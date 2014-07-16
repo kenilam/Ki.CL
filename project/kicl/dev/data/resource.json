@@ -1,0 +1,52 @@
+{
+    "info" : {
+        "name" : "Ki.CL"
+    },
+
+    "content" : [
+        {
+            "name" : "home",
+            "route" : "home"
+        },
+        {
+            "name" : "work",
+            "route" : "work",
+            "children" : [
+                {
+                    "name" : "home",
+                    "route" : "work/home",
+                    "children" : [
+                        {
+                            "name" : "home",
+                            "route" : "work/home/home"
+                        },
+                        {
+                            "name" : "work",
+                            "route" : "work/home/work"
+                        },
+                        {
+                            "name" : "contact",
+                            "route" : "work/home/contact"
+                        }
+                    ]
+                },
+                {
+                    "name" : "work",
+                    "route" : "work/work"
+                },
+                {
+                    "name" : "contact",
+                    "route" : "work/contact"
+                }
+            ]
+        },
+        {
+            "name" : "contact",
+            "route" : "contact"
+        }
+    ],
+
+    "template" : {
+        "error" : "partial/error.html"
+    }
+}

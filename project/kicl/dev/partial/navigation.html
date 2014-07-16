@@ -1,0 +1,13 @@
+<nav data-state="{{navigation.state}}">
+    <ul>
+        <li
+            ng-repeat="list in navigation.list track by $index"
+            ng-class="{
+                'isActive' : _.isEqual(state, list.state)
+            }"
+        >
+            <a ui-sref="{{list.route}}" ng-if="list.route">{{list.name}}</a>
+            <a ng-href="{{list.link}}" target="_blank" ng-if="list.link">{{list.name}}</a>
+        </li>
+    </ul>
+</nav>

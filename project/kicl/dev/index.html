@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="kicl">
+    <head ng-controller="head">
+        <meta charset="UTF-8">
+        <meta http-equiv="content-type" content="text/html; charset=UTF8;">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+        <meta name="fragment" content="!">
+
+        <title ng-bind="info.name + ' | ' + routes">Welcome To Ki.CL</title>
+        
+        <!-- build:css stylesheet/app.css -->
+        <link rel="stylesheet" type="text/css" href="css/lib/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/lib/font-awesome.css" />
+
+        <link rel="stylesheet" type="text/css" href="css/lib/angular-csp.css" />
+        <!-- endbuild -->
+    </head>
+    <body ng-cloak class="ng-cloak">
+        <header ng-controller="header">
+            <navigation></navigation>
+        </header>
+        <main role="main" ui-view="view"></main>
+        <footer>
+            
+        </footer>
+
+        <!-- build:js javascript/lib.js -->
+        <script src="lib/jquery.js"></script>
+        <script src="lib/modernizr.js"></script>
+        <script src="lib/html5shiv.js"></script>
+        <script src="lib/underscore.js"></script>
+
+        <script src="lib/angular.js"></script>
+        <script src="lib/angular-animate.js"></script>
+        <script src="lib/angular-route.js"></script>
+        <script src="lib/angular-resource.js"></script>
+        <script src="lib/angular-sanitize.js"></script>
+        <script src="lib/angular-ui-router.js"></script>
+        <!-- endbuild -->
+        <!-- build:js javascript/app.js -->
+        <script src="app/module.js"></script>
+        <script src="app/run.js"></script>
+        <script src="app/config.js"></script>
+
+        <script src="app/service.async.js"></script>
+
+        <script src="app/directive.navigation.js"></script>
+
+        <script src="app/controller.head.js"></script>
+        <script src="app/controller.header.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>
