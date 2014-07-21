@@ -2,10 +2,10 @@
 (
     function (app) {
         app.controller('header', [
-            '$rootScope', '$scope', '$state', '$stateParams',
-            function (root, scope, state, stateParams) {
+            '$rootScope', '$scope',
+            function (root, scope) {
                 root.resource.$promise.then(function (resource) {
-                    scope.navigation = resource.content;
+                    scope.navigation = _.rest(resource.content);
                 });
             }
         ]);

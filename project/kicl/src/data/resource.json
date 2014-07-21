@@ -1,6 +1,7 @@
 {
     "info" : {
-        "name" : "Ki.CL"
+        "name" : "Ki.CL",
+        "title" : "A Creative Consultant"
     },
 
     "content" : [
@@ -10,35 +11,7 @@
         },
         {
             "name" : "work",
-            "route" : "work",
-            "children" : [
-                {
-                    "name" : "home",
-                    "route" : "work/home",
-                    "children" : [
-                        {
-                            "name" : "home",
-                            "route" : "work/home/home"
-                        },
-                        {
-                            "name" : "work",
-                            "route" : "work/home/work"
-                        },
-                        {
-                            "name" : "contact",
-                            "route" : "work/home/contact"
-                        }
-                    ]
-                },
-                {
-                    "name" : "work",
-                    "route" : "work/work"
-                },
-                {
-                    "name" : "contact",
-                    "route" : "work/contact"
-                }
-            ]
+            "route" : "work"
         },
         {
             "name" : "contact",
@@ -46,7 +19,17 @@
         }
     ],
 
-    "template" : {
-        "error" : "partial/error.html"
+    "error" : {
+        "route" : {
+            "404" : {
+                "message" : "This route does not exist"
+            }
+        }
+    },
+
+    "status" : {
+        "loading" : {
+            "message" : "loading"
+        }
     }
 }

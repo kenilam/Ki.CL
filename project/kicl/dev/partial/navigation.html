@@ -1,9 +1,12 @@
-<nav data-state="{{navigation.state}}">
+<nav
+    data-route="{{navigation.route}}"
+    ng-if="navigation.list.length > 0"
+>
     <ul>
         <li
             ng-repeat="list in navigation.list track by $index"
             ng-class="{
-                'isActive' : _.isEqual(state, list.state)
+                'isActive' : _.where([navigation.state], list.state).length > 0
             }"
         >
             <a ui-sref="{{list.route}}" ng-if="list.route">{{list.name}}</a>

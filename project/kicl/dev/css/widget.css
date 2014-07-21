@@ -1,0 +1,88 @@
+.loader {
+  -webkit-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -moz-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -o-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  zoom: 1;
+  filter: alpha(opacity=100);
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+  opacity: 1;
+  -webkit-border-radius: 50%;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 50%;
+  -moz-background-clip: padding;
+  border-radius: 50%;
+  background-clip: padding-box;
+  height: 48px;
+  width: 48px;
+  background-color: #fafafa;
+  font-size: 48px;
+  left: 50%;
+  overflow: hidden;
+  margin-left: -34px;
+  margin-top: -34px;
+  padding: 10px;
+  position: absolute;
+  text-indent: -9999px;
+  top: 50%;
+  z-index: 99;
+}
+.loader:before {
+  display: block;
+  text-indent: 0;
+  left: 10px;
+  position: absolute;
+  top: 10px;
+  width: 48px;
+}
+.loader.ng-leave-active {
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+}
+.logo {
+  -webkit-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -moz-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -o-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -webkit-border-radius: 50%;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 50%;
+  -moz-background-clip: padding;
+  border-radius: 50%;
+  background-clip: padding-box;
+  height: 120px;
+  width: 120px;
+  background-image: url(../../asset/image/gradient.full.png);
+  background-color: #5a5a5a;
+  display: block;
+  padding: 50px;
+  position: relative;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+.logo:before {
+  -webkit-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -moz-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  -o-transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  transition: all 500ms cubic-bezier(0.82, 0, 0.07, 1) 100ms;
+  background-image: url(../../asset/image/logo.kicl.white.png);
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  content: "\00a0";
+  display: block;
+  height: 120px;
+  left: 50px;
+  position: absolute;
+  top: 50px;
+  width: 120px;
+}
+.logo:hover {
+  background-color: #ff6666;
+}

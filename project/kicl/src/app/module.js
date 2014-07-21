@@ -11,7 +11,7 @@ var kicl = angular.module(
 ).constant(
     'config', {
         'route' : {
-            'map' : '/:section/:page/:item/:id',
+            'map' : '/:section/:page/:item/:detail/:alternative',
             'index' : 'home'
         }
     }

@@ -34,6 +34,10 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
                     '!font-awesome/{less,src}/**/*.{less,css}'
                 ],
                 font: '**/fonts/*.{eot,svg,ttf,woff,otf}'
+            },
+            plugin: {
+                JS: [ './plugin/**/*.js' ],
+                LESS: [ './plugin/**/*.{less,css}' ],
             }
         },
 
@@ -42,6 +46,10 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
                 JS: destination + '/lib',
                 LESS: destination + '/less/lib',
                 font: destination + '/less/fonts'
+            },
+            plugin: {
+                JS: destination + '/lib',
+                LESS: destination + '/less/lib',
             }
         };
     
@@ -53,7 +61,7 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
         ]).pipe(clean());
     });
 
-    gulp.task(taskName + '.copy.font', [taskName + '.clean'], function () {
+    gulp.task(taskName + '.copy.component.font', [taskName + '.clean'], function () {
         return bowerSrc()
             .pipe(filter(file.component.font))
             .pipe(changed(dir.component.font))
@@ -65,7 +73,7 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             .pipe(gulp.dest(dir.component.font))
     });
 
-    gulp.task(taskName + '.copy.LESS', [taskName + '.clean'], function () {
+    gulp.task(taskName + '.copy.component.LESS', [taskName + '.clean'], function () {
         return bowerSrc()
             .pipe(filter(file.component.LESS))
             .pipe(changed(dir.component.LESS))
@@ -78,7 +86,7 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             .pipe(gulp.dest(dir.component.LESS));
     });
     
-    gulp.task(taskName + '.copy.JS', [taskName + '.clean'], function () {
+    gulp.task(taskName + '.copy.component.JS', [taskName + '.clean'], function () {
         return bowerSrc()
             .pipe(filter(file.component.JS))
             .pipe(changed(dir.component.JS))
@@ -90,10 +98,37 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             .pipe(gulp.dest(dir.component.JS));
     });
 
+    gulp.task(taskName + '.copy.plugin.JS', [taskName + '.clean'], function () {
+        return gulp.src(file.plugin.JS)
+            .pipe(
+                rename(function (path) {
+                    path.dirname = '.';
+                })
+            )
+            .pipe(gulp.dest(dir.component.JS));
+    });
+
+    gulp.task(taskName + '.copy.plugin.LESS', [taskName + '.clean'], function () {
+        return gulp.src(file.plugin.LESS)
+            .pipe(
+                rename(function (path) {
+                    if (path.basename === 'lesshat') {
+                        path.basename = '_lesshat';
+                        path.dirname = '../';
+                    } else {
+                        path.dirname = '.';
+                    }
+                })
+            )
+            .pipe(gulp.dest(dir.component.LESS));
+    });
+
     gulp.task(taskName + '.copy', [
-        taskName + '.copy.font',
-        taskName + '.copy.LESS',
-        taskName + '.copy.JS'
+        taskName + '.copy.component.font',
+        taskName + '.copy.component.LESS',
+        taskName + '.copy.component.JS',
+        taskName + '.copy.plugin.LESS',
+        taskName + '.copy.plugin.JS'
     ]);
 
     gulp.task(taskName, [taskName + '.copy']);

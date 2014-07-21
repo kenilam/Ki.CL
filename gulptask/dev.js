@@ -33,7 +33,6 @@ module.exports.dev = function (project, dependentTasks, gulp) {
         compile = {
             LESS: {
                 config: {
-                    includePath: ['_*.less'],
                     root: './project/' + project + '/src/less',
                     strictPropertyOrder: false,
                     noOverqualifying: false,
@@ -44,7 +43,8 @@ module.exports.dev = function (project, dependentTasks, gulp) {
                 },
                 file: [
                     './project/' + project + '/src/**/*.{less,css}',
-                    '!./project/' + project + '/src/**/_*.{less,css}'
+                    '!./project/' + project + '/src/**/_*.{less,css}',
+                    '!./project/' + project + '/src/**/lesshat.less'
                 ]
             }
         },

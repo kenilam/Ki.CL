@@ -1,6 +1,6 @@
 var root = __dirname + '/../../',
 
-    appName = 'UI Remote Challenge',
+    appName = 'Ki.CL',
     port    =  '8081',
     debug   = false,
     logger  = require('logger').createLogger(),

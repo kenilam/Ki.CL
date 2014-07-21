@@ -1,0 +1,15 @@
+<nav
+    class="breadcrumb"
+    ng-if="breadcrumb.list.length > 0"
+>
+    <p>
+        <a ui-sref="{{breadcrumb.root.route}}">{{breadcrumb.root.name}}</a><!--
+        --><a
+            ng-repeat="list in breadcrumb.list track by $index"
+            ui-sref="{{list.route}}"
+            ng-class="{
+                'isActive' : $index = breadcrumb.index
+            }"
+        >{{list.name}}</a>
+    </p>
+</nav>

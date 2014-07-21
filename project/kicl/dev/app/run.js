@@ -3,8 +3,8 @@
     function (app) {
         app.run(
             [
-                '$rootScope', '$state', '$stateParams', '$urlRouter', 'async', 'config',
-                function(root, state, stateParams, urlRouter, async, config) {
+                '$rootScope', '$state', '$stateParams', 'async',
+                function(root, state, stateParams, async) {
                     root.info = {
                         protocol : location.protocol,
                         host : location.hostname,
@@ -19,14 +19,14 @@
                     root.$state = state;
                     root.$stateParams = stateParams;
 
-                    root.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-                        root.resource.$promise.then(function (resource) {
-                            state.go(toState.name, {
-                                views : {
-                                    
-                                }
-                            });
-                        });
+                    root.init = true;
+
+                    root.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error){
+                        
+                    });
+
+                    root.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams, error){
+                        
                     });
                 }
             ]

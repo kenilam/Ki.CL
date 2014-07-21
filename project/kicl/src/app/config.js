@@ -17,48 +17,51 @@
                             views : {
                                 'view' : {
                                     templateUrl : function (state) {
-                                        var page = function (idx) { return state[routes[idx]] ? routes[idx] : page(idx - 1); };
+                                        var page = function (idx) { return state[routes[idx]] ? routes[idx] : page(idx - 1); },
+                                            route = _.toArray(state),
+                                            template = {
+                                                view : 'view/' + state.section + '/' + page(routes.length - 1),
+                                                error : 'partial/error'
+                                            };
+
                                         return 'view/' + state.section + '/' + page(routes.length - 1) + '.html';
                                     },
-                                    controller : [
-                                        '$rootScope', '$scope', '$state', '$stateParams',
-                                        function (root, scope, state, stateParams) {
-                                            var setContent = function (contents) {
-                                                var ctn = undefined;
+                                    resolve : {
+                                        'content' : ['$rootScope', '$state', '$stateParams',
+                                            function (root, state, stateParams) {
+                                                var setContent = function (contents) {
+                                                    var ctn = _.findWhere(contents, { route : _.toArray(stateParams).join('/') }) || undefined,
+                                                        subCtn = undefined;
 
-                                                ctn = _.findWhere(contents, { route : _.toArray(stateParams).join('/') });
+                                                    if (!ctn)
+                                                        _.each(contents, function (content) {
+                                                            if (content.children) subCtn = setContent(content.children);
+                                                            if (subCtn) ctn = subCtn;
+                                                        });
 
-                                                if (!ctn)
-                                                    _.each(contents, function (content) {
-                                                        var subCtn = undefined;
-                                                        if (content.children) subCtn = setContent(content.children);
-                                                        if (subCtn) ctn = subCtn;
-                                                    });
+                                                    return ctn;
+                                                };
 
-                                                return ctn;
+                                                return root.resource.$promise.then(function (resource) {
+                                                    return setContent(resource.content);
+                                                });
                                             }
+                                        ]
+                                    },
+                                    controller : [
+                                        '$rootScope', '$scope', '$state', '$stateParams', 'content',
+                                        function (root, scope, state, stateParams, content) {
                                             root.resource.$promise.then(function (resource) {
-                                                scope.content = setContent(resource.content);
-                                                scope.navigation = scope.content && scope.content.children ? scope.content.children : undefined;
+                                                if (content) {
+                                                    scope.content = content;
+                                                    if (content.children) scope.navigation = content.children;
+                                                }
                                             });
                                         }
                                     ]
                                 }
                             }
                         });
-                    });
-                    
-                    stateProvider.state('error', {
-                        url : '/:error',
-                        templateUrl : function (state) {
-                            return 'partial/error.html';
-                        },
-                        controller : [
-                            '$rootScope', '$scope', '$state', '$stateParams',
-                            function (root, scope, state, stateParams) {
-                                debugger
-                            }
-                        ]
                     });
 
                     urlRouterProvider.otherwise(function(){

@@ -1,0 +1,15 @@
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+}
+.fa {
+  font-family: 'Comfortaa', cursive;
+}
+.fa:before {
+  font-family: FontAwesome;
+  text-align: center;
+}

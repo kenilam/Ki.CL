@@ -1,0 +1,72 @@
+@import '_import';
+
+html {
+    background-color: @dark_grey;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+body[data-route] {
+    @loading_color: @dark_grey;
+
+    .transition(all @speed_standard 100ms);
+    .background-image(url(~'@{image_path}gradient.full.png'));
+
+    background-color: @white;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: repeat;
+
+    color: @dark_grey;
+
+    font-family: @font_family;
+    font-size: @font_size;
+
+    line-height: @line_height;
+
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    header,
+    main,
+    footer {
+        .transition(all @speed_standard 100ms);
+        .opacity(1);
+    }
+
+    &.loading {
+        .through();
+        .background-image(url(~'@{image_path}gradient.full.png'));
+        
+        background-color: @loading_color;
+        color: @white;
+
+        header,
+        main,
+        footer {
+            .opacity(0);
+        }
+
+        .loader {
+            color: @loading_color;
+        }
+    }
+
+    &.init {
+        overflow: hidden;
+
+        main,
+        footer {
+            .opacity(0);
+        }
+    }
+}
+
+h1 {font-size: @h1_size;}
+h2 {font-size: @h2_size;}
+h3 {font-size: @h3_size;}
+h4 {font-size: @h4_size;}
+h5 {font-size: @h5_size;}
+
