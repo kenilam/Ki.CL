@@ -1,4 +1,6 @@
 .DS_Store
+.idea/
+*.log
 
 project/**/dev
 project/**/build
@@ -9,6 +11,3 @@ project/**/src/less/fonts
 
 node_modules
 bower_components
-
-.idea/
-*.log
