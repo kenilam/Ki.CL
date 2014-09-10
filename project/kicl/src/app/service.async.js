@@ -1,4 +1,3 @@
-"use strict";
 (
     function (app) {
         app.service(

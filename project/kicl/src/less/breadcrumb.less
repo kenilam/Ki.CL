@@ -1,0 +1,35 @@
+@import '_import';
+
+.breadcrumb {
+    @space: 10px;
+    @size: 18px;
+
+    span {
+        .hidden();
+    }
+
+    a {
+        display: inline-block;
+        margin: @space @space @space 0;
+        text-transform: capitalize;
+
+        &:hover {
+            border-bottom: 0;
+            margin-bottom: @space;
+        }
+
+        &.isCurrent {
+            cursor: default;
+        }
+    }
+    
+    .fa-home {
+        cursor: default;
+        height: @size;
+        width: @size;
+
+        &:before {
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<ul>
+    <li
+        ng-repeat="(key, project) in projects track by $index"
+        ng-if="project.owners[0].username === resource.userName"
+    >
+        <h3>{{project.name}}</h3>
+        <img ng-src="{{project.covers[resource.config.covers.size]}}">
+        <ul>
+            <li class="created">
+                {{resource.content.label.created_on}} {{project.created_on}}
+            </li>
+        </ul>
+    </li>
+</ul>

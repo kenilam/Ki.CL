@@ -1,4 +1,4 @@
-.through () {
+.through() {
     background-image: url(@transparent_base64);
     pointer-events: none;
 
@@ -6,17 +6,33 @@
     *background:none !important\9;
 }
 
-.circle (@size) {
+.circle(@size) {
     .border-radius(50%);
     height: @size;
     width: @size;
 }
 
-.hidden () {
+.hidden() {
+    .opacity(0);
+
     height: 1px;
     left: -10000px;
     overflow: hidden;
     position: absolute;
     top: auto;
     width: 1px;
+}
+
+.inline-block() {
+    display: inline-block;
+    vertical-align: middle;
+    zoom: 1;
+    *display: inline;
+}
+
+.truncate(@width: 100%) {
+    width: @width;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

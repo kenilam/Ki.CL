@@ -1,13 +1,18 @@
-"use strict";
 (
     function (app) {
         app.controller('body', [
-            '$rootScope', '$scope', '$timeout',
-            function (root, scope, timeout) {
-                scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+            '$rootScope', '$scope', '$timeout', '$interval',
+            function (root, scope, timeout, interval) {
+                scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+                    var reference = {
+                        header : angular.element('header')
+                    };
+
                     scope.route = _.toArray(toParams).join('.');
 
-                    scope.init = root.init;
+                    scope.style = {
+                        main : {}
+                    };
 
                     root.resource.$promise.then(function (resource) {
                         scope.status = resource.status;
@@ -16,7 +21,11 @@
                         scope.timer = timeout(function () {
                             scope.ready = true;
                         }, 1500);
-                    })
+                    });
+
+                    interval(function () {
+                        scope.style.main.paddingTop = reference.header.outerHeight();
+                    }, 1000);
                 });
             }
         ]);

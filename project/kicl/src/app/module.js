@@ -1,4 +1,3 @@
-"use strict";
 var kicl = angular.module(
     'kicl',
     [
@@ -6,10 +5,14 @@ var kicl = angular.module(
         'ngAnimate',
         'ngRoute',
         'ngResource',
-        'ngSanitize'
+        'ngSanitize',
+        'behance'
     ]
 ).constant(
     'config', {
+        'data' : {
+            'resource' : '/data/resource.json'
+        },
         'route' : {
             'map' : '/:section/:page/:item/:detail/:alternative',
             'index' : 'home'

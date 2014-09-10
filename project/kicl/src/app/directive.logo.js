@@ -1,4 +1,3 @@
-"use strict";
 (
     function (app) {
         app.directive('logo', function () {
@@ -10,14 +9,17 @@
                 },
                 templateUrl: 'partial/logo.html',
                 controller: [
-                    '$rootScope', '$scope', '$state', '$stateParams', 'config',
-                    function (root, scope, state, stateParams, config) {
+                    '$rootScope', '$scope', 'config',
+                    function (root, scope, config) {
                         root.resource.$promise.then(function (resource) {
-                            var state = _.first(_.rest(config.route.map.split('/:')));
+                            var route = _.first(_.rest(config.route.map.split('/:'))),
+                                obj = {};
+
+                            obj[route] = '';
 
                             scope.logo = {
-                                name : resource.info.name,
-                                route : state + '({' + state + ':"' + config.route.index + '"})'
+                                name : resource.info.name + ' | ' + config.route.index,
+                                route : route + '({' + route + ':"' + config.route.index + '"})'
                             };
                         });
                     }

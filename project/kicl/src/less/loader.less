@@ -1,0 +1,57 @@
+@import '_import';
+
+.loader {
+    @background-color: @orange;
+    @color: @white;
+    @size: (@font_size * 3);
+    @space: 10px;
+    
+    .transition(all @speed_standard 100ms);
+    .circle(@size);
+    .box-shadow(@shadow);
+    .opacity(1);
+
+    background-color: @background-color;
+    color: @color;
+    left: 50%;
+    margin-left: -((@size + (@space * 2)) / 2);
+    margin-top: -((@size + (@space * 2)) / 2);
+    overflow: hidden;
+    padding: @space;
+    position: absolute;
+    text-indent: -9999px;
+    top: 50%;
+    z-index: 99;
+
+    &:before {
+        .transition(all @speed_standard 100ms);
+
+        display: block;
+        font-size: @size;
+        left: @space;
+        text-align: center;
+        text-indent: 0;
+        top: @space;
+        position: absolute;
+        width: @size;
+    }
+
+    &.ng-leave-active {
+        @size: @font_size;
+        @space: 5px;
+
+        .circle(@size);
+        .opacity(0);
+
+        margin-left: -((@size + (@space * 2)) / 2);
+        margin-top: -((@size + (@space * 2)) / 2);
+        padding: @space;
+
+        &:before {
+            font-size: @size;
+            left: @space;
+            top: @space;
+            width: @size;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+@import '_import';
+
+.navigation {
+    @space: 10px;
+
+    height: 100%;
+
+    ul,
+    li {
+        height: 100%;
+
+        &:before {
+            .inline-block();
+
+            content: '';
+            height: 100%;
+            vertical-align: middle;
+        }
+    }
+    
+    li {
+        .inline-block();
+
+        padding: 0 @space;
+    }
+    
+    a {
+        .inline-block();
+
+        text-transform: capitalize;
+
+        &:hover {
+            border-bottom: 0;
+            margin-bottom: 0;
+        }
+    }
+}

@@ -1,4 +1,3 @@
-"use strict";
 (
     function (app) {
         app.directive('breadcrumb', function () {
@@ -13,8 +12,6 @@
                     '$rootScope', '$scope', 'config',
                     function (root, scope, config) {
                         var idx = 0,
-                            params,
-                            ref = {},
                             route = _.rest(config.route.map.split('/:'));
 
                         scope.breadcrumb = {
@@ -24,9 +21,9 @@
                             }
                         };
 
-                        scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                        scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
                             scope.breadcrumb.list = _.reject(
-                                _.map(toParams, function (name, state) {
+                                _.map(toParams, function (name) {
                                     idx ++;
                                     return {
                                         name : name,

@@ -1,4 +1,3 @@
-"use strict";
 (
     function (app) {
         app.controller('head', [
@@ -7,11 +6,11 @@
                 root.resource.$promise.then(function (resource) {
                     scope.info = resource.info;
 
-                    scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                    scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
                         scope.route = (
                             function () {
                                 var route = _.map(
-                                    _.toArray(toParams), function (value, key) {
+                                    _.toArray(toParams), function (value) {
                                         return value === 'home' ? resource.info.title : value;
                                     }
                                 );

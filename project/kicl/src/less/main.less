@@ -1,0 +1,21 @@
+@import '_import';
+
+main {
+    @space : 10px;
+    
+    > * {
+        padding-left:(@space * 3);
+        padding-right:(@space * 3);
+        padding-top: @space;
+
+        + * {
+            padding-top: 0;
+        }
+    }
+
+    p {
+        + p {
+            padding-top: @space;
+        }
+    }
+}

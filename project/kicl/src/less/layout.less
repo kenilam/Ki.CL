@@ -1,72 +1,50 @@
 @import '_import';
 
 html {
-    background-color: @dark_grey;
+    background-color: @white;
     height: 100%;
     position: relative;
     width: 100%;
 }
 
-body[data-route] {
-    @loading_color: @dark_grey;
-
-    .transition(all @speed_standard 100ms);
-    .background-image(url(~'@{image_path}gradient.full.png'));
-
-    background-color: @white;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: repeat;
-
-    color: @dark_grey;
-
-    font-family: @font_family;
-    font-size: @font_size;
-
-    line-height: @line_height;
-
-    height: 100%;
+body {
     position: relative;
-    width: 100%;
-
-    header,
-    main,
-    footer {
-        .transition(all @speed_standard 100ms);
-        .opacity(1);
-    }
+    height: 100%;
 
     &.loading {
-        .through();
-        .background-image(url(~'@{image_path}gradient.full.png'));
-        
-        background-color: @loading_color;
-        color: @white;
-
         header,
         main,
         footer {
-            .opacity(0);
-        }
-
-        .loader {
-            color: @loading_color;
+            .hidden();
         }
     }
 
-    &.init {
-        overflow: hidden;
+    > header,
+    main,
+    > footer {
+        .transition(opacity @speed_standard 500ms);
+        .opacity(1);
 
-        main,
-        footer {
-            .opacity(0);
-        }
+        width: 100%;
+    }
+
+    > header {
+        z-index: 3;
+    }
+    > footer {
+        z-index: 2;
+    }
+
+    > header {
+        position: relative;
+    }
+
+    main {
+        z-index: 1;
+    }
+
+    > footer {
+        bottom: 0;
+        position: fixed;
     }
 }
-
-h1 {font-size: @h1_size;}
-h2 {font-size: @h2_size;}
-h3 {font-size: @h3_size;}
-h4 {font-size: @h4_size;}
-h5 {font-size: @h5_size;}
-

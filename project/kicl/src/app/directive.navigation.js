@@ -1,4 +1,3 @@
-"use strict";
 (
     function (app) {
         app.directive('navigation', function () {
@@ -10,49 +9,34 @@
                 },
                 templateUrl: 'partial/navigation.html',
                 controller: [
-                    '$rootScope', '$scope', '$stateParams', '$timeout', 'config',
-                    function (root, scope, stateParams, timeout, config) {
-                        var route = _.rest(config.route.map.split('/:'));
+                    '$rootScope', '$scope', '$stateParams', '$timeout', 'routeProperty', 'config',
+                    function (root, scope, stateParams, timeout, routeProperty, config) {
+                        var route = _.rest(config.route.map.split('/:')),
+                            assign = function (data) {
+                                scope.navigation = {
+                                    list : routeProperty(data.navigation),
+                                    state : {}
+                                };
+
+                                timeout.cancel(scope.timer);
+                                scope.timer = timeout(function () {
+                                    scope.navigation.route = route[_.toArray(stateParams).length];
+                                }, 0);
+
+                                scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
+                                    scope.navigation.state = toParams;
+                                });
+                            };
+                        
+                        if(!scope.$parent.navigation) {
+                            scope.$on('navigation', function (evt, data) {
+                                assign(data);
+                            });
+                        } else {
+                            assign({sitemap: scope.$parent.sitemap});
+                        }
 
                         scope._ = _;
-
-                        scope.navigation = {
-                            list : _.map(scope.$parent.navigation, function (nav) {
-                                var list = {
-                                        name : nav.name
-                                    },
-                                    ref = {};
-
-                                if (nav.link) list.link = nav.link;
-
-                                if (nav.route) {
-                                    ref.state = [];
-                                    ref.name = [];
-
-                                    list.state = {};
-
-                                    _.map(nav.route.split('/'), function (r, k) {
-                                        ref.state.push(route[k]);
-                                        ref.name.push(route[k] + ':"' + r + '"');
-
-                                        list.state[route[k]] = r;
-                                    });
-
-                                    list.route = ref.state.join('.') + '({' + ref.name.join(',') + '})';
-                                }
-                                return list;
-                            }),
-                            state : {}
-                        };
-
-                        timeout.cancel(scope.timer);
-                        scope.timer = timeout(function () {
-                            scope.navigation.route = route[_.toArray(stateParams).length];
-                        }, 0);
-
-                        scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-                            scope.navigation.state = toParams;
-                        });
                     }
                 ]
             }

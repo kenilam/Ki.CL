@@ -1,0 +1,30 @@
+{
+    "baseUrl" : "http://www.behance.net",
+    "version" : "v2",
+    "userName" : "kicl",
+    "apiKey" : "PpQd2N3JDELa4xVt6kT5iWZhwqfmOqKw",
+    "widget" : {
+        "profile" : {
+            "path" : "users/:userName"
+        },
+        "projects" : {
+            "path" : "projects",
+            "params" : {
+                "q" : ":userName"
+            },
+            "config" : {
+                "covers" : {
+                    "size" : "202"
+                }
+            },
+            "content" : {
+                "label" : {
+                    "created_on" : "Created on:"
+                }
+            }
+        },
+        "project" : {
+            "path" : "projects/:projectId"
+        }
+    }
+}

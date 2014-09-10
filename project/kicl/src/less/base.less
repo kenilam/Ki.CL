@@ -1,15 +1,37 @@
 @import '_import';
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, p, ul {
     margin: 0;
     padding: 0;
 }
 
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
 .fa {
+    display: inherit;
     font-family: @font_family;
-    
+    font-weight: inherit;
+    vertical-align: middle;
+
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: initial;
+
     &:before {
+        display: inline-block;
         font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+        padding-right: 10px;
         text-align: center;
+
+        -webkit-font-smoothing: auto;
+        -moz-osx-font-smoothing: initial;
     }
 }

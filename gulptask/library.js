@@ -21,9 +21,9 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
                     'dist/*.js',
                     '!**/*.min.js',
                     '!**/dist/*.min.js',
-                    '!d3/**/*.js',
                     '!**/{test,min,bin,lang,lib,support,src,feature-detects}/**/*.js',
-                    '!**/{grunt,Gruntfile,,GruntFile}.js'
+                    '!**/{grunt,Gruntfile,,GruntFile}.js',
+                    '**/src/uncompressed/**/*.js'
                 ],
                 LESS: [
                     '**/*.{less,css}',
@@ -50,6 +50,9 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             plugin: {
                 JS: destination + '/lib',
                 LESS: destination + '/less/lib',
+            },
+            template: {
+                HTML : ['./project/src/{partial,view}/**/*.html']
             }
         };
     
@@ -92,7 +95,11 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             .pipe(changed(dir.component.JS))
             .pipe(
                 rename(function (path) {
-                    path.dirname = '.';
+                    if (path.dirname.indexOf('GreenSock') > -1) {
+                        path.dirname = path.dirname.replace('GreenSock-js/src/uncompressed', 'greensock');
+                    } else {
+                        path.dirname = '.';
+                    }
                 })
             )
             .pipe(gulp.dest(dir.component.JS));

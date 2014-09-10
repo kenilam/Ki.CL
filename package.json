@@ -10,6 +10,7 @@
     "gulp": "*",
     "gulp-add-src": "*",
     "gulp-autoprefixer": "*",
+    "gulp-templatecache": "*",
     "gulp-bower": "*",
     "gulp-bower-src": "*",
     "gulp-changed": "*",

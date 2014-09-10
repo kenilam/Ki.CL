@@ -24,7 +24,8 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 
         copy = {
             file: [
-                './project/' + project + '/src/**/*.{js,eot,svg,ttf,woff,otf,html,png,jpg,gif,ico,json}'
+                './project/' + project + '/' + src + '/**/*.{js,eot,svg,ttf,woff,otf,html,png,jpg,gif,ico,json}',
+                '!./project/' + project + '/' + src + '/{partial,view,api}/**/*.html'
             ],
             destination: './project/' + project + '/' + env,
             source: './project/' + project + '/' + src
@@ -33,7 +34,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
         compile = {
             LESS: {
                 config: {
-                    root: './project/' + project + '/src/less',
+                    root: './project/' + project + '/' + src + '/less',
                     strictPropertyOrder: false,
                     noOverqualifying: false,
                     zeroUnits: false,
@@ -42,22 +43,22 @@ module.exports.dev = function (project, dependentTasks, gulp) {
                     prefixWhitespace: false
                 },
                 file: [
-                    './project/' + project + '/src/**/*.{less,css}',
-                    '!./project/' + project + '/src/**/_*.{less,css}',
-                    '!./project/' + project + '/src/**/lesshat.less'
+                    './project/' + project + '/' + src + '/**/*.{less,css}',
+                    '!./project/' + project + '/' + src + '/**/_*.{less,css}',
+                    '!./project/' + project + '/' + src + '/**/lesshat.less'
                 ]
             }
         },
 
         watch = {
             file: [
-                './project/' + project + '/src/**/*.{less,css,js,eot,svg,ttf,woff,otf,html,png,jpg,gif,ico,json}',
-                '!./project/' + project + '/src/data/*.json',
-                './project/' + project + '/src/data/resource.json',
-                '!./project/' + project + '/src/lib/',
-                '!./project/' + project + '/src/lib/**/*',
-                '!./project/' + project + '/src/less/lib/',
-                '!./project/' + project + '/src/less/lib/**/*'
+                './project/' + project + '/' + src + '/**/*.{less,css,js,eot,svg,ttf,woff,otf,html,png,jpg,gif,ico,json}',
+                '!./project/' + project + '/' + src + '/data/*.json',
+                './project/' + project + '/' + src + '/data/resource.json',
+                '!./project/' + project + '/' + src + '/lib/',
+                '!./project/' + project + '/' + src + '/lib/**/*',
+                '!./project/' + project + '/' + src + '/less/lib/',
+                '!./project/' + project + '/' + src + '/less/lib/**/*'
             ]
         },
 
@@ -80,13 +81,15 @@ module.exports.dev = function (project, dependentTasks, gulp) {
                     }))
                     .pipe(gulp.dest(copy.destination));
             }
-        };
+        },
+
+        template = require('../gulptask/template').template(project, env, env, taskName + '.clean', gulp, true);
 
     gulp.task(taskName + '.clean', dependentTasks, function () { // gulp [project].dev.clean
         return gulp.src(copy.destination).pipe(clean());
     });
 
-    gulp.task(taskName + '.copy.src', [taskName + '.clean'], function () { // gulp [project].dev.copy.src
+    gulp.task(taskName + '.copy.src', [taskName + '.clean', template.normal], function () { // gulp [project].dev.copy.src
         return fn.copySrc();
     });
 
@@ -114,11 +117,13 @@ module.exports.dev = function (project, dependentTasks, gulp) {
             console.log('');
 
             if (isLESS) {
-                task = taskName + '.changed.LESS';
+                task = [taskName + '.changed.LESS'];
             } else {
-                task = taskName + '.changed.src';
+                task = [taskName + '.changed.src', template.changed];
             }
-            gulp.start(task);
+            for (var i = 0, l = task.length; i < l; i ++) {
+                gulp.start(task[i]);
+            }
         });
     });
 
@@ -130,7 +135,8 @@ module.exports.dev = function (project, dependentTasks, gulp) {
     ]);
 
 	gulp.task(taskName + '.default', [              // gulp [project].dev.default
-        taskName + '.compile'                		// gulp [project].dev.compile
+        taskName + '.compile',                		// gulp [project].dev.compile
+        template.normal                             // gulp [project].dev.template
     ],
 	function () {
         return gulp.start(taskName + '.run.app');   // gulp [project].dev.run.app

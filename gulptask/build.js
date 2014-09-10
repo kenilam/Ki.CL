@@ -8,6 +8,8 @@ module.exports.build = function (project, dependentTasks, gulp) {
 
         dev = 'dev',
 
+        src = 'src',
+
         taskName = project + '.' + env,
 
         run = require('../gulptask/run').run().app,
@@ -16,19 +18,22 @@ module.exports.build = function (project, dependentTasks, gulp) {
         clean = require('gulp-clean'),
         changed = require('gulp-changed'),
         concat = require('gulp-concat'),
-        debug = require('gulp-debug'),
         filter = require('gulp-filter'),
         less = require('gulp-less'),
         miniHTML = require('gulp-minify-html'),
         miniCSS = require('gulp-minify-css'),
         miniJSON = require('gulp-jsonminify'),
+        ngTemplate = require('gulp-templatecache'),
         recess = require('gulp-recess'),
         rename = require('gulp-rename'),
         uglify = require('gulp-uglify'),
         usemin = require('gulp-usemin'),
 
         copy = {
-            file: './project/' + project + '/src/**/*.{js,html}',
+            file: [
+                './project/' + project + '/src/**/*.{js,html}',
+                '!./project/' + project + '/src/{partial,view,api}/**/*.html'
+            ],
             destination: './project/' + project + '/' + dev,
 
             build: {
@@ -68,11 +73,12 @@ module.exports.build = function (project, dependentTasks, gulp) {
                 CSS: {
                     keepSpecialComments: 0,
                     benchmark: true,
-                    processImport: true,
-                    debug: false
+                    processImport: true
                 },
                 JS: {
-                    
+                    output: {
+                        'space_colon': false
+                    }
                 },
                 HTML: {
                     empty: true,
@@ -131,7 +137,9 @@ module.exports.build = function (project, dependentTasks, gulp) {
                     ))
                     .pipe(gulp.dest(copy.build.destination));
             }
-        };
+        },
+
+        template = require('../gulptask/template').template(project, env, dev, taskName + '.clean', gulp);
 
     gulp.task(taskName + '.clean', dependentTasks, function () { // gulp [project].build.clean
         return gulp.src(copy.destination)
@@ -139,7 +147,7 @@ module.exports.build = function (project, dependentTasks, gulp) {
             .pipe(clean());
     });
 
-    gulp.task(taskName + '.copy.src', [taskName + '.clean'], function () { // gulp [project].build.copy.src
+    gulp.task(taskName + '.copy.src', [taskName + '.clean', template.normal], function () { // gulp [project].build.copy.src
         return fn.copySrc(copy.file, copy.destination);
     });
 
@@ -147,7 +155,7 @@ module.exports.build = function (project, dependentTasks, gulp) {
         return fn.copySrc(copy.build.file, copy.build.destination, env);
     });
 
-    gulp.task(taskName + '.compile.JSON', [taskName + '.clean'], function () { // gulp [project].build.compile.LESS
+    gulp.task(taskName + '.compile.JSON', [taskName + '.clean'], function () { // gulp [project].build.compile.JSON
         return fn.compileJSON();
     });
 
@@ -162,7 +170,7 @@ module.exports.build = function (project, dependentTasks, gulp) {
     run(project, env);                              // gulp [project].build.run.app
 
     gulp.task(taskName + '.default', [              // gulp [project].build.default
-        taskName + '.bundlify'                      // gulp [project].build.bundlify
+        taskName + '.bundlify',                     // gulp [project].build.bundlify
     ], function () {
         return gulp.start(taskName + '.run.app');   // gulp [project].build.run.app
     });

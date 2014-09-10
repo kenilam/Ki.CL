@@ -1,0 +1,33 @@
+@import '_import';
+
+@h1_size: @font_size * 3;
+
+body {
+    color: @black;
+    font-family: @font_family;
+    font-size: @font_size;
+    font-weight: 100;
+    line-height: (@font_size * 1.3);
+}
+
+h1, h2, h3, h4, h5 {
+    padding-bottom: 10px;
+}
+h1 {font-size: @h1_size;        line-height: @h1_size;}
+h2 {font-size: (@h1_size * .8);   line-height: (@h1_size * .8);}
+h3 {font-size: (@h1_size * .6);   line-height: (@h1_size * .6);}
+h4 {font-size: (@h1_size * .4);   line-height: (@h1_size * .4);}
+h5 {font-size: (@h1_size * .2);   line-height: (@h1_size * .2);}
+
+a {
+    .transition(all @speed_faster 100ms);
+
+    border-bottom: 0;
+    color: @dark_grey;
+
+    &:hover {
+        border-bottom: 1px dotted @orange;
+        color: @orange;
+        margin-bottom: -1px;
+    }
+}

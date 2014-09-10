@@ -1,0 +1,50 @@
+@import '_import';
+
+.animation {
+    &.slide {
+        &.ng-enter,
+        &.ng-leave {
+            .transition(top @speed_slow 100ms);
+        }
+
+        &.up {
+            position: absolute;
+            top: 0;
+
+            &.ng-enter {
+                top: 100%;
+                &.ng-enter-active {
+                    top: 0;
+                }
+            }
+             
+            &.ng-leave {
+                top: 0;
+                &.ng-leave-active{
+                    top: -100%;
+                }
+            }
+        }
+    }
+
+    &.fade {
+        &.ng-enter,
+        &.ng-leave {
+            .transition(opacity @speed_slow 100ms);
+        }
+
+        &.ng-enter {
+            .hidden();
+            &.ng-enter-active {
+                .opacity(1);
+            }
+        }
+         
+        &.ng-leave {
+            .opacity(1);
+            &.ng-leave-active{
+                .hidden();
+            }
+        }
+    }
+}

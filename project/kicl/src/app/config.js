@@ -1,4 +1,3 @@
-"use strict";
 (
     function (app) {
         app
@@ -17,12 +16,7 @@
                             views : {
                                 'view' : {
                                     templateUrl : function (state) {
-                                        var page = function (idx) { return state[routes[idx]] ? routes[idx] : page(idx - 1); },
-                                            route = _.toArray(state),
-                                            template = {
-                                                view : 'view/' + state.section + '/' + page(routes.length - 1),
-                                                error : 'partial/error'
-                                            };
+                                        var page = function (idx) { return state[routes[idx]] ? routes[idx] : page(idx - 1); };
 
                                         return 'view/' + state.section + '/' + page(routes.length - 1) + '.html';
                                     },
@@ -30,8 +24,8 @@
                                         'content' : ['$rootScope', '$state', '$stateParams',
                                             function (root, state, stateParams) {
                                                 var setContent = function (contents) {
-                                                    var ctn = _.findWhere(contents, { route : _.toArray(stateParams).join('/') }) || undefined,
-                                                        subCtn = undefined;
+                                                    var ctn = _.findWhere(contents, { route : _.toArray(stateParams).join('/') }),
+                                                        subCtn;
 
                                                     if (!ctn)
                                                         _.each(contents, function (content) {
@@ -51,12 +45,11 @@
                                     controller : [
                                         '$rootScope', '$scope', '$state', '$stateParams', 'content',
                                         function (root, scope, state, stateParams, content) {
-                                            root.resource.$promise.then(function (resource) {
-                                                if (content) {
-                                                    scope.content = content;
-                                                    if (content.children) scope.navigation = content.children;
-                                                }
-                                            });
+                                            scope.content = content;
+                                            
+                                            if (content.children) {
+                                                scope.navigation = content.children;
+                                            }
                                         }
                                     ]
                                 }

@@ -1,78 +1,8 @@
 @import '_import';
 
 body[data-route^="home"] {
-    @loading_logo_size: 68px;
-    @logo_size: 220px;
+    .background-image(~'url(/asset/image/gradient.full.png)');
 
-    header {
-        height: 100%;
-        width: 100%;
-
-        h1 {
-            .transition(all @speed_slow 100ms);
-
-            display: block;
-            left: 50%;
-            margin-left: -(@logo_size / 2);
-            margin-top: -(@logo_size / 2);
-            position: absolute;
-            top: 50%;
-        }
-
-        .logo {
-            .box-shadow(0 1px 3px 0 @black);
-            .opacity(1);
-        }
-
-        nav {
-            .hidden();
-        }
-    }
-
-    footer {
-        .hidden();
-    }
-
-    &.loading-remove-active {
-        header {
-            h1,
-            .logo,
-            .logo:before {
-                .transition(all @speed_slow 400ms);
-            }
-        }
-    }
-
-    &.loading {
-        header {
-            @space: 15px;
-            @size: (@loading_logo_size - (@space * 2));
-
-            h1 {
-                @outer_size: (@size + (@space * 2));
-
-                .transform(rotate(270deg));
-
-                margin-left: -(@outer_size / 2);
-                margin-top: -(@outer_size / 2);
-            }
-
-            .logo {
-                .opacity(0);
-                .box-shadow(0 0 0 0 @black);
-
-                background-color: @white;
-                height: @size;
-                padding: @space;
-                width: @size;
-
-                &:before {
-                    height: @size;
-                    left: @space;
-                    top: @space;
-                    width: @size;
-                }
-            }
-        }
-    }
+    background-attachment: fixed;
+    background-position: center;
 }

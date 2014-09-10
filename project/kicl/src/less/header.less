@@ -1,0 +1,69 @@
+@import '_import';
+
+body > header {
+    @space: 10px;
+    @size: 20px;
+
+    .box-shadow(0 1px 1px 0 rgba(red(@black), green(@black), blue(@black), .25));
+
+    background-color: darken(@black, 10);
+    font-size: 18px;
+
+    h1,
+    nav {
+        .inline-block();
+    }
+
+    h1 {
+        height: @size;
+        padding: (@space * 2) (@space * 3);
+        width: @size;
+    }
+
+    .navigation {
+        @height: (@size + (@space * 4));
+
+        border-left: 1px solid @darker_grey;
+        height: @height;
+
+        li {
+            .transition(all @speed_standard);
+
+            border-bottom: 0px solid @white;
+
+            padding-left: (@space * 2);
+            padding-right: (@space * 2);
+
+            + li {
+                border-left: 1px solid @darker_grey;
+            }
+
+            &.isCurrent {
+                @border: 1px;
+
+                border-bottom-width: @border;
+                height: (@height - @border);
+
+                a {
+                    cursor: default;
+                    color: @white;
+                    padding-top: 3px;
+                }
+            }
+        }
+    }
+    .breadcrumb {
+        background-color: @black;
+        border-bottom: 1px solid @darker_grey;
+        border-top: 1px solid @darker_grey;
+        padding: 0 (@space * 3);
+        width: 100%;
+
+        :not(.fa-home) {
+            &:before,
+            &.isCurrent {
+                color: @white;
+            }
+        }
+    }
+}

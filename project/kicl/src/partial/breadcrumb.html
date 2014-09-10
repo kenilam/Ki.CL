@@ -1,14 +1,18 @@
 <nav
     class="breadcrumb"
-    ng-if="breadcrumb.list.length > 0"
+    ng-if="breadcrumb.list"
 >
     <p>
-        <a ui-sref="{{breadcrumb.root.route}}">{{breadcrumb.root.name}}</a><!--
+        <span>You are here:</span>
+        <a
+            class="icon fa fa-home"
+            ui-sref="{{breadcrumb.root.route}}">{{breadcrumb.root.name}}</a><!--
         --><a
+            class="fa fa-angle-right"
             ng-repeat="list in breadcrumb.list track by $index"
             ui-sref="{{list.route}}"
             ng-class="{
-                'isActive' : $index = breadcrumb.index
+                'isCurrent' : $last
             }"
         >{{list.name}}</a>
     </p>
