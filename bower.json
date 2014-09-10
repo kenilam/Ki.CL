@@ -1,5 +1,5 @@
 {
-  "name": "KiCL_Component",
+  "name": "KiCL_component",
   "version": "0.0.0",
   "directory": "lib",
   "dependencies": {
