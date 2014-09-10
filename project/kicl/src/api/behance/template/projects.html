@@ -1,9 +1,14 @@
-<ul>
+<ul data-api="behance.projects">
     <li
         ng-repeat="(key, project) in projects track by $index"
         ng-if="project.owners[0].username === resource.userName"
+        ng-style="{
+            'background-image' : 'url(' + project.covers[resource.config.covers.size] + ')'
+        }"
     >
-        <h3>{{project.name}}</h3>
+        <h3>
+            <a ui-sref="{{project.route}}">{{project.name}}</a>
+        </h3>
         <img ng-src="{{project.covers[resource.config.covers.size]}}">
         <ul>
             <li class="created">

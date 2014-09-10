@@ -1,7 +1,7 @@
 (
     function (app) {
         app.controller('head', [
-            '$rootScope', '$scope',
+            '$rootScope', '$scope', 'config',
             function (root, scope, config) {
                 root.resource.$promise.then(function (resource) {
                     scope.info = resource.info;

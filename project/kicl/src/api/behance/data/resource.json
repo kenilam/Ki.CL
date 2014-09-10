@@ -8,10 +8,7 @@
             "path" : "users/:userName"
         },
         "projects" : {
-            "path" : "projects",
-            "params" : {
-                "q" : ":userName"
-            },
+            "path" : "users/:userName/projects",
             "config" : {
                 "covers" : {
                     "size" : "202"
