@@ -9,3 +9,6 @@ project/**/src/less/fonts
 
 node_modules
 bower_components
+
+.idea/
+*.log
