@@ -11,7 +11,7 @@
     "angular-ui-router": "*",
     "font-awesome": "*",
     "html5shiv": "*",
-    "GreenSock-js": "git@github.com:greensock/GreenSock-JS.git",
+    "GreenSock-js": "https://github.com/greensock/GreenSock-JS.git",
     "jquery": "*",
     "modernizr": "*",
     "normalize-less": "*",
