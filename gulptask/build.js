@@ -1,9 +1,5 @@
 'use strict';
 module.exports.build = function (project, dependentTasks, gulp) {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
-
     var env = 'build',
 
         dev = 'dev',
@@ -140,6 +136,10 @@ module.exports.build = function (project, dependentTasks, gulp) {
         },
 
         template = require('../gulptask/template').template(project, env, dev, taskName + '.clean', gulp);
+
+    if (!gulp) {
+        gulp = require('gulp');
+    }
 
     gulp.task(taskName + '.clean', dependentTasks, function () { // gulp [project].build.clean
         return gulp.src(copy.destination)

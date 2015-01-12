@@ -1,14 +1,19 @@
 (
     function (app) {
+        'use strict';
+        
         app
             .config([
+                '$locationProvider',
                 '$stateProvider',
                 '$urlRouterProvider',
                 'config',
-                function (stateProvider, urlRouterProvider, config) {
+                function (location, stateProvider, urlRouterProvider, config) {
                     var route = config.route,
                         map = route.map,
                         routes = _.rest(map.split('/:'));
+
+                    location.hashPrefix('!');
 
                     _.each(routes, function (route, key) {
                         stateProvider.state(routes.slice(0, key + 1).join('.'), {
@@ -47,7 +52,7 @@
                                         function (root, scope, state, stateParams, content) {
                                             scope.content = content;
                                             
-                                            if (content.children) {
+                                            if (content && content.children) {
                                                 scope.navigation = content.children;
                                             }
                                         }
@@ -61,6 +66,7 @@
                         return route.index;
                     });
                 }
-            ]);
+            ]
+        );
     }
 )(kicl);

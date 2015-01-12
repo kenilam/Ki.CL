@@ -20,7 +20,7 @@
             <li
                 ng-repeat="list in list.children"
                 ng-class="{
-                    'isCurrent' : _.where([sitemap.state], list.state).length > 0,
+                    'isCurrent' : $root.helper._.where([sitemap.state], list.state).length > 0,
                     'hasChildren' : list.children
                 }"
                 ng-include="'sitemap-list.html'"
@@ -34,7 +34,7 @@
         <li
             ng-repeat="list in sitemap.list track by $index"
             ng-class="{
-                'isCurrent' : _.where([sitemap.state], list.state).length > 0,
+                'isCurrent' : $root.helper._.where([sitemap.state], list.state).length > 0,
                 'hasChildren' : list.children
             }"
             ng-include="'sitemap-list.html'"

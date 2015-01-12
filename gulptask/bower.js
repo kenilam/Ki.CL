@@ -1,15 +1,15 @@
 'use strict';
 module.exports.bower = function (gulp) {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
-
     var taskName = 'bower',
 
         bower = require('gulp-bower'),
         clean = require('gulp-clean'),
         bowerSrc = require('gulp-bower-src'),
         debug = require('gulp-debug');
+    
+    if (!gulp) {
+        gulp = require('gulp');
+    }
 
     gulp.task('bower.clean', function () {
         return function () {
@@ -21,11 +21,11 @@ module.exports.bower = function (gulp) {
         }
     });
 
-    gulp.task('bower.get', ['bower.clean'], function () {
+    gulp.task(taskName + '.get', ['bower.clean'], function () {
         return bower();
     });
 
-    gulp.task('bower', ['bower.clean', 'bower.get']);
+    gulp.task(taskName + 'bower', ['bower.clean', 'bower.get']);
 
-    return 'bower';
-}
+    return taskName;
+};

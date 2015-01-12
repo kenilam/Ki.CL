@@ -1,26 +1,38 @@
 (
     function (app) {
-        app.directive('behanceProfile', function () {
-            return {
-                restrict: 'AE',
-                replace: true,
-                scope : {
-                    'isolate' : '&'
-                },
-                templateUrl: 'api/behance/template/profile.html',
-                controller: [
-                    '$rootScope', '$scope',
-                    function (root, scope) {
-                        root.api.behance.resource.$promise.then(function () {
-                            root.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-                                root.api.behance.profile.jsonp().$promise.then(function (data) {
+        'use strict';
+        
+        app
+            .service('behanceProfile_link',
+                [
+                    '$rootScope',
+                    function (root) {
+                        return function (scope, elm) {
+                            root.api.behance.resource.$promise.then(function () {
+                                if (!root.api.behance.resource.profile) {
+                                    root.api.behance.resource.profile = root.api.behance.profile();
+                                }
+                                
+                                root.api.behance.resource.profile.$promise.then(function (data) {
                                     scope.profile = data.user;
                                 });
                             });
-                        });
+                        };
                     }
                 ]
-            }
-        });
+            )
+            .directive('behanceProfile',
+                [
+                    'behanceProfile_link',
+                    function (link) {
+                        return {
+                            restrict: 'AE',
+                            replace: true,
+                            templateUrl: 'api/behance/template/profile.html',
+                            link: link
+                        };
+                    }
+                ]
+            );
     }
 )(behance);

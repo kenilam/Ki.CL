@@ -4,6 +4,7 @@
   "directory": "lib",
   "dependencies": {
     "angular": "*",
+    "angular-mocks": "*",
     "angular-animate": "*",
     "angular-resource": "*",
     "angular-route": "*",
@@ -15,6 +16,7 @@
     "jquery": "*",
     "modernizr": "*",
     "normalize-less": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "moment": "*"
   }
 }

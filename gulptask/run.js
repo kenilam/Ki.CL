@@ -2,12 +2,12 @@
 module.exports.run = function () {
     return {
         app : function (project, environment, dependentTasks, gulp) {
+            var taskName = project + '.' + environment + '.run.app',
+                log = require('logger').createLogger();
+
             if (!gulp) {
                 gulp = require('gulp');
             }
-
-            var taskName = project + '.' + environment + '.run.app',
-                log = require('logger').createLogger();
 
             gulp.task(taskName, dependentTasks, function () {
 

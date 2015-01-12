@@ -1,9 +1,5 @@
 'use strict';
 module.exports.dev = function (project, dependentTasks, gulp) {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
-
     var env = 'dev',
 
         src = 'src',
@@ -84,6 +80,10 @@ module.exports.dev = function (project, dependentTasks, gulp) {
         },
 
         template = require('../gulptask/template').template(project, env, env, taskName + '.clean', gulp, true);
+    
+    if (!gulp) {
+        gulp = require('gulp');
+    }
 
     gulp.task(taskName + '.clean', dependentTasks, function () { // gulp [project].dev.clean
         return gulp.src(copy.destination).pipe(clean());
@@ -119,7 +119,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
             if (isLESS) {
                 task = [taskName + '.changed.LESS'];
             } else {
-                task = [taskName + '.changed.src', template.changed];
+                task = ['jshint', taskName + '.changed.src', template.changed];
             }
             for (var i = 0, l = task.length; i < l; i ++) {
                 gulp.start(task[i]);

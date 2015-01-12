@@ -1,60 +1,102 @@
 'use strict';
 
-try {
-    require('node-env-file')(__dirname + '/.env');
-} catch (e) {
-    console.error("Error while reading .env File: " + e);
-    console.error("Setting default environment variables manually instead...");
-    process.env.KIOSK_DEBUG_MODE = 'true';
-    process.env.PROXY_DEBUG_MODE = 'true';
-    process.env.DAEMON = 'false';
-}
-
 var gulp = require('gulp'),
+
+    gulpTasklisting = require('gulp-task-listing'),
     
     fs = require('fs'),
 
     dev = require('./gulptask/dev').dev,
     build = require('./gulptask/build').build,
+    jshint = require('./gulptask/jshint').jshint,
+    karma = require('./gulptask/karma').karma,
 
     fn = {
-        init: function (project) {
+        init : function (project) {
+            var config = require('./project/' + project + '/config').config();
+
+            // ==== ==== ==== ==== ====
+            // create {{project}}.src task
             require('./gulptask/src').src(project, []);
+            // ==== ==== ==== ==== ====
 
-            //Only clean and do bower if there is no dev directory
-            dev(project, [project + (!fs.existsSync('./project/' + project + '/dev') ? '.src' : '.src.noclean')]);
+            // ==== ==== ==== ==== ====
+            // create {{project}}.dev task
+            dev(project, [project + (
+                !fs.existsSync('./project/' + project + '/dev') ?
+                    '.src' : //Only clean and do bower if there is no dev directory
+                    '.src.noclean')
+            ]);
+            // ==== ==== ==== ==== ====
 
-            //Only clean and do bower if there is no build directory
-            build(project, [project + (!fs.existsSync('./project/' + project + '/dev') ? '.src' : '.src.noclean')]);
+            // ==== ==== ==== ==== ====
+            // create {{project}}.build task
+            build(project, [project + (
+                !fs.existsSync('./project/' + project + '/dev') ?
+                    '.src' : //Only clean and do bower if there is no build directory
+                    '.src.noclean')
+            ]);
+            // ==== ==== ==== ==== ====
+
+            // ==== ==== ==== ==== ====
+            // create {{project}}.jshint task
+            jshint(project);
+            // ==== ==== ==== ==== ====
+
+            // ==== ==== ==== ==== ====
+            // create {{project}}.karma task
+            karma(project, config.karma);
+            // ==== ==== ==== ==== ====
             
+            // ==== ==== ==== ==== ====
             gulp.task(project, [project + '.dev']);
+            // ==== ==== ==== ==== ====
+
+            // ==== ==== ==== ==== ====
+            // create {{project}} reset task
+            gulp.task(project + '.reset', [project + '.src']);
+            // ==== ==== ==== ==== ====
+
+            // ==== ==== ==== ==== ====
+            // create initial task
+            gulp.task(project + '.init', ['bower'], function () {
+                return gulp.start(project + '.src');
+            });
+            // ==== ==== ==== ==== ====
+
+            // ==== ==== ==== ==== ====
+            // create global unit.test task
+            gulp.task(project + '.test', [project + '.jshint'], function () {
+                return gulp.start(project + '.karma');
+            });
+            // ==== ==== ==== ==== ====
 
             return project;
         }
     };
 
+try {
+    require('node-env-file')(__dirname + '/.env');
+} catch (e) {
+    console.error("Error while reading .env File: " + e);
+    console.error("Setting default environment variables manually instead...");
+}
+
 // ==== ==== ==== ==== ====
 // create gulp tasks instant
 require('./gulptask/bower').bower();
+// ==== ==== ==== ==== ====
 
+// ==== ==== ==== ==== ====
+// initial project
 fn.init('kicl');
+// ==== ==== ==== ==== ====
 
-gulp.task('reset', ['kicl.src']);
-gulp.task('kicl.reset', ['kicl.src']);
-
-gulp.task('init', ['bower'], function () {
-    return gulp.start('kicl.src');
-});
-
-gulp.task('dev', ['init'], function () {
-    return gulp.start('kicl.dev');
-});
-
-gulp.task('build', ['init'], function () {
-    return gulp.start('kicl.build');
-});
-
-gulp.task('default', ['init'], function () {
-	return gulp.start('kicl.dev');
-});
+// ==== ==== ==== ==== ====
+// create gulp default task
+gulp.task('help', gulpTasklisting.withFilters(function(task) {
+    return task.indexOf('.') > -1;
+}));
+gulp.task('init', ['bower']);
+gulp.task('default', ['init', 'kicl.dev']);
 // ==== ==== ==== ==== ====

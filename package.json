@@ -31,6 +31,22 @@
     "gulp-usemin": "*",
     "gulp-util": "*",
     "gulp-watch": "*",
+
+    "gulp-task-listing": "*",
+
+    "gulp-jshint": "*",
+    "jshint-stylish": "*",
+    
+    "gulp-karma": "*",
+    "karma": "*",
+    "karma-jasmine": "*",
+    "karma-junit-reporter": "*",
+    "karma-chrome-launcher": "*",
+    "karma-firefox-launcher": "*",
+    "karma-safari-launcher": "*",
+    "karma-phantomjs-launcher": "*",
+    
+    "protractor": "*",
     "less": "*",
     "logger": "*",
     "node-env-file": "~0.1.0",
@@ -39,6 +55,7 @@
     "walk": "*"
   },
   "devDependencies": {
-    "gulp": "*"
+    "gulp": "*",
+    "gulp-task-listing": "^1.0.0"
   }
 }

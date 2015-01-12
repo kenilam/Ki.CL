@@ -8,7 +8,7 @@
         --><li
             ng-repeat="list in navigation.list track by $index"
             ng-class="{
-                'isCurrent' : _.where([navigation.state], list.state).length > 0
+                'isCurrent' : $root.helper._.where([navigation.state], list.state).length > 0
             }"
         >
             <a ui-sref="{{list.route}}" ng-if="list.route">{{list.name}}</a>

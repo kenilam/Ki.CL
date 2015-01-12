@@ -1,9 +1,5 @@
 'use strict';
 module.exports.library = function (project, destination, dependentTasks, gulp) {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
-
     var taskName = project + '.library',
 
         bowerSrc = require('gulp-bower-src'),
@@ -19,10 +15,14 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
                 JS: [
                     '**/*.js',
                     'dist/*.js',
+                    '!*.min.js',
+                    '!*-min.js',
                     '!**/*.min.js',
+                    '!**/*-min.js',
                     '!**/dist/*.min.js',
-                    '!**/{test,min,bin,lang,lib,support,src,feature-detects}/**/*.js',
-                    '!**/{grunt,Gruntfile,,GruntFile}.js',
+                    '!**/dist/*-min.js',
+                    '!**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects}/**/*.js',
+                    '!**/{grunt,Gruntfile,GruntFile,test,export}.js',
                     '**/src/uncompressed/**/*.js'
                 ],
                 LESS: [
@@ -37,7 +37,7 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             },
             plugin: {
                 JS: [ './plugin/**/*.js' ],
-                LESS: [ './plugin/**/*.{less,css}' ],
+                LESS: [ './plugin/**/*.{less,css}' ]
             }
         },
 
@@ -49,13 +49,17 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
             },
             plugin: {
                 JS: destination + '/lib',
-                LESS: destination + '/less/lib',
+                LESS: destination + '/less/lib'
             },
             template: {
                 HTML : ['./project/src/{partial,view}/**/*.html']
             }
         };
     
+    if (!gulp) {
+        gulp = require('gulp');
+    }
+
     gulp.task(taskName + '.clean', dependentTasks, function () {
         return gulp.src([
             dir.component.font,
