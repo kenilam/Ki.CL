@@ -16,4 +16,4 @@ var behance = angular.module(
             'map' : '/:section/:page/:item/:detail/:alternative'
         }
     }
-)
+);

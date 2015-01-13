@@ -119,7 +119,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
             if (isLESS) {
                 task = [taskName + '.changed.LESS'];
             } else {
-                task = ['jshint', taskName + '.changed.src', template.changed];
+                task = [project + '.jshint', taskName + '.changed.src', template.changed];
             }
             for (var i = 0, l = task.length; i < l; i ++) {
                 gulp.start(task[i]);

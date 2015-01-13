@@ -20,7 +20,7 @@ var gulp = require('gulp'),
             require('./gulptask/src').src(project, []);
             // ==== ==== ==== ==== ====
 
-            // ==== ==== ==== ==== ====
+            // ==== ==== ==== ==== ===‰
             // create {{project}}.dev task
             dev(project, [project + (
                 !fs.existsSync('./project/' + project + '/dev') ?

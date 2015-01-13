@@ -24,11 +24,11 @@
                                         'put':      {params : arg.params, method:'PUT'},
                                         'jsonp':    {params : arg.params, method:'JSONP'}
                                     }
-                                )
-                            }
-                        }
+                                );
+                            };
+                        };
                     }
                 ]
-            )
+            );
     }
-)(behance)
+)(behance);

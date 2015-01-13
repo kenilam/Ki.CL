@@ -12,15 +12,15 @@
                                     .replace(':userName', userName)
                                     .replace(':projectId', projectId);
                             },
-                            projectId
+                            projectId;
 
                         if (!root.api) {
-                            root.api = {}
+                            root.api = {};
                         }
 
                         root.api.behance = {
                             resource : resource(behance.data.resource).get()
-                        }
+                        };
 
                         root.api.behance.resource.$promise.then(function (data) {
                             root.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -34,17 +34,17 @@
                                                 params : _.object(
                                                     _.map(
                                                         config.params, function (param, name) {
-                                                            return [name, replaceExp(param, data.userName, projectId)]
+                                                            return [name, replaceExp(param, data.userName, projectId)];
                                                         }
                                                     )
                                                 )
                                             }
-                                        ).jsonp
-                                })
-                            })
-                        })
+                                        ).jsonp;
+                                });
+                            });
+                        });
                     }
                 ]
-            )
+            );
     }
-)(behance)
+)(behance);
