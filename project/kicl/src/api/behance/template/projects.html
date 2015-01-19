@@ -11,11 +11,7 @@
                 <a ui-sref="{{project.route}}">{{project.name}}</a>
             </h3>
             <img ng-src="{{project.covers[resource.config.covers.size]}}">
-            <ul>
-                <li class="created">
-                    {{resource.content.label.created_on}} {{project.created_on}}
-                </li>
-            </ul>
+            <p>{{resource.content.label.published_on}}<time datetime="{{project.published_on}}">{{$root.helper.moment(project.published_on).fromNow()}}</time></p>
         </li>
     </ul>
 </nav>

@@ -10,6 +10,7 @@
     "angular-route": "*",
     "angular-sanitize": "*",
     "angular-ui-router": "*",
+    "ui-router-extras": "*",
     "font-awesome": "*",
     "html5shiv": "*",
     "GreenSock-js": "https://github.com/greensock/GreenSock-JS.git",

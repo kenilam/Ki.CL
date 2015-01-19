@@ -20,14 +20,19 @@
                                     }
 
                                     root.api.behance.resource.$promise.then(function (resource) {
-                                        scope.resource = resource.widget.projects;
+                                        scope.resource = resource.widget.project;
                                         scope.resource.userName = resource.userName;
 
-                                        if (!apiResource) {
-                                            apiResource = root.api.behance.resource.project[projectId] = root.api.behance.project();
+                                        if (apiResource) {
+                                            scope.project = apiResource.project;
+                                            return;
                                         }
 
+                                        apiResource = root.api.behance.resource.project[projectId] = root.api.behance.project();
+
                                         apiResource.$promise.then(function (data) {
+                                            data.project.published_on = moment(new Date(data.project.published_on * 1000));
+                                            
                                             scope.project = data.project;
                                         });
                                     });

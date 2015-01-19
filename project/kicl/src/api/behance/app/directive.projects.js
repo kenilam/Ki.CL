@@ -23,7 +23,8 @@
                                     scope.projects = _.map(data.projects, function (project) {
                                         return _.extend(project, {
                                             'route' : route + '({' + _.last(route.split('.')) + ':"' + project.id + '"})',
-                                            'created_on' : moment(new Date(project.created_on * 1000)).fromNow()
+                                            'created_on' : moment(new Date(project.created_on * 1000)),
+                                            'published_on' : moment(new Date(project.published_on * 1000))
                                         });
                                     });
 

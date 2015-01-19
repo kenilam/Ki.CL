@@ -1,6 +1,33 @@
 <section
     data-api="behance.project"
     ng-if="project.owners[0].username === resource.userName"
+    ng-style="{
+    	'background-image' : 'url(' + project.covers[resource.config.covers.size] + ')'
+    }"
 >
+    <header>
     <h3>{{project.name}}</h3>
+    <p>{{resource.config.content.label.published_on}}<time datetime="{{project.published_on}}">{{$root.helper.moment(project.published_on).fromNow()}}</time></p>
+    <ul class="fields">
+        <li ng-repeat="field in project.fields track by $index">{{field}}</li>
+    </ul>
+    </header>
+	<div>
+		<p ng-repeat-start="module in project.modules" ng-if="module.type === 'text'" ng-bind-html="module.text_plain"></p>
+		<span
+            class="img"
+            ng-repeat-end ng-if="module.type === 'image'"
+            ng-style="{
+                'background-image' : 'url(' + module.sizes[resource.config.module.image.size] + ')'
+            }"
+        ><img ng-src="{{module.sizes[resource.config.module.image.size]}}"></span>
+	</div>
+    <aside>
+    	<ul class="stats">
+    		<li ng-repeat="(key, stat) in project.stats track by $index"><span>{{key}}</span>{{stat}}</li>
+    	</ul>
+    	<ul class="tags">
+    		<li ng-repeat="tag in project.tags track by $index">{{tag}}</li>
+    	</ul>
+    </aside>
 </section>

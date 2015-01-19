@@ -16,12 +16,27 @@
             },
             "content" : {
                 "label" : {
-                    "created_on" : "Created:"
+                    "published_on" : "Published:"
                 }
             }
         },
         "project" : {
-            "path" : "projects/:projectId"
+            "path" : "projects/:projectId",
+            "config" : {
+                "cover" : {
+                    "size" : "202"
+                },
+                "module" : {
+                    "image" : {
+                        "size" : "original"
+                    }
+                },
+                "content" : {
+                    "label" : {
+                        "published_on" : "Published:"
+                    }
+                }
+            }
         }
     }
 }

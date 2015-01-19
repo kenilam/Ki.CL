@@ -20,7 +20,7 @@
                                         );
 
                                         if (route.length > 1) {
-                                            route = _.without(route, config.route.index).join(' | ').toUpperCase();
+                                            route = _.without(route, config.route.index).join(' | ');
                                         }
 
                                         return route;

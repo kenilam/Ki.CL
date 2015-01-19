@@ -23,50 +23,22 @@
 
     "content" : [
         {
-            "name" : "home",
+            "name" : "Home",
             "route" : "home",
             "resource" : {
                 "heading" : "Welcome to Ki.CL"
             }
         },
         {
-            "name" : "work",
-            "route" : "work",
-            "children" : [
-                {
-                    "name" : "home",
-                    "route" : "work/home",
-                    "resource" : {
-                        "heading" : "Welcome to Ki.CL"
-                    },
-                    "children" : [
-                        {
-                            "name" : "home",
-                            "route" : "work/work",
-                            "resource" : {
-                                "heading" : "Welcome to Ki.CL"
-                            }
-                        },
-                        {
-                            "name" : "home",
-                            "route" : "work/contact",
-                            "resource" : {
-                                "heading" : "Welcome to Ki.CL"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name" : "home",
-                    "route" : "home",
-                    "resource" : {
-                        "heading" : "Welcome to Ki.CL"
-                    }
-                }
-            ]
+            "name" : "About",
+            "route" : "about"
         },
         {
-            "name" : "contact",
+            "name" : "Work",
+            "route" : "work"
+        },
+        {
+            "name" : "Contact",
             "route" : "contact"
         }
     ],
