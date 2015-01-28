@@ -3,6 +3,16 @@
         'use strict';
         
         app
+            .controller('configRouter', [
+                '$rootScope', '$scope', '$state', '$stateParams', 'content',
+                function (root, scope, state, stateParams, content) {
+                    scope.content = content;
+                    
+                    if (content && content.children) {
+                        scope.navigation = content.children;
+                    }
+                }
+            ])
             .config([
                 '$locationProvider',
                 '$stateProvider',
@@ -47,16 +57,7 @@
                                             }
                                         ]
                                     },
-                                    controller : [
-                                        '$rootScope', '$scope', '$state', '$stateParams', 'content',
-                                        function (root, scope, state, stateParams, content) {
-                                            scope.content = content;
-                                            
-                                            if (content && content.children) {
-                                                scope.navigation = content.children;
-                                            }
-                                        }
-                                    ]
+                                    controller : 'configRouter'
                                 }
                             }
                         });

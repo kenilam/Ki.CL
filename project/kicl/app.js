@@ -22,14 +22,14 @@ app.use(function(req, res, next) {
     //Global handler
     return next();
 });
-app.settings.env = (environment === 'build') ? 'production' : 'development';
 /**** **** **** **** ****/
 
 server.listen(port, function(){
     console.log('');
+    console.log('=== ==== ==== ==== ');
     logger.info();
     console.log(appName, 'listening at port:', port);
-    console.log(app.settings.env, 'environment');
+    console.log('=== ==== ==== ==== ');
 });
 /**** End of Script ****/
 

@@ -75,13 +75,6 @@ var gulp = require('gulp'),
         }
     };
 
-try {
-    require('node-env-file')(__dirname + '/.env');
-} catch (e) {
-    console.error("Error while reading .env File: " + e);
-    console.error("Setting default environment variables manually instead...");
-}
-
 // ==== ==== ==== ==== ====
 // create gulp tasks instant
 require('./gulptask/bower').bower();

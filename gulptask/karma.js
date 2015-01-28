@@ -7,7 +7,8 @@ module.exports.karma = function (project, config, gulp) {
         gulp = require('gulp');
     }
 
-    // grab  and assign all test spec file to Karam
+    // grab and assign all test spec file to Karam
+    config.files.push('spec/**/module.js');
     config.files.push('spec/**/*.js');
 
     for (var i = 0, l = config.files.length; i < l; i ++) {

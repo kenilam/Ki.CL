@@ -2,7 +2,6 @@ var kicl = angular.module(
     'kicl',
     [
         'ui.router',
-        'ct.ui.router.extras',
         'ngAnimate',
         'ngRoute',
         'ngResource',

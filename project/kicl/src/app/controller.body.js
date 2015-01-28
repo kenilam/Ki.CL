@@ -8,16 +8,6 @@
                     '$rootScope', '$scope', '$timeout', '$interval',
                     function (root, scope, timeout, interval) {
                         scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
-                            var reference = {
-                                header : angular.element('header')
-                            };
-
-                            scope.route = _.toArray(toParams).join('.');
-
-                            scope.style = {
-                                main : {}
-                            };
-
                             root.resource.$promise.then(function (resource) {
                                 scope.status = resource.status;
 
@@ -26,10 +16,6 @@
                                     scope.ready = true;
                                 }, 1500);
                             });
-
-                            interval(function () {
-                                scope.style.main.paddingTop = reference.header.outerHeight();
-                            }, 1000);
                         });
                     }
                 ]

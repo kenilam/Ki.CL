@@ -19,31 +19,7 @@
         <link rel="stylesheet" href="css/lib/angular-csp.css" />
 
         <link rel="stylesheet" href="css/base.css" />
-
         <link rel="stylesheet" href="css/font.css" />
-
-        <link rel="stylesheet" href="css/layout.css" />
-
-        <link rel="stylesheet" href="css/loader.css" />
-        <link rel="stylesheet" href="css/logo.css" />
-        <link rel="stylesheet" href="css/navigation.css" />
-        <link rel="stylesheet" href="css/breadcrumb.css" />
-        <link rel="stylesheet" href="css/sitemap.css" />
-        <link rel="stylesheet" href="css/socialNetwork.css" />
-        
-        <link rel="stylesheet" href="css/icon.css" />
-
-        <link rel="stylesheet" href="api/behance/css/intro.css" />
-        <link rel="stylesheet" href="api/behance/css/project.css" />
-
-        <link rel="stylesheet" href="css/header.css" />
-        <link rel="stylesheet" href="css/footer.css" />
-        <link rel="stylesheet" href="css/main.css" />
-
-        <link rel="stylesheet" href="css/home.css" />
-        
-        <link rel="stylesheet" href="css/condition.css" />
-        <link rel="stylesheet" href="css/animation.css" />
         <!-- endbuild -->
     </head>
     <body
@@ -71,24 +47,15 @@
             ui-view="view"
             ng-style="style.main"
         ></main>
-        <footer
-            role="contentinfo"
-            ng-controller="footer"
-            ng-mouseenter="render(true)"
-            ng-mouseleave="render(false)"
-            ng-class="{
-                'isExpanded' : triggered
-            }"
-            ng-style="style"
-        >
+        <footer ole="contentinfo">
             <h1>
                 <logo></logo>
             </h1><!--
-            --><span class="tooltip fa fa-ellipsis-v animation fade">{{resource.show.message}}</span><!--
-            --><sitemap></sitemap><!--
-            --><social-network></social-network>
+            --><navigation></navigation><!--
+            --><social-network></social-network><!--
+            --><copyright></copyright>
         </footer>
-        <loader ng-if="!ready"></loader>
+        <loader ng-if="!ready || $root.status.loading"></loader>
         
         <!--[if lt IE 9]>
         <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -104,7 +71,7 @@
         <script src="lib/greensock/jquery.gsap.js"></script>
         <script src="lib/greensock/TweenMax.js"></script>
         <script src="lib/greensock/easing/EasePack.js"></script>
-
+        
         <script src="lib/angular.js"></script>
         <script src="lib/angular-mocks.js"></script>
         <script src="lib/angular-animate.js"></script>
@@ -112,7 +79,6 @@
         <script src="lib/angular-resource.js"></script>
         <script src="lib/angular-sanitize.js"></script>
         <script src="lib/angular-ui-router.js"></script>
-        <script src="lib/ct-ui-router-extras.js"></script>
 
         <script src="app/module.js"></script>
         <script src="app/run.js"></script>
@@ -122,10 +88,11 @@
         <script src="app/service.routeProperty.js"></script>
         <script src="app/service.tween.js"></script>
 
+        <script src="app/directive.breadcrumb.js"></script>
+        <script src="app/directive.copyright.js"></script>
         <script src="app/directive.loader.js"></script>
         <script src="app/directive.logo.js"></script>
         <script src="app/directive.navigation.js"></script>
-        <script src="app/directive.breadcrumb.js"></script>
         <script src="app/directive.sitemap.js"></script>
         <script src="app/directive.socialNetwork.js"></script>
 

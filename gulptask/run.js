@@ -52,10 +52,10 @@ module.exports.run = function () {
                         console.log('=== ==== ==== ==== ');
                         log.info();
                         console.log(project + ' is ready in ' + environment + ' mode');
-                        console.log('Watching changes ...');
-                        console.log('Hit ctrl + c to cancel');
-                        console.log('=== ==== ==== ==== ');
+                        console.log('Watching for any changes ...');
                         console.log('');
+                        console.log('Hit ctrl + "c" to cancel');
+                        console.log('=== ==== ==== ==== ');
                     })
                     .on('restart', function(files){
                         console.log("Nodemon Watched Files Changed: " + files);

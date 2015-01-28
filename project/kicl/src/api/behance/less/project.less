@@ -1,53 +1,5 @@
-@import '../../../less/_import';
+@import '_import';
 
 [data-api="behance.project"] {
-	@space: 10px;
-
-	div {
-		text-align: center;
-
-		p + p,
-		p + .img,
-		.img + p,
-		.img + .img {
-			margin-left: @space;
-			margin-top: @space;
-		}
-
-		p,
-		.img {
-			.inline-block();
-		}
-
-		.img {
-			.background-size(cover);
-			.border-radius(50%);
-
-			background-position: center;
-			background-repeat: no-repeat;
-			height: 300px;
-			overflow: hidden;
-			width: 300px;
-
-			img {
-				.opacity(0);
-			}
-		}
-	}
-
-	.fields,
-	.stats,
-	.tags {
-		@corner: 2px;
-		@space: 5px;
-
-		li {
-			.inline-block();
-			.border-radius(@corner);
-			.box-shadow(0 0 2px 0 rgba(red(@black), green(@black), blue(@black), .25));
-
-			margin: 0 @space  @space 0;
-			padding: @space (@space * 1.5);
-		}
-	}
+	
 }

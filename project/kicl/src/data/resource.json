@@ -18,6 +18,9 @@
     "component" : {
         "sitemap" : {
             "title" : "sitemap"
+        },
+        "copyright" : {
+            "message" : "All rights reserve © {{year}} Keni, Lam (Ki.CL)"
         }
     },
 
