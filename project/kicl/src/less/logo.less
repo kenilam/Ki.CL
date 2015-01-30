@@ -1,0 +1,19 @@
+@import '_import';
+
+.logo {
+	@size: 50px;
+
+	.transition(background-image @speed_standard);
+
+	.background-image(url(../asset/image/logo.kicl.grey.png));
+	.background-size(contain);
+
+	background-repeat: no-repeat;
+
+	display: block;
+	text-indent: -9999px;
+	height: @size;
+	margin: 0 auto;
+	overflow: hidden;
+	width: @size;
+}

@@ -13,6 +13,10 @@
                             port : location.port
                         };
 
+                        root.ref = {
+                            route : ''
+                        };
+
                         root.helper = {
                             _ : _,
                             moment : moment
@@ -22,7 +26,7 @@
                             url: root.info.protocol + '//' + root.info.host + ':' + root.info.port,
                             path: config.data.resource
                         }).get();
-                        
+
                         root.$state = state;
                         root.$stateParams = stateParams;
                     }

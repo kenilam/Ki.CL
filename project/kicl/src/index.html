@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="kicl">
+<html
+    ng-app="kicl"
+    data-route="{{$root.ref.route}}"
+>
     <head ng-controller="head">
         <meta charset="UTF-8">
         <meta http-equiv="content-type" content="text/html; charset=UTF8;">
@@ -9,9 +12,6 @@
 
         <title ng-bind="info.name + ' | ' + route">Welcome To Ki.CL</title>
 
-        <script type="text/javascript" src="//use.typekit.net/cpi1lno.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
         <!-- build:css stylesheet/app.css -->
         <link rel="stylesheet" href="css/lib/normalize.css" />
         <link rel="stylesheet" href="css/lib/font-awesome.css" />
@@ -20,11 +20,18 @@
 
         <link rel="stylesheet" href="css/base.css" />
         <link rel="stylesheet" href="css/font.css" />
+        <link rel="stylesheet" href="css/layout.css" />
+
+        <link rel="stylesheet" href="css/logo.css" />
+        <link rel="stylesheet" href="css/socialNetwork.css" />
+
+        <link rel="stylesheet" href="css/body.header.css" />
+
+        <link rel="stylesheet" href="css/home.css" />
         <!-- endbuild -->
     </head>
     <body
         class="ng-cloak loading"
-        data-route="{{route}}"
         ng-controller="body"
         ng-class="{
             'loading' : !ready
@@ -47,19 +54,24 @@
             ui-view="view"
             ng-style="style.main"
         ></main>
-        <footer ole="contentinfo">
-            <h1>
+        <footer
+            role="contentinfo"
+            ng-controller="footer"
+        >
+            <h1 ng-if="$root.ref.route !== 'home'">
                 <logo></logo>
             </h1><!--
             --><navigation></navigation><!--
             --><social-network></social-network><!--
             --><copyright></copyright>
         </footer>
-        <loader ng-if="!ready || $root.status.loading"></loader>
         
         <!--[if lt IE 9]>
         <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
         <![endif]-->
+
+        <script src="//use.typekit.net/cpi1lno.js"></script>
+        <script>try{Typekit.load();}catch(e){}</script>
 
         <!-- build:js javascript/app.js -->
         <script src="lib/jquery.js"></script>

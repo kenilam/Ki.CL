@@ -8,6 +8,29 @@
     *background:none !important\9;
 }
 
+.setIcon (@size) {
+    .transition(~'font-size @{speed_fast}, height @{speed_fast}, width @{speed_fast}');
+        
+    height: @size;
+    text-indent: -9999px;
+    position: relative;
+    overflow: hidden;
+    width: @size * 0.875;;
+
+    &:before {
+        left: 0;
+        position: absolute;
+        text-indent: 0;
+        top: 0;
+    }
+}
+
+.resetIcon (@size) {
+    font-size: @size;
+    height: @size;
+    width: @size * 0.875;
+}
+
 .circle(@size) {
     .border-radius(50%);
     height: @size;

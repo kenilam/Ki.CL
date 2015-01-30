@@ -33,7 +33,7 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
                     '!**/{support,src,test}/**/*.css',
                     '!font-awesome/{less,src}/**/*.{less,css}'
                 ],
-                font: '**/fonts/*.{eot,svg,ttf,woff,otf}'
+                font: '**/fonts/*.{eot,svg,ttf,woff,woff2,otf}'
             },
             plugin: {
                 JS: [ './plugin/**/*.js' ],

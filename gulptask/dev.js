@@ -20,7 +20,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 
         copy = {
             file: [
-                './project/' + project + '/' + src + '/**/*.{js,eot,svg,ttf,woff,otf,html,png,jpg,gif,ico,json}',
+                './project/' + project + '/' + src + '/**/*.{js,eot,svg,ttf,woff,woff2,otf,html,png,jpg,gif,ico,json}',
                 '!./project/' + project + '/' + src + '/{partial,view,api}/**/*.html'
             ],
             destination: './project/' + project + '/' + env,

@@ -1,0 +1,76 @@
+@import '_import';
+
+html[data-route=home] {
+	@bleed: 10%;
+	@space: 40px;
+
+	background-color: @blue;
+	color: @white;
+
+	header,
+	main,
+	footer {
+		padding: 0 @bleed;
+	}
+
+	main,
+	footer {
+		text-align: center;
+	}
+
+	header {
+		margin-bottom: @space;
+		padding-top: @bleed;
+
+		.navigation {
+			.hidden();
+		}
+	}
+
+	main {
+		> * {
+			+ * {
+				margin-top: @space;
+			}
+		}
+	}
+
+	footer {
+		margin-top: @space;
+		padding-bottom: @bleed;
+
+		> * {
+			+ * {
+				margin-top: @space;
+			}
+		}
+
+		nav {
+			margin: 0 auto;
+			width: 80%;
+
+			ul {
+				.display(flex);
+				.justify-content(space-between);
+			}
+		}
+
+		.socialNetwork {
+			a {
+				.resetIcon(2rem);
+			}
+		}
+	}
+
+	a {
+		color: @white;
+	}
+
+	.logo {
+		@size: 100px;
+
+		background-image: url(../asset/image/logo.kicl.white.png);
+		height: @size;
+		width: @size;
+	}
+}

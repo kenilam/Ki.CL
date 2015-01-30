@@ -11,6 +11,8 @@
                     if (content && content.children) {
                         scope.navigation = content.children;
                     }
+
+                    root.ref.route = _.values(stateParams).join('.');
                 }
             ])
             .config([

@@ -33,7 +33,7 @@ module.exports.build = function (project, dependentTasks, gulp) {
             destination: './project/' + project + '/' + dev,
 
             build: {
-                file: './project/' + project + '/src/**/*.{eot,svg,ttf,woff,otf,png,jpg,gif,ico}',
+                file: './project/' + project + '/src/**/*.{eot,svg,ttf,woff,woff2,otf,png,jpg,gif,ico}',
                 destination: './project/' + project + '/' + env
             }
         },
