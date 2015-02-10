@@ -1,13 +1,3 @@
-.through() {
-    @transparent_base64: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    
-    background-image: url(@transparent_base64);
-    pointer-events: none;
-
-    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@transparent_base64, sizingMethod='scale');
-    *background:none !important\9;
-}
-
 .setIcon (@size) {
     .transition(~'font-size @{speed_fast}, height @{speed_fast}, width @{speed_fast}');
         
@@ -24,11 +14,28 @@
         top: 0;
     }
 }
-
 .resetIcon (@size) {
     font-size: @size;
     height: @size;
     width: @size * 0.875;
+}
+
+.setLogo (@width, @height, @color) {
+    .logo {
+        background-image: ~'url(../asset/image/logo/kicl.@{color}.png)';
+        height: @height;
+        width: @width;
+    }
+}
+
+.through() {
+    @transparent_base64: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    
+    background-image: url(@transparent_base64);
+    pointer-events: none;
+
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=@transparent_base64, sizingMethod='scale');
+    *background:none !important\9;
 }
 
 .circle(@size) {

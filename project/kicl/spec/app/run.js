@@ -4,16 +4,20 @@ describe('run', function () {
     beforeEach(module('kicl'));
 
     beforeEach(
-        inject(
-            function ($injector) {
-                this.location = $injector.get('$location');
-                this.root = $injector.get('$rootScope');
-                this.state = $injector.get('$state');
-                this.stateParams = $injector.get('$stateParams');
-                this.async = $injector.get('async');
-                this.config = $injector.get('config');
-            }
-        )
+        function () {
+            module('kicl');
+            
+            inject(
+                function ($injector) {
+                    this.location = $injector.get('$location');
+                    this.root = $injector.get('$rootScope');
+                    this.state = $injector.get('$state');
+                    this.stateParams = $injector.get('$stateParams');
+                    this.async = $injector.get('async');
+                    this.config = $injector.get('config');
+                }
+            )
+        }
     );
 
     it(

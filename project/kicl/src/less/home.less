@@ -4,12 +4,27 @@ html[data-route=home] {
 	@bleed: 10%;
 	@space: 40px;
 
-	background-color: @blue;
+	background-image: url(../asset/image/room.jpg);
 	color: @white;
+		
+	&:before {
+		.opacity(.7);
+		
+		background-color: @black;
+		content: '';
+		display: block;
+		height: 140%;
+		left: -20%;
+		top: -20%;
+		position: fixed;
+		width: 140%;
+	}
 
 	header,
 	main,
 	footer {
+		.opacity(1);
+
 		padding: 0 @bleed;
 	}
 
@@ -18,19 +33,70 @@ html[data-route=home] {
 		text-align: center;
 	}
 
+	body {
+		position: relative;
+	}
+
 	header {
+		.justify-content(center);
+		
 		margin-bottom: @space;
 		padding-top: @bleed;
 
-		.navigation {
+		@media all and (max-width: @screen_ls) {
+			padding-top: (@bleed * 2);
+		}
+
+		.navigation,
+		.breadcrumb {
 			.hidden();
 		}
 	}
 
 	main {
+		+ main {
+			.hidden();
+		}
+
 		> * {
 			+ * {
 				margin-top: @space;
+			}
+		}
+
+		h2 {
+			@media all and (max-width: @screen_ms) {
+				.hidden();
+			}
+		}
+
+		p {
+			@size: 40%;
+
+			margin-left: auto;
+			margin-right: auto;
+			width: @size;
+
+			@media all and (max-width: @screen_xm) {
+				@size: 50%;
+
+				width: @size;
+			}
+
+			@media all and (max-width: @screen_ll) {
+				@size: 60%;
+
+				width: @size;
+			}
+
+			@media all and (max-width: @screen_ml) {
+				@size: 80%;
+
+				width: @size;
+			}
+
+			@media all and (max-width: @screen_ms) {
+				.hidden();
 			}
 		}
 	}
@@ -45,20 +111,8 @@ html[data-route=home] {
 			}
 		}
 
-		nav {
-			margin: 0 auto;
-			width: 80%;
-
-			ul {
-				.display(flex);
-				.justify-content(space-between);
-			}
-		}
-
-		.socialNetwork {
-			a {
-				.resetIcon(2rem);
-			}
+		h1 {
+			.hidden();
 		}
 	}
 
@@ -66,11 +120,93 @@ html[data-route=home] {
 		color: @white;
 	}
 
-	.logo {
-		@size: 100px;
+	.navigation,
+	.socialNetwork {
+		@size: 40%;
 
-		background-image: url(../asset/image/logo.kicl.white.png);
-		height: @size;
+		margin-left: auto;
+		margin-right: auto;
 		width: @size;
+
+		ul {
+			.justify-content(space-around);
+		}
+
+		@media all and (max-width: @screen_ls) {
+			@size: 60%;
+
+			width: @size;
+		}
+
+		@media all and (max-width: @screen_ml) {
+			@size: 80%;
+
+			width: @size;
+		}
+
+		@media all and (max-width: @screen_ms) {
+			@size: 90%;
+
+			width: @size;
+		}
+	}
+
+	.navigation {
+		ul {
+			@media all and (max-width: @screen_ms) {
+				.flex-direction(column);
+				.align-items(center);
+			}
+		}
+
+		li {
+			@size: 100px;
+
+			.display(flex);
+			.align-items(center);
+			.justify-content(center);
+			.circle(@size);
+
+			border: 1px solid @white;
+
+			@media all and (max-width: @screen_xs) {
+				@size: 80px;
+
+				.circle(@size);
+			}
+
+			+ li {
+				@media all and (max-width: @screen_ms) {
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+
+	.socialNetwork {
+		@media all and (max-width: @screen_ms) {
+			@size: 80%;
+
+			width: @size;
+		}
+
+		a {
+			.resetIcon(2rem);
+		}
+	}
+
+	.setLogo(150px, 60px, 'white');
+
+	body {
+		&.loading {
+			.opacity(0);
+			.through();
+			.transform(scale(.8, .8));
+		}
+
+		&:not(.loading) {
+			.transition(~'opacity @{speed_faster}, transform @{speed_faster}');
+			.transform(scale(1, 1));
+		}
 	}
 }

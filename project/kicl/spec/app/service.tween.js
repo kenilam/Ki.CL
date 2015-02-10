@@ -3,14 +3,16 @@
 describe('service.tween', function () {
     var service;
     
-    beforeEach(module('kicl'));
-
     beforeEach(
-        inject(
-            function ($injector) {
-                service = $injector.get('tween');
-            }
-        )
+        function () {
+            module('kicl');
+
+            inject(
+                function ($injector) {
+                    service = $injector.get('tween');
+                }
+            )
+        }
     );
 
     it(

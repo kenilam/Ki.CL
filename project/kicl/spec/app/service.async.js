@@ -3,14 +3,16 @@
 describe('service.async', function () {
     var service;
     
-    beforeEach(module('kicl'));
-
     beforeEach(
-        inject(
-            function ($injector) {
-                service = $injector.get('async');
-            }
-        )
+        function () {
+            module('kicl');
+
+            inject(
+                function ($injector) {
+                    service = $injector.get('async');
+                }
+            )
+        }
     );
 
     it(

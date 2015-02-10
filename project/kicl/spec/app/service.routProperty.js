@@ -2,15 +2,17 @@
 
 describe('service.routeProperty', function () {
     var service;
-
-    beforeEach(module('kicl'));
-
+    
     beforeEach(
-        inject(
-            function ($injector) {
-                service = $injector.get('routeProperty');
-            }
-        )
+        function () {
+            module('kicl');
+
+            inject(
+                function ($injector) {
+                    service = $injector.get('routeProperty');
+                }
+            )
+        }
     );
 
     it(

@@ -22,7 +22,10 @@
         <link rel="stylesheet" href="css/font.css" />
         <link rel="stylesheet" href="css/layout.css" />
 
+        <link rel="stylesheet" href="css/animate.css" />
+
         <link rel="stylesheet" href="css/logo.css" />
+        <link rel="stylesheet" href="css/navigation.css" />
         <link rel="stylesheet" href="css/socialNetwork.css" />
 
         <link rel="stylesheet" href="css/body.header.css" />
@@ -49,7 +52,6 @@
             <breadcrumb></breadcrumb>
         </header>
         <main
-            class="animation slide up"
             role="main"
             ui-view="view"
             ng-style="style.main"
@@ -58,7 +60,7 @@
             role="contentinfo"
             ng-controller="footer"
         >
-            <h1 ng-if="$root.ref.route !== 'home'">
+            <h1>
                 <logo></logo>
             </h1><!--
             --><navigation></navigation><!--
@@ -95,6 +97,8 @@
         <script src="app/module.js"></script>
         <script src="app/run.js"></script>
         <script src="app/config.js"></script>
+
+        <script src="app/filter.sec.js"></script>
 
         <script src="app/service.async.js"></script>
         <script src="app/service.routeProperty.js"></script>
