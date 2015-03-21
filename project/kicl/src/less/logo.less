@@ -1,20 +1,23 @@
 @import '_import';
 
 .logo {
-	@height: 125px;
-	@width: 50px;
+	.setLogo('grey');
+}
 
-	.transition(background-image @speed_standard);
+html[data-route^=home] {
+	.logo {
+		.setLogoColor('black');
+		
+		cursor: default;
+	}
+}
 
-	.background-image(url(../asset/image/logo/kicl.grey.png));
-	.background-size(contain);
+html:not([data-route^=home]) {
+	.logo {
+		.setLogoColor('grey');
 
-	background-repeat: no-repeat;
-
-	display: block;
-	text-indent: -9999px;
-	height: @height;
-	margin: 0 auto;
-	overflow: hidden;
-	width: @width;
+		&:hover {
+			.setLogoColor('red');
+		}
+	}
 }

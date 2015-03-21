@@ -2,16 +2,16 @@
     role="navigation"
     class="sitemap"
 >
-    <script type="text/ng-template" id="sitemap-list.html"><!--
-        --><a
+    <script type="text/ng-template" id="sitemap-list.html">
+        <a
             class="fa"
             ui-sref="{{list.route}}"
             ng-if="list.route"
             ng-class="{
                 'fa-caret-down' : list.children
             }"
-        >{{list.name}}</a><!--
-        --><a
+        >{{list.name}}</a>
+        <a
             ng-href="{{list.link}}"
             ng-if="list.link"
             target="_blank"

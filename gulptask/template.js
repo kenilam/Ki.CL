@@ -29,7 +29,8 @@ module.exports.template = function (project, environment, destination, dependent
         },
 
         taskName = {
-            normal : project + '.' + environment + '.template'
+            normal : project + '.' + environment + '.template',
+            changed : project + '.' + environment + '.changed.template'
         };
 
     gulp.task(taskName.normal, [dependentTasks], function () {
@@ -37,8 +38,6 @@ module.exports.template = function (project, environment, destination, dependent
     });
 
     if (watch) {
-        taskName.changed = project + '.' + environment + '.changed.template';
-
         gulp.task(taskName.changed, function () {
             return fn.template();
         });

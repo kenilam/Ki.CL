@@ -3,15 +3,39 @@
         'use strict';
         
         app
+            .service('behanceProjects_stateChangeSuccess',
+                [
+                    '$rootScope', '$stateParams',
+                    function stateChangeSuccess (root, stateParams) {
+                        return function trigger (scope) {
+                            function setSelected (id) {
+                                _.each(scope.projects, function eachProject (project) {
+                                    delete project.selected;
+                                });
+
+                                if (id) {
+                                    _.findWhere(scope.projects, { id : parseInt(id) }).selected = true;
+                                }
+                            }
+
+                            function whenStateChangeSuccess (event, toState, toParams, fromState, fromParams) {
+                                setSelected(toParams.page);
+                            }
+
+                            setSelected(stateParams.page);
+                            return root.$on('$stateChangeSuccess', whenStateChangeSuccess);
+                        };
+                    }
+                ]
+            )
             .service('behanceProjects_link',
                 [
-                    '$rootScope', '$stateParams', 'config',
-                    function (root, stateParams, config) {
-                        return function (scope, elm, attrs) {
-                            var route = attrs.behanceProjectsRoute,
-                                currentProject;
+                    '$rootScope', '$stateParams', 'behanceProjects_stateChangeSuccess', 'config',
+                    function link (root, stateParams, stateChangeSuccess, config) {
+                        return function trigger (scope, elm, attrs) {
+                            var route = attrs.behanceProjectsRoute;
 
-                            root.api.behance.resource.$promise.then(function (resource) {
+                            root.api.behance.resource.$promise.then(function behanceResource (resource) {
                                 scope.resource = resource.widget.projects;
                                 scope.resource.userName = resource.userName;
 
@@ -19,26 +43,16 @@
                                     root.api.behance.resource.projects = root.api.behance.projects();
                                 }
 
-                                root.api.behance.resource.projects.$promise.then(function (data) {
+                                root.api.behance.resource.projects.$promise.then(function projectResource (data) {
                                     scope.projects = _.map(data.projects, function (project) {
-                                        return _.extend(project, {
-                                            'route' : route + '({' + _.last(route.split('.')) + ':"' + project.id + '"})',
-                                            'created_on' : moment(new Date(project.created_on * 1000)),
-                                            'published_on' : moment(new Date(project.published_on * 1000))
-                                        });
+                                        project.route = route + '({' + _.last(route.split('.')) + ':"' + project.id + '"})';
+                                        project.created_on = moment(new Date(project.created_on * 1000));
+                                        project.published_on = moment(new Date(project.published_on * 1000));
+                                        
+                                        return project;
                                     });
 
-                                    scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-                                        currentProject = _.findWhere(scope.projects, { id : route });
-
-                                        _.each(scope.projects, function (project) {
-                                            delete project.selected;
-                                        });
-
-                                        if (currentProject) {
-                                            currentProject.selected = true;
-                                        }
-                                    });
+                                    stateChangeSuccess(scope);
                                 });
                             });
                         };
@@ -48,7 +62,7 @@
             .directive('behanceProjects',
                 [
                     'behanceProjects_link',
-                    function (link) {
+                    function behanceProjects (link) {
                         return {
                             restrict: 'AE',
                             replace: true,

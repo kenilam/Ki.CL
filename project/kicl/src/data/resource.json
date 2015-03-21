@@ -39,7 +39,11 @@
         },
         {
             "name" : "Work",
-            "route" : "work"
+            "route" : "work",
+            "resource" : {
+                "heading" : "WORK",
+                "message" : "Ki.CL is portfolio of California Based Creative / Digital Specialist Keni, Lam.\r\nWith over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
+            }
         },
         {
             "name" : "Contact",

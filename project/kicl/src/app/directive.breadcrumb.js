@@ -1,26 +1,21 @@
 (
-    function (app) {
+    function init (app) {
         'use strict';
         
         app
-            .service('breadcrumb_link',
+            .service('breadcrumb_stateChange',
                 [
-                    '$rootScope', 'config',
-                    function (root, config) {
-                        return function (scope, elm) {
-                            var idx = 0,
-                                route = _.rest(config.route.map.split('/:'));
+                    '$rootScope', '$timeout', 'config',
+                    function whenStateChange (root, timeout, config) {
+                        var idx = 0,
+                            route = _.rest(config.route.map.split('/:'));
 
-                            scope.breadcrumb = {
-                                root : {
-                                    name : config.route.index,
-                                    route : route[idx] + '({' + route[idx] + ':"' + config.route.index + '"})'
-                                }
-                            };
+                        return function trigger (scope, elm) {
+                            root.$on('$stateChangeSuccess', function whileStateChange (event, toState, toParams) {
+                                scope.breadcrumb.list = [];
 
-                            scope.$on('$stateChangeSuccess', function (event, toState, toParams) {
                                 scope.breadcrumb.list = _.reject(
-                                    _.map(toParams, function (name) {
+                                    _.map(toParams, function eachList (name) {
                                         idx ++;
 
                                         return {
@@ -28,7 +23,7 @@
                                             route : route.slice(0, idx).join('.') + '({' + route[idx - 1] + ':"' + name + '"' + '})'
                                         };
                                     }
-                                ), function (obj) { return obj.name === config.route.index; });
+                                ), function shouldReject (obj) { return obj.name === config.route.index; });
 
                                 scope.breadcrumb.state = _.toArray(toParams).join('.');
 
@@ -38,13 +33,38 @@
                     }
                 ]
             )
+            .service('breadcrumb_link',
+                [
+                    '$rootScope', 'config', 'resize', 'breadcrumb_stateChange',
+                    function link (root, config, resize, stateChange) {
+                        return function trigger (scope, elm) {
+                            var idx = 0,
+                                route = _.rest(config.route.map.split('/:'));
+                            
+                            scope.breadcrumb = {
+                                timer : {},
+                                root : {
+                                    name : config.route.index,
+                                    route : route[idx] + '({' + route[idx] + ':"' + config.route.index + '"})'
+                                },
+                                resize : resize('breadcrumb', scope, elm)
+                            };
+
+                            stateChange(scope, elm);
+                        };
+                    }
+                ]
+            )
             .directive('breadcrumb',
                 [
                     'breadcrumb_link',
-                    function (link) {
+                    function directive (link) {
                         return {
                             restrict: 'AE',
                             replace: true,
+                            scope : {
+                                'isolate' : '&'
+                            },
                             templateUrl: 'partial/breadcrumb.html',
                             link: link
                         };

@@ -1,0 +1,54 @@
+@import '_import';
+
+.breadcrumb {
+	width: 100%;
+
+	span {
+		.hidden();
+	}
+
+	p {
+		.display(flex);
+
+		padding: @space;
+	}
+
+	a {
+		.display(flex);
+		.align-items(center);
+
+		+ a {
+			margin-left : @space;
+
+			&:before {
+				color: @dark_grey;
+				margin-right : @space;
+			}
+		}
+
+		&[href*=home] {
+			.setIcon(1rem);
+
+			color: transparent;
+
+			&:before {
+				color: @dark_grey;
+			}
+
+			&:hover {
+				&:before {
+					color: @red;
+				}
+			}
+		}
+
+		&:last-child {
+			color: @black;
+			cursor: default;
+		}
+
+		&.ng-animate {
+			.transition(none);
+		}
+	}
+}

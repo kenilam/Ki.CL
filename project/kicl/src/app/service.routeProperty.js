@@ -1,16 +1,16 @@
 (
-    function (app) {
+    function init (app) {
         'use strict';
         
         app
-            .service(
-                'routeProperty',
-                [   'config',
-                    function (config) {
-                        return function (data, returnChildren) {
+            .service('routeProperty',
+                [
+                    'config',
+                    function service (config) {
+                        return function trigger (data, returnChildren) {
                             var route = _.rest(config.route.map.split('/:')),
                                 property = function (data) {
-                                    return _.map(data, function (node) {
+                                    return _.map(data, function eachNode (node) {
                                         var list = {
                                                 name : node.name
                                             },
@@ -24,7 +24,7 @@
 
                                             list.state = {};
 
-                                            _.map(node.route.split('/'), function (r, k) {
+                                            _.map(node.route.split('/'), function eachRoute (r, k) {
                                                 ref.state.push(route[k]);
                                                 ref.name.push(route[k] + ':"' + r + '"');
 

@@ -1,14 +1,13 @@
 (
-    function (app) {
+    function init (app) {
         'use strict';
         
         app
-            .service(
-                'tween',
+            .service('tween',
                 [
-                    function () {
-                        return function (target, duration, delay, property, stagger) {
-                            return function (callback) {
+                    function service () {
+                        return function trigger (target, duration, delay, property, stagger) {
+                            return function whenDone (callback) {
                                 property.delay = delay;
                                 property.ease = Expo.easeOut;
 

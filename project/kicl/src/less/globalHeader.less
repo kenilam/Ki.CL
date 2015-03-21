@@ -1,0 +1,70 @@
+@import '_import';
+
+.globalHeader {
+	.transition(~'box-shadow @{speed}, margin-top @{speed_fast}');
+
+	.display(flex);
+	.align-items(stretch);
+
+	background-color: @dark_white;
+	overflow: hidden;
+
+	&.isOverlay {
+		.box-shadow(@shadow);
+
+		.breadcrumb {
+			background-color: @dark_white;
+		}
+
+		@media all and (min-width: @grid_mm) {
+			.logo,
+			.navigation {
+				margin-top: -100%;
+			}
+		}
+	}
+
+	@media all and (max-width: @grid_m) {
+		.justify-content(space-between);
+	}
+
+	.logo {
+		margin: @space * 2;
+		margin-left: @space * 4;
+
+		@media all and (max-width: @grid_ls) {
+			margin: @space;
+		}
+
+		@media all and (max-width: @grid_m) {
+			.setLogoWidth(@grid_ss / 3);
+		}
+	}
+
+	.navigation {
+		@media all and (max-width: @grid_m) {
+			padding-right: @space;
+		}
+	}
+
+	.breadcrumb {
+		.transition(~'background-color @{speed_fast} @{speed}, opacity @{speed_standard} @{speed}, padding-left @{speed_fast}');
+		.opacity(1);
+
+		background-color: @darker_white;
+		bottom: 0;
+		left: 0;
+		padding-left: @space * 3;
+		position : absolute;
+
+		@media all and (max-width: @grid_ls) {
+			padding-left: 0;
+		}
+
+		&.isHidden {
+			.opacity(0);
+
+			background-color: transparent;
+		}
+	}
+}

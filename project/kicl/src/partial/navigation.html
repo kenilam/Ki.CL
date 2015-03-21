@@ -1,11 +1,11 @@
 <nav
-    role="navigation"
     class="navigation"
+    role="navigation"
     data-route="{{navigation.route}}"
     ng-if="navigation.list.length > 0"
 >
-    <ul><!--
-        --><li
+    <ul>
+        <li
             ng-repeat="list in navigation.list track by $index"
             ng-class="{
                 'isCurrent' : $root.helper._.where([navigation.state], list.state).length > 0

@@ -1,13 +1,17 @@
 <nav
     class="breadcrumb"
-    ng-if="breadcrumb.list.length > 0"
+    ng-class="{
+        'isHidden' : breadcrumb.list.length <= 0
+    }"
 >
-    <p>
+    <p
+        ng-if="breadcrumb.list.length > 0"
+    >
         <span>You are here:</span>
         <a
             class="fa fa-home"
-            ui-sref="{{breadcrumb.root.route}}">{{breadcrumb.root.name}}</a><!--
-        --><a
+            ui-sref="{{breadcrumb.root.route}}">{{breadcrumb.root.name}}</a
+        ><a
             class="fa fa-angle-right"
             ng-repeat="list in breadcrumb.list track by $index"
             ui-sref="{{list.route}}"

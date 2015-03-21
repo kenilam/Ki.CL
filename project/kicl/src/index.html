@@ -3,17 +3,19 @@
     ng-app="kicl"
     data-route="{{$root.ref.route}}"
 >
-    <head ng-controller="head">
+    <head>
         <meta charset="UTF-8">
         <meta http-equiv="content-type" content="text/html; charset=UTF8;">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="fragment" content="!">
 
-        <title ng-bind="info.name + ' | ' + route">Welcome To Ki.CL</title>
+        <title ng-bind="$root.ref.info.name + ' | ' + $root.status.route">Welcome To Ki.CL</title>
 
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700" />
         <!-- build:css stylesheet/app.css -->
         <link rel="stylesheet" href="css/lib/normalize.css" />
+        <link rel="stylesheet" href="css/lib/normalize-opentype.css" />
         <link rel="stylesheet" href="css/lib/font-awesome.css" />
 
         <link rel="stylesheet" href="css/lib/angular-csp.css" />
@@ -22,51 +24,42 @@
         <link rel="stylesheet" href="css/font.css" />
         <link rel="stylesheet" href="css/layout.css" />
 
-        <link rel="stylesheet" href="css/animate.css" />
-
+        <link rel="stylesheet" href="css/breadcrumb.css" />
         <link rel="stylesheet" href="css/logo.css" />
         <link rel="stylesheet" href="css/navigation.css" />
+        <link rel="stylesheet" href="css/copyright.css" />
         <link rel="stylesheet" href="css/socialNetwork.css" />
+        
+        <link rel="stylesheet" href="css/globalHeader.css" />
+        <link rel="stylesheet" href="css/globalFooter.css" />
 
-        <link rel="stylesheet" href="css/body.header.css" />
+        <link rel="stylesheet" href="api/behance/css/projects.css" />
+        <link rel="stylesheet" href="api/behance/css/project.css" />
 
         <link rel="stylesheet" href="css/home.css" />
+        <link rel="stylesheet" href="css/work.css" />
+
+        <link rel="stylesheet" href="css/condition.css" />
         <!-- endbuild -->
     </head>
     <body
         class="ng-cloak loading"
-        ng-controller="body"
         ng-class="{
-            'loading' : !ready
+            'loading' : !$root.status.ready
         }"
         ng-cloak
     >
-        <header
-            role="banner"
-            ng-controller="header"
-        >
-            <h1>
-                <logo></logo>
-            </h1><!--
-            --><navigation></navigation>
-            <breadcrumb></breadcrumb>
-        </header>
+        <global-header></global-header>
         <main
             role="main"
             ui-view="view"
-            ng-style="style.main"
+            ng-style="{
+                paddingTop : $root.ref.resize.globalHeader.height + 'px',
+                paddingBottom : $root.ref.resize.globalFooter.height + 'px'
+            }"
+            data-route="{{$root.ref.route}}"
         ></main>
-        <footer
-            role="contentinfo"
-            ng-controller="footer"
-        >
-            <h1>
-                <logo></logo>
-            </h1><!--
-            --><navigation></navigation><!--
-            --><social-network></social-network><!--
-            --><copyright></copyright>
-        </footer>
+        <global-footer></global-footer>
         
         <!--[if lt IE 9]>
         <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -103,6 +96,7 @@
         <script src="app/service.async.js"></script>
         <script src="app/service.routeProperty.js"></script>
         <script src="app/service.tween.js"></script>
+        <script src="app/service.resize.js"></script>
 
         <script src="app/directive.breadcrumb.js"></script>
         <script src="app/directive.copyright.js"></script>
@@ -111,11 +105,9 @@
         <script src="app/directive.navigation.js"></script>
         <script src="app/directive.sitemap.js"></script>
         <script src="app/directive.socialNetwork.js"></script>
-
-        <script src="app/controller.head.js"></script>
-        <script src="app/controller.body.js"></script>
-        <script src="app/controller.header.js"></script>
-        <script src="app/controller.footer.js"></script>
+        
+        <script src="app/directive.globalHeader.js"></script>
+        <script src="app/directive.globalFooter.js"></script>
 
         <script src="automation/run.template.js"></script>
 

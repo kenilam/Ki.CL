@@ -28,6 +28,10 @@
                                             return;
                                         }
 
+                                        scope.project = {
+                                            loading : true
+                                        };
+
                                         apiResource = root.api.behance.resource.project[projectId] = root.api.behance.project();
 
                                         apiResource.$promise.then(function (data) {

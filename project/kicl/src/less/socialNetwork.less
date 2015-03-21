@@ -1,14 +1,51 @@
 @import '_import';
 
 .socialNetwork {
-	@size: 2rem;
+	.setHoverColor (@color) {
+		a {
+			&:hover {
+				color : @color;
+			}
+		}
+	}
 
 	.display(flex);
-	.justify-content(space-around);
+	.align-items(stretch);
 
-	font-size: @size;
+	padding: 0 @space;
+
+	ul {
+		.display(flex);
+		.align-items(center);
+	}
+
+	li {
+		position: relative;
+
+		+ li {
+			margin-left: @space;
+		}
+
+		&.linkedin {
+			.setHoverColor(#0077B5);
+		}
+
+		&.twitter {
+			.setHoverColor(#1DCAFF);
+		}
+
+		&.google-plus {
+			.setHoverColor(#D34836);
+		}
+
+		&.behance {
+			.setHoverColor(#053EFF);
+		}
+	}
 
 	a {
-		.setIcon(@size);
+		.setIcon(2rem);
+
+		margin-top: 0;
 	}
 }

@@ -1,6 +1,9 @@
-<section
+<article
     data-api="behance.project"
     ng-if="project.owners[0].username === resource.userName"
+    ng-class="{
+        'isLoading' : project.loading
+    }"
     ng-style="{
     	'background-image' : 'url(' + project.covers[resource.config.covers.size] + ')'
     }"
@@ -14,13 +17,13 @@
     </header>
 	<div>
 		<p ng-repeat-start="module in project.modules" ng-if="module.type === 'text'" ng-bind-html="module.text_plain"></p>
-		<span
+		<p
             class="img"
             ng-repeat-end ng-if="module.type === 'image'"
             ng-style="{
                 'background-image' : 'url(' + module.sizes[resource.config.module.image.size] + ')'
             }"
-        ><img ng-src="{{module.sizes[resource.config.module.image.size]}}"></span>
+        ><img ng-src="{{module.sizes[resource.config.module.image.size] || module.src}}"></p>
 	</div>
     <aside>
     	<ul class="stats">
@@ -30,4 +33,4 @@
     		<li ng-repeat="tag in project.tags track by $index">{{tag}}</li>
     	</ul>
     </aside>
-</section>
+</article>

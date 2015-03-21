@@ -1,8 +1,25 @@
 @import '_import';
 
 .navigation {
-	ul {
+	.display(flex);
+	.align-items(stretch);
+
+	ul,
+	li {
 		.display(flex);
-		.justify-content(space-between);
+	}
+
+	ul {
+		.align-items(stretch);
+	}
+
+	li {
+		.align-items(center);
+
+		padding: 0 @space;
+
+		+ li {
+			margin-left: @space;
+		}
 	}
 }

@@ -1,0 +1,142 @@
+@import '_import';
+
+[data-api="behance.projects"] {
+	li {
+		.transition(~'background-size @{speed_slowest}, height @{speed_slowest}, min-height @{speed_slowest}');
+
+		.background-size(120%);
+
+		background-repeat: no-repeat;
+		background-position: center;
+		height: @grid_s;
+		min-height: @grid_s;
+		position: relative;
+		width: 100%;
+
+		&:before,
+		&:after {
+			display: block;
+			content: '\0020';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 0;
+		}
+
+		&:before {
+			.transition(~'background-color @{speed_standard}');
+
+			background-color: rgba(red(@white), green(@white), blue(@white), .7);
+
+			@media all and (max-width: @grid_ls) {
+				background-color: rgba(red(@black), green(@black), blue(@black), .7);
+			}
+		}
+
+		&:after {
+			.background-image(url(../../../asset/image/gradient.full.png));
+		}
+
+		&:hover {
+			.background-size(115%);
+
+			&:before {
+				background-color: rgba(red(@black), green(@black), blue(@black), .7);
+			}
+		}
+
+		+ li {
+			margin-top: @space;
+		}
+
+		@media all and (max-width: @grid_ls) {
+			height: @grid_sm;
+			min-height: @grid_sm;
+
+			&:hover {
+				.background-size(120%);
+			}
+		}
+	}
+
+	figure {
+		.display(flex);
+		.flex-direction(column);
+		.align-items(center);
+		.justify-content(center);
+
+		height: 100%;
+		position: relative;
+		z-index: 1;
+	}
+
+	figcaption {
+		text-align: center;
+	}
+
+	a, p {
+		.transition(~'color @{speed_fast}, font-size @{speed_fast}, padding-top @{speed_fast}');
+
+		color: @light_black;
+
+		@media all and (max-width: @grid_ls) {
+			color: @darker_white;
+		}
+	}
+
+	a {
+		.display(flex);
+		.align-items(center);
+		.justify-content(center);
+
+		color: @light_black;
+		left: 0;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+
+		&:hover {
+			color: @white;
+			font-size: 120%;
+
+			+ p {
+				color: @darker_white;
+				font-size: 120%;
+				padding-top: (@font_size * 3) * 1.2;
+			}
+		}
+
+		@media all and (max-width: @grid_ls) {
+			color: @white;
+			font-size: 90%;
+
+			&:hover {
+				font-size: 90%;
+
+				+ p {
+					font-size: 90%;
+					padding-top: (@font_size * 3);
+				}
+			}
+		}
+
+		+ p {
+			padding-top: (@font_size * 3);
+
+			@media all and (max-width: @grid_ls) {
+				font-size: 90%;
+			}
+		}
+	}
+
+	time {
+		padding-left: @space;
+	}
+
+	img {
+		.hidden;
+	}
+}

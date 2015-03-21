@@ -1,36 +1,61 @@
 .setIcon (@size) {
-    .transition(~'font-size @{speed_fast}, height @{speed_fast}, width @{speed_fast}');
-        
-    height: @size;
-    text-indent: -9999px;
-    position: relative;
-    overflow: hidden;
-    width: @size * 0.875;;
+    .transition(~'all @{speed_fast}');
 
-    &:before {
-        left: 0;
-        position: absolute;
-        text-indent: 0;
-        top: 0;
-    }
-}
-.resetIcon (@size) {
     font-size: @size;
     height: @size;
-    width: @size * 0.875;
+    position: relative;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: @size;
+
+    &:before {
+        .transition(~'color @{speed_fast}, height @{speed_fast}, width @{speed_fast}');
+
+        height: @size;
+        left: 0;
+        position: absolute;
+        text-align: center;
+        text-indent: 0;
+        top: 0;
+        width: @size;
+    }
+}
+.setIconSize (@size) {
+    font-size: @size;
+    height: @size;
+    width: @size;
+
+    &:before {
+        height: @size;
+        width: @size;
+    }
 }
 
-.setLogo (@width, @height, @color) {
-    .logo {
-        background-image: ~'url(../asset/image/logo/kicl.@{color}.png)';
-        height: @height;
-        width: @width;
-    }
+.setLogo (@color) {
+    .transition(~'background-image @{speed_fast}, height @{speed_fast}, margin @{speed_fast}, margin-top @{speed_fast}, width @{speed_fast}');
+    
+    .background-size(cover);
+
+    .setLogoColor(@color);
+    background-repeat: no-repeat;
+    background-position: left;
+    display: block;
+    height: @grid_ss / 3;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: @grid_ss / 3 * 2.5;
+}
+.setLogoWidth (@width) {
+    width: @width;
+}
+.setLogoHeight (@height) {
+    height: @height;
+}
+.setLogoColor (@color) {
+    background-image: url(~'../../asset/image/logo/kicl.@{color}.png');
 }
 
 .through() {
-    @transparent_base64: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-    
     background-image: url(@transparent_base64);
     pointer-events: none;
 

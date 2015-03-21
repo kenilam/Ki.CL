@@ -1,6 +1,6 @@
 @import '_import';
 
-h1, h2, h3, h4, h5, p, ul {
+h1, h2, h3, h4, h5, p, ul, figure {
     margin: 0;
     padding: 0;
 }
@@ -33,4 +33,13 @@ a {
         -webkit-font-smoothing: auto;
         -moz-osx-font-smoothing: initial;
     }
+}
+
+::selection {
+    background: @red;
+    color: @white;
+}
+::-moz-selection {
+    background: @red;
+    color: @white;
 }

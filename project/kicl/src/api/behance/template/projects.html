@@ -3,15 +3,20 @@
         <li
             ng-repeat="(key, project) in projects track by $index"
             ng-if="project.owners[0].username === resource.userName"
+            ng-class="{
+                'isCurrent' : project.selected
+            }"
             ng-style="{
                 'background-image' : 'url(' + project.covers[resource.config.covers.size] + ')'
             }"
         >
-            <h3>
-                <a ui-sref="{{project.route}}">{{project.name}}</a>
-            </h3>
-            <img ng-src="{{project.covers[resource.config.covers.size]}}">
-            <p>{{resource.content.label.published_on}}<time datetime="{{project.published_on}}">{{$root.helper.moment(project.published_on).fromNow()}}</time></p>
+            <figure>
+                <img ng-src="{{project.covers[resource.config.covers.size]}}">
+                <figcaption>
+                    <a ui-sref="{{project.route}}">{{project.name}}</a>
+                    <p>{{resource.content.label.published_on}}<time datetime="{{project.published_on}}">{{$root.helper.moment(project.published_on).fromNow()}}</time></p>
+                </figcaption>
+            </figure>
         </li>
     </ul>
 </nav>

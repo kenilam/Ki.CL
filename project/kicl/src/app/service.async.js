@@ -1,14 +1,13 @@
 (
-    function (app) {
+    function init (app) {
         'use strict';
         
         app
-            .service(
-                'async',
+            .service('async',
                 [
                     '$resource',
-                    function (resource) {
-                        return function (arg) {
+                    function service (resource) {
+                        return function trigger (arg) {
                             return resource(
                                 arg.url + (arg.path ? arg.path: ''),
                                 arg.credent,

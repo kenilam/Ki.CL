@@ -14,7 +14,6 @@ module.exports.build = function (project, dependentTasks, gulp) {
         clean = require('gulp-clean'),
         changed = require('gulp-changed'),
         concat = require('gulp-concat'),
-        filter = require('gulp-filter'),
         less = require('gulp-less'),
         miniHTML = require('gulp-minify-html'),
         miniCSS = require('gulp-minify-css'),

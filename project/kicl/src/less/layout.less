@@ -1,21 +1,86 @@
 @import '_import';
 
-html, body {
+html,
+body {
 	height: 100%;
 	position: absolute;
 	width: 100%;
 }
 
-html {
-	.transition(background-color @speed_fast);
+header[role=banner],
+footer[role=contentinfo] {
+	position: fixed;
+	width: 100%;
+	z-index: 2000;
+}
+
+body {
+	.transition(~'background @{speed_slow}');
+
+	.background-image(url(@transparent_base64));
 	.background-size(cover);
-	
-	background-attachment: fixed;
-	background-color: @white;
+	.opacity(1);
+
+	background-color: @black;
 	background-position: center;
 	background-repeat: no-repeat;
+
+	&:before,
+	&:after {
+		.transition(~'background @{speed_slow}');
+		.background-image(url(@transparent_base64));
+		
+		content: '';
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+	&:before {
+		z-index: -1;
+	}
+	&:after {
+		z-index: 0;
+	}
 }
 
 main {
-	
+	.transition(~'top @{speed_slower}, opacity @{speed_slower}');
+
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+
+	&.ng-animate {
+		&.ng-enter {
+			.opacity(0);
+
+			top: 100%;
+		}
+
+		&.ng-enter-active {
+			.opacity(1);
+
+			top: 0%;
+		}
+
+		&.ng-leave {
+			.opacity(1);
+
+			top: 0%;
+		}
+
+		&.ng-leave-active {
+			.opacity(0);
+
+			top: -100%;
+		}
+	}
+}
+
+footer[role=contentinfo] {
+	bottom: 0;
 }

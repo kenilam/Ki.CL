@@ -1,11 +1,11 @@
 (
-    function (app) {
+    function init (app) {
         'use strict';
         
         app
             .directive('loader',
                 [
-                    function () {
+                    function directive () {
                         return {
                             restrict: 'AE',
                             replace: true,

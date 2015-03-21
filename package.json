@@ -18,7 +18,7 @@
     "gulp-concat": "*",
     "gulp-debug": "*",
     "gulp-expect-file": "*",
-    "gulp-filter": "0.4.1",
+    "gulp-filter": "*",
     "gulp-ignore": "*",
     "gulp-jsonminify": "*",
     "gulp-less": "*",
@@ -31,6 +31,7 @@
     "gulp-usemin": "*",
     "gulp-util": "*",
     "gulp-watch": "*",
+    "gulp-livereload": "*",
 
     "gulp-task-listing": "*",
 
