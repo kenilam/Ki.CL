@@ -1,0 +1,107 @@
+@import '_import';
+
+main[data-route^=work] {
+	.display(flex);
+	.flex-wrap(wrap);
+
+	h2 {
+		.order(1);
+		.flex-grow(10);
+
+		width: 100%;
+	}
+
+	[data-api="behance.projects"],
+	.project {
+		.box-sizing(border-box);
+	}
+
+	[data-api="behance.projects"] {
+		.transition(~'padding @{speed_standard}, width @{speed_standard}');
+
+		.order(2);
+
+		padding: 0;
+		width: 100%;
+	}
+
+	.project {
+		.transition(~'opacity @{speed_standard}, width @{speed_standard}');
+
+		.order(3);
+		.opacity(0);
+
+		overflow: hidden;
+		padding-right: (@space * 2);
+		position: relative;
+		width: 0%;
+	}
+
+	section[ui-view] {
+		.transition(~'opacity @{speed_standard}, left @{speed_standard}');
+
+		&.ng-animate {
+			position: absolute;
+			top: 0;
+
+			&.ng-enter {
+				.opacity(0);
+
+				left: -100%;
+			}
+
+			&.ng-enter-active {
+				.opacity(1);
+
+				left: 0%;
+			}
+
+			&.ng-leave {
+				.opacity(1);
+
+				left: 0%;
+			}
+
+			&.ng-leave-active {
+				.opacity(0);
+
+				left: 100%;
+			}
+		}
+	}
+
+	&:not([data-route$=work]) {
+		[data-api="behance.projects"] {
+			padding-left: (@space * 2);
+			padding-right: (@space * 2);
+			width: 30%;
+
+			li {
+				.background-size(200%);
+
+				height: @grid_sm;
+
+				&:hover {
+					.background-size(220%);
+				}
+
+				a {
+					&:hover {
+						font-size: 100%;
+
+						+ p {
+							font-size: 100%;
+							padding-top: (@font_size * 3);
+						}
+					}
+				}
+			}
+		}
+
+		.project {
+			.opacity(1);
+
+			width: 70%;
+		}
+	}
+}

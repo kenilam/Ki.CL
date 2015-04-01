@@ -9,6 +9,10 @@
 	background-color: @dark_white;
 	overflow: hidden;
 
+	.navigation {
+		.transition(~'margin-top @{speed_standard}');
+	}
+
 	&.isOverlay {
 		.box-shadow(@shadow);
 

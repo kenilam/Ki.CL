@@ -1,82 +1,78 @@
 {
-    "info" : {
-        "name" : "Ki.CL",
-        "title" : "A Creative Consultant"
-    },
+	"info" : {
+		"name" : "Ki.CL",
+		"title" : "A Creative Consultant"
+	},
 
-    "initial" : {
-        "footer" : {
-            "hide" : {
-                "delay" : "2000"
-            },
-            "show" : {
-                "message" : "Content Information"
-            }
-        }
-    },
+	"initial" : {
+		"footer" : {
+			"hide" : {
+				"delay" : "2000"
+			},
+			"show" : {
+				"message" : "Content Information"
+			}
+		}
+	},
 
-    "component" : {
-        "sitemap" : {
-            "title" : "sitemap"
-        },
-        "copyright" : {
-            "message" : "All rights reserve © {{year}} Keni, Lam (Ki.CL)"
-        }
-    },
+	"component" : {
+		"sitemap" : {
+			"title" : "sitemap"
+		},
+		"copyright" : {
+			"message" : "All rights reserve © {{year}} Keni, Lam (Ki.CL)"
+		}
+	},
 
-    "content" : [
-        {
-            "name" : "Home",
-            "route" : "home",
-            "resource" : {
-                "heading" : "WELCOME",
-                "message" : "Ki.CL is portfolio of California Based Creative / Digital Specialist Keni, Lam.\r\nWith over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
-            }
-        },
-        {
-            "name" : "About",
-            "route" : "about"
-        },
-        {
-            "name" : "Work",
-            "route" : "work",
-            "resource" : {
-                "heading" : "WORK",
-                "message" : "Ki.CL is portfolio of California Based Creative / Digital Specialist Keni, Lam.\r\nWith over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
-            }
-        },
-        {
-            "name" : "Contact",
-            "route" : "contact"
-        }
-    ],
+	"content" : [
+		{
+			"name" : "Home",
+			"route" : "home",
+			"resource" : {
+				"heading" : "WELCOME",
+				"message" : "Ki.CL is portfolio of California Based Creative / Digital Specialist Keni, Lam.\r\nWith over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
+			}
+		},
+		{
+			"name" : "About",
+			"route" : "about"
+		},
+		{
+			"name" : "Work",
+			"route" : "work"
+		},
+		{
+			"name" : "Contact",
+			"route" : "contact"
+		}
+	],
 
-    "status" : {
-        "loading" : {
-            "message" : "loading"
-        }
-    },
+	"status" : {
+		"loading" : {
+			"message" : "loading"
+		}
+	},
 
-    "socialNetwork" : [
-        {
-            "name" : "Link me on LinkedIn",
-            "nickname" : "linkedin",
-            "url" : "https://www.linkedin.com/in/kenilam"
-        },
-        {
-            "name" : "Follow me on Twitter",
-            "nickname" : "twitter",
-            "url" : "https://twitter.com/_kicl"
-        },
-        {
-            "name" : "Add me to your Google+ circle",
-            "nickname" : "google-plus",
-            "url" : "https://plus.google.com/+KeniLam"
-        },
-        {
-            "name" : "See my works on Behance",
-            "nickname" : "behance",
-            "url" : "https://www.behance.net/kicl"
-        }
-    ]
+	"socialNetwork" : [
+		{
+			"name" : "Link me on LinkedIn",
+			"nickname" : "linkedin",
+			"url" : "https://www.linkedin.com/in/kenilam"
+		},
+		{
+			"name" : "Follow me on Twitter",
+			"nickname" : "twitter",
+			"url" : "https://twitter.com/_kicl"
+		},
+		{
+			"name" : "Add me to your Google+ circle",
+			"nickname" : "google-plus",
+			"url" : "https://plus.google.com/+KeniLam"
+		},
+		{
+			"name" : "See my works on Behance",
+			"nickname" : "behance",
+			"url" : "https://www.behance.net/kicl"
+		}
+	]
 }

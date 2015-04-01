@@ -7,13 +7,21 @@
                 [
                     '$rootScope', '$interpolate',
                     function link (root, interpolate) {
-                        return function trigger (scope, elm) {
-                            root.resource.$promise.then(function promise (resource) {
+                        function init (scope, elm) {
+                            function whenInit (resource) {
                                 scope.copyright = {
                                     message : interpolate(resource.component.copyright.message)({ year : (new Date()).getFullYear() })
                                 };
-                            });
-                        };
+                            }
+
+                            return whenInit;
+                        }
+                        
+                        function trigger (scope, elm) {
+                            root.resource.$promise.then(init(scope, elm));
+                        }
+
+                        return trigger;
                     }
                 ]
             )

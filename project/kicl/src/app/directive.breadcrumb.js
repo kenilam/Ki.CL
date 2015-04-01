@@ -10,26 +10,36 @@
                         var idx = 0,
                             route = _.rest(config.route.map.split('/:'));
 
-                        return function trigger (scope, elm) {
-                            root.$on('$stateChangeSuccess', function whileStateChange (event, toState, toParams) {
+                        function shouldReject (obj) {
+                            return obj.name === config.route.index;
+                        }
+
+                        function eachList (name) {
+                            idx ++;
+
+                            return {
+                                name : name,
+                                route : route.slice(0, idx).join('.') + '({' + route[idx - 1] + ':"' + name + '"' + '})'
+                            };
+                        }
+
+                        function whileStateChange (scope, elm) {
+                            return function (event, toState, toParams) {
                                 scope.breadcrumb.list = [];
 
-                                scope.breadcrumb.list = _.reject(
-                                    _.map(toParams, function eachList (name) {
-                                        idx ++;
-
-                                        return {
-                                            name : name,
-                                            route : route.slice(0, idx).join('.') + '({' + route[idx - 1] + ':"' + name + '"' + '})'
-                                        };
-                                    }
-                                ), function shouldReject (obj) { return obj.name === config.route.index; });
+                                scope.breadcrumb.list = _.reject(_.map(toParams, eachList), shouldReject);
 
                                 scope.breadcrumb.state = _.toArray(toParams).join('.');
 
                                 idx = 0;
-                            });
-                        };
+                            };
+                        }
+
+                        function trigger (scope, elm) {
+                            root.$on('$stateChangeSuccess', whileStateChange(scope, elm));
+                        }
+
+                        return trigger;
                     }
                 ]
             )
@@ -37,7 +47,7 @@
                 [
                     '$rootScope', 'config', 'resize', 'breadcrumb_stateChange',
                     function link (root, config, resize, stateChange) {
-                        return function trigger (scope, elm) {
+                        function trigger (scope, elm) {
                             var idx = 0,
                                 route = _.rest(config.route.map.split('/:'));
                             
@@ -51,7 +61,9 @@
                             };
 
                             stateChange(scope, elm);
-                        };
+                        }
+                        
+                        return trigger;
                     }
                 ]
             )

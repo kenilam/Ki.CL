@@ -2,7 +2,11 @@
 module.exports.run = function () {
     return {
         app : function (project, environment, dependentTasks, gulp) {
-            var taskName = project + '.' + environment + '.run.app',
+            var browserSync = require('browser-sync'),
+
+                reload = browserSync.reload,
+                
+                taskName = project + '.' + environment + '.run.app',
                 log = require('logger').createLogger();
 
             if (!gulp) {
@@ -17,7 +21,7 @@ module.exports.run = function () {
                         //interfere with gulp-watch and/or gulp-changed libs, causing the watch tasks to not
                         //detect changed files while Nodemon is running
                         //cwd: './project/' + project + '/',
-                        script:'./project/' + project + '/' + 'app.js',
+                        script: './project/' + project + '/' + 'app.js',
                         env: (
                             function (env) {
                                 var returnVal = env;

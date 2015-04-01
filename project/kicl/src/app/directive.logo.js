@@ -7,8 +7,8 @@
                 [
                     '$rootScope', 'config',
                     function link (root, config) {
-                        return function trigger (scope, elm) {
-                            root.resource.$promise.then(function promise (resource) {
+                        function init (scope, elm) {
+                            function whenInit (resource) {
                                 var route = _.first(_.rest(config.route.map.split('/:'))),
                                     obj = {};
 
@@ -18,8 +18,16 @@
                                     name : resource.info.name + ' | ' + config.route.index,
                                     route : route + '({' + route + ':"' + config.route.index + '"})'
                                 };
-                            });
-                        };
+                            }
+
+                            return whenInit;
+                        }
+
+                        function trigger (scope, elm) {
+                            root.resource.$promise.then(init(scope, elm));
+                        }
+
+                        return trigger;
                     }
                 ]
             )

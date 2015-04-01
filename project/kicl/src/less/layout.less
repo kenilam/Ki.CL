@@ -14,22 +14,26 @@ footer[role=contentinfo] {
 	z-index: 2000;
 }
 
-body {
-	.transition(~'background @{speed_slow}');
+main {
+	.transition(~'background @{speed_slow}, top @{speed_slower}, opacity @{speed_slower}');
 
 	.background-image(url(@transparent_base64));
 	.background-size(cover);
-	.opacity(1);
 
 	background-color: @black;
 	background-position: center;
 	background-repeat: no-repeat;
 
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+
 	&:before,
 	&:after {
 		.transition(~'background @{speed_slow}');
 		.background-image(url(@transparent_base64));
-		
+
 		content: '';
 		display: block;
 		height: 100%;
@@ -44,15 +48,6 @@ body {
 	&:after {
 		z-index: 0;
 	}
-}
-
-main {
-	.transition(~'top @{speed_slower}, opacity @{speed_slower}');
-
-	position: absolute;
-	top: 0;
-	width: 100%;
-	z-index: 1000;
 
 	&.ng-animate {
 		&.ng-enter {

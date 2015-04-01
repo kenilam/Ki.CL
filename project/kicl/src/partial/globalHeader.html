@@ -1,16 +1,20 @@
 <header
-    class="globalHeader"
-    role="banner"
-    ng-class="{
-        'isOverlay' : $root.ref.scroll.overTop
-    }"
-    ng-style = "{
-    	paddingBottom : $root.ref.resize.breadcrumb.height + 'px'
-    }"
+	class="globalHeader"
+	role="banner"
+	ng-class="{
+		'isOverlay' : $root.ref.scroll.overTop
+	}"
+	ng-style = "{
+		paddingBottom : $root.ref.resize.breadcrumb.height + 'px'
+	}"
 >
-    <h1>
-        <logo></logo>
-    </h1>
-    <navigation></navigation>
-    <breadcrumb></breadcrumb>
+	<h1
+		ng-attr-aria-hidden="{{$root.ref.scroll.overTop}}"
+	>
+		<logo></logo>
+	</h1>
+	<navigation
+		ng-attr-aria-hidden="{{$root.ref.scroll.overTop}}"
+	></navigation>
+	<breadcrumb></breadcrumb>
 </header>

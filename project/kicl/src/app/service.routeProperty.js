@@ -1,51 +1,52 @@
 (
-    function init (app) {
-        'use strict';
-        
-        app
-            .service('routeProperty',
-                [
-                    'config',
-                    function service (config) {
-                        return function trigger (data, returnChildren) {
-                            var route = _.rest(config.route.map.split('/:')),
-                                property = function (data) {
-                                    return _.map(data, function eachNode (node) {
-                                        var list = {
-                                                name : node.name
-                                            },
-                                            ref = {};
+	function init (app) {
+		'use strict';
 
-                                        if (node.link) list.link = node.link;
+		app
+			.service('routeProperty',
+				[
+					'config',
+					function service (config) {
+						return function trigger (data, returnChildren) {
+							var route = _.rest(config.route.map.split('/:'));
 
-                                        if (node.route) {
-                                            ref.state = [];
-                                            ref.name = [];
+							function property (data) {
+								return _.map(data, function eachNode (node) {
+									var list = {
+											name : node.name
+										},
+										ref = {};
 
-                                            list.state = {};
+									if (node.link) list.link = node.link;
 
-                                            _.map(node.route.split('/'), function eachRoute (r, k) {
-                                                ref.state.push(route[k]);
-                                                ref.name.push(route[k] + ':"' + r + '"');
+									if (node.route) {
+										ref.state = [];
+										ref.name = [];
 
-                                                list.state[route[k]] = r;
-                                            });
+										list.state = {};
 
-                                            list.route = ref.state.join('.') + '({' + ref.name.join(',') + '})';
-                                        }
+										_.map(node.route.split('/'), function eachRoute (r, k) {
+											ref.state.push(route[k]);
+											ref.name.push(route[k] + ':"' + r + '"');
 
-                                        if (returnChildren && node.children && node.children.length) {
-                                            list.children = property(node.children);
-                                        }
+											list.state[route[k]] = r;
+										});
 
-                                        return list;
-                                    });
-                                };
+										list.route = ref.state.join('.') + '({' + ref.name.join(',') + '})';
+									}
 
-                            return property(data);
-                        };
-                    }
-                ]
-            );
-    }
+									if (returnChildren && node.children && node.children.length) {
+										list.children = property(node.children);
+									}
+
+									return list;
+								});
+							}
+
+							return property(data);
+						};
+					}
+				]
+			);
+	}
 )(kicl);

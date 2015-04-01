@@ -2,14 +2,13 @@
 
 [data-api="behance.projects"] {
 	li {
-		.transition(~'background-size @{speed_slowest}, height @{speed_slowest}, min-height @{speed_slowest}');
+		.transition(~'background-size @{speed_standard}, height @{speed_standard}, margin-top @{speed_standard}, min-height @{speed_standard}');
 
 		.background-size(120%);
 
 		background-repeat: no-repeat;
 		background-position: center;
 		height: @grid_s;
-		min-height: @grid_s;
 		position: relative;
 		width: 100%;
 
@@ -36,7 +35,9 @@
 		}
 
 		&:after {
+			.transform(scaleY(-1));
 			.background-image(url(../../../asset/image/gradient.full.png));
+			.opacity(.5);
 		}
 
 		&:hover {
@@ -48,7 +49,7 @@
 		}
 
 		+ li {
-			margin-top: @space;
+			margin-top: (@space * 4);
 		}
 
 		@media all and (max-width: @grid_ls) {
@@ -57,6 +58,10 @@
 
 			&:hover {
 				.background-size(120%);
+			}
+
+			+ li {
+				margin-top: @space;
 			}
 		}
 	}
@@ -73,11 +78,13 @@
 	}
 
 	figcaption {
+		.truncate(100%);
 		text-align: center;
 	}
 
 	a, p {
 		.transition(~'color @{speed_fast}, font-size @{speed_fast}, padding-top @{speed_fast}');
+		.truncate(100%);
 
 		color: @light_black;
 
