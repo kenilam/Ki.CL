@@ -1,107 +1,108 @@
 @import '_import';
 
 main[data-route^=work] {
-	.display(flex);
-	.flex-wrap(wrap);
+	@backgorund_opacity: .8;
+	@bleed: (@space * 4);
 
-	h2 {
-		.order(1);
-		.flex-grow(10);
-
-		width: 100%;
-	}
-
-	[data-api="behance.projects"],
-	.project {
+	[data-api="behance.project"] {
 		.box-sizing(border-box);
+
+		margin: 0 auto;
+		width: 90%;
 	}
 
-	[data-api="behance.projects"] {
-		.transition(~'padding @{speed_standard}, width @{speed_standard}');
-
-		.order(2);
-
-		padding: 0;
-		width: 100%;
-	}
-
-	.project {
-		.transition(~'opacity @{speed_standard}, width @{speed_standard}');
-
-		.order(3);
-		.opacity(0);
-
-		overflow: hidden;
-		padding-right: (@space * 2);
-		position: relative;
-		width: 0%;
-	}
-
-	section[ui-view] {
-		.transition(~'opacity @{speed_standard}, left @{speed_standard}');
-
-		&.ng-animate {
-			position: absolute;
-			top: 0;
-
-			&.ng-enter {
-				.opacity(0);
-
-				left: -100%;
-			}
-
-			&.ng-enter-active {
-				.opacity(1);
-
-				left: 0%;
-			}
-
-			&.ng-leave {
-				.opacity(1);
-
-				left: 0%;
-			}
-
-			&.ng-leave-active {
-				.opacity(0);
-
-				left: 100%;
-			}
-		}
+	[data-api="behance.project"] {
+		max-width: @screen_xs;
 	}
 
 	&:not([data-route$=work]) {
-		[data-api="behance.projects"] {
-			padding-left: (@space * 2);
-			padding-right: (@space * 2);
-			width: 30%;
+		[ui-view="view"] {
+			position: relative;
+			z-index: 3000;
 
-			li {
-				.background-size(200%);
+			&:before {
+				.opacity(@backgorund_opacity);
 
-				height: @grid_sm;
+				content: '\0020';
+				background-color: @darker_white;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 1000;
+			}
 
-				&:hover {
-					.background-size(220%);
+			article {
+				.box-shadow(@shadow);
+
+				background-color: @white;
+				padding: @bleed;
+				position: relative;
+				margin-bottom: @bleed;
+				z-index: 2000;
+			}
+
+			&.ng-animate {
+				.transition-duration(@speed_faster * 3);
+
+				&:before {
+					.transition-property(opacity);
+					.transition-timing-function(@ease_smooth);
+					.transition-duration(@speed_faster);
+
+					.opacity(@backgorund_opacity);
 				}
 
-				a {
-					&:hover {
-						font-size: 100%;
+				article {
+					.transition-timing-function(@ease_smooth);
+					.transition-duration(@speed_faster);
+					.transition-delay(@speed_faster);
+				}
 
-						+ p {
-							font-size: 100%;
-							padding-top: (@font_size * 3);
-						}
+				&.ng-enter {
+					&:before {
+						.opacity(0);
+					}
+
+					article {
+						.opacity(0);
+						.transform(~'translate3d(0, @{grid_s}, 0)');
+					}
+				}
+
+				&.ng-enter-active {
+					&:before {
+						.opacity(@backgorund_opacity);
+					}
+
+					article {
+						.opacity(1);
+						.transform(~'translate3d(0, 0, 0)');
+					}
+				}
+
+				&.ng-leave {
+					&:before {
+						.opacity(@backgorund_opacity);
+					}
+
+					article {
+						.opacity(1);
+						.transform(~'translate3d(0, 0, 0)');
+					}
+				}
+
+				&.ng-leave-active {
+					&:before {
+						.opacity(0);
+					}
+
+					article {
+						.opacity(0);
+						.transform(~'translate3d(0, @{grid_s}, 0)');
 					}
 				}
 			}
-		}
-
-		.project {
-			.opacity(1);
-
-			width: 70%;
 		}
 	}
 }

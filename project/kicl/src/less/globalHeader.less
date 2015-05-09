@@ -1,16 +1,19 @@
 @import '_import';
 
 .globalHeader {
-	.transition(~'box-shadow @{speed}, margin-top @{speed_fast}');
+	.transition(~'box-shadow @{speed} @{ease}, margin-top @{speed_fast} @{ease}');
 
 	.display(flex);
 	.align-items(stretch);
 
 	background-color: @dark_white;
 	overflow: hidden;
+	top: 0;
 
 	.navigation {
-		.transition(~'margin-top @{speed_standard}');
+		.transition-property(margin-top);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed);
 	}
 
 	&.isOverlay {
@@ -52,7 +55,7 @@
 	}
 
 	.breadcrumb {
-		.transition(~'background-color @{speed_fast} @{speed}, opacity @{speed_standard} @{speed}, padding-left @{speed_fast}');
+		.transition(~'background-color @{speed_fast} @{ease}, opacity @{speed_standard} @{ease}, padding-left @{speed_fast} @{ease}');
 		.opacity(1);
 
 		background-color: @darker_white;

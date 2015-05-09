@@ -1,5 +1,151 @@
 @import '_import';
 
 [data-api="behance.project"] {
-	
+	@gap: (@space * 2);
+
+	.display(flex);
+	.flex-wrap(wrap);
+
+	header {
+		.display(flex);
+		.flex-direction(column);
+		.align-items(center);
+
+		width: 100%;
+	}
+
+	h3 {
+		text-align: center;
+
+		+ p {
+			margin-top: @gap;
+		}
+	}
+
+	div {
+		.box-sizing(border-box);
+
+		@media all and (min-width: @screen_ls) {
+			padding-right: @gap;
+			width: 70%;
+		}
+
+		@media all and (max-width: @screen_ls) {
+			width: 100%;
+		}
+	}
+
+	aside {
+		@media all and (min-width: @screen_ls) {
+			width: 30%;
+		}
+
+		@media all and (max-width: @screen_ls) {
+			margin-top: @gap;
+			width: 100%;
+		}
+	}
+
+	p {
+		&.img {
+			.background-size(cover);
+
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		+ p {
+			margin-top: @gap;
+		}
+	}
+
+	img {
+		.opacity(0);
+
+		height: 100%;
+		width: 100%;
+	}
+
+	.fields,
+	.stats,
+	.tags {
+		.display(flex);
+		.flex-wrap(wrap);
+
+		li {
+			.truncate(auto);
+		}
+	}
+
+	.stats,
+	.tags {
+		@size: (@grid / 2);
+
+		margin: 0 0 @gap;
+
+		@media all and (min-width: @screen_ls) {
+			.flex-direction(column);
+		}
+
+		@media all and (max-width: @screen_ls) {
+			.flex-direction(row);
+			.justify-content(center);
+		}
+
+		li {
+			@media all and (min-width: @screen_ls) {
+				margin-bottom: @space;	
+			}
+
+			@media all and (max-width: @screen_ls) {
+				margin-bottom: 0;
+				margin-right: @space;
+			}
+		}
+
+		span {
+			font-weight: @bold;
+		}
+	}
+
+	.fields,
+	.stats {
+		li {
+			.border-radius(@corner * 5);
+
+			padding: @space / 2 @gap;
+		}
+	}
+
+	.fields {
+		.justify-content(center);
+
+		margin: @space 0;
+
+		li {
+			background-color: @darker_white;
+			color: @gold;
+			margin-bottom: @space;
+			margin-right: @space;
+		}
+	}
+
+	.tags {
+		font-size: @font_size * .8;
+
+		li {
+			.border-radius(@corner * 4.5);
+
+			background-color: @gold;
+			color: @white;
+			padding: @space / 3 @space;
+		}
+	}
+
+	.stats {
+		li {
+			background-color: @dark_white;
+			color: @gold;
+		}
+	}
 }

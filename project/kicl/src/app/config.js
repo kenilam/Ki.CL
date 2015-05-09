@@ -5,8 +5,8 @@
 		app
 			.controller('configRouterStateController',
 				[
-					'$rootScope', '$scope', '$state', '$stateParams', 'content',
-					function configRouterStateController (root, scope, state, stateParams, content) {
+					'$rootScope', '$scope', '$state', '$stateParams', '$timeout', '$anchorScroll', 'content',
+					function configRouterStateController (root, scope, state, stateParams, timeout, anchorScroll, content) {
 						scope.content = content;
 
 						if (content && content.children) {

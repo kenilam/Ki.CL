@@ -1,14 +1,6 @@
 @import '_import';
 
 html[data-route^=work] {
-	body {
-		background-color: @darker_white;
-
-		&:before {
-			.background-image(url(../asset/image/gradient.full.png));
-		}
-	}
-
 	.navigation {
 		a[href^='#!/work'] {
 			color: @black;
@@ -18,28 +10,53 @@ html[data-route^=work] {
 }
 
 main[data-route^=work] {
+	@gap: (@space * 3);
+
 	background-color: @darker_white;
 
-	&:before {
-		.background-image(url(../asset/image/gradient.full.png));
-	}
-
 	h2 {
-		.transition(~'font-size @{speed_fast}, padding @{speed_fast}');
+		.transition-property(font-size, padding);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_fast);
 
 		font-size: @h_font_size;
-		padding: (@space * 6) 0;
+		line-height: @h_font_size;
+		padding: @gap 0;
 		text-align: center;
 
 		width: 100%;
 
 		@media all and (max-width: @grid_ls) {
-			padding: (@space * 3) 0;
+			padding: @gap 0;
 		}
 
 		@media all and (max-width: @grid_l) {
 			font-size: (@h_font_size * .6);
-			padding: (@space * 2) 0;
+			padding: (@gap * .75) 0;
+		}
+	}
+
+	[data-api="behance.projects"] {
+		.transition-property(opacity);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_fast);
+
+		.box-sizing(border-box);
+		.opacity(1);
+
+		margin: 0 auto @gap;
+		max-width: @screen_ls;
+		width: 90%;
+	}
+
+	&:not([data-route$=work]) {
+		[data-api="behance.projects"] {
+			.opacity(0);
+
+			left: 50%;
+			margin-left: -45%;
+			position: absolute;
+			z-index: 2000;
 		}
 	}
 }

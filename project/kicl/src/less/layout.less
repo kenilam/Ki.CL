@@ -1,10 +1,19 @@
 @import '_import';
 
-html,
-body {
+html {
+	background-color: @darker_white;
 	height: 100%;
 	position: absolute;
 	width: 100%;
+
+	&:before {
+		.background-image(url(../asset/image/gradient.full.png));
+	}
+
+	* {
+		.border-radius(1px);
+	}
+
 }
 
 header[role=banner],
@@ -15,15 +24,18 @@ footer[role=contentinfo] {
 }
 
 main {
-	.transition(~'background @{speed_slow}, top @{speed_slower}, opacity @{speed_slower}');
+	.transition-property(background, opacity);
+	.transition-timing-function(@ease);
+	.transition-duration(@speed_slower);
 
 	.background-image(url(@transparent_base64));
 	.background-size(cover);
+	.box-sizing(border-box);
 
 	background-color: @black;
 	background-position: center;
 	background-repeat: no-repeat;
-
+	min-height: 100%;
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -31,10 +43,13 @@ main {
 
 	&:before,
 	&:after {
-		.transition(~'background @{speed_slow}');
+		.transition-property(background);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_slow);
+
 		.background-image(url(@transparent_base64));
 
-		content: '';
+		content: '\0020';
 		display: block;
 		height: 100%;
 		left: 0;
@@ -46,32 +61,24 @@ main {
 		z-index: -1;
 	}
 	&:after {
-		z-index: 0;
+		z-index: -1;
 	}
 
 	&.ng-animate {
 		&.ng-enter {
 			.opacity(0);
-
-			top: 100%;
 		}
 
 		&.ng-enter-active {
 			.opacity(1);
-
-			top: 0%;
 		}
 
 		&.ng-leave {
 			.opacity(1);
-
-			top: 0%;
 		}
 
 		&.ng-leave-active {
 			.opacity(0);
-
-			top: -100%;
 		}
 	}
 }

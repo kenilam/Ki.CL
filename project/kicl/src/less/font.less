@@ -1,16 +1,16 @@
 @import '_import';
 
 html {
-    color: @black;
-    font-family: @font_family;
-    font-size: @font_size;
-    font-weight: @font_weight;
-    line-height: (@font_size * 1.5);
+	color: @black;
+	font-family: @font_family;
+	font-size: @font_size;
+	font-weight: @font_weight;
+	line-height: (@font_size * 1.5);
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: @h_font_family;
-    font-weight: @h_font_weight;
+	font-family: @h_font_family;
+	font-weight: @h_font_weight;
 }
 h1 {font-size: @h_font_size;        line-height: @h_font_size;}
 h2 {font-size: (@h_font_size * .8); line-height: (@h_font_size * .8);}
@@ -19,22 +19,22 @@ h4 {font-size: (@h_font_size * .4); line-height: (@h_font_size * .4);}
 h5 {font-size: (@h_font_size * .2); line-height: (@h_font_size * .2);}
 
 a {
-    .transition(color @speed_faster);
+	.transition(color @speed_faster);
 
-    color: @dark_grey;
-    font-family: @h_font_family;
+	color: @gold;
+	font-family: @h_font_family;
 
-    &:hover {
-        color: @orange;
-    }
+	&:hover {
+		color: @orange;
+	}
 
-    &.isCurrent  {
-        font-weight: 400;
-    }
+	&.isCurrent  {
+		font-weight: 400;
+	}
 }
 
 .isCurrent  {
-    a {
-        font-weight: 400;
-    }
+	a {
+		font-weight: 400;
+	}
 }

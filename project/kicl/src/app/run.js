@@ -1,179 +1,179 @@
 (
-    function init (app) {
-        'use strict';
-        
-        app
-            .service('stateChangeSuccess',
-                [
-                    '$rootScope', 'config',
-                    function stateChangeSuccess (root, config) {
-                        function stateRoute (resource, toParams) {
-                            var route = _.toArray(toParams);
+	function init (app) {
+		'use strict';
 
-                            if (route.length > 1) {
-                                route = _.without(route, config.route.index);
-                            }
+		app
+			.service('stateChangeSuccess',
+				[
+					'$rootScope', 'config',
+					function stateChangeSuccess (root, config) {
+						function stateRoute (resource, toParams) {
+							var route = _.toArray(toParams);
 
-                            return route;
-                        }
+							if (route.length > 1) {
+								route = _.without(route, config.route.index);
+							}
 
-                        return function trigger (resource) {
-                            return function whenStateChange (event, toState, toParams) {
-                                var routeArray = stateRoute(resource, toParams);
+							return route;
+						}
 
-                                root.status.route = routeArray.join(' | ').replace('home', resource.info.title);
-                                root.ref.route = routeArray.join('.');
-                            };
-                        };
-                    }
-                ]
-            )
-            .service('scroll',
-                [
-                    '$rootScope', '$window', '$timeout',
-                    function scroll (root, win, timeout) {
-                        var timer,
-                            wn = angular.element(win),
-                            body,
-                            main,
-                            header,
+						return function trigger (resource) {
+							return function whenStateChange (event, toState, toParams) {
+								var routeArray = stateRoute(resource, toParams);
 
-                            overTop = function () {
-                                if (body.scrollTop() > 0) {
-                                    root.ref.scroll.overTop = true;
-                                    return;
-                                }
+								root.status.route = routeArray.join(' | ').replace('home', resource.info.title);
+								root.ref.route = routeArray.join('.');
+							};
+						};
+					}
+				]
+			)
+			.service('scroll',
+				[
+					'$rootScope', '$window', '$timeout',
+					function scroll (root, win, timeout) {
+						var timer,
+							wn = angular.element(win),
+							body,
+							main,
+							header,
 
-                                delete root.ref.scroll.overTop;
-                            },
-                            overBottom = function () {
-                                var main = angular.element('main'),
-                                    gap = main.outerHeight() - body.scrollTop(),
-                                    height = body.outerHeight();
+							overTop = function () {
+								if (window.pageYOffset > 0) {
+									root.ref.scroll.overTop = true;
+									return;
+								}
 
-                                if (gap != height) {
-                                    root.ref.scroll.overBottom = true;
-                                    return;
-                                }
+								delete root.ref.scroll.overTop;
+							},
+							overBottom = function () {
+								var main = angular.element('main'),
+									gap = main.outerHeight() - window.pageYOffset,
+									height = wn.outerHeight();
 
-                                delete root.ref.scroll.overBottom;
-                            },
-                            whileScroll = function () {
-                                overTop();
-                                overBottom();
-                            },
-                            whenScroll = function () {
-                                timeout.cancel(timeout);
-                                timer = timeout(whileScroll, 100);
-                            },
-                            whenTrigger = function () {
-                                body = angular.element('body');
-                                header = angular.element('body > header');
+								if (gap > height) {
+									root.ref.scroll.overBottom = true;
+									return;
+								}
 
-                                angular.element(win).bind('scroll', whenScroll);
-                                root.$on('$stateChangeSuccess', whenScroll);
+								delete root.ref.scroll.overBottom;
+							},
+							whileScroll = function () {
+								overTop();
+								overBottom();
+							},
+							whenScroll = function () {
+								timeout.cancel(timeout);
+								timer = timeout(whileScroll, 100);
+							},
+							whenTrigger = function () {
+								body = angular.element('body');
+								header = angular.element('body > header');
 
-                                whenScroll();
-                            },
-                            trigger = function () {
-                                timeout(whenTrigger, 0);
+								angular.element(win).bind('scroll', whenScroll);
+								root.$on('$stateChangeSuccess', whenScroll);
 
-                                return whenScroll;
-                            };
+								whenScroll();
+							},
+							trigger = function () {
+								timeout(whenTrigger, 0);
 
-                        return trigger;
-                    }
-                ]
-            )
-            .service('readyToRun',
-                [
-                    '$rootScope', '$timeout', 'stateChangeSuccess', 'resize', 'scroll', 'config',
-                    function readyToRun (root, timeout, stateChangeSuccess, resize, scroll, config) {
-                        function timer () {
-                            root.status.ready = true;
-                        }
+								return whenScroll;
+							};
 
-                        function whenResize () {
-                            root.ref.whenResize = resize('window', root, angular.element('body'));
-                        }
+						return trigger;
+					}
+				]
+			)
+			.service('readyToRun',
+				[
+					'$rootScope', '$timeout', 'stateChangeSuccess', 'resize', 'scroll', 'config',
+					function readyToRun (root, timeout, stateChangeSuccess, resize, scroll, config) {
+						function timer () {
+							root.status.ready = true;
+						}
 
-                        function whenScroll () {
-                            root.ref.whenScroll = scroll();
-                        }
+						function whenResize () {
+							root.ref.whenResize = resize('window', root, angular.element('body'));
+						}
 
-                        function trigger (resource) {
-                            root.ref.info = resource.info;
+						function whenScroll () {
+							root.ref.whenScroll = scroll();
+						}
 
-                            timeout.cancel(root.ref.timer.ready);
-                            root.ref.timer.ready = timeout(timer, 1500);
+						function trigger (resource) {
+							root.ref.info = resource.info;
 
-                            whenResize();
-                            whenScroll();
-                            
-                            root.$on('$stateChangeSuccess', stateChangeSuccess(resource));
-                        }
+							timeout.cancel(root.ref.timer.ready);
+							root.ref.timer.ready = timeout(timer, 1500);
 
-                        return trigger;
-                    }
-                ]
-            )
-            .run(
-                [
-                    '$rootScope', '$state', '$stateParams', 'async', 'config', 'readyToRun',
-                    function run (root, state, stateParams, async, config, readyToRun) {
-                        function refUpdate (event, ref) {
-                            _.each(ref, function eachRef (property, name) {
-                                root.helper._.extend(root.ref[name], property);
-                            });
+							whenResize();
+							whenScroll();
 
-                            root.$broadcast('refChange', root.ref);
-                        }
+							root.$on('$stateChangeSuccess', stateChangeSuccess(resource));
+						}
 
-                        function statusUpdate (event, status) {
-                            _.each(status, function eachState (property, name) {
-                                root.helper._.extend(root.status[name], property);
-                            });
+						return trigger;
+					}
+				]
+			)
+			.run(
+				[
+					'$rootScope', '$state', '$stateParams', 'async', 'config', 'readyToRun',
+					function run (root, state, stateParams, async, config, readyToRun) {
+						function refUpdate (event, ref) {
+							_.each(ref, function eachRef (property, name) {
+								root.helper._.extend(root.ref[name], property);
+							});
 
-                            root.$broadcast('statusChange', root.status);
-                        }
+							root.$broadcast('refChange', root.ref);
+						}
 
-                        /* domain */
-                        root.domain = {
-                            protocol : location.protocol,
-                            host : location.hostname,
-                            port : location.port
-                        };
+						function statusUpdate (event, status) {
+							_.each(status, function eachState (property, name) {
+								root.helper._.extend(root.status[name], property);
+							});
 
-                        /* helper */
-                        root.helper = {
-                            _ : _,
-                            moment : moment
-                        };
+							root.$broadcast('statusChange', root.status);
+						}
 
-                        /* ref */
-                        root.ref = {
-                            timer : {},
-                            resize : {},
-                            scroll : {}
-                        };
-                        root.$on('refUpdate', refUpdate);
+						/* domain */
+						root.domain = {
+							protocol : location.protocol,
+							host : location.hostname,
+							port : location.port
+						};
 
-                        /* status */
-                        root.status = {};
-                        root.$on('statusUpdate', statusUpdate);
+						/* helper */
+						root.helper = {
+							_ : _,
+							moment : moment
+						};
 
-                        /* resource */
-                        root.resource = async({
-                            url: root.domain.protocol + '//' + root.domain.host + ':' + root.domain.port,
-                            path: config.data.resource
-                        }).get();
-                        root.resource.$promise.then(readyToRun);
+						/* ref */
+						root.ref = {
+							timer : {},
+							resize : {},
+							scroll : {}
+						};
+						root.$on('refUpdate', refUpdate);
 
-                        /* state && stateParams */
-                        root.$state = state;
-                        root.$stateParams = stateParams;
-                    }
-                ]
-            );
-    }
+						/* status */
+						root.status = {};
+						root.$on('statusUpdate', statusUpdate);
+
+						/* resource */
+						root.resource = async({
+							url: root.domain.protocol + '//' + root.domain.host + ':' + root.domain.port,
+							path: config.data.resource
+						}).get();
+						root.resource.$promise.then(readyToRun);
+
+						/* state && stateParams */
+						root.$state = state;
+						root.$stateParams = stateParams;
+					}
+				]
+			);
+	}
 )(kicl);

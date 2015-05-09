@@ -1,8 +1,8 @@
 @import '_import';
 
 .globalFooter {
-	.transition(~'background-color @{speed_fast}, box-shadow @{speed}');
-	
+	.transition(~'background-color @{speed_fast} @{ease}, box-shadow @{speed} @{ease}');
+
 	.display(flex);
 	.align-items(stretch);
 
@@ -37,8 +37,10 @@
 	}
 
 	.socialNetwork {
-		.transition(~'margin-right @{speed_fast}');
-		
+		.transition-property(margin-right);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_fast);
+
 		height: 100%;
 		margin-right: @space * 4;
 		position: absolute;
@@ -56,7 +58,9 @@
 	}
 
 	h1 {
-		.transition(~'opcaity @{speed_fast}');
+		.transition-property(opcaity);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_fast);
 
 		.opacity(1);
 

@@ -1,124 +1,124 @@
 <!DOCTYPE html>
 <html
-    ng-app="kicl"
-    data-route="{{$root.ref.route}}"
+	ng-app="kicl"
+	data-route="{{$root.ref.route}}"
 >
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="content-type" content="text/html; charset=UTF8;">
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
-        <meta name="fragment" content="!">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="content-type" content="text/html; charset=UTF8;">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+		<meta name="fragment" content="!">
 
-        <title ng-bind="$root.ref.info.name + ' | ' + $root.status.route">Welcome To Ki.CL</title>
+		<title ng-bind="$root.ref.info.name + ' | ' + $root.status.route">Welcome To Ki.CL</title>
 
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700" />
-        <!-- build:css stylesheet/app.css -->
-        <link rel="stylesheet" href="css/lib/normalize.css" />
-        <link rel="stylesheet" href="css/lib/normalize-opentype.css" />
-        <link rel="stylesheet" href="css/lib/font-awesome.css" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700" />
+		<!-- build:css stylesheet/app.css -->
+		<link rel="stylesheet" href="css/lib/normalize.css" />
+		<link rel="stylesheet" href="css/lib/normalize-opentype.css" />
+		<link rel="stylesheet" href="css/lib/font-awesome.css" />
 
-        <link rel="stylesheet" href="css/lib/angular-csp.css" />
+		<link rel="stylesheet" href="css/lib/angular-csp.css" />
 
-        <link rel="stylesheet" href="css/base.css" />
-        <link rel="stylesheet" href="css/font.css" />
-        <link rel="stylesheet" href="css/layout.css" />
+		<link rel="stylesheet" href="css/base.css" />
+		<link rel="stylesheet" href="css/font.css" />
+		<link rel="stylesheet" href="css/layout.css" />
 
-        <link rel="stylesheet" href="css/breadcrumb.css" />
-        <link rel="stylesheet" href="css/logo.css" />
-        <link rel="stylesheet" href="css/navigation.css" />
-        <link rel="stylesheet" href="css/copyright.css" />
-        <link rel="stylesheet" href="css/socialNetwork.css" />
-        
-        <link rel="stylesheet" href="css/globalHeader.css" />
-        <link rel="stylesheet" href="css/globalFooter.css" />
+		<link rel="stylesheet" href="css/breadcrumb.css" />
+		<link rel="stylesheet" href="css/logo.css" />
+		<link rel="stylesheet" href="css/navigation.css" />
+		<link rel="stylesheet" href="css/copyright.css" />
+		<link rel="stylesheet" href="css/socialNetwork.css" />
 
-        <link rel="stylesheet" href="api/behance/css/projects.css" />
-        <link rel="stylesheet" href="api/behance/css/project.css" />
+		<link rel="stylesheet" href="css/globalHeader.css" />
+		<link rel="stylesheet" href="css/globalFooter.css" />
 
-        <link rel="stylesheet" href="css/home.css" />
-        <link rel="stylesheet" href="css/work.css" />
-        <link rel="stylesheet" href="css/work.project.css" />
+		<link rel="stylesheet" href="api/behance/css/projects.css" />
+		<link rel="stylesheet" href="api/behance/css/project.css" />
 
-        <link rel="stylesheet" href="css/condition.css" />
-        <!-- endbuild -->
-    </head>
-    <body
-        class="ng-cloak loading"
-        ng-class="{
-            'loading' : !$root.status.ready
-        }"
-        ng-cloak
-    >
-        <global-header></global-header>
-        <main
-            role="main"
-            ui-view="view"
-            ng-style="{
-                paddingTop : $root.ref.resize.globalHeader.height + 'px',
-                paddingBottom : $root.ref.resize.globalFooter.height + 'px'
-            }"
-            data-route="{{$root.ref.route}}"
-        ></main>
-        <global-footer></global-footer>
-        
-        <!--[if lt IE 9]>
-        <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-        <![endif]-->
+		<link rel="stylesheet" href="css/home.css" />
+		<link rel="stylesheet" href="css/work.css" />
+		<link rel="stylesheet" href="css/work.project.css" />
 
-        <script src="//use.typekit.net/cpi1lno.js"></script>
-        <script>try{Typekit.load();}catch(e){}</script>
+		<link rel="stylesheet" href="css/condition.css" />
+		<!-- endbuild -->
+	</head>
+	<body
+		class="ng-cloak loading"
+		ng-cloak
+		ng-class="{
+			'loading' : !$root.status.ready
+		}"
+	>
+		<global-header></global-header>
+		<main
+			role="main"
+			ui-view="view"
+			data-route="{{$root.ref.route}}"
+			ng-style="{
+				'padding-top' : $root.ref.resize.globalHeader.height + 'px',
+				'padding-bottom' : $root.ref.resize.globalFooter.height + 'px'
+			}"
+		></main>
+		<global-footer></global-footer>
 
-        <!-- build:js javascript/app.js -->
-        <script src="lib/jquery.js"></script>
-        <script src="lib/modernizr.js"></script>
-        <script src="lib/html5shiv.js"></script>
-        <script src="lib/moment.js"></script>
-        <script src="lib/underscore.js"></script>
+		<!--[if lt IE 9]>
+		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+		<![endif]-->
 
-        <script src="lib/greensock/jquery.gsap.js"></script>
-        <script src="lib/greensock/TweenMax.js"></script>
-        <script src="lib/greensock/easing/EasePack.js"></script>
-        
-        <script src="lib/angular.js"></script>
-        <script src="lib/angular-mocks.js"></script>
-        <script src="lib/angular-animate.js"></script>
-        <script src="lib/angular-route.js"></script>
-        <script src="lib/angular-resource.js"></script>
-        <script src="lib/angular-sanitize.js"></script>
-        <script src="lib/angular-ui-router.js"></script>
+		<script src="//use.typekit.net/cpi1lno.js"></script>
+		<script>try{Typekit.load();}catch(e){}</script>
 
-        <script src="app/module.js"></script>
-        <script src="app/run.js"></script>
-        <script src="app/config.js"></script>
+		<!-- build:js javascript/app.js -->
+		<script src="lib/jquery.js"></script>
+		<script src="lib/modernizr.js"></script>
+		<script src="lib/html5shiv.js"></script>
+		<script src="lib/moment.js"></script>
+		<script src="lib/underscore.js"></script>
 
-        <script src="app/filter.sec.js"></script>
+		<script src="lib/greensock/jquery.gsap.js"></script>
+		<script src="lib/greensock/TweenMax.js"></script>
+		<script src="lib/greensock/easing/EasePack.js"></script>
 
-        <script src="app/service.async.js"></script>
-        <script src="app/service.routeProperty.js"></script>
-        <script src="app/service.tween.js"></script>
-        <script src="app/service.resize.js"></script>
+		<script src="lib/angular.js"></script>
+		<script src="lib/angular-mocks.js"></script>
+		<script src="lib/angular-animate.js"></script>
+		<script src="lib/angular-route.js"></script>
+		<script src="lib/angular-resource.js"></script>
+		<script src="lib/angular-sanitize.js"></script>
+		<script src="lib/angular-ui-router.js"></script>
 
-        <script src="app/directive.breadcrumb.js"></script>
-        <script src="app/directive.copyright.js"></script>
-        <script src="app/directive.loader.js"></script>
-        <script src="app/directive.logo.js"></script>
-        <script src="app/directive.navigation.js"></script>
-        <script src="app/directive.sitemap.js"></script>
-        <script src="app/directive.socialNetwork.js"></script>
-        
-        <script src="app/directive.globalHeader.js"></script>
-        <script src="app/directive.globalFooter.js"></script>
+		<script src="app/module.js"></script>
+		<script src="app/run.js"></script>
+		<script src="app/config.js"></script>
 
-        <script src="automation/run.template.js"></script>
+		<script src="app/filter.sec.js"></script>
 
-        <script src="api/behance/app/module.js"></script>
-        <script src="api/behance/app/run.js"></script>
-        <script src="api/behance/app/service.async.js"></script>
-        <script src="api/behance/app/directive.intro.js"></script>
-        <script src="api/behance/app/directive.profile.js"></script>
-        <script src="api/behance/app/directive.projects.js"></script>
-        <script src="api/behance/app/directive.project.js"></script>
-        <!-- endbuild -->
-    </body>
+		<script src="app/service.async.js"></script>
+		<script src="app/service.routeProperty.js"></script>
+		<script src="app/service.tween.js"></script>
+		<script src="app/service.resize.js"></script>
+
+		<script src="app/directive.breadcrumb.js"></script>
+		<script src="app/directive.copyright.js"></script>
+		<script src="app/directive.loader.js"></script>
+		<script src="app/directive.logo.js"></script>
+		<script src="app/directive.navigation.js"></script>
+		<script src="app/directive.sitemap.js"></script>
+		<script src="app/directive.socialNetwork.js"></script>
+
+		<script src="app/directive.globalHeader.js"></script>
+		<script src="app/directive.globalFooter.js"></script>
+
+		<script src="automation/run.template.js"></script>
+
+		<script src="api/behance/app/module.js"></script>
+		<script src="api/behance/app/run.js"></script>
+		<script src="api/behance/app/service.async.js"></script>
+		<script src="api/behance/app/directive.intro.js"></script>
+		<script src="api/behance/app/directive.profile.js"></script>
+		<script src="api/behance/app/directive.projects.js"></script>
+		<script src="api/behance/app/directive.project.js"></script>
+		<!-- endbuild -->
+	</body>
 </html>

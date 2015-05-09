@@ -26,8 +26,11 @@ main[data-route=home] {
 	h2,
 	p {
 		@delay : (@speed * 2);
-
-		.transition(~'opacity @{speed_slow} @{delay}');
+		
+		.transition-property(opacity);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_slow);
+		.transition-delay(@delay);
 	}
 
 	h2 {
