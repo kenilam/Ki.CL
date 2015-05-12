@@ -5,6 +5,7 @@
 
 	.display(flex);
 	.flex-wrap(wrap);
+	.justify-content(skretch);
 
 	header {
 		.display(flex);
@@ -12,14 +13,6 @@
 		.align-items(center);
 
 		width: 100%;
-	}
-
-	h3 {
-		text-align: center;
-
-		+ p {
-			margin-top: @gap;
-		}
 	}
 
 	div {
@@ -36,13 +29,22 @@
 	}
 
 	aside {
+		margin: @gap 0;
+
 		@media all and (min-width: @screen_ls) {
 			width: 30%;
 		}
 
 		@media all and (max-width: @screen_ls) {
-			margin-top: @gap;
 			width: 100%;
+		}
+	}
+
+	h3 {
+		text-align: center;
+
+		+ p {
+			margin-top: @gap;
 		}
 	}
 
@@ -73,15 +75,26 @@
 		.flex-wrap(wrap);
 
 		li {
+			.border-radius(@corner);
 			.truncate(auto);
 		}
+	}
+
+	.fields,
+	.stats {
+		li {
+			padding: @space / 2 @gap;
+		}
+	}
+
+	.fields,
+	.tags {
+		text-align: center;
 	}
 
 	.stats,
 	.tags {
 		@size: (@grid / 2);
-
-		margin: 0 0 @gap;
 
 		@media all and (min-width: @screen_ls) {
 			.flex-direction(column);
@@ -93,27 +106,11 @@
 		}
 
 		li {
-			@media all and (min-width: @screen_ls) {
-				margin-bottom: @space;	
-			}
-
-			@media all and (max-width: @screen_ls) {
-				margin-bottom: 0;
-				margin-right: @space;
-			}
+			margin: 0 @space @space;
 		}
 
 		span {
 			font-weight: @bold;
-		}
-	}
-
-	.fields,
-	.stats {
-		li {
-			.border-radius(@corner * 5);
-
-			padding: @space / 2 @gap;
 		}
 	}
 
@@ -125,8 +122,16 @@
 		li {
 			background-color: @darker_white;
 			color: @gold;
-			margin-bottom: @space;
-			margin-right: @space;
+			margin: 0 @space @space;
+		}
+	}
+
+	.stats {
+		margin-bottom: @gap;
+
+		li {
+			background-color: @gold;
+			color: @dark_white;
 		}
 	}
 
@@ -134,18 +139,38 @@
 		font-size: @font_size * .8;
 
 		li {
-			.border-radius(@corner * 4.5);
-
-			background-color: @gold;
-			color: @white;
+			background-color: @darker_white;
+			color: @black;
 			padding: @space / 3 @space;
 		}
 	}
 
-	.stats {
+	.tool {
+		.display(flex);
+		.justify-content(flex-end);
+		.align-items(center);
+
 		li {
-			background-color: @dark_white;
-			color: @gold;
+			.order(1);
+
+			&.close {
+				.order(2);
+			}
+
+			+ li {
+				margin-left: @space;
+			}
+		}
+
+		a,
+		button {
+			.setIcon(1.5rem);
+
+			color: @dark_grey;
+
+			&:hover {
+				color: @gold;
+			}
 		}
 	}
 }

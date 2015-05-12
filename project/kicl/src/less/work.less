@@ -1,40 +1,9 @@
 @import '_import';
 
-html[data-route^=work] {
-	.navigation {
-		a[href^='#!/work'] {
-			color: @black;
-			cursor: default;
-		}
-	}
-}
-
 main[data-route^=work] {
 	@gap: (@space * 3);
 
 	background-color: @darker_white;
-
-	h2 {
-		.transition-property(font-size, padding);
-		.transition-timing-function(@ease);
-		.transition-duration(@speed_fast);
-
-		font-size: @h_font_size;
-		line-height: @h_font_size;
-		padding: @gap 0;
-		text-align: center;
-
-		width: 100%;
-
-		@media all and (max-width: @grid_ls) {
-			padding: @gap 0;
-		}
-
-		@media all and (max-width: @grid_l) {
-			font-size: (@h_font_size * .6);
-			padding: (@gap * .75) 0;
-		}
-	}
 
 	[data-api="behance.projects"] {
 		.transition-property(opacity);

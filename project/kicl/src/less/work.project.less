@@ -40,6 +40,31 @@ main[data-route^=work] {
 				position: relative;
 				margin-bottom: @bleed;
 				z-index: 2000;
+
+				@media all and (min-width: @screen_ls) {
+					div {
+						padding-bottom: @bleed * 1.5;
+					}
+				}
+
+				aside {
+					padding-bottom: @bleed;
+				}
+
+				footer {
+					.transition-property(background-color, padding-bottom, padding-top);
+					.transition-timing-function(@ease);
+					.transition-duration(@speed_faster);
+
+					.box-sizing(border-box);
+
+					background-color: @white;
+					bottom: @bleed;
+					left: 0;
+					padding: 0 @bleed;
+					position: absolute;
+					width: 100%;
+				}
 			}
 
 			&.ng-animate {
@@ -47,14 +72,14 @@ main[data-route^=work] {
 
 				&:before {
 					.transition-property(opacity);
-					.transition-timing-function(@ease_smooth);
+					.transition-timing-function(@ease);
 					.transition-duration(@speed_faster);
 
 					.opacity(@backgorund_opacity);
 				}
 
 				article {
-					.transition-timing-function(@ease_smooth);
+					.transition-timing-function(@ease);
 					.transition-duration(@speed_faster);
 					.transition-delay(@speed_faster);
 				}
@@ -100,6 +125,33 @@ main[data-route^=work] {
 					article {
 						.opacity(0);
 						.transform(~'translate3d(0, @{grid_s}, 0)');
+					}
+				}
+			}
+		}
+
+		.isOverlay {
+			article {
+				footer {
+					.box-shadow(@shadow);
+
+					background-color: @gold;
+					bottom: @bleed;
+					padding-bottom: @space;
+					padding-top: @space;
+					position: fixed;
+				}
+
+				.tool {
+					a,
+					button {
+						.setIcon(1.3rem);
+
+						color: @white;
+
+						&:hover {
+							color: @black;
+						}
 					}
 				}
 			}

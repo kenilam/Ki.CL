@@ -21,6 +21,18 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 		browserSync = require('browser-sync'),
 		reload = browserSync.reload,
 
+		config = {
+			browserSync : {
+				port: 8081,
+				server: {
+					baseDir: './project/' + project + '/' + env,
+					middleware: function (req, res, next) {
+						next();
+					}
+				}
+			}
+		},
+
 		copy = {
 			file: [
 				'./project/' + project + '/' + src + '/**/*.{js,eot,svg,ttf,woff,woff2,otf,html,png,jpg,gif,ico,json}',
@@ -156,12 +168,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 	});
 
 	gulp.task(taskName + '.browser.sync', function () {
-		browserSync({
-			port: 8081,
-			server: {
-				baseDir: './project/' + project + '/' + env
-			}
-		});
+		browserSync(config.browserSync);
 
 		return gulp.watch(['*.html', 'styles/**/*.css', 'scripts/**/*.js'], {cwd: './project/' + project + '/' + env}, reload);
 	});

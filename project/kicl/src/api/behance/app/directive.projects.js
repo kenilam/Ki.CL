@@ -29,7 +29,7 @@
 							setSelected(stateParams.page);
 
 							return root.$on('$stateChangeSuccess', whenStateChangeSuccess);
-						};
+						}
 
 						return trigger;
 					}

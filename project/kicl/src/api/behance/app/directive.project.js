@@ -1,70 +1,94 @@
 (
-    function (app) {
-        'use strict';
-        
-        app
-            .service('behanceProject_link',
-                [
-                    '$rootScope', '$stateParams',
-                    function (root, stateParams) {
-                        return function (scope) {
-                            var key = _.keys(stateParams),
-                                route = _.last(key),
-                                projectId,
-                                apiResource,
-                                setProject = function () {
-                                    projectId = stateParams[route];
+	function (app) {
+		'use strict';
 
-                                    if (projectId) {
-                                        apiResource = root.api.behance.resource.project[projectId];
-                                    }
+		app
+			.service('behanceProject_link',
+				[
+					'$rootScope', '$state', '$stateParams', '$timeout', '$anchorScroll',
+					function (root, state, stateParams, timeout, anchorScroll) {
+						return function (scope) {
+							var key = _.keys(stateParams),
+								route = _.last(key),
+								projectId,
+								apiResource,
+								control = {
+									close : function () {
+										var prevState = key[key.length - 2],
+											params = {};
 
-                                    root.api.behance.resource.$promise.then(function (resource) {
-                                        scope.resource = resource.widget.project;
-                                        scope.resource.userName = resource.userName;
+										params[prevState] = stateParams[prevState];
 
-                                        if (apiResource) {
-                                            scope.project = apiResource.project;
-                                            return;
-                                        }
+										state.go(prevState, params);
+									}
+								},
+								fakeScroll = function () {
+									timeout(function () {
+										var scroll = angular.element('html, body').scrollTop();
+										angular.element('html, body').scrollTop(scroll + 1);
+									}, 0);
+								},
+								setProject = function () {
+									projectId = stateParams[route];
 
-                                        scope.project = {
-                                            loading : true
-                                        };
+									if (projectId) {
+										apiResource = root.api.behance.resource.project[projectId];
+									}
 
-                                        apiResource = root.api.behance.resource.project[projectId] = root.api.behance.project();
+									fakeScroll();
 
-                                        apiResource.$promise.then(function (data) {
-                                            data.project.published_on = moment(new Date(data.project.published_on * 1000));
-                                            
-                                            scope.project = data.project;
-                                        });
-                                    });
-                                };
+									root.api.behance.resource.$promise.then(function (resource) {
+										scope.resource = resource.widget.project;
+										scope.resource.userName = resource.userName;
 
-                            if (!root.api.behance.resource.project) {
-                                root.api.behance.resource.project = {};
-                            }
+										if (apiResource) {
+											scope.project = apiResource.project;
 
-                            scope.$on('$stateChangeSuccess', setProject);
-                            
-                            setProject();
-                        };
-                    }
-                ]
-            )
-            .directive('behanceProject',
-                [
-                    'behanceProject_link',
-                    function (link) {
-                        return {
-                            restrict: 'AE',
-                            replace: true,
-                            templateUrl: 'api/behance/template/project.html',
-                            link: link
-                        };
-                    }
-                ]
-            );
-    }
+											fakeScroll();
+
+											return;
+										}
+
+										apiResource = root.api.behance.resource.project[projectId] = root.api.behance.project();
+
+										apiResource.$promise.then(function (data) {
+											data.project.published_on = moment(new Date(data.project.published_on * 1000));
+
+											scope.project = data.project;
+											scope.project.control = control;
+
+											fakeScroll();
+										});
+									});
+								};
+
+							if (!root.api.behance.resource.project) {
+								root.api.behance.resource.project = {};
+							}
+
+							scope.project = {
+								loading : true
+							};
+
+							scope.$on('$stateChangeSuccess', setProject);
+
+							setProject();
+						};
+					}
+				]
+			)
+			.directive('behanceProject',
+				[
+					'behanceProject_link',
+					function (link) {
+						return {
+							restrict: 'AE',
+							replace: true,
+							templateUrl: 'api/behance/template/project.html',
+							link: link
+						};
+					}
+				]
+			);
+	}
 )(behance);

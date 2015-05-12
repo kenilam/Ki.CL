@@ -32,7 +32,7 @@ main {
 	.background-size(cover);
 	.box-sizing(border-box);
 
-	background-color: @black;
+	background-color: @darker_white;
 	background-position: center;
 	background-repeat: no-repeat;
 	min-height: 100%;
@@ -40,6 +40,30 @@ main {
 	top: 0;
 	width: 100%;
 	z-index: 1000;
+
+	h2 {
+		@gap: (@space * 3);
+
+		.transition-property(font-size, padding);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_fast);
+
+		font-size: @h_font_size;
+		line-height: @h_font_size;
+		padding: @gap 0;
+		text-align: center;
+
+		width: 100%;
+
+		@media all and (max-width: @grid_ls) {
+			padding: @gap 0;
+		}
+
+		@media all and (max-width: @grid_l) {
+			font-size: (@h_font_size * .6);
+			padding: (@gap * .75) 0;
+		}
+	}
 
 	&:before,
 	&:after {

@@ -46,10 +46,6 @@
 				margin: @bleed;
 			}
 
-			@media all and (max-width: @screen_l) {
-				.box-shadow(none);
-			}
-
 			+ figcaption {
 				.title {
 					color: @gold;
@@ -65,6 +61,7 @@
 	}
 
 	figcaption {
+		.transition-property(color, margin);
 		.transition-timing-function(@ease);
 		.transition-duration(@speed_fastest);
 
