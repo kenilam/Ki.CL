@@ -64,7 +64,7 @@
 							return whenStateChange;
 						}
 
-						function resurceReady (data) {
+						function resourceReady (data) {
 							root.$on('$stateChangeSuccess', stateChangeSuccess(data));
 						}
 
@@ -76,7 +76,7 @@
 							resource : resource(behance.data.resource).get()
 						};
 
-						root.api.behance.resource.$promise.then(resurceReady);
+						root.api.behance.resource.$promise.then(resourceReady);
 					}
 				]
 			);

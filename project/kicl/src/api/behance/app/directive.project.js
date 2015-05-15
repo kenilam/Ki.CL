@@ -5,8 +5,8 @@
 		app
 			.service('behanceProject_link',
 				[
-					'$rootScope', '$state', '$stateParams', '$timeout', '$anchorScroll',
-					function (root, state, stateParams, timeout, anchorScroll) {
+					'$rootScope', '$state', '$stateParams', '$timeout',
+					function (root, state, stateParams, timeout) {
 						return function (scope) {
 							var key = _.keys(stateParams),
 								route = _.last(key),

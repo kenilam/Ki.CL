@@ -1,5 +1,11 @@
 @import '_import';
 
-[data-api-name="behanceIntro"] {
-    display: block;
+[data-api="behance.intro"] {
+	padding: 0 @space;
+
+	p {	
+		+ p {
+			margin-top: @space;
+		}
+	}
 }

@@ -1,87 +1,90 @@
 (
-    function init (app) {
-        'use strict';
-        
-        app
-            .service('breadcrumb_stateChange',
-                [
-                    '$rootScope', '$timeout', 'config',
-                    function whenStateChange (root, timeout, config) {
-                        var idx = 0,
-                            route = _.rest(config.route.map.split('/:'));
+	function init (app) {
+		'use strict';
 
-                        function shouldReject (obj) {
-                            return obj.name === config.route.index;
-                        }
+		app
+			.service('breadcrumb_stateChange',
+				[
+					'$rootScope', '$timeout', 'config',
+					function whenStateChange (root, timeout, config) {
+						var idx = 0,
+							route = _.rest(config.route.map.split('/:'));
 
-                        function eachList (name) {
-                            idx ++;
+						function shouldReject (obj) {
+							return obj.name === config.route.index;
+						}
 
-                            return {
-                                name : name,
-                                route : route.slice(0, idx).join('.') + '({' + route[idx - 1] + ':"' + name + '"' + '})'
-                            };
-                        }
+						function eachList (name) {
+							idx ++;
 
-                        function whileStateChange (scope, elm) {
-                            return function (event, toState, toParams) {
-                                scope.breadcrumb.list = [];
+							return {
+								name : name,
+								route : route.slice(0, idx).join('.') + '({' + route[idx - 1] + ':"' + name + '"' + '})'
+							};
+						}
 
-                                scope.breadcrumb.list = _.reject(_.map(toParams, eachList), shouldReject);
+						function whileStateChange (scope, elm) {
+							return function (event, toState, toParams) {
+								scope.breadcrumb.list = [];
 
-                                scope.breadcrumb.state = _.toArray(toParams).join('.');
+								timeout.cancel(scope.breadcrumb.timer.whileStateChange);
+								scope.breadcrumb.timer.whileStateChange = timeout(function () {
+									scope.breadcrumb.list = _.reject(_.map(toParams, eachList), shouldReject);
 
-                                idx = 0;
-                            };
-                        }
+									scope.breadcrumb.state = _.toArray(toParams).join('.');
+								}, 0);
 
-                        function trigger (scope, elm) {
-                            root.$on('$stateChangeSuccess', whileStateChange(scope, elm));
-                        }
+								idx = 0;
+							};
+						}
 
-                        return trigger;
-                    }
-                ]
-            )
-            .service('breadcrumb_link',
-                [
-                    '$rootScope', 'config', 'resize', 'breadcrumb_stateChange',
-                    function link (root, config, resize, stateChange) {
-                        function trigger (scope, elm) {
-                            var idx = 0,
-                                route = _.rest(config.route.map.split('/:'));
-                            
-                            scope.breadcrumb = {
-                                timer : {},
-                                root : {
-                                    name : config.route.index,
-                                    route : route[idx] + '({' + route[idx] + ':"' + config.route.index + '"})'
-                                },
-                                resize : resize('breadcrumb', scope, elm)
-                            };
+						function trigger (scope, elm) {
+							root.$on('$stateChangeSuccess', whileStateChange(scope, elm));
+						}
 
-                            stateChange(scope, elm);
-                        }
-                        
-                        return trigger;
-                    }
-                ]
-            )
-            .directive('breadcrumb',
-                [
-                    'breadcrumb_link',
-                    function directive (link) {
-                        return {
-                            restrict: 'AE',
-                            replace: true,
-                            scope : {
-                                'isolate' : '&'
-                            },
-                            templateUrl: 'partial/breadcrumb.html',
-                            link: link
-                        };
-                    }
-                ]
-            );
-    }
+						return trigger;
+					}
+				]
+			)
+			.service('breadcrumb_link',
+				[
+					'$rootScope', 'config', 'resize', 'breadcrumb_stateChange',
+					function link (root, config, resize, stateChange) {
+						function trigger (scope, elm) {
+							var idx = 0,
+								route = _.rest(config.route.map.split('/:'));
+
+							scope.breadcrumb = {
+								timer : {},
+								root : {
+									name : config.route.index,
+									route : route[idx] + '({' + route[idx] + ':"' + config.route.index + '"})'
+								},
+								resize : resize('breadcrumb', scope, elm)
+							};
+
+							stateChange(scope, elm);
+						}
+
+						return trigger;
+					}
+				]
+			)
+			.directive('breadcrumb',
+				[
+					'breadcrumb_link',
+					function directive (link) {
+						return {
+							restrict: 'AE',
+							replace: true,
+							scope : {
+								'isolate' : '&'
+							},
+							templateUrl: 'partial/breadcrumb.html',
+							link: link
+						};
+					}
+				]
+			);
+	}
 )(kicl);

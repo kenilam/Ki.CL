@@ -1,5 +1,17 @@
 @import '_import';
 
 main[data-route^=about] {
+	@gap: (@space * 3);
 
+	background-color: @darker_white;
+
+	> section {
+		margin: 0 auto @gap;
+		max-width: @screen_ls;
+		width: 90%;
+
+		+ section {
+			padding-bottom: @gap;
+		}
+	}
 }

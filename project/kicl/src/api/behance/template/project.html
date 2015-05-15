@@ -5,13 +5,15 @@
 	ng-class="{
 		'isLoading' : project.loading
 	}"
-	ng-style="{
-		'background-image' : 'url(' + project.covers[resource.config.covers.size] + ')'
-	}"
 >
 	<header>
 		<h3>{{project.name}}</h3>
-		<p>{{resource.config.content.label.published_on}}<time datetime="{{project.published_on}}">{{$root.helper.moment(project.published_on).fromNow()}}</time></p>
+		<i
+			ng-style="{
+				'background-image' : 'url(' + project.covers[resource.config.covers.size] + ')'
+			}"
+		></i>
+		<p>{{resource.config.content.label.published_on}} <time datetime="{{project.published_on}}">{{$root.helper.moment(project.published_on).fromNow()}}</time></p>
 		<ul class="fields">
 			<li ng-repeat="field in project.fields track by $index">{{field}}</li>
 		</ul>

@@ -1,0 +1,48 @@
+@import '_import';
+
+[data-api="behance.experience"] {
+	padding: 0 @space;
+	
+	h4 {
+		padding-bottom : @space;
+	}
+
+	ul {
+		.display(flex);
+		.flex-wrap(wrap);
+		.align-items(space-between);
+
+		li {
+			.box-sizing(border-box);
+
+			padding: @space;
+			width: 25%;
+
+			@media all and (max-width: @screen_mm) {
+				width: 33.33%;
+			}
+
+			@media all and (max-width: @screen_l) {
+				width: 50%;
+			}
+
+			@media all and (max-width: @screen_s) {
+				width: 100%;
+			}
+
+			&:first-child {
+				font-size: 2rem;
+				line-height: 2.2rem;
+				width: 50%;
+
+				@media all and (max-width: @screen_mm) {
+					width: 66.66%;
+				}
+
+				@media all and (max-width: @screen_l) {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

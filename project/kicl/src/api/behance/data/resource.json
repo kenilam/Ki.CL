@@ -8,7 +8,13 @@
 			"path" : "users/:userName"
 		},
 		"experience" : {
-			"path" : "users/:userName/work_experience"
+			"path" : "users/:userName/work_experience",
+			"content" : {
+				"title" : "Experiences",
+				"start_date" : {
+					"toPresent" : "- Present"
+				}
+			}
 		},
 		"projects" : {
 			"path" : "users/:userName/projects",
@@ -34,7 +40,7 @@
 				}
 			},
 			"config" : {
-				"cover" : {
+				"covers" : {
 					"size" : "202"
 				},
 				"module" : {

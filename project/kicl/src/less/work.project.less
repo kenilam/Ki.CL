@@ -3,19 +3,29 @@
 main[data-route^=work] {
 	@backgorund_opacity: .8;
 	@bleed: (@space * 4);
+	@background_color: @black;
+	@overlay_background_color: @white;
+	@overlay_color: @dark_grey;
+	@project_size: 90%;
+	@project_max_size: @screen_xs;
 
 	[data-api="behance.project"] {
 		.box-sizing(border-box);
 
 		margin: 0 auto;
-		width: 90%;
+		width: @project_size;
 	}
 
 	[data-api="behance.project"] {
-		max-width: @screen_xs;
+		max-width: @project_max_size;
 	}
 
 	&:not([data-route$=work]) {
+
+		h2 {
+			color: @white;
+		}
+
 		[ui-view="view"] {
 			position: relative;
 			z-index: 3000;
@@ -24,7 +34,7 @@ main[data-route^=work] {
 				.opacity(@backgorund_opacity);
 
 				content: '\0020';
-				background-color: @darker_white;
+				background-color: @background_color;
 				height: 100%;
 				position: fixed;
 				top: 0;
@@ -32,7 +42,7 @@ main[data-route^=work] {
 				z-index: 1000;
 			}
 
-			article {
+			[data-api="behance.project"] {
 				.box-shadow(@shadow);
 
 				background-color: @white;
@@ -52,7 +62,7 @@ main[data-route^=work] {
 				}
 
 				footer {
-					.transition-property(background-color, padding-bottom, padding-top);
+					.transition-property(background-color, bottom);
 					.transition-timing-function(@ease);
 					.transition-duration(@speed_faster);
 
@@ -61,27 +71,31 @@ main[data-route^=work] {
 					background-color: @white;
 					bottom: @bleed;
 					left: 0;
-					padding: 0 @bleed;
+					padding: 0 @bleed / 2;
 					position: absolute;
 					width: 100%;
+
+					@media all and (min-width: @screen_ls) {
+						padding: 0 @bleed;
+					}
 				}
 			}
 
 			&.ng-animate {
-				.transition-duration(@speed_faster * 3);
+				.transition-duration(@speed_fast * 2 + @speed_faster);
 
 				&:before {
 					.transition-property(opacity);
 					.transition-timing-function(@ease);
-					.transition-duration(@speed_faster);
+					.transition-duration(@speed_fast);
 
 					.opacity(@backgorund_opacity);
 				}
 
-				article {
+				[data-api="behance.project"] {
 					.transition-timing-function(@ease);
 					.transition-duration(@speed_faster);
-					.transition-delay(@speed_faster);
+					.transition-delay(@speed_fast);
 				}
 
 				&.ng-enter {
@@ -89,9 +103,9 @@ main[data-route^=work] {
 						.opacity(0);
 					}
 
-					article {
+					[data-api="behance.project"] {
 						.opacity(0);
-						.transform(~'translate3d(0, @{grid_s}, 0)');
+						.transform(~'translate3d(@{grid_s}, 0, 0)');
 					}
 				}
 
@@ -100,7 +114,7 @@ main[data-route^=work] {
 						.opacity(@backgorund_opacity);
 					}
 
-					article {
+					[data-api="behance.project"] {
 						.opacity(1);
 						.transform(~'translate3d(0, 0, 0)');
 					}
@@ -111,7 +125,7 @@ main[data-route^=work] {
 						.opacity(@backgorund_opacity);
 					}
 
-					article {
+					[data-api="behance.project"] {
 						.opacity(1);
 						.transform(~'translate3d(0, 0, 0)');
 					}
@@ -122,24 +136,38 @@ main[data-route^=work] {
 						.opacity(0);
 					}
 
-					article {
+					[data-api="behance.project"] {
 						.opacity(0);
-						.transform(~'translate3d(0, @{grid_s}, 0)');
+						.transform(~'translate3d(@{grid_s}, 0, 0)');
 					}
 				}
 			}
 		}
 
 		.isOverlay {
-			article {
+			[data-api="behance.project"] {
 				footer {
+					@gap: @bleed / 2;
+
 					.box-shadow(@shadow);
 
-					background-color: @gold;
+					background-color: @overlay_background_color;
 					bottom: @bleed;
 					padding-bottom: @space;
 					padding-top: @space;
 					position: fixed;
+
+					@media all and (min-width: @screen_ls) {
+						ul {
+							.box-sizing(border-box);
+
+							margin: 0 auto;
+							max-width: @project_max_size;
+							padding-left: @gap;
+							padding-right: @gap;
+							width: @project_size;
+						}
+					}
 				}
 
 				.tool {
@@ -147,10 +175,10 @@ main[data-route^=work] {
 					button {
 						.setIcon(1.3rem);
 
-						color: @white;
+						color: @overlay_color;
 
 						&:hover {
-							color: @black;
+							color: @orange;
 						}
 					}
 				}

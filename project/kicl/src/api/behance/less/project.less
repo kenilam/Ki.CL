@@ -2,6 +2,7 @@
 
 [data-api="behance.project"] {
 	@gap: (@space * 2);
+	@avator_size: (@grid * 2);
 
 	.display(flex);
 	.flex-wrap(wrap);
@@ -12,10 +13,47 @@
 		.flex-direction(column);
 		.align-items(center);
 
+		.background-size(cover);
+
+		background-position: center;
+		background-repeat: no-repeat;
+		text-align: center;
 		width: 100%;
+
+		h3,
+		p,
+		.fields {
+			margin-top: @gap;
+		}
+
+		h3 {
+			.order(2);
+
+			border-bottom: 1px dashed @grey;
+			padding-bottom: @gap;
+			width: 100%;
+		}
+
+		i {
+			.order(1);
+			.circle(@avator_size);
+			.box-shadow(@shadow);
+		}
+
+		p {
+			.order(3);
+		}
+
+		.fields {
+			.order(4);
+		}
 	}
 
 	div {
+		.display(flex);
+		.flex-wrap(wrap);
+		.justify-content(space-between);
+
 		.box-sizing(border-box);
 
 		@media all and (min-width: @screen_ls) {
@@ -40,20 +78,23 @@
 		}
 	}
 
-	h3 {
-		text-align: center;
-
-		+ p {
-			margin-top: @gap;
-		}
-	}
-
 	p {
+		width: 100%;
 		&.img {
 			.background-size(cover);
 
 			background-repeat: no-repeat;
 			background-position: center;
+
+			width: 100%;
+
+			+ .img {
+				width: 48%;
+
+				@media all and (max-width: @screen_m) {
+					width: 100%;
+				}
+			}
 		}
 
 		+ p {

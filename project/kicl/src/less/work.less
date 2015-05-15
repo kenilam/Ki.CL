@@ -5,10 +5,23 @@ main[data-route^=work] {
 
 	background-color: @darker_white;
 
-	[data-api="behance.projects"] {
-		.transition-property(opacity);
+	h2 {
+		.transition-property(color);
 		.transition-timing-function(@ease);
-		.transition-duration(@speed_fast);
+		.transition-duration(@speed_faster);
+
+		position: relative;
+		z-index: 2000;
+	}
+
+	> section {
+		position: relative;
+		z-index: 1000;
+	}
+
+	[data-api="behance.projects"] {
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_faster);
 
 		.box-sizing(border-box);
 		.opacity(1);
@@ -21,11 +34,11 @@ main[data-route^=work] {
 	&:not([data-route$=work]) {
 		[data-api="behance.projects"] {
 			.opacity(0);
+			.transform(~'translate3d(-@{grid_s}, 0, 0)');
 
-			left: 50%;
-			margin-left: -45%;
+			left: 25%;
 			position: absolute;
-			z-index: 2000;
+			top: 0;
 		}
 	}
 }
