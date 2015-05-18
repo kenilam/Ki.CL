@@ -4,11 +4,15 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 
 		src = 'src',
 
+		fs = require('fs'),
+
 		taskName = project + '.' + env,
 
 		run = require('../gulptask/run').run().app,
 
 		log = require('logger').createLogger(),
+
+		url = require("url"),
 
 		clean = require('gulp-clean'),
 		changed = require('gulp-changed'),
@@ -18,17 +22,71 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 		rename = require('gulp-rename'),
 		util = require('gulp-util'),
 		watch = require('gulp-watch'),
-		browserSync = require('browser-sync'),
+		browserSync = require('browser-sync').create(),
 		reload = browserSync.reload,
 
-		config = {
-			browserSync : {
+		fn = {
+			browserSync: function (req, res, next) {
+				var uri = url.parse(req.url, true),
+					rootPath = './project/' + project + '/mock',
+					filePath = rootPath + uri.pathname;
+
+				if (!uri.pathname.match(/\.json$/)) {
+					return next();
+				}
+
+				fs.readFile(filePath, {encoding: 'utf-8', flag: 'rs'}, function(error, data) {
+					if (error) return res.end(error.toString().replace(rootPath, ''));
+
+					if (uri.query.callback) {
+						console.log(uri.query.callback);
+						return res.end(uri.query.callback + '(' + data + ')');
+					}
+
+					res.end(data);
+				});
+			},
+			copySrc: function () {
+				return gulp.src(copy.file)
+					.pipe(changed(copy.destination))
+					.pipe(rename(function (path) {
+						path.dirname = path.dirname.replace('less', 'css');
+					}))
+					.pipe(gulp.dest(copy.destination))
+					.pipe(reload({ stream:true }));
+			},
+			compileLess: function () {
+				return gulp.src(compile.LESS.file)
+					.pipe(changed(copy.destination))
+					.pipe(recess(compile.LESS.config).on('error', fn.error))
+					.pipe(less({sourcemap: true}).on('error', fn.error))
+					.pipe(rename(function (path) {
+						path.dirname = path.dirname.replace('less', 'css');
+					}))
+					.pipe(gulp.dest(copy.destination))
+					.pipe(reload({ stream:true }));
+			},
+			error: function (error) {
+				console.log('');
+				console.log('==== ==== ====');
+				console.log(error.plugin, error.name);
+				console.log('Issue occured while streaming file:', error.fileName);
+				console.log('Line number:', error.lineNumber);
+				console.log('Column Number:', error.columnNumber);
+				console.log('Reason: ', error.message);
+				console.log('==== ==== ====');
+				console.log('');
+
+				this.emit('end');
+			}
+		},
+
+		browser = {
+			sync : {
 				port: 8081,
 				server: {
 					baseDir: './project/' + project + '/' + env,
-					middleware: function (req, res, next) {
-						next();
-					}
+					middleware: [fn.browserSync]
 				}
 			}
 		},
@@ -69,42 +127,6 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 				'!./project/' + project + '/' + src + '/less/lib/',
 				'!./project/' + project + '/' + src + '/less/lib/**/*'
 			]
-		},
-
-		fn = {
-			copySrc: function () {
-				return gulp.src(copy.file)
-					.pipe(changed(copy.destination))
-					.pipe(rename(function (path) {
-						path.dirname = path.dirname.replace('less', 'css');
-					}))
-					.pipe(gulp.dest(copy.destination))
-					.pipe(reload({ stream:true }));
-			},
-			compileLess: function () {
-				return gulp.src(compile.LESS.file)
-					.pipe(changed(copy.destination))
-					.pipe(recess(compile.LESS.config).on('error', fn.error))
-					.pipe(less({sourcemap: true}).on('error', fn.error))
-					.pipe(rename(function (path) {
-						path.dirname = path.dirname.replace('less', 'css');
-					}))
-					.pipe(gulp.dest(copy.destination))
-					.pipe(reload({ stream:true }));
-			},
-			error: function (error) {
-				console.log('');
-				console.log('==== ==== ====');
-				console.log(error.plugin, error.name);
-				console.log('Issue occured while streaming file:', error.fileName);
-				console.log('Line number:', error.lineNumber);
-				console.log('Column Number:', error.columnNumber);
-				console.log('Reason: ', error.message);
-				console.log('==== ==== ====');
-				console.log('');
-
-				this.emit('end');
-			}
 		},
 
 		template = require('../gulptask/template').template(project, env, env, taskName + '.clean', gulp, true);
@@ -168,9 +190,17 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 	});
 
 	gulp.task(taskName + '.browser.sync', function () {
-		browserSync(config.browserSync);
+		browserSync.init(browser.sync, function (error, browserSync) {
+			browserSync.addMiddleware(fn.browserSync);
+		});
 
-		return gulp.watch(['*.html', 'styles/**/*.css', 'scripts/**/*.js'], {cwd: './project/' + project + '/' + env}, reload);
+		return gulp.watch(
+			['*.html', 'styles/**/*.css', 'scripts/**/*.js'],
+			{
+				cwd: './project/' + project + '/' + env
+			},
+			reload
+		);
 	});
 
 	//run(project, env, [taskName + '.watch', taskName + '.browser.sync']);   // gulp [project].dev.run.app

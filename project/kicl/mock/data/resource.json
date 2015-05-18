@@ -1,0 +1,85 @@
+{
+	"info" : {
+		"name" : "Ki.CL",
+		"title" : "A Creative Consultant"
+	},
+
+	"initial" : {
+		"footer" : {
+			"hide" : {
+				"delay" : "2000"
+			},
+			"show" : {
+				"message" : "Content Information"
+			}
+		}
+	},
+
+	"component" : {
+		"sitemap" : {
+			"title" : "sitemap"
+		},
+		"copyright" : {
+			"message" : "All rights reserve © {{year}} Keni, Lam (Ki.CL)"
+		}
+	},
+
+	"content" : [
+		{
+			"name" : "Home",
+			"route" : "home",
+			"resource" : {
+				"heading" : "WELCOME to Ki.CL"
+			}
+		},
+		{
+			"name" : "About",
+			"route" : "about",
+			"resource" : {
+				"me" : {
+					"heading" : "Me"
+				},
+				"kicl" : {
+					"heading" : "Ki.CL"
+				}
+			}
+		},
+		{
+			"name" : "Work",
+			"route" : "work"
+		},
+		{
+			"name" : "Contact",
+			"route" : "contact"
+		}
+	],
+
+	"status" : {
+		"loading" : {
+			"message" : "loading"
+		}
+	},
+
+	"socialNetwork" : [
+		{
+			"name" : "Link with me on LinkedIn",
+			"nickname" : "linkedin",
+			"url" : "https://www.linkedin.com/in/kenilam"
+		},
+		{
+			"name" : "Follow me on Twitter",
+			"nickname" : "twitter",
+			"url" : "https://twitter.com/_kicl"
+		},
+		{
+			"name" : "Add me to your Google+ circle",
+			"nickname" : "google-plus",
+			"url" : "https://plus.google.com/+KeniLam"
+		},
+		{
+			"name" : "See my works on Behance",
+			"nickname" : "behance",
+			"url" : "https://www.behance.net/kicl"
+		}
+	]
+}

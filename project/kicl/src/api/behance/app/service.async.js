@@ -3,13 +3,16 @@
 		'use strict';
 
 		app
-			.service(
-				'behance.async',
+			.service('behance.async',
 				[
-					'$resource', '$timeout',
-					function (resource, timeout) {
-						return function (url, api_key) {
-							return function (arg) {
+					'$resource',
+					function service (resource) {
+						return function trigger (url, api_key) {
+							return function assign (arg) {
+								if (!arg) {
+									arg = {};
+								}
+
 								if (!arg.params) {
 									arg.params = {};
 								}

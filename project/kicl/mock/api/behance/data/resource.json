@@ -1,0 +1,59 @@
+{
+	"baseUrl" : "api/behance",
+	"version" : "v2",
+	"userName" : "kicl",
+	"apiKey" : "PpQd2N3JDELa4xVt6kT5iWZhwqfmOqKw",
+	"widget" : {
+		"profile" : {
+			"path" : "users/:userName.json"
+		},
+		"experience" : {
+			"path" : "users/:userName/work_experience.json",
+			"content" : {
+				"title" : "Experiences",
+				"start_date" : {
+					"toPresent" : "- Present"
+				}
+			}
+		},
+		"projects" : {
+			"path" : "users/:userName/projects.json",
+			"config" : {
+				"covers" : {
+					"size" : "202"
+				}
+			},
+			"content" : {
+				"label" : {
+					"published_on" : "Published:"
+				}
+			}
+		},
+		"project" : {
+			"path" : "projects/:projectId.json",
+			"content" : {
+				"link" : {
+					"message" : "See this project in Behance"
+				},
+				"close" : {
+					"message" : "Exit this project"
+				}
+			},
+			"config" : {
+				"covers" : {
+					"size" : "202"
+				},
+				"module" : {
+					"image" : {
+						"size" : "original"
+					}
+				},
+				"content" : {
+					"label" : {
+						"published_on" : "Published:"
+					}
+				}
+			}
+		}
+	}
+}
