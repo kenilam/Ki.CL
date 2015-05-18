@@ -2,7 +2,7 @@
 	"baseUrl" : "api/behance",
 	"version" : "v2",
 	"userName" : "kicl",
-	"apiKey" : "PpQd2N3JDELa4xVt6kT5iWZhwqfmOqKw",
+	"apiKey" : "xxxxxxxxxxxx",
 	"widget" : {
 		"profile" : {
 			"path" : "users/:userName.json"
@@ -12,7 +12,7 @@
 			"content" : {
 				"title" : "Experiences",
 				"start_date" : {
-					"toPresent" : "- Present"
+					"toPresent" : "Present"
 				}
 			}
 		},

@@ -5,7 +5,7 @@
 			<p class="position">{{list.position}}</p>
 			<p class="organization">{{list.organization}}</p>
 			<p class="location">{{list.location}}</p>
-			<p class="start_date">{{list.start_date}}{{$index == 0 ? ' ' + experience.content.start_date.toPresent : ''}}</p>
+			<p class="start_date">{{list.start_date}} - {{$index == 0 ? ' ' + experience.content.start_date.toPresent : experience.list[$index - 1].start_date}}</p>
 		</li>
 	</ul>
 </section>
