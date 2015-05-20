@@ -10,12 +10,6 @@
 	overflow: hidden;
 	top: 0;
 
-	.navigation {
-		.transition-property(margin-top);
-		.transition-timing-function(@ease);
-		.transition-duration(@speed);
-	}
-
 	&.isOverlay {
 		.box-shadow(@shadow);
 
@@ -49,6 +43,12 @@
 	}
 
 	.navigation {
+		.transition-property(margin-top);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed);
+
+		z-index: 2000;
+
 		@media all and (max-width: @grid_m) {
 			padding-right: @space;
 		}
@@ -63,6 +63,7 @@
 		left: 0;
 		padding-left: @space * 3;
 		position : absolute;
+		z-index: 1000;
 
 		@media all and (max-width: @grid_ls) {
 			padding-left: 0;

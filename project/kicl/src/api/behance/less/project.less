@@ -8,6 +8,28 @@
 	.flex-wrap(wrap);
 	.justify-content(skretch);
 
+	.loader {
+		.display(flex);
+		.align-items(center);
+		.justify-content(center);
+
+		color: @green;
+		font-size: 2rem;
+		text-align: center;
+
+		.spinner {
+			.display(flex);
+			.align-items(center);
+			.justify-content(center);
+			text-indent: 0;
+		}
+
+		.word {
+			text-indent: -9999px;
+			overflow: hidden;
+		}
+	}
+
 	header {
 		.display(flex);
 		.flex-direction(column);

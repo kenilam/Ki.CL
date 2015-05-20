@@ -34,7 +34,7 @@ main[data-route^=work] {
 	&:not([data-route$=work]) {
 		[data-api="behance.projects"] {
 			.opacity(0);
-			.transform(~'translate3d(-@{grid_s}, 0, 0)');
+			.transform(scale3d(.8, .8, .8), translate3d(-1 * @grid_s, 0, 0));
 
 			left: 25%;
 			position: absolute;

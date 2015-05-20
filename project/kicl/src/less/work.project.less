@@ -5,7 +5,7 @@ main[data-route^=work] {
 	@bleed: (@space * 4);
 	@background_color: @black;
 	@overlay_background_color: @white;
-	@overlay_color: @dark_grey;
+	@overlay_color: @black;
 	@project_size: 90%;
 	@project_max_size: @screen_xs;
 
@@ -81,65 +81,62 @@ main[data-route^=work] {
 				}
 			}
 
-			&.ng-animate {
-				.transition-duration(@speed_fast * 2 + @speed_faster);
+			&.ng-enter,
+			&.ng-leave {
+				.transition-timing-function(@ease);
+				.transition-duration((@speed_faster * 3) + @speed);
 
+				[data-api="behance.project"] {
+					.transition-property(transform, opacity);
+					.transition-timing-function(@ease);
+					.transition-duration(@speed_faster);
+				}
+			}
+
+			&.ng-enter {
 				&:before {
 					.transition-property(opacity);
 					.transition-timing-function(@ease);
-					.transition-duration(@speed_fast);
+					.transition-duration(@speed_faster);
+					.transition-delay(@speed_faster);
 
+					.opacity(0);
+				}
+
+				[data-api="behance.project"] {
+					.transition-delay(@speed);
+
+					.transform(translate3d(@grid_s, 0, 0));
+					.opacity(0);
+				}
+			}
+
+			&.ng-enter-active {
+				&:before {
 					.opacity(@backgorund_opacity);
 				}
 
 				[data-api="behance.project"] {
-					.transition-timing-function(@ease);
-					.transition-duration(@speed_faster);
-					.transition-delay(@speed_fast);
+					.transform(translate3d(0, 0, 0));
+					.opacity(1);
+				}
+			}
+
+			&.ng-leave {
+				&:before {
+					.opacity(0);
 				}
 
-				&.ng-enter {
-					&:before {
-						.opacity(0);
-					}
-
-					[data-api="behance.project"] {
-						.opacity(0);
-						.transform(~'translate3d(@{grid_s}, 0, 0)');
-					}
+				[data-api="behance.project"] {
+					.transform(translate3d(0, 0, 0));
+					.opacity(1);
 				}
+			}
 
-				&.ng-enter-active {
-					&:before {
-						.opacity(@backgorund_opacity);
-					}
-
-					[data-api="behance.project"] {
-						.opacity(1);
-						.transform(~'translate3d(0, 0, 0)');
-					}
-				}
-
-				&.ng-leave {
-					&:before {
-						.opacity(@backgorund_opacity);
-					}
-
-					[data-api="behance.project"] {
-						.opacity(1);
-						.transform(~'translate3d(0, 0, 0)');
-					}
-				}
-
-				&.ng-leave-active {
-					&:before {
-						.opacity(0);
-					}
-
-					[data-api="behance.project"] {
-						.opacity(0);
-						.transform(~'translate3d(@{grid_s}, 0, 0)');
-					}
+			&.ng-leave-active {
+				[data-api="behance.project"] {
+					.transform(translate3d(-1 * @grid_s, 0, 0));
+					.opacity(0);
 				}
 			}
 		}

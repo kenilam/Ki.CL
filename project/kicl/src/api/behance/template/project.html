@@ -6,7 +6,12 @@
 		'isLoading' : project.loading
 	}"
 >
-	<header>
+	<p class="loader" ng-if="project.loading">
+		<span class="spinner"><i class="fa fa-spin fa-circle-o-notch"></i></span>
+		<span class="word">loading</span>
+	</p>
+
+	<header ng=if="!project.loading">
 		<h3>{{project.name}}</h3>
 		<i
 			ng-style="{
@@ -19,7 +24,7 @@
 		</ul>
 	</header>
 
-	<div>
+	<div ng=if="!project.loading">
 		<p
 			ng-repeat-start="module in project.modules"
 			ng-if="module.type === 'text' && module.text_plain !== ''"
@@ -34,7 +39,7 @@
 		><img ng-src="{{module.sizes[resource.config.module.image.size] || module.src}}"></p>
 	</div>
 
-	<aside>
+	<aside ng=if="!project.loading">
 		<ul class="stats">
 			<li ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span> {{key}}</li>
 		</ul>
@@ -43,7 +48,7 @@
 		</ul>
 	</aside>
 
-	<footer>
+	<footer ng=if="!project.loading">
 		<ul class="tool">
 			<li class="link">
 				<a

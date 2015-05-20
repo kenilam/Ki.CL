@@ -1,11 +1,14 @@
 <section data-api="behance.experience">
 	<h4>{{experience.content.title}}</h4>
 	<ul>
-		<li ng-repeat="list in experience.list track by $index">
-			<p class="position">{{list.position}}</p>
-			<p class="organization">{{list.organization}}</p>
-			<p class="location">{{list.location}}</p>
-			<p class="start_date">{{list.start_date}} - {{$index == 0 ? ' ' + experience.content.start_date.toPresent : experience.list[$index - 1].start_date}}</p>
+		<li ng-repeat-start="list in experience.list track by $index"
+			ng-if="$index < 1"
+		>
+			<time>{{list.start_date}} - {{$index == 0 ? ' ' + experience.content.start_date.toPresent : experience.list[$index - 1].start_date}}</time>
+			<p>{{list.position}}, {{list.organization}} {{list.location}}</p>
+		</li>
+		<li ng-repeat-end ng-if="$index > 0">
+			<time>{{list.start_date}} - {{$index == 0 ? ' ' + experience.content.start_date.toPresent : experience.list[$index - 1].start_date}}</time> {{list.position}}, {{list.organization}}, {{list.location}}
 		</li>
 	</ul>
 </section>

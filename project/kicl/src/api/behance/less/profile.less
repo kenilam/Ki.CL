@@ -1,9 +1,11 @@
 @import '_import';
 
 [data-api="behance.profile"] {
+	@gap: (@space * 2);
+
 	> section {
 		+ section {
-			margin-top: @space;
+			margin-top: @gap;
 		}
 	}
 }

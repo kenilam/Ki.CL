@@ -37,10 +37,10 @@
 			"route" : "about",
 			"resource" : {
 				"me" : {
-					"heading" : "Me"
+					"heading" : "About Me"
 				},
 				"kicl" : {
-					"heading" : "Ki.CL"
+					"heading" : "About Ki.CL"
 				}
 			}
 		},
