@@ -7,6 +7,9 @@
   },
   "dependencies": {
 	"express": "3.x",
+	"browser-sync": "*",
+	"del": "*",
+	"vinyl-paths": "*",
 	"gulp": "*",
 	"gulp-add-src": "*",
 	"gulp-autoprefixer": "*",
@@ -14,7 +17,6 @@
 	"gulp-bower": "*",
 	"gulp-bower-src": "*",
 	"gulp-changed": "*",
-	"gulp-clean": "*",
 	"gulp-concat": "*",
 	"gulp-debug": "*",
 	"gulp-expect-file": "*",
@@ -31,7 +33,6 @@
 	"gulp-usemin": "*",
 	"gulp-util": "*",
 	"gulp-watch": "*",
-	"browser-sync": "*",
 
 	"gulp-task-listing": "*",
 

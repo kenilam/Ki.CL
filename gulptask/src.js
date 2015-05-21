@@ -1,29 +1,31 @@
 'use strict';
 module.exports.src = function (project, dependentTasks, gulp) {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
-    
-    var taskName = project + '.src',
+	if (!gulp) {
+		gulp = require('gulp');
+	}
 
-        clean = require('gulp-clean'),
+	var taskName = project + '.src',
 
-        root = './project/' + project,
-        src = root + '/src',
-        dev =  root + '/dev',
-        build =  root + '/build',
+		del = require('del'),
+		vinylPaths = require('vinyl-paths'),
+		bower = require('gulp-bower'),
 
-        libTasks = require('../gulptask/library').library(project, root + '/src', dependentTasks); // gulp [project].library
-    
-    gulp.task(taskName, [
-        libTasks
-    ], function () {
-        return gulp.src([dev, build]).pipe(clean());
-    });
+		root = './project/' + project,
+		src = root + '/src',
+		dev =  root + '/dev',
+		build =  root + '/build',
 
-    gulp.task(taskName + '.noclean', [
-        libTasks
-    ]);
+		libTasks = require('../gulptask/library').library(project, root + '/src', dependentTasks); // gulp [project].library
 
-    return taskName;
+	gulp.task(taskName, [
+		libTasks
+	], function () {
+		return gulp.src([dev, build]).pipe(vinylPaths(del));
+	});
+
+	gulp.task(taskName + '.noclean', [
+		libTasks
+	]);
+
+	return taskName;
 };

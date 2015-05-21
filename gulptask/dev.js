@@ -14,7 +14,8 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 
 		url = require("url"),
 
-		clean = require('gulp-clean'),
+		del = require('del'),
+		vinylPaths = require('vinyl-paths'),
 		changed = require('gulp-changed'),
 		debug = require('gulp-debug'),
 		less = require('gulp-less'),
@@ -135,7 +136,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 	}
 
 	gulp.task(taskName + '.clean', dependentTasks, function () { // gulp [project].dev.clean
-		return gulp.src(copy.destination).pipe(clean());
+		return gulp.src(copy.destination).pipe(vinylPaths(del));
 	});
 
 	gulp.task(taskName + '.copy.src', [taskName + '.clean', template.normal], function () { // gulp [project].dev.copy.src
@@ -189,9 +190,7 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 	});
 
 	gulp.task(taskName + '.browser.sync', function () {
-		browserSync.init(browser.sync, function (error, browserSync) {
-			browserSync.addMiddleware(fn.browserSync);
-		});
+		browserSync.init(browser.sync);
 
 		return gulp.watch(
 			['*.html', 'styles/**/*.css', 'scripts/**/*.js'],
