@@ -10,10 +10,9 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="fragment" content="!">
 
-		<title ng-bind="$root.status.route + ' | ' + $root.ref.info.name">Welcome To Ki.CL</title>
+		<title ng-bind="$root.status.route.toUpperCase() + ' | ' + $root.ref.info.name">Welcome To Ki.CL</title>
 
 		<link rel="icon" type="image/png" href="asset/image/logo/kicl.black.square.png">
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Montserrat:400,700" />
 		<!-- build:css stylesheet/app.css -->
 		<link rel="stylesheet" href="css/lib/normalize.css" />
 		<link rel="stylesheet" href="css/lib/normalize-opentype.css" />
@@ -24,12 +23,14 @@
 		<link rel="stylesheet" href="css/base.css" />
 		<link rel="stylesheet" href="css/font.css" />
 		<link rel="stylesheet" href="css/layout.css" />
+		<link rel="stylesheet" href="css/formElement.css" />
 
 		<link rel="stylesheet" href="css/breadcrumb.css" />
 		<link rel="stylesheet" href="css/logo.css" />
 		<link rel="stylesheet" href="css/navigation.css" />
 		<link rel="stylesheet" href="css/copyright.css" />
 		<link rel="stylesheet" href="css/socialNetwork.css" />
+		<link rel="stylesheet" href="css/contactForm.css" />
 
 		<link rel="stylesheet" href="css/globalHeader.css" />
 		<link rel="stylesheet" href="css/globalFooter.css" />
@@ -42,8 +43,9 @@
 
 		<link rel="stylesheet" href="css/home.css" />
 		<link rel="stylesheet" href="css/about.css" />
-		<link rel="stylesheet" href="css/work.css" />
-		<link rel="stylesheet" href="css/work.project.css" />
+		<link rel="stylesheet" href="css/projects.css" />
+		<link rel="stylesheet" href="css/projects.project.css" />
+		<link rel="stylesheet" href="css/contact.css" />
 
 		<link rel="stylesheet" href="css/condition.css" />
 		<!-- endbuild -->
@@ -61,7 +63,7 @@
 			ui-view="view"
 			data-route="{{$root.ref.route}}"
 			ng-style="{
-				'padding-top' : $root.ref.resize.globalHeader.height + 'px',
+				'padding-top' : $root.ref.resize.globalHeader.height + $root.ref.resize.breadcrumb.height + 'px',
 				'padding-bottom' : $root.ref.resize.globalFooter.height + 'px'
 			}"
 		></main>
@@ -80,10 +82,6 @@
 		<script src="lib/html5shiv.js"></script>
 		<script src="lib/moment.js"></script>
 		<script src="lib/underscore.js"></script>
-
-		<script src="lib/greensock/jquery.gsap.js"></script>
-		<script src="lib/greensock/TweenMax.js"></script>
-		<script src="lib/greensock/easing/EasePack.js"></script>
 
 		<script src="lib/angular.js"></script>
 		<script src="lib/angular-mocks.js"></script>
@@ -111,6 +109,7 @@
 		<script src="app/directive.navigation.js"></script>
 		<script src="app/directive.sitemap.js"></script>
 		<script src="app/directive.socialNetwork.js"></script>
+		<script src="app/directive.contactForm.js"></script>
 
 		<script src="app/directive.globalHeader.js"></script>
 		<script src="app/directive.globalFooter.js"></script>

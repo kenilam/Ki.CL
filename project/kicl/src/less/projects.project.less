@@ -1,0 +1,299 @@
+@import '_import';
+
+@backgorund_opacity: 1;
+@bleed: (@space * 4);
+@background_color: @light_black;
+@overlay_background_color: @white;
+@overlay_color: @black;
+@project_size: 90%;
+@project_max_size: @screen_xs;
+
+html[data-route^=projects] {
+	&:not([data-route$=projects]) {
+		.navigation {
+			a[href^='#!/project'] {
+				color: @gold;
+				cursor: pointer;
+				font-weight: @font_weight;
+
+				&:hover {
+					color: @orange;
+				}
+			}
+		}
+
+		.globalHeader,
+		.globalFooter {
+			.logo {
+				.setLogoColor('white');
+			}
+
+			&.isOverlay {
+				.logo {
+					.setLogoColor('black');
+				}
+			}
+
+			&:not(.isOverlay) {
+				background-color: @background_color;
+			}
+		}
+
+		.globalHeader {
+			&:not(.isOverlay) {
+				.breadcrumb {
+					background-color: @black;
+
+					a {
+						&:not([href*=home]) {
+							&:last-child,
+							&:before {
+								color: @white;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.globalFooter {
+			&:not(.isOverlay) {
+				.copyright,
+				.socialNetwork {
+					a {
+						color: @white;
+					}
+				}
+
+				.socialNetwork {
+					li {
+						&.linkedin {
+							a {
+								&:hover {
+									color : @linkedin;
+								}
+							}
+						}
+
+						&.twitter {
+							a {
+								&:hover {
+									color : @twitter;
+								}
+							}
+						}
+
+						&.googlePlus {
+							a {
+								&:hover {
+									color : @googlePlus;
+								}
+							}
+						}
+
+						&.behance {
+							a {
+								&:hover {
+									color : @behance;
+								}
+							}
+						}
+
+						&.github {
+							a {
+								&:hover {
+									color : @gitHub;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+main[data-route^=projects] {
+	[data-api="behance.project"] {
+		.box-sizing(border-box);
+
+		margin: 0 auto;
+		max-width: @project_max_size;
+		width: @project_size;
+	}
+
+	&.ng-leave {
+		[data-api="behance.project"] {
+			footer {
+				.opacity(0);
+			}
+		}
+	}
+
+	&:not([data-route$=projects]) {
+		h2 {
+			color: @white;
+		}
+
+		[ui-view="view"] {
+			position: relative;
+			z-index: 3000;
+
+			&:before {
+				.transform(scale3d(1.2, 1.2, 1.2));
+
+				content: '\0020';
+				background-color: @background_color;
+				height: 100%;
+				left: 0;
+				position: fixed;
+				top: 0;
+				width: 100%;
+				z-index: 1000;
+			}
+
+			&.ng-enter,
+			&.ng-leave {
+				.transition-timing-function(@ease);
+				.transition-duration((@speed_faster * 2) + (@speed * 3));
+
+				[data-api="behance.project"] {
+					.transition-property(transform, opacity);
+					.transition-timing-function(@ease);
+					.transition-duration(@speed_faster);
+					.transition-delay(@speed);
+
+					footer {
+						.opacity(0);
+					}
+				}
+			}
+
+			&.ng-enter {
+				&:before {
+					.transition-property(opacity);
+					.transition-timing-function(@ease);
+					.transition-duration(@speed_faster);
+
+					.opacity(0);
+				}
+
+				[data-api="behance.project"] {
+					.transition-delay(@speed);
+
+					.transform(translate3d(@grid_s, 0, 0));
+					.opacity(0);
+				}
+			}
+
+			&.ng-enter-active {
+				&:before {
+					.opacity(@backgorund_opacity);
+				}
+
+				[data-api="behance.project"] {
+					.transform(translate3d(0, 0, 0));
+					.opacity(1);
+				}
+			}
+
+			&.ng-leave {
+				&:before {
+					.opacity(0);
+				}
+
+				[data-api="behance.project"] {
+					.transform(translate3d(0, 0, 0));
+					.opacity(1);
+				}
+			}
+
+			&.ng-leave-active {
+				[data-api="behance.project"] {
+					.transform(translate3d(-1 * @grid_s, 0, 0));
+					.opacity(0);
+				}
+			}
+		}
+
+		[data-api="behance.project"] {
+			.box-shadow(@shadow);
+
+			background-color: @white;
+			padding: @bleed;
+			position: relative;
+			margin-bottom: @bleed;
+			z-index: 2000;
+
+			@media all and (min-width: @screen_ls) {
+				div {
+					padding-bottom: @bleed * 1.5;
+				}
+			}
+
+			aside {
+				padding-bottom: @bleed;
+			}
+
+			footer {
+				.transition-property(background-color, bottom);
+				.transition-timing-function(@ease);
+				.transition-duration(@speed_faster);
+
+				.box-sizing(border-box);
+
+				background-color: @white;
+				bottom: @bleed;
+				left: 0;
+				padding: 0 @bleed / 2;
+				position: absolute;
+				width: 100%;
+
+				@media all and (min-width: @screen_ls) {
+					padding: 0 @bleed;
+				}
+			}
+		}
+
+		.isOverlay {
+			[data-api="behance.project"] {
+				.tool {
+					a,
+					button {
+						.setIcon(1.3rem);
+
+						color: @overlay_color;
+
+						&:hover {
+							color: @orange;
+						}
+					}
+				}
+
+				footer {
+					@gap: @bleed / 2;
+
+					.box-shadow(@shadow);
+
+					background-color: @overlay_background_color;
+					bottom: @bleed;
+					padding-bottom: @space;
+					padding-top: @space;
+					position: fixed;
+
+					@media all and (min-width: @screen_ls) {
+						ul {
+							.box-sizing(border-box);
+
+							margin: 0 auto;
+							max-width: @project_max_size;
+							padding-left: @gap;
+							padding-right: @gap;
+							width: @project_size;
+						}
+					}
+				}
+			}
+		}
+	}
+}

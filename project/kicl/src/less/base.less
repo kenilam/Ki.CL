@@ -1,8 +1,17 @@
 @import '_import';
 
-h1, h2, h3, h4, h5, p, ul, figure, button {
+h1, h2, h3, h4, h5, p, ul, figure, button, input, textarea, fieldset {
 	margin: 0;
 	padding: 0;
+}
+
+button, input:not([type=radio]), textarea, fieldset, a {
+	outline: none;
+}
+
+button, input, textarea, fieldset {
+	background: 0;
+	border: 0;
 }
 
 ul {
@@ -14,13 +23,7 @@ a {
 	text-decoration: none;
 }
 
-button {
-	background: 0;
-	border: 0;
-}
-
 .fa {
-	display: inherit;
 	font-family: @font_family;
 	font-weight: inherit;
 	vertical-align: middle;
@@ -41,11 +44,19 @@ button {
 	}
 }
 
+.fa-spin {
+	.animation(none);
+
+	&:before {
+		.animation(fa-spin 2s infinite linear);
+	}
+}
+
 ::selection {
-	background: @red;
+	background: @green;
 	color: @white;
 }
 ::-moz-selection {
-	background: @red;
+	background: @green;
 	color: @white;
 }

@@ -1,9 +1,16 @@
 <h2>{{content.name}}</h2>
-<section class="kicl">
-	<h3>{{content.resource.kicl.heading}}</h3>
-</section>
 <section class="me">
 	<h3>{{content.resource.me.heading}}</h3>
-	<span class="avator"></span>
 	<behance-profile></behance-profile>
+</section>
+<section class="kicl">
+	<h3>{{content.resource.kicl.heading}}</h3>
+	<ul class="tool">
+		<li
+			ng-repeat="tool in content.resource.kicl.tool track by $index"
+			ng-attr-class="{{tool.class}}"
+		>
+			{{tool.name}}
+		</li>
+	</ul>
 </section>

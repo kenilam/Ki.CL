@@ -33,9 +33,6 @@
 			class="img"
 			ng-repeat-end
 			ng-if="module.type === 'image'"
-			ng-style="{
-				'background-image' : 'url(' + module.sizes[resource.config.module.image.size] + ')'
-			}"
 		><img ng-src="{{module.sizes[resource.config.module.image.size] || module.src}}"></p>
 	</div>
 

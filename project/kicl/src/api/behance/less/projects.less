@@ -23,6 +23,7 @@
 		.transition-timing-function(@ease);
 		.transition-duration(@speed_fastest);
 
+		.box-shadow(@shadow);
 		.circle(@size);
 
 		.background-size(cover);
@@ -38,14 +39,6 @@
 		}
 
 		&:hover {
-			.box-shadow(@shadow);
-
-			@media all and (min-width: @screen_mm) {
-				.circle(@size_enlarged);
-
-				margin: @bleed;
-			}
-
 			+ figcaption {
 				.title {
 					color: @gold;
@@ -82,23 +75,21 @@
 
 		@media all and (max-width: @screen_mm) {
 			+ li {
+				margin-top: @gap * 2;
+			}
+		}
+
+		@media all and (max-width: @screen_l) {
+			height: auto;
+
+			+ li {
 				margin-top: @gap;
 			}
 		}
 
 		@media all and (min-width: @screen_mm) {
 			&:nth-child(odd) {
-				a {
-					&:hover {
-						+ figcaption {
-							margin-left: @gap_enlarged;
-						}
-					}
-				}
-
 				figcaption {
-					.transition-property(margin-left);
-
 					margin-left: @gap;
 				}
 			}
@@ -108,14 +99,6 @@
 
 				figure {
 					.flex-direction(row-reverse);
-				}
-
-				a {
-					&:hover {
-						+ figcaption {
-							margin-right: @gap_enlarged;
-						}
-					}
 				}
 
 				figcaption {
@@ -130,10 +113,6 @@
 					margin-top: -(@size / 3);
 				}
 			}
-		}
-
-		@media all and (max-width: @screen_l) {
-			height: auto;
 		}
 	}
 

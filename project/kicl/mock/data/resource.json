@@ -21,7 +21,105 @@
 		},
 		"copyright" : {
 			"message" : "All rights reserve © {{year}} Keni, Lam (Ki.CL)"
-		}
+		},
+		"contactForm" : {
+			"action" : "http://ki-cl.com/widget/component/contactform/action.php",
+			"message" : "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+			"field" : [
+				{
+					"name" : "name",
+					"label" : "Name",
+					"type" : "text",
+					"placeholder" : "Your name",
+					"required" : true,
+					"minLength" : 2
+				},
+				{
+					"name" : "email",
+					"label" : "Email",
+					"type" : "email",
+					"placeholder" : "Your email",
+					"required" : true,
+					"minLength" : 6
+				},
+				{
+					"name" : "organlisation",
+					"label" : "Organlisation",
+					"placeholder" : "Your Organlisation",
+					"type" : "text",
+					"minLength" : 2
+				},
+				{
+					"name" : "stayInTouch",
+					"label" : "Stay In Touch",
+					"type" : "radio",
+					"set" : [
+						{
+							"name" : "yes",
+							"label" : "Yes",
+							"value" : 1
+						},
+						{
+							"name" : "no",
+							"label" : "No",
+							"value" : 0
+						}
+					]
+				},
+				{
+					"name" : "message",
+					"label" : "Messages",
+					"type" : "textarea",
+					"placeholder" : "Your Messages",
+					"required" : true,
+					"minLength" : 10,
+					"maxLength" : 300
+				}
+			],
+			"button" : {
+				"loading" : {
+					"name" : "Loading"
+				},
+				"submit" : {
+					"name" : "Submit"
+				},
+				"reset" : {
+					"name" : "Reset"
+				}
+			}
+		},
+		"socialNetwork" : [
+			{
+				"name" : "Link with me on LinkedIn",
+				"className" : "linkedin",
+				"fontIcon" : "linkedin-square",
+				"url" : "https://www.linkedin.com/in/kenilam"
+			},
+			{
+				"name" : "Follow me on Twitter",
+				"className" : "twitter",
+				"fontIcon" : "twitter-square",
+				"url" : "https://twitter.com/_kicl"
+			},
+			{
+				"name" : "Add me to your Google+ circle",
+				"className" : "googlePlus",
+				"fontIcon" : "google-plus-square",
+				"url" : "https://plus.google.com/+KeniLam"
+			},
+			{
+				"name" : "See my works on Behance",
+				"className" : "behance",
+				"fontIcon" : "behance-square",
+				"url" : "https://www.behance.net/kicl"
+			},
+			{
+				"name" : "Check out my GitHub",
+				"className" : "github",
+				"fontIcon" : "github-alt",
+				"url" : "https://github.com/kenilam"
+			}
+		]
 	},
 
 	"content" : [
@@ -40,16 +138,34 @@
 					"heading" : "About Me"
 				},
 				"kicl" : {
-					"heading" : "About Ki.CL"
+					"heading" : "About Ki.CL",
+					"tool" : [
+						{
+							"name" : "AngularJS",
+							"class" : "angular"
+						},
+						{
+							"name" : "HTML5",
+							"class" : "htmlfive"
+						},
+						{
+							"name" : "CSS3",
+							"class" : "cssthree"
+						},
+						{
+							"name" : "NodeJS",
+							"class" : "node"
+						}
+					]
 				}
 			}
 		},
 		{
-			"name" : "Work",
-			"route" : "work"
+			"name" : "Projects",
+			"route" : "projects"
 		},
 		{
-			"name" : "Contact",
+			"name" : "Get in touch",
 			"route" : "contact"
 		}
 	],
@@ -58,28 +174,5 @@
 		"loading" : {
 			"message" : "loading"
 		}
-	},
-
-	"socialNetwork" : [
-		{
-			"name" : "Link with me on LinkedIn",
-			"nickname" : "linkedin",
-			"url" : "https://www.linkedin.com/in/kenilam"
-		},
-		{
-			"name" : "Follow me on Twitter",
-			"nickname" : "twitter",
-			"url" : "https://twitter.com/_kicl"
-		},
-		{
-			"name" : "Add me to your Google+ circle",
-			"nickname" : "google-plus",
-			"url" : "https://plus.google.com/+KeniLam"
-		},
-		{
-			"name" : "See my works on Behance",
-			"nickname" : "behance",
-			"url" : "https://www.behance.net/kicl"
-		}
-	]
+	}
 }

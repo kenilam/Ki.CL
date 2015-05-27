@@ -1,7 +1,9 @@
 @import '_import';
 
 main[data-route=home] {
-	.transition(font-size @speed_faster);
+	.transition-property(font-size);
+	.transition-timing-function(@ease);
+	.transition-duration(@speed_faster);
 
 	.display(flex);
 	.box-sizing(border-box);
@@ -14,19 +16,10 @@ main[data-route=home] {
 	height: 100%;
 	line-height: (@font_size * 2);
 
-	&:before {
-		.background-image(url(../asset/image/gradient.full.png));
-	}
-
-	@media all and (max-width: @grid_l) {
-		font-size: @font_size;
-		line-height: (@font_size * 1.5);
-	}
-
 	h2,
 	p {
 		@delay : (@speed * 2);
-		
+
 		.transition-property(opacity);
 		.transition-timing-function(@ease);
 		.transition-duration(@speed_slow);
@@ -72,5 +65,10 @@ main[data-route=home] {
 				.opacity(0);
 			}
 		}
+	}
+
+	@media all and (max-width: @grid_l) {
+		font-size: @font_size;
+		line-height: (@font_size * 1.5);
 	}
 }

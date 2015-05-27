@@ -1,6 +1,8 @@
 @import '_import';
 
 .globalFooter {
+	@logo_size : (@grid_ss / 4);
+
 	.transition(~'background-color @{speed_fast} @{ease}, box-shadow @{speed} @{ease}');
 
 	.display(flex);
@@ -14,26 +16,12 @@
 		background-color: @white;
 	}
 
-	@media all and (max-width: @grid_m) {
-		.justify-content(center);
-	}
-
 	.logo {
-		@size : (@grid_ss / 4);
-
-		.setLogoHeight(@size);
-		.setLogoWidth(@size * 2.5);
+		.setLogoHeight(@logo_size);
+		.setLogoWidth(@logo_size * 2.5);
 
 		margin: @space;
 		margin-left: @space * 4;
-
-		@media all and (max-width: @grid_ls) {
-			margin-left: @space;
-		}
-
-		@media all and (max-width: @grid_ml) {
-			.setLogoWidth(@size);
-		}
 	}
 
 	.socialNetwork {
@@ -41,13 +29,14 @@
 		.transition-timing-function(@ease);
 		.transition-duration(@speed_fast);
 
+		.order(2);
+
 		height: 100%;
 		margin-right: @space * 4;
 		position: absolute;
-		right: 0;
 
-		@media all and (max-width: @grid_ls) {
-			margin-right: 0;
+		a {
+			.setIconSize(1.5rem);
 		}
 	}
 
@@ -63,51 +52,66 @@
 		.transition-duration(@speed_fast);
 
 		.opacity(1);
+	}
 
-		@media all and (max-width: @grid_ms) {
+	.navigation {
+		.transition-property(opcaity);
+		.transition-timing-function(@ease);
+		.transition-duration(@speed_slow);
+
+		.opacity(1);
+
+		margin-right: @space;
+	}
+
+	.copyright {
+		color: @dark_grey;
+		font-size: .8rem;
+	}
+
+	@media all and (max-width: @grid_ls) {
+		.logo {
+			margin-left: @space;
+		}
+
+		.socialNetwork {
+			margin-right: 0;
+		}
+	}
+
+	@media all and (max-width: @grid_ml) {
+		.logo {
+			.setLogoWidth(@logo_size);
+		}
+	}
+
+	@media all and (max-width: @grid_mm) {
+		.navigation {
+			.hidden();
+		}
+	}
+
+	@media all and (max-width: @grid_ms) {
+		h1 {
 			.opacity(0);
 
 			width: 0;
 		}
 	}
 
-	.navigation {
-		.transition(opcaity @speed_slow);
-		.opacity(1);
+	@media all and (max-width: @grid_m) {
+		.justify-content(center);
 
-		margin-right: @space;
-
-		@media all and (max-width: @grid_mm) {
-			.hidden();
-		}
-	}
-
-	.copyright {
-		color: @dark_grey;
-		font-size: .8rem;
-
-		@media all and (max-width: @grid_m) {
-			.hidden();
-		}
-	}
-
-	.socialNetwork {
-		.order(2);
-
-		height: 100%;
-		position: absolute;
-		right: 0;
-
-		a {
-			.setIconSize(1.5rem);
-		}
-
-		@media all and (max-width: @grid_m) {
+		.socialNetwork {
 			.align-self(center);
 
 			left: 0;
 			position: relative;
 			right: auto;
+		}
+
+		.copyright {
+			.hidden();
 		}
 	}
 }

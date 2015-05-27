@@ -1,14 +1,14 @@
 <aside class="socialNetwork">
-    <ul>
-        <li
-            class="{{network.nickname}}"
-            ng-repeat="network in socialNetwork"
-        >
-            <a
-                class="fa fa-{{network.nickname}}-square"
-                ng-href="{{network.url}}" title="{{network.name}}"
-                target="_blank"
-            >{{network.name}}</a>
-        </li>
-    </ul>
+	<ul>
+		<li
+			class="{{network.className}}"
+			ng-repeat="network in socialNetwork"
+		>
+			<a
+				class="fa fa-{{network.fontIcon}}"
+				ng-href="{{network.url}}" title="{{network.name}}"
+				target="_blank"
+			>{{network.name}}</a>
+		</li>
+	</ul>
 </aside>

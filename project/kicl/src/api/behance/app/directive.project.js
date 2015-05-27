@@ -23,10 +23,7 @@
 									}
 								},
 								fakeScroll = function () {
-									timeout(function () {
-										var scroll = angular.element('html, body').scrollTop();
-										angular.element('html, body').scrollTop(scroll + 1);
-									}, 0);
+									
 								},
 								setProject = function () {
 									projectId = stateParams[route];

@@ -24,8 +24,8 @@ footer[role=contentinfo] {
 }
 
 main {
-	.background-image(url(@transparent_base64));
-	.background-size(cover);
+	@gap: (@space * 3);
+
 	.box-sizing(border-box);
 
 	background-color: @darker_white;
@@ -33,13 +33,12 @@ main {
 	background-repeat: no-repeat;
 	min-height: 100%;
 	position: absolute;
+	overflow-x: hidden;
 	top: 0;
 	width: 100%;
 	z-index: 1000;
 
 	h2 {
-		@gap: (@space * 3);
-
 		.transition-property(font-size, padding);
 		.transition-timing-function(@ease);
 		.transition-duration(@speed_fast);
@@ -56,32 +55,8 @@ main {
 		}
 
 		@media all and (max-width: @grid_l) {
-			font-size: (@h_font_size * .6);
-			padding: (@gap * .75) 0;
+			.hidden();
 		}
-	}
-
-	&:before,
-	&:after {
-		.transition-property(background);
-		.transition-timing-function(@ease);
-		.transition-duration(@speed_slow);
-
-		.background-image(url(@transparent_base64));
-
-		content: '\0020';
-		display: block;
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
-	&:before {
-		z-index: -1;
-	}
-	&:after {
-		z-index: -1;
 	}
 
 	&.ng-enter,
@@ -111,6 +86,18 @@ main {
 	&.ng-leave-active {
 		.opacity(0);
 		.transform(scale3d(.8, .8, .8));
+	}
+
+	@media all and (max-width: @grid_ls) {
+		h2 {
+			padding: @gap 0;
+		}
+	}
+
+	@media all and (max-width: @grid_l) {
+		h2 {
+			.hidden();
+		}
 	}
 }
 

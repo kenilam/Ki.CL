@@ -8,10 +8,22 @@ html {
 	line-height: (@font_size * 1.5);
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, label, legend {
 	font-family: @h_font_family;
 	font-weight: @h_font_weight;
+	letter-spacing: @h_letter_space;
 }
+
+h1, h2, h3, h4, h5 {
+	text-transform: uppercase;
+}
+
+label {
+	&.forRadio {
+		font-weight: @font_weight;
+	}
+}
+
 h1 {font-size: @h_font_size;        line-height: (@h_font_size * 1.2);}
 h2 {font-size: (@h_font_size * .8); line-height: @h_font_size;}
 h3 {font-size: (@h_font_size * .6); line-height: (@h_font_size * .8);}

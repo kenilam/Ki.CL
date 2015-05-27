@@ -14,4 +14,26 @@ main[data-route^=about] {
 			padding-bottom: @gap;
 		}
 	}
+
+	@media all and (max-width: @grid_mm) {
+		text-align: center;
+
+		[data-api="behance.experience"] {
+			li {
+				+ li {
+					time {
+						padding-right: 0;
+					}
+				}
+			}
+		}
+	}
+
+	@media all and (max-width: @grid_l) {
+		h2 {
+			+ section {
+				margin-top: @gap;
+			}
+		}
+	}
 }

@@ -1,6 +1,6 @@
 @import '_import';
 
-main[data-route^=work] {
+main[data-route^=projects] {
 	@gap: (@space * 3);
 
 	background-color: @darker_white;
@@ -21,7 +21,7 @@ main[data-route^=work] {
 
 	[data-api="behance.projects"] {
 		.transition-timing-function(@ease);
-		.transition-duration(@speed_faster);
+		.transition-duration(@speed_fast);
 
 		.box-sizing(border-box);
 		.opacity(1);
@@ -31,13 +31,17 @@ main[data-route^=work] {
 		width: 90%;
 	}
 
-	&:not([data-route$=work]) {
+	&:not([data-route$=projects]) {
 		[data-api="behance.projects"] {
-			.opacity(0);
-			.transform(scale3d(.8, .8, .8), translate3d(-1 * @grid_s, 0, 0));
+			.transform(scale3d(.8, .8, .8), translate3d(@grid_s, 0, 0));
 
-			left: 25%;
+			.opacity(0);
+
+			left:0;
+			margin-left:auto;
+			margin-right:auto;
 			position: absolute;
+			right:0;
 			top: 0;
 		}
 	}
