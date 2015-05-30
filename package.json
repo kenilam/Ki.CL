@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "repository": {
 	"type": "git",
-	"url": ""
+	"url": "https://github.com/kenilam/Ki.CL"
   },
   "dependencies": {
-	"express": "3.x",
+	"express": "*",
 	"browser-sync": "*",
 	"del": "*",
 	"vinyl-paths": "*",
@@ -23,16 +23,16 @@
 	"gulp-filter": "*",
 	"gulp-ignore": "*",
 	"gulp-jsonminify": "*",
-	"gulp-less": "*",
 	"gulp-minify-css": "*",
 	"gulp-minify-html": "*",
-	"gulp-nodemon": "*",
+	"gulp-less": "*",
 	"gulp-recess": "*",
 	"gulp-rename": "*",
 	"gulp-uglify": "*",
 	"gulp-usemin": "*",
 	"gulp-util": "*",
 	"gulp-watch": "*",
+	"gulp-nodemon": "*",
 
 	"gulp-task-listing": "*",
 
@@ -48,16 +48,7 @@
 	"karma-safari-launcher": "*",
 	"karma-phantomjs-launcher": "*",
 
-	"protractor": "*",
-	"less": "*",
 	"logger": "*",
-	"node-env-file": "~0.1.0",
-	"path": "*",
-	"request": "~2.16.6",
-	"walk": "*"
-  },
-  "devDependencies": {
-	"gulp": "*",
-	"gulp-task-listing": "^1.0.0"
+	"path": "*"
   }
 }
