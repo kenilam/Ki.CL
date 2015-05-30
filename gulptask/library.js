@@ -23,7 +23,7 @@ module.exports.library = function (project, destination, dependentTasks, gulp) {
 					'!**/dist/*.min.js',
 					'!**/dist/*-min.js',
 					'!**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects}/**/*.js',
-					'!**/{grunt,Gruntfile,GruntFile,test,export}.js',
+					'!**/{grunt,Gruntfile,GruntFile,gulpfile,test,export}.js',
 					'**/src/uncompressed/**/*.js'
 				],
 				LESS: [

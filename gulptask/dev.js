@@ -59,7 +59,6 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 				return gulp.src(compile.LESS.file)
 					.pipe(changed(copy.destination))
 					.pipe(recess(compile.LESS.config).on('error', fn.error))
-					.pipe(debug())
 					.pipe(less({sourcemap: true}).on('error', fn.error))
 					.pipe(rename(function (path) {
 						path.dirname = path.dirname.replace('less', 'css');

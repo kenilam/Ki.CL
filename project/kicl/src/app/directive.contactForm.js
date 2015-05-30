@@ -59,7 +59,10 @@
 									submit : function (model) {
 										if (control.validate()) {
 											control.isLoading(true);
-											async({url: scope.contactForm.action }).post().$promise.then(callback.post, callback.error);
+											async({
+												url: scope.contactForm.action,
+												params: scope.contactForm.model,
+											}).post().$promise.then(callback.post, callback.error);
 										}
 									},
 									reset : function (event) {

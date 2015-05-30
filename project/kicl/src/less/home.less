@@ -1,5 +1,23 @@
 @import '_import';
 
+html[data-route=home] {
+	background-image: url(/asset/image/room.jpg);
+
+	min-height: @grid * 4;
+
+	.globalHeader,
+	.globalFooter {
+		background-color: transparent;
+	}
+
+	.globalHeader,
+	.globalFooter {
+		.logo {
+			.setLogoColor('red');
+		}
+	}
+}
+
 main[data-route=home] {
 	.transition-property(font-size);
 	.transition-timing-function(@ease);
@@ -8,13 +26,13 @@ main[data-route=home] {
 	.display(flex);
 	.box-sizing(border-box);
 	.flex-direction(column);
-	.justify-content(center);
 	.align-items(center);
 
-	background-color: @light_grey;
+	color: @white;
 	font-size: (@font_size * 1.5);
 	height: 100%;
 	line-height: (@font_size * 2);
+	padding: @space * 10;
 
 	h2,
 	p {

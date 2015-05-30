@@ -1,14 +1,19 @@
 @import '_import';
 
 html {
+	.transition-property(background-color, background-image);
+	.transition-timing-function(@ease);
+	.transition-duration(@speed_fast);
+
+	.background-size(cover);
+
 	background-color: @darker_white;
+	background-image: url(@transparent_base64);
+	background-repeat: no-repeat;
+	background-position: center;
 	height: 100%;
 	position: absolute;
 	width: 100%;
-
-	&:before {
-		.background-image(url(../asset/image/gradient.full.png));
-	}
 
 	* {
 		.border-radius(1px);
@@ -28,9 +33,6 @@ main {
 
 	.box-sizing(border-box);
 
-	background-color: @darker_white;
-	background-position: center;
-	background-repeat: no-repeat;
 	min-height: 100%;
 	position: absolute;
 	overflow-x: hidden;
@@ -49,14 +51,6 @@ main {
 		text-align: center;
 
 		width: 100%;
-
-		@media all and (max-width: @grid_ls) {
-			padding: @gap 0;
-		}
-
-		@media all and (max-width: @grid_l) {
-			.hidden();
-		}
 	}
 
 	&.ng-enter,
@@ -95,8 +89,10 @@ main {
 	}
 
 	@media all and (max-width: @grid_l) {
-		h2 {
-			.hidden();
+		&:not([data-route=home]) {
+			h2 {
+				.hidden();
+			}
 		}
 	}
 }

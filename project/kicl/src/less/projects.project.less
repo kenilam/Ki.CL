@@ -10,6 +10,8 @@
 
 html[data-route^=projects] {
 	&:not([data-route$=projects]) {
+		background-color: @background_color;
+
 		.navigation {
 			a[href^='#!/project'] {
 				color: @gold;
@@ -129,7 +131,7 @@ main[data-route^=projects] {
 			}
 		}
 	}
-
+	
 	&:not([data-route$=projects]) {
 		h2 {
 			color: @white;
@@ -138,19 +140,6 @@ main[data-route^=projects] {
 		[ui-view="view"] {
 			position: relative;
 			z-index: 3000;
-
-			&:before {
-				.transform(scale3d(1.2, 1.2, 1.2));
-
-				content: '\0020';
-				background-color: @background_color;
-				height: 100%;
-				left: 0;
-				position: fixed;
-				top: 0;
-				width: 100%;
-				z-index: 1000;
-			}
 
 			&.ng-enter,
 			&.ng-leave {
@@ -170,14 +159,6 @@ main[data-route^=projects] {
 			}
 
 			&.ng-enter {
-				&:before {
-					.transition-property(opacity);
-					.transition-timing-function(@ease);
-					.transition-duration(@speed_faster);
-
-					.opacity(0);
-				}
-
 				[data-api="behance.project"] {
 					.transition-delay(@speed);
 
@@ -187,10 +168,6 @@ main[data-route^=projects] {
 			}
 
 			&.ng-enter-active {
-				&:before {
-					.opacity(@backgorund_opacity);
-				}
-
 				[data-api="behance.project"] {
 					.transform(translate3d(0, 0, 0));
 					.opacity(1);
@@ -198,10 +175,6 @@ main[data-route^=projects] {
 			}
 
 			&.ng-leave {
-				&:before {
-					.opacity(0);
-				}
-
 				[data-api="behance.project"] {
 					.transform(translate3d(0, 0, 0));
 					.opacity(1);

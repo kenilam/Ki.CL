@@ -71,7 +71,7 @@
 
 .circle(@size: 100%) {
 	.border-radius(50%);
-	
+
 	min-height: @size;
 	min-width: @size;
 }
@@ -85,6 +85,17 @@
 	position: absolute;
 	top: auto;
 	width: 1px;
+}
+
+.unhide () {
+	.opacity(inherit);
+
+	height: inherit;
+	left: inherit;
+	overflow: inherit;
+	position: inherit;
+	top: inherit;
+	width: inherit;
 }
 
 .inline-block() {
