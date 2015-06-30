@@ -1,0 +1,7 @@
+<nav class="navigation">
+	<ul>
+		<li ng-repeat="list in navigation.list track by $index">
+			<a ui-sref="{{list.route}}()">{{list.name}}</a>
+		</li>
+	</ul>
+</nav>

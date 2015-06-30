@@ -1,0 +1,7 @@
+{
+	"name" : "home",
+	"route" : "home",
+	"content" : {
+		"message" : "Welcome to Ki.CL"
+	}
+}

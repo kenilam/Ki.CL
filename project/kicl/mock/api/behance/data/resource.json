@@ -4,8 +4,30 @@
 	"userName" : "kicl",
 	"apiKey" : "xxxxxxxxxxxx",
 	"widget" : {
-		"profile" : {
-			"path" : "users/:userName.json"
+		"user" : {
+			"path" : "users/:userName.json",
+			"content" : {
+				"stats" : {
+					"appreciations" : {
+						"title" : "Appreciations"
+					},
+					"comments" : {
+						"title" : "Comments"
+					},
+					"followers" : {
+						"title" : "Followers"
+					},
+					"following" : {
+						"title" : "Following"
+					},
+					"team_members" : {
+						"title" : "Team Members"
+					},
+					"views" : {
+						"title" : "Views"
+					}
+				}
+			}
 		},
 		"experience" : {
 			"path" : "users/:userName/work_experience.json",

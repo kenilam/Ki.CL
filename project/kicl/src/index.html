@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html
-	ng-app="kicl"
-	data-route="{{$root.ref.route}}"
->
+<html ng-app="kicl" data-route="{{$root.status.route}}">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="content-type" content="text/html; charset=UTF8;">
@@ -10,64 +7,28 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="fragment" content="!">
 
-		<title ng-bind="$root.status.route.toUpperCase() + ' | ' + $root.ref.info.name">Welcome To Ki.CL</title>
+		<title ng-bind="$root.status.route.toUpperCase().split('.').reverse().join(' | ') + ' | Ki.CL'">Welcome To Ki.CL</title>
+
 
 		<link rel="icon" type="image/png" href="asset/image/logo/kicl.ico">
 		<!-- build:css stylesheet/app.css -->
-		<link rel="stylesheet" href="css/lib/normalize.css" />
-		<link rel="stylesheet" href="css/lib/normalize-opentype.css" />
-		<link rel="stylesheet" href="css/lib/font-awesome.css" />
 
-		<link rel="stylesheet" href="css/lib/angular-csp.css" />
-
-		<link rel="stylesheet" href="css/base.css" />
-		<link rel="stylesheet" href="css/font.css" />
-		<link rel="stylesheet" href="css/layout.css" />
-		<link rel="stylesheet" href="css/formElement.css" />
-
-		<link rel="stylesheet" href="css/breadcrumb.css" />
-		<link rel="stylesheet" href="css/logo.css" />
-		<link rel="stylesheet" href="css/navigation.css" />
-		<link rel="stylesheet" href="css/copyright.css" />
-		<link rel="stylesheet" href="css/socialNetwork.css" />
-		<link rel="stylesheet" href="css/contactForm.css" />
-
-		<link rel="stylesheet" href="css/globalHeader.css" />
-		<link rel="stylesheet" href="css/globalFooter.css" />
-
-		<link rel="stylesheet" href="api/behance/css/experience.css" />
-		<link rel="stylesheet" href="api/behance/css/intro.css" />
-		<link rel="stylesheet" href="api/behance/css/profile.css" />
-		<link rel="stylesheet" href="api/behance/css/projects.css" />
-		<link rel="stylesheet" href="api/behance/css/project.css" />
-
-		<link rel="stylesheet" href="css/home.css" />
-		<link rel="stylesheet" href="css/about.css" />
-		<link rel="stylesheet" href="css/projects.css" />
-		<link rel="stylesheet" href="css/projects.project.css" />
-		<link rel="stylesheet" href="css/contact.css" />
-
-		<link rel="stylesheet" href="css/condition.css" />
 		<!-- endbuild -->
 	</head>
-	<body
-		class="ng-cloak loading"
-		ng-cloak
-		ng-class="{
-			'loading' : !$root.status.ready
-		}"
-	>
+	<body class="ng-cloak" ng-cloak>
 		<global-header></global-header>
-		<main
-			role="main"
-			ui-view="view"
-			data-route="{{$root.ref.route}}"
-			ng-style="{
-				'padding-top' : $root.ref.resize.globalHeader.height + $root.ref.resize.breadcrumb.height + 'px',
-				'padding-bottom' : $root.ref.resize.globalFooter.height + 'px'
-			}"
-		></main>
+
+		<main ui-view="section"></main>
+
 		<global-footer></global-footer>
+
+		<!--[if lt IE 7]>
+		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
+		<![endif]-->
+
+		<!--[if lt IE 8]>
+		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
+		<![endif]-->
 
 		<!--[if lt IE 9]>
 		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
@@ -91,39 +52,45 @@
 		<script src="lib/angular-sanitize.js"></script>
 		<script src="lib/angular-ui-router.js"></script>
 
-		<script src="app/module.js"></script>
-		<script src="app/run.js"></script>
-		<script src="app/config.js"></script>
+		<script src="kicl.js"></script>
 
-		<script src="app/filter.sec.js"></script>
+		<script src="api/api.js"></script>
+		<script src="api/behance/behance.js"></script>
+		<script src="api/behance/factory/factory.js"></script>
+		<script src="api/behance/factory/reference/reference.js"></script>
+		<script src="api/behance/service/service.js"></script>
+		<script src="api/behance/service/async/async.js"></script>
+		<script src="api/behance/component/component.js"></script>
+		<script src="api/behance/component/experience/experience.js"></script>
 
-		<script src="app/service.async.js"></script>
-		<script src="app/service.routeProperty.js"></script>
-		<script src="app/service.tween.js"></script>
-		<script src="app/service.resize.js"></script>
+		<script src="api/behance/component/user/user.js"></script>
+		<script src="api/behance/component/user/about/about.js"></script>
+		<script src="api/behance/component/user/info/info.js"></script>
+		<script src="api/behance/component/user/stats/stats.js"></script>
 
-		<script src="app/directive.breadcrumb.js"></script>
-		<script src="app/directive.copyright.js"></script>
-		<script src="app/directive.loader.js"></script>
-		<script src="app/directive.logo.js"></script>
-		<script src="app/directive.navigation.js"></script>
-		<script src="app/directive.sitemap.js"></script>
-		<script src="app/directive.socialNetwork.js"></script>
-		<script src="app/directive.contactForm.js"></script>
+		<script src="api/behance/component/projects/projects.js"></script>
 
-		<script src="app/directive.globalHeader.js"></script>
-		<script src="app/directive.globalFooter.js"></script>
+		<script src="app/component/component.js"></script>
+		<script src="app/component/logo/logo.js"></script>
+		<script src="app/component/navigation/navigation.js"></script>
+		<script src="app/component/globalHeader/globalHeader.js"></script>
+		<script src="app/component/globalFooter/globalFooter.js"></script>
+
+		<script src="app/factory/factory.js"></script>
+		<script src="app/factory/sitemap/sitemap.js"></script>
+
+		<script src="app/service/service.js"></script>
+		<script src="app/service/async/async.js"></script>
+
+		<script src="app/view/view.js"></script>
+		<script src="app/view/home/home.js"></script>
+		<script src="app/view/about/about.js"></script>
+		<script src="app/view/projects/projects.js"></script>
+		<script src="app/view/contact/contact.js"></script>
+
+		<script src="app/app.js"></script>
 
 		<script src="automation/run.template.js"></script>
-
-		<script src="api/behance/app/module.js"></script>
-		<script src="api/behance/app/run.js"></script>
-		<script src="api/behance/app/service.async.js"></script>
-		<script src="api/behance/app/directive.intro.js"></script>
-		<script src="api/behance/app/directive.experience.js"></script>
-		<script src="api/behance/app/directive.profile.js"></script>
-		<script src="api/behance/app/directive.projects.js"></script>
-		<script src="api/behance/app/directive.project.js"></script>
 		<!-- endbuild -->
 	</body>
 </html>
