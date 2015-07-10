@@ -1,4 +1,4 @@
-(function () {
+(function about () {
 	'use strict';
 
 	var ref = {},
@@ -6,7 +6,7 @@
 			name: 'about',
 			url: '/about',
 			resolve : {
-				resource: ['async', 'viewAboutResource', function (async, viewAboutResource) {
+				resource: ['async', 'viewAboutResource', function resource (async, viewAboutResource) {
 					if (ref.resource) {
 						return ref.resource;
 					}
@@ -27,12 +27,16 @@
 			resource : 'app/view/about/about.json'
 		},
 		controller = [
-			'$rootScope',
 			'$scope',
 			'resource',
 			'sitemap',
-			function controller (root, scope, resource, sitemap) {
+			function controller (scope, resource, sitemap) {
+				scope.name = resource.name;
 				scope.content = resource.content;
+				
+				sitemap.current('about', 'root');
+
+				scope.$emit('updateRoute');
 			}
 		],
 		config = [
@@ -42,15 +46,14 @@
 			}
 		],
 		run = [
-			'$rootScope', '$timeout', 'sitemap',
-			function (root, timeout, sitemap) {
+			'sitemap',
+			function run (sitemap) {
 				sitemap.add('about', {name: 'about', route: 'about'});
-				sitemap.current('about', 'root');
 			}
 		];
 
 	angular
-		.module('view.about', ['ui.router'])
+		.module('view.about', [])
 		.constant('viewAboutResource', constant.resource)
 		.config(config)
 		.run(run)

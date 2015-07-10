@@ -1,4 +1,4 @@
-(function () {
+(function home () {
 	'use strict';
 
 	var ref = {},
@@ -6,7 +6,7 @@
 			name: 'home',
 			url: '/home',
 			resolve : {
-				resource: ['async', 'viewHomeResource', function (async, viewHomeResource) {
+				resource: ['async', 'viewHomeResource', function resource (async, viewHomeResource) {
 					if (ref.resource) {
 						return ref.resource;
 					}
@@ -27,12 +27,16 @@
 			resource : 'app/view/home/home.json'
 		},
 		controller = [
-			'$rootScope',
 			'$scope',
 			'resource',
 			'sitemap',
-			function controller (root, scope, resource, sitemap) {
+			function controller (scope, resource, sitemap) {
+				scope.name = resource.name;
 				scope.content = resource.content;
+				
+				sitemap.current('home', 'root');
+
+				scope.$emit('updateRoute');
 			}
 		],
 		config = [
@@ -42,16 +46,14 @@
 			}
 		],
 		run = [
-			'$rootScope',
 			'sitemap',
-			function (root, sitemap) {
+			function run (sitemap) {
 				sitemap.add('home', {name: 'home', route: 'home'});
-				sitemap.current('home', 'root');
 			}
 		];
 
 	angular
-		.module('view.home', ['ui.router'])
+		.module('view.home', [])
 		.constant('viewHomeResource', constant.resource)
 		.config(config)
 		.run(run)

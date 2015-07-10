@@ -1,4 +1,4 @@
-(function () {
+(function factory () {
 	'use strict';
 
 	angular.module('factory', [

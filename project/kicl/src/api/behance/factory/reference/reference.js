@@ -1,4 +1,4 @@
-(function () {
+(function reference () {
 	'use strict';
 
 	var factory = [
@@ -11,7 +11,7 @@
 				callback = {
 					resource : function (data) {
 						resource.data = data;
-						
+
 						setComponent(data);
 
 						root.$on('$stateChangeSuccess', stateChangeSuccess(data));
@@ -19,9 +19,9 @@
 					api : function (callback) {
 						return function (data) {
 							callback(data);
-						}
+						};
 					}
-				}
+				};
 
 			function eachComponent (widget, name) {
 				component[name] = {};
@@ -36,8 +36,6 @@
 			}
 
 			function replaceExp (string, exp) {
-				var replacedString;
-
 				function eachExp (replaceTo, name) {
 					var replaceFrom = new RegExp(':' + name, 'g');
 
@@ -84,9 +82,9 @@
 
 			function stateChangeSuccess(data) {
 				function whenStateChange (event, toState, toParams, fromState, fromParams) {
-					var projectId = _.last(_.toArray(toParams));
+					var projectId = toParams.project;
 
-					_.each(data.widget, eachWidget(data, _.last(_.toArray(toParams))));
+					_.each(data.widget, eachWidget(data, projectId));
 				}
 
 				return whenStateChange;
@@ -97,9 +95,9 @@
 				api : api,
 				resource : resource,
 				callback : callback
-			}
+			};
 		}
-	]
+	];
 
 	angular
 		.module('behance.factory.reference', [])

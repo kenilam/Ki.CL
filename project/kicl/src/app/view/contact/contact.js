@@ -1,4 +1,4 @@
-(function () {
+(function contact () {
 	'use strict';
 
 	var ref = {},
@@ -6,7 +6,7 @@
 			name: 'contact',
 			url: '/contact',
 			resolve : {
-				resource: ['async', 'viewContactResource', function (async, viewContactResource) {
+				resource: ['async', 'viewContactResource', function resource (async, viewContactResource) {
 					if (ref.resource) {
 						return ref.resource;
 					}
@@ -27,13 +27,16 @@
 			resource : 'app/view/contact/contact.json'
 		},
 		controller = [
-			'$rootScope',
 			'$scope',
-			'resource',
+			'viewContactResource',
 			'sitemap',
-			function controller (root, scope, resource, sitemap) {
+			function controller (scope, resource, sitemap) {
+				scope.name = resource.name;
 				scope.content = resource.content;
+				
 				sitemap.current('contact', 'root');
+
+				scope.$emit('updateRoute');
 			}
 		],
 		config = [
@@ -43,15 +46,14 @@
 			}
 		],
 		run = [
-			'$rootScope', '$timeout', 'sitemap',
-			function (root, timeout, sitemap) {
+			'sitemap',
+			function run (sitemap) {
 				sitemap.add('contact', {name: 'contact', route: 'contact'});
-				sitemap.current('contact', 'root');
 			}
 		];
 
 	angular
-		.module('view.contact', ['ui.router'])
+		.module('view.contact', [])
 		.constant('viewContactResource', constant.resource)
 		.config(config)
 		.run(run)

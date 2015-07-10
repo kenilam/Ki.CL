@@ -1,27 +1,39 @@
-(function () {
+(function app () {
 	'use strict';
 
 	var callback = {
-			stateChangeSuccess : function (root, sitemap) {
-				function whenStateChangeStart (event, toState, toParams, fromState, fromParams) {
-					root.status.route = sitemap.current().route;
-				};
-
-				return whenStateChangeStart;
-			},
 			stateChangeError : function (event, toState, toParams, fromState, fromParams, error) {
 				console.error(error);
 			},
+			updateRoute : function (root, sitemap) {
+				var route = [];
+
+				function currentRoute (current) {
+					if (current.parent && !current.root) {
+						currentRoute(current.parent);
+					}
+
+					if (!current.route && current.root) {
+						return;
+					}
+
+					route.push(current.route);
+				}
+
+				function whenUpdateRoute () {
+					route = [];
+
+					currentRoute(sitemap.current());
+					
+					root.status.route = route.join('.');
+				}
+
+				return whenUpdateRoute;
+			},
 			init : function (root, sitemap) {
-				var stateChangeSuccess = callback.stateChangeSuccess(root, sitemap),
-					stateChangeError = callback.stateChangeError;
-
 				function whenInit () {
-					stateChangeSuccess();
-
-					root.$on('$stateChangeSuccess', stateChangeSuccess);
 					root.$on('$stateChangeError', callback.stateChangeError);
-				};
+				}
 
 				return whenInit;
 			}
@@ -56,9 +68,13 @@
 		run = [
 			'$rootScope', '$timeout', 'index', 'sitemap',
 			function run (root, timeout, index, sitemap) {
+				var updateRoute = callback.updateRoute(root, sitemap);
+
 				root.status = {
 					route : index
 				};
+
+				root.$on('updateRoute', updateRoute);
 
 				timeout(callback.init(root, sitemap), 0);
 			}

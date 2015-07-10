@@ -1,4 +1,4 @@
-(function () {
+(function globalHeader () {
 	'use strict';
 
 	function directive () {

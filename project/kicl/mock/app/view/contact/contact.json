@@ -1,3 +1,7 @@
 {
-	"name" : "contact"
+	"name" : "contact",
+	"route" : "contact",
+	"content" : {
+		
+	}
 }

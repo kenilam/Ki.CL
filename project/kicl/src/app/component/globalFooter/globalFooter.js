@@ -1,4 +1,4 @@
-(function () {
+(function globalFooter () {
 	'use strict';
 
 	function directive () {

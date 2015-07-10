@@ -1,4 +1,4 @@
-(function () {
+(function info () {
 	'use strict';
 
 	var controller = [
@@ -15,7 +15,7 @@
 							scope.info.state = data.user.state;
 							scope.info.country = data.user.country;
 						}
-					}
+					};
 
 				scope.info = {};
 
@@ -25,7 +25,7 @@
 
 				reference.component.user.promise.then(callback.data);
 			}
-		]
+		];
 
 	function directive (async) {
 		return {

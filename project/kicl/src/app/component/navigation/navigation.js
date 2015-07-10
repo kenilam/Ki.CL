@@ -1,14 +1,14 @@
-(function () {
+(function navigation () {
 	'use strict';
 
 	var controller = [
-		'$rootScope', '$scope', '$element', '$timeout', 'sitemap',
-		function (root, scope, elm, timeout, sitemap) {
-			scope.navigation = {};
+			'$scope', '$element', 'sitemap',
+			function (scope, elm, sitemap) {
+				scope.navigation = {};
 
-			scope.navigation.list = sitemap.get(elm.data('list'));
-		}
-	];
+				scope.navigation.list = sitemap.get(elm.data('list'));
+			}
+		];
 
 	function directive () {
 		return {

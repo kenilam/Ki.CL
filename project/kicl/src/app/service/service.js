@@ -1,4 +1,4 @@
-(function () {
+(function service () {
 	'use strict';
 
 	angular.module('service', [

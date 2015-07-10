@@ -1,12 +1,12 @@
-(function () {
+(function logo () {
 	'use strict';
 
 	var controller = [
-		'$rootScope', '$scope', '$element', '$timeout', 'sitemap',
-		function (root, scope, elm, timeout, sitemap) {
-			scope.logo = sitemap.get('root').home;
-		}
-	];
+		'$scope', 'sitemap',
+			function (scope, sitemap) {
+				scope.logo = sitemap.get('root').home;
+			}
+		];
 
 	function directive () {
 		return {

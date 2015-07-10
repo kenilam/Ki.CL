@@ -20,9 +20,6 @@
 					"following" : {
 						"title" : "Following"
 					},
-					"team_members" : {
-						"title" : "Team Members"
-					},
 					"views" : {
 						"title" : "Views"
 					}
@@ -54,6 +51,9 @@
 		"project" : {
 			"path" : "projects/:projectId.json",
 			"content" : {
+				"label" : {
+					"published_on" : "Published:"
+				},
 				"link" : {
 					"message" : "See this project in Behance"
 				},

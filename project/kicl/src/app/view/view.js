@@ -1,4 +1,4 @@
-(function () {
+(function view () {
 	'use strict';
 
 	angular.module('view', [

@@ -12,7 +12,10 @@
 
 		<link rel="icon" type="image/png" href="asset/image/logo/kicl.ico">
 		<!-- build:css stylesheet/app.css -->
-
+		<link rel="stylesheet" href="css/lib/normalize.css">
+		<link rel="stylesheet" href="css/lib/normalize-opentype.css">
+		<link rel="stylesheet" href="css/lib/angular-csp.css">
+		<link rel="stylesheet" href="css/lib/font-awesome.css">
 		<!-- endbuild -->
 	</head>
 	<body class="ng-cloak" ng-cloak>
@@ -58,8 +61,13 @@
 		<script src="api/behance/behance.js"></script>
 		<script src="api/behance/factory/factory.js"></script>
 		<script src="api/behance/factory/reference/reference.js"></script>
+
 		<script src="api/behance/service/service.js"></script>
 		<script src="api/behance/service/async/async.js"></script>
+		<script src="api/behance/service/time/time.js"></script>
+		<script src="api/behance/service/check/check.js"></script>
+		<script src="api/behance/service/modify/modify.js"></script>
+		
 		<script src="api/behance/component/component.js"></script>
 		<script src="api/behance/component/experience/experience.js"></script>
 
@@ -67,12 +75,15 @@
 		<script src="api/behance/component/user/about/about.js"></script>
 		<script src="api/behance/component/user/info/info.js"></script>
 		<script src="api/behance/component/user/stats/stats.js"></script>
-
+		
 		<script src="api/behance/component/projects/projects.js"></script>
+		<script src="api/behance/component/project/project.js"></script>
 
 		<script src="app/component/component.js"></script>
 		<script src="app/component/logo/logo.js"></script>
 		<script src="app/component/navigation/navigation.js"></script>
+		<script src="app/component/breadcrumb/breadcrumb.js"></script>
+		<script src="app/component/contactForm/contactForm.js"></script>
 		<script src="app/component/globalHeader/globalHeader.js"></script>
 		<script src="app/component/globalFooter/globalFooter.js"></script>
 
@@ -86,6 +97,7 @@
 		<script src="app/view/home/home.js"></script>
 		<script src="app/view/about/about.js"></script>
 		<script src="app/view/projects/projects.js"></script>
+		<script src="app/view/projects/project/project.js"></script>
 		<script src="app/view/contact/contact.js"></script>
 
 		<script src="app/app.js"></script>

@@ -1,3 +1,80 @@
 {
-	"name" : "about"
+	"name" : "about",
+	"route" : "about",
+	"content" : {
+		"me" : {
+			"title" : "About Me",
+			"experience" : {
+				"title" : "My Experiences"
+			}
+		},
+		"site" : {
+			"title" : "About Ki.CL",
+			"tool" : {
+				"title" : "Things I use to build this site",
+				"list" : [
+					{
+						"name" : "AngularJS",
+						"message" : [
+							"AngularJS is an open-source web application framework maintained by Google and by a community of individual developers and corporations to address many of the challenges encountered in developing single-page applications.",
+							"It aims to simplify both the development and the testing of such applications by providing a framework for client-side model–view–controller (MVC) and model-view-viewmodel (MVVM) architectures, along with components commonly used in rich Internet applications."
+						],
+						"quote" : {
+							"name" : "Wikipedia, the free encyclopedia",
+							"link" : "https://en.wikipedia.org/wiki/AngularJS"
+						},
+						"class" : "angularjs",
+						"link" : "https://en.wikipedia.org/wiki/AngularJS",
+						"image" : "asset/image/tool/angular.png"
+					},
+					{
+						"name" : "HTML5",
+						"message" : [
+							"HTML5 is a core technology markup language of the Internet used for structuring and presenting content for the World Wide Web.",
+							"As of October 2014 this is the final and complete fifth revision of the HTML standard of the World Wide Web Consortium (W3C).",
+							"The previous version, HTML 4, was standardized in 1997."
+						],
+						"quote" : {
+							"name" : "Wikipedia, the free encyclopedia",
+							"link" : "https://en.wikipedia.org/wiki/HTML5"
+						},
+						"class" : "html5",
+						"link" : "https://en.wikipedia.org/wiki/HTML5",
+						"image" : "asset/image/tool/html5.png"
+					},
+					{
+						"name" : "CSS3",
+						"message" : [
+							"Unlike CSS 2, which is a large single specification defining various features, CSS 3 is divided into several separate documents called \"modules\".",
+							"Each module adds new capabilities or extends features defined in CSS 2, preserving backward compatibility.",
+							"Work on CSS level 3 started around the time of publication of the original CSS 2 recommendation.",
+							"The earliest CSS 3 drafts were published in June 1999"
+						],
+						"quote" : {
+							"name" : "Wikipedia, the free encyclopedia",
+							"link" : "https://en.wikipedia.org/wiki/Cascading_Style_Sheets#CSS_3"
+						},
+						"class" : "css3",
+						"link" : "https://en.wikipedia.org/wiki/Cascading_Style_Sheets#CSS_3",
+						"image" : "asset/image/tool/css3.png"
+					},
+					{
+						"name" : "NodeJS",
+						"message" : [
+							"Node.js is an open source, cross-platform runtime environment for server-side and networking applications.",
+							"Node.js applications are written in JavaScript, and can be run within the Node.js runtime on OS X, Microsoft Windows, Linux, FreeBSD, NonStop, IBM AIX, IBM System z and IBM i.",
+							"Its work is hosted and supported by the Node.js Foundation, a Collaborative Project at Linux Foundation."
+						],
+						"quote" : {
+							"name" : "Wikipedia, the free encyclopedia",
+							"link" : "https://en.wikipedia.org/wiki/Node.js"
+						},
+						"class" : "nodejs",
+						"link" : "https://en.wikipedia.org/wiki/Node.js",
+						"image" : "asset/image/tool/nodejs.png"
+					}
+				]
+			}
+		}
+	}
 }

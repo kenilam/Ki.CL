@@ -1,5 +1,15 @@
 <ul data-api="behance.projects">
 	<li ng-repeat="project in projects track by $index">
-		
+		<figure>
+			<a
+				ui-sref="{{project.route}}"
+			>
+				<img ng-src="{{project.covers}}">
+			</a>
+			<figcaption>
+				<p class="title">{{project.name}}</p>
+				<p>{{resource.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
+			</figcaption>
+		</figure>
 	</li>
 </ul>

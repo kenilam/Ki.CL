@@ -1,9 +1,12 @@
-(function () {
+(function sitemap () {
 	'use strict';
+	
+	var cache = {},
+		current = cache;
 
 	function setParent (map) {
 		var mapArray = map.split('.'),
-			currentNode = sitemap,
+			currentNode = cache,
 			i = 0;
 
 		do {
@@ -11,7 +14,11 @@
 				currentNode[mapArray[i]] = {};
 			}
 
-			currentNode = currentNode[mapArray[i]].children = {};
+			if (!currentNode[mapArray[i]].children) {
+				currentNode[mapArray[i]].children = {};
+			}
+
+			currentNode = currentNode[mapArray[i]];
 
 			i ++;
 		} while (i < mapArray.length);
@@ -21,18 +28,18 @@
 
 	function findParent (map) {
 		var mapArray = map.split('.'),
-			i = 0,
-			currentNode = sitemap;
+			currentNode = cache,
+			i = 0;
 
 		do {
-			if (!currentNode[mapArray[i]] || !currentNode[mapArray[i]].children) {
+			if (!currentNode[mapArray[i]]) {
 				currentNode = undefined;
 
 				return;
 			}
 
-			currentNode = currentNode[mapArray[i]].children;
-
+			currentNode = currentNode[mapArray[i]].children || currentNode[mapArray[i]];
+			
 			i ++;
 		} while (i < mapArray.length);
 
@@ -40,45 +47,54 @@
 	}
 	
 	function factory () {
-		var sitemap = {},
-			current = sitemap;
-
 		return {
 			current : function (id, map) {
-				var parent = sitemap;
+				var parent = cache;
 
 				if (arguments.length <= 0) {
 					return current;
 				}
 
-				if (id && map && map !== 'root') {
+				if (map && map !== 'root') {
 					parent = findParent(map);
 				}
 
-				current = parent[id];
+				if (parent.children) {
+					parent = parent.children;
+				}
+
+				if (id) {
+					current = parent[id];
+				}
 
 				return current;
 			},
 			add : function (id, prop, map) {
-				var parent = sitemap;
+				var parent = cache;
 
 				if (map) {
 					parent = setParent(map);
 				}
 
-				parent[id] = prop;
+				(parent.children || parent)[id] = prop;
+
+				(parent.children || parent)[id].parent = parent;
+
+				if (!parent.children) {
+					parent[id].root = true;
+				}
 
 				return parent[id];
 			},
 			get : function (id, map) {
-				var parent = sitemap;
+				var parent = cache;
 
 				if (!id || id === 'root') {
 					return parent;
 				}
 
 				if (map) {
-					parent = setParent(map);
+					parent = findParent(map);
 				}
 
 				if (!parent.children) {

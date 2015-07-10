@@ -1,4 +1,4 @@
-(function () {
+(function user () {
 	'use strict';
 
 	function directive (async) {

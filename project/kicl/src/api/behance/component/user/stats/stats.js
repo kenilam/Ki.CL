@@ -1,4 +1,4 @@
-(function () {
+(function stats () {
 	'use strict';
 
 	var controller = [
@@ -11,7 +11,7 @@
 							scope.stats = data.user.stats;
 							scope.stats.content = reference.component.user.content.stats;
 						}
-					}
+					};
 
 				if (!reference.component.user.promise) {
 					reference.component.user.promise = reference.api.user().$promise;
@@ -19,7 +19,7 @@
 
 				reference.component.user.promise.then(callback.data);
 			}
-		]
+		];
 
 	function directive (async) {
 		return {

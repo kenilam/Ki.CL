@@ -1,4 +1,4 @@
-(function () {
+(function behance () {
 	'use strict';
 
 	var dependency = [

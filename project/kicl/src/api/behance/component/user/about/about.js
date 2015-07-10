@@ -1,4 +1,4 @@
-(function () {
+(function about () {
 	'use strict';
 
 	var controller = [
@@ -10,7 +10,7 @@
 
 							scope.about.paragraph = data.user.sections.About.split('\n\n');
 						}
-					}
+					};
 
 				scope.about = {};
 
@@ -20,7 +20,7 @@
 
 				reference.component.user.promise.then(callback.data);
 			}
-		]
+		];
 
 	function directive (async) {
 		return {

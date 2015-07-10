@@ -1,31 +1,22 @@
-(function () {
+(function projects () {
 	'use strict';
 
-	var controller = [
-			'$rootScope', '$scope', 'behanceReference',
-			function controller (root, scope, reference) {
+	var projectsRoute,
+		controller = [
+			'$rootScope', '$scope', 'behanceReference', 'behanceCheck', 'behanceModify',
+			function controller (root, scope, reference, check, modify) {
 				var callback = {
 						data : function (data) {
 							reference.component.projects.resolved = data.$resolved;
 
-							scope.projects = _.map(data.projects, eachProject).filter(checkProject);
+							modify.storage('project', { projectsRoute : projectsRoute });
+							scope.projects = check.project(_.map(data.projects, modify.project));
+							
+							scope.resource = reference.resource.data.widget.projects;
+
+							root.$broadcast('behance.projects.data', scope.projects);
 						}
-					}
-				
-				function toTime (stamp) {
-					return moment(stamp * 1000).format('MMMM, YYYY');
-				}
-
-				function checkProject (project) {
-					return project.owners[0].username = reference.resource.data.userName;
-				}
-
-				function eachProject (project) {
-					project.created_on = toTime(project.created_on);
-					project.published_on = toTime(project.published_on);
-
-					return project;
-				}
+					};
 
 				if (!reference.component.projects.promise) {
 					reference.component.projects.promise = reference.api.projects().$promise;
@@ -33,7 +24,15 @@
 
 				reference.component.projects.promise.then(callback.data);
 			}
-		]
+		],
+
+		link = function (scope, elm, attr) {
+			if (!attr.projectsRoute) {
+				throw ('behance.component.projects need data-project-route to run');
+			}
+
+			projectsRoute = attr.projectsRoute;
+		};
 
 	function directive (async) {
 		return {
@@ -43,7 +42,8 @@
 				'isolate' : '&'
 			},
 			templateUrl : 'api/behance/component/projects/projects.html',
-			controller : controller
+			controller : controller,
+			link : link
 		};
 	}
 

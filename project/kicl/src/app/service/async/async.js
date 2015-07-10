@@ -1,10 +1,10 @@
-(function () {
+(function async () {
 	'use strict';
 
 	var service = [
 		'$resource',
 		function async (resource) {
-			return function async (arg) {
+			function loader (arg) {
 				return resource(
 					arg.url + (arg.path ? arg.path: ''),
 					arg.credent,
@@ -17,7 +17,9 @@
 						'jsonp':    {params : arg.params, method:'JSONP'}
 					}
 				);
-			};
+			}
+
+			return loader;
 		}
 	];
 

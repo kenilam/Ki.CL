@@ -1,31 +1,38 @@
-(function () {
+(function experience () {
 	'use strict';
 
 	var controller = [
-			'$rootScope', '$scope', 'behanceReference',
-			function controller (root, scope, reference) {
-				var callback = {
+			'$rootScope', '$scope', 'behanceReference', 'behanceModify',
+			function controller (root, scope, reference, modify) {
+				var loader = {},
+					control = {
+						get : {
+							experience : function () {
+								var then = function (data) {
+									loader.resolved = data.$resolved;
+
+									callback.data(data);
+								};
+
+								if (!loader.promise) {
+									loader.promise = reference.api.experience().$promise;
+								}
+
+								loader.promise.then(then);
+							}
+						}
+					},
+					callback = {
 						data : function (data) {
 							reference.component.experience.resolved = data.$resolved;
-							reference.component.experience.list = _.map(data.work_experience, eachExperience);
+
+							scope.experience = _.map(data.work_experience, modify.experience);
 						}
-					}
+					};
 
-				function eachExperience (experience) {
-					var stamp = new Date(experience.start_date.split("-").reverse().join("-")).getTime();
-
-					experience.start_date = moment(stamp).format('MMMM, YYYY');
-
-					return experience;
-				}
-
-				if (!reference.component.experience.resolved) {
-					reference.api.experience().$promise.then(callback.data);
-				}
-
-				scope.experience = reference.component.experience;
+				control.get.experience();
 			}
-		]
+		];
 
 	function directive (async) {
 		return {

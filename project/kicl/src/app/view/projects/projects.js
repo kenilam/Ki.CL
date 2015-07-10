@@ -1,4 +1,4 @@
-(function () {
+(function projects () {
 	'use strict';
 
 	var ref = {},
@@ -6,12 +6,12 @@
 			name: 'projects',
 			url: '/projects',
 			resolve : {
-				resource: ['async', 'viewProjectsResource', function (async, viewHomeResource) {
+				resource: ['async', 'viewProjectsResource', function resource (async, viewProjectsResource) {
 					if (ref.resource) {
 						return ref.resource;
 					}
 
-					ref.resource = async({ url : viewHomeResource }).get().$promise;
+					ref.resource = async({ url : viewProjectsResource }).get().$promise;
 
 					return ref.resource;
 				}]
@@ -27,12 +27,18 @@
 			resource : 'app/view/projects/projects.json'
 		},
 		controller = [
-			'$rootScope',
 			'$scope',
 			'resource',
 			'sitemap',
-			function controller (root, scope, resource, sitemap) {
+			function controller (scope, resource, sitemap) {
+				scope.name = resource.name;
 				scope.content = resource.content;
+				
+				sitemap.current('projects', 'root');
+
+				capture(scope, sitemap);
+
+				scope.$emit('updateRoute');
 			}
 		],
 		config = [
@@ -42,15 +48,35 @@
 			}
 		],
 		run = [
-			'$rootScope', '$timeout', 'sitemap',
-			function (root, timeout, sitemap) {
+			'sitemap',
+			function run (sitemap) {
 				sitemap.add('projects', {name: 'projects', route: 'projects'});
-				sitemap.current('projects', 'root');
 			}
-		];
+		],
+		capture = function (scope, sitemap) {
+			scope.$on('behance.projects.data', callback.data(sitemap));
+		},
+		callback = {
+			eachProject : function (sitemap) {
+				function eachProject (project) {
+					sitemap.add(project.id, {name: project.name, route: project.id}, 'projects');
+				}
+
+				return eachProject;
+			},
+			data : function (sitemap) {
+				function data (event, projects) {
+					_.each(projects, callback.eachProject(sitemap));
+				}
+
+				return data;
+			}
+		};
 
 	angular
-		.module('view.projects', ['ui.router'])
+		.module('view.projects', [
+			'view.projects.project'
+		])
 		.constant('viewProjectsResource', constant.resource)
 		.config(config)
 		.run(run)

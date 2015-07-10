@@ -40,7 +40,6 @@ module.exports.dev = function (project, dependentTasks, gulp) {
 					if (error) return res.end(error.toString().replace(rootPath, ''));
 
 					if (uri.query.callback) {
-						console.log(uri);
 						return res.end('/**/' + uri.query.callback + '(' + data + ')');
 					}
 

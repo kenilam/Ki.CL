@@ -1,4 +1,4 @@
-(function () {
+(function async () {
 	'use strict';
 
 	var service = [
