@@ -37,8 +37,6 @@
 				sitemap.current('projects', 'root');
 
 				capture(scope, sitemap);
-
-				scope.$emit('updateRoute');
 			}
 		],
 		config = [
@@ -50,7 +48,7 @@
 		run = [
 			'sitemap',
 			function run (sitemap) {
-				sitemap.add('projects', {name: 'projects', route: 'projects'});
+				sitemap.add('projects', {name: 'projects', route: 'projects()'});
 			}
 		],
 		capture = function (scope, sitemap) {
@@ -59,7 +57,7 @@
 		callback = {
 			eachProject : function (sitemap) {
 				function eachProject (project) {
-					sitemap.add(project.id, {name: project.name, route: project.id}, 'projects');
+					sitemap.add(project.id, {name: project.name, route: 'projects.project({project:"' + project.id + '"})'}, 'projects');
 				}
 
 				return eachProject;

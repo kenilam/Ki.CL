@@ -1,7 +1,76 @@
 {
 	"name" : "contact",
 	"route" : "contact",
-	"content" : {
-		
+	"message" : "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+	"component" : {
+		"customForm" : {
+			"name" : "contactFrom",
+			"action" : "http://ki-cl.com/widget/component/contactform/action.php",
+			"message" : {
+				"required" : "required"
+			},
+			"field" : [
+				{
+					"name" : "name",
+					"label" : "Name",
+					"type" : "text",
+					"placeholder" : "Your name",
+					"required" : true,
+					"minLength" : 2
+				},
+				{
+					"name" : "email",
+					"label" : "Email",
+					"type" : "email",
+					"placeholder" : "Your email",
+					"required" : true,
+					"minLength" : 6
+				},
+				{
+					"name" : "organlisation",
+					"label" : "Organlisation",
+					"placeholder" : "Your Organlisation",
+					"type" : "text",
+					"minLength" : 2
+				},
+				{
+					"name" : "stayInTouch",
+					"label" : "Stay In Touch",
+					"type" : "radio",
+					"set" : [
+						{
+							"name" : "yes",
+							"label" : "Yes",
+							"value" : 1
+						},
+						{
+							"name" : "no",
+							"label" : "No",
+							"value" : 0
+						}
+					]
+				},
+				{
+					"name" : "message",
+					"label" : "Messages",
+					"type" : "textarea",
+					"placeholder" : "Your Messages",
+					"required" : true,
+					"minLength" : 10,
+					"maxLength" : 300
+				}
+			],
+			"button" : {
+				"loading" : {
+					"name" : "Sending"
+				},
+				"submit" : {
+					"name" : "Submit"
+				},
+				"reset" : {
+					"name" : "Reset"
+				}
+			}
+		}
 	}
 }

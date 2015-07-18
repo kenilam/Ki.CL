@@ -5,7 +5,7 @@
 		'component.logo',
 		'component.navigation',
 		'component.breadcrumb',
-		'component.contactForm',
+		'component.customForm',
 
 		'component.globalHeader',
 		'component.globalFooter'

@@ -40,15 +40,12 @@
 
 				function whenProjectLoaded () {
 					sitemap.current(scope.projectId, 'projects');
-					scope.$emit('updateRoute');
 				}
 
 				scope.name = resource.name;
 				scope.content = resource.content;
 
 				scope.projectId = stateParams.project;
-
-				capture(scope, sitemap);
 
 				timeout(whenTimeout, 0);
 			}

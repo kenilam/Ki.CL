@@ -1,3 +1,6 @@
 <nav class="breadcrumb">
-	
+	<a
+		ng-repeat="list in breadcrumb.list"
+		ui-sref="{{list.route}}"
+	>{{list.name}}</a>
 </nav>

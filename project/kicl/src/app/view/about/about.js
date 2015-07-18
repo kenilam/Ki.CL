@@ -35,8 +35,6 @@
 				scope.content = resource.content;
 				
 				sitemap.current('about', 'root');
-
-				scope.$emit('updateRoute');
 			}
 		],
 		config = [
@@ -48,7 +46,7 @@
 		run = [
 			'sitemap',
 			function run (sitemap) {
-				sitemap.add('about', {name: 'about', route: 'about'});
+				sitemap.add('about', {name: 'about', route: 'about()'});
 			}
 		];
 

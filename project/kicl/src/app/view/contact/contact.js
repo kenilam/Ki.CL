@@ -28,15 +28,21 @@
 		},
 		controller = [
 			'$scope',
-			'viewContactResource',
+			'$timeout',
+			'resource',
 			'sitemap',
-			function controller (scope, resource, sitemap) {
+			function controller (scope, timeout, resource, sitemap) {
+				function broadcast () {
+					resource.component.customForm.name = "contactFrom";
+					
+					scope.$broadcast('contact.customForm.data', resource.component.customForm);
+				}
+
 				scope.name = resource.name;
-				scope.content = resource.content;
 				
 				sitemap.current('contact', 'root');
 
-				scope.$emit('updateRoute');
+				timeout(broadcast, 0);
 			}
 		],
 		config = [
@@ -48,7 +54,7 @@
 		run = [
 			'sitemap',
 			function run (sitemap) {
-				sitemap.add('contact', {name: 'contact', route: 'contact'});
+				sitemap.add('contact', {name: 'contact', route: 'contact()'});
 			}
 		];
 

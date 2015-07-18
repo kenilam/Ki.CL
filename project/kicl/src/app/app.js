@@ -17,7 +17,9 @@
 						return;
 					}
 
-					route.push(current.route);
+					if (current.route) {
+						route.push(current.route.split('(')[0]);
+					}
 				}
 
 				function whenUpdateRoute () {
@@ -32,7 +34,7 @@
 			},
 			init : function (root, sitemap) {
 				function whenInit () {
-					root.$on('$stateChangeError', callback.stateChangeError);
+					
 				}
 
 				return whenInit;
@@ -74,7 +76,9 @@
 					route : index
 				};
 
-				root.$on('updateRoute', updateRoute);
+				root.$on('sitemap.current.updated', updateRoute);
+				root.$on('$stateChangeSuccess', updateRoute);
+				root.$on('$stateChangeError', callback.stateChangeError);
 
 				timeout(callback.init(root, sitemap), 0);
 			}

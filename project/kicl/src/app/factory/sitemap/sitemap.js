@@ -46,7 +46,7 @@
 		return currentNode;
 	}
 	
-	function factory () {
+	function factory (root) {
 		return {
 			current : function (id, map) {
 				var parent = cache;
@@ -66,6 +66,8 @@
 				if (id) {
 					current = parent[id];
 				}
+
+				root.$broadcast('sitemap.current.updated', current);
 
 				return current;
 			},
@@ -107,5 +109,5 @@
 	}
 
 	angular.module('factory.sitemap', [])
-		.service('sitemap', factory);
+		.service('sitemap', ['$rootScope', factory]);
 }());
