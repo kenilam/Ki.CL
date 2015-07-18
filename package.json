@@ -10,10 +10,10 @@
 	"browser-sync": "*",
 	"del": "*",
 	"vinyl-paths": "*",
+
 	"gulp": "*",
 	"gulp-add-src": "*",
 	"gulp-autoprefixer": "*",
-	"gulp-templatecache": "*",
 	"gulp-bower": "*",
 	"gulp-bower-src": "*",
 	"gulp-changed": "*",
@@ -22,19 +22,27 @@
 	"gulp-expect-file": "*",
 	"gulp-filter": "*",
 	"gulp-ignore": "*",
-	"gulp-jsonminify": "*",
-	"gulp-minify-css": "*",
-	"gulp-minify-html": "*",
-	"gulp-less": "*",
-	"gulp-recess": "*",
 	"gulp-rename": "*",
-	"gulp-uglify": "*",
-	"gulp-usemin": "*",
-	"gulp-util": "*",
-	"gulp-watch": "*",
-	"gulp-nodemon": "*",
 
 	"gulp-task-listing": "*",
+	
+	"gulp-templatecache": "*",
+
+	"gulp-sourcemaps": "*",
+
+	"gulp-sass": "*",
+	
+	"gulp-less": "*",
+
+	"gulp-uglify": "*",
+	
+	"gulp-minify-css": "*",
+	"gulp-minify-html": "*",
+	"gulp-jsonminify": "*",
+	"gulp-usemin": "*",
+
+	"gulp-util": "*",
+	"gulp-watch": "*",
 
 	"gulp-jshint": "*",
 	"jshint-stylish": "*",
