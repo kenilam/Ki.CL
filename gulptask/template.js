@@ -1,47 +1,63 @@
-'use strict';
-module.exports.template = function (project, environment, destination, dependentTasks, gulp, watch) {
-    if (!gulp) {
-        gulp = require('gulp');
-    }
+'use strict'
 
-    var ngTemplate = require('gulp-templatecache'),
+module.exports.template = function (project) {
+	var taskName = project + '.template',
 
-        template = {
-            HTML : [
-                './project/' + project + '/src/**/**/*.html',
-                '!./project/' + project + '/src/index.html'
-            ],
+		gulp = require('gulp'),
 
-            destination : './project/' + project + '/' + destination + '/automation'
-        },
+		fs = require('fs'),
+		
+		del = require('del'),
+		vinylPaths = require('vinyl-paths'),
 
-        fn = {
-            template: function () {
-                return gulp.src(template.HTML)
-                    .pipe(ngTemplate({
-                        output: 'run.template.js',
-                        strip: __dirname.substr(0, __dirname.length - 8) + 'project/' + project + '/src/',
-                        minify: {},
-                        moduleName: project
-                    }))
-                    .pipe(gulp.dest(template.destination))
-            }
-        },
+		template = require('gulp-templatecache'),
 
-        taskName = {
-            normal : project + '.' + environment + '.template',
-            changed : project + '.' + environment + '.changed.template'
-        };
+		watch = require('gulp-watch'),
 
-    gulp.task(taskName.normal, [dependentTasks], function () {
-        return fn.template();
-    });
+		changed = require('gulp-changed'),
 
-    if (watch) {
-        gulp.task(taskName.changed, function () {
-            return fn.template();
-        });
-    };
+		debug = require('gulp-debug'),
 
-    return taskName;
-};
+		file = {
+			template : [
+				'./project/' + project + '/src/**/**/*.html',
+				'!./project/' + project + '/src/index.html'
+			]
+		},
+
+		config = {
+			template : {
+				output: 'run.template.js',
+				strip: appRoot + '/project/' + project + '/src/',
+				minify: {},
+				moduleName: project
+			}
+		},
+
+		destination = {
+			template : './project/' + project + '/dev/automation'
+		},
+
+		fn = {
+			clean: function () {
+				var des = [];
+
+				if (fs.existsSync(appRoot + destination.template.substr(1))) {
+					des.push(destination.template);
+				}
+				
+				return gulp.src(des).pipe(vinylPaths(del));
+			},
+			template: function () {
+				return gulp.src(file.template)
+					.pipe(template(config.template))
+					.pipe(gulp.dest(destination.template));
+			}
+		}
+
+	gulp.task(taskName + '.clean', fn.clean);
+
+	gulp.task(taskName, fn.template);
+
+	return taskName;
+}

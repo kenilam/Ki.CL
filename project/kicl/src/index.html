@@ -9,19 +9,20 @@
 
 		<title ng-bind="$root.status.route.toUpperCase().split('.').reverse().join(' | ') + ' | Ki.CL'">Welcome To Ki.CL</title>
 
-
 		<link rel="icon" type="image/png" href="asset/image/logo/kicl.ico">
+
 		<!-- build:css stylesheet/app.css -->
 		<link rel="stylesheet" href="css/lib/normalize.css">
 		<link rel="stylesheet" href="css/lib/normalize-opentype.css">
 		<link rel="stylesheet" href="css/lib/angular-csp.css">
 		<link rel="stylesheet" href="css/lib/font-awesome.css">
+		<link rel="stylesheet" href="css/base.css">
 		<link rel="stylesheet" href="css/layout.css">
 		<!-- endbuild -->
 	</head>
 	<body class="ng-cloak" ng-cloak>
 		<global-header></global-header>
-
+		
 		<main ui-view="section"></main>
 
 		<global-footer></global-footer>
@@ -45,6 +46,7 @@
 		<script src="lib/jquery.js"></script>
 		<script src="lib/modernizr.js"></script>
 		<script src="lib/html5shiv.js"></script>
+		<script src="lib/html5shiv-printshiv.js"></script>
 		<script src="lib/moment.js"></script>
 		<script src="lib/underscore.js"></script>
 

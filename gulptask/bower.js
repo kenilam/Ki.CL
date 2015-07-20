@@ -1,31 +1,23 @@
-'use strict';
-module.exports.bower = function (gulp) {
+'use strict'
+
+module.exports.bower = function () {
 	var taskName = 'bower',
 
-		bower = require('gulp-bower'),
+		gulp = require('gulp'),
 		del = require('del'),
 		vinylPaths = require('vinyl-paths'),
-		bowerSrc = require('gulp-bower-src');
+		
+		bower = require('gulp-bower');
 
-	if (!gulp) {
-		gulp = require('gulp');
-	}
-
-	gulp.task('bower.clean', function () {
-		return function () {
-			try {
-				return bowerSrc().pipe(vinylPaths(del));
-			} catch (e) {
-				return true;
-			}
-		}
+	gulp.task(taskName + '.clean', function () {
+		return gulp.src('./bower_components').pipe(vinylPaths(del));
 	});
 
-	gulp.task(taskName + '.get', ['bower.clean'], function () {
+	gulp.task(taskName + '.get', [taskName + '.clean'], function () {
 		return bower();
 	});
 
-	gulp.task(taskName, ['bower.clean', 'bower.get']);
+	gulp.task(taskName, [taskName + '.get']);
 
 	return taskName;
-};
+}

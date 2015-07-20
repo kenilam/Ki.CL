@@ -11,6 +11,8 @@
 	"del": "*",
 	"vinyl-paths": "*",
 
+	"main-bower-files": "*",
+
 	"gulp": "*",
 	"gulp-add-src": "*",
 	"gulp-autoprefixer": "*",
@@ -31,7 +33,6 @@
 	"gulp-sourcemaps": "*",
 
 	"gulp-sass": "*",
-	
 	"gulp-less": "*",
 
 	"gulp-uglify": "*",

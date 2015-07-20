@@ -10,14 +10,19 @@
 	"angular-sanitize": "*",
 	"angular-ui-router": "*",
 	"ui-router-extras": "*",
-	"font-awesome": "*",
-	"lesshat": "*",
+
 	"html5shiv": "*",
+
 	"GreenSock-js": "https://github.com/greensock/GreenSock-JS.git",
 	"jquery": "*",
-	"modernizr": "*",
-	"normalize-less": "*",
 	"underscore": "*",
-	"moment": "*"
+	"moment": "*",
+
+	"modernizr": "*",
+	"normalize-scss": "*",
+	
+	"font-awesome": "*",
+
+	"compass-mixins": "*"
   }
 }

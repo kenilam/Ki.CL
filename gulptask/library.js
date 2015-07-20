@@ -1,149 +1,111 @@
-'use strict';
-module.exports.library = function (project, destination, dependentTasks, gulp) {
+'use strict'
+
+module.exports.library = function (project, dependencies) {
 	var taskName = project + '.library',
+
+		gulp = require('gulp'),
 
 		del = require('del'),
 		vinylPaths = require('vinyl-paths'),
+
+		addSrc = require('gulp-add-src'),
 		bowerSrc = require('gulp-bower-src'),
-		changed = require('gulp-changed'),
 		filter = require('gulp-filter'),
 		rename = require('gulp-rename'),
-		addsrc = require('gulp-add-src'),
+		
 		debug = require('gulp-debug'),
 
 		file = {
-			component: {
-				JS: [
-					'**/*.js',
-					'dist/*.js',
-					'!*.min.js',
-					'!*-min.js',
-					'!**/*.min.js',
-					'!**/*-min.js',
-					'!**/dist/*.min.js',
-					'!**/dist/*-min.js',
-					'!**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects}/**/*.js',
-					'!**/{grunt,Gruntfile,GruntFile,gulpfile,test,export}.js',
-					'**/src/uncompressed/**/*.js'
-				],
-				LESS: [
-					'**/*.{less,css}',
-					'**/css/*.css',
-					'!**/*.min.{less,css}',
-					'!**/css/*.min.css',
-					'!**/{support,src,test}/**/*.css',
-					'!font-awesome/{less,src}/**/*.{less,css}'
-				],
-				font: '**/fonts/*.{eot,svg,ttf,woff,woff2,otf}'
+			plugin : {
+				JS : ['./plugin/**/*.js'],
+				SCSS : ['./plugin/**/*.scss'],
+				CSS : ['./plugin/**/*.css'],
+				font : ['./plugin/**/*.{eot,svg,ttf,woff,woff2,otf}']
 			},
-			plugin: {
-				JS: [ './plugin/**/*.js' ],
-				LESS: [ './plugin/**/*.{less,css}' ]
+			JS : filter([
+				'**/*.js',
+				'**/dist/*.js',,
+				'**/src/uncompressed/**/*.js',
+				'!**/index.js',
+				'!**/*.min.js',
+				'!**/*-min.js',
+				'!**/dist/*.min.js',
+				'!**/dist/*-min.js',
+				'!**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects,templates}/**/*.js',
+				'!**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd}.js'
+			]),
+			CSS : filter([
+				'**/*.css',
+				'!**/*.min.css',
+				'!**/{support,src,test}/**/*.css'
+			]),
+			SCSS : filter([
+				'**/*.{scss, sass}',
+				'!**/*.min.{scss, sass}',
+				'!{font-awesome,normalize-scss}/**/*'
+			]),
+			font : filter([
+				'**/fonts/*.{eot,svg,ttf,woff,woff2,otf}'
+			])
+		},
+
+		destination = {
+			JS : './project/' + project + '/src/lib',
+			CSS : './project/' + project + '/src/css/lib',
+			font : './project/' + project + '/src/css/fonts'
+		},
+
+		fn = {
+			clean : function (extension) {
+				var name = taskName + '.clean.' + extension;
+
+				gulp.task(name, function () {
+					return gulp.src(destination[extension]).pipe(vinylPaths(del));
+				});
+
+				return name;
+			},
+			get : function (extension, dependency) {
+				var name = taskName + '.get.' + extension;
+
+				gulp.task(name, dependency, function () {
+					return bowerSrc()
+						.pipe(file[extension])
+						.pipe(addSrc(file.plugin[extension]))
+						.pipe(rename(function (file) {
+							var path = file.dirname.split('/'),
+								lastPath = path[path.length - 1];
+
+							file.dirname = '';
+						}))
+						.pipe(gulp.dest(destination[extension]))
+						.pipe(file[extension].restore());
+				});
+
+				return name;
 			}
 		},
 
-		dir = {
-			component: {
-				JS: destination + '/lib',
-				LESS: destination + '/less/lib',
-				font: destination + '/less/fonts'
-			},
-			plugin: {
-				JS: destination + '/lib',
-				LESS: destination + '/less/lib'
-			},
-			template: {
-				HTML : ['./project/src/{partial,view}/**/*.html']
-			}
-		};
+		getDependencies = [],
+		cleanDependencies = [];
 
-	if (!gulp) {
-		gulp = require('gulp');
+	dependencies = dependencies || [];
+
+	for (var extension in destination) {
+		var cleanTask = fn.clean(extension),
+			getTask = fn.get(extension, [cleanTask]);
+
+		cleanDependencies.push(cleanTask);
+		getDependencies.push(getTask);
 	}
 
-	gulp.task(taskName + '.clean', dependentTasks, function () {
-		return gulp.src([
-			dir.component.font,
-			dir.component.LESS,
-			dir.component.JS
-		]).pipe(vinylPaths(del));
+	gulp.task(taskName + '.clean', cleanDependencies);
+
+	gulp.task(taskName + '.get', getDependencies);
+
+	gulp.task(taskName, dependencies, function () {
+		return gulp.start(taskName + '.get');
 	});
-
-	gulp.task(taskName + '.copy.component.font', [taskName + '.clean'], function () {
-		return bowerSrc()
-			.pipe(filter(file.component.font))
-			.pipe(changed(dir.component.font))
-			.pipe(
-				rename(function (path) {
-					path.dirname = '.';
-				})
-			)
-			.pipe(gulp.dest(dir.component.font))
-	});
-
-	gulp.task(taskName + '.copy.component.LESS', [taskName + '.clean'], function () {
-		return bowerSrc()
-			.pipe(filter(file.component.LESS))
-			.pipe(changed(dir.component.LESS))
-			.pipe(
-				rename(function (path) {
-					path.dirname = '.';
-					path.extname = '.less';
-				})
-			)
-			.pipe(gulp.dest(dir.component.LESS));
-	});
-
-	gulp.task(taskName + '.copy.component.JS', [taskName + '.clean'], function () {
-		return bowerSrc()
-			.pipe(filter(file.component.JS))
-			.pipe(changed(dir.component.JS))
-			.pipe(
-				rename(function (path) {
-					if (path.dirname.indexOf('GreenSock') > -1) {
-						path.dirname = path.dirname.replace('GreenSock-js/src/uncompressed', 'greensock');
-					} else {
-						path.dirname = '.';
-					}
-				})
-			)
-			.pipe(gulp.dest(dir.component.JS));
-	});
-
-	gulp.task(taskName + '.copy.plugin.JS', [taskName + '.clean'], function () {
-		return gulp.src(file.plugin.JS)
-			.pipe(
-				rename(function (path) {
-					path.dirname = '.';
-				})
-			)
-			.pipe(gulp.dest(dir.component.JS));
-	});
-
-	gulp.task(taskName + '.copy.plugin.LESS', [taskName + '.clean'], function () {
-		return gulp.src(file.plugin.LESS)
-			.pipe(
-				rename(function (path) {
-					if (path.basename === 'lesshat') {
-						path.basename = '_lesshat';
-						path.dirname = '../';
-					} else {
-						path.dirname = '.';
-					}
-				})
-			)
-			.pipe(gulp.dest(dir.component.LESS));
-	});
-
-	gulp.task(taskName + '.copy', [
-		taskName + '.copy.component.font',
-		taskName + '.copy.component.LESS',
-		taskName + '.copy.component.JS',
-		taskName + '.copy.plugin.LESS',
-		taskName + '.copy.plugin.JS'
-	]);
-
-	gulp.task(taskName, [taskName + '.copy']);
 
 	return taskName;
-};
+}
