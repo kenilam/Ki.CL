@@ -6,8 +6,10 @@ project/**/dev
 project/**/build
 
 project/**/src/lib
-project/**/src/less/lib
-project/**/src/less/fonts
+project/**/src/css/lib
+project/**/src/css/fonts
+project/**/src/scss/lib
+project/**/src/scss/fonts
 
 node_modules
 bower_components
