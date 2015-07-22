@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports.bundlify = function (project) {
+module.exports.bundlify = function (project, dependencies) {
 	var taskName = project + '.bundlify',
 
 		gulp = require('gulp'),
@@ -47,7 +47,7 @@ module.exports.bundlify = function (project) {
 			}
 		};
 
-	gulp.task(taskName, function () {
+	gulp.task(taskName, dependencies, function () {
 		return gulp.src(file.bundlify)
 			.pipe(usemin(
 				{

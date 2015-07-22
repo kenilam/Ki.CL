@@ -4,12 +4,16 @@ module.exports.watch = function (project, whenChange) {
 	var taskName = project + '.watch',
 
 		gulp = require('gulp'),
+		del = require('del'),
+		vinylPaths = require('vinyl-paths'),
 
 		watch = require('gulp-watch'),
 		changed = require('gulp-changed'),
 		rename = require('gulp-rename'),
 		sass = require('gulp-sass'),
 		sourcemaps = require('gulp-sourcemaps'),
+
+		logger = require('logger').createLogger(),
 
 		jshint = require(appRoot + '/gulptask/jshint').jshint(project),
 		
@@ -61,12 +65,45 @@ module.exports.watch = function (project, whenChange) {
 			}
 		},
 
+		event = {
+			default : function (path, event) {
+				console.log('');
+				console.log('==== ==== ====');
+				logger.info();
+				console.log(path, event);
+				console.log('==== ==== ====');
+				console.log('');
+			},
+			add : function (path) { event.default(path, 'added'); },
+			changed : function (path) { event.default(path, 'changed'); },
+			unlink : function (path) {
+				event.default(path, 'removed');
+				
+				gulp.src(path.replace('src', 'dev')).pipe(vinylPaths(del));
+			},
+			error : error.error
+		},
+
 		fn = {
+			watcher : function (file) {
+				var watcher = watch(file);
+
+				watcher
+					.on('add', event.add)
+					.on('change', event.changed)
+					.on('unlink', event.unlink)
+					.on('addDir', event.add)
+					.on('unlinkDir', event.changed)
+					.on('unlink', event.unlink);
+
+				return watcher;
+			},
+
 			basicWatch : function (extension, format) {
 				var name = project + '.changed.' + extension;
 
 				gulp.task(name, function () {
-					return watch(file[extension])
+					return fn.watcher(file[extension])
 						.pipe(changed(destination[extension] + '**/*.' + format))
 						.pipe(gulp.dest(destination[extension]))
 						.pipe(whenChange.reload({ stream: true }));
@@ -81,15 +118,13 @@ module.exports.watch = function (project, whenChange) {
 				},
 
 				JS : function () {
-					var name = project + '.changed.' + extension;
+					var name = project + '.changed.JS';
 
-					gulp.task(name, function () {
-						return watch(file.JS, function () {
-							return gulp.start(jshint);
-						})
-						.pipe(changed(destination.JS + '**/*.js'))
-						.pipe(gulp.dest(destination.JS))
-						.pipe(whenChange.reload({ stream: true }));
+					gulp.task(name, [jshint], function () {
+						return watch(file.JS)
+							.pipe(changed(destination.JS + '**/*.js'))
+							.pipe(gulp.dest(destination.JS))
+							.pipe(whenChange.reload({ stream: true }));
 					});
 
 					return name;
@@ -103,7 +138,7 @@ module.exports.watch = function (project, whenChange) {
 					var name = project + '.changed.SCSS';
 
 					gulp.task(name, function () {
-						return watch(file.SCSS)
+						return fn.watcher(file.SCSS)
 							.pipe(changed(destination.SCSS))
 							.pipe(sourcemaps.init())
 								.pipe(sass(config.SCSS).on('error', error.error))
@@ -134,7 +169,7 @@ module.exports.watch = function (project, whenChange) {
 					var name = project + '.changed.template';
 
 					gulp.task(name, function () {
-						return watch(file.template, function () {
+						return fn.watcher(file.template, function () {
 							return gulp.start(template);
 						})
 						.pipe(whenChange.reload({ stream: true }));

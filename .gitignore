@@ -5,6 +5,8 @@
 project/**/dev
 project/**/build
 
+project/**/secret.json
+
 project/**/src/lib
 project/**/src/css/lib
 project/**/src/css/fonts

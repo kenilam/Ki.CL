@@ -1,8 +1,8 @@
 {
-	"baseUrl" : "api/behance",
-	"version" : "v2",
-	"userName" : "kicl",
-	"apiKey" : "xxxxxxxxxxxx",
+	"baseUrl" : "{{baseUrl}}",
+	"version" : "{{version}}",
+	"userName" : "{{userName}}",
+	"apiKey" : "{{apiKey}}",
 	"widget" : {
 		"user" : {
 			"path" : "users/:userName.json",

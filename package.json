@@ -24,7 +24,9 @@
 	"gulp-expect-file": "*",
 	"gulp-filter": "*",
 	"gulp-ignore": "*",
+	"gulp-modify": "*",
 	"gulp-rename": "*",
+	"gulp-util": "*",
 
 	"gulp-task-listing": "*",
 	
@@ -42,8 +44,9 @@
 	"gulp-jsonminify": "*",
 	"gulp-usemin": "*",
 
-	"gulp-util": "*",
 	"gulp-watch": "*",
+
+	"gulp-sftp": "*",
 
 	"gulp-jshint": "*",
 	"jshint-stylish": "*",

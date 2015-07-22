@@ -16,6 +16,7 @@ module.exports.kicl = function (dependencies) {
 		init = require(appRoot + '/gulptask/init').init(project),
 		dev = require(appRoot + '/gulptask/dev').dev(project),
 		build = require(appRoot + '/gulptask/build').build(project),
+		ftp = require(appRoot + '/gulptask/ftp').ftp(project),
 
 		fn = {
 			makeBrowser : function (env, middleware, whenBrowserSync) {
@@ -24,13 +25,21 @@ module.exports.kicl = function (dependencies) {
 				}
 				return whenMakeBrowser;
 			},
-			whenBrowserSync : function (browserSync) {
-				gulp.start(watch(project, browserSync));
+			watchDev : function (browserSync) {
+				return gulp.start(watch(project, browserSync));
+			},
+			whenDeploy : function () {
+				return gulp.start(ftp);
 			}
 		};
 
-	gulp.task(project + '.build.run', [build], fn.makeBrowser('build'));
-	gulp.task(project, [dev], fn.makeBrowser('dev', [middleware.mock], fn.whenBrowserSync));
+	gulp.task(dev + '.run', [dev], fn.makeBrowser('dev', [middleware.mock], fn.watchDev));
+	
+	gulp.task(build + '.run', [build], fn.makeBrowser('build'));
+
+	gulp.task(project + '.deploy', [build], fn.whenDeploy);
+
+	gulp.task(project, [dev + '.run']);
 
 	return project;
 }

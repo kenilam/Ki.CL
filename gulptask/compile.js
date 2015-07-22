@@ -23,7 +23,6 @@ module.exports.compile = function (project) {
 			JS : './project/' + project + '/src/**/*.js',
 			CSS : './project/' + project + '/src/**/*.css',
 			SCSS : './project/' + project + '/src/**/*.{sass,scss}',
-			JSON : './project/' + project + '/src/**/*.json',
 			font : './project/' + project + '/src/**/*.{eot,svg,ttf,woff,woff2,otf}',
 			image : './project/' + project + '/src/**/*.{png,jpg,gif,ico}'
 		},
@@ -33,7 +32,6 @@ module.exports.compile = function (project) {
 			JS : './project/' + project + '/dev',
 			CSS : './project/' + project + '/dev',
 			SCSS : './project/' + project + '/dev',
-			JSON : './project/' + project + '/dev',
 			font : './project/' + project + '/dev',
 			image : './project/' + project + '/dev'
 		},
@@ -99,9 +97,6 @@ module.exports.compile = function (project) {
 					});
 
 					return name;
-				},
-				JSON : function (dependencies) {
-					return fn.basicComplie('JSON', dependencies)
 				},
 				font : function (dependencies) {
 					return fn.basicComplie('font', dependencies)
