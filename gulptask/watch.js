@@ -3,12 +3,14 @@
 module.exports.watch = function (project, whenChange) {
 	var taskName = project + '.watch',
 
+		colors = require('colors'),
+
 		gulp = require('gulp'),
 		del = require('del'),
 		vinylPaths = require('vinyl-paths'),
 
+		addSrc = require('gulp-add-src'),
 		watch = require('gulp-watch'),
-		changed = require('gulp-changed'),
 		rename = require('gulp-rename'),
 		sass = require('gulp-sass'),
 		sourcemaps = require('gulp-sourcemaps'),
@@ -19,7 +21,9 @@ module.exports.watch = function (project, whenChange) {
 		
 		template = require(appRoot + '/gulptask/template').template(project),
 
-		error = require(appRoot + '/gulptask/error'),
+		plumber = require('gulp-plumber'),
+
+		error = require(appRoot + '/gulptask/error').error,
 
 		debug = require('gulp-debug'),
 
@@ -51,8 +55,10 @@ module.exports.watch = function (project, whenChange) {
 		config = {
 			SCSS : {
 				includePaths: [
-					appRoot + '/bower_components'
+					appRoot + '/bower_components',
+					appRoot + '/project/' + project + '/src/scss'
 				],
+				compass: true,
 				sourceMap: true,
 				outputStyle: 'compressed',
 				errLogToConsole: true
@@ -68,11 +74,8 @@ module.exports.watch = function (project, whenChange) {
 		event = {
 			default : function (path, event) {
 				console.log('');
-				console.log('==== ==== ====');
 				logger.info();
-				console.log(path, event);
-				console.log('==== ==== ====');
-				console.log('');
+				console.log(path.magenta, event.green);
 			},
 			add : function (path) { event.default(path, 'added'); },
 			changed : function (path) { event.default(path, 'changed'); },
@@ -81,12 +84,12 @@ module.exports.watch = function (project, whenChange) {
 				
 				gulp.src(path.replace('src', 'dev')).pipe(vinylPaths(del));
 			},
-			error : error.error
+			error : error
 		},
 
 		fn = {
-			watcher : function (file) {
-				var watcher = watch(file);
+			watcher : function (file, callback) {
+				var watcher = watch(file, callback);
 
 				watcher
 					.on('add', event.add)
@@ -103,8 +106,7 @@ module.exports.watch = function (project, whenChange) {
 				var name = project + '.changed.' + extension;
 
 				gulp.task(name, function () {
-					return fn.watcher(file[extension])
-						.pipe(changed(destination[extension] + '**/*.' + format))
+					return fn.watcher(file[extension] + '**/*.' + format)
 						.pipe(gulp.dest(destination[extension]))
 						.pipe(whenChange.reload({ stream: true }));
 				});
@@ -121,8 +123,7 @@ module.exports.watch = function (project, whenChange) {
 					var name = project + '.changed.JS';
 
 					gulp.task(name, [jshint], function () {
-						return watch(file.JS)
-							.pipe(changed(destination.JS + '**/*.js'))
+						return fn.watcher(file.JS)
 							.pipe(gulp.dest(destination.JS))
 							.pipe(whenChange.reload({ stream: true }));
 					});
@@ -138,16 +139,24 @@ module.exports.watch = function (project, whenChange) {
 					var name = project + '.changed.SCSS';
 
 					gulp.task(name, function () {
-						return fn.watcher(file.SCSS)
-							.pipe(changed(destination.SCSS))
-							.pipe(sourcemaps.init())
-								.pipe(sass(config.SCSS).on('error', error.error))
-							.pipe(sourcemaps.write())
-							.pipe(rename(function (file) {
-								file.dirname = file.dirname.replace('scss', 'css');
-							}))
-							.pipe(gulp.dest(destination.SCSS))
-							.pipe(whenChange.reload({ stream: true }));
+						var files = file;
+						return fn.watcher(file.SCSS, function (file) {
+							var path = file.path.split('/'),
+								name = path[path.length - 1];
+
+							return gulp.src(name.substr(0,1) === '_' ? files.SCSS : file.path)
+								.pipe(plumber({
+									errorHandler: error
+								}))
+								.pipe(sourcemaps.init())
+									.pipe(sass(config.SCSS))
+								.pipe(sourcemaps.write())
+								.pipe(rename(function (file) {
+									file.dirname = file.dirname.replace('scss', 'css');
+								}))
+								.pipe(gulp.dest(destination.SCSS))
+								.pipe(whenChange.reload({ stream: true }));
+						});
 					});
 
 					return name;

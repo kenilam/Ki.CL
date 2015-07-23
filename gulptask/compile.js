@@ -3,6 +3,8 @@
 module.exports.compile = function (project) {
 	var taskName = project + '.compile',
 
+		colors = require('colors'),
+
 		gulp = require('gulp'),
 		del = require('del'),
 		vinylPaths = require('vinyl-paths'),
@@ -15,6 +17,10 @@ module.exports.compile = function (project) {
 		jshint = require(appRoot + '/gulptask/jshint').jshint(project),
 		
 		template = require(appRoot + '/gulptask/template').template(project),
+
+		plumber = require('gulp-plumber'),
+
+		error = require(appRoot + '/gulptask/error').error,
 
 		debug = require('gulp-debug'),
 
@@ -39,8 +45,10 @@ module.exports.compile = function (project) {
 		config = {
 			SCSS : {
 				includePaths: [
-					appRoot + '/bower_components'
+					appRoot + '/bower_components',
+					appRoot + '/project/' + project + '/src/scss'
 				],
+				compass: true,
 				sourceMap: true,
 				outputStyle: 'compressed',
 				errLogToConsole: true
@@ -87,6 +95,9 @@ module.exports.compile = function (project) {
 
 					gulp.task(name, dependencies, function () {
 						return gulp.src(file.SCSS)
+							.pipe(plumber({
+								errorHandler: error
+							}))
 							.pipe(sourcemaps.init())
 								.pipe(sass(config.SCSS))
 							.pipe(sourcemaps.write())

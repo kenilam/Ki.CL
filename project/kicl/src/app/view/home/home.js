@@ -1,6 +1,6 @@
 (function home () {
 	'use strict';
-
+	
 	var ref = {},
 		state = {
 			name: 'home',

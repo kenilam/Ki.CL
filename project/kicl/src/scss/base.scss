@@ -1,7 +1,5 @@
-@import "compass-mixins/lib/_compass";
+@import '_import';
 
-$blue : #f2f2f2;
-
-body {
-	background: $blue;
+html {
+	font-size: $font_size;
 }

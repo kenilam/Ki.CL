@@ -1,6 +1,6 @@
 (function app () {
 	'use strict';
-		
+	
 	var callback = {
 			stateChangeError : function (event, toState, toParams, fromState, fromParams, error) {
 				console.error(error);

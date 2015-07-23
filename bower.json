@@ -23,6 +23,8 @@
 	
 	"font-awesome": "*",
 
-	"compass-mixins": "*"
+	"libsass-mixins": "*",
+	"bourbon": "*",
+	"susy": "*"
   }
 }

@@ -1,9 +1,11 @@
-@import "compass-mixins/lib/_compass";
+@import '_import';
 
 html[data-route=home] {
-	$color : #333;
-
 	body {
-		background-color: $color; 
+		background-image: url(/asset/image/room.jpg);
+		background-size: cover;
+		font-size: 1rem;
+
+		min-height: 100%;
 	}
 }

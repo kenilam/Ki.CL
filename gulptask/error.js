@@ -1,15 +1,14 @@
 'use strict'
 
 module.exports.error = function (error) {
-	var logger = require('logger').createLogger();
-
+	var logger = require('logger').createLogger(),
+		colors = require('colors');
+	
 	console.log('');
-	console.log('==== ==== ====');
-	logger.info();
-	console.log(error.plugin, error.name);
-	console.log('Reason: ', error.message);
-	console.log('==== ==== ====');
-	console.log('');
-
+	logger.error();
+	console.log((error.plugin + ': ' + error.name).underline.bold.red);
+	console.log('Reason'.yellow);
+	console.log(error.message.yellow);
+	
 	this.emit('end');
 } 
