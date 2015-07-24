@@ -2,4 +2,14 @@
 
 html {
 	font-size: $font_size;
+	min-height: 100%;
+}
+
+::selection {
+	background: $green;
+	color: $white;
+}
+::-moz-selection {
+	background: $green;
+	color: $white;
 }

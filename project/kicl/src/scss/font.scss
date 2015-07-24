@@ -1,0 +1,56 @@
+@import '_import';
+
+@mixin set-font-size ($rate) {
+	$size: $rate * $font_size;
+	
+	font-size: $size;
+	font-size: $size / $em-base * 1rem;
+	letter-spacing: $size * .2;
+	line-height: $size * 1.5;
+}
+
+html {
+	@include set-font-size(1);
+
+	color: $black;
+	font-family: $font_family;
+	font-weight: $font_weight;
+}
+
+h1, h2, h3, h4, h5, label, legend {
+	font-weight: $heading_font_weight;
+}
+
+h1, h2, h3, h4, h5 {
+	text-transform: uppercase;
+}
+
+label {
+	&.forRadio {
+		font-weight: $font_weight;
+	}
+}
+
+h1 { @include set-font-size(1.2); }
+h2 { @include set-font-size(.8); }
+h3 { @include set-font-size(.6); }
+h4 { @include set-font-size(.4); }
+h5 { @include set-font-size(.2); }
+
+a {
+	color: $gold;
+
+	&:hover {
+		color: $orange;
+	}
+
+	&.isCurrent  {
+		font-weight: $a_isCurrent_font_weight;
+	}
+}
+
+.isCurrent  {
+	a {
+		font-weight: $a_isCurrent_font_weight;
+	}
+}

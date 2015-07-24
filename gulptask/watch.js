@@ -8,14 +8,12 @@ module.exports.watch = function (project, whenChange) {
 		gulp = require('gulp'),
 		del = require('del'),
 		vinylPaths = require('vinyl-paths'),
+		logger = require('logger').createLogger(),
 
-		addSrc = require('gulp-add-src'),
 		watch = require('gulp-watch'),
 		rename = require('gulp-rename'),
 		sass = require('gulp-sass'),
 		sourcemaps = require('gulp-sourcemaps'),
-
-		logger = require('logger').createLogger(),
 
 		jshint = require(appRoot + '/gulptask/jshint').jshint(project),
 		
@@ -102,21 +100,17 @@ module.exports.watch = function (project, whenChange) {
 				return watcher;
 			},
 
-			basicWatch : function (extension, format) {
-				var name = project + '.changed.' + extension;
-
-				gulp.task(name, function () {
-					return fn.watcher(file[extension] + '**/*.' + format)
-						.pipe(gulp.dest(destination[extension]))
-						.pipe(whenChange.reload({ stream: true }));
-				});
-
-				return name;
-			},
-
 			watch : {
 				HTML : function () {
-					return fn.basicWatch('HTML', 'html');
+					var name = project + '.changed.HTML';
+
+					gulp.task(name, function () {
+						return fn.watcher(file.HTML)
+							.pipe(gulp.dest(destination.HTML))
+							.pipe(whenChange.reload({ stream: true }));
+					});
+
+					return name;
 				},
 
 				JS : function () {
@@ -132,7 +126,15 @@ module.exports.watch = function (project, whenChange) {
 				},
 
 				CSS : function () {
-					return fn.basicWatch('CSS', 'css');
+					var name = project + '.changed.CSS';
+
+					gulp.task(name, function () {
+						return fn.watcher(file.CSS)
+							.pipe(gulp.dest(destination.CSS))
+							.pipe(whenChange.reload({ stream: true }));
+					});
+
+					return name;
 				},
 
 				SCSS : function () {
@@ -141,10 +143,14 @@ module.exports.watch = function (project, whenChange) {
 					gulp.task(name, function () {
 						var files = file;
 						return fn.watcher(file.SCSS, function (file) {
-							var path = file.path.split('/'),
-								name = path[path.length - 1];
+							var path = file.path.replace('/project/' + project + '/src', '').replace(appRoot, ''),
+								pathArray = path.split('/'),
+								nameArray = pathArray.pop().split('.'),
+								extname = nameArray.pop(),
+								basename = nameArray.join('.'),
+								dirname = pathArray.join('/');
 
-							return gulp.src(name.substr(0,1) === '_' ? files.SCSS : file.path)
+							return gulp.src(basename.substr(0, 1) === '_' ? files.SCSS : file.path.replace(appRoot, '.'))
 								.pipe(plumber({
 									errorHandler: error
 								}))
@@ -152,7 +158,15 @@ module.exports.watch = function (project, whenChange) {
 									.pipe(sass(config.SCSS))
 								.pipe(sourcemaps.write())
 								.pipe(rename(function (file) {
+									if (basename.substr(0, 1) !== '_') {
+										file.dirname = dirname;
+										file.basename = basename;
+										file.extname = '.' + extname;
+									}
+
 									file.dirname = file.dirname.replace('scss', 'css');
+									file.basename = file.basename.replace('scss', 'css');
+									file.extname = file.extname.replace('scss', 'css');
 								}))
 								.pipe(gulp.dest(destination.SCSS))
 								.pipe(whenChange.reload({ stream: true }));
@@ -163,15 +177,39 @@ module.exports.watch = function (project, whenChange) {
 				},
 
 				JSON : function () {
-					return fn.basicWatch('JSON', 'json');
+					var name = project + '.changed.JSON';
+
+					gulp.task(name, [jshint], function () {
+						return fn.watcher(file.JSON)
+							.pipe(gulp.dest(destination.JSON))
+							.pipe(whenChange.reload({ stream: true }));
+					});
+
+					return name;
 				},
 
 				font : function () {
-					return fn.basicWatch('font', '{eot,svg,ttf,woff,woff2,otf}');
+					var name = project + '.changed.font';
+
+					gulp.task(name, [jshint], function () {
+						return fn.watcher(file.font)
+							.pipe(gulp.dest(destination.font))
+							.pipe(whenChange.reload({ stream: true }));
+					});
+
+					return name;
 				},
 
 				image : function () {
-					return fn.basicWatch('image', '{png,jpg,gif,ico}');
+					var name = project + '.changed.image';
+
+					gulp.task(name, [jshint], function () {
+						return fn.watcher(file.image)
+							.pipe(gulp.dest(destination.image))
+							.pipe(whenChange.reload({ stream: true }));
+					});
+
+					return name;
 				},
 
 				template : function () {

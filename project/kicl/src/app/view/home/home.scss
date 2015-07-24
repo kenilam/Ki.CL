@@ -1,11 +1,21 @@
 @import '_import';
 
 html[data-route=home] {
-	body {
-		background-image: url(/asset/image/room.jpg);
-		background-size: cover;
-		font-size: 1rem;
+	@include align-items(center);
+	@include justify-content(center);
 
-		min-height: 100%;
+	background-image: url(/asset/image/room.bw.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	.logo,
+	.navigation {
+		text-transform: uppercase;
+	}
+
+	.breadcrumb,
+	footer {
+		@include hidden();
 	}
 }

@@ -1,0 +1,10 @@
+@import '_import';
+
+html {
+	@include display(flex);
+}
+
+body {
+	@include align-items(stretch);
+	@include justify-content(stretch);
+}

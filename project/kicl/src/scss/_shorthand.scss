@@ -1,0 +1,84 @@
+@mixin opacity($opacity: 1) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin through () {
+	pointer-events: none;
+}
+
+@mixin circle ($size: 100%) {
+	@include border-radius(50%);
+
+	min-height: $size;
+	min-width: $size;
+}
+
+@mixin clip-path ($anchor...) {
+	-webkit-clip-path: polygon($anchor);
+	clip-path: polygon($anchor);
+}
+
+@mixin hidden () {
+	@include clip-path(0 0, 0 0, 0 0, 0 0);
+
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+@mixin unhide  () {
+	@include clip-path(0 0, 100% 0, 100% 100%, 0% 100%);
+
+	height: inherit;
+	left: inherit;
+	overflow: inherit;
+	position: inherit;
+	top: inherit;
+	width: inherit;
+}
+
+@mixin inline-block () {
+	display: inline-block;
+	vertical-align: middle;
+	zoom: 1;
+	*display: inline;
+}
+
+@mixin multiline-truncate($line: 2) {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: $line;
+	-webkit-box-orient: vertical;
+}
+
+@mixin truncate ($width: 100%) {
+	width: $width;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+// Media Query
+@mixin bp-large {
+  @media only screen and (max-width: 60em) {
+    @content;
+  }
+}
+
+@mixin bp-medium {
+  @media only screen and (max-width: 40em) {
+    @content;
+  }
+}
+
+@mixin bp-small {
+  @media only screen and (max-width: 30em) {
+    @content;
+  }
+}
