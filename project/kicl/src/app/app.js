@@ -32,9 +32,9 @@
 
 				return whenUpdateRoute;
 			},
-			init : function (root, sitemap) {
+			init : function (root, timeout, sitemap) {
 				function whenInit () {
-					
+					delete root.status.init;
 				}
 
 				return whenInit;
@@ -73,14 +73,15 @@
 				var updateRoute = callback.updateRoute(root, sitemap);
 
 				root.status = {
-					route : index
+					route : index,
+					init : true
 				};
 
 				root.$on('sitemap.current.updated', updateRoute);
 				root.$on('$stateChangeSuccess', updateRoute);
 				root.$on('$stateChangeError', callback.stateChangeError);
 
-				timeout(callback.init(root, sitemap), 0);
+				timeout(callback.init(root, timeout, sitemap), 500);
 			}
 		];
 

@@ -27,7 +27,11 @@
 		<link rel="stylesheet" href="app/view/home/home.css">
 		<!-- endbuild -->
 	</head>
-	<body class="ng-cloak tk-brandon-grotesque" ng-cloak>
+	<body class="ng-cloak tk-brandon-grotesque"
+		ng-class="{
+			'init' : $root.status.init
+		}"
+	ng-cloak>
 		<global-header></global-header>
 		
 		<main ui-view="section"></main>
@@ -89,6 +93,7 @@
 
 		<script src="app/component/component.js"></script>
 		<script src="app/component/logo/logo.js"></script>
+		
 		<script src="app/component/navigation/navigation.js"></script>
 		<script src="app/component/breadcrumb/breadcrumb.js"></script>
 		<script src="app/component/customForm/customForm.js"></script>

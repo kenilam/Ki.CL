@@ -1,3 +1,6 @@
 <h1 class="logo">
-	<a ui-sref="{{logo.route}}">{{logo.name}}</a>
+	<a
+		ng-attr-title="{{logo.name.toUpperCase()}} | Ki.CL"
+		ui-sref="{{logo.route}}"
+	><span>{{logo.name}}</span></a>
 </h1>

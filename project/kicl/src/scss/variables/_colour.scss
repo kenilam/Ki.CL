@@ -1,4 +1,5 @@
 $white: #f6f6f6;
+$darkest_white: shade($white, 10);
 $darker_white: shade($white, 6);
 $dark_white: shade($white, 1);
 
@@ -8,6 +9,7 @@ $light_black: tint($black, 3);
 $grey: #B7C4CC;
 $light_grey: tint($grey, 15);
 $darker_grey: #3f3f3f;
+$darkest_grey: shade($darker_grey, 30);
 $dark_grey: tint($darker_grey, 20);
 
 $green: #2FA390;

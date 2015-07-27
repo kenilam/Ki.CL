@@ -7,4 +7,6 @@ html {
 body {
 	@include align-items(stretch);
 	@include justify-content(stretch);
+
+	position: relative;
 }

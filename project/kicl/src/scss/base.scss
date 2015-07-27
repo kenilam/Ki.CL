@@ -1,8 +1,35 @@
 @import '_import';
 
 html {
+	background-color: $black;
 	font-size: $font_size;
 	min-height: 100%;
+}
+
+body {
+	&:before {
+		@include content();
+		@include display(block);
+
+		@include set-transition(background-color, clip-path, -webkit-clip-path);
+
+		background-color: $white;
+		height: calc(100% + #{$grow});
+		left: -$bleed;
+		position: absolute;
+		top: -$bleed;
+		width: calc(100% + #{$grow});
+		z-index: -1;
+	}
+	
+	&.init {
+		&:before {
+			@include clip-path(0 0,90% 80%,100% 90%,0 0);
+
+			background-color: transparent;
+		}
+
+	}
 }
 
 ::selection {

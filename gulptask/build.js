@@ -39,6 +39,10 @@ module.exports.build = function (project) {
 					return gulp.src(file[extension])
 						.pipe(rename(function (file) {
 							file.dirname = file.dirname.replace('css', '');
+
+							if (file.dirname.indexOf('fonts') > -1) {
+								file.dirname = 'fonts';
+							}
 						}))
 						.pipe(gulp.dest(destination[extension]));
 				})

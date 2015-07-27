@@ -1,0 +1,23 @@
+$grid: em(80);
+$gutter: em(16);
+
+$mobile-size: em(320);
+$tablet-size: em(720px);
+$desktop-size: em(960);
+$largedesktop-size: em(1200);
+
+
+
+$bleed: $gutter * 100;
+$grow: $bleed * 2;
+
+$x1: $bleed - $gutter;
+$x2: $bleed + $mobile-size;
+
+$y1: $bleed - $gutter;
+
+// Bourbon Neat Breakpoints
+$mobile: new-breakpoint(max-width $mobile-size 4);
+$tablet: new-breakpoint(max-width $tablet-size 8);
+$desktop: new-breakpoint(max-width $desktop-size 12);
+$largedesktop: new-breakpoint(max-width $largedesktop-size 16);

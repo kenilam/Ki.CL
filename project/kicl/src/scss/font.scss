@@ -1,14 +1,5 @@
 @import '_import';
 
-@mixin set-font-size ($rate) {
-	$size: $rate * $font_size;
-	
-	font-size: $size;
-	font-size: $size / $em-base * 1rem;
-	letter-spacing: $size * .2;
-	line-height: $size * 1.5;
-}
-
 html {
 	@include set-font-size(1);
 

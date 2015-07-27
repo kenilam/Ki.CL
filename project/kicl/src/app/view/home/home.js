@@ -33,6 +33,9 @@
 			function controller (scope, resource, sitemap) {
 				scope.name = resource.name;
 				scope.content = resource.content;
+
+				scope.state = {};
+				scope.state.loading = true;
 				
 				sitemap.current('home', 'root');
 			}

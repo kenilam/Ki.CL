@@ -25,6 +25,7 @@
 
 	"libsass-mixins": "*",
 	"bourbon": "*",
+	"neat": "*",
 	"susy": "*"
   }
 }

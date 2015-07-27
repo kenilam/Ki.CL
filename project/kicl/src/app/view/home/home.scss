@@ -1,21 +1,119 @@
 @import '_import';
 
 html[data-route=home] {
+	$color: $darker_grey;
+
 	@include align-items(center);
 	@include justify-content(center);
 
-	background-image: url(/asset/image/room.bw.jpg);
-	background-position: center;
+	background-image: url(#{$image_path}room.bw.jpg);
+	background-position: bottom right;
 	background-repeat: no-repeat;
 	background-size: cover;
+	overflow: hidden;
 
 	.logo,
 	.navigation {
 		text-transform: uppercase;
 	}
 
-	.breadcrumb,
-	footer {
+	.breadcrumb {
 		@include hidden();
+	}
+
+	.globalHeader,
+	main,
+	a {
+		color: $color;
+		width: 100%;
+	}
+
+	.globalHeader,
+	main {
+		@include set-transition(opacity, transform);
+	}
+
+	.globalHeader {
+		@include transition-delay($speed);
+	}
+
+	main {
+		@include transition-delay($speed * 1.5);
+	}
+
+	body {
+		box-sizing: border-box;
+		max-width: $mobile-size;
+		position: relative;
+
+		&:not(.init) {
+			&:before {
+				@include content();
+				@include display(block);
+
+				@include clip-path(
+					$x1 - $gutter $x1 - $gutter,
+					$x2 + $gutter $y1 + $gutter,
+					$x2 calc(100% - #{$bleed} + #{$gutter} * 2),
+					$x1 calc(100% - #{$bleed} + #{$gutter})
+				);
+			}
+		}
+
+		&.init {
+			.globalHeader,
+			main {
+				@include opacity(0);
+				@include transform(translate3d($gutter, $gutter, $gutter));
+			}
+		}
+	}
+
+	.globalHeader {
+		position: relative;
+		padding-bottom: $gutter;
+	}
+
+	.globalFooter {
+		top: 100%;
+		position: absolute;
+		
+		.logo,
+		.navigation {
+			@include hidden();
+		}
+	}
+
+	.navigation {
+		a {
+			@include set-font-size(1.5);
+			font-weight: $heading_font_weight;
+			line-height: 1.5rem;
+		}
+	}
+
+	a {
+		&:hover {
+			color: $green;
+		}
+	}
+
+	@include media($tablet) {
+		@include align-items(flex-start);
+		@include justify-content(flex-start);
+
+		body {
+			padding: $gutter;
+			&:not(.init) {
+				&:before {
+					@include clip-path(
+						$x1 - $gutter $x1 - $gutter,
+						$x2 + $gutter $y1 + $gutter,
+						$x2 calc(100% - #{$bleed} + #{$gutter} * 6),
+						$x1 calc(100% - #{$bleed} + #{$gutter})
+					);
+				}
+			}
+		}
 	}
 }

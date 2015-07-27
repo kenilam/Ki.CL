@@ -4,3 +4,12 @@ $font_size: 16px;
 $font_weight: 300;
 $a_isCurrent_font_weight: 400;
 $heading_font_weight: 500;
+
+@mixin set-font-size ($rate) {
+	$size: $rate * $font_size;
+	
+	font-size: $size;
+	font-size: $size / $em-base * 1rem;
+	letter-spacing: $size * .1;
+	line-height: $size * 1.5;
+}

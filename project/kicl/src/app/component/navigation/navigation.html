@@ -1,6 +1,8 @@
 <nav class="navigation">
 	<ul>
-		<li ng-repeat="list in navigation.list track by $index">
+		<li ng-repeat="list in navigation.list track by $index"
+			ng-if="list.name !== 'home'"
+		>
 			<a ui-sref="{{list.route}}">{{list.name}}</a>
 		</li>
 	</ul>
