@@ -55,7 +55,7 @@
 					return current;
 				}
 
-				if (map && map !== 'root') {
+				if (map !== 'root') {
 					parent = findParent(map);
 				}
 
@@ -63,9 +63,12 @@
 					parent = parent.children;
 				}
 
-				if (id) {
-					current = parent[id];
+				if (!parent[id]) {
+					parent[id] = {};
+					parent[id].parent = parent;
 				}
+
+				current = parent[id];
 
 				root.$broadcast('sitemap.current.updated', current);
 

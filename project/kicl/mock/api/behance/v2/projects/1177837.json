@@ -18,7 +18,7 @@
 			"id": 383011,
 			"first_name": "Keni",
 			"last_name": "Lam",
-			"username": "kicl",
+			"username": "{{userName}}",
 			"city": "Santa Clara",
 			"state": "California",
 			"country": "United States",

@@ -1,23 +1,94 @@
-$grid: em(80);
-$gutter: em(16);
+$min-grid: em(40px);
+$grid: $min-grid * 2;
+$gutter: em(16px);
+$space: $gutter / 2;
 
-$mobile-size: em(320);
-$tablet-size: em(720px);
-$desktop-size: em(960);
-$largedesktop-size: em(1200);
+$global-header-width: $min-grid + $gutter * 2;
 
+$mobile-size: $grid * 4;
+$tablet-size: $grid * 9;
+$desktop-size: $grid * 12;
+$largedesktop-size: $grid * 15;
 
+@function query-size ($min: false, $max: false, $screen: false, $ratio: false, $orientation: false) {
+	$size: ($grid + $gutter);
 
-$bleed: $gutter * 100;
-$grow: $bleed * 2;
+	@if $min {
+		$min: ($size * $min + $gutter);
+	}
 
-$x1: $bleed - $gutter;
-$x2: $bleed + $mobile-size;
+	@if $max {
+		$max: ($size * $max + $gutter);
+	}
 
-$y1: $bleed - $gutter;
+	@if $min and not $max {
+		$width : (min-width $min);
+	}
 
-// Bourbon Neat Breakpoints
-$mobile: new-breakpoint(max-width $mobile-size 4);
-$tablet: new-breakpoint(max-width $tablet-size 8);
-$desktop: new-breakpoint(max-width $desktop-size 12);
-$largedesktop: new-breakpoint(max-width $largedesktop-size 16);
+	@if $max and not $min {
+		$width : (max-width $max);
+	}
+
+	@if $min and $max {
+		$width : (width $min $max);
+	}
+
+	@if not $screen {
+		$screen: all;
+	}
+
+	@if $ratio {
+		$ratio: (min-resolution $ratio);
+	}
+
+	@if $orientation {
+		$orientation: (orientation $orientation);
+	}
+
+	@if $orientation and $ratio {
+		@return $screen $width, $ratio, $orientation;
+	}
+
+	@if $orientation and not $ratio {
+		@return $screen $width, $orientation;
+	}
+	
+	@if $ratio and not $orientation {
+		@return $screen $width, $ratio;
+	}
+
+	@return $screen $width;
+}
+
+@mixin mobile () {
+	@include breakpoint(query-size($max: 4)) {
+		@content;
+	}
+}
+@mixin mobile-landscape () {
+	@include breakpoint(query-size($max: 4, $orientation: landscape)) {
+		@content;
+	}
+}
+
+@mixin tablet () {
+	@include breakpoint(query-size($min: 4, $max: 9)) {
+		@content;
+	}
+}
+@mixin tablet-landscape () {
+	@include breakpoint(query-size($min: 4, $max: 9, $orientation: landscape)) {
+		@content;
+	}
+}
+
+@mixin desktop () {
+	@include breakpoint(query-size($min: 9, $max: 12)) {
+		@content;
+	}
+}
+@mixin largedesktop () {
+	@include breakpoint(query-size($min: 12, $max: 15)) {
+		@content;
+	}
+}

@@ -14,6 +14,8 @@
 							scope.info.city = data.user.city;
 							scope.info.state = data.user.state;
 							scope.info.country = data.user.country;
+
+							root.$broadcast('behance.user.info.data', scope.info);
 						}
 					};
 

@@ -25,7 +25,6 @@
 
 	"libsass-mixins": "*",
 	"bourbon": "*",
-	"neat": "*",
-	"susy": "*"
+	"compass-breakpoint": "*"
   }
 }

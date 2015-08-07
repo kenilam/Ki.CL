@@ -9,6 +9,7 @@ module.exports.error = function (error) {
 	console.log((error.plugin + ': ' + error.name).underline.bold.red);
 	console.log('Reason'.yellow);
 	console.log(error.message.yellow);
-	
-	this.emit('end');
+
+	// This will end the corrent process
+	//this.emit('end');
 } 

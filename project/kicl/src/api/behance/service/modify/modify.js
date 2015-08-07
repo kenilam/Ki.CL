@@ -14,6 +14,10 @@
 				storage = {};
 			}
 
+			function dateStamp (date) {
+				return new Date(date.split("-").reverse().join("-")).getTime();
+			}
+
 			function projectModule (module) {
 				if (module.type === 'image') {
 					module.src = module.sizes[reference.resource.data.widget.project.config.module.image.size];
@@ -28,9 +32,11 @@
 			};
 
 			Modify.prototype.experience = function (experience) {
-				var stamp = new Date(experience.start_date.split("-").reverse().join("-")).getTime();
+				experience.start_date = moment(dateStamp(experience.start_date)).format('MMMM, YYYY');
 
-				experience.start_date = moment(stamp).format('MMMM, YYYY');
+				if (experience.end_date) {
+					experience.end_date = moment(dateStamp(experience.end_date)).format('MMMM, YYYY');
+				}
 
 				return experience;
 			};
@@ -61,7 +67,7 @@
 
 					project.modified = true;
 				}
-
+				
 				return project;
 			};
 

@@ -1,9 +1,15 @@
 <nav class="navigation">
 	<ul>
-		<li ng-repeat="list in navigation.list track by $index"
-			ng-if="list.name !== 'home'"
+		<li ng-repeat="(name, property) in navigation.list track by $index"
+			ng-if="property.name !== 'home'"
 		>
-			<a ui-sref="{{list.route}}">{{list.name}}</a>
+			<a
+				ng-class="{
+					'isCurrent' : $index === navigation.current.index
+				}"
+				ng-click="navigation.control.click($index, property)"
+				ui-sref="{{property.route}}"
+			>{{property.name}}</a>
 		</li>
 	</ul>
 </nav>

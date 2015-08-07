@@ -1,0 +1,23 @@
+@import '_import';
+
+.breadcrumb {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
+	box-sizing: border-box;
+	padding: $gutter;
+	width: 100%;
+
+	p {
+		@include hidden();
+	}
+
+	i {
+		margin: 0 $space;
+	}
+
+	a:last-child {
+		@include truncate(auto);
+	}
+}

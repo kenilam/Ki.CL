@@ -1,6 +1,16 @@
-<nav class="breadcrumb">
+<nav class="breadcrumb"
+	ng-show="breadcrumb.list.length > 1"
+>
+	<p>{{breadcrumb.title}}</p>
+	<i
+		class="fa fa-angle-right"
+		ng-repeat-start="list in breadcrumb.list track by $index"
+		ng-if="$index > 0"
+	></i>
 	<a
-		ng-repeat="list in breadcrumb.list"
-		ui-sref="{{list.route}}"
+		ng-repeat-end ui-sref="{{list.route}}"
+		ng-class="{
+			'isCurrent' : $index === breadcrumb.list.length - 1
+		}"
 	>{{list.name}}</a>
 </nav>

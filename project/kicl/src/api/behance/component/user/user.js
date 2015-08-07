@@ -8,10 +8,7 @@
 						data : function (data) {
 							reference.component.user.resolved = data.$resolved;
 
-							scope.stats = data.user.stats;
-							scope.stats.content = reference.component.user.content.stats;
-
-							root.$broadcast('behance.user.data', scope.projects);
+							root.$broadcast('behance.user.data', data);
 						}
 					};
 

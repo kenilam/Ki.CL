@@ -1,8 +1,7 @@
 (function project () {
 	'use strict';
 
-	var projectId,
-		controller = [
+	var controller = [
 			'$rootScope', '$scope', '$timeout', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
 			function controller (root, scope, timeout, stateParams, reference, check, modify) {
 				var loader = {},
@@ -34,6 +33,8 @@
 							scope.resource = reference.resource.data.widget.project;
 
 							scope.project = modify.project(check.project(data.project));
+
+							root.$broadcast('behance.project.data', scope.project);
 						}
 					};
 

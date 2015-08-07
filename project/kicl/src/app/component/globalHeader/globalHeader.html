@@ -1,5 +1,18 @@
-<header class="globalHeader" role="banner">
+<header
+	class="globalHeader"
+	role="banner"
+	ng-class="{
+		'isExpanded' : globalHeader.status.expanded
+	}"
+>
 	<logo></logo>
 	<navigation data-list-at-root="true" data-list="root"></navigation>
 	<breadcrumb></breadcrumb>
+	<button
+		class="closeButton"
+		ng-attr-title="{{globalHeader.closeButton[
+			globalHeader.status.expanded ? 'collapse' : 'expand'
+		].message}}"
+		ng-click="globalHeader.control.troggle()"
+	>{{globalHeader.closeButton.message}}</button>
 </header>

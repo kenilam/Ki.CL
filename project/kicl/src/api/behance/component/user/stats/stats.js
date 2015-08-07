@@ -10,6 +10,8 @@
 
 							scope.stats = data.user.stats;
 							scope.stats.content = reference.component.user.content.stats;
+
+							root.$broadcast('behance.user.stats.data', scope.stats);
 						}
 					};
 

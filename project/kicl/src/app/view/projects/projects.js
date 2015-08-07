@@ -7,11 +7,9 @@
 			url: '/projects',
 			resolve : {
 				resource: ['async', 'viewProjectsResource', function resource (async, viewProjectsResource) {
-					if (ref.resource) {
-						return ref.resource;
+					if (!ref.resource) {
+						ref.resource = async({ url : viewProjectsResource }).get().$promise;
 					}
-
-					ref.resource = async({ url : viewProjectsResource }).get().$promise;
 
 					return ref.resource;
 				}]
@@ -31,12 +29,31 @@
 			'resource',
 			'sitemap',
 			function controller (scope, resource, sitemap) {
+				var callback = {
+						data : function (event, projects) {
+							_.each(projects, eachProject);
+
+							scope.$broadcast('behance.projects.throbber.hide');
+						}
+					};
+
+				function eachProject (project) {
+					sitemap.add(
+						project.id,
+						{
+							name: project.name,
+							route: 'projects.project({project:"' + project.id + '"})'
+						},
+						'projects'
+					);
+				}
+
 				scope.name = resource.name;
 				scope.content = resource.content;
 				
-				sitemap.current('projects', 'root');
+				scope.$on('behance.projects.data', callback.data);
 
-				capture(scope, sitemap);
+				sitemap.current('projects', 'root');
 			}
 		],
 		config = [
@@ -50,26 +67,7 @@
 			function run (sitemap) {
 				sitemap.add('projects', {name: 'projects', route: 'projects()'});
 			}
-		],
-		capture = function (scope, sitemap) {
-			scope.$on('behance.projects.data', callback.data(sitemap));
-		},
-		callback = {
-			eachProject : function (sitemap) {
-				function eachProject (project) {
-					sitemap.add(project.id, {name: project.name, route: 'projects.project({project:"' + project.id + '"})'}, 'projects');
-				}
-
-				return eachProject;
-			},
-			data : function (sitemap) {
-				function data (event, projects) {
-					_.each(projects, callback.eachProject(sitemap));
-				}
-
-				return data;
-			}
-		};
+		];
 
 	angular
 		.module('view.projects', [

@@ -1,8 +1,5 @@
 @import '_import';
 
-$logo-kicl-square: "\e600";
-$logo-kicl: "\e601";
-
 @font-face {
 	font-family: 'kicl';
 	src:url('../fonts/kicl.eot?1g05q6');
@@ -14,37 +11,67 @@ $logo-kicl: "\e601";
 	font-style: normal;
 }
 
-@mixin set-logo-icon-family () {
-	@include set-font-size(4);
+@mixin set-logo-size ($size: 1.325) {
+	a {
+		@include set-font-size($size);
+	}
+}
 
-	font-family: 'kicl';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
+@mixin set-logo-content ($square: false) {
+	$logo-kicl-square: "\e600";
+	$logo-kicl: "\e601";
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	a {
+		&:before {
+			@if $square {
+				content: $logo-kicl-square;
+			} @else {
+				content: $logo-kicl;
+			}
+		}
+	}
 }
 
 .logo {
+	@include set-logo-size();
+	@include set-logo-content();
+	
+	padding: $space;
+
 	a {
-		@include set-logo-icon-family();
+		color: $darker_grey;
+		font-family: 'kicl';
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		letter-spacing: 0;
+		line-height: 1;
+		text-transform: none;
+		speak: none;
 
 		&:before {
-			content: $logo-kicl;
+			display: block;
+			text-align: center;
 		}
 
-		&.square {
-			&:before {
-				content: $logo-kicl-square;
-			}
+		&:hover {
+			color: $green;
 		}
 	}
 	
 	span {
 		@include hidden();
+	}
+
+	&.square {
+		@include set-logo-content(true);
+	}
+
+	@include mobile() {
+		@include set-logo-content(true);
+	}
+
+	@include tablet() {
+		@include set-logo-content(true);
 	}
 }

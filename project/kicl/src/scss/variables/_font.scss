@@ -1,15 +1,31 @@
 $font_family: proxima-nova, sans-serif;
-$font_size: 16px;
+$font_size: em(16px);
 
 $font_weight: 300;
 $a_isCurrent_font_weight: 400;
 $heading_font_weight: 500;
 
+@mixin font-smoothing($value: antialiased) {
+	@if $value == antialiased {
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+	@else {
+		-webkit-font-smoothing: subpixel-antialiased;
+		-moz-osx-font-smoothing: auto;
+	}
+}
+
 @mixin set-font-size ($rate) {
 	$size: $rate * $font_size;
 	
-	font-size: $size;
-	font-size: $size / $em-base * 1rem;
+	font-size: $size * $rate;
 	letter-spacing: $size * .1;
-	line-height: $size * 1.5;
+	line-height: 1.5;
+}
+
+@mixin set-h-font-size ($rate, $gutter) {
+	@include set-font-size($rate);
+
+	padding-bottom: $gutter * $rate / 2;
 }

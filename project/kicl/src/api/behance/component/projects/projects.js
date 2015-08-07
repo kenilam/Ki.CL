@@ -10,8 +10,8 @@
 							reference.component.projects.resolved = data.$resolved;
 
 							modify.storage('project', { projectsRoute : projectsRoute });
+
 							scope.projects = check.project(_.map(data.projects, modify.project));
-							
 							scope.resource = reference.resource.data.widget.projects;
 
 							root.$broadcast('behance.projects.data', scope.projects);

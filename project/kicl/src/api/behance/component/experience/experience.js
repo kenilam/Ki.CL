@@ -26,9 +26,15 @@
 						data : function (data) {
 							reference.component.experience.resolved = data.$resolved;
 
-							scope.experience = _.map(data.work_experience, modify.experience);
+							scope.experience.list = _.map(data.work_experience, modify.experience);
+
+							root.$broadcast('behance.experience.data', scope.experience);
 						}
 					};
+
+				scope.experience = {};
+				
+				scope.experience.content = reference.resource.data.widget.experience.content;
 
 				control.get.experience();
 			}

@@ -2,6 +2,9 @@
 	'use strict';
 
 	angular.module('component', [
+		'component.throbber',
+
+		'component.copyright',
 		'component.logo',
 		'component.navigation',
 		'component.breadcrumb',

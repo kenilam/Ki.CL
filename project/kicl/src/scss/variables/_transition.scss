@@ -1,12 +1,11 @@
 $ease: cubic-bezier(0.645, 0.045, 0.355, 1.000);
 $speed: 500ms;
+$slow: $speed * 2;
+$slower: $speed * 3;
+$slowest: $speed * 4;
 
 @mixin set-transition ($property...) {
 	@include transition-property($property);
 	@include transition-timing-function($ease);
 	@include transition-duration($speed);
-}
-
-a {
-	@include set-transition(color);
 }

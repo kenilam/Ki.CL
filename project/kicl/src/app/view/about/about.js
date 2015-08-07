@@ -7,11 +7,9 @@
 			url: '/about',
 			resolve : {
 				resource: ['async', 'viewAboutResource', function resource (async, viewAboutResource) {
-					if (ref.resource) {
-						return ref.resource;
+					if (!ref.resource) {
+						ref.resource = async({ url : viewAboutResource }).get().$promise;
 					}
-
-					ref.resource = async({ url : viewAboutResource }).get().$promise;
 
 					return ref.resource;
 				}]
@@ -31,8 +29,16 @@
 			'resource',
 			'sitemap',
 			function controller (scope, resource, sitemap) {
+				var callback = {
+						data : function () {
+							scope.$broadcast('behance.user.throbber.hide');
+						}
+					};
+
 				scope.name = resource.name;
 				scope.content = resource.content;
+
+				scope.$on('behance.user.data', callback.data);
 				
 				sitemap.current('about', 'root');
 			}

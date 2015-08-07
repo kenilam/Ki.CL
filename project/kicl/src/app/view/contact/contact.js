@@ -7,11 +7,9 @@
 			url: '/contact',
 			resolve : {
 				resource: ['async', 'viewContactResource', function resource (async, viewContactResource) {
-					if (ref.resource) {
-						return ref.resource;
+					if (!ref.resource) {
+						ref.resource = async({ url : viewContactResource }).get().$promise;
 					}
-
-					ref.resource = async({ url : viewContactResource }).get().$promise;
 
 					return ref.resource;
 				}]
@@ -32,7 +30,7 @@
 			'resource',
 			'sitemap',
 			function controller (scope, timeout, resource, sitemap) {
-				function broadcast () {
+				function init () {
 					resource.component.customForm.name = "contactFrom";
 					
 					scope.$broadcast('contact.customForm.data', resource.component.customForm);
@@ -42,7 +40,7 @@
 				
 				sitemap.current('contact', 'root');
 
-				timeout(broadcast, 0);
+				timeout(init, 0);
 			}
 		],
 		config = [

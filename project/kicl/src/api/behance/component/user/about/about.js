@@ -9,6 +9,8 @@
 							reference.component.user.resolved = data.$resolved;
 
 							scope.about.paragraph = data.user.sections.About.split('\n\n');
+
+							root.$broadcast('behance.user.about.data', scope.about);
 						}
 					};
 

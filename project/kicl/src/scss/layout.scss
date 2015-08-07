@@ -1,12 +1,7 @@
 @import '_import';
 
-html {
-	@include display(flex);
-}
-
+html,
 body {
-	@include align-items(stretch);
-	@include justify-content(stretch);
-
-	position: relative;
+	height: 100%;
+	width: 100%;
 }

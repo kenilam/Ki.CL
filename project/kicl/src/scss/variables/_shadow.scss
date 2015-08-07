@@ -1,0 +1,9 @@
+$shadow-distant: em(2px);
+$shadow-color: #000;
+$shadow-alpha: .2;
+$shadow-rgba: rgba(red($shadow-color), green($shadow-color), blue($shadow-color), $shadow-alpha);
+
+$shadow-left: -$shadow-distant 0 $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;
+$shadow-right: $shadow-distant 0 $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;
+$shadow-top: 0 -$shadow-distant $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;
+$shadow-bottom: 0 $shadow-distant $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;

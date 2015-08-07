@@ -1,3 +1,4 @@
+
 (function project() {
 	'use strict';
 
@@ -7,11 +8,9 @@
 			url: '/:project',
 			resolve : {
 				resource: ['async', 'viewProjectsProjectResource', function resource (async, viewProjectsProjectResource) {
-					if (ref.resource) {
-						return ref.resource;
+					if (!ref.resource) {
+						ref.resource = async({ url : viewProjectsProjectResource }).get().$promise;
 					}
-
-					ref.resource = async({ url : viewProjectsProjectResource }).get().$promise;
 
 					return ref.resource;
 				}]
@@ -34,20 +33,18 @@
 			'resource',
 			'sitemap',
 			function controller (scope, stateParams, timeout, reference, resource, sitemap) {
-				function whenTimeout () {
-					reference.component.project[scope.projectId].promise.then(whenProjectLoaded);
-				}
-
-				function whenProjectLoaded () {
-					sitemap.current(scope.projectId, 'projects');
-				}
+				var callback = {
+						data : function (event, project) {
+							scope.$broadcast('behance.project.throbber.hide');
+							
+							sitemap.current(project.id, 'projects');
+						}
+					};
 
 				scope.name = resource.name;
 				scope.content = resource.content;
 
-				scope.projectId = stateParams.project;
-
-				timeout(whenTimeout, 0);
+				scope.$on('behance.project.data', callback.data);
 			}
 		],
 		config = [
@@ -57,8 +54,10 @@
 			}
 		],
 		run = [
+			'$timeout',
+			'$stateParams',
 			'sitemap',
-			function run (sitemap) {
+			function run (timeout, stateParams, sitemap) {
 				sitemap.add('projects', {name: 'projects', route: 'projects'});
 			}
 		];

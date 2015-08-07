@@ -1,6 +1,5 @@
-@import 'susy/sass/_susy';
-@import 'bourbon/app/assets/stylesheets/_bourbon';
-@import 'neat/app/assets/stylesheets/_neat';
+@import 'bourbon/app/assets/stylesheets/bourbon';
+@import 'compass-breakpoint/stylesheets/breakpoint';
 
-@import '_variables';
-@import '_shorthand';
+@import 'variables';
+@import 'shorthand';

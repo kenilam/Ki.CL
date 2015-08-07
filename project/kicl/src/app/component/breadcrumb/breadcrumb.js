@@ -3,36 +3,62 @@
 
 	var controller = [
 			'$scope',
-			function (scope) {
-				var callback = {
-						stateChange : function (event, sitemap) {
+			'$timeout',
+			'$state',
+			'$stateParams',
+			'sitemap',
+			function (scope, timeout, state, stateParams, sitemap) {
+				var index = 0,
+					callback = {
+						sitemapUpdate : function () {
+							index = 0;
+
 							scope.breadcrumb.list = [];
-							
-							setBreadcrumb(sitemap);
+
+							timeout.cancel(scope.breadcrumb.timer.sitemapUpdate);
+							scope.breadcrumb.timer.sitemapUpdate = timeout(setBreadcrumb, 1000);
+						},
+						data : function (event, data) {
+							function eachData (value, name) {
+								scope.breadcrumb[name] = value;
+							}
+
+							_.each(data, eachData);
 						}
-					},
-					index = 0;
+					};
 
-				function setBreadcrumb (sitemap) {
-					scope.breadcrumb.list[index] = sitemap;
+				function filterBreadcrumb (list) {
+					return (list.name !== 'home');
+				}
 
-					if (sitemap.parent && !sitemap.root) {
+				function setBreadcrumb (currentSitemap) {
+					if (!currentSitemap) {
+						currentSitemap = sitemap.current();
+					}
+
+					scope.breadcrumb.list[index] = currentSitemap;
+
+					if (currentSitemap.parent && !currentSitemap.root) {
 						index = index + 1;
 
-						setBreadcrumb(sitemap.parent);
+						setBreadcrumb(currentSitemap.parent);
+
+						return;
 					}
 
-					if (sitemap.root) {
-						index = 0;
+					scope.breadcrumb.list = scope.breadcrumb.list.reverse().filter(filterBreadcrumb);
+				}
 
-						scope.breadcrumb.list.reverse();
-					}
+				function init () {
+					scope.$on('sitemap.current.updated', callback.sitemapUpdate);
 				}
 
 				scope.breadcrumb = {};
+				scope.breadcrumb.timer = {};
 				scope.breadcrumb.list = [];
 
-				scope.$on('sitemap.current.updated', callback.stateChange);
+				scope.$on('sitemap.current.updated', callback.sitemapUpdate);
+				scope.$on('breadcrumb.data', callback.data);
 			}
 		];
 

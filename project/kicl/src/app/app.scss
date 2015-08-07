@@ -1,0 +1,18 @@
+@import '_import';
+
+body {
+	position: relative;
+	width: 100%;
+}
+
+.globalHeader {
+	z-index: 2;
+}
+
+main,
+.globalFooter {
+	box-sizing: border-box;
+	padding-left: $global-header-width;
+	position: relative;
+	z-index: 1;
+}

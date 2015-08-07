@@ -16,32 +16,46 @@ h1, h2, h3, h4, h5 {
 	text-transform: uppercase;
 }
 
+html {
+	@include font-smoothing();
+}
+
 label {
 	&.forRadio {
 		font-weight: $font_weight;
 	}
 }
 
-h1 { @include set-font-size(1.2); }
-h2 { @include set-font-size(.8); }
-h3 { @include set-font-size(.6); }
-h4 { @include set-font-size(.4); }
-h5 { @include set-font-size(.2); }
+h1 { @include set-h-font-size(1.2, $gutter); }
+h2 { @include set-h-font-size(.8, $gutter); }
+h3 { @include set-h-font-size(.6, $gutter); }
+h4 { @include set-h-font-size(.4, $gutter); }
+h5 { @include set-h-font-size(.2, $gutter); }
+
 
 a {
-	color: $gold;
+	@include display(block);
+	@include set-transition(color);
+	
+	color: $green;
 
 	&:hover {
 		color: $orange;
 	}
 
 	&.isCurrent  {
+		@include through();
+
+		color: $black;
 		font-weight: $a_isCurrent_font_weight;
 	}
 }
 
 .isCurrent  {
 	a {
+		@include through();
+		
+		color: $black;
 		font-weight: $a_isCurrent_font_weight;
 	}
 }

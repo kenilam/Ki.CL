@@ -29,7 +29,8 @@ module.exports.watch = function (project, whenChange) {
 			HTML : './project/' + project + '/src/index.html',
 			JS : './project/' + project + '/src/**/*.js',
 			CSS : './project/' + project + '/src/**/*.css',
-			SCSS : './project/' + project + '/src/**/*.{sass,scss}',
+			importSCSS : './project/' + project + '/src/**/_*.{sass,scss}',
+			SCSS : ['./project/' + project + '/src/**/*.{sass,scss}', '!./project/' + project + '/src/**/_*.{sass,scss}'],
 			JSON : './project/' + project + '/src/**/*.json',
 			font : './project/' + project + '/src/**/*.{eot,svg,ttf,woff,woff2,otf}',
 			image : './project/' + project + '/src/**/*.{png,jpg,gif,ico}',
@@ -43,6 +44,7 @@ module.exports.watch = function (project, whenChange) {
 			HTML : './project/' + project + '/dev',
 			JS : './project/' + project + '/dev',
 			CSS : './project/' + project + '/dev',
+			importSCSS : './project/' + project + '/dev',
 			SCSS : './project/' + project + '/dev',
 			JSON : './project/' + project + '/dev',
 			font : './project/' + project + '/dev',
@@ -58,7 +60,7 @@ module.exports.watch = function (project, whenChange) {
 				],
 				compass: true,
 				sourceMap: true,
-				outputStyle: 'compressed',
+				outputStyle: 'expanded',
 				errLogToConsole: true
 			},
 			template : {
@@ -100,6 +102,10 @@ module.exports.watch = function (project, whenChange) {
 				return watcher;
 			},
 
+			jshint : function () {
+				return gulp.start(jshint);
+			},
+
 			watch : {
 				HTML : function () {
 					var name = project + '.changed.HTML';
@@ -115,9 +121,9 @@ module.exports.watch = function (project, whenChange) {
 
 				JS : function () {
 					var name = project + '.changed.JS';
-
+					
 					gulp.task(name, [jshint], function () {
-						return fn.watcher(file.JS)
+						return fn.watcher(file.JS, fn.jshint)
 							.pipe(gulp.dest(destination.JS))
 							.pipe(whenChange.reload({ stream: true }));
 					});
@@ -137,40 +143,47 @@ module.exports.watch = function (project, whenChange) {
 					return name;
 				},
 
-				SCSS : function () {
-					var name = project + '.changed.SCSS';
+				importSCSS : function () {
+					var name = project + '.changed.importSCSS';
 
 					gulp.task(name, function () {
-						var files = file;
-						return fn.watcher(file.SCSS, function (file) {
-							var path = file.path.replace('/project/' + project + '/src', '').replace(appRoot, ''),
-								pathArray = path.split('/'),
-								nameArray = pathArray.pop().split('.'),
-								extname = nameArray.pop(),
-								basename = nameArray.join('.'),
-								dirname = pathArray.join('/');
-
-							return gulp.src(basename.substr(0, 1) === '_' ? files.SCSS : file.path.replace(appRoot, '.'))
-								.pipe(plumber({
-									errorHandler: error
-								}))
+						return fn.watcher(file.importSCSS, function () {
+							gulp.src(file.SCSS)
 								.pipe(sourcemaps.init())
+									.pipe(plumber({
+										errorHandler: error
+									}))
 									.pipe(sass(config.SCSS))
 								.pipe(sourcemaps.write())
 								.pipe(rename(function (file) {
-									if (basename.substr(0, 1) !== '_') {
-										file.dirname = dirname;
-										file.basename = basename;
-										file.extname = '.' + extname;
-									}
-
 									file.dirname = file.dirname.replace('scss', 'css');
-									file.basename = file.basename.replace('scss', 'css');
-									file.extname = file.extname.replace('scss', 'css');
+									file.extname = file.extname.replace('scss', 'css').replace('sass', 'css');
 								}))
 								.pipe(gulp.dest(destination.SCSS))
 								.pipe(whenChange.reload({ stream: true }));
 						});
+					});
+
+					return name;
+				},
+
+				SCSS : function () {
+					var name = project + '.changed.SCSS';
+
+					gulp.task(name, function () {
+						return fn.watcher(file.SCSS)
+							.pipe(sourcemaps.init())
+								.pipe(plumber({
+									errorHandler: error
+								}))
+								.pipe(sass(config.SCSS))
+							.pipe(sourcemaps.write())
+							.pipe(rename(function (file) {
+								file.dirname = file.dirname.replace('scss', 'css').replace('sass', 'css');
+								file.extname = '.css';
+							}))
+							.pipe(gulp.dest(destination.SCSS))
+							.pipe(whenChange.reload({ stream: true }));
 					});
 
 					return name;

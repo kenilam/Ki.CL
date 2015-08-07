@@ -1,0 +1,17 @@
+@import '_import';
+
+.globalFooter {
+	@include display(flex);
+	@include flex-direction(column);
+	@include align-items(stretch);
+
+	.navigation {
+		ul {
+			@include flex-direction(column);
+		}
+
+		li {
+			width: 100%;
+		}
+	}
+}

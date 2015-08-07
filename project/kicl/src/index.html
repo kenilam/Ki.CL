@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="kicl" data-route="{{$root.status.route}}">
+<html ng-app="kicl" ng-attr-data-route="{{$root.status.route}}">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="content-type" content="text/html; charset=UTF8;">
@@ -7,7 +7,7 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="fragment" content="!">
 
-		<title ng-bind="$root.status.route.toUpperCase().split('.').reverse().join(' | ') + ' | Ki.CL'">Welcome To Ki.CL</title>
+		<title ng-bind="$root.status.title.toUpperCase ? $root.status.title.toUpperCase() + ' | Ki.CL' : 'Welcome To Ki.CL'">Welcome To Ki.CL</title>
 
 		<link rel="icon" type="image/png" href="asset/image/logo/kicl.ico">
 
@@ -16,29 +16,45 @@
 		<link rel="stylesheet" href="css/lib/normalize-opentype.css">
 		<link rel="stylesheet" href="css/lib/angular-csp.css">
 		<link rel="stylesheet" href="css/lib/font-awesome.css">
-
-		<link rel="stylesheet" href="app/component/logo/logo.css">
 		
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/base.css">
 		<link rel="stylesheet" href="css/layout.css">
 		<link rel="stylesheet" href="css/font.css">
 
+		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
+		<link rel="stylesheet" href="app/component/copyright/copyright.css">
+		<link rel="stylesheet" href="app/component/customForm/customForm.css">
+		<link rel="stylesheet" href="app/component/logo/logo.css">
+		<link rel="stylesheet" href="app/component/navigation/navigation.css">
+		<link rel="stylesheet" href="app/component/throbber/throbber.css">
+		
+		<link rel="stylesheet" href="app/component/globalHeader/globalHeader.css">
+		<link rel="stylesheet" href="app/component/globalFooter/globalFooter.css">
+
+		<link rel="stylesheet" href="app/app.css">
 		<link rel="stylesheet" href="app/view/home/home.css">
+		<link rel="stylesheet" href="app/view/about/about.css">
 		<!-- endbuild -->
 	</head>
-	<body class="ng-cloak tk-brandon-grotesque"
+	<body
+		class="ng-cloak tk-brandon-grotesque"
+		ng-cloak
 		ng-class="{
-			'init' : $root.status.init
+			'init' : $root.status.init,
+			'loading' : $root.status.loading
 		}"
-	ng-cloak>
+	>
+		<throbber data-emit-from="resource"></throbber>
+
 		<global-header></global-header>
 		
-		<main ui-view="section"></main>
+		<main ui-view="section" ng-if="!$root.status.loading"></main>
 
 		<global-footer></global-footer>
 
 		<!--[if lt IE 7]>
+		<script src="IE8.js">IE7_PNG_SUFFIX=".png";</script>
 		<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
 		<![endif]-->
 
@@ -76,9 +92,9 @@
 
 		<script src="api/behance/service/service.js"></script>
 		<script src="api/behance/service/async/async.js"></script>
-		<script src="api/behance/service/time/time.js"></script>
 		<script src="api/behance/service/check/check.js"></script>
 		<script src="api/behance/service/modify/modify.js"></script>
+		<script src="api/behance/service/time/time.js"></script>
 		
 		<script src="api/behance/component/component.js"></script>
 		<script src="api/behance/component/experience/experience.js"></script>
@@ -92,13 +108,14 @@
 		<script src="api/behance/component/project/project.js"></script>
 
 		<script src="app/component/component.js"></script>
-		<script src="app/component/logo/logo.js"></script>
-		
-		<script src="app/component/navigation/navigation.js"></script>
 		<script src="app/component/breadcrumb/breadcrumb.js"></script>
+		<script src="app/component/copyright/copyright.js"></script>
 		<script src="app/component/customForm/customForm.js"></script>
 		<script src="app/component/globalHeader/globalHeader.js"></script>
 		<script src="app/component/globalFooter/globalFooter.js"></script>
+		<script src="app/component/logo/logo.js"></script>
+		<script src="app/component/navigation/navigation.js"></script>
+		<script src="app/component/throbber/throbber.js"></script>
 
 		<script src="app/factory/factory.js"></script>
 		<script src="app/factory/sitemap/sitemap.js"></script>
@@ -107,11 +124,11 @@
 		<script src="app/service/async/async.js"></script>
 
 		<script src="app/view/view.js"></script>
-		<script src="app/view/home/home.js"></script>
 		<script src="app/view/about/about.js"></script>
+		<script src="app/view/contact/contact.js"></script>
+		<script src="app/view/home/home.js"></script>
 		<script src="app/view/projects/projects.js"></script>
 		<script src="app/view/projects/project/project.js"></script>
-		<script src="app/view/contact/contact.js"></script>
 
 		<script src="app/app.js"></script>
 

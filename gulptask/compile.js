@@ -50,7 +50,7 @@ module.exports.compile = function (project) {
 				],
 				compass: true,
 				sourceMap: true,
-				outputStyle: 'compressed',
+				outputStyle: 'expanded',
 				errLogToConsole: true
 			}
 		},
@@ -95,14 +95,14 @@ module.exports.compile = function (project) {
 
 					gulp.task(name, dependencies, function () {
 						return gulp.src(file.SCSS)
-							.pipe(plumber({
-								errorHandler: error
-							}))
 							.pipe(sourcemaps.init())
+								.pipe(plumber({
+									errorHandler: error
+								}))
 								.pipe(sass(config.SCSS))
 							.pipe(sourcemaps.write())
 							.pipe(rename(function (file) {
-								file.dirname = file.dirname.replace('scss', 'css');
+								file.dirname = file.dirname.replace('scss', 'css').replace('sass', 'css');
 							}))
 							.pipe(gulp.dest(destination[extension]));
 					});
