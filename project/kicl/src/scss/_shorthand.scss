@@ -9,10 +9,10 @@
 }
 
 @mixin circle ($size: 100%) {
-	@include border-radius(50%);
-
-	min-height: $size;
-	min-width: $size;
+	border-radius: $size / 2;
+	height: $size;
+	width: $size;
+	overflow: hidden;
 }
 
 @mixin clip-path ($anchor...) {

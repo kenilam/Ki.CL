@@ -5,8 +5,13 @@
 	<header>
 		<h1>{{project.name}}</h1>
 		<p>{{resource.config.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
-
-		<img ng-src="{{project.covers}}">
+		<figure
+			ng-style="{
+				'background-image' : 'url(' + project.covers + ')'
+			}"
+		>
+			<img ng-src="{{project.covers}}">
+		</figure>
 
 		<ul class="fields">
 			<li ng-repeat="field in project.fields track by $index">{{field}}</li>

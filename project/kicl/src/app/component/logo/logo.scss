@@ -11,9 +11,9 @@
 	font-style: normal;
 }
 
-@mixin set-logo-size ($size: 1.325) {
+@mixin set-logo-size ($rate: 1.325) {
 	a {
-		@include set-font-size($size);
+		@include set-font-size($rate);
 	}
 }
 

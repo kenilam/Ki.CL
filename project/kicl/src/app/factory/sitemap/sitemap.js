@@ -102,7 +102,7 @@
 					parent = findParent(map);
 				}
 
-				if (!parent.children) {
+				if (!parent || !parent.children) {
 					return undefined;
 				}
 

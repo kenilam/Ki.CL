@@ -5,14 +5,15 @@ body {
 	width: 100%;
 }
 
+main,
+.globalFooter {
+	z-index: 1;
+}
+
 .globalHeader {
 	z-index: 2;
 }
 
-main,
-.globalFooter {
-	box-sizing: border-box;
-	padding-left: $global-header-width;
-	position: relative;
-	z-index: 1;
+p {
+	margin-bottom: $space;
 }

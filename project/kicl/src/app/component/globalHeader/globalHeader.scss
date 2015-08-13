@@ -5,22 +5,32 @@
 	@include flex-direction(column);
 	@include justify-content(flex-start);
 
-	@include set-transition(background-color, box-shadow, width);
+	@include set-transition(background-color, transform, width);
 
-	background-color: $pure_white;
-	height: 100vh;
+	@include box-shadow($shadow-right);
+
+	background-color: $white;
+	height: 100%;
 	left: 0;
 	position: fixed;
 	top: 0;
+
+	will-change: background-color, transform, width;
+
+	.logo,
+	.navigation,
+	.breadcrumb {
+		position: relative;
+	}
 
 	.navigation,
 	.breadcrumb {
 		@include set-transition(opacity, transform);
 
-		@include opacity(0);
-
 		overflow: hidden;
 		width: 100%;
+
+		will-change: opacity, transform;
 	}
 
 	.logo {
@@ -28,9 +38,9 @@
 
 		@include set-transition(margin, transform);
 
-		a {
-			@include set-transition(max-width);
+		will-change: margin, transform;
 
+		a {
 			margin: 0 auto;
 			overflow: hidden;
 		}
@@ -47,6 +57,8 @@
 			@include set-transition(padding-bottom, padding-top);
 
 			text-transform: uppercase;
+
+			will-change: padding-bottom, padding-top;
 		}
 	}
 
@@ -56,21 +68,17 @@
 		@include mobile() {
 			@include hidden();
 		}
-
-		@include tablet() {
-			@include hidden();
-		}
 	}
 
 	.closeButton {
 		@include opacity(0);
 
+		background-color: $black;
 		left: 0;
 		height: 100%;
 		position: absolute;
-		top: $min-grid + $gutter;
+		top: 0;
 		width: 100%;
-		z-index: 1;
 	}
 
 	&:hover {
@@ -79,35 +87,16 @@
 
 	&.isExpanded {
 		background-color: $white;
-		box-shadow: $shadow-right;
-
-		@include mobile() {
-			width: calc(100% - #{$global-header-width});
-		}
-
-		@include tablet() {
-			width: calc(60% - #{$global-header-width});
-		}
-
-		@include desktop() {
-			width: calc(40% - #{$global-header-width});
-		}
-
-		@include largedesktop() {
-			width: calc(40% - #{$global-header-width});
-		}
 
 		.logo,
 		.navigation,
 		.breadcrumb {
-			@include transition-delay($speed);
-
-			@include transform(translateY(10vh));
+			@include transform(translateY(25vh));
 		}
 
 		.navigation,
 		.breadcrumb {
-			@include opacity(1);
+			@include transition-delay($speed);
 		}
 
 		.logo {
@@ -127,8 +116,30 @@
 		}
 
 		.closeButton {
+			@include opacity(.2);
+
 			left: 100%;
 			width: 100vw;
+		}
+
+		@include mobile() {
+			width: calc(100% - #{$global-header-width});
+		}
+
+		@include tablet() {
+			width: calc(60% - #{$global-header-width});
+		}
+
+		@include desktop() {
+			width: calc(40% - #{$global-header-width});
+		}
+
+		@include largedesktop() {
+			width: calc(40% - #{$global-header-width});
+		}
+
+		@include largestdesktop() {
+			width: calc(20% - #{$global-header-width});
 		}
 	}
 
@@ -137,7 +148,17 @@
 
 		width: $global-header-width;
 
+		.navigation,
+		.breadcrumb {
+			@include opacity(0);
+			@include transform(translateY(50vh));
+		}
+
 		.logo {
+			@include transition-delay($speed);
+
+			z-index: 2;
+
 			a {
 				max-width: $min-grid;
 
@@ -154,16 +175,8 @@
 			}
 		}
 
-		&:hover {
-			box-shadow: $shadow-right;
-		}
-
-		@include desktop() {
-			width: $global-header-width;
-		}
-
-		@include largedesktop() {
-			width: $global-header-width;
+		.closeButton {
+			z-index: 1;
 		}
 	}
 }

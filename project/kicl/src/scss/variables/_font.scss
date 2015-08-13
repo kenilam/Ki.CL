@@ -27,5 +27,5 @@ $heading_font_weight: 500;
 @mixin set-h-font-size ($rate, $gutter) {
 	@include set-font-size($rate);
 
-	padding-bottom: $gutter * $rate / 2;
+	margin-bottom: $gutter * $rate / 2;
 }

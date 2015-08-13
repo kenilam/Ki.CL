@@ -1,13 +1,5 @@
 @import '_import';
 
-html {
-	@include set-font-size(1);
-
-	color: $black;
-	font-family: $font_family;
-	font-weight: $font_weight;
-}
-
 h1, h2, h3, h4, h5, label, legend {
 	font-weight: $heading_font_weight;
 }
@@ -17,7 +9,12 @@ h1, h2, h3, h4, h5 {
 }
 
 html {
+	@include set-font-size(1);
 	@include font-smoothing();
+
+	color: $black;
+	font-family: $font_family;
+	font-weight: $font_weight;
 }
 
 label {

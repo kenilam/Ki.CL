@@ -92,3 +92,8 @@ $largedesktop-size: $grid * 15;
 		@content;
 	}
 }
+@mixin largestdesktop () {
+	@include breakpoint(query-size($min: 15)) {
+		@content;
+	}
+}

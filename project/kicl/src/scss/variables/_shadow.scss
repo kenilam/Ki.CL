@@ -7,3 +7,9 @@ $shadow-left: -$shadow-distant 0 $shadow-distant * 2 -1 * $shadow-distant / 2 $s
 $shadow-right: $shadow-distant 0 $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;
 $shadow-top: 0 -$shadow-distant $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;
 $shadow-bottom: 0 $shadow-distant $shadow-distant * 2 -1 * $shadow-distant / 2 $shadow-rgba;
+
+@mixin box-shadow ($property...) {
+	box-shadow: $property;
+	-webkit-box-shadow: $property;
+	-moz-box-shadow: $property;
+}

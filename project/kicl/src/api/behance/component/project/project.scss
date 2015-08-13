@@ -1,0 +1,115 @@
+@import '_import';
+
+[data-api="behance.project"] {
+	box-sizing: border-box;
+	margin: 0 auto;
+	max-width: $desktop-size;
+
+	@include tablet () {
+		padding: 0 $gutter;
+	}
+
+	header {
+		@include display(flex);
+		@include flex-direction(column);
+		@include flex-wrap(wrap);
+		@include align-items(center);
+
+		margin-bottom: $gutter;
+		text-align: center;
+
+		figure {
+			@include circle($grid * 2 + $gutter);
+
+			background-size: cover;
+			background-repeat: no-repeat;
+			margin-bottom: $gutter;
+
+			img {
+				@include hidden();
+			}
+		}
+
+		@include tablet () {
+			@include align-items(flex-end);
+		}
+	}
+
+	h1 {
+		box-sizing: border-box;
+		text-align: center;
+		width: 100%;
+
+		will-change: opacity;
+
+		@include mobile() {
+			margin-left: 20%;
+			text-align: right;
+			width: 80%;
+		}
+
+		@include tablet() {
+			margin-left: $min-grid + $gutter;
+			text-align: right;
+			width: calc(100% - #{$min-grid + $gutter});
+		}
+	}
+
+	.fields {
+		@include display(flex);
+
+		li {
+			@include truncate();
+
+			background-color: $gold;
+			border-radius: $gutter;
+			box-sizing: border-box;
+			color: $white;
+			padding: $space $gutter;
+
+			+ li {
+				margin-left: $gutter;
+			}
+		}
+
+		@include mobile() {
+			@include hidden();
+		}
+	}
+
+	div {
+		@include display(flex);
+		@include flex-wrap(wrap);
+
+		p {
+			@include display(flex);
+			@include align-items(center);
+
+			width: 100%;
+
+			+ p {
+				padding-top: $gutter;
+			}
+
+			img {
+				width: 100%;
+			}
+
+			&.img {
+				+ p {
+					&.img {
+						width: calc(50% - #{$space});
+
+						&:nth-child(odd) {
+							padding-right: $space;
+						}
+
+						&:nth-child(even) {
+							padding-left: $space;
+						}
+					}
+				}
+			}
+		}
+	}
+}
