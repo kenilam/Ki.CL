@@ -1,182 +1,99 @@
 @import '_import';
 
 .globalHeader {
+	$min-size : $min-grid + $gutter * 2;
+
 	@include display(flex);
 	@include flex-direction(column);
-	@include justify-content(flex-start);
 
-	@include set-transition(background-color, transform, width);
+	@include set-transition(background-color, box-shadow, height, width);
 
-	@include box-shadow($shadow-right);
-
-	background-color: $white;
 	height: 100%;
-	left: 0;
 	position: fixed;
-	top: 0;
 
-	will-change: background-color, transform, width;
+	will-change: background-color, box-shadow, height, width;
 
-	.logo,
-	.navigation,
-	.breadcrumb {
-		position: relative;
-	}
-
-	.navigation,
-	.breadcrumb {
-		@include set-transition(opacity, transform);
-
-		overflow: hidden;
-		width: 100%;
-
-		will-change: opacity, transform;
+	.breadcrumb,
+	.navigation {
+		@include set-transition(transform, opacity);
+		
+		will-change: transform, opacity;
 	}
 
 	.logo {
 		@include order(1);
-
-		@include set-transition(margin, transform);
-
-		will-change: margin, transform;
-
-		a {
-			margin: 0 auto;
-			overflow: hidden;
-		}
-	}
-
-	.navigation {
-		@include order(3);
-
-		ul {
-			@include flex-direction(column);
-		}
-
-		a {
-			@include set-transition(padding-bottom, padding-top);
-
-			text-transform: uppercase;
-
-			will-change: padding-bottom, padding-top;
-		}
 	}
 
 	.breadcrumb {
 		@include order(2);
-		
-		@include mobile() {
-			@include hidden();
-		}
 	}
 
-	.closeButton {
-		@include opacity(0);
+	.navigation {
+		@include order(3);
+		text-align: center;
+	}
 
-		background-color: $black;
-		left: 0;
+	.toggle {
 		height: 100%;
 		position: absolute;
 		top: 0;
 		width: 100%;
 	}
 
-	&:hover {
-		background-color: $white;
-	}
-
 	&.isExpanded {
 		background-color: $white;
+		box-shadow: $shadow-right;
 
 		.logo,
-		.navigation,
-		.breadcrumb {
-			@include transform(translateY(25vh));
-		}
-
-		.navigation,
-		.breadcrumb {
+		.breadcrumb,
+		.navigation {
 			@include transition-delay($speed);
 		}
 
-		.logo {
-			margin: $gutter 0;
-
-			a {
-				@include transition-delay($speed);
-
-				max-width: $min-grid * 2;
-			}
-		}
-
-		.navigation {
-			a {
-				@include transition-delay($speed);
-			}
-		}
-
-		.closeButton {
-			@include opacity(.2);
-
+		.toggle {
 			left: 100%;
+			height: 100vh;
 			width: 100vw;
+			z-index: -1;
 		}
 
 		@include mobile() {
-			width: calc(100% - #{$global-header-width});
+			width: calc(50% - #{$min-size});
 		}
 
 		@include tablet() {
-			width: calc(60% - #{$global-header-width});
+			width: calc(40% - #{$min-size});
 		}
 
 		@include desktop() {
-			width: calc(40% - #{$global-header-width});
+			width: calc(30% - #{$min-size});
 		}
 
 		@include largedesktop() {
-			width: calc(40% - #{$global-header-width});
+			width: calc(20% - #{$min-size});
 		}
 
 		@include largestdesktop() {
-			width: calc(20% - #{$global-header-width});
+			width: calc(20% - #{$min-size});
 		}
 	}
 
 	&:not(.isExpanded) {
 		@include transition-delay($speed);
 
-		width: $global-header-width;
+		width: 0;
 
-		.navigation,
-		.breadcrumb {
-			@include opacity(0);
-			@include transform(translateY(50vh));
-		}
-
-		.logo {
-			@include transition-delay($speed);
-
-			z-index: 2;
-
-			a {
-				max-width: $min-grid;
-
-				&:before {
-					content: "\e600";
-				}
-			}
-		}
-
+		.breadcrumb,
 		.navigation {
-			a {
-				padding-bottom: 0;
-				padding-top: 0;
-			}
+			@include transform(translateY(25vh));
+			@include opacity(0);
 		}
 
-		.closeButton {
-			z-index: 1;
+		.toggle {
+			@include opacity(0);
+
+			width: $min-size;
+			left: 0%;
 		}
 	}
 }

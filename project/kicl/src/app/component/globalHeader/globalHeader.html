@@ -5,11 +5,15 @@
 		'isExpanded' : globalHeader.status.expanded
 	}"
 >
-	<logo></logo>
+	<logo
+		ng-class="{
+			'square' : !globalHeader.status.expanded
+		}"
+	></logo>
 	<navigation data-list-at-root="true" data-list="root"></navigation>
 	<breadcrumb></breadcrumb>
 	<button
-		class="closeButton"
+		class="toggle"
 		ng-attr-title="{{globalHeader.closeButton[
 			globalHeader.status.expanded ? 'collapse' : 'expand'
 		].message}}"

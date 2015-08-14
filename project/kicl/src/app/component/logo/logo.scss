@@ -35,7 +35,8 @@
 .logo {
 	@include set-logo-size();
 	@include set-logo-content();
-	
+
+	margin-bottom: 0;
 	padding: $space;
 
 	a {

@@ -1,19 +1,56 @@
 @import '_import';
 
 body {
+	overflow: hidden;
+	overflow-y: auto;
 	position: relative;
 	width: 100%;
 }
 
 main,
 .globalFooter {
+	position: relative;
 	z-index: 1;
 }
 
 .globalHeader {
 	z-index: 2;
+
+	$globalHeader-size: $min-grid + $gutter * 2;
+	&.isExpanded {
+		+ main {
+			@include mobile() {
+				@include transform(translateX(calc(50% - #{$globalHeader-size})));
+			}
+
+			@include tablet() {
+				@include transform(translateX(calc(40% - #{$globalHeader-size})));
+			}
+
+			@include desktop() {
+				@include transform(translateX(calc(30% - #{$globalHeader-size})));
+			}
+
+			@include largedesktop() {
+				@include transform(translateX(calc(20% - #{$globalHeader-size})));
+			}
+
+			@include largestdesktop() {
+				@include transform(translateX(calc(20% - #{$globalHeader-size})));
+			}
+		}
+	}
+
+	&:not(.isExpanded) {
+		+ main {
+			@include transition-delay($speed);
+		}
+	}
 }
 
-p {
-	margin-bottom: $space;
+main {
+	@include set-transition(transform);
+	box-sizing: border-box;
+
+	will-change: transform;
 }
