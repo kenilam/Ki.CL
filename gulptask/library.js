@@ -33,20 +33,20 @@ module.exports.library = function (project, dependencies) {
 				'!**/dist/*-min.js',
 				'!**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects,templates}/**/*.js',
 				'!**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd}.js'
-			]),
+			], {restore: true, passthrough: false}),
 			CSS : filter([
 				'**/*.css',
 				'!**/*.min.css',
 				'!**/{support,src,test}/**/*.css'
-			]),
+			], {restore: true, passthrough: false}),
 			SCSS : filter([
 				'**/*.{scss, sass}',
 				'!**/*.min.{scss, sass}',
 				'!{font-awesome,normalize-scss}/**/*'
-			]),
+			], {restore: true, passthrough: false}),
 			font : filter([
 				'**/fonts/*.{eot,svg,ttf,woff,woff2,otf}'
-			])
+			], {restore: true, passthrough: false})
 		},
 
 		destination = {
@@ -69,7 +69,7 @@ module.exports.library = function (project, dependencies) {
 				var name = taskName + '.get.' + extension;
 
 				gulp.task(name, dependency, function () {
-					return bowerSrc()
+					var stream = bowerSrc()
 						.pipe(file[extension])
 						.pipe(addSrc(file.plugin[extension]))
 						.pipe(rename(function (file) {
@@ -78,8 +78,11 @@ module.exports.library = function (project, dependencies) {
 
 							file.dirname = '';
 						}))
-						.pipe(gulp.dest(destination[extension]))
-						.pipe(file[extension].restore());
+						.pipe(gulp.dest(destination[extension]));
+
+					file[extension].restore.pipe(gulp.dest(destination[extension]));
+
+					return stream;
 				});
 
 				return name;
