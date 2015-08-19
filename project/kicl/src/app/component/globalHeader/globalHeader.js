@@ -3,12 +3,11 @@
 
 	function link (scope) {
 		var callback = {
+				eachData : function (value, name) {
+					scope.globalHeader[name] = value;
+				},
 				data : function (event, data) {
-					function eachData (value, name) {
-						scope.globalHeader[name] = value;
-					}
-
-					_.each(data, eachData);
+					_.each(data, callback.eachData);
 				},
 				expand : function () {
 					scope.globalHeader.status.expanded = true;
@@ -25,6 +24,7 @@
 
 		scope.globalHeader = {};
 		scope.globalHeader.status = {};
+		scope.globalHeader.status.expanded = true;
 
 		scope.globalHeader.control = control;
 

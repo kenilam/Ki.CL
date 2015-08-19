@@ -1,6 +1,10 @@
 @import '_import';
 
 .throbber {
+	height: 100%;
+	position: absolute;
+	width: 100%;
+
 	&.ng-enter,
 	&.ng-leave {
 		@include set-transition(opacity);

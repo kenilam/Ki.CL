@@ -1,6 +1,85 @@
 @import '_import';
 
 html[data-route=home] {
-	
+	main,
+	.globalFooter {
+		color: $white;
+	}
+
+	.globalHeader {
+		&:not(.isExpanded) {
+			.logo {
+				a {
+					color: $white;
+				}
+			}
+		}
+	}
+
+	main {
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+		@include justify-content(center);
+
+		box-sizing: border-box;
+		height: 100%;
+		margin: 0 auto;
+		text-align: center;
+
+		@include mobile() {
+			padding: 0 $gutter;
+		}
+
+		@include tablet() {
+			max-width: $mobile-size;
+			padding: 0 $gutter;
+		}
+
+		@include desktop() {
+			max-width: $tablet-size;
+			padding: 0 $gutter;
+		}
+
+		@include largedesktop() {
+			max-width: $tablet-size;
+		}
+
+		@include largestdesktop() {
+			max-width: $tablet-size;
+		}
+
+		&:before,
+		&:after {
+			content: '\0020';
+			display: block;
+			left: 0;
+			height: 100vh;
+			position: fixed;
+			top: 0;
+			width: 100vw;
+		}
+
+		&:before {
+			background-image: url(#{$image_path}london.whitechapel.jpg);
+			background-position: top right;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-color: $black;
+		}
+
+		&:after {
+			@include opacity(.4);
+
+			background-color: $black;
+		}
+	}
+
+	.globalFooter {
+		left: 0;
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+	}
 }
 

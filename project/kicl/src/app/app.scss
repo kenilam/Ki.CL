@@ -17,6 +17,7 @@ main,
 	z-index: 2;
 
 	$globalHeader-size: $min-grid + $gutter * 2;
+
 	&.isExpanded {
 		+ main {
 			@include mobile() {
@@ -50,6 +51,7 @@ main,
 
 main {
 	@include set-transition(transform);
+	
 	box-sizing: border-box;
 
 	will-change: transform;

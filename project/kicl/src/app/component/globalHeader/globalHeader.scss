@@ -34,10 +34,10 @@
 	}
 
 	.toggle {
-		height: 100%;
 		position: absolute;
 		top: 0;
-		width: 100%;
+
+		will-change: height, width;
 	}
 
 	&.isExpanded {
@@ -92,6 +92,7 @@
 		.toggle {
 			@include opacity(0);
 
+			height: $min-size;
 			width: $min-size;
 			left: 0%;
 		}
