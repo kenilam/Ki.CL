@@ -9,8 +9,10 @@ module.exports.library = function (project, dependencies) {
 		vinylPaths = require('vinyl-paths'),
 
 		addSrc = require('gulp-add-src'),
-		bowerSrc = require('gulp-bower-src'),
-		filter = require('gulp-filter'),
+		// For some reasons filter return all files after bowerSrc,
+		// Temporary removing the functionalities from fn.get and use gulp.src instead
+		//bowerSrc = require('gulp-bower-src'),
+		//filter = require('gulp-filter'),
 		rename = require('gulp-rename'),
 		
 		debug = require('gulp-debug'),
@@ -22,31 +24,32 @@ module.exports.library = function (project, dependencies) {
 				CSS : ['./plugin/**/*.css'],
 				font : ['./plugin/**/*.{eot,svg,ttf,woff,woff2,otf}']
 			},
-			JS : filter([
-				'**/*.js',
-				'**/dist/*.js',,
-				'**/src/uncompressed/**/*.js',
-				'!**/index.js',
-				'!**/*.min.js',
-				'!**/*-min.js',
-				'!**/dist/*.min.js',
-				'!**/dist/*-min.js',
-				'!**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects,templates}/**/*.js',
-				'!**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd}.js'
-			], {restore: true, passthrough: false}),
-			CSS : filter([
-				'**/*.css',
-				'!**/*.min.css',
-				'!**/{support,src,test}/**/*.css'
-			], {restore: true, passthrough: false}),
-			SCSS : filter([
-				'**/*.{scss, sass}',
-				'!**/*.min.{scss, sass}',
+			JS : [
+				'!bower_components/**/index.js',
+				'!bower_components/**/*.min.js',
+				'!bower_components/**/*-min.js',
+				'!bower_components/**/dist/*.min.js',
+				'!bower_components/**/dist/*-min.js',
+				'!bower_components/compass-breakpoint/**/*.{js}',
+				'!bower_components/**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects,templates}/**/*.js',
+				'!bower_components/**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd}.js',
+				'bower_components/**/*.js',
+				'bower_components/**/dist/*.js',
+				'bower_components/**/src/uncompressed/**/*.js'
+			],
+			CSS : [
+				'bower_components/**/*.css',
+				'!bower_components/**/*.min.css',
+				'!bower_components/**/{support,src,test}/**/*.css'
+			],
+			SCSS : [
+				'bower_components/**/*.{scss, sass}',
+				'!bower_components/**/*.min.{scss, sass}',
 				'!{font-awesome,normalize-scss}/**/*'
-			], {restore: true, passthrough: false}),
-			font : filter([
-				'**/fonts/*.{eot,svg,ttf,woff,woff2,otf}'
-			], {restore: true, passthrough: false})
+			],
+			font : [
+				'bower_components/**/fonts/*.{eot,svg,ttf,woff,woff2,otf}'
+			]
 		},
 
 		destination = {
@@ -69,18 +72,16 @@ module.exports.library = function (project, dependencies) {
 				var name = taskName + '.get.' + extension;
 
 				gulp.task(name, dependency, function () {
-					var stream = bowerSrc()
-						.pipe(file[extension])
-						.pipe(addSrc(file.plugin[extension]))
-						.pipe(rename(function (file) {
-							var path = file.dirname.split('/'),
-								lastPath = path[path.length - 1];
+					var stream = 
+						gulp.src(file[extension])
+							.pipe(addSrc(file.plugin[extension]))
+							.pipe(rename(function (file) {
+								var path = file.dirname.split('/'),
+									lastPath = path[path.length - 1];
 
-							file.dirname = '';
-						}))
-						.pipe(gulp.dest(destination[extension]));
-
-					file[extension].restore.pipe(gulp.dest(destination[extension]));
+								file.dirname = '';
+							}))
+							.pipe(gulp.dest(destination[extension]));
 
 					return stream;
 				});
