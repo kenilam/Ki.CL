@@ -10,18 +10,26 @@ module.exports.middleware = function (project) {
 			filePath = rootPath + uri.pathname,
 
 			baseUrl = new RegExp('%7B%7BbaseUrl%7D%7D', 'g'),
+			baseUrlActual = new RegExp('{{baseUrl}}', 'g'),
+
 			version = new RegExp('%7B%7Bversion%7D%7D', 'g'),
-			userName = new RegExp('%7B%7BuserName%7D%7D', 'g');
+			versionActual = new RegExp('{{version}}', 'g'),
+			
+			userName = new RegExp('%7B%7BuserName%7D%7D', 'g'),
+			userNameActual = new RegExp('{{userName}}', 'g');
 
 		if (!uri.pathname.match(exceptionExpression)) {
 			return next();
 		}
-
+		
 		fs.readFile(
 			filePath
 				.replace(baseUrl, 'api/behance')
+				.replace(baseUrlActual, 'api/behance')
 				.replace(version, 'v2')
-				.replace(userName, 'kicl'),
+				.replace(versionActual, 'v2')
+				.replace(userName, 'kicl')
+				.replace(userNameActual, 'kicl'),
 			{encoding: 'utf-8', flag: 'rs'}, function(error, data) {
 				if (error) return res.end(error.toString().replace(rootPath, ''));
 
