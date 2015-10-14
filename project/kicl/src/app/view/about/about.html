@@ -1,17 +1,20 @@
 <section class="me">
+	<throbber data-emit-from="behance.user" data-show-on-default="true"></throbber>
+	
 	<h1>{{content.me.title}}</h1>
-	<throbber data-emit-from="behance.user"></throbber>
+
 	<behance-user></behance-user>
+	
 	<section class="experience">
 		<h1>{{content.me.experience.title}}</h1>
 		<behance-experience></behance-experience>
 	</section>
 </section>
-
 <section class="site">
 	<h1>{{content.site.title}}</h1>
 
 	<h2>{{content.site.tool.title}}</h2>
+	
 	<ul class="tool">
 		<li
 			ng-repeat="tool in content.site.tool.list"

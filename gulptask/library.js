@@ -32,7 +32,7 @@ module.exports.library = function (project, dependencies) {
 				'!bower_components/**/dist/*-min.js',
 				'!bower_components/compass-breakpoint/**/*.{js}',
 				'!bower_components/**/{test,min,bin,lang,lib,support,src,locale,benchmarks,scripts,feature-detects,templates}/**/*.js',
-				'!bower_components/**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd}.js',
+				'!bower_components/**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd,eyeglass-exports,ngAnimateMock,ngMock,ngMockE2E}.js',
 				'bower_components/**/*.js',
 				'bower_components/**/dist/*.js',
 				'bower_components/**/src/uncompressed/**/*.js'

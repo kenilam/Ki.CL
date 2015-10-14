@@ -1,4 +1,14 @@
 <h1>{{name}}</h1>
-<throbber data-emit-from="behance.projects"></throbber>
-<section ui-view="project"></section>
-<behance-projects data-projects-route="projects"></behance-projects>
+<throbber data-emit-from="behance.projects" data-show-on-default="true"></throbber>
+<section
+	ui-view="project"
+	ng-style="{
+		'padding-top' : $root.status.route !== 'home' ? ($root.ref.globalHeader.height + $root.ref.breadcrumb.height) + 'px' : null
+	}"
+></section>
+<behance-projects
+	data-projects-route="projects"
+	ng-class="{
+		'isRendering' : status.rendering
+	}"
+></behance-projects>

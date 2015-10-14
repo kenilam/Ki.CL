@@ -1,5 +1,5 @@
 $font_family: proxima-nova, sans-serif;
-$font_size: em(16px);
+$font_size: rem(16px);
 
 $font_weight: 300;
 $a_isCurrent_font_weight: 400;
@@ -22,10 +22,14 @@ $heading_font_weight: 500;
 	font-size: $size * $rate;
 	letter-spacing: $size * .1;
 	line-height: 1.5;
+
+	@if $rate >= 1 {
+		font-weight: $heading_font_weight;
+	}
 }
 
-@mixin set-h-font-size ($rate, $gutter) {
+@mixin set-h-font-size ($rate, $bleed) {
 	@include set-font-size($rate);
 
-	margin-bottom: $gutter * $rate / 2;
+	margin-bottom: $bleed * $rate / 2;
 }

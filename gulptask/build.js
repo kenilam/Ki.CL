@@ -16,7 +16,9 @@ module.exports.build = function (project) {
 		bundlify = require(appRoot + '/gulptask/bundlify').bundlify(project, [taskName + '.clean', compile]),
 
 		file = {
-			JSON : './project/' + project + '/mock/**/*.json',
+			JSON : [
+				'./project/' + project + '/mock/**/*.json'
+			],
 			font : './project/' + project + '/src/**/*.{eot,svg,ttf,woff,woff2,otf}',
 			image : './project/' + project + '/src/**/*.{png,jpg,gif,ico}'
 		},
@@ -63,6 +65,7 @@ module.exports.build = function (project) {
 								for (name in api) {
 									for (value in api[name]) {
 										var regex = new RegExp('{{' + value + '}}', 'g');
+										
 										content = content.replace(regex, api[name][value]).replace(/.json/g, '');
 									}
 								}

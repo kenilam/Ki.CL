@@ -1,0 +1,121 @@
+@import '_import';
+
+[data-api="behance.projects"] {
+	@include set-transition(opacity, transform);
+	
+	max-width: grid-size($tablet-size);
+	padding: $gutter;
+	width: 100%;
+
+	figure {
+		@include display(flex);
+		@include align-items(center);
+
+		@include mobile () {
+			@include flex-direction(column);
+			@include align-items(center);
+		}
+
+		@include largemobile () {
+			@include flex-direction(column);
+			@include align-items(center);
+		}
+	}
+
+	figcaption {
+		@include mobile () {
+			padding-top: $gutter;
+			text-align: center;
+		}
+
+		@include largemobile () {
+			padding-top: $gutter;
+			text-align: center;
+		}
+	}
+
+	a {
+		@include set-transition(border);
+		@include circle(grid-size(3));
+		@include box-shadow($shadow-center);
+
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		border: $space solid $white;
+
+		&:hover {
+			border-color: $orange;
+			border-width: $space * 1.5;
+
+			+ figcaption {
+				color: $orange;
+			}
+		}
+
+		@include mobile () {
+			@include circle(grid-size(2));
+		}
+
+		@include largemobile () {
+			@include circle(grid-size(2));
+		}
+	}
+
+	img {
+		@include hidden();
+	}
+
+	li {
+		+ li {
+			margin-top: $gutter * 2;
+		}
+
+		&:nth-child(odd) {
+			figcaption {
+				padding-left: $gutter;
+
+				@include mobile () {
+					padding-left: 0;
+				}
+
+				@include largemobile () {
+					padding-left: 0;
+				}
+			}
+		}
+
+		&:nth-child(even) {
+			figure {
+				@include flex-direction(row-reverse);
+
+				@include mobile () {
+					@include flex-direction(column);
+				}
+
+				@include largemobile () {
+					@include flex-direction(column);
+				}
+			}
+
+			figcaption {
+				padding-right: $gutter;
+				text-align: right;
+
+				@include mobile () {
+					padding-right: 0;
+					text-align: center;
+				}
+
+				@include largemobile () {
+					padding-right: 0;
+					text-align: center;
+				}
+			}
+		}
+
+		&.isCurrent {
+			@include through();
+		}
+	}
+}

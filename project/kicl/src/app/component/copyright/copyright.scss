@@ -1,11 +1,5 @@
 @import '_import';
 
 .copyright {
-	@include display(flex);
-	@include align-items(center);
-	@include justify-content(center);
-
-	box-sizing: border-box;
-	font-size: em(12px);
-	padding: $space $gutter;
+	
 }

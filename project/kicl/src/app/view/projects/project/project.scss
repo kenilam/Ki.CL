@@ -1,1 +1,64 @@
 @import '_import';
+
+html {
+	&[data-route='projects.project'] {
+		background-color: $light_grey;
+	}
+}
+
+main {
+	&[data-route='projects.project'] {
+		> h1 {
+			@include transform(scale3d(.5, .5, 1));
+			@include opacity(0);
+		}
+		
+		[data-api="behance.projects"] {
+			@include transform(scale3d(.5, .5, 1));
+			@include opacity(0);
+		}
+	}
+}
+
+[data-api='behance.project'] {
+	background-color: $dark_white;
+	margin: 0 auto;
+	max-width: grid-size($desktop-size);
+
+	@mixin set-margin () {
+		margin-left: $gutter;
+		margin-right: $gutter;
+	}
+
+	@include mobile() {
+		margin: 0 auto;
+	}
+	@include mobile-landscape() {
+		margin: 0 auto;
+	}
+
+	@include largemobile() {
+		margin: 0 auto;
+	}
+	@include largemobile-landscape() {
+		margin: 0 auto;
+	}
+
+	@include tablet() {
+		@include set-margin();
+	}
+	@include tablet-landscape() {
+		@include set-margin();
+	}
+
+	@include desktop() {
+		@include set-margin();
+	}
+
+	@include largedesktop() {
+		margin: 0 auto;
+	}
+	@include largestdesktop() {
+		margin: 0 auto;
+	}
+}

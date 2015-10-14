@@ -25,13 +25,17 @@
 			resource : 'app/view/home/home.json'
 		},
 		controller = [
+			'$rootScope',
 			'$scope',
 			'resource',
 			'sitemap',
-			function controller (scope, resource, sitemap) {
+			function controller (root, scope, resource, sitemap) {
 				var callback = {
 						data : function () {
 							scope.$broadcast('behance.user.about.throbber.hide');
+						},
+						destroy : function () {
+							root.$broadcast('globalHeader.expand');
 						}
 					};
 
@@ -42,6 +46,9 @@
 				scope.state.loading = true;
 
 				scope.$on('behance.user.about.data', callback.data);
+				scope.$on('$destroy', callback.destroy);
+
+				root.$broadcast('globalHeader.collapse');
 				
 				sitemap.current('home', 'root');
 			}

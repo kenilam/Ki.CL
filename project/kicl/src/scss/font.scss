@@ -24,12 +24,13 @@ label {
 }
 
 h1 { @include set-h-font-size(1.2, $gutter); }
-h2 { @include set-h-font-size(.8, $gutter); }
-h3 { @include set-h-font-size(.6, $gutter); }
-h4 { @include set-h-font-size(.4, $gutter); }
-h5 { @include set-h-font-size(.2, $gutter); }
+h2 { @include set-h-font-size(1.1, $gutter); }
+h3 { @include set-h-font-size(1, $gutter); }
+h4 { @include set-h-font-size(.9, $gutter); }
+h5 { @include set-h-font-size(.8, $gutter); }
 
-a {
+a,
+button {
 	@include display(block);
 	@include set-transition(color);
 	
@@ -39,21 +40,15 @@ a {
 		color: $orange;
 	}
 
+	.isCurrent &,
 	&.isCurrent  {
-		@include through();
-
 		color: $black;
 		font-weight: $a_isCurrent_font_weight;
 	}
 }
 
-.isCurrent  {
-	a {
-		@include through();
-		
-		color: $black;
-		font-weight: $a_isCurrent_font_weight;
-	}
+.isCurrent {
+	@include through();
 }
 
 p {

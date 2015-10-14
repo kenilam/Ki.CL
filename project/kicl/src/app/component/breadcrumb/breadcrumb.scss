@@ -1,26 +1,48 @@
 @import '_import';
 
 .breadcrumb {
-	@include display(flex);
-	@include align-items(center);
-
-	padding: $space $gutter;
-
+	@include set-font-size(.8);
+	
 	p {
+		@include set-transition(opacity, transform);
+		@include display(flex);
+		@include align-items(center);
+
+		padding: $space 0;
+	}
+
+	span {
 		@include hidden();
 	}
 
 	i {
-		padding: 0 $space;
+		@include set-font-size(.6);
+
+		height: 100%;
+		margin: 0 $space;
 	}
 
 	a {
-		&:last-child {
-			@include truncate();
-		}
+		font-weight: 400;
+		text-transform: uppercase;
 
 		&.isCurrent {
-			pointer-events: auto;
+			font-weight: 800;
+		}
+	}
+
+	&.ng-hide-add-active,
+	&.ng-hide-remove {
+		p {
+			@include opacity(0);
+			@include transform(translate3d(0, -100%, 0) !important);
+		}
+	}
+
+	&.ng-hide-add,
+	&.ng-hide-remove-active {
+		p {
+			@include opacity(1);
 		}
 	}
 }

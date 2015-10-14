@@ -38,8 +38,22 @@
 				var callback = {
 						data : function (event, project) {
 							scope.$broadcast('behance.project.throbber.hide');
-							
-							sitemap.current(project.id, 'projects');
+
+							if (sitemap.get().projects.children) {
+								sitemap.current(project.id, 'projects');
+							}
+						},
+						setSitemap : function (event, projects) {
+							function whenSetSitemap () {
+								sitemap.current(stateParams.project, 'projects');
+							}
+
+							if (!sitemap.get().projects.children) {
+								_.each(projects, eachProject);
+
+								timeout.cancel(scope.timer.setSitemap);
+								scope.timer.setSitemap = timeout(whenSetSitemap, 0);
+							}
 						},
 						stateChangeStart: function (event, toState) {
 							var map = toState.name.split('.'),
@@ -61,10 +75,23 @@
 						}
 					};
 
+				function eachProject (project, index) {
+					sitemap.add(
+						project.id,
+						{
+							name: project.name,
+							route: 'projects.project({project:"' + project.id + '"})'
+						},
+						'projects'
+					);
+				}
+
 				scope.name = resource.name;
 				scope.content = resource.content;
+				scope.id = stateParams.project;
 
 				scope.$on('$stateChangeStart', callback.stateChangeStart);
+				scope.$on('behance.projects.data', callback.setSitemap);
 				scope.$on('behance.project.data', callback.data);
 			}
 		],

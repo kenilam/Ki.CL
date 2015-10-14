@@ -1,24 +1,33 @@
-$min-grid: em(40px);
+$min-grid: rem(40px);
 $grid: $min-grid * 2;
-$gutter: em(16px);
+$gutter: rem(16px);
 $space: $gutter / 2;
 
 $global-header-width: $min-grid + $gutter * 2;
 
-$mobile-size: $grid * 4;
-$tablet-size: $grid * 9;
-$desktop-size: $grid * 12;
-$largedesktop-size: $grid * 15;
+$mobile-size: 4;
+$largemobile-size: 6;
+$tablet-size: 9;
+$desktop-size: 12;
+$largedesktop-size: 15;
+
+@function grid-size ($size) {
+	@return ($grid + $gutter) * $size - $gutter;
+}
+
+@function screen-size ($size) {
+	@return ($grid + $gutter) * $size + $gutter;
+};
 
 @function query-size ($min: false, $max: false, $screen: false, $ratio: false, $orientation: false) {
 	$size: ($grid + $gutter);
 
 	@if $min {
-		$min: ($size * $min + $gutter);
+		$min: screen-size($min);
 	}
 
 	@if $max {
-		$max: ($size * $max + $gutter);
+		$max: screen-size($max);
 	}
 
 	@if $min and not $max {
@@ -61,39 +70,50 @@ $largedesktop-size: $grid * 15;
 }
 
 @mixin mobile () {
-	@include breakpoint(query-size($max: 4)) {
+	@include breakpoint(query-size($max: $mobile-size)) {
 		@content;
 	}
 }
 @mixin mobile-landscape () {
-	@include breakpoint(query-size($max: 4, $orientation: landscape)) {
+	@include breakpoint(query-size($max: $mobile-size, $orientation: landscape)) {
+		@content;
+	}
+}
+
+@mixin largemobile () {
+	@include breakpoint(query-size($min: $mobile-size, $max: $largemobile-size)) {
+		@content;
+	}
+}
+@mixin largemobile-landscape () {
+	@include breakpoint(query-size($min: $mobile-size, $max: $largemobile-size, $orientation: landscape)) {
 		@content;
 	}
 }
 
 @mixin tablet () {
-	@include breakpoint(query-size($min: 4, $max: 9)) {
+	@include breakpoint(query-size($min: $largemobile-size, $max: $tablet-size)) {
 		@content;
 	}
 }
 @mixin tablet-landscape () {
-	@include breakpoint(query-size($min: 4, $max: 9, $orientation: landscape)) {
+	@include breakpoint(query-size($min: $largemobile-size, $max: $tablet-size, $orientation: landscape)) {
 		@content;
 	}
 }
 
 @mixin desktop () {
-	@include breakpoint(query-size($min: 9, $max: 12)) {
+	@include breakpoint(query-size($min: $tablet-size, $max: $desktop-size)) {
 		@content;
 	}
 }
 @mixin largedesktop () {
-	@include breakpoint(query-size($min: 12, $max: 15)) {
+	@include breakpoint(query-size($min: $desktop-size, $max: $largedesktop-size)) {
 		@content;
 	}
 }
 @mixin largestdesktop () {
-	@include breakpoint(query-size($min: 15)) {
+	@include breakpoint(query-size($min: $largedesktop-size)) {
 		@content;
 	}
 }

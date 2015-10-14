@@ -26,16 +26,17 @@ a {
 .fa {
 	font-family: $font_family;
 	font-weight: inherit;
+	height: 100%;
 	vertical-align: middle;
 
 	-webkit-font-smoothing: auto;
 	-moz-osx-font-smoothing: initial;
 
 	&:before {
-		display: inline-block;
 		font-family: FontAwesome;
 		font-style: normal;
 		font-weight: normal;
+		height: 100%;
 		line-height: 1;
 		text-align: center;
 

@@ -69,7 +69,7 @@
 				}
 
 				current = parent[id];
-
+				
 				root.$broadcast('sitemap.current.updated', current);
 
 				return current;

@@ -61,6 +61,9 @@
 	"karma-safari-launcher": "*",
 	"karma-phantomjs-launcher": "*",
 
+	"jquery": "*",
+	"jasmine-jquery": "*",
+
 	"logger": "*",
 	"path": "*"
   }

@@ -11,6 +11,8 @@
 @mixin circle ($size: 100%) {
 	border-radius: $size / 2;
 	height: $size;
+	min-height: $size;
+	min-width: $size;
 	width: $size;
 	overflow: hidden;
 }
@@ -65,4 +67,25 @@
 
 @mixin content ($content: '\0020') {
 	content: $content;
+}
+
+@mixin set-logo-size ($rate: 1.325) {
+	a {
+		@include set-font-size($rate);
+	}
+}
+
+@mixin set-logo-content ($isSquare: false) {
+	$logo-kicl-square: "\e600";
+	$logo-kicl: "\e601";
+
+	a {
+		&:before {
+			@if $isSquare {
+				content: $logo-kicl-square;
+			} @else {
+				content: $logo-kicl;
+			}
+		}
+	}
 }

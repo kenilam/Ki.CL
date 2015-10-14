@@ -3,9 +3,18 @@
 
 	var projectsRoute,
 		controller = [
-			'$rootScope', '$scope', 'behanceReference', 'behanceCheck', 'behanceModify',
-			function controller (root, scope, reference, check, modify) {
-				var callback = {
+			'$rootScope', '$scope', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
+			function controller (root, scope, stateParams, reference, check, modify) {
+				var control = {
+						set : {
+							current : {
+								id : function (id) {
+									scope.current.id = id;
+								}
+							}
+						}
+					},
+					callback = {
 						data : function (data) {
 							reference.component.projects.resolved = data.$resolved;
 
@@ -15,6 +24,9 @@
 							scope.resource = reference.resource.data.widget.projects;
 
 							root.$broadcast('behance.projects.data', scope.projects);
+						},
+						stateChange : function (event, toState, toParams, fromState, fromParams) {
+							control.set.current.id(toParams.project);
 						}
 					};
 
@@ -22,7 +34,14 @@
 					reference.component.projects.promise = reference.api.projects().$promise;
 				}
 
+				scope.projects = {};
+				scope.resource = {};
+				scope.current = {};
+
+				scope.$on('$stateChangeSuccess', callback.stateChange);
+				
 				reference.component.projects.promise.then(callback.data);
+				control.set.current.id(stateParams.project);
 			}
 		],
 

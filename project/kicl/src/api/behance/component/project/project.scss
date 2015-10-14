@@ -1,5 +1,228 @@
 @import '_import';
 
 [data-api="behance.project"] {
-	
+	@include display(flex);
+	@include flex-direction(column);
+
+	margin-bottom: $gutter;
+	position: relative;
+
+	header,
+	div {
+		@include display(flex);
+		@include align-items(center);
+	}
+
+	header {
+		@include flex-direction(column);
+		
+		border-bottom: 1px solid $grey;
+		padding: $gutter;
+
+		figure {
+			@include order(1);
+
+			@include circle(grid-size(2));
+			@include box-shadow($shadow-center);
+
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			border: $space solid $white;
+		}
+
+		img {
+			@include hidden();
+		}
+
+		h1 {
+			@include order(2);
+
+			text-align: center;
+			padding-top: $gutter;
+		}
+
+		p {
+			@include order(3);
+		}
+
+		ul {
+			@include order(4);
+
+			padding-top: $space;
+		}
+	}
+
+	div {
+		@include flex-wrap(wrap);
+		@include justify-content(space-between);
+		
+		padding: $gutter;
+
+		p {
+			@include display(flex);
+			@include justify-content(center);
+
+			width: 100%;
+
+			&.isTitle {
+				@include set-h-font-size(1.2, $gutter);
+
+				margin-top: $gutter * 2;
+
+				~ .isTitle {
+					@include set-h-font-size(1.1, $gutter);
+				}
+			}
+
+			&.isImage {
+				@mixin smaller-image () {
+					+ .isImage {
+						width: calc(50% - #{$space /2});
+						
+						+ .isImage {
+							width: calc(50% - #{$space /2});
+						}
+					}
+				}
+
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				position: relative;
+				text-align: center;
+
+				@include mobile-landscape() {
+					width: 100%;
+				}
+				@include mobile() {
+					width: 100%;
+				}
+
+				@include largemobile-landscape() {
+					@include smaller-image();
+				}
+				@include largemobile() {
+					width: 100%;
+				}
+
+				@include tablet-landscape() {
+					@include smaller-image();
+				}
+				@include tablet() {
+					width: 100%;
+				}
+
+				@include largestdesktop() {
+					@include smaller-image();
+				}
+				@include largedesktop() {
+					@include smaller-image();
+				}
+				@include desktop() {
+					@include smaller-image();
+				}
+
+				&:before {
+					display: block;
+					content: '\0020';
+					padding-top: 71.17%;
+					width: 100%;
+				}
+
+				img {
+					@include hidden();
+				}
+			}
+		}
+	}
+
+	aside {
+		padding: $gutter 0;
+	}
+
+	footer {
+		@include display(flex);
+		@include justify-content(center);
+		
+		border-top: 1px solid $grey;
+		margin-top: $gutter;
+		padding: $gutter 0;
+
+		a,
+		button {
+			@include display(flex);
+			@include align-items(center);
+			@include justify-content(center);
+		}
+
+		a {
+			i {
+				margin-right: $space;
+			}
+		}
+
+		button {
+			@include set-transition(color);
+			@include set-font-size(1.5);
+
+			color: $dark_grey;
+			right: $gutter;
+			position: absolute;
+			text-shadow: $shadow-bottom;
+			top: $gutter;
+
+			&:hover {
+				color: $orange;
+			}
+
+			span {
+				@include hidden();
+			}
+		}
+	}
+
+	.fields,
+	.stats,
+	.tags {
+		@include display(flex);
+		@include flex-wrap(wrap);
+		@include align-items(center);
+		@include justify-content(center);
+
+		li {
+			@include set-font-size(.9);
+			@include circle(.5rem);
+
+			border: 1px solid $grey;
+			font-weight: $heading_font_weight;
+			height: auto;
+			margin: $space / 2;
+			padding: $space $gutter;
+			text-transform: capitalize;
+			width: auto;
+		}
+	}
+
+	.fields {
+		li {
+			background-color: $darker_white;
+		}
+	}
+
+	.stats {
+		li {
+			background-color: $dark_grey;
+			color: $white;
+		}
+	}
+
+	.tags {
+		margin-top: $space;
+
+		li {
+			background-color: $light_grey;
+		}
+	}
 }
+

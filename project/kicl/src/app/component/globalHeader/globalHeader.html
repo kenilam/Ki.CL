@@ -4,6 +4,7 @@
 	ng-class="{
 		'isExpanded' : globalHeader.status.expanded
 	}"
+	aria-hidden="{{globalHeader.status.expanded ? 'false' : 'true'}}"
 >
 	<logo
 		ng-class="{
@@ -11,12 +12,4 @@
 		}"
 	></logo>
 	<navigation data-list-at-root="true" data-list="root"></navigation>
-	<breadcrumb></breadcrumb>
-	<button
-		class="toggle"
-		ng-attr-title="{{globalHeader.closeButton[
-			globalHeader.status.expanded ? 'collapse' : 'expand'
-		].message}}"
-		ng-click="globalHeader.control.troggle()"
-	>{{globalHeader.closeButton.message}}</button>
 </header>

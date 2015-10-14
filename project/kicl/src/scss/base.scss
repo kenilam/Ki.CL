@@ -8,3 +8,8 @@
 	background: $green;
 	color: $white;
 }
+
+.ng-enter,
+.ng-leave {
+	@include through();
+}

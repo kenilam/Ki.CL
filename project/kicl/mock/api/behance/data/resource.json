@@ -75,6 +75,23 @@
 						"published_on" : "Published:"
 					}
 				}
+			},
+			"content" : {
+				"fields" : {
+					"label" : "Related fields"
+				},
+				"stats" : {
+					"label" : "Project stats"
+				},
+				"tags" : {
+					"label" : "Project tags"
+				},
+				"link" : {
+					"message" : "Click to see project in Behance"
+				},
+				"close" : {
+					"message" : "Click to close this project"
+				}
 			}
 		}
 	}

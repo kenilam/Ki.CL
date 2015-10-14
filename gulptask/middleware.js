@@ -31,6 +31,8 @@ module.exports.middleware = function (project) {
 				.replace(userName, 'kicl')
 				.replace(userNameActual, 'kicl'),
 			{encoding: 'utf-8', flag: 'rs'}, function(error, data) {
+				res.setHeader('Content-Type', 'application/json');
+				
 				if (error) return res.end(error.toString().replace(rootPath, ''));
 
 				if (uri.query.callback) {

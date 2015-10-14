@@ -25,31 +25,73 @@
 			resource : 'app/view/projects/projects.json'
 		},
 		controller = [
+			'$rootScope',
 			'$scope',
+			'$element',
+			'$timeout',
 			'resource',
 			'sitemap',
-			function controller (scope, resource, sitemap) {
-				var callback = {
+			function controller (root, scope, element, timeout, resource, sitemap) {
+				var get = {
+						list : function () {
+							return element.find('[data-api="behance.projects"] li');
+						}
+					},
+					callback = {
 						data : function (event, projects) {
-							_.each(projects, eachProject);
+							function hasData () {
+								_.each(
+									projects,
+									eachProject()
+								);
+								
+								scope.$broadcast('behance.projects.throbber.hide');
+							}
 
-							scope.$broadcast('behance.projects.throbber.hide');
+							timeout.cancel(scope.timer.data);
+							scope.timer.data = timeout(hasData, 0);
 						}
 					};
 
-				function eachProject (project) {
-					sitemap.add(
-						project.id,
-						{
-							name: project.name,
-							route: 'projects.project({project:"' + project.id + '"})'
-						},
-						'projects'
-					);
+				function eachProject () {
+					var projects = element.find('[data-api="behance.projects"] li'),
+						isHidden = 'isHidden',
+						pendding = 400,
+						speed = 1600;
+
+					function showProject (list) {
+						function whenShow () {
+							list.removeClass(isHidden);
+						}
+
+						return whenShow;
+					}
+
+					function setProject (project, index) {
+						sitemap.add(
+							project.id,
+							{
+								name: project.name,
+								route: 'projects.project({project:"' + project.id + '"})'
+							},
+							'projects'
+						);
+
+						timeout.cancel(scope.timer.render[index]);
+						scope.timer.render[index] = timeout(
+							showProject(
+								angular.element(projects.get(index)).addClass(isHidden)
+							),
+							pendding + (speed / projects.length * index));
+					}
+
+					return setProject;
 				}
 
 				scope.name = resource.name;
 				scope.content = resource.content;
+				scope.timer = {};
+				scope.timer.render = {};
 				
 				scope.$on('behance.projects.data', callback.data);
 

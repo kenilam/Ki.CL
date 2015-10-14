@@ -11,28 +11,11 @@
 	font-style: normal;
 }
 
-@mixin set-logo-size ($rate: 1.325) {
-	a {
-		@include set-font-size($rate);
-	}
-}
-
-@mixin set-logo-content ($square: false) {
-	$logo-kicl-square: "\e600";
-	$logo-kicl: "\e601";
-
-	a {
-		&:before {
-			@if $square {
-				content: $logo-kicl-square;
-			} @else {
-				content: $logo-kicl;
-			}
-		}
-	}
-}
-
 .logo {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
 	@include set-logo-size();
 	@include set-logo-content();
 
@@ -64,15 +47,7 @@
 		@include hidden();
 	}
 
-	&.square {
-		@include set-logo-content(true);
-	}
-
 	@include mobile() {
-		@include set-logo-content(true);
-	}
-
-	@include tablet() {
 		@include set-logo-content(true);
 	}
 }

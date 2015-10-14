@@ -14,6 +14,7 @@ module.exports.kicl = function (dependencies) {
 		browser = require(appRoot + '/gulptask/browser').browser,
 		
 		init = require(appRoot + '/gulptask/init').init(project),
+		test = require(appRoot + '/gulptask/test').test(project),
 		dev = require(appRoot + '/gulptask/dev').dev(project),
 		build = require(appRoot + '/gulptask/build').build(project),
 		ftp = require(appRoot + '/gulptask/ftp').ftp(project),
@@ -30,6 +31,9 @@ module.exports.kicl = function (dependencies) {
 			},
 			deploy : function () {
 				return gulp.start(ftp);
+			},
+			test : function () {
+				return gulp.start(test);
 			}
 		};
 
@@ -38,6 +42,8 @@ module.exports.kicl = function (dependencies) {
 	gulp.task(build + '.run', [build], fn.browser('build'));
 
 	gulp.task(project + '.deploy', [build], fn.deploy);
+
+	gulp.task(dev + '.test', fn.test);
 
 	gulp.task(project, [dev + '.run']);
 

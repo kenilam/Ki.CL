@@ -1,0 +1,24 @@
+@import '_import';
+
+[data-project-id='1177179'] {
+	[data-api='behance.projects'] & {
+		a {
+			&:hover {
+				border-color: $blue;
+				border-width: $space * 1.5;
+
+				+ figcaption {
+					color: $blue;
+				}
+			}
+		}
+	}
+
+	&[data-api="behance.project"] {
+		header {
+			figure {
+				border-color: $blue;
+			}
+		}
+	}
+}

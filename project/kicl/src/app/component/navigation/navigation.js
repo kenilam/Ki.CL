@@ -46,7 +46,7 @@
 
 				root.$on('$stateChangeSuccess', checkList);
 
-				timeout(checkList, 1000);
+				timeout(checkList, 0);
 			}
 		];
 

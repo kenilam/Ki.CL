@@ -8,6 +8,8 @@
 						data : function (data) {
 							reference.component.user.resolved = data.$resolved;
 
+							scope.$broadcast('behance.user.throbber.hide');
+							
 							root.$broadcast('behance.user.data', data);
 						}
 					};

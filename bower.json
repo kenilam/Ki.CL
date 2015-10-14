@@ -5,12 +5,14 @@
 	"angular": "*",
 	"angular-mocks": "*",
 	"angular-animate": "*",
+	"angular-aria": "*",
 	"angular-resource": "*",
 	"angular-route": "*",
 	"angular-sanitize": "*",
 	"angular-ui-router": "*",
 	"ui-router-extras": "*",
 
+	"es5-shim": "*",
 	"html5shiv": "*",
 
 	"GreenSock-js": "https://github.com/greensock/GreenSock-JS.git",
@@ -18,7 +20,7 @@
 	"underscore": "*",
 	"moment": "*",
 
-	"modernizr": "*",
+	"modernizr": "2.8.3",
 	"normalize-scss": "*",
 	
 	"font-awesome": "*",

@@ -1,15 +1,33 @@
 @import '_import';
 
 .navigation {
+	@include display(flex);
+	@include align-items(stretch);
+
 	text-transform: capitalize;
 
-	li {
+	ul {
 		@include display(flex);
-		@include flex-direction(column);
-		@include align-items(center);
+	}
+
+	li {
+		@include set-transition(border-color, border-width);
+
+		@include display(flex);
+		@include align-items(stretch);
+		@include flex-grow(1);
+		
+		+ li {
+			border-left: 1px solid $black;
+		}
 	}
 
 	a {
-		padding: $space 0;
+		@include display(flex);
+		@include align-items(center);
+		
+		font-weight: 600;
+		padding: $space $gutter;
+		text-align: center;
 	}
 }

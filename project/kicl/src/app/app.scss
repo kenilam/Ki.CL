@@ -1,58 +1,116 @@
 @import '_import';
 
+$max-width: screen-size($desktop-size);
+
+html {
+	@include set-transition(background-color);
+	@include transition-duration($slowest);
+}
+
 body {
-	overflow: hidden;
-	overflow-y: auto;
-	position: relative;
+	> .throbber {
+		font-size: 3rem;
+		height: 3rem;
+		margin-left: -1.5rem;
+		margin-top: -1.5rem;
+		width: 3rem;
+
+		&:after {
+			@include set-transition(transform);
+			
+			background-color: $white;
+			content : '\0020';
+			display: block;
+			left: 50%;
+			height: 100vh;
+			margin-left: -50vw;
+			margin-top: -50vh;
+			position: absolute;
+			top: 50%;
+			width: 100vw;
+			z-index: -1;
+		}
+
+		&.ng-leave-active {
+			&:after {
+				@include transform(scale(10));
+			}
+		}
+	}
+
+	> .breadcrumb {
+		@include set-transition(transform);
+
+		position: fixed;
+		width: 100%;
+		z-index: 3;
+
+		p {
+			background: $darkest_grey;
+			padding-left: $space;
+			padding-right: $space;
+			
+			@include box-shadow($shadow-bottom);
+
+			@include largedesktop() {
+				padding-left: calc(50% - #{$max-width / 2} + #{$space});
+				padding-right: calc(50% - #{$max-width / 2} + #{$space});
+			}
+
+			@include largestdesktop() {
+				padding-left: calc(50% - #{$max-width / 2} + #{$space});
+				padding-right: calc(50% - #{$max-width / 2} + #{$space});
+			}
+
+		}
+
+		a {
+			color: $darkest_white;
+
+			&:hover {
+				color: $orange;
+			}
+		}
+
+		a.isCurrent,
+		.fa {
+			color: $white;
+
+			&:hover {
+				color: $white;
+			}
+		}
+	}
+}
+
+main,
+.globalHeader,
+.globalFooter {
 	width: 100%;
 }
 
 main,
 .globalFooter {
-	position: relative;
-	z-index: 1;
+	position: absolute;
 }
 
 .globalHeader {
-	z-index: 2;
-
-	$globalHeader-size: $min-grid + $gutter * 2;
-
-	&.isExpanded {
-		+ main {
-			@include mobile() {
-				@include transform(translateX(calc(50% - #{$globalHeader-size})));
-			}
-
-			@include tablet() {
-				@include transform(translateX(calc(40% - #{$globalHeader-size})));
-			}
-
-			@include desktop() {
-				@include transform(translateX(calc(30% - #{$globalHeader-size})));
-			}
-
-			@include largedesktop() {
-				@include transform(translateX(calc(20% - #{$globalHeader-size})));
-			}
-
-			@include largestdesktop() {
-				@include transform(translateX(calc(20% - #{$globalHeader-size})));
-			}
-		}
-	}
-
-	&:not(.isExpanded) {
-		+ main {
-			@include transition-delay($speed);
-		}
-	}
+	border-bottom: 1px solid $dark_grey;
+	position: fixed;
+	z-index: 4;
 }
 
 main {
-	@include set-transition(transform);
+	@include display(flex);
+	@include flex-direction(column);
+	@include align-items(center);
+	@include justify-content(center);
 	
-	box-sizing: border-box;
-
-	will-change: transform;
+	top: 0;
+	z-index: 2;
 }
+
+.globalFooter {
+	z-index: 1;
+}
+

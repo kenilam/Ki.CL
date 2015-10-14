@@ -1,32 +1,39 @@
 (function throbber () {
 	'use strict';
 
-	var link = function (scope, elm, attr) {
-		function show (event, data) {
-			scope.throbber.show = true;
+	var controller = [
+		'$scope',
+		'$timeout',
+		function controller (scope, timeout) {
+			scope.throbber = {};
+			scope.throbber.timer = {};
+			scope.throbber.control = {};
+			
+			scope.throbber.control.show = function (event, data) {
+				scope.throbber.show = true;
+			};
+
+			scope.throbber.control.hide = function (event, data) {
+				delete scope.throbber.show;
+			};
 		}
+	];
 
-		function hide (event, data) {
-			scope.throbber.show = false;
-		}
+	function link (scope, elm, attr) {
+		scope.$on(attr.emitFrom + '.throbber.show', scope.throbber.control.show);
+		scope.$on(attr.emitFrom + '.throbber.hide', scope.throbber.control.hide);
 
-		scope.throbber = {};
-		scope.throbber.show = true;
-		scope.throbber.emitFrom = attr.emitFrom;
-
-		scope.$on(attr.emitFrom + '.throbber.show', show);
-		scope.$on(attr.emitFrom + '.throbber.hide', hide);
-	};
+		scope.throbber.show = Boolean(attr.showOnDefault === 'true');
+	}
 
 	function directive () {
 		return {
 			restrict : 'E',
 			replace : true,
-			scope : {
-				'isolate' : '&'
-			},
+			scope : true,
 			templateUrl : 'app/component/throbber/throbber.html',
-			link : link
+			link : link,
+			controller : controller
 		};
 	}
 

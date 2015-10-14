@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="kicl" ng-attr-data-route="{{$root.status.route}}">
+<html
+	ng-app="kicl"
+	ng-attr-data-route="{{$root.status.route}}"
+	ng-attr-data-from-route="{{$root.status.fromRoute}}"
+	ng-class="{
+		'isLoading' : $root.status.loading,
+		'stateIsChanging' : $root.status.stateIsChanging
+	}"
+>
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="content-type" content="text/html; charset=UTF8;">
@@ -7,9 +15,14 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="fragment" content="!">
 
-		<title ng-bind="$root.status.title.toUpperCase ? $root.status.title.toUpperCase() + ' | Ki.CL' : 'Welcome To Ki.CL'">Welcome To Ki.CL</title>
+		<title ng-bind="$root.status.title.toUpperCase ?  'Ki.CL | ' + $root.status.title.toUpperCase() : 'Welcome To Ki.CL'">Welcome To Ki.CL</title>
 
-		<link rel="icon" type="image/png" href="asset/image/logo/kicl.ico">
+		<!--[if IE]>
+		<link rel="shortcut icon" type="image/x-icon" href="asset/image/logo/kicl.ico" />
+		<![endif]-->
+		<!--[if !IE]><!-->
+		<link rel="icon" type="image/x-icon" href="asset/image/logo/kicl.ico" />
+		<!--<![endif]-->
 
 		<!-- build:css stylesheet/app.css -->
 		<link rel="stylesheet" href="css/lib/normalize.css">
@@ -23,6 +36,7 @@
 		<link rel="stylesheet" href="css/layout.css">
 		<link rel="stylesheet" href="css/font.css">
 
+		<link rel="stylesheet" href="api/behance/component/projects/projects.css">
 		<link rel="stylesheet" href="api/behance/component/project/project.css">
 
 		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
@@ -40,24 +54,51 @@
 		<link rel="stylesheet" href="app/view/view.css">
 		<link rel="stylesheet" href="app/view/about/about.css">
 		<link rel="stylesheet" href="app/view/home/home.css">
+		<link rel="stylesheet" href="app/view/projects/projects.css">
 		<link rel="stylesheet" href="app/view/projects/project/project.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177179/1177179.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177609/1177609.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177731/1177731.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177837/1177837.css">
 		<!-- endbuild -->
 	</head>
 	<body
 		class="ng-cloak tk-brandon-grotesque"
 		ng-cloak
-		ng-class="{
-			'init' : $root.status.init,
-			'loading' : $root.status.loading
-		}"
 	>
-		<throbber data-emit-from="resource"></throbber>
-
 		<global-header></global-header>
-		
-		<main ui-view="section" ng-if="!$root.status.loading"></main>
 
-		<global-footer></global-footer>
+		<breadcrumb
+			ng-style="{
+				'-webkit-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
+				'-moz-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
+				'-ms-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
+				'-o-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
+				'transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)'
+			}"
+		></breadcrumb>
+
+		<main
+			role="main"
+			ui-view="section"
+			ng-attr-data-route="{{$root.status.route}}"
+			ng-style="{
+				'height' : $root.status.route !== 'home' ? null : '100%',
+				'padding-top' : $root.status.route !== 'home' ? ($root.ref.globalHeader.height + $root.ref.breadcrumb.height) + 'px' : null
+			}"
+		></main>
+
+		<global-footer
+			ng-style="{
+				'-webkit-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
+				'-moz-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
+				'-ms-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
+				'-o-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
+				'transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)'
+			}"
+		></global-footer>
+
+		<throbber data-emit-from="resource" data-show-on-default="true"></throbber>
 
 		<!--[if lt IE 7]>
 		<script src="IE8.js">IE7_PNG_SUFFIX=".png";</script>
@@ -76,16 +117,20 @@
 		<script>try{Typekit.load();}catch(e){}</script>
 
 		<!-- build:js javascript/app.js -->
+		<script src="lib/es5-shim.js"></script>
+
 		<script src="lib/jquery.js"></script>
 		<script src="lib/modernizr.js"></script>
+
 		<script src="lib/html5shiv.js"></script>
 		<script src="lib/html5shiv-printshiv.js"></script>
+		
 		<script src="lib/moment.js"></script>
 		<script src="lib/underscore.js"></script>
 
 		<script src="lib/angular.js"></script>
-		<script src="lib/angular-mocks.js"></script>
 		<script src="lib/angular-animate.js"></script>
+		<script src="lib/angular-aria.js"></script>
 		<script src="lib/angular-route.js"></script>
 		<script src="lib/angular-resource.js"></script>
 		<script src="lib/angular-sanitize.js"></script>

@@ -1,0 +1,179 @@
+@import '_import';
+
+html {
+	&[data-route=projects] {
+		background-color: $dark_white;
+	}
+}
+
+main {
+	$length : 10;
+	$x: 160%;
+	$y: 60%;
+	$scale: 10;
+
+	&[data-route^=projects] {
+		h1 {
+			@include set-transition(opacity, transform);
+
+			margin-top: $gutter;
+		}
+
+		[data-api="behance.projects"] {
+			overflow: hidden;
+			
+			li {
+				@include set-transition(opacity, transform);
+
+				position: relative;
+				z-index: 1;
+
+				figcaption {
+					@include set-transition(opacity, transform);
+				}
+
+				&.isCurrent {
+					@include filter(grayscale(100%));
+
+					z-index: 2;
+
+					figcaption {
+						@include transform(scale3d(0, 0, 0));
+
+						@include opacity(0);
+					}
+				}
+
+				@for $i from 1 through $length {
+					&:nth-child(#{$i}) {
+						&:nth-child(odd) {
+							&.isCurrent {
+								@include transform(translate3d(#{$x}, #{-1 * $y * $i}, 0) scale3d($scale, $scale, $scale));
+
+								a {
+									@include transform(translate3d(50%, 0, 0));
+								}
+							}
+						}
+
+						&:nth-child(even) {
+							&.isCurrent {
+								@include transform(translate3d(#{-1 * $x}, #{-1 * $y * $i}, 0) scale3d($scale, $scale, $scale));
+
+								a {
+									@include transform(translate3d(-50%, 0, 0));
+								}
+							}
+						}
+					}
+				}
+
+				&.isHidden {
+					@include transition-duration(0s);
+
+					@include opacity(0);
+				}
+
+				&:nth-child(odd) {
+					&.isHidden {
+						@include transform(translate3d(-100%, 0, 0));
+					}
+				}
+
+				&:nth-child(even) {
+					&.isHidden {
+						@include transform(translate3d(100%, 0, 0));
+					}
+				}
+			}
+		}
+	}
+
+	&.ng-enter,
+	&.ng-leave {
+		[data-api="behance.projects"] {
+			@include opacity(0);
+		}
+	}
+
+	&.ng-enter {
+		[data-api="behance.projects"] {
+			@include transform(scale(2));
+		}
+	}
+
+	&.ng-leave {
+		[data-api="behance.projects"] {
+			@include transform(scale(1.5));
+		}
+	}
+}
+
+[ui-view=project] {
+	@include set-transition(opacity, padding-top, transform);
+
+	position: absolute;
+	width: 100%;
+	z-index: 2;
+
+	@include mobile() {
+		top: 0;
+	}
+	@include mobile-landscape() {
+		top: 0;
+	}
+
+	@include largemobile() {
+		top: 0;
+	}
+	@include largemobile-landscape() {
+		top: 0;
+	}
+
+	@include tablet() {
+		top: $gutter;
+	}
+	@include tablet-landscape() {
+		top: $gutter;
+	}
+
+	@include desktop() {
+		top: $gutter;
+	}
+
+	@include largedesktop() {
+		top: $gutter;
+	}
+	@include largestdesktop() {
+		top: $gutter;
+	}
+
+	&.ng-enter,
+	&.ng-leave {
+		@include through();
+
+		div {
+			@include opacity(0);
+		}
+	}
+
+	&.ng-enter {
+		@include transform(translate3d(0, 100vh, 0) scale3d(1.5, 1.5, 1.5));
+		@include opacity(0);
+	}
+
+	&.ng-enter-active {
+		/*@include transition-delay($fast);*/
+	}
+
+	&.ng-leave-active {
+		@include transform(translate3d(0, 100vh, 0) scale3d(.5, .5, .5));
+		@include opacity(0);
+	}
+}
+
+[data-api='behance.projects'] {
+	position: relative;
+	z-index: 1;
+}
+

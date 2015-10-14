@@ -1,6 +1,5 @@
 <article
 	data-api="behance.project"
-	ng-attr-id="{{project.id}}"
 >
 	<header>
 		<h1>{{project.name}}</h1>
@@ -10,10 +9,10 @@
 				'background-image' : 'url(' + project.covers + ')'
 			}"
 		>
-			<img ng-src="{{project.covers}}">
+			<img ng-src="{{project.covers}}" ng-attr-alt="{{project.name}}">
 		</figure>
 
-		<ul class="fields">
+		<ul class="fields" aria-label="{{resource.content.fields.label}}">
 			<li ng-repeat="field in project.fields track by $index">{{field}}</li>
 		</ul>
 	</header>
@@ -22,19 +21,28 @@
 		<p
 			ng-repeat-start="module in project.modules"
 			ng-if="module.type === 'text' && module.text_plain !== ''"
+			ng-class="{
+				'isTitle' : module.text.indexOf('class=&quot;title&quot;') > -1
+			}"
+			ng-style="{
+				'text-align' : module.alignment
+			}"
 			ng-bind-html="module.text_plain"></p>
 		<p
-			class="img"
+			class="isImage"
 			ng-repeat-end
 			ng-if="module.type === 'image'"
+			ng-style="{
+				'background-image' : 'url(' + module.src + ')'
+			}"
 		><img ng-src="{{module.src}}"></p>
 	</div>
 
 	<aside>
-		<ul class="stats">
+		<ul class="stats" aria-label="{{resource.content.stats.label}}">
 			<li ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span> {{key}}</li>
 		</ul>
-		<ul class="tags">
+		<ul class="tags" aria-label="{{resource.content.tags.label}}">
 			<li ng-repeat="tag in project.tags track by $index">{{tag}}</li>
 		</ul>
 	</aside>
@@ -43,18 +51,16 @@
 		<ul class="tool">
 			<li class="link">
 				<a
-					class="fa fa-external-link"
 					target="_blank"
 					ng-href="{{project.url}}"
 					ng-attr-title="{{resource.content.link.message}}"
-				>{{resource.content.link.message}}</a>
+				><i class="fa fa-external-link"></i><span>{{resource.content.link.message}}</span></a>
 			</li>
 			<li class="close">
 				<button
-					class="fa fa-times-circle"
 					ng-attr-title="{{resource.content.close.message}}"
-					ng-click="project.control.close()"
-				>{{resource.content.close.message}}</button>
+					ng-click="control.close()"
+				><i class="fa fa-times"></i><span>{{resource.content.close.message}}</span></button>
 			</li>
 		</ul>
 	</footer>

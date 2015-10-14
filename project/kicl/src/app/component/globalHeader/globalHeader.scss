@@ -1,100 +1,98 @@
 @import '_import';
 
 .globalHeader {
-	$min-size : $min-grid + $gutter * 2;
+	$border-color: $dark_grey;
+	$text-color: $dark_grey;
+	$active_text-color: $white;
+	$max-width: screen-size($desktop-size);
+
+	@include set-transition(transform);
 
 	@include display(flex);
-	@include flex-direction(column);
+	@include flex-wrap(wrap);
+	@include justify-content(space-between);
 
-	@include set-transition(background-color, box-shadow, height, width);
+	background: $black;
+	position: relative;
 
-	height: 100%;
-	position: fixed;
+	&:not(.isExpanded) {
+		@include transform(translate3d(0, -100%, 0));
+	}
 
-	will-change: background-color, box-shadow, height, width;
-
-	.breadcrumb,
+	.logo,
 	.navigation {
-		@include set-transition(transform, opacity);
+		background: $black;
+	}
+
+	a {
+		color: $text-color;
+	}
 		
-		will-change: transform, opacity;
+	.isCurrent a {
+		color: $active_text-color;
+
+		&:hover {
+			color: $active_text-color;
+		}
+	}
+
+	.logo,
+	.navigation {
+		position: relative;
+		z-index: 2;
 	}
 
 	.logo {
-		@include order(1);
-	}
-
-	.breadcrumb {
-		@include order(2);
-	}
-
-	.navigation {
-		@include order(3);
-		text-align: center;
-	}
-
-	.toggle {
-		position: absolute;
-		top: 0;
-
-		will-change: height, width;
-	}
-
-	&.isExpanded {
-		background-color: $white;
-		box-shadow: $shadow-right;
-
-		.logo,
-		.breadcrumb,
-		.navigation {
-			@include transition-delay($speed);
-		}
-
-		.toggle {
-			left: 100%;
-			height: 100vh;
-			width: 100vw;
-			z-index: -1;
-		}
-
-		@include mobile() {
-			width: calc(50% - #{$min-size});
-		}
-
-		@include tablet() {
-			width: calc(40% - #{$min-size});
-		}
-
-		@include desktop() {
-			width: calc(30% - #{$min-size});
-		}
-
 		@include largedesktop() {
-			width: calc(20% - #{$min-size});
+			left: 50%;
+			margin-left: calc(-1 * #{$max-width / 2});
 		}
 
 		@include largestdesktop() {
-			width: calc(20% - #{$min-size});
+			left: 50%;
+			margin-left: calc(-1 * #{$max-width / 2});
 		}
 	}
 
-	&:not(.isExpanded) {
-		@include transition-delay($speed);
+	.navigation {
+		border-left: 1px solid $border-color;
 
-		width: 0;
-
-		.breadcrumb,
-		.navigation {
-			@include transform(translateY(25vh));
-			@include opacity(0);
+		a {
+			&:hover {
+				color: $orange;
+			}
 		}
 
-		.toggle {
-			@include opacity(0);
+		li {
+			@include set-transition(background-color);
 
-			height: $min-size;
-			width: $min-size;
-			left: 0%;
+			&:hover {
+				background-color: rgba(red($dark_grey), green($dark_grey), blue($dark_grey), .3);
+			}
+
+			+ li {
+				border-left: 1px solid $border-color;
+			}
+		}
+
+		@include mobile() {
+			a {
+				@include set-font-size(.9);
+
+				padding: $space;
+			}
+		}
+
+		@include largedesktop() {
+			border-right: 1px solid $border-color;
+			right: 50%;
+			margin-right: calc(-1 * #{$max-width / 2});
+		}
+
+		@include largestdesktop() {
+			border-right: 1px solid $border-color;
+			right: 50%;
+			margin-right: calc(-1 * #{$max-width / 2});
 		}
 	}
 }

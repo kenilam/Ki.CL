@@ -1,85 +1,71 @@
 @import '_import';
 
-html[data-route=home] {
-	main,
-	.globalFooter {
-		color: $white;
-	}
+html {
+	&[data-route=home] {
+		.globalFooter {
+			color: $white;
 
-	.globalHeader {
-		&:not(.isExpanded) {
-			.logo {
-				a {
-					color: $white;
-				}
+			> .breadcrumb {
+				border-top: 0;
 			}
 		}
 	}
+}
 
-	main {
-		@include display(flex);
-		@include flex-direction(column);
-		@include align-items(center);
-		@include justify-content(center);
+main {
+	&[data-route=home] {
+		color: $white;
 
-		box-sizing: border-box;
-		height: 100%;
-		margin: 0 auto;
-		text-align: center;
+		&:before {
+			@include opacity(1);
 
-		@include mobile() {
-			padding: 0 $gutter;
+			background-image: url(#{$image_path}room.bw.jpg);
 		}
 
-		@include tablet() {
-			max-width: $mobile-size;
-			padding: 0 $gutter;
-		}
-
-		@include desktop() {
-			max-width: $tablet-size;
-			padding: 0 $gutter;
+		&.ng-leave-active {
+			&:before {
+				@include transform(scale(2.5));
+			}
 		}
 
 		@include largedesktop() {
-			max-width: $tablet-size;
+			left: 0;
+			margin-left: auto;
 		}
 
 		@include largestdesktop() {
-			max-width: $tablet-size;
-		}
-
-		&:before,
-		&:after {
-			content: '\0020';
-			display: block;
 			left: 0;
-			height: 100vh;
-			position: fixed;
-			top: 0;
-			width: 100vw;
+			margin-left: auto;
 		}
 
-		&:before {
-			background-image: url(#{$image_path}london.whitechapel.jpg);
-			background-position: top right;
-			background-repeat: no-repeat;
-			background-size: cover;
-			background-color: $black;
+		.globalHeader {
+			border-bottom: 0;
 		}
 
-		&:after {
-			@include opacity(.4);
+		.logo {
+			@include set-logo-size(1.6);
+			@include through();
 
-			background-color: $black;
+			a {
+				color: $white;
+			}
+
+			@include desktop() {
+				@include set-logo-size(2);
+			}
 		}
-	}
+		
+		[data-api='behance.user.about'] {
+			margin-bottom: $space;
+			max-width: screen-size($tablet-size);
+			padding: 0 $gutter;
+			text-align: center;
+		}
 
-	.globalFooter {
-		left: 0;
-		position: absolute;
-		bottom: 0;
-		width: 100%;
+		.navigation {
+			li {
+				border-left-color: $white;
+			}
+		}
 	}
 }
-
