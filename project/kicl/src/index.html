@@ -38,6 +38,7 @@
 
 		<link rel="stylesheet" href="api/behance/component/projects/projects.css">
 		<link rel="stylesheet" href="api/behance/component/project/project.css">
+		<link rel="stylesheet" href="api/behance/component/user/stats/stats.css">
 
 		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
 		<link rel="stylesheet" href="app/component/copyright/copyright.css">
@@ -70,11 +71,11 @@
 
 		<breadcrumb
 			ng-style="{
-				'-webkit-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
-				'-moz-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
-				'-ms-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
-				'-o-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)',
-				'transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * $root.ref.globalHeader.height) + 'px, 0)'
+				'-webkit-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
+				'-moz-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
+				'-ms-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
+				'-o-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
+				'transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)'
 			}"
 		></breadcrumb>
 
@@ -84,17 +85,18 @@
 			ng-attr-data-route="{{$root.status.route}}"
 			ng-style="{
 				'height' : $root.status.route !== 'home' ? null : '100%',
-				'padding-top' : $root.status.route !== 'home' ? ($root.ref.globalHeader.height + $root.ref.breadcrumb.height) + 'px' : null
+				'padding-top' : $root.status.route !== 'home' ? (($root.ref.globalHeader.height || 0) + ($root.ref.breadcrumb.height || 0)) + 'px' : null
 			}"
 		></main>
 
 		<global-footer
 			ng-style="{
-				'-webkit-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
-				'-moz-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
-				'-ms-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
-				'-o-transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)',
-				'transform' : 'translate3d(0,' + ($root.ref.main.height - ( $root.status.route !== 'home' ? 0 : $root.ref.globalFooter.height )) + 'px, 0)'
+				'-webkit-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
+				'-moz-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
+				'-ms-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
+				'-o-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
+				'transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
+				'visibility' : $root.ref.main.height <= 0 ? 'hidden' : null
 			}"
 		></global-footer>
 

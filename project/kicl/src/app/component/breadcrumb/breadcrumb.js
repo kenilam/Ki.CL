@@ -35,11 +35,7 @@
 							return whenData;
 						},
 						data : function (event, data) {
-							function eachData (value, name) {
-								scope.breadcrumb[name] = value;
-							}
-
-							_.each(data, eachData);
+							scope.resource = data;
 						}
 					},
 					control = {
@@ -78,7 +74,7 @@
 						return;
 					}
 
-					scope.breadcrumb.list = scope.breadcrumb.list.reverse().filter(filterBreadcrumb);
+					scope.breadcrumb.list = scope.breadcrumb.list.filter(filterBreadcrumb);
 
 					broadcast.height();
 				}

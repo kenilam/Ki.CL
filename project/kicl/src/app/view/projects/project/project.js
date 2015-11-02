@@ -31,10 +31,11 @@
 			'$timeout',
 			'$state',
 			'$stateParams',
+			'$element',
 			'behanceReference',
 			'resource',
 			'sitemap',
-			function controller (root, scope, timeout, state, stateParams, reference, resource, sitemap) {
+			function controller (root, scope, timeout, state, stateParams, element, reference, resource, sitemap) {
 				var callback = {
 						data : function (event, project) {
 							scope.$broadcast('behance.project.throbber.hide');
@@ -72,6 +73,14 @@
 							if (toState.name !== 'projects.project') {
 								sitemap.current(name, map);
 							}
+						},
+						transitionend : function (event) {
+							var target = event.target,
+								uiView = event.delegateTarget.attributes.getNamedItem('ui-view');
+							
+							if (uiView.nodeValue === 'project') {
+								root.$broadcast('main.update.height');
+							}
 						}
 					};
 
@@ -93,6 +102,8 @@
 				scope.$on('$stateChangeStart', callback.stateChangeStart);
 				scope.$on('behance.projects.data', callback.setSitemap);
 				scope.$on('behance.project.data', callback.data);
+
+				element.on('transitionend', callback.transitionend);
 			}
 		],
 		config = [

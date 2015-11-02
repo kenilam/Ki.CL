@@ -85,6 +85,15 @@
 						}
 					}
 				}
+				@mixin full-image () {
+					+ .isImage {
+						width: 100%;
+						
+						+ .isImage {
+							width: 100%;
+						}
+					}
+				}
 
 				background-size: cover;
 				background-position: center;
@@ -93,24 +102,24 @@
 				text-align: center;
 
 				@include mobile-landscape() {
-					width: 100%;
+					@include full-image();
 				}
 				@include mobile() {
-					width: 100%;
+					@include full-image();
 				}
 
 				@include largemobile-landscape() {
 					@include smaller-image();
 				}
 				@include largemobile() {
-					width: 100%;
+					@include full-image();
 				}
 
 				@include tablet-landscape() {
 					@include smaller-image();
 				}
 				@include tablet() {
-					width: 100%;
+					@include full-image();
 				}
 
 				@include largestdesktop() {
@@ -191,16 +200,7 @@
 		@include justify-content(center);
 
 		li {
-			@include set-font-size(.9);
-			@include circle(.5rem);
-
-			border: 1px solid $grey;
-			font-weight: $heading_font_weight;
-			height: auto;
-			margin: $space / 2;
-			padding: $space $gutter;
-			text-transform: capitalize;
-			width: auto;
+			@include pill();
 		}
 	}
 

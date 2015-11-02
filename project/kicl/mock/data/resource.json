@@ -27,7 +27,7 @@
 			}
 		},
 		"breadcrumb" : {
-			"title" : "You are here:"
+			"title" : "You are at:"
 		},
 		"copyright" : {
 			"message" : "All rights reserve © {{year}} Keni, Lam (Ki.CL)"

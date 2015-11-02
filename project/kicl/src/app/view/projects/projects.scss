@@ -8,9 +8,9 @@ html {
 
 main {
 	$length : 10;
-	$x: 160%;
+	$x: 100%;
 	$y: 60%;
-	$scale: 10;
+	$scale: 7;
 
 	&[data-route^=projects] {
 		h1 {
@@ -20,8 +20,6 @@ main {
 		}
 
 		[data-api="behance.projects"] {
-			overflow: hidden;
-			
 			li {
 				@include set-transition(opacity, transform);
 
@@ -30,42 +28,6 @@ main {
 
 				figcaption {
 					@include set-transition(opacity, transform);
-				}
-
-				&.isCurrent {
-					@include filter(grayscale(100%));
-
-					z-index: 2;
-
-					figcaption {
-						@include transform(scale3d(0, 0, 0));
-
-						@include opacity(0);
-					}
-				}
-
-				@for $i from 1 through $length {
-					&:nth-child(#{$i}) {
-						&:nth-child(odd) {
-							&.isCurrent {
-								@include transform(translate3d(#{$x}, #{-1 * $y * $i}, 0) scale3d($scale, $scale, $scale));
-
-								a {
-									@include transform(translate3d(50%, 0, 0));
-								}
-							}
-						}
-
-						&:nth-child(even) {
-							&.isCurrent {
-								@include transform(translate3d(#{-1 * $x}, #{-1 * $y * $i}, 0) scale3d($scale, $scale, $scale));
-
-								a {
-									@include transform(translate3d(-50%, 0, 0));
-								}
-							}
-						}
-					}
 				}
 
 				&.isHidden {
@@ -110,8 +72,6 @@ main {
 }
 
 [ui-view=project] {
-	@include set-transition(opacity, padding-top, transform);
-
 	position: absolute;
 	width: 100%;
 	z-index: 2;
@@ -150,11 +110,9 @@ main {
 
 	&.ng-enter,
 	&.ng-leave {
+		@include set-transition(opacity, padding-top, transform);
+		@include transition-duration(0);
 		@include through();
-
-		div {
-			@include opacity(0);
-		}
 	}
 
 	&.ng-enter {
@@ -163,11 +121,15 @@ main {
 	}
 
 	&.ng-enter-active {
-		/*@include transition-delay($fast);*/
+		@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+		@include transition-duration($speed);
+		@include transition-delay($fast);
+		@include opacity(1);
 	}
 
 	&.ng-leave-active {
 		@include transform(translate3d(0, 100vh, 0) scale3d(.5, .5, .5));
+		@include transition-duration($speed);
 		@include opacity(0);
 	}
 }
@@ -175,5 +137,15 @@ main {
 [data-api='behance.projects'] {
 	position: relative;
 	z-index: 1;
+
+	li {
+		a {
+			@include set-transition(border, transform);
+		}
+
+		figcaption {
+			@include set-transition(opacity, transform);
+		}
+	}
 }
 

@@ -4,17 +4,17 @@
 	ng-hide="breadcrumb.list.length <= 1"
 >
 	<p>
-		<span>{{breadcrumb.title}}</span>
+		<span>{{resource.title}}</span>
 		<i
 			class="fa fa-angle-right"
 			ng-repeat-start="list in breadcrumb.list track by $index"
 			ng-if="$index > 0 && breadcrumb.list.length > 1"
-		></i>
+		><span>{{resource.separator.message}}</span></i>
 		<a
 			ng-repeat-end
 			ng-if="list.route"
 			ng-class="{
-				'isCurrent' : $index === breadcrumb.list.length - 1
+				'isCurrent' : $index <= 0
 			}"
 			ng-attr-title="{{list.name}}"
 			ui-sref="{{list.route}}"

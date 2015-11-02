@@ -36,7 +36,7 @@ module.exports.ftp = function (project) {
 		config = {};
 
 	gulp.task(taskName, function () {
-		return gulp.src('./project/' + project + '/build/*')
+		return gulp.src('./project/' + project + '/build/**/*')
 			.pipe(fn.ftp(require(appRoot + '/project/' + project + '/secret.json').ftp))
 			.pipe(fn.complete());
 	});

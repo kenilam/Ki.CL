@@ -2,7 +2,11 @@
 
 html {
 	&[data-route='projects.project'] {
-		background-color: $light_grey;
+		background-color: $dark_grey;
+
+		.globalFooter {
+			color: $white;
+		}
 	}
 }
 
@@ -16,6 +20,12 @@ main {
 		[data-api="behance.projects"] {
 			@include transform(scale3d(.5, .5, 1));
 			@include opacity(0);
+
+			li {
+				&:not(.isCurrent) {
+					@include opacity(0);
+				}
+			}
 		}
 	}
 }

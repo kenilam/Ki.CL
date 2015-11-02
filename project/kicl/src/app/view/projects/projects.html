@@ -1,4 +1,6 @@
-<h1>{{name}}</h1>
+<h1
+	aria-hidden="{{$root.status.route === 'projects.project'}}"
+>{{name}}</h1>
 <throbber data-emit-from="behance.projects" data-show-on-default="true"></throbber>
 <section
 	ui-view="project"

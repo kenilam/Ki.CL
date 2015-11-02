@@ -5,8 +5,12 @@
 	
 	p {
 		@include set-transition(opacity, transform);
+
 		@include display(flex);
+		@include flex-direction(row-reverse);
+		@include justify-content(flex-end);
 		@include align-items(center);
+
 
 		padding: $space 0;
 	}
@@ -20,6 +24,11 @@
 
 		height: 100%;
 		margin: 0 $space;
+		overflow: hidden;
+
+		span {
+			@include hidden();
+		}
 	}
 
 	a {
@@ -29,20 +38,17 @@
 		&.isCurrent {
 			font-weight: 800;
 		}
+
+		&.ng-isCurrent-remove {
+			@include hidden();
+		}
 	}
 
 	&.ng-hide-add-active,
 	&.ng-hide-remove {
 		p {
-			@include opacity(0);
 			@include transform(translate3d(0, -100%, 0) !important);
-		}
-	}
-
-	&.ng-hide-add,
-	&.ng-hide-remove-active {
-		p {
-			@include opacity(1);
+			@include opacity(0);
 		}
 	}
 }

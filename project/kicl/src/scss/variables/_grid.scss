@@ -21,6 +21,7 @@ $largedesktop-size: 15;
 
 @function query-size ($min: false, $max: false, $screen: false, $ratio: false, $orientation: false) {
 	$size: ($grid + $gutter);
+	$width : (min-width);
 
 	@if $min {
 		$min: screen-size($min);

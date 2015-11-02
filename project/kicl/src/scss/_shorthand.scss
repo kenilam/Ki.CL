@@ -89,3 +89,16 @@
 		}
 	}
 }
+
+@mixin pill () {
+	@include set-font-size(.9);
+	@include circle(.5rem);
+
+	border: 1px solid $grey;
+	font-weight: $heading_font_weight;
+	height: auto;
+	margin: $space / 2;
+	padding: $space $gutter;
+	text-transform: capitalize;
+	width: auto;
+}

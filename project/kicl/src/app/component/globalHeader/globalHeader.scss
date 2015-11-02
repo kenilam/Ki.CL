@@ -75,14 +75,6 @@
 			}
 		}
 
-		@include mobile() {
-			a {
-				@include set-font-size(.9);
-
-				padding: $space;
-			}
-		}
-
 		@include largedesktop() {
 			border-right: 1px solid $border-color;
 			right: 50%;

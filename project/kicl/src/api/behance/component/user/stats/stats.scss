@@ -1,0 +1,12 @@
+@import '_import';
+
+[data-api='behance.user.stats'] {
+	@include display(flex);
+	@include flex-wrap(wrap);
+
+	li {
+		@include pill();
+
+		background-color: $darker_white;
+	}
+}

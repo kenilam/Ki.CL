@@ -1,7 +1,20 @@
 @import '_import';
 
+.ng-enter,
+.ng-leave {
+	@include through();
+}
+
 main {
-	@include set-transition(opacity, padding-top, transform);
+	@include set-transition(padding-top);
+
+	@include largedesktop() {
+		$size: grid-size($desktop-size);
+
+		left: 0;
+		margin-left: calc(50% - #{$size / 2});
+		max-width: $size;
+	}
 
 	&:before {
 		@include opacity(0);
@@ -21,6 +34,8 @@ main {
 	
 	&.ng-enter,
 	&.ng-leave {
+		@include set-transition(opacity, padding-top, transform);
+
 		&:before {
 			@include set-transition(opacity, transform);
 		}

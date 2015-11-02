@@ -1,5 +1,29 @@
+$prefix: -webkit;
+
 @import '_import';
 
 html[data-route=about] {
-	
+
+}
+
+main[data-route=about] {
+	$size: grid-size($tablet-size);
+
+	margin-left: calc(50% - #{$size / 2});
+	max-width: $size;
+
+	section {
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+		@include justify-content(center);
+	}
+}
+
+[data-api='behance.user'] {
+	text-align: center;
+}
+
+[data-api='behance.user.about'] {
+	margin: $gutter 0;
 }

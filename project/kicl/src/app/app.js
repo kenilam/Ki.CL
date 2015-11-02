@@ -167,19 +167,19 @@
 
 					root.ref.main = {};
 
-					function setValue (height) {
-						root.ref.main.height = height;
+					function assign () {
+						root.ref.main.height = get.main.height(stateParams);
 					}
 
-					function delayValue () {
-						setValue(get.main.height(stateParams));
+					function delay () {
+						assign();
 					}
 
-					function trigger (height) {
-						setValue(height);
+					function trigger () {
+						assign();
 						
 						timeout.cancel(root.timer.updateMainHeight);
-						root.timer.updateMainHeight = timeout(delayValue, pendding);
+						root.timer.updateMainHeight = timeout(delay, pendding);
 					}
 
 					return trigger;
@@ -229,6 +229,8 @@
 				root.$on('globalHeader.height', callback.globalHeaderHeight(root));
 				root.$on('globalFooter.height', callback.globalFooterHeight(root));
 				root.$on('breadcrumb.height', callback.breadcrumbHeight(root));
+
+				root.$on('main.update.height', update.main.height(root, timeout, stateParams));
 
 				root.timer.init = timeout(callback.init(root, timeout, state, async, resource, index, sitemap), 0);
 
