@@ -9,12 +9,21 @@
 }
 
 @mixin circle ($size: 100%) {
-	border-radius: $size / 2;
+	@include transform(translateZ(0));
+
+	border-radius: 50%;
 	height: $size;
 	min-height: $size;
 	min-width: $size;
 	width: $size;
 	overflow: hidden;
+}
+
+@mixin resize-circle ($size: 100%) {
+	height: $size;
+	min-height: $size;
+	min-width: $size;
+	width: $size;
 }
 
 @mixin clip-path ($anchor...) {
@@ -69,7 +78,7 @@
 	content: $content;
 }
 
-@mixin set-logo-size ($rate: 1.325) {
+@mixin set-logo-size ($rate: 1.825) {
 	a {
 		@include set-font-size($rate);
 	}
@@ -90,15 +99,23 @@
 	}
 }
 
-@mixin pill () {
-	@include set-font-size(.9);
-	@include circle(.5rem);
-
-	border: 1px solid $grey;
-	font-weight: $heading_font_weight;
-	height: auto;
-	margin: $space / 2;
-	padding: $space $gutter;
+@mixin pill ($background-color: $dark_white) {
+	background-color: $background-color;
+	border-radius: rem($space);
+	overflow: hidden;
+	padding: rem($space / 2) rem($space);
 	text-transform: capitalize;
-	width: auto;
+}
+
+@mixin pills ($background-color: $dark_white) {
+	@include display(flex);
+	@include flex-wrap(wrap);
+	@include align-items(center);
+	@include justify-content(center);
+
+	> * {
+		@include pill($background-color);
+
+		margin: rem($space);
+	}
 }

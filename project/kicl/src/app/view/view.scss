@@ -1,63 +1,54 @@
 @import '_import';
 
-.ng-enter,
-.ng-leave {
-	@include through();
+@keyframes fadeOut {
+	to {
+		@include opacity(0);
+	}
+}
+
+@keyframes fadeIn {
+	to {
+		@include opacity(1);
+	}
 }
 
 main {
-	@include set-transition(padding-top);
-
-	@include largedesktop() {
-		$size: grid-size($desktop-size);
-
-		left: 0;
-		margin-left: calc(50% - #{$size / 2});
-		max-width: $size;
-	}
-
-	&:before {
-		@include opacity(0);
-
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		display: block;
-		content: '\0020';
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: -1;
-	}
+	@include set-transition(background, padding);
 	
+	top: 0;
+
+	+ .globalFooter {
+		animation: fadeIn $speed $ease 1;
+	}
+
 	&.ng-enter,
 	&.ng-leave {
-		@include set-transition(opacity, padding-top, transform);
+		position: absolute;
+		width: 100%;
 
-		&:before {
-			@include set-transition(opacity, transform);
+		+ .globalFooter {
+			animation: fadeOut $speed $ease 1;
 		}
 	}
 
 	&.ng-enter {
-		@include transform(scale(1.5));
-		
 		@include opacity(0);
-	}
+		
+		animation: fadeIn $speed $ease 1;
+		animation-delay: $fast;
+		animation-play-state: paused;
 
-	&.ng-enter-active {
-		@include transform(scale(1));
-		@include opacity(1);
+		&.ng-enter-active {
+			animation-play-state: running;
+		}
 	}
 
 	&.ng-leave {
-		@include opacity(1);
-	}
+		animation: fadeOut $speed $ease 1;
+		animation-play-state: paused;
 
-	&.ng-leave-active {
-		@include transform(scale(.5));
-		@include opacity(0);
+		&.ng-leave-active {
+			animation-play-state: running;
+		}
 	}
 }

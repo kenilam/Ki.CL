@@ -1,17 +1,16 @@
 <nav
 	class="breadcrumb"
 	role="navigation"
-	ng-hide="breadcrumb.list.length <= 1"
+	ng-show="breadcrumb.list.length > 2"
 >
-	<p>
-		<span>{{resource.title}}</span>
+	<div>
+		<span class="title">{{resource.title}}</span>
 		<i
 			class="fa fa-angle-right"
 			ng-repeat-start="list in breadcrumb.list track by $index"
 			ng-if="$index > 0 && breadcrumb.list.length > 1"
 		><span>{{resource.separator.message}}</span></i>
 		<a
-			ng-repeat-end
 			ng-if="list.route"
 			ng-class="{
 				'isCurrent' : $index <= 0
@@ -19,5 +18,15 @@
 			ng-attr-title="{{list.name}}"
 			ui-sref="{{list.route}}"
 		>{{list.name}}</a>
-	</p>
+		<a
+			class="home"
+			ng-repeat-end
+			ng-if="list.home"
+			ng-class="{
+				'isCurrent' : $index <= 0
+			}"
+			ng-attr-title="{{list.home.name}}"
+			ui-sref="{{list.home.route}}"
+		>{{list.home.name}}</a>
+	</div>
 </nav>

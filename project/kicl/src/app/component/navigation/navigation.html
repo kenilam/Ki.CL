@@ -6,9 +6,7 @@
 		<li
 			ng-repeat="(name, property) in navigation.list track by $index"
 			ng-if="property.name !== 'home'"
-			ng-class="{
-				'isCurrent' : $index === navigation.current.index
-			}"
+			ng-class="{'isCurrent' : $index === navigation.current.index}"
 		>
 			<a
 				ng-click="navigation.control.click($index, property)"

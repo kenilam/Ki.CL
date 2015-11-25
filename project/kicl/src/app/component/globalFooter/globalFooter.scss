@@ -1,9 +1,9 @@
 @import '_import';
 
 .globalFooter {
-	@include set-transition(background-color);
-	@include set-font-size(.9);
+	@include display(flex);
+	@include justify-content(center);
 
-	padding: $gutter * 2 0;
+	padding: rem($gutter);
 	text-align: center;
 }

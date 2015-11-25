@@ -25,10 +25,11 @@
 			resource : 'app/view/about/about.json'
 		},
 		controller = [
+			'$rootScope',
 			'$scope',
 			'resource',
 			'sitemap',
-			function controller (scope, resource, sitemap) {
+			function controller (root, scope, resource, sitemap) {
 				var callback = {
 						data : function () {
 							scope.$broadcast('behance.user.throbber.hide');
@@ -39,6 +40,8 @@
 				scope.content = resource.content;
 
 				scope.$on('behance.user.data', callback.data);
+
+				root.$broadcast('globalHeader.show');
 				
 				sitemap.current('about', 'root');
 			}

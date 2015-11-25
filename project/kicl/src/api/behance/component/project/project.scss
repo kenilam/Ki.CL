@@ -1,227 +1,208 @@
 @import '_import';
 
-[data-api="behance.project"] {
-	@include display(flex);
-	@include flex-direction(column);
+[data-api='behance.project'] {
+	$pill-background-color: $dark_grey;
+	$pill-background-color-light: tint($pill-background-color, 5);
+	$pill-background-color-lighter: tint($pill-background-color, 15);
 
-	margin-bottom: $gutter;
+	padding: rem($gutter);
 	position: relative;
 
 	header,
-	div {
-		@include display(flex);
-		@include align-items(center);
+	aside {
+		border: 1px dashed transparent;
+	}
+
+	div,
+	aside {
+		padding: rem($gutter);
+	}
+
+	figure,
+	p {
+		position: relative;
 	}
 
 	header {
+		@include display(flex);
 		@include flex-direction(column);
-		
-		border-bottom: 1px solid $grey;
-		padding: $gutter;
+		@include align-items(center);
+
+		border: 1px dashed transparent;
+		border-bottom-color: $grey;
+		padding-bottom: rem($gutter);
+		text-align: center;
 
 		figure {
+			@include set-transition(height, min-height, min-width, width);
+			
 			@include order(1);
 
-			@include circle(grid-size(2));
-			@include box-shadow($shadow-center);
+			@include circle(grid-size(3));
 
-			background-size: cover;
 			background-position: center;
-			background-repeat: no-repeat;
-			border: $space solid $white;
-		}
+			margin-bottom: rem($space);
 
-		img {
-			@include hidden();
+			@include mobile () {
+				@include circle(grid-size(2));
+			}
 		}
 
 		h1 {
 			@include order(2);
-
-			text-align: center;
-			padding-top: $gutter;
 		}
 
 		p {
 			@include order(3);
+
+			margin-bottom: rem($space);
 		}
 
-		ul {
+		.fields {
 			@include order(4);
-
-			padding-top: $space;
 		}
 	}
 
 	div {
+		@include display(flex);
 		@include flex-wrap(wrap);
-		@include justify-content(space-between);
-		
-		padding: $gutter;
-
-		p {
-			@include display(flex);
-			@include justify-content(center);
-
-			width: 100%;
-
-			&.isTitle {
-				@include set-h-font-size(1.2, $gutter);
-
-				margin-top: $gutter * 2;
-
-				~ .isTitle {
-					@include set-h-font-size(1.1, $gutter);
-				}
-			}
-
-			&.isImage {
-				@mixin smaller-image () {
-					+ .isImage {
-						width: calc(50% - #{$space /2});
-						
-						+ .isImage {
-							width: calc(50% - #{$space /2});
-						}
-					}
-				}
-				@mixin full-image () {
-					+ .isImage {
-						width: 100%;
-						
-						+ .isImage {
-							width: 100%;
-						}
-					}
-				}
-
-				background-size: cover;
-				background-position: center;
-				background-repeat: no-repeat;
-				position: relative;
-				text-align: center;
-
-				@include mobile-landscape() {
-					@include full-image();
-				}
-				@include mobile() {
-					@include full-image();
-				}
-
-				@include largemobile-landscape() {
-					@include smaller-image();
-				}
-				@include largemobile() {
-					@include full-image();
-				}
-
-				@include tablet-landscape() {
-					@include smaller-image();
-				}
-				@include tablet() {
-					@include full-image();
-				}
-
-				@include largestdesktop() {
-					@include smaller-image();
-				}
-				@include largedesktop() {
-					@include smaller-image();
-				}
-				@include desktop() {
-					@include smaller-image();
-				}
-
-				&:before {
-					display: block;
-					content: '\0020';
-					padding-top: 71.17%;
-					width: 100%;
-				}
-
-				img {
-					@include hidden();
-				}
-			}
-		}
+		@include justify-content(center);
 	}
 
 	aside {
-		padding: $gutter 0;
+		border-top-color: $grey;
+		padding: rem($gutter);
 	}
 
 	footer {
-		@include display(flex);
-		@include justify-content(center);
-		
-		border-top: 1px solid $grey;
-		margin-top: $gutter;
-		padding: $gutter 0;
+		left: 0;
+		padding: rem($gutter);
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 
-		a,
-		button {
-			@include display(flex);
-			@include align-items(center);
-			@include justify-content(center);
-		}
+	img {
+		@include opacity(0);
 
-		a {
-			i {
-				margin-right: $space;
-			}
-		}
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 
-		button {
-			@include set-transition(color);
-			@include set-font-size(1.5);
+	p {
+		margin: rem($space / 4) rem($space / 2);
+		width: 100%;
 
-			color: $dark_grey;
-			right: $gutter;
-			position: absolute;
-			text-shadow: $shadow-bottom;
-			top: $gutter;
+		&.isImage {
+			background-size: contain;
+			background-position: center;
+			background-repeat: no-repeat;
+			margin: rem($space / 4) rem($space / 2);
+			padding-top: 71%;
 
-			&:hover {
-				color: $orange;
-			}
+			+ .isImage{
+				padding-top: 35.5%;
+				width: calc(50% - #{rem($space)});
 
-			span {
-				@include hidden();
+				@include mobile () {
+					padding-top: 71%;
+					width: 100%;
+				}
 			}
 		}
 	}
 
 	.fields,
-	.stats,
-	.tags {
-		@include display(flex);
-		@include flex-wrap(wrap);
-		@include align-items(center);
-		@include justify-content(center);
+	.tags,
+	.stats {
+		@include mobile () {
+			@include flex-direction(column);
+		}
+	}
 
-		li {
-			@include pill();
+	.fields,
+	.tags {
+		@include pills($pill-background-color);
+
+		color: $white;
+
+		@include mobile () {
+			text-align: center;
+
+			li {
+				width: 70%;
+			}
 		}
 	}
 
 	.fields {
-		li {
-			background-color: $darker_white;
-		}
+		width: 100%;
 	}
 
 	.stats {
+		@include pills(transparent);
+
+		color: $white;
+
 		li {
-			background-color: $dark_grey;
-			color: $white;
+			@include pills($pill-background-color);
+
+			padding: 0;
+		}
+
+		span {
+			margin: 0;
+
+			&:first-child {
+				background-color: $pill-background-color-light;
+				border-bottom-right-radius: 0;
+				border-top-right-radius: 0;
+				color: $light_black;
+				padding-right: rem($space / 2);
+			}
+
+			&:last-child {
+				border-left: 1px solid $pill-background-color-lighter;
+				border-bottom-left-radius: 0;
+				border-top-left-radius: 0;
+				padding-left: rem($space / 2);
+			}
 		}
 	}
 
-	.tags {
-		margin-top: $space;
+	.tool {
+		@include display(flex);
+		@include justify-content(space-between);
+
+		@include set-font-size(1.3);
+
+		width: 100%;
 
 		li {
-			background-color: $light_grey;
+			+ li {
+				margin-left: rem($space);
+			}
+		}
+
+		a,
+		button {
+			@include display(flex);
+		}
+		
+		span {
+			@include hidden();
+		}
+	}
+
+	.close {
+		button {
+			color: $black;
+
+			&:hover {
+				color: $red;
+			}
 		}
 	}
 }

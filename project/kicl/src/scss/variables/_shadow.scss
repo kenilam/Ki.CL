@@ -1,4 +1,4 @@
-$shadow-distant: em(2px);
+$shadow-distant: rem(2);
 $shadow-color: #000;
 $shadow-alpha: .2;
 $shadow-rgba: rgba(red($shadow-color), green($shadow-color), blue($shadow-color), $shadow-alpha);

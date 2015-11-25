@@ -1,16 +1,5 @@
 @import '_import';
 
-@font-face {
-	font-family: 'kicl';
-	src:url('../fonts/kicl.eot?1g05q6');
-	src:url('../fonts/kicl.eot?#iefix1g05q6') format('embedded-opentype'),
-		url('../fonts/kicl.ttf?1g05q6') format('truetype'),
-		url('../fonts/kicl.woff?1g05q6') format('woff'),
-		url('../fonts/kicl.svg?1g05q6#kicl') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
 .logo {
 	@include display(flex);
 	@include align-items(center);
@@ -45,9 +34,5 @@
 	
 	span {
 		@include hidden();
-	}
-
-	@include mobile() {
-		@include set-logo-content(true);
 	}
 }

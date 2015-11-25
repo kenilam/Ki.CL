@@ -1,72 +1,244 @@
 @import '_import';
 
+$large-size: grid-size($largemobile-size);
+$size: grid-size($mobile-size);
+$small-size: $size - rem($gutter * 2);
+
+$enter-size: grid-size($largedesktop-size);
+
+$overlay_opacity: .6;
+
+@mixin render-content-state-change () {
+	> div {
+		@inlcude opacity(0);
+
+		&:hover {
+			@include render-content-normal();
+		}
+
+		&:not(:hover),
+		&:hover {
+			@include through();
+
+			@include resize-circle($enter-size);
+
+			@include mobile () {
+				@include resize-circle($size);
+			}
+
+			background-color: transparent;
+
+			h2,
+			[data-api='behance.user.about'] {
+				@include opacity(0);
+			}
+
+			.logo {
+				@include transform(scale3d(0, 0, 0) translate3d(0, 500%, 0));
+			}
+
+			h2 {
+				@include transform(scale3d(0, 0, 0) translate3d(0, 400%, 0));
+			}
+
+			[data-api='behance.user.about'] {
+				@include transform(scale3d(0, 0, 0) translate3d(0, -50%, 0));
+			}
+
+			.navigation {
+				@include transform(scale3d(0, 0, 0) translate3d(0, -300%, 0));
+			}
+		}
+	}
+}
+
+@mixin render-content-normal () {
+	h2,
+	[data-api='behance.user.about'] {
+		@include opacity(0);
+	}
+
+	.logo {
+		@include transform(scale3d(1, 1, 1) translate3d(0, 200%, 0));
+	}
+
+	h2 {
+		@include transform(scale3d(0, 0, 0) translate3d(0, 400%, 0));
+	}
+
+	[data-api='behance.user.about'] {
+		@include transform(scale3d(0, 0, 0) translate3d(0, -50%, 0));
+	}
+
+	.navigation {
+		@include transform(scale3d(1, 1, 1) translate3d(0, -300%, 0));
+	}
+}
+@mixin render-content-hover ($size) {
+	@include resize-circle($size * 1.1);
+
+	background-color: rgba(red($pitch_black), green($pitch_black), blue($pitch_black), $overlay_opacity);
+
+	h2,
+	[data-api='behance.user.about'] {
+		@include transform(scale3d(1, 1, 1) translate3d(0, 0, 0));
+		@include opacity(1);
+	}
+}
+
+@mixin render-content ($size) {
+	> div {
+		@include circle($size);
+
+		background-color: transparent;
+
+		&:not(:hover) {
+			@include render-content-normal();
+		}
+
+		&:hover {
+			@include render-content-hover($size);
+		}
+	}
+}
+
+@mixin reset-render-in-mobile ($size) {
+	> div {
+		[data-api='behance.user.about'],
+		.navigation a {
+			@include set-font-size(.9);
+		}
+
+		&:hover,
+		&:not(:hover) {
+			@include render-content-hover($size * .9);
+
+			.logo {
+				@include transform(scale3d(1, 1, 1) translate3d(0, 90%, 0));
+			}
+
+			h2 {
+				@include transform(scale3d(1, 1, 1) translate3d(0, 180%, 0));
+			}
+
+			[data-api='behance.user.about'] {
+				@include transform(scale3d(0, 0, 0) translate3d(0, -50%, 0));
+			}
+
+			.navigation {
+				@include transform(scale3d(1, 1, 1) translate3d(0, -220%, 0));
+			}
+		}
+	}
+}
+
 html {
+	$overlay-color: $black;
+	$overlay-opacity: .6;
+
 	&[data-route=home] {
+		body {
+			@include justify-content(center);
+			
+			background-color: rgba(red($overlay-color), green($overlay-color), blue($overlay-color), $overlay-opacity);
+			max-height: 100vh;
+		}
+
 		.globalFooter {
 			color: $white;
-
-			> .breadcrumb {
-				border-top: 0;
-			}
 		}
 	}
 }
 
 main {
 	&[data-route=home] {
+		@include display(flex);
+		@include align-items(center);
+		@include justify-content(center);
+		
 		color: $white;
-		max-width: 100%;
+		height: 100%;
+		text-align: center;
 
-		&:before {
-			@include opacity(1);
-
-			background-image: url(#{$image_path}room.bw.jpg);
+		.logo,
+		.navigation {
+			@include set-transition(transform);
 		}
 
-		&.ng-leave-active {
-			&:before {
-				@include transform(scale(2.5));
-			}
+		h2,
+		[data-api='behance.user.about'] {
+			@include set-transition(opacity, transform);
 		}
 
-		@include largedesktop() {
-			left: 0;
-			margin-left: auto;
-		}
-
-		@include largestdesktop() {
-			left: 0;
-			margin-left: auto;
-		}
-
-		.globalHeader {
-			border-bottom: 0;
-		}
-
-		.logo {
-			@include set-logo-size(1.6);
-			@include through();
-
+		.logo,
+		.navigation {
 			a {
 				color: $white;
 			}
+		}
 
-			@include desktop() {
-				@include set-logo-size(2);
+		> div {
+			@include set-transition(background-color, height, min-height, min-width, transform, width);
+
+			@include display(flex);
+			@include flex-direction(column);
+			@include align-items(center);
+			@include justify-content(center);
+
+			border: 1px dashed $white;
+			position: relative;
+			z-index: 1;
+
+			> * {
+				max-width: $small-size;
 			}
 		}
-		
-		[data-api='behance.user.about'] {
-			margin-bottom: $space;
-			max-width: screen-size($tablet-size);
-			padding: 0 $gutter;
-			text-align: center;
+
+		.logo {
+			margin-bottom: rem($gutter);
 		}
 
 		.navigation {
+			margin-top: rem($space);
+
 			li {
-				border-left-color: $white;
+				+ li {
+					border-left-color: $white;
+				}
 			}
+
+			a {
+				font-weight: $heading_font_weight;
+				text-transform: uppercase;
+
+				&:hover {
+					color: $green;
+				}
+
+			}
+		}
+
+		@include render-content($large-size);
+
+		@include largemobile () {
+			@include render-content($size);
+
+			@include reset-render-in-mobile($size);
+		}
+
+		@include mobile () {
+			> div {
+				@include resize-circle($size * .9);
+
+				&:hover {
+					@include resize-circle($size);
+				}
+			}
+		}
+
+		&.ng-enter,
+		&.ng-leave {
+			@include render-content-state-change();
 		}
 	}
 }

@@ -1,116 +1,94 @@
 @import '_import';
 
-$max-width: screen-size($desktop-size);
+$overlay-color: $pitch_black;
+$overlay-opacity: 1;
+
+$backdrop-overlay-color: $white;
+$backdrop-overlay-opacity: .8;
+
+@mixin body-background-color($color, $opacity) {
+	background-color: rgba(red($color), green($color), blue($color), $opacity);
+}
 
 html {
-	@include set-transition(background-color);
+	@include set-transition(background-image);
 	@include transition-duration($slowest);
+
+	@include mobile () {
+		@include transition-duration(0s);
+	}
+
+	@include display(flex);
+	@include align-items(stretch);
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	max-width: 100%;
+
+	&.hasBackdrop {
+		body {
+			@include body-background-color($backdrop-overlay-color, $backdrop-overlay-opacity);
+		}
+	}
 }
 
 body {
-	> .throbber {
-		font-size: 3rem;
-		height: 3rem;
-		margin-left: -1.5rem;
-		margin-top: -1.5rem;
-		width: 3rem;
+	@include set-transition(background-color);
+	@include transition-duration($slowest);
+	
+	@include display(flex);
+	@include flex-direction(column);
 
-		&:after {
-			@include set-transition(transform);
-			
-			background-color: $white;
-			content : '\0020';
-			display: block;
-			left: 50%;
-			height: 100vh;
-			margin-left: -50vw;
-			margin-top: -50vh;
-			position: absolute;
-			top: 50%;
-			width: 100vw;
-			z-index: -1;
-		}
+	@include body-background-color($overlay-color, $overlay-opacity);
 
-		&.ng-leave-active {
-			&:after {
-				@include transform(scale(10));
-			}
-		}
-	}
-
-	> .breadcrumb {
-		@include set-transition(transform);
-
-		position: fixed;
-		width: 100%;
-		z-index: 3;
-
-		p {
-			background: $darkest_grey;
-			padding-left: $space;
-			padding-right: $space;
-			
-			@include box-shadow($shadow-bottom);
-
-			@include largedesktop() {
-				padding-left: calc(50% - #{$max-width / 2} + #{$space});
-				padding-right: calc(50% - #{$max-width / 2} + #{$space});
-			}
-
-			@include largestdesktop() {
-				padding-left: calc(50% - #{$max-width / 2} + #{$space});
-				padding-right: calc(50% - #{$max-width / 2} + #{$space});
-			}
-
-		}
-
-		a {
-			color: $darkest_white;
-
-			&:hover {
-				color: $orange;
-			}
-		}
-
-		a.isCurrent,
-		.fa {
-			color: $white;
-
-			&:hover {
-				color: $white;
-			}
-		}
-	}
+	position: relative;
 }
 
-main,
 .globalHeader,
+.breadcrumb,
 .globalFooter {
 	width: 100%;
 }
 
-main,
+.globalHeader,
 .globalFooter {
-	position: absolute;
+	z-index: 3;
 }
 
-.globalHeader {
-	border-bottom: 1px solid $dark_grey;
+.globalHeader,
+.breadcrumb {
 	position: fixed;
-	z-index: 4;
+	top: 0;
 }
 
-main {
-	@include display(flex);
-	@include flex-direction(column);
-	@include align-items(center);
-	@include justify-content(center);
-	
-	top: 0;
+.breadcrumb {
 	z-index: 2;
 }
 
-.globalFooter {
+main {
+	min-height: 100vh;
+	position: relative;
 	z-index: 1;
+
+	&:not([data-route]) {
+		@include hidden();
+	}
+
+	> h1 {
+		@include set-h-font-size(2, $gutter);
+
+		text-align: center;
+		margin-top: rem($gutter);
+
+		@include mobile() {
+			@include set-h-font-size(1.3, $gutter);
+		}
+	}
 }
 
+.globalFooter {
+	position: absolute;
+	bottom: 0;
+}

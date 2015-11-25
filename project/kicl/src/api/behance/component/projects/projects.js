@@ -3,30 +3,57 @@
 
 	var projectsRoute,
 		controller = [
-			'$rootScope', '$scope', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
-			function controller (root, scope, stateParams, reference, check, modify) {
+			'$rootScope', '$scope', '$timeout', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
+			function controller (root, scope, timeout, stateParams, reference, check, modify) {
 				var control = {
 						set : {
-							current : {
-								id : function (id) {
-									scope.current.id = id;
-								}
+							current : function (project) {
+								scope.current = project;
+
+								root.$broadcast('behance.projects.set.current', scope.current);
 							}
-						}
+						},
+						unset : {
+							current : function (project) {
+								delete scope.current;
+
+								root.$broadcast('behance.projects.unset.current', scope.current);
+							}
+						},
+						mouseover : function () {},
+						mouseleave : function () {}
 					},
 					callback = {
 						data : function (data) {
 							reference.component.projects.resolved = data.$resolved;
 
-							modify.storage('project', { projectsRoute : projectsRoute });
+							modify.storage('project', { projectsRoute : scope.attr.projectsRoute });
 
 							scope.projects = check.project(_.map(data.projects, modify.project));
 							scope.resource = reference.resource.data.widget.projects;
 
+							control.set.current(_.findWhere(scope.projects, { id : stateParams.project }));
+
 							root.$broadcast('behance.projects.data', scope.projects);
 						},
+						control : function (event, control) {
+							scope.control.mouseover = control.mouseover;
+							scope.control.mouseleave = control.mouseleave;
+						},
+						destroy : function () {
+							control.unset.current(scope.current);
+						},
 						stateChange : function (event, toState, toParams, fromState, fromParams) {
-							control.set.current.id(toParams.project);
+							var current = _.findWhere(scope.projects, { id : toParams.project });
+
+							if (current) {
+								control.set.current(current);
+								return;
+							}
+
+							if (scope.current && !current) {
+								control.unset.current(scope.current);
+							}
 						}
 					};
 
@@ -35,13 +62,20 @@
 				}
 
 				scope.projects = {};
+				scope.timer = {};
 				scope.resource = {};
 				scope.current = {};
+				scope.control = {};
+				scope.control.mouseover = control.mouseover;
+				scope.control.mouseleave = control.mouseleave;
+				scope.control.click = control.click;
 
+				scope.$on('behance.projects.control', callback.control);
+				scope.$on('$destroy', callback.destroy);
 				scope.$on('$stateChangeSuccess', callback.stateChange);
 				
 				reference.component.projects.promise.then(callback.data);
-				control.set.current.id(stateParams.project);
+				control.set.current(stateParams.project);
 			}
 		],
 
@@ -50,7 +84,7 @@
 				throw ('behance.component.projects need data-project-route to run');
 			}
 
-			projectsRoute = attr.projectsRoute;
+			scope.attr = attr;
 		};
 
 	function directive (async) {

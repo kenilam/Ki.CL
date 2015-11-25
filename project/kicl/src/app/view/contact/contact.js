@@ -25,11 +25,12 @@
 			resource : 'app/view/contact/contact.json'
 		},
 		controller = [
+			'$rootScope',
 			'$scope',
 			'$timeout',
 			'resource',
 			'sitemap',
-			function controller (scope, timeout, resource, sitemap) {
+			function controller (root, scope, timeout, resource, sitemap) {
 				function init () {
 					resource.component.customForm.name = "contactFrom";
 					
@@ -37,6 +38,8 @@
 				}
 
 				scope.name = resource.name;
+
+				root.$broadcast('globalHeader.show');
 				
 				sitemap.current('contact', 'root');
 

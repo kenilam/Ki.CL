@@ -15,6 +15,7 @@ html {
 	color: $black;
 	font-family: $font_family;
 	font-weight: $font_weight;
+	text-rendering: optimizeLegibility;
 }
 
 label {

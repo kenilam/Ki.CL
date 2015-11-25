@@ -27,28 +27,39 @@
 		controller = [
 			'$rootScope',
 			'$scope',
+			'$timeout',
 			'resource',
 			'sitemap',
-			function controller (root, scope, resource, sitemap) {
+			function controller (root, scope, timeout, resource, sitemap) {
 				var callback = {
 						data : function () {
 							scope.$broadcast('behance.user.about.throbber.hide');
+
+							timeout.cancel(scope.timer.backdrop);
+							scope.timer.backdrop = timeout(function () {
+								scope.$emit('backdrop.add', scope.content.backdrop);
+							}, 100);
 						},
 						destroy : function () {
-							root.$broadcast('globalHeader.expand');
+							timeout.cancel(scope.timer.backdrop);
+							
+							scope.$emit('globalHeader.show');
+							scope.$emit('backdrop.remove', scope.content.backdrop);
 						}
 					};
-
+				
 				scope.name = resource.name;
 				scope.content = resource.content;
 
 				scope.state = {};
 				scope.state.loading = true;
 
+				scope.timer = {};
+
 				scope.$on('behance.user.about.data', callback.data);
 				scope.$on('$destroy', callback.destroy);
 
-				root.$broadcast('globalHeader.collapse');
+				root.$broadcast('globalHeader.hide');
 				
 				sitemap.current('home', 'root');
 			}

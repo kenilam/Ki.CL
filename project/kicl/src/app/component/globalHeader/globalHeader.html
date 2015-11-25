@@ -1,15 +1,15 @@
-<header
-	class="globalHeader"
-	role="banner"
+<header class="globalHeader" role="banner" ng-show="globalHeader.show"
 	ng-class="{
-		'isExpanded' : globalHeader.status.expanded
+		'isScrolled' : !globalHeader.ref.showLogo
 	}"
-	aria-hidden="{{globalHeader.status.expanded ? 'false' : 'true'}}"
+	ng-style="{
+		'-webkit-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
+		'-moz-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
+		'-ms-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
+		'-o-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
+		'transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null
+	}"
 >
-	<logo
-		ng-class="{
-			'square' : !globalHeader.status.expanded
-		}"
-	></logo>
+	<logo></logo>
 	<navigation data-list-at-root="true" data-list="root"></navigation>
 </header>

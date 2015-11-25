@@ -1,24 +1,6 @@
 @import '_import';
+@import '../_project';
 
-[data-project-id='1177179'] {
-	[data-api='behance.projects'] & {
-		a {
-			&:hover {
-				border-color: $blue;
-				border-width: $space * 1.5;
-
-				+ figcaption {
-					color: $blue;
-				}
-			}
-		}
-	}
-
-	&[data-api="behance.project"] {
-		header {
-			figure {
-				border-color: $blue;
-			}
-		}
-	}
+main {
+	@include set-project('1177179', $dark_grey, $white, $white);
 }

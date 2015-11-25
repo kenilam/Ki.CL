@@ -41,7 +41,7 @@
 
 	<aside>
 		<ul class="stats" aria-label="{{resource.content.stats.label}}" role="list">
-			<li role="listitem" ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span> {{key}}</li>
+			<li role="listitem" ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span><span>{{key}}</span></li>
 		</ul>
 		<ul class="tags" aria-label="{{resource.content.tags.label}}" role="list">
 			<li role="listitem" ng-repeat="tag in project.tags track by $index">{{tag}}</li>

@@ -1,151 +1,78 @@
 @import '_import';
 
+$scale_in : .2;
+$scale_out : 1.2;
+
 html {
-	&[data-route=projects] {
-		background-color: $dark_white;
+	&[data-route^=projects] {
+		body {
+			@include mobile () {
+				background-color: $white;
+			}
+		}
 	}
 }
 
 main {
-	$length : 10;
-	$x: 100%;
-	$y: 60%;
-	$scale: 7;
-
 	&[data-route^=projects] {
-		h1 {
-			@include set-transition(opacity, transform);
+		[data-api='behance.proejcts'] {
+			@include set-transition(transform);
 
-			margin-top: $gutter;
+			position: relative;
+			z-index: 1;
 		}
 
-		[data-api="behance.projects"] {
-			li {
-				@include set-transition(opacity, transform);
+		&.ng-enter-active {
+			[data-api='behance.proejcts'] {
+				@include transform(scale3d($scale_out, $scale_out, $scale_out));
+			}
+		}
 
-				position: relative;
-				z-index: 1;
+		&.ng-leave-active {
+			[data-api='behance.proejcts'] {
+				@include transform(scale3d($scale_in, $scale_in, $scale_in));
+			}
+		}
 
-				figcaption {
-					@include set-transition(opacity, transform);
+		[ui-view=project] {
+			$enter-distance : grid-size(1);
+			$leave-distance : grid-size(5);
+
+			@include set-transition(background-color, transform, opacity);
+
+
+			background-color: transparent;
+			z-index: 2;
+
+			&.ng-enter,
+			&.ng-leave {
+				background-color: $white;
+				position: absolute;
+				width: 100%;
+			}
+
+			&.ng-enter {
+				@include transition-delay($speed);
+				@include transform(translate3d(0, -1 * $enter-distance, 0) scale3d(2, 2, 2));
+				@include opacity(0);
+
+				&.ng-enter-active {
+					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+					@include opacity(1);
 				}
+			}
 
-				&.isHidden {
-					@include transition-duration(0s);
+			&.ng-leave {
+				@transition-duration($slow);
 
+				@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+				@include opacity(1);
+
+				&.ng-leave-active {
+					@include transform(translate3d(0, $leave-distance, 0) scale3d(.8, .8, .8));
 					@include opacity(0);
-				}
-
-				&:nth-child(odd) {
-					&.isHidden {
-						@include transform(translate3d(-100%, 0, 0));
-					}
-				}
-
-				&:nth-child(even) {
-					&.isHidden {
-						@include transform(translate3d(100%, 0, 0));
-					}
 				}
 			}
 		}
 	}
-
-	&.ng-enter,
-	&.ng-leave {
-		[data-api="behance.projects"] {
-			@include opacity(0);
-		}
-	}
-
-	&.ng-enter {
-		[data-api="behance.projects"] {
-			@include transform(scale(2));
-		}
-	}
-
-	&.ng-leave {
-		[data-api="behance.projects"] {
-			@include transform(scale(1.5));
-		}
-	}
 }
-
-[ui-view=project] {
-	position: absolute;
-	width: 100%;
-	z-index: 2;
-
-	@include mobile() {
-		top: 0;
-	}
-	@include mobile-landscape() {
-		top: 0;
-	}
-
-	@include largemobile() {
-		top: 0;
-	}
-	@include largemobile-landscape() {
-		top: 0;
-	}
-
-	@include tablet() {
-		top: $gutter;
-	}
-	@include tablet-landscape() {
-		top: $gutter;
-	}
-
-	@include desktop() {
-		top: $gutter;
-	}
-
-	@include largedesktop() {
-		top: $gutter;
-	}
-	@include largestdesktop() {
-		top: $gutter;
-	}
-
-	&.ng-enter,
-	&.ng-leave {
-		@include set-transition(opacity, padding-top, transform);
-		@include transition-duration(0);
-		@include through();
-	}
-
-	&.ng-enter {
-		@include transform(translate3d(0, 100vh, 0) scale3d(1.5, 1.5, 1.5));
-		@include opacity(0);
-	}
-
-	&.ng-enter-active {
-		@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-		@include transition-duration($speed);
-		@include transition-delay($fast);
-		@include opacity(1);
-	}
-
-	&.ng-leave-active {
-		@include transform(translate3d(0, 100vh, 0) scale3d(.5, .5, .5));
-		@include transition-duration($speed);
-		@include opacity(0);
-	}
-}
-
-[data-api='behance.projects'] {
-	position: relative;
-	z-index: 1;
-
-	li {
-		a {
-			@include set-transition(border, transform);
-		}
-
-		figcaption {
-			@include set-transition(opacity, transform);
-		}
-	}
-}
-

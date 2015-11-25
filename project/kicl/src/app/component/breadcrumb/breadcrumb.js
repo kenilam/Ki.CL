@@ -8,52 +8,55 @@
 			'$timeout',
 			'$state',
 			'$stateParams',
+			'transition',
 			'sitemap',
-			function (root, scope, element, timeout, state, stateParams, sitemap) {
-				var index = 0,
-					callback = {
-						sitemapUpdate : function () {
-							index = 0;
+			function (root, scope, element, timeout, state, stateParams, transition, sitemap) {
+				var index = 0;
 
-							scope.breadcrumb.list = [];
+				function sitemapUpdate () {
+					index = 0;
 
-							timeout.cancel(scope.breadcrumb.timer.sitemapUpdate);
-							scope.breadcrumb.timer.sitemapUpdate = timeout(setBreadcrumb, 0);
+					scope.breadcrumb.list = [];
 
+					timeout.cancel(scope.breadcrumb.timer.sitemapUpdate);
+					scope.breadcrumb.timer.sitemapUpdate = timeout(setBreadcrumb, 0);
 
-							scope.$on('behance.projects.data', setBreadcrumb);
-						},
-						ready : function (data) {
-							function eachData (value, name) {
-								scope.breadcrumb[name] = value;
-							}
+					scope.$on('behance.projects.data', setBreadcrumb);
+				}
 
-							function whenData () {
-								_.each(data, eachData);
-							}
+				function ready (data) {
+					function eachData (value, name) {
+						scope.breadcrumb[name] = value;
+					}
 
-							return whenData;
-						},
-						data : function (event, data) {
-							scope.resource = data;
-						}
-					},
-					control = {
-						get : {
-							height : function () {
-								return element.outerHeight();
-							}
-						}
-					},
-					broadcast = {
-						height : function () {
-							function whenBroadcast () {
-								root.$broadcast('breadcrumb.height', control.get.height());
-							}
+					function whenData () {
+						_.each(data, eachData);
+					}
 
-							scope.breadcrumb.timer.broadcast = timeout(whenBroadcast, 0);
-						}
-					};
+					return whenData;
+				}
+
+				function breadcrumbData (event, data) {
+					scope.resource = data;
+				}
+
+				function height () {
+					var value = element.outerHeight() - parseInt(element.css('padding-top'));
+
+					if (value && value > 0) {
+						return value;
+					}
+
+					return 0;
+				}
+				
+				function broadcastHeight () {
+					root.$broadcast('breadcrumb.height', height());
+				}
+
+				function destroy () {
+					timeout.cancel(scope.breadcrumb.timer.broadcast);
+				}
 
 				function filterBreadcrumb (list) {
 					return (list.name !== 'home');
@@ -66,7 +69,7 @@
 
 					scope.breadcrumb.list[index] = currentSitemap;
 
-					if (currentSitemap.parent && !currentSitemap.root) {
+					if (currentSitemap.parent) {
 						index = index + 1;
 
 						setBreadcrumb(currentSitemap.parent);
@@ -74,23 +77,23 @@
 						return;
 					}
 
-					scope.breadcrumb.list = scope.breadcrumb.list.filter(filterBreadcrumb);
-
-					broadcast.height();
+					// scope.breadcrumb.list = scope.breadcrumb.list.filter(filterBreadcrumb);
 				}
 
 				function init () {
-					scope.$on('sitemap.current.updated', callback.sitemapUpdate);
+					scope.$on('sitemap.current.updated', sitemapUpdate);
 				}
+
+				element.bind(transition.end.which(element), broadcastHeight);
 
 				scope.breadcrumb = {};
 				scope.breadcrumb.timer = {};
 				scope.breadcrumb.list = [];
 
-				scope.$on('sitemap.current.updated', callback.sitemapUpdate);
-				scope.$on('breadcrumb.data', callback.data);
+				scope.$watch(height, broadcastHeight, true);
 
-				scope.$watch(control.get.height, broadcast.height);
+				scope.$on('sitemap.current.updated', sitemapUpdate);
+				scope.$on('breadcrumb.data', breadcrumbData);
 			}
 		];
 

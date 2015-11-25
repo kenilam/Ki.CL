@@ -6,19 +6,22 @@
 		}"
 		data-project-id="{{project.id}}"
 	>
-		<figure>
+		<figure
+			ng-mouseover="control.mouseover(project)"
+			ng-mouseleave="control.mouseleave(project)"
+		>
 			<a
-				ui-sref="{{project.route}}"
 				ng-attr-title="go to: {{project.name}}"
 				ng-style="{
 					'background-image' : 'url(' + project.covers + ')'
 				}"
+				ui-sref="{{project.route}}"
 			>
 				<img ng-src="{{project.covers}}" alt="{{project.name}}">
 			</a>
 			<figcaption>
 				<p class="title">{{project.name}}</p>
-				<p>{{resource.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
+				<p class="published_on">{{resource.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
 			</figcaption>
 		</figure>
 	</li>

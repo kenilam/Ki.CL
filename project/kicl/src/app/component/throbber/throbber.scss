@@ -47,16 +47,5 @@
 	&.ng-leave-active {
 		@include opacity(0);
 		@include transform(scale(0));
-
-		~ * {
-			@include opacity(1);
-		}
-	}
-
-	~ * {
-		@include set-transition(opacity);
-
-		@include opacity(0);
-		@include through();
 	}
 }

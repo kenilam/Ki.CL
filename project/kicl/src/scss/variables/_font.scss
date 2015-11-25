@@ -1,5 +1,5 @@
 $font_family: proxima-nova, sans-serif;
-$font_size: rem(16px);
+$font_size: 16;
 
 $font_weight: 300;
 $a_isCurrent_font_weight: 400;
@@ -17,7 +17,7 @@ $heading_font_weight: 500;
 }
 
 @mixin set-font-size ($rate) {
-	$size: $rate * $font_size;
+	$size: rem($rate * $font_size);
 	
 	font-size: $size * $rate;
 	letter-spacing: $size * .1;
@@ -31,5 +31,5 @@ $heading_font_weight: 500;
 @mixin set-h-font-size ($rate, $bleed) {
 	@include set-font-size($rate);
 
-	margin-bottom: $bleed * $rate / 2;
+	margin-bottom: rem($bleed * $rate / 2);
 }

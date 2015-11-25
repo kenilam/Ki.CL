@@ -31,14 +31,15 @@
 			'$timeout',
 			'$state',
 			'$stateParams',
-			'$element',
 			'behanceReference',
 			'resource',
 			'sitemap',
-			function controller (root, scope, timeout, state, stateParams, element, reference, resource, sitemap) {
+			function controller (root, scope, timeout, state, stateParams, reference, resource, sitemap) {
 				var callback = {
 						data : function (event, project) {
 							scope.$broadcast('behance.project.throbber.hide');
+
+							scope.$emit('backdrop.add', { image : project.covers });
 
 							if (sitemap.get().projects.children) {
 								sitemap.current(project.id, 'projects');
@@ -56,7 +57,7 @@
 								scope.timer.setSitemap = timeout(whenSetSitemap, 0);
 							}
 						},
-						stateChangeStart: function (event, toState) {
+						stateChangeStart : function (event, toState) {
 							var map = toState.name.split('.'),
 								name = _.last(map);
 
@@ -73,14 +74,14 @@
 							if (toState.name !== 'projects.project') {
 								sitemap.current(name, map);
 							}
+
+							scope.$emit('backdrop.remove');
 						},
-						transitionend : function (event) {
-							var target = event.target,
-								uiView = event.delegateTarget.attributes.getNamedItem('ui-view');
-							
-							if (uiView.nodeValue === 'project') {
-								root.$broadcast('main.update.height');
-							}
+						stateChangeSuccess : function (event, toState, toParams, fromState, fromParams) {
+							scope.$emit('backdrop.remove');
+						},
+						destroy : function () {
+							scope.$emit('backdrop.remove');
 						}
 					};
 
@@ -100,10 +101,13 @@
 				scope.id = stateParams.project;
 
 				scope.$on('$stateChangeStart', callback.stateChangeStart);
+				scope.$on('$stateChangeSuccess', callback.stateChangeSuccess);
 				scope.$on('behance.projects.data', callback.setSitemap);
 				scope.$on('behance.project.data', callback.data);
 
-				element.on('transitionend', callback.transitionend);
+				scope.$on('$destroy', callback.destroy);
+
+				root.$broadcast('globalHeader.show');
 			}
 		],
 		config = [

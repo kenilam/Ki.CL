@@ -5,7 +5,11 @@
 	ng-attr-data-from-route="{{$root.status.fromRoute}}"
 	ng-class="{
 		'isLoading' : $root.status.loading,
-		'stateIsChanging' : $root.status.stateIsChanging
+		'stateIsChanging' : $root.status.stateIsChanging,
+		'hasBackdrop' : $root.ref.backdrop.image
+	}"
+	ng-style="{
+		'background-image' : $root.ref.backdrop.image ? 'url(' + $root.ref.backdrop.image + ')' : 'transparent'
 	}"
 >
 	<head>
@@ -43,6 +47,7 @@
 		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
 		<link rel="stylesheet" href="app/component/copyright/copyright.css">
 		<link rel="stylesheet" href="app/component/customForm/customForm.css">
+		<link rel="stylesheet" href="app/component/fonts/fonts.css">
 		<link rel="stylesheet" href="app/component/logo/logo.css">
 		<link rel="stylesheet" href="app/component/navigation/navigation.css">
 		<link rel="stylesheet" href="app/component/throbber/throbber.css">
@@ -65,17 +70,19 @@
 	</head>
 	<body
 		class="ng-cloak tk-brandon-grotesque"
+		ng-show="!$root.status.loading"
 		ng-cloak
 	>
 		<global-header></global-header>
 
 		<breadcrumb
 			ng-style="{
-				'-webkit-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
-				'-moz-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
-				'-ms-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
-				'-o-transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)',
-				'transform' : 'translate3d(0,' + (($root.status.route === 'home' ? -1 : 1) * ($root.ref.globalHeader.height || 0)) + 'px, 0)'
+				'padding-top' : $root.ref.globalHeader.height + 'px',
+				'-webkit-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
+				'-moz-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
+				'-ms-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
+				'-o-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
+				'transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null
 			}"
 		></breadcrumb>
 
@@ -84,21 +91,12 @@
 			ui-view="section"
 			ng-attr-data-route="{{$root.status.route}}"
 			ng-style="{
-				'height' : $root.status.route !== 'home' ? null : '100%',
-				'padding-top' : $root.status.route !== 'home' ? (($root.ref.globalHeader.height || 0) + ($root.ref.breadcrumb.height || 0)) + 'px' : null
+				'padding-top' : (($root.ref.globalHeader.height || 0) + ($root.ref.breadcrumb.height || 0)) + 'px',
+				'padding-bottom' : $root.ref.globalFooter.height + 'px'
 			}"
 		></main>
 
-		<global-footer
-			ng-style="{
-				'-webkit-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
-				'-moz-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
-				'-ms-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
-				'-o-transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
-				'transform' : 'translate3d(0,' + (($root.ref.main.height || 0) - ( $root.status.route !== 'home' ? 0 : ($root.ref.globalFooter.height || 0) )) + 'px, 0)',
-				'visibility' : $root.ref.main.height <= 0 ? 'hidden' : null
-			}"
-		></global-footer>
+		<global-footer></global-footer>
 
 		<throbber data-emit-from="resource" data-show-on-default="true"></throbber>
 
@@ -126,6 +124,8 @@
 
 		<script src="lib/html5shiv.js"></script>
 		<script src="lib/html5shiv-printshiv.js"></script>
+		<script src="lib/respond.src.js"></script>
+		<script src="lib/respond.matchmedia.addListener.src.js"></script>
 		
 		<script src="lib/moment.js"></script>
 		<script src="lib/underscore.js"></script>
@@ -175,6 +175,8 @@
 
 		<script src="app/service/service.js"></script>
 		<script src="app/service/async/async.js"></script>
+		<script src="app/service/mediaquery/mediaquery.js"></script>
+		<script src="app/service/transition/transition.js"></script>
 
 		<script src="app/view/view.js"></script>
 		<script src="app/view/about/about.js"></script>

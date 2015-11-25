@@ -5,6 +5,10 @@
 			stateChangeStart : function (root) {
 				function whenStateChangeStart (event, toState, toParams, fromState, fromParams, error) {
 					root.status.stateIsChanging = true;
+
+					if (!root.$$phase) {
+						root.$apply();
+					}
 				}
 
 				return whenStateChangeStart;
@@ -38,6 +42,30 @@
 			stateChangeError : function (event, toState, toParams, fromState, fromParams, error) {
 				console.error(error);
 			},
+			backdrop : function (root) {
+				root.ref.backdrop = {};
+
+				function add (event, backdrop) {
+					root.ref.backdrop = backdrop;
+
+					if (!root.$$phase) {
+						root.$apply();
+					}
+				}
+
+				function remove (event, backdrop) {
+					root.ref.backdrop = {};
+
+					if (!root.$$phase) {
+						root.$apply();
+					}
+				}
+
+				return {
+					add : add,
+					remove : remove
+				};
+			},
 			updateRoute : function (root, sitemap, timeout) {
 				function currentRoute (current) {
 					var route = [],
@@ -52,6 +80,11 @@
 					}
 
 					if (!current.route && current.root) {
+					
+						if (!root.$$phase) {
+							root.$apply();
+						}
+						
 						return;
 					}
 
@@ -62,6 +95,10 @@
 
 					root.status.route = route.join('.');
 					root.status.title = title.join(' | ');
+					
+					if (!root.$$phase) {
+						root.$apply();
+					}
 				}
 
 				function whenUpdateRoute () {
@@ -77,6 +114,29 @@
 
 				function setValue (event, height) {
 					root.ref.globalHeader.height = height;
+					
+					if (!root.$$phase) {
+						root.$apply();
+					}
+				}
+
+				return setValue;
+			},
+			globalHeaderLogo : function (root) {
+				root.ref.globalHeader.logo = {};
+				root.ref.globalHeader.logo = {};
+				root.ref.globalHeader.logo.show = true;
+
+				function setValue (event, result) {
+					root.ref.globalHeader.logo.show = result.show;
+
+					if (!root.ref.globalHeader.logo.show) {
+						root.ref.globalHeader.logo.height = result.height;
+
+						return;
+					}
+
+					delete root.ref.globalHeader.logo.height;
 				}
 
 				return setValue;
@@ -87,6 +147,10 @@
 
 				function setValue (event, height) {
 					root.ref.globalFooter.height = height;
+					
+					if (!root.$$phase) {
+						root.$apply();
+					}
 				}
 
 				return setValue;
@@ -97,6 +161,10 @@
 
 				function setValue (event, height) {
 					root.ref.breadcrumb.height = height;
+					
+					if (!root.$$phase) {
+						root.$apply();
+					}
 				}
 
 				return setValue;
@@ -108,8 +176,10 @@
 					var height = get.main.height(stateParams);
 
 					udpateMainHeight(height);
-
-					root.$apply();
+					
+					if (!root.$$phase) {
+						root.$apply();
+					}
 				}
 
 				return whenResize;
@@ -131,7 +201,7 @@
 					}
 
 					timeout.cancel(root.timer.resourceReady);
-					root.timer.resourceReady = timeout(whenResourceReady, 500);
+					root.timer.resourceReady = timeout(whenResourceReady, 0);
 				}
 
 				function whenInit () {
@@ -220,6 +290,9 @@
 				root.status = {};
 				root.ref = {};
 				root.timer = {};
+				root.control = {};
+
+				root.control.backdrop = callback.backdrop(root);
 
 				root.$on('sitemap.current.updated', callback.updateRoute(root, sitemap, timeout));
 				root.$on('$stateChangeStart', callback.stateChangeStart(root));
@@ -227,8 +300,12 @@
 				root.$on('$stateChangeError', callback.stateChangeError);
 				
 				root.$on('globalHeader.height', callback.globalHeaderHeight(root));
+				root.$on('globalHeader.logo.toggle', callback.globalHeaderLogo(root));
 				root.$on('globalFooter.height', callback.globalFooterHeight(root));
 				root.$on('breadcrumb.height', callback.breadcrumbHeight(root));
+
+				root.$on('backdrop.add', root.control.backdrop.add);
+				root.$on('backdrop.remove', root.control.backdrop.remove);
 
 				root.$on('main.update.height', update.main.height(root, timeout, stateParams));
 

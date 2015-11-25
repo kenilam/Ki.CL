@@ -5,21 +5,23 @@
 		'$rootScope',
 		'$scope',
 		'$element',
-		function controller (root, scope, element) {
-			var control = {
-					get : {
-						height : function () {
-							return element.outerHeight();
-						}
-					}
-				},
-				broadcast = {
-					height : function (height) {
-						root.$broadcast('globalFooter.height', height);
-					}
-				};
+		'$timeout',
+		'mediaquery',
+		function (root, scope, element, timeout, mediaquery) {
+			function height () {
+				return element.outerHeight();
+			}
+			
+			function broadcastHeight (newHeight, oldHeight) {
+				if (newHeight !== oldHeight) {
+					root.$broadcast('globalFooter.height', height());
+				}
+			}
 
-			scope.$watch(control.get.height, broadcast.height);
+			scope.globalFooter = {};
+			scope.globalFooter.timer = {};
+
+			scope.$watch(height, broadcastHeight);
 		}
 	];
 

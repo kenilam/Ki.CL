@@ -1,54 +1,68 @@
 @import '_import';
 
 .breadcrumb {
-	@include set-font-size(.8);
-	
-	p {
-		@include set-transition(opacity, transform);
+	@include set-transition(background-color, opacity, transform);
 
-		@include display(flex);
-		@include flex-direction(row-reverse);
-		@include justify-content(flex-end);
-		@include align-items(center);
+	background-color: $dark_white;
+	border: 1px solid transparent;
+	border-bottom-color: $grey;
 
-
-		padding: $space 0;
+	@include mobile () {
+		border: 0;
+		height: 0;
+		overflow: hidden;
+		padding: 0 rem($gutter);
 	}
 
-	span {
-		@include hidden();
+	div {
+		@include display(flex);
+		@include flex-direction(row-reverse);
+		@include align-items(baseline);
+		@include justify-content(center);
+		
+		padding: rem($space) rem($gutter);
 	}
 
 	i {
-		@include set-font-size(.6);
-
-		height: 100%;
-		margin: 0 $space;
-		overflow: hidden;
-
-		span {
-			@include hidden();
-		}
+		margin: 0 rem($space);
 	}
 
 	a {
-		font-weight: 400;
-		text-transform: uppercase;
+		@include unset-transition();
 
-		&.isCurrent {
-			font-weight: 800;
-		}
+		text-transform: capitalize;
+	}
 
-		&.ng-isCurrent-remove {
-			@include hidden();
+	.title {
+		@include hidden();
+	}
+
+	.home {
+		@include set-logo-size();
+		@include set-logo-content();
+	}
+
+	&.ng-hide-add {
+		@include transform(translate3d(0, 0, 0));
+		
+		@include opacity(1);
+
+		&.ng-hide-add-active {
+			@include transform(translate3d(0, -100%, 0));
+
+			@include opacity(0);
 		}
 	}
 
-	&.ng-hide-add-active,
 	&.ng-hide-remove {
-		p {
-			@include transform(translate3d(0, -100%, 0) !important);
-			@include opacity(0);
+		@include transform(translate3d(0, -100%, 0));
+
+		@include opacity(0);
+
+		&.ng-hide-remove-active {
+			@include transform(translate3d(0, 0, 0));
+
+			@include opacity(1);
 		}
 	}
 }

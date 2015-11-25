@@ -1,9 +1,7 @@
-$min-grid: rem(40px);
+$min-grid: 40;
 $grid: $min-grid * 2;
-$gutter: rem(16px);
+$gutter: $min-grid / 2;
 $space: $gutter / 2;
-
-$global-header-width: $min-grid + $gutter * 2;
 
 $mobile-size: 4;
 $largemobile-size: 6;
@@ -12,15 +10,15 @@ $desktop-size: 12;
 $largedesktop-size: 15;
 
 @function grid-size ($size) {
-	@return ($grid + $gutter) * $size - $gutter;
+	@return rem(($grid + $gutter) * $size - $gutter);
 }
 
 @function screen-size ($size) {
-	@return ($grid + $gutter) * $size + $gutter;
+	@return rem(($grid + $gutter) * $size + $gutter);
 };
 
 @function query-size ($min: false, $max: false, $screen: false, $ratio: false, $orientation: false) {
-	$size: ($grid + $gutter);
+	$size: rem($grid + $gutter);
 	$width : (min-width);
 
 	@if $min {
@@ -71,50 +69,79 @@ $largedesktop-size: 15;
 }
 
 @mixin mobile () {
-	@include breakpoint(query-size($max: $mobile-size)) {
+	@include breakpoint(query-size($max: $largemobile-size - 0.1)) {
+		// mobile
 		@content;
 	}
 }
 @mixin mobile-landscape () {
-	@include breakpoint(query-size($max: $mobile-size, $orientation: landscape)) {
+	@include breakpoint(query-size($max: $largemobile-size - 0.1, $orientation: landscape)) {
+		// mobile-landscape
 		@content;
 	}
 }
 
 @mixin largemobile () {
-	@include breakpoint(query-size($min: $mobile-size, $max: $largemobile-size)) {
+	@include breakpoint(query-size($max: $tablet-size - 0.1)) {
+		// largemobile
 		@content;
 	}
 }
 @mixin largemobile-landscape () {
-	@include breakpoint(query-size($min: $mobile-size, $max: $largemobile-size, $orientation: landscape)) {
+	@include breakpoint(query-size($max: $tablet-size - 0.1, $orientation: landscape)) {
+		// largemobile-landscape
 		@content;
 	}
 }
 
 @mixin tablet () {
-	@include breakpoint(query-size($min: $largemobile-size, $max: $tablet-size)) {
+	@include breakpoint(query-size($max: $desktop-size - 0.1)) {
+		// tablet
 		@content;
 	}
 }
 @mixin tablet-landscape () {
-	@include breakpoint(query-size($min: $largemobile-size, $max: $tablet-size, $orientation: landscape)) {
+	@include breakpoint(query-size($max: $desktop-size - 0.1, $orientation: landscape)) {
+		// tablet-landscape
 		@content;
 	}
 }
 
 @mixin desktop () {
-	@include breakpoint(query-size($min: $tablet-size, $max: $desktop-size)) {
+	@include breakpoint(query-size($max: $largedesktop-size - 0.1)) {
+		// desktop
 		@content;
 	}
 }
+@mixin desktop-landscape () {
+	@include breakpoint(query-size($max: $largedesktop-size - 0.1, $orientation: landscape)) {
+		// desktop-landscape
+		@content;
+	}
+}
+
 @mixin largedesktop () {
-	@include breakpoint(query-size($min: $desktop-size, $max: $largedesktop-size)) {
+	@include breakpoint(query-size($min: $largedesktop-size)) {
+		// largedesktop
 		@content;
 	}
 }
+@mixin largedesktop-landscape () {
+	@include breakpoint(query-size($min: $largedesktop-size, $orientation: landscape)) {
+		// largedesktop-landscape
+		@content;
+	}
+}
+
 @mixin largestdesktop () {
-	@include breakpoint(query-size($min: $largedesktop-size)) {
+	@include breakpoint(query-size($min: $largedesktop-size + 0.1)) {
+		// largestdesktop
+		@content;
+	}
+}
+@mixin largestdesktop-landscape () {
+	@include breakpoint(query-size($min: $largedesktop-size + 0.1, $orientation: landscape)) {
+		// largestdesktop-landscape
 		@content;
 	}
 }

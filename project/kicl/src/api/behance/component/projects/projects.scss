@@ -1,121 +1,158 @@
 @import '_import';
 
 [data-api="behance.projects"] {
-	@include set-transition(opacity, transform);
-	
-	max-width: grid-size($tablet-size);
-	padding: $gutter;
-	width: 100%;
+	$thumbnail-size: grid-size(3);
+	$thumbnail-size-active: grid-size(3);
 
-	figure {
-		@include display(flex);
-		@include align-items(center);
+	$thumbnail-mobile-size: grid-size(3);
+	$thumbnail-mobile-size-active: grid-size(3);
+
+	$overlay-color: $white;
+	$overlay-text-color: $black;
+	$overlay-opacity: .6;
+	$mobile-overlay-opacity: .8;
+	$overlay-scale: .8;
+
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+	@include flex-wrap(wrap);
+
+	@mixin set-figure-active () {
+		@include circle($thumbnail-size-active);
+
+		border-color: $black;
 
 		@include mobile () {
-			@include flex-direction(column);
-			@include align-items(center);
+			@include circle($thumbnail-mobile-size-active);
 		}
 
-		@include largemobile () {
-			@include flex-direction(column);
-			@include align-items(center);
-		}
-	}
+		a {
+			@include opacity(0);
 
-	figcaption {
-		@include mobile () {
-			padding-top: $gutter;
-			text-align: center;
-		}
-
-		@include largemobile () {
-			padding-top: $gutter;
-			text-align: center;
-		}
-	}
-
-	a {
-		@include set-transition(border);
-		@include circle(grid-size(3));
-		@include box-shadow($shadow-center);
-
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		border: $space solid $white;
-
-		&:hover {
-			border-color: $orange;
-			border-width: $space * 1.5;
-
-			+ figcaption {
-				color: $orange;
+			@include mobile () {
+				@include opacity(1);
 			}
 		}
 
-		@include mobile () {
-			@include circle(grid-size(2));
-		}
+		figcaption {
+			@include opacity(1);
 
-		@include largemobile () {
-			@include circle(grid-size(2));
+			p {
+				@include transform(
+					translate3d(0, 0, 0)
+					scale3d(1, 1, 1)
+				)
+			}
 		}
 	}
 
-	img {
-		@include hidden();
+	max-width: ($thumbnail-size * 2) + rem($gutter * 4) + rem($space * 2);
+	margin: 0 auto;
+	padding: rem($space);
+
+	a,
+	figcaption {
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
 	}
 
 	li {
-		+ li {
-			margin-top: $gutter * 2;
-		}
+		@include display(flex);
+		@include align-items(stretch);
 
-		&:nth-child(odd) {
-			figcaption {
-				padding-left: $gutter;
-
-				@include mobile () {
-					padding-left: 0;
-				}
-
-				@include largemobile () {
-					padding-left: 0;
-				}
-			}
-		}
-
-		&:nth-child(even) {
-			figure {
-				@include flex-direction(row-reverse);
-
-				@include mobile () {
-					@include flex-direction(column);
-				}
-
-				@include largemobile () {
-					@include flex-direction(column);
-				}
-			}
-
-			figcaption {
-				padding-right: $gutter;
-				text-align: right;
-
-				@include mobile () {
-					padding-right: 0;
-					text-align: center;
-				}
-
-				@include largemobile () {
-					padding-right: 0;
-					text-align: center;
-				}
-			}
-		}
+		margin: rem($gutter);
 
 		&.isCurrent {
-			@include through();
+			figure {
+				@include set-figure-active();
+			}
 		}
+	}
+
+	figure {
+		@include set-transition(border-color);
+
+		border: 1px dashed transparent;
+		position: relative;
+		width: 100%;
+
+		@include circle($thumbnail-size);
+		@include mobile () {
+			@include circle($thumbnail-mobile-size);
+		}
+
+		figcaption {
+			@include opacity(0);
+
+			p {
+				@include transform(
+					translate3d(0, 100%, 0)
+					scale3d($overlay-scale, $overlay-scale, $overlay-scale)
+				)
+			}
+		}
+
+		&:hover {
+			@include set-figure-active();
+		}
+
+		@include mobile () {
+			@include set-figure-active();
+		}
+	}
+
+	a,
+	figcaption {
+		@include set-transition(opacity);
+	}
+
+	a {
+		background-position: center;
+		z-index: 1;
+	}
+
+	img {
+		@include opacity(0);
+	}
+
+	figcaption {
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(cenetr);
+		@include justify-content(center);
+
+		@include through();
+
+		background-color: rgba(red($overlay-color), green($overlay-color), blue($overlay-color), $overlay-opacity);
+		color: $overlay-text-color;
+		font-weight: $heading_font_weight;
+		padding: rem($space);
+		text-align: center;
+		z-index: 2;
+
+		@include mobile () {
+			background-color: rgba(red($overlay-color), green($overlay-color), blue($overlay-color), $mobile-overlay-opacity);
+		}
+
+		p {
+			@include set-transition(transform);
+			@include transition-duration($fast)
+
+			+ p {
+				margin-top: rem($space);
+
+				@include mobile () {
+					margin-top: 0;
+				}
+			}
+		}
+	}
+
+	.published_on {
+		@include set-font-size(.9);
 	}
 }

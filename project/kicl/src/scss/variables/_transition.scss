@@ -1,5 +1,5 @@
 $ease: $ease-out-expo;
-$speed: 800ms;
+$speed: 1000ms;
 
 $fast: $speed / 2;
 $faster: $fast / 2;
@@ -71,6 +71,14 @@ $slowest: $speed * 4;
     will-change: $will-change;
 }
 
+@mixin unset-transition () {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
 @mixin set-transition ($values...) { 
     $transitions: ();
 
@@ -85,22 +93,22 @@ $slowest: $speed * 4;
 	        @for $i from 2 through $length {
                $name : inspect(nth($declaration, $i));
 
-	        	@if $name {
-	        		@if $i == 2 {
-						$prop-opts: append($prop-opts, nth($declaration, $i));
-					} @else {
-						$prop-opts: append($prop-opts, $speed);
-					}
-	        	}
+                @if $name {
+                    @if $i == 2 {
+                        $prop-opts: append($prop-opts, nth($declaration, $i));
+                    } @else {
+                        $prop-opts: append($prop-opts, $speed);
+                    }
+                }
 
-	        	@if $i == $length {
-	        		@if $name {
-	        			$prop-opts: append($prop-opts, nth($declaration, $i));
-	        		} @else {
-	        			$prop-opts: append($prop-opts, $ease);
-	        		}
-	        	}
-	        }
+                @if $i == $length {
+                    @if $name {
+                        $prop-opts: append($prop-opts, nth($declaration, $i));
+                    } @else {
+                        $prop-opts: append($prop-opts, $ease);
+                    }
+                }
+            }
 	    } @else {
 	    	$prop-opts: append(append($prop-opts, $speed), $ease);
 	    }

@@ -1,0 +1,67 @@
+@mixin set-project ($projectId, $background-color, $overlay-text-color, $mobile-overlay-text-color) {
+	$overlay-opacity: .6;
+	$mobile-overlay-opacity: .95;
+
+	[data-api='behance.projects'] {
+		[data-project-id='#{$projectId}'] {
+			figure {
+				@include mobile () {
+					border-color: $background-color;
+				}
+			}
+
+			figcaption {
+				@include mobile () {
+					background-color: rgba(red($background-color), green($background-color), blue($background-color), $mobile-overlay-opacity);
+					color: $mobile-overlay-text-color;
+				}
+			}
+
+			&.isCurrent {
+				figure {
+					border-color: $background-color;
+				}
+
+				figcaption {
+					background-color: rgba(red($background-color), green($background-color), blue($background-color), $overlay-opacity);
+					color: $overlay-text-color;
+
+					@include mobile () {
+						background-color: rgba(red($background-color), green($background-color), blue($background-color), $mobile-overlay-opacity);
+					}
+				}
+			}
+		}
+	}
+
+	[data-api='behance.project'] {
+		&[data-project-id='#{$projectId}'] {
+			.fields,
+			.tags {
+				li {
+					background-color: $background-color;
+					color: $overlay-text-color;
+				}
+			}
+
+			.stats {
+				li {
+					> * {
+						background-color: $background-color;
+						color: $overlay-text-color;
+					}
+
+					span {
+						&:first-child {
+							background-color: tint($background-color, 40);
+						}
+
+						&:last-child {
+							border-left-color: tint($background-color, 50);
+						}
+					}
+				}
+			}
+		}
+	}
+}

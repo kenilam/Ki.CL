@@ -1,90 +1,83 @@
 @import '_import';
 
 .globalHeader {
-	$border-color: $dark_grey;
-	$text-color: $dark_grey;
-	$active_text-color: $white;
-	$max-width: screen-size($desktop-size);
-
-	@include set-transition(transform);
+	@include set-transition(background-color, opacity, transform);
 
 	@include display(flex);
-	@include flex-wrap(wrap);
-	@include justify-content(space-between);
+	@include flex-direction(column);
+	@include align-items(center);
 
-	background: $black;
-	position: relative;
+	background-color: $white;
+	border: 1px solid transparent;
+	border-bottom-color: $grey;
+	padding: rem($space) rem($gutter);
 
-	&:not(.isExpanded) {
-		@include transform(translate3d(0, -100%, 0));
-	}
-
-	.logo,
-	.navigation {
-		background: $black;
-	}
-
-	a {
-		color: $text-color;
-	}
-		
-	.isCurrent a {
-		color: $active_text-color;
-
-		&:hover {
-			color: $active_text-color;
-		}
-	}
-
-	.logo,
-	.navigation {
-		position: relative;
-		z-index: 2;
+	@include mobile () {
+		@include flex-direction(row);
 	}
 
 	.logo {
-		@include largedesktop() {
-			left: 50%;
-			margin-left: calc(-1 * #{$max-width / 2});
+		@include set-transition(opacity);
+
+		@include largemobile () {
+			@include set-logo-content(true);
 		}
 
-		@include largestdesktop() {
-			left: 50%;
-			margin-left: calc(-1 * #{$max-width / 2});
+		@include mobile () {
+			@include set-logo-size(1.26);
 		}
 	}
 
 	.navigation {
-		border-left: 1px solid $border-color;
+		@include set-transition(margin-top, opacity);
 
-		a {
-			&:hover {
-				color: $orange;
-			}
-		}
+		margin-top: rem($gutter);
 
 		li {
-			@include set-transition(background-color);
-
-			&:hover {
-				background-color: rgba(red($dark_grey), green($dark_grey), blue($dark_grey), .3);
-			}
-
 			+ li {
-				border-left: 1px solid $border-color;
+				border-left-color: $grey;
 			}
 		}
 
-		@include largedesktop() {
-			border-right: 1px solid $border-color;
-			right: 50%;
-			margin-right: calc(-1 * #{$max-width / 2});
+		@include mobile () {
+			margin-left: rem($gutter);
+			margin-top: 0;
+		}
+	}
+
+	&.isScrolled {
+		.logo {
+			@include opacity(0);
+
+			@include through();
 		}
 
-		@include largestdesktop() {
-			border-right: 1px solid $border-color;
-			right: 50%;
-			margin-right: calc(-1 * #{$max-width / 2});
+		.navigation {
+			margin-top: 0;
+		}
+	}
+
+	&.ng-hide-add {
+		@include transform(translate3d(0, 0, 0));
+		
+		@include opacity(1);
+
+		&.ng-hide-add-active {
+			@include transform(translate3d(0, -100%, 0));
+
+			@include opacity(0);
+		}
+	}
+
+	&.ng-hide-remove {
+		@include transform(translate3d(0, -100%, 0));
+
+		@include opacity(0);
+
+		&.ng-hide-remove-active {
+			@include transform(translate3d(0, 0, 0));
+
+			@include opacity(1);
 		}
 	}
 }

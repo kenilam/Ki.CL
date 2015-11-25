@@ -31,25 +31,68 @@
 			'$timeout',
 			'resource',
 			'sitemap',
-			function controller (root, scope, element, timeout, resource, sitemap) {
+			'mediaquery',
+			'behanceReference',
+			function controller (root, scope, element, timeout, resource, sitemap, mediaquery, behanceReference) {
 				var get = {
 						list : function () {
 							return element.find('[data-api="behance.projects"] li');
 						}
 					},
+					emit = {
+						backdrop : function (image) {
+							if (!mediaquery().mobile) {
+								scope.$emit('backdrop.add', {
+									image : image
+								});
+							}
+						}
+					},
+					control = {
+						mouseover : function (project) {
+							emit.backdrop(project.covers);
+						},
+						mouseleave : function (project) {
+							if (scope.current) {
+								emit.backdrop(scope.current.covers);
+								return;
+							}
+						}
+					},
 					callback = {
 						data : function (event, projects) {
 							function hasData () {
-								_.each(
-									projects,
-									eachProject()
-								);
+								_.each(projects, eachProject());
+
+								emit.backdrop(projects[0].covers);
 								
 								scope.$broadcast('behance.projects.throbber.hide');
+								scope.$broadcast('behance.projects.control', {
+									mouseover : control.mouseover,
+									mouseleave : control.mouseleave
+								});
 							}
 
 							timeout.cancel(scope.timer.data);
 							scope.timer.data = timeout(hasData, 0);
+						},
+						setCurrent : function (event, current) {
+							scope.current = current;
+						},
+						unsetCurrent : function () {
+							delete scope.current;
+						},
+						stateChangeSuccess : function (event, toState, toParams) {
+							function whenPtojectsReady (data) {
+								emit.backdrop(data.projects[0].covers);
+							}
+
+							if (toState.name === 'projects' && behanceReference.component.projects.promise) {
+								behanceReference.component.projects.promise.then(whenPtojectsReady);
+							}
+						},
+						destroy : function () {
+							scope.$emit('backdrop.remove');
 						}
 					};
 
@@ -76,13 +119,6 @@
 							},
 							'projects'
 						);
-
-						timeout.cancel(scope.timer.render[index]);
-						scope.timer.render[index] = timeout(
-							showProject(
-								angular.element(projects.get(index)).addClass(isHidden)
-							),
-							pendding + (speed / projects.length * index));
 					}
 
 					return setProject;
@@ -91,9 +127,17 @@
 				scope.name = resource.name;
 				scope.content = resource.content;
 				scope.timer = {};
-				scope.timer.render = {};
-				
+				scope.control = {};
+				scope.control.mouseover = control.mouseover;
+				scope.control.mouseleave = control.mouseleave;
+
 				scope.$on('behance.projects.data', callback.data);
+				scope.$on('behance.projects.set.current', callback.setCurrent);
+				scope.$on('behance.projects.unset.current', callback.unsetCurrent);
+				scope.$on('$stateChangeSuccess', callback.stateChangeSuccess);
+				scope.$on('$destroy', callback.destroy);
+
+				root.$broadcast('globalHeader.show');
 
 				sitemap.current('projects', 'root');
 			}
