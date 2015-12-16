@@ -1,94 +1,65 @@
 @import '_import';
 
-$overlay-color: $pitch_black;
-$overlay-opacity: 1;
-
-$backdrop-overlay-color: $white;
-$backdrop-overlay-opacity: .8;
-
-@mixin body-background-color($color, $opacity) {
-	background-color: rgba(red($color), green($color), blue($color), $opacity);
-}
-
 html {
-	@include set-transition(background-image);
-	@include transition-duration($slowest);
-
-	@include mobile () {
-		@include transition-duration(0s);
-	}
-
-	@include display(flex);
-	@include align-items(stretch);
-
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-attachment: fixed;
-	max-width: 100%;
-
-	&.hasBackdrop {
-		body {
-			@include body-background-color($backdrop-overlay-color, $backdrop-overlay-opacity);
-		}
-	}
+	@include set-transition(background-color);
+	
+	background-color: $black;
 }
 
 body {
-	@include set-transition(background-color);
-	@include transition-duration($slowest);
-	
-	@include display(flex);
-	@include flex-direction(column);
-
-	@include body-background-color($overlay-color, $overlay-opacity);
-
 	position: relative;
+
+	/*&:before {
+		@include set-transition(border, height, left, opacity, top, transform, width);
+
+		@include through();
+
+		@include opacity(.7);
+
+		border: rem($gutter) solid $yellow;
+		content: '\0020';
+		display: block;
+		height: calc(100% - #{rem($gutter * 2)});
+		left: rem($gutter);
+		position: absolute;
+		top: rem($gutter);
+		width: calc(100% - #{rem($gutter * 2)});
+		z-index: 4;
+	}*/
 }
 
 .globalHeader,
 .breadcrumb,
+main,
 .globalFooter {
 	width: 100%;
 }
 
-.globalHeader,
-.globalFooter {
+.breadcrumb,
+.globalHeader {
+	position: fixed;
+}
+
+.overflowBackground {
+	z-index: 1;
+}
+
+.globalHeader {
+	z-index: 4;
+}
+
+.breadcrumb {
 	z-index: 3;
 }
 
-.globalHeader,
-.breadcrumb {
-	position: fixed;
+main {
+	position: relative;
 	top: 0;
-}
-
-.breadcrumb {
 	z-index: 2;
 }
 
-main {
-	min-height: 100vh;
-	position: relative;
-	z-index: 1;
-
-	&:not([data-route]) {
-		@include hidden();
-	}
-
-	> h1 {
-		@include set-h-font-size(2, $gutter);
-
-		text-align: center;
-		margin-top: rem($gutter);
-
-		@include mobile() {
-			@include set-h-font-size(1.3, $gutter);
-		}
-	}
-}
-
 .globalFooter {
-	position: absolute;
 	bottom: 0;
+	position: absolute;
+	z-index: 4;
 }

@@ -40,9 +40,16 @@
 						}
 					},
 					emit = {
-						backdrop : function (image) {
-							if (!mediaquery().mobile) {
-								scope.$emit('backdrop.add', {
+						backdrop : {
+							add : function (image) {
+								if (!mediaquery().mobile) {
+									scope.$emit('backdrop.add', {
+										image : image
+									});
+								}
+							},
+							remove : function (image) {
+								scope.$emit('backdrop.remove', {
 									image : image
 								});
 							}
@@ -50,21 +57,21 @@
 					},
 					control = {
 						mouseover : function (project) {
-							emit.backdrop(project.covers);
+							emit.backdrop.add(project.covers);
 						},
 						mouseleave : function (project) {
 							if (scope.current) {
-								emit.backdrop(scope.current.covers);
+								emit.backdrop.add(scope.current.covers);
 								return;
 							}
+
+							emit.backdrop.remove(project.covers);
 						}
 					},
 					callback = {
 						data : function (event, projects) {
 							function hasData () {
 								_.each(projects, eachProject());
-
-								emit.backdrop(projects[0].covers);
 								
 								scope.$broadcast('behance.projects.throbber.hide');
 								scope.$broadcast('behance.projects.control', {
@@ -81,15 +88,6 @@
 						},
 						unsetCurrent : function () {
 							delete scope.current;
-						},
-						stateChangeSuccess : function (event, toState, toParams) {
-							function whenPtojectsReady (data) {
-								emit.backdrop(data.projects[0].covers);
-							}
-
-							if (toState.name === 'projects' && behanceReference.component.projects.promise) {
-								behanceReference.component.projects.promise.then(whenPtojectsReady);
-							}
 						},
 						destroy : function () {
 							scope.$emit('backdrop.remove');
@@ -134,7 +132,6 @@
 				scope.$on('behance.projects.data', callback.data);
 				scope.$on('behance.projects.set.current', callback.setCurrent);
 				scope.$on('behance.projects.unset.current', callback.unsetCurrent);
-				scope.$on('$stateChangeSuccess', callback.stateChangeSuccess);
 				scope.$on('$destroy', callback.destroy);
 
 				root.$broadcast('globalHeader.show');

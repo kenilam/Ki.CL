@@ -1,18 +1,1 @@
 @import '_import';
-
-main {
-	&[data-route=about] {
-		section {
-			> h1 {
-				@include set-h-font-size(2, $gutter);
-
-				text-align: center;
-				margin-top: rem($gutter);
-
-				@include mobile() {
-					@include set-h-font-size(1.3, $gutter);
-				}
-			}
-		}
-	}
-}

@@ -122,25 +122,6 @@
 
 				return setValue;
 			},
-			globalHeaderLogo : function (root) {
-				root.ref.globalHeader.logo = {};
-				root.ref.globalHeader.logo = {};
-				root.ref.globalHeader.logo.show = true;
-
-				function setValue (event, result) {
-					root.ref.globalHeader.logo.show = result.show;
-
-					if (!root.ref.globalHeader.logo.show) {
-						root.ref.globalHeader.logo.height = result.height;
-
-						return;
-					}
-
-					delete root.ref.globalHeader.logo.height;
-				}
-
-				return setValue;
-			},
 			globalFooterHeight : function (root) {
 				root.ref.globalFooter = {};
 				root.ref.globalFooter.height = 0;
@@ -300,7 +281,6 @@
 				root.$on('$stateChangeError', callback.stateChangeError);
 				
 				root.$on('globalHeader.height', callback.globalHeaderHeight(root));
-				root.$on('globalHeader.logo.toggle', callback.globalHeaderLogo(root));
 				root.$on('globalFooter.height', callback.globalFooterHeight(root));
 				root.$on('breadcrumb.height', callback.breadcrumbHeight(root));
 

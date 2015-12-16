@@ -3,20 +3,16 @@
 .navigation {
 	ul {
 		@include display(flex);
-		@include justify-content(center);
 	}
 
 	li {
-		border: 1px solid transparent;
-		padding: rem($space / 2) rem($space);
-
 		+ li {
-			border-left-color: $black;
+			margin-left: rem($gutter);
 		}
 	}
 
 	a {
-		font-weight: $heading_font_weight;
-		text-transform: capitalize;
+		font-weight: $thicker_font_weight;
+		text-transform: uppercase;
 	}
 }

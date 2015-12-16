@@ -74,7 +74,7 @@
 
 						setBreadcrumb(currentSitemap.parent);
 
-						return;
+
 					}
 
 					// scope.breadcrumb.list = scope.breadcrumb.list.filter(filterBreadcrumb);

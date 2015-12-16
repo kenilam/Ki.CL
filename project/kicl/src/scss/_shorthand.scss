@@ -42,7 +42,7 @@
 	width: 1px;
 }
 
-@mixin unhide  () {
+@mixin unhide () {
 	@include clip-path(0 0, 100% 0, 100% 100%, 0% 100%);
 
 	height: inherit;

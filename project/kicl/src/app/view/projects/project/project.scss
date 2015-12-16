@@ -1,18 +1,1 @@
 @import '_import';
-
-html {
-	&[data-route='projects.project'] {
-		background-attachment: local;
-	}
-}
-
-main {
-	&[data-route='projects.project'] {
-		[data-api='behance.project'] {
-			> div {
-				margin: 0 auto;
-				max-width: grid-size($tablet-size);
-			}
-		}
-	}
-}

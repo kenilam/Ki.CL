@@ -1,54 +1,90 @@
 @import '_import';
 
-@keyframes fadeOut {
-	to {
-		@include opacity(0);
-	}
+.ng-enter,
+.ng-leave {
+	@include through();
 }
 
-@keyframes fadeIn {
-	to {
-		@include opacity(1);
+html {
+	$overlay-color: $white;
+	$overlay-opacity: .8;
+
+	@include set-transition(background-image);
+
+	background: center no-repeat;
+	background-size: cover;
+
+	&:before {
+		@include set-transition(background-color, opacity);
+
+		@include opacity($overlay-opacity);
+
+		background-color: $overlay-color;
+		content: '\0020';
+		display: block;
+		height: 100%;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 0;
 	}
 }
 
 main {
-	@include set-transition(background, padding);
-	
-	top: 0;
-
-	+ .globalFooter {
-		animation: fadeIn $speed $ease 1;
-	}
+	@include set-transition(padding-top);
 
 	&.ng-enter,
 	&.ng-leave {
+		@include set-transition(opacity, transform);
+
+		@include through();
+
 		position: absolute;
-		width: 100%;
 
 		+ .globalFooter {
-			animation: fadeOut $speed $ease 1;
+			@include opacity(0);
 		}
 	}
 
 	&.ng-enter {
-		@include opacity(0);
+		@include transform(translate3d(100%, 0, 0));
 		
-		animation: fadeIn $speed $ease 1;
-		animation-delay: $fast;
-		animation-play-state: paused;
+		z-index: 1;
+
+		@include mobile() {
+			@include transform(translate3d(0, 0, 0));
+			@include opacity(0);
+		}
 
 		&.ng-enter-active {
-			animation-play-state: running;
+			@include transform(translate3d(0, 0, 0));
+
+			@include mobile() {
+				@include opacity(1);
+			}
 		}
 	}
 
 	&.ng-leave {
-		animation: fadeOut $speed $ease 1;
-		animation-play-state: paused;
+		@include transform(translate3d(0, 0, 0));
+
+		z-index: 2;
+
+		@include mobile() {
+			@include opacity(1);
+		}
 
 		&.ng-leave-active {
-			animation-play-state: running;
+			@include transform(translate3d(-100%, 0, 0));
+
+			@include mobile() {
+				@include transform(translate3d(0, 0, 0));
+				@include opacity(0);
+			}
 		}
 	}
+}
+
+.globalFooter {
+	@include set-transition(opacity);
 }

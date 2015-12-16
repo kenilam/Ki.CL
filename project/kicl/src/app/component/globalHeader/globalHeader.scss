@@ -1,10 +1,11 @@
 @import '_import';
 
 .globalHeader {
-	@include set-transition(background-color, opacity, transform);
+	@include set-transition(background-color, box-shadow, transform);
 
 	@include display(flex);
 	@include flex-direction(column);
+	@include justify-content(center);
 	@include align-items(center);
 
 	background-color: $white;
@@ -12,40 +13,41 @@
 	border-bottom-color: $grey;
 	padding: rem($space) rem($gutter);
 
-	@include mobile () {
+	@include mobile() {
 		@include flex-direction(row);
+		@include justify-content(space-between);
+
+		@include box-shadow($shadow-center);
+
+		background-color: $white;
+		padding: rem($space) rem($gutter);
 	}
 
 	.logo {
-		@include set-transition(opacity);
-
-		@include largemobile () {
+		@include mobile() {
+			@include set-logo-size(1.28);
 			@include set-logo-content(true);
-		}
-
-		@include mobile () {
-			@include set-logo-size(1.26);
 		}
 	}
 
 	.navigation {
-		@include set-transition(margin-top, opacity);
+		padding: rem($space) rem($gutter) 0;
 
-		margin-top: rem($gutter);
-
-		li {
-			+ li {
-				border-left-color: $grey;
-			}
-		}
-
-		@include mobile () {
-			margin-left: rem($gutter);
-			margin-top: 0;
+		@include mobile() {
+			font-size: .8rem;
+			padding: rem($space) 0 rem($space) rem($space);
 		}
 	}
 
 	&.isScrolled {
+		@include box-shadow($shadow-bottom);
+
+		background-color: $dark_white;
+
+		@include mobile() {
+			@include box-shadow($shadow-center);
+		}
+
 		.logo {
 			@include opacity(0);
 
@@ -53,31 +55,26 @@
 		}
 
 		.navigation {
-			margin-top: 0;
+			padding-top: 0;
 		}
 	}
 
 	&.ng-hide-add {
 		@include transform(translate3d(0, 0, 0));
-		
-		@include opacity(1);
 
 		&.ng-hide-add-active {
 			@include transform(translate3d(0, -100%, 0));
-
-			@include opacity(0);
 		}
 	}
 
 	&.ng-hide-remove {
-		@include transform(translate3d(0, -100%, 0));
+		@include transition-delay($speed);
 
-		@include opacity(0);
+		@include transform(translate3d(0, -100%, 0));
 
 		&.ng-hide-remove-active {
 			@include transform(translate3d(0, 0, 0));
-
-			@include opacity(1);
 		}
 	}
 }
+

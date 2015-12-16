@@ -1,78 +1,26 @@
 @import '_import';
 
-$scale_in : .2;
-$scale_out : 1.2;
+$enter-main-background-color: $white;
+
+$overlay-color: transparent;
+$overlay-opacity: 0;
+
+$backdrop-overlay-color: $white;
+$backdrop-overlay-opacity: .6;
+
+$square-opacity: .6;
 
 html {
 	&[data-route^=projects] {
-		body {
-			@include mobile () {
-				background-color: $white;
-			}
-		}
+		
 	}
 }
 
 main {
 	&[data-route^=projects] {
-		[data-api='behance.proejcts'] {
-			@include set-transition(transform);
-
-			position: relative;
-			z-index: 1;
-		}
-
-		&.ng-enter-active {
-			[data-api='behance.proejcts'] {
-				@include transform(scale3d($scale_out, $scale_out, $scale_out));
-			}
-		}
-
-		&.ng-leave-active {
-			[data-api='behance.proejcts'] {
-				@include transform(scale3d($scale_in, $scale_in, $scale_in));
-			}
-		}
-
-		[ui-view=project] {
-			$enter-distance : grid-size(1);
-			$leave-distance : grid-size(5);
-
-			@include set-transition(background-color, transform, opacity);
-
-
-			background-color: transparent;
-			z-index: 2;
-
-			&.ng-enter,
-			&.ng-leave {
-				background-color: $white;
-				position: absolute;
-				width: 100%;
-			}
-
-			&.ng-enter {
-				@include transition-delay($speed);
-				@include transform(translate3d(0, -1 * $enter-distance, 0) scale3d(2, 2, 2));
-				@include opacity(0);
-
-				&.ng-enter-active {
-					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-					@include opacity(1);
-				}
-			}
-
-			&.ng-leave {
-				@transition-duration($slow);
-
-				@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-				@include opacity(1);
-
-				&.ng-leave-active {
-					@include transform(translate3d(0, $leave-distance, 0) scale3d(.8, .8, .8));
-					@include opacity(0);
-				}
-			}
+		&.ng-enter,
+		&.ng-leave {
+          background-color: $enter-main-background-color;
 		}
 	}
 }

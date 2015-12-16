@@ -1,158 +1,158 @@
 @import '_import';
 
 [data-api="behance.projects"] {
-	$thumbnail-size: grid-size(3);
-	$thumbnail-size-active: grid-size(3);
-
-	$thumbnail-mobile-size: grid-size(3);
-	$thumbnail-mobile-size-active: grid-size(3);
-
-	$overlay-color: $white;
-	$overlay-text-color: $black;
-	$overlay-opacity: .6;
-	$mobile-overlay-opacity: .8;
-	$overlay-scale: .8;
-
 	@include display(flex);
+	@include flex-direction(column);
 	@include align-items(center);
 	@include justify-content(center);
 	@include flex-wrap(wrap);
 
-	@mixin set-figure-active () {
-		@include circle($thumbnail-size-active);
-
-		border-color: $black;
+	li,
+	figcaption {
+		@include circle(grid-size(3));
 
 		@include mobile () {
-			@include circle($thumbnail-mobile-size-active);
+			@include circle(grid-size(2));
 		}
-
-		a {
-			@include opacity(0);
-
-			@include mobile () {
-				@include opacity(1);
-			}
-		}
-
-		figcaption {
-			@include opacity(1);
-
-			p {
-				@include transform(
-					translate3d(0, 0, 0)
-					scale3d(1, 1, 1)
-				)
-			}
-		}
-	}
-
-	max-width: ($thumbnail-size * 2) + rem($gutter * 4) + rem($space * 2);
-	margin: 0 auto;
-	padding: rem($space);
-
-	a,
-	figcaption {
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
 	}
 
 	li {
+		@include set-transition(height, margin-left, margin-top, min-height, min-width, width);
+
 		@include display(flex);
-		@include align-items(stretch);
+		@include box-shadow($shadow-center);
 
-		margin: rem($gutter);
-
-		&.isCurrent {
-			figure {
-				@include set-figure-active();
-			}
-		}
-	}
-
-	figure {
-		@include set-transition(border-color);
-
-		border: 1px dashed transparent;
-		position: relative;
-		width: 100%;
-
-		@include circle($thumbnail-size);
-		@include mobile () {
-			@include circle($thumbnail-mobile-size);
-		}
-
-		figcaption {
-			@include opacity(0);
-
-			p {
-				@include transform(
-					translate3d(0, 100%, 0)
-					scale3d($overlay-scale, $overlay-scale, $overlay-scale)
-				)
-			}
-		}
-
-		&:hover {
-			@include set-figure-active();
-		}
-
-		@include mobile () {
-			@include set-figure-active();
-		}
-	}
-
-	a,
-	figcaption {
-		@include set-transition(opacity);
-	}
-
-	a {
-		background-position: center;
-		z-index: 1;
-	}
-
-	img {
-		@include opacity(0);
-	}
-
-	figcaption {
-		@include display(flex);
-		@include flex-direction(column);
-		@include align-items(cenetr);
-		@include justify-content(center);
-
-		@include through();
-
-		background-color: rgba(red($overlay-color), green($overlay-color), blue($overlay-color), $overlay-opacity);
-		color: $overlay-text-color;
-		font-weight: $heading_font_weight;
-		padding: rem($space);
+		margin-left: -1 * 30%;
 		text-align: center;
-		z-index: 2;
 
-		@include mobile () {
-			background-color: rgba(red($overlay-color), green($overlay-color), blue($overlay-color), $mobile-overlay-opacity);
+		@include largemobile () {
+			margin-left: -1 * 40%;
 		}
 
-		p {
-			@include set-transition(transform);
-			@include transition-duration($fast)
+		@include mobile () {
+			margin-left: 0;
+		}
 
-			+ p {
-				margin-top: rem($space);
+		&:nth-child(even) {
+			margin-left: 30%;
 
-				@include mobile () {
-					margin-top: 0;
+			@include largemobile () {
+				margin-left: 40%;
+			}
+
+			@include mobile () {
+				margin-left: 0;
+			}
+		}
+
+		+ li {
+			margin-top: rem(-1 * $gutter * 4);
+
+			@include mobile () {
+				margin-top: rem($gutter);
+			}
+		}
+
+		&.isCurrent,
+		&:hover {
+			a {
+				@include transform(scale3d(1.2, 1.2, 1.2));
+			}
+
+			figcaption {
+				@include opacity(1);
+
+				p {
+					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
 				}
 			}
 		}
 	}
 
+	figure {
+		height: 100%;
+		position: relative;
+		width: 100%;
+	}
+
+	figcaption {
+		@include set-transition(height, min-height, min-width, opacity, width);
+
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+		@include justify-content(center);
+
+		@include opacity(0);
+
+		@include through();
+
+		background-color: rgba(red($black), green($black), blue($black), .9);
+		color: $white;
+		height: 100%;
+		padding: rem($space);
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	a {
+		@include set-transition(transform);
+		
+		background-size: cover;
+
+		height: 100%;
+		width: 100%;
+
+		&:hover {
+			@include transform(scale3d(1.2, 1.2, 1.2));
+
+			+ figcaption {
+				@include opacity(1);
+
+				p {
+					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+				}
+			}
+		}
+	}
+
+	img {
+		@include opacity(0);
+
+		height: 100%;
+		width: 100%;
+	}
+
+	p {
+		@include set-transition(transform);
+
+		@include transform(translate3d(0, rem($gutter), 0) scale3d(.6, .6, .6));
+
+		+ p {
+			@include transform(translate3d(0, rem(-1 * $space), 0) scale3d(.6, .6, .6));
+
+			margin-top: rem($space);
+		}
+	}
+
+	.title {
+		font-weight: $thicker_font_weight;
+
+		@include mobile () {
+			@include truncate();
+
+			font-weight: $font_weight;
+		}
+	}
+
 	.published_on {
-		@include set-font-size(.9);
+		@include pill();
+
+		color: $dark-grey;
+
+		@include mobile () {
+			@include hidden();
+		}
 	}
 }

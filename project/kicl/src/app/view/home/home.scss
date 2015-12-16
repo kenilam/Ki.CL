@@ -1,151 +1,45 @@
 @import '_import';
 
-$large-size: grid-size($largemobile-size);
-$size: grid-size($mobile-size);
-$small-size: $size - rem($gutter * 2);
 
-$enter-size: grid-size($largedesktop-size);
+$overlay-color: $black;
+$overlay-opacity: .9;
 
-$overlay_opacity: .6;
+$fream-color: $green;
+$frame-opacity: .7;
+$fream-margin: rem($gutter * 7);
 
-@mixin render-content-state-change () {
-	> div {
-		@inlcude opacity(0);
+$font-color: $white;
+$font-active-color: $green;
 
-		&:hover {
-			@include render-content-normal();
-		}
+$logo-font-size: 2.3;
 
-		&:not(:hover),
-		&:hover {
-			@include through();
+$nav-font-size: 14vh;
+$nav-line-height: 1.2;
+$nav-background-color: $white;
+$nav-border-size: rem($gutter);
 
-			@include resize-circle($enter-size);
-
-			@include mobile () {
-				@include resize-circle($size);
-			}
-
-			background-color: transparent;
-
-			h2,
-			[data-api='behance.user.about'] {
-				@include opacity(0);
-			}
-
-			.logo {
-				@include transform(scale3d(0, 0, 0) translate3d(0, 500%, 0));
-			}
-
-			h2 {
-				@include transform(scale3d(0, 0, 0) translate3d(0, 400%, 0));
-			}
-
-			[data-api='behance.user.about'] {
-				@include transform(scale3d(0, 0, 0) translate3d(0, -50%, 0));
-			}
-
-			.navigation {
-				@include transform(scale3d(0, 0, 0) translate3d(0, -300%, 0));
-			}
-		}
-	}
-}
-
-@mixin render-content-normal () {
-	h2,
-	[data-api='behance.user.about'] {
-		@include opacity(0);
-	}
-
-	.logo {
-		@include transform(scale3d(1, 1, 1) translate3d(0, 200%, 0));
-	}
-
-	h2 {
-		@include transform(scale3d(0, 0, 0) translate3d(0, 400%, 0));
-	}
-
-	[data-api='behance.user.about'] {
-		@include transform(scale3d(0, 0, 0) translate3d(0, -50%, 0));
-	}
-
-	.navigation {
-		@include transform(scale3d(1, 1, 1) translate3d(0, -300%, 0));
-	}
-}
-@mixin render-content-hover ($size) {
-	@include resize-circle($size * 1.1);
-
-	background-color: rgba(red($pitch_black), green($pitch_black), blue($pitch_black), $overlay_opacity);
-
-	h2,
-	[data-api='behance.user.about'] {
-		@include transform(scale3d(1, 1, 1) translate3d(0, 0, 0));
-		@include opacity(1);
-	}
-}
-
-@mixin render-content ($size) {
-	> div {
-		@include circle($size);
-
-		background-color: transparent;
-
-		&:not(:hover) {
-			@include render-content-normal();
-		}
-
-		&:hover {
-			@include render-content-hover($size);
-		}
-	}
-}
-
-@mixin reset-render-in-mobile ($size) {
-	> div {
-		[data-api='behance.user.about'],
-		.navigation a {
-			@include set-font-size(.9);
-		}
-
-		&:hover,
-		&:not(:hover) {
-			@include render-content-hover($size * .9);
-
-			.logo {
-				@include transform(scale3d(1, 1, 1) translate3d(0, 90%, 0));
-			}
-
-			h2 {
-				@include transform(scale3d(1, 1, 1) translate3d(0, 180%, 0));
-			}
-
-			[data-api='behance.user.about'] {
-				@include transform(scale3d(0, 0, 0) translate3d(0, -50%, 0));
-			}
-
-			.navigation {
-				@include transform(scale3d(1, 1, 1) translate3d(0, -220%, 0));
-			}
-		}
-	}
-}
+$nav-largemobile-font-size: 13vw;
+$nav-mobile-font-size: 16vw;
+$nav-mobile-border-size: 3.5vw;
 
 html {
-	$overlay-color: $black;
-	$overlay-opacity: .6;
-
 	&[data-route=home] {
+		&:before {
+			@include opacity($overlay-opacity);
+
+			background-color: $overlay-color;
+		}
+
 		body {
-			@include justify-content(center);
-			
-			background-color: rgba(red($overlay-color), green($overlay-color), blue($overlay-color), $overlay-opacity);
-			max-height: 100vh;
+			overflow: hidden;
+		}
+
+		.globalHeader {
+			@include transition-duration(0s);
 		}
 
 		.globalFooter {
-			color: $white;
+			color: $font-color;
 		}
 	}
 }
@@ -153,92 +47,193 @@ html {
 main {
 	&[data-route=home] {
 		@include display(flex);
-		@include align-items(center);
+		@include flex-direction(column);
+		@include align-items(flex-start);
 		@include justify-content(center);
-		
-		color: $white;
-		height: 100%;
-		text-align: center;
 
-		.logo,
-		.navigation {
-			@include set-transition(transform);
-		}
+		padding: rem($gutter);
 
 		h2,
 		[data-api='behance.user.about'] {
-			@include set-transition(opacity, transform);
-		}
-
-		.logo,
-		.navigation {
-			a {
-				color: $white;
-			}
-		}
-
-		> div {
-			@include set-transition(background-color, height, min-height, min-width, transform, width);
-
-			@include display(flex);
-			@include flex-direction(column);
-			@include align-items(center);
-			@include justify-content(center);
-
-			border: 1px dashed $white;
-			position: relative;
-			z-index: 1;
-
-			> * {
-				max-width: $small-size;
-			}
+			color: $font-color;
 		}
 
 		.logo {
-			margin-bottom: rem($gutter);
+			@include order(1);
+			@include justify-content(flex-start);
+
+			@include through();
+			@include set-logo-size(2.3);
+		}
+
+		h2 {
+			@include order(2);
+		}
+
+		[data-api='behance.user.about'] {
+			@include set-transition(max-width);
+			@include transition-duration($fast);
+
+			@include order(4);
+
+			margin-top: rem($gutter);
+			max-width: grid-size(6);
+
+			@include mobile() {
+				max-width: grid-size(4);
+			}
 		}
 
 		.navigation {
-			margin-top: rem($space);
+			@include set-transition(font-size);
+			@include transition-duration($fast);
+
+			@include order(3);
+
+			font-size: $nav-font-size;
+			letter-spacing: 0;
+			line-height: $nav-line-height;
+			width: 100%;
+
+			@include largemobile() {
+				font-size: $nav-largemobile-font-size;
+			}
+
+			@include mobile() {
+				font-size: $nav-mobile-font-size;
+			}
+
+			ul {
+				@include flex-direction(column);
+				@include align-items(flex-start);
+			}
 
 			li {
+				@include set-transition(box-shadow, padding, width);
+				@include transition-duration($fast);
+
+				background-color: $nav-background-color;
+				padding: 0 $nav-border-size;
+				position: relative;
+				width: 0;
+				z-index: 1;
+
 				+ li {
-					border-left-color: $white;
+					margin-left: 0;
+				}
+
+				@include mobile() {
+					padding: 0 $nav-mobile-border-size;
+				}
+
+				&:before {
+					@include set-transition(transform);
+					@include transition-delay($faster);
+
+					@include through();
+
+					background-color: $nav-background-color;
+					content: '\0020';
+					display: block;
+					height: 100%;
+					position: fixed;
+					right: 0;
+					top: 0;
+					width: $nav-border-size;
+					z-index: 0;
+
+					@include transform(translate3d($nav-border-size, 0, 0));
+
+					@include largemobile() {
+						content: initial;
+					}
+				}
+
+				&.isCurrent,
+				&:hover {
+					width: 100%;
+
+					z-index: 2;
+
+					@include largemobile() {
+						width: calc(100% + #{$nav-border-size});
+					}
+				}
+
+				&:hover {
+					@include box-shadow($shadow-center);
+
+					&:before {
+						@include transform(translate3d(0, 0, 0));
+					}
+
+					a {
+						color: $font-active-color;
+					}
 				}
 			}
 
 			a {
-				font-weight: $heading_font_weight;
-				text-transform: uppercase;
-
-				&:hover {
-					color: $green;
-				}
-
+				font-weight: $thicker_font_weight;
 			}
 		}
 
-		@include render-content($large-size);
+		a {
+			color: $font-color;
 
-		@include largemobile () {
-			@include render-content($size);
-
-			@include reset-render-in-mobile($size);
-		}
-
-		@include mobile () {
-			> div {
-				@include resize-circle($size * .9);
-
-				&:hover {
-					@include resize-circle($size);
-				}
+			&:hover {
+				color: $font-active-color;
 			}
 		}
 
 		&.ng-enter,
 		&.ng-leave {
-			@include render-content-state-change();
+			.logo,
+			h2,
+			[data-api='behance.user.about'],
+			.navigation {
+				@include set-transition(transform);
+
+				width: 100%;
+			}
+
+			.navigation {
+				li {
+					@include box-shadow(none);
+
+					&:before {
+						@include opacity(0);
+					}
+
+					&.isCurrent {
+						width: calc(100% + #{$nav-border-size});
+					}
+				}
+			}
+		}
+
+		&.ng-enter {
+			.logo {
+				@include transform(translate3d(100%, 0, 0));
+			}
+			h2 {
+				@include transform(translate3d(400%, 0, 0));
+			}
+			.navigation {
+				@include transform(translate3d(600%, 0, 0));
+			}
+			[data-api='behance.user.about'] {
+				@include transform(translate3d(1000%, 0, 0));
+			}
+
+			&.ng-enter-active {
+				.logo,
+				h2,
+				[data-api='behance.user.about'],
+				.navigation {
+					@include transform(translate3d(0, 0, 0));
+				}
+			}
 		}
 	}
 }

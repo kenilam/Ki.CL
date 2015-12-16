@@ -2,8 +2,12 @@
 
 global.appRoot = require('path').resolve(__dirname);
 
-var bower = require('./gulptask/bower').bower(),
+var gulp = require('gulp'),
+
+    list = require('./gulptask/list').list(),
+
+    bower = require('./gulptask/bower').bower(),
 
 	kicl = require('./project/kicl/gulpfile').kicl();
 
-require('./gulptask/list').list();
+gulp.task('default', [kicl]);

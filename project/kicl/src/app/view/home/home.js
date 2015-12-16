@@ -38,13 +38,17 @@
 							timeout.cancel(scope.timer.backdrop);
 							scope.timer.backdrop = timeout(function () {
 								scope.$emit('backdrop.add', scope.content.backdrop);
-							}, 100);
+							}, 0);
+
 						},
 						destroy : function () {
 							timeout.cancel(scope.timer.backdrop);
 							
 							scope.$emit('globalHeader.show');
-							scope.$emit('backdrop.remove', scope.content.backdrop);
+
+							timeout(function () {
+								root.$broadcast('backdrop.remove', scope.content.backdrop);
+							}, 1000);
 						}
 					};
 				

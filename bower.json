@@ -16,7 +16,8 @@
 	"html5shiv": "*",
 	"Respond": "*",
 
-	"GreenSock-js": "https://github.com/greensock/GreenSock-JS.git",
+	"gsap": "*",
+	"velocity": "*",
 	"jquery": "*",
 	"underscore": "*",
 	"moment": "*",

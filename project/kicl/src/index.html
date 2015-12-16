@@ -76,8 +76,11 @@
 		<global-header></global-header>
 
 		<breadcrumb
+			ng-class="{
+				'isScrolled' : !$root.ref.globalHeader.logo.show
+			}"
 			ng-style="{
-				'padding-top' : $root.ref.globalHeader.height + 'px',
+				'padding-top' : ($root.ref.globalHeader.height || 0) + 'px',
 				'-webkit-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
 				'-moz-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
 				'-ms-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
@@ -126,9 +129,11 @@
 		<script src="lib/html5shiv-printshiv.js"></script>
 		<script src="lib/respond.src.js"></script>
 		<script src="lib/respond.matchmedia.addListener.src.js"></script>
-		
+
 		<script src="lib/moment.js"></script>
 		<script src="lib/underscore.js"></script>
+		
+		<script src="lib/velocity.js"></script>
 
 		<script src="lib/angular.js"></script>
 		<script src="lib/angular-animate.js"></script>

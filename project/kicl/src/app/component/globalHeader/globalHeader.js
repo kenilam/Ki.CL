@@ -4,10 +4,11 @@
 	var controller = [
 		'$rootScope',
 		'$scope',
+		'$window',
 		'$element',
 		'$timeout',
 		'mediaquery',
-		function (root, scope, element, timeout, mediaquery) {
+		function (root, scope, win, element, timeout, mediaquery) {
 			var doc = angular.element(document);
 
 			function hide () {
@@ -26,9 +27,15 @@
 				return scope.globalHeader.show ? element.outerHeight() : 0;
 			}
 
+			function logoHeight () {
+				scope.globalHeader.ref.logo.height = element.children('.logo').outerHeight();
+				
+				return scope.globalHeader.ref.logo.height;
+			}
+
 			function udpateHeight () {
 				timeout.cancel(scope.globalHeader.timer.broadcastHeight);
-				scope.globalHeader.timer.broadcastHeight = timeout(broadcastHeight, 100);
+				scope.globalHeader.timer.broadcastHeight = timeout(broadcastHeight, 0);
 			}
 			
 			function broadcastHeight () {
@@ -36,30 +43,23 @@
 			}
 
 			function toggleLogo () {
-				if (doc.scrollTop() > scope.globalHeader.ref.logo.height && !mediaquery().mobile) {
-					scope.globalHeader.ref.showLogo = false;
-				} else {
-					scope.globalHeader.ref.showLogo = true;
-				}
+				scope.globalHeader.ref.showLogo = !Boolean(doc.scrollTop() > logoHeight() && !mediaquery().mobile);
 				
 				if (!scope.$$phase) {
 					scope.$apply();
 				}
 
 				scope.globalHeader.ref.scrollPos = doc.scrollTop();
-
-				root.$broadcast('globalHeader.logo.toggle', {
-					show : scope.globalHeader.ref.showLogo,
-					height : scope.globalHeader.ref.logo.height
-				});
 			}
 
-			function windowScroll (event) {
+			function scroll (event) {
+				udpateHeight();
 				toggleLogo();
 			}
 
-			function init () {
-				scope.globalHeader.ref.logo.height = element.children('.logo').outerHeight();
+			function resize (event) {
+				udpateHeight();
+				toggleLogo();
 			}
 
 			function destroy () {
@@ -79,10 +79,8 @@
 			scope.$on('globalHeader.hide', hide);
 			scope.$on('globalHeader.show', show);
 
-			doc.bind('scroll', windowScroll);
-
-			timeout.cancel(scope.globalHeader.timer.init);
-			scope.globalHeader.timer.init = timeout(init, 1000);
+			doc.bind('scroll', scroll);
+			angular.element(win).resize(resize);
 		}
 	];
 
