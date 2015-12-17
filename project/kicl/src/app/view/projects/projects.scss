@@ -12,12 +12,29 @@ $square-opacity: .6;
 
 html {
 	&[data-route^=projects] {
-		
+		background-attachment: fixed;
 	}
 }
 
 main {
 	&[data-route^=projects] {
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+
+		margin: 0 auto;
+		max-width: grid-size($desktop-size);
+
+		h1 {
+			@include set-font-size(1.5);
+
+			margin-top: rem($gutter);
+		}
+
+		[data-api="behance.projects"] {
+			width: 100%;
+		}
+
 		&.ng-enter,
 		&.ng-leave {
           background-color: $enter-main-background-color;

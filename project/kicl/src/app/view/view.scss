@@ -7,12 +7,14 @@
 
 html {
 	$overlay-color: $white;
-	$overlay-opacity: .8;
+	$overlay-opacity: .5;
 
-	@include set-transition(background-image);
-
+	@include set-transition(background-color, background-image, background-size);
+	
+	background-color: $black;
+	background-image: url(#{$transparent_base64});
 	background: center no-repeat;
-	background-size: cover;
+	background-size: auto 100%;
 
 	&:before {
 		@include set-transition(background-color, opacity);
@@ -27,6 +29,10 @@ html {
 		top: 0;
 		width: 100%;
 		z-index: 0;
+	}
+
+	&.hasBackdrop {
+		background-size: auto 200%;
 	}
 }
 
@@ -48,38 +54,36 @@ main {
 
 	&.ng-enter {
 		@include transform(translate3d(100%, 0, 0));
+
+		@include opacity(0);
 		
 		z-index: 1;
 
 		@include mobile() {
 			@include transform(translate3d(0, 0, 0));
-			@include opacity(0);
 		}
 
 		&.ng-enter-active {
 			@include transform(translate3d(0, 0, 0));
 
-			@include mobile() {
-				@include opacity(1);
-			}
+			@include opacity(1);
 		}
 	}
 
 	&.ng-leave {
 		@include transform(translate3d(0, 0, 0));
 
-		z-index: 2;
+		@include opacity(1);
 
-		@include mobile() {
-			@include opacity(1);
-		}
+		z-index: 2;
 
 		&.ng-leave-active {
 			@include transform(translate3d(-100%, 0, 0));
 
+			@include opacity(0);
+
 			@include mobile() {
 				@include transform(translate3d(0, 0, 0));
-				@include opacity(0);
 			}
 		}
 	}

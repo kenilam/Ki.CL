@@ -1,6 +1,4 @@
 @import '_import';
 @import '../_project';
 
-main {
-	@include set-project('1177179', $dark_grey, $white, $white);
-}
+@include set-project('1177179', $black, .9, $white);

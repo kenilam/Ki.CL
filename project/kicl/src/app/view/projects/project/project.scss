@@ -1,1 +1,21 @@
 @import '_import';
+
+html {
+	&[data-route='projects.project'] {
+		background-size: auto 200%;
+	}
+}
+
+main {
+	&[data-route='projects.project'] {
+		&.ng-enter {
+			background-size: auto 120%;
+		}
+	}
+}
+
+[data-route='projects.project'] {
+	.globalHeader {
+		@include box-shadow(none);
+	}
+}

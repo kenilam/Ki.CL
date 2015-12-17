@@ -1,71 +1,24 @@
 @import '_import';
 
 [data-api="behance.projects"] {
+	$li_circle_size: grid-size(3);
+	$li_circle_size_s: grid-size(2);
+	$li_margin: 40%;
+	$figcaption_xPos: 200%;
+	$figcaption_yPos: 50%;
+	$figcaption_scale: .1;
+
 	@include display(flex);
 	@include flex-direction(column);
 	@include align-items(center);
 	@include justify-content(center);
 	@include flex-wrap(wrap);
 
-	li,
-	figcaption {
-		@include circle(grid-size(3));
-
-		@include mobile () {
-			@include circle(grid-size(2));
-		}
-	}
-
 	li {
-		@include set-transition(height, margin-left, margin-top, min-height, min-width, width);
-
-		@include display(flex);
-		@include box-shadow($shadow-center);
-
-		margin-left: -1 * 30%;
-		text-align: center;
-
-		@include largemobile () {
-			margin-left: -1 * 40%;
-		}
+		@include circle($li_circle_size);
 
 		@include mobile () {
-			margin-left: 0;
-		}
-
-		&:nth-child(even) {
-			margin-left: 30%;
-
-			@include largemobile () {
-				margin-left: 40%;
-			}
-
-			@include mobile () {
-				margin-left: 0;
-			}
-		}
-
-		+ li {
-			margin-top: rem(-1 * $gutter * 4);
-
-			@include mobile () {
-				margin-top: rem($gutter);
-			}
-		}
-
-		&.isCurrent,
-		&:hover {
-			a {
-				@include transform(scale3d(1.2, 1.2, 1.2));
-			}
-
-			figcaption {
-				@include opacity(1);
-
-				p {
-					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-				}
-			}
+			@include circle($li_circle_size_s);
 		}
 	}
 
@@ -89,11 +42,13 @@
 
 		background-color: rgba(red($black), green($black), blue($black), .9);
 		color: $white;
-		height: 100%;
-		padding: rem($space);
+		height: calc(100% + #{rem($space * 2)});
+		margin-left: rem(-1 * $space);
+		margin-top: rem(-1 * $space);
+		padding: rem($space * 2);
 		position: absolute;
 		top: 0;
-		width: 100%;
+		width: calc(100% + #{rem($space * 2)});
 	}
 
 	a {
@@ -103,18 +58,6 @@
 
 		height: 100%;
 		width: 100%;
-
-		&:hover {
-			@include transform(scale3d(1.2, 1.2, 1.2));
-
-			+ figcaption {
-				@include opacity(1);
-
-				p {
-					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-				}
-			}
-		}
 	}
 
 	img {
@@ -122,18 +65,6 @@
 
 		height: 100%;
 		width: 100%;
-	}
-
-	p {
-		@include set-transition(transform);
-
-		@include transform(translate3d(0, rem($gutter), 0) scale3d(.6, .6, .6));
-
-		+ p {
-			@include transform(translate3d(0, rem(-1 * $space), 0) scale3d(.6, .6, .6));
-
-			margin-top: rem($space);
-		}
 	}
 
 	.title {
@@ -147,12 +78,91 @@
 	}
 
 	.published_on {
+		@include transition-delay($fastest);
+
+		@include box-shadow($shadow-center);
 		@include pill();
 
 		color: $dark-grey;
 
 		@include mobile () {
 			@include hidden();
+		}
+	}
+
+	li {
+		@include set-transition(height, margin-left, margin-top, min-height, min-width, width);
+
+		@include display(flex);
+		@include box-shadow($shadow-center);
+
+		margin-left: -1 * $li_margin;
+		text-align: center;
+
+		@include mobile () {
+			margin-left: 0;
+		}
+
+		p {
+			@include set-transition(transform);
+			@include transitiion-delay($faster);
+
+			@include transform(translate3d($figcaption_xPos, $figcaption_yPos, 0) scale3d($figcaption_scale, $figcaption_scale, $figcaption_scale));
+
+			+ p {
+				margin-top: rem($space);
+			}
+		}
+
+		&:nth-child(even) {
+			margin-left: $li_margin;
+
+			@include mobile () {
+				margin-left: 0;
+			}
+
+			p {
+				@include transform(translate3d(-1 * $figcaption_xPos, $figcaption_yPos, 0) scale3d($figcaption_scale, $figcaption_scale, $figcaption_scale));
+			}
+		}
+
+		+ li {
+			margin-top: rem(-1 * $gutter * 4);
+
+			@include mobile () {
+				margin-top: rem($gutter);
+			}
+		}
+
+		&.isCurrent,
+		&:hover {
+			a {
+				@include transform(scale3d(1.2, 1.2, 1.2));
+			}
+
+			figcaption {
+				@include opacity(1);
+			}
+
+			p {
+				@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+			}
+		}
+
+		@include mobile () {
+			&:nth-child(n) {
+				a {
+					@include transform(scale3d(1.2, 1.2, 1.2));
+				}
+
+				figcaption {
+					@include opacity(1);
+				}
+
+				p {
+					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
+				}
+			}
 		}
 	}
 }

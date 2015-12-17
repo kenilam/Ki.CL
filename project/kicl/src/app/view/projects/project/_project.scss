@@ -1,3 +1,14 @@
-@mixin set-project ($projectId, $background-color, $overlay-text-color, $mobile-overlay-text-color) {
-	
+@mixin set-project ($projectId, $background-color, $background-alpha, $text-color) {
+	li[data-project-id='#{$projectId}'] {
+		figcaption {
+			background-color: rgba(red($background-color), green($background-color), blue($background-color), $background-alpha);
+			color: $text-color;
+		}
+	}
+
+	[data-project-id='#{$projectId}'] {
+		.globalHeader {
+			background-color: $background-color;
+		}
+	}
 }

@@ -4,17 +4,6 @@
 		"title" : "A Creative Consultant"
 	},
 
-	"initial" : {
-		"footer" : {
-			"hide" : {
-				"delay" : "2000"
-			},
-			"show" : {
-				"message" : "Content Information"
-			}
-		}
-	},
-
 	"component" : {
 		"globalHeader" : {
 			"closeButton" : {

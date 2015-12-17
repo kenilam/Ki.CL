@@ -101,7 +101,7 @@
 
 @mixin pill ($background-color: $dark_white) {
 	background-color: $background-color;
-	border-radius: rem($space);
+	border-radius: rem($space / 2);
 	overflow: hidden;
 	padding: rem($space / 2) rem($space);
 	text-transform: capitalize;

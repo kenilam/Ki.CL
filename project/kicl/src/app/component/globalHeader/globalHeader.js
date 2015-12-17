@@ -4,11 +4,10 @@
 	var controller = [
 		'$rootScope',
 		'$scope',
-		'$window',
 		'$element',
 		'$timeout',
 		'mediaquery',
-		function (root, scope, win, element, timeout, mediaquery) {
+		function (root, scope, element, timeout, mediaquery) {
 			var doc = angular.element(document);
 
 			function hide () {
@@ -27,15 +26,9 @@
 				return scope.globalHeader.show ? element.outerHeight() : 0;
 			}
 
-			function logoHeight () {
-				scope.globalHeader.ref.logo.height = element.children('.logo').outerHeight();
-				
-				return scope.globalHeader.ref.logo.height;
-			}
-
 			function udpateHeight () {
 				timeout.cancel(scope.globalHeader.timer.broadcastHeight);
-				scope.globalHeader.timer.broadcastHeight = timeout(broadcastHeight, 0);
+				scope.globalHeader.timer.broadcastHeight = timeout(broadcastHeight, 100);
 			}
 			
 			function broadcastHeight () {
@@ -43,23 +36,30 @@
 			}
 
 			function toggleLogo () {
-				scope.globalHeader.ref.showLogo = !Boolean(doc.scrollTop() > logoHeight() && !mediaquery().mobile);
+				if (doc.scrollTop() > scope.globalHeader.ref.logo.height && !mediaquery().mobile) {
+					scope.globalHeader.ref.showLogo = false;
+				} else {
+					scope.globalHeader.ref.showLogo = true;
+				}
 				
 				if (!scope.$$phase) {
 					scope.$apply();
 				}
 
 				scope.globalHeader.ref.scrollPos = doc.scrollTop();
+
+				root.$broadcast('globalHeader.logo.toggle', {
+					show : scope.globalHeader.ref.showLogo,
+					height : scope.globalHeader.ref.logo.height
+				});
 			}
 
-			function scroll (event) {
-				udpateHeight();
+			function windowScroll (event) {
 				toggleLogo();
 			}
 
-			function resize (event) {
-				udpateHeight();
-				toggleLogo();
+			function init () {
+				scope.globalHeader.ref.logo.height = element.children('.logo').outerHeight();
 			}
 
 			function destroy () {
@@ -79,8 +79,10 @@
 			scope.$on('globalHeader.hide', hide);
 			scope.$on('globalHeader.show', show);
 
-			doc.bind('scroll', scroll);
-			angular.element(win).resize(resize);
+			doc.bind('scroll', windowScroll);
+
+			timeout.cancel(scope.globalHeader.timer.init);
+			scope.globalHeader.timer.init = timeout(init, 1000);
 		}
 	];
 

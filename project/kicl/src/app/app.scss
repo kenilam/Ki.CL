@@ -1,9 +1,9 @@
 @import '_import';
 
 html {
-	@include set-transition(background-color);
+	@include set-transition(background-color, background-image);
 	
-	background-color: $black;
+	background-color: $white;
 }
 
 body {
@@ -54,7 +54,6 @@ main,
 
 main {
 	position: relative;
-	top: 0;
 	z-index: 2;
 }
 
