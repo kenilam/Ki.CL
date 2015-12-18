@@ -10,7 +10,8 @@
 			'$stateParams',
 			'transition',
 			'sitemap',
-			function (root, scope, element, timeout, state, stateParams, transition, sitemap) {
+			'mediaquery',
+			function (root, scope, element, timeout, state, stateParams, transition, sitemap, mediaquery) {
 				var index = 0;
 
 				function sitemapUpdate () {

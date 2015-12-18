@@ -36,10 +36,10 @@
 			}
 
 			function toggleLogo () {
+				scope.globalHeader.ref.showLogo = true;
+				
 				if (doc.scrollTop() > scope.globalHeader.ref.logo.height && !mediaquery().mobile) {
 					scope.globalHeader.ref.showLogo = false;
-				} else {
-					scope.globalHeader.ref.showLogo = true;
 				}
 				
 				if (!scope.$$phase) {

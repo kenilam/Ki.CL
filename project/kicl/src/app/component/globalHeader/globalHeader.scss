@@ -50,7 +50,9 @@
 
 		@include mobile() {
 			font-size: .8rem;
-			padding: rem($space) 0 rem($space) rem($space);
+			margin-top: 0;
+			padding-top: 0;
+			padding-right: 0;
 		}
 	}
 

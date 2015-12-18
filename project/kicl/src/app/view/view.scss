@@ -11,9 +11,9 @@ html {
 
 	@include set-transition(background-color, background-image, background-size);
 	
-	background-color: $black;
-	background-image: url(#{$transparent_base64});
-	background: center no-repeat;
+	background-color: $black url(#{$transparent_base64});
+	background-position: center;
+	background-repeat: no-repeat;
 	background-size: auto 100%;
 
 	&:before {

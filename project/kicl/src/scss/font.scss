@@ -54,6 +54,6 @@ button {
 
 p {
 	+ p {
-		margin-top: $space;
+		margin-top: rem($space);
 	}
 }
