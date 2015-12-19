@@ -28,13 +28,14 @@
 		controller = [
 			'$rootScope',
 			'$scope',
+			'$element',
 			'$timeout',
 			'$state',
 			'$stateParams',
 			'behanceReference',
 			'resource',
 			'sitemap',
-			function controller (root, scope, timeout, state, stateParams, reference, resource, sitemap) {
+			function controller (root, scope, element, timeout, state, stateParams, reference, resource, sitemap) {
 				var callback = {
 						data : function (event, project) {
 							scope.$broadcast('behance.project.throbber.hide');

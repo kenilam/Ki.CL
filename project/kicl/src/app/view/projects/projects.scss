@@ -23,7 +23,10 @@ main {
 		@include align-items(center);
 
 		margin: 0 auto;
-		max-width: grid-size($desktop-size);
+
+		:not(.ng-enter) {
+			max-width: grid-size($desktop-size);
+		}
 
 		h1 {
 			@include set-font-size(1.5);
@@ -32,12 +35,117 @@ main {
 		}
 
 		[data-api="behance.projects"] {
+			@include set-transition(transform);
+
+			-webkit-perspective: 500px;
+		    -moz-perspective: 500px;
+		    -ms-perspective: 500px;
+		    -o-perspective: 500px;
+			perspective: 500px;
+
+			-webkit-transform-style: preserve-3d;
+			transform-style: preserve-3d;
+
 			width: 100%;
+
+			&.isShadow {
+				@include box-shadow(none);
+				@include through();
+
+				@include opacity(.3);
+
+				left: 50%;
+				position: absolute;
+
+				li {
+					background-color: $pitch-black;
+				}
+
+				figure {
+					@include hidden();
+				}
+			}
 		}
 
 		&.ng-enter,
 		&.ng-leave {
-          background-color: $enter-main-background-color;
+			h1,
+			[data-api="behance.projects"],
+			[data-api="behance.projects"] li {
+				@include set-transition(transform);
+			}
+
+			[data-api="behance.projects"] li {
+				@include transition-delay($speed);
+			}
+		}
+
+		&.ng-enter {
+			h1,
+			[data-api="behance.projects"] {
+				@include transform(translate3d(100%, 0, 0));
+			}
+			
+			[data-api="behance.projects"] {
+				li {
+					@include transform(translate3d(500%, 0, 0));
+
+					&:nth-child(even) {
+						@include transform(translate3d(700%, 0, 0));
+					}
+				}
+			}
+
+			&.ng-enter-active {
+				h1,
+				[data-api="behance.projects"] {
+					@include transform(translate3d(0, 0, 0));
+				}
+				
+				[data-api="behance.projects"] {
+					li {
+						@include transform(translate3d(0, 0, 0));
+
+						&:nth-child(even) {
+							@include transform(translate3d(0, 0, 0));
+						}
+					}
+				}
+			}
+		}
+
+		&.ng-leave {
+			h1,
+			[data-api="behance.projects"] {
+				@include transform(translate3d(0, 0, 0));
+			}
+			
+			[data-api="behance.projects"] {
+				li {
+					@include transform(translate3d(0, 0, 0));
+
+					&:nth-child(even) {
+						@include transform(translate3d(0, 0, 0));
+					}
+				}
+			}
+
+			&.ng-leave-active {
+				h1,
+				[data-api="behance.projects"] {
+					@include transform(translate3d(-100%, 0, 0));
+				}
+
+				[data-api="behance.projects"] {
+					li {
+						@include transform(translate3d(-700%, 0, 0));
+
+						&:nth-child(even) {
+							@include transform(translate3d(-500%, 0, 0));
+						}
+					}
+				}
+			}
 		}
 	}
 }

@@ -13,7 +13,7 @@
 			<img ng-src="{{project.covers}}" ng-attr-alt="{{project.name}}">
 		</figure>
 
-		<ul class="fields" aria-label="{{resource.content.fields.label}}" role="list">
+		<ul class="pills fields" aria-label="{{resource.content.fields.label}}" role="list">
 			<li role="listitem" ng-repeat="field in project.fields track by $index">{{field}}</li>
 		</ul>
 	</header>
@@ -40,10 +40,10 @@
 	</div>
 
 	<aside>
-		<ul class="stats" aria-label="{{resource.content.stats.label}}" role="list">
+		<ul class="pills stats" aria-label="{{resource.content.stats.label}}" role="list">
 			<li role="listitem" ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span><span>{{key}}</span></li>
 		</ul>
-		<ul class="tags" aria-label="{{resource.content.tags.label}}" role="list">
+		<ul class="pills tags" aria-label="{{resource.content.tags.label}}" role="list">
 			<li role="listitem" ng-repeat="tag in project.tags track by $index">{{tag}}</li>
 		</ul>
 	</aside>

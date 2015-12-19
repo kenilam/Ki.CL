@@ -9,12 +9,12 @@ html {
 	$overlay-color: $white;
 	$overlay-opacity: .5;
 
-	@include set-transition(background-color, background-image, background-size);
+	@include set-transition(background-color, background-size);
 	
-	background-color: $black url(#{$transparent_base64});
+	background-image: url(#{$transparent_base64});
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: auto 100%;
+	background-size: 100% auto;
 
 	&:before {
 		@include set-transition(background-color, opacity);
@@ -32,7 +32,7 @@ html {
 	}
 
 	&.hasBackdrop {
-		background-size: auto 200%;
+		background-size: 200% auto;
 	}
 }
 
@@ -46,6 +46,7 @@ main {
 		@include through();
 
 		position: absolute;
+		width: 100%;
 
 		+ .globalFooter {
 			@include opacity(0);

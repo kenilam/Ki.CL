@@ -28,12 +28,13 @@
 			'$rootScope',
 			'$scope',
 			'$element',
+			'$window',
 			'$timeout',
 			'resource',
 			'sitemap',
 			'mediaquery',
 			'behanceReference',
-			function controller (root, scope, element, timeout, resource, sitemap, mediaquery, behanceReference) {
+			function controller (root, scope, element, win, timeout, resource, sitemap, mediaquery, behanceReference) {
 				var get = {
 						list : function () {
 							return element.find('[data-api="behance.projects"] li');
@@ -43,14 +44,22 @@
 						backdrop : {
 							add : function (image) {
 								if (!mediaquery().mobile) {
-									scope.$emit('backdrop.add', {
-										image : image
-									});
+									timeout.cancel(scope.timer.addBackdrop);
+									timeout.cancel(scope.timer.removeBackdrop);
+									scope.timer.addBackdrop = timeout(function () {
+										scope.$emit('backdrop.add', {
+											image : image
+										});
+									}, 1000);
 								}
 							},
 							remove : function (image) {
-								scope.$emit('backdrop.remove', {
-									image : image
+								timeout.cancel(scope.timer.addBackdrop);
+								timeout.cancel(scope.timer.removeBackdrop);
+								scope.timer.removeBackdrop = timeout(function () {
+									scope.$emit('backdrop.remove', {
+										image : image
+									}, 1000);
 								});
 							}
 						}
@@ -66,6 +75,23 @@
 							}
 
 							emit.backdrop.remove(project.covers);
+						},
+						mousemove : function (event) {
+							var distant = .04;
+
+							scope.style.rotateX = 0;
+							scope.style.rotateY = 0;
+
+							if (!mediaquery().mobile) {
+								// scope.style.rotateX = -1 * ((win.outerHeight / 2 - event.clientY) * distant);
+								scope.style.rotateY = -1 * ((win.outerWidth / 2 - event.clientX) * distant);
+							}
+
+							console.log(scope.style.rotateY)
+
+							if (!root.$$phase) {
+								root.$apply();
+							}
 						}
 					},
 					callback = {
@@ -121,9 +147,17 @@
 
 					return setProject;
 				}
+				
+				document.onmousemove = control.mousemove;
 
 				scope.name = resource.name;
 				scope.content = resource.content;
+
+				scope.style = {};
+				scope.style.rotateX = 0;
+				scope.style.rotateY = 0;
+				scope.style.rotateZ = 0;
+
 				scope.timer = {};
 				scope.control = {};
 				scope.control.mouseover = control.mouseover;
