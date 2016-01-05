@@ -29,8 +29,10 @@
 				'$window',
 				'mediaquery',
 				function motion (win, mediaquery) {
-					var project,
-						list,
+					var projects,
+						project,
+						figure,
+						shadows,
 						shadow,
 
 						setting = {
@@ -43,9 +45,10 @@
 						},
 
 						property = {
-							list : {},
 							project : {},
-							shadow : { opacity : mediaquery().largemobile ? 0 : 1 },
+							figure : {},
+							shadows : { opacity : mediaquery().largemobile ? 0 : 1 },
+							shadow : {},
 
 							x : 0,
 							y : 0
@@ -109,19 +112,23 @@
 						};
 
 					function construct () {
-						project = angular.element('[data-api="behance.projects"]');
+						projects = angular.element('[data-api="behance.projects"]');
+
+						project = projects.children('li');
 						
-						list = project.find('li figure');
+						figure = project.find('figure');
 
-						shadow = project.clone();
+						shadows = projects.clone();
 
-						shadow
+						shadow = shadows.children('li');
+
+						shadows
 							.addClass('isShadow')
 							.children()
 								.css('background-color', '#000')
 							.children().remove();
 
-						project.after(shadow);
+						projects.after(shadows);
 					}
 
 					function events () {
@@ -130,8 +137,9 @@
 					}
 
 					function animate () {
-						tween.list = new TweenMax.to(list, setting.duration, property.list, setting.ease);
 						tween.project = new TweenMax.to(project, setting.duration, property.project, setting.ease);
+						tween.figure = new TweenMax.to(figure, setting.duration, property.figure, setting.ease);
+						tween.shadows = new TweenMax.to(shadows, setting.duration, property.shadows, setting.ease);
 						tween.shadow = new TweenMax.to(shadow, setting.duration, property.shadow, setting.ease);
 					}
 
