@@ -40,6 +40,7 @@
 				scope.name = resource.name;
 
 				root.$broadcast('globalHeader.show');
+				root.$broadcast('globalFooter.logo.show');
 				
 				sitemap.current('contact', 'root');
 

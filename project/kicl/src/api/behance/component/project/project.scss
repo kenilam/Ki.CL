@@ -78,6 +78,9 @@
             @include box-shadow($shadow-center);
 
             @include circle(grid-size(2));
+
+            background-position: center;
+            background-size: cover;
         }
 
         h1 {

@@ -42,6 +42,7 @@
 				scope.$on('behance.user.data', callback.data);
 
 				root.$broadcast('globalHeader.show');
+				root.$broadcast('globalFooter.logo.show');
 				
 				sitemap.current('about', 'root');
 			}

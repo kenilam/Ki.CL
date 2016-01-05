@@ -18,8 +18,21 @@
 				}
 			}
 
+			function showLogo () {
+				scope.globalFooter.status.logo.show = true;
+			}
+			function hideLogo () {
+				scope.globalFooter.status.logo.show = false;
+			}
+
 			scope.globalFooter = {};
 			scope.globalFooter.timer = {};
+			scope.globalFooter.status = {};
+			scope.globalFooter.status.logo = {};
+			scope.globalFooter.status.logo.show = true;
+
+			scope.$on('globalFooter.logo.show', showLogo);
+			scope.$on('globalFooter.logo.hide', hideLogo);
 
 			scope.$watch(height, broadcastHeight);
 		}

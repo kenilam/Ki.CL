@@ -13,7 +13,7 @@
 	border-bottom-color: $grey;
 	padding: rem($space) rem($gutter);
 
-	@include mobile() {
+	@include largemobile() {
 		@include flex-direction(row);
 		@include justify-content(space-between);
 
@@ -21,10 +21,14 @@
 
 		background-color: $white;
 		padding: rem($space) rem($gutter);
+
+		.logo {
+			padding: 0;
+		}
 	}
 
 	.logo {
-		@include mobile() {
+		@include largemobile() {
 			@include set-logo-size(1.28);
 			@include set-logo-content(true);
 		}
@@ -48,7 +52,7 @@
 			text-align: center;
 		}
 
-		@include mobile() {
+		@include largemobile() {
 			font-size: .8rem;
 			margin-top: 0;
 			padding-top: 0;
@@ -61,7 +65,7 @@
 
 		background-color: $dark_white;
 
-		@include mobile() {
+		@include largemobile() {
 			@include box-shadow($shadow-center);
 		}
 

@@ -64,6 +64,7 @@
 				scope.$on('$destroy', callback.destroy);
 
 				root.$broadcast('globalHeader.hide');
+				root.$broadcast('globalFooter.logo.hide');
 				
 				sitemap.current('home', 'root');
 			}

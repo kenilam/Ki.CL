@@ -5,9 +5,10 @@
 		'$rootScope',
 		'$scope',
 		'$element',
+		'$window',
 		'$timeout',
 		'mediaquery',
-		function (root, scope, element, timeout, mediaquery) {
+		function (root, scope, element, win, timeout, mediaquery) {
 			var doc = angular.element(document);
 
 			function hide () {
@@ -28,7 +29,15 @@
 
 			function udpateHeight () {
 				timeout.cancel(scope.globalHeader.timer.broadcastHeight);
-				scope.globalHeader.timer.broadcastHeight = timeout(broadcastHeight, 100);
+				scope.globalHeader.timer.broadcastHeight = timeout(broadcastHeight, 0);
+			}
+
+			function updateLogoHeight () {
+				scope.globalHeader.ref.logo.height = element.children('.logo').outerHeight();
+				
+				if (!scope.$$phase) {
+					scope.$apply();
+				}
 			}
 			
 			function broadcastHeight () {
@@ -36,9 +45,13 @@
 			}
 
 			function toggleLogo () {
+				updateLogoHeight();
+				
 				scope.globalHeader.ref.showLogo = true;
 				
-				if (doc.scrollTop() > scope.globalHeader.ref.logo.height && !mediaquery().mobile) {
+				scope.globalHeader.ref.scrollPos = doc.scrollTop();
+				
+				if (scope.globalHeader.ref.scrollPos > scope.globalHeader.ref.logo.height && !mediaquery().largemobile) {
 					scope.globalHeader.ref.showLogo = false;
 				}
 				
@@ -46,20 +59,22 @@
 					scope.$apply();
 				}
 
-				scope.globalHeader.ref.scrollPos = doc.scrollTop();
-
 				root.$broadcast('globalHeader.logo.toggle', {
 					show : scope.globalHeader.ref.showLogo,
 					height : scope.globalHeader.ref.logo.height
 				});
 			}
 
-			function windowScroll (event) {
+			function scroll (event) {
 				toggleLogo();
 			}
 
+			function resize (event) {
+				updateLogoHeight();
+			}
+
 			function init () {
-				scope.globalHeader.ref.logo.height = element.children('.logo').outerHeight();
+				updateLogoHeight();
 			}
 
 			function destroy () {
@@ -79,10 +94,11 @@
 			scope.$on('globalHeader.hide', hide);
 			scope.$on('globalHeader.show', show);
 
-			doc.bind('scroll', windowScroll);
+			doc.bind('scroll scrollend', scroll);
+			angular.element(win).bind('resize', resize);
 
 			timeout.cancel(scope.globalHeader.timer.init);
-			scope.globalHeader.timer.init = timeout(init, 1000);
+			scope.globalHeader.timer.init = timeout(init, 0);
 		}
 	];
 

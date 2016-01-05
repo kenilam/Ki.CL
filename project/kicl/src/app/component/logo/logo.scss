@@ -9,7 +9,7 @@
 	@include set-logo-content();
 
 	margin-bottom: 0;
-	padding: $space;
+	padding: rem($space);
 
 	a {
 		color: $darker_grey;

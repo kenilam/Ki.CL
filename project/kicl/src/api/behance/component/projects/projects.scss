@@ -15,14 +15,6 @@
 	@include justify-content(center);
 	@include flex-wrap(wrap);
 
-	li {
-		@include circle($li_circle_size);
-
-		@include mobile () {
-			@include circle($li_circle_size_s);
-		}
-	}
-
 	figure {
 		height: 100%;
 		position: relative;
@@ -54,7 +46,8 @@
 
 	a {
 		@include set-transition(transform);
-		
+
+		background-position: center;
 		background-size: cover;
 
 		height: 100%;
@@ -94,16 +87,22 @@
 		@include transition-duration($faster);
 
 		@include display(flex);
-		@include box-shadow($shadow-center);
 
+		@include circle($li_circle_size);
+
+		border: 1px solid $dark-grey;
 		margin-left: -1 * $li_margin;
+		position: relative;
 		text-align: center;
+		z-index: 1;
 
 		@include largemobile () {
 			margin-left: -1 * $li_margin_wider;
 		}
 
 		@include mobile () {
+			@include circle($li_circle_size_s);
+
 			margin-left: 0;
 		}
 
@@ -144,6 +143,8 @@
 
 		&.isCurrent,
 		&:hover {
+			z-index: 2;
+
 			a {
 				@include transform(scale3d(1.2, 1.2, 1.2));
 			}

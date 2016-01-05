@@ -35,6 +35,10 @@
 					callback.updateRoute(root, sitemap, timeout)();
 					
 					anchorScroll();
+
+					if (!root.$$phase) {
+						root.$apply();
+					}
 				}
 
 				return whenStateChangeSuccess;
@@ -67,10 +71,10 @@
 				};
 			},
 			updateRoute : function (root, sitemap, timeout) {
-				function currentRoute (current) {
-					var route = [],
-						title = [];
+				var route = [],
+					title = [];
 
+				function currentRoute (current) {
 					if (!current) {
 						current = sitemap.current();
 					}
@@ -102,6 +106,9 @@
 				}
 
 				function whenUpdateRoute () {
+					route = [];
+					title = [];
+					
 					timeout.cancel(root.timer.updateRoute);
 					root.timer.updateRoute = timeout(currentRoute, 0);
 				}

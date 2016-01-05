@@ -6,16 +6,49 @@ html {
 	}
 }
 
-main {
-	&[data-route='projects.project'] {
-		&.ng-enter {
-			background-size: auto 120%;
-		}
-	}
-}
-
 [data-route='projects.project'] {
 	.globalHeader {
 		@include box-shadow(none);
+	}
+
+	h1 {
+		position: relative;
+		z-index: 2;
+	}
+
+	[ui-view='project'] {
+		position: relative;
+		z-index: 2;
+
+		&.ng-enter,
+		&.ng-leave {
+			@include set-transition(opacity);
+		}
+
+		&.ng-enter {
+			@include transform(translateX(-50%));
+
+			@include opacity(0);
+
+			left: 50%;
+			position: absolute;
+			top: 0;
+
+			&.ng-enter-active {
+				@include opacity(1);
+			}
+		}
+
+		&.ng-leave {
+			@include opacity(1);
+
+			&.ng-leave-active {
+				@include opacity(0);
+			}
+		}
+	}
+
+	> div {
+		z-index: 1;
 	}
 }
