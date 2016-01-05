@@ -8,17 +8,20 @@
 html {
 	$overlay-color: $white;
 	$overlay-opacity: 0;
+	$background-scale: 100%;
+
 	$hasBackdrop-overlay-opacity: .8;
+	$hasBackdrop-background-scale: 150%;
 
 	@include set-transition(background-color, background-image, background-size);
 	
 	background-image: url(#{$transparent_base64});
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: 100% auto;
+	background-size: auto $background-scale;
 
 	@include mobile () {
-		background-size: auto 100%;
+		@include set-transition(background-color);
 	}
 
 	&:before {
@@ -37,14 +40,10 @@ html {
 	}
 
 	&.hasBackdrop {
-		background-size: 200% auto;
+		background-size: auto $hasBackdrop-background-scale;
 
 		&:before {
 			@include opacity($hasBackdrop-overlay-opacity);
-		}
-
-		@include mobile () {
-			background-size: auto 120%;
 		}
 	}
 }

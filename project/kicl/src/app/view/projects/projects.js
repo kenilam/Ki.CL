@@ -48,10 +48,7 @@
 							project : {},
 							figure : {},
 							shadows : { opacity : mediaquery().largemobile ? 0 : 1 },
-							shadow : {},
-
-							x : 0,
-							y : 0
+							shadow : {}
 						},
 
 						tween = {
@@ -64,26 +61,23 @@
 
 						control = {
 							enable : function () {
-								property.shadow = Object.create({ opacity : 1 });
+								property.shadows = Object.create({ opacity : 1 });
 
 								angular.element(document).bind('mousemove', control.move);
 
 								animate();
 							},
 							disable : function () {
-								property.project = Object.create({ rotationY : 0 });
-								property.shadow = Object.create({ opacity : 0 });
+								property.project = Object.create({ rotationX : 0, rotationY : 0 });
+								property.shadows = Object.create({ opacity : 0 });
 
 								angular.element(document).unbind('mousemove');
 
 								animate();
 							},
 							move : function (event) {
-								property.x = event.clientX;
-								property.y = event.clientY;
-
-								var x = ((win.outerWidth / 2) - property.x) * setting.distance.x,
-									y = ((win.outerHeight / 2) - property.y) * setting.distance.y;
+								var x = ((win.outerWidth / 2) - event.clientX) * setting.distance.x,
+									y = ((win.outerHeight / 2) - event.clientY) * setting.distance.y;
 
 								property.project = Object.create({
 									rotationX : -1 * y,
@@ -116,14 +110,16 @@
 
 						project = projects.children('li');
 						
-						figure = project.find('figure');
+						figure = project.children('figure');
 
 						shadows = projects.clone();
 
 						shadow = shadows.children('li');
 
 						shadows
-							.addClass('isShadow')
+							.addClass('isShadow');
+
+						shadow
 							.children()
 								.css('background-color', '#000')
 							.children().remove();

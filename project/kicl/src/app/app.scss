@@ -8,24 +8,6 @@ html {
 
 body {
 	position: relative;
-
-	/*&:before {
-		@include set-transition(border, height, left, opacity, top, transform, width);
-
-		@include through();
-
-		@include opacity(.7);
-
-		border: rem($gutter) solid $yellow;
-		content: '\0020';
-		display: block;
-		height: calc(100% - #{rem($gutter * 2)});
-		left: rem($gutter);
-		position: absolute;
-		top: rem($gutter);
-		width: calc(100% - #{rem($gutter * 2)});
-		z-index: 4;
-	}*/
 }
 
 .globalHeader,
