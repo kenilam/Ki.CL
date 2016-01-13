@@ -93,13 +93,13 @@
 					}
 
 					if (current.route) {
-						route.push(current.route.split('(')[0]);
+						route.push(_.last(current.route.split('(')[0].split('.')));
 						title.push(current.name);
 					}
 
 					root.status.route = route.join('.');
 					root.status.title = title.join(' | ');
-					
+
 					if (!root.$$phase) {
 						root.$apply();
 					}

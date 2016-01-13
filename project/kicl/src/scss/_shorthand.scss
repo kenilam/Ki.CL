@@ -114,8 +114,10 @@
 	@include justify-content(center);
 
 	> * {
+		$pill_space: rem($space);
+
 		@include pill($background-color);
 
-		margin: rem($space);
+		margin: $pill_space;
 	}
 }

@@ -6,6 +6,7 @@
 		<h1>{{project.name}}</h1>
 		<p>{{resource.config.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
 		<figure
+			ng-attr-title="{{project.name}}"
 			ng-style="{
 				'background-image' : 'url(' + project.covers + ')'
 			}"
@@ -13,7 +14,7 @@
 			<img ng-src="{{project.covers}}" ng-attr-alt="{{project.name}}">
 		</figure>
 
-		<ul class="pills fields" aria-label="{{resource.content.fields.label}}" role="list">
+		<ul class="fields" aria-label="{{resource.content.fields.label}}" role="list">
 			<li role="listitem" ng-repeat="field in project.fields track by $index">{{field}}</li>
 		</ul>
 	</header>
@@ -36,14 +37,15 @@
 			ng-style="{
 				'background-image' : 'url(' + module.src + ')'
 			}"
+			ng-click="control.troggle.slideshow('show')"
 		><img ng-src="{{module.src}}"></p>
 	</div>
 
 	<aside>
-		<ul class="pills stats" aria-label="{{resource.content.stats.label}}" role="list">
+		<ul class="stats" aria-label="{{resource.content.stats.label}}" role="list">
 			<li role="listitem" ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span><span>{{key}}</span></li>
 		</ul>
-		<ul class="pills tags" aria-label="{{resource.content.tags.label}}" role="list">
+		<ul class="tags" aria-label="{{resource.content.tags.label}}" role="list">
 			<li role="listitem" ng-repeat="tag in project.tags track by $index">{{tag}}</li>
 		</ul>
 	</aside>
@@ -60,7 +62,7 @@
 			<li class="close">
 				<button
 					ng-attr-title="{{resource.content.close.message}}"
-					ng-click="control.close()"
+					ng-click="control.close(); control.troggle.slideshow('hide')"
 				><i class="fa fa-times"></i><span>{{resource.content.close.message}}</span></button>
 			</li>
 		</ul>

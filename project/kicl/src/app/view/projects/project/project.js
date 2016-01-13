@@ -83,6 +83,8 @@
 						},
 						destroy : function () {
 							scope.$emit('backdrop.remove');
+
+							delete root.ref.project.id;
 						}
 					};
 
@@ -100,6 +102,9 @@
 				scope.name = resource.name;
 				scope.content = resource.content;
 				scope.id = stateParams.project;
+
+				root.ref.project = {};
+				root.ref.project.id = scope.id;
 
 				scope.$on('$stateChangeStart', callback.stateChangeStart);
 				scope.$on('$stateChangeSuccess', callback.stateChangeSuccess);

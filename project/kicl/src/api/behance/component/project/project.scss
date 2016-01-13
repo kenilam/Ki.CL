@@ -2,10 +2,12 @@
 
 [data-api='behance.project'] {
     $image_padding_top: 71.11%;
+    $image_space : rem($space / 2);
 
     margin: 0 auto;
     max-width: grid-size($tablet-size);
     padding: rem($gutter);
+    position: relative;
 
     h1,
     p {
@@ -40,10 +42,14 @@
             border: 1px solid $grey;
             border-radius: rem($space / 3);
             padding-top: $image_padding_top;
+            pointer-event: default;
+            width: calc(100% - #{$image_space * 2});
 
             + .isImage {
-                width: calc(50% - #{rem($space / 2)});
-                padding-top: calc(#{$image_padding_top / 2} - #{rem($space / 2)});
+                margin-left: $image_space;
+                margin-right: $image_space;
+                padding-top: calc(#{$image_padding_top / 2} - #{$image_space});
+                width: calc(50% - #{$image_space * 2});
 
                 @include mobile () {
                     width: 100%;
@@ -101,15 +107,21 @@
     div {
         @include display(flex);
         @include flex-wrap(wrap);
-        @include justify-content(space-between);
+        @include justify-content(center);
     }
 
     aside {
         margin: rem($gutter);
     }
 
-    .pills {
+    .fields,
+    .stats,
+    .tags {
         @include pills();
+
+        li {
+            @include box-shadow($shadow-center);
+        }
     }
 
     .stats {
@@ -124,9 +136,52 @@
 
             border-radius: 0;
 
+            &:first-child {
+                font-weight: $thicker_font_weight;
+            }
+
             + span {
                 border-left: 1px solid $grey;
             }
+        }
+    }
+
+    .tool {
+        $font-size: 1.5;
+
+        @include display(flex);
+
+        right: 0;
+        padding: rem($space);
+        position: absolute;
+        top: 0;
+
+        li {
+            + li {
+                margin-left: rem($space);
+            }
+        }
+
+        button,
+        a {
+            @include display(flex);
+            @include justify-content(center);
+
+            @include set-font-size($font-size);
+        }
+
+        i {
+            @include display(flex);
+
+            &:before {
+                height: rem($gutter * $font-size * 1.02);
+                text-align: center;
+                width: rem($gutter * $font-size * 1.02);
+            }
+        }
+
+        span {
+            @include hidden();
         }
     }
 }

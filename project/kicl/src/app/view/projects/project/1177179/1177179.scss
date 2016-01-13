@@ -2,3 +2,32 @@
 @import '../_project';
 
 @include set-project('1177179', $black, .9, $white);
+
+[data-project-id='1177179'] {
+	.logo,
+	.navigation,
+	.breadcrumb {
+		a {
+			&:not(.isCurrent) {
+				&:hover {
+					color: $green;
+				}
+			}
+		}
+	}
+
+	.breadcrumb {
+		a {
+			&.isCurrent {
+				color: $white;
+			}
+		}
+	}
+
+    .tool {
+    	a,
+    	button {
+    		color: $dark_grey;
+    	}
+    }
+}

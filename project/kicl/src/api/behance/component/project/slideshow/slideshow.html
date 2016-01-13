@@ -1,0 +1,17 @@
+<div
+	data-api="behance.project.slideshow"
+	ng-show="projectSlideshow.show"
+>
+	<ul>
+		<li
+			ng-repeat="module in projectSlideshow.modules track by $index"
+			ng-if="module.type === 'image'"
+			ng-style="{
+				'background-image' : 'url(' + module.src + ')'
+			}"
+		>
+			<img ng-src="{{module.src}}">
+		</li>
+	</ul>
+	<button class='close' ng-click="projectSlideshow.control.close()">{{projectSlideshow.resource.content.close.message}}</button>
+</div>

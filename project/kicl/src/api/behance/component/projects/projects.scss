@@ -91,7 +91,7 @@
 		@include circle($li_circle_size);
 
 		border: 1px solid $dark-grey;
-		margin-left: -1 * $li_margin;
+		margin-left: -1 * $li_margin_wider;
 		position: relative;
 		text-align: center;
 		z-index: 1;

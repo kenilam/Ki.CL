@@ -92,6 +92,15 @@
 				"close" : {
 					"message" : "Click to close this project"
 				}
+			},
+			"widget" : {
+				"slideshow" : {
+					"content" : {
+						"close" : {
+							"message" : "Close this slideshow"
+						}
+					}
+				}
 			}
 		}
 	}

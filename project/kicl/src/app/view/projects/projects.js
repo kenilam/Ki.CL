@@ -16,8 +16,8 @@
 			},
 			views: {
 				'section' : {
-					templateUrl: 'app/view/projects/projects.html',
-					controller: 'view.projects.controller'
+					templateUrl : 'app/view/projects/projects.html',
+					controller : 'view.projects.controller'
 				}
 			}
 		},
@@ -27,73 +27,74 @@
 		service = {
 			motion : [
 				'$window',
+				'$timeout',
 				'mediaquery',
-				function motion (win, mediaquery) {
-					var projects,
+				function motion (win, timeout, mediaquery) {
+					var root,
+						scope,
+						_doc = angular.element(document),
+						_win = angular.element(win),
+						container,
+						projects,
 						project,
 						figure,
 						shadows,
 						shadow,
 
+						timer = {},
+
 						setting = {
 							duration : 1,
-							ease : Back.easeOut.config(2),
+							ease : Expo.easeOut,
 							distance : {
-								x : 0.04,
-								y : 0.02
+								x : 0.02,
+								y : 0.04
 							}
 						},
 
 						property = {
+							container : { opacity : 1, delay : 1 },
 							project : {},
 							figure : {},
-							shadows : { opacity : mediaquery().largemobile ? 0 : 1 },
+							shadows : { opacity : mediaquery().mobile ? 0 : 1 },
 							shadow : {}
-						},
-
-						tween = {
-							list : {},
-							project : {},
-							shadow : {},
-
-							
 						},
 
 						control = {
 							enable : function () {
 								property.shadows = Object.create({ opacity : 1 });
 
-								angular.element(document).bind('mousemove', control.move);
-
+								_doc.bind('mousemove', control.move);
 								animate();
 							},
 							disable : function () {
 								property.project = Object.create({ rotationX : 0, rotationY : 0 });
 								property.shadows = Object.create({ opacity : 0 });
 
-								angular.element(document).unbind('mousemove');
-
+								_doc.unbind('mousemove');
 								animate();
 							},
+							assign : {
+								current : function () {
+									function eachProject (index, item) {
+										angular.element(item).removeClass('isCurrent');
+									}
+
+									project.each(eachProject)
+								}
+							},
 							move : function (event) {
-								var x = ((win.outerWidth / 2) - event.clientX) * setting.distance.x,
-									y = ((win.outerHeight / 2) - event.clientY) * setting.distance.y;
+								var x = ((_win.width() / 2) - (event.pageX - _doc.scrollLeft())) * setting.distance.x,
+									y = ((_win.height() / 2) - (event.pageY - _doc.scrollTop())) * setting.distance.y;
 
 								property.project = Object.create({
 									rotationX : -1 * y,
 									rotationY : x
 								});
 
-								property.list = Object.create({
-									rotationY : -1 * x,
-									scaleX : 1 + (Math.abs(x) / 200),
-									scaleY : 1 + (Math.abs(y) / 200)
-								});
-
 								property.shadow = Object.create({
 									rotationX : -1 * y,
 									rotationY : x,
-
 									x : x,
 									y : y
 								});
@@ -101,21 +102,11 @@
 								animate();
 							},
 							resize : function () {
-								control[ mediaquery().largemobile ? 'disable' : 'enable' ]();
+								control[ mediaquery().mobile ? 'disable' : 'enable' ]();
 							}
 						};
 
 					function construct () {
-						projects = angular.element('[data-api="behance.projects"]');
-
-						project = projects.children('li');
-						
-						figure = project.children('figure');
-
-						shadows = projects.clone();
-
-						shadow = shadows.children('li');
-
 						shadows
 							.addClass('isShadow');
 
@@ -124,28 +115,83 @@
 								.css('background-color', '#000')
 							.children().remove();
 
-						projects.after(shadows);
+						container
+							.empty()
+							.append(shadows)
+							.append(projects);
 					}
 
 					function events () {
-						angular.element(document).bind('mousemove', control.move);
-						angular.element(win).bind('resize', control.resize);
+						_win.bind('resize', control.resize);
+						_doc.bind('mousemove', control.move);
 					}
 
 					function animate () {
-						tween.project = new TweenMax.to(project, setting.duration, property.project, setting.ease);
-						tween.figure = new TweenMax.to(figure, setting.duration, property.figure, setting.ease);
-						tween.shadows = new TweenMax.to(shadows, setting.duration, property.shadows, setting.ease);
-						tween.shadow = new TweenMax.to(shadow, setting.duration, property.shadow, setting.ease);
+						TweenMax.killTweensOf([project, figure, shadows, shadow]);
+						
+						TweenMax.to(project, setting.duration, property.project, setting.ease);
+						TweenMax.to(figure, setting.duration, property.figure, setting.ease);
+						TweenMax.to(shadows, setting.duration, property.shadows, setting.ease);
+						TweenMax.to(shadow, setting.duration, property.shadow, setting.ease);
 					}
 
-					function init () {
+					function stateChangeSuccess (event, toState) {
+						if (toState.name !== 'projects.project') {
+							return;
+						}
+
+						control.assign.current();
+					}
+
+					function destroy () {
+						function eachTimer (timer, name) {
+							if (typeof timer === 'function') {
+								timer();
+
+								return;
+							}
+
+							timeout.cancel(timer);
+						}
+
+						_.each(scope.timer, eachTimer);
+					}
+
+					function ready () {
 						construct();
 						animate();
 						events();
+
+						TweenMax.to(container, setting.duration, property.container, setting.ease);
+
+						timer.stateChangeSuccess = scope.$on('$stateChangeSuccess', stateChangeSuccess);
+
+						scope.$on('$destroy', destroy);
 					}
 
-					return init;
+					function prepare (whenComplete) {
+						projects = angular.element('[data-api="behance.projects"]');
+						project = projects.children('li');
+						figure = project.children('figure');
+						shadows = projects.clone();
+						shadow = shadows.children('li');
+						container = projects.parent();
+
+						TweenMax.killTweensOf(container);
+						TweenMax.set(container, { opacity: 0, onComplete : whenComplete });
+					}
+
+					function init () {
+						prepare(ready);
+					}
+
+					function trigger ($scope) {
+						scope = $scope;
+
+						return init;
+					}
+
+					return trigger;
 				}
 			]
 		},
@@ -163,7 +209,7 @@
 				var emit = {
 						backdrop : {
 							add : function (image) {
-								if (!mediaquery().largemobile) {
+								if (!mediaquery().mobile) {
 									timeout.cancel(scope.timer.addBackdrop);
 									timeout.cancel(scope.timer.removeBackdrop);
 
@@ -226,6 +272,12 @@
 						},
 						destroy : function () {
 							scope.$emit('backdrop.remove');
+
+							function eachTimer (timer, name) {
+								timeout.cancel(timer);
+							}
+
+							_.each(scope.timer, eachTimer);
 						}
 					};
 
@@ -240,7 +292,7 @@
 						});
 
 						timeout.cancel(scope.timer.viewProjectsMotion);
-						scope.timer.viewProjectsMotion = timeout(viewProjectsMotion, 1000);
+						scope.timer.viewProjectsMotion = timeout(viewProjectsMotion(scope), 0);
 					}
 
 					timeout.cancel(scope.timer.ready);

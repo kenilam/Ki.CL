@@ -3,7 +3,7 @@
 .throbber {
 	@include set-transition(color, opacity, transform);
 
-	color: $green;
+	color: $dark_grey;
 	font-size: 2.2rem;
 	height: 2rem;
 	left: 50%;

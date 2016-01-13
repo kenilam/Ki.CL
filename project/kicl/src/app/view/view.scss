@@ -12,13 +12,11 @@ html {
 
 	$hasBackdrop-overlay-opacity: .8;
 	$hasBackdrop-background-scale: 150%;
-
-	@include set-transition(background-color, background-image, background-size);
 	
 	background-image: url(#{$transparent_base64});
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: auto $background-scale;
+	background-size: cover;
 
 	@include mobile () {
 		@include set-transition(background-color);
@@ -40,8 +38,6 @@ html {
 	}
 
 	&.hasBackdrop {
-		background-size: auto $hasBackdrop-background-scale;
-
 		&:before {
 			@include opacity($hasBackdrop-overlay-opacity);
 		}

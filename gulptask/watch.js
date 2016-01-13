@@ -10,6 +10,7 @@ module.exports.watch = function (project, whenChange) {
 		vinylPaths = require('vinyl-paths'),
 		logger = require('logger').createLogger(),
 
+		changed = require('gulp-changed'),
 		watch = require('gulp-watch'),
 		rename = require('gulp-rename'),
 		sass = require('gulp-sass'),
@@ -172,6 +173,7 @@ module.exports.watch = function (project, whenChange) {
 
 					gulp.task(name, function () {
 						return fn.watcher(file.SCSS)
+							.pipe(changed(destination.SCSS))
 							.pipe(sourcemaps.init())
 								.pipe(plumber({
 									errorHandler: error

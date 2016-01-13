@@ -6,6 +6,12 @@ html {
 	}
 }
 
+main {
+	&[data-route='projects.project'] {
+		position: relative;
+	}
+}
+
 [data-route='projects.project'] {
 	.globalHeader {
 		@include box-shadow(none);
@@ -16,30 +22,40 @@ html {
 		z-index: 2;
 	}
 
+	.navigation {
+		.isCurrent {
+			pointer-events: initial;
+		}
+	}
+
 	[ui-view='project'] {
+		@include set-transition(opacity);
+
 		position: relative;
 		z-index: 2;
 
-		&.ng-enter,
-		&.ng-leave {
-			@include set-transition(opacity);
-		}
-
 		&.ng-enter {
-			@include transform(translateX(-50%));
-
 			@include opacity(0);
 
 			left: 50%;
+			margin-left: -50%;
 			position: absolute;
-			top: 0;
+			width: 100%;
+			z-index: 1;
 
 			&.ng-enter-active {
 				@include opacity(1);
 			}
+
+			~ div {
+				[data-api='behance.projects'] {
+					@include display(none);
+				}
+			}
 		}
 
 		&.ng-leave {
+			@include transform(translate3d(0, 0, 0));
 			@include opacity(1);
 
 			&.ng-leave-active {

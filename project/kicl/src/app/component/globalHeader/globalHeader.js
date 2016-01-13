@@ -70,6 +70,7 @@
 			}
 
 			function resize (event) {
+				toggleLogo();
 				updateLogoHeight();
 			}
 

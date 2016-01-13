@@ -24,20 +24,13 @@ main {
 
 		margin: 0 auto;
 
-		div {
-			margin: 0 auto;
-			max-width: grid-size($desktop-size);
-			position: relative;
-			width: 100%;
-		}
-
 		h1 {
 			@include set-font-size(1.5);
 
 			margin-top: rem($gutter);
 		}
 
-		[data-api="behance.projects"] {
+		[data-api='behance.projects'] {
 			@include set-transition(transform);
 			
 			left: 0;
@@ -58,26 +51,33 @@ main {
 			}
 		}
 
+		> div {
+			margin: 0 auto;
+			max-width: grid-size($desktop-size);
+			position: relative;
+			width: 100%;
+		}
+
 		&.ng-enter,
 		&.ng-leave {
 			h1,
-			[data-api="behance.projects"],
-			[data-api="behance.projects"] li {
+			[data-api='behance.projects'],
+			[data-api='behance.projects'] li {
 				@include set-transition(transform);
 			}
 
-			[data-api="behance.projects"] li {
+			[data-api='behance.projects'] li {
 				@include transition-delay($speed);
 			}
 		}
 
 		&.ng-enter {
 			h1,
-			[data-api="behance.projects"] {
+			[data-api='behance.projects'] {
 				@include transform(translate3d(100%, 0, 0));
 			}
 			
-			[data-api="behance.projects"] {
+			[data-api='behance.projects'] {
 				li {
 					@include transform(translate3d(500%, 0, 0));
 
@@ -89,11 +89,11 @@ main {
 
 			&.ng-enter-active {
 				h1,
-				[data-api="behance.projects"] {
+				[data-api='behance.projects'] {
 					@include transform(translate3d(0, 0, 0));
 				}
 				
-				[data-api="behance.projects"] {
+				[data-api='behance.projects'] {
 					li {
 						@include transform(translate3d(0, 0, 0));
 
@@ -107,11 +107,11 @@ main {
 
 		&.ng-leave {
 			h1,
-			[data-api="behance.projects"] {
+			[data-api='behance.projects'] {
 				@include transform(translate3d(0, 0, 0));
 			}
 			
-			[data-api="behance.projects"] {
+			[data-api='behance.projects'] {
 				li {
 					@include transform(translate3d(0, 0, 0));
 
@@ -123,11 +123,11 @@ main {
 
 			&.ng-leave-active {
 				h1,
-				[data-api="behance.projects"] {
+				[data-api='behance.projects'] {
 					@include transform(translate3d(-100%, 0, 0));
 				}
 
-				[data-api="behance.projects"] {
+				[data-api='behance.projects'] {
 					li {
 						@include transform(translate3d(-700%, 0, 0));
 

@@ -2,3 +2,11 @@
 @import '../_project';
 
 @include set-project('1177731', $yellow, .5, $black);
+
+[data-project-id='1177731'] {
+	.globalHeader,
+	.breadcrumb.isScrolled {
+		background-color: lighten($yellow, 30%);
+		border-bottom-color: lighten($yellow, 30%);;
+	}
+}

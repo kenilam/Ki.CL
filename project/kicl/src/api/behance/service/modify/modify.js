@@ -25,6 +25,20 @@
 				return module;
 			}
 
+			function projectSlideshow (modules) {
+				function eachImage (module) {
+					if (module.type === 'image') {
+						return module;
+					}
+				}
+
+				function checkModule (module) {
+					return module;
+				}
+
+				return modules.map(eachImage).filter(checkModule);
+			}
+
 			Modify.prototype.storage = function (object, value) {
 				storage[object] = value;
 
@@ -58,7 +72,8 @@
 					}
 
 					if (project.modules) {
-						project.modules = _.map(project.modules, projectModule);
+						project.modules = project.modules.map(projectModule);
+						project.slideshow = projectSlideshow(project.modules);
 					}
 
 					if (storage.project && storage.project.projectsRoute) {

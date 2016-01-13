@@ -3,6 +3,7 @@
 	ng-app="kicl"
 	ng-attr-data-route="{{$root.status.route}}"
 	ng-attr-data-from-route="{{$root.status.fromRoute}}"
+	ng-attr-data-project-id="{{$root.ref.project.id}}"
 	ng-class="{
 		'isLoading' : $root.status.loading,
 		'stateIsChanging' : $root.status.stateIsChanging,
@@ -42,6 +43,7 @@
 
 		<link rel="stylesheet" href="api/behance/component/projects/projects.css">
 		<link rel="stylesheet" href="api/behance/component/project/project.css">
+		<link rel="stylesheet" href="api/behance/component/project/slideshow/slideshow.css">
 		<link rel="stylesheet" href="api/behance/component/user/stats/stats.css">
 
 		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
@@ -100,6 +102,8 @@
 		></main>
 
 		<global-footer></global-footer>
+
+		<behance-project-slideshow aria-disabled="true"></behance-project-slideshow>
 
 		<throbber data-emit-from="resource" data-show-on-default="true"></throbber>
 
@@ -164,7 +168,8 @@
 		
 		<script src="api/behance/component/projects/projects.js"></script>
 		<script src="api/behance/component/project/project.js"></script>
-
+		<script src="api/behance/component/project/slideshow/slideshow.js"></script>
+		
 		<script src="app/component/component.js"></script>
 		<script src="app/component/breadcrumb/breadcrumb.js"></script>
 		<script src="app/component/copyright/copyright.js"></script>

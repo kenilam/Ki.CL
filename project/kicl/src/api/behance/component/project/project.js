@@ -6,6 +6,11 @@
 			function controller (root, scope, element, timeout, state, stateParams, reference, check, modify) {
 				var loader = {},
 					control = {
+						troggle : {
+							slideshow : function (action) {
+								root.$broadcast('behance.project.slideshow.' + action);
+							}
+						},
 						get : {
 							project : function () {
 								var then = function (data) {
@@ -19,7 +24,7 @@
 								}
 
 								loader = reference.component.project[stateParams.project] = {};
-
+								
 								if (!loader.promise) {
 									loader.promise = reference.api.project().$promise;
 								}
@@ -36,6 +41,7 @@
 						broadcast : {
 							data : function () {
 								root.$broadcast('behance.project.data', scope.project);
+								root.$broadcast('behance.project.slideshow.data', scope.project.slideshow);
 							},
 							height : function () {
 								root.$broadcast('behance.project.height', control.get.height);
@@ -47,6 +53,8 @@
 							scope.resource = reference.resource.data.widget.project;
 
 							scope.project = modify.project(check.project(data.project));
+
+							root.$broadcast('behance.project.slideshow.trigger', { id : scope.project.id });
 
 							timeout.cancel(scope.timer.data);
 							scope.timer.data = timeout(control.broadcast.data, 0);
@@ -61,6 +69,7 @@
 				scope.timer = {};
 
 				scope.control = {};
+				scope.control.troggle = control.troggle;
 				scope.control.close = control.close;
 			}
 		];
@@ -77,7 +86,9 @@
 		};
 	}
 
-	angular.module('behance.component.project', [])
+	angular.module('behance.component.project', [
+		'behance.component.project.slideshow'
+	])
 		.directive('behanceProject', [
 			directive
 		]);

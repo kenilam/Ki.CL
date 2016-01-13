@@ -1,0 +1,50 @@
+@import '_import';
+
+* [data-api='behance.project.slideshow'] {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
+	background-color: rgba($black, .4);
+	height: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 9999;
+	width: 100%;
+
+	ul {
+		max-width: grid-size($tablet-size);
+		padding-top: 57.5%;
+		position: relative;
+		width: calc(100% - #{rem($gutter * 2)});
+		z-index: 2;
+	}
+
+	li {
+		background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid $grey;
+        border-radius: rem($space / 3);
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	img {
+		@include opacity(0);
+
+		position: absolute;
+	}
+
+	button {
+		left: 0;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+}
