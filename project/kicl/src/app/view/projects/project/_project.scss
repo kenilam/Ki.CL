@@ -82,4 +82,36 @@
 			}
 		}
 	}
+
+	html {
+		&[data-project-id='#{$projectId}'] {
+			&.hasBehanceProjectSlideshow {
+				&:before {
+					@include opacity(1);
+
+					background-color: $background-color;
+				}
+			}
+
+			[data-api='behance.project.slideshow'] {
+				h1 {
+					background-color: $text-color;
+					color: $background-color;
+				}
+				.pagination {
+					button {
+						i {
+							color: invert($background-color);
+						}
+
+						&.isCurrent {
+							i {
+								color: $text-color;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

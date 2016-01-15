@@ -80,7 +80,7 @@
 										angular.element(item).removeClass('isCurrent');
 									}
 
-									project.each(eachProject)
+									project.each(eachProject);
 								}
 							},
 							move : function (event) {

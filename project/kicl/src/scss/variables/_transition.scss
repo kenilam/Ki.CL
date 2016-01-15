@@ -14,7 +14,7 @@ $slowest: $speed * 4;
 }
 
 @function prefix ($property, $prefixes: (webkit moz o ms)) {
-    $vendor-prefixed-properties: transform background-clip background-size;
+    $vendor-prefixed-properties: transform background-clip background-size clip-path;
     $result: ();
     @each $prefix in $prefixes {
        @if index($vendor-prefixed-properties, $property) {
@@ -117,11 +117,11 @@ $slowest: $speed * 4;
         $transitions: append($transitions, $trans, comma);
     }
 
+    transition: $transitions;
     -webkit-transition: trans-prefix($transitions, webkit);
     -moz-transition: trans-prefix($transitions, moz);
     -ms-transition: trans-prefix($transitions, ms);
     -o-transition: trans-prefix($transitions, o);
-    transition: $transitions;
 
     @include set-will-change($values...);
 }

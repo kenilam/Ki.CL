@@ -34,7 +34,7 @@
         }
 
         &.isImage {
-            @include set-transition(padding-top);
+            @include set-transition(border-color, padding-top);
 
             background-position: center;
             background-repeat: no-repeat;
@@ -42,8 +42,12 @@
             border: 1px solid $grey;
             border-radius: rem($space / 3);
             padding-top: $image_padding_top;
-            pointer-event: default;
+            cursor: -webkit-zoom-in;
             width: calc(100% - #{$image_space * 2});
+
+            &:hover {
+                border-color: $orange;
+            }
 
             + .isImage {
                 margin-left: $image_space;

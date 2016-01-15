@@ -7,7 +7,8 @@
 	ng-class="{
 		'isLoading' : $root.status.loading,
 		'stateIsChanging' : $root.status.stateIsChanging,
-		'hasBackdrop' : $root.ref.backdrop.image
+		'hasBackdrop' : $root.ref.backdrop.image || $root.ref.behanceProjectSlideshow.show,
+		'hasBehanceProjectSlideshow' : $root.ref.behanceProjectSlideshow.show
 	}"
 	ng-style="{
 		'background-image' : $root.ref.backdrop.image ? 'url(' + $root.ref.backdrop.image + ')' : 'transparent'

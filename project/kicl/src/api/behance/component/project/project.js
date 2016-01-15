@@ -7,8 +7,8 @@
 				var loader = {},
 					control = {
 						troggle : {
-							slideshow : function (action) {
-								root.$broadcast('behance.project.slideshow.' + action);
+							slideshow : function (action, module) {
+								root.$broadcast('behance.project.slideshow.' + action, module);
 							}
 						},
 						get : {
@@ -41,7 +41,11 @@
 						broadcast : {
 							data : function () {
 								root.$broadcast('behance.project.data', scope.project);
-								root.$broadcast('behance.project.slideshow.data', scope.project.slideshow);
+								
+								root.$broadcast('behance.project.slideshow.data', {
+									name : scope.project.name,
+									modules : scope.project.slideshow
+								});
 							},
 							height : function () {
 								root.$broadcast('behance.project.height', control.get.height);
@@ -53,8 +57,6 @@
 							scope.resource = reference.resource.data.widget.project;
 
 							scope.project = modify.project(check.project(data.project));
-
-							root.$broadcast('behance.project.slideshow.trigger', { id : scope.project.id });
 
 							timeout.cancel(scope.timer.data);
 							scope.timer.data = timeout(control.broadcast.data, 0);

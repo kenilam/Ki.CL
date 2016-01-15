@@ -21,7 +21,7 @@
 
 	<div>
 		<p
-			ng-repeat-start="module in project.modules"
+			ng-repeat-start="module in project.modules track by $index"
 			ng-if="module.type === 'text' && module.text_plain !== ''"
 			ng-class="{
 				'isTitle' : module.text.indexOf('class=&quot;title&quot;') > -1
@@ -37,7 +37,7 @@
 			ng-style="{
 				'background-image' : 'url(' + module.src + ')'
 			}"
-			ng-click="control.troggle.slideshow('show')"
+			ng-click="control.troggle.slideshow('show', module)"
 		><img ng-src="{{module.src}}"></p>
 	</div>
 

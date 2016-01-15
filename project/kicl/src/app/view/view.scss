@@ -11,7 +11,8 @@ html {
 	$background-scale: 100%;
 
 	$hasBackdrop-overlay-opacity: .8;
-	$hasBackdrop-background-scale: 150%;
+
+	$hasBehanceProjectSlideshow-overlay-background-color: $black;
 	
 	background-image: url(#{$transparent_base64});
 	background-position: center;
@@ -40,6 +41,14 @@ html {
 	&.hasBackdrop {
 		&:before {
 			@include opacity($hasBackdrop-overlay-opacity);
+		}
+	}
+
+	&.hasBehanceProjectSlideshow {
+		&:before {
+			background-color: $hasBehanceProjectSlideshow-overlay-background-color;
+
+			z-index: 10;
 		}
 	}
 }

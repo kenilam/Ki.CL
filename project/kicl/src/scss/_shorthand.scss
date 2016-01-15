@@ -27,8 +27,8 @@
 }
 
 @mixin clip-path ($anchor...) {
-	-webkit-clip-path: polygon($anchor);
-	clip-path: polygon($anchor);
+	-webkit-clip-path: $anchor;
+	clip-path: $anchor;
 }
 
 @mixin hidden () {

@@ -46,6 +46,19 @@
 			stateChangeError : function (event, toState, toParams, fromState, fromParams, error) {
 				console.error(error);
 			},
+			behanceProjectSlideshow : function (root) {
+				root.ref.behanceProjectSlideshow = {};
+				root.ref.behanceProjectSlideshow.show = false;
+
+				return {
+					add : function () {
+						root.ref.behanceProjectSlideshow.show = true;
+					},
+					remove : function () {
+						root.ref.behanceProjectSlideshow.show = false;
+					}
+				};
+			},
 			backdrop : function (root) {
 				root.ref.backdrop = {};
 
@@ -300,6 +313,7 @@
 				root.control = {};
 
 				root.control.backdrop = callback.backdrop(root);
+				root.control.behanceProjectSlideshow = callback.behanceProjectSlideshow(root);
 
 				root.$on('sitemap.current.updated', callback.updateRoute(root, sitemap, timeout));
 				root.$on('$stateChangeStart', callback.stateChangeStart(root));
@@ -313,6 +327,9 @@
 
 				root.$on('backdrop.add', root.control.backdrop.add);
 				root.$on('backdrop.remove', root.control.backdrop.remove);
+
+				root.$on('behance.project.slideshow.on.show', root.control.behanceProjectSlideshow.add);
+				root.$on('behance.project.slideshow.on.hide', root.control.behanceProjectSlideshow.remove);
 
 				root.$on('main.update.height', update.main.height(root, timeout, stateParams));
 
