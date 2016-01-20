@@ -7,8 +7,8 @@
 				var loader = {},
 					control = {
 						troggle : {
-							slideshow : function (action, module) {
-								root.$broadcast('behance.project.slideshow.' + action, module);
+							slideshow : function (event, action, module) {
+								root.$broadcast('behance.project.slideshow.' + action, { module : module });
 							}
 						},
 						get : {

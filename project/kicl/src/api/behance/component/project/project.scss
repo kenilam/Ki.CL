@@ -154,17 +154,14 @@
         $font-size: 1.5;
 
         @include display(flex);
+        @include flex-direction(column);
+        @include align-items(center);
+        @include justify-content(center);
 
         right: 0;
         padding: rem($space);
         position: absolute;
         top: 0;
-
-        li {
-            + li {
-                margin-left: rem($space);
-            }
-        }
 
         button,
         a {
@@ -186,6 +183,16 @@
 
         span {
             @include hidden();
+        }
+
+        .close {
+            @include order(1);
+        }
+
+        .link {
+            @include order(2);
+
+            margin-top: rem($gutter);
         }
     }
 }

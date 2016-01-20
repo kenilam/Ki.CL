@@ -32,11 +32,13 @@
 		}
 
 		.globalHeader.isScrolled,
+		.globalFooter.isScrolled,
 		.breadcrumb {
 			background-color: $background-color;
 		}
 		
 		.globalHeader,
+		.globalFooter,
 		.breadcrumb.isScrolled {
 			background-color: lighten($background-color, 20%);
 		}
@@ -48,6 +50,10 @@
 	    		background-color: $background-color;
 	    		color: $text-color;
 	    	}
+	    }
+
+	    .globalFooter {
+	    	color: $text-color;
 	    }
 
 		.stats {
@@ -65,13 +71,25 @@
 	    .tool {
 	    	a,
 	    	button {
-	    		color: $text-color;
+	    		color: darken($background-color, 20%);
+
+	    		&:hover {
+	    			color: darken($background-color, 50%);
+	    		}
 	    	}
 	    }
 
 	    .throbber {
 	    	color: $background-color;
 	    }
+
+		p {
+			&.isImage {
+				&:hover {
+					border-color: $background-color;
+				}
+			}
+		}
 	}
 
 	li {

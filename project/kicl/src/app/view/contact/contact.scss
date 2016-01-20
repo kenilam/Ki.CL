@@ -1,0 +1,55 @@
+@import '_import';
+
+[data-route^=contact] {
+    body {
+        background-color: $darkest_grey;
+    }
+
+    .globalHeader,
+    .globalFooter {
+        background-color: $darker_grey;
+    }
+
+    .globalHeader {
+        border-color: $darker_grey;
+
+        .logo {
+            a {
+                color: $white;
+
+                &:hover {
+                    color: $green;
+                }
+            }
+        }
+    }
+
+    .breadcrumb {
+        background-color: $darker_grey;
+    }
+}
+
+main {
+    &[data-route^=contact] {
+        color: white;
+
+        h1,
+        p {
+            padding: 0 rem($gutter);
+            text-align: center;
+        }
+
+        h1 {
+            @include set-font-size(1.5);
+            
+            margin-top: rem($gutter);
+            margin-bottom: rem($gutter * 2);
+        }
+
+        .customForm {
+            margin: 0 auto;
+            max-width: grid-size($tablet-size);
+            padding: rem($gutter);
+        }
+    }
+}

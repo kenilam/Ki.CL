@@ -45,21 +45,28 @@ html {
 	}
 
 	&.hasBehanceProjectSlideshow {
+		overflow: hidden;
+		
 		&:before {
 			background-color: $hasBehanceProjectSlideshow-overlay-background-color;
-
 			z-index: 10;
 		}
 	}
 }
 
+.breadcrumb {
+	&.isScrolled {
+		@include box-shadow($shadow-center);
+
+		background-color: $white;
+	}
+}
+
 main {
-	@include set-transition(padding-top);
+	@include set-transition(padding-top, opacity, transform);
 
 	&.ng-enter,
 	&.ng-leave {
-		@include set-transition(opacity, transform);
-
 		@include through();
 
 		position: absolute;
@@ -108,5 +115,26 @@ main {
 }
 
 .globalFooter {
-	@include set-transition(opacity);
+	@include set-transition(box-shadow, opacity, transform);
+
+	@include transform(translate3d(0, 100%, 0));
+
+	.logo {
+		@include set-transition(opacity, transform);
+		@include transition-delay($fast);
+
+		@include opacity(0);
+		@include transform(translate3d(-100%, 0, 0));
+	}
+
+	&.isScrolled {
+		@include transform(translate3d(0, 0, 0));
+
+		@include box-shadow($shadow-top);
+
+		.logo {
+			@include opacity(1);
+			@include transform(translate3d(0, 0, 0));
+		}
+	}
 }

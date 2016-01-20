@@ -69,6 +69,7 @@
 		<link rel="stylesheet" href="app/view/projects/project/1177609/1177609.css">
 		<link rel="stylesheet" href="app/view/projects/project/1177731/1177731.css">
 		<link rel="stylesheet" href="app/view/projects/project/1177837/1177837.css">
+		<link rel="stylesheet" href="app/view/contact/contact.css">
 		<!-- endbuild -->
 	</head>
 	<body
@@ -102,7 +103,11 @@
 			}"
 		></main>
 
-		<global-footer></global-footer>
+		<global-footer
+			ng-class="{
+				'isScrolled' : !$root.ref.globalHeader.logo.show
+			}"
+		></global-footer>
 
 		<behance-project-slideshow aria-disabled="true"></behance-project-slideshow>
 

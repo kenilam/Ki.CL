@@ -11,16 +11,14 @@
 	<ul>
 		<li ng-repeat="field in customForm.data.field track by $index"
 			ng-class="{
-				'hasError' : $parent.$$childHead[customForm.data.name][field.name].$invalid
+				'hasError' : $parent.$$childHead[customForm.data.name][field.name].$invalid,
+				'forTextarea' : field.type === 'textarea'
 			}"
 			ng-switch="field.type"
 		>
 			<label
 				ng-attr-for="{{field.name}}"
 				ng-if="field.type !== 'radio'"
-				ng-class="{
-					'forTextarea' : field.type === 'textarea'
-				}"
 			>{{field.label}}</label>
 			<input
 				tabindex="1"
@@ -87,33 +85,43 @@
 					</li>
 				</ul>
 			</fieldset>
-			<span class="required fa"
+			<span class="required"
 				ng-if="field.required"
 				ng-class="{
-					'fa-exclamation-circle' : $parent.$$childHead[customForm.data.name][field.name].$invalid,
-					'isValid fa-check' : $parent.$$childHead[customForm.data.name][field.name].$valid
+					'isValid' : $parent.$$childHead[customForm.data.name][field.name].$valid
 				}"
-			>{{customForm.data.message.required}}</span>
+			><i class="fa"
+				ng-class="{
+					'fa-exclamation-circle' : $parent.$$childHead[customForm.data.name][field.name].$invalid,
+					'fa-check' : $parent.$$childHead[customForm.data.name][field.name].$valid
+				}"
+			></i><span>{{customForm.data.message.required}}</span></span>
 			<p
 				class="charCount"
+				ng-class="{
+					'isValid' : $parent.$$childHead[customForm.data.name][field.name].$valid
+				}"
 				ng-if="field.type === 'textarea' && $parent.$$childHead[customForm.data.name][field.name].$viewValue"
 			><span>{{$parent.$$childHead[customForm.data.name][field.name].$viewValue.length}} / {{field.maxLength}}</span></p>
 		</li>
 	</ul>
 	<button
 		type="submit"
-		class="fa"
 		tabindex="1"
 		ng-disabled="$parent.$$childHead[customForm.data.name].$invalid || customForm.loading"
 		ng-class="{
-			'fa-paper-plane-o' : !customForm.loading,
-			'isLoading fa-spin fa-circle-o-notch' : customForm.loading
+			'isLoading' : customForm.loading
 		}"
-	>{{customForm.loading ? customForm.data.button.loading.name : customForm.data.button.submit.name}}</button>
+	><i class="fa"
+		ng-class="{
+			'fa-times' : $parent.$$childHead[customForm.data.name].$invalid,
+			'fa-paper-plane-o' : !customForm.loading && !$parent.$$childHead[customForm.data.name].$invalid,
+			'ifa-spin fa-circle-o-notch' : customForm.loading
+		}"
+	></i>{{customForm.loading ? customForm.data.button.loading.name : customForm.data.button.submit.name}}</button>
 	<button
 		type="reset"
-		class="fa fa-undo"
 		tabindex="1"
 		ng-click="customForm.control.reset($event)"
-	>{{customForm.data.button.reset.name}}</button>
+	><i class="fa fa-undo"></i>{{customForm.data.button.reset.name}}</button>
 </form>

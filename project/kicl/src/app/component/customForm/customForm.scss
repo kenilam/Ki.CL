@@ -1,1 +1,251 @@
 @import '_import';
+
+.customForm {
+    @include display(flex);
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+    @include align-items(center);
+    @include justify-content(center);
+
+    ul {
+        @include transform(translate3d(-12%, 0, 0));
+
+        padding: rem($gutter);
+        width: 100%;
+
+        @include mobile () {
+            @include transform(translate3d(0, 0, 0));
+        }
+    }
+
+    li {
+        @include display(flex);
+        @include align-items(center);
+
+        position: relative;
+
+        + li {
+            margin-top: rem($gutter);
+        }
+    }
+
+    label {
+        @include set-transition(margin-right, opacity, width);
+        
+        margin-right: rem($space);
+        overflow: hidden;
+        text-align: right;
+        width: calc(30% - #{rem($space)});
+
+        @include mobile () {
+            @include opacity(0);
+
+            margin-right: 0;
+            width: 0%;
+        }
+    }
+
+    input,
+    textarea {
+        @include set-transition(border-color, width);
+
+        color: $black;
+        background-color: $white;
+        border: 1px solid $grey;
+        border-radius: rem($space / 3);
+        padding: rem($space);
+        width: 70%;
+
+        &:focus {
+            border-color: $green;
+        }
+
+        @include mobile () {
+            width: 100%;
+        }
+
+        &.ng-invalid {
+            border-color: $red;
+        }
+    }
+
+    textarea {
+        height: grid-size(2);
+    }
+
+    button {
+        @include set-transition(background-color, color);
+
+        border-radius: rem($space / 3);
+        color: $white;
+        padding: rem($space) rem($gutter);
+
+        i {
+            margin-right: rem($space);
+        }
+
+        &[type=submit] {
+            background-color: $green;
+        }
+
+        &[type=reset] {
+            background-color: $red;
+        }
+
+        &[disabled] {
+            background-color: $darkest_white;
+            color: $grey;
+        }
+
+        + button {
+            margin-left: rem($space);
+        }
+    }
+
+    legend {
+        @include display(flex);
+        @include align-items(center);
+        @include justify-content(center);
+
+        height: 100%;
+        position: absolute;
+
+        span {
+            @include display(flex);
+            @include align-items(center);
+
+            height: 100%;
+            position: absolute;
+            right: 0;
+            text-align: right;
+        }
+    }
+
+    fieldset {
+        @include display(flex);
+
+        width: 100%;
+
+        legend {
+            @include set-transition(width);
+
+            width: calc(30% - #{rem($space)});
+
+            @include mobile () {
+                width: calc(50% - #{rem($space)});
+
+                span {
+                    text-align: left;
+                }
+            }
+        }
+
+        ul {
+            @include set-transition(margin-left, width);
+
+            @include transform(translate3d(0%, 0, 0));
+
+            @include display(flex);
+            @include flex-direction(row);
+            @include align-items(center);
+
+            margin-left: 30%;
+            padding: rem($space);
+            width: 70%;
+
+            @include mobile () {
+                margin-left: 50%;
+                width: 50%;
+            }
+        }
+
+        li {
+            @include display(flex);
+            @include flex-direction(row);
+            @include align-items(center);
+
+            + li {
+                margin-left: rem($space);
+                margin-top: 0;
+            }
+        }
+
+        label {
+            margin-right: rem($space);
+            text-align: left;
+            width: auto;
+
+            @include mobile () {
+                @include opacity(1);
+            }
+        }
+
+        input {
+            width: auto;
+        }
+    }
+
+    .required,
+    .charCount {
+        @include display(flex);
+        @include align-items(center);
+
+        position: absolute;
+        right: 0;
+        text-transform: capitalize;
+
+        i,
+        span {
+            @include set-transition(color);
+
+            color: $red;
+        }
+
+        &.isValid {
+            i,
+            span {
+                color: $green;
+            }
+        }
+    }
+
+    .required {
+        height: 100%;
+        padding: rem($space) rem($space) rem($space) 0;
+
+        i {
+            @include display(flex);
+            @include align-items(center);
+            @include justify-content(center);
+
+            &:before {
+                height: auto;
+            }
+        }
+
+        span {
+            @include hidden();
+        }
+
+        &.isValid {
+            @include opacity(.5);
+        }
+    }
+
+    .charCount {
+        @include transform(translate3d(0, -100%, 0));
+    }
+
+    .forTextarea {
+        label {
+            @include align-self(flex-start);
+
+            padding-top: rem($space);
+        }
+
+        .required {
+            height: auto;
+            padding-top: rem($space * 1.5);
+        }
+    }
+}

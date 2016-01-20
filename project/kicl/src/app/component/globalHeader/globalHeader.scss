@@ -21,16 +21,14 @@
 
 		background-color: $white;
 		padding: rem($space) rem($gutter);
-
-		.logo {
-			padding: 0;
-		}
 	}
 
 	.logo {
 		@include largemobile() {
 			@include set-logo-size(1.28);
 			@include set-logo-content(true);
+
+			padding: 0;
 		}
 	}
 

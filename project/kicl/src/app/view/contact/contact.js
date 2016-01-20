@@ -38,6 +38,7 @@
 				}
 
 				scope.name = resource.name;
+				scope.message = resource.message;
 
 				root.$broadcast('globalHeader.show');
 				root.$broadcast('globalFooter.logo.show');

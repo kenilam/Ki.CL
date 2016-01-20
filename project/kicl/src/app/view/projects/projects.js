@@ -106,7 +106,7 @@
 							}
 						};
 
-					function construct () {
+					function construct (callback) {
 						shadows
 							.addClass('isShadow');
 
@@ -117,13 +117,25 @@
 
 						container
 							.empty()
-							.append(shadows)
-							.append(projects);
+							.delay(1000)
+							.queue(function () {
+								container
+									.append(shadows)
+									.append(projects);
+
+								callback ? callback() : null;
+							});
 					}
 
 					function events () {
 						_win.bind('resize', control.resize);
 						_doc.bind('mousemove', control.move);
+
+						_win.trigger('resize');
+
+						timer.stateChangeSuccess = scope.$on('$stateChangeSuccess', stateChangeSuccess);
+
+						scope.$on('$destroy', destroy);
 					}
 
 					function animate () {
@@ -157,16 +169,15 @@
 						_.each(scope.timer, eachTimer);
 					}
 
+					function render () {
+						TweenMax.killTweensOf(container);
+						TweenMax.to(container, setting.duration, property.container, setting.ease);
+					}
+
 					function ready () {
-						construct();
+						construct(render);
 						animate();
 						events();
-
-						TweenMax.to(container, setting.duration, property.container, setting.ease);
-
-						timer.stateChangeSuccess = scope.$on('$stateChangeSuccess', stateChangeSuccess);
-
-						scope.$on('$destroy', destroy);
 					}
 
 					function prepare (whenComplete) {

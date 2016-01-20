@@ -2,8 +2,8 @@
 	'use strict';
 
 	var controller = [
-			'$rootScope', '$scope', '$timeout', 'behanceReference',
-			function (root, scope, timeout, reference) {
+			'$rootScope', '$scope', '$element', '$timeout', 'behanceReference',
+			function (root, scope, element, timeout, reference) {
 				var control = {
 						get : {
 							resource : function () {
@@ -28,9 +28,9 @@
 					scope.projectSlideshow.current = project.modules[0];
 				}
 
-				function show (event, module) {
-					if (module) {
-						control.set.current(module);
+				function show (event, params) {
+					if (params.module) {
+						control.set.current(params.module);
 					}
 
 					scope.projectSlideshow.show = true;

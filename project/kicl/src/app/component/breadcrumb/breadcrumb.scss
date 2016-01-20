@@ -38,12 +38,6 @@
 		padding: 0 rem($space);
 	}
 
-	&.isScrolled {
-		@include box-shadow($shadow-center);
-
-		background-color: $white;
-	}
-
 	&.ng-hide-add {
 		@include transform(translate3d(0, 0, 0));
 
