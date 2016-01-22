@@ -119,12 +119,26 @@ main {
 
 	@include transform(translate3d(0, 100%, 0));
 
+	@include largemobile() {
+		@include transform(translate3d(0, 0, 0));
+	}
+
 	.logo {
 		@include set-transition(opacity, transform);
 		@include transition-delay($fast);
 
 		@include opacity(0);
 		@include transform(translate3d(-100%, 0, 0));
+
+		@include largemobile() {
+			width: 0;
+		}
+	}
+
+	p {
+		@include largemobile() {
+			width: 100%;
+		}
 	}
 
 	&.isScrolled {

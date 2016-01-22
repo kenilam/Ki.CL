@@ -5,25 +5,6 @@
         background-color: $darkest_grey;
     }
 
-    .globalHeader,
-    .globalFooter {
-        background-color: $darker_grey;
-    }
-
-    .globalHeader {
-        border-color: $darker_grey;
-
-        .logo {
-            a {
-                color: $white;
-
-                &:hover {
-                    color: $green;
-                }
-            }
-        }
-    }
-
     .breadcrumb {
         background-color: $darker_grey;
     }
