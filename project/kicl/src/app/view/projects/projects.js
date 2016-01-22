@@ -123,7 +123,9 @@
 									.append(shadows)
 									.append(projects);
 
-								callback ? callback() : null;
+								if (callback) {
+									callback();
+								}
 							});
 					}
 

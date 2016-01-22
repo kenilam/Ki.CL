@@ -22,25 +22,24 @@ main,
 	position: fixed;
 }
 
-.overflowBackground {
-	z-index: 1;
-}
-
 .globalHeader {
-	z-index: 4;
-}
-
-.breadcrumb {
 	z-index: 3;
 }
 
-main {
+.breadcrumb {
 	z-index: 2;
+}
+
+main {
+	top: 0;
+	left: 0;
+	position: absolute;
+	z-index: 1;
 }
 
 .globalFooter {
 	bottom: 0;
 	position: fixed;
 	width: 100%;
-	z-index: 4;
+	z-index: 3;
 }

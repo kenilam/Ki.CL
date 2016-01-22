@@ -68,8 +68,7 @@ main {
 	&.ng-enter,
 	&.ng-leave {
 		@include through();
-
-		position: absolute;
+		
 		width: 100%;
 
 		+ .globalFooter {
