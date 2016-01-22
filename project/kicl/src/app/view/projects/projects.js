@@ -117,7 +117,7 @@
 
 						container
 							.empty()
-							.delay(1000)
+							.delay(500)
 							.queue(function () {
 								container
 									.append(shadows)
@@ -130,10 +130,8 @@
 					}
 
 					function events () {
-						_win.bind('resize', control.resize);
+						_win.bind('resize', control.resize).trigger('resize');
 						_doc.bind('mousemove', control.move);
-
-						_win.trigger('resize');
 
 						timer.stateChangeSuccess = scope.$on('$stateChangeSuccess', stateChangeSuccess);
 

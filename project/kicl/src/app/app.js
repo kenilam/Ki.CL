@@ -161,6 +161,20 @@
 
 				return setValue;
 			},
+			globalFooterHeight : function (root) {
+				root.ref.globalFooter = {};
+				root.ref.globalFooter.height = 0;
+
+				function setValue (event, height) {
+					root.ref.globalFooter.height = height;
+					
+					if (!root.$$phase) {
+						root.$apply();
+					}
+				}
+
+				return setValue;
+			},
 			breadcrumbHeight : function (root) {
 				root.ref.breadcrumb = {};
 				root.ref.breadcrumb.height = 0;
@@ -308,6 +322,9 @@
 				
 				root.$on('globalHeader.height', callback.globalHeaderHeight(root));
 				root.$on('globalHeader.logo.toggle', callback.globalHeaderLogo(root));
+
+				root.$on('globalFooter.height', callback.globalFooterHeight(root));
+
 				root.$on('breadcrumb.height', callback.breadcrumbHeight(root));
 
 				root.$on('backdrop.add', root.control.backdrop.add);

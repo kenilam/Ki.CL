@@ -52,7 +52,7 @@ main {
 		}
 
 		> div {
-			margin: 0 auto;
+			margin: 0 auto rem($gutter) auto;
 			max-width: grid-size($desktop-size);
 			position: relative;
 			width: 100%;

@@ -1,1 +1,236 @@
 @import '_import';
+
+[data-route=about] {
+    body {
+        background-color: $darkest_grey;
+    }
+}
+
+main {
+    &[data-route=about] {
+    	color: $white;
+		text-align: center;
+
+		section {
+			@include display(flex);
+			@include flex-direction(column);
+			@include align-items(center);
+
+			margin: rem($gutter);
+
+			section {
+				margin: 0;
+
+				+ section,
+				+ ul {
+					margin-top: rem($gutter);
+				}
+			}
+		}
+
+		img {
+			width: 100%;
+		}
+
+		.me,
+		.site {
+			margin-left: auto;
+			margin-right: auto;
+			max-width: grid-size($tablet-size);
+		}
+
+		.me {
+			border: 1px dashed transparent;
+			border-bottom-color: $white;
+			padding-bottom: rem($gutter);
+
+			> h1 {
+	            @include set-font-size(1.5);
+	            
+	            margin-top: rem($gutter);
+	            margin-bottom: 0;
+	        }
+	    }
+
+	    .site {
+	    	h1 {
+	            @include set-font-size(1.5);
+	            
+	            margin-bottom: 0;
+	            margin-top: rem($gutter);
+	        }
+
+	        h2 {
+	        	@include set-font-size(1.2);
+	            
+	            margin-bottom: rem($gutter * 2);
+	            margin-top: rem($space);
+	        }
+	    }
+
+		.experience {
+			border: 1px dashed transparent;
+			border-top-color: $white;
+			margin-top: rem($gutter);
+			padding-top: rem($gutter);
+			width: 100%;
+
+			> h1 {
+				@include set-font-size(1.4);
+			}
+		}
+
+		.fn {
+			@include set-font-size(1.5);
+		}
+
+		[data-api='behance.user.stats'] {
+			@include pills();
+
+			li {
+				@include box-shadow($shadow-center);
+
+				background-color: $green;
+			}
+		}
+
+		[data-api='behance.experience'] {
+			@include display(flex);
+			@include flex-wrap(wrap);
+			@include justify-content(center);
+
+			width: 80%;
+
+			@include mobile () {
+				width: 100%;
+			}
+
+			li {
+				border: 1px dashed transparent;
+				padding: rem($gutter);
+				width: 50%;
+
+				@include largemobile () {
+					width: 100%;
+				}
+
+				&:nth-last-child(2),
+				&:last-child {
+					padding-bottom: rem($gutter);
+				}
+
+				&:nth-child(odd) {
+					text-align: left;
+
+					@include largemobile () {
+						text-align: center;
+					}
+				}
+
+				&:nth-child(even) {
+					text-align: right;
+
+					&:last-child {
+						padding-right: 0;
+					}
+
+					@include largemobile () {
+						text-align: center;
+					}
+				}
+
+				&:nth-child(2) {
+					border-top-left-radius: rem(3);
+
+					@include largemobile () {
+						border-top-right-radius: rem(3);
+					}
+				}
+
+				&:nth-child(3) {
+					border-top-right-radius: rem(3);
+
+					@include largemobile () {
+						border-top-right-radius: 0;
+					}
+				}
+
+				&:nth-last-child(2) {
+					border-bottom-left-radius: rem(3);
+
+					@include largemobile () {
+						border-bottom-color: $dark_grey;
+						border-bottom-left-radius: 0;
+					}
+				}
+
+				&:last-child {
+					border-bottom-right-radius: rem(3);
+
+					@include largemobile () {
+						border-bottom-left-radius: rem(3);
+					}
+				}
+
+				&:first-child {
+					background-color: $darker_grey;
+					border-radius: rem(3);
+					margin: 0 auto;
+					padding: rem($space);
+					text-align: center;
+					width: calc(100% - #{rem($gutter * 2)});
+				}
+
+				&:not(:first-child) {
+					@include mobile () {
+						@include hidden();
+					}
+
+					&:not(:nth-last-child(2)) {
+						&:not(:last-child) {
+							border-bottom-color: $dark_grey;
+						}
+					}
+				}
+			}
+
+			p {
+				&.organization {
+					font-weight: $thicker_font_weight;
+				}
+			}
+		}
+
+		.tool {
+			@include display(flex);
+			@include flex-wrap(wrap);
+			@include justify-content(center);
+
+			li {
+				width: 50%;
+
+				> a {
+					margin: 0 auto;
+					max-width: grid-size(2);
+					width: 80%;
+				}
+
+				+ li {
+					margin-top: rem($gutter);
+				}
+			}
+
+			footer {
+				margin-top: rem($space);
+			}
+
+			blockquote {
+				text-align: left;
+
+				@include mobile () {
+					@include hidden();
+				}
+			}
+		}
+	}
+}

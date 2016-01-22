@@ -1,6 +1,7 @@
 @import '_import';
 
 [data-route^=contact] {
+<<<<<<< HEAD
     .globalHeader,
     .globalFooter {
         background-color: $darker_grey;
@@ -18,6 +19,10 @@
                 }
             }
         }
+=======
+    body {
+        background-color: $darkest_grey;
+>>>>>>> e7942e13b7ffcc90a0175257cb7cc170c5113a2f
     }
 
     .breadcrumb {
