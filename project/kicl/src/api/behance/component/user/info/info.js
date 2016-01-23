@@ -4,20 +4,16 @@
 	var controller = [
 			'$rootScope', '$scope', 'behanceReference',
 			function controller (root, scope, reference) {
-				var callback = {
-						data : function (data) {
-							reference.component.user.resolved = data.$resolved;
+				function init (data) {
+					scope.info.first_name = data.user.first_name;
+					scope.info.last_name = data.user.last_name;
 
-							scope.info.first_name = data.user.first_name;
-							scope.info.last_name = data.user.last_name;
+					scope.info.city = data.user.city;
+					scope.info.state = data.user.state;
+					scope.info.country = data.user.country;
 
-							scope.info.city = data.user.city;
-							scope.info.state = data.user.state;
-							scope.info.country = data.user.country;
-
-							root.$broadcast('behance.user.info.data', scope.info);
-						}
-					};
+					root.$broadcast('behance.user.info.data', scope.info);
+				}
 
 				scope.info = {};
 
@@ -25,7 +21,7 @@
 					reference.component.user.promise = reference.api.user().$promise;
 				}
 
-				reference.component.user.promise.then(callback.data);
+				reference.component.user.promise.then(init);
 			}
 		];
 

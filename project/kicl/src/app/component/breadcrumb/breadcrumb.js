@@ -41,20 +41,6 @@
 					scope.resource = data;
 				}
 
-				function height () {
-					var value = element.outerHeight() - parseInt(element.css('padding-top'));
-
-					if (value && value > 0) {
-						return value;
-					}
-
-					return 0;
-				}
-				
-				function broadcastHeight () {
-					root.$broadcast('breadcrumb.height', height());
-				}
-
 				function destroy () {
 					timeout.cancel(scope.breadcrumb.timer.broadcast);
 				}
@@ -85,13 +71,9 @@
 					scope.$on('sitemap.current.updated', sitemapUpdate);
 				}
 
-				element.bind(transition.end.which(element), broadcastHeight);
-
 				scope.breadcrumb = {};
 				scope.breadcrumb.timer = {};
 				scope.breadcrumb.list = [];
-
-				scope.$watch(height, broadcastHeight, true);
 
 				scope.$on('sitemap.current.updated', sitemapUpdate);
 				scope.$on('breadcrumb.data', breadcrumbData);

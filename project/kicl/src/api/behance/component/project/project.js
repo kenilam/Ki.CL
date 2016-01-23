@@ -4,75 +4,37 @@
 	var controller = [
 			'$rootScope', '$scope', '$element', '$timeout', '$state', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
 			function controller (root, scope, element, timeout, state, stateParams, reference, check, modify) {
-				var loader = {},
-					control = {
-						troggle : {
-							slideshow : function (event, action, module) {
-								root.$broadcast('behance.project.slideshow.' + action, { module : module });
-							}
-						},
-						get : {
-							project : function () {
-								var then = function (data) {
-									loader.resolved = data.$resolved;
+				function close () {
+					state.go('projects');
+				}
 
-									callback.data(data);
-								};
+				function broadcast () {
+					root.$broadcast('behance.project.data', scope.project);
+				}
 
-								if (!stateParams.project) {
-									return;
-								}
+				function init (data) {
+					scope.resource = reference.resource.data.widget.project;
 
-								loader = reference.component.project[stateParams.project] = {};
-								
-								if (!loader.promise) {
-									loader.promise = reference.api.project().$promise;
-								}
+					scope.project = modify.project(check.project(data.project));
 
-								loader.promise.then(then);
-							},
-							height : function () {
-								return element.outerHeight();
-							}
-						},
-						close : function () {
-							state.go('projects');
-						},
-						broadcast : {
-							data : function () {
-								root.$broadcast('behance.project.data', scope.project);
-								
-								root.$broadcast('behance.project.slideshow.data', {
-									name : scope.project.name,
-									modules : scope.project.slideshow
-								});
-							},
-							height : function () {
-								root.$broadcast('behance.project.height', control.get.height);
-							}
-						}
-					},
-					callback = {
-						data : function (data) {
-							scope.resource = reference.resource.data.widget.project;
-
-							scope.project = modify.project(check.project(data.project));
-
-							timeout.cancel(scope.timer.data);
-							scope.timer.data = timeout(control.broadcast.data, 0);
-
-							timeout.cancel(scope.timer.hieght);
-							scope.timer.hieght = timeout(control.broadcast.height, 0);
-						}
-					};
-
-				control.get.project();
+					timeout.cancel(scope.timer.data);
+					scope.timer.data = timeout(broadcast, 0);
+				}
 
 				scope.timer = {};
 
 				scope.control = {};
-				scope.control.troggle = control.troggle;
-				scope.control.close = control.close;
+				scope.control.close = close;
+
+				if (!reference.component.project[stateParams.project]) {
+					reference.component.project[stateParams.project] = {};
+				}
+				
+				if (!reference.component.project[stateParams.project].promise) {
+					reference.component.project[stateParams.project].promise = reference.api.project().$promise;
+				}
+
+				reference.component.project[stateParams.project].promise.then(init);
 			}
 		];
 
@@ -88,9 +50,7 @@
 		};
 	}
 
-	angular.module('behance.component.project', [
-		'behance.component.project.slideshow'
-	])
+	angular.module('behance.component.project', [])
 		.directive('behanceProject', [
 			directive
 		]);

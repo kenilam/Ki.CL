@@ -13,7 +13,7 @@
 						resource.data = data;
 
 						setComponent(data);
-
+						
 						root.$on('$stateChangeSuccess', stateChangeSuccess(data));
 					},
 					api : function (callback) {

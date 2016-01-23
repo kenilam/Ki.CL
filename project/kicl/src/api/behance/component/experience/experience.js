@@ -2,83 +2,30 @@
 	'use strict';
 
 	var controller = [
-			'$rootScope', '$scope', '$window', '$element', '$timeout', 'behanceReference', 'behanceModify', 'mediaquery',
-			function controller (root, scope, win, element, timeout, reference, modify, mediaquery) {
-				var loader = {},
-					control = {
-						get : {
-							experience : function () {
-								var then = function (data) {
-									loader.resolved = data.$resolved;
-
-									callback.data(data);
-								};
-
-								if (!loader.promise) {
-									loader.promise = reference.api.experience().$promise;
-								}
-
-								loader.promise.then(then);
-							}
-						},
-						set : {
-							nameHeight : function (list) {
-								function getNameHeight (li) {
-									return angular.element(li).outerHeight();
-								}
-
-								function setHeight () {
-									list.css({ height : 'auto' });
-
-									if (!mediaquery().mobile) {
-										list.css({
-											height : Math.max.apply(null, Array.from(list).map(getNameHeight))
-										});
-									}
-								}
-
-								return setHeight;
-							}
-						}
-					},
-					callback = {
-						data : function (data) {
-							reference.component.experience.resolved = data.$resolved;
-							
-							scope.experience.list = _.map(data.work_experience, modify.experience);
-
-							root.$broadcast('behance.experience.data', scope.experience);
-
-							timeout.cancel(scope.experience.timer);
-							scope.experience.timer = timeout(init, 0);
-						},
-						resize : function () {
-							control.set.nameHeight(element.children('li'));
-						},
-						destroy : function () {
-							timeout.cancel(scope.experience.timer);
-						}
-					};
-
-				function init () {
-					scope.experience.control.set.nameHeight = control.set.nameHeight(element.find('li:not(:first-child) h1'));
-					angular.element(win).bind('resize', scope.experience.control.set.nameHeight);
-
-					scope.experience.control.set.nameHeight();
+			'$rootScope', '$scope', '$window', '$element', 'behanceReference', 'behanceModify', 'mediaquery',
+			function controller (root, scope, win, element, reference, modify, mediaquery) {
+				function resource (data) {
+					scope.resource = data.widget.experience.content;
 				}
 
-				scope.experience = {};
+				function init (data) {
+					reference.component.experience.resolved = data.$resolved;
 
-				scope.experience.timer = {};
+					scope.experience = _.map(data.work_experience, modify.experience);
 
-				scope.experience.control = {};
-				scope.experience.control.set = {};
+					root.$broadcast('behance.experience.data', scope.experience);
+				}
+
+				if (!reference.component.experience) {
+					reference.component.experience = {};
+				}
 				
-				scope.experience.content = reference.resource.data.widget.experience.content;
-
-				scope.$on('$destroy', callback.destroy);
-
-				control.get.experience();
+				if (!reference.component.experience.promise) {
+					reference.component.experience.promise = reference.api.experience().$promise;
+				}
+				
+				reference.resource.loader.success(resource);
+				reference.component.experience.promise.then(init);
 			}
 		];
 

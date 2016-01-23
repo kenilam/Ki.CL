@@ -1,15 +1,4 @@
-<header class="globalHeader" role="banner" ng-show="globalHeader.show"
-	ng-class="{
-		'isScrolled' : !globalHeader.ref.showLogo
-	}"
-	ng-style="{
-		'-webkit-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
-		'-moz-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
-		'-ms-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
-		'-o-transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null,
-		'transform' : !globalHeader.ref.showLogo ? 'translateY(-' + globalHeader.ref.logo.height + 'px)' : null
-	}"
->
+<header class="globalHeader" role="banner" ng-show="globalHeader.show">
 	<logo></logo>
 	<navigation data-list-at-root="true" data-list="root"></navigation>
 </header>

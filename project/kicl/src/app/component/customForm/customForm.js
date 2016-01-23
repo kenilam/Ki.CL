@@ -1,26 +1,33 @@
 (function form () {
 	'use strict';
 
-	var customForm,
-		elmRef,
-		controller = [
-			'$scope', '$timeout',
-			function (scope, timeout) {
-				scope.customForm = customForm = {};
+	var controller = [
+			'$scope',
+			'$attrs',
+			function (scope, attr) {
+				function submit () {
+					
+				}
+
+				function reset () {
+					scope.customForm.model = {};
+				}
+
+				function init (event, data) {
+					scope.customForm.form = data;
+				}
+
+				scope.customForm = {};
+				scope.customForm.model = {};
+				scope.status = {};
+				scope.status.loading = false;
+				scope.control = {};
+				scope.control.submit = submit;
+				scope.control.reset = reset;
+
+				scope.$on((attr.emitFrom ? attr.emitFrom + '.' : '') + 'customForm.data', init);
 			}
-		],
-
-		callback = {
-			data : function (event, data) {
-				customForm.data = data;
-			}
-		};
-
-	function link (scope, elm, attr) {
-		elmRef = elm;
-
-		scope.$on((attr.emitFrom ? attr.emitFrom + '.' : '') + 'customForm.data', callback.data);
-	}
+		];
 
 	function directive () {
 		return {
@@ -30,8 +37,7 @@
 				'isolate' : '&'
 			},
 			templateUrl : 'app/component/customForm/customForm.html',
-			controller : controller,
-			link : link
+			controller : controller
 		};
 	}
 	

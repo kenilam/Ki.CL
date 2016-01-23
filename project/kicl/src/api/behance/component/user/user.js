@@ -4,21 +4,26 @@
 	var controller = [
 			'$rootScope', '$scope', 'behanceReference',
 			function controller (root, scope, reference) {
-				var callback = {
-						data : function (data) {
-							reference.component.user.resolved = data.$resolved;
+				function init (data) {
+					reference.component.user.resolved = data.$resolved;
 
-							scope.$broadcast('behance.user.throbber.hide');
-							
-							root.$broadcast('behance.user.data', data);
-						}
-					};
+					scope.$broadcast('behance.user.throbber.hide');
+					root.$broadcast('behance.user.data', data);
+				}
+
+				if (!reference.component.user) {
+					reference.component.user = {};
+				}
+
+				if (!reference.component.user) {
+					reference.component.user = {};
+				}
 
 				if (!reference.component.user.promise) {
 					reference.component.user.promise = reference.api.user().$promise;
 				}
 
-				reference.component.user.promise.then(callback.data);
+				reference.component.user.promise.then(init);
 			}
 		];
 

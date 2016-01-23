@@ -35,20 +35,11 @@
 						data : function () {
 							scope.$broadcast('behance.user.about.throbber.hide');
 
-							timeout.cancel(scope.timer.backdrop);
-							scope.timer.backdrop = timeout(function () {
-								scope.$emit('backdrop.add', scope.content.backdrop);
-							}, 0);
-
 						},
 						destroy : function () {
 							timeout.cancel(scope.timer.backdrop);
 							
 							scope.$emit('globalHeader.show');
-
-							timeout(function () {
-								root.$broadcast('backdrop.remove', scope.content.backdrop);
-							}, 1000);
 						}
 					};
 				
@@ -64,7 +55,6 @@
 				scope.$on('$destroy', callback.destroy);
 
 				root.$broadcast('globalHeader.hide');
-				root.$broadcast('globalFooter.logo.hide');
 				
 				sitemap.current('home', 'root');
 			}

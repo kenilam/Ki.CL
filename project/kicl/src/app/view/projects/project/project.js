@@ -40,8 +40,6 @@
 						data : function (event, project) {
 							scope.$broadcast('behance.project.throbber.hide');
 
-							scope.$emit('backdrop.add', { image : project.covers });
-
 							if (sitemap.get().projects.children) {
 								sitemap.current(project.id, 'projects');
 							}
@@ -77,14 +75,6 @@
 							}
 
 							scope.$emit('backdrop.remove');
-						},
-						stateChangeSuccess : function (event, toState, toParams, fromState, fromParams) {
-							scope.$emit('backdrop.remove');
-						},
-						destroy : function () {
-							scope.$emit('backdrop.remove');
-
-							delete root.ref.project.id;
 						}
 					};
 
@@ -107,11 +97,8 @@
 				root.ref.project.id = scope.id;
 
 				scope.$on('$stateChangeStart', callback.stateChangeStart);
-				scope.$on('$stateChangeSuccess', callback.stateChangeSuccess);
 				scope.$on('behance.projects.data', callback.setSitemap);
 				scope.$on('behance.project.data', callback.data);
-
-				scope.$on('$destroy', callback.destroy);
 
 				root.$broadcast('globalHeader.show');
 			}

@@ -3,16 +3,6 @@
 	ng-app="kicl"
 	ng-attr-data-route="{{$root.status.route}}"
 	ng-attr-data-from-route="{{$root.status.fromRoute}}"
-	ng-attr-data-project-id="{{$root.ref.project.id}}"
-	ng-class="{
-		'isLoading' : $root.status.loading,
-		'stateIsChanging' : $root.status.stateIsChanging,
-		'hasBackdrop' : $root.ref.backdrop.image || $root.ref.behanceProjectSlideshow.show,
-		'hasBehanceProjectSlideshow' : $root.ref.behanceProjectSlideshow.show
-	}"
-	ng-style="{
-		'background-image' : $root.ref.backdrop.image ? 'url(' + $root.ref.backdrop.image + ')' : 'transparent'
-	}"
 >
 	<head>
 		<meta charset="UTF-8">
@@ -41,77 +31,12 @@
 		<link rel="stylesheet" href="css/base.css">
 		<link rel="stylesheet" href="css/layout.css">
 		<link rel="stylesheet" href="css/font.css">
-
-		<link rel="stylesheet" href="api/behance/component/projects/projects.css">
-		<link rel="stylesheet" href="api/behance/component/project/project.css">
-		<link rel="stylesheet" href="api/behance/component/project/slideshow/slideshow.css">
-		<link rel="stylesheet" href="api/behance/component/user/stats/stats.css">
-
-		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
-		<link rel="stylesheet" href="app/component/copyright/copyright.css">
-		<link rel="stylesheet" href="app/component/customForm/customForm.css">
-		<link rel="stylesheet" href="app/component/fonts/fonts.css">
-		<link rel="stylesheet" href="app/component/logo/logo.css">
-		<link rel="stylesheet" href="app/component/navigation/navigation.css">
-		<link rel="stylesheet" href="app/component/throbber/throbber.css">
-		
-		<link rel="stylesheet" href="app/component/globalHeader/globalHeader.css">
-		<link rel="stylesheet" href="app/component/globalFooter/globalFooter.css">
-
-		<link rel="stylesheet" href="app/app.css">
-
-		<link rel="stylesheet" href="app/view/view.css">
-		<link rel="stylesheet" href="app/view/about/about.css">
-		<link rel="stylesheet" href="app/view/home/home.css">
-		<link rel="stylesheet" href="app/view/projects/projects.css">
-		<link rel="stylesheet" href="app/view/projects/project/project.css">
-		<link rel="stylesheet" href="app/view/projects/project/1177179/1177179.css">
-		<link rel="stylesheet" href="app/view/projects/project/1177609/1177609.css">
-		<link rel="stylesheet" href="app/view/projects/project/1177731/1177731.css">
-		<link rel="stylesheet" href="app/view/projects/project/1177837/1177837.css">
-		<link rel="stylesheet" href="app/view/contact/contact.css">
 		<!-- endbuild -->
 	</head>
-	<body
-		class="ng-cloak tk-brandon-grotesque"
-		ng-show="!$root.status.loading"
-		ng-cloak
-	>
+	<body class="ng-cloak tk-brandon-grotesque" ng-show="!$root.status.loading" ng-cloak>
 		<global-header></global-header>
-
-		<breadcrumb
-			ng-class="{
-				'isScrolled' : !$root.ref.globalHeader.logo.show
-			}"
-			ng-style="{
-				'padding-top' : ($root.ref.globalHeader.height || 0) + 'px',
-				'-webkit-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
-				'-moz-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
-				'-ms-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
-				'-o-transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null,
-				'transform' : !$root.ref.globalHeader.logo.show ? 'translateY(-' + $root.ref.globalHeader.logo.height + 'px)' : null
-			}"
-		></breadcrumb>
-
-		<main
-			role="main"
-			ui-view="section"
-			ng-attr-data-route="{{$root.status.route}}"
-			ng-style="{
-				'padding-top' : (($root.ref.globalHeader.height || 0) + ($root.ref.breadcrumb.height || 0)) + 'px',
-				'padding-bottom' : $root.ref.globalFooter.height + 'px'
-			}"
-		></main>
-
-		<global-footer
-			ng-class="{
-				'isScrolled' : !$root.ref.globalHeader.logo.show
-			}"
-		></global-footer>
-
-		<behance-project-slideshow aria-disabled="true"></behance-project-slideshow>
-
-		<throbber data-emit-from="resource" data-show-on-default="true"></throbber>
+		<main role="main" ui-view="section"></main>
+		<global-footer></global-footer>
 
 		<!--[if lt IE 7]>
 		<script src="IE8.js">IE7_PNG_SUFFIX=".png";</script>
@@ -174,7 +99,6 @@
 		
 		<script src="api/behance/component/projects/projects.js"></script>
 		<script src="api/behance/component/project/project.js"></script>
-		<script src="api/behance/component/project/slideshow/slideshow.js"></script>
 		
 		<script src="app/component/component.js"></script>
 		<script src="app/component/breadcrumb/breadcrumb.js"></script>

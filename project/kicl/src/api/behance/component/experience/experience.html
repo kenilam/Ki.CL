@@ -1,8 +1,8 @@
 <ul data-api="behance.experience">
-	<li ng-repeat="list in experience.list track by $index">
+	<li ng-repeat="list in experience track by $index">
 		<h1>{{list.position}}</h1>
 		<p class="organization">{{list.organization}}</p>
 		<p class="location">{{list.location}}</p>
-		<p class="period"><time>{{list.start_date}} ~ {{list.end_date || experience.content.start_date.toPresent}}</time></p>
+		<p class="period"><time>{{list.start_date}} ~ {{list.end_date || resource.start_date.toPresent}}</time></p>
 	</li>
 </ul>
