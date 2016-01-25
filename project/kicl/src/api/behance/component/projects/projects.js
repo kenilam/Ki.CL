@@ -18,8 +18,7 @@
 				}
 
 				function setControl (event, control) {
-					scope.control.mouseover = control.mouseover;
-					scope.control.mouseleave = control.mouseleave;
+					scope.control.click = control.click;
 				}
 
 				function stateChangeSuccess (event, toState, toParams, fromState, fromParams) {
@@ -56,6 +55,7 @@
 				scope.resource = {};
 				scope.current = {};
 				scope.control = {};
+				scope.control.click = function () { return; };
 
 				scope.$on('behance.projects.control', setControl);
 				scope.$on('$stateChangeSuccess', stateChangeSuccess);

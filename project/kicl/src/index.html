@@ -31,11 +31,32 @@
 		<link rel="stylesheet" href="css/base.css">
 		<link rel="stylesheet" href="css/layout.css">
 		<link rel="stylesheet" href="css/font.css">
+
+		<link rel="stylesheet" href="api/behance/component/projects/projects.css">
+
+		<link rel="stylesheet" href="app/component/fonts/fonts.css">
+		<link rel="stylesheet" href="app/component/globalFooter/globalFooter.css">
+		<link rel="stylesheet" href="app/component/navigation/navigation.css">
+		<link rel="stylesheet" href="app/component/logo/logo.css">
+		
+		<link rel="stylesheet" href="app/app.css">
+		<link rel="stylesheet" href="app/view/view.css">
+		<link rel="stylesheet" href="app/view/home/home.css">
+		<link rel="stylesheet" href="app/view/projects/projects.css">
+		<link rel="stylesheet" href="app/view/projects/1177179/1177179.css">
+		<link rel="stylesheet" href="app/view/projects/1177609/1177609.css">
+		<link rel="stylesheet" href="app/view/projects/1177731/1177731.css">
+		<link rel="stylesheet" href="app/view/projects/1177837/1177837.css">
 		<!-- endbuild -->
 	</head>
 	<body class="ng-cloak tk-brandon-grotesque" ng-show="!$root.status.loading" ng-cloak>
 		<global-header></global-header>
-		<main role="main" ui-view="section"></main>
+		<main
+			role="main"
+			ui-view="section"
+			ng-attr-data-route="{{$root.status.route}}"
+			ng-attr-data-view-project-current-id="{{$root.ref.viewProjects.current.id}}"
+		></main>
 		<global-footer></global-footer>
 
 		<!--[if lt IE 7]>
@@ -116,7 +137,9 @@
 		<script src="app/service/service.js"></script>
 		<script src="app/service/async/async.js"></script>
 		<script src="app/service/mediaquery/mediaquery.js"></script>
+		<script src="app/service/statechange/statechange.js"></script>
 		<script src="app/service/transition/transition.js"></script>
+		<script src="app/service/tween/tween.js"></script>
 
 		<script src="app/view/view.js"></script>
 		<script src="app/view/about/about.js"></script>

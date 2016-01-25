@@ -1,1 +1,25 @@
 @import '_import';
+
+.globalHeader,
+main,
+.globalFooter {
+	width: 100%;
+}
+
+.globalHeader,
+.globalFooter {
+	position: fixed;
+	z-index: 3;
+}
+
+body {
+	background-color: $white;
+}
+
+main {
+	position: absolute;
+}
+
+.globalFooter {
+	bottom: 0;
+}

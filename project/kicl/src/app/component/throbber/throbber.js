@@ -3,28 +3,23 @@
 
 	var controller = [
 		'$scope',
-		'$timeout',
-		function controller (scope, timeout) {
-			scope.throbber = {};
-			scope.throbber.timer = {};
-			scope.throbber.control = {};
-			
-			scope.throbber.control.show = function (event, data) {
+		'$attrs',
+		function controller (scope, attrs) {
+			function show () {
 				scope.throbber.show = true;
-			};
+			}
 
-			scope.throbber.control.hide = function (event, data) {
+			function hide () {
 				delete scope.throbber.show;
-			};
+			}
+
+			scope.throbber = {};
+			scope.throbber.show = Boolean(attrs.showOnDefault === 'true');
+
+			scope.$on(attrs.emitFrom + '.throbber.show', show);
+			scope.$on(attrs.emitFrom + '.throbber.hide', hide);
 		}
 	];
-
-	function link (scope, elm, attr) {
-		scope.$on(attr.emitFrom + '.throbber.show', scope.throbber.control.show);
-		scope.$on(attr.emitFrom + '.throbber.hide', scope.throbber.control.hide);
-
-		scope.throbber.show = Boolean(attr.showOnDefault === 'true');
-	}
 
 	function directive () {
 		return {
@@ -32,7 +27,6 @@
 			replace : true,
 			scope : true,
 			templateUrl : 'app/component/throbber/throbber.html',
-			link : link,
 			controller : controller
 		};
 	}

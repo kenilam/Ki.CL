@@ -1,138 +1,130 @@
 @import '_import';
 
-$enter-main-background-color: $white;
-
-$overlay-color: transparent;
-$overlay-opacity: 0;
-
-$backdrop-overlay-color: $white;
-$backdrop-overlay-opacity: .6;
-
-$square-opacity: .6;
-
-html {
-	&[data-route^=projects] {
-		background-attachment: fixed;
-	}
-}
-
 main {
 	&[data-route^=projects] {
-		@include display(flex);
-		@include flex-direction(column);
-		@include align-items(center);
+		overflow: hidden;
 
-		margin: 0 auto;
+		> div {
+			@include display(flex);
+			@include justify-content(center);
 
-		h1 {
-			@include set-font-size(1.5);
-
-			margin-top: rem($gutter);
+			height: 100%;
+			position: absolute;
+			top: 0;
+			width: 100%;
 		}
 
 		[data-api='behance.projects'] {
-			@include set-transition(transform);
-			
-			left: 0;
+			@include display(flex);
+
+			height: 100%;
 			position: relative;
-			top: 0;
-			width: 100%;
-			z-index: 2;
+			width: 50%;
 
-			&.isShadow {
-				@include filter(blur(5px));
+			a,
+			figcaption {
+				@include set-transition(opacity);
+			}
 
-				position: absolute;
-				z-index: 1;
+			figure {
+				@include display(flex);
+				@include flex-direction(column);
+				@include align-items(center);
+				@include justify-content(center);
 
-				li {
-					@include opacity(.4);
+				height: 100%;
+				width: 100%;
+			}
+
+			figcaption {
+				@include set-transition(opacity, transform);
+				@include transition-duration($fast);
+				@include transition-timing-function($ease-out-back);
+
+				@include through();
+
+				margin-top: rem($gutter);
+				text-align: center;
+			}
+
+			a {
+				@include set-transition(background-color, transform);
+				@include transition-duration($fast);
+				@include transition-timing-function($ease-out-back);
+
+				@include circle(grid-size(3));
+
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				border: 1px dashed $light_grey;
+				position: relative;
+
+				&:after {
+					@include set-transition(opacity);
+
+					@include opacity(0);
+
+					background-color: $white;
+					content: '\0020';
+					display: block;
+					height: 100%;
+					left: 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
 				}
 			}
-		}
 
-		> div {
-			margin: 0 auto rem($gutter) auto;
-			max-width: grid-size($desktop-size);
-			position: relative;
-			width: 100%;
-		}
+			img {
+				@include hidden();
+			}
 
-		&.ng-enter,
-		&.ng-leave {
-			h1,
-			[data-api='behance.projects'],
-			[data-api='behance.projects'] li {
+			li {
 				@include set-transition(transform);
-			}
 
-			[data-api='behance.projects'] li {
-				@include transition-delay($speed);
-			}
-		}
+				height: 100%;
+				min-width: 100%;
 
-		&.ng-enter {
-			h1,
-			[data-api='behance.projects'] {
-				@include transform(translate3d(100%, 0, 0));
-			}
-			
-			[data-api='behance.projects'] {
-				li {
-					@include transform(translate3d(500%, 0, 0));
+				&:not(.isPrev),
+				&:not(.isNext) {
+					a {
+						&:hover {
+							@include transform(scale3d(1.2, 1.2, 1.2));
 
-					&:nth-child(even) {
-						@include transform(translate3d(700%, 0, 0));
-					}
-				}
-			}
-
-			&.ng-enter-active {
-				h1,
-				[data-api='behance.projects'] {
-					@include transform(translate3d(0, 0, 0));
-				}
-				
-				[data-api='behance.projects'] {
-					li {
-						@include transform(translate3d(0, 0, 0));
-
-						&:nth-child(even) {
-							@include transform(translate3d(0, 0, 0));
+							+ figcaption {
+								@include transform(scale3d(.8, .8, .8) translate3d(0, -1 * grid_size(2.5), 0));
+								@include opacity(0);
+							}
 						}
 					}
 				}
 			}
-		}
 
-		&.ng-leave {
-			h1,
-			[data-api='behance.projects'] {
-				@include transform(translate3d(0, 0, 0));
-			}
-			
-			[data-api='behance.projects'] {
-				li {
-					@include transform(translate3d(0, 0, 0));
+			.isPrev,
+			.isNext {
+				a {
+					@include through();
 
-					&:nth-child(even) {
-						@include transform(translate3d(0, 0, 0));
+					&:after {
+						@include opacity(1);
 					}
 				}
-			}
 
-			&.ng-leave-active {
-				h1,
-				[data-api='behance.projects'] {
-					@include transform(translate3d(-100%, 0, 0));
+				figcaption {
+					@include opacity(0);
 				}
 
-				[data-api='behance.projects'] {
-					li {
-						@include transform(translate3d(-700%, 0, 0));
+				&:not(:hover) {
+					a {
+						background-image: url(#{$transparent_base64}) !important;
+					}
+				}
 
-						&:nth-child(even) {
-							@include transform(translate3d(-500%, 0, 0));
+				&:hover {
+					a {
+						&:after {
+							@include opacity(0);
 						}
 					}
 				}

@@ -30,7 +30,15 @@
 			}
 		],
 		run = [
-			'$rootScope', '$timeout', '$state', '$stateParams', '$anchorScroll', '$window', 'async', 'resource', 'index', 'sitemap',
+			'$rootScope',
+			'$timeout', '$state',
+			'$stateParams',
+			'$anchorScroll',
+			'$window',
+			'async',
+			'resource',
+			'index',
+			'sitemap',
 			function run (root, timeout, state, stateParams, anchorScroll, win, async, resource, index, sitemap) {
 				function init () {
 					function eachComponent (component, name) {
@@ -154,10 +162,40 @@
 						title = [];
 						
 						timeout.cancel(root.timer.updateRoute);
-						root.timer.updateRoute = timeout(currentRoute(), 0);
+						root.timer.updateRoute = timeout(currentRoute, 0);
 					}
 
 					return whenUpdateRoute;
+				}
+
+				function updateViewProjectsCurrent (unset) {
+					if (!root.ref.viewProjects) {
+						root.ref.viewProjects = {};
+					}
+
+					function whenUpdateCurrent (event, current) {
+						if (unset) {
+							delete root.ref.viewProjects.current;
+
+							return;
+						}
+
+						root.ref.viewProjects.current = current;
+					}
+
+					return whenUpdateCurrent;
+				}
+
+				function updateHeightRef (target) {
+					function update (event, height) {
+						root.ref[target].height = height;
+					}
+
+					if (!root.ref[target]) {
+						root.ref[target] = {};
+					}
+
+					return update;
 				}
 
 				root.status = {};
@@ -167,9 +205,15 @@
 
 				root.$on('sitemap.current.updated', updateRoute());
 
+				root.$on('view.projects.set.current', updateViewProjectsCurrent());
+				root.$on('view.projects.unset.current', updateViewProjectsCurrent(true));
+
 				root.$on('$stateChangeStart', stateChangeStart());
 				root.$on('$stateChangeSuccess', stateChangeSuccess());
 				root.$on('$stateChangeError', stateChangeError());
+
+				root.$on('globalHeader.height', updateHeightRef('globalHeader'));
+				root.$on('globalFooter.height', updateHeightRef('globalFooter'));
 
 				root.timer.init = timeout(init(), 0);
 			}

@@ -3,45 +3,11 @@
 .globalFooter {
 	@include set-transition(color);
 
-    background-color: $darkest_grey;
-    color: $white;
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
 
-    > div {
-        @include display(flex);
-        @include align-items(center);
-        @include justify-content(space-between);
-
-        margin: 0 auto;
-        max-width: grid-size($tablet-size);
-        overflow: hidden;
-        padding: rem($space / 4) rem($space);
-
-        @include largemobile() {
-            padding: rem($space / 4) rem($gutter);
-        }
-    }
-
-    .logo {
-        @include set-logo-size(1.5);
-
-        padding-bottom: 0;
-        padding-top: 0;
-
-        a {
-            color: $white;
-
-            &:hover {
-                color: $green;
-            }
-        }
-
-        @include largemobile() {
-            @include set-logo-size(1.28);
-            @include set-logo-content(true);
-
-            padding: 0;
-        }
-    }
+    padding: rem($gutter) 0;
 
     p {
         text-align: center;

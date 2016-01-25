@@ -1,237 +1,140 @@
 @import '_import';
 
+[data-route=home] {
+	.logo {
+		a {
+			color: $white;
+		}
+	}
 
-$overlay-color: $black;
-$overlay-opacity: .7;
+	.globalFooter {
 
-$fream-color: $green;
-$frame-opacity: .7;
-$fream-margin: rem($gutter * 7);
-
-$font-color: $white;
-$font-active-color: $green;
-
-$logo-font-size: 2.3;
-
-$nav-font-size: 14vh;
-$nav-line-height: 1.2;
-$nav-background-color: $white;
-$nav-border-size: rem($gutter);
-
-$nav-largemobile-font-size: 13vw;
-$nav-mobile-font-size: 16vw;
-$nav-mobile-border-size: 3.5vw;
-
-html {
-	&[data-route=home] {
-		&:before {
-			@include opacity($overlay-opacity);
-
-			background-color: $overlay-color;
+		.logo {
+			@include hidden();
 		}
 
-		body {
-			overflow: hidden;
-		}
-
-		.globalHeader {
-			@include transition-duration(0s);
-		}
-
-		.globalFooter {
-			color: $font-color;
+		@include largemobile () {
+			color: $white;
 		}
 	}
 }
 
 main {
+	$background-size: grid-size($mobile-size);
+
 	&[data-route=home] {
 		@include display(flex);
 		@include flex-direction(column);
-		@include align-items(flex-start);
+		@include align-items(center);
 		@include justify-content(center);
 
-		padding: rem($gutter);
+		@include opacity(1);
 
-		h2,
-		[data-api='behance.user.about'] {
-			color: $font-color;
-		}
+		color: $white;
 
-		.logo {
-			@include order(1);
-			@include justify-content(flex-start);
-
-			@include through();
-			@include set-logo-size(2.3);
+		> * {
+			position: relative;
+			z-index: 3;
 		}
 
 		h2 {
-			@include order(2);
-		}
-
-		[data-api='behance.user.about'] {
-			@include set-transition(max-width);
-			@include transition-duration($fast);
-
-			@include order(4);
-
+			margin-bottom: rem($gutter);
 			margin-top: rem($gutter);
-			max-width: grid-size(6);
-
-			@include mobile() {
-				max-width: grid-size(4);
-			}
 		}
 
 		.navigation {
-			@include set-transition(font-size);
-			@include transition-duration($fast);
-
-			@include order(3);
-
-			font-size: $nav-font-size;
-			letter-spacing: 0;
-			line-height: $nav-line-height;
-			width: 100%;
-
-			@include largemobile() {
-				font-size: $nav-largemobile-font-size;
-			}
-
-			@include mobile() {
-				font-size: $nav-mobile-font-size;
-			}
-
 			ul {
+				@include display(flex);
 				@include flex-direction(column);
-				@include align-items(flex-start);
+				@include align-items(center);
 			}
 
 			li {
-				@include set-transition(box-shadow, padding, width);
-				@include transition-duration($fast);
-
-				background-color: $nav-background-color;
-				padding: 0 $nav-border-size;
-				position: relative;
-				width: 0;
-				z-index: 1;
+				margin-left: 0;
 
 				+ li {
-					margin-left: 0;
-				}
-
-				@include mobile() {
-					padding: 0 $nav-mobile-border-size;
-				}
-
-				&:before {
-					@include set-transition(transform);
-					@include transition-delay($faster);
-
-					@include through();
-
-					background-color: $nav-background-color;
-					content: '\0020';
-					display: block;
-					height: 100%;
-					position: fixed;
-					right: 0;
-					top: 0;
-					width: $nav-border-size;
-					z-index: 0;
-
-					@include transform(translate3d($nav-border-size, 0, 0));
-
-					@include largemobile() {
-						content: initial;
-					}
-				}
-
-				&.isCurrent,
-				&:hover {
-					width: 100%;
-
-					z-index: 2;
-
-					@include largemobile() {
-						width: calc(100% + #{$nav-border-size});
-					}
-				}
-
-				&:hover {
-					@include box-shadow($shadow-center);
-
-					&:before {
-						@include transform(translate3d(0, 0, 0));
-					}
-
-					a {
-						color: $font-active-color;
-					}
+					margin-top: rem($space);
 				}
 			}
 
 			a {
+				@include set-transition(color, font-size);
+
+				color: $white;
 				font-weight: $thicker_font_weight;
+
+				&:hover {
+					@include set-font-size(1.2);
+				}
 			}
 		}
 
-		a {
-			color: $font-color;
+		.background {
+			@include circle($background-size);
 
-			&:hover {
-				color: $font-active-color;
-			}
-		}
+			background-image: url(#{$image_path}london.whitechapel.jpg);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			border: 1px dashed $white;
+			left: 50%;
+			margin-left: (-1 * $background-size / 2);
+			margin-top: (-1 * $background-size / 2);
+			position: absolute;
+			top: 50%;
+			z-index: 2;
 
-		&.ng-enter,
-		&.ng-leave {
-			.logo,
-			h2,
-			[data-api='behance.user.about'],
-			.navigation {
-				@include set-transition(transform);
-
+			&:before {
+				background-color: rgba($black, .6);
+				content : '\0020';
+				display: block;
+				left: 0;
+				height: 100%;
+				position: absolute;
+				top: 0;
 				width: 100%;
+				z-index: 1;
 			}
 
-			.navigation {
-				li {
-					@include box-shadow(none);
+			@include largemobile () {
+				@include resize-circle();
 
-					&:before {
-						@include opacity(0);
-					}
+				border: 0;
+				border-radius: 0;
+				left: 0;
+				margin: 0;
+				top: 0;
+			}
+		}
 
-					&.isCurrent {
-						width: calc(100% + #{$nav-border-size});
+		&.ng-enter {
+			.background {
+				@include largemobile () {
+					@include opacity(0);
+				}
+			}
+
+			&.ng-enter-active {
+				.background {
+					@include largemobile () {
+						@include opacity(1);
 					}
 				}
 			}
 		}
 
-		&.ng-enter {
-			.logo {
-				@include transform(translate3d(100%, 0, 0));
-			}
-			h2 {
-				@include transform(translate3d(400%, 0, 0));
-			}
-			.navigation {
-				@include transform(translate3d(600%, 0, 0));
-			}
-			[data-api='behance.user.about'] {
-				@include transform(translate3d(1000%, 0, 0));
+		&.ng-leave {
+			.background {
+				@include largemobile () {
+					@include opacity(1);
+				}
 			}
 
-			&.ng-enter-active {
-				.logo,
-				h2,
-				[data-api='behance.user.about'],
-				.navigation {
-					@include transform(translate3d(0, 0, 0));
+			&.ng-leave-active {
+				.background {
+					@include largemobile () {
+						@include opacity(0);
+					}
 				}
 			}
 		}

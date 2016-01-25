@@ -4,28 +4,19 @@
 	var controller = [
 			'$rootScope', '$scope', '$element', '$attrs', '$timeout', '$state', 'sitemap',
 			function (root, scope, elm, attrs, timeout, state, sitemap) {
-				var index = 0,
+				var index = 0;
 
-					control = {
-						set : {
-							current : function (index, list) {
-								scope.navigation.current = list;
+				function setCurrent (index, list) {
+					scope.navigation.current = list;
 
-								if (index >= 0) {
-									scope.navigation.current.index = index;
-								}
-							}
-						},
-						on : {
-							click : function (index, list) {
-								control.set.current(index, list);
-							}
-						}
-					};
+					if (index >= 0) {
+						scope.navigation.current.index = index;
+					}
+				}
 
 				function checkEachList (list) {
 					if (list.route === state.current.name + '()') {
-						control.set.current(index, list);
+						setCurrent(index, list);
 					}
 
 					index = index + 1;
@@ -37,16 +28,24 @@
 					index = 0;
 				}
 
+				function click (index, list) {
+					setCurrent(index, list);
+				}
+
+				function init () {
+					checkList();
+				}
+
 				scope.navigation = {};
 				
 				scope.navigation.control = {};
-				scope.navigation.control.click = control.on.click;
+				scope.navigation.control.click = click;
 
 				scope.navigation.list = sitemap.get(attrs.list);
 
 				root.$on('$stateChangeSuccess', checkList);
 
-				timeout(checkList, 0);
+				timeout(init, 0);
 			}
 		];
 

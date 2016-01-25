@@ -36,48 +36,6 @@
 			'resource',
 			'sitemap',
 			function controller (root, scope, element, timeout, state, stateParams, reference, resource, sitemap) {
-				var callback = {
-						data : function (event, project) {
-							scope.$broadcast('behance.project.throbber.hide');
-
-							if (sitemap.get().projects.children) {
-								sitemap.current(project.id, 'projects');
-							}
-						},
-						setSitemap : function (event, projects) {
-							function whenSetSitemap () {
-								sitemap.current(stateParams.project, 'projects');
-							}
-
-							if (!sitemap.get().projects.children) {
-								_.each(projects, eachProject);
-
-								timeout.cancel(scope.timer.setSitemap);
-								scope.timer.setSitemap = timeout(whenSetSitemap, 0);
-							}
-						},
-						stateChangeStart : function (event, toState) {
-							var map = toState.name.split('.'),
-								name = _.last(map);
-
-							if (map.length > 1) {
-								map.length = map.length - 2;
-							} else {
-								map = 'root';
-							}
-
-							if (typeof map !== 'string') {
-								map = map.join('.');
-							}
-
-							if (toState.name !== 'projects.project') {
-								sitemap.current(name, map);
-							}
-
-							scope.$emit('backdrop.remove');
-						}
-					};
-
 				function eachProject (project, index) {
 					sitemap.add(
 						project.id,
@@ -89,6 +47,46 @@
 					);
 				}
 
+				function stateChangeStart (event, toState) {
+					var map = toState.name.split('.'),
+						name = _.last(map);
+
+					if (map.length > 1) {
+						map.length = map.length - 2;
+					} else {
+						map = ['root'];
+					}
+
+					map = map.join('.');
+
+					if (toState.name !== 'projects.project') {
+						sitemap.current(name, map);
+					}
+
+					scope.$emit('backdrop.remove');
+				}
+
+				function setSitemap (event, projects) {
+					function whenSetSitemap () {
+						sitemap.current(stateParams.project, 'projects');
+					}
+
+					if (!sitemap.get().projects.children) {
+						_.each(projects, eachProject);
+
+						timeout.cancel(scope.timer.setSitemap);
+						scope.timer.setSitemap = timeout(whenSetSitemap, 0);
+					}
+				}
+
+				function init (event, data) {
+					scope.$broadcast('behance.project.throbber.hide');
+
+					if (sitemap.get().projects.children) {
+						sitemap.current(data.id, 'projects');
+					}
+				}
+
 				scope.name = resource.name;
 				scope.content = resource.content;
 				scope.id = stateParams.project;
@@ -96,9 +94,9 @@
 				root.ref.project = {};
 				root.ref.project.id = scope.id;
 
-				scope.$on('$stateChangeStart', callback.stateChangeStart);
-				scope.$on('behance.projects.data', callback.setSitemap);
-				scope.$on('behance.project.data', callback.data);
+				scope.$on('$stateChangeStart', stateChangeStart);
+				scope.$on('behance.projects.data', setSitemap);
+				scope.$on('behance.project.data', init);
 
 				root.$broadcast('globalHeader.show');
 			}

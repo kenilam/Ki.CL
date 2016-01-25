@@ -6,7 +6,7 @@
 			name: 'home',
 			url: '/home',
 			resolve : {
-				resource: ['async', 'viewHomeResource', function resource (async, viewHomeResource) {
+				resource : ['async', 'viewHomeResource', function resource (async, viewHomeResource) {
 					if (!ref.resource) {
 						ref.resource = async({ url : viewHomeResource }).get().$promise;
 					}
@@ -28,35 +28,75 @@
 			'$rootScope',
 			'$scope',
 			'$timeout',
+			'$element',
+			'mediaquery',
 			'resource',
 			'sitemap',
-			function controller (root, scope, timeout, resource, sitemap) {
-				var callback = {
-						data : function () {
-							scope.$broadcast('behance.user.about.throbber.hide');
+			'statechange',
+			'tween',
+			function controller (root, scope, timeout, element, mediaquery, resource, sitemap, statechange, tween) {
+				var background,
+					logo,
+					h2,
+					nav;
 
-						},
-						destroy : function () {
-							timeout.cancel(scope.timer.backdrop);
-							
-							scope.$emit('globalHeader.show');
-						}
-					};
+				function behanceUserAboutData (event, data) {
+					scope.$broadcast('behance.user.about.throbber.hide');
+				}
+
+				function whenEnter (fromState) {
+					logo = element.children('.logo');
+					h2 = element.children('h2');
+					nav = element.children('.navigation');
+
+					tween.killTweensOf([logo, h2, nav]);
+					tween.set([logo, h2, nav], { opacity: 0, delay : fromState.name ? 0.2 : 1 });
+					tween.to([logo, h2, nav], 1, { opacity: 1, delay : fromState.name ? 0.2 : 1 });
+				}
+
+				function destroy () {
+					root.$broadcast('globalHeader.show');
+
+					timeout.cancel(scope.timer.onEnter);
+				}
 				
 				scope.name = resource.name;
+				scope.timer = {};
 				scope.content = resource.content;
 
-				scope.state = {};
-				scope.state.loading = true;
-
-				scope.timer = {};
-
-				scope.$on('behance.user.about.data', callback.data);
-				scope.$on('$destroy', callback.destroy);
+				scope.$on('behance.user.about.data', behanceUserAboutData);
+				scope.$on('$destroy', destroy);
 
 				root.$broadcast('globalHeader.hide');
 				
 				sitemap.current('home', 'root');
+				
+				statechange(scope, { name : 'home' }).when({
+					onEnter : function (toState, fromState) {
+						if (!mediaquery().largemobile) {
+							background = element.children('.background');
+
+							tween.killTweensOf(element);
+							tween.set(element, { scale : 2, opacity : 0 });
+							tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 0.2 : 1 });
+
+							tween.killTweensOf(background);
+							tween.set(background, { rotation : 90 });
+							tween.to(background, 1, { rotation : 0, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 1 });
+
+							timeout.cancel(scope.timer.onEnter);
+							scope.timer.onEnter = timeout(function () {
+								whenEnter(fromState);
+							}, 0);
+						}
+					},
+					onExit : function () {
+						if (!mediaquery().largemobile) {
+							tween.killTweensOf(element);
+							tween.to(element, 1, { scale : 0.2, rotation : -180, opacity : 0 });
+						}
+					}
+				});
 			}
 		],
 		config = [

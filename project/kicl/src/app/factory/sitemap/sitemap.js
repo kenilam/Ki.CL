@@ -6,109 +6,111 @@
 
 	function setParent (map) {
 		var mapArray = map.split('.'),
-			currentNode = cache,
-			i = 0;
+			currentNode = cache;
 
-		do {
-			if (!currentNode[mapArray[i]]) {
-				currentNode[mapArray[i]] = {};
+		function eachElement (name, index) {
+			if (!currentNode[name]) {
+				currentNode[name] = {};
 			}
 
-			if (!currentNode[mapArray[i]].children) {
-				currentNode[mapArray[i]].children = {};
+			if (!currentNode[name].children) {
+				currentNode[name].children = {};
 			}
 
-			currentNode = currentNode[mapArray[i]];
+			currentNode = currentNode[name];
+		}
 
-			i ++;
-		} while (i < mapArray.length);
+		mapArray.forEach(eachElement);
 
 		return currentNode;
 	}
 
 	function findParent (map) {
 		var mapArray = map.split('.'),
-			currentNode = cache,
-			i = 0;
+			currentNode = cache;
 
-		do {
-			if (!currentNode[mapArray[i]]) {
+		function eachElement (name, index) {
+			if (!currentNode[name]) {
 				currentNode = undefined;
 
 				return;
 			}
 
-			currentNode = currentNode[mapArray[i]].children || currentNode[mapArray[i]];
-			
-			i ++;
-		} while (i < mapArray.length);
+			currentNode = currentNode[name].children || currentNode[name];
+		}
+
+		mapArray.forEach(eachElement);
 
 		return currentNode;
 	}
 	
 	function factory (root) {
-		return {
-			current : function (id, map) {
-				var parent = cache;
+		function Sitemap () {}
 
-				if (arguments.length <= 0) {
-					return current;
-				}
+		Sitemap.prototype.current = function (id, map) {
+			var parent = cache;
 
-				if (map !== 'root') {
-					parent = findParent(map);
-				}
-
-				if (parent.children) {
-					parent = parent.children;
-				}
-
-				if (!parent[id]) {
-					parent[id] = {};
-					parent[id].parent = parent;
-				}
-
-				current = parent[id];
-				
-				root.$broadcast('sitemap.current.updated', current);
-
+			if (arguments.length <= 0) {
 				return current;
-			},
-			add : function (id, prop, map) {
-				var parent = cache;
-
-				if (map) {
-					parent = setParent(map);
-				}
-
-				(parent.children || parent)[id] = prop;
-
-				(parent.children || parent)[id].parent = parent;
-
-				if (!parent.children) {
-					parent[id].root = true;
-				}
-
-				return parent[id];
-			},
-			get : function (id, map) {
-				var parent = cache;
-
-				if (!id || id === 'root') {
-					return parent;
-				}
-
-				if (map) {
-					parent = findParent(map);
-				}
-
-				if (!parent || !parent.children) {
-					return undefined;
-				}
-
-				return parent.children[id];
 			}
+
+			if (map !== 'root') {
+				parent = findParent(map);
+			}
+
+			if (parent.children) {
+				parent = parent.children;
+			}
+
+			if (!parent[id]) {
+				parent[id] = {};
+				parent[id].parent = parent;
+			}
+
+			current = parent[id];
+			
+			root.$broadcast('sitemap.current.updated', current);
+
+			return current;
 		};
+
+		Sitemap.prototype.add = function (id, prop, map) {
+			var parent = cache;
+
+			if (map) {
+				parent = setParent(map);
+			}
+
+			(parent.children || parent)[id] = prop;
+
+			(parent.children || parent)[id].parent = parent;
+
+			if (!parent.children) {
+				parent[id].root = true;
+			}
+
+			return parent[id];
+		};
+
+		Sitemap.prototype.get = function (id, map) {
+			var parent = cache;
+
+			if (!id || id === 'root') {
+				return parent;
+			}
+
+			if (map) {
+				parent = findParent(map);
+			}
+
+			if (!parent || !parent.children) {
+				return undefined;
+			}
+
+			return parent.children[id];
+		};
+
+		return new Sitemap();
 	}
 
 	angular.module('factory.sitemap', [])

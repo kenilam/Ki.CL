@@ -6,23 +6,28 @@
 		'$scope',
 		'$element',
 		function (root, scope, element) {
-			var callback = {
-					height : function (height) {
-						broadcast.height(height);
-					}
-				},
+			function hide () {
+				delete scope.globalFooter.show;
+			}
 
-				broadcast = {
-					height : function (height) {
-						root.$broadcast('globalFooter.height', height);
-					}
-				};
+			function show () {
+				scope.globalFooter.show = true;
+			}
 
-			function height () {
+			function getHeight () {
 				return element.outerHeight();
 			}
 
-			scope.$watch(height, callback.height);
+			function broadcastHeight (height) {
+				root.$broadcast('globalFooter.height', height);
+			}
+
+			scope.globalFooter = {};
+			scope.globalFooter.show = false;
+
+			scope.$on('globalFooter.hide', hide);
+			scope.$on('globalFooter.show', show);
+			scope.$watch(getHeight, broadcastHeight);
 		}
 	];
 

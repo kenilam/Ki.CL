@@ -1,177 +1,19 @@
 @import '_import';
 
 [data-api="behance.projects"] {
-	$li_circle_size: grid-size(3);
-	$li_circle_size_s: grid-size(2);
-	$li_margin: 30%;
-	$li_margin_wider: 40%;
-	$figcaption_xPos: 200%;
-	$figcaption_yPos: 50%;
-	$figcaption_scale: .1;
-
-	@include display(flex);
-	@include flex-direction(column);
-	@include align-items(center);
-	@include justify-content(center);
-	@include flex-wrap(wrap);
-
 	figure {
-		height: 100%;
-		position: relative;
-		width: 100%;
+		outline: none;
 	}
 
 	figcaption {
-		@include set-transition(height, min-height, min-width, opacity, width);
-
-		@include display(flex);
-		@include flex-direction(column);
-		@include align-items(center);
-		@include justify-content(center);
-
-		@include opacity(0);
-
-		@include through();
-
-		background-color: rgba(red($black), green($black), blue($black), .9);
-		color: $white;
-		height: calc(100% + #{rem($space * 2)});
-		margin-left: rem(-1 * $space);
-		margin-top: rem(-1 * $space);
-		padding: rem($space * 2);
-		position: absolute;
-		top: 0;
-		width: calc(100% + #{rem($space * 2)});
-	}
-
-	a {
-		@include set-transition(transform);
-
-		background-position: center;
-		background-size: cover;
-
-		height: 100%;
-		width: 100%;
-	}
-
-	img {
-		@include opacity(0);
-
-		height: 100%;
-		width: 100%;
+		p {
+			@include word-break();
+		}
 	}
 
 	.title {
-		font-weight: $thicker_font_weight;
-
-		@include mobile () {
-			font-weight: $font_weight;
-		}
-	}
-
-	.published_on {
-		@include transition-delay($fastest);
-
-		@include box-shadow($shadow-center);
-		@include pill();
-
-		color: $dark-grey;
-
-		@include mobile () {
-			@include hidden();
-		}
-	}
-
-	li {
-		@include set-transition(height, margin-left, margin-top, min-height, min-width, width);
-		@include transition-duration($faster);
-
-		@include display(flex);
-
-		@include circle($li_circle_size);
-
-		border: 1px solid $dark-grey;
-		margin-left: -1 * $li_margin_wider;
-		position: relative;
-		text-align: center;
-		z-index: 1;
-
-		@include largemobile () {
-			margin-left: -1 * $li_margin_wider;
-		}
-
-		@include mobile () {
-			@include circle($li_circle_size_s);
-
-			margin-left: 0;
-		}
-
-		p {
-			@include set-transition(transform);
-			@include transition-delay($faster);
-
-			@include transform(translate3d($figcaption_xPos, $figcaption_yPos, 0) scale3d($figcaption_scale, $figcaption_scale, $figcaption_scale));
-
-			+ p {
-				margin-top: rem($space);
-			}
-		}
-
-		&:nth-child(even) {
-			margin-left: $li_margin;
-
-			@include largemobile () {
-				margin-left: $li_margin_wider;
-			}
-
-			@include mobile () {
-				margin-left: 0;
-			}
-
-			p {
-				@include transform(translate3d(-1 * $figcaption_xPos, $figcaption_yPos, 0) scale3d($figcaption_scale, $figcaption_scale, $figcaption_scale));
-			}
-		}
-
-		+ li {
-			margin-top: rem(-1 * $gutter * 4);
-
-			@include mobile () {
-				margin-top: rem($gutter);
-			}
-		}
-
-		&.isCurrent,
-		&:hover {
-			z-index: 2;
-
-			a {
-				@include transform(scale3d(1.2, 1.2, 1.2));
-			}
-
-			figcaption {
-				@include opacity(1);
-			}
-
-			p {
-				@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-			}
-		}
-
-		@include mobile () {
-			&:nth-child(n) {
-				a {
-					@include transform(scale3d(1.2, 1.2, 1.2));
-				}
-
-				figcaption {
-					@include opacity(1);
-				}
-
-				p {
-					@include transform(translate3d(0, 0, 0) scale3d(1, 1, 1));
-				}
-			}
-		}
+		@include set-font-size(1.2);
+		
+		font-family: $heading_font_family;
 	}
 }

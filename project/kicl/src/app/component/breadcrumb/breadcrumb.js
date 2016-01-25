@@ -25,26 +25,6 @@
 					scope.$on('behance.projects.data', setBreadcrumb);
 				}
 
-				function ready (data) {
-					function eachData (value, name) {
-						scope.breadcrumb[name] = value;
-					}
-
-					function whenData () {
-						_.each(data, eachData);
-					}
-
-					return whenData;
-				}
-
-				function breadcrumbData (event, data) {
-					scope.resource = data;
-				}
-
-				function destroy () {
-					timeout.cancel(scope.breadcrumb.timer.broadcast);
-				}
-
 				function filterBreadcrumb (list) {
 					return (list.name !== 'home');
 				}
@@ -67,8 +47,12 @@
 					// scope.breadcrumb.list = scope.breadcrumb.list.filter(filterBreadcrumb);
 				}
 
-				function init () {
-					scope.$on('sitemap.current.updated', sitemapUpdate);
+				function init (event, data) {
+					scope.resource = data;
+				}
+
+				function destroy () {
+					timeout.cancel(scope.breadcrumb.timer.broadcast);
 				}
 
 				scope.breadcrumb = {};
@@ -76,7 +60,7 @@
 				scope.breadcrumb.list = [];
 
 				scope.$on('sitemap.current.updated', sitemapUpdate);
-				scope.$on('breadcrumb.data', breadcrumbData);
+				scope.$on('breadcrumb.data', init);
 			}
 		];
 

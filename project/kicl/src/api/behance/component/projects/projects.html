@@ -1,21 +1,20 @@
 <ul data-api="behance.projects">
 	<li
 		ng-repeat="project in projects track by $index"
+		ng-attr-data-project-id="{{project.id}}"
 		ng-class="{
 			'isCurrent' : project.id === current.id
 		}"
-		data-project-id="{{project.id}}"
 	>
 		<figure
-			ng-mouseover="control.mouseover(project)"
-			ng-mouseleave="control.mouseleave(project)"
+			ng-click="control.click($index)"
 		>
 			<a
 				ng-attr-title="go to: {{project.name}}"
+				ui-sref="{{project.route}}"
 				ng-style="{
 					'background-image' : 'url(' + project.covers + ')'
 				}"
-				ui-sref="{{project.route}}"
 			>
 				<img ng-src="{{project.covers}}" alt="{{project.name}}">
 			</a>

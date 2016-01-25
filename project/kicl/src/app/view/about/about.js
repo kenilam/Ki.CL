@@ -30,19 +30,14 @@
 			'resource',
 			'sitemap',
 			function controller (root, scope, resource, sitemap) {
-				var callback = {
-						data : function () {
-							scope.$broadcast('behance.user.throbber.hide');
-						}
-					};
+				function behanceUserData (event, data) {
+					scope.$broadcast('behance.user.throbber.hide');
+				}
 
 				scope.name = resource.name;
 				scope.content = resource.content;
 
-				scope.$on('behance.user.data', callback.data);
-
-				root.$broadcast('globalHeader.show');
-				root.$broadcast('globalFooter.logo.show');
+				scope.$on('behance.user.data', behanceUserData);
 				
 				sitemap.current('about', 'root');
 			}

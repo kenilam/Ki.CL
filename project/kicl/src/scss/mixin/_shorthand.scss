@@ -31,6 +31,16 @@
 	clip-path: $anchor;
 }
 
+@mixin word-break () {
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
 @mixin hidden () {
 	@include clip-path(0 0, 0 0, 0 0, 0 0);
 

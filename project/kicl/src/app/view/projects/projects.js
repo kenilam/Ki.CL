@@ -24,91 +24,150 @@
 		constant = {
 			resource : 'app/view/projects/projects.json'
 		},
+		service = [
+
+		],
 		controller = [
 			'$rootScope',
 			'$scope',
+			'$window',
 			'$element',
 			'$timeout',
+			'mediaquery',
 			'resource',
 			'sitemap',
-			'mediaquery',
-			'behanceReference',
-			function controller (root, scope, element, timeout, resource, sitemap, mediaquery, behanceReference) {
-				var set = {
-						sitemap : function () {
-							function setProject (project, index) {
-								sitemap.add(
-									project.id,
-									{
-										name: project.name,
-										route: 'projects.project({project:"' + project.id + '"})'
-									},
-									'projects'
-								);
-							}
+			'statechange',
+			'tween',
+			function controller (root, scope, win, element, timeout, mediaquery, resource, sitemap, statechange, tween) {
+				var projects,
+					cursor;
 
-							return setProject;
-						}
-					},
-					control = {
-						mouse : {
-							over : function (project) {
-								
-							},
-							leave : function (project) {
-								
-							}
+				function setSitemap (project, index) {
+					sitemap.add(
+						project.id,
+						{
+							name: project.name,
+							route: 'projects.project({project:"' + project.id + '"})'
 						},
-						current : {
-							set : function (event, current) {
-								scope.current = current;
-							},
-							unset : function () {
-								delete scope.current;
-							}
-						},
-						destroy : function () {
-							scope.$emit('backdrop.remove');
+						'projects'
+					);
+				}
 
-							function eachTimer (timer, name) {
-								timeout.cancel(timer);
-							}
+				function behanceProjectsRenderEachProject (index, list) {
+					var project = angular.element(list);
 
-							_.each(scope.timer, eachTimer);
-						}
-					};
+					project.removeClass('isNext isPrev');
 
-				function init (event, projects) {
-					function ready () {
-						_.each(projects, set.sitemap());
-						
-						scope.$broadcast('behance.projects.throbber.hide');
-						scope.$broadcast('behance.projects.control', {
-							mouseover : control.mouse.over,
-							mouseleave : control.mouse.leave
-						});
+					if (index < scope.ref.currentIndex) {
+						project.addClass('isPrev');
+
+						return;
 					}
 
-					timeout.cancel(scope.timer.ready);
-					scope.timer.ready = timeout(ready, 0);
+					if (index > scope.ref.currentIndex) {
+						project.addClass('isNext');
+
+						return;
+					}
+					
+					root.$broadcast('view.projects.set.current', scope.projects[index]);
+				}
+
+				function behanceProjectsRender () {
+					if (!projects) {
+						projects = element.find('[data-api="behance.projects"]');
+					}
+
+					projects.children().each(behanceProjectsRenderEachProject);
+				}
+
+				function behanceProjectsControlClick (index) {
+					scope.ref.currentIndex = index;
+
+					tween.to(projects, 1, { x : (-100 * index) + '%', ease : Back[index > scope.ref.currentIndex ? 'easeIn' : 'easeOut'] });
+
+					projects.children().each(behanceProjectsRenderEachProject);
+				}
+
+				function behanceProjectsControl () {
+					if (scope.ref.currentIndex === undefined) {
+						scope.ref.currentIndex = 0;
+					}
+
+					scope.$broadcast('behance.projects.control', {
+						click : behanceProjectsControlClick
+					});
+				}
+
+				function behanceProjectsCursor () {
+					if (!cursor) {
+						cursor = element.find('.cursor');
+					}
+
+					angular.element(win).bind('mousemove', behanceProjectsCursorMove);
+				}
+
+				function init (event, projects) {
+					_.each(projects, setSitemap);
+
+					scope.projects = projects;
+
+					timeout.cancel(scope.timer.behanceProjectsControl);
+					scope.timer.behanceProjectsControl = timeout(behanceProjectsControl, 0);
+
+					timeout.cancel(scope.timer.behanceProjectsRender);
+					scope.timer.behanceProjectsRender = timeout(behanceProjectsRender, 0);
+					
+					scope.$broadcast('behance.projects.throbber.hide');
+				}
+
+				function destroy () {
+					function eachTimer (timer, name) {
+						timeout.cancel(timer);
+					}
+
+					_.each(scope.timer, eachTimer);
+
+					tween.killTweensOf(element);
+
+					angular.element(win).unbind('mousemove');
+
+					root.$broadcast('view.projects.unset.current');
 				}
 
 				scope.name = resource.name;
 				scope.content = resource.content;
 
+				scope.ref = {};
+
 				scope.timer = {};
-				scope.control = {};
-				scope.control.mouseover = control.mouseover;
-				scope.control.mouseleave = control.mouseleave;
 
 				scope.$on('behance.projects.data', init);
-				scope.$on('behance.projects.set.current', control.current.set);
-				scope.$on('behance.projects.unset.current', control.current.unset);
-				scope.$on('$destroy', control.destroy);
+				scope.$on('$destroy', destroy);
 
 				root.$broadcast('globalHeader.show');
 
 				sitemap.current('projects', 'root');
+				
+				statechange(scope, { name : 'projects' }).when({
+					onEnter : function (toState, fromState) {
+						if (fromState.name === 'projects.project') {
+							return;
+						}
+
+						if (!mediaquery().largemobile) {
+							tween.killTweensOf(element);
+							tween.set(element, { scale : 1.2, y : '100%', opacity : 0 });
+							tween.to(element, 1, { scale : 1, y : '0%', opacity : 1, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 0 });
+						}
+					},
+					onExit : function () {
+						if (!mediaquery().largemobile) {
+							tween.killTweensOf(element);
+							tween.to(element, 1, { y : '100%', opacity : 0 });
+						}
+					}
+				});
 			}
 		],
 		config = [

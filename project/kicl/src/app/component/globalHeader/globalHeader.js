@@ -5,12 +5,7 @@
 		'$rootScope',
 		'$scope',
 		'$element',
-		'$window',
-		'$timeout',
-		'mediaquery',
-		function (root, scope, element, win, timeout, mediaquery) {
-			var doc = angular.element(document);
-
+		function (root, scope, element) {
 			function hide () {
 				delete scope.globalHeader.show;
 			}
@@ -19,11 +14,20 @@
 				scope.globalHeader.show = true;
 			}
 
+			function getHeight () {
+				return element.outerHeight();
+			}
+
+			function broadcastHeight (height) {
+				root.$broadcast('globalHeader.height', height);
+			}
+
 			scope.globalHeader = {};
 			scope.globalHeader.show = false;
 
 			scope.$on('globalHeader.hide', hide);
 			scope.$on('globalHeader.show', show);
+			scope.$watch(getHeight, broadcastHeight);
 		}
 	];
 
