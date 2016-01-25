@@ -2,12 +2,6 @@
 
 @mixin set-project ($projectId, $background-color, $text-color) {
 	main {
-		&[data-route^=projects] {
-			> div {
-				@include set-transition(background-color, color);
-			}
-		}
-
 		[data-api='behance.projects'] {
 			a {
 				&[href*='#{$projectId}'] {
@@ -25,6 +19,7 @@
 		color: $text-color;
 
 		a {
+			border-color: $background-color;
 			color: $text-color;
 
 			&:hover {
@@ -37,7 +32,6 @@
 				color: invert($background-color);
 			}
 		}
-
 		main {
 			> div {
 				background-color: $background-color;

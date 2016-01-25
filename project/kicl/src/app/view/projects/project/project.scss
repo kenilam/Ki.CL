@@ -1,1 +1,9 @@
 @import '_import';
+
+main {
+    &[data-route='projects.project'] {
+        [ui-view='project'] {
+            margin-top: 100vh;
+        }
+    }
+}

@@ -5,13 +5,17 @@ main {
 		overflow: hidden;
 
 		> div {
+			@include set-transition(background-color, border-radius, color, height, margin, width);
+
 			@include display(flex);
 			@include justify-content(center);
 
-			height: 100%;
+			border-radius: rem(5);
+			height: calc(100vh - #{rem($gutter) * 2});
+			margin: rem($gutter);
 			position: absolute;
 			top: 0;
-			width: 100%;
+			width: calc(100% - #{rem($gutter) * 2});
 		}
 
 		[data-api='behance.projects'] {
@@ -20,11 +24,6 @@ main {
 			height: 100%;
 			position: relative;
 			width: 50%;
-
-			a,
-			figcaption {
-				@include set-transition(opacity);
-			}
 
 			figure {
 				@include display(flex);
@@ -44,11 +43,13 @@ main {
 				@include through();
 
 				margin-top: rem($gutter);
+				position: absolute;
 				text-align: center;
+				width: 100%;
 			}
 
 			a {
-				@include set-transition(background-color, transform);
+				@include set-transition(background-color, border-color, border-width, transform);
 				@include transition-duration($fast);
 				@include transition-timing-function($ease-out-back);
 
@@ -83,26 +84,29 @@ main {
 			li {
 				@include set-transition(transform);
 
+				@include transform(scale3d(1.2, 1.2, 1.2));
+
 				height: 100%;
 				min-width: 100%;
+				z-index: 1;
 
-				&:not(.isPrev),
-				&:not(.isNext) {
+				figcaption {
+					@include transform(translate3d(0, grid_size(.5), 0));
+				}
+
+				&:not(.isPrev):not(.isNext) {
+					z-index: 2;
+					
 					a {
-						&:hover {
-							@include transform(scale3d(1.2, 1.2, 1.2));
-
-							+ figcaption {
-								@include transform(scale3d(.8, .8, .8) translate3d(0, -1 * grid_size(2.5), 0));
-								@include opacity(0);
-							}
-						}
+						border-width: 5px;
 					}
 				}
 			}
 
 			.isPrev,
 			.isNext {
+				@include transform(scale3d(1, 1, 1));
+
 				a {
 					@include through();
 

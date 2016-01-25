@@ -8,7 +8,7 @@
 				var self = this;
 
 				function whileChange (event, toState, toParams, fromState, fromParams, error) {
-					if (toState.name === self.state.name) {
+					if (toState.name.indexOf(self.state.name) > -1) {
 						self.onEnter(toState, fromState);
 					}
 				}

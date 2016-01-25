@@ -155,11 +155,16 @@
 							return;
 						}
 
-						if (!mediaquery().largemobile) {
-							tween.killTweensOf(element);
-							tween.set(element, { scale : 1.2, y : '100%', opacity : 0 });
-							tween.to(element, 1, { scale : 1, y : '0%', opacity : 1, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 0 });
+						if (mediaquery().largemobile) {
+							tween.set(element, { opacity : 0 });
+							tween.to(element, 1, { opacity : 1 });
+
+							return;
 						}
+
+						tween.killTweensOf(element);
+						tween.set(element, { scale : 1.2, y : '100%', opacity : 0 });
+						tween.to(element, 1, { scale : 1, y : '0%', opacity : 1, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 0 });
 					},
 					onExit : function () {
 						if (!mediaquery().largemobile) {

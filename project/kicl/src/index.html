@@ -47,15 +47,20 @@
 		<link rel="stylesheet" href="app/view/projects/1177609/1177609.css">
 		<link rel="stylesheet" href="app/view/projects/1177731/1177731.css">
 		<link rel="stylesheet" href="app/view/projects/1177837/1177837.css">
+		<link rel="stylesheet" href="app/view/projects/project/project.css">
 		<!-- endbuild -->
 	</head>
-	<body class="ng-cloak tk-brandon-grotesque" ng-show="!$root.status.loading" ng-cloak>
+	<body
+		class="ng-cloak tk-brandon-grotesque"
+		ng-show="!$root.status.loading"
+		ng-attr-data-project-current-id="{{$root.ref.viewProjects.current.id}}"
+		ng-cloak
+	>
 		<global-header></global-header>
 		<main
 			role="main"
 			ui-view="section"
 			ng-attr-data-route="{{$root.status.route}}"
-			ng-attr-data-view-project-current-id="{{$root.ref.viewProjects.current.id}}"
 		></main>
 		<global-footer></global-footer>
 
