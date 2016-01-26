@@ -84,12 +84,12 @@
 						background = element.children('.background');
 
 						tween.killTweensOf(element);
-						tween.set(element, { scale : 2, opacity : 0 });
-						tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 0.2 : 1 });
+						tween.set(element, { scale : .6, rotation : -180, opacity : 0 });
+						tween.to(element, 1, { scale : 1, rotation : 0, opacity : 1, delay : fromState.name ? 0.2 : 1 });
 
 						tween.killTweensOf(background);
-						tween.set(background, { rotation : 90 });
-						tween.to(background, 1, { rotation : 0, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 1 });
+						tween.set(background, { scale : 2, rotation : 90 });
+						tween.to(background, 1, { scale : 1, rotation : 0, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 1 });
 
 						timeout.cancel(scope.timer.onEnter);
 						scope.timer.onEnter = timeout(function () {
@@ -99,7 +99,7 @@
 					onExit : function () {
 						if (!mediaquery().largemobile) {
 							tween.killTweensOf(element);
-							tween.to(element, 1, { scale : 0.2, rotation : -180, opacity : 0 });
+							tween.to(element, 0.5, { scale : 0, rotation : 180, opacity : 0 });
 						}
 					}
 				});
