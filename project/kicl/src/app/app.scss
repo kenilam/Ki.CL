@@ -8,16 +8,20 @@ main,
 
 .globalHeader,
 .globalFooter {
-	position: fixed;
 	z-index: 3;
+}
+
+main,
+.globalFooter {
+	position: absolute;
 }
 
 body {
 	background-color: $white;
 }
 
-main {
-	position: absolute;
+.globalHeader {
+	position: fixed;
 }
 
 .globalFooter {

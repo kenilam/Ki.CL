@@ -5,8 +5,6 @@
 		[data-api='behance.projects'] {
 			a {
 				&[href*='#{$projectId}'] {
-					border-color: $background-color;
-
 					&:after {
 						background-color: $background-color;
 					}
@@ -19,7 +17,6 @@
 		color: $text-color;
 
 		a {
-			border-color: $background-color;
 			color: $text-color;
 
 			&:hover {

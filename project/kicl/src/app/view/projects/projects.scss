@@ -5,17 +5,18 @@ main {
 		overflow: hidden;
 
 		> div {
-			@include set-transition(background-color, border-radius, color, height, margin, width);
+			@include set-transition(background-color);
 
 			@include display(flex);
 			@include justify-content(center);
 
 			border-radius: rem(5);
-			height: calc(100vh - #{rem($gutter) * 2});
-			margin: rem($gutter);
 			position: absolute;
 			top: 0;
-			width: calc(100% - #{rem($gutter) * 2});
+
+			@include largemobile () {
+				border-radius: 0;
+			}
 		}
 
 		[data-api='behance.projects'] {
@@ -24,6 +25,25 @@ main {
 			height: 100%;
 			position: relative;
 			width: 50%;
+
+			li {
+				@include set-transition(transform);
+
+				@include transform(scale3d(1.1, 1.1, 1.1));
+
+				height: 100%;
+				margin-top: rem(-1 * $gutter * 2);
+				min-width: 100%;
+				z-index: 1;
+
+				figcaption {
+					@include transform(translate3d(0, grid_size(.5), 0));
+				}
+
+				&:not(.isPrev):not(.isNext) {
+					z-index: 2;
+				}
+			}
 
 			figure {
 				@include display(flex);
@@ -35,21 +55,8 @@ main {
 				width: 100%;
 			}
 
-			figcaption {
-				@include set-transition(opacity, transform);
-				@include transition-duration($fast);
-				@include transition-timing-function($ease-out-back);
-
-				@include through();
-
-				margin-top: rem($gutter);
-				position: absolute;
-				text-align: center;
-				width: 100%;
-			}
-
 			a {
-				@include set-transition(background-color, border-color, border-width, transform);
+				@include set-transition(background-color, transform);
 				@include transition-duration($fast);
 				@include transition-timing-function($ease-out-back);
 
@@ -58,7 +65,6 @@ main {
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
-				border: 1px dashed $light_grey;
 				position: relative;
 
 				&:after {
@@ -77,35 +83,27 @@ main {
 				}
 			}
 
-			img {
-				@include hidden();
+			figcaption {
+				@include set-transition(opacity, transform);
+				@include transition-duration($fast);
+				@include transition-timing-function($ease-out-back);
+
+				@include through();
+				
+				position: absolute;
+				text-align: center;
+				width: 100%;
 			}
 
-			li {
-				@include set-transition(transform);
-
-				@include transform(scale3d(1.2, 1.2, 1.2));
-
-				height: 100%;
-				min-width: 100%;
-				z-index: 1;
-
-				figcaption {
-					@include transform(translate3d(0, grid_size(.5), 0));
-				}
-
-				&:not(.isPrev):not(.isNext) {
-					z-index: 2;
-					
-					a {
-						border-width: 5px;
-					}
-				}
+			img {
+				@include hidden();
 			}
 
 			.isPrev,
 			.isNext {
 				@include transform(scale3d(1, 1, 1));
+
+				cursor: pointer;
 
 				a {
 					@include through();
