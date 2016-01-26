@@ -102,7 +102,7 @@
 				root.$broadcast('globalHeader.hide');
 				
 				sitemap.current('home', 'root');
-				
+
 				statechange(scope, { name : 'home' }).when({ onEnter : onEnter, onExit : onExit });
 			}
 		],
