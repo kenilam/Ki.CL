@@ -3,9 +3,7 @@
 main {
 	&[data-route='projects.project'] {
 		[ui-view='project'] {
-			@include set-transition(transform);
-			@include transition-duration(0s);
-			@include transform(translate3d(0, 100vh, 0));
+            
 		}
 	}
 }

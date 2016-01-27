@@ -39,12 +39,13 @@
 			'sitemap',
 			'statechange',
 			'tween',
-			function controller (root, scope, state, win, element, timeout, mediaquery, resource, sitemap, statechange, tween) {
+			function controller (root, scope, state, win, element, timeout, mediaquery, resource, sitemap, stateChange, tween) {
 				var _window = angular.element(win),
 					projectsWrapper,
 					projects,
 					projectUiView,
-					cursor;
+					cursor,
+					gutter = 40;
 
 				function setSitemap (project, index) {
 					sitemap.add(
@@ -58,19 +59,27 @@
 				}
 
 				function behanceProjectsRenderEachProject (index, list) {
-					var project = angular.element(list);
+					var project = angular.element(list),
+						prop = {
+							scale : mediaquery().mobile ? 0.3 : 1,
+							ease : Expo.easeOut
+						};
 
 					project.removeClass('isNext isPrev');
 
 					if (index < scope.ref.currentIndex) {
 						project.addClass('isPrev');
-
-						return;
 					}
 
 					if (index > scope.ref.currentIndex) {
 						project.addClass('isNext');
 					}
+
+					if (index === scope.ref.currentIndex) {
+						prop.scale = mediaquery().mobile ? 1 : 1.3;
+					}
+
+					tween.to(project, 0.5, prop);
 				}
 
 				function behanceProjectsRender () {
@@ -82,14 +91,19 @@
 				}
 
 				function behanceProjectsWhenTranslate (callback) {
-					if (!projectUiView) {
-						projectUiView = element.find('section[ui-view=project]');
-					}
+					projectUiView = element.find('section[ui-view=project]');
 
 					tween.set(projectUiView, { opacity : 0 });
 
+					function onceTranslate () {
+						tween.set(projectUiView, { opacity : 1 });
+					}
+
 					function whenTranslate () {
-						tween.to(projectUiView, 1, { opacity : 1 });
+						projectUiView = element.find('section[ui-view=project]');
+
+						tween.killTweensOf(projectUiView);
+						tween.set(projectUiView, { opacity : 0, y : projectsWrapper.outerHeight() + gutter, onComplete : onceTranslate });
 						
 						if (callback) {
 							callback();
@@ -100,11 +114,19 @@
 				}
 
 				function behanceProjectsTranslate (callback) {
-					tween.to(projects, 1, {
+					var prop = {
 						x : (-100 * scope.ref.currentIndex) + '%',
 						ease : Back.easeOut,
 						onComplete : behanceProjectsWhenTranslate(callback)
-					});
+					};
+
+					if (!projects) {
+						projects = element.find('[data-api="behance.projects"]');
+					}
+
+					behanceProjectsWhenTranslate(callback);
+
+					tween.to(projects, 1, prop);
 				}
 
 				function behanceProjectsSetCurrent (index) {
@@ -141,6 +163,9 @@
 
 				function behanceProjectsNavigateState (id) {
 					state.go('projects.project', { project : id });
+
+					timeout.cancel(scope.timer.behanceProjectsWhenTranslate);
+					scope.timer.behanceProjectsWhenTranslate = timeout(behanceProjectsWhenTranslate(), 0);
 				}
 
 				function behanceProjectsControlClick (index) {
@@ -167,13 +192,15 @@
 					angular.element(win).bind('mousemove', behanceProjectsCursorMove);
 				}
 
-				function resizeProjectsWrapper () {
-					var gutter = 40;
+				function projectsWrapperResize () {
+					var winHeight = _window.outerHeight(),
+						winWidth = _window.outerWidth();
 					
 					function whileResize () {
-						var winHeight = _window.outerHeight(),
-							winWidth = _window.outerWidth(),
-							bleed = mediaquery().mobile ? 0 : gutter;
+						var bleed = mediaquery().mobile ? 0 : gutter;
+
+						winHeight = _window.outerHeight();
+						winWidth = _window.outerWidth();
 
 						tween.to(projectsWrapper, 1, {
 							height : winHeight - bleed,
@@ -181,13 +208,60 @@
 							width : winWidth - bleed,
 							y : bleed / 2
 						});
+
+						behanceProjectsRender();
+
+						timeout.cancel(scope.timer.behanceProjectsWhenTranslate);
+						scope.timer.behanceProjectsWhenTranslate = timeout(behanceProjectsWhenTranslate(), 0);
 					}
 
 					if (!projectsWrapper) {
 						projectsWrapper = element.children('div');
+						
+						tween.set(projectsWrapper, {
+							height : 0,
+							x : winWidth / 2,
+							y : winHeight / 2,
+							width : 0
+						});
 					}
 
 					return whileResize();
+				}
+
+				function cursorTranslate (event) {
+					var selector = '[data-api="behance.projects"]',
+						isPrev = '.isPrev',
+						isCurrent = 'isCurrent',
+						target = angular.element(event.target),
+						prop = {
+							opacity : 0,
+							rotation : 0,
+							x : event.pageX,
+							y : event.pageY,
+							ease : Linear.easeIn
+						}
+
+					if (!cursor) {
+						cursor = element.find('.cursor');
+					}
+
+					if (target.closest(selector).length > 0 || target.children(selector).length > 0) {
+						prop.opacity = 1;
+					}
+
+					if (target.closest(isCurrent).length > 0 || target.children(isCurrent).length > 0) {
+						prop.opacity = 0;
+					}
+
+					if (target.closest(isPrev).length > 0 || target.children(isPrev).length > 0) {
+						prop.rotation = -180;
+					}
+
+					console.log('moved');
+
+					tween.killTweensOf(cursor);
+					tween.to(cursor, .1, prop);
 				}
 
 				function init (event, projects) {
@@ -207,6 +281,9 @@
 
 					timeout.cancel(scope.timer.behanceProjectsSetCurrent);
 					scope.timer.behanceProjectsSetCurrent = timeout(behanceProjectsSetCurrent, 0);
+
+					_window.bind('resize', onResize());
+					angular.element(document).bind('mousemove', onMouseMove());
 					
 					scope.$broadcast('behance.projects.throbber.hide');
 				}
@@ -225,9 +302,17 @@
 					root.$broadcast('view.projects.unset.current');
 				}
 
+				function onMouseMove () {
+					function whileMove (event) {
+						cursorTranslate(event);
+					}
+
+					return whileMove;
+				}
+
 				function onResize () {
 					function whileResize (event) {
-						resizeProjectsWrapper();
+						projectsWrapperResize();
 					}
 
 					whileResize();
@@ -236,6 +321,11 @@
 				}
 
 				function onEnter (toState, fromState) {
+					if (fromState.name === 'projects.project' && toState.name === 'projects' && !state.params.project && scope.projects) {
+						behanceProjectsSetCurrent();
+						behanceProjectsNavigateState(scope.projects[0].id);
+					}
+
 					if (
 						Boolean(fromState.name && toState.name === 'projects.project') ||
 						fromState.name === 'projects.project'
@@ -272,13 +362,11 @@
 				scope.$on('behance.projects.data', init);
 				scope.$on('$destroy', destroy);
 
-				_window.bind('resize', onResize());
-
 				root.$broadcast('globalHeader.show');
 
 				sitemap.current('projects', 'root');
 				
-				statechange(scope, { name : 'projects' }).when({ onEnter : onEnter, onExit : onExit });
+				stateChange(scope, { name : 'projects' }).when({ onEnter : onEnter, onExit : onExit });
 			}
 		],
 		config = [

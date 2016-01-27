@@ -5,16 +5,17 @@ main {
 		overflow: hidden;
 
 		> div {
-			@include set-transition(background-color);
+			@include set-transition(background-color, border-radius);
 
 			@include display(flex);
+			@include align-items(center);
 			@include justify-content(center);
 
 			border-radius: rem(5);
 			position: absolute;
 			top: 0;
 
-			@include largemobile () {
+			@include mobile () {
 				border-radius: 0;
 			}
 		}
@@ -31,17 +32,18 @@ main {
 
 				@include transform(scale3d(1.1, 1.1, 1.1));
 
+				@include display(flex);
+				@include align-items(center);
+				@include justify-content(center);
+
+				@include opacity(1);
+
 				height: 100%;
-				margin-top: rem(-1 * $gutter * 2);
 				min-width: 100%;
 				z-index: 1;
 
 				figcaption {
 					@include transform(translate3d(0, grid_size(.5), 0));
-				}
-
-				&:not(.isPrev):not(.isNext) {
-					z-index: 2;
 				}
 			}
 
@@ -56,15 +58,17 @@ main {
 			}
 
 			a {
-				@include set-transition(background-color, transform);
+				@include set-transition(background-color, border-width, transform);
 				@include transition-duration($fast);
 				@include transition-timing-function($ease-out-back);
 
 				@include circle(grid-size(3));
 
+				background-color: $white;
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
+				border: 0px solid $white;
 				position: relative;
 
 				&:after {
@@ -93,20 +97,31 @@ main {
 				position: absolute;
 				text-align: center;
 				width: 100%;
+
+				p {
+					margin: 0 auto;
+					width: 80%;
+				}
 			}
 
 			img {
 				@include hidden();
 			}
 
+			.isCurrent,
 			.isPrev,
 			.isNext {
-				@include transform(scale3d(1, 1, 1));
+				@include opacity(1);
+			}
 
+			.isPrev,
+			.isNext {
 				cursor: pointer;
 
 				a {
 					@include through();
+
+					border-width: rem($gutter);
 
 					&:after {
 						@include opacity(1);
@@ -131,6 +146,33 @@ main {
 					}
 				}
 			}
+
+			.isCurrent {
+				z-index: 2;
+			}
+		}
+
+		[ui-view=project] {
+			@include transform(translate3d(0, 100%, 0));
+
+			min-height: 100%;
+		}
+
+		.cursor {
+			$cursor_size: 64px;
+
+			@include opacity(0);
+
+			@include through();
+
+			background-image: url(#{$image_path}cursor/left.png);
+			display: block;
+			left: -1 * $cursor_size / 2;
+			height: $cursor_size;
+			position: absolute;
+			top: -1 * $cursor_size / 2;
+			width: $cursor_size;
+			z-index: 9999;
 		}
 	}
 }
