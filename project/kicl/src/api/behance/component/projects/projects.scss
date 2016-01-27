@@ -15,5 +15,13 @@
 		@include set-font-size(1.2);
 		
 		font-family: $heading_font_family;
+
+		@include largemobile () {
+			@include set-font-size(1);
+		}
+	}
+
+	.published_on {
+		@include set-font-size(.8);
 	}
 }

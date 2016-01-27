@@ -125,3 +125,13 @@ $slowest: $speed * 4;
 
     @include set-will-change($values...);
 }
+
+@mixin unset-transition () {
+    transition: none;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+
+    will-change: auto;
+}

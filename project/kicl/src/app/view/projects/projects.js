@@ -90,42 +90,51 @@
 					projects.children().each(behanceProjectsRenderEachProject);
 				}
 
-				function behanceProjectsWhenTranslate (callback) {
+				function behanceProjectsWhenTransition (callback) {
 					projectUiView = element.find('section[ui-view=project]');
 
 					tween.set(projectUiView, { opacity : 0 });
 
-					function onceTranslate () {
+					function onceTransition () {
 						tween.set(projectUiView, { opacity : 1 });
 					}
 
-					function whenTranslate () {
+					function whenTransition () {
 						projectUiView = element.find('section[ui-view=project]');
 
 						tween.killTweensOf(projectUiView);
-						tween.set(projectUiView, { opacity : 0, y : projectsWrapper.outerHeight() + gutter, onComplete : onceTranslate });
+						tween.set(projectUiView, {
+							opacity : 0,
+							y : projectsWrapper.outerHeight() + gutter,
+							onComplete : onceTransition
+						});
 						
 						if (callback) {
 							callback();
 						}
 					}
 
-					return whenTranslate;
+					return whenTransition;
 				}
 
-				function behanceProjectsTranslate (callback) {
-					var prop = {
+				function behanceProjectsTransition (callback) {
+					var whenTransition = behanceProjectsWhenTransition(callback),
+
+						prop = {
 						x : (-100 * scope.ref.currentIndex) + '%',
 						ease : Back.easeOut,
-						onComplete : behanceProjectsWhenTranslate(callback)
+						onComplete : function () {
+							projects.removeClass('isTransitioning');
+
+							whenTransition();
+						}
 					};
 
 					if (!projects) {
 						projects = element.find('[data-api="behance.projects"]');
 					}
 
-					behanceProjectsWhenTranslate(callback);
-
+					projects.addClass('isTransitioning');
 					tween.to(projects, 1, prop);
 				}
 
@@ -144,15 +153,17 @@
 						return find();
 					}
 
+					function navigateState () {
+						behanceProjectsNavigateState(scope.projects[scope.ref.currentIndex].id);
+					}
+
 					scope.ref.currentIndex = findMatchIndex(state.params.project) || 0;
 
 					if (index !== undefined) {
 						scope.ref.currentIndex = index;
 					}
 
-					behanceProjectsTranslate(function () {
-						behanceProjectsNavigateState(scope.projects[scope.ref.currentIndex].id);
-					});
+					behanceProjectsTransition(navigateState);
 					behanceProjectsRender();
 					behanceProjectsBroadcastCurrent();
 				}
@@ -162,10 +173,12 @@
 				}
 
 				function behanceProjectsNavigateState (id) {
-					state.go('projects.project', { project : id });
+					behanceProjectScropToTop(function () {
+						state.go('projects.project', { project : id });
 
-					timeout.cancel(scope.timer.behanceProjectsWhenTranslate);
-					scope.timer.behanceProjectsWhenTranslate = timeout(behanceProjectsWhenTranslate(), 0);
+						timeout.cancel(scope.timer.behanceProjectsWhenTransition);
+						scope.timer.behanceProjectsWhenTransition = timeout(behanceProjectsWhenTransition(), 0);
+					});
 				}
 
 				function behanceProjectsControlClick (index) {
@@ -192,6 +205,32 @@
 					angular.element(win).bind('mousemove', behanceProjectsCursorMove);
 				}
 
+				function behanceProjectScropToContent () {
+					tween.to(_window, 1, {
+						scrollTo : { y : _window.outerHeight() },
+						ease : Power2.easeOut,
+						onComplete : function () {
+							
+						}
+					});
+				}
+
+				function behanceProjectScropToTop (callback) {
+					if (window.scrollY === 0) {
+						return;
+					}
+
+					tween.to(_window, 1, {
+						scrollTo : { y : 0 },
+						ease : Power2.easeOut,
+						onComplete : callback
+					});
+				}
+
+				function behanceProjectData (event, data) {
+					behanceProjectScropToContent();
+				}
+
 				function projectsWrapperResize () {
 					var winHeight = _window.outerHeight(),
 						winWidth = _window.outerWidth();
@@ -211,8 +250,8 @@
 
 						behanceProjectsRender();
 
-						timeout.cancel(scope.timer.behanceProjectsWhenTranslate);
-						scope.timer.behanceProjectsWhenTranslate = timeout(behanceProjectsWhenTranslate(), 0);
+						timeout.cancel(scope.timer.behanceProjectsWhenTransition);
+						scope.timer.behanceProjectsWhenTransition = timeout(behanceProjectsWhenTransition(), 0);
 					}
 
 					if (!projectsWrapper) {
@@ -229,39 +268,39 @@
 					return whileResize();
 				}
 
-				function cursorTranslate (event) {
-					var selector = '[data-api="behance.projects"]',
+				function cursorTransition (event) {
+					var behanceProjects = '[data-api="behance.projects"]',
 						isPrev = '.isPrev',
-						isCurrent = 'isCurrent',
+						isNext = '.isNext',
 						target = angular.element(event.target),
 						prop = {
 							opacity : 0,
 							rotation : 0,
-							x : event.pageX,
-							y : event.pageY,
-							ease : Linear.easeIn
-						}
+							ease : Bounce.easeOut
+						};
+
+					function hasSelector (selector) {
+						return (target.closest(selector).length > 0 || target.children(selector).length > 0);
+					}
 
 					if (!cursor) {
 						cursor = element.find('.cursor');
 					}
 
-					if (target.closest(selector).length > 0 || target.children(selector).length > 0) {
+					if (hasSelector(isPrev)) {
+						prop.rotation = 180;
+					}
+
+					if (hasSelector(behanceProjects)) {
 						prop.opacity = 1;
-					}
 
-					if (target.closest(isCurrent).length > 0 || target.children(isCurrent).length > 0) {
-						prop.opacity = 0;
+						if (!hasSelector(isPrev) && !hasSelector(isNext)) {
+							prop.rotation = 90;
+						}
 					}
-
-					if (target.closest(isPrev).length > 0 || target.children(isPrev).length > 0) {
-						prop.rotation = -180;
-					}
-
-					console.log('moved');
 
 					tween.killTweensOf(cursor);
-					tween.to(cursor, .1, prop);
+					tween.to(cursor, hasSelector(behanceProjects) ? 0.5 : 0, prop);
 				}
 
 				function init (event, projects) {
@@ -283,9 +322,10 @@
 					scope.timer.behanceProjectsSetCurrent = timeout(behanceProjectsSetCurrent, 0);
 
 					_window.bind('resize', onResize());
-					angular.element(document).bind('mousemove', onMouseMove());
 					
 					scope.$broadcast('behance.projects.throbber.hide');
+					
+					root.$broadcast('viewProjects.cursor.assign.mouseMove', cursorTransition);
 				}
 
 				function destroy () {
@@ -297,17 +337,9 @@
 
 					tween.killTweensOf(element);
 
-					angular.element(win).unbind('mousemove');
+					_window.unbind('resize');
 
 					root.$broadcast('view.projects.unset.current');
-				}
-
-				function onMouseMove () {
-					function whileMove (event) {
-						cursorTranslate(event);
-					}
-
-					return whileMove;
 				}
 
 				function onResize () {
@@ -355,11 +387,16 @@
 				scope.name = resource.name;
 				scope.content = resource.content;
 
+				scope.control = {};
+				scope.control.cursor = {};
+				scope.control.cursor.mousemove = cursorTransition;
+
 				scope.ref = {};
 
 				scope.timer = {};
 
 				scope.$on('behance.projects.data', init);
+				scope.$on('behance.project.data', behanceProjectData);
 				scope.$on('$destroy', destroy);
 
 				root.$broadcast('globalHeader.show');

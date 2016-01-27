@@ -28,8 +28,6 @@ main {
 			width: 50%;
 
 			li {
-				@include set-transition(transform);
-
 				@include transform(scale3d(1.1, 1.1, 1.1));
 
 				@include display(flex);
@@ -41,10 +39,6 @@ main {
 				height: 100%;
 				min-width: 100%;
 				z-index: 1;
-
-				figcaption {
-					@include transform(translate3d(0, grid_size(.5), 0));
-				}
 			}
 
 			figure {
@@ -59,7 +53,7 @@ main {
 
 			a {
 				@include set-transition(background-color, border-width, transform);
-				@include transition-duration($fast);
+				@include transition-duration($faster);
 				@include transition-timing-function($ease-out-back);
 
 				@include circle(grid-size(3));
@@ -92,6 +86,8 @@ main {
 				@include transition-duration($fast);
 				@include transition-timing-function($ease-out-back);
 
+				@include transform(translate3d(0, calc((-1 * #{grid-size(3)}) - 100% - #{rem($space)}), 0));
+
 				@include through();
 				
 				position: absolute;
@@ -101,6 +97,10 @@ main {
 				p {
 					margin: 0 auto;
 					width: 80%;
+
+					@include largemobile () {
+						width: 100%;
+					}
 				}
 			}
 
@@ -140,8 +140,10 @@ main {
 
 				&:hover {
 					a {
+						@include transform(scale3d(1.1, 1.1, 1.1));
+
 						&:after {
-							@include opacity(0);
+							@include opacity(0.8);
 						}
 					}
 				}
@@ -149,6 +151,20 @@ main {
 
 			.isCurrent {
 				z-index: 2;
+			}
+
+			&.isTransitioning {
+				a {
+					@include unset-transition();
+
+					&:after {
+						@include unset-transition();
+					}
+				}
+				
+				figcaption {
+					@include unset-transition();
+				}
 			}
 		}
 
@@ -165,14 +181,18 @@ main {
 
 			@include through();
 
-			background-image: url(#{$image_path}cursor/left.png);
 			display: block;
-			left: -1 * $cursor_size / 2;
 			height: $cursor_size;
+			left: -1 * $cursor_size / 2;
 			position: absolute;
 			top: -1 * $cursor_size / 2;
 			width: $cursor_size;
 			z-index: 9999;
+
+			.frame,
+			.arrow {
+				fill: $white;
+			}
 		}
 	}
 }

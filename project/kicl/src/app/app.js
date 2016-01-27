@@ -33,13 +33,12 @@
 			'$rootScope',
 			'$timeout', '$state',
 			'$stateParams',
-			'$anchorScroll',
 			'$window',
 			'async',
 			'resource',
 			'index',
 			'sitemap',
-			function run (root, timeout, state, stateParams, anchorScroll, win, async, resource, index, sitemap) {
+			function run (root, timeout, state, stateParams, win, async, resource, index, sitemap) {
 				function init () {
 					function eachComponent (component, name) {
 						root.$broadcast(name + '.data', component);
@@ -103,8 +102,6 @@
 						}
 
 						updateRoute(root, sitemap, timeout)();
-						
-						anchorScroll();
 
 						if (!root.$$phase) {
 							root.$apply();

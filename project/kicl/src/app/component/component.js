@@ -2,13 +2,14 @@
 	'use strict';
 
 	angular.module('component', [
-		'component.throbber',
 
+		'component.breadcrumb',
 		'component.copyright',
+		'component.customForm',
+		'component.cursor',
 		'component.logo',
 		'component.navigation',
-		'component.breadcrumb',
-		'component.customForm',
+		'component.throbber',
 
 		'component.globalHeader',
 		'component.globalFooter'
