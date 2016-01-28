@@ -2,22 +2,47 @@
 
 main {
 	&[data-route^=projects] {
-		overflow: hidden;
+		@include display(flex);
+		@include flex-direction(column);
+
+		overflow-x: hidden;
+
+		h1 {
+			position: absolute;
+			text-align: center;
+			width: 100%;
+		}
 
 		> div {
-			@include set-transition(background-color, border-radius);
+			@include set-transition(background-color, border-radius, transform);
 
 			@include display(flex);
 			@include align-items(center);
 			@include justify-content(center);
 
+			@include order(1);
+
+			@include transform(translate3d(rem($gutter), rem($gutter), 0));
+
 			border-radius: rem(5);
-			position: absolute;
-			top: 0;
+			height: calc(100% - #{rem($gutter * 2)});
+			width: calc(100% - #{rem($gutter * 2)});
 
 			@include mobile () {
+				@include set-transition(border-radius, transform);
+				@include transform(translate3d(0, 0, 0));
+
 				border-radius: 0;
+				height: 100%;
+				width: 100%;
 			}
+		}
+
+		[ui-view=project] {
+			@include order(2);
+
+			margin-top: rem($gutter * 2);
+			position: absolute;
 		}
 
 		[data-api='behance.projects'] {
@@ -119,12 +144,18 @@ main {
 				cursor: pointer;
 
 				a {
+					@include transform(scale3d(.8, .8, .8));
+
 					@include through();
 
 					border-width: rem($gutter);
 
 					&:after {
 						@include opacity(1);
+					}
+
+					@include mobile () {
+						@include transform(scale3d(.2, .2, .2));
 					}
 				}
 
@@ -140,10 +171,14 @@ main {
 
 				&:hover {
 					a {
-						@include transform(scale3d(1.1, 1.1, 1.1));
+						@include transform(scale3d(1, 1, 1));
 
 						&:after {
 							@include opacity(0.8);
+						}
+
+						@include mobile () {
+							@include transform(scale3d(.2, .2, .2));
 						}
 					}
 				}
@@ -152,30 +187,6 @@ main {
 			.isCurrent {
 				z-index: 2;
 			}
-
-			&.isTransitioning {
-				a {
-					@include unset-transition();
-
-					&:after {
-						@include unset-transition();
-					}
-				}
-				
-				figcaption {
-					@include unset-transition();
-				}
-			}
-
-			&.isScrolled {
-				@include justify-content(flex-end);
-			}
-		}
-
-		[ui-view=project] {
-			@include transform(translate3d(0, 100%, 0));
-
-			min-height: 100%;
 		}
 
 		.cursor {

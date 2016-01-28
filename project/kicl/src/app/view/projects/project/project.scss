@@ -3,7 +3,7 @@
 main {
 	&[data-route='projects.project'] {
 		[ui-view='project'] {
-            min-height: 100%;
+            
 		}
 	}
 }

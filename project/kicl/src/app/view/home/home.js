@@ -40,16 +40,6 @@
 					h2,
 					nav;
 
-				function behanceUserAboutData (event, data) {
-					scope.$broadcast('behance.user.about.throbber.hide');
-				}
-
-				function destroy () {
-					root.$broadcast('globalHeader.show');
-
-					timeout.cancel(scope.timer.onEnter);
-				}
-
 				function whenEnter (fromState) {
 					logo = element.children('.logo');
 					h2 = element.children('h2');
@@ -61,17 +51,17 @@
 				}
 
 				function onEnter (toState, fromState) {
+					background = element.children('.background');
+
+					tween.killTweensOf(element);
+
 					if (mediaquery().largemobile) {
-						tween.killTweensOf(element);
 						tween.set(element, { opacity : 0 });
 						tween.to(element, 1, { opacity : 1, delay : fromState.name ? 0.2 : 1 });
 
 						return;
 					}
 
-					background = element.children('.background');
-
-					tween.killTweensOf(element);
 					tween.set(element, { scale : 2, opacity : 0 });
 					tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 0.2 : 1 });
 
@@ -85,25 +75,37 @@
 					}, 0);
 				}
 
-				function onExit () {
-					if (!mediaquery().largemobile) {
-						tween.killTweensOf(element);
-						tween.to(element, 1, { scale : 0.2, rotation : -180, opacity : 0 });
+				function destroy () {
+					var prop = {
+						scale : 0.2,
+						rotation : -180,
+						opacity : 0
+					};
+
+					_.forEach(scope.timer, function (timer, name) {
+						timeout.cancel(scope.timer[name]);
+					});
+
+					root.$broadcast('globalHeader.show');
+
+					if (mediaquery().largemobile) {
+						delete prop.scale;
+						delete prop.rotation;
 					}
+
+					tween.killTweensOf(element);
+					tween.to(element, 1, prop);
 				}
 				
 				scope.name = resource.name;
 				scope.timer = {};
 				scope.content = resource.content;
 
-				scope.$on('behance.user.about.data', behanceUserAboutData);
-				scope.$on('$destroy', destroy);
-
 				root.$broadcast('globalHeader.hide');
 				
 				sitemap.current('home', 'root');
 
-				statechange(scope, { name : 'home' }).when({ onEnter : onEnter, onExit : onExit });
+				statechange(scope, { name : 'home' }).when({ onEnter : onEnter, onExit : destroy });
 			}
 		],
 		config = [
