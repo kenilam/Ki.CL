@@ -34,17 +34,19 @@
 			'$window',
 			'$element',
 			'$timeout',
+			'$anchorScroll',
 			'mediaquery',
 			'resource',
 			'sitemap',
 			'statechange',
 			'tween',
-			function controller (root, scope, state, win, element, timeout, mediaquery, resource, sitemap, stateChange, tween) {
+			function controller (root, scope, state, win, element, timeout, anchorScroll, mediaquery, resource, sitemap, stateChange, tween) {
 				var _window = angular.element(win),
 					projectsWrapper,
 					projects,
 					projectUiView,
 					cursor,
+					firstRun = true,
 					gutter = 40;
 
 				function setSitemap (project, index) {
@@ -59,27 +61,40 @@
 				}
 
 				function behanceProjectsRenderEachProject (index, list) {
+					function whenRender (idx) {
+						function whileRender () {
+							project.removeClass('isNext isPrev');
+
+							if (idx < scope.ref.currentIndex) {
+								project.addClass('isPrev');
+							}
+
+							if (idx > scope.ref.currentIndex) {
+								project.addClass('isNext');
+							}
+
+							if (idx === scope.ref.currentIndex) {
+								prop.scale = mediaquery().mobile ? 1 : 1.3;
+							}
+
+							tween.to(project, 0.5, prop);
+						}
+
+						timeout.cancel(scope.timer.behanceProjectsRenderEachProject[idx]);
+						scope.timer.behanceProjectsRenderEachProject[idx] = timeout(whileRender, window.scrollY > 0 ? 1000 : 0);
+					}
+
 					var project = angular.element(list),
 						prop = {
 							scale : mediaquery().mobile ? 0.3 : 1,
 							ease : Expo.easeOut
 						};
 
-					project.removeClass('isNext isPrev');
-
-					if (index < scope.ref.currentIndex) {
-						project.addClass('isPrev');
+					if (!scope.timer.behanceProjectsRenderEachProject) {
+						scope.timer.behanceProjectsRenderEachProject = {};
 					}
 
-					if (index > scope.ref.currentIndex) {
-						project.addClass('isNext');
-					}
-
-					if (index === scope.ref.currentIndex) {
-						prop.scale = mediaquery().mobile ? 1 : 1.3;
-					}
-
-					tween.to(project, 0.5, prop);
+					whenRender(index);
 				}
 
 				function behanceProjectsRender () {
@@ -99,6 +114,10 @@
 						tween.set(projectUiView, { opacity : 1 });
 					}
 
+					function onceTransitionCallback () {
+						callback(onceTransition);
+					}
+
 					function whenTransition () {
 						projectUiView = element.find('section[ui-view=project]');
 
@@ -106,12 +125,8 @@
 						tween.set(projectUiView, {
 							opacity : 0,
 							y : projectsWrapper.outerHeight() + gutter,
-							onComplete : onceTransition
+							onComplete : callback ? onceTransitionCallback : onceTransition
 						});
-						
-						if (callback) {
-							callback();
-						}
 					}
 
 					return whenTransition;
@@ -121,21 +136,44 @@
 					var whenTransition = behanceProjectsWhenTransition(callback),
 
 						prop = {
-						x : (-100 * scope.ref.currentIndex) + '%',
-						ease : Back.easeOut,
-						onComplete : function () {
-							projects.removeClass('isTransitioning');
+							x : (-100 * scope.ref.currentIndex) + '%',
+							ease : Back.easeOut,
+							onComplete : onceScrolledComplete
+						};
 
-							whenTransition();
+					function onceScrolledComplete () {
+						projects.removeClass('isTransitioning');
+
+						timeout.cancel(scope.timer.onceScrolledComplete);
+						scope.timer.onceScrolledComplete = timeout(whenTransition, 1000);
+					}
+
+					function onceScrolledCompleteWithCallback (callback) {
+						function whenComplete () {
+							onceScrolledComplete();
+
+							timeout.cancel(scope.timer.onceScrolledCompleteWithCallback);
+							scope.timer.onceScrolledCompleteWithCallback = timeout(callback, 1000);
 						}
-					};
+
+						return whenComplete;
+					}
+
+					function onceScrolled (callback) {
+						if (callback) {
+							prop.onComplete = onceScrolledCompleteWithCallback(callback);
+						}
+
+						tween.to(projects, 1, prop);
+					}
 
 					if (!projects) {
 						projects = element.find('[data-api="behance.projects"]');
 					}
 
 					projects.addClass('isTransitioning');
-					tween.to(projects, 1, prop);
+
+					behanceProjectScropToTop(onceScrolled);
 				}
 
 				function behanceProjectsSetCurrent (index) {
@@ -153,8 +191,12 @@
 						return find();
 					}
 
-					function navigateState () {
+					function navigateState (callback) {
 						behanceProjectsNavigateState(scope.projects[scope.ref.currentIndex].id);
+
+						if (callback) {
+							callback();
+						}
 					}
 
 					scope.ref.currentIndex = findMatchIndex(state.params.project) || 0;
@@ -173,18 +215,29 @@
 				}
 
 				function behanceProjectsNavigateState (id) {
-					behanceProjectScropToTop(function () {
-						state.go('projects.project', { project : id });
+					state.go('projects.project', { project : id });
 
-						timeout.cancel(scope.timer.behanceProjectsWhenTransition);
-						scope.timer.behanceProjectsWhenTransition = timeout(behanceProjectsWhenTransition(), 0);
-					});
+					timeout.cancel(scope.timer.behanceProjectsWhenTransition);
+					scope.timer.behanceProjectsWhenTransition = timeout(behanceProjectsWhenTransition(), 0);
 				}
 
 				function behanceProjectsControlClick (index) {
+					function whenClick () {
+						projects.children().each(behanceProjectsRenderEachProject);
+					}
+
+					var wait = 0;
+
+					if (window.scrollY > 0) {
+						wait = 1000;
+					}
+
+					delete scope.ref.hasBehanceProjectData;
+
 					behanceProjectsSetCurrent(index);
 
-					projects.children().each(behanceProjectsRenderEachProject);
+					timeout.cancel(scope.timer.behanceProjectsControlClick);
+					scope.timer.behanceProjectsControlClick = timeout(whenClick, wait);
 				}
 
 				function behanceProjectsControl () {
@@ -206,29 +259,55 @@
 				}
 
 				function behanceProjectScropToContent () {
-					tween.to(_window, 1, {
+					function whenScrolled () {
+						projectsWrapper.addClass('isScrolled');
+					}
+
+					if (window.scrollTop >= _window.outerHeight()) {
+						whenScrolled();
+
+						return;
+					}
+
+					tween.killTweensOf(_window);
+					tween.to(_window, 2, {
 						scrollTo : { y : _window.outerHeight() },
-						ease : Power2.easeOut,
-						onComplete : function () {
-							
-						}
+						ease : Expo.easeInOut,
+						onComplete : whenScrolled
 					});
 				}
 
 				function behanceProjectScropToTop (callback) {
-					if (window.scrollY === 0) {
+					function whenScrolled () {
+						projectsWrapper.removeClass('isScrolled');
+
+						if (callback) {
+							callback(behanceProjectScropToContent);
+						}
+					}
+
+					if (window.scrollY === 0 || firstRun) {
+						firstRun = false;
+
+						whenScrolled();
+
 						return;
 					}
 
-					tween.to(_window, 1, {
+					tween.killTweensOf(_window);
+					tween.to(_window, 2, {
 						scrollTo : { y : 0 },
-						ease : Power2.easeOut,
-						onComplete : callback
+						ease : Expo.easeInOut,
+						onComplete : whenScrolled
 					});
 				}
 
 				function behanceProjectData (event, data) {
-					behanceProjectScropToContent();
+					timeout.cancel(scope.timer.behanceProjectsRender);
+					scope.timer.behanceProjectsRender = timeout(behanceProjectsRender, 0);
+
+					timeout.cancel(scope.timer.behanceProjectsSetCurrent);
+					scope.timer.behanceProjectsSetCurrent = timeout(behanceProjectsSetCurrent, 0);
 				}
 
 				function projectsWrapperResize () {
@@ -241,6 +320,7 @@
 						winHeight = _window.outerHeight();
 						winWidth = _window.outerWidth();
 
+						tween.killTweensOf(projectsWrapper);
 						tween.to(projectsWrapper, 1, {
 							height : winHeight - bleed,
 							x : bleed / 2,
@@ -257,6 +337,7 @@
 					if (!projectsWrapper) {
 						projectsWrapper = element.children('div');
 						
+						tween.killTweensOf(projectsWrapper);
 						tween.set(projectsWrapper, {
 							height : 0,
 							x : winWidth / 2,
@@ -353,28 +434,35 @@
 				}
 
 				function onEnter (toState, fromState) {
-					if (fromState.name === 'projects.project' && toState.name === 'projects' && !state.params.project && scope.projects) {
-						behanceProjectsSetCurrent();
-						behanceProjectsNavigateState(scope.projects[0].id);
+					function whenEnter () {
+						if (fromState.name === 'projects.project' && toState.name === 'projects' && !state.params.project && scope.projects) {
+							behanceProjectsSetCurrent();
+							behanceProjectsNavigateState(scope.projects[0].id);
+						}
+
+						if (
+							Boolean(fromState.name && toState.name === 'projects.project') ||
+							fromState.name === 'projects.project'
+						) {
+							return;
+						}
+
+						if (mediaquery().largemobile) {
+							tween.set(element, { opacity : 0 });
+							tween.to(element, 1, { opacity : 1 });
+
+							return;
+						}
+
+						tween.killTweensOf(element);
+						tween.set(element, { scale : 1.2, opacity : 0 });
+						tween.to(element, 1, { scale : 1, opacity : 1, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 0 });
 					}
 
-					if (
-						Boolean(fromState.name && toState.name === 'projects.project') ||
-						fromState.name === 'projects.project'
-					) {
-						return;
-					}
+					anchorScroll();
 
-					if (mediaquery().largemobile) {
-						tween.set(element, { opacity : 0 });
-						tween.to(element, 1, { opacity : 1 });
-
-						return;
-					}
-
-					tween.killTweensOf(element);
-					tween.set(element, { scale : 1.2, opacity : 0 });
-					tween.to(element, 1, { scale : 1, opacity : 1, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 0 });
+					timeout.cancel(scope.timer.onEnter);
+					scope.timer.onEnter = timeout(whenEnter, 1000);
 				}
 
 				function onExit () {

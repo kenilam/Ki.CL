@@ -166,6 +166,10 @@ main {
 					@include unset-transition();
 				}
 			}
+
+			&.isScrolled {
+				@include justify-content(flex-end);
+			}
 		}
 
 		[ui-view=project] {
