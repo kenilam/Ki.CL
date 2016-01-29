@@ -7,7 +7,7 @@
     @include align-items(center);
     @include justify-content(center);
 
-    padding: rem($gutter) 0 rem($gutter * 2);
+    padding: rem($gutter);
 
     p {
         text-align: center;

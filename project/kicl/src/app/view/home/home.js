@@ -63,11 +63,11 @@
 					}
 
 					tween.set(element, { scale : 2, opacity : 0 });
-					tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 0.2 : 1 });
+					tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 1 : 0.5 });
 
 					tween.killTweensOf(background);
 					tween.set(background, { rotation : 90 });
-					tween.to(background, 1, { rotation : 0, ease : Back.easeInOut, delay : fromState.name ? 0.2 : 1 });
+					tween.to(background, 1, { rotation : 0, ease : Back.easeInOut, delay : fromState.name ? 1 : 0.5 });
 
 					timeout.cancel(scope.timer.onEnter);
 					scope.timer.onEnter = timeout(function () {

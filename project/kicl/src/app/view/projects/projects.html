@@ -1,8 +1,12 @@
 <h1
 	ng-show="$root.status.route === 'projects'"
 >{{name}}</h1>
-<throbber data-emit-from="behance.projects" data-show-on-default="true"></throbber>
-<section ui-view="project"></section>
+<throbber data-emit-from="behance.projects" data-show-on-default="false"></throbber>
+<throbber class="behanceProjectThrobber" data-emit-from="behance.project" data-show-on-default="false"></throbber>
+<section
+    ui-view="project"
+    ng-show="!status.behanceProject_loading"
+></section>
 <div>
 	<behance-projects data-projects-route="projects"></behance-projects>
 </div>

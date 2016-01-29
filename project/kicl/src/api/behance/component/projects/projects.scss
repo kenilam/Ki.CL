@@ -12,16 +12,22 @@
 	}
 
 	.title {
-		@include set-font-size(1.2);
+		@include set-font-size(1.6);
 		
 		font-family: $heading_font_family;
 
-		@include largemobile () {
-			@include set-font-size(1);
+		@include desktop () {
+			@include set-font-size(1.4);
+		}
+
+		@include tablet () {
+			@include set-font-size(1.2);
 		}
 	}
 
 	.published_on {
-		@include set-font-size(.8);
+		@include mobile () {
+			@include set-font-size(.9);
+		}
 	}
 }
