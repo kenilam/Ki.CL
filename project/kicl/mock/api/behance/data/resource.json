@@ -56,9 +56,6 @@
 				},
 				"link" : {
 					"message" : "See this project in Behance"
-				},
-				"close" : {
-					"message" : "Exit this project"
 				}
 			},
 			"config" : {

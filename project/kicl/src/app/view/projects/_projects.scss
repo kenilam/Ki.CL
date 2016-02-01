@@ -16,6 +16,18 @@
 	[data-project-current-id='#{$projectId}'] {
 		color: $text-color;
 
+		.globalHeader {
+			&.isScrolled {
+				background-color: $background-color;
+				padding: 0;
+			}
+		}
+		
+		.projectsWrapper {
+			background-color: $background-color;
+			color: $text-color;
+		}
+
 		a {
 			color: $text-color;
 
@@ -29,10 +41,15 @@
 				color: invert($background-color);
 			}
 		}
-		main {
-			> div {
-				background-color: $background-color;
+
+		.cursor {
+			.message {
 				color: $text-color;
+			}
+
+			.frame,
+			.arrow {
+				fill: $text-color;
 			}
 		}
 	}

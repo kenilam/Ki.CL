@@ -50,6 +50,10 @@
 		Sitemap.prototype.current = function (id, map) {
 			var parent = cache;
 
+			if (cache[""]) {
+				delete cache[""];
+			}
+
 			if (arguments.length <= 0) {
 				return current;
 			}
@@ -77,6 +81,10 @@
 		Sitemap.prototype.add = function (id, prop, map) {
 			var parent = cache;
 
+			if (cache[""]) {
+				delete cache[""];
+			}
+
 			if (map) {
 				parent = setParent(map);
 			}
@@ -94,6 +102,10 @@
 
 		Sitemap.prototype.get = function (id, map) {
 			var parent = cache;
+
+			if (cache[""]) {
+				delete cache[""];
+			}
 
 			if (!id || id === 'root') {
 				return parent;

@@ -1,5 +1,21 @@
-<header class="globalHeader" role="banner" ng-show="globalHeader.show">
+<header
+	class="globalHeader"
+	role="banner"
+	ng-class="{
+		'isScrolled' : globalHeader.status.scrolled
+	}"
+	ng-show="globalHeader.status.show"
+>
 	<logo></logo>
-	<navigation data-list-at-root="true" data-list="root"></navigation>
+	<div
+		class="navigationWrapper"
+		ng-attr-data-status="globalHeader.status.navigation.show"
+		ng-class="{
+			'isClosed' : !globalHeader.status.navigation.show
+		}"
+	>
+		<hamburger-button data-emit-to="globalHeader.navigation" close-on-default="true"></hamburger-button>
+		<navigation data-list="root"></navigation>
+	</div>
 	<breadcrumb></breadcrumb>
 </header>

@@ -1,20 +1,30 @@
 @import '_import';
 
+[data-route^=projects] {
+	.globalHeader {
+		padding: rem($gutter);
+
+		@include mobile() {
+			padding: 0;
+		}
+	}
+}
+
 main {
 	&[data-route^=projects] {
 		@include display(flex);
 		@include flex-direction(column);
 
 		overflow-x: hidden;
-
-		h1 {
+		
+		> h1 {
 			position: absolute;
 			text-align: center;
 			width: 100%;
 			z-index: 2;
 		}
 
-		> div {
+		.projectsWrapper {
 			@include set-transition(background-color, border-radius, transform);
 
 			@include display(flex);
@@ -26,7 +36,7 @@ main {
 			@include transform(translate3d(rem($gutter), rem($gutter), 0));
 
 			border-radius: rem(5);
-			height: calc(100% - #{rem($gutter * 2)});
+			height: calc(100vh - #{rem($gutter * 2)});
 			width: calc(100% - #{rem($gutter * 2)});
 
 			@include mobile () {
@@ -34,7 +44,8 @@ main {
 				@include transform(translate3d(0, 0, 0));
 
 				border-radius: 0;
-				height: 100%;
+				height: 100vh;
+				min-height: 100%;
 				width: 100%;
 			}
 		}
@@ -43,10 +54,15 @@ main {
 			@include order(2);
 
 			margin-top: rem($gutter * 2);
-			position: absolute;
+			padding-bottom: rem($gutter * 2);
+
+			@include mobile () {
+				padding-bottom: rem($gutter);
+			}
 		}
 
 		[data-api='behance.projects'] {
+			@include set-transition(width);
 			@include display(flex);
 
 			height: 100%;
@@ -76,6 +92,7 @@ main {
 				@include justify-content(center);
 
 				height: 100%;
+				position: relative;
 				width: 100%;
 			}
 
@@ -98,6 +115,8 @@ main {
 
 					@include opacity(0);
 
+					@include through();
+
 					background-color: $white;
 					content: '\0020';
 					display: block;
@@ -114,7 +133,7 @@ main {
 			}
 
 			figcaption {
-				@include set-transition(opacity, transform);
+				@include set-transition(opacity);
 				@include transition-duration($fast);
 				@include transition-timing-function($ease-in-expo);
 
@@ -123,6 +142,7 @@ main {
 				@include through();
 				
 				position: absolute;
+				left: 0;
 				text-align: center;
 				width: 100%;
 
@@ -192,6 +212,8 @@ main {
 			}
 
 			.isCurrent {
+				@include unthrough();
+
 				z-index: 2;
 			}
 		}
@@ -203,27 +225,6 @@ main {
 			margin-top: grid-size(2.5);
 			position: absolute;
 			z-index: 2;
-		}
-
-		.cursor {
-			$cursor_size: 64px;
-
-			@include opacity(0);
-
-			@include through();
-
-			display: block;
-			height: $cursor_size;
-			left: -1 * $cursor_size / 2;
-			position: absolute;
-			top: -1 * $cursor_size / 2;
-			width: $cursor_size;
-			z-index: 9999;
-
-			.frame,
-			.arrow {
-				fill: $white;
-			}
 		}
 
 		+ .globalFooter {

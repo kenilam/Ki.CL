@@ -8,10 +8,18 @@
 		function (root, scope, element) {
 			function hide () {
 				delete scope.globalFooter.show;
+
+				if (!scope.$$phase) {
+					scope.$apply();
+				}
 			}
 
 			function show () {
 				scope.globalFooter.show = true;
+
+				if (!scope.$$phase) {
+					scope.$apply();
+				}
 			}
 
 			function getHeight () {
@@ -23,7 +31,7 @@
 			}
 
 			scope.globalFooter = {};
-			scope.globalFooter.show = false;
+			scope.globalFooter.show = true;
 
 			scope.$on('globalFooter.hide', hide);
 			scope.$on('globalFooter.show', show);

@@ -1,6 +1,9 @@
 @import '_import';
 
 .navigation {
+	@include display(flex);
+	@include align-items(center);
+
 	ul {
 		@include display(flex);
 	}

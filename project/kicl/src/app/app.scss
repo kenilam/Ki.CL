@@ -6,11 +6,6 @@ main,
 	width: 100%;
 }
 
-.globalHeader,
-.globalFooter {
-	z-index: 3;
-}
-
 main,
 .globalFooter {
 	position: absolute;
@@ -22,8 +17,10 @@ body {
 
 .globalHeader {
 	position: fixed;
+	z-index: 4;
 }
 
 .globalFooter {
 	bottom: 0;
+	z-index: 3;
 }

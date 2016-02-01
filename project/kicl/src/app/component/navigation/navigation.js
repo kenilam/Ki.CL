@@ -28,21 +28,14 @@
 					index = 0;
 				}
 
-				function click (index, list) {
-					setCurrent(index, list);
-				}
-
 				function init () {
 					checkList();
 				}
 
 				scope.navigation = {};
 				
-				scope.navigation.control = {};
-				scope.navigation.control.click = click;
-
 				scope.navigation.list = sitemap.get(attrs.list);
-
+				
 				root.$on('$stateChangeSuccess', checkList);
 
 				timeout(init, 0);

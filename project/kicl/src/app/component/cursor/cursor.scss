@@ -1,0 +1,28 @@
+@import '_import';
+
+.cursor {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
+	$cursor_size: 64px;
+
+	@include opacity(0);
+
+	@include through();
+
+	display: block;
+	height: $cursor_size;
+	left: -1 * $cursor_size / 2;
+	position: absolute;
+	top: -1 * $cursor_size / 2;
+	width: $cursor_size;
+	z-index: 9999;
+
+	.frame,
+	.arrow {
+		@include set-transition(fill);
+		
+		fill: $white;
+	}
+}

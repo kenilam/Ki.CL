@@ -40,19 +40,21 @@
 
 	"gulp-uglify": "*",
 	
-	"gulp-minify-css": "*",
-	"gulp-minify-html": "*",
+	"gulp-cssnano": "*",
+	"gulp-htmlmin": "*",
 	"gulp-jsonminify": "*",
 	"gulp-usemin": "*",
 
 	"gulp-watch": "*",
 
 	"gulp-sftp": "*",
-
+	
+	"jshint": "*",
 	"gulp-jshint": "*",
 	"jshint-stylish": "*",
 
 	"gulp-karma": "*",
+	"phantomjs-prebuilt": "*",
 	"karma": "*",
 	"karma-jasmine": "*",
 	"karma-junit-reporter": "*",
@@ -62,6 +64,7 @@
 	"karma-phantomjs-launcher": "*",
 
 	"jquery": "*",
+	"jasmine-core": "*",
 	"jasmine-jquery": "*",
 
 	"logger": "*",

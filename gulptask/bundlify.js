@@ -5,8 +5,8 @@ module.exports.bundlify = function (project, dependencies) {
 
 		gulp = require('gulp'),
 
-		miniHTML = require('gulp-minify-html'),
-		miniCSS = require('gulp-minify-css'),
+		miniHTML = require('gulp-htmlmin'),
+		miniCSS = require('gulp-cssnano'),
 		miniJSON = require('gulp-jsonminify'),
 
 		concat = require('gulp-concat'),
@@ -38,11 +38,7 @@ module.exports.bundlify = function (project, dependencies) {
 					}
 				},
 				HTML: {
-					empty: true,
-					comments: true,
-					conditionals: true,
-					spare: true,
-					quotes: true
+					collapseWhitespace : true
 				}
 			}
 		};

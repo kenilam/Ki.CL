@@ -1,0 +1,45 @@
+@import '_import';
+
+.hamburgerButton {
+	$hamburgerButton_size: 64px;
+
+	height: $hamburgerButton_size;
+	width: $hamburgerButton_size;
+
+	line {
+		@include set-transition(opacity, transform);
+		@include transition-duration($fast);
+		@include transform-style(preserve-3d);
+		@include transform-origin(50% 50% 0);
+
+		&.cross-right {
+			@include transform(scale3d(0, 0, 1) rotate(-45deg));
+
+			@include opacity(0);
+		}
+	}
+
+	&.isCross {
+		line {
+			&.top {
+				@include transform(scale3d(0, 1, 1));
+			}
+
+			&.cross-left {
+				@include transition-delay($faster);
+				@include transform(rotate(45deg));
+			}
+
+			&.cross-right {
+				@include transition-delay($fast);
+				@include transform(scale3d(1, 1, 1) rotate(-45deg));
+
+				@include opacity(1);
+			}
+
+			&.bottom {
+				@include transform(scale3d(0, 1, 1));
+			}
+		}
+	}
+}

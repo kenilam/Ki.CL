@@ -35,4 +35,8 @@
 	span {
 		@include hidden();
 	}
+
+	@include mobile() {
+		@include set-logo-content(true);
+	}
 }

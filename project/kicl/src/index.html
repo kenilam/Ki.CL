@@ -33,22 +33,34 @@
 		<link rel="stylesheet" href="css/font.css">
 
 		<link rel="stylesheet" href="api/behance/component/projects/projects.css">
+		<link rel="stylesheet" href="api/behance/component/project/project.css">
+		<link rel="stylesheet" href="api/behance/component/project/slideshow/slideshow.css">
 
+		<link rel="stylesheet" href="app/component/breadcrumb/breadcrumb.css">
+		<link rel="stylesheet" href="app/component/cursor/cursor.css">
 		<link rel="stylesheet" href="app/component/fonts/fonts.css">
 		<link rel="stylesheet" href="app/component/throbber/throbber.css">
+		<link rel="stylesheet" href="app/component/globalHeader/globalHeader.css">
 		<link rel="stylesheet" href="app/component/globalFooter/globalFooter.css">
+		<link rel="stylesheet" href="app/component/hamburgerButton/hamburgerButton.css">
 		<link rel="stylesheet" href="app/component/navigation/navigation.css">
 		<link rel="stylesheet" href="app/component/logo/logo.css">
 		
 		<link rel="stylesheet" href="app/app.css">
 		<link rel="stylesheet" href="app/view/view.css">
 		<link rel="stylesheet" href="app/view/home/home.css">
+		
 		<link rel="stylesheet" href="app/view/projects/projects.css">
 		<link rel="stylesheet" href="app/view/projects/1177179/1177179.css">
 		<link rel="stylesheet" href="app/view/projects/1177609/1177609.css">
 		<link rel="stylesheet" href="app/view/projects/1177731/1177731.css">
 		<link rel="stylesheet" href="app/view/projects/1177837/1177837.css">
+
 		<link rel="stylesheet" href="app/view/projects/project/project.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177179/1177179.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177609/1177609.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177731/1177731.css">
+		<link rel="stylesheet" href="app/view/projects/project/1177837/1177837.css">
 		<!-- endbuild -->
 	</head>
 	<body
@@ -64,6 +76,7 @@
 			ng-attr-data-route="{{$root.status.route}}"
 		></main>
 		<global-footer></global-footer>
+		<behance-project-slideshow aria-disabled="true"></behance-project-slideshow>
 
 		<!--[if lt IE 7]>
 		<script src="IE8.js">IE7_PNG_SUFFIX=".png";</script>
@@ -127,6 +140,7 @@
 		
 		<script src="api/behance/component/projects/projects.js"></script>
 		<script src="api/behance/component/project/project.js"></script>
+		<script src="api/behance/component/project/slideshow/slideshow.js"></script>
 		
 		<script src="app/component/component.js"></script>
 		<script src="app/component/breadcrumb/breadcrumb.js"></script>
@@ -135,6 +149,7 @@
 		<script src="app/component/cursor/cursor.js"></script>
 		<script src="app/component/globalHeader/globalHeader.js"></script>
 		<script src="app/component/globalFooter/globalFooter.js"></script>
+		<script src="app/component/hamburgerButton/hamburgerButton.js"></script>
 		<script src="app/component/logo/logo.js"></script>
 		<script src="app/component/navigation/navigation.js"></script>
 		<script src="app/component/throbber/throbber.js"></script>
@@ -144,6 +159,7 @@
 
 		<script src="app/service/service.js"></script>
 		<script src="app/service/async/async.js"></script>
+		<script src="app/service/checkmobilebrowser/checkmobilebrowser.js"></script>
 		<script src="app/service/mediaquery/mediaquery.js"></script>
 		<script src="app/service/statechange/statechange.js"></script>
 		<script src="app/service/transition/transition.js"></script>

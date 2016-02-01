@@ -4,12 +4,17 @@
 	var controller = [
 			'$rootScope', '$scope', '$element', '$timeout', '$state', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
 			function controller (root, scope, element, timeout, state, stateParams, reference, check, modify) {
-				function close () {
-					state.go('projects');
+				function showSlideshow (module) {
+					root.$broadcast('behance.project.slideshow.show', { module : module });
 				}
 
 				function broadcast () {
 					root.$broadcast('behance.project.data', scope.project);
+
+					root.$broadcast('behance.project.slideshow.data', {
+						name : scope.project.name,
+						modules : scope.project.slideshow
+					});
 				}
 
 				function init (data) {
@@ -24,7 +29,7 @@
 				scope.timer = {};
 
 				scope.control = {};
-				scope.control.close = close;
+				scope.control.showSlideshow = showSlideshow;
 
 				if (!reference.component.project[stateParams.project]) {
 					reference.component.project[stateParams.project] = {};
@@ -50,7 +55,9 @@
 		};
 	}
 
-	angular.module('behance.component.project', [])
+	angular.module('behance.component.project', [
+		'behance.component.project.slideshow'
+	])
 		.directive('behanceProject', [
 			directive
 		]);

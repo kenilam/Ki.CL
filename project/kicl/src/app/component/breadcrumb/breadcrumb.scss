@@ -1,60 +1,28 @@
 @import '_import';
 
 .breadcrumb {
-	@include set-transition(background-color, border-bottom-color, padding, transform);
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(flex-end);
+	@include flex-direction(row-reverse);
 
-	@include set-font-size(.9);
-
-	background-color: $dark_white;
-	border: 1px solid transparent;
-	border-bottom-color: $grey;
-
-	div {
-		@include display(flex);
-		@include flex-direction(row-reverse);
-		@include align-items(center);
-		@include justify-content(center);
-
-		padding: rem($space) rem($gutter);
-
-		> span {
-			@include hidden();
-		}
-
-		@include mobile() {
-			@include hidden();
-		}
-	}
-
-	a {
-		text-transform: uppercase;
-
-		&.ng-leave {
-			@include hidden();
-		}
+	.title {
+		@include hidden();
 	}
 
 	i {
 		padding: 0 rem($space);
 	}
 
-	&.ng-hide-add {
-		@include transform(translate3d(0, 0, 0));
+	a {
+		text-transform: capitalize;
 
-		&.ng-hide-add-active {
-			@include transform(translate3d(0, -100%, 0));
+		&:not(:last-child) {
+			@include truncate(auto);
 		}
-	}
 
-	&.ng-hide-remove {
-		@include transform(translate3d(0, -100%, 0));
-
-		&.ng-hide-remove-active {
-			@include transform(translate3d(0, 0, 0));
+		&.ng-leave {
+			@include hidden();
 		}
-	}
-
-	@include mobile () {
-		display: none;
 	}
 }

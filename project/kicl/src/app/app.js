@@ -178,14 +178,22 @@
 						}
 
 						root.ref.viewProjects.current = current;
+
+						if (!root.$$phase) {
+							root.$apply();
+						}
 					}
 
 					return whenUpdateCurrent;
 				}
 
-				function updateHeightRef (target) {
+				function updateHeight (target) {
 					function update (event, height) {
 						root.ref[target].height = height;
+						
+						if (!root.$$phase) {
+							root.$apply();
+						}
 					}
 
 					if (!root.ref[target]) {
@@ -201,7 +209,7 @@
 				root.control = {};
 
 				root.$on('sitemap.current.updated', updateRoute());
-
+				
 				root.$on('view.projects.set.current', updateViewProjectsCurrent());
 				root.$on('view.projects.unset.current', updateViewProjectsCurrent(true));
 
@@ -209,8 +217,8 @@
 				root.$on('$stateChangeSuccess', stateChangeSuccess());
 				root.$on('$stateChangeError', stateChangeError());
 
-				root.$on('globalHeader.height', updateHeightRef('globalHeader'));
-				root.$on('globalFooter.height', updateHeightRef('globalFooter'));
+				root.$on('globalHeader.height', updateHeight('globalHeader'));
+				root.$on('globalFooter.height', updateHeight('globalFooter'));
 
 				root.timer.init = timeout(init(), 0);
 			}

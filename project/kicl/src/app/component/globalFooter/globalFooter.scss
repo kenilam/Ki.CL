@@ -1,7 +1,7 @@
 @import '_import';
 
 .globalFooter {
-	@include set-transition(color);
+	@include set-transition(color, opacity);
 
     @include display(flex);
     @include align-items(center);
@@ -11,5 +11,21 @@
 
     p {
         text-align: center;
+    }
+
+    &.ng-hide-add {
+    	@include opacity(1);
+
+    	&.ng-hide-add-active {
+    		@include opacity(0);
+    	}
+    }
+
+    &.ng-hide-remove {
+    	@include opacity(0);
+
+    	&.ng-hide-remove-active {
+    		@include opacity(1);
+    	}
     }
 }

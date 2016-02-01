@@ -1,33 +1,19 @@
 @import '_import';
 @import '../_project';
 
-@include set-project('1177179', $black, .9, $white);
+@include set-project('1177179', $black, $white);
 
-[data-project-id='1177179'] {
-	.logo,
-	.navigation,
-	.breadcrumb {
-		a {
-			&:not(.isCurrent) {
-				&:hover {
-					color: $green;
-				}
-			}
+[data-project-current-id='1177179'] {
+	[data-api='behance.project.slideshow'] {
+		a,
+		button i {
+			color: $darker_grey;
 		}
 	}
 
-	.breadcrumb {
+	.tool {
 		a {
-			&.isCurrent {
-				color: $white;
-			}
+			color: $black;
 		}
 	}
-
-    .tool {
-    	a,
-    	button {
-    		color: $dark_grey;
-    	}
-    }
 }

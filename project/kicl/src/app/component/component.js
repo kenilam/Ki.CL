@@ -7,6 +7,7 @@
 		'component.copyright',
 		'component.customForm',
 		'component.cursor',
+		'component.hamburgerButton',
 		'component.logo',
 		'component.navigation',
 		'component.throbber',

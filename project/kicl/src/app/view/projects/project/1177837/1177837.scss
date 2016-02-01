@@ -1,4 +1,17 @@
 @import '_import';
 @import '../_project';
 
-@include set-project('1177837', $green, .9, $white);
+@include set-project('1177837', $green, $darkest_grey);
+
+[data-project-current-id='1177837'] {
+	[data-api='behance.project'] {
+		color: darken($green, 50%);
+	}
+
+	[data-api='behance.project.slideshow'] {
+		a,
+		button i {
+			color: $dark_grey;
+		}
+	}
+}

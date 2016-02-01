@@ -57,22 +57,19 @@
 
 					if (mediaquery().largemobile) {
 						tween.set(element, { opacity : 0 });
-						tween.to(element, 1, { opacity : 1, delay : fromState.name ? 0.2 : 1 });
+						tween.to(element, 1, { opacity : 1, delay : fromState.name ? 1 : 0.5 });
 
 						return;
 					}
 
 					tween.set(element, { scale : 2, opacity : 0 });
-					tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 1 : 0.5 });
+					tween.to(element, 1, { scale : 1, opacity : 1, delay : fromState.name ? 1 : 0.5, onComplete : function () {
+						whenEnter(fromState);
+					} });
 
 					tween.killTweensOf(background);
 					tween.set(background, { rotation : 90 });
 					tween.to(background, 1, { rotation : 0, ease : Back.easeInOut, delay : fromState.name ? 1 : 0.5 });
-
-					timeout.cancel(scope.timer.onEnter);
-					scope.timer.onEnter = timeout(function () {
-						whenEnter(fromState);
-					}, 0);
 				}
 
 				function destroy () {

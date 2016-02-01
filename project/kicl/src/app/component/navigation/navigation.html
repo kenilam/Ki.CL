@@ -9,7 +9,6 @@
 			ng-class="{'isCurrent' : $index === navigation.current.index}"
 		>
 			<a
-				ng-click="navigation.control.click($index, property)"
 				ui-sref="{{property.route}}"
 			>{{property.name}}</a>
 		</li>

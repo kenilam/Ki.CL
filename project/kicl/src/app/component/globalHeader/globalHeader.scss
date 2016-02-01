@@ -1,98 +1,172 @@
 @import '_import';
 
 .globalHeader {
-	@include set-transition(background-color, border-bottom-color, box-shadow, transform);
+	@include set-transition(background-color, opacity, padding);
 
 	@include display(flex);
-	@include flex-direction(column);
-	@include justify-content(center);
-	@include align-items(center);
+	@include align-items(stretch);
+	@include justify-content(space-between);
 
-	background-color: $white;
-	border: 1px solid transparent;
-	border-bottom-color: $grey;
-	padding: rem($space) rem($gutter);
-
-	@include largemobile() {
-		@include flex-direction(row);
-		@include justify-content(space-between);
-
-		@include box-shadow($shadow-center);
-
-		background-color: $white;
-		padding: rem($space) rem($gutter);
-	}
-
-	.logo {
-		@include largemobile() {
-			@include set-logo-size(1.28);
-			@include set-logo-content(true);
-
-			padding: 0;
-		}
+	.navigationWrapper,
+	.breadcrumb {
+		padding: rem($space);
 	}
 
 	.navigation {
-		margin-top: rem($gutter);
-		padding: 0 rem($gutter) 0;
-		width: 100%;
+		@include set-transition(transform, opacity);
+		@include transition-duration($fast);
+		@include transition-timing-function($ease-out-back);
 
-		ul {
-			@include justify-content(space-between);
-			
-			margin: 0 auto;
-			max-width: grid-size($largemobile-size);
-		}
-
-		li {
-			@include flex(1);
-
-			text-align: center;
-		}
+		margin-right: rem($gutter);
 
 		@include largemobile() {
-			font-size: .8rem;
-			margin-top: 0;
-			padding-top: 0;
-			padding-right: 0;
+			@include transition-duration($fast);
+			@include transition-timing-function($ease-in-expo);
+
+			@include align-items(flex-start);
+
+			background-color: $white;
+			height: 100vh;
+			left: 0;
+			margin-right: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+
+			ul {
+				@include set-transition(transform, opacity);
+				@include transition-timing-function($ease-out-back);
+				@include transition-delay($faster);
+
+				@include flex-direction(column);
+				@include align-items(center);
+
+				@include transform(translate3d(0, #{grid-size(2)}, 0) scale3d(1, 1, 1));
+
+				position: relative;
+				width: 100%;
+			}
+
+			li {
+				padding: 0 rem($gutter);
+
+				+ li {
+					margin-left: 0;
+					margin-top: rem($gutter);
+				}
+			}
+
+			a {
+				@include set-font-size(1.5);
+			}
+		}
+	}
+
+	.logo {
+		@include align-self(flex-start);
+
+		@include order(1);
+
+		position: relative;
+		z-index: 2;
+	}
+
+	.navigationWrapper {
+		@include display(flex);
+		@include flex-direction(row-reverse);
+		@include align-items(center);
+		@include justify-content(center);
+
+		@include order(3);
+
+		padding: 0;
+		right: rem($gutter);
+		z-index: 1;
+
+		@include largemobile() {
+			@include flex-direction(column);
+			@include align-items(flex-end);
+		}
+
+		button {
+			position: relative;
+			z-index: 2;
+		}
+
+		&.isClosed {
+			.navigation {
+				@include transform(translate3d(100%, 0, 0));
+				@include opacity(0);
+
+				@include through();
+
+
+				@include largemobile() {
+					@include transition-delay($faster);
+
+					@include transform(translate3d(0, 0, 0));
+
+					ul {
+						@include transition-delay(0s);
+
+						@include transform(translate3d(0, #{grid-size(2.5)}, 0) scale3d(.3, .3, .3));
+						
+						@include opacity(0);
+					}
+				}
+			}
+		}
+
+		&:not(.isClosed) {
+			+ .breadcrumb {
+				@include through();
+
+				overflow: hidden;
+				padding: 0;
+				width: 0px;
+			}
+		}
+	}
+
+	.breadcrumb {
+		@include order(2);
+
+		@include largemobile() {
+			@include hidden();
 		}
 	}
 
 	&.isScrolled {
-		@include box-shadow($shadow-bottom);
+		@include box-shadow($shadow-center);
 
-		background-color: $dark_white;
-
-		@include largemobile() {
-			@include box-shadow($shadow-center);
-		}
+		background-color: $white;
 
 		.logo {
-			@include opacity(0);
-
-			@include through();
-		}
-
-		.navigation {
-			margin-top: 0;
+			@include set-logo-size(1.5);
 		}
 	}
 
+	&.ng-hide-add,
+	&.ng-hide-remove {
+		@include through();
+	}
+
 	&.ng-hide-add {
-		@include transform(translate3d(0, 0, 0));
+		@include opacity(1);
 
 		&.ng-hide-add-active {
-			@include transform(translate3d(0, -100%, 0));
+			@include opacity(0);
 		}
 	}
 
 	&.ng-hide-remove {
 		@include transition-delay($speed);
-
-		@include transform(translate3d(0, -100%, 0));
+		
+		@include opacity(0);
 
 		&.ng-hide-remove-active {
-			@include transform(translate3d(0, 0, 0));
+			@include opacity(1);
 		}
 	}
 }

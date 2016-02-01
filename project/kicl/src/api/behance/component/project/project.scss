@@ -41,23 +41,29 @@
             background-size: cover;
             border: 1px solid $grey;
             border-radius: rem($space / 3);
-            padding-top: $image_padding_top;
             cursor: -webkit-zoom-in;
             width: calc(100% - #{$image_space * 2});
 
+            &:before {
+                content: '\0020';
+                display: block;
+                padding-top: $image_padding_top;
+                position: relative;
+                width: 100%;
+                z-index: 0;
+            }
+
             &:hover {
-                border-color: $orange;
+                border-color: $black;
             }
 
             + .isImage {
                 margin-left: $image_space;
                 margin-right: $image_space;
-                padding-top: calc(#{$image_padding_top / 2} - #{$image_space});
                 width: calc(50% - #{$image_space * 2});
 
                 @include mobile () {
                     width: 100%;
-                    padding-top: $image_padding_top;
                 }
             }
 
@@ -151,48 +157,32 @@
     }
 
     .tool {
-        $font-size: 1.5;
+        $font-size: 1;
 
         @include display(flex);
         @include flex-direction(column);
         @include align-items(center);
         @include justify-content(center);
 
-        right: 0;
         padding: rem($space);
-        position: absolute;
-        top: 0;
 
         button,
         a {
             @include display(flex);
+            @include align-items(center);
             @include justify-content(center);
 
             @include set-font-size($font-size);
         }
 
         i {
-            @include display(flex);
+            margin-right: rem($space);
 
             &:before {
                 height: rem($gutter * $font-size * 1.02);
                 text-align: center;
                 width: rem($gutter * $font-size * 1.02);
             }
-        }
-
-        span {
-            @include hidden();
-        }
-
-        .close {
-            @include order(1);
-        }
-
-        .link {
-            @include order(2);
-
-            margin-top: rem($gutter);
         }
     }
 }

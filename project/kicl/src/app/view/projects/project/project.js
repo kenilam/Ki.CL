@@ -47,20 +47,21 @@
 					);
 				}
 
-				function stateChangeStart (event, toState) {
-					var map = toState.name.split('.'),
-						name = _.last(map);
+				function filterState (state) {
+					var map = state.name.split('.');
 
 					if (map.length > 1) {
 						map.length = map.length - 2;
-					} else {
-						map = ['root'];
+
+						return map.join('.');
 					}
 
-					map = map.join('.');
+					return 'root';
+				}
 
+				function stateChangeStart (event, toState) {
 					if (toState.name !== 'projects.project') {
-						sitemap.current(name, map);
+						sitemap.current(name, filterState(toState));
 					}
 
 					scope.$emit('backdrop.remove');
@@ -80,7 +81,7 @@
 				}
 
 				function init (event, data) {
-					scope.$broadcast('behance.project.throbber.hide');
+					scope.$broadcast('view.projects.project.behance.project.throbber.hide');
 
 					if (sitemap.get().projects.children) {
 						sitemap.current(data.id, 'projects');
