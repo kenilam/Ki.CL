@@ -34,7 +34,7 @@
 			'sitemap',
 			'statechange',
 			'tween',
-			function controller (root, scope, timeout, element, mediaquery, resource, sitemap, statechange, tween) {
+			function controller (root, scope, timeout, element, mediaquery, resource, sitemap, stateChange, tween) {
 				var background,
 					logo,
 					h2,
@@ -52,7 +52,7 @@
 
 				function onEnter (toState, fromState) {
 					background = element.children('.background');
-
+					
 					tween.killTweensOf(element);
 
 					if (mediaquery().largemobile) {
@@ -99,10 +99,10 @@
 				scope.content = resource.content;
 
 				root.$broadcast('globalHeader.hide');
-				
-				sitemap.current('home', 'root');
 
-				statechange(scope, { name : 'home' }).when({ onEnter : onEnter, onExit : destroy });
+				sitemap.current('home', 'root');
+				
+				stateChange(scope, { name : 'home' }).when({ onEnter : onEnter, onExit : destroy });
 			}
 		],
 		config = [

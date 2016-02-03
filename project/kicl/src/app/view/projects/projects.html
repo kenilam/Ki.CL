@@ -1,11 +1,6 @@
 <throbber data-emit-from="view.projects.behance.projects" data-show-on-default="false"></throbber>
 <throbber class="behanceProjectThrobber" data-emit-from="view.projects.behance.project" data-show-on-default="false"></throbber>
-<section
-    ui-view="project"
-    ng-class="{
-    	'isLoading' : status.behanceProject.loading
-    }"
-></section>
+<section ui-view="project"></section>
 <div class="projectsWrapper">
 	<behance-projects data-projects-route="projects"></behance-projects>
 </div>

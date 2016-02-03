@@ -3,7 +3,10 @@
 		ng-repeat="project in projects track by $index"
 		ng-attr-data-project-id="{{project.id}}"
 		ng-class="{
-			'isCurrent' : project.id === current.id
+			'isCurrent' : $index === currentIndex,
+			'isPrev' : $index === currentIndex- 1,
+			'isNext' : $index === currentIndex + 1,
+			'isElse' : $index < currentIndex - 1 || $index > currentIndex + 1,
 		}"
 	>
 		<figure

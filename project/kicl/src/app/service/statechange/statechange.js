@@ -8,7 +8,7 @@
 				var self = this;
 
 				function whileChange (event, toState, toParams, fromState, fromParams, error) {
-					if (toState.name.indexOf(self.state.name) > -1) {
+					if (toState.name.indexOf(self.state.name) > -1  && self.onEnter) {
 						self.onEnter(toState, fromState);
 					}
 				}
@@ -24,6 +24,10 @@
 						return;
 					}
 
+					if (callback.beforeEnter) {
+						self.beforeEnter = callback.beforeEnter;
+					}
+
 					if (callback.onEnter) {
 						self.onEnter = callback.onEnter;
 					}
@@ -32,7 +36,7 @@
 						self.onExit = callback.onExit;
 					}
 				};
-
+				
 				scope.$on('$stateChangeSuccess', whileChange);
 				scope.$on('$destroy', whileDestroy);
 			}

@@ -62,7 +62,6 @@ main {
 		}
 
 		[data-api='behance.projects'] {
-			@include set-transition(width);
 			@include display(flex);
 
 			height: 100%;
@@ -97,7 +96,7 @@ main {
 			}
 
 			a {
-				@include set-transition(background-color, border-width, transform);
+				@include set-transition(transform);
 				@include transition-duration($faster);
 				@include transition-timing-function($ease-out-back);
 
@@ -185,8 +184,6 @@ main {
 				a {
 					@include transform(scale3d(.7, .7, .7));
 
-					@include through();
-
 					border-width: rem($gutter * 1.53);
 
 					&:after {
@@ -216,6 +213,12 @@ main {
 							@include transform(scale3d(.2, .2, .2));
 						}
 					}
+				}
+			}
+
+			.isElse {
+				figure {
+					@include hidden();
 				}
 			}
 
