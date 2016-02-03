@@ -6,11 +6,6 @@ main,
 	width: 100%;
 }
 
-main,
-.globalFooter {
-	position: absolute;
-}
-
 body {
 	background-color: $white;
 }
@@ -21,6 +16,7 @@ body {
 }
 
 .globalFooter {
+	position: absolute;
 	bottom: 0;
-	z-index: 3;
+	z-index: 4;
 }

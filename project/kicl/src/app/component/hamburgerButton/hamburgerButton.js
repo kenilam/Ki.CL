@@ -6,18 +6,10 @@
 			function (root, scope, element, attrs) {
 				function open () {
 					scope.hamburgerButton.status.closed = false;
-					
-					if (!scope.$$phase) {
-						scope.$apply();
-					}
 				}
 
 				function close () {
 					scope.hamburgerButton.status.closed = true;
-
-					if (!scope.$$phase) {
-						scope.$apply();
-					}
 				}
 
 				function emit () {
@@ -33,6 +25,10 @@
 					emit();
 				}
 
+				function stateChangeSuccess () {
+					close();
+				}
+
 				scope.hamburgerButton = {};
 				
 				scope.hamburgerButton.status = {};
@@ -41,8 +37,10 @@
 				scope.hamburgerButton.control = {};
 				scope.hamburgerButton.control.click = click;
 
-				scope.$on((attrs.emitTo ? attrs.emitTo + '.' : '') + 'hamburgerButton.open', open);
-				scope.$on((attrs.emitTo ? attrs.emitTo + '.' : '') + 'hamburgerButton.close', close);
+				scope.$on('$stateChangeSuccess', stateChangeSuccess);
+
+				scope.$on((attrs.emitTo ? attrs.emitFrom + '.' : '') + 'hamburgerButton.open', open);
+				scope.$on((attrs.emitTo ? attrs.emitFrom + '.' : '') + 'hamburgerButton.close', close);
 
 				emit();
 			}

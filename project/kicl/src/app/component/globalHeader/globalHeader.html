@@ -14,7 +14,11 @@
 			'isClosed' : !globalHeader.status.navigation.show
 		}"
 	>
-		<hamburger-button data-emit-to="globalHeader.navigation" close-on-default="true"></hamburger-button>
+		<hamburger-button
+			data-emit-to="globalHeader.navigation"
+			data-emit-from="globalHeader.navigation"
+			close-on-default="true"
+		></hamburger-button>
 		<navigation data-list="root"></navigation>
 	</div>
 	<breadcrumb></breadcrumb>

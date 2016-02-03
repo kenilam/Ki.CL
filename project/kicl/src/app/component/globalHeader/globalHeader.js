@@ -5,28 +5,27 @@
 		'$rootScope',
 		'$scope',
 		'$window',
+		'$timeout',
 		'$element',
-		function (root, scope, win, element) {
+		function (root, scope, win, timeout, element) {
 			var _window = angular.element(win);
 
 			function hide () {
 				delete scope.globalHeader.status.show;
+				scope.globalHeader.status.scrolled = false;
 			}
 
 			function show () {
 				scope.globalHeader.status.show = true;
+				scope.globalHeader.status.scrolled = false;
 			}
 
 			function showNavigation () {
 				scope.globalHeader.status.navigation.show = true;
-
-				scope.$on('globalHeader.navigation.hamburgerButton.close');
 			}
 
 			function hideNavigation () {
 				delete scope.globalHeader.status.navigation.show;
-
-				scope.$on('globalHeader.navigation.hamburgerButton.open');
 			}
 
 			function troggleNavigation (event, status) {
@@ -49,23 +48,41 @@
 
 			function stateChangeSuccess () {
 				hideNavigation();
+
+				init();
+			}
+
+			function init () {
+				_window.bind('scroll', onScroll);
+			}
+
+			function troggleScrollStatus () {
+				if (angular.element(document).scrollTop() >= element.outerHeight()) {
+					return true;
+				}
+
+				return false;
 			}
 
 			function onScroll (event) {
-				if (angular.element(document).scrollTop() >= element.outerHeight()) {
-					scope.globalHeader.status.scrolled = true;
-					return;
-				}
+				scope.globalHeader.status.scrolled = troggleScrollStatus();
 
-				delete scope.globalHeader.status.scrolled;
+				if (!scope.$$phase) {
+					scope.$apply();
+				}
 			}
 
 			scope.globalHeader = {};
 
+			scope.globalHeader.timer ={};
+			
 			scope.globalHeader.status = {};
 			scope.globalHeader.status.show = false;
 			scope.globalHeader.status.navigation = {};
 			scope.globalHeader.status.navigation.show = true;
+
+			timeout.cancel(scope.globalHeader.timer.init);
+			scope.globalHeader.timer.init = timeout(init, 0);
 
 			scope.$on('globalHeader.hide', hide);
 			scope.$on('globalHeader.show', show);
@@ -76,8 +93,6 @@
 			scope.$on('$stateChangeSuccess', stateChangeSuccess);
 
 			scope.$watch(getHeight, broadcastHeight);
-
-			_window.bind('scroll', onScroll);
 		}
 	];
 

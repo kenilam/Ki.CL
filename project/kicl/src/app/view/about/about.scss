@@ -8,6 +8,7 @@
 
 main {
     &[data-route=about] {
+    	background-color: $darkest_grey;
     	color: $white;
 		text-align: center;
 
@@ -16,7 +17,7 @@ main {
 			@include flex-direction(column);
 			@include align-items(center);
 
-			margin: rem($gutter);
+			padding: rem($gutter);
 
 			section {
 				margin: 0;

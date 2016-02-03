@@ -1,11 +1,30 @@
 @import '_import';
 
+body {
+	@include set-transition(background-color);
+}
+
 [data-route] {
 	main {
-		@include set-transition(display);
+		@include set-transition(color);
+		@include-duration(1.5s);
 
-		min-height: 100%;
+		min-height: 100vh;
 		z-index: 1;
+
+		&.ng-animate {
+			left: 0;
+			top: 0;
+			position: absolute;
+
+			+ .globalFooter {
+				@include opacity(0);
+
+				@include largemobile () {
+					@include hidden();
+				}
+			}
+		}
 		
 		&.ng-enter {
 			z-index: 2;

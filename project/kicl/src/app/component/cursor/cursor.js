@@ -55,13 +55,11 @@
 				}
 
 				function whenResize () {
-					if (!checkmobilebrowser()) {
-						angular.element(document).bind('mousemove touchmove', whenMouseMove);
-
-						return;
+					if (checkmobilebrowser()) {
+						angular.element(document).unbind('mousemove touchmove');
 					}
 
-					angular.element(document).unbind('mousemove touchmove');
+					angular.element(document).bind('mousemove touchmove', whenMouseMove);
 				}
 
 				function destroy () {

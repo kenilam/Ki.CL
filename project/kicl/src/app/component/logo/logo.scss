@@ -7,9 +7,8 @@
 
 	@include set-logo-size();
 	@include set-logo-content();
-
-	margin-bottom: 0;
-	padding: rem($space);
+	
+	padding: 0 rem($space);
 
 	a {
 		color: $darker_grey;

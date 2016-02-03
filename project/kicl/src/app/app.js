@@ -34,11 +34,12 @@
 			'$timeout', '$state',
 			'$stateParams',
 			'$window',
+			'$anchorScroll',
 			'async',
 			'resource',
 			'index',
 			'sitemap',
-			function run (root, timeout, state, stateParams, win, async, resource, index, sitemap) {
+			function run (root, timeout, state, stateParams, win, anchorScroll, async, resource, index, sitemap) {
 				function init () {
 					function eachComponent (component, name) {
 						root.$broadcast(name + '.data', component);
@@ -73,6 +74,8 @@
 				function stateChangeStart () {
 					function whenStateChangeStart (event, toState, toParams, fromState, fromParams, error) {
 						root.status.stateIsChanging = true;
+
+						anchorScroll();
 
 						if (!root.$$phase) {
 							root.$apply();

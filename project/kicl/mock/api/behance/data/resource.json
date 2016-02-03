@@ -7,6 +7,11 @@
 		"user" : {
 			"path" : "users/:userName.json",
 			"content" : {
+				"avatar" : {
+					"images" : {
+						"size" : 138
+					}
+				},
 				"stats" : {
 					"appreciations" : {
 						"title" : "Appreciations"

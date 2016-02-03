@@ -1,15 +1,14 @@
 @import '_import';
 
 .globalHeader {
-	@include set-transition(background-color, opacity, padding);
+	@include set-transition(opacity);
 
 	@include display(flex);
 	@include align-items(stretch);
 	@include justify-content(space-between);
 
-	.navigationWrapper,
-	.breadcrumb {
-		padding: rem($space);
+	@include largemobile() {
+		@include unset-transition();
 	}
 
 	.navigation {
@@ -68,20 +67,36 @@
 
 		@include order(1);
 
+		padding-bottom: rem($space);
+		padding-top: rem($space);
 		position: relative;
 		z-index: 2;
+	}
+
+	.breadcrumb {
+		@include set-transition(opacity, transform);
+		@include transition-duration($fast);
+		@include transition-timing-function($ease-out-back);
+		
+		@include order(2);
+
+		padding: 0 rem($space);
+		width: 100%;
+
+		@include largemobile() {
+			@include hidden();
+		}
 	}
 
 	.navigationWrapper {
 		@include display(flex);
 		@include flex-direction(row-reverse);
 		@include align-items(center);
-		@include justify-content(center);
 
 		@include order(3);
 
 		padding: 0;
-		right: rem($gutter);
+		width: 64px;
 		z-index: 1;
 
 		@include largemobile() {
@@ -90,6 +105,7 @@
 		}
 
 		button {
+			min-width: 64px;
 			position: relative;
 			z-index: 2;
 		}
@@ -120,20 +136,12 @@
 
 		&:not(.isClosed) {
 			+ .breadcrumb {
+				@include transform(translate3d(-100%, 0, 0));
+
+				@include opacity(0);
+
 				@include through();
-
-				overflow: hidden;
-				padding: 0;
-				width: 0px;
 			}
-		}
-	}
-
-	.breadcrumb {
-		@include order(2);
-
-		@include largemobile() {
-			@include hidden();
 		}
 	}
 
@@ -144,6 +152,11 @@
 
 		.logo {
 			@include set-logo-size(1.5);
+
+			height: 64px;
+			padding-bottom: 0;
+			padding-left: rem($gutter);
+			padding-top: 0;
 		}
 	}
 

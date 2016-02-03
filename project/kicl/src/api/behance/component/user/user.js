@@ -41,6 +41,7 @@
 
 	angular.module('behance.component.user', [
 		'behance.component.user.about',
+		'behance.component.user.avatar',
 		'behance.component.user.info',
 		'behance.component.user.stats'
 	])

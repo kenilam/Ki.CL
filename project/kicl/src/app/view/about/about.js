@@ -27,19 +27,43 @@
 		controller = [
 			'$rootScope',
 			'$scope',
+			'$timeout',
+			'$element',
 			'resource',
 			'sitemap',
-			function controller (root, scope, resource, sitemap) {
+			'statechange',
+			'tween',
+			function controller (root, scope, timeout, element, resource, sitemap, statechange, tween) {
 				function behanceUserData (event, data) {
 					scope.$broadcast('behance.user.throbber.hide');
 				}
 
+				function onEnter (toState, fromState) {
+					tween.set(element, { opacity : 0 });
+					tween.to(element, 1, { opacity : 1, delay : fromState.name ? 1.5 : 0.5 });
+				}
+
+				function init () {
+					root.$broadcast('globalHeader.show');
+				}
+
+				function destroy () {
+					tween.set(element, { opacity : 1 });
+					tween.to(element, 1, { opacity : 0 });
+				}
+
 				scope.name = resource.name;
+				scope.timer = {};
 				scope.content = resource.content;
+
+				timeout.cancel(scope.timer.init);
+				scope.timer.init = timeout(init, 0);
 
 				scope.$on('behance.user.data', behanceUserData);
 				
 				sitemap.current('about', 'root');
+
+				statechange(scope, { name : 'about' }).when({ onEnter : onEnter, onExit : destroy });
 			}
 		],
 		config = [

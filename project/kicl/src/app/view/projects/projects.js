@@ -98,8 +98,7 @@
 
 				function updateCurrent (id) {
 					scope.status.currentIndex = id;
-
-
+					
 					timeout.cancel(scope.timer.broadcastCurrent);
 					scope.timer.broadcastCurrent = timeout(broadcastCurrent, 500);
 				}
@@ -181,6 +180,8 @@
 						}
 					};
 					Control.prototype.loaded = function (data) {
+						ctl.data = data;
+
 						if (ctl.onLoaded) {
 							ctl.onLoaded(data);
 						}
@@ -254,7 +255,7 @@
 						ctl.prop.svg.rotation = 90;
 
 						scope.$broadcast('viewProjects.cursor.' + ( isProjects ? 'unpause' : 'pause' ));
-
+						
 						if (isProjects) {
 							ctl.prop.cursor.opacity = 1;
 						}
@@ -284,39 +285,52 @@
 					angular.element(project).bind('click', onClick(index));
 				}
 
+				function onEnterTrigger (toState, fromState) {
+					var prop = {
+							opacity : 1,
+							scale : 1,
+							delay : fromState && fromState.name ? 0.2 : 1,
+							ease : Back.easeInOut
+						};
+
+					function trigger () {
+						if (toState.name === fromState.name && toState.name === 'projects.project') {
+							return;
+						}
+
+						tween.killTweensOf(element);
+						tween.to(element, 1, prop);
+					}
+
+					if (mediaquery().largemobile) {
+						delete prop.scale;
+					}
+
+					return trigger;
+				}
+
 				function onEnter (toState, fromState) {
-					var delay = fromState.name ? 0.2 : 1;
-
-					if (toState.name.substr(0, 8) === 'projects' && !state.params.project && scope.projects) {
-						navigateToProjectView(scope.projects[0].id);
-
-						return;
-					}
-
-					if (state.params.project) {
-						timeout.cancel(scope.timer.behanceProject_checkPromise);
-						scope.timer.behanceProject_checkPromise = timeout(behanceProject.checkPromise, 0);
-					}
-
-					if (scope.projects) {
-						defaultAction();
-					}
+					var prop = {
+							opacity : 1,
+							scale : 1
+						};
 
 					if (toState.name === fromState.name && toState.name === 'projects.project') {
+						timeout.cancel(scope.timer.onEnterTrigger);
+						scope.timer.onEnterTrigger = timeout(onEnterTrigger(toState, fromState), 0);
+
 						return;
+					}
+
+					if (mediaquery().largemobile) {
+						delete prop.scale;
 					}
 
 					tween.killTweensOf(element);
+					tween.set(element, prop);
 
-					if (mediaquery().largemobile) {
-						tween.set(element, { opacity : 0 });
-						tween.to(element, 1, { opacity : 1, delay : delay });
-
-						return;
-					}
-
-					tween.set(element, { opacity : 0, scale : 0.6 });
-					tween.to(element, 1, { opacity : 1, scale : 1, delay : delay, ease : Back.easeInOut });
+					timeout.cancel(scope.timer.onEnterTrigger);
+					scope.timer.onEnterTrigger = timeout(onEnterTrigger(toState, fromState), 0);
 				}
 
 				function onClick (index) {
@@ -341,6 +355,8 @@
 						timeout.cancel(scope.timer.behanceProject_checkPromise);
 						scope.timer.behanceProject_checkPromise = timeout(behanceProject.checkPromise, 0);
 					}
+					
+					root.$broadcast('globalHeader.show');
 				}
 
 				function destroy () {
@@ -351,8 +367,8 @@
 					if (!projectsWrapper) {
 						projectsWrapper = element.children('.projectsWrapper');
 					}
-
-					tween.set(projectsWrapper, { backgroundColor : projectsWrapper.css('background-color') });
+					
+					tween.set(projectsWrapper, { css : { backgroundColor : projectsWrapper.css('background-color') } });
 
 					_.forEach(scope.timer, function (timer, name) {
 						timeout.cancel(scope.timer[name]);
@@ -373,24 +389,16 @@
 				};
 				behanceProjects.prototype.onLoaded = function (data) {
 					scope.projects = data.projects;
+
+					defaultAction();
+
+					_.each(scope.projects, setSitemap);
 					
 					if (state.current.name.substr(0, 8) === 'projects' && !state.params.project) {
 						navigateToProjectView(scope.projects[0].id);
 
 						return;
 					}
-
-					root.$broadcast('globalHeader.show');
-
-					if (!state.params.project) {
-						navigateToProjectView(scope.projects[0].id);
-
-						return;
-					}
-
-					_.each(scope.projects, setSitemap);
-
-					defaultAction();
 				};
 
 				behanceProject = new BehanceControl('project');

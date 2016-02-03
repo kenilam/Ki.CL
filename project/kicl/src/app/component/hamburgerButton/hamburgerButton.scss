@@ -12,6 +12,8 @@
 		@include transform-style(preserve-3d);
 		@include transform-origin(50% 50% 0);
 
+		stroke: $darker_grey;
+
 		&.cross-right {
 			@include transform(scale3d(0, 0, 1) rotate(-45deg));
 

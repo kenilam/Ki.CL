@@ -1,0 +1,13 @@
+@import '_import';
+
+[data-api='behance.user.avatar'] {
+	@include circle(grid-size(3));
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	img {
+		@include opacity(0);
+	}
+}

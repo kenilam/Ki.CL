@@ -130,6 +130,10 @@ main {
 				@include tablet () {
 					@include circle(grid-size(3));
 				}
+
+				@include largemobile () {
+					@include transition-timing-function($ease-out-expo);
+				}
 			}
 
 			figcaption {
@@ -157,6 +161,10 @@ main {
 
 				@include tablet () {
 					@include transform(translate3d(0, calc((-1 * #{grid-size(3)}) - 100% - #{rem($gutter)}), 0));
+				}
+				
+				@include largemobile() {
+					@include unset-transition();
 				}
 			}
 

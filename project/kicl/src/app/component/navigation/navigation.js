@@ -14,7 +14,7 @@
 					}
 				}
 
-				function checkEachList (list) {
+				function checkEachList (list, name) {
 					if (list.route === state.current.name + '()') {
 						setCurrent(index, list);
 					}
@@ -33,7 +33,7 @@
 				}
 
 				scope.navigation = {};
-				
+
 				scope.navigation.list = sitemap.get(attrs.list);
 				
 				root.$on('$stateChangeSuccess', checkList);
