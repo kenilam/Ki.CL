@@ -27,64 +27,38 @@
 		.service('view.project.current', [
 			'$rootScope',
 			function currentProject (root) {
-				this.update = function (event, current) {
+				function update (event, current) {
 					root.currentProject = current;
-				};
+				}
 
-				this.delete = function () {
+				function remove () {
 					delete root.currentProject;
-				};
+				}
 
-				this.init = function () {
-					root.$on('view.project.set.current', this.update);
-					root.$on('view.project.unset.current', this.delete);
-				};
+				root.$on('view.project.set.current', update);
+				root.$on('view.project.unset.current', remove);
 			}
 		])
 
 		.service('view.route', [
 			'$rootScope',
 			function route (root) {
-				this.update = function (event, data) {
+				function update (event, data) {
 					root.name = data.name;
 					root.route = data.route;
 					root.breadcrumb = data.route.split('.').map(function (value) {
 						return value.toUpperCase();
 					});
-				};
-
-				this.init = function () {
-					root.$on('update.view.data', this.update);
-				};
-			}
-		])
-
-		.service('view.google.analytics', [
-			'$rootScope',
-			'$window',
-			'$location',
-			function (root, win, loc) {
-				function stateChangeSuccess () {
-					if (!win.ga) {
-						return;
-					}
-
-					win.ga('send', 'pageview', { page: loc.path() });
 				}
 
-				root.$on('$stateChangeSuccess', stateChangeSuccess);
+				root.$on('update.view.data', update);
 			}
 		])
 
 		.run([
-			'$rootScope',
-			'$window',
-			'view.google.analytics',
 			'view.project.current',
 			'view.route',
-			function run (root, win, viewGoogleAnalytics, viewCurrentProject, viewRoute) {
-				viewCurrentProject.init();
-				viewRoute.init();
-			}
+			'googleAnalytics',
+			function run () {}
 		]);
 }());

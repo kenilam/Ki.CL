@@ -4,6 +4,7 @@
 	var dependencies = [
 		'service.async',
 		'service.checkmobilebrowser',
+		'service.googleAnalytics',
 		'service.loadimage',
 		'service.mediaquery',
 		'service.scroll'
