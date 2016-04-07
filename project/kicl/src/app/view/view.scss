@@ -17,6 +17,8 @@ main {
 	}
 
 	&.ng-enter {
+		@include transition-delay($fast);
+		
 		@include opacity(0);
 
 		z-index: 2;
@@ -35,8 +37,4 @@ main {
 			@include opacity(0);
 		}
 	}
-}
-
-.ng-animate {
-	@include through();
 }

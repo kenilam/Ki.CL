@@ -1,7 +1,7 @@
 @import '_import';
 
 .globalHeader {
-	@include set-transition(backdrop-filter);
+	@include set-transition(backdrop-filter, padding);
 	
 	@include display(flex);
 	@include align-items(center);
@@ -135,29 +135,24 @@
 		@include backdrop-filter(blur(0px));
 	}
 
-	&.ng-animate {
+	&.ng-enter-active,
+	&.ng-leave-active {
 		@include set-transition(opacity, padding, transform);
 	}
 
 	&.ng-enter {
-		@include transform(translate3d(0, -100%, 0));
-		
 		@include opacity(0);
-
+		
 		&.ng-enter-active {
-			@include transform(translate3d(0, 0, 0));
+			@include transition-delay($speed);
 			
 			@include opacity(1);
 		}
 	}
 
 	&.ng-leave {
-		@include transform(translate3d(0, 0, 0));
-
-		@include opacity(1);
-
 		&.ng-leave-active {
-			@include transform(translate3d(0, -100%, 0));
+			@include transform(scale(.6));
 
 			@include opacity(0);
 		}

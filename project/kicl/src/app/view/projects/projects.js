@@ -87,7 +87,7 @@
 						return;
 					}
 
-					state.go('projects.project', { project : projects[0].id, location : 'replace' });
+					state.transitionTo('projects.project', { project : projects[0].id }, { location : 'replace' });
 				};
 
 				this.onData = function (callback) {

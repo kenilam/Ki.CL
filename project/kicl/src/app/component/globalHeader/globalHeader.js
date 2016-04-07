@@ -56,15 +56,26 @@
 		])
 		.service('component.globalHeader.render', [
 			'$rootScope',
-			function render (root) {
+			'$timeout',
+			function render (root, timeout) {
 				var scope;
 
+				function toggle (show) {
+					function whenToggle () {
+						scope.show = Boolean(show);
+					}
+
+					return whenToggle;
+				}
+
 				this.hide = function () {
-					scope.show = false;
+					timeout.cancel(scope.globalHeaderRender);
+					scope.globalHeaderRender = timeout(toggle(false), 0);
 				};
 
 				this.show = function () {
-					scope.show = true;
+					timeout.cancel(scope.globalHeaderRender);
+					scope.globalHeaderRender = timeout(toggle(true), 0);
 				};
 
 				this.assign = function (scopeRef) {

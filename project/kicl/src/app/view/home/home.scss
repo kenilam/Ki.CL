@@ -107,10 +107,10 @@ main {
 		}
 
 		&.ng-enter {
-			@include transform(scale(2) rotate(270deg));
+			@include transform(scale(.5) rotate(200deg));
 
 			@include largemobile () {
-				@include transform(scale(2));
+				@include transform(scale(1.2));
 			}
 
 			.logo,
@@ -130,6 +130,10 @@ main {
 			&.ng-enter-active {
 				@include transform(scale(1) rotate(0deg));
 
+				@include largemobile () {
+					@include transform(scale(1));
+				}
+
 				.logo,
 				.navigation {
 					@include transform(scale(1) translate3d(0, 0, 0));
@@ -142,10 +146,10 @@ main {
 			@include transform(scale(1));
 
 			&.ng-leave-active {
-				@include transform(scale(.01) rotate(270deg));
+				@include transform(scale(.01) rotate(200deg));
 
 				@include largemobile () {
-					@include transform(scale(.9));
+					@include transform(scale(1));
 				}
 
 				.logo,

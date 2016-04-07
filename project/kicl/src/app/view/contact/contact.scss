@@ -123,20 +123,6 @@ main {
 				}
 			}
 		}
-
-		&.ng-leave {
-			.message,
-			form {
-				@include transform(scale(1));
-			}
-
-			&.ng-leave-active {
-				.message,
-				form {
-					@include transform(scale(1.2));
-				}
-			}
-		}
 	}
 }
 

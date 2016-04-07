@@ -275,18 +275,6 @@ main {
 				}
 			}
 		}
-
-		&.ng-leave {
-			> * {
-				@include transform(scale(1));
-			}
-
-			&.ng-leave-active {
-				> * {
-					@include transform(scale(1.2));
-				}
-			}
-		}
 	}
 }
 
