@@ -2,10 +2,12 @@
 	"name" : "about",
 	"route" : "about",
 	"content" : {
+		"backdrop" : {
+			"image" : "/asset/image/room.jpg"
+		},
 		"me" : {
-			"title" : "About Me",
 			"experience" : {
-				"title" : "My Experiences"
+				"title" : "Experiences"
 			}
 		},
 		"site" : {

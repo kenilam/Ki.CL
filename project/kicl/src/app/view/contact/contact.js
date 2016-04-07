@@ -1,67 +1,62 @@
 (function contact () {
 	'use strict';
 
-	var ref = {},
-		state = {
-			name: 'contact',
-			url: '/contact',
-			resolve : {
-				resource: ['async', 'viewContactResource', function resource (async, viewContactResource) {
-					if (!ref.resource) {
-						ref.resource = async({ url : viewContactResource }).get().$promise;
-					}
+	var dependencies = [],
 
-					return ref.resource;
-				}]
-			},
-			views: {
-				'section' : {
-					templateUrl: 'app/view/contact/contact.html',
-					controller: 'view.contact.controller'
-				}
+		ref = {};
+
+	angular
+		.module('view.contact', dependencies)
+		.config(['$stateProvider',
+			function config (stateProvider) {
+				stateProvider.state({
+					name : 'contact',
+					url : '/contact',
+					resolve : {
+						resource: ['async', function resource (async) {
+							if (!ref.resource) {
+								ref.resource = async({ url : 'app/view/contact/contact.json' }).get().$promise;
+							}
+
+							return ref.resource;
+						}]
+					},
+					views : {
+						'section' : {
+							templateUrl : 'app/view/contact/contact.html',
+							controller : 'view.contact.controller'
+						}
+					}
+				});
 			}
-		},
-		constant = {
-			resource : 'app/view/contact/contact.json'
-		},
-		controller = [
+		])
+		.run([
+			'sitemap',
+			function run (sitemap) {
+				sitemap.add('contact', { name : 'contact', route : 'contact' });
+			}
+		])
+		.controller('view.contact.controller', [
 			'$rootScope',
 			'$scope',
 			'$timeout',
+			'$anchorScroll',
 			'resource',
-			'sitemap',
-			function controller (root, scope, timeout, resource, sitemap) {
-				function init () {
-					resource.component.customForm.name = "contactFrom";
-					
-					scope.$broadcast('contact.customForm.data', resource.component.customForm);
-				}
-
+			function controller (root, scope, timeout, anchorScroll, resource) {
+				scope.content = resource.content;
 				scope.name = resource.name;
-				scope.message = resource.message;
-				
-				sitemap.current('contact', 'root');
+				scope.route = resource.route;
 
-				timeout(init, 0);
-			}
-		],
-		config = [
-			'$stateProvider',
-			function config (stateProvider) {
-				stateProvider.state(state);
-			}
-		],
-		run = [
-			'sitemap',
-			function run (sitemap) {
-				sitemap.add('contact', {name: 'contact', route: 'contact()'});
-			}
-		];
+				scope.$emit('update.view.data', { name : resource.name, route : resource.route });
 
-	angular
-		.module('view.contact', [])
-		.constant('viewContactResource', constant.resource)
-		.config(config)
-		.run(run)
-		.controller('view.contact.controller', controller);
+				root.$broadcast('globalHeader.show');
+
+				timeout.cancel(scope.viewContactTimer);
+				scope.viewContactTimer = timeout(function sendData () {
+					scope.$broadcast('view.contact.customForm.data', resource.component.customForm);
+				});
+
+				anchorScroll();
+			}
+		]);
 }());

@@ -49,7 +49,8 @@
 			},
 			"content" : {
 				"label" : {
-					"published_on" : "Published:"
+					"published_on" : "Published:",
+					"see_more" : "Scroll to see more"
 				}
 			}
 		},
@@ -89,10 +90,7 @@
 					"label" : "Project tags"
 				},
 				"link" : {
-					"message" : "Click to see project in Behance"
-				},
-				"close" : {
-					"message" : "Click to close this project"
+					"message" : "Click to see this project in Behance"
 				}
 			},
 			"widget" : {

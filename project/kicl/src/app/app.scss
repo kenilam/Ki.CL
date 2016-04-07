@@ -1,22 +1,23 @@
 @import '_import';
 
-.globalHeader,
-main,
-.globalFooter {
-	width: 100%;
-}
+html {
 
-body {
-	background-color: $white;
 }
 
 .globalHeader {
 	position: fixed;
-	z-index: 4;
+	width: 100%;
+	z-index: 3;
 }
 
-.globalFooter {
-	position: absolute;
-	bottom: 0;
-	z-index: 4;
+main {
+	z-index: 1;
+}
+
+body {
+	background-color: $white;
+	
+	&.hasOverlay {
+		overflow: hidden;
+	}
 }

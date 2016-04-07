@@ -4,6 +4,7 @@ module.exports.build = function (project) {
 	var taskName = project + '.build',
 
 		gulp = require('gulp'),
+		debug = require('gulp-debug'),
 		del = require('del'),
 		vinylPaths = require('vinyl-paths'),
 
@@ -16,6 +17,15 @@ module.exports.build = function (project) {
 		bundlify = require(appRoot + '/gulptask/bundlify').bundlify(project, [taskName + '.clean', compile]),
 
 		file = {
+			PHP : [
+				'./project/' + project + '/src/**/*.php'
+			],
+			XML : [
+				'./project/' + project + '/src/**/*.xml'
+			],
+			TXT : [
+				'./project/' + project + '/src/**/*.txt'
+			],
 			JSON : [
 				'./project/' + project + '/mock/**/*.json'
 			],
@@ -24,6 +34,9 @@ module.exports.build = function (project) {
 		},
 
 		destination = {
+			PHP : './project/' + project + '/build',
+			XML : './project/' + project + '/build',
+			TXT : './project/' + project + '/build',
 			JSON : './project/' + project + '/build',
 			font : './project/' + project + '/build',
 			image : './project/' + project + '/build'

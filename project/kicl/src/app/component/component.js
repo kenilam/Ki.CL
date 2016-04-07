@@ -1,18 +1,16 @@
 (function component () {
 	'use strict';
 
-	angular.module('component', [
-
-		'component.breadcrumb',
-		'component.copyright',
+	var dependencies = [
 		'component.customForm',
 		'component.cursor',
 		'component.hamburgerButton',
+		'component.globalHeader',
 		'component.logo',
 		'component.navigation',
-		'component.throbber',
+		'component.throbber'
+	];
 
-		'component.globalHeader',
-		'component.globalFooter'
-	]);
+	angular
+		.module('component', dependencies);
 }());

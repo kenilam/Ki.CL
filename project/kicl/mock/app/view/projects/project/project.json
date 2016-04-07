@@ -1,6 +1,6 @@
 {
 	"name" : "project",
-	"route" : "project",
+	"route" : "projects.project",
 
 	"content" : {
 		

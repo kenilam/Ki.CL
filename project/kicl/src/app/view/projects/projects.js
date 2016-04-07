@@ -1,197 +1,269 @@
 (function projects () {
 	'use strict';
 
-	var ref = {},
-		state = {
-			name: 'projects',
-			url: '/projects',
-			resolve : {
-				resource: ['async', 'viewProjectsResource', function resource (async, viewProjectsResource) {
-					if (!ref.resource) {
-						ref.resource = async({ url : viewProjectsResource }).get().$promise;
-					}
-					
-					return ref.resource;
-				}]
-			},
-			views: {
-				'section' : {
-					templateUrl : 'app/view/projects/projects.html',
-					controller : 'view.projects.controller'
-				}
-			}
-		},
-		constant = {
-			resource : 'app/view/projects/projects.json'
-		},
-		service = [
-
+	var dependencies = [
+			'view.projects.project'
 		],
-		controller = [
-			'$rootScope',
-			'$scope',
-			'$state',
-			'$window',
-			'$element',
-			'$timeout',
-			'$anchorScroll',
-			'mediaquery',
-			'resource',
-			'sitemap',
-			'statechange',
-			'tween',
-			function controller (root, scope, state, win, element, timeout, anchorScroll, mediaquery, resource, sitemap, stateChange, tween) {
-				var inital = true,
-					projectsWrapper,
-					projectsHolder,
-					projectsUiView;
 
-				function projectLoad () {
-					projectsUiView = element.find('[ui-view=project]');
+		urlRouter,
 
-					projectsUiView.attr('hidden', true);
-				}
-
-				function projectReady () {
-					projectsUiView = element.find('[ui-view=project]');
-					
-					projectsUiView.attr('hidden', false);
-				}
-
-				function navigateToProjects (id) {
-					inital = false;
-					
-					projectReady();
-
-					state.go('projects.project', { project : id !== undefined ? id : scope.ref.current.id });
-				}
-
-				function projectsTransition (callback) {
-					var prop = {
-							x : -1 * (100 * scope.ref.currentIndex) + '%',
-							// delay : 1,
-							ease : mediaquery().largemobile ? Expo.easeIn : Back.easeOut,
-							onComplete : callback
-						};
-
-					if (scope.ref.currentIndex === undefined) {
-						timeout.cancel(scope.timer.projectsTransition);
-						scope.timer.projectsTransition = timeout(projectsTransition, 0);
-
-						return;
-					}
-
-					projectsHolder = element.find('.projectsWrapper ul');
-
-					tween.killTweensOf(projectsHolder);
-
-					if (inital) {
-						delete prop.ease;
-						delete prop.delay;
-
-						tween.set(projectsHolder, prop);
-					}
-
-					tween.to(projectsHolder, 0.5, prop);
-				}
-
-				function projectsEvents () {
-					function eachProject (prop, index) {
-						var project = element.find('.projectsWrapper ul li:nth-child(' + (index + 1) + ') a');
-
-						project.bind('click touchstart', onClick(index));
-					}
-
-					scope.ref.projects.forEach(eachProject);
-				}
-
-				function setCurrentIndex (event, index) {
-					scope.ref.currentIndex = index;
-
-					projectsTransition(navigateToProjects);
-				}
-
-				function setCurrent (event, current) {
-					if (!current) {
-						scope.ref.current = scope.ref.projects[0].id;
-						
-						navigateToProjects(scope.ref.current);
-
-						return;
-					}
-
-					scope.ref.current = current;
-
-					root.$broadcast('view.projects.set.current', scope.ref.current);
-				}
-
-				function setProjects (data, projects) {
-					scope.ref.projects = projects;
-
-					if (inital) {
-						projectsEvents();
-					}
-				}
-
-				function onClick (index) {
-					function whenClick (event) {
-
-					}
-
-					return whenClick;
-				}
-
-				function onEnter (toState, fromState) {
-					if (toState.name === 'projects.project' && (!fromState || fromState.name !== 'projects')) {
-						return;
-					}
-
-					tween.killTweensOf(element);
-					tween.set(element, { scale : 1.2, opacity : 0 });
-					tween.to(element, 1, { scale : 1, opacity : 1, delay : 1 });
-				}
-
-				function destroy () {
-					projectsWrapper = element.find('.projectsWrapper');
-
-					tween.set(projectsWrapper, { css : { backgroundColor : projectsWrapper.css('background-color') } });
-
-					root.$broadcast('view.projects.unset.current', scope.ref.current);
-				}
-
-				scope.ref = {};
-				scope.timer = {};
-
-				scope.$on('behance.projects.data', setProjects);
-				scope.$on('behance.projects.set.current', setCurrent);
-				scope.$on('behance.projects.set.currentIndex', setCurrentIndex);
-				scope.$on('behance.project.load', projectLoad);
-				scope.$on('behance.project.data', projectReady);
-
-				sitemap.current('projects', 'root');
-				
-				stateChange(scope, { name : 'projects' }).when({ onEnter : onEnter, onExit : destroy });
-			}
-		],
-		config = [
-			'$stateProvider',
-			function config (stateProvider) {
-				stateProvider.state(state);
-			}
-		],
-		run = [
-			'sitemap',
-			function run (sitemap) {
-				sitemap.add('projects', {name: 'projects', route: 'projects()'});
-			}
-		];
+		ref = {};
 
 	angular
-		.module('view.projects', [
-			'view.projects.project'
+		.module('view.projects', dependencies)
+		.config([
+			'$stateProvider',
+			'$urlRouterProvider',
+			function config (stateProvider, urlRouterProvider) {
+				urlRouter = urlRouterProvider;
+
+				stateProvider.state({
+					name : 'projects',
+					url : '/projects',
+					resolve : {
+						resource : ['async', function resource (async) {
+							if (!ref.resource) {
+								ref.resource = async({ url : 'app/view/projects/projects.json' }).get().$promise;
+							}
+
+							return ref.resource;
+						}]
+					},
+					views : {
+						'section' : {
+							templateUrl : 'app/view/projects/projects.html',
+							controller : 'view.projects.controller'
+						}
+					}
+				});
+			}
 		])
-		.constant('viewProjectsResource', constant.resource)
-		.config(config)
-		.run(run)
-		.controller('view.projects.controller', controller);
+		.run([
+			'sitemap',
+			function run (sitemap) {
+				sitemap.add('projects', { name : 'projects', route : 'projects' });
+			}
+		])
+		.service('view.projects.events', [
+			'$window',
+			'$state',
+			'$anchorScroll',
+			'scroll',
+			function events (_win, state, anchorScroll, scroll) {
+				var scope,
+					element,
+					win = angular.element(_win);
+
+				function onStateChangeStart (event, toState, toParams, fromState, fromParams, options) {
+					if (toState.name !== 'projects') {
+						return;
+					}
+
+					event.preventDefault();
+				}
+
+				this.onStateChangeSuccess = function (callback) {
+					scope.$on('$stateChangeSuccess', callback);
+				};
+
+				this.init = function (scopeRef, elementRef) {
+					scope = scopeRef;
+					element = elementRef;
+
+					scope.$on('$stateChangeStart', onStateChangeStart);
+				};
+			}
+		])
+		.service('view.projects.behanceProjectsData', [
+			'$state',
+			'$stateParams',
+			function behanceData (state, stateParams) {
+				var scope;
+
+				this.ready = function (event, projects) {
+					scope.ref.projects = projects;
+
+					if (stateParams.project) {
+						return;
+					}
+
+					state.go('projects.project', { project : projects[0].id, location : 'replace' });
+				};
+
+				this.onData = function (callback) {
+					scope.$on('behance.projects.data', callback);
+				};
+
+				this.init = function (scopeRef, noCallback) {
+					scope = scopeRef;
+
+					if (noCallback) {
+						return;
+					}
+
+					this.onData(this.ready);
+				};
+			}
+		])
+		.service('view.projects.behanceProjectsHeight', [
+			'$rootScope',
+			'$window',
+			'$document',
+			'$timeout',
+			'mediaquery',
+			function behanceProjectsHeight (root, _win, doc, timeout, mediaquery) {
+				var scope,
+					win = angular.element(_win);
+
+				this.set = function () {
+					if (mediaquery().mobile) {
+						scope.style.behanceProjects.height = win.height() * 0.5;
+
+						return;
+					}
+
+					scope.style.behanceProjects.height = win.height();
+				};
+
+				this.update = function () {
+					if(scope.$$pahse) {
+						return;
+					}
+
+					scope.$apply(this.set.bind(this));
+				}.bind(this);
+
+				this.projectData = function (event, data) {
+					timeout.cancel(scope.behanceProjectsHeight);
+					scope.behanceProjectsHeightTimer = timeout(this.set, 0);
+				}.bind(this);
+
+				this.init = function (scopeRef) {
+					scope = scopeRef;
+
+					scope.$on('behance.project.data', this.projectData);
+
+					this.set();
+
+					win.bind('resize', this.update);
+				}.bind(this);
+			}
+		])
+		.service('view.projects.swiper', [
+			'$state',
+			'$stateParams',
+			'$timeout',
+			'view.projects.behanceProjectsData',
+			'view.projects.events',
+			function swiper (state, stateParams, timeout, behanceProjectsData, events) {
+				var element,
+					scope,
+					swiper,
+					swiperContainer,
+
+					config = {
+						centeredSlides : true,
+						grabCursor : true,
+						observer : true,
+						observeParents : true,
+						slidesPerView : 2,
+						watchSlidesProgress : true,
+						watchSlidesVisibility : true
+					};
+
+				this.self = function () {
+					return swiper;
+				};
+
+				this.slideTo = function (index) {
+					if (!swiper) {
+						console.warning('Swiper is not ready');
+					}
+
+					if (!stateParams.project) {
+						index = 0;
+					}
+
+					if ((index !== undefined || index !== 0) && stateParams.project && scope.ref.projects) {
+						index = _.findIndex(scope.ref.projects, { id : stateParams.project });
+					}
+
+					if (!stateParams.project) {
+						return;
+					}
+
+					swiper.slideTo(index);
+				};
+
+				this.onSliderMove = function () {
+					scope.isSwiping = true;
+					scope.$apply();
+				};
+
+				this.onTransitionEnd = function () {
+					state.go('projects.project', { project : scope.ref.projects[swiper.activeIndex].id });
+
+					timeout.cancel(scope.swiperTransitionEndTimer);
+					scope.swiperTransitionEndTimer = timeout(function () {
+						delete scope.isSwiping;
+					}, 500);
+				};
+
+				this.trigger = function () {
+					swiperContainer.find('li').addClass('swiper-slide');
+					swiper = new Swiper(swiperContainer, config);
+
+					swiper.on('onSliderMove', this.onSliderMove);
+					swiper.on('onTransitionEnd', this.onTransitionEnd);
+
+					events.onStateChangeSuccess(this.slideTo);
+
+					this.slideTo();
+				}.bind(this);
+
+				this.setup = function () {
+					timeout.cancel(scope.timer.swiperSetup);
+					scope.timer.swiperSetup = timeout(this.trigger);
+				}.bind(this);
+
+				this.init = function (scopeRef, elementRef) {
+					element = elementRef;
+					scope = scopeRef;
+
+					swiperContainer = element.children('nav');
+
+					behanceProjectsData.init(scope, true);
+					behanceProjectsData.onData(this.setup);
+				};
+			}
+		])
+		.controller('view.projects.controller', [
+			'$rootScope',
+			'$scope',
+			'$element',
+			'resource',
+			'view.projects.behanceProjectsData',
+			'view.projects.behanceProjectsHeight',
+			'view.projects.events',
+			'view.projects.swiper',
+			function controller (root, scope, element, resource, behanceProjectsData, behanceProjectsHeight, events, swiper) {
+				scope.content = resource.content;
+				scope.name = resource.name;
+				scope.route = resource.route;
+
+				scope.style = {};
+				scope.style.behanceProjects = {};
+
+				scope.timer = {};
+				
+				scope.$emit('update.view.data', { name : resource.name, route : resource.route });
+
+				root.$broadcast('globalHeader.show');
+
+				behanceProjectsData.init(scope);
+				behanceProjectsHeight.init(scope);
+				events.init(scope, element);
+				swiper.init(scope, element);
+			}
+		]);
 }());

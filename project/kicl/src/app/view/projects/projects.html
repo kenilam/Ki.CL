@@ -1,7 +1,15 @@
-<throbber data-emit-from="view.projects.behance.projects" data-show-on-default="false"></throbber>
-<throbber class="behanceProjectThrobber" data-emit-from="view.projects.behance.project" data-show-on-default="false"></throbber>
-<section ui-view="project"></section>
-<div class="projectsWrapper">
-	<behance-projects data-projects-route="projects"></behance-projects>
-</div>
-<cursor data-emit-from="viewProjects"></cursor>
+<section ui-view='project'></section>
+
+<nav
+	class='swiper-container'
+	ng-style='{
+		height : style.behanceProjects.height + "px"
+	}'
+	ng-class='{
+		"isSwiping" : isSwiping
+	}'
+>
+	<span class='background'></span>
+	<behance-projects data-projects-route='projects' class='swiper-wrapper'></behance-projects>
+</nav>
+<cursor></cursor>

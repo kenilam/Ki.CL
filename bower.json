@@ -12,7 +12,7 @@
 	"angular-ui-router": "*",
 	"ui-router-extras": "*",
 
-	"es5-shim": "*",
+	"es6-shim": "*",
 	"html5shiv": "*",
 	"Respond": "*",
 
@@ -21,6 +21,8 @@
 	"jquery": "*",
 	"underscore": "*",
 	"moment": "*",
+
+	"swiper": "*",
 
 	"modernizr": "2.8.3",
 	"normalize-scss": "*",

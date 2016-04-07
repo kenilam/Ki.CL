@@ -1,5 +1,7 @@
 @import '_import';
 
+@import '../app/component/fonts/fonts';
+
 .logo {
 	@include display(flex);
 	@include align-items(center);
@@ -7,11 +9,12 @@
 
 	@include set-logo-size();
 	@include set-logo-content();
+	@include set-logo-color();
 	
-	padding: 0 rem($space);
+	padding: rem($space);
 
 	a {
-		color: $darker_grey;
+		@include set-transition(color, font-size);
 		font-family: 'kicl';
 		font-style: normal;
 		font-weight: normal;
@@ -33,9 +36,5 @@
 	
 	span {
 		@include hidden();
-	}
-
-	@include mobile() {
-		@include set-logo-content(true);
 	}
 }

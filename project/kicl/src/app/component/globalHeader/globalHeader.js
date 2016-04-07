@@ -1,115 +1,231 @@
 (function globalHeader () {
 	'use strict';
 
-	var controller = [
-		'$rootScope',
-		'$scope',
-		'$window',
-		'$timeout',
-		'$element',
-		function (root, scope, win, timeout, element) {
-			var _window = angular.element(win);
-
-			function hide () {
-				delete scope.globalHeader.status.show;
-				scope.globalHeader.status.scrolled = false;
-			}
-
-			function show () {
-				scope.globalHeader.status.show = true;
-				scope.globalHeader.status.scrolled = false;
-			}
-
-			function showNavigation () {
-				scope.globalHeader.status.navigation.show = true;
-			}
-
-			function hideNavigation () {
-				delete scope.globalHeader.status.navigation.show;
-			}
-
-			function troggleNavigation (event, status) {
-				if (status === 'close') {
-					hideNavigation();
-
-					return;
-				}
-
-				showNavigation();
-			}
-
-			function getHeight () {
-				return element.outerHeight();
-			}
-
-			function broadcastHeight (height) {
-				root.$broadcast('globalHeader.height', height);
-			}
-
-			function stateChangeSuccess () {
-				hideNavigation();
-
-				init();
-			}
-
-			function init () {
-				_window.bind('scroll', onScroll);
-			}
-
-			function troggleScrollStatus () {
-				if (angular.element(document).scrollTop() >= element.outerHeight()) {
-					return true;
-				}
-
-				return false;
-			}
-
-			function onScroll (event) {
-				scope.globalHeader.status.scrolled = troggleScrollStatus();
-
-				if (!scope.$$phase) {
-					scope.$apply();
-				}
-			}
-
-			scope.globalHeader = {};
-
-			scope.globalHeader.timer ={};
-			
-			scope.globalHeader.status = {};
-			scope.globalHeader.status.show = false;
-			scope.globalHeader.status.navigation = {};
-			scope.globalHeader.status.navigation.show = true;
-
-			timeout.cancel(scope.globalHeader.timer.init);
-			scope.globalHeader.timer.init = timeout(init, 0);
-
-			scope.$on('globalHeader.hide', hide);
-			scope.$on('globalHeader.show', show);
-			scope.$on('globalHeader.navigation.show', showNavigation);
-			scope.$on('globalHeader.navigation.hide', hideNavigation);
-			scope.$on('globalHeader.navigation.hamburgerButton.troggle', troggleNavigation);
-
-			scope.$on('$stateChangeSuccess', stateChangeSuccess);
-
-			scope.$watch(getHeight, broadcastHeight);
-		}
+	var dependencies = [
+		
 	];
 
-	function directive () {
-		return {
-			restrict: 'E',
-			replace: true,
-			scope : {
-				'isolate' : '&'
-			},
-			templateUrl : 'app/component/globalHeader/globalHeader.html',
-			controller : controller
-		};
-	}
+	angular
+		.module('component.globalHeader', dependencies)
+		.service('component.globalHeader.height', [
+			'$rootScope',
+			'$window',
+			'$timeout',
+			function height (root, _window, timeout) {
+				var element,
+					scope,
+					win = angular.element(_window);
 
-	angular.module('component.globalHeader', [])
+				this.get = function () {
+					if (element.context.nodeType === 8) {
+						return element.next().outerHeight();
+					}
+
+					return element.outerHeight();
+				};
+
+				this.update = function () {
+					root.$broadcast('globalHeader.height', scope.height);
+				};
+
+				this.set = function () {
+					scope.height = this.get();
+
+					if (!scope.$$phase) {
+						scope.$apply();
+					}
+
+					this.update();
+				}.bind(this);
+
+				this.unbind = function () {
+					timeout.cancel(scope.heightTimer);
+					element.unbind('resize');
+				};
+
+				this.assign = function (scopeRef, elementRef) {
+					scope = scopeRef;
+					element = elementRef;
+
+					win.bind('resize', this.set);
+
+					timeout.cancel(scope.heightTimer);
+					scope.heightTimer = timeout(this.set);
+				};
+			}
+		])
+		.service('component.globalHeader.render', [
+			'$rootScope',
+			function render (root) {
+				var scope;
+
+				this.hide = function () {
+					scope.show = false;
+				};
+
+				this.show = function () {
+					scope.show = true;
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					scope.$on('globalHeader.show', this.show);
+					scope.$on('globalHeader.hide', this.hide);
+
+					return this;
+				};
+			}
+		])
+		.service('component.globalHeader.navigation', [
+			'$window',
+			'$timeout',
+			'mediaquery',
+			function navigation (_window, timeout, mediaquery) {
+				var scope,
+					emitFrom = 'globalHeader.navigation.',
+					win = angular.element(_window);
+
+				function troggle (set) {
+					scope.navigation.closed = Boolean(set);
+
+					if (!mediaquery().mobile) {
+						return;
+					}
+
+					scope.$emit('overlay.' + (!Boolean(set) ? 'set' : 'unset'));
+				}
+
+				this.open = function () {
+					troggle(false);
+				};
+
+				this.close = function () {
+					troggle(true);
+				};
+
+				this.resize = function () {
+					if (mediaquery().mobile && !scope.navigation.closed) {
+						scope.$emit('overlay.set');
+
+						return;
+					}
+
+					scope.$emit('overlay.unset');
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					scope.navigation = {};
+
+					scope.$on(emitFrom + 'hamburgerButton.render.close', this.open);
+					scope.$on(emitFrom + 'hamburgerButton.render.open', this.close);
+
+					win.bind('resize', this.resize);
+				};
+			}
+		])
+		.service('component.globalHeader.scroll', [
+			'$window',
+			'scroll',
+			function scroll (_window, scrollEvent) {
+				var scope;
+
+				this.set = function (offset) {
+					scope.scrollTop = offset.y;
+
+					scope.scrolled = false;
+
+					if (offset.y !== 0) {
+						scope.scrolled = true;
+					}
+
+					if (!scope.$$phase) {
+						scope.$apply();
+					}
+				}.bind(this);
+
+				this.unbind = scrollEvent.unbind;
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					scrollEvent.init(this.set);
+				};
+			}
+		])
+		.service('component.globalHeader.stateChange', [
+			'component.globalHeader.navigation',
+			'mediaquery',
+			function (navigation, mediaquery) {
+				var scope;
+
+				this.start = function () {
+					if (!mediaquery().mobile) {
+						return;
+					}
+
+					navigation.close();
+
+					scope.$broadcast('globalHeader.navigation.hamburgerButton.open', { doNotBroadcast : true });
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					navigation.assign(scope);
+
+					scope.$on('$stateChangeStart', this.start);
+				};
+			}
+		])
+		.service('component.globalHeader.event', [
+			'component.globalHeader.scroll',
+			'component.globalHeader.stateChange',
+			function globalHeaderEvent (stateChange, scroll) {
+				var scope;
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					stateChange.assign(scope);
+					scroll.assign(scope);
+				};
+			}
+		])
 		.directive('globalHeader', [
-			directive
-		]);
+			function directive (height, scroll) {
+				return {
+					restrict : 'E',
+					replace : true,
+					transclude: true,
+					scope: true,
+					templateUrl : 'app/component/globalHeader/globalHeader.html',
+					controller : 'component.globalHeader.controller'
+				};
+			}
+		])
+		.controller('component.globalHeader.controller',
+			[
+				'$scope',
+				'$element',
+				'$attrs',
+				'component.globalHeader.height',
+				'component.globalHeader.render',
+				'component.globalHeader.event',
+				function controller (scope, element, attrs, height, render, globalHeaderEvent) {
+					height.assign(scope, element);
+					render.assign(scope);
+					globalHeaderEvent.assign(scope);
+
+					scope.$on('$destroy', function () {
+						height.unbind();
+						scroll.unbind();
+					});
+				}
+			]
+		);
 }());
+
+

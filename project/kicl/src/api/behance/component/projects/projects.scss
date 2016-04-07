@@ -7,21 +7,45 @@
 
 	figcaption {
 		p {
-			@include word-break();
+			font-family: $heading_font_family;
+			white-space: nowrap;
 		}
 	}
 
 	.title {
+		@include set-transition(transform);
+
 		@include set-font-size(1.6);
 		
-		font-family: $heading_font_family;
+		margin-left: auto;
+		margin-right: auto;
 
 		@include desktop () {
-			@include set-font-size(1.4);
+			@include transform(scale(1.2));
+
+			margin-bottom: rem($gutter);
 		}
 
 		@include tablet () {
-			@include set-font-size(1.2);
+			@include transform(scale(1));
+
+			margin-bottom: rem($space);
+		}
+
+		@include largemobile () {
+			@include transform(scale(.8));
+
+			margin-bottom: rem(-1 * $space);
+		}
+
+		@include mobile () {
+			@include transform(scale(.6));
+
+			@include truncate(80%);
+		}
+
+		@include smallmobile () {
+			@include transform(scale(.4));
 		}
 	}
 

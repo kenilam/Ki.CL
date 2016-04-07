@@ -25,18 +25,24 @@ module.exports.library = function (project, dependencies) {
 				font : ['./plugin/**/*.{eot,svg,ttf,woff,woff2,otf}']
 			},
 			JS : [
-				'!bower_components/**/index.js',
-				'!bower_components/**/*.min.js',
-				'!bower_components/**/*-min.js',
-				'!bower_components/**/dist/*.min.js',
-				'!bower_components/**/dist/*-min.js',
-				'!bower_components/compass-breakpoint/**/*.{js}',
-				'!bower_components/**/{test,min,bin,lang,lib,support,locale,benchmarks,scripts,feature-detects,templates}/**/*.js',
-				'!bower_components/{angular-ui-router,jquery,moment,Respond}/src/**/*.js',
-				'!bower_components/**/{grunt,Gruntfile,GruntFile,gulpfile,test,export,umd,eyeglass-exports,ngAnimateMock,ngMock,ngMockE2E}.js',
-				'bower_components/**/*.js',
-				'bower_components/**/dist/*.js',
-				'bower_components/**/src/**/*.js'
+				'bower_components/angular/angular.js',
+				'bower_components/angular-animate/angular-animate.js',
+				'bower_components/angular-aria/angular-aria.js',
+				'bower_components/angular-resource/angular-resource.js',
+				'bower_components/angular-route/angular-route.js',
+				'bower_components/angular-sanitize/angular-sanitize.js',
+				'bower_components/angular-ui-router/release/angular-ui-router.js',
+				'bower_components/es6-shim/es6-sham.js',
+				'bower_components/es6-shim/es6-shim.js',
+				'bower_components/underscore/underscore.js',
+				'bower_components/gsap/src/uncompressed/TweenMax.js',
+				'bower_components/html5shiv/dist/{html5shiv,html5shiv-printshiv}.js',
+				'bower_components/jquery/dist/jquery.js',
+				'bower_components/modernizr/modernizr.js',
+				'bower_components/moment/moment.js',
+				'bower_components/swiper/dist/js/swiper.js',
+				'bower_components/swiper/dist/js/maps/swiper.min.js.map',
+				'bower_components/underscore/underscore.js'
 			],
 			CSS : [
 				'bower_components/**/*.css',
@@ -77,10 +83,15 @@ module.exports.library = function (project, dependencies) {
 						gulp.src(file[extension])
 							.pipe(addSrc(file.plugin[extension]))
 							.pipe(rename(function (file) {
-								var path = file.dirname.split('/'),
-									lastPath = path[path.length - 1];
-
 								file.dirname = '';
+								
+								if (file.basename === 'swiper.min.js') {
+									file.basename = 'swiper.js';
+								}
+
+								if (file.extname === '.map') {
+									file.dirname = 'maps';
+								}
 							}))
 							.pipe(gulp.dest(destination[extension]));
 

@@ -26,7 +26,7 @@ module.exports.compile = function (project) {
 
 		file = {
 			HTML : './project/' + project + '/src/index.html',
-			JS : './project/' + project + '/src/**/*.js',
+			JS : './project/' + project + '/src/**/*.{js,map}',
 			CSS : './project/' + project + '/src/**/*.css',
 			SCSS : './project/' + project + '/src/**/*.{sass,scss}',
 			font : './project/' + project + '/src/**/*.{eot,svg,ttf,woff,woff2,otf}',

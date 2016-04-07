@@ -1,18 +1,17 @@
 {
 	"info" : {
-		"name" : "Ki.CL",
-		"title" : "A Creative Consultant"
+		"title" : "Ki.CL",
+		"description" : "A independent design agency specialize in creative consulting, branding and web development",
+		"heroImage" : "http://ki-cl.com/asset/image/site.hero.png"
 	},
 
 	"component" : {
-		"globalHeader" : {
-			"closeButton" : {
-				"expand" : {
-					"message" : "Tap to expand"
-				},
-				"collapse" : {
-					"message" : "Tap to collapse"
-				}
+		"hamburgerButton" : {
+			"expand" : {
+				"message" : "Tap to expand"
+			},
+			"collapse" : {
+				"message" : "Tap to collapse"
 			}
 		},
 		"breadcrumb" : {

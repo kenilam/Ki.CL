@@ -2,12 +2,16 @@
 
 [data-api='behance.user.avatar'] {
 	@include circle(grid-size(3));
-
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
+	
+	position: relative;
 
 	img {
-		@include opacity(0);
+		@include transform(translate3d(-50%, -50%, 0));
+
+		height: 100%;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		width: 100%;
 	}
 }

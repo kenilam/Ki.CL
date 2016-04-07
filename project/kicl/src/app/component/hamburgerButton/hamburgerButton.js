@@ -1,65 +1,107 @@
 (function hamburgerButton () {
 	'use strict';
 
-	var controller = [
-		'$rootScope', '$scope', '$element', '$attrs',
-			function (root, scope, element, attrs) {
-				function open () {
-					scope.hamburgerButton.status.closed = false;
-				}
+	var dependencies = [
+		
+	];
 
-				function close () {
-					scope.hamburgerButton.status.closed = true;
-				}
+	angular
+		.module('component.hamburgerButton', dependencies)
+		.service('component.hamburgerButton.render', [
+			'$rootScope',
+			function (root) {
+				var scope,
+					attrs,
+					eventName;
 
-				function emit () {
-					root.$broadcast(
-						(attrs.emitTo ? attrs.emitTo + '.' : '') + 'hamburgerButton.troggle',
-						scope.hamburgerButton.status.closed ? 'close' : 'open'
-					);
-				}
+				this.open = function (event, prop) {
+					scope.closed = false;
 
-				function click () {
-					scope.hamburgerButton.status.closed = !scope.hamburgerButton.status.closed;
+					if (prop && prop.doNotBroadcast) {
+						return;
+					}
 
-					emit();
-				}
+					root.$broadcast(eventName + 'render.open');
+				};
 
-				function stateChangeSuccess () {
-					close();
-				}
+				this.close = function (event, prop) {
+					scope.closed = true;
+					
+					if (prop && prop.doNotBroadcast) {
+						return;
+					}
 
-				scope.hamburgerButton = {};
-				
-				scope.hamburgerButton.status = {};
-				scope.hamburgerButton.status.closed = Boolean(attrs.closeOnDefault === 'true');
+					root.$broadcast(eventName + 'render.close');
+				};
 
-				scope.hamburgerButton.control = {};
-				scope.hamburgerButton.control.click = click;
+				this.troggle = function (event, prop) {
+					if (scope.closed) {
+						this.open(event, prop);
 
-				scope.$on('$stateChangeSuccess', stateChangeSuccess);
+						return;
+					}
 
-				scope.$on((attrs.emitTo ? attrs.emitFrom + '.' : '') + 'hamburgerButton.open', open);
-				scope.$on((attrs.emitTo ? attrs.emitFrom + '.' : '') + 'hamburgerButton.close', close);
+					this.close(event, prop);
+				}.bind(this);
 
-				emit();
+				this.assign = function (scopeRef, attrsRef) {
+					scope = scopeRef;
+					attrs = attrsRef;
+					eventName = (attrs.emitTo ? attrs.emitFrom + '.' : '') + 'hamburgerButton.';
+
+					scope.$on(eventName + 'open', this.open);
+					scope.$on(eventName + 'close', this.close);
+					scope.$on(eventName + 'toggle', this.troggle);
+
+					if (attrs.closeOnDefault === 'close') {
+						this.close();
+
+						return;
+					}
+
+					this.open();
+				};
 			}
-		];
+		])
+		.service('component.hamburgerButton.resource', [
+			function () {
+				var scope;
 
-	function directive () {
-		return {
-			restrict : 'E',
-			replace : true,
-			scope : {
-				'isolate' : '&'
-			},
-			templateUrl : 'app/component/hamburgerButton/hamburgerButton.html',
-			controller : controller
-		};
-	}
+				function hasResource (event, resource) {
+					scope.resource = resource;
+				}
+				
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
 
-	angular.module('component.hamburgerButton', [])
+					scope.$on('kicl.component.hamburgerButton.resource', hasResource);
+				};
+			}
+		])
 		.directive('hamburgerButton', [
-			directive
+			function directive (root, sitemap, render) {
+				return {
+					restrict : 'E',
+					replace : true,
+					scope : {
+						'isolate' : '&'
+					},
+					templateUrl : 'app/component/hamburgerButton/hamburgerButton.html',
+					controller : 'component.hamburgerButton.controller'
+				};
+			}
+		])
+		.controller('component.hamburgerButton.controller', [
+			'$scope',
+			'$attrs',
+			'component.hamburgerButton.render',
+			'component.hamburgerButton.resource',
+			function controller (scope, attrs, render, resource) {
+				render.assign(scope, attrs);
+				resource.assign(scope);
+
+				scope.control = {};
+				scope.control.click = render.troggle;
+			}
 		]);
 }());

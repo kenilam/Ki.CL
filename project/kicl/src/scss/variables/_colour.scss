@@ -10,6 +10,7 @@ $pitch_black: #000;
 
 $grey: #B7C4CC;
 $light_grey: tint($grey, 15);
+$lighter-grey: tint($light_grey, 30);
 $darker_grey: #3f3f3f;
 $darkest_grey: shade($darker_grey, 30);
 $dark_grey: tint($darker_grey, 20);

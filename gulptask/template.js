@@ -21,7 +21,8 @@ module.exports.template = function (project) {
 		file = {
 			template : [
 				'./project/' + project + '/src/**/**/*.html',
-				'!./project/' + project + '/src/index.html'
+				'!./project/' + project + '/src/index.html',
+				'!./project/' + project + '/src/app/component/contactForm/**/*.html'
 			]
 		},
 

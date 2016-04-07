@@ -1,11 +1,18 @@
 {
 	"name" : "contact",
 	"route" : "contact",
-	"message" : "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+	"content" : {
+		"title" : "let's talk",
+		"message" : "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+		"backdrop" : {
+			"image" : "/asset/image/room.jpg"
+		}
+	},
 	"component" : {
 		"customForm" : {
 			"name" : "contactFrom",
-			"action" : "http://ki-cl.com/widget/component/contactform/action.php",
+			"action" : "app/component/contactForm/action.php",
+			"method" : "post",
 			"message" : {
 				"required" : "required"
 			},

@@ -1,64 +1,82 @@
 (function project () {
 	'use strict';
 
-	var controller = [
-			'$rootScope', '$scope', '$element', '$timeout', '$state', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
-			function controller (root, scope, element, timeout, state, stateParams, reference, check, modify) {
-				function showSlideshow (module) {
-					root.$broadcast('behance.project.slideshow.show', { module : module });
-				}
+	angular
+		.module('behance.component.project', [
+			'behance.component.project.slideshow'
+		])
+		.service('behance.component.project.data', [
+			'$rootScope',
+			'$stateParams',
+			'behanceReference',
+			'behanceCheck',
+			'behanceModify',
+			'behance.component.project.slideshow',
+			function projectData (root, stateParams, reference, check, modify, slideshow) {
+				var scope;
 
-				function broadcast () {
-					root.$broadcast('behance.project.data', scope.project);
-
-					root.$broadcast('behance.project.slideshow.data', {
-						name : scope.project.name,
-						modules : scope.project.slideshow
-					});
-				}
-
-				function init (data) {
-					scope.resource = reference.resource.data.widget.project;
-
+				this.data = function (data) {
 					scope.project = modify.project(check.project(data.project));
 
-					timeout.cancel(scope.timer.data);
-					scope.timer.data = timeout(broadcast, 0);
-				}
+					root.$broadcast('behance.project.data', scope.project);
 
-				scope.timer = {};
+					slideshow.data(scope.project);
+				};
 
-				scope.control = {};
-				scope.control.showSlideshow = showSlideshow;
+				this.init = function (scopeRef) {
+					scope = scopeRef;
 
-				if (!reference.component.project[stateParams.project]) {
-					reference.component.project[stateParams.project] = {};
-				}
-				
-				if (!reference.component.project[stateParams.project].promise) {
-					reference.component.project[stateParams.project].promise = reference.api.project().$promise;
-				}
+					scope.resource = reference.resource.data.widget.project;
 
-				reference.component.project[stateParams.project].promise.then(init);
+					if (!reference.component.project[stateParams.project]) {
+						reference.component.project[stateParams.project] = {};
+					}
+					
+					if (!reference.component.project[stateParams.project].promise) {
+						reference.component.project[stateParams.project].promise = reference.api.project().$promise;
+					}
+
+					reference.component.project[stateParams.project].promise.then(this.data);
+				};
 			}
-		];
+		])
+		.service('behance.component.project.slideshow', [
+			'$rootScope',
+			function slieshow (root) {
+				this.data = function (project) {
+					root.$broadcast('behance.project.slideshow.data', {
+						name : project.name,
+						modules : project.slideshow
+					});
+				};
 
-	function directive (async) {
-		return {
-			restrict: 'E',
-			replace: true,
-			scope : {
-				'isolate' : '&'
-			},
-			templateUrl : 'api/behance/component/project/project.html',
-			controller : controller
-		};
-	}
+				this.show = function (module) {
+					root.$broadcast('behance.project.slideshow.show', { module : module });
+				};
+			}
+		])
+		.controller('behance.component.project', [
+			'behance.component.project.data',
+			'behance.component.project.slideshow',
+			'$rootScope', '$scope', '$element', '$timeout', '$state', '$stateParams', 'behanceReference', 'behanceCheck', 'behanceModify',
+			function controller (projectData, slideshow, root, scope, element, timeout, state, stateParams, reference, check, modify) {
+				scope.control = {};
+				scope.control.showSlideshow = slideshow.show;
 
-	angular.module('behance.component.project', [
-		'behance.component.project.slideshow'
-	])
+				projectData.init(scope);
+			}
+		])
 		.directive('behanceProject', [
-			directive
+			function directive (async) {
+				return {
+					restrict: 'E',
+					replace: true,
+					scope : {
+						'isolate' : '&'
+					},
+					templateUrl : 'api/behance/component/project/project.html',
+					controller : 'behance.component.project'
+				};
+			}
 		]);
 }());

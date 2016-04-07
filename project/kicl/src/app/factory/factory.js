@@ -1,7 +1,9 @@
 (function factory () {
 	'use strict';
 
-	angular.module('factory', [
+	var dependencies = [
 		'factory.sitemap'
-	]);
+	];
+
+	angular.module('factory', dependencies);
 }());

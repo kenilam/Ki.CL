@@ -1,19 +1,26 @@
-@import '_import';
 @import '../_project';
 
-@include set-project('1177179', $black, $white);
+@include set-project(1177179, $darkest-grey, $grey, $black, 15%);
 
-[data-project-current-id='1177179'] {
-	[data-api='behance.project.slideshow'] {
-		a,
-		button i {
-			color: $darker_grey;
+[data-current-project-id='1177179'] {
+	.globalHeader {
+		&.isScrolled {
+			nav {
+				a {
+					&[ui-sref='projects'],
+					&:hover {
+						color: $white;
+					}
+				}
+			}
 		}
 	}
-
-	.tool {
-		a {
-			color: $black;
+	
+	[ui-view='project'] {
+		.tool {
+			a {
+				color: $darkest-grey;
+			}
 		}
 	}
 }

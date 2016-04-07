@@ -1,47 +1,42 @@
 @import '_import';
 
-body {
-	@include set-transition(background-color);
-}
+main {
+	left: 0;
+	min-height: 100vh;
+	padding-top: grid-size(1);
+	position: absolute;
+	top: 0;
+	width: 100%;
 
-[data-route] {
-	main {
-		@include set-transition(color);
-		@include-duration(1.5s);
+	@include mobile () {
+		padding-top: grid-size(.8);
+	}
 
-		min-height: 100vh;
-		z-index: 1;
+	&.ng-animate {
+		@include set-transition(opacity);
+	}
 
-		&.ng-animate {
-			left: 0;
-			top: 0;
-			position: absolute;
+	&.ng-enter {
+		@include opacity(0);
 
-			+ .globalFooter {
-				@include opacity(0);
+		z-index: 2;
 
-				@include largemobile () {
-					@include hidden();
-				}
-			}
-		}
-		
-		&.ng-enter {
-			z-index: 2;
-
-			&.ng-enter-active {
-				@include largemobile () {
-					@include opacity(1);
-				}
-			}
-		}
-
-		&.ng-leave {
-			&.ng-leave-active {
-				@include largemobile () {
-					@include opacity(1);
-				}
-			}
+		&.ng-enter-active {
+			@include opacity(1);
 		}
 	}
+
+	&.ng-leave {
+		@include opacity(1);
+
+		z-index: 1;
+		
+		&.ng-leave-active {
+			@include opacity(0);
+		}
+	}
+}
+
+.ng-animate {
+	@include through();
 }

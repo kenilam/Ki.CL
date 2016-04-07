@@ -13,6 +13,8 @@
 }
 
 @mixin circle ($size: 100%) {
+	@include set-transition(height, min-height, min-width, transform, width);
+
 	@include transform(translateZ(0));
 
 	border-radius: 50%;
@@ -28,6 +30,15 @@
 	min-height: $size;
 	min-width: $size;
 	width: $size;
+}
+
+@mixin unset-circle ($size: 100%) {
+	border-radius: 0;
+	height: inherit;
+	min-height: inherit;
+	min-width: inherit;
+	width: inherit;
+	overflow: inherit;
 }
 
 @mixin clip-path ($anchor...) {
@@ -46,7 +57,7 @@
 }
 
 @mixin hidden () {
-	@include clip-path(0 0, 0 0, 0 0, 0 0);
+	@include clip-path(polygon(0 0, 0 0, 0 0, 0 0));
 
 	height: 1px;
 	margin: -1px;
@@ -92,9 +103,15 @@
 	content: $content;
 }
 
+@mixin backdrop-filter ($prop...) {
+	-webkit-backdrop-filter: $prop;
+}
+
 @mixin set-logo-size ($rate: 1.825) {
 	a {
 		@include set-font-size($rate);
+
+		line-height: 1;
 	}
 }
 
@@ -110,6 +127,12 @@
 				content: $logo-kicl;
 			}
 		}
+	}
+}
+
+@mixin set-logo-color ($color: $darker_grey) {
+	a {
+		color: $color;
 	}
 }
 

@@ -1,25 +1,9 @@
-@import '_import';
 @import '../_project';
 
-@include set-project('1177731', $yellow, $black);
+@include set-project(1177731, $yellow, darken($yellow, 50%), $darkest-grey, 5%);
 
-[data-project-current-id='1177731'] {
-	[data-api='behance.project'] {
+[data-current-project-id='1177731'] {
+	[ui-view='project'] {
 		color: darken($yellow, 50%);
-
-		.tool {
-			a {
-				&:hover {
-					color: $orange;
-				}
-			}
-		}
-	}
-
-	[data-api='behance.project.slideshow'] {
-		a,
-		button i {
-			color: $dark_grey;
-		}
 	}
 }

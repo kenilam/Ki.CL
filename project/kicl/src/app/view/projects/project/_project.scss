@@ -1,60 +1,132 @@
-@mixin set-project ($projectId, $background-color, $text-color) {
-	[data-project-current-id='#{$projectId}'] {
+@import 'import';
+
+@mixin set-project ($id, $theme-color, $text-color, $text-active-color, $lighten: 15%, $darken: 50%) {
+	[data-current-project-id='#{$id}'] {
 		.globalHeader {
-			.navigation {
-				@include largemobile() {
-					background-color: $background-color;
+			nav {
+				a {
+					color: $text-color;
+
+					&[ui-sref='projects'],
+					&:hover {
+						color: $text-active-color;
+					}
+				}
+
+				@include mobile () {
+					background-color: $theme-color;
 				}
 			}
 
-			.hamburgerButton {
-				line {
-					stroke: $text-color;
-				}
+			&.isScrolled {
+				background-color: $theme-color;
+			}
+		}
 
-				path {
-					fill: $text-color;
+		.logo {
+			a {
+				color: $text-color;
+
+				&:hover {
+					color: $text-active-color;
 				}
 			}
 		}
 
-		[ui-view=project] {
-			color: $background-color;
+		.hamburgerButton {
+			line {
+				stroke: $text-color;
+			}
 
-			.fields,
-			.stats,
-			.tags {
+			&:hover {
+				line {
+					stroke: $text-active-color;
+				}
+			}
+		}
+		
+		main {
+			nav {
+				.background {
+					background-color: lighten($theme-color, $lighten);
+				}
+			}
+		}
+		
+		[ui-view='project'] {
+			color: $theme-color;
+
+			.tags,
+			.fields {
+				li {
+					background-color: $theme-color;
+					color: $text-color;
+				}
+			}
+
+			.stats {
 				li,
 				span {
-					background-color: $background-color;
+					background-color: $theme-color;
+				}
+
+				li {
 					color: $text-color;
 				}
 
 				span {
-					+ span {
-						border-left-color: $text-color;
+					&:first-child {
+						border-right-color: darken($theme-color, $darken);
 					}
+				}
+			}
+
+			.tool {
+				a {
+					color: $text-color;
 				}
 			}
 		}
 
 		[data-api='behance.project.slideshow'] {
-			background-color: $background-color;
+			color: $text-color;
 
-			a {
-				color: invert($text-color);
-			}
-
-			button {
-				&.isCurrent {
-					i {
-						color: $text-color;
-					}
+			.wrapper {
+				background-color: $theme-color;
+				
+				@include largemobile () {
+					background-color: transparent;
 				}
 			}
 
+			.close {
+				@include largemobile () {
+					background-color: $theme-color;
+				}
+			}
+
+			.pagination button i {
+				color: $text-color;
+			}
+
 			line {
-				stroke : $text-color;
+				@include largemobile () {
+					stroke: $text-color;
+				}
+			}
+		}
+	}
+
+	main {
+		.published_on {
+			font-weight: $a_isCurrent_font_weight;
+		}
+
+		[href='#!/projects/#{$id}'] {
+			color: $text-color;
+
+			.published_on {
+				color: $text-active-color;
 			}
 		}
 	}

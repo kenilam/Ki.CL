@@ -1,156 +1,226 @@
 (function projects () {
 	'use strict';
 
-	var projectsRoute,
-		controller = [
-			'$rootScope', '$scope', '$stateParams', '$timeout', 'behanceReference', 'behanceCheck', 'behanceModify',
-			function controller (root, scope, stateParams, timeout, reference, check, modify) {
-				function setCurrentIndex () {
-					function broadcast () {
-						root.$broadcast('behance.projects.set.currentIndex', scope.currentIndex);
-					}
+	angular
+		.module('behance.component.projects', [])
+		.service('behance.component.projects.currentProject', [
+			'$stateParams',
+			'behance.component.projects.current',
+			'behance.component.projects.currentIndex',
+			function currentProject (stateParams, current, currentIndex) {
+				var scope;
 
-					function eachProject (prop, index) {
-						if (scope.current.id === prop.id) {
-							return index;
+				this.set = function (project, navigate) {
+					var currentProject = project || _.findWhere(scope.projects, { id : stateParams.project });
+
+					if (currentProject) {
+						current.set(currentProject);
+						currentIndex.set();
+
+						if (!navigate) {
+							return;
 						}
-					}
-					
-					function filterProjects (index) {
-						return index >= 0;
-					}
 
-					scope.currentIndex = scope.projects.map(eachProject).filter(filterProjects)[0];
-
-					timeout.cancel(scope.timer.setCurrentIndex);
-					scope.timer.setCurrentIndex = timeout(broadcast, 0);
-				}
-				function unsetCurrentIndex () {
-					function broadcast () {
-						root.$broadcast('behance.projects.unset.currentIndex', scope.currentIndex);
-					}
-
-					delete scope.currentIndex;
-
-					timeout.cancel(scope.timer.unsetCurrentIndex);
-					scope.timer.unsetCurrentIndex = timeout(broadcast, 0);
-				}
-				
-
-				function setCurrent (project) {
-					function broadcast () {
-						root.$broadcast('behance.projects.set.current', scope.current);
-					}
-
-					scope.current = project || scope.projects[0];
-
-					timeout.cancel(scope.timer.setCurrent);
-					scope.timer.setCurrent = timeout(broadcast, 0);
-				}
-
-				function unsetCurrent () {
-					function broadcast () {
-						root.$broadcast('behance.projects.unset.current', scope.current);
-					}
-
-					delete scope.current;
-
-					unsetCurrentIndex();
-
-					timeout.cancel(scope.timer.setCurrent);
-					scope.timer.setCurrent = timeout(broadcast, 0);
-				}
-
-				function setCurrentProject () {
-					var current = _.findWhere(scope.projects, { id : stateParams.project });
-					
-					if (current) {
-						setCurrent(current);
-						setCurrentIndex();
+						state.go('projects.project', { project : currentProject.id });
 
 						return;
 					}
 
-					if (scope.current && !current) {
-						unsetCurrent();
-						unsetCurrentIndex();
+					if (scope.current) {
+						current.unset();
+						currentIndex.unset();
 					}
-				}
+				};
 
-				function setControl (event, control) {
-					scope.control.click = control.click;
-				}
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
 
-				function stateChangeSuccess (event, toState, toParams, fromState, fromParams) {
-					setCurrentProject();
-				}
+					current.assign(scope);
+					currentIndex.assign(scope);
+				};
+			}
+		])
+		.service('behance.component.projects.currentIndex', [
+			'$rootScope',
+			'$timeout',
+			function currentIndex (root, timeout) {
+				var scope;
 
-				function destroy () {
-					unsetCurrent();
+				this.broadcast = function (method) {
+					if (!method) {
+						return;
+					}
 
-					_.each(scope.timer, function (timer) {
-						timeout.cancel(timer);
-					});
-				}
+					timeout.cancel(scope.currentIndexTimer);
+					scope.currentIndexTimer = timeout(function () {
+						root.$broadcast('behance.projects.set.' + method + '.currentIndex', scope.currentIndex);
+					}, 0);
+				};
 
-				function init (data) {
-					var current;
+				this.set = function (prop) {
+					scope.currentIndex = scope.projects.map(function eachProject (prop, index) {
+						if (scope.current.id === prop.id) {
+							return index;
+						}
+					}).filter(function filterProjects (index) {
+						return index >= 0;
+					})[0];
 
+					this.broadcast('set');
+				};
+
+				this.unset = function () {
+					delete scope.currentIndex;
+
+					this.broadcast('unset');
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+				};
+			}
+		])
+		.service('behance.component.projects.current', [
+			'$rootScope',
+			'$timeout',
+			'behance.component.projects.currentIndex',
+			function current (root, timeout, currentIndex) {
+				var scope;
+
+				this.broadcast = function (method) {
+					if (!method) {
+						return;
+					}
+
+					timeout.cancel(scope.currentTimer);
+					scope.currentTimer = timeout(function () {
+						root.$broadcast('behance.projects.set.' + method + '.current', scope.current);
+					}, 0);
+				};
+
+				this.set = function (project) {
+					scope.current = project || scope.projects[0];
+
+					this.broadcast('set');
+				};
+
+				this.unset = function () {
+					delete scope.current;
+
+					currentIndex.unset();
+
+					this.broadcast('unset');
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					currentIndex.assign(scope);
+				};
+			}
+		])
+		.service('behance.component.projects.data', [
+			'$rootScope',
+
+			'behanceReference',
+			'behanceCheck',
+			'behanceModify',
+
+			'behance.component.projects.current',
+			'behance.component.projects.currentIndex',
+			'behance.component.projects.currentProject',
+			function projectsData (root, reference, check, modify, current, currentIndex, currentProject) {
+				var scope,
+					attrs;
+
+				this.set = function (projects) {
+					scope.projects = check.project(_.map(projects, modify.project));
+					
+					current.set();
+					currentIndex.set();
+					currentProject.set();
+				};
+
+				this.loaded = function (data) {
 					reference.component.projects.resolved = data.$resolved;
 
-					modify.storage('project', { projectsRoute : scope.attr.projectsRoute });
+					modify.storage('project', { projectsRoute : attrs.projectsRoute });
 
-					scope.projects = check.project(_.map(data.projects, modify.project));
-					scope.resource = reference.resource.data.widget.projects;
-
-					setCurrentProject();
+					this.set(data.projects);
 
 					root.$broadcast('behance.projects.data', scope.projects);
-				}
+				}.bind(this);
 
-				scope.projects = {};
-				scope.timer = {};
-				scope.resource = {};
-				scope.current = {};
-				scope.currentIndex = 0;
-				scope.control = {};
-				scope.control.click = function () { return; };
+				this.assign = function (scopeRef, attrsRef) {
+					if (!attrsRef.projectsRoute) {
+						throw ('behance.component.projects need data-project-route to run');
+					}
 
-				scope.$on('behance.projects.control', setControl);
-				scope.$on('$stateChangeSuccess', stateChangeSuccess);
-				scope.$on('$destroy', destroy);
+					scope = scopeRef;
+					attrs = attrsRef;
 
-				if (!reference.component.projects.promise) {
-					reference.component.projects.promise = reference.api.projects().$promise;
-				}
-				
-				reference.component.projects.promise.then(init);
+					scope.resource = reference.resource.data.widget.projects;
+
+					if (!reference.component.projects.promise) {
+						reference.component.projects.promise = reference.api.projects().$promise;
+					}
+					
+					reference.component.projects.promise.then(this.loaded);
+
+					current.assign(scope);
+					currentIndex.assign(scope);
+					currentProject.assign(scope);
+				};
 			}
-		],
+		])
+		.service('behance.component.projects.stateChange', [
+			'behance.component.projects.current',
+			'behance.component.projects.currentProject',
+			function stateChange (current, currentProject) {
+				var scope;
 
-		link = function (scope, elm, attr) {
-			if (!attr.projectsRoute) {
-				throw ('behance.component.projects need data-project-route to run');
+				this.onStateChangeSuccess = function (event, toState, toParams, fromState, fromParams) {
+					if (!scope) {
+						return;
+					}
+
+					if (toState.name === 'projects.project') {
+						currentProject.set();
+
+						return;
+					}
+
+					current.unset();
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					scope.$on('$stateChangeSuccess', this.onStateChangeSuccess);
+				};
 			}
-
-			scope.attr = attr;
-		};
-
-	function directive (async) {
-		return {
-			restrict: 'E',
-			replace: true,
-			scope : {
-				'isolate' : '&'
-			},
-			templateUrl : 'api/behance/component/projects/projects.html',
-			controller : controller,
-			link : link
-		};
-	}
-
-	angular.module('behance.component.projects', [])
+		])
+		.controller('behance.component.projects.controller', [
+			'$scope',
+			'$attrs',
+			'behance.component.projects.data',
+			'behance.component.projects.stateChange',
+			function controller (scope, attrs, projectsData, stateChange) {
+				projectsData.assign(scope, attrs);
+				stateChange.assign(scope);
+			}
+		])
 		.directive('behanceProjects', [
-			directive
+			function directive (async) {
+				return {
+					restrict: 'E',
+					replace: true,
+					scope : {
+						'isolate' : '&'
+					},
+					templateUrl : 'api/behance/component/projects/projects.html',
+					controller : 'behance.component.projects.controller'
+				};
+			}
 		]);
 }());

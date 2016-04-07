@@ -8,14 +8,34 @@
 		@include display(flex);
 	}
 
-	li {
-		+ li {
-			margin-left: rem($gutter);
-		}
-	}
-
 	a {
 		font-weight: $thicker_font_weight;
 		text-transform: uppercase;
+	}
+
+	&:not(.isVertical) {
+		li {
+			+ li {
+				margin-left: rem($gutter);
+			}
+		}
+	}
+
+	&.isVertical {
+		@include justify-content(center);
+
+		ul {
+			@include flex-direction(column);
+		}
+		
+		li {
+			+ li {
+				margin-top: rem($gutter);
+			}
+		}
+
+		a {
+			text-align: center;
+		}
 	}
 }

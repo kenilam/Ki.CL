@@ -14,20 +14,7 @@
 			landscape : '(orientation: landscape)'
 		},
 
-		matching = {},
-
-		service = [
-			function mediaquery () {
-				function matcher () {
-					_.forEach(query, eachQuery);
-					_.forEach(orientation, eachOrientation);
-
-					return matching;
-				}
-
-				return matcher;
-			}
-		];
+		matching = {};
 
 	function eachQuery (query, name) {
 		matching[name] = matchMedia(query).matches;
@@ -37,6 +24,17 @@
 		matching[name] = matchMedia(orientation).matches;
 	}
 
+	function matcher () {
+		_.forEach(query, eachQuery);
+		_.forEach(orientation, eachOrientation);
+
+		return matching;
+	}
+
 	angular.module('service.mediaquery', [])
-		.service('mediaquery', service);
+		.service('mediaquery', [
+			function mediaquery () {
+				return matcher;
+			}
+		]);
 }());

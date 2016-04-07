@@ -1,9 +1,75 @@
 @import '_import';
 
-main {
-	&[data-route='projects.project'] {
-		[ui-view='project'] {
-            position: relative;
+[data-route^='projects.project'] {
+	.globalHeader {
+		nav {
+			a {
+				color: $white;
+
+				&:hover {
+					color: darken($white, 50%);
+				}
+			}
+		}
+	}
+	
+	.logo {
+		a {
+			color: $white;
+		}
+	}
+	
+	.hamburgerButton {
+		line {
+			stroke: $white;
+		}
+	}
+}
+
+[ui-view='project'] {
+	min-height: 50vh;
+	position: relative;
+
+	.throbber {
+		top: grid-size(1);
+	}
+
+	[data-api='behance.project'] {
+		&.ng-hide-add-active,
+		&.ng-hide-remove-active {
+			@include set-transition(opacity, transform);
+		}
+
+		&.ng-hide-remove {
+			@include opacity(0);
+
+			@include mobile () {
+				@include transform(scale(1.2));
+			}
+
+			&.ng-hide-remove-active {
+				@include opacity(1);
+
+				@include mobile () {
+					@include transform(scale(1));
+				}
+			}
+		}
+
+		&.ng-hide-add {
+			@include opacity(1);
+
+			@include mobile () {
+				@include transform(scale(1));
+			}
+
+			&.ng-hide-add-active {
+				@include opacity(0);
+
+				@include mobile () {
+					@include transform(scale(1.2));
+				}
+			}
 		}
 	}
 }

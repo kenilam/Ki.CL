@@ -1,99 +1,88 @@
 (function cursor () {
 	'use strict';
 
-	var controller = [
-		'$scope',
-		'$window',
-		'$element',
-		'$attrs',
-		'checkmobilebrowser',
-		'tween',
-			function (scope, win, element, attrs, checkmobilebrowser, tween) {
-				var _window = angular.element(win),
-					whileMouseMove;
+	angular
+		.module('component.cursor', [])
+		.service('component.cursor.position', [
+			function () {
+				var scope,
+					element;
 
-				function getElement () {
-					var target = {};
-
-					target.cursor = element;
-					target.svg = element.children('svg');
-					target.frame = target.svg.children('.frame');
-					target.arrow = target.svg.children('.arrow');
-
-					return target;
-				}
-
-				function pause () {
-					scope.cursor.status.pause = true;
-				}
-
-				function unpause () {
-					delete scope.cursor.status.pause;
-				}
-
-				function whenMouseMove (event) {
-					var target = {
-						cursor : element
-					};
-
-					if (whileMouseMove) {
-						whileMouseMove(getElement(), event);
-					}
-
-					if (scope.cursor.status.pause) {
+				this.move = function (prop) {
+					if (!scope || !prop || prop.x === undefined || prop.y === undefined) {
 						return;
 					}
 
-					tween.set(element, {
+					TweenMax.set(element, prop);
+				};
+
+				this.assign = function (scopeRef, elementRef) {
+					scope = scopeRef;
+					element = elementRef;
+				};
+			}
+		])
+		.service('component.cursor.event', [
+			'$window',
+			'checkmobilebrowser',
+			'component.cursor.position',
+			function (_win, checkmobilebrowser, position) {
+				var scope,
+					element,
+					win = angular.element(_win);
+
+				this.bind = function () {
+					if (checkmobilebrowser()) {
+						win.onmousemove = null;
+
+						return;
+					}
+
+					win.bind('mousemove', this.move);
+				}.bind(this);
+
+				this.resize = function () {
+					this.bind();
+				}.bind(this);
+
+				this.move = function (event) {
+					position.move({
 						x : event.pageX + element.parent().scrollLeft(),
 						y : event.pageY + element.parent().scrollTop()
 					});
-				}
+				};
 
-				function assignMouseMove (event, onMouseMove) {
-					whileMouseMove = onMouseMove;
-				}
+				this.assign = function (scopeRef, elementRef) {
+					scope = scopeRef;
+					element = elementRef;
 
-				function whenResize () {
-					if (checkmobilebrowser()) {
-						angular.element(document).unbind('mousemove touchmove');
-					}
+					position.assign(scope, element);
 
-					angular.element(document).bind('mousemove touchmove', whenMouseMove);
-				}
-
-				function destroy () {
-					angular.element(document).unbind('mousemove touchmove');
-				}
-
-				scope.cursor = {};
-				scope.cursor.status = {};
-
-				scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '') + 'cursor.mouseMove.assign', assignMouseMove);
-				scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '') + 'cursor.pause', pause);
-				scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '') + 'cursor.unpause', unpause);
-				scope.$on('$destroy', destroy);
-
-				angular.element(win).bind('resize', whenResize);
-
-				whenResize();
+					win.bind('resize', this.resize);
+					
+					this.bind();
+				};
 			}
-		];
-
-	function directive () {
-		return {
-			restrict: 'E',
-			replace: true,
-			scope : {
-				'isolate' : '&'
-			},
-			templateUrl : 'app/component/cursor/cursor.html',
-			controller : controller
-		};
-	}
-
-	angular.module('component.cursor', [])
+		])
 		.directive('cursor', [
-			directive
+			function directive () {
+				return {
+					restrict: 'E',
+					replace: true,
+					scope : {
+						'isolate' : '&'
+					},
+					templateUrl : 'app/component/cursor/cursor.html',
+					controller : 'component.cursor.controller'
+				};
+			}
+		])
+		.controller('component.cursor.controller', [
+			'$scope',
+			'$element',
+			'component.cursor.event',
+			function controller (scope, element, event) {
+				event.assign(scope, element);
+			}
 		]);
 }());

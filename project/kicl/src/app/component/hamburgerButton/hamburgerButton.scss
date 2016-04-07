@@ -6,8 +6,12 @@
 	height: $hamburgerButton_size;
 	width: $hamburgerButton_size;
 
+	span {
+		@include hidden();
+	}
+
 	line {
-		@include set-transition(opacity, transform);
+		@include set-transition(opacity, stroke, transform);
 		@include transition-duration($fast);
 		@include transform-style(preserve-3d);
 		@include transform-origin(50% 50% 0);
@@ -28,12 +32,10 @@
 			}
 
 			&.cross-left {
-				@include transition-delay($faster);
 				@include transform(rotate(45deg));
 			}
 
 			&.cross-right {
-				@include transition-delay($fast);
 				@include transform(scale3d(1, 1, 1) rotate(-45deg));
 
 				@include opacity(1);

@@ -3,13 +3,13 @@
 [data-api='behance.project.slideshow'] {
 	$image_padding_top: 71.11%;
 
-	$pagination_button_font_size: 1.2rem;
+	$pagination_button_font_size: 1.6rem;
 	$pagination_button_size: $pagination_button_font_size * 1.1;
-
-	$pagination_current_button_font_size: 1.6rem;
-	$pagination_current_button_size: $pagination_current_button_font_size * 1.1;
+	$pagination_button_icon_height: $pagination_button_font_size + .2rem;
 
 	@include transition-timing-function($ease-in-expo);
+
+	@include backdrop-filter(blur(5px));
 
 	@include display(flex);
 	@include flex-direction(column);
@@ -23,39 +23,63 @@
 	z-index: 9999;
 	width: 100%;
 
+	h1 {
+		@include truncate();
+
+		margin-bottom: rem($gutter);
+		margin-top: rem($gutter);
+		text-align: center;
+	}
+
 	.wrapper {
-		@include transition-timing-function($ease-in-back);
+		@include set-transition(max-width, transform);
 
 		@include display(flex);
 		@include flex-direction(column);
 		@include align-items(center);
 		@include justify-content(center);
 
+		@include box-shadow($shadow-center);
+
+		@include order(1);
+
+		background-color: $white;
+		min-width: grid-size(7);
+		max-width: grid-size(8);
+		padding: rem($gutter);
 		position: relative;
 		z-index: 2;
-	}
 
-	h1 {
-		@include set-font-size(1.5);
+		@include largemobile () {
+			@include box-shadow(none);
 
-		@include through();
+			background-color: transparent;
+			min-width: 0;
+			max-width: grid-size(5);
+			padding: 0;
+			width: 80%;
+		}
 
-		border-radius: rem($space / 3);
-		margin-bottom: rem($gutter);
-		max-width: 55rem;
-		position: relative;
-		text-align: center;
-		width: calc(100% - 2.5rem);
-		z-index: 4;
+		@include mobile () {
+			@include transform(translate3d(0, -25%, 0));
+		}
 	}
 
 	ul {
 		@include through();
 
+		@include order(1);
+
 		max-width: grid-size($tablet-size);
 		position: relative;
-		width: calc(100% - #{rem($gutter * 2)});
+		width: 100%;
 		z-index: 2;
+
+		@include largemobile () {
+			@include order(2);
+
+			width: 100%;
+		}
 
 		&:before {
 			content: '\0020';
@@ -66,18 +90,84 @@
 		}
 	}
 
+	.pagination {
+		@include display(flex);
+		@include align-items(center);
+		@include justify-content(center);
+
+		@include order(2);
+		
+		margin-bottom: rem($gutter);
+		margin-top: rem($gutter);
+		z-index: 3;
+
+		@include mobile () {
+			@include transform(scale(.8));
+		}
+
+		@include largemobile () {
+			@include order(3);
+		}
+
+		button {
+			@include set-transition(transform);
+			@include transition-duration($faster);
+			@include transition-timing-function(ease-out-bounce);
+
+			@include transform(scale(.8));
+
+			color: transparent;
+			font-size: $pagination_button_font_size;
+			height: $pagination_button_icon_height;
+			overflow: hidden;
+			position: relative;
+			width: $pagination_button_icon_height;
+
+			i {
+				@include set-transition(color);
+				@include transition-duration(faster);
+
+				@include display(flex);
+				@include align-items(center);
+				@include justify-content(center);
+
+				@include transform(translate3d(-50%, -50%, 0));
+
+				color: $green;
+				left: 50%;
+				position: absolute;
+				text-indent: 0;
+				top: 50%;
+
+				&:before {
+					@include set-transition(height, width);
+
+					height: $pagination_button_icon_height;
+					width: $pagination_button_font_size;
+				}
+			}
+
+			&:hover,
+			&.isCurrent {
+				@include transform(scale(1));
+			}
+
+			&.isCurrent {
+				i {
+					text-shadow: 0 0 2px $black;
+				}
+			}
+		}
+	}
+
 	li {
 		@include set-transition(opacity);
 
 		@include opacity(0);
-
-		background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        border: 1px solid $white;
-        border-radius: rem($space / 3);
+		
 		padding-top: $image_padding_top;
 		left: 0;
+		overflow: hidden;
 		position: absolute;
 		top: 0;
 		width: 100%;
@@ -93,17 +183,25 @@
 	}
 
 	img {
-		@include opacity(0);
+		@include transform(translate3d(-50%, -50%, 0));
 
+		left: 50%;
 		position: absolute;
-		top: 0;
+		top: 50%;
+		width: 102%;
 	}
 
 	button {
 		color: transparent;
 	}
 
-	> button {
+	.close {
+		@include backdrop-filter(blur(5px));
+
+		background-color: rgba($black, .8);
+		background-image: url('#{$image_path}pattern/half.tone.png');
+		background-position: center;
+		background-repeat: repeat;
 		cursor: -webkit-zoom-out;
 		left: 0;
 		height: 100%;
@@ -112,6 +210,10 @@
 		outline: none;
 		width: 100%;
 		z-index: 1;
+
+		@include largemobile () {
+			background-color: $white;
+		}
 
 		span {
 			@include opacity(0);
@@ -131,90 +233,41 @@
 
 	line {
 		@include set-transition(stroke);
-	}
 
-	.pagination {
-		@include display(flex);
-		@include align-items(center);
-		@include justify-content(center);
+		stroke: $white;
 
-		margin-top: rem($gutter);
-		z-index: 3;
-
-		button {
-			@include set-transition( font-size, height, width);
-			@include transition-duration($fast);
-
-			color: transparent;
-			font-size: $pagination_button_font_size;
-			height: $pagination_current_button_size;
-			overflow: hidden;
-			position: relative;
-			width: $pagination_current_button_size;
-
-			i {
-				@include set-transition(color);
-
-				@include display(flex);
-				@include align-items(center);
-				@include justify-content(center);
-
-				@include transform(translate3d(-50%, -50%, 0));
-
-				color: $white;
-				left: 50%;
-				position: absolute;
-				text-indent: 0;
-				top: 50%;
-
-				&:before {
-					@include set-transition(height, width);
-
-					height: $pagination_button_font_size - .1rem;
-					width: $pagination_button_font_size;
-				}
-			}
-
-			&:hover,
-			&.isCurrent {
-				font-size: $pagination_current_button_font_size;
-
-				i {
-					&:before {
-						height: $pagination_current_button_size - .1rem;
-						width: $pagination_current_button_size;
-					}
-				}
-			}
-
-			&.isCurrent {
-				i {
-					color: $green;
-				}
-			}
+		@include largemobile () {
+			stroke: $black;
 		}
 	}
 
 	&.ng-hide-animate {
-		@include set-transition(opacity);
+		@include set-transition(backdrop-filter, opacity);
 
 		clip-rule: nonzero;
 		overflow: hidden;
 
 		.wrapper {
 			@include set-transition(opacity, transform);
+			@include transition-timing-function($ease-out-back);
 		}
 	}
 
 	&.ng-hide-add {
 		@include transition-delay($fast);
-
+		
 		@include opacity(1);
 
 		.wrapper {
+			@include transition-duration($fast);
+			
 			@include transform(scale3d(1, 1, 1));
 
 			@include opacity(1);
+
+			@include mobile () {
+				@include transform(scale3d(1, 1, 1) translate3d(0, -25%, 0));
+			}
 		}
 
 		svg {
@@ -225,9 +278,13 @@
 			@include opacity(0);
 
 			.wrapper {
-				@include transform(scale3d(.1, .1, .1));
+				@include transform(scale3d(1.1, 1.1, 1.1));
 
 				@include opacity(0);
+
+				@include mobile () {
+					@include transform(scale3d(1.1, 1.1, 1.1) translate3d(0, -25%, 0));
+				}
 			}
 
 			svg {
@@ -242,9 +299,13 @@
 		.wrapper {
 			@include transition-delay($fast);
 
-			@include transform(scale3d(.1, .1, .1));
+			@include transform(scale3d(1.2, 1.2, 1.2));
 
 			@include opacity(0);
+				
+			@include mobile () {
+				@include transform(scale3d(1.1, 1.1, 1.1) translate3d(0, -25%, 0));
+			}
 		}
 
 		svg {
@@ -258,6 +319,10 @@
 				@include transform(scale3d(1, 1, 1));
 
 				@include opacity(1);
+				
+				@include mobile () {
+					@include transform(scale3d(1, 1, 1) translate3d(0, -25%, 0));
+				}
 			}
 
 			svg {

@@ -1,18 +1,16 @@
 <div
+	ng-attr-title="{{name}}"
 	data-api="behance.project.slideshow"
-	ng-show="projectSlideshow.show"
+	ng-show="show"
 >
 	<div class="wrapper">
-		<h1>{{projectSlideshow.name}}</h1>
+		<h1>{{name}}</h1>
 		<ul>
 			<li
-				ng-repeat="module in projectSlideshow.modules track by $index"
+				ng-repeat="module in modules track by $index"
 				ng-if="module.type === 'image'"
 				ng-class="{
-					'isCurrent' : module.id === projectSlideshow.current.id
-				}"
-				ng-style="{
-					'background-image' : 'url(' + module.src + ')'
+					'isCurrent' : module.id === current.id
 				}"
 			>
 				<img ng-src="{{module.src}}">
@@ -20,21 +18,21 @@
 		</ul>
 		<div class='pagination'>
 			<button
-				ng-repeat="module in projectSlideshow.modules track by $index"
+				ng-repeat="module in modules track by $index"
 				ng-attr-title="{{$index + 1}}"
 				ng-class="{
-					'isCurrent' : module.id === projectSlideshow.current.id
+					'isCurrent' : module.id === current.id
 				}"
-				ng-click="projectSlideshow.control.set.current(module)"
+				ng-click="setCurrent(module)"
 			><i class='fa fa-circle'
 				ng-class="{
-					'fa-circle' : module.id === projectSlideshow.current.id,
-					'fa-circle-thin' : module.id !== projectSlideshow.current.id
+					'fa-circle' : module.id === current.id,
+					'fa-circle-thin' : module.id !== current.id
 				}"
 			></i>{{$index}}</button>
 		</div>
 	</div>
-	<button class='close' ng-click="projectSlideshow.control.close()" ng-attr-title="{{projectSlideshow.resource.content.close.message}}">
+	<button class='close' ng-click="close()" ng-attr-title="{{resource.content.close.message}}">
 		<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
 			<line fill="none" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" x1="21.4" y1="42.6" x2="42.6" y2="21.4"></line>
 			<line fill="none" stroke-width="3" stroke-linecap="round" stroke-miterlimit="10" x1="21.4" y1="21.4" x2="42.6" y2="42.6"></line>

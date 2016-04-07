@@ -1,126 +1,138 @@
-
-(function project() {
+(function projects () {
 	'use strict';
 
-	var ref = {},
-		state = {
-			name: 'projects.project',
-			url: '/:project',
-			resolve : {
-				resource: ['async', 'viewProjectsProjectResource', function resource (async, viewProjectsProjectResource) {
-					if (!ref.resource) {
-						ref.resource = async({ url : viewProjectsProjectResource }).get().$promise;
-					}
+	var dependencies = [],
 
-					return ref.resource;
-				}]
-			},
-			views: {
-				'project' : {
-					templateUrl : 'app/view/projects/project/project.html',
-					controller : 'view.projects.project.controller'
-				}
-			}
-		},
-		constant = {
-			resource : 'app/view/projects/project/project.json'
-		},
-		controller = [
-			'$rootScope',
-			'$scope',
-			'$element',
-			'$timeout',
-			'$state',
-			'$stateParams',
-			'behanceReference',
-			'resource',
-			'sitemap',
-			function controller (root, scope, element, timeout, state, stateParams, reference, resource, sitemap) {
-				function eachProject (project, index) {
-					sitemap.add(
-						project.id,
-						{
-							name: project.name,
-							route: 'projects.project({project:"' + project.id + '"})'
-						},
-						'projects'
-					);
-				}
+		ref = {};
 
-				function filterState (state) {
-					var map = state.name.split('.');
-
-					if (map.length > 1) {
-						map.length = map.length - 2;
-
-						return map.join('.');
-					}
-
-					return 'root';
-				}
-
-				function stateChangeStart (event, toState) {
-					if (toState.name !== 'projects.project') {
-						sitemap.current(name, filterState(toState));
-					}
-
-					scope.$emit('backdrop.remove');
-				}
-
-				function setSitemap (event, projects) {
-					function whenSetSitemap () {
-						sitemap.current(stateParams.project, 'projects');
-					}
-
-					if (!sitemap.get().projects.children) {
-						_.each(projects, eachProject);
-
-						timeout.cancel(scope.timer.setSitemap);
-						scope.timer.setSitemap = timeout(whenSetSitemap, 0);
-					}
-				}
-
-				function init (event, data) {
-					scope.$broadcast('view.projects.project.behance.project.throbber.hide');
-
-					if (sitemap.get().projects.children) {
-						sitemap.current(data.id, 'projects');
-					}
-				}
-
-				scope.name = resource.name;
-				scope.content = resource.content;
-				scope.id = stateParams.project;
-
-				root.ref.project = {};
-				root.ref.project.id = scope.id;
-
-				scope.$on('$stateChangeStart', stateChangeStart);
-				scope.$on('behance.projects.data', setSitemap);
-				scope.$on('behance.project.data', init);
-
-				root.$broadcast('globalHeader.show');
-			}
-		],
-		config = [
-			'$stateProvider',
-			function config (stateProvider) {
-				stateProvider.state(state);
-			}
-		],
-		run = [
-			'$timeout',
-			'$stateParams',
-			'sitemap',
-			function run (timeout, stateParams, sitemap) {
-				sitemap.add('projects', {name: 'projects', route: 'projects'});
-			}
-		];
-		
 	angular
-		.module('view.projects.project', [])
-		.constant('viewProjectsProjectResource', constant.resource)
-		.config(config)
-		.run(run)
-		.controller('view.projects.project.controller', controller);
+		.module('view.projects.project', dependencies)
+		.config(['$stateProvider',
+			function config (stateProvider) {
+				stateProvider.state({
+					'name' : 'projects.project',
+					'url' : '/:project',
+					'resolve' : {
+						'resource' : ['async', function resource (async) {
+							if (!ref.resource) {
+								ref.resource = async({ url : 'app/view/projects/project/project.json' }).get().$promise;
+							}
+
+							return ref.resource;
+						}]
+					},
+					'views' : {
+						'project' : {
+							'templateUrl' : 'app/view/projects/project/project.html',
+							'controller' : 'view.projects.project.controller'
+						}
+					}
+				});
+			}
+		])
+		.run([
+			'sitemap',
+			function run (sitemap) {
+				
+			}
+		])
+		.service('view.projects.project.current', [
+			'$rootScope',
+			'$window',
+			'$timeout',
+			'$stateParams',
+			function current (root, _window, timeout, stateParams) {
+				var scope;
+
+				this.set = function (stateParams) {
+					scope.$emit('view.project.set.current', stateParams.project);
+				};
+
+				this.unset = function (event, fromState, toState) {
+					scope.$emit('view.project.unset.current');
+				};
+
+				this.stateChangeStart = function (event, toState, toParams, fromState, fromParams) {
+					if (toState.name.indexOf('projects') > -1) {
+						this.set(toParams);
+
+						return;
+					}
+
+					timeout.cancel(scope.projectCurrentTimer);
+					scope.projectCurrentTimer = timeout(this.unset, 500);
+				}.bind(this);
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					this.set(stateParams);
+
+					root.$on('$stateChangeStart', this.stateChangeStart);
+				};
+			}
+		])
+		.service('view.projects.project.slideshow', [
+			function () {
+				var scope;
+				
+				this.show = function () {
+					scope.$emit('overlay.set');
+				};
+
+				this.hide = function () {
+					scope.$emit('overlay.unset');
+				};
+				
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					scope.$on('behance.project.slideshow.on.show', this.show);
+					scope.$on('behance.project.slideshow.on.hide', this.hide);
+				};
+			}
+		])
+		.service('view.projects.project.data', [
+			'$timeout',
+			function projectData (timeout) {
+				var scope,
+					resource;
+
+				this.loaded = function (event, project) {
+					timeout.cancel(scope.projectDataTimer);
+					scope.projectDataTimer = timeout(function () {
+						scope.projectLoaded = true;
+						scope.$broadcast('view.projects.project.throbber.hide');
+					}, 1000);
+
+					scope.$emit('update.view.data', {
+						name : 'projects.' + resource.name,
+						route : resource.route.replace('.project', '.' + project.name)
+					});
+				};
+
+				this.assign = function (scopeRef, resourceRef) {
+					scope = scopeRef;
+					resource = resourceRef;
+
+					scope.$on('behance.project.data', this.loaded);
+				};
+			}
+		])
+		.controller('view.projects.project.controller', [
+			'$scope',
+			'$stateParams',
+			'$anchorScroll',
+			'resource',
+			'view.projects.project.current',
+			'view.projects.project.data',
+			'view.projects.project.slideshow',
+			function controller (scope, stateParams, anchorScroll, resource, currentProject, projectData, projectSlideshow) {
+				currentProject.assign(scope);
+				projectData.assign(scope, resource);
+				projectSlideshow.assign(scope);
+
+				anchorScroll();
+			}
+		]);
 }());

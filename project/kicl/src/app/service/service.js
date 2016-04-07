@@ -1,12 +1,13 @@
 (function service () {
 	'use strict';
 
-	angular.module('service', [
+	var dependencies = [
 		'service.async',
 		'service.checkmobilebrowser',
+		'service.loadimage',
 		'service.mediaquery',
-		'service.statechange',
-		'service.transition',
-		'service.tween'
-	]);
+		'service.scroll'
+	];
+
+	angular.module('service', dependencies);
 }());

@@ -14,7 +14,7 @@ $slowest: $speed * 4;
 }
 
 @function prefix ($property, $prefixes: (webkit moz o ms)) {
-    $vendor-prefixed-properties: transform background-clip background-size clip-path;
+    $vendor-prefixed-properties: transform background-clip background-size clip-path backdrop-filter;
     $result: ();
     @each $prefix in $prefixes {
        @if index($vendor-prefixed-properties, $property) {

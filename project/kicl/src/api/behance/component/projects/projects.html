@@ -1,7 +1,10 @@
 <ul data-api="behance.projects">
 	<li
+		tabindex='-1'
 		ng-repeat="project in projects track by $index"
 		ng-attr-data-project-id="{{project.id}}"
+		ng-focus="control.focus(project)"
+		ui-sref="{{project.route}}"
 		ng-class="{
 			'isCurrent' : $index === currentIndex,
 			'isPrev' : $index === currentIndex- 1,
@@ -14,16 +17,15 @@
 		>
 			<a
 				ng-attr-title="go to: {{project.name}}"
+				ng-focus="control.focus(project)"
 				ui-sref="{{project.route}}"
-				ng-style="{
-					'background-image' : 'url(' + project.covers + ')'
-				}"
 			>
 				<img ng-src="{{project.covers}}" alt="{{project.name}}">
 			</a>
 			<figcaption>
 				<p class="title">{{project.name}}</p>
 				<p class="published_on">{{resource.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
+				<p class="see_more">{{resource.content.label.see_more}}</p>
 			</figcaption>
 		</figure>
 	</li>

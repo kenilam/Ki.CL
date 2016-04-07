@@ -1,10 +1,12 @@
 (function service () {
 	'use strict';
 
-	angular.module('behance.service', [
+	var dependencies = [
 		'behance.service.async',
 		'behance.service.time',
 		'behance.service.check',
 		'behance.service.modify'
-	]);
+	];
+
+	angular.module('behance.service', dependencies);
 }());

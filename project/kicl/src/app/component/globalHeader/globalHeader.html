@@ -1,25 +1,17 @@
-<header
-	class="globalHeader"
-	role="banner"
-	ng-class="{
-		'isScrolled' : globalHeader.status.scrolled
-	}"
-	ng-show="globalHeader.status.show"
+<header class='globalHeader' ng-if='show'
+	ng-class='{
+		"isScrolled" : scrolled
+	}'
 >
 	<logo></logo>
-	<div
-		class="navigationWrapper"
-		ng-attr-data-status="globalHeader.status.navigation.show"
-		ng-class="{
-			'isClosed' : !globalHeader.status.navigation.show
-		}"
-	>
-		<hamburger-button
-			data-emit-to="globalHeader.navigation"
-			data-emit-from="globalHeader.navigation"
-			close-on-default="true"
-		></hamburger-button>
-		<navigation data-list="root"></navigation>
-	</div>
-	<breadcrumb></breadcrumb>
+	<hamburger-button
+		data-emit-to='globalHeader.navigation'
+		data-emit-from='globalHeader.navigation'
+		close-on-default='true'
+	></hamburger-button>
+	<navigation
+		data-emit-from="globalHeader"
+		data-list-at-root='true'
+		data-list='root'
+		ng-show='!navigation.closed'></navigation>
 </header>

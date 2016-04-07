@@ -3,8 +3,10 @@
 
 	var deafultValues = {
 			ease : Expo.easeOut
-		},
-		service = [
+		};
+
+	angular.module('service.tween', [])
+		.service('tween', [
 			function tween () {
 				this.killTweensOf = TweenMax.killTweensOf;
 				this.set = TweenMax.set;
@@ -17,8 +19,5 @@
 					TweenMax.to(element, duration, prop);
 				};
 			}
-		];
-
-	angular.module('service.tween', [])
-		.service('tween', service);
+		]);
 }());

@@ -8,6 +8,7 @@ $shadow-left: -1 * ($shadow-distant / 2) 1px $shadow-distant $shadow-distant $sh
 $shadow-right: ($shadow-distant / 2) 1px $shadow-distant $shadow-distant $shadow-rgba;
 $shadow-top: 0 -1 * ($shadow-distant / 2) $shadow-distant $shadow-distant $shadow-rgba;
 $shadow-bottom: 0 ($shadow-distant / 2) $shadow-distant $shadow-distant $shadow-rgba;
+$shadow-none: 0 0 0 0 transparent;
 
 @mixin box-shadow ($property...) {
 	-webkit-box-shadow: $property;

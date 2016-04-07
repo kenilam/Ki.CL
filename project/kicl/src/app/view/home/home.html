@@ -1,4 +1,12 @@
 <logo></logo>
-<h2>{{content.message}}</h2>
-<navigation data-list="root"></navigation>
-<span class="background"></span>
+
+<navigation class="isVertical" data-list-at-root="true" data-list="root"></navigation>
+
+<span
+	class='background'
+	ng-style='{
+		"background-image" : "url(" + content.backdrop.image + ")"
+	}'
+></span>
+
+<span class='overground'></span>

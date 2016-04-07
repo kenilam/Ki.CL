@@ -1,142 +1,167 @@
 @import '_import';
 
 [data-route=home] {
-	.logo {
-		a {
-			color: $white;
-		}
-	}
-
-	.globalFooter {
-
-		.logo {
-			@include hidden();
-		}
-
-		@include largemobile () {
-			color: $white;
-		}
+	.globalHeader {
+		@include unset-transition();
 	}
 }
 
 main {
-	$background-size: grid-size($mobile-size);
-
 	&[data-route=home] {
 		@include display(flex);
 		@include flex-direction(column);
-		@include align-items(center);
 		@include justify-content(center);
 
-		@include opacity(1);
+		height: 100vh;
+		overflow: hidden;
+		padding-top: 0;
 
-		color: $white;
+		.background,
+		.overground {
+			@include circle(grid-size(5));
 
-		> * {
-			position: relative;
-			z-index: 3;
+			@include unset-transition();
+
+			@include transform(translate3d(-50%, -50%, 0));
+
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			z-index: 0;
+
+			@include largemobile {
+				@include unset-circle();
+
+				height: 100%;
+				width: 100%;
+			}
 		}
 
-		h2 {
-			margin-bottom: rem($gutter);
-			margin-top: rem($gutter);
+		.logo,
+		.navigation {
+			position: relative;
+			z-index: 1;
+		}
+
+		.background {
+			@include box-shadow($shadow-bottom);
+
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.overground {
+			background-color: rgba($black, .1);
+			background-image: url('#{$image_path}pattern/half.tone.png');
+			background-position: center;
+			background-repeat: repeat;
+		}
+
+		.logo {
+			@include set-logo-color($white);
+
+			text-shadow: 0 0 5px $black;
+
+			@include largemobile () {
+				margin-top: (-1 * grid-size(1));
+			}
 		}
 
 		.navigation {
-			ul {
-				@include display(flex);
-				@include flex-direction(column);
-				@include align-items(center);
-			}
+			@include set-font-size(1.6);
 
-			li {
-				margin-left: 0;
+			margin-top: rem($gutter);
 
-				+ li {
-					margin-top: rem($space);
+			&.isVertical {
+				li {
+					+ li {
+						margin-top: 0;
+					}
 				}
 			}
 
 			a {
-				@include set-transition(color, font-size);
+				@include set-transition(transform);
+				@include transition-duration($faster);
+
+				text-shadow: 0 0 5px $black;
 
 				color: $white;
-				font-weight: $thicker_font_weight;
+				font-family: $heading_font_family;
 
 				&:hover {
-					@include set-font-size(1.2);
+					@include transform(scale(1.2));
 				}
 			}
 		}
 
-		.background {
-			@include circle($background-size);
+		&.ng-animate {
+			@include set-transition(opacity, transform);
+			@include transition-duration($slow);
 
-			background-image: url(#{$image_path}london.whitechapel.jpg);
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			border: 1px dashed $white;
-			left: 50%;
-			margin-left: (-1 * $background-size / 2);
-			margin-top: (-1 * $background-size / 2);
-			position: absolute;
-			top: 50%;
-			z-index: 2;
-
-			&:before {
-				background-color: rgba($black, .6);
-				content : '\0020';
-				display: block;
-				left: 0;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				width: 100%;
-				z-index: 1;
-			}
-
-			@include largemobile () {
-				@include resize-circle();
-
-				border: 0;
-				border-radius: 0;
-				left: 0;
-				margin: 0;
-				top: 0;
+			.logo,
+			.navigation {
+				@include set-transition(transform, opacity);
 			}
 		}
 
 		&.ng-enter {
-			.background {
-				@include largemobile () {
-					@include opacity(0);
-				}
+			@include transform(scale(2) rotate(270deg));
+
+			@include largemobile () {
+				@include transform(scale(2));
+			}
+
+			.logo,
+			.navigation {
+				@include transition-delay($speed);
+				@include opacity(0);
+			}
+
+			.logo {
+				@include transform(scale(.7) translate3d(0, rem($gutter), 0));
+			}
+
+			.navigation {
+				@include transform(scale(.7) translate3d(0, rem(-1 * $gutter), 0));
 			}
 
 			&.ng-enter-active {
-				.background {
-					@include largemobile () {
-						@include opacity(1);
-					}
+				@include transform(scale(1) rotate(0deg));
+
+				.logo,
+				.navigation {
+					@include transform(scale(1) translate3d(0, 0, 0));
+					@include opacity(1);
 				}
 			}
 		}
 
 		&.ng-leave {
-			.background {
-				@include largemobile () {
-					@include opacity(1);
-				}
-			}
+			@include transform(scale(1));
 
 			&.ng-leave-active {
-				.background {
-					@include largemobile () {
-						@include opacity(0);
-					}
+				@include transform(scale(.01) rotate(270deg));
+
+				@include largemobile () {
+					@include transform(scale(.9));
+				}
+
+				.logo,
+				.navigation {
+					@include opacity(0);
+				}
+
+				.logo {
+					@include transform(translate3d(0, rem($gutter), 0) scale(.5));
+				}
+
+				.navigation {
+					@include transform(translate3d(0, rem(-1 * $gutter), 0) scale(.5));
 				}
 			}
 		}
 	}
 }
+

@@ -7,7 +7,12 @@
     margin: 0 auto;
     max-width: grid-size($tablet-size);
     padding: rem($gutter);
+    padding-top: rem($gutter * 3);
     position: relative;
+
+    @include mobile () {
+        padding-top: rem($gutter);
+    }
 
     h1,
     p {
@@ -27,20 +32,12 @@
     p {
         width: 100%;
 
-        &:first-child {
-            &:not(.isImage) {
-                @include set-font-size(1.5);
-            }
-        }
-
         &.isImage {
             @include set-transition(border-color, padding-top);
 
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            border: 1px solid $grey;
-            border-radius: rem($space / 3);
             cursor: -webkit-zoom-in;
             width: calc(100% - #{$image_space * 2});
 
@@ -66,18 +63,6 @@
                     width: 100%;
                 }
             }
-
-            + p:not(.isImage) {
-                @include set-font-size(1.5);
-
-                font-weight: $thick_font_weight;
-                margin-top: rem($gutter * 2);
-                padding: 0 rem($gutter);
-
-                @include largemobile () {
-                    @include set-font-size(1.2);
-                }
-            }
         }
     }
 
@@ -101,6 +86,8 @@
 
         h1 {
             @include order(2);
+
+            margin-top: 0;
         }
 
         p {
@@ -131,7 +118,22 @@
 
         li {
             @include box-shadow($shadow-center);
+
+            @include mobile () {
+                @include truncate(calc(50% - #{rem($gutter)}));
+
+                span {
+                    + span {
+                        @include truncate(auto);
+                    }
+                }
+            }
         }
+    }
+
+    .fields,
+    .tags {
+        text-align: center;
     }
 
     .stats {
@@ -145,19 +147,19 @@
             @include pill();
 
             border-radius: 0;
+            position: relative;
+            z-index: 1;
 
             &:first-child {
+                border-right: 1px solid $darkest-white;
                 font-weight: $thicker_font_weight;
-            }
-
-            + span {
-                border-left: 1px solid $grey;
+                z-index: 2;
             }
         }
     }
 
     .tool {
-        $font-size: 1;
+        $font-size: 2;
 
         @include display(flex);
         @include flex-direction(column);
@@ -168,11 +170,24 @@
 
         button,
         a {
+            @include set-transition(background-color);
+
             @include display(flex);
             @include align-items(center);
             @include justify-content(center);
 
-            @include set-font-size($font-size);
+            background-color: transparent;
+            border: 1px solid $grey;
+            border-radius: rem($space / 2);
+            padding: rem($gutter);
+
+            &:hover {
+                background-color: $darker_white;
+            }
+        }
+
+        span {
+            @include truncate();
         }
 
         i {

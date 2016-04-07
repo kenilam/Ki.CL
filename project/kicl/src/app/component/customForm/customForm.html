@@ -1,17 +1,19 @@
 <form
 	novalidate
-	class="customForm {{customForm.form.name}}"
-	name="{{customForm.form.name}}"
-	ng-submit="control.submit()"
+	class="customForm {{form.name}}"
+	method='post'
+	name="{{form.name}}"
+	ng-submit="submit()"
 	ng-class="{
-		'isLoading' : customForm.loading
+		'isLoading' : loading
 	}"
 >
-	<p>{{customForm.message}}</p>
+	<p>{{message}}</p>
+	<input name="userid" id="userid" class="hiddenInput" type="text" placeholder="UserID" ng-model="model.userid" />
 	<ul>
-		<li ng-repeat="field in customForm.form.field track by $index"
+		<li ng-repeat="field in form.field track by $index"
 			ng-class="{
-				'hasError' : $parent.$$childHead[customForm.form.name][field.name].$invalid,
+				'hasError' : $parent.$$childHead[form.name][field.name].$invalid,
 				'forTextarea' : field.type === 'textarea'
 			}"
 			ng-switch="field.type"
@@ -22,7 +24,7 @@
 			>{{field.label}}</label>
 			<input
 				tabindex="1"
-				ng-model="customForm.model[field.name]"
+				ng-model="model[field.name]"
 				ng-attr-id="{{field.name}}"
 				ng-attr-name="{{field.name}}"
 				ng-attr-type="{{field.type}}"
@@ -34,7 +36,7 @@
 			>
 			<input
 				tabindex="1"
-				ng-model="customForm.model[field.name]"
+				ng-model="model[field.name]"
 				ng-attr-id="{{field.name}}"
 				ng-attr-name="{{field.name}}"
 				ng-attr-type="{{field.type}}"
@@ -46,18 +48,17 @@
 			>
 			<textarea
 				tabindex="1"
-				ng-model="customForm.model[field.name]"
+				ng-model="model[field.name]"
 				ng-attr-id="{{field.name}}"
 				ng-attr-name="{{field.name}}"
 				ng-attr-type="{{field.type}}"
 				ng-attr-placeholder="{{field.placeholder}}"
-				ng-attr-maxlength="{{field.maxLength + 1}}"
 				ng-minlength="field.minLength"
 				ng-maxlength="field.maxLength"
 				ng-required="field.required"
 				ng-switch-when="textarea"
 				ng-class="{
-					'hasChar' : $parent.$$childHead[customForm.form.name][field.name].$viewValue
+					'hasChar' : $parent.$$childHead[form.name][field.name].$viewValue
 				}"
 			></textarea>
 			<fieldset
@@ -76,7 +77,7 @@
 						>{{set.label}}</label>
 						<input
 							tabindex="1"
-							ng-model="customForm.model[field.name]"
+							ng-model="model[field.name]"
 							ng-attr-id="{{set.name}}"
 							ng-attr-name="{{field.name}}"
 							ng-attr-value="{{set.value}}"
@@ -88,40 +89,41 @@
 			<span class="required"
 				ng-if="field.required"
 				ng-class="{
-					'isValid' : $parent.$$childHead[customForm.form.name][field.name].$valid
+					'isValid' : $parent.$$childHead[form.name][field.name].$valid
 				}"
 			><i class="fa"
 				ng-class="{
-					'fa-exclamation-circle' : $parent.$$childHead[customForm.form.name][field.name].$invalid,
-					'fa-check' : $parent.$$childHead[customForm.form.name][field.name].$valid
+					'fa-exclamation-circle' : $parent.$$childHead[form.name][field.name].$invalid,
+					'fa-check' : $parent.$$childHead[form.name][field.name].$valid
 				}"
-			></i><span>{{customForm.message.required}}</span></span>
+			></i><span>{{message.required}}</span></span>
 			<p
 				class="charCount"
 				ng-class="{
-					'isValid' : $parent.$$childHead[customForm.form.name][field.name].$valid
+					'isValid' : $parent.$$childHead[form.name][field.name].$valid,
+					'isOver' : $parent.$$childHead[form.name][field.name].$viewValue.length > field.maxLength
 				}"
-				ng-if="field.type === 'textarea' && $parent.$$childHead[customForm.form.name][field.name].$viewValue"
-			><span>{{$parent.$$childHead[customForm.form.name][field.name].$viewValue.length}} / {{field.maxLength}}</span></p>
+				ng-if="field.type === 'textarea' && $parent.$$childHead[form.name][field.name].$viewValue"
+			>{{$parent.$$childHead[form.name][field.name].$viewValue.length}} / {{field.maxLength}}</p>
 		</li>
 	</ul>
 	<button
 		type="submit"
 		tabindex="1"
-		ng-disabled="$parent.$$childHead[customForm.form.name].$invalid || customForm.status.loading"
+		ng-disabled="$parent.$$childHead[form.name].$invalid || status.loading"
 		ng-class="{
-			'isLoading' : customForm.loading
+			'isLoading' : loading
 		}"
 	><i class="fa"
 		ng-class="{
-			'fa-times' : $parent.$$childHead[customForm.form.name].$invalid,
-			'fa-paper-plane-o' : !customForm.loading && !$parent.$$childHead[customForm.form.name].$invalid,
-			'ifa-spin fa-circle-o-notch' : customForm.loading
+			'fa-times' : $parent.$$childHead[form.name].$invalid,
+			'fa-paper-plane-o' : !loading && !$parent.$$childHead[form.name].$invalid,
+			'ifa-spin fa-circle-o-notch' : loading
 		}"
-	></i>{{customForm.loading ? customForm.button.loading.name : customForm.button.submit.name}}</button>
+	></i>{{loading ? form.button.loading.name : form.button.submit.name}}</button>
 	<button
 		type="reset"
 		tabindex="1"
-		ng-click="control.reset($event)"
-	><i class="fa fa-undo"></i>{{customForm.button.reset.name}}</button>
+		ng-click="reset($event)"
+	><i class="fa fa-undo"></i>{{form.button.reset.name}}</button>
 </form>

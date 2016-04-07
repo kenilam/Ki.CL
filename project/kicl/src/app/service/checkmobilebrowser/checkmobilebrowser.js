@@ -1,7 +1,8 @@
 (function checkmobilebrowser () {
 	'use strict';
 
-	var service = [
+	angular.module('service.checkmobilebrowser', [])
+		.service('checkmobilebrowser', [
 			function mobilebrowser () {
 				function checker () {
 					var check = false;
@@ -11,8 +12,5 @@
 
 				return checker;
 			}
-		];
-
-	angular.module('service.checkmobilebrowser', [])
-		.service('checkmobilebrowser', service);
+		]);
 }());

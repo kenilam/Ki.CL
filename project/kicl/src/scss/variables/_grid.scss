@@ -68,6 +68,19 @@ $largedesktop-size: 15;
 	@return $screen $width;
 }
 
+@mixin smallmobile () {
+	@include breakpoint(query-size($max: $mobile-size - 0.1)) {
+		// smallmobile
+		@content;
+	}
+}
+@mixin smallmobile-landscape () {
+	@include breakpoint(query-size($max: $mobile-size - 0.1, $orientation: landscape)) {
+		// smallmobile-landscape
+		@content;
+	}
+}
+
 @mixin mobile () {
 	@include breakpoint(query-size($max: $largemobile-size - 0.1)) {
 		// mobile
