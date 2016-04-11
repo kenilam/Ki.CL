@@ -81,7 +81,7 @@
 				var scope;
 
 				this.ready = function (event, projects) {
-					scope.ref.projects = projects;
+					scope.projects = projects;
 
 					if (stateParams.project) {
 						return;
@@ -184,8 +184,8 @@
 						index = 0;
 					}
 
-					if ((index !== undefined || index !== 0) && stateParams.project && scope.ref.projects) {
-						index = _.findIndex(scope.ref.projects, { id : stateParams.project });
+					if ((index !== undefined || index !== 0) && stateParams.project && scope.projects) {
+						index = _.findIndex(scope.projects, { id : stateParams.project });
 					}
 
 					if (!stateParams.project) {
@@ -201,7 +201,7 @@
 				};
 
 				this.onTransitionEnd = function () {
-					state.go('projects.project', { project : scope.ref.projects[swiper.activeIndex].id });
+					state.go('projects.project', { project : scope.projects[swiper.activeIndex].id });
 
 					timeout.cancel(scope.swiperTransitionEndTimer);
 					scope.swiperTransitionEndTimer = timeout(function () {

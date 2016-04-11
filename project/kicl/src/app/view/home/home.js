@@ -43,44 +43,20 @@
 				sitemap.add('home', { name : 'home', route : 'home' });
 			}
 		])
-		.service('view.home.globalHeader', [
-			'$rootScope',
-			'$timeout',
-			function (root, timeout) {
-				var scope;
-
-				this.broadcast = function (event) {
-					return function () {
-						root.$broadcast('globalHeader.' + event);
-					};
-				};
-
-				this.hide = function () {
-					scope.timer.hideGlobelHeader = timeout(this.broadcast('hide'));
-				};
-
-				this.assign = function (scopeRef) {
-					scope = scopeRef;
-				};
-			}
-		])
 		.controller('view.home.controller', [
 			'$rootScope',
 			'$scope',
 			'$timeout',
 			'$anchorScroll',
 			'resource',
-			'view.home.globalHeader',
-			function controller (root, scope, timeout, anchorScroll, resource, globalHeader) {
+			function controller (root, scope, timeout, anchorScroll, resource) {
 				scope.content = resource.content;
 				scope.name = resource.name;
 				scope.route = resource.route;
+
 				scope.$emit('update.view.data', { name : resource.name, route : resource.route });
 
-				scope.timer = {};
-
-				globalHeader.assign(scope);
-				globalHeader.hide();
+				root.$broadcast('globalHeader.hide');
 
 				anchorScroll();
 			}

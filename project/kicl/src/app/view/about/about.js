@@ -19,6 +19,13 @@
 							}
 
 							return ref.resource;
+						}],
+						'backdrop' : ['resource', 'loadimage', function backdrop (resource, loadimage) {
+							if (!ref.backdrop) {
+								ref.backdrop = loadimage(resource.content.backdrop.image);
+							}
+
+							return ref.backdrop;
 						}]
 					},
 					views : {

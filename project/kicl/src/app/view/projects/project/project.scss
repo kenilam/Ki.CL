@@ -1,6 +1,6 @@
 @import '_import';
 
-[data-route^='projects.project'] {
+[data-name^='projects.project'] {
 	.globalHeader {
 		nav {
 			a {

@@ -17,7 +17,32 @@
 		@include mobile () {
 			@include set-logo-size(1.6);
 
-			z-index: 2;
+			z-index: 1;
+		}
+	}
+
+	.hamburgerButton {
+		@include order(3);
+
+		@include opacity(1);
+
+		z-index: 3;
+
+		&.ng-animate {
+			@include set-transition(opacity);
+		}
+
+		&.isCross-add {
+			@include transition-delay($faster);
+		}
+
+		@include mobile () {
+			left: 0;
+			position: absolute;
+
+			&:not(.isCross) {
+				@include opacity(0);
+			}
 		}
 	}
 
@@ -38,7 +63,7 @@
 			@include transform(translate3d(0, 0, 0));
 
 			@include flex-direction(column);
-			@include justify-content(flex-start);
+			@include justify-content(center);
 
 			@include set-font-size(1.8);
 
@@ -51,15 +76,29 @@
 			position: fixed;
 			top: 0;
 			width: 100%;
-			z-index: 1;
+			z-index: 2;
 		}
 
 		ul {
 			@include mobile () {
-				@include transform(translate3d(0, grid-size(2), 0));
-				
 				@include flex-direction(column);
 				@include align-items(center);
+			}
+		}
+
+		li {
+			@include mobile () {
+				@include set-font-size(1.7);
+
+				line-height: 1;
+			}
+
+			&[data-list-name='home'] {
+				display: none;
+
+				@include mobile () {
+					display: inherit;
+				}
 			}
 		}
 
@@ -74,10 +113,13 @@
 			}
 		}
 
-		&.ng-animate {
+		&.ng-hide-animate {
 			@include set-transition(opacity, transform);
 			@include transition-duration($fast);
-			@include transition-timing-function($ease-in-out-back);
+
+			ul {
+				@include set-transition(opacity, transform);
+			}
 		}
 
 		&.ng-hide-remove {
@@ -85,7 +127,14 @@
 			@include transform(translate3d(100%, 0, 0));
 
 			@include mobile () {
-				@include transform(scale(1));
+				@include transform(translate3d(0, 0, 0));
+			}
+
+			ul {
+				@include mobile () {
+					@include opacity(0);
+					@include transform(scale(1.6));
+				}
 			}
 
 			&.ng-hide-remove-active {
@@ -93,7 +142,14 @@
 				@include transform(translate3d(rem(-1 * $gutter * 4), 0, 0));
 
 				@include mobile () {
-					@include transform(scale(1.2));
+					@include transform(translate3d(0, 0, 0));
+				}
+
+				ul {
+					@include mobile () {
+						@include opacity(1);
+						@include transform(scale(1));
+					}
 				}
 			}
 		}
@@ -103,7 +159,14 @@
 			@include transform(translate3d(rem(-1 * $gutter * 4), 0, 0));
 
 			@include mobile () {
-				@include transform(scale(1.2));
+				@include transform(translate3d(0, 0, 0));
+			}
+
+			ul {
+				@include mobile () {
+					@include opacity(1);
+					@include transform(scale(1));
+				}
 			}
 			
 			&.ng-hide-add-active {
@@ -111,16 +174,17 @@
 				@include transform(translate3d(100%, 0, 0));
 
 				@include mobile () {
-					@include transform(scale(1));
+					@include transform(translate3d(0, 0, 0));
+				}
+
+				ul {
+					@include mobile () {
+						@include opacity(0);
+						@include transform(scale(1.6));
+					}
 				}
 			}
 		}
-	}
-
-	.hamburgerButton {
-		@include order(3);
-
-		z-index: 2;
 	}
 
 	&.isScrolled {

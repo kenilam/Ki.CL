@@ -7,53 +7,6 @@
 
 	angular
 		.module('component.globalHeader', dependencies)
-		.service('component.globalHeader.height', [
-			'$rootScope',
-			'$window',
-			'$timeout',
-			function height (root, _window, timeout) {
-				var element,
-					scope,
-					win = angular.element(_window);
-
-				this.get = function () {
-					if (element.context.nodeType === 8) {
-						return element.next().outerHeight();
-					}
-
-					return element.outerHeight();
-				};
-
-				this.update = function () {
-					root.$broadcast('globalHeader.height', scope.height);
-				};
-
-				this.set = function () {
-					scope.height = this.get();
-
-					if (!scope.$$phase) {
-						scope.$apply();
-					}
-
-					this.update();
-				}.bind(this);
-
-				this.unbind = function () {
-					timeout.cancel(scope.heightTimer);
-					element.unbind('resize');
-				};
-
-				this.assign = function (scopeRef, elementRef) {
-					scope = scopeRef;
-					element = elementRef;
-
-					win.bind('resize', this.set);
-
-					timeout.cancel(scope.heightTimer);
-					scope.heightTimer = timeout(this.set);
-				};
-			}
-		])
 		.service('component.globalHeader.render', [
 			'$rootScope',
 			'$timeout',
@@ -220,18 +173,14 @@
 		.controller('component.globalHeader.controller',
 			[
 				'$scope',
-				'$element',
 				'$attrs',
-				'component.globalHeader.height',
 				'component.globalHeader.render',
 				'component.globalHeader.event',
-				function controller (scope, element, attrs, height, render, globalHeaderEvent) {
-					height.assign(scope, element);
+				function controller (scope, attrs, render, globalHeaderEvent) {
 					render.assign(scope);
 					globalHeaderEvent.assign(scope);
 
 					scope.$on('$destroy', function () {
-						height.unbind();
 						scroll.unbind();
 					});
 				}

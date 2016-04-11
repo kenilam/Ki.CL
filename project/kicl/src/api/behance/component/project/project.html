@@ -6,9 +6,9 @@
 		<h1>{{project.name}}</h1>
 		<p>{{resource.config.content.label.published_on}} <time datetime="{{project.published_on_datetime}}">{{project.published_on}}</time></p>
 
-		<ul class="fields" aria-label="{{resource.content.fields.label}}" role="list">
+		<!-- <ul class="fields" aria-label="{{resource.content.fields.label}}" role="list">
 			<li role="listitem" ng-repeat="field in project.fields track by $index">{{field}}</li>
-		</ul>
+		</ul> -->
 	</header>
 
 	<div>
@@ -33,14 +33,14 @@
 		><img ng-src="{{module.src}}"></p>
 	</div>
 
-	<aside>
+	<!-- <aside>
 		<ul class="stats" aria-label="{{resource.content.stats.label}}" role="list">
 			<li role="listitem" ng-repeat="(key, stat) in project.stats track by $index"><span>{{stat}}</span><span>{{key}}</span></li>
 		</ul>
 		<ul class="tags" aria-label="{{resource.content.tags.label}}" role="list">
 			<li role="listitem" ng-repeat="tag in project.tags track by $index">{{tag}}</li>
 		</ul>
-	</aside>
+	</aside> -->
 
 	<footer>
 		<ul class="tool">

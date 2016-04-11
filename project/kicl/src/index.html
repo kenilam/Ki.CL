@@ -12,7 +12,7 @@
     <meta property='og:description' content='A independent design agency specialize in creative consulting, branding and web development' />
     <meta property='og:image' content='http://ki-cl.com/asset/image/site.hero.png' />
 
-    <title ng-bind-html='info.title + " | " +  breadcrumb.join(" | ")'>Welcome to Ki.CL</title>
+    <title ng-bind-html='info.title + " | " +  route.join(" | ")'>Welcome to Ki.CL</title>
 
     <link href='asset/image/logo/kicl.ico' rel='icon' type='image/x-icon'>
     <link href="/asset/image/logo/kicl.black.png" rel="apple-touch-icon" />
@@ -67,11 +67,10 @@
 </head>
 
 <body
-    ng-attr-data-route='{{route}}'
     ng-attr-data-name='{{name}}'
     ng-attr-data-current-project-id='{{currentProject}}'
     ng-class="{
-        'hasOverlay' : ref.overlay
+        'hasOverlay' : overlay
     }"
 >
     <global-header></global-header>
@@ -79,6 +78,9 @@
     <main ui-view='section'
         ng-attr-data-route='{{route}}'
         ng-attr-data-name='{{name}}'
+        ng-style='{
+            "background-image" : content.backdrop ? "url(" + content.backdrop.image + ")" : null
+        }'
     ></main>
 
     <behance-project-slideshow></behance-project-slideshow>

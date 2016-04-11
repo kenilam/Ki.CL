@@ -94,13 +94,13 @@
 			.wrapper {
 				background-color: $theme-color;
 				
-				@include largemobile () {
+				@include mobile () {
 					background-color: transparent;
 				}
 			}
 
 			.close {
-				@include largemobile () {
+				@include mobile () {
 					background-color: $theme-color;
 				}
 			}
@@ -110,7 +110,7 @@
 			}
 
 			line {
-				@include largemobile () {
+				@include mobile () {
 					stroke: $text-color;
 				}
 			}

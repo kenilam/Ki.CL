@@ -1,9 +1,15 @@
 @import '_import';
 
-[data-route=contact] {
+[data-name=contact] {
 	.globalHeader {
 		&.isScrolled {
 			background: rgba($black, .9);
+		}
+
+		nav {
+			@include mobile () {
+				background-color: $black;
+			}
 		}
 	}
 
@@ -18,12 +24,6 @@
 			stroke: $white;
 		}
 	}
-
-	nav {
-		@include mobile () {
-			background-color: $black;
-		}
-	}
 }
 
 main {
@@ -32,29 +32,10 @@ main {
 		@include align-items(center);
 		@include flex-direction(column);
 
-		.background,
-		.overground {
-			display: block;
-			height: 100%;
-			left: 0;
-			position: fixed;
-			top: 0;
-			width: 100%;
-			z-index: 0;
-		}
-
-		p,
-		label,
-		legend {
-			color: $white;
-		}
-
-		.background {
-			background-attachment: fixed;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
 
 		.overground {
 			@include backdrop-filter(blur(5px));
@@ -63,6 +44,18 @@ main {
 			background-image: url('#{$image_path}pattern/half.tone.png');
 			background-position: center;
 			background-repeat: repeat;
+			height: 100%;
+			left: 0%;
+			position: absolute;
+			top: 0%;
+			width: 100%;
+			z-index: 0;
+		}
+
+		p,
+		label,
+		legend {
+			color: $white;
 		}
 
 		h1,

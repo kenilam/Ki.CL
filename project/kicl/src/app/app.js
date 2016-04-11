@@ -19,34 +19,19 @@
 
 	angular
 		.module('kicl', dependencies)
-		.service('kicl.globalHeader.height', [
-			'$rootScope',
-			function (root) {
-				this.update = function (event, height) {
-					root.ref.globalHeader.height = height;
-				};
-
-				this.assign = function () {
-					root.ref.globalHeader = {};
-					root.$on('globalHeader.height', this.update);
-				};
-			}
-		])
 		.service('kicl.overlay', [
 			'$rootScope',
 			function (root) {
-				this.set = function () {
-					root.ref.overlay = true;
-				};
+				function set () {
+					root.overlay = true;
+				}
 
-				this.unset = function () {
-					delete root.ref.overlay;
-				};
+				function unset () {
+					delete root.overlay;
+				}
 
-				this.assign = function () {
-					root.$on('overlay.set', this.set);
-					root.$on('overlay.unset', this.unset);
-				};
+				root.$on('overlay.set', set);
+				root.$on('overlay.unset', unset);
 			}
 		])
 		.service('kicl.resource', [
@@ -77,15 +62,10 @@
 			}
 		])
 		.run([
-			'$rootScope',
-			'kicl.globalHeader.height',
 			'kicl.overlay',
 			'kicl.resource',
-			function run (root, globalHeaderHeight, overlay, resource) {
-				root.ref = {};
-
-				globalHeaderHeight.assign();
-				overlay.assign();
+			function run () {
+				
 			}
 		]);
 }());

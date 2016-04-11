@@ -8,8 +8,8 @@
 	<ul role="navigation" >
 		<li
 			ng-repeat="(name, property) in list track by $index"
-			ng-if="property.name !== 'home'"
 			ng-class="{'isCurrent' : $index === current.index}"
+			ng-attr-data-list-name="{{name}}"
 		>
 			<a
 				ui-sref="{{property.route}}"

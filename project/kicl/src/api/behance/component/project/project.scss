@@ -92,12 +92,12 @@
 
         p {
             @include order(3);
-
-            margin-bottom: rem($gutter);
         }
 
         .fields {
             @include order(4);
+
+            margin-top: rem($gutter);
         }
     }
 
@@ -108,7 +108,11 @@
     }
 
     aside {
-        margin: rem($gutter);
+        margin: 0 rem($gutter);
+    }
+
+    footer {
+        margin-top: rem($gutter);
     }
 
     .fields,
@@ -168,6 +172,10 @@
 
         padding: rem($space);
 
+        li {
+            width: 100%;
+        }
+
         button,
         a {
             @include set-transition(background-color);
@@ -197,6 +205,20 @@
                 height: rem($gutter * $font-size * 1.02);
                 text-align: center;
                 width: rem($gutter * $font-size * 1.02);
+            }
+        }
+
+        .link {
+            @include mobile () {
+                i {
+                    @include hidden();
+                }
+
+                span {
+                   @include set-font-size(.95);
+
+                   text-align: center;
+                }
             }
         }
     }

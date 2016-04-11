@@ -1,6 +1,6 @@
 @import '_import';
 
-[data-route=home] {
+[data-name=home] {
 	.globalHeader {
 		@include unset-transition();
 	}
@@ -12,43 +12,23 @@ main {
 		@include flex-direction(column);
 		@include justify-content(center);
 
-		height: 100vh;
+		@include box-shadow($shadow-center);
+
+		@include circle(grid-size(5));
+
+		@include unset-transition();
+
+		@include transform(translate3d(-50%, -50%, 0));
+
+		background-position: center;
+		background-repeat: no-repeat;
+		left: 50%;
 		overflow: hidden;
 		padding-top: 0;
+		top: 50%;
 
-		.background,
-		.overground {
-			@include circle(grid-size(5));
-
-			@include unset-transition();
-
-			@include transform(translate3d(-50%, -50%, 0));
-
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			z-index: 0;
-
-			@include largemobile {
-				@include unset-circle();
-
-				height: 100%;
-				width: 100%;
-			}
-		}
-
-		.logo,
-		.navigation {
-			position: relative;
-			z-index: 1;
-		}
-
-		.background {
-			@include box-shadow($shadow-bottom);
-
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
+		@include largemobile () {
+			@include unset-circle();
 		}
 
 		.overground {
@@ -56,6 +36,18 @@ main {
 			background-image: url('#{$image_path}pattern/half.tone.png');
 			background-position: center;
 			background-repeat: repeat;
+			height: 100%;
+			left: 0%;
+			position: absolute;
+			top: 0%;
+			width: 100%;
+			z-index: 0;
+		}
+
+		.logo,
+		.navigation {
+			position: relative;
+			z-index: 1;
 		}
 
 		.logo {
@@ -81,6 +73,12 @@ main {
 				}
 			}
 
+			li {
+				&[data-list-name='home'] {
+					display: none;
+				}
+			}
+
 			a {
 				@include set-transition(transform);
 				@include transition-duration($faster);
@@ -96,73 +94,34 @@ main {
 			}
 		}
 
-		&.ng-animate {
-			@include set-transition(opacity, transform);
-			@include transition-duration($slow);
-
-			.logo,
-			.navigation {
-				@include set-transition(transform, opacity);
-			}
-		}
-
 		&.ng-enter {
-			@include transform(scale(.5) rotate(200deg));
+			@include transform(translate3d(-50%, -50%, 0) scale(.1) rotate(200deg));
+
+			@include opacity(0);
 
 			@include largemobile () {
-				@include transform(scale(1.2));
-			}
-
-			.logo,
-			.navigation {
-				@include transition-delay($speed);
-				@include opacity(0);
-			}
-
-			.logo {
-				@include transform(scale(.7) translate3d(0, rem($gutter), 0));
-			}
-
-			.navigation {
-				@include transform(scale(.7) translate3d(0, rem(-1 * $gutter), 0));
+				@include transform(translate3d(-50%, -50%, 0) scale(1.2));
 			}
 
 			&.ng-enter-active {
-				@include transform(scale(1) rotate(0deg));
+				@include transform(translate3d(-50%, -50%, 0) scale(1) rotate(0deg));
+
+				@include opacity(1);
 
 				@include largemobile () {
-					@include transform(scale(1));
-				}
-
-				.logo,
-				.navigation {
-					@include transform(scale(1) translate3d(0, 0, 0));
-					@include opacity(1);
+					@include transform(translate3d(-50%, -50%, 0) scale(1));
 				}
 			}
 		}
 
 		&.ng-leave {
-			@include transform(scale(1));
+			@include transform(translate3d(-50%, -50%, 0) scale(1));
 
 			&.ng-leave-active {
-				@include transform(scale(.01) rotate(200deg));
+				@include transform(translate3d(-50%, -50%, 0) scale(1.2) rotate(200deg));
 
 				@include largemobile () {
-					@include transform(scale(1));
-				}
-
-				.logo,
-				.navigation {
-					@include opacity(0);
-				}
-
-				.logo {
-					@include transform(translate3d(0, rem($gutter), 0) scale(.5));
-				}
-
-				.navigation {
-					@include transform(translate3d(0, rem(-1 * $gutter), 0) scale(.5));
+					@include transform(translate3d(-50%, -50%, 0) scale(1));
 				}
 			}
 		}

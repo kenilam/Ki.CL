@@ -24,6 +24,22 @@
 			}
 		])
 
+		.service('view.backdrop', [
+			'$rootScope',
+			function backdrop (root) {
+				function set (event, url) {
+					root.backdrop = url;
+				}
+
+				function unset () {
+					delete root.backdrop;
+				}
+
+				root.$on('view.backdrop.set', set);
+				root.$on('view.backdrop.unset', unset);
+			}
+		])
+
 		.service('view.project.current', [
 			'$rootScope',
 			function currentProject (root) {
@@ -45,8 +61,7 @@
 			function route (root) {
 				function update (event, data) {
 					root.name = data.name;
-					root.route = data.route;
-					root.breadcrumb = data.route.split('.').map(function (value) {
+					root.route = data.route.split('.').map(function (value) {
 						return value.toUpperCase();
 					});
 				}

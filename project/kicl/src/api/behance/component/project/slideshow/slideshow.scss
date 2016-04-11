@@ -51,17 +51,17 @@
 		z-index: 2;
 
 		@include largemobile () {
-			@include box-shadow(none);
-
-			background-color: transparent;
-			min-width: 0;
-			max-width: grid-size(5);
-			padding: 0;
-			width: 80%;
+			min-width: 80%;
 		}
 
 		@include mobile () {
-			@include transform(translate3d(0, -25%, 0));
+			@include box-shadow(none);
+
+			background-color: transparent;
+			min-width: 0%;
+			max-width: grid-size(5);
+			padding: 0;
+			width: 80%;
 		}
 	}
 
@@ -75,10 +75,8 @@
 		width: 100%;
 		z-index: 2;
 
-		@include largemobile () {
+		@include mobile () {
 			@include order(2);
-
-			width: 100%;
 		}
 
 		&:before {
@@ -105,7 +103,7 @@
 			@include transform(scale(.8));
 		}
 
-		@include largemobile () {
+		@include mobile () {
 			@include order(3);
 		}
 
@@ -211,7 +209,7 @@
 		width: 100%;
 		z-index: 1;
 
-		@include largemobile () {
+		@include mobile () {
 			background-color: $white;
 		}
 
@@ -229,6 +227,11 @@
 		position: absolute;
 		top: 0;
 		width: 64px;
+
+		@include mobile () {
+			left: 0;
+			right: auto;
+		}
 	}
 
 	line {
@@ -236,7 +239,7 @@
 
 		stroke: $white;
 
-		@include largemobile () {
+		@include mobile () {
 			stroke: $black;
 		}
 	}
@@ -266,7 +269,7 @@
 			@include opacity(1);
 
 			@include mobile () {
-				@include transform(scale3d(1, 1, 1) translate3d(0, -25%, 0));
+				@include transform(scale3d(1, 1, 1));
 			}
 		}
 
@@ -283,7 +286,7 @@
 				@include opacity(0);
 
 				@include mobile () {
-					@include transform(scale3d(1.1, 1.1, 1.1) translate3d(0, -25%, 0));
+					@include transform(scale3d(1.1, 1.1, 1.1));
 				}
 			}
 
@@ -304,7 +307,7 @@
 			@include opacity(0);
 				
 			@include mobile () {
-				@include transform(scale3d(1.1, 1.1, 1.1) translate3d(0, -25%, 0));
+				@include transform(scale3d(1.1, 1.1, 1.1));
 			}
 		}
 
@@ -321,7 +324,7 @@
 				@include opacity(1);
 				
 				@include mobile () {
-					@include transform(scale3d(1, 1, 1) translate3d(0, -25%, 0));
+					@include transform(scale3d(1, 1, 1));
 				}
 			}
 
