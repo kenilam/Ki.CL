@@ -60,6 +60,8 @@
 		top: 0;
 
 		@include mobile () {
+			@include unset-transition();
+
 			@include transform(translate3d(0, 0, 0));
 
 			@include flex-direction(column);
@@ -188,6 +190,8 @@
 	}
 
 	&.isScrolled {
+		@include set-transition(background-color, backdrop-filter, padding);
+		
 		@include box-shadow($shadow-bottom);
 
 		@include backdrop-filter(blur(5px));
@@ -199,8 +203,7 @@
 		@include backdrop-filter(blur(0px));
 	}
 
-	&.ng-enter-active,
-	&.ng-leave-active {
+	&.ng-animate {
 		@include set-transition(opacity, padding, transform);
 	}
 

@@ -33,7 +33,7 @@
 			function current (state, list) {
 				var scope;
 
-				this.set = function (index, list) {
+				function set (list, index) {
 					scope.current = list;
 
 					if (scope.current.index !== undefined) {
@@ -41,17 +41,17 @@
 					}
 
 					scope.current.index = index;
-				};
+				}
 
 				this.check = function () {
 					var lists = list.get();
 
 					Object.keys(lists).forEach(function checkList (name, index) {
-						if (lists[name].route !== state.current.name + '()') {
+						if (lists[name].route !== state.current.name) {
 							return;
 						}
-
-						this.set(scope.lists[name], index);
+						
+						set(lists[name], index);
 					});
 				};
 

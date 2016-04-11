@@ -12,24 +12,12 @@ main {
 		@include flex-direction(column);
 		@include justify-content(center);
 
-		@include box-shadow($shadow-center);
-
-		@include circle(grid-size(5));
-
-		@include unset-transition();
-
 		@include transform(translate3d(-50%, -50%, 0));
 
-		background-position: center;
-		background-repeat: no-repeat;
 		left: 50%;
 		overflow: hidden;
 		padding-top: 0;
 		top: 50%;
-
-		@include largemobile () {
-			@include unset-circle();
-		}
 
 		.overground {
 			background-color: rgba($black, .1);
@@ -94,34 +82,41 @@ main {
 			}
 		}
 
-		&.ng-enter {
-			@include transform(translate3d(-50%, -50%, 0) scale(.1) rotate(200deg));
+		$scale_out: 1.6;
 
-			@include opacity(0);
-
-			@include largemobile () {
-				@include transform(translate3d(-50%, -50%, 0) scale(1.2));
-			}
-
-			&.ng-enter-active {
-				@include transform(translate3d(-50%, -50%, 0) scale(1) rotate(0deg));
-
-				@include opacity(1);
-
-				@include largemobile () {
-					@include transform(translate3d(-50%, -50%, 0) scale(1));
-				}
+		&.ng-animate {
+			.logo,
+			.navigation {
+				
 			}
 		}
 
-		&.ng-leave {
-			@include transform(translate3d(-50%, -50%, 0) scale(1));
+		&.ng-enter {
+			@include transform(translate3d(-50%, -50%, 0) scale($scale_out));
 
-			&.ng-leave-active {
-				@include transform(translate3d(-50%, -50%, 0) scale(1.2) rotate(200deg));
+			.logo,
+			.navigation {
+				@include opacity(0);
+			}
 
-				@include largemobile () {
-					@include transform(translate3d(-50%, -50%, 0) scale(1));
+			.logo {
+				@include transform(scale(1 / $scale_out) translate3d(0, 20%, 0));
+			}
+
+			.navigation {
+				@include transform(scale(1 / $scale_out) translate3d(0, -20%, 0));
+			}
+
+			&.ng-enter-active {
+				@include transform(translate3d(-50%, -50%, 0) scale(1));
+
+				.logo,
+				.navigation {
+					@include set-transition(opacity, transform);
+					@include transition-delay($speed);
+
+					@include transform(scale(1) translate3d(0, 0, 0));
+					@include opacity(1);
 				}
 			}
 		}
