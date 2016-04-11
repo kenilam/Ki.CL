@@ -5,17 +5,19 @@
 >
 	<div class="wrapper">
 		<h1>{{name}}</h1>
-		<ul>
-			<li
-				ng-repeat="module in modules track by $index"
-				ng-if="module.type === 'image'"
-				ng-class="{
-					'isCurrent' : module.id === current.id
-				}"
-			>
-				<img ng-src="{{module.src}}">
-			</li>
-		</ul>
+		<div class='swiper'>
+			<ul>
+				<li
+					ng-repeat="module in modules track by $index"
+					ng-if="module.type === 'image'"
+					ng-class="{
+						'isCurrent' : module.id === current.id
+					}"
+				>
+					<img ng-src="{{module.src}}">
+				</li>
+			</ul>
+		</div>
 		<div class='pagination'>
 			<button
 				ng-repeat="module in modules track by $index"

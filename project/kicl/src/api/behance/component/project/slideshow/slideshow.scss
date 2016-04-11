@@ -44,48 +44,36 @@
 		@include order(1);
 
 		background-color: $white;
-		min-width: grid-size(7);
-		max-width: grid-size(8);
 		padding: rem($gutter);
-		position: relative;
+		width: grid-size(8);
 		z-index: 2;
 
 		@include largemobile () {
-			min-width: 80%;
+			width: 80%;
 		}
 
 		@include mobile () {
 			@include box-shadow(none);
 
 			background-color: transparent;
-			min-width: 0%;
-			max-width: grid-size(5);
 			padding: 0;
-			width: 80%;
+			width: calc(100% - #{rem($gutter)});
 		}
 	}
 
-	ul {
-		@include through();
-
-		@include order(1);
-
-		max-width: grid-size($tablet-size);
-		position: relative;
+	.swiper {
+		height: 0;
+	    padding-top: 71.11%;
 		width: 100%;
-		z-index: 2;
+	}
 
-		@include mobile () {
-			@include order(2);
-		}
+	ul {
+		top: 0;
+	    position: absolute;
+	}
 
-		&:before {
-			content: '\0020';
-			display: block;
-			height: 0;
-			padding-top: $image_padding_top;
-			width: 100%;
-		}
+	img {
+		width: 100%;
 	}
 
 	.pagination {
@@ -110,7 +98,7 @@
 		button {
 			@include set-transition(transform);
 			@include transition-duration($faster);
-			@include transition-timing-function(ease-out-bounce);
+			@include transition-timing-function($ease-out-back);
 
 			@include transform(scale(.8));
 
@@ -156,37 +144,6 @@
 				}
 			}
 		}
-	}
-
-	li {
-		@include set-transition(opacity);
-
-		@include opacity(0);
-		
-		padding-top: $image_padding_top;
-		left: 0;
-		overflow: hidden;
-		position: absolute;
-		top: 0;
-		width: 100%;
-		z-index: 1;
-
-		&.isCurrent {
-			@include opacity(1);
-
-			z-index: 2;
-
-			opacity: 1;
-		}
-	}
-
-	img {
-		@include transform(translate3d(-50%, -50%, 0));
-
-		left: 50%;
-		position: absolute;
-		top: 50%;
-		width: 102%;
 	}
 
 	button {

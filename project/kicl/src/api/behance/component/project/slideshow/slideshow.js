@@ -55,6 +55,18 @@
 
 				this.setCurrent = function (module) {
 					scope.current = _.findWhere(scope.modules, module) || scope.modules[0];
+					scope.currentIndex = _.findIndex(scope.modules, scope.current);
+
+					root.$broadcast('behance.project.slideshow.setCurrent', scope.currentIndex);
+				};
+
+				this.setCurrentByIndex = function (event, index) {
+					scope.current = scope.modules[index];
+					scope.currentIndex = index;
+
+					if (!scope.$$phase) {
+						scope.$apply();
+					}
 				};
 
 				this.destory = function () {
@@ -71,6 +83,7 @@
 					scope.$on('behance.project.slideshow.data', this.data);
 					scope.$on('behance.project.slideshow.show', this.show);
 					scope.$on('behance.project.slideshow.hide', this.hide);
+					scope.$on('behance.project.slideshow.currentIndex', this.setCurrentByIndex);
 
 					scope.$on('$destory', this.destory);
 

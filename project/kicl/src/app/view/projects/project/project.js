@@ -66,23 +66,106 @@
 				};
 			}
 		])
+		.service('view.projects.project.slideshow.swiper', [
+			'$rootScope',
+			'$timeout',
+			function swiper (root, timeout) {
+				var scope,
+
+					swiper,
+					container,
+					wrapper,
+
+					config = {
+						centeredSlides : true,
+						grabCursor : true,
+						observer : true,
+						observeParents : true,
+						slidesPerView : 1,
+						speed : 800,
+						watchSlidesProgress : true,
+						watchSlidesVisibility : true
+					};
+
+				function onTransitionEnd () {
+					root.$broadcast('behance.project.slideshow.currentIndex', swiper.activeIndex);
+				}
+
+				function trigger () {
+					if (!swiper) {
+						swiper = new Swiper(container, config);
+
+						swiper.on('onTransitionEnd', onTransitionEnd);
+					}
+				}
+
+				function slideTo (index) {
+					function whenSlide () {
+						if (!swiper) {
+							return;
+						}
+
+						swiper.slideTo(index);
+					}
+
+					return whenSlide;
+				}
+
+				this.set = function (index) {
+					wrapper.children('li').addClass('swiper-slide');
+
+					timeout.cancel(scope.timer.swiperSet);
+					scope.timer.swiperSet = timeout(trigger	);
+				};
+
+				this.setCurrent = function (index) {
+					timeout.cancel(scope.timer.swiperSetCurrent);
+					scope.timer.swiperSetCurrent = timeout(slideTo(index), 300);
+				};
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+
+					container = angular.element('[data-api="behance.project.slideshow"] .swiper');
+					wrapper = container.children('ul');
+
+					if (!container.hasClass('swiper-container')) {
+						container.addClass('swiper-container');
+					}
+
+					if (!wrapper.hasClass('swiper-wrapper')) {
+						wrapper.addClass('swiper-wrapper');
+					}
+				};
+			}
+		])
 		.service('view.projects.project.slideshow', [
-			function () {
+			'view.projects.project.slideshow.swiper',
+			function slideshow (swiper) {
 				var scope;
 				
 				this.show = function () {
+					swiper.set();
+
 					scope.$emit('overlay.set');
 				};
 
 				this.hide = function () {
 					scope.$emit('overlay.unset');
 				};
+
+				this.setCurrent = function (event, index) {
+					swiper.setCurrent(index);
+				};
 				
 				this.assign = function (scopeRef) {
 					scope = scopeRef;
 
+					swiper.assign(scope);
+
 					scope.$on('behance.project.slideshow.on.show', this.show);
 					scope.$on('behance.project.slideshow.on.hide', this.hide);
+					scope.$on('behance.project.slideshow.setCurrent', this.setCurrent);
 				};
 			}
 		])
