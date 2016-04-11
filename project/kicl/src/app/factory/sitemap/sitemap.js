@@ -103,26 +103,18 @@
 					return parent[id];
 				};
 
-				Sitemap.prototype.get = function (id, map) {
+				Sitemap.prototype.get = function (map) {
 					var parent = cache;
 
 					if (cache[""]) {
 						delete cache[""];
 					}
 
-					if (!id || id === 'root') {
-						return parent;
+					if (!map || map === 'root') {
+						return cache;
 					}
 
-					if (map) {
-						parent = findParent(map);
-					}
-
-					if (!parent || !parent.children) {
-						return undefined;
-					}
-
-					return parent.children[id];
+					return findParent(map);
 				};
 
 				return new Sitemap();

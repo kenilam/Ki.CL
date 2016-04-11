@@ -30,12 +30,6 @@
 				});
 			}
 		])
-		.run([
-			'sitemap',
-			function run (sitemap) {
-				
-			}
-		])
 		.service('view.projects.project.current', [
 			'$rootScope',
 			'$window',
@@ -94,7 +88,8 @@
 		])
 		.service('view.projects.project.data', [
 			'$timeout',
-			function projectData (timeout) {
+			'sitemap',
+			function projectData (timeout, sitemap) {
 				var scope,
 					resource;
 
@@ -109,6 +104,8 @@
 						name : 'projects.' + resource.name,
 						route : resource.route.replace('.project', '.' + project.name)
 					});
+
+					sitemap.add(project.id, { name : 'projects', route : 'projects.project({project:' + project.id + '})' }, 'projects');
 				};
 
 				this.assign = function (scopeRef, resourceRef) {

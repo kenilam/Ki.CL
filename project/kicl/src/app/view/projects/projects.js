@@ -77,11 +77,16 @@
 		.service('view.projects.behanceProjectsData', [
 			'$state',
 			'$stateParams',
-			function behanceData (state, stateParams) {
+			'sitemap',
+			function behanceData (state, stateParams, sitemap) {
 				var scope;
 
 				this.ready = function (event, projects) {
 					scope.projects = projects;
+
+					projects.forEach(function (project) {
+						sitemap.add(project.id, { name : project.name, route : 'projects.project({project:' + project.id + '})' }, 'projects');
+					});
 
 					if (stateParams.project) {
 						return;

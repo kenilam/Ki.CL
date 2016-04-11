@@ -7,7 +7,7 @@
 
 	angular
 		.module('component.navigation', dependencies)
-		.service('navigation.list', [
+		.service('component.navigation.list', [
 			'sitemap',
 			function list (sitemap) {
 				var scope,
@@ -27,9 +27,9 @@
 				};
 			}
 		])
-		.service('navigation.current', [
+		.service('component.navigation.current', [
 			'$state',
-			'navigation.list',
+			'component.navigation.list',
 			function current (state, list) {
 				var scope;
 
@@ -62,7 +62,7 @@
 				};
 			}
 		])
-		.service('navigation.vertical', [
+		.service('component.navigation.vertical', [
 			function vertical () {
 				var scope,
 					attrs;
@@ -79,8 +79,8 @@
 					scope = scopeRef;
 					attrs = attrsRef;
 
-					scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '' ) + 'navigation.set.vertical', this.set);
-					scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '' ) + 'navigation.unset.vertical', this.unset);
+					scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '' ) + 'component.navigation.set.vertical', this.set);
+					scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '' ) + 'component.navigation.unset.vertical', this.unset);
 				};
 			}
 		])
@@ -93,23 +93,33 @@
 						'isolate' : '&'
 					},
 					templateUrl : 'app/component/navigation/navigation.html',
-					controller : 'navigation.controler'
+					controller : 'component.navigation.controler'
 				};
 			}
 		])
-		.controller('navigation.controler', [
+		.controller('component.navigation.controler', [
 			'$scope',
+			'$element',
 			'$attrs',
-			'navigation.list',
-			'navigation.current',
-			'navigation.vertical',
-			function controller (scope, attrs, list, current, vertical) {
-				list.assign(scope, attrs);
-				current.assign(scope);
-				vertical.assign(scope, attrs);
+			'component.navigation.list',
+			'component.navigation.current',
+			'component.navigation.vertical',
+			function controller (scope, element, attrs, list, current, vertical) {
+				function init () {
+					list.assign(scope, attrs);
+					current.assign(scope);
+					vertical.assign(scope, attrs);
+					list.set();
+					current.check();
+				}
 
-				list.set();
-				current.check();
+				if (attrs.initWhen) {
+					scope.$on(attrs.initWhen + '.navigation.init', init);
+
+					return;
+				}
+
+				init();
 			}
 		]);
 }());

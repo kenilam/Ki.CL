@@ -24,7 +24,7 @@
 			'$scope',
 			'sitemap',
 			function controller (scope, sitemap) {
-				scope.logo = sitemap.get('root').home;
+				scope.logo = sitemap.get('home');
 			}
 		]);
 }());
