@@ -153,7 +153,7 @@
 	.close {
 		@include backdrop-filter(blur(5px));
 
-		background-color: rgba($black, .8);
+		background-color: rgba($black, .9);
 		background-image: url('#{$image_path}pattern/half.tone.png');
 		background-position: center;
 		background-repeat: repeat;

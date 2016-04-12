@@ -4,7 +4,7 @@ module.exports.middleware = function (project) {
 	var fs = require('fs'),
 		url = require("url");
 
-	function read (exceptionExpression, dirName, req, res, next) {
+	function readJSON (exceptionExpression, dirName, req, res, next) {
 		var uri = url.parse(req.url, true),
 			rootPath = appRoot + '/project/' + project + '/' + dirName,
 			filePath = rootPath + uri.pathname,
@@ -19,7 +19,7 @@ module.exports.middleware = function (project) {
 			userNameActual = new RegExp('{{userName}}', 'g');
 
 		if (!uri.pathname.match(exceptionExpression)) {
-			return next();
+			return readPHP(/\.php$/, 'mock', req, res, next);
 		}
 		
 		fs.readFile(
@@ -44,8 +44,30 @@ module.exports.middleware = function (project) {
 		);
 	}
 
+	function readPHP (exceptionExpression, dirName, req, res, next) {
+		var uri = url.parse(req.url, true),
+			rootPath = appRoot + '/project/' + project + '/' + dirName,
+			filePath = rootPath + uri.pathname.replace('php', 'json');
+
+		if (!uri.pathname.match(exceptionExpression)) {
+			return next();
+		}
+
+		fs.readFile(filePath, {encoding: 'utf-8', flag: 'rs'}, function(error, data) {
+			res.setHeader('Content-Type', 'application/json');
+			
+			if (error) return res.end(error.toString().replace(rootPath, ''));
+
+			if (uri.query.callback) {
+				return res.end('/**/' + uri.query.callback + '(' + data + ')');
+			}
+
+			res.end(data);
+		});
+	}
+
 	function mock (req, res, next) {
-		read(/\.json$/, 'mock', req, res, next);
+		readJSON(/\.json$/, 'mock', req, res, next);
 	}
 
 	return {

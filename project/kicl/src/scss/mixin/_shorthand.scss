@@ -99,6 +99,13 @@
 	text-overflow: ellipsis;
 }
 
+@mixin untruncate () {
+	width: inherit;
+	white-space: initial;
+	overflow: initial;
+	text-overflow: initial;
+}
+
 @mixin content ($content: '\0020') {
 	content: $content;
 }

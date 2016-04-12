@@ -1,7 +1,11 @@
 @import '_import';
 
-html {
-
+body {
+	background-color: $white;
+	
+	&.hasOverlay {
+		overflow: hidden;
+	}
 }
 
 .globalHeader {
@@ -14,10 +18,6 @@ main {
 	z-index: 1;
 }
 
-body {
-	background-color: $white;
-	
-	&.hasOverlay {
-		overflow: hidden;
-	}
+.customFormDialog {
+	z-index: 4;
 }

@@ -45,6 +45,7 @@
     <link rel='stylesheet' type='text/css' href='api/behance/component/user/stats/stats.css'>
     
     <link rel='stylesheet' type='text/css' href='app/component/customForm/customForm.css'>
+    <link rel='stylesheet' type='text/css' href='app/component/customForm/dialog/dialog.css'>
     <link rel='stylesheet' type='text/css' href='app/component/cursor/cursor.css'>
     <link rel='stylesheet' type='text/css' href='app/component/hamburgerButton/hamburgerButton.css'>
     <link rel='stylesheet' type='text/css' href='app/component/globalHeader/globalHeader.css'>
@@ -84,6 +85,7 @@
     ></main>
 
     <behance-project-slideshow></behance-project-slideshow>
+    <custom-form-dialog data-emit-from='view.contact'></custom-form-dialog>
 
     <!--[if lt IE 7]>
     <script src='IE8.js'>IE7_PNG_SUFFIX='.png';</script>
@@ -104,15 +106,6 @@
     <script type='text/javascript' src='lib/html5shiv-printshiv.js'></script>
     <!-- endbuild -->
     <!--<![endif]-->
-    
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-41733388-1', 'auto');
-    </script>
 
     <script src="https://use.typekit.net/cpi1lno.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
@@ -171,6 +164,7 @@
 
     <script type='text/javascript' src="app/component/component.js"></script>
     <script type='text/javascript' src="app/component/customForm/customForm.js"></script>
+    <script type='text/javascript' src="app/component/customForm/dialog/dialog.js"></script>
     <script type='text/javascript' src="app/component/cursor/cursor.js"></script>
     <script type='text/javascript' src="app/component/globalHeader/globalHeader.js"></script>
     <script type='text/javascript' src="app/component/hamburgerButton/hamburgerButton.js"></script>
@@ -189,6 +183,15 @@
 
     <script type='text/javascript' src='automation/run.template.js'></script>
     <!-- endbuild -->
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-41733388-1', 'auto');
+    </script>
 </body>
 
 </html>

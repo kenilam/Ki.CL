@@ -43,16 +43,45 @@
 				sitemap.add('contact', { name : 'contact', route : 'contact' });
 			}
 		])
+		.service('view.contact.customForm.event', [
+			'$rootScope',
+			function customFormEvent (root) {
+				var scope;
+
+				function success (event, model) {
+					root.$broadcast('view.contact.customForm.dialog.show.success', model);
+				}
+
+				function error (event, error) {
+					root.$broadcast('view.contact.customForm.dialog.show.error', error);
+				}
+
+				function hide (event, keep) {
+					scope.$broadcast('view.contact.customForm.reset', keep);
+				}
+
+				this.assign = function (scopeRef) {
+					scope = scopeRef;
+					
+					scope.$on('view.contact.customForm.responseHandler.success', success);
+					scope.$on('view.contact.customForm.responseHandler.error', error);
+					scope.$on('view.contact.customForm.dialog.hide', hide);
+				};
+			}
+		])
 		.controller('view.contact.controller', [
 			'$rootScope',
 			'$scope',
 			'$timeout',
 			'$anchorScroll',
 			'resource',
-			function controller (root, scope, timeout, anchorScroll, resource) {
+			'view.contact.customForm.event',
+			function controller (root, scope, timeout, anchorScroll, resource, customFormEvent) {
 				scope.content = resource.content;
 				scope.name = resource.name;
 				scope.route = resource.route;
+
+				customFormEvent.assign(scope);
 
 				scope.$emit('update.view.data', { name : resource.name, route : resource.route });
 

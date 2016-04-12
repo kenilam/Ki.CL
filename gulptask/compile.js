@@ -25,6 +25,9 @@ module.exports.compile = function (project) {
 		debug = require('gulp-debug'),
 
 		file = {
+			PHP : './project/' + project + '/src/**/*.php',
+			XML : './project/' + project + '/src/**/*.xml',
+			TXT : './project/' + project + '/src/**/*.txt',
 			HTML : './project/' + project + '/src/index.html',
 			JS : './project/' + project + '/src/**/*.{js,map}',
 			CSS : './project/' + project + '/src/**/*.css',
@@ -34,6 +37,9 @@ module.exports.compile = function (project) {
 		},
 
 		destination = {
+			PHP : './project/' + project + '/dev',
+			XML : './project/' + project + '/dev',
+			TXT : './project/' + project + '/dev',
 			HTML : './project/' + project + '/dev',
 			JS : './project/' + project + '/dev',
 			CSS : './project/' + project + '/dev',
@@ -79,6 +85,15 @@ module.exports.compile = function (project) {
 			},
 
 			compile : {
+				PHP : function (dependencies) {
+					return fn.basicComplie('PHP', dependencies)
+				},
+				XML : function (dependencies) {
+					return fn.basicComplie('XML', dependencies)
+				},
+				TXT : function (dependencies) {
+					return fn.basicComplie('TXT', dependencies)
+				},
 				HTML : function (dependencies) {
 					return fn.basicComplie('HTML', dependencies)
 				},

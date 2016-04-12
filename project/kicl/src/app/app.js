@@ -49,7 +49,7 @@
 					}
 
 					timeout.cancel(root.kiclResource);
-					root.kiclResource = timeout(whenBroadcast);
+					root.kiclResource = timeout(whenBroadcast, 100);
 				}
 
 				function loaded (data) {
