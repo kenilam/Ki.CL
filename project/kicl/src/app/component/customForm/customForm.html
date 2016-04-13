@@ -25,6 +25,7 @@
 			>{{field.label}}</label>
 			<input
 				tabindex='1'
+				ng-disabled='request'
 				ng-model='model[field.name]'
 				ng-attr-id='{{field.name}}'
 				ng-attr-name='{{field.name}}'
@@ -37,6 +38,7 @@
 			>
 			<input
 				tabindex='1'
+				ng-disabled='request'
 				ng-model='model[field.name]'
 				ng-attr-id='{{field.name}}'
 				ng-attr-name='{{field.name}}'
@@ -49,6 +51,7 @@
 			>
 			<textarea
 				tabindex='1'
+				ng-disabled='request'
 				ng-model='model[field.name]'
 				ng-attr-id='{{field.name}}'
 				ng-attr-name='{{field.name}}'
@@ -78,6 +81,7 @@
 						>{{set.label}}</label>
 						<input
 							tabindex='1'
+							ng-disabled='request'
 							ng-model='model[field.name]'
 							ng-attr-id='{{set.name}}'
 							ng-attr-name='{{field.name}}'
@@ -111,20 +115,29 @@
 	<button
 		type='submit'
 		tabindex='1'
-		ng-disabled='$parent.$$childHead[form.name].$invalid || status.loading'
+		ng-disabled='$parent.$$childHead[form.name].$invalid || request'
 		ng-class='{
-			"isLoading" : loading
+			"isLoading" : request
 		}'
 	><i class='fa'
 		ng-class='{
 			"fa-times" : $parent.$$childHead[form.name].$invalid,
-			"fa-paper-plane-o" : !loading && !$parent.$$childHead[form.name].$invalid,
-			"ifa-spin fa-circle-o-notch" : loading
+			"fa-paper-plane-o" : !request && !$parent.$$childHead[form.name].$invalid,
+			"fa-spin fa-circle-o-notch" : request
 		}'
-	></i>{{loading ? form.button.loading.name : form.button.submit.name}}</button>
+	></i>{{request ? form.button.loading.name : form.button.submit.name}}</button>
 	<button
 		type='reset'
 		tabindex='1'
+		ng-disabled='request'
+		ng-class='{
+			"isLoading" : request
+		}'
 		ng-click='reset($event)'
-	><i class='fa fa-undo'></i>{{form.button.reset.name}}</button>
+	><i class='fa'
+		ng-class='{
+			"fa-times" : request,
+			"fa-undo" : !request
+		}'
+	></i>{{form.button.reset.name}}</button>
 </form>

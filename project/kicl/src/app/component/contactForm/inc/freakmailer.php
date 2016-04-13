@@ -40,6 +40,7 @@ function email($from, $to, $name, $subject, $message){
 	$replace_messages = stripslashes($messages);
 	
 	$mailer = new FreakMailer();
+	$mailer->CharSet="UTF-8";
 	$mailer->SMTPDebug=1;
 	$mailer->From = $from;
 	$mailer->FromName = $name;

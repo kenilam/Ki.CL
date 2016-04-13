@@ -102,6 +102,8 @@
 					attrs;
 
 				function reset (event, keep) {
+					delete scope.request;
+					
 					if (keep) {
 						return;
 					}

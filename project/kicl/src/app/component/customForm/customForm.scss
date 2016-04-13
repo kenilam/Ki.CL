@@ -102,6 +102,10 @@
                     }
                 }
             }
+
+            &.isLoading {
+                color: darken($green, 20%);
+            }
         }
 
         &[type=reset] {
