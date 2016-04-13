@@ -43,8 +43,6 @@
 					attrs = attrsRef;
 
 					scope.close = this.hide;
-					scope.keydown = this.keydown;
-					scope.keyup = this.keyup;
 				};
 			}
 		])
@@ -59,6 +57,10 @@
 
 					scope.success = true;
 					scope.model = model;
+
+					if (scope.model.message) {
+						// scope.model.message = scope.model.message.split('\n').filter(function (pg) { return pg !== ''; });
+					}
 
 					control.show();
 				}
@@ -84,18 +86,20 @@
 				};
 			}
 		])
-		.service('component.customForm.dialog.resource', [
-			function event () {
-				var scope;
+		.service('component.customForm.dialog.data', [
+			function customFormData () {
+				var scope,
+					attrs;
 
-				function dialogResource (event, resource) {
-					scope.resource = resource;
-				}
+				this.onData = function (event, data) {
+					scope.resource = data;
+				};
 
-				this.assign = function (scopeRef) {
+				this.assign = function (scopeRef, attrsRef) {
 					scope = scopeRef;
+					attrs = attrsRef;
 					
-					scope.$on('kicl.component.customFormDialog.resource', dialogResource);
+					scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '') + 'customForm.dialog.data', this.onData);
 				};
 			}
 		])
@@ -115,11 +119,11 @@
 		.controller('component.customForm.dialog.controller', [
 			'$scope',
 			'$attrs',
+			'component.customForm.dialog.data',
 			'component.customForm.dialog.event',
-			'component.customForm.dialog.resource',
-			function controller (scope, attrs, event, resource) {
-				event.assign(scope, attrs);
-				resource.assign(scope);
+			function controller (scope, attrs, dialogData, dialogEvent) {
+				dialogData.assign(scope, attrs);
+				dialogEvent.assign(scope, attrs);
 			}
 		]);
 }());

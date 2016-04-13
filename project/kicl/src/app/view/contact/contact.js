@@ -90,6 +90,7 @@
 				timeout.cancel(scope.viewContactTimer);
 				scope.viewContactTimer = timeout(function sendData () {
 					scope.$broadcast('view.contact.customForm.data', resource.component.customForm);
+					root.$broadcast('view.contact.customForm.dialog.data', resource.component.customForm.dialog);
 				});
 
 				anchorScroll();

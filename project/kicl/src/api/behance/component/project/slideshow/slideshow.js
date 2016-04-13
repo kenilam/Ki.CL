@@ -21,20 +21,27 @@
 		])
 		.service('behance.component.project.slideshow.event', [
 			'$rootScope',
-			function slideshowEvent (root) {
+			'$window',
+			function slideshowEvent (root, _win) {
 				var scope,
-					doc = angular.element(document);
+					win = angular.element(_win);
+
+				function keyup (event) {
+					if (event.keyCode !== 27) {
+						return;
+					}
+
+					scope.close();
+
+					if (!scope.$$phase) {
+						scope.$apply();
+					}
+				}
 
 				this.data = function (event, project) {
 					scope.name = project.name;
 					scope.modules = project.modules;
 					scope.current = project.modules[0];
-				};
-
-				this.hide = function () {
-					scope.show = false;
-
-					root.$broadcast('behance.project.slideshow.on.hide');
 				};
 
 				this.show = function (event, params) {
@@ -44,14 +51,18 @@
 
 					scope.show = true;
 
+					win.bind('keyup', keyup);
+
 					root.$broadcast('behance.project.slideshow.on.show');
 				}.bind(this);
 
-				this.keyup = function (event) {
-					if (event.keyCode === 27) {
-						this.hide();
-					}
-				}.bind(this);
+				this.hide = function () {
+					scope.show = false;
+
+					win.unbind('keyup', keyup);
+
+					root.$broadcast('behance.project.slideshow.on.hide');
+				};
 
 				this.setCurrent = function (module) {
 					scope.current = _.findWhere(scope.modules, module) || scope.modules[0];
@@ -69,10 +80,6 @@
 					}
 				};
 
-				this.destory = function () {
-					doc.unbind('keyup', this.keyup);
-				};
-
 				this.init = function (scopeRef) {
 					scope = scopeRef;
 
@@ -85,9 +92,7 @@
 					scope.$on('behance.project.slideshow.hide', this.hide);
 					scope.$on('behance.project.slideshow.currentIndex', this.setCurrentByIndex);
 
-					scope.$on('$destory', this.destory);
-
-					doc.bind('keyup', this.keyup);
+					scope.$on('$stateChangeStart', this.hide);
 				};
 			}
 		])

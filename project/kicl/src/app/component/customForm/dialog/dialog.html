@@ -10,7 +10,10 @@
 			<p ng-repeat='message in resource.success.message track by $index'>{{message}}</p>
 			<h2>{{resource.success.report.title}}</h2>
 			<ul class='report'>
-				<li ng-repeat='(name, value) in model track by $index' ng-attr-data-report-name='{{name}}'>
+				<li
+					ng-repeat='(name, value) in model track by $index'
+					ng-attr-data-report-name='{{name}}'
+				>
 					<h3>{{name}}</h3>
 					<p>{{value}}</p>
 				</li>
@@ -24,11 +27,11 @@
 			<p ng-repeat='message in resource.error.message track by $index'>{{message}}</p>
 			<h2>{{resource.error.report.title}}</h2>
 			<ul class='report'>
-				<li ng-attr-data-report-name='status'>
+				<li data-report-name='status'>
 					<h3>{{resource.error.report.status.title}}</h3>
 					<p>{{error.status}}</p>
 				</li>
-				<li ng-attr-data-report-name='message'>
+				<li data-report-name='message'>
 					<h3>{{resource.error.report.message.title}}</h3>
 					<p>{{error.messages}}</p>
 				</li>

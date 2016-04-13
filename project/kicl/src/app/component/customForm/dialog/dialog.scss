@@ -90,12 +90,11 @@
 			h3 {
 				@include truncate(30%);
 
-				padding-right: rem($space / 2);
+				padding-right: rem($space);
 				text-align: right;
 			}
 
 			p {
-				padding-left: rem($space / 2);
 				text-align: left;
 				width: 70%;
 			}
@@ -108,7 +107,9 @@
 
 			&[data-report-name=message] {
 				p {
-					@include multiline-truncate(3);
+					@include multiline-truncate(4);
+
+					text-align: left;
 				}
 			}
 		}

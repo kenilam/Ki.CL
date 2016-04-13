@@ -48,12 +48,12 @@
 						{
 							"name" : "yes",
 							"label" : "Yes",
-							"value" : 1
+							"value" : "yes"
 						},
 						{
 							"name" : "no",
 							"label" : "No",
-							"value" : 0
+							"value" : "no"
 						}
 					]
 				},
@@ -76,6 +76,41 @@
 				},
 				"reset" : {
 					"name" : "Reset"
+				}
+			},
+			
+			"dialog" : {
+				"button" : {
+					"close" : {
+						"message" : "Close this dialog"
+					}
+				},
+				"success" : {
+					"title" : "All Done!",
+					"message" : [
+						"Thank you for reaching out.",
+						"A auto reply email has been sent to your inbox.",
+						"I will be in touch soon!"
+					],
+					"report" : {
+						"title" : "Below is a copy of your messages:"
+					}
+				},
+				"error" : {
+					"title" : "Oop!",
+					"message" : [
+						"I am sorry, but something went wrong",
+						"Please try again."
+					],
+					"report" : {
+						"title" : "Below are the responds from the server:",
+						"status" : {
+							"title" : "Status"
+						},
+						"message" : {
+							"title" : "Messages"
+						}
+					}
 				}
 			}
 		}
