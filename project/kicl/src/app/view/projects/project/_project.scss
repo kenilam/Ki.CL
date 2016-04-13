@@ -19,7 +19,7 @@
 			}
 
 			&.isScrolled {
-				background-color: $theme-color;
+				background-color: rgba($theme-color, .9);
 			}
 		}
 
