@@ -42,8 +42,20 @@ $msg[] = '"email":' . ($email == '' ? 'false' : 'true');
 $msg[] = '"message":' . ($message == '' ? 'false' : 'true');
 
 if($name != "" && $email != "" && $message != "") {
-	email(html_entity_decode($siteautoreply), $email, $name, 'Ki.CL Auto Reply - DO NOT REPLY TO THIS EMAIL', markup('autoreply',$name,$message));
-	email($email, html_entity_decode($siteemail), $name, 'Contact via Ki.CL', markup('notice','<a href="mailto:'.$email.'" style="border-bottom:#f66 dotted 1px; color:#666; text-decoration:none;">'.$organlization.' '.$name.'</a>',$message));
+	email(
+		html_entity_decode($siteautoreply),
+		$email,
+		'Ki.CL Auto Reply',
+		'Ki.CL Auto Reply - DO NOT REPLY TO THIS EMAIL',
+		markup('autoreply',$name,$message)
+	);
+	email(
+		$email,
+		html_entity_decode($siteemail),
+		$name,
+		'Contact via Ki.CL',
+		markup('notice','<a href="mailto:'.$email.'" style="border-bottom:#f66 dotted 1px; color:#666; text-decoration:none;">'.$organlization.' '.$name.'</a>',$message)
+	);
 
 	$msg[] = '"status":200';
 

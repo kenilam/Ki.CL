@@ -80,6 +80,9 @@
 				}
 			},
 			"content" : {
+				"image" : {
+					"message" : "Tap to see this image on a slideshow"
+				},
 				"fields" : {
 					"label" : "Related fields"
 				},

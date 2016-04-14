@@ -24,6 +24,7 @@
 			'$window',
 			function slideshowEvent (root, _win) {
 				var scope,
+					element,
 					win = angular.element(_win);
 
 				function keyup (event) {
@@ -45,6 +46,12 @@
 				};
 
 				this.show = function (event, params) {
+					var btn = element.children('button'),
+						wrapper = element.children('.wrapper');
+
+					btn.removeAttr('style');
+					wrapper.removeAttr('style');
+
 					if (params.module) {
 						this.setCurrent(params.module);
 					}
@@ -57,6 +64,12 @@
 				}.bind(this);
 
 				this.hide = function () {
+					var btn = element.children('button'),
+						wrapper = element.children('.wrapper');
+
+					btn.css('background', btn.css('background'));
+					wrapper.css('background', wrapper.css('background'));
+
 					scope.show = false;
 
 					win.unbind('keyup', keyup);
@@ -80,8 +93,9 @@
 					}
 				};
 
-				this.init = function (scopeRef) {
+				this.init = function (scopeRef, elementRef) {
 					scope = scopeRef;
+					element = elementRef;
 
 					scope.show = false;
 					scope.setCurrent = this.setCurrent;
@@ -98,11 +112,12 @@
 		])
 		.controller('behance.component.project.slideshow.controller', [
 			'$scope',
+			'$element',
 			'behance.component.project.slideshow.resource',
 			'behance.component.project.slideshow.event',
-			function (scope, slideshowResource, slideshowEvent) {
+			function (scope, element, slideshowResource, slideshowEvent) {
 				slideshowResource.init(scope);
-				slideshowEvent.init(scope);
+				slideshowEvent.init(scope, element);
 			}
 		])
 		.directive('behanceProjectSlideshow', [

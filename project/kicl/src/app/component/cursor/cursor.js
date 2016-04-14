@@ -57,10 +57,23 @@
 					element = elementRef;
 
 					position.assign(scope, element);
-
-					win.bind('resize', this.resize);
 					
-					this.bind();
+					win.bind('resize', this.resize);
+				};
+			}
+		])
+		.service('component.cursor.resource', [
+			function resource () {
+				var scope,
+					attrs;
+
+				function hasResource (event, resource) {
+					scope.resource = resource;
+				}
+
+				this.assign = function (scopeRef, attrsRef) {
+					scope = scopeRef;
+					attrs = attrsRef;
 				};
 			}
 		])
@@ -80,9 +93,12 @@
 		.controller('component.cursor.controller', [
 			'$scope',
 			'$element',
+			'$attrs',
 			'component.cursor.event',
-			function controller (scope, element, event) {
+			'component.cursor.resource',
+			function controller (scope, element, attrs, event, resource) {
 				event.assign(scope, element);
+				resource.assign(scope, attrs);
 			}
 		]);
 }());

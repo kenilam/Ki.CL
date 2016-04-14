@@ -30,7 +30,8 @@
 			ng-style="{
 				'background-image' : 'url(' + module.src + ')'
 			}"
-		><img ng-src="{{module.src}}"></p>
+			ng-attr-title="{{resource.content.image.message}}"
+		><img ng-src="{{module.src}}"><span>{{resource.content.image.message}}</span></p>
 	</div>
 
 	<!-- <aside>
