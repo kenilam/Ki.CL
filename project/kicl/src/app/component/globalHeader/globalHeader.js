@@ -66,8 +66,6 @@
 				};
 
 				this.close = function (event) {
-					element;
-
 					if (event.target && event.target.parentElement.classList.contains('navigation')) {
 						return;
 					}
