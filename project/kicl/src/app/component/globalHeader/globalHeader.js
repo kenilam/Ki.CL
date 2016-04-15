@@ -47,6 +47,7 @@
 			'mediaquery',
 			function navigation (_window, timeout, mediaquery) {
 				var scope,
+					element,
 					emitFrom = 'globalHeader.navigation.',
 					win = angular.element(_window);
 
@@ -60,11 +61,21 @@
 					scope.$emit('overlay.' + (!Boolean(set) ? 'set' : 'unset'));
 				}
 
-				this.open = function () {
+				this.open = function (event) {
 					troggle(false);
 				};
 
-				this.close = function () {
+				this.close = function (event) {
+					element;
+
+					if (event.target && event.target.parentElement.classList.contains('navigation')) {
+						return;
+					}
+
+					if (event.target && event.target.parentElement.classList.contains('globalHeader')) {
+						scope.$broadcast('globalHeader.navigation.hamburgerButton.open', { doNotBroadcast : true });
+					}
+
 					troggle(true);
 				};
 
@@ -78,8 +89,11 @@
 					scope.$emit('overlay.unset');
 				};
 
-				this.assign = function (scopeRef) {
+				this.assign = function (scopeRef, elementRef) {
 					scope = scopeRef;
+					element = elementRef;
+
+					scope.close = this.close;
 
 					scope.navigation = {};
 
@@ -130,15 +144,13 @@
 						return;
 					}
 
-					navigation.close();
-
 					scope.$broadcast('globalHeader.navigation.hamburgerButton.open', { doNotBroadcast : true });
 				};
 
-				this.assign = function (scopeRef) {
+				this.assign = function (scopeRef, elementRef) {
 					scope = scopeRef;
 
-					navigation.assign(scope);
+					navigation.assign(scope, elementRef);
 
 					scope.$on('$stateChangeStart', this.start);
 				};
@@ -147,14 +159,10 @@
 		.service('component.globalHeader.event', [
 			'component.globalHeader.scroll',
 			'component.globalHeader.stateChange',
-			function globalHeaderEvent (stateChange, scroll) {
-				var scope;
-
-				this.assign = function (scopeRef) {
-					scope = scopeRef;
-
-					stateChange.assign(scope);
+			function globalHeaderEvent (scroll, stateChange) {
+				this.assign = function (scope, element) {
 					scroll.assign(scope);
+					stateChange.assign(scope, element);
 				};
 			}
 		])
@@ -173,12 +181,12 @@
 		.controller('component.globalHeader.controller',
 			[
 				'$scope',
-				'$attrs',
+				'$element',
 				'component.globalHeader.render',
 				'component.globalHeader.event',
-				function controller (scope, attrs, render, globalHeaderEvent) {
+				function controller (scope, element, render, globalHeaderEvent) {
 					render.assign(scope);
-					globalHeaderEvent.assign(scope);
+					globalHeaderEvent.assign(scope, element);
 
 					scope.$on('$destroy', function () {
 						scroll.unbind();

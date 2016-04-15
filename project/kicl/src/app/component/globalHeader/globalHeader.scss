@@ -73,6 +73,7 @@
 			background-image: url('#{$image_path}pattern/half.tone.png');
 			background-position: center;
 			background-repeat: repeat;
+			cursor: pointer;
 			height: 100vh;
 			left: 0;
 			position: fixed;
@@ -85,6 +86,8 @@
 			@include mobile () {
 				@include flex-direction(column);
 				@include align-items(center);
+
+				cursor: default;
 			}
 		}
 

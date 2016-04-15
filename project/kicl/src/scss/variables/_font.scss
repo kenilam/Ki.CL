@@ -32,4 +32,5 @@ $thicker_font_weight: 700;
 
 @mixin set-h-font-size ($rate, $bleed) {
 	@include set-font-size($rate);
+	line-height: 1;
 }
