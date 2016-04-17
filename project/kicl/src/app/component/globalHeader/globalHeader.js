@@ -66,13 +66,7 @@
 				};
 
 				this.close = function (event) {
-					if (event.target &&
-						(
-							event.target.parentNode.classList.contains('navigation') ||
-							event.target.parentNode.parentNode.classList.contains('navigation') ||
-							event.target.parentNode.parentNode.parentNode.classList.contains('navigation')
-						)
-					) {
+					if (event.target && event.target.parentElement.classList.contains('navigation')) {
 						return;
 					}
 
@@ -199,5 +193,4 @@
 			]
 		);
 }());
-
 
