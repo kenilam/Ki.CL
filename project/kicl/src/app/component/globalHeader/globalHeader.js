@@ -47,7 +47,6 @@
 			'mediaquery',
 			function navigation (_window, timeout, mediaquery) {
 				var scope,
-					element,
 					emitFrom = 'globalHeader.navigation.',
 					win = angular.element(_window);
 
@@ -66,14 +65,6 @@
 				};
 
 				this.close = function (event) {
-					if (event.target && event.target.parentElement.classList.contains('navigation')) {
-						return;
-					}
-
-					if (event.target && event.target.parentElement.classList.contains('globalHeader')) {
-						scope.$broadcast('globalHeader.navigation.hamburgerButton.open', { doNotBroadcast : true });
-					}
-
 					troggle(true);
 				};
 
@@ -87,9 +78,8 @@
 					scope.$emit('overlay.unset');
 				};
 
-				this.assign = function (scopeRef, elementRef) {
+				this.assign = function (scopeRef) {
 					scope = scopeRef;
-					element = elementRef;
 
 					scope.close = this.close;
 
@@ -135,22 +125,24 @@
 			'component.globalHeader.navigation',
 			'mediaquery',
 			function (navigation, mediaquery) {
-				var scope;
+				var scope,
+					element;
 
-				this.start = function () {
+				this.stateChangeSuccess = function () {
 					if (!mediaquery().mobile) {
 						return;
 					}
 
-					scope.$broadcast('globalHeader.navigation.hamburgerButton.open', { doNotBroadcast : true });
+					scope.$broadcast('globalHeader.navigation.hamburgerButton.open');
 				};
 
 				this.assign = function (scopeRef, elementRef) {
 					scope = scopeRef;
+					element = elementRef;
 
-					navigation.assign(scope, elementRef);
+					navigation.assign(scope);
 
-					scope.$on('$stateChangeStart', this.start);
+					scope.$on('$stateChangeSuccess', this.stateChangeSuccess);
 				};
 			}
 		])
@@ -165,7 +157,7 @@
 			}
 		])
 		.directive('globalHeader', [
-			function directive (height, scroll) {
+			function directive () {
 				return {
 					restrict : 'E',
 					replace : true,
