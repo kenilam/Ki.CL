@@ -38,31 +38,26 @@
 			function current (root, _window, timeout, stateParams) {
 				var scope;
 
-				this.set = function (stateParams) {
+				function setCurrent () {
 					scope.$emit('view.project.set.current', stateParams.project);
-				};
+				}
 
-				this.unset = function (event, fromState, toState) {
+				function unsetCurrent () {
 					scope.$emit('view.project.unset.current');
-				};
+				}
 
-				this.stateChangeStart = function (event, toState, toParams, fromState, fromParams) {
-					if (toState.name.indexOf('projects') > -1) {
-						this.set(toParams);
-
-						return;
-					}
-
-					timeout.cancel(scope.projectCurrentTimer);
-					scope.projectCurrentTimer = timeout(this.unset, 500);
-				}.bind(this);
+				function stateChangeSuccess () {
+					timeout.cancel(scope.projectSetCurrentTimer);
+					scope.projectSetCurrentTimer = timeout(setCurrent, 0);
+				}
 
 				this.assign = function (scopeRef) {
 					scope = scopeRef;
 
-					this.set(stateParams);
+					setCurrent();
 
-					root.$on('$stateChangeStart', this.stateChangeStart);
+					scope.$on('$stateChangeSuccess', stateChangeSuccess);
+					scope.$on('$destroy', unsetCurrent);
 				};
 			}
 		])
