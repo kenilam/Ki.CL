@@ -1,6 +1,8 @@
 @import '_import';
 
 main {
+	@include set-transition(background-color);
+
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;

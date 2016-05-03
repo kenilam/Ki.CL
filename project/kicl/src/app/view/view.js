@@ -43,16 +43,16 @@
 		.service('view.project.current', [
 			'$rootScope',
 			function currentProject (root) {
-				function update (event, current) {
+				function set (event, current) {
 					root.currentProject = current;
 				}
 
-				function remove () {
+				function unset () {
 					delete root.currentProject;
 				}
 
-				root.$on('view.project.set.current', update);
-				root.$on('view.project.unset.current', remove);
+				root.$on('view.project.set.current', set);
+				root.$on('view.project.unset.current', unset);
 			}
 		])
 
@@ -74,6 +74,6 @@
 			'view.project.current',
 			'view.route',
 			'googleAnalytics',
-			function run () {}
+			function run () { }
 		]);
-}());
+	}());

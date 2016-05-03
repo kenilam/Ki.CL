@@ -61,6 +61,7 @@
 				async({ url : 'data/resource.json' }).get().$promise.then(loaded);
 			}
 		])
+
 		.run([
 			'kicl.overlay',
 			'kicl.resource',

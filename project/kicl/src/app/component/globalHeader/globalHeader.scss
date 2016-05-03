@@ -40,6 +40,11 @@
 			left: 0;
 			position: absolute;
 
+			&.isCross {
+				cursor: -webkit-zoom-out;
+				position: fixed;
+			}
+
 			&:not(.isCross) {
 				@include opacity(0);
 			}
@@ -73,7 +78,6 @@
 			background-image: url('#{$image_path}pattern/half.tone.png');
 			background-position: center;
 			background-repeat: repeat;
-			cursor: pointer;
 			height: 100%;
 			left: 0;
 			position: fixed;
@@ -83,6 +87,8 @@
 		}
 
 		ul {
+			@include set-transition(margin-right);
+
 			@include mobile () {
 				@include flex-direction(column);
 				@include align-items(center);
@@ -105,6 +111,10 @@
 					display: inherit;
 				}
 			}
+		}
+
+		a {
+			line-height: 1;
 		}
 
 		&:not(.isVertical) {
@@ -212,7 +222,7 @@
 
 	&.ng-enter {
 		@include opacity(0);
-		
+
 		&.ng-enter-active {
 			@include transition-delay($speed);
 			

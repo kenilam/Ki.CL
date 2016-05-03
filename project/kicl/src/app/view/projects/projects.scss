@@ -1,6 +1,6 @@
 @import '_import';
 
-[data-name^='projects'] {
+[data-route^='projects'] {
 	background-image: none;
 	
 	.globalHeader {
@@ -231,24 +231,29 @@ main {
 
 		&.ng-animate {
 			nav {
-				ul {
-					@include set-transition(opacity);
+				.background {
+					@include set-transition(transform);
 				}
 
-				li {
-					@include set-transition(transform);
+				ul {
+					@include set-transition(opacity);
 				}
 			}
 		}
 
 		&.ng-enter {
 			nav {
+				.background,
+				ul {
+					@include transition-delay($fast);
+				}
+				
 				.background {
 					@include transform(translate3d(-50%, -50%, 0) scale(1.3));
 				}
 
 				ul {
-					@include transition-delay($speed);
+					@include transition-delay($slow);
 
 					@include opacity(0);
 				}
@@ -261,7 +266,7 @@ main {
 					}
 
 					ul {
-						@include transition-delay($speed);
+						@include transition-delay($slow);
 
 						@include opacity(1);
 					}
@@ -270,12 +275,6 @@ main {
 		}
 
 		&.ng-leave {
-			nav {
-				.background {
-					background-color: transparent;
-				}
-			}
-
 			&.ng-leave-active {
 				nav {
 					.background {

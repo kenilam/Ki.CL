@@ -1,18 +1,23 @@
 <html ng-app='kicl'>
 
 <head>
-    <meta http-equiv='content-type' content='text/html; charset=UTF8;'>
+    <title ng-bind-html='info.title && route ? info.title + " | " +  route.join(" | ") : ""'>Welcome to Ki.CL</title>
+    
+    <meta charset="UTF-8">
+
+    <meta name="description" content='A independent design agency specialize in creative consulting, branding and web development'>
+    <meta name="keywords" content="Keni,Lam,kicl,KiCL,Ki.CL,Design,Design,Developer,Creative">
+    <meta name="author" content="Keni, Lam">
+
     <meta http-equiv='X-UA-Compatible' content='IE=Edge'>
     <meta name='viewport' content='user-scalable=no,width=device-width,initial-scale=1,maximum-scale=1'>
     <meta name='fragment' content='!'>
     
-    <meta property='og:url' content='http://www.ki-cl.com' />
-    <meta property='og:type' content='website' />
-    <meta property='og:title' content='Ki.CL' />
-    <meta property='og:description' content='A independent design agency specialize in creative consulting, branding and web development' />
-    <meta property='og:image' content='http://ki-cl.com/asset/image/site.hero.png' />
-
-    <title ng-bind-html='info.title + " | " +  route.join(" | ")'>Welcome to Ki.CL</title>
+    <meta property='og:url' content='http://www.ki-cl.com'>
+    <meta property='og:type' content='website'>
+    <meta property='og:title' content='Ki.CL'>
+    <meta property='og:description' content='A independent design agency specialize in creative consulting, branding and web development'>
+    <meta property='og:image' content='http://ki-cl.com/asset/image/site.hero.png'>
 
     <link href='asset/image/logo/kicl.ico' rel='icon' type='image/x-icon'>
     <link href="/asset/image/logo/kicl.black.png" rel="apple-touch-icon" />
@@ -44,11 +49,13 @@
     <link rel='stylesheet' type='text/css' href='api/behance/component/user/avatar/avatar.css'>
     <link rel='stylesheet' type='text/css' href='api/behance/component/user/stats/stats.css'>
     
+    <link rel='stylesheet' type='text/css' href='app/component/copyright/copyright.css'>
     <link rel='stylesheet' type='text/css' href='app/component/customForm/customForm.css'>
     <link rel='stylesheet' type='text/css' href='app/component/customForm/dialog/dialog.css'>
     <link rel='stylesheet' type='text/css' href='app/component/cursor/cursor.css'>
     <link rel='stylesheet' type='text/css' href='app/component/hamburgerButton/hamburgerButton.css'>
     <link rel='stylesheet' type='text/css' href='app/component/globalHeader/globalHeader.css'>
+    <link rel='stylesheet' type='text/css' href='app/component/globalFooter/globalFooter.css'>
     <link rel='stylesheet' type='text/css' href='app/component/logo/logo.css'>
     <link rel='stylesheet' type='text/css' href='app/component/navigation/navigation.css'>
     <link rel='stylesheet' type='text/css' href='app/component/throbber/throbber.css'>
@@ -68,10 +75,12 @@
 </head>
 
 <body
-    ng-attr-data-name='{{name}}'
+    ng-cloak
+    ng-attr-data-route='{{name}}'
     ng-attr-data-current-project-id='{{currentProject}}'
     ng-class="{
-        'hasOverlay' : overlay
+        'hasOverlay' : overlay,
+        'loading' : loading
     }"
 >
     <global-header></global-header>
@@ -83,6 +92,8 @@
             "background-image" : content.backdrop ? "url(" + content.backdrop.image + ")" : null
         }'
     ></main>
+
+    <!-- <global-footer></global-footer> -->
 
     <behance-project-slideshow></behance-project-slideshow>
     <custom-form-dialog data-emit-from='view.contact'></custom-form-dialog>
@@ -163,9 +174,11 @@
     <script type='text/javascript' src="app/service/scroll/scroll.js"></script>
 
     <script type='text/javascript' src="app/component/component.js"></script>
+    <script type='text/javascript' src="app/component/copyright/copyright.js"></script>
     <script type='text/javascript' src="app/component/customForm/customForm.js"></script>
     <script type='text/javascript' src="app/component/customForm/dialog/dialog.js"></script>
     <script type='text/javascript' src="app/component/cursor/cursor.js"></script>
+    <script type='text/javascript' src="app/component/globalFooter/globalFooter.js"></script>
     <script type='text/javascript' src="app/component/globalHeader/globalHeader.js"></script>
     <script type='text/javascript' src="app/component/hamburgerButton/hamburgerButton.js"></script>
     <script type='text/javascript' src="app/component/logo/logo.js"></script>

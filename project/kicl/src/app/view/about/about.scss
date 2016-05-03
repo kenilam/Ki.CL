@@ -1,6 +1,8 @@
 @import '_import';
 
-[data-name=about] {
+[data-route=about] {
+	background-color: $black;
+	
 	.globalHeader {
 		&.isScrolled {
 			background: rgba($black, .9);

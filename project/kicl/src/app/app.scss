@@ -19,6 +19,13 @@ main {
 	z-index: 1;
 }
 
+.globalFooter {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 4;
+}
+
 .customFormDialog {
 	z-index: 4;
 }

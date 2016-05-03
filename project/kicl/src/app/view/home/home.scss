@@ -1,6 +1,6 @@
 @import '_import';
 
-[data-name=home] {
+[data-route=home] {
 	.globalHeader {
 		@include unset-transition();
 	}
