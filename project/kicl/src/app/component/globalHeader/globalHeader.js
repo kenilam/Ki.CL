@@ -177,10 +177,6 @@
 				function controller (scope, element, render, globalHeaderEvent) {
 					render.assign(scope);
 					globalHeaderEvent.assign(scope, element);
-
-					scope.$on('$destroy', function () {
-						scroll.unbind();
-					});
 				}
 			]
 		);

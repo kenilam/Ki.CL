@@ -1,0 +1,7 @@
+{
+	"name" : "experiments cube",
+	"route" : "experiments.cube",
+	"content" : {
+		"message" : "A 3D Cube"
+	}
+}

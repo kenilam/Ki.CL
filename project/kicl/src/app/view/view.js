@@ -4,6 +4,7 @@
 	var dependencies = [
 		'view.home',
 		'view.about',
+		'view.experiments',
 		'view.projects',
 		'view.contact'
 	];

@@ -1,0 +1,75 @@
+@import '_import';
+
+[data-route='experiments.experiment'] {
+	main {
+		&[data-route] {
+			> h1,
+			> p {
+				@include opacity(0);
+
+				@include through();
+			}
+
+			> nav {
+				bottom: 0;
+				left: 0;
+				margin-top: 0;
+				max-width: 100%;
+				position: absolute;
+
+				li {
+					@include set-font-size(1);
+
+					padding-top: grid-size(1);
+					width: 25%;
+
+					&:after {
+						border-top: 0;
+					}
+
+					&:not(.isCurrent) {
+						&:hover {
+							&:after {
+								border: 0;
+							}
+						}
+					}
+
+					&.isCurrent {
+						&:after {
+							border-top: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+[ui-view='experiment'] {
+	position: relative;
+
+	&.ng-animate {
+		@include set-transition(opacity, transform);
+	}
+
+	&.ng-enter {
+		@include transform(scale(1.5));
+		@include opacity(0);
+
+		&.ng-enter-active {
+			@include transform(scale(1));
+			@include opacity(1);
+		}
+	}
+
+	&.ng-leave {
+		@include transform(scale(1));
+		@include opacity(1);
+
+		&.ng-leave-active {
+			@include transform(scale(1.2));
+			@include opacity(0);
+		}
+	}
+}

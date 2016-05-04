@@ -12,7 +12,12 @@
 			}
 
 			nav {
+				@include largemobile () {
+					@include set-font-size(1.2);
+				}
+
 				@include mobile () {
+					@include set-font-size(1.4);
 					@include backdrop-filter(blur(5px));
 				}
 

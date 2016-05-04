@@ -92,7 +92,13 @@
 						parent = setParent(map);
 					}
 
-					(parent.children || parent)[id] = prop;
+					if (!(parent.children || parent)[id]) {
+						(parent.children || parent)[id] = {};
+					}
+
+					Object.keys(prop).forEach(function (name) {
+						(parent.children || parent)[id][name] = prop[name];
+					});
 
 					(parent.children || parent)[id].parent = parent;
 

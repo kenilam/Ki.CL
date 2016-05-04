@@ -13,6 +13,10 @@
 				var scope,
 					attrs;
 
+				function update (event, map) {
+					scope.list = sitemap.get(map || attrs.list);
+				}
+
 				this.get = function () {
 					return scope.list;
 				};
@@ -24,6 +28,8 @@
 				this.assign = function (scopeRef, attrsRef) {
 					scope = scopeRef;
 					attrs = attrsRef;
+
+					scope.$on((attrs.emitFrom ? attrs.emitFrom + '.' : '' ) + 'component.navigation.update.list', update);
 				};
 			}
 		])
@@ -99,27 +105,25 @@
 		])
 		.controller('component.navigation.controler', [
 			'$scope',
+			'$timeout',
 			'$element',
 			'$attrs',
 			'component.navigation.list',
 			'component.navigation.current',
 			'component.navigation.vertical',
-			function controller (scope, element, attrs, list, current, vertical) {
-				function init () {
-					list.assign(scope, attrs);
-					current.assign(scope);
-					vertical.assign(scope, attrs);
-					list.set();
-					current.check();
-				}
-
+			function controller (scope, timeout, element, attrs, list, current, vertical) {
 				if (attrs.initWhen) {
 					scope.$on(attrs.initWhen + '.navigation.init', init);
 
 					return;
 				}
 
-				init();
+				list.assign(scope, attrs);
+				current.assign(scope);
+				vertical.assign(scope, attrs);
+
+				list.set();
+				current.check();
 			}
 		]);
 }());

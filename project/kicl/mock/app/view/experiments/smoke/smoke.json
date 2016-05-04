@@ -1,0 +1,7 @@
+{
+	"name" : "experiments smoke",
+	"route" : "experiments.smoke",
+	"content" : {
+		"message" : "Smoke effect in WebGL"
+	}
+}

@@ -42,6 +42,7 @@ module.exports.library = function (project, dependencies) {
 				'bower_components/moment/moment.js',
 				'bower_components/swiper/dist/js/swiper.js',
 				'bower_components/swiper/dist/js/maps/swiper.min.js.map',
+				'bower_components/threejs/build/three.js',
 				'bower_components/underscore/underscore.js'
 			],
 			CSS : [

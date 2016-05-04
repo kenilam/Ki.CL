@@ -1,0 +1,155 @@
+@import '_import';
+
+[data-route^='experiments'] {
+	background-color: $black;
+	
+	.globalHeader {
+		&.isScrolled {
+			background: rgba($black, .9);
+		}
+
+		nav {
+			a {
+				color: $white;
+			}
+			
+			.isCurrent {
+				a {
+					color: $orange;
+				}
+			}
+
+			@include mobile () {
+				background-color: $black;
+			}
+		}
+	}
+
+	.logo {
+		a {
+			color: $white;
+		}
+	}
+
+	.hamburgerButton {
+		line {
+			stroke: $white;
+		}
+	}
+}
+
+main {
+	&[data-route^='experiments'] {
+		@include display(flex);
+		@include flex-direction(column);
+		@include align-items(center);
+
+		color: $white;
+
+		> h1,
+		> p {
+			@include set-transition(opacity);
+
+			position: relative;
+			z-index: 2;
+		}
+
+		> h1 {
+			@include set-font-size(2);
+		}
+
+		> p {
+			@include set-font-size(1.1);
+
+			font-family: $heading_font_family;
+		}
+
+		> nav {
+			margin-top: rem($gutter);
+			max-width: grid-size($desktop-size);
+			position: relative;
+			width: 100%;
+			z-index: 2;
+
+			ul {
+				@include display(flex);
+				@include justify-content(center);
+				@include flex-wrap(wrap);
+			}
+
+			li {
+				@include set-font-size(2);
+
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				overflow: hidden;
+				padding-top: 25%;
+				position: relative;
+				width: 50%;
+
+				@include mobile () {
+					padding-top: 50%;
+					width: 100%;
+				}
+
+				&:after {
+					@include set-transition(border, transform);
+
+					border: 3px solid transparent;
+					border-left: 0;
+					border-right: 0;
+					content: '\0020';
+					cursor: pointer;
+					display: block;
+					height: calc(100% - #{rem($gutter * 2)});
+					left: rem($gutter);
+					position: absolute;
+					top: rem($gutter);
+					width: calc(100% - #{rem($gutter * 2)});
+					z-index: 3;
+				}
+
+				a {
+					@include set-transition(transform);
+
+					@include display(flex);
+					@include align-items(center);
+					@include justify-content(center);
+
+					color: $dark_white;
+					font-family: $heading_font_family;
+					height: 100%;
+					position: absolute;
+					text-transform: uppercase;
+					top: 0;
+					width: 100%;
+					z-index: 2;
+				}
+
+				&:hover,
+				&.isCurrent {
+					&:after {
+						@include transition-delay($fastest);
+						@include transform(scale(1.1));
+
+						border-color: $dark_white;
+					}
+
+					a {
+						@include transform(scale(1.5));
+					}
+				}
+			}
+		}
+
+		[ui-view='experiment'] {
+			left: 0;
+			position: absolute;
+			top: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 1;
+		}
+	}
+}
