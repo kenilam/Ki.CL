@@ -5,6 +5,10 @@
 		"heroImage" : "http://ki-cl.com/asset/image/site.hero.png"
 	},
 
+	"lang" : [
+		"en"
+	],
+
 	"component" : {
 		"hamburgerButton" : {
 			"expand" : {

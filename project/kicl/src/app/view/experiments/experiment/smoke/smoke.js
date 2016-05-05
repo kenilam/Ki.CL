@@ -27,9 +27,6 @@
 				// The maximum velocity in each direction
 				var maxVelocity = 2;
 
-				// The target frames per second (how often do we want to update / redraw the scene)
-				var targetFPS = 33;
-
 				// Set the dimensions of the canvas as variables so they can be used.
 				var canvasWidth = 400;
 				var canvasHeight = 400;
@@ -169,6 +166,16 @@
 					});
 				}
 
+				function renderer () {
+					// Update the scene befoe drawing
+					update();
+
+					// Draw the scene
+					draw();
+
+					animateId = requestAnimationFrame(renderer);
+				}
+
 				this.draw = function () {
 					// Once the image has been downloaded then set the image on all of the particles
 					imageObj.onload = function () {
@@ -179,6 +186,10 @@
 						particles.forEach(eachParticle);
 
 						delete scope.loading;
+
+						if (!scope.$$phase) {
+							scope.$apply();
+						}
 					};
 
 					// Once the callback is arranged then set the source of the image
@@ -189,13 +200,7 @@
 
 					// If the context is set then we can draw the scene (if not then the browser does not support canvas)
 					if (context) {
-						animateId = setInterval(function () {
-							// Update the scene befoe drawing
-							update();
-
-							// Draw the scene
-							draw();
-						}, 1000 / targetFPS);
+						renderer();
 					}
 				};
 

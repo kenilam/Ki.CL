@@ -17,6 +17,8 @@
 	"Respond": "*",
 
 	"gsap": "*",
+	"tweenjs": "*",
+	
 	"velocity": "*",
 	"jquery": "*",
 	"underscore": "*",
