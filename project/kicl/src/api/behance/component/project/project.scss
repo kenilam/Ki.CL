@@ -27,13 +27,7 @@
 
     img {
         @include set-transition(transform);
-        @include transition-duration($slowest);
 
-        @include transform(translate3d(-50%, -50%, 0));
-
-        left: 50%;
-        position: absolute;
-        top: 50%;
         width: 100%;
     }
 
@@ -41,8 +35,6 @@
         width: 100%;
 
         &.isImage {
-            $img-height: 71.11%;
-
             @include set-transition(border-color);
 
             background-position: center;
@@ -50,7 +42,6 @@
             background-size: cover;
             cursor: -webkit-zoom-in;
             overflow: hidden;
-            padding-top: $img-height;
             position: relative;
             width: calc(100% - #{$image_space * 2});
 
@@ -111,7 +102,7 @@
                 border-color: $black;
 
                 img {
-                    @include transform(scale3d(1.2, 1.2, 1) translate3d(-42.5%, -42.5%, 0));
+                    @include transform(scale3d(1.2, 1.2, 1));
                 }
 
                 span {
@@ -133,11 +124,9 @@
             + .isImage {
                 margin-left: $image_space;
                 margin-right: $image_space;
-                padding-top: $img-height / 2;
                 width: calc(50% - #{$image_space * 2});
 
                 @include mobile () {
-                    padding-top: $img-height;
                     width: 100%;
                 }
             }

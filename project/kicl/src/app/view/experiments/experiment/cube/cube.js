@@ -52,7 +52,10 @@
 			}
 		])
 		.service('view.experiments.cube.render', [
-			function render () {
+			'$window',
+			function render (_win) {
+				var win = angular.element(_win);
+
 				var element;
 
 				var scene = new THREE.Scene();
@@ -71,11 +74,7 @@
 
 				var delay = 0;
 
-				var colorChangeDuration = 3;
-				var colorChangeDelay = 0;
-
-				var zoomChangeDuration = 3;
-				var zoomChangeDelay = 0;
+				var zoom = 1500;
 
 				var lastLoop = new Date();
 
@@ -98,8 +97,8 @@
 					this.delay = 0;
 				};
 
-				function randomHex () {
-					return Math.floor(Math.random() * 256 / 100);
+				function randomNum (max) {
+					return Math.floor(Math.random() * max);
 				}
 
 				function fps () { 
@@ -112,10 +111,9 @@
 				}
 				
 				function render () {
-
 					changeItems.rotation.render({x : '+0.1', y : '+0.1', z : '-0.1'}, 1);
-					changeItems.color.render({r : randomHex(), g : randomHex(), b : randomHex()}, 2);
-					changeItems.camera.render({z : Math.floor(Math.random() * 1000)}, 5);
+					changeItems.color.render({r : randomNum(256 / 100), g : randomNum(256 / 100), b : randomNum(256 / 100)}, 2);
+					changeItems.camera.render({z : randomNum(zoom)}, 5);
 
 					renderer.render(scene, camera);
 
@@ -126,14 +124,16 @@
 
 				geometry.dynamic = true;
 				
-				camera.position.z = 1000;
+				camera.position.z = zoom;
 
 				changeItems.rotation = new Tween(cube.rotation);
 				changeItems.color = new Tween(cube.material.color);
 				changeItems.camera = new Tween(camera.position);
 
 				this.draw = function () {
-					renderer.setSize(window.innerWidth, window.innerWidth);
+					var size = window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight;
+
+					renderer.setSize(size, size);
 
 					element.append(renderer.domElement);
 					
@@ -142,12 +142,22 @@
 					render();
 				};
 
+				function resize () {
+					var size = window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight;
+
+					renderer.setSize(size, size);
+				};
+
 				this.destroy = function () {
+					win.unbind('resize', resize);
+
 					cancelAnimationFrame(animateId);
 				};
 
 				this.assign = function (elementRef) {
 					element = elementRef;
+
+					win.bind('resize', resize);
 				};
 			}
 		])
