@@ -10,13 +10,9 @@
 					var timer;
 
 					function calculator (frameTime) {
-						var self = this;
-
 						frames = Math.floor(1000 / (frameTime - previousFrameTime));
 						previousFrameTime = frameTime;
 						timer = requestAnimationFrame(calculator);
-
-						console.log(frames);
 					}
 
 					function get () {
@@ -34,7 +30,7 @@
 					return {
 						get : get,
 						destroy : destroy
-					}
+					};
 				}
 
 				return new GetFrames();

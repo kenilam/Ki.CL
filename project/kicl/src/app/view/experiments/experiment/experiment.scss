@@ -23,10 +23,6 @@
 					padding-top: grid-size(1);
 					width: 25%;
 
-					&:after {
-						border-top: 0;
-					}
-
 					&:not(.isCurrent) {
 						&:hover {
 							&:after {

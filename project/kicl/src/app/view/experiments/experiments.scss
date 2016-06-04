@@ -96,9 +96,7 @@ main {
 				&:after {
 					@include set-transition(border, transform);
 
-					border: 3px solid transparent;
-					border-left: 0;
-					border-right: 0;
+					border-bottom: 3px solid transparent;
 					content: '\0020';
 					cursor: pointer;
 					display: block;

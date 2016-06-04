@@ -63,7 +63,7 @@
 				}
 				
 				function render () {
-					changeItems.rotation.render({x : '+0.01', y : '+0.01', z : '-0.01'}, .1);
+					changeItems.rotation.render({x : '+0.01', y : '+0.01', z : '-0.01'}, 0.1);
 					changeItems.color.render({r : randomNum(256 / 100), g : randomNum(256 / 100), b : randomNum(256 / 100)}, 3);
 					changeItems.camera.render({z : randomNum(zoom)}, 10);
 

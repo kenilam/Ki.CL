@@ -2,6 +2,9 @@
 	"name" : "experiments smoke",
 	"route" : "experiments.smoke",
 	"content" : {
+		"backdrop" : {
+			"image" : "/app/view/experiments/experiment/smoke/asset/image/hero.png"
+		},
 		"message" : "Smoke effect in WebGL"
 	}
 }
