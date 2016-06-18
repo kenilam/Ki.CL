@@ -2,16 +2,11 @@
 .idea/
 *.log
 
-project/**/dev
-project/**/build
+project/dev
+project/build
 
-project/**/secret.json
-
-project/**/src/lib
-project/**/src/css/lib
-project/**/src/css/fonts
-project/**/src/scss/lib
-project/**/src/scss/fonts
+project/src/lib
+project/src/plugin
 
 node_modules
 bower_components

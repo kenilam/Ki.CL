@@ -1,40 +1,36 @@
 {
-  "name": "KiCL_Component",
-  "version": "0.0.0",
+  "name": "kicl.component",
+  "description": "Ki.CL components",
+  "authors": [
+    "Keni",
+    "Lam"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/kenilam/Ki.CL",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-	"angular": "*",
-	"angular-mocks": "*",
-	"angular-animate": "*",
-	"angular-aria": "*",
-	"angular-resource": "*",
-	"angular-route": "*",
-	"angular-sanitize": "*",
-	"angular-ui-router": "*",
-	"ui-router-extras": "*",
-
-	"es6-shim": "*",
-	"html5shiv": "*",
-	"Respond": "*",
-
-	"gsap": "*",
-	"tweenjs": "*",
-	
-	"velocity": "*",
-	"jquery": "*",
-	"underscore": "*",
-	"moment": "*",
-
-	"swiper": "*",
-
-	"threejs": "*",
-
-	"modernizr": "2.8.3",
-	"normalize-scss": "*",
-	
-	"font-awesome": "*",
-
-	"libsass-mixins": "*",
-	"bourbon": "*",
-	"compass-breakpoint": "*"
+    "html5shiv": "~3.7.3",
+    "moment": "~2.13.0",
+    "modernizr": "2.8.3",
+    "bourbon": "~4.2.7",
+    "breakpoint-sass": "~2.7.0",
+    "font-awesome": "~4.6.3",
+    "libsass-mixins": "~1.3.0",
+    "react": "~15.1.0",
+    "react-plugins": "react#~15.1.0",
+    "react-router": "https://npmcdn.com/react-router/umd/ReactRouter.js",
+    "history": "^1.8.0",
+    "normalize-css": "^4.1.1",
+    "normalize-opentype-css": "normalize-opentype.css#^0.2.4",
+    "classnames": "^2.2.5",
+    "reset-css": "^2.0.2011012603"
   }
 }

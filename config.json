@@ -1,0 +1,105 @@
+{
+  "bower" : {
+    "overrides": {
+      "bourbon": {
+        "debugging": true,
+        "main": [
+          "**/*.{sass,scss}"
+        ]
+      },
+      "breakpoint-sass": {
+        "debugging": true,
+        "main": [
+          "**/*.{sass,scss}"
+        ]
+      },
+      "font-awesome": {
+        "debugging": true,
+        "main": [
+          "**/*.{sass,scss,eot,svg,ttf,woff,woff2}"
+        ]
+      },
+      "html5shiv": {
+        "debugging": true,
+        "main": [
+          "**/html5shiv.js",
+          "**/html5shiv-printshiv.js"
+        ]
+      },
+      "libsass-mixins": {
+        "debugging": true,
+        "main": [
+          "**/*.{sass,scss}"
+        ]
+      },
+      "moment": {
+        "debugging": true,
+        "main": [
+          "moment.js"
+        ]
+      },
+      "normalize-css": {
+        "debugging": true,
+        "main": [
+          "**/*.css"
+        ]
+      },
+      "normalize-opentype-css": {
+        "debugging": true,
+        "main": [
+          "**/*.css"
+        ]
+      },
+      "react" : {
+        "debugging": true,
+        "main": [
+          "react.js"
+        ]
+      },
+      "react-plugins" : {
+        "debugging": true,
+        "main": [
+          "react-dom.js",
+          "react-with-addons.js"
+        ]
+      },
+      "classnames" : {
+        "debugging": true,
+        "main": [
+          "index.js"
+        ]
+      },
+      "history": {
+        "debugging": true,
+        "main": [
+          "scripts/uncompressed/history.js"
+        ]
+      },
+      "reset-css": {
+        "debugging": true,
+        "main": [
+          "reset.css"
+        ]
+      },
+      "sassy-maps": {
+        "debugging": true,
+        "ignore": true
+      }
+    }
+  },
+  "filter" : {
+    "bower" : [
+      "**/*",
+      "!**/*/react.js",
+      "!**/*/react-with-addons.js",
+      "!**/*/history.js",
+      "!**/*/reset.css"
+    ],
+    "priority" : [
+      "**/*/react.js",
+      "**/*/react-with-addons.js",
+      "**/*/history.js",
+      "**/*/reset.css"
+    ]
+  }
+}

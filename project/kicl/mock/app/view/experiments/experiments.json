@@ -1,7 +1,0 @@
-{
-	"name" : "experiments",
-	"route" : "experiments",
-	"content" : {
-		"message" : "A place where I do all kinds of cool stuff"
-	}
-}

@@ -1,0 +1,24 @@
+<div>
+	<header role='banner'>
+		<Logo/>
+		<Navigation list={[
+			{ name: 'Home', route: 'home' },
+			{ name: 'About', route: 'about' }
+		]} />
+	</header>
+
+	<CSSTransitionGroup
+		component='main'
+		transitionName='route'
+		transitionEnterTimeout={500}
+		transitionLeaveTimeout={500}
+	>
+		{cloneElement(children, {
+			key: location.pathname
+		})}
+	</CSSTransitionGroup>
+
+	<footer role='contentinfo'>
+		<Logo/>
+	</footer>
+</div>

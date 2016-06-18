@@ -1,0 +1,33 @@
+@import 'bourbon/app/assets/stylesheets/_bourbon';
+
+main {
+	position: relative;
+}
+
+.route-enter,
+.route-leave {
+	@include transition(opacity 500ms ease-in);
+
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.route-enter {
+	opacity: 0;
+	z-index: 1;
+
+	&.route-enter-active {
+		opacity: 1;
+	}
+}
+
+.route-leave {
+	opacity: 1;
+	pointer-events: none;
+	z-index: 2;
+
+	&.route-leave-active {
+		opacity: 0;
+	}
+}

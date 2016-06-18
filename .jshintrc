@@ -1,0 +1,20 @@
+	{
+		"browserify": true,
+		"debug" : true,
+		"devel" : true,
+		"esversion": 6,
+		"browser": true,
+		"undef": true,
+		"unused": false,
+
+		"predef" : [
+			"React",
+			"ReactDOM",
+			"ReactRouter",
+			"classNames",
+			"document",
+			"console",
+			"debugger",
+			"template"
+		]
+	}

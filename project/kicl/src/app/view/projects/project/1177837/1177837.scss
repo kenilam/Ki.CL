@@ -1,9 +1,0 @@
-@import '../_project';
-
-@include set-project(1177837, $green, darken($green, 50%), $darkest-grey);
-
-[data-current-project-id='1177837'] {
-	[ui-view='project'] {
-		color: darken($green, 50%);
-	}
-}
