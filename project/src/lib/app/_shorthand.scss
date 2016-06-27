@@ -1,0 +1,128 @@
+@mixin background-gradient ($start_color: #000000, $start_opacity: 1, $from: 0%, $end_color: #000000, $end_opacity: 0, $to: 100%) {
+	background: -moz-linear-gradient(top, rgba($start_color, $start_opacity) $from, rgba($end_color, $end_opacity) $to); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, rgba($start_color, $start_opacity) $from, rgba($end_color, $end_opacity) $to); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(top bottom, rgba($start_color, $start_opacity) $from, rgba($end_color, $end_opacity) $to); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start_color}', endColorstr='#{$end_color}',GradientType=$end_opacity); /* IE6-9 */
+}
+
+@mixin opacity ($opacity: 1) {
+	opacity: $opacity;
+	$opacity-ie: $opacity * 100;
+	filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin through () {
+	pointer-events: none;
+}
+
+@mixin unthrough () {
+	pointer-events: auto;
+}
+
+@mixin half-tone ($color: #000) {
+	background-image: radial-gradient($color 5%, transparent 10%), radial-gradient(transparent 80%, $color 100%);
+	background-position: 0 0, 0px 0px;
+	background-size: 5px 5px;
+}
+
+@mixin circle ($size: 100%) {
+	@include set-transition(height, min-height, min-width, transform, width);
+
+	@include transform(translateZ(0));
+
+	border-radius: 50%;
+	height: $size;
+	min-height: $size;
+	min-width: $size;
+	width: $size;
+	overflow: hidden;
+}
+
+@mixin resize-circle ($size: 100%) {
+	height: $size;
+	min-height: $size;
+	min-width: $size;
+	width: $size;
+}
+
+@mixin unset-circle ($size: 100%) {
+	border-radius: 0;
+	height: inherit;
+	min-height: inherit;
+	min-width: inherit;
+	width: inherit;
+	overflow: inherit;
+}
+
+@mixin clip-path ($anchor...) {
+	-webkit-clip-path: $anchor;
+	clip-path: $anchor;
+}
+
+@mixin word-break () {
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	hyphens: auto;
+}
+
+@mixin hidden () {
+	@include clip-path(polygon(0 0, 0 0, 0 0, 0 0));
+
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+@mixin unhide () {
+	@include clip-path(0 0, 100% 0, 100% 100%, 0% 100%);
+
+	height: inherit;
+	left: inherit;
+	overflow: inherit;
+	position: inherit;
+	top: inherit;
+	width: inherit;
+}
+
+@mixin inline-block () {
+	display: inline-block;
+	vertical-align: middle;
+	zoom: 1;
+	*display: inline;
+}
+
+@mixin multiline-truncate ($line: 2) {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: $line;
+	-webkit-box-orient: vertical;
+}
+
+@mixin truncate ($width: 100%) {
+	width: $width;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@mixin untruncate () {
+	width: inherit;
+	white-space: initial;
+	overflow: initial;
+	text-overflow: initial;
+}
+
+@mixin content ($content: '\0020') {
+	content: $content;
+}
+
+@mixin backdrop-filter ($prop...) {
+	-webkit-backdrop-filter: $prop;
+}

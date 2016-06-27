@@ -31,9 +31,7 @@ header[role=banner] {
 
 main {
 	> section {
-		@include largemobile() {
-			padding-top: $gutter;
-		}
+		@include set-transition(padding-top, min-height);
 	}
 }
 

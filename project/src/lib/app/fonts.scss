@@ -1,0 +1,13 @@
+@import '_import';
+
+h1, h2, h3, h4, h5, label, legend {
+	font-weight: $thick_font_weight;
+}
+
+h1, h2, h3, h4, h5 {
+	text-transform: uppercase;
+}
+
+html {
+	font-family: $font_family;
+}

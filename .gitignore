@@ -5,8 +5,8 @@
 project/dev
 project/build
 
-project/src/lib
-project/src/plugin
+project/src/lib/bower
+project/src/lib/priority
 
 node_modules
 bower_components

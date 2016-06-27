@@ -1,0 +1,62 @@
+@import '_import';
+
+h1, h2, h3, h4, h5, p, ul, figure, button, input, textarea, fieldset {
+	margin: 0;
+	padding: 0;
+}
+
+button, input:not([type=radio]), textarea, fieldset, a {
+	outline: none;
+}
+
+button, input, textarea, fieldset {
+	background: 0;
+	border: 0;
+	height: auto;
+	padding: 0;
+	width: auto;
+}
+
+ul {
+	list-style: none;
+}
+
+a {
+	color: inherit;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.fa {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
+	font-family: $font_family;
+	font-weight: inherit;
+	height: 100%;
+	vertical-align: middle;
+
+	-webkit-font-smoothing: auto;
+	-moz-osx-font-smoothing: initial;
+
+	&:before {
+		display: block;
+		font-family: FontAwesome;
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+		text-align: center;
+
+		-webkit-font-smoothing: auto;
+		-moz-osx-font-smoothing: initial;
+	}
+}
+
+.fa-spin {
+	@include animation(none);
+
+	&:before {
+		@include animation(fa-spin 2s infinite linear);
+	}
+}

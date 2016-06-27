@@ -1,0 +1,54 @@
+@import '_import';
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body,
+main,
+main > section,
+footer[role=contentinfo],
+[app-root] [data-reactroot] {
+	@include display(flex);
+}
+
+header[role=banner] {
+	z-index: 3;
+}
+
+footer[role=contentinfo] {
+	z-index: 2;
+}
+
+html,
+body,
+[app-root],
+[app-root] [data-reactroot] {
+	height: 100%;
+}
+
+body {
+	@include flex-direction(column);
+	@include align-items(stretch);
+	
+	position: relative;
+}
+
+[app-root] [data-reactroot] {
+	@include flex-direction(column);
+}
+
+main {
+	@include flex-direction(column);
+	
+	position: relative;
+	z-index: 1;
+
+	> section {
+		@include flex-direction(column);
+		
+		height: 100%;
+	}
+}
