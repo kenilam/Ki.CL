@@ -10,16 +10,20 @@ class Babel {
 	}
 
 	transform (filePath) {
-		let type = 'script type="text/javascript"';
+		let type = 'script';
+		let attr = 'type="text/javascript"';
 		let link = 'src';
 		
 		if (path.extname(filePath) === '.css') {
-			type = 'link rel="stylesheet" type="text/css"';
+			type = 'link';
+			attr = 'rel="stylesheet" type="text/css"';
 			link = 'href';
 		}
 
 		return [ '<',
 			type,
+			' ',
+			attr,
 			' ',
 			link,
 			'="',

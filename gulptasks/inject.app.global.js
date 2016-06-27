@@ -8,7 +8,8 @@ import debug from 'gulp-debug';
 import transform from './inject.transform';
 
 const src = [
-	'./project/dev/lib/plugin/**/*.{js,css}'
+	'./project/dev/lib/app/**/*',
+	'!./project/dev/lib/app/priority/**/*'
 ];
 
 class Inject {
@@ -19,7 +20,7 @@ class Inject {
 	inject () {
 		return gulpInject(
 			gulp.src(src, { read: false }),
-			{ name: 'plugin', transform: transform }
+			{ name: 'app.global', transform: transform }
 		);
 	}
 }

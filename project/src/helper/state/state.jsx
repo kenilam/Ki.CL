@@ -1,13 +1,13 @@
 'use strict';
 
-class state {
+class State {
 	constructor () {
 
 	}
 
-	stateEnter (nextState, transition, callback) {
+	enter (nextState, transition, callback) {
 		window.dispatchEvent(new CustomEvent(
-			'stateEnter',
+			'state.enter',
 			{
 				detail: {
 					nextState: nextState,
@@ -20,9 +20,9 @@ class state {
 		callback();
 	}
 
-	stateChange (prevState, nextState, replace, callback) {
+	change (prevState, nextState, replace, callback) {
 		window.dispatchEvent(new CustomEvent(
-			'stateChange',
+			'state.change',
 			{
 				detail: {
 					prevState: prevState,
@@ -37,9 +37,9 @@ class state {
 		callback();
 	}
 
-	stateLeave () {
+	leave () {
 		window.dispatchEvent(new CustomEvent(
-			'stateLeave',
+			'state.leave',
 			{
 				detail: {
 					_this: this
@@ -48,3 +48,5 @@ class state {
 		));
 	}
 }
+
+export default new State();

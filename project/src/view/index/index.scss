@@ -1,0 +1,79 @@
+@import '_import';
+
+@import '../logo/_logo';
+
+[data-route^='index'] {
+	header[role=banner],
+	footer[role=contentinfo] {
+		@include opacity(0);
+		@include through();
+	}
+
+	header[role=banner] {
+		@include transform(translate3d(0, -100%, 0));
+	}
+
+	main {
+		min-height: 100%;
+	}
+
+	footer[role=contentinfo] {
+		@include transform(translate3d(0, 100%, 0));
+	}
+}
+
+.index {
+	@include justify-content(center);
+
+	background-color: $black;
+	color: $white;
+	min-height: 100vh;
+
+	header[role=banner],
+	footer[role=contentinfo] {
+		@include opacity(0);
+		@include through();
+	}
+
+	&:before {
+		@include content();
+
+		@include half-tone($red);
+
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+
+	h1,
+	nav {
+		position: relative;
+		z-index: 2;
+	}
+
+	h1 {
+		@include set_logo_color($white);
+		@include set_logo_size(3rem);
+
+		margin-bottom: $grid_block;
+	}
+
+	nav {
+		font-size: 2rem;
+
+		ul {
+			@include flex-direction(column);
+		}
+
+		li {
+			+ li {
+				margin-left: 0;
+				margin-top: $grid_block;
+			}
+		}
+	}
+}

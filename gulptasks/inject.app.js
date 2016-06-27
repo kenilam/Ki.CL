@@ -14,7 +14,7 @@ class Inject {
 		return gulpInject(
 			gulp.src([
 				'./project/dev/**/*.{js,css}',
-				'!./project/dev/{lib,plugin}/**/*.{js,css}'
+				'!./project/dev/lib/**/*.{js,css}'
 			], { read: false }),
 			{ name: 'app', transform: transform }
 		);

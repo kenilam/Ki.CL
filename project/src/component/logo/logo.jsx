@@ -1,5 +1,7 @@
 'use strict';
 
+const Link = ReactRouter.Link;
+
 class Logo extends React.Component {
 	constructor() {
 		super();

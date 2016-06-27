@@ -7,7 +7,7 @@ import gulp from 'gulp';
 const taskName = 'browser';
 
 const watchSrc = [
-	'./project/dev/**/*.{css,html,js}'
+	'./project/dev/**/*.{html,js}'
 ];
 
 const config = {

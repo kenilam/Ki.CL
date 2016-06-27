@@ -4,18 +4,7 @@ import sass from 'gulp-sass';
 
 import errorHandler from './errorHandler';
 
-const settings = {
-	includePaths: [
-		'./project/src',
-		'./project/src/lib/bower',
-		'./project/src/lib/plugin',
-	],
-	outputStyle: 'compressed',
-	sourceMap: true,
-	compressed: true,
-	errLogToConsole: true,
-	precision: 2
-};
+import config from '../config';
 
 class Compile {
 	constructor () {
@@ -23,8 +12,9 @@ class Compile {
 	}
 
 	compile () {
-		return sass.sync(settings).on('error', errorHandler.notify());
+		return sass.sync(config.sass).on('error', errorHandler.notify());
 	}
 }
 
 export default new Compile();
+export { config as config };

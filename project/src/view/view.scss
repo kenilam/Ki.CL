@@ -1,21 +1,58 @@
-@import 'bourbon/app/assets/stylesheets/_bourbon';
+@import '_import';
+
+[data-route] {
+
+}
+
+header[role=banner],
+footer[role=contentinfo],
+main {
+	@include set-transition(opacity $faster, transform $faster);
+}
+
+header[role=banner],
+footer[role=contentinfo],
+main > section {
+	padding: 0 $gutter;
+}
+
+header[role=banner],
+footer[role=contentinfo] {
+	padding-bottom: $gutter;
+	padding-top: $gutter;
+}
+
+
+header[role=banner] {
+	@include largemobile() {
+		padding: 0;
+	}
+}
 
 main {
-	position: relative;
+	> section {
+		@include largemobile() {
+			padding-top: $gutter;
+		}
+	}
 }
 
 .route-enter,
 .route-leave {
-	@include transition(opacity 500ms ease-in);
+	@include transition(opacity $speed);
 
+	pointer-events: none;
 	position: absolute;
-	top: 0;
 	width: 100%;
 }
 
 .route-enter {
 	opacity: 0;
 	z-index: 1;
+
+	+ .route-enter {
+		display: none;
+	}
 
 	&.route-enter-active {
 		opacity: 1;
@@ -24,7 +61,6 @@ main {
 
 .route-leave {
 	opacity: 1;
-	pointer-events: none;
 	z-index: 2;
 
 	&.route-leave-active {

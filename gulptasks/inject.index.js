@@ -3,9 +3,10 @@
 import gulp from 'gulp';
 
 import appSources from './inject.app';
+import appGlobalSources from './inject.app.global';
+import appPrioritySources from './inject.app.priority';
 import bowerSources from './inject.bower';
 import prioritySources from './inject.priority';
-import pluginSources from './inject.plugin';
 
 const taskName = 'inject.index';
 const src = [
@@ -24,9 +25,10 @@ class Inject {
 	task () {
 		return gulp.src(src)
 			.pipe(appSources())
-			.pipe(prioritySources())
+			.pipe(appGlobalSources())
+			.pipe(appPrioritySources())
 			.pipe(bowerSources())
-			.pipe(pluginSources())
+			.pipe(prioritySources())
 			.pipe(gulp.dest(dest));
 	}
 }

@@ -1,0 +1,67 @@
+@import '_import';
+
+$size: 2rem;
+
+.menuButton {
+	@include display(flex);
+
+	color: transparent;
+	cursor: pointer;
+	font-size: $size;
+	height: $size;
+	overflow: hidden;
+	text-indent: -9999px;
+	width: $size;
+
+	i {
+		@include set-transition(opacity $faster, transform $faster);
+
+		@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
+
+		color: $black;
+		left: 50%;
+		position: absolute;
+		text-indent: 0;
+		top: 50%;
+	}
+
+	.hamburger {
+		@include opacity(1);
+	}
+
+	.cross {
+		@include transform(translate3d(-100%, -50%, 0) scale(.3, .3));
+		@include opacity(0);
+	}
+
+	&.isExpanded {
+		.hamburger {
+			@include transform(translate3d(100%, -50%, 0) scale(.3, .3));
+			@include opacity(0);
+		}
+
+		.cross {
+			@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
+			@include opacity(1);
+		}
+	}
+
+	@include largemobile() {
+		.cross {
+			@include transform(translate3d(-50%, -50%, 0) scale(.2, .2));
+			@include opacity(0);
+		}
+
+		&.isExpanded {
+			.hamburger {
+				@include transform(translate3d(-50%, -50%, 0) scale(1.5, 1.5));
+				@include opacity(0);
+			}
+
+			.cross {
+				@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
+				@include opacity(1);
+			}
+		}
+	}
+}

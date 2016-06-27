@@ -2,6 +2,8 @@
 
 import path from 'path';
 
+import { argv as args } from 'yargs';
+
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 
@@ -69,7 +71,7 @@ class Bundle {
             .on('finish', callback);
     }
 
-    copyStatic (callback) {
+    renameJSX (callback) {
         return () => {
             gulp.src(src.jsx)
                 .pipe(gulpRename(rename))
@@ -113,13 +115,15 @@ class Bundle {
             return;
         }
 
-        this.copyStatic(
+        this.renameJSX(
             this.compileTemplate(
                 this.bundler(
                     this.compileTemplate(
-                        this.deleteTempSrc(
-                            callback
-                        )
+                        !args.debug ?
+                            this.deleteTempSrc(
+                                callback
+                            )
+                        : callback
                     )
                 )
             )

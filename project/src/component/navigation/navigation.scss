@@ -1,0 +1,24 @@
+@import '_import';
+
+.navigation {
+	@include display(flex);
+
+	font-size: 1rem;
+	font-weight: $thick_font_weight;
+
+	ul,
+	li {
+		@include display(flex);
+		@include align-items(center);
+	}
+
+	ul {
+		@include flex-grow(1);
+	}
+
+	li {
+		+ li {
+			margin-left: $grid_block;
+		}
+	}
+}

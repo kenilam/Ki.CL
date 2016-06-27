@@ -1,0 +1,34 @@
+@import '_import';
+
+@import '../fonts/_fonts';
+@import '_logo';
+.logo {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
+	@include set_logo_color($black);
+	@include set_logo_size($font_size);
+
+	a {
+		@include display(flex);
+
+		color: transparent;
+		overflow: hidden;
+
+		&:before {
+			@include content($kicl);
+			
+			display: block;
+			font-family: 'kicl';
+		}
+	}
+
+	&.isSquared {
+		@include set_square_logo($font_size);
+	}
+
+	@include largemobile() {
+		@include set_square_logo($font_size);
+	}
+}

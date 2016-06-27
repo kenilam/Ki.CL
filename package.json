@@ -65,6 +65,7 @@
     "gulp-react": "^3.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.1",
+    "gulp-sass-graph": "^1.0.0",
     "gulp-scss-lint": "^0.4.0",
     "gulp-scss-lint-stylish": "^1.0.1",
     "gulp-scss-lint-stylish2": "^2.0.2",
@@ -102,6 +103,7 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-paths": "^2.1.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "yargs": "^4.7.1"
   }
 }

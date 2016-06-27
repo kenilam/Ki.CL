@@ -10,9 +10,12 @@ import gutil from 'gulp-util';
 import del from 'del';
 import vinylPaths from 'vinyl-paths';
 
-import gulpWatch from 'gulp-watch';
 import gulpBatch from 'gulp-batch';
 import gulpFilter from 'gulp-filter';
+import gulpSassGraph from 'gulp-sass-graph';
+import gulpWatch from 'gulp-watch';
+
+import {config as sassConfig} from './sass';
 
 const taskName = 'watch';
 
@@ -21,12 +24,16 @@ class Event {
 
     }
 
-    unlink (event, eventActions) {
-        const src = event.path
+    getSrc (event) {
+        return event.path
             .replace(global.appRoot, '.')
             .replace('src', 'dev')
             .replace('html', 'template.js')
             .replace('scss', 'css');
+    }
+
+    unlink (event, eventActions) {
+        const src = this.getSrc(event);
 
         const map = [src, 'map'].join('.');
 
@@ -39,6 +46,10 @@ class Event {
 
                 return gulp.run.apply(this, eventActions);
             });
+    }
+
+    add (event, eventActions) {
+        return gulp.run.apply(this, eventActions);
     }
 }
 
@@ -56,7 +67,7 @@ class Watch {
 
             gutil.log(file.magenta, (vinyl.event+'ed').green, '\r\n');
             
-            if (!this.events[vinyl.event] || eventActions) {
+            if (!this.events[vinyl.event] || !eventActions) {
                 return gulp.run.apply(this, defaultActions);
             }
 
@@ -68,12 +79,20 @@ class Watch {
 
     task () {
         gulpWatch(
+            ['./project/src/index.html'],
+            { name : 'indexWatcher' },
+            this.action(
+                ['inject.index']
+            )
+        );
+
+        gulpWatch(
             [
                 './project/src/**/*.html',
                 '!./project/src/index.html',
                 './project/src/**/*.jsx'
             ],
-            { name : 'javascriptWatcher' },
+            { name : 'bundleWatcher' },
             this.action(
                 ['app.compile.bundle', 'inject.index'],
                 {
@@ -84,19 +103,44 @@ class Watch {
 
         gulpWatch(
             [
-                './project/src/**/*.scss'
+                './project/src/**/*.scss',
+                '!./project/src/**/_*.scss'
             ],
             { name : 'scssWatcher' },
             this.action(
-                ['app.compile.scss', 'inject.index']
+                ['app.compile.scss'],
+                {
+                    add: ['app.compile.scss', 'inject.index']
+                }
             )
         );
 
         gulpWatch(
-            ['./project/src/index.html'],
-            { name : 'indexWatcher' },
+            [
+                './project/src/**/_*.scss'
+            ],
+            { name : '_imported_scssWatcher' },
             this.action(
-                ['inject.index']
+                ['app.compile.all.scss'],
+                {
+                    add: ['app.compile.all.scss', 'inject.index']
+                }
+            )
+        );
+
+        gulpWatch(
+            ['./project/src/**/*.{jpg,jpeg,gif,png}'],
+            { name : 'imageWatcher' },
+            this.action(
+                ['app.copy.image']
+            )
+        );
+
+        gulpWatch(
+            ['./project/src/**/*.{eot,svg,ttf,woff,woff2}'],
+            { name : 'fontWatcher' },
+            this.action(
+                ['app.copy.font']
             )
         );
     }

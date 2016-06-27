@@ -1,19 +1,22 @@
-<section className='about'>
+<section
+	className='about'
+	style={this.state.style}
+>
 	<h2>About</h2>
 
 	<Navigation list={[
-		{ name: 'About Index', route: 'about/index' },
-		{ name: 'About Me', route: 'about/me' }
+		{ name: 'About Me', route: '/about/me' },
+		{ name: 'About site', route: '/about/site' }
 	]} />
 
 	<CSSTransitionGroup
 		component='section'
-		transitionName='route'
+		transitionName='aboutRoute'
 		transitionEnterTimeout={500}
 		transitionLeaveTimeout={500}
 	>
-		{cloneElement(children, {
-			key: location.pathname
+		{cloneElement(this.props.children, {
+			key: this.props.location.pathname
 		})}
 	</CSSTransitionGroup>
 </section>

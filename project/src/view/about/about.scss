@@ -1,0 +1,40 @@
+@import '_import';
+
+[data-route^='about'] {
+	
+}
+
+.about {
+	section {
+		position: relative;
+	}
+}
+
+.aboutRoute-enter,
+.aboutRoute-leave {
+	@include set-transition(opacity);
+
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.aboutRoute-enter {
+	opacity: 0;
+	position: relative;
+	z-index: 1;
+
+	&.aboutRoute-enter-active {
+		opacity: 1;
+	}
+}
+
+.aboutRoute-leave {
+	opacity: 1;
+	pointer-events: none;
+	z-index: 2;
+
+	&.aboutRoute-leave-active {
+		opacity: 0;
+	}
+}

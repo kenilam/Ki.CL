@@ -15,7 +15,9 @@ class Lib {
 	}
 
 	task (callback) {
-		return gulp.run(priority.taskName, bower.taskName, plugin.taskName, callback);
+		return gulp.run(
+			bower.taskName, plugin.taskName, priority.taskName, callback
+		);
 	}
 }
 

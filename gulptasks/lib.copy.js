@@ -4,7 +4,6 @@ import path from 'path';
 
 import gulp from 'gulp';
 
-import gulpIf from 'gulp-if';
 import gulpPlumber from 'gulp-plumber';
 import gulpSourcemaps from 'gulp-sourcemaps';
 

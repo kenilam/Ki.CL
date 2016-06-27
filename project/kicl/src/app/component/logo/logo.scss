@@ -1,0 +1,40 @@
+@import '_import';
+
+@import '../app/component/fonts/fonts';
+
+.logo {
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(center);
+
+	@include set-logo-size();
+	@include set-logo-content();
+	@include set-logo-color();
+	
+	padding: rem($space);
+
+	a {
+		@include set-transition(color, font-size);
+		font-family: 'kicl';
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		letter-spacing: 0;
+		line-height: 1;
+		text-transform: none;
+		speak: none;
+
+		&:before {
+			display: block;
+			text-align: center;
+		}
+
+		&:hover {
+			color: $green;
+		}
+	}
+	
+	span {
+		@include hidden();
+	}
+}
