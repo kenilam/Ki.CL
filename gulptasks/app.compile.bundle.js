@@ -118,13 +118,11 @@ class Bundle {
         this.renameJSX(
             this.compileTemplate(
                 this.bundler(
-                    this.compileTemplate(
-                        !args.debug ?
-                            this.deleteTempSrc(
-                                callback
-                            )
-                        : callback
-                    )
+                    !args.debug ?
+                        this.deleteTempSrc(
+                            callback
+                        )
+                    : callback
                 )
             )
         )
