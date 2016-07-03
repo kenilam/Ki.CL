@@ -34,6 +34,12 @@ $size: 2rem;
 		@include opacity(0);
 	}
 
+	&:hover {
+		.hamburger {
+			@include transform(translate3d(-50%, -50%, 0) scale(1.2, 1.2));
+		}
+	}
+
 	&.isExpanded {
 		.hamburger {
 			@include transform(translate3d(100%, -50%, 0) scale(.3, .3));
@@ -43,6 +49,12 @@ $size: 2rem;
 		.cross {
 			@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
 			@include opacity(1);
+		}
+
+		&:hover {
+			.cross {
+				@include transform(translate3d(-50%, -50%, 0) scale(1.2, 1.2));
+			}
 		}
 	}
 

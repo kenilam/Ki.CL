@@ -24,9 +24,9 @@ const WorkComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
-})
+});
 
 class Work {
 	constructor () {

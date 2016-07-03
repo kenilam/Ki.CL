@@ -1,16 +1,15 @@
 @import '_import';
 
-@import '../logo/_logo';
+@import '../../component/logo/_logo';
 
 [data-route^='index'] {
 	header[role=banner],
 	footer[role=contentinfo] {
-		@include opacity(0);
 		@include through();
 	}
 
 	header[role=banner] {
-		@include transform(translate3d(0, -100%, 0));
+		@include transform(translate3d(0, -130%, 0));
 	}
 
 	main {
@@ -28,6 +27,7 @@
 	background-color: $black;
 	color: $white;
 	min-height: 100vh;
+	padding: 0;
 
 	header[role=banner],
 	footer[role=contentinfo] {
@@ -38,7 +38,7 @@
 	&:before {
 		@include content();
 
-		@include half-tone($red);
+		@include half-tone($light_black);
 
 		display: block;
 		height: 100%;

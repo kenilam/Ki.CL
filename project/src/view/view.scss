@@ -10,28 +10,21 @@ main {
 	@include set-transition(opacity $faster, transform $faster);
 }
 
-header[role=banner],
 footer[role=contentinfo],
 main > section {
 	padding: 0 $gutter;
 }
 
-header[role=banner],
 footer[role=contentinfo] {
 	padding-bottom: $gutter;
 	padding-top: $gutter;
 }
 
-
 header[role=banner] {
-	@include largemobile() {
-		padding: 0;
-	}
-}
+	margin: $gutter;
 
-main {
-	> section {
-		@include set-transition(padding-top, min-height);
+	@include largemobile() {
+		margin: 0;
 	}
 }
 

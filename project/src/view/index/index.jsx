@@ -10,9 +10,9 @@ const HomeComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
-})
+});
 
 class Home {
 	constructor () {

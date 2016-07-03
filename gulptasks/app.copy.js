@@ -2,6 +2,7 @@
 
 import gulp from 'gulp';
 
+import data from './app.copy.data';
 import font from './app.copy.font';
 import image from './app.copy.image';
 
@@ -15,7 +16,7 @@ class Copy {
 	}
 
 	task (callback) {
-		return gulp.run(font.taskName, image.taskName, callback);
+		return gulp.run(data.taskName, font.taskName, image.taskName, callback);
 	}
 }
 

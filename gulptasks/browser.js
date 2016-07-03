@@ -11,8 +11,16 @@ const watchSrc = [
 ];
 
 const config = {
-	server: {
-		baseDir: "./project/dev"
+	logPrefix : 'Ki.CL',
+	port : 3021,
+	server : {
+		baseDir : './project/dev'
+	},
+	ui : {
+		port : 3022,
+		weinre : {
+			port : 3023
+		}
 	}
 };
 

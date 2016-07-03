@@ -9,9 +9,9 @@ const IndexComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
-})
+});
 
 class Index {
 	constructor () {

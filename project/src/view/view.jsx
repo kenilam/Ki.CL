@@ -36,7 +36,7 @@ const ViewComponent = React.createClass({
 
 			},
 			route : route || 'index'
-		}
+		};
 
 		return style;
 	},
@@ -44,8 +44,8 @@ const ViewComponent = React.createClass({
 	setLayoutStyle () {
 		let headerHeight = this.state.style.globalHeader.height;
 		let footerHeight = this.state.style.globalFooter.height;
-		
 		let minHeight = window.innerHeight - footerHeight;
+		
 		let style = {};
 
 		if (this.props.location.pathname === '/') {
@@ -61,17 +61,20 @@ const ViewComponent = React.createClass({
 		if (this.props.location.pathname === '/') {
 			style.main.paddingTop = null;
 		}
-		
-		window.dispatchEvent(new CustomEvent(
-			'view.style',
-			{
-				detail: {
-					style : style
-				}
-			}
-		));
 
-		this.updateState({style: style}, true);
+		clearTimeout(this.setLayoutStyleTimer);
+		this.setLayoutStyleTimer = setTimeout(() => {
+			window.dispatchEvent(new CustomEvent(
+				'view.style',
+				{
+					detail: {
+						style : style
+					}
+				}
+			));
+
+			this.updateState({style: style}, true);
+		}, 250);
 	},
 
 	updateState (currentState, noCallback) {
@@ -81,16 +84,14 @@ const ViewComponent = React.createClass({
 	},
 
 	setStyle (elementName, property) {
-		function setter (event) {
+		return () => {
 			let style = {};
 
 			style[elementName] = {};
 			style[elementName][property] = event.detail[property];
 
 			this.updateState({style: style});
-		}
-
-		return setter.bind(this);
+		};
 	},
 
 	stateEnter (event) {
@@ -120,7 +121,7 @@ const ViewComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
 });
 

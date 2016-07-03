@@ -32,9 +32,9 @@ const AboutComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
-})
+});
 
 class About {
 	constructor () {

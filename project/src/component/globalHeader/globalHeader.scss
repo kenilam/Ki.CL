@@ -38,21 +38,6 @@ $border_color: $grey;
 
 	button {
 		box-sizing: content-box;
-
-		&:before {
-			@include set-transition(backgroun-image);
-
-			@include content();
-
-			background-image: transparent;
-
-			display: block;
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
-			width: 100%;
-		}
 	}
 
 	nav {
@@ -63,8 +48,21 @@ $border_color: $grey;
 		position: absolute;
 		z-index: 1;
 
+		&:before {
+			@include half-tone($darkest_white);
+
+			@include content();
+
+			display: block;
+			height: 100%;
+			position: absolute;
+			width: 100%;
+			z-index: 1;
+		}
+
 		ul {
-			@include half-tone($red);
+			position: relative;
+			z-index: 2;
 		}
 	}
 
@@ -144,7 +142,7 @@ $border_color: $grey;
 				@include through();
 
 				ul {
-					@include transform(scale(1.1, 1.1));
+					@include transform(scale(2, 2));
 				}
 			}
 		}

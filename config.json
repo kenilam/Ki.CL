@@ -120,6 +120,19 @@
     ]
   },
 
+  "jshint" : {
+    "predef" : [
+      "$",
+      "ElementQueries",
+      "ResizeSensor",
+      "React",
+      "ReactDOM",
+      "ReactRouter",
+      "template",
+      "classNames"
+    ]
+  },
+
   "sass" : {
     "includePaths": [
       "./project/src",

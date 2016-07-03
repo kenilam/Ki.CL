@@ -59,7 +59,7 @@ const rename = {
 class Bundle {
     constructor () {
         gulp.task(lintTaskName, this.lint.bind(this));
-        gulp.task(taskName, this.task.bind(this));
+        gulp.task(taskName, [lintTaskName], this.task.bind(this));
 
         this.taskName = taskName;
     }
@@ -68,11 +68,13 @@ class Bundle {
         gulp.src(src.jsx)
             .pipe(jshint.jsxhint())
             .pipe(jshint.notify())
+            .pipe(jshint.reporter())
             .on('finish', callback);
     }
 
     renameJSX (callback) {
         return () => {
+            gutil.log('renaming JXS'.yellow);
             gulp.src(src.jsx)
                 .pipe(gulpRename(rename))
                 .pipe(gulp.dest(tempDest))
@@ -83,6 +85,7 @@ class Bundle {
 
     compileTemplate (callback) {
         return () => {
+            gutil.log('compiling templates'.yellow);
             gulp.src(src.template)
                 .pipe(template())
                 .pipe(gulpRename(rename))
@@ -93,6 +96,7 @@ class Bundle {
 
     bundler (callback) {
         return () => {
+            gutil.log('browserifying'.yellow);
             browserify(entry, callback)
                 .pipe(source(output))
                 .pipe(gulp.dest(dest))
@@ -102,19 +106,15 @@ class Bundle {
 
     deleteTempSrc (callback) {
         return () => {
+            gutil.log('deleting temporary JS files'.yellow);
             gulp.src(src.temp)
-                .pipe(vinylPaths(del))
-                .on('finish', callback);
+                .pipe(vinylPaths(del));
+
+            callback();
         }
     }
 
     task (callback) {
-        if (jshint.errors.length > 0) {
-            callback();
-
-            return;
-        }
-
         this.renameJSX(
             this.compileTemplate(
                 this.bundler(

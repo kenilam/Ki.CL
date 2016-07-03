@@ -8,9 +8,9 @@ const SiteComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
-})
+});
 
 class Site {
 	constructor () {
@@ -20,7 +20,7 @@ class Site {
 			onEnter={State.enter}
 			onChange={State.change}
 			onLeave={State.leave}
-		/>
+		/>;
 	}
 }
 

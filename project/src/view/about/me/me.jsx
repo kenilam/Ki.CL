@@ -8,9 +8,9 @@ const MeComponent = React.createClass({
 	render () {
 		return (
 			{template}
-		)
+		);
 	}
-})
+});
 
 class Me {
 	constructor () {
@@ -20,7 +20,7 @@ class Me {
 			onEnter={State.enter}
 			onChange={State.change}
 			onLeave={State.leave}
-		/>
+		/>;
 	}
 }
 
