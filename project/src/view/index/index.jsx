@@ -15,7 +15,11 @@ const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 const IndexContents = React.createClass({
 	render () {
 		return (
-			<div>
+			<div
+				style={{
+					backgroundImage: `url(${this.props.resource.hero})`
+				}}
+			>
 				<img className='hero' src={this.props.resource.hero} />
 				<Logo/>
 				<Navigation list={
