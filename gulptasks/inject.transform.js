@@ -13,11 +13,14 @@ class Babel {
 		let type = 'script';
 		let attr = 'type="text/javascript"';
 		let link = 'src';
+
+		let url = filePath.replace(global.appRoot, '').replace('/project/dev', '');
 		
 		if (path.extname(filePath) === '.css') {
 			type = 'link';
 			attr = 'rel="stylesheet" type="text/css"';
 			link = 'href';
+			url = url.replace(/\/\.\./g, '');
 		}
 
 		return [ '<',
@@ -27,7 +30,7 @@ class Babel {
 			' ',
 			link,
 			'="',
-			filePath.replace('/project/dev/', ''),
+			url,
 			'"></',
 			type,
 			'>'

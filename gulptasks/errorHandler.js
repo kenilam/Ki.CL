@@ -12,8 +12,7 @@ class Handler {
 		return gulpNotify.onError({
 			title: '',
 			message: [
-				'\n',
-				'\n',
+				'\n\r',
 				'<%= error.message %>'
 			].join(' ')
 		})

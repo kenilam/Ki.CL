@@ -1,7 +1,7 @@
 @import '_import';
 
 [data-route] {
-
+	position: relative;
 }
 
 header[role=banner],
@@ -16,8 +16,11 @@ main > section {
 }
 
 footer[role=contentinfo] {
+	bottom: 0;
 	padding-bottom: $gutter;
 	padding-top: $gutter;
+	position: absolute !important;
+	width: 100%;
 }
 
 header[role=banner] {

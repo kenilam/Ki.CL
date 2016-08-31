@@ -1,5 +1,7 @@
 'use strict';
 
+import { Resource } from '@/component/component';
+
 const Link = ReactRouter.Link;
 
 class Logo extends React.Component {
@@ -10,17 +12,17 @@ class Logo extends React.Component {
 			resource : {}
 		};
 
-		this.eventHandler();
+		this.resource = new Resource(this.resourceData.bind(this));
 	}
 
-	eventHandler () {
-		window.addEventListener('component.logo.resource', this.resourceData.bind(this));
-	}
-
-	resourceData (event) {
+	resourceData (data) {
 		this.setState({
-			resource : event.detail
+			resource : data.component.logo
 		});
+	}
+
+	componentWillMount () {
+		
 	}
 
 	render () {

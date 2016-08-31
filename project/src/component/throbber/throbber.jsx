@@ -1,6 +1,6 @@
 'use strict';
 
-class Preloader extends React.Component {
+class Throbber extends React.Component {
 	constructor () {
 		super();
 	}
@@ -12,4 +12,4 @@ class Preloader extends React.Component {
 	}
 }
 
-export default Preloader;
+export default Throbber;

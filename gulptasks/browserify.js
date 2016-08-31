@@ -7,7 +7,6 @@ import gutil from 'gulp-util';
 
 import browserify from 'browserify';
 
-import debug from 'gulp-debug';
 import errorHandler from './errorHandler';
 
 const domainEvent = domain.create();
@@ -32,6 +31,7 @@ class Browserify {
 	compile (entry) {
 		return browserify(entry, config)
 			.bundle()
+			.on('error', errorHandler.notify())
             .pipe(errorHandler.plumber());
 	}
 }

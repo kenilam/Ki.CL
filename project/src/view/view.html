@@ -2,18 +2,10 @@
 	data-route={this.state.route}
 >
 	<GlobalHeader/>
-
-	<CSSTransitionGroup
+	<AnimationLayer
+		element={cloneElement(this.props.children, { key: this.props.keyValue })}
 		component='main'
-		transitionName='route'
-		transitionEnterTimeout={500}
-		transitionLeaveTimeout={500}
-		className={this.state.routeName}
-	>
-		{cloneElement(this.props.children, {
-			key: this.props.location.pathname
-		})}
-	</CSSTransitionGroup>
-
+		keyValue={this.props.location.pathname}
+	/>
 	<GlobalFooter/>
 </div>

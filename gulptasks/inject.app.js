@@ -5,6 +5,11 @@ import gulpInject from 'gulp-inject';
 
 import transform from './inject.transform';
 
+const src = [
+	'./**/*.{js,css}',
+	'!./lib/**/*.{js,css}'
+];
+
 class Inject {
 	constructor () {
 		return this.inject.bind(this);
@@ -12,10 +17,7 @@ class Inject {
 
 	inject () {
 		return gulpInject(
-			gulp.src([
-				'./project/dev/**/*.{js,css}',
-				'!./project/dev/lib/**/*.{js,css}'
-			], { read: false }),
+			gulp.src(src, { read : false, cwd : './project/dev/' }),
 			{ name: 'app', transform: transform }
 		);
 	}

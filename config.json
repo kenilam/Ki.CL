@@ -75,12 +75,6 @@
           "index.js"
         ]
       },
-      "history" : {
-        "debugging" : true,
-        "main" : [
-          "scripts/uncompressed/history.js"
-        ]
-      },
       "reset-css" : {
         "debugging" : true,
         "main" : [
@@ -107,7 +101,6 @@
       "!**/*/ResizeSensor.js",
       "!**/*/react.js",
       "!**/*/react-with-addons.js",
-      "!**/*/history.js",
       "!**/*/reset.css"
     ],
     "priority" : [
@@ -115,7 +108,6 @@
       "**/*/ResizeSensor.js",
       "**/*/react.js",
       "**/*/react-with-addons.js",
-      "**/*/history.js",
       "**/*/reset.css"
     ]
   },

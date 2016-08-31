@@ -3,8 +3,6 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
-import debug from 'gulp-debug';
-
 import transform from './inject.transform';
 
 const src = [

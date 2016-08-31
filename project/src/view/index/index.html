@@ -1,7 +1,5 @@
-<section className='index'>
-	<Logo/>
-	<Navigation list={[
-		{ name: 'About', route: '/about' },
-		{ name: 'Work', route: '/work' }
-	]} />
-</section>
+<AnimationLayer
+	component='section'
+	className='index'
+	element={this.state.resource.contents}
+/>

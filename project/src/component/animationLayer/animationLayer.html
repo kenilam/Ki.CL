@@ -1,0 +1,11 @@
+<CSSTransitionGroup
+	component={this.props.component}
+	className={this.props.className}
+	keyValue={this.props.keyValue}
+	transitionName='animate'
+	transitionEnterTimeout={1000}
+	transitionLeaveTimeout={1000}
+	ref={(ref) => this._element = ref}
+>
+	{this.props.element}
+</CSSTransitionGroup>

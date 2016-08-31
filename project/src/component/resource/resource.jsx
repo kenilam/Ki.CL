@@ -1,27 +1,49 @@
-class Resource {
-	constructor (callback) {
-		if (window.kicl) {
+class BroadcastResource {
+	constructor (type, resource) {
+		if (!resource) {
 			return;
 		}
 
-		window.kicl = {};
+		this.type = type;
+		this.resource = resource;
+		this.broadcast();
 
-		this.load(callback);
+		window.addEventListener('state.enter', this.broadcast.bind(this));
+	}
+
+	broadcast () {
+		clearTimeout(this.timer);
+		this.timer = setTimeout(() => {
+			Object.keys(this.resource).forEach(name => {
+				window.dispatchEvent(new CustomEvent(
+					['resource', this.type, name].join('.'),
+					{
+						detail: this.resource[name]
+					}
+				));
+			});
+		}, 100);
+	}
+}
+
+class Resource {
+	constructor (callback) {
+		if (callback) {
+			this.callback = callback;
+		}
 	}
 
 	success (resource) {
-		Object.defineProperty(window.kicl, 'resource', {
-			value : resource,
-			enumerable : false,
-			writable : false,
-			configurable : false
-		});
+		this.resource = resource;
+
+		new BroadcastResource('view', this.resource.view);
+		new BroadcastResource('component', this.resource.component);
 
 		if (!this.callback) {
 			return;
 		}
 
-		this.callback(window.kicl.resource);
+		this.callback(resource);
 	}
 
 	error (error) {
@@ -32,16 +54,8 @@ class Resource {
 
 	}
 
-	load (callback) {
-		this.callback = callback;
-
-		if (window.kicl.resource && this.callback) {
-			this.callback(window.kicl.resource);
-
-			return;
-		}
-
-		return $.ajax({ url : 'data/resource.json' })
+	load () {
+		$.ajax({ url : 'data/resource.json' })
 			.then(
 				this.success.bind(this),
 				this.error.bind(this),

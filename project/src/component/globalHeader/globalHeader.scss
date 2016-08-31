@@ -44,8 +44,6 @@ $border_color: $grey;
 		@include set-transition(opacity $fast, transform $fast);
 
 		border-left: 1px solid $border_color;
-		height: 100%;
-		position: absolute;
 		z-index: 1;
 
 		&:before {

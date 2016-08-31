@@ -2,18 +2,19 @@
 
 import {State} from '@/helper/helper';
 import {
+	AnimationLayer,
 	GlobalFooter,
 	GlobalHeader,
 	Preloader
 } from '@/component/component';
 
+import PageNotFound from './pageNotFound/pageNotFound';
 import About from './about/about';
 import Index from './index/index';
 import Work from './work/work';
 
 const IndexRedirect = ReactRouter.IndexRedirect;
 const Route = ReactRouter.Route;
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 const cloneElement = React.cloneElement;
 
 const ViewComponent = React.createClass({
@@ -21,7 +22,7 @@ const ViewComponent = React.createClass({
 		const bleed = 0;
 		const route = location.hash.split('?')[0].replace('#', '').replace(/\//g, '.').replace('.', '');
 
-		const style = {
+		const state = {
 			style : {
 				main : {
 					paddingTop : !route ? false : bleed,
@@ -38,7 +39,7 @@ const ViewComponent = React.createClass({
 			route : route || 'index'
 		};
 
-		return style;
+		return state;
 	},
 
 	setLayoutStyle () {
@@ -62,19 +63,16 @@ const ViewComponent = React.createClass({
 			style.main.paddingTop = null;
 		}
 
-		clearTimeout(this.setLayoutStyleTimer);
-		this.setLayoutStyleTimer = setTimeout(() => {
-			window.dispatchEvent(new CustomEvent(
-				'view.style',
-				{
-					detail: {
-						style : style
-					}
+		window.dispatchEvent(new CustomEvent(
+			'view.style',
+			{
+				detail: {
+					style : style
 				}
-			));
+			}
+		));
 
-			this.updateState({style: style}, true);
-		}, 250);
+		this.updateState({style: style}, true);
 	},
 
 	updateState (currentState, noCallback) {
@@ -97,7 +95,7 @@ const ViewComponent = React.createClass({
 	stateEnter (event) {
 		const pathname = event.detail.nextState.location.pathname.replace(/\//g, '.').replace('.', '');
 		const route = pathname || 'index';
-
+		
 		clearTimeout(this.stateEnterTimer);
 		this.stateEnterTimer = setTimeout(() => {
 			this.updateState({ route : route });
@@ -137,6 +135,7 @@ class View {
 			{Index}
 			{About}
 			{Work}
+			{PageNotFound}
 		</Route>;
 	}
 }

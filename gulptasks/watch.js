@@ -47,10 +47,6 @@ class Event {
                 return gulp.run.apply(this, eventActions);
             });
     }
-
-    add (event, eventActions) {
-        return gulp.run.apply(this, eventActions);
-    }
 }
 
 class Watch {
@@ -62,19 +58,23 @@ class Watch {
     }
 
     action (defaultActions, eventActions) {
-        const react = vinyl => {
-            const file = vinyl.path.replace(global.appRoot, '.');
-
-            gutil.log(file.magenta, (vinyl.event+'ed').green, '\r\n');
-            
-            if (!this.events[vinyl.event] || !eventActions) {
-                return gulp.run.apply(this, defaultActions);
-            }
-
-            return this.events[vinyl.event](vinyl, eventActions[vinyl.event]);
+        if (!eventActions) {
+            eventActions = {};
         }
 
-        return react;
+        const reaction = vinyl => {
+            const file = vinyl.path.replace(global.appRoot, '.');
+
+            gutil.log(file.magenta, (vinyl.event).green);
+
+            if (!this.events[vinyl.event]) {
+                return gulp.run.apply(this, eventActions[vinyl.event] || defaultActions);
+            }
+
+            return this.events[vinyl.event](vinyl, eventActions[vinyl.event] || defaultActions);
+        }
+
+        return reaction;
     }
 
     task () {
@@ -96,7 +96,7 @@ class Watch {
             this.action(
                 ['app.compile.bundle', 'inject.index'],
                 {
-                    unlink: ['inject.index']
+                    change : ['app.compile.bundle']
                 }
             )
         );
@@ -108,9 +108,9 @@ class Watch {
             ],
             { name : 'scssWatcher' },
             this.action(
-                ['app.compile.scss'],
+                ['app.compile.scss', 'inject.index'],
                 {
-                    add: ['app.compile.scss', 'inject.index']
+                    change : ['app.compile.scss']
                 }
             )
         );
@@ -121,9 +121,9 @@ class Watch {
             ],
             { name : '_imported_scssWatcher' },
             this.action(
-                ['app.compile.all.scss'],
+                ['app.compile.all.scss', 'inject.index'],
                 {
-                    add: ['app.compile.all.scss', 'inject.index']
+                    change: ['app.compile.all.scss']
                 }
             )
         );
@@ -141,6 +141,14 @@ class Watch {
             { name : 'fontWatcher' },
             this.action(
                 ['app.copy.font']
+            )
+        );
+
+        gulpWatch(
+            ['./project/src/**/*.{json}'],
+            { name : 'dataWatcher' },
+            this.action(
+                ['app.copy.component.data', 'inject.index']
             )
         );
     }

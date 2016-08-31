@@ -18,12 +18,15 @@ class Babel {
 			link = 'href';
 		}
 
+		console.log(filePath.replace('/project/dev', ''));
+		console.log('');
+
 		return [ '<',
 			type,
 			' type="babel/text" ',
 			link,
 			'="',
-			filePath.replace('/project/dev/', ''),
+			filePath.replace('/project/dev', ''),
 			'"></',
 			type,
 			'>'

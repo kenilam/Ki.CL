@@ -94,7 +94,7 @@ class Bundle {
         }
     }
 
-    bundler (callback) {
+    bundle (callback) {
         return () => {
             gutil.log('browserifying'.yellow);
             browserify(entry, callback)
@@ -117,7 +117,7 @@ class Bundle {
     task (callback) {
         this.renameJSX(
             this.compileTemplate(
-                this.bundler(
+                this.bundle(
                     !args.debug ?
                         this.deleteTempSrc(
                             callback

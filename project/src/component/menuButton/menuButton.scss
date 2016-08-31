@@ -2,78 +2,50 @@
 
 $size: 2rem;
 
-.menuButton {
-	@include display(flex);
+@import '_import';
 
+.menuButton {
 	color: transparent;
 	cursor: pointer;
 	font-size: $size;
 	height: $size;
 	overflow: hidden;
-	text-indent: -9999px;
 	width: $size;
 
-	i {
-		@include set-transition(opacity $faster, transform $faster);
-
-		@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
-
-		color: $black;
-		left: 50%;
-		position: absolute;
-		text-indent: 0;
-		top: 50%;
+	span {
+		@include hidden();
 	}
 
-	.hamburger {
-		@include opacity(1);
+	path {
+		@include set-transition(fill, opacity, transform);
+		@include transition-duration($fast);
+		@include transform-style(preserve-3d);
+		@include transform-origin(50% 50% 0);
+
+		fill: $black;
 	}
 
 	.cross {
-		@include transform(translate3d(-100%, -50%, 0) scale(.3, .3));
 		@include opacity(0);
-	}
 
-	&:hover {
-		.hamburger {
-			@include transform(translate3d(-50%, -50%, 0) scale(1.2, 1.2));
+		&.left {
+			@include transform(rotate(-45deg));
+		}
+
+		&.right {
+			@include transform(rotate(45deg));
 		}
 	}
 
 	&.isExpanded {
-		.hamburger {
-			@include transform(translate3d(100%, -50%, 0) scale(.3, .3));
+		.line {
+			@include transform(scale3d(0, 1, 1));
 			@include opacity(0);
 		}
 
 		.cross {
-			@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
+			@include transform(rotate(0deg));
 			@include opacity(1);
-		}
-
-		&:hover {
-			.cross {
-				@include transform(translate3d(-50%, -50%, 0) scale(1.2, 1.2));
-			}
-		}
-	}
-
-	@include largemobile() {
-		.cross {
-			@include transform(translate3d(-50%, -50%, 0) scale(.2, .2));
-			@include opacity(0);
-		}
-
-		&.isExpanded {
-			.hamburger {
-				@include transform(translate3d(-50%, -50%, 0) scale(1.5, 1.5));
-				@include opacity(0);
-			}
-
-			.cross {
-				@include transform(translate3d(-50%, -50%, 0) scale(1, 1));
-				@include opacity(1);
-			}
 		}
 	}
 }

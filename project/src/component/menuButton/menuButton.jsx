@@ -1,7 +1,5 @@
 'use strict';
 
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 class MenuButton extends React.Component {
 	constructor () {
 		super();
@@ -24,6 +22,12 @@ class MenuButton extends React.Component {
 				}
 			}
 		));
+	}
+
+	setStyle (style) {
+		this.setState((previousState, currentProps) => {
+			return $.extend(true, {}, previousState, { style : style });
+		});
 	}
 
 	setClass () {

@@ -1,4 +1,12 @@
 {
+	"view" : {
+		"index" : {
+			"hero" : "assets/image/london.whitechapel.jpg"
+		},
+		"pageNotFound" : {
+			"message" : "Oops! 404.. {route} page is not found!"
+		}
+	},
 	"component" : {
 		"logo" : {
 			"message" : "Ki.CL | HOME"

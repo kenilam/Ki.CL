@@ -27,7 +27,6 @@
     "react": "~15.1.0",
     "react-plugins": "react#~15.1.0",
     "react-router": "https://npmcdn.com/react-router/umd/ReactRouter.js",
-    "history": "^1.8.0",
     "normalize-css": "^4.1.1",
     "normalize-opentype-css": "normalize-opentype.css#^0.2.4",
     "classnames": "^2.2.5",

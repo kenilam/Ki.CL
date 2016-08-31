@@ -7,33 +7,31 @@ import View from './view/view';
 const hashHistory = ReactRouter.hashHistory;
 const Router = ReactRouter.Router;
 
-class App {
+class App extends Resource {
 	constructor () {
-		new Resource(resource => {
-			
-			ElementQueries.listen();
+		super();
 
-			this.resource = resource;
-
-			this.render();
-		});
+		ReactDOM.render(
+			(
+				<Router history={hashHistory}>
+					{View}
+				</Router>
+			),
+			document.querySelector('[app-root]'),
+			this.load.bind(this)
+		);
 	}
 
-	broadcastResource () {
-		Object.keys(this.resource.component).forEach(name => {
-			window.dispatchEvent(new CustomEvent('component.' + name + '.resource', {
-				detail : this.resource.component[name]
-			}));
-		});
-	}
+	callback (resource) {
+		ElementQueries.listen();
 
-	render () {
-		ReactDOM.render((
-			<Router history={hashHistory}>
-				{View}
-			</Router>
-		), document.querySelector('[app-root]'), this.broadcastResource.bind(this));
+		this.resource = resource;
 	}
 }
+
+Object.defineProperty(window, 'kicl', {
+	value : {},
+	configurable : true
+});
 
 export default new App();

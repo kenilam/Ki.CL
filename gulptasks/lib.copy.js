@@ -4,6 +4,7 @@ import path from 'path';
 
 import gulp from 'gulp';
 
+import gulpRename from 'gulp-rename';
 import gulpPlumber from 'gulp-plumber';
 import gulpSourcemaps from 'gulp-sourcemaps';
 
@@ -55,7 +56,13 @@ class Copy {
 	srcTask () {
 		const destRoot = dest.replace('{env}', 'src').replace('{type}', this.type);
 
-		return this.src.pipe(gulp.dest(destRoot));
+		return this.src
+			.pipe(gulpRename(file => {
+				if (file.basename === 'index' && !file.extname) {
+					file.extname = '.js';
+				}
+			}))
+			.pipe(gulp.dest(destRoot));
 	}
 
 	maskTask (env) {

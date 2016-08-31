@@ -1,0 +1,39 @@
+@import '_import';
+
+.animate-enter,
+.animate-leave,
+.animate-appear {
+	@include transition(opacity $speed);
+
+	pointer-events: none;
+	position: absolute;
+	width: 100%;
+}
+
+.animate-enter {
+	@include opacity(0);
+	
+	z-index: 1;
+
+	&.animate-enter-active {
+		@include opacity(1);
+	}
+}
+
+.animate-leave {
+	@include opacity(1);
+
+	z-index: 2;
+
+	&.animate-leave-active {
+		@include opacity(0);
+	}
+}
+
+.animate-appear {
+	@include opacity(0);
+
+	&.animate-appear-active {
+		@include opacity(1);
+	}
+}

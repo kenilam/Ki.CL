@@ -3,6 +3,8 @@
 @import '../../component/logo/_logo';
 
 [data-route^='index'] {
+	overflow: hidden;
+
 	header[role=banner],
 	footer[role=contentinfo] {
 		@include through();
@@ -51,6 +53,8 @@
 
 	h1,
 	nav {
+		@include transition(opacity $fast $slow, transform $fast $slow);
+
 		position: relative;
 		z-index: 2;
 	}
@@ -74,6 +78,34 @@
 				margin-left: 0;
 				margin-top: $grid_block;
 			}
+		}
+	}
+
+	.hero {
+		@include transform(translate3d(-50%, -50%, 0));
+
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		width: 150vw;
+		z-index: 0;
+	}
+
+	.animate-enter {
+		@include transition(opacity $fast, transform $fast);
+
+		@include transform(scale(1.5));
+		@include opacity(0);
+
+		h1,
+		nav {
+			@include transform(scale(1.8));
+			@include opacity(0);
+		}
+
+		&.animate-enter-active {
+			@include transform(scale(1));
+			@include opacity(1);
 		}
 	}
 }
