@@ -11,3 +11,5 @@ project/src/**/*.js
 
 node_modules
 bower_components
+
+secret.json
