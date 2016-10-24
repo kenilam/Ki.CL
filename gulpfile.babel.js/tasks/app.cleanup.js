@@ -10,8 +10,8 @@ import vinylPaths from 'vinyl-paths';
 const taskName = 'app.cleanup';
 
 let src = [
-	'./project/dev/**/*.{html,css,js,eot,svg,ttf,woff,woff2,jpg,jpeg,gif,png}',
-	'!./project/dev/lib/**/*',
+	'./**/*.{html,css,js,eot,svg,ttf,woff,woff2,jpg,jpeg,gif,png}',
+	'!./lib/**/*',
 ];
 
 class Cleanup {
@@ -22,7 +22,7 @@ class Cleanup {
 	}
 
 	task () {
-		return gulp.src(src, {read: false}).pipe(vinylPaths(del));
+		return gulp.src(src, {read: false, cwd : './project/dev/' }).pipe(vinylPaths(del));
 	}
 }
 

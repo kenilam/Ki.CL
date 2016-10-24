@@ -9,7 +9,7 @@ import mainBowerFiles from 'gulp-main-bower-files';
 import Copy from './lib.copy';
 import Cleanup from './lib.cleanup';
 
-import config from '../config';
+import config from '../../config';
 
 const taskName = 'lib.priority';
 

@@ -1,15 +1,11 @@
 'use strict';
 
-import domain from 'domain';
-
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 
 import browserify from 'browserify';
 
 import errorHandler from './errorHandler';
-
-const domainEvent = domain.create();
 
 const config = {
     cache: {},
@@ -32,7 +28,7 @@ class Browserify {
 		return browserify(entry, config)
 			.bundle()
 			.on('error', errorHandler.notify())
-            .pipe(errorHandler.plumber());
+			.pipe(errorHandler.plumber());
 	}
 }
 

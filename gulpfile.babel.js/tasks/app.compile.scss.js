@@ -1,8 +1,5 @@
 'use strict';
-import path from 'path';
-
 import gulp from 'gulp';
-import gutil from 'gulp-util';
 
 import gulpChanged from 'gulp-changed';
 import gulpSourcemaps from 'gulp-sourcemaps';
@@ -10,16 +7,15 @@ import gulpSourcemaps from 'gulp-sourcemaps';
 import sass from './sass';
 
 const taskName = 'app.compile.scss';
-const lintTaskName = [taskName, 'lint'].join('.');
 
 const src = [
 	'./project/src/**/*.scss',
 	'!./project/src/**/_*.scss'
-]
+];
 
-const importSrc = [
+const allSrc = [
 	'./project/src/**/*.scss'
-]
+];
 
 const dest = './project/dev';
 
@@ -33,7 +29,7 @@ class Compile {
 	}
 
 	all () {
-		return gulp.src(importSrc)
+		return gulp.src(allSrc)
 			.pipe(gulpSourcemaps.init())
 			.pipe(sass())
 			.pipe(gulpSourcemaps.write())

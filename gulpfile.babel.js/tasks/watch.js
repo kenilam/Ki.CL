@@ -103,6 +103,26 @@ class Watch {
 
         gulpWatch(
             [
+                './project/src/**/*.php'
+            ],
+            { name : 'phpWatcher' },
+            this.action(
+                ['app.compile.php']
+            )
+        );
+
+        gulpWatch(
+            [
+                './secret.json'
+            ],
+            { name : 'secretWatcher' },
+            this.action(
+                ['app.compile.all.php', 'app.compile.bundle']
+            )
+        );
+
+        gulpWatch(
+            [
                 './project/src/**/*.scss',
                 '!./project/src/**/_*.scss'
             ],

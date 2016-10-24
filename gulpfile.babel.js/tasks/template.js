@@ -18,24 +18,28 @@ class Template {
 		return this.compile.bind(this);
 	}
 
+	interpolate (template) {
+		return (file, callback) => {
+			let contents = file.contents.toString().replace(/{template}/g, template.contents.toString());
+
+			template.path = file.path.replace('.html', '.js');
+			template.contents = new Buffer(esformatter.format(contents));
+
+			callback(null, template);
+		}
+	}
+
 	transform (file, callback) {
 		gulp.src(file.path.replace('.html', '.jsx'))
 			.pipe(errorHandler.plumber())
-			.pipe(gulpData((compiledFile, compiledCallback) => {
-				const template = compiledFile.contents.toString().replace(/{template}/g, file.contents.toString());
-				
-				file.path = file.path.replace('.html', '.js');
-				file.contents = new Buffer(esformatter.format(template));
-
-				compiledCallback(null, file);
-			}))
+			.pipe(gulpData(this.interpolate(file)))
 			.on('finish', () => {
 				callback(null, file);
 			})
 	}
 
 	compile () {
-		return gulpData(this.transform);
+		return gulpData(this.transform.bind(this));
 	}
 }
 

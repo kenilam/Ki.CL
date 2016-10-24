@@ -8,7 +8,7 @@ import debug from 'gulp-debug';
 import transform from './inject.transform';
 
 const src = [
-	'./project/dev/lib/bower/**/*.{js,css}'
+	'./lib/bower/**/*.{js,css}'
 ];
 
 class Inject {
@@ -18,7 +18,7 @@ class Inject {
 
 	inject () {
 		return gulpInject(
-			gulp.src(src, { read: false }),
+			gulp.src(src, { read: false, cwd : './project/dev/' }),
 			{ name: 'lib', transform: transform }
 		);
 	}

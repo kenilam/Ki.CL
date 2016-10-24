@@ -3,10 +3,13 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
+import debug from 'gulp-debug';
+
 import transform from './inject.transform';
 
 const src = [
-	'./project/dev/lib/app/priority/**/*'
+	'./lib/app/**/*',
+	'!./lib/app/priority/**/*'
 ];
 
 class Inject {
@@ -16,8 +19,8 @@ class Inject {
 
 	inject () {
 		return gulpInject(
-			gulp.src(src, { read: false }),
-			{ name: 'app.priority', transform: transform }
+			gulp.src(src, { read: false, cwd : './project/dev/' }),
+			{ name: 'app.global', transform: transform }
 		);
 	}
 }

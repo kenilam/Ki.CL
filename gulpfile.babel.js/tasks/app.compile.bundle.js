@@ -10,22 +10,20 @@ import gutil from 'gulp-util';
 import gulpAddsrc from 'gulp-add-src';
 import gulpChanged from 'gulp-changed';
 import gulpData from 'gulp-data';
-import gulpNotify from 'gulp-notify';
-import gulpPlumber from 'gulp-plumber';
 import gulpRename from 'gulp-rename';
-import gulpSourcemaps from 'gulp-sourcemaps';
 
 import debug from 'gulp-debug';
 
-import buffer from 'vinyl-buffer';
 import source from 'vinyl-source-stream';
 
 import del from 'del';
-import vinylPaths from 'vinyl-paths';
 
 import browserify from './browserify';
 import template from './template';
 import jshint from './jshint';
+import webpack from './webpack';
+
+import errorHandler from './errorHandler';
 
 const lintTaskName = 'app.compile.bundle.lint';
 const taskName = 'app.compile.bundle';
@@ -65,22 +63,10 @@ class Bundle {
     }
 
     lint (callback) {
-        gulp.src(src.jsx)
+        return gulp.src(src.jsx)
             .pipe(jshint.jsxhint())
             .pipe(jshint.notify())
-            .pipe(jshint.reporter())
-            .on('finish', callback);
-    }
-
-    renameJSX (callback) {
-        return () => {
-            gutil.log('renaming JXS'.yellow);
-            gulp.src(src.jsx)
-                .pipe(gulpRename(rename))
-                .pipe(gulp.dest(tempDest))
-                .on('end', callback);
-        }
-
+            .pipe(jshint.reporter());
     }
 
     compileTemplate (callback) {
@@ -96,10 +82,38 @@ class Bundle {
 
     bundle (callback) {
         return () => {
-            gutil.log('browserifying'.yellow);
-            browserify(entry, callback)
-                .pipe(source(output))
+            gutil.log('webpacking'.yellow);
+            webpack(entry, output)
+
+            // gutil.log('browserifying'.yellow);
+            // browserify(entry)
+            //     .pipe(source(output))
+
                 .pipe(gulp.dest(dest))
+                .on('end', callback);
+        }
+    }
+
+    interpolateBundle (file, callback) {
+        let secret = require('../../secret');
+        let envSecret = secret[process.env.mode || 'dev'];
+        let database = `${envSecret.api.servername}:${envSecret.api.proxy}`;
+
+        const contents = file.contents.toString()
+            .replace(/{database}/g, database);
+
+        file.contents = new Buffer(contents);
+        
+        callback(null, file);
+    }
+
+    createTempSrc (callback) {
+        return () => {
+            gutil.log('renaming JSX'.yellow);
+            gulp.src(src.jsx)
+                .pipe(gulpData(this.interpolateBundle))
+                .pipe(gulpRename(rename))
+                .pipe(gulp.dest(tempDest))
                 .on('end', callback);
         }
     }
@@ -107,26 +121,26 @@ class Bundle {
     deleteTempSrc (callback) {
         return () => {
             gutil.log('deleting temporary JS files'.yellow);
-            gulp.src(src.temp)
-                .pipe(vinylPaths(del));
-
-            callback();
+            
+            del(src.temp).then(paths => {
+                callback();
+            });
         }
     }
 
     task (callback) {
-        this.renameJSX(
+        this.createTempSrc(
             this.compileTemplate(
                 this.bundle(
                     !args.debug ?
                         this.deleteTempSrc(
-                            callback
+                            callback,
+                            errorHandler.notify
                         )
                     : callback
                 )
             )
-        )
-        ();
+        )();
     };
 }
 
