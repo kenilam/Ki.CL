@@ -3,7 +3,7 @@
 .animate-enter,
 .animate-leave,
 .animate-appear {
-	@include transition(opacity $speed);
+	@include transition(opacity $speed, transform $speed);
 
 	pointer-events: none;
 	position: absolute;
@@ -16,7 +16,13 @@
 	z-index: 1;
 
 	&.animate-enter-active {
+		@include transition-delay($speed);
+		
 		@include opacity(1);
+	}
+
+	~ .animate-enter {
+		@include hidden();
 	}
 }
 
@@ -27,6 +33,10 @@
 
 	&.animate-leave-active {
 		@include opacity(0);
+	}
+
+	~ .animate-leave {
+		@include hidden();
 	}
 }
 

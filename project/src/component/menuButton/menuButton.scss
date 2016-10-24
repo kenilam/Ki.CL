@@ -17,7 +17,7 @@ $size: 2rem;
 	}
 
 	path {
-		@include set-transition(fill, opacity, transform);
+		@include transition(fill, opacity, transform);
 		@include transition-duration($fast);
 		@include transform-style(preserve-3d);
 		@include transform-origin(50% 50% 0);

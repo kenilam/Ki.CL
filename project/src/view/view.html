@@ -1,11 +1,10 @@
-<div
-	data-route={this.state.route}
->
+<div data-route={this.state.route}>
 	<GlobalHeader/>
 	<AnimationLayer
-		element={cloneElement(this.props.children, { key: this.props.keyValue })}
 		component='main'
-		keyValue={this.props.location.pathname}
+		element={ cloneElement(this.props.children, { key : this.state.rootRoute }) }
+		ref={(ref) => this._element = ref}
 	/>
 	<GlobalFooter/>
+	<Throbber component='div' eventName='global' show={true} />
 </div>

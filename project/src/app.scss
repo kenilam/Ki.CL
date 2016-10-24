@@ -4,14 +4,8 @@ body {
 	background-color: $grey;
 }
 
-header[role=banner] {
-
-}
-
-main {
-
-}
-
-footer[role=contentinfo] {
-	
+a {
+	&.isCurrent {
+		@include through();
+	}
 }

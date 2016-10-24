@@ -1,4 +1,8 @@
-<p className='throbber'>
-	<i className='fa fa-spin fa-cog'></i>
-	<span>Loading...</span>
-</p>
+<AnimationLayer
+	component={this.props.component}
+	className={this.className}
+	componentName='throbber'
+	componentActive={this.state.show}
+	element={this.state.content}
+	ref={(ref) => this._element = ref}
+/>

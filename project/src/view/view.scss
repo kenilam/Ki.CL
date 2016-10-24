@@ -4,30 +4,53 @@
 	position: relative;
 }
 
-header[role=banner],
-footer[role=contentinfo],
+.globalHeader,
+.globalFooter {
+	z-index: 2;
+}
+
 main {
-	@include set-transition(opacity $faster, transform $faster);
+	@include transition(opacity $faster, transform $faster);
+
+	@include display(flex);
+	@include flex-direction(column);
+
+	z-index: 1;
+
+	> section {
+		padding: 4rem $gutter 0;
+	}
 }
 
-footer[role=contentinfo],
-main > section {
-	padding: 0 $gutter;
-}
-
-footer[role=contentinfo] {
-	bottom: 0;
-	padding-bottom: $gutter;
-	padding-top: $gutter;
-	position: absolute !important;
+.global[data-component='throbber'] {
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
 	width: 100%;
-}
+	z-index: 3;
 
-header[role=banner] {
-	margin: $gutter;
+	[data-content-name='throbber.spinner'] {
+		&:before {
+			@include backdrop-filter(blur(1rem));
 
-	@include largemobile() {
-		margin: 0;
+			@include content();
+
+			background-color: rgba($white, 0.7);
+			display: block;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 0;
+		}
+	}
+
+	&.isHidden {
+		@include through();
+		
+		z-index: 0;
 	}
 }
 

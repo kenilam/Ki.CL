@@ -1,17 +1,22 @@
 'use strict';
 
-import {State} from '@/helper/helper';
+import {
+	ComponentState,
+	State
+} from '@/helper/helper';
+
 import {
 	AnimationLayer,
 	GlobalFooter,
 	GlobalHeader,
-	Preloader
+	Throbber
 } from '@/component/component';
 
-import PageNotFound from './pageNotFound/pageNotFound';
 import About from './about/about';
+import Contact from './contact/contact';
 import Index from './index/index';
-import Work from './work/work';
+import PageNotFound from './pageNotFound/pageNotFound';
+import Works from './works/works';
 
 const IndexRedirect = ReactRouter.IndexRedirect;
 const Route = ReactRouter.Route;
@@ -21,7 +26,7 @@ const ViewComponent = React.createClass({
 	getInitialState () {
 		const bleed = 0;
 		const route = location.hash.split('?')[0].replace('#', '').replace(/\//g, '.').replace('.', '');
-
+		
 		const state = {
 			style : {
 				main : {
@@ -36,13 +41,25 @@ const ViewComponent = React.createClass({
 				}
 
 			},
-			route : route || 'index'
+			route : route || 'index',
+			rootRoute : this.props.location.pathname.split('/')[1]
 		};
 
 		return state;
 	},
 
-	setLayoutStyle () {
+	broadcastStyle () {
+		window.dispatchEvent(new CustomEvent(
+			'view.style',
+			{
+				detail: {
+					style : this.state.style
+				}
+			}
+		));
+	},
+
+	setResizeStyle () {
 		let headerHeight = this.state.style.globalHeader.height;
 		let footerHeight = this.state.style.globalFooter.height;
 		let minHeight = window.innerHeight - footerHeight;
@@ -63,56 +80,73 @@ const ViewComponent = React.createClass({
 			style.main.paddingTop = null;
 		}
 
-		window.dispatchEvent(new CustomEvent(
-			'view.style',
-			{
-				detail: {
-					style : style
-				}
-			}
-		));
-
-		this.updateState({style: style}, true);
+		this.updateState({ style: style }, this.broadcastStyle);
 	},
 
-	updateState (currentState, noCallback) {
-		this.setState((previousState, currentProps) => {
-			return $.extend(true, {}, previousState, currentState);
-		}, !noCallback ? this.setLayoutStyle : null);
-	},
-
-	setStyle (elementName, property) {
-		return () => {
+	setStyle (elementName, property, execute) {
+		const exec = () => {
 			let style = {};
 
 			style[elementName] = {};
 			style[elementName][property] = event.detail[property];
 
-			this.updateState({style: style});
+			this.updateState({ style: style }, this.setResizeStyle);
 		};
+
+		if (execute) {
+			return exec();
+		}
+
+		return exec;
+	},
+
+	setRoute (event) {
+		const pathname = (
+			event ? event.detail.nextState.location.pathname : this.props.location.pathname
+		).replace('.', '').replace(/\//g, '.');
+		
+		let route = (pathname === '.' || !pathname ? 'index' : pathname);
+
+		if (route[0] === '.') {
+			route = route.substr(1);
+		}
+
+		clearTimeout(this.routeTimer);
+		this.routeTimer = setTimeout(() => {
+			this.updateState({
+				route : route
+			});
+		}, 100);
+
+		this.updateState({
+			rootRoute : route.split('.')[0]
+		});
 	},
 
 	stateEnter (event) {
-		const pathname = event.detail.nextState.location.pathname.replace(/\//g, '.').replace('.', '');
-		const route = pathname || 'index';
-		
-		clearTimeout(this.stateEnterTimer);
-		this.stateEnterTimer = setTimeout(() => {
-			this.updateState({ route : route });
-		}, 250);
+		this.setRoute(event);
+
+		this.setStyle('globalHeader', 'height', true);
+		this.setStyle('globalFooter', 'height', true);
+
+		window.dispatchEvent(new Event('global.throbber.hide'));
 	},
 
 	componentWillMount () {
+		this.updateState = ComponentState.update.bind(this);
+
+		this.setRoute();
+		
 		window.addEventListener('globalHeader.height', this.setStyle('globalHeader', 'height'));
 		window.addEventListener('globalFooter.height', this.setStyle('globalFooter', 'height'));
-		window.addEventListener('resize', this.setLayoutStyle);
+		window.addEventListener('resize', this.setResizeStyle);
 		window.addEventListener('state.enter', this.stateEnter);
 	},
 
 	componentWillUnmount () {
 		window.removeEventListener('globalHeader.height', this.setGlobalHeaderHeight);
 		window.removeEventListener('globalFooter.height', this.setGlobalFooterHeight);
-		window.removeEventListener('resize', this.setLayoutStyle);
+		window.removeEventListener('resize', this.setResizeStyle);
 		window.removeEventListener('state.enter', this.stateEnter);
 	},
 
@@ -134,7 +168,8 @@ class View {
 		>
 			{Index}
 			{About}
-			{Work}
+			{Works}
+			{Contact}
 			{PageNotFound}
 		</Route>;
 	}

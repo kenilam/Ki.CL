@@ -4,9 +4,12 @@ $background_color: $white;
 $border_color: $grey;
 
 .globalHeader {
+	@include transition(opacity $faster, transform $faster);
+
 	@include display(flex);
 	@include align-items(stretch);
 	
+	padding: $gutter;
 	position: fixed;
 
 	.logo,
@@ -41,7 +44,7 @@ $border_color: $grey;
 	}
 
 	nav {
-		@include set-transition(opacity $fast, transform $fast);
+		@include transition(opacity $fast, transform $fast);
 
 		border-left: 1px solid $border_color;
 		z-index: 1;
@@ -64,7 +67,7 @@ $border_color: $grey;
 		}
 	}
 
-	&.menuCollapsed {
+	&.isCollapsed {
 		nav {
 			@include transform(translate3d(-100%, 0, 0));
 			@include opacity(0);
@@ -72,7 +75,7 @@ $border_color: $grey;
 	}
 
 	@include largemobile() {
-		margin: 0;
+		padding: 0;
 		width: 100%;
 
 		.logo,
@@ -117,7 +120,7 @@ $border_color: $grey;
 			width: 100%;
 
 			ul {
-				@include set-transition(transform $fast);
+				@include transition(transform $fast);
 				@include flex-direction(column);
 				@include align-items(center);
 				@include justify-content(center);
@@ -133,7 +136,7 @@ $border_color: $grey;
 			}
 		}
 
-		&.menuCollapsed {
+		&.isCollapsed {
 			nav {
 				@include transform(translate3d(0, 0, 0));
 

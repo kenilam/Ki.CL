@@ -1,0 +1,9 @@
+@import '_import';
+
+[data-component='throbber'] {
+	@include transition(height, transform, width);
+
+	.message {
+		@include hidden();
+	}
+}

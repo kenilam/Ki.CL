@@ -1,5 +1,7 @@
 'use strict';
 
+import { ComponentState } from '@/helper/helper';
+
 class MenuButton extends React.Component {
 	constructor () {
 		super();
@@ -24,12 +26,6 @@ class MenuButton extends React.Component {
 		));
 	}
 
-	setStyle (style) {
-		this.setState((previousState, currentProps) => {
-			return $.extend(true, {}, previousState, { style : style });
-		});
-	}
-
 	setClass () {
 		this.className = classNames({
 			menuButton : true,
@@ -40,9 +36,7 @@ class MenuButton extends React.Component {
 	}
 
 	toggle () {
-		this.setState({
-			isExpanded : !this.state.isExpanded
-		}, this.setClass);
+		this.updateState({ isExpanded : !this.state.isExpanded }, this.setClass);
 	}
 
 	handleClick () {
@@ -50,18 +44,16 @@ class MenuButton extends React.Component {
 	}
 
 	stateEnter () {
-		this.setState({
-			isExpanded : false
-		}, this.setClass);
+		this.updateState({ isExpanded : false }, this.setClass);
 
 		clearTimeout(this.timer);
 		this.timer = setTimeout(this.forceUpdate.bind(this));
 	}
 
 	componentWillMount () {
-		this.setState({
-			isExpanded : !this.props.isExpanded
-		}, this.toggle);
+		this.updateState = ComponentState.update.bind(this);
+
+		this.updateState({ isExpanded : !this.props.isExpanded }, this.toggle);
 
 		clearTimeout(this.timer);
 		this.timer = setTimeout(this.forceUpdate.bind(this));

@@ -1,6 +1,6 @@
 @import '_import';
 
-.pageNotFound {
+[data-view='pageNotFound'] {
 	@include display(flex);
 	@include align-items(center);
 	@include justify-content(center);

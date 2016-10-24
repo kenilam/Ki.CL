@@ -2,6 +2,8 @@
 
 import { Resource } from '@/component/component';
 
+import Behance from '@/api/behance/behance';
+
 import View from './view/view';
 
 const hashHistory = ReactRouter.hashHistory;
@@ -10,6 +12,9 @@ const Router = ReactRouter.Router;
 class App extends Resource {
 	constructor () {
 		super();
+
+		this.behance = new Behance();
+		this.behance.load();
 
 		ReactDOM.render(
 			(
@@ -22,10 +27,8 @@ class App extends Resource {
 		);
 	}
 
-	callback (resource) {
+	callback () {
 		ElementQueries.listen();
-
-		this.resource = resource;
 	}
 }
 

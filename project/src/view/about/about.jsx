@@ -1,27 +1,36 @@
 'use strict';
 
-import {State} from '@/helper/helper';
+import {
+	State,
+	ComponentState
+} from '@/helper/helper';
 
 import Index from './index/index';
 import Me from './me/me';
 import Site from './site/site';
 
-import {Navigation} from '@/component/component';
+import {
+	AnimationLayer,
+	Navigation
+} from '@/component/component';
 
 const Route = ReactRouter.Route;
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
 const cloneElement = React.cloneElement;
 
 const AboutComponent = React.createClass({
+	getInitialState () {
+		return {
+			style : {}
+		};
+	},
+
 	setStyle (event) {
-		this.setState((previousState, currentProps) => {
-			return $.extend(true, {}, previousState, { style : event.detail.style.main });
-		});
+		this.updateState({ style : event.detail.style.main });
 	},
 
 	componentWillMount () {
-		this.state = {};
-
+		this.updateState = ComponentState.update.bind(this);
+		
 		window.addEventListener('view.style', this.setStyle, false);
 	},
 

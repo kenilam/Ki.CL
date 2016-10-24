@@ -1,72 +1,42 @@
 'use strict';
 
-import {State} from '@/helper/helper';
 import {
-	AnimationLayer,
-	Logo,
-	Navigation,
-	Throbber
+	ComponentState,
+	State
+} from '@/helper/helper';
+
+import Content from './content/content';
+
+import {
+	AnimationLayer
 } from '@/component/component';
 
-const Route = ReactRouter.Route;
 const IndexRoute = ReactRouter.IndexRoute;
-const CSSTransitionGroup = React.addons.CSSTransitionGroup;
-
-const IndexContents = React.createClass({
-	render () {
-		return (
-			<div
-				style={{
-					backgroundImage: `url(${this.props.resource.hero})`
-				}}
-			>
-				<img className='hero' src={this.props.resource.hero} />
-				<Logo/>
-				<Navigation list={
-					[
-						{ name: 'About', route: '/about' },
-						{ name: 'Work', route: '/work' }
-					]
-				} />
-			</div>
-		);
-	}
-});
 
 const IndexComponent = React.createClass({
 	getInitialState () {
-		return {
-			resource : {}
-		};
+		return {};
 	},
 
-	renderContents (resource) {
-		let hero = new Image();
+	resourceData (event) {
+		this.updateState({ content : this.content });
 
-		hero.onload = event => {
-			this.setState({
-				resource : {
-					contents : <IndexContents resource={this.resource} />
-				}
-			});
-		};
-
-		hero.src = this.resource.hero;
+		window.dispatchEvent(new CustomEvent('view.index.content.resource', { detail : event.detail }));
 	},
 
-	updateState (event) {
-		if (!this.updater.isMounted(this)) {
-			return;
-		}
+	componentWillMount () {
+		this.updateState = ComponentState.update.bind(this);
 
-		this.resource = event.detail;
-		this.renderContents();
+		this.content = <Content key={0} />;
+		this.span = <span key={1}/>;
+
+		this.updateState({ content : this.span });
+
+		window.addEventListener('view.resource', this.resourceData);
 	},
 
-	componentDidMount () {
-		window.addEventListener('resource.view.index', event => {
-			this.updateState(event);
-		});
+	componentWillUnmount () {
+		window.removeEventListener('view.resource', this.resourceData);
 	},
 
 	render () {

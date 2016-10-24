@@ -1,5 +1,5 @@
 <section
-	className='about'
+	data-view='about'
 	style={this.state.style}
 >
 	<h2>About</h2>
@@ -9,14 +9,17 @@
 		{ name: 'About site', route: '/about/site' }
 	]} />
 
-	<CSSTransitionGroup
+	<AnimationLayer
 		component='section'
-		transitionName='aboutRoute'
-		transitionEnterTimeout={500}
-		transitionLeaveTimeout={500}
-	>
-		{cloneElement(this.props.children, {
-			key: this.props.location.pathname
-		})}
-	</CSSTransitionGroup>
+		keyValue={this.props.location.pathname}
+		element={
+			cloneElement(
+				this.props.children,
+				{
+					key: this.props.location.pathname
+				}
+			)
+		}
+		ref={(ref) => this._element = ref}
+	/>
 </section>

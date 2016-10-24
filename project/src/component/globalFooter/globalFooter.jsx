@@ -20,10 +20,6 @@ class Globalefooter extends React.Component {
 		));
 	}
 
-	componentWillUnmount () {
-		
-	}
-
 	componentDidMount () {
 		new ResizeSensor(this._element, this.broadcastHeight.bind(this));
 

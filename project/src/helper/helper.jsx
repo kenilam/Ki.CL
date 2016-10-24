@@ -1,7 +1,7 @@
 'use strict';
 
-import StateClass from './state/state';
+import ComponentState from './componentState/componentState';
+import Resource from './resource/resource';
+import State from './state/state';
 
-export {
-	StateClass as State
-};
+export { ComponentState, Resource, State };

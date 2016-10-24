@@ -2,25 +2,11 @@
 
 import {State} from '@/helper/helper';
 
+import {Project} from '@/api/behance/behance';
+
 const Route = ReactRouter.Route;
 
 const WorkComponent = React.createClass({
-	setStyle (event) {
-		this.setState((previousState, currentProps) => {
-			return $.extend(true, {}, previousState, { style : event.detail.style.main });
-		});
-	},
-
-	componentWillMount () {
-		this.state = {};
-
-		window.addEventListener('view.style', this.setStyle, false);
-	},
-
-	componentWillUnmount () {
-		window.removeEventListener('view.style', this.setStyle, false);
-	},
-
 	render () {
 		return (
 			{template}
@@ -31,7 +17,7 @@ const WorkComponent = React.createClass({
 class Work {
 	constructor () {
 		return <Route
-			path='work'
+			path=':work'
 			component={WorkComponent}
 			onEnter={State.enter}
 			onChange={State.change}

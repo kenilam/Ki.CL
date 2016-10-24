@@ -1,0 +1,215 @@
+@import '_import';
+
+@import '../../../component/logo/_logo';
+
+$thumb_size : grid_size(2);
+
+$thumb_font_family : $heading_font_family;
+$thumb_font_size : 2rem;
+$thumb_color : $white;
+$thumb_scale_on_focus : 1.1;
+
+$outer_border_size: 1px;
+$inner_border_size: 2px;
+
+$foreground_bleed: $grid * .5;
+
+$background_size: 100%;
+$foreground_size: calc(100% - #{$foreground_bleed * 2});
+
+$app_background_color: $darker_white;
+$background_color: $light_black;
+$border_color: $light_black;
+
+$index_keyframes_speed : $speed * 10;
+
+@include keyframes('indexContent') {
+	@include transition-timing-function($ease-in-out-quad);
+
+	0% {
+		@include transform(scale(1));
+	}
+
+	20% {
+		@include transform(scale(.98));
+	}
+
+	100% {
+		@include transform(scale(1));
+	}
+}
+
+@mixin thumb-style ($route: '', $content: '', $x: 0%, $y: 0%) {
+	[data-navigation-route='/#{$route}'] {
+		left: $x;
+		top: $y;
+
+		a {
+			&:after {
+				@include content($content);
+			}
+		}
+	}
+}
+
+[data-content-name='index.content'] {
+	@include transition(opacity $fast);
+
+	@include display(flex);
+	@include flex-direction(column);
+	@include align-items(center);
+	@include justify-content(center);
+
+	overflow: initial;
+	position: relative;
+
+	.throbber,
+	.logo,
+	.navigation {
+		@include transition(opacity $fast $speed);
+	}
+
+	.background,
+	.foreground {
+		background: $border_color;
+		position: absolute;
+		z-index: 1;
+
+		&:before {
+			@include transform(translate3d(-50%, -50%, 0));
+
+			@include circle(calc(100% - 2px));
+
+			@include content();
+
+			background: $app_background_color;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+		}
+	}
+
+	.logo,
+	.navigation {
+		@include opacity(1);
+	}
+
+	.background {
+		@include circle($background_size);
+
+		left: 0;
+		top: 0;
+
+		&:before {
+			@include circle(calc(100% - #{$outer_border_size * 2}));
+		}
+	}
+
+	.foreground {
+		@include circle($foreground_size);
+
+		left: $foreground_bleed;
+		top: $foreground_bleed;
+
+		&:before {
+			@include circle(calc(100% - #{$inner_border_size * 2}));
+		}
+	}
+
+	.throbber {
+		@include transform(translate3d(-50%, -50%, 0));
+
+		@include opacity(0);
+
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		z-index: 2;
+	}
+
+	.logo {
+		@include set_logo_color($light_black);
+		@include set_logo_size(grid_size(1.5));
+
+		position: relative;
+		z-index: 2;
+	}
+
+	.navigation {
+		height: $foreground_size;
+		left: $foreground_bleed;
+		position: absolute;
+		top: $foreground_bleed;
+		width: $foreground_size;
+		z-index: 2;
+
+		ul {
+			@include justify-content(center);
+
+			height: 100%;
+			width: 100%;
+		}
+
+		li {
+			@include transition(transform $faster);
+
+			position: absolute;
+
+			+ li {
+				margin-left: 0;
+			}
+		}
+
+		a {
+			color: transparent;
+			height: $thumb_size;
+			left: (-1 * $thumb_size / 2);
+			position: absolute;
+			top: (-1 * $thumb_size / 2);
+			width: $thumb_size;
+
+			&:before,
+			&:after {
+				display: block;
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+
+			&:before {
+				@include circle($thumb_size, $faster);
+
+				@include content();
+
+				background-color: $background_color;
+			}
+
+			&:after {
+				@include display(flex);
+				@include align-items(center);
+				@include justify-content(center);
+
+				color: $thumb_color;
+				font-family: $thumb_font_family;
+				font-size: $thumb_font_size;
+				height: 100%;
+				width: 100%;
+			}
+
+			&:hover {
+				&:before {
+					@include transform(scale(1.2));
+				}
+			}
+		}
+	}
+
+	@include thumb-style('about', 'A', 0%, 50%);
+	@include thumb-style('works', 'W', 100%, 50%);
+	@include thumb-style('contact', 'C', 50%, 100%);
+
+	&.animate-enter {
+		@include opacity(0);
+	}
+}
+

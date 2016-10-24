@@ -1,0 +1,14 @@
+@import '_import';
+
+[data-api='behance.projects'] {
+	@include align-self(center);
+
+	@include flex-grow(1);
+	
+	@include display(flex);
+	@include flex-direction(column);
+	@include align-items(center);
+	@include justify-content(center);
+
+	width: 100%;
+}

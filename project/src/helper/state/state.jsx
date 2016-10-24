@@ -1,9 +1,7 @@
 'use strict';
 
 class State {
-	constructor () {
-
-	}
+	constructor () {}
 
 	enter (nextState, transition, callback) {
 		window.dispatchEvent(new CustomEvent(

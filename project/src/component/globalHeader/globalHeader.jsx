@@ -1,6 +1,14 @@
 'use strict';
 
-import {Logo, MenuButton, Navigation} from '@/component/component';
+import {
+	ComponentState
+} from '@/helper/helper';
+
+import {
+	Logo,
+	MenuButton,
+	Navigation
+} from '@/component/component';
 
 let globaleHeaderTimer;
 
@@ -8,10 +16,14 @@ class GlobaleHeader extends React.Component {
 	constructor () {
 		super();
 
-		this.state = {};
+		this.state = {
+			resource : {},
+			navigation : []
+		};
+		
 		this.className = classNames({
 			globalHeader : true,
-			menuCollapsed : true
+			isCollapsed : true
 		});
 	}
 
@@ -29,7 +41,7 @@ class GlobaleHeader extends React.Component {
 	setClass () {
 		this.className = classNames({
 			globalHeader : true,
-			menuCollapsed : this.state.menuCollapsed
+			isCollapsed : this.state.isCollapsed
 		});
 
 		clearTimeout(this.timer);
@@ -37,17 +49,38 @@ class GlobaleHeader extends React.Component {
 	}
 
 	toggleMenu (event) {
-		this.setState({
-			menuCollapsed : !event.detail.expanded
-		}, this.setClass);
+		this.updateState({ isCollapsed : !event.detail.expanded }, this.setClass);
+	}
+
+	resourceData (event) {
+		this.updateState({
+			resource : event.detail,
+			navigation : Object.keys(event.detail).filter(name => {
+				let view = event.detail[name];
+				
+				return !view.indexRoute && !view.disabledRoute;
+			})
+			.map(name => {
+				let view = event.detail[name];
+
+				return {
+					route : view.route,
+					name : view.name
+				};
+			})
+		});
 	}
 
 	componentWillMount () {
+		this.updateState = ComponentState.update.bind(this);
+
 		window.addEventListener('globalHeader.navigation', this.toggleMenu.bind(this));
+		window.addEventListener('view.resource', this.resourceData.bind(this));
 	}
 
 	componentWillUnmount () {
 		window.removeEventListener('globalHeader.navigation', this.toggleMenu);
+		window.removeEventListener('view.resource', this.resourceData);
 	}
 
 	componentDidMount () {

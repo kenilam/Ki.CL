@@ -1,43 +1,41 @@
 'use strict';
 
-import {State} from '@/helper/helper';
+import {
+	State,
+	ComponentState
+} from '@/helper/helper';
 
 const Route = ReactRouter.Route;
 
 const PageNotFoundComponent = React.createClass({
+	getInitialState: function() {
+		return {
+			resource : {
+				message : ''
+			}
+		};
+	},
+
 	setStyle (event) {
-		this.setState((previousState, currentProps) => {
-			return $.extend(true, {}, previousState, { style : event.detail.style.main });
-		});
+		this.updateState({ style : event.detail.style.main });
 	},
 
 	resourceData (event) {
-		if (!event.detail) {
-			return;
-		}
-		
-		this.setState({
-			resource : event.detail
-		});
+		this.updateState({ resource : event.detail });
 	},
 
 	componentWillMount () {
-		this.state = {};
+		this.updateState = ComponentState.update.bind(this);
 
-		this.setState({
-			route : location.hash.split('?')[0]
-		});
-
-		this.resourceData({
-			detail : window.kicl.resource ? window.kicl.resource.view.pageNotFound : false
-		});
+		this.updateState({ route : location.hash.split('?')[0] });
 
 		window.addEventListener('view.pageNotFound.resource', this.resourceData);
 		window.addEventListener('view.style', this.setStyle, false);
 	},
 
 	componentWillUnmount () {
-		window.removeEventListener('view.style', this.setStyle, false);
+		window.removeEventListener('view.pageNotFound.resource', this.resourceData);
+		window.removeEventListener('view.style', this.setStyle);
 	},
 
 	render () {

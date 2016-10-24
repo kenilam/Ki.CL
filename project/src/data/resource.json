@@ -1,10 +1,26 @@
 {
 	"view" : {
 		"index" : {
+			"indexRoute" : true,
 			"hero" : "assets/image/london.whitechapel.jpg"
 		},
 		"pageNotFound" : {
+			"disabledRoute" : true,
 			"message" : "Oops! 404.. {route} page is not found!"
+		},
+		"about" : {
+			"route" : "/about",
+			"name" : "About"
+		},
+		"works" : {
+			"route" : "/works",
+			"name" : "Works",
+			"message" : "Select any project from below to view more details."
+		},
+		"contact" : {
+			"route" : "/contact",
+			"name" : "Contact",
+			"message" : "Select any project from below to view more details."
 		}
 	},
 	"component" : {
