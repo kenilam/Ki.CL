@@ -12,4 +12,4 @@ project/src/**/*.js
 node_modules
 bower_components
 
-project/secret.json
+secret.json
