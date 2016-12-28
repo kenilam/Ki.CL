@@ -1,11 +1,11 @@
 <div
 	data-content-name='index.content'
 	className={this.className}
-	style={this.state.style}
-	ref={(ref) => this._element = ref}
+	ref={ref => this._element = ref}
 >
-	<Logo/>
+	<Logo
+		link={this.state.logo.route}
+		message={`${this.state.siteName} | ${this.state.logo.name}`}
+	/>
 	<Navigation list={this.state.navigation} />
-	<i className='background' />
-	<i className='foreground' />
 </div>

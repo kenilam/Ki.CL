@@ -1,6 +1,5 @@
 <section
 	data-view='works'
-	style={this.state.style}
 >
 	<h2>work</h2>
 	<p>{this.state.resource.message}</p>
@@ -18,6 +17,6 @@
 				}
 			)
 		}
-		ref={(ref) => this._element = ref}
+		ref={ref => this._element = ref}
 	/>
 </section>

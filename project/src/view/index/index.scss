@@ -20,7 +20,7 @@
 [data-view='index'] {
 	@include align-items(center);
 	@include justify-content(center);
-
+	
 	height: 100vh;
 	max-height: 100vh;
 	padding: 0;

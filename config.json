@@ -69,6 +69,18 @@
           "react-with-addons.js"
         ]
       },
+      "react-mixin-manager" : {
+        "debugging" : true,
+        "main" : [
+          "react-mixin-manager.js"
+        ]
+      },
+      "react-events" : {
+        "debugging" : true,
+        "main" : [
+          "react-events.js"
+        ]
+      },
       "classnames" : {
         "debugging" : true,
         "main" : [
@@ -101,6 +113,7 @@
       "!**/*/ResizeSensor.js",
       "!**/*/react.js",
       "!**/*/react-with-addons.js",
+      "!**/*/react-mixin-manager.js",
       "!**/*/reset.css"
     ],
     "priority" : [
@@ -108,6 +121,7 @@
       "**/*/ResizeSensor.js",
       "**/*/react.js",
       "**/*/react-with-addons.js",
+      "**/*/react-mixin-manager.js",
       "**/*/reset.css"
     ]
   },

@@ -1,61 +1,55 @@
 'use strict'
 
-import path from 'path';
-
 import gulp from 'gulp';
-import gutil from 'gulp-util';
+
+import browser from './browser';
 
 import gulpData from 'gulp-data';
-import gulpChanged from 'gulp-changed';
-
-import debug from 'gulp-debug';
+import changedInPlace from 'gulp-changed-in-place';
 
 import phplint from 'gulp-phplint';
 
-import errorHandler from './errorHandler';
+import debug from 'gulp-debug';
 
-const lintTaskName = 'app.compile.php.lint';
 const taskName = 'app.compile.php';
 
 const config = {
     lint : 'fail'
-}
+};
 
 const src = [
     './project/src/**/*.php'
-]
+];
 
 const dest = './project/dev';
 
 class Php {
     constructor () {
-        gulp.task(lintTaskName, this.lint.bind(this));
-        
-        gulp.task(taskName, [lintTaskName], this.task.bind(this));
-
-        gulp.task(taskName.replace('php', 'all.php'), this.all.bind(this));
+        gulp.task(taskName, Php.task);
+        gulp.task(taskName.replace('php', 'all.php'), Php.all);
 
         this.taskName = taskName;
     }
 
-    lint (callback) {
-        return gulp.src(src)
-            .pipe(gulpChanged(dest))
+    static lint (file, callback) {
+        gulp.src(file.path.replace(global.appFoot, '.'))
             .pipe(phplint())
             .pipe(phplint.reporter(config.lint));
+
+        callback(null, file);
     }
 
-    getSecret () {
+    static getSecret () {
         return require('../../secret')[process.env.mode || 'dev'];
     }
 
-    replaceSecret () {
-        let secret = this.getSecret();
+    static replaceSecret () {
+        let secret = Php.getSecret();
 
         let results = ['<?', 'class'];
 
-        Object.keys(envSecret).forEach(className => {
-            let classValue = envSecret[className];
+        Object.keys(secret).forEach(className => {
+            let classValue = secret[className];
 
             results.push(`${className}Class`, '{');
 
@@ -96,10 +90,9 @@ class Php {
         return results.join(' ');
     }
 
-    interpolate (file, callback) {
-        let secret = this.getSecret();
-
-        let contents = file.contents.toString().replace(/{secret}/g, this.getSecret());
+    static interpolate (file, callback) {
+        let secret = Php.getSecret();
+        let contents = file.contents.toString().replace(/{secret}/g, Php.replaceSecret());
 
         Object.keys(secret.api).forEach(name => {
             contents = contents.replace(new RegExp(`{${name}}`, 'g'), secret.api[name]);
@@ -110,20 +103,22 @@ class Php {
         callback(null, file);
     }
 
-    all () {
+    static all () {
         return gulp.src(src)
-            .pipe(gulpData(this.interpolate.bind(this)))
+            .pipe(gulpData(Php.interpolate))
+            .pipe(gulpData(Php.lint))
             .pipe(gulp.dest(dest))
-            .pipe(global.browserSync.stream());
+            .pipe(browser.instance().stream());
     }
 
-    task () {
+    static task () {
         return gulp.src(src)
-            .pipe(gulpData(this.interpolate.bind(this)))
-            .pipe(gulpChanged(dest))
+            .pipe(changedInPlace({ firstPass : true }))
+            .pipe(gulpData(Php.interpolate))
+            .pipe(gulpData(Php.lint))
             .pipe(gulp.dest(dest))
-            .pipe(global.browserSync.stream());
-    };
+            .pipe(browser.instance().stream());
+    }
 }
 
 export default new Php();

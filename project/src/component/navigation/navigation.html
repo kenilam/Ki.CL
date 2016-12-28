@@ -1,13 +1,17 @@
-<nav className='navigation'>
+<nav
+	className='navigation'
+	style={this.state.style}
+	ref={ref => this._element = ref}
+>
 	<AnimationLayer
 		component='ul'
 		element={
 			this.props.list.map((item, key) => {
-				return <li key={key} data-navigation-route={item.route}>
+				return <li key={key} data-route={item.route}>
 					<Link to={item.route} activeClassName='isCurrent'>{item.name}</Link>
-				</li>
+				</li>;
 			})
 		}
-		ref={(ref) => this._element = ref}
+		ref={ref => this._element = ref}
 	/>
 </nav>

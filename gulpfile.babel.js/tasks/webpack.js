@@ -1,44 +1,56 @@
 'use strict';
 
-import path from 'path';
-
-import gulp from 'gulp';
-import gutil from 'gulp-util';
-
 import webpack from 'webpack';
-import webpackStream from 'webpack-stream';
+import stripAnsi from 'strip-ansi';
 
-import errorHandler from './errorHandler';
+import browser from './browser';
 
-const config = {
-	devtool: 'source-map',
-	// watch: true,
-	output: {},
-	module: {
-		loaders: [
-		{
-			test: /\.js$/,
-			exclude: /(node_modules|bower_components)/,
-			loader: 'babel', // 'babel-loader' is also a valid name to reference
-			query: {
-				presets: ['react']
-			}
-		}]
-	}
-}
+import webpackConfig from '../../webpack.config';
+
+const dest = '/project/dev/';
+
+const entry = './project/src/app.js';
+const output = 'app.bundle.js';
 
 class Webpack {
-	constructor () {
-		return this.compile.bind(this);
+	constructor () {}
+
+	static done (stats) {
+		if (
+			Boolean(stats.hasErrors() || stats.hasWarnings()) &&
+			browser.instance().sockets
+		) {
+			return browser.instance().sockets.emit('fullscreen:message', {
+				title: "Webpack Error:",
+				body:  stripAnsi(stats.toString()),
+				timeout: 100000
+			});
+		}
+
+		browser.instance().reload();
 	}
 
-	compile (entry, output) {
-		config.output.filename = output;
+	complete (callback) {
+		return (error) => {
+			if (error) {
+				callback(error);
+				return;
+			}
+			
+			callback();
+		}
+	}
 
-		return gulp.src(entry)
-			.pipe(webpackStream(config, webpack))
-			.on('error', errorHandler.notify())
-            .pipe(errorHandler.plumber());
+	compile (callback) {
+		webpackConfig.entry = [entry];
+
+		webpackConfig.output = {
+			path : `${global.appRoot}${dest}`,
+			filename : output
+		};
+
+		global.webpack = webpack(webpackConfig, this.complete(callback));
+		global.webpack.plugin('done', Webpack.done);
 	}
 }
 

@@ -24,18 +24,8 @@ const AboutComponent = React.createClass({
 		};
 	},
 
-	setStyle (event) {
-		this.updateState({ style : event.detail.style.main });
-	},
-
 	componentWillMount () {
 		this.updateState = ComponentState.update.bind(this);
-		
-		window.addEventListener('view.style', this.setStyle, false);
-	},
-
-	componentWillUnmount () {
-		window.removeEventListener('view.style', this.setStyle, false);
 	},
 
 	render () {

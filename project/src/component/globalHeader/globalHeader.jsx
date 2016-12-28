@@ -10,8 +10,6 @@ import {
 	Navigation
 } from '@/component/component';
 
-let globaleHeaderTimer;
-
 class GlobaleHeader extends React.Component {
 	constructor () {
 		super();
@@ -25,17 +23,6 @@ class GlobaleHeader extends React.Component {
 			globalHeader : true,
 			isCollapsed : true
 		});
-	}
-
-	broadcastHeight () {
-		window.dispatchEvent(new CustomEvent(
-			'globalHeader.height',
-			{
-				detail : {
-					height : $(this._element).outerHeight(true)
-				}
-			}
-		));
 	}
 
 	setClass () {
@@ -81,12 +68,6 @@ class GlobaleHeader extends React.Component {
 	componentWillUnmount () {
 		window.removeEventListener('globalHeader.navigation', this.toggleMenu);
 		window.removeEventListener('view.resource', this.resourceData);
-	}
-
-	componentDidMount () {
-		new ResizeSensor(this._element, this.broadcastHeight.bind(this));
-
-		this.broadcastHeight();
 	}
 
 	render () {

@@ -8,12 +8,15 @@ import {
 import Content from './content/content';
 
 import {
-	AnimationLayer
+	AnimationLayer,
+	EventEmitter
 } from '@/component/component';
 
 const IndexRoute = ReactRouter.IndexRoute;
 
 const IndexComponent = React.createClass({
+	mixins : ['events'],
+
 	getInitialState () {
 		return {};
 	},
@@ -21,7 +24,11 @@ const IndexComponent = React.createClass({
 	resourceData (event) {
 		this.updateState({ content : this.content });
 
-		window.dispatchEvent(new CustomEvent('view.index.content.resource', { detail : event.detail }));
+		window.dispatchEvent(
+			new CustomEvent('view.index.content.resource', { detail : event.detail })
+		);
+
+		window.dispatchEvent(new Event('global.throbber.hide'));
 	},
 
 	componentWillMount () {

@@ -47,4 +47,16 @@ class State {
 	}
 }
 
+const StateClass = React.createClass({
+	mixin : ['events'],
+	events : {
+		'window:resize' : {
+			callback : function () {
+				console.log('events: resized');
+			}
+		}
+	},
+	render : () => <span />
+});
+
 export default new State();

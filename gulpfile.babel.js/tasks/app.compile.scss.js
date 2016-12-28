@@ -1,7 +1,10 @@
 'use strict';
+
+import browser from './browser';
+
 import gulp from 'gulp';
 
-import gulpChanged from 'gulp-changed';
+import changedInPlace from 'gulp-changed-in-place';
 import gulpSourcemaps from 'gulp-sourcemaps';
 
 import sass from './sass';
@@ -34,17 +37,17 @@ class Compile {
 			.pipe(sass())
 			.pipe(gulpSourcemaps.write())
 			.pipe(gulp.dest(dest))
-			.pipe(global.browserSync.stream());
+			.pipe(browser.instance().stream());
 	}
 
 	task () {
 		return gulp.src(src)
+			.pipe(changedInPlace({ firstPass : true }))
 			.pipe(gulpSourcemaps.init())
 			.pipe(sass())
 			.pipe(gulpSourcemaps.write())
-			.pipe(gulpChanged(dest))
 			.pipe(gulp.dest(dest))
-			.pipe(global.browserSync.stream());
+			.pipe(browser.instance().stream());
 	}
 }
 

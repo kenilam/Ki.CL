@@ -28,10 +28,6 @@ const WorksComponent = React.createClass({
 		};
 	},
 
-	setStyle (event) {
-		this.updateState({ style : event.detail.style.main });
-	},
-
 	setProjects (event) {
 		this.updateState({
 			projects : event.detail.projects
@@ -62,6 +58,8 @@ const WorksComponent = React.createClass({
 		this.updateState({
 			resource : event.detail
 		});
+
+		window.dispatchEvent(new Event('global.throbber.hide'));
 	},
 
 	componentWillMount () {
@@ -69,14 +67,12 @@ const WorksComponent = React.createClass({
 		
 		this.setProject();
 
-		window.addEventListener('view.style', this.setStyle, false);
 		window.addEventListener('state.enter', this.setProject, false);
 		window.addEventListener('api.behance.projects.data', this.setProjects);
 		window.addEventListener('view.works.resource', this.resourceData);
 	},
 
 	componentWillUnmount () {
-		window.removeEventListener('view.style', this.setStyle);
 		window.removeEventListener('state.enter', this.setProject);
 		window.removeEventListener('api.behance.projects.data', this.setProjects);
 		window.removeEventListener('view.works.resource', this.resourceData);

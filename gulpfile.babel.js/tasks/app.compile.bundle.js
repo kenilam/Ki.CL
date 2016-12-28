@@ -1,36 +1,21 @@
-'use strict'
+'use strict';
 
-import path from 'path';
-
-import { argv as args } from 'yargs';
+import fs from 'fs';
 
 import gulp from 'gulp';
-import gutil from 'gulp-util';
-
-import gulpAddsrc from 'gulp-add-src';
-import gulpChanged from 'gulp-changed';
 import gulpData from 'gulp-data';
 import gulpRename from 'gulp-rename';
 
-import debug from 'gulp-debug';
+import gutil from 'gulp-util';
 
-import source from 'vinyl-source-stream';
+import changedInPlace from 'gulp-changed-in-place';
 
 import del from 'del';
 
-import browserify from './browserify';
-import template from './template';
 import jshint from './jshint';
 import webpack from './webpack';
 
-import errorHandler from './errorHandler';
-
-const lintTaskName = 'app.compile.bundle.lint';
 const taskName = 'app.compile.bundle';
-
-const entry = './project/src/app.js';
-const dest = './project/dev';
-const output = 'app.bundle.js';
 
 const src = {
     template: [
@@ -46,101 +31,94 @@ const src = {
         './project/src/**/*.js',
         '!./project/src/{lib,plugin}/**/*'
     ]
-}
+};
 
 const tempDest = './project/src';
 
 const rename = {
     extname : '.js'
-}
+};
 
 class Bundle {
     constructor () {
-        gulp.task(lintTaskName, this.lint.bind(this));
-        gulp.task(taskName, [lintTaskName], this.task.bind(this));
+        gulp.task(`${taskName}.cleanup`, Bundle.cleanup);
+        gulp.task(taskName, Bundle.task);
 
         this.taskName = taskName;
     }
 
-    lint (callback) {
-        return gulp.src(src.jsx)
+    static cleanup () {
+        return del(src.temp);
+    }
+
+    static lint (file, callback) {
+        jshint.reset();
+
+        gulp.src(file.path.replace(global.appFoot, '.'))
             .pipe(jshint.jsxhint())
             .pipe(jshint.notify())
             .pipe(jshint.reporter());
-    }
 
-    compileTemplate (callback) {
-        return () => {
-            gutil.log('compiling templates'.yellow);
-            gulp.src(src.template)
-                .pipe(template())
-                .pipe(gulpRename(rename))
-                .pipe(gulp.dest(tempDest))
-                .on('end', callback);
-        }
-    }
-
-    bundle (callback) {
-        return () => {
-            gutil.log('webpacking'.yellow);
-            webpack(entry, output)
-
-            // gutil.log('browserifying'.yellow);
-            // browserify(entry)
-            //     .pipe(source(output))
-
-                .pipe(gulp.dest(dest))
-                .on('end', callback);
-        }
-    }
-
-    interpolateBundle (file, callback) {
-        let secret = require('../../secret');
-        let envSecret = secret[process.env.mode || 'dev'];
-        let database = `${envSecret.api.servername}:${envSecret.api.proxy}`;
-
-        const contents = file.contents.toString()
-            .replace(/{database}/g, database);
-
-        file.contents = new Buffer(contents);
-        
         callback(null, file);
     }
 
-    createTempSrc (callback) {
-        return () => {
-            gutil.log('renaming JSX'.yellow);
-            gulp.src(src.jsx)
-                .pipe(gulpData(this.interpolateBundle))
-                .pipe(gulpRename(rename))
-                .pipe(gulp.dest(tempDest))
-                .on('end', callback);
+    static insertSecret (file) {
+        const secret = require('../../secret');
+        const envSecret = secret[process.env.mode || 'dev'];
+        const database = `${envSecret.api.servername}:${envSecret.api.proxy}`;
+
+        const filePath = file.path.replace('.html', '.jsx');
+
+        if (!fs.existsSync(filePath)) {
+            return { error : new gutil.PluginError(
+                taskName,
+                `${filePath.replace(global.appRoot, '.')} dos not exists`,
+                { showStack: true }
+            ) };
         }
+
+        file.contents = new Buffer(fs.readFileSync(filePath).toString().replace(/{database}/g, database));
+
+        return file;
     }
 
-    deleteTempSrc (callback) {
-        return () => {
-            gutil.log('deleting temporary JS files'.yellow);
-            
-            del(src.temp).then(paths => {
-                callback();
+    static insertTemplate (file) {
+        const filePath = file.path.replace('.jsx', '.html');
+
+        if (!fs.existsSync(filePath)) {
+            return file;
+        }
+
+        const template = fs.readFileSync(filePath);
+
+        file.contents = new Buffer(file.contents.toString().replace(/{template}/g, template));
+
+        return file;
+    }
+
+    static transpolate (file, callback) {
+        const modifiedFile = Bundle.insertSecret(file);
+
+        if (modifiedFile.error) {
+            callback(modifiedFile.error);
+            return;
+        }
+
+        Bundle.insertTemplate(file);
+
+        callback(null, Bundle.insertTemplate(modifiedFile));
+    }
+
+    static task (callback) {
+        gulp.src([].concat(...[src.jsx, src.template]))
+            .pipe(changedInPlace({ firstPass : true }))
+            .pipe(gulpData(Bundle.transpolate))
+            .pipe(gulpRename(rename))
+            .pipe(gulpData(Bundle.lint))
+            .pipe(gulp.dest(tempDest))
+            .on('end', () => {
+                webpack.compile(callback);
             });
-        }
-    }
-
-    task (callback) {
-        this.createTempSrc(
-            this.compileTemplate(
-                this.bundle(
-                    !args.debug ?
-                        this.deleteTempSrc(
-                            callback,
-                            errorHandler.notify
-                        )
-                    : callback
-                )
-            )
-        )();
     };
 }
 

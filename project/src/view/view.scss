@@ -14,11 +14,15 @@ main {
 
 	@include display(flex);
 	@include flex-direction(column);
+	@include align-items(stretch);
+	@include justify-content(stretch);
 
+	min-height: 100%;
 	z-index: 1;
 
 	> section {
-		padding: 4rem $gutter 0;
+		min-height: 100%;
+		padding: ($gutter * 6) $gutter 0;
 	}
 }
 

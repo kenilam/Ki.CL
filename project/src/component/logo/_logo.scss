@@ -5,31 +5,33 @@
 $font_size: 2rem;
 
 @mixin set_square_logo ($new_size) {
-	a {
-		width: $new_size * 1.03;
-		
-		&:before {
-			@include content($kicl-square);
-		}
-	}
+  a {
+    font-size: $new_size;
+    height: $new_size;
+    width: $new_size;
+
+    &:before {
+      @include content($kicl-square);
+    }
+  }
 }
 
 @mixin set_logo_size ($new_size) {
-	a {
-		font-size: $new_size;
-		height: $new_size;
-		width: $new_size * 2.4;
-	}
+  a {
+    font-size: $new_size;
+    height: $new_size;
+    width: $new_size * 2.4;
+  }
 
-	@include largemobile() {
-		@include set_square_logo($new_size);
-	}
+  @include largemobile() {
+    @include set_square_logo($new_size);
+  }
 }
 
 @mixin set_logo_color ($new_color) {
-	a {
-		&:before {
-			color: $new_color;
-		}
-	}
+  a {
+    &:before {
+      color: $new_color;
+    }
+  }
 }

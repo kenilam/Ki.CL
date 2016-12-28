@@ -18,16 +18,15 @@ import Index from './index/index';
 import PageNotFound from './pageNotFound/pageNotFound';
 import Works from './works/works';
 
-const IndexRedirect = ReactRouter.IndexRedirect;
-const Route = ReactRouter.Route;
 const cloneElement = React.cloneElement;
+const Route = ReactRouter.Route;
 
 const ViewComponent = React.createClass({
 	getInitialState () {
 		const bleed = 0;
 		const route = location.hash.split('?')[0].replace('#', '').replace(/\//g, '.').replace('.', '');
 		
-		const state = {
+		return {
 			style : {
 				main : {
 					paddingTop : !route ? false : bleed,
@@ -44,8 +43,6 @@ const ViewComponent = React.createClass({
 			route : route || 'index',
 			rootRoute : this.props.location.pathname.split('/')[1]
 		};
-
-		return state;
 	},
 
 	broadcastStyle () {
@@ -126,14 +123,14 @@ const ViewComponent = React.createClass({
 	stateEnter (event) {
 		this.setRoute(event);
 
-		this.setStyle('globalHeader', 'height', true);
-		this.setStyle('globalFooter', 'height', true);
-
 		window.dispatchEvent(new Event('global.throbber.hide'));
 	},
 
 	componentWillMount () {
 		this.updateState = ComponentState.update.bind(this);
+
+		this.setGlobalHeaderHeight = this.setStyle('globalHeader', 'height');
+		this.setGlobalFooterHeight = this.setStyle('globalFooter', 'height');
 
 		this.setRoute();
 		

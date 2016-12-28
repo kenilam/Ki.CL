@@ -16,10 +16,6 @@ const ContactComponent = React.createClass({
 		};
 	},
 
-	setStyle (event) {
-		this.updateState({ style : event.detail.style.main });
-	},
-
 	resourceData (event) {
 		this.updateState({ resource : event.detail });
 	},
@@ -30,12 +26,10 @@ const ContactComponent = React.createClass({
 		this.updateState({ route : location.hash.split('?')[0] });
 
 		window.addEventListener('view.contact.resource', this.resourceData);
-		window.addEventListener('view.style', this.setStyle, false);
 	},
 
 	componentWillUnmount () {
 		window.removeEventListener('view.contact.resource', this.resourceData);
-		window.removeEventListener('view.style', this.setStyle);
 	},
 
 	render () {

@@ -1,9 +1,12 @@
 <header
 	role='banner'
 	className={this.className}
-	ref={(ref) => this._element = ref}
+	ref={ref => this._element = ref}
 >
 	<Logo/>
 	<MenuButton dispatchEvent='globalHeader.navigation'/>
-	<Navigation list={this.state.navigation} />
+	<Navigation
+		wrapSizes={true}
+	    list={this.state.navigation}
+	/>
 </header>

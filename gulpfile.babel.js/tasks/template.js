@@ -1,5 +1,6 @@
 'use strict';
 
+import fs from 'fs';
 import gulp from 'gulp';
 
 import gulpData from 'gulp-data';
@@ -14,32 +15,27 @@ import errorHandler from './errorHandler';
 esformatter.register(esformatterJSX);
 
 class Template {
-	constructor () {
-		return this.compile.bind(this);
+	constructor () {}
+
+	static interpolate (file, callback) {
+        fs.readFile(file.path.replace('.jsx', '.html'), (err, data) => {
+            if (!err) {
+                const template = data.toString();
+
+                const contents = file.contents.toString().replace(/{template}/g, template);
+
+                file.contents = new Buffer(contents);
+            }
+
+            callback(null, file);
+        });
 	}
 
-	interpolate (template) {
-		return (file, callback) => {
-			let contents = file.contents.toString().replace(/{template}/g, template.contents.toString());
-
-			template.path = file.path.replace('.html', '.js');
-			template.contents = new Buffer(esformatter.format(contents));
-
-			callback(null, template);
-		}
-	}
-
-	transform (file, callback) {
+	inject (file, callback) {
 		gulp.src(file.path.replace('.html', '.jsx'))
 			.pipe(errorHandler.plumber())
-			.pipe(gulpData(this.interpolate(file)))
-			.on('finish', () => {
-				callback(null, file);
-			})
-	}
-
-	compile () {
-		return gulpData(this.transform.bind(this));
+			.pipe(gulpData(Template.interpolate))
+            .pipe(gulpData((transformedFile) => callback(null, transformedFile)));
 	}
 }
 

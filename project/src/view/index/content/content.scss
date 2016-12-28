@@ -1,215 +1,101 @@
 @import '_import';
 
+@import '../../component/fonts/_fonts.scss';
+
 @import '../../../component/logo/_logo';
 
-$thumb_size : grid_size(2);
+$logo_size: grid-size(3);
+$logo_size_mobile: grid-size(2);
+$logo_space: grid-size(.6);
+$logo_border_size: 3px;
 
-$thumb_font_family : $heading_font_family;
-$thumb_font_size : 2rem;
-$thumb_color : $white;
-$thumb_scale_on_focus : 1.1;
-
-$outer_border_size: 1px;
-$inner_border_size: 2px;
-
-$foreground_bleed: $grid * .5;
-
-$background_size: 100%;
-$foreground_size: calc(100% - #{$foreground_bleed * 2});
-
-$app_background_color: $darker_white;
-$background_color: $light_black;
-$border_color: $light_black;
-
-$index_keyframes_speed : $speed * 10;
-
-@include keyframes('indexContent') {
-	@include transition-timing-function($ease-in-out-quad);
-
-	0% {
-		@include transform(scale(1));
-	}
-
-	20% {
-		@include transform(scale(.98));
-	}
-
-	100% {
-		@include transform(scale(1));
-	}
-}
-
-@mixin thumb-style ($route: '', $content: '', $x: 0%, $y: 0%) {
-	[data-navigation-route='/#{$route}'] {
-		left: $x;
-		top: $y;
-
-		a {
-			&:after {
-				@include content($content);
-			}
-		}
-	}
-}
+$nav_size: grid_size($tablet_size);
+$nav_size_mobile: grid_size($largemobile_size);
 
 [data-content-name='index.content'] {
-	@include transition(opacity $fast);
+  @include display(flex);
+  @include flex-direction(column);
+  @include align-items(center);
+  @include justify-content(center);
 
-	@include display(flex);
-	@include flex-direction(column);
-	@include align-items(center);
-	@include justify-content(center);
+  width: 100%;
 
-	overflow: initial;
-	position: relative;
+  .logo {
+    @include set_square_logo($logo_size);
 
-	.throbber,
-	.logo,
-	.navigation {
-		@include transition(opacity $fast $speed);
-	}
+    height: $logo_size;
+    position: relative;
+    width: $logo_size;
 
-	.background,
-	.foreground {
-		background: $border_color;
-		position: absolute;
-		z-index: 1;
+    &:before,
+    &:after {
+      @include content();
 
-		&:before {
-			@include transform(translate3d(-50%, -50%, 0));
+      padding-top: 100%;
+    }
 
-			@include circle(calc(100% - 2px));
+    &:before {
+      position: relative;
+      width: 100%;
+      z-index: 1;
+    }
 
-			@include content();
+    &:after {
+      @include transform(translate3d(-50%, -50%, 0));
+      @include calc(height, '100% + #{$logo_space * 2}');
+      @include calc(width, '100% + #{$logo_space * 2}');
 
-			background: $app_background_color;
-			left: 50%;
-			position: absolute;
-			top: 50%;
-		}
-	}
+      border: $logo_border_size solid $black;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+    }
 
-	.logo,
-	.navigation {
-		@include opacity(1);
-	}
+    a {
+      height: $logo_size;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: $logo_size;
+      z-index: 2;
+    }
 
-	.background {
-		@include circle($background_size);
+    @include largemobile() {
+      height: $logo_size_mobile;
+      width: $logo_size_mobile;
 
-		left: 0;
-		top: 0;
+      @include set_square_logo($logo_size_mobile);
+    }
+  }
 
-		&:before {
-			@include circle(calc(100% - #{$outer_border_size * 2}));
-		}
-	}
+  .navigation {
+    margin-top: grid-size(1);
+    width: $nav_size;
 
-	.foreground {
-		@include circle($foreground_size);
+    ul {
+      @include display(flex);
+      @include justify-content(space-around);
 
-		left: $foreground_bleed;
-		top: $foreground_bleed;
+      width: $nav_size;
+    }
 
-		&:before {
-			@include circle(calc(100% - #{$inner_border_size * 2}));
-		}
-	}
+    li {
+      @include display(flex);
+      @include align-items(center);
+      @include justify-content(center);
 
-	.throbber {
-		@include transform(translate3d(-50%, -50%, 0));
+      @include flex-grow(1);
+      @include flex-basis(0);
 
-		@include opacity(0);
+      + li {
+        margin-left: 0;
+      }
+    }
 
-		left: 50%;
-		position: absolute;
-		top: 50%;
-		z-index: 2;
-	}
-
-	.logo {
-		@include set_logo_color($light_black);
-		@include set_logo_size(grid_size(1.5));
-
-		position: relative;
-		z-index: 2;
-	}
-
-	.navigation {
-		height: $foreground_size;
-		left: $foreground_bleed;
-		position: absolute;
-		top: $foreground_bleed;
-		width: $foreground_size;
-		z-index: 2;
-
-		ul {
-			@include justify-content(center);
-
-			height: 100%;
-			width: 100%;
-		}
-
-		li {
-			@include transition(transform $faster);
-
-			position: absolute;
-
-			+ li {
-				margin-left: 0;
-			}
-		}
-
-		a {
-			color: transparent;
-			height: $thumb_size;
-			left: (-1 * $thumb_size / 2);
-			position: absolute;
-			top: (-1 * $thumb_size / 2);
-			width: $thumb_size;
-
-			&:before,
-			&:after {
-				display: block;
-				left: 0;
-				position: absolute;
-				top: 0;
-			}
-
-			&:before {
-				@include circle($thumb_size, $faster);
-
-				@include content();
-
-				background-color: $background_color;
-			}
-
-			&:after {
-				@include display(flex);
-				@include align-items(center);
-				@include justify-content(center);
-
-				color: $thumb_color;
-				font-family: $thumb_font_family;
-				font-size: $thumb_font_size;
-				height: 100%;
-				width: 100%;
-			}
-
-			&:hover {
-				&:before {
-					@include transform(scale(1.2));
-				}
-			}
-		}
-	}
-
-	@include thumb-style('about', 'A', 0%, 50%);
-	@include thumb-style('works', 'W', 100%, 50%);
-	@include thumb-style('contact', 'C', 50%, 100%);
-
-	&.animate-enter {
-		@include opacity(0);
-	}
+    @include largemobile() {
+      width: $nav_size_mobile;
+    }
+  }
 }
 

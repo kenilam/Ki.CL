@@ -2,6 +2,8 @@
 
 import gulp from 'gulp';
 
+import gulpJSONminify from 'gulp-jsonminify';
+
 const taskName = 'app.copy.component.data';
 
 const src = [
@@ -19,7 +21,9 @@ class Copy {
 	}
 
 	task () {
-		return gulp.src(src).pipe(gulp.dest(dest));
+		return gulp.src(src)
+			.pipe(gulpJSONminify())
+			.pipe(gulp.dest(dest));
 	}
 }
 

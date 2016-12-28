@@ -24,7 +24,7 @@ class Event {
 
     }
 
-    getSrc (event) {
+    static getSrc (event) {
         return event.path
             .replace(global.appRoot, '.')
             .replace('src', 'dev')
@@ -33,11 +33,9 @@ class Event {
     }
 
     unlink (event, eventActions) {
-        const src = this.getSrc(event);
+        const src = Event.getSrc(event);
 
-        const map = [src, 'map'].join('.');
-
-        return gulp.src([src, map])
+        return gulp.src([src, `${src}.map`])
             .pipe(vinylPaths(del))
             .on('finish', () => {
                 if (!eventActions) {
@@ -62,7 +60,7 @@ class Watch {
             eventActions = {};
         }
 
-        const reaction = vinyl => {
+        return vinyl => {
             const file = vinyl.path.replace(global.appRoot, '.');
 
             gutil.log(file.magenta, (vinyl.event).green);
@@ -72,9 +70,7 @@ class Watch {
             }
 
             return this.events[vinyl.event](vinyl, eventActions[vinyl.event] || defaultActions);
-        }
-
-        return reaction;
+        };
     }
 
     task () {
@@ -152,7 +148,7 @@ class Watch {
             ['./project/src/**/*.{jpg,jpeg,gif,png}'],
             { name : 'imageWatcher' },
             this.action(
-                ['app.copy.image']
+                ['app.copy.component.image']
             )
         );
 
@@ -160,7 +156,7 @@ class Watch {
             ['./project/src/**/*.{eot,svg,ttf,woff,woff2}'],
             { name : 'fontWatcher' },
             this.action(
-                ['app.copy.font']
+                ['app.copy.component.font']
             )
         );
 

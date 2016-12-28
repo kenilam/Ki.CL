@@ -18,8 +18,6 @@ class Jshint {
 	}
 
 	hint () {
-		this.errors = [];
-
 		return gulpJshint({
 			lookup: true,
 			undef: true,
@@ -29,8 +27,6 @@ class Jshint {
 	}
 
 	jsxhint () {
-		this.errors = [];
-
 		return gulpJshint({
 			linter: jsxhint.JSXHINT,
 			lookup: true
@@ -57,6 +53,10 @@ class Jshint {
 		return gulpJshint.reporter(stylish, { verbose: true });
 	}
 
+	reset () {
+		this.errors = [];
+	}
+
 	notify () {
 		return gulpNotify(file => {
 			if (file.jshint.success) {
@@ -66,12 +66,14 @@ class Jshint {
 			this.errors.push(file.jshint.results);
 
 			const errors = file.jshint.results.map(data => {
-				if (data.error) {
-					return '(' + data.error.line + ':' + data.error.character + ') ' + data.error.reason;
+				if (!data.error) {
+					return;
 				}
-			}).join('\n');
 
-			return file.relative + ' (' + file.jshint.results.length + ' errors)\n' + errors + '\n';
+				return `(${data.error.line}:${data.error.character} ${data.error.reason})`;
+			}).filter(error => error !== undefined).join('\n');
+
+			return `${file.relative} (${file.jshint.results.length} errors)\n${errors}\n`;
 		})
 	}
 }

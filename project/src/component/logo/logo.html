@@ -1,3 +1,11 @@
-<h1 className='logo'>
-	<Link to='/' title={this.state.resource.message}>{this.state.resource.message}</Link>
+<h1
+	className='logo'
+	data-route={this.props.link || '/'}
+	ref={ref => this._element = ref}
+>
+	<Link
+		to={this.props.link || '/'}
+		title={this.props.message || this.state.resource.message}>{
+	this.props.message || this.state.resource.message
+	}</Link>
 </h1>

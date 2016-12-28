@@ -43,9 +43,9 @@ class Resource {
 	success (resource) {
 		this.resource = resource;
 
-		Object.keys(this.resource).forEach(type => {
-			new BroadcastResource(this.name, type, this.resource[type]);
-		});
+		Object.keys(this.resource).forEach(
+			type => new BroadcastResource(this.name, type, this.resource[type])
+		);
 
 		if (!this.callback) {
 			return;

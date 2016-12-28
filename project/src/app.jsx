@@ -27,8 +27,18 @@ class App extends Resource {
 		);
 	}
 
-	callback () {
+	callback (resource) {
 		ElementQueries.listen();
+
+		setTimeout(
+			() => window.dispatchEvent(new CustomEvent(
+				'app.resource',
+				{
+					detail: resource
+				}
+			)),
+			500
+		);
 	}
 }
 

@@ -3,10 +3,10 @@
 import { ComponentState } from '@/helper/helper';
 
 import {
-	Base64Transparent,
-	Logo,
-	Navigation,
-	Throbber
+    Base64Transparent,
+    Logo,
+    Navigation,
+    Throbber
 } from '@/component/component';
 
 const Route = ReactRouter.Route;
@@ -14,81 +14,68 @@ const IndexRoute = ReactRouter.IndexRoute;
 const Link = ReactRouter.Link;
 
 const Content = React.createClass({
-	getInitialState () {
-		return {
-			navigation : [],
-			style : {}
-		};
-	},
+    getInitialState () {
+        return {
+            navigation : [],
+            logo : {},
+            siteName : ''
+        };
+    },
 
-	setStyle () {
-		const body = $('body');
-		const bodyHeight = body.outerHeight();
-		const bodyWidth = body.outerWidth();
+    heroLoaded (data) {
+        return () => this.updateState({
+            navigation : Object.keys(data.navigation)
+                .filter(
+                    name => !data.navigation[name].indexRoute && !data.navigation[name].disabledRoute
+                )
+                .map(name => ({
+                    route : data.navigation[name].route,
+                    name : data.navigation[name].name
+                    })
+                ),
+            logo : data.navigation.index.logo,
+            siteName : data.siteName
+        }, this.setClass);
+    },
 
-		const radius = bodyHeight / bodyWidth;
+    ready (data) {
+        const hero = new Image();
 
-		const style = {};
+        hero.onload = this.heroLoaded({
+            siteName : data[0].siteName,
+            navigation : data[1]
+        });
 
-		let size = Math.round((radius >= 1 ? bodyWidth : bodyHeight) * 0.8);
+        hero.src = data[1].index.hero;
+    },
 
-		if (size % 2) {
-			size = size - 1;
-		}
+    addPromiseListener (eventName) {
+        return new Promise(
+            (resolve) => window.addEventListener(eventName,
+                event => resolve(event.detail)
+            )
+        );
+    },
 
-		size = `${size}px`;
+    componentWillMount () {
+        this.updateState = ComponentState.update.bind(this);
 
-		this.updateState({
-			style : {
-				height : size,
-				width : size
-			}
-		});
-	},
+        Promise.all([
+            this.addPromiseListener('app.resource'),
+            this.addPromiseListener('view.index.content.resource')
+        ]).then(this.ready);
+    },
 
-	resourceData (event) {
-		let hero = new Image();
+    componentWillUnmount () {
+        window.addEventListener('app.resource', this.resourceData);
+        window.removeEventListener('view.index.content.resource', this.resourceData);
+    },
 
-		hero.onload = () => {
-			this.setStyle();
-
-			this.updateState({
-				navigation : Object.keys(event.detail).filter(name => {
-					let view = event.detail[name];
-					
-					return !view.indexRoute && !view.disabledRoute;
-				})
-				.map(name => {
-					let view = event.detail[name];
-
-					return {
-						route : view.route,
-						name : view.name
-					};
-				})
-			}, this.setClass);
-		};
-
-		hero.src = event.detail.index.hero;
-	},
-
-	componentWillMount () {
-		this.updateState = ComponentState.update.bind(this);
-
-		window.addEventListener('view.index.content.resource', this.resourceData);
-		window.addEventListener('resize', this.setStyle);
-	},
-
-	componentWillUnmount () {
-		window.removeEventListener('view.index.content.resource', this.resourceData);
-		window.removeEventListener('resize', this.setStyle);
-	},
-
-	render () {
-		return (
-			{template}
-		);
-	}
+    render () {
+        return (
+            {template}
+        );
+    }
 });
 
 export default Content;

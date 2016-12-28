@@ -2,6 +2,7 @@
 
 import AnimationLayer from './animationLayer/animationLayer';
 import Base64Transparent from './base64Transparent/base64Transparent';
+// import EventEmitter from './eventEmitter/eventEmitter';
 import GlobalFooter from './globalFooter/globalFooter';
 import GlobalHeader from './globalHeader/globalHeader';
 import Logo from './logo/logo';
@@ -13,6 +14,7 @@ import Throbber from './throbber/throbber';
 export {
 	AnimationLayer,
 	Base64Transparent,
+	// EventEmitter,
 	GlobalFooter,
 	GlobalHeader,
 	Logo,

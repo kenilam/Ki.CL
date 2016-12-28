@@ -8,7 +8,7 @@ class ComponentState {
 			return;
 		}
 
-		this.setState((previousState, currentProps) => {
+		this.setState((previousState) => {
 			return $.extend(true, {}, previousState, currentState);
 		}, callback ? callback : null);
 	}

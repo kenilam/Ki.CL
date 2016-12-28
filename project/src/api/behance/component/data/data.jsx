@@ -28,14 +28,14 @@ class Data {
 	}
 
 	error (service) {
-		return err => {
-			window.dispatchEvent(new CustomEvent(
+		return err => window.dispatchEvent(
+			new CustomEvent(
 				['api', 'behance', service, 'data', 'error'].join('.'),
 				{
 					detail: this.resource[service]
 				}
-			));
-		};
+			)
+		);
 	}
 
 	progress (result) {
@@ -46,15 +46,15 @@ class Data {
 		if (this.resource[service]) {
 			clearTimeout(this.broadcastTimer);
 
-			this.broadcastTimer = setTimeout(() => {
-				this.broadcast(service);
-			}, 250);
+			this.broadcastTimer = setTimeout(
+				() => this.broadcast(service), 250
+			);
 			
 			return;
 		}
 
 		$.ajax({
-			url : `http://{database}/api/behance/data/${service.replace('.', '/')}`,
+			url : `http://localhost:8888/api/behance/data/${service.replace('.', '/')}`,
 			type : 'GET',
 			dataType : 'jsonp',
 			jsonp : 'callback',

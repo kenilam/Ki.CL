@@ -4,12 +4,11 @@
 		element={
 			this.props.list.map((item, key) => {
 				item.route = `/${this.props.route}/${item.id}`;
-
 				return <li key={key} data-navigation-route={item.route}>
 					<Link to={item.route} activeClassName='isCurrent'>{item.name}</Link>
-				</li>
+				</li>;
 			})
 		}
-		ref={(ref) => this._element = ref}
+		ref={ref => this._element = ref}
 	/>
 </nav>

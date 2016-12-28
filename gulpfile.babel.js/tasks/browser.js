@@ -6,16 +6,16 @@ import gulp from 'gulp';
 
 const taskName = 'browser';
 
-const watchSrc = [
-	'./project/dev/**/*.{html,js}'
-];
-
 const config = {
 	logPrefix : 'Ki.CL',
 	port : 3021,
 	server : {
 		baseDir : './project/dev'
 	},
+	socket: {
+		namespace: '/sockets'
+	},
+	plugins: ['bs-fullscreen-message'],
 	ui : {
 		port : 3022,
 		weinre : {
@@ -24,20 +24,20 @@ const config = {
 	}
 };
 
-global.browserSync = browserSync;
-
 class Browser {
 	constructor () {
-		gulp.task(taskName, this.task);
+		gulp.task(taskName, Browser.task);
 
 		this.taskName = taskName;
 	}
 
-	task () {
-		global.browserSync.init(config);
+	static instance () {
+		return browserSync;
+	}
 
-		gulp.watch(watchSrc).on('change', browserSync.reload);
+	static task () {
+		Browser.instance().init(config);
 	}
 }
 
-export default new Browser();
+export default Browser;

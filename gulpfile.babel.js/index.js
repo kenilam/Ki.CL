@@ -19,6 +19,8 @@ class Gulpfile {
 	constructor () {
 		global.appRoot = path.resolve(`${__dirname}/../`);
 
+		process.stdout.setMaxListeners(Infinity);
+		
 		this.init();
 	}
 
@@ -37,7 +39,14 @@ class Gulpfile {
 		});
 
 		gulp.task('default', callback => {
-			return gulp.run('init', 'dev', browser.taskName, watch.taskName, callback);
+			return gulp.run(
+				'init',
+				'app.compile.bundle.cleanup',
+				'dev',
+				(new browser()).taskName,
+				watch.taskName,
+				callback
+			);
 		});
 	}
 }

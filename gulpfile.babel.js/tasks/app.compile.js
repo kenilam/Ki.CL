@@ -10,12 +10,12 @@ const taskName = 'app.compile';
 
 class Compile {
 	constructor () {
-		gulp.task(taskName, this.task);
+		gulp.task(taskName, Compile.task);
 
 		this.taskName = taskName;
 	}
 
-	task (callback) {
+	static task (callback) {
 		return gulp.run([bundle.taskName, php.taskName, scss.taskName], callback);
 	}
 }

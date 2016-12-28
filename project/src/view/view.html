@@ -3,7 +3,7 @@
 	<AnimationLayer
 		component='main'
 		element={ cloneElement(this.props.children, { key : this.state.rootRoute }) }
-		ref={(ref) => this._element = ref}
+		ref={ref => this._element = ref}
 	/>
 	<GlobalFooter/>
 	<Throbber component='div' eventName='global' show={true} />
