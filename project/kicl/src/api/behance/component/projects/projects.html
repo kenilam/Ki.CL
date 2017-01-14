@@ -17,7 +17,13 @@
 		>
 			<a
 				ng-attr-title="go to: {{project.name}}"
+				ng-class="{
+					hasBackgroundImage : $parent.projectsUseBackground
+				}"
 				ng-focus="control.focus(project)"
+				ng-style="{
+					backgroundImage : $parent.projectsUseBackground ? 'url(' + project.covers + ')' : null
+				}"
 				ui-sref="{{project.route}}"
 			>
 				<img ng-src="{{project.covers}}" alt="{{project.name}}">

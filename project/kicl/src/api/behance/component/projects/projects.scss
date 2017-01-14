@@ -12,6 +12,18 @@
 		}
 	}
 
+	a {
+		&.hasBackgroundImage {
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+
+			img {
+				@include hidden();
+			}
+		}
+	}
+
 	.title {
 		@include set-transition(transform);
 

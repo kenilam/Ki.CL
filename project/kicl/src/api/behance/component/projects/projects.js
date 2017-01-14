@@ -160,6 +160,7 @@
 					attrs = attrsRef;
 
 					scope.resource = reference.resource.data.widget.projects;
+					scope.projectsUseBackground = scope.$eval(attrs.projectsUseBackground);
 
 					if (!reference.component.projects.promise) {
 						reference.component.projects.promise = reference.api.projects().$promise;
