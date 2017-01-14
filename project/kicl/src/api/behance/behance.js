@@ -15,7 +15,7 @@
 			function run (root, http, reference, resource) {
 				reference.resource.loader = http({ url : resource });
 
-				reference.resource.loader.success(reference.callback.resource);
+				reference.resource.loader.then(reference.callback.resource);
 			}
 		]);
 }());

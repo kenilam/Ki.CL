@@ -11,12 +11,12 @@
 					component = {},
 
 					callback = {
-						resource : function (data) {
-							resource.data = data;
+						resource : function (result) {
+							resource.data = result.data;
 
-							setComponent(data);
+							setComponent(result.data);
 							
-							root.$on('$stateChangeSuccess', stateChangeSuccess(data));
+							root.$on('$stateChangeSuccess', stateChangeSuccess(result.data));
 						},
 						api : function (callback) {
 							return function (data) {
