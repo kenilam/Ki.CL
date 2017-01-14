@@ -14,7 +14,7 @@ module.exports.bower = function () {
 	});
 
 	gulp.task(taskName + '.get', [taskName + '.clean'], function () {
-		return bower();
+		return bower({ interactive : true });
 	});
 
 	gulp.task(taskName, [taskName + '.get']);
