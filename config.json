@@ -102,6 +102,18 @@
       "sassy-maps" : {
         "debugging" : true,
         "ignore" : true
+      },
+      "emitter" : {
+        "debugging" : true,
+        "main" : [
+          "emitter.js"
+        ]
+      },
+      "fetch" : {
+        "debugging" : true,
+        "main" : [
+          "fetch.js"
+        ]
       }
     }
   },
@@ -109,6 +121,7 @@
   "filter" : {
     "bower" : [
       "**/*",
+      "!**/*/gulpfile.js",
       "!**/*/jquery.js",
       "!**/*/ResizeSensor.js",
       "!**/*/react.js",

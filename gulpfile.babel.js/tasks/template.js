@@ -12,6 +12,8 @@ import esformatterJSX from 'esformatter-jsx';
 
 import errorHandler from './errorHandler';
 
+const expression = '{template}';
+
 esformatter.register(esformatterJSX);
 
 class Template {
@@ -22,9 +24,12 @@ class Template {
             if (!err) {
                 const template = data.toString();
 
-                const contents = file.contents.toString().replace(/{template}/g, template);
+                if (template.indexOf(expression) > -1) {
+                    const placeholder = new RegExp(expression, 'g');
+                    const contents = file.contents.toString().replace(placeholder, template);
 
-                file.contents = new Buffer(contents);
+                    file.contents = new Buffer(contents);
+                }
             }
 
             callback(null, file);

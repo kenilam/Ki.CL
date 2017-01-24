@@ -1,20 +1,6 @@
 @import '_import';
 
-@import '../fonts/_fonts.scss';
-
-$font_size: 2rem;
-
-@mixin set_square_logo ($new_size) {
-  a {
-    font-size: $new_size;
-    height: $new_size;
-    width: $new_size;
-
-    &:before {
-      @include content($kicl-square);
-    }
-  }
-}
+@import '../../asset/fonts/_kicl';
 
 @mixin set_logo_size ($new_size) {
   a {
@@ -24,7 +10,19 @@ $font_size: 2rem;
   }
 
   @include largemobile() {
-    @include set_square_logo($new_size);
+    @include make_logo_square($new_size);
+  }
+}
+
+@mixin make_logo_square ($new_size) {
+  a {
+    font-size: $new_size;
+    height: $new_size;
+    width: $new_size;
+
+    &:before {
+      @include content($kicl-square);
+    }
   }
 }
 

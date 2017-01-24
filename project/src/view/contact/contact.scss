@@ -1,9 +1,0 @@
-@import '_import';
-
-[data-view='pageNotFound'] {
-	@include display(flex);
-	@include align-items(center);
-	@include justify-content(center);
-
-	text-align: center;
-}

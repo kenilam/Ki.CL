@@ -1,34 +1,45 @@
 @import '_import';
 
-@import '../fonts/_fonts';
-@import '_logo';
+@import '_Logo';
+
+$font_size: 2rem;
+
 .logo {
-	@include display(flex);
-	@include align-items(center);
-	@include justify-content(center);
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
 
-	@include set_logo_color($black);
-	@include set_logo_size($font_size);
+  @include set_logo_color($black);
+  @include set_logo_size($font_size);
 
-	a {
-		@include display(flex);
+  a {
+    @include transition(font-size, height, width);
+    @include transition-duration($fast);
+    @include transition-timing-function($ease);
 
-		color: transparent;
-		overflow: hidden;
+    @include display(flex);
 
-		&:before {
-			@include content($kicl);
-			
-			display: block;
-			font-family: 'kicl';
-		}
-	}
+    color: transparent;
+    overflow: hidden;
 
-	&.isSquared {
-		@include set_square_logo($font_size);
-	}
+    &:before {
+      @include transition-property(color);
+      @include transition-duration($fast);
+      @include transition-timing-function($ease);
 
-	@include largemobile() {
-		@include set_square_logo($font_size);
-	}
+      @include content($kicl);
+
+      display: block;
+      font-family: $kicl_font_name;
+      letter-spacing: 0rem;
+    }
+  }
+
+  &.isSquared {
+    @include make_logo_square($font_size);
+  }
+
+  @include largemobile() {
+    @include make_logo_square($font_size);
+  }
 }

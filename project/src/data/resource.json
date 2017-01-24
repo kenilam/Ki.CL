@@ -1,7 +1,8 @@
 {
   "siteName" : "Ki.CL",
+  "initialMessage" : "Welcome to Ki.CL",
   "view" : {
-    "index" : {
+    "root" : {
       "indexRoute" : true,
       "hero" : "assets/image/london.whitechapel.jpg",
       "logo" : {
@@ -11,7 +12,7 @@
     },
     "pageNotFound" : {
       "disabledRoute" : true,
-      "message" : "Oops! 404.. {route} page is not found!"
+      "message" : "Oops! 404... {route} page is not found!"
     },
     "about" : {
       "route" : "/about",
@@ -30,7 +31,8 @@
   },
   "component" : {
     "logo" : {
-      "message" : "HOME"
+      "route" : "/",
+      "name" : "HOME"
     }
   }
 }

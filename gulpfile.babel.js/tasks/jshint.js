@@ -1,14 +1,10 @@
 'use strict';
 
-import gutil from 'gulp-util';
-
 import gulpJshint from 'gulp-jshint';
 import gulpNotify from 'gulp-notify';
 
 import jsxhint from 'jshint-jsx';
 import stylish from 'jshint-stylish';
-
-import map from 'map-stream';
 
 gulpNotify.logLevel = 1;
 
@@ -32,22 +28,6 @@ class Jshint {
 			lookup: true
 		});
 	}
-
-	// reporter () {
-	// 	return map((file, callback) => {
-	// 		if (!file.jshint.success) {
-	// 			gutil.log('JSHINT fail in '+file.path);
-				
-	// 			file.jshint.results.forEach(err => {
-	// 				if (err) {
-	// 					gutil.log(' '+file.path + ': line ' + err.line + ', col ' + err.character + ', code ' + err.code + ', ' + err.reason);
-	// 				}
-	// 			});
-	// 		}
-
-	// 		callback(null, file);
-	// 	})
-	// }
 
 	reporter () {
 		return gulpJshint.reporter(stylish, { verbose: true });

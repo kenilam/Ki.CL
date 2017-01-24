@@ -42,7 +42,9 @@ body {
 
 main {
 	@include flex-direction(column);
-	
+
+	min-height: 100%;
+	min-width: 100%;
 	position: relative;
 	z-index: 1;
 

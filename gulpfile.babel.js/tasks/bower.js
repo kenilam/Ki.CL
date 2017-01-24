@@ -13,7 +13,7 @@ class Bower {
 	}
 
 	task () {
-		return gulpBower();
+		return gulpBower()
 	}
 }
 

@@ -1,5 +1,7 @@
 'use strict';
 
+import child_process from 'child_process';
+
 import path from 'path';
 
 import sequence from 'run-sequence';
@@ -14,6 +16,8 @@ import browser from './tasks/browser';
 import inject from './tasks/inject';
 import lib from './tasks/lib';
 import watch from './tasks/watch';
+
+const exec = child_process.exec;
 
 class Gulpfile {
 	constructor () {

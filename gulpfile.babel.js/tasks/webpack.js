@@ -3,6 +3,9 @@
 import webpack from 'webpack';
 import stripAnsi from 'strip-ansi';
 
+import gulp from 'gulp';
+import gulpSourcemaps from 'gulp-sourcemaps';
+
 import browser from './browser';
 
 import webpackConfig from '../../webpack.config';
@@ -10,7 +13,7 @@ import webpackConfig from '../../webpack.config';
 const dest = '/project/dev/';
 
 const entry = './project/src/app.js';
-const output = 'app.bundle.js';
+const output = 'app.js';
 
 class Webpack {
 	constructor () {}
@@ -49,8 +52,7 @@ class Webpack {
 			filename : output
 		};
 
-		global.webpack = webpack(webpackConfig, this.complete(callback));
-		global.webpack.plugin('done', Webpack.done);
+		webpack(webpackConfig, this.complete(callback)).plugin('done', Webpack.done);
 	}
 }
 

@@ -1,0 +1,132 @@
+@import '_import';
+
+@import '../../Component/Logo/_logo';
+
+$logo-size: grid-size(2);
+$logo-space: grid-size(.5);
+
+[data-view]:not([data-view='root']) {
+  [app-root][data-route-to='root'] & {
+    background-color: $light_grey;
+  }
+}
+
+[data-view='root'] {
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+
+  .background,
+  .overlay {
+    @include transform(translate3d(-50%, -50%, 0));
+
+    display: block;
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    z-index: 0;
+  }
+
+  .background {
+    &:before {
+      @include transition-property(transform);
+      @include transition-duration($very-slow);
+      @include transition-timing-function($ease);
+
+      @include background-image(url('/asset/image/london.whitechapel.jpg'));
+
+      @include content();
+
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .overlay {
+    @include transition-property(opacity);
+    @include transition-duration($slower);
+    @include transition-timing-function($ease);
+
+    @include opacity(.3);
+
+    background-color: $pitch_black;
+  }
+
+  .frame {
+    @include transition-property(border-width, height, width);
+    @include transition-duration($fast);
+    @include transition-timing-function($ease);
+
+    @include transform(translate3d(-50%, -50%, 0));
+
+    border: 2px solid $white;
+    left: 50%;
+    height: $logo-size + ($logo-space * 2);
+    position: absolute;
+    top: 50%;
+    width: $logo-size + ($logo-space * 2);
+    z-index: 1;
+
+    [app-root][data-route-to] & {
+      border-color: $white;
+    }
+  }
+
+  .logo {
+    @include make_logo_square($logo-size);
+    @include set_logo_color($white);
+
+    position: relative;
+    text-shadow: 0px 0px 5px $black;
+    z-index: 2;
+
+    a {
+      &:before {
+        @include transition-property(transform);
+        @include transition-duration($fast);
+        @include transition-timing-function($ease);
+      }
+    }
+  }
+
+  [app-root][data-route-to] &,
+  &.animate-enter,
+  &.animate-enter-active,
+  &.animate-leave {
+    .background {
+      &:before {
+        @include transform(scale(1.1));
+      }
+    }
+
+    .overlay {
+      @include opacity(.6);
+    }
+
+    .frame {
+      @include calc(height, '100% - #{$logo-space * 2}');
+      @include calc(width, '100% - #{$logo-space * 2}');
+
+      border-width: grid-size(.5);
+    }
+
+    .logo {
+      a {
+        &:before {
+          @include transform(scale(.8));
+        }
+      }
+    }
+  }
+
+  &.animate-enter:not(.animate-enter-active),
+  &.animate-leave-active {
+    @include transform(scale(1.5));
+  }
+}

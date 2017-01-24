@@ -1,0 +1,118 @@
+{
+	"name" : "contact",
+	"route" : "contact",
+	"content" : {
+		"title" : "let's talk",
+		"message" : "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+		"backdrop" : {
+			"image" : "/asset/image/room.jpg"
+		}
+	},
+	"component" : {
+		"customForm" : {
+			"name" : "contactFrom",
+			"action" : "app/component/contactForm/action.php",
+			"method" : "post",
+			"message" : {
+				"required" : "required"
+			},
+			"field" : [
+				{
+					"name" : "name",
+					"label" : "Name",
+					"type" : "text",
+					"placeholder" : "Your name",
+					"required" : true,
+					"minLength" : 2
+				},
+				{
+					"name" : "email",
+					"label" : "Email",
+					"type" : "email",
+					"placeholder" : "Your email",
+					"required" : true,
+					"minLength" : 6
+				},
+				{
+					"name" : "organlisation",
+					"label" : "Organlisation",
+					"placeholder" : "Your Organlisation",
+					"type" : "text",
+					"minLength" : 2
+				},
+				{
+					"name" : "stayInTouch",
+					"label" : "Stay In Touch",
+					"type" : "radio",
+					"set" : [
+						{
+							"name" : "yes",
+							"label" : "Yes",
+							"value" : "yes"
+						},
+						{
+							"name" : "no",
+							"label" : "No",
+							"value" : "no"
+						}
+					]
+				},
+				{
+					"name" : "message",
+					"label" : "Messages",
+					"type" : "textarea",
+					"placeholder" : "Your Messages",
+					"required" : true,
+					"minLength" : 10,
+					"maxLength" : 300
+				}
+			],
+			"button" : {
+				"loading" : {
+					"name" : "Sending"
+				},
+				"submit" : {
+					"name" : "Submit"
+				},
+				"reset" : {
+					"name" : "Reset"
+				}
+			},
+			
+			"dialog" : {
+				"button" : {
+					"close" : {
+						"message" : "Close this dialog"
+					}
+				},
+				"success" : {
+					"title" : "All Done!",
+					"message" : [
+						"Thank you for reaching out.",
+						"A auto reply email has been sent to your inbox.",
+						"I will be in touch soon!"
+					],
+					"report" : {
+						"title" : "Below is a copy of your messages:"
+					}
+				},
+				"error" : {
+					"title" : "Oop!",
+					"message" : [
+						"I am sorry, but something went wrong",
+						"Please try again."
+					],
+					"report" : {
+						"title" : "Below are the responds from the server:",
+						"status" : {
+							"title" : "Status"
+						},
+						"message" : {
+							"title" : "Messages"
+						}
+					}
+				}
+			}
+		}
+	}
+}
