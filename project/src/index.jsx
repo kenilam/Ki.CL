@@ -1,22 +1,25 @@
 'use strict';
 
 import {
-    EventEmitter
+    State
+} from '@/Helper';
+
+import {
+    EventEmitter,
+    Sitemap
 } from '@/Component';
 
-import View from '@/View';
+import App from '@/App';
 
 let siteName = '';
 let initialMessage = '';
 let route = '';
 
-class App {
+class Index {
     constructor () {
-        this.appRoot = document.querySelector('[app-root]');
+        this.body = document.querySelector('body');
 
         const setRoute = this.routeAttribute(...[false, this.setTitle.bind(this)]);
-
-        this.render();
 
         setRoute(location.pathname);
 
@@ -27,23 +30,6 @@ class App {
         EventEmitter.on('route.to', this.routeAttribute(...['to']));
         EventEmitter.on('data.resource.siteName', this.siteNameData.bind(this));
         EventEmitter.on('data.resource.initialMessage', this.initialMessageData.bind(this));
-        EventEmitter.on('sitemap.data', this.sitemapData.bind(this));
-    }
-
-    sitemapData (sitemap) {
-
-    }
-
-    siteNameData (siteName) {
-        this.siteName = siteName;
-
-        this.setTitle();
-    }
-
-    initialMessageData (initialMessage) {
-        this.initialMessage = initialMessage;
-
-        this.setTitle();
     }
 
     static getHashValue (value) {
@@ -65,6 +51,18 @@ class App {
         };
     }
 
+    siteNameData (data) {
+        this.siteName = data;
+
+        this.setTitle();
+    }
+
+    initialMessageData (data) {
+        this.initialMessage = data;
+
+        this.setTitle();
+    }
+
     setTitle () {
         if (!this.siteName || !this.initialMessage) {
             return;
@@ -81,14 +79,11 @@ class App {
 
     routeAttribute (name, callback) {
         return value => {
-            const hash = App.getHashValue(value);
+            const hash = Index.getHashValue(value);
 
             this.route = hash.value;
 
-            this.appRoot[`${hash.method}Attribute`](
-                `data-route${name ? `-${name}` : ''}`,
-                hash.value
-            );
+            this.body[`${hash.method}Attribute`](`data-route${name ? `-${name}` : ''}`, hash.value);
 
             if (!callback) {
                 return;
@@ -97,13 +92,6 @@ class App {
             callback(value);
         };
     }
-
-    render () {
-        ReactDOM.render(
-            View,
-            this.appRoot
-        );
-    }
 }
 
-export default new App();
+export default new Index();

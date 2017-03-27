@@ -81,6 +81,12 @@
           "react-events.js"
         ]
       },
+      "react-router" : {
+        "debugging" : true,
+        "main" : [
+          "index.js"
+        ]
+      },
       "classnames" : {
         "debugging" : true,
         "main" : [
@@ -103,10 +109,10 @@
         "debugging" : true,
         "ignore" : true
       },
-      "emitter" : {
+      "eventEmitter" : {
         "debugging" : true,
         "main" : [
-          "emitter.js"
+          "EventEmitter.js"
         ]
       },
       "fetch" : {
@@ -126,7 +132,9 @@
       "!**/*/ResizeSensor.js",
       "!**/*/react.js",
       "!**/*/react-with-addons.js",
+      "!**/*/react-dom.js",
       "!**/*/react-mixin-manager.js",
+      "!**/*/react-router/index.js",
       "!**/*/reset.css"
     ],
     "priority" : [
@@ -134,7 +142,9 @@
       "**/*/ResizeSensor.js",
       "**/*/react.js",
       "**/*/react-with-addons.js",
+      "**/*/react-dom.js",
       "**/*/react-mixin-manager.js",
+      "**/*/react-router/index.js",
       "**/*/reset.css"
     ]
   },
@@ -155,9 +165,9 @@
   "sass" : {
     "includePaths": [
       "./project/src",
-      "./project/src/lib/bower",
-      "./project/src/lib/plugin",
-      "./project/src/lib/app"
+      "./project/src/Lib/bower",
+      "./project/src/Lib/plugin",
+      "./project/src/Lib/app"
     ],
     "outputStyle": "compressed",
     "sourceMap": true,

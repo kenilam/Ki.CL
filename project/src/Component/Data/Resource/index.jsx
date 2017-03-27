@@ -7,7 +7,7 @@ import { Get } from '../Method';
 class Resource {
     constructor () {
         this.eventPrefix = 'data.resource';
-        this.url = 'data/resource.json';
+        this.url = 'Data/resource.json';
 
         return () => this.request().then(this.response.bind(this));
     }

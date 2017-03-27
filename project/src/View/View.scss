@@ -1,7 +1,0 @@
-@import '_import';
-
-[data-view] {
-  @include transition(background-color $fast $ease);
-
-  background-color: transparent;
-}

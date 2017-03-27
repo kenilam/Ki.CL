@@ -30,6 +30,9 @@
     }
   },
   "component" : {
+    "globalHeader" : {
+      
+    },
     "logo" : {
       "route" : "/",
       "name" : "HOME"

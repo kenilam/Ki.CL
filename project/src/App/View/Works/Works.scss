@@ -1,8 +1,8 @@
 @import '_import';
 
 [data-view]:not([data-view='works']) {
-  [app-root][data-route-from='works'] &,
-  [app-root][data-route-to='works'] & {
+  [app-view][data-route-from='works'] &,
+  [app-view][data-route-to='works'] & {
     background-color: $green;
   }
 }

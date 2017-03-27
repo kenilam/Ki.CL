@@ -9,13 +9,15 @@ import { EventEmitter } from '@/Component';
 
 const routeName = 'works';
 
+class Works extends Route {
+    constructor () {
+        super(routeName, () => new Content());
+    }
+}
+
 class Content extends RouteComponent {
     constructor () {
         super(routeName, Content.template());
-    }
-
-    static template () {
-        return {template};
     }
 
     resourceData (resource) {
@@ -23,11 +25,9 @@ class Content extends RouteComponent {
 
         EventEmitter.emit('root.logo.resource', resource.logo);
     }
-}
 
-class Works extends Route {
-    constructor () {
-        super(routeName, () => new Content());
+    static template () {
+        return {template};
     }
 }
 

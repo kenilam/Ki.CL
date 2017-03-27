@@ -9,6 +9,12 @@ import {
     EventEmitter
 } from '@/Component';
 
+class PageNotFound extends Route {
+    constructor () {
+        super('*', () => new Content());
+    }
+}
+
 class Content extends React.Component {
     constructor () {
         super();
@@ -43,12 +49,6 @@ class Content extends React.Component {
 
     render () {
         return {template};
-    }
-}
-
-class PageNotFound extends Route{
-    constructor () {
-        super('*', () => new Content());
     }
 }
 

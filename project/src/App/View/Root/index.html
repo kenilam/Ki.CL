@@ -1,0 +1,28 @@
+<section
+    data-view={routeName}
+    ref={ref => { this.element = ref; }}
+>
+    <span className='background' />
+    <span className='overlay' />
+    <i className='frame'/>
+    <Logo
+        eventName={routeName}
+
+        onTouchStart={Content.routeTo}
+        onTouchEnd={Content.routeOut}
+
+        onMouseOver={Content.routeTo}
+        onMouseOut={Content.routeOut}
+    />
+    <Navigation
+        eventName={routeName}
+
+        listDirection='column'
+
+        onTouchStart={Content.routeTo}
+        onTouchEnd={Content.routeOut}
+
+        onMouseOver={Content.routeTo}
+        onMouseOut={Content.routeOut}
+    />
+</section>

@@ -1,0 +1,13 @@
+@import '_import';
+
+[data-reactroot] {
+  @include transition-property(transform, opacity);
+  @include transition-duration($fast);
+  @include transition-timing-function($ease);
+}
+
+[data-view] {
+  @include transition(background-color $fast $ease);
+
+  background-color: transparent;
+}

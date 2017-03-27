@@ -18,10 +18,6 @@ class Logo extends React.Component {
         };
     }
 
-    render () {
-        return {template};
-    }
-
     siteNameData (siteName) {
         State.update(this, { siteName : siteName });
     }
@@ -40,6 +36,10 @@ class Logo extends React.Component {
         EventEmitter.removeListener('data.resource.siteName', this.siteNameData);
         EventEmitter.removeListener('data.resource.component.logo', this.resourceData);
         EventEmitter.removeListener(`${this.props.eventName}${this.props.eventName ? '.' : ''}logo.resource`, this.resourceData);
+    }
+
+    render () {
+        return {template};
     }
 }
 

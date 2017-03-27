@@ -1,0 +1,15 @@
+@import '_import';
+
+[role=banner] {
+	@include transform(translate3d(-50%, 0, 0));
+
+	@include display(flex);
+	@include align-items(center);
+	@include justify-content(space-between);
+
+	left: 50%;
+	padding: $gutter;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}

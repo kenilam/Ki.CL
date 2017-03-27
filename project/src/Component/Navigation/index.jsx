@@ -11,10 +11,11 @@ import {
 class Navigation extends React.Component {
     constructor () {
         super();
-    }
 
-    render () {
-        return {template};
+        this.state = {
+            siteName : '',
+            list : {}
+        };
     }
 
     siteNameData (siteName) {
@@ -30,21 +31,19 @@ class Navigation extends React.Component {
     }
 
     componentWillMount () {
-        if (this.props.list) {
-            this.listData(this.props.list);
-        }
-
         EventEmitter.on('data.resource.siteName', this.siteNameData.bind(this));
         EventEmitter.on('data.resource.component.navigation', this.resourceData.bind(this));
-        EventEmitter.on(`${this.props.eventName}${this.props.eventName ? '.' : ''}navigation.resource`, this.resourceData.bind(this));
         EventEmitter.on(`${this.props.eventName}${this.props.eventName ? '.' : ''}navigation.list`, this.listData.bind(this));
     }
 
     componentWillUnmount () {
         EventEmitter.removeListener('data.resource.siteName', this.siteNameData);
         EventEmitter.removeListener('data.resource.component.navigation', this.resourceData);
-        EventEmitter.removeListener(`${this.props.eventName}${this.props.eventName ? '.' : ''}navigation.resource`, this.resourceData);
         EventEmitter.removeListener(`${this.props.eventName}${this.props.eventName ? '.' : ''}navigation.list`, this.listData);
+    }
+
+    render () {
+        return {template};
     }
 }
 

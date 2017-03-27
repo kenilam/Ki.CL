@@ -4,6 +4,8 @@ import colors from 'colors';
 
 import path from 'path';
 
+import merge from 'merge-stream';
+
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 
@@ -19,11 +21,7 @@ import {config as sassConfig} from './sass';
 
 const taskName = 'watch';
 
-class Event {
-    constructor () {
-
-    }
-
+class WatchEvents {
     static getSrc (event) {
         return event.path
             .replace(global.appRoot, '.')
@@ -32,8 +30,8 @@ class Event {
             .replace('scss', 'css');
     }
 
-    unlink (event, eventActions) {
-        const src = Event.getSrc(event);
+    static unlink (event, eventActions) {
+        const src = WatchEvents.getSrc(event);
 
         return gulp.src([src, `${src}.map`])
             .pipe(vinylPaths(del))
@@ -51,120 +49,98 @@ class Watch {
     constructor () {
         gulp.task(taskName, this.task.bind(this));
 
-        this.events = new Event();
         this.taskName = taskName;
     }
 
-    action (defaultActions, eventActions) {
+    action (eventActions) {
         if (!eventActions) {
             eventActions = {};
         }
 
         return vinyl => {
-            const file = vinyl.path.replace(global.appRoot, '.');
-
-            gutil.log(file.magenta, (vinyl.event).green);
-
-            if (!this.events[vinyl.event]) {
-                return gulp.run.apply(this, eventActions[vinyl.event] || defaultActions);
+            if (!WatchEvents[vinyl.event]) {
+                return gulp.run.apply(this, eventActions[vinyl.event] || eventActions.default);
             }
 
-            return this.events[vinyl.event](vinyl, eventActions[vinyl.event] || defaultActions);
+            return WatchEvents[vinyl.event](vinyl, eventActions[vinyl.event] || eventActions.default);
         };
     }
 
+    options (options) {
+        return Object.assign({}, {
+            verbose : true
+        }, options)
+    }
+
     task () {
-        gulpWatch(
-            ['./project/src/index.html'],
-            { name : 'indexWatcher' },
-            this.action(
-                ['inject.index']
-            )
-        );
+        return merge(
+            gulpWatch(
+                ['./project/src/index.html'],
+                this.options({ name : 'indexWatcher' }),
+                this.action({
+                    default : ['inject.index']
+                })
+            ),
 
-        gulpWatch(
-            [
-                './project/src/**/*.html',
-                '!./project/src/index.html',
-                './project/src/**/*.jsx'
-            ],
-            { name : 'bundleWatcher' },
-            this.action(
-                ['app.compile.bundle', 'inject.index'],
-                {
-                    change : ['app.compile.bundle']
-                }
-            )
-        );
+            gulpWatch(
+                ['./project/src/**/*.html', '!./project/src/index.html', './project/src/**/*.jsx'],
+                this.options({ name : 'bundleWatcher' }),
+                this.action({
+                    default : ['app.compile.bundle']
+                })
+            ),
 
-        gulpWatch(
-            [
-                './project/src/**/*.php'
-            ],
-            { name : 'phpWatcher' },
-            this.action(
-                ['app.compile.php']
-            )
-        );
+            gulpWatch(['./project/src/**/*.php'],
+                this.options({ name : 'phpWatcher' }),
+                this.action({
+                    default : ['app.compile.php']
+                })
+            ),
 
-        gulpWatch(
-            [
-                './secret.json'
-            ],
-            { name : 'secretWatcher' },
-            this.action(
-                ['app.compile.all.php', 'app.compile.bundle']
-            )
-        );
+            gulpWatch(['./secret.json'],
+                this.options({ name : 'secretWatcher' }),
+                this.action({
+                    default : ['app.compile.all.php', 'app.compile.bundle']
+                })
+            ),
 
-        gulpWatch(
-            [
-                './project/src/**/*.scss',
-                '!./project/src/**/_*.scss'
-            ],
-            { name : 'scssWatcher' },
-            this.action(
-                ['app.compile.scss', 'inject.index'],
-                {
+            gulpWatch(['./project/src/**/*.scss', '!./project/src/**/_*.scss'],
+                this.options({ name : 'scssWatcher' }),
+                this.action({
+                    default : ['app.compile.scss', 'inject.index'],
                     change : ['app.compile.scss']
-                }
-            )
-        );
+                })
+            ),
 
-        gulpWatch(
-            [
-                './project/src/**/_*.scss'
-            ],
-            { name : '_imported_scssWatcher' },
-            this.action(
-                ['app.compile.all.scss', 'inject.index'],
-                {
+            gulpWatch(['./project/src/**/_*.scss'],
+                this.options({ name : '_imported_scssWatcher' }),
+                this.action({
+                    default : ['app.compile.all.scss', 'inject.index'],
                     change: ['app.compile.all.scss']
-                }
-            )
-        );
+                })
+            ),
 
-        gulpWatch(
-            ['./project/src/**/*.{jpg,jpeg,gif,png}'],
-            { name : 'imageWatcher' },
-            this.action(
-                ['app.copy.component.image']
-            )
-        );
+            gulpWatch(['./project/src/**/*.{jpg,jpeg,gif,png}'],
+                this.options({ name : 'imageWatcher' }),
+                this.action({
+                    default : ['app.copy.component.image']
+                })
+            ),
 
-        gulpWatch(
-            ['./project/src/**/*.{eot,svg,ttf,woff,woff2}'],
-            { name : 'fontWatcher' },
-            this.action(
-                ['app.copy.component.font']
-            )
-        );
+            gulpWatch(
+                ['./project/src/**/*.{eot,svg,ttf,woff,woff2}'],
+                this.options({ name : 'fontWatcher' }),
+                this.action({
+                    default : ['app.copy.component.font']
+                })
+            ),
 
-        gulpWatch(
-            ['./project/src/**/*.{json}'],
-            { name : 'dataWatcher' },
-            this.action(
-                ['app.copy.component.data', 'inject.index']
+            gulpWatch(
+                ['./project/src/**/*.{json}'],
+                this.options({ name : 'dataWatcher' }),
+                this.action({
+                    default : ['app.copy.component.data', 'inject.index']
+                })
             )
         );
     }

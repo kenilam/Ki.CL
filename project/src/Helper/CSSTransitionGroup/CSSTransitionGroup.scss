@@ -14,7 +14,7 @@
 .animate-appear-active,
 .animate-leave-active {
   @include transition-property(opacity, transform);
-  @include transition-duration($speed);
+  @include transition-duration($fast);
   @include transition-timing-function($ease);
 }
 

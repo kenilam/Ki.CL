@@ -1,2 +1,38 @@
 @import '_import';
 
+.navigation {
+  ul {
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+  }
+
+  a {
+  	display: block;
+  	text-align: center;
+  	width: 100%;
+  }
+
+  li {
+    + li {
+      margin-left: $grid / 2;
+    }
+  }
+
+  &[data-list-direction=column] {
+    ul {
+      flex-direction: column;
+    }
+
+    li {
+      + li {
+        margin-left: 0;
+        margin-top: $grid / 2;
+      }
+    }
+  }
+
+  .isCurrent {
+    pointer-events: none;
+  }
+}

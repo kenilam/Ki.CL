@@ -15,15 +15,15 @@ const taskName = 'lib.priority';
 
 const src = './bower.json';
 
-const bowerSrc = gulp.src(src)
-	.pipe(mainBowerFiles(config.bower))
-	.pipe(gulpFilter(config.filter.priority));
-
 class Priority {
 	constructor () {
 		this.taskName = taskName;
 
-		this.copy = new Copy('priority', bowerSrc);
+		this.bowerSrc = gulp.src(src)
+			.pipe(mainBowerFiles(config.bower))
+			.pipe(gulpFilter(config.filter.priority));
+
+		this.copy = new Copy('priority', this.bowerSrc);
 		this.cleanup = new Cleanup('priority');
 
 		gulp.task(this.taskName, callback => {

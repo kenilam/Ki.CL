@@ -12,7 +12,7 @@ import webpackConfig from '../../webpack.config';
 
 const dest = '/project/dev/';
 
-const entry = './project/src/app.js';
+const entry = './project/src/index.js';
 const output = 'app.js';
 
 class Webpack {

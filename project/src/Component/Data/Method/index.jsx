@@ -11,9 +11,8 @@ class Get {
         })
             .then(response => {
                 if (response.status !== 200) {
-                    throw new Error('Something went wrong on api server!');
+                    throw new Error('Something went wrong on the api server!');
                 }
-
 
                 return response.json();
             });

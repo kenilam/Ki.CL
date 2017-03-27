@@ -110,7 +110,7 @@ class Bundle {
     }
 
     static task (callback) {
-        gulp.src([].concat(...[src.jsx, src.template]))
+        gulp.src([].concat(src.jsx, src.template))
             .pipe(changedInPlace({ firstPass : true }))
             .pipe(gulpData(Bundle.transpolate))
             .pipe(gulpRename(rename))
