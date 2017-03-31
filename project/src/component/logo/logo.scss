@@ -33,6 +33,10 @@ $font_size: 2rem;
       font-family: $kicl_font_name;
       letter-spacing: 0rem;
     }
+
+    &.isCurrent {
+      pointer-events: none;
+    }
   }
 
   &.isSquared {

@@ -3,11 +3,11 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
-const cwd = 'project/dev';
+const cwd = '/project/dev/';
 
 const src = [
-	`./${cwd}/**/*.{js,css}`,
-	`!./${cwd}/lib/**/*.{js,css}`
+	`.${cwd}**/*.{js,css}`,
+	`!.${cwd}lib/**/*.{js,css}`
 ];
 
 const injectName = 'app';

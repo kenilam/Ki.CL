@@ -1,11 +1,8 @@
 'use strict';
 
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-const cloneElement = React.cloneElement;
-
 class CSSTransitionGroup {
     constructor (component, timeout, children, key) {
-        return <ReactCSSTransitionGroup
+        return <React.addons.CSSTransitionGroup
             component={component}
             transitionName='animate'
             transitionAppear={true}
@@ -13,8 +10,8 @@ class CSSTransitionGroup {
             transitionLeaveTimeout={timeout}
             transitionAppearTimeout={timeout}
         >
-            {cloneElement(children || <div />, { key })}
-        </ReactCSSTransitionGroup>;
+            {React.cloneElement(children || <div />, { key })}
+        </React.addons.CSSTransitionGroup>;
     }
 }
 

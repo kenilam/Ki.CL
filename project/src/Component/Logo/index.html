@@ -14,7 +14,7 @@
     <ReactRouter.Link
         to={this.props.route || this.state.resource.route}
         title={`${this.state.siteName} | ${this.props.name || this.state.resource.name}`}
-        onlyActiveOnIndex={true}
+        activeClassName='isCurrent'
 
         onClick={this.props.onClick}
     >{this.props.name || this.state.resource.name}</ReactRouter.Link>

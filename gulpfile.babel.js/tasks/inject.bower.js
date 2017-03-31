@@ -3,10 +3,10 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
-const cwd = 'project/dev';
+const cwd = '/project/dev/';
 
 const src = [
-	`./${cwd}/lib/bower/**/*.{js,css}`
+	`.${cwd}lib/bower/**/*.{js,css}`
 ];
 
 const injectName = 'bower';

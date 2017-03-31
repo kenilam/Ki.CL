@@ -14,7 +14,7 @@ class App {
 		EventEmitter.on('data.resource.view', App.sitemapData);
 
 		App.render(document.querySelector('app-header'), Header);
-		// App.render(document.querySelector('app-view'), View);
+		App.render(document.querySelector('app-view'), View);
 		
 		Data.resource();
 	}

@@ -5,10 +5,10 @@ import gulpInject from 'gulp-inject';
 
 import debug from 'gulp-debug';
 
-const cwd = 'project/dev';
+const cwd = '/project/dev/';
 
 const src = [
-	`./${cwd}/lib/priority/**/*.{js,css}`
+	`.${cwd}lib/priority/**/*.{js,css}`
 ];
 
 const injectName = 'priority';
