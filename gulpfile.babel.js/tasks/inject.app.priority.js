@@ -3,23 +3,21 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
-import transform from './inject.transform';
+const cwd = 'project/dev';
 
 const src = [
-	'./lib/app/priority/**/*'
+	`./${cwd}/lib/app/priority/**/*.{js,css}`
 ];
 
-class Inject {
-	constructor () {
-		return this.inject.bind(this);
-	}
+const injectName = 'appPriority';
 
-	inject () {
+class Inject {
+	static tag () {
 		return gulpInject(
-			gulp.src(src, { read: false, cwd : './project/dev/' }),
-			{ name: 'app.priority', transform: transform }
+			gulp.src(src, { read : false }),
+			{ name : injectName, ignorePath : cwd }
 		);
 	}
 }
 
-export default new Inject();
+export default Inject;

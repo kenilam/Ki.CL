@@ -3,24 +3,22 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
-import transform from './inject.transform';
+const cwd = 'project/dev';
 
 const src = [
-	'./**/*.{js,css}',
-	'!./lib/**/*.{js,css}'
+	`./${cwd}/**/*.{js,css}`,
+	`!./${cwd}/lib/**/*.{js,css}`
 ];
 
-class Inject {
-	constructor () {
-		return this.inject.bind(this);
-	}
+const injectName = 'app';
 
-	inject () {
+class Inject {
+	static tag () {
 		return gulpInject(
-			gulp.src(src, { read : false, cwd : './project/dev/' }),
-			{ name: 'app', transform: transform }
+			gulp.src(src, { read : false }),
+			{ name : injectName, ignorePath : cwd }
 		);
 	}
 }
 
-export default new Inject();
+export default Inject;

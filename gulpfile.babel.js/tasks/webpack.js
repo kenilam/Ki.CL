@@ -6,7 +6,7 @@ import stripAnsi from 'strip-ansi';
 import gulp from 'gulp';
 import gulpSourcemaps from 'gulp-sourcemaps';
 
-import browser from './browser';
+import Browser from './browser';
 
 import webpackConfig from '../../webpack.config';
 
@@ -30,7 +30,7 @@ class Webpack {
 			});
 		}
 
-		browser.instance().reload();
+		Browser.instance().reload();
 	}
 
 	complete (callback) {

@@ -16,7 +16,7 @@ class Compile {
 	}
 
 	static task (callback) {
-		return gulp.run([bundle.taskName, php.taskName, scss.taskName], callback);
+		return gulp.run(bundle.taskName, php.taskName, scss.taskName, callback);
 	}
 }
 

@@ -16,7 +16,7 @@ class Copy {
 	}
 
 	task (callback) {
-		return gulp.run(data.taskName, font.taskName, image.taskName, callback);
+		return gulp.run([data.taskName, font.taskName, image.taskName], callback);
 	}
 }
 

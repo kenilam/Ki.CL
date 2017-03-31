@@ -3,25 +3,21 @@
 import gulp from 'gulp';
 import gulpInject from 'gulp-inject';
 
-import debug from 'gulp-debug';
-
-import transform from './inject.transform';
+const cwd = 'project/dev';
 
 const src = [
-	'./lib/bower/**/*.{js,css}'
+	`./${cwd}/lib/bower/**/*.{js,css}`
 ];
 
-class Inject {
-	constructor () {
-		return this.inject.bind(this);
-	}
+const injectName = 'bower';
 
-	inject () {
+class Inject {
+	static tag () {
 		return gulpInject(
-			gulp.src(src, { read: false, cwd : './project/dev/' }),
-			{ name: 'lib', transform: transform }
+			gulp.src(src, { read : false }),
+			{ name : injectName, ignorePath : cwd }
 		);
 	}
 }
 
-export default new Inject();
+export default Inject;

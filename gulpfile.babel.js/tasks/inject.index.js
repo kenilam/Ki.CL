@@ -2,11 +2,14 @@
 
 import gulp from 'gulp';
 
-import appSources from './inject.app';
-import appGlobalSources from './inject.app.global';
-import appPrioritySources from './inject.app.priority';
-import bowerSources from './inject.bower';
-import prioritySources from './inject.priority';
+import debug from 'gulp-debug';
+
+import App from './inject.app';
+import AppGlobal from './inject.app.global';
+import AppPriority from './inject.app.priority';
+import Bower from './inject.bower';
+import Browser from './browser';
+import Priority from './inject.priority';
 
 const taskName = 'inject.index';
 const src = [
@@ -24,12 +27,13 @@ class Inject {
 
 	task () {
 		return gulp.src(src)
-			.pipe(appSources())
-			.pipe(appGlobalSources())
-			.pipe(appPrioritySources())
-			.pipe(bowerSources())
-			.pipe(prioritySources())
-			.pipe(gulp.dest(dest));
+			.pipe(App.tag())
+			.pipe(AppGlobal.tag())
+			.pipe(AppPriority.tag())
+			.pipe(Bower.tag())
+			.pipe(Priority.tag())
+			.pipe(gulp.dest(dest))
+			.on('end', Browser.instance().reload);
 	}
 }
 
