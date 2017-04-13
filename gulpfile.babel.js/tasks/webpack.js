@@ -3,9 +3,6 @@
 import webpack from 'webpack';
 import stripAnsi from 'strip-ansi';
 
-import gulp from 'gulp';
-import gulpSourcemaps from 'gulp-sourcemaps';
-
 import Browser from './browser';
 
 import webpackConfig from '../../webpack.config';
@@ -21,7 +18,7 @@ class Webpack {
 	static done (stats) {
 		if (
 			Boolean(stats.hasErrors() || stats.hasWarnings()) &&
-			browser.instance().sockets
+			Browser.instance().sockets
 		) {
 			return browser.instance().sockets.emit('fullscreen:message', {
 				title: "Webpack Error:",
