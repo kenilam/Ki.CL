@@ -1,0 +1,10 @@
+{
+	"name" : "home",
+	"route" : "home",
+	"content" : {
+		"backdrop" : {
+			"image" : "/asset/image/london.whitechapel.jpg"
+		},
+		"message" : "Welcome to Ki.CL"
+	}
+}

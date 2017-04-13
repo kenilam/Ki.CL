@@ -1,0 +1,30 @@
+$pure_white: #fff;
+$white: #fafafa;
+$darkest_white: shade($white, 10);
+$darker_white: shade($white, 6);
+$dark_white: shade($white, 2);
+
+$black: #141414;
+$light_black: tint($black, 15);
+$pitch_black: #000;
+
+$grey: #ececec;
+$light_grey: tint($grey, 15);
+$lighter_grey: tint($grey, 30);
+$dark_grey: shade($grey, 15);
+$darker_grey: shade($grey, 20);
+$darkest_grey: shade($grey, 25);
+
+$green: #8cdfbb;
+$blue: #b5e0e8;
+$orange: #f39943;
+$red: #be4e4d;
+$yellow: #e8e5b5;
+
+$linkedin: #0077B5;
+$twitter: #1DCAFF;
+$googlePlus: #D34836;
+$behance: #053EFF;
+$gitHub: #4183c4;
+
+$gold: #B0976D;

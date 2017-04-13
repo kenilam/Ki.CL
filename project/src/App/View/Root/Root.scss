@@ -1,0 +1,183 @@
+@import '_import';
+
+@import '../../Component/Logo/_logo';
+
+$logo-size: grid-size(2);
+$logo-space: grid-size(.5);
+
+$distant-from-top: 30%;
+
+@mixin set-active-nav ($names) {
+  %active-styles {
+    color: $darkest_grey;
+  }
+
+  @each $name in $names {
+    [data-route-to='#{$name}'] & {
+      .navigation {
+        a:not([href='#/#{$name}']) { @extend %active-styles; }
+      }
+    }
+  }
+}
+
+[data-route='root'] {
+  main {
+    height: 100vh;
+  }
+}
+
+[data-view]:not([data-view='root']) {
+  [data-route-to='root'] & {
+    background-color: $light_grey;
+  }
+}
+
+[data-view='root'] {
+  @include display(flex);
+  @include align-items(center);
+  @include justify-content(center);
+
+  .background,
+  .overlay {
+    @include transform(translate3d(-50%, -50%, 0));
+
+    display: block;
+    height: 100%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    z-index: 0;
+  }
+
+  .background {
+    &:before {
+      @include transition-property(transform);
+      @include transition-duration($very-slow);
+      @include transition-timing-function($ease);
+
+      @include background-image(url('/Asset/image/london.whitechapel.jpg'));
+
+      @include content();
+
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .overlay {
+    @include transition-property(opacity);
+    @include transition-duration($slower);
+    @include transition-timing-function($ease);
+
+    @include opacity(.5);
+
+    background-color: $pitch_black;
+  }
+
+  .frame {
+    @include transition-property(border-width);
+    @include transition-duration($fast);
+    @include transition-timing-function($ease);
+
+    @include transform(translate3d(-50%, -50%, 0));
+
+    @include through();
+
+    border: 2px solid $white;
+    left: 50%;
+    height: $logo-size + ($logo-space * 2);
+    position: absolute;
+    top: $distant-from-top;
+    width: $logo-size + ($logo-space * 2);
+    z-index: 1;
+
+    [data-route-to] & {
+      border-color: $white;
+    }
+  }
+
+  .logo {
+    @include make_logo_square($logo-size);
+    @include set_logo_color($white);
+
+    @include transform(translate3d(-50%, -50%, 0));
+
+    left: 50%;
+    position: absolute;
+    text-shadow: 0px 0px 5px $black;
+    top: $distant-from-top;
+    z-index: 2;
+
+    a {
+      &:before {
+        @include transition-property(transform);
+        @include transition-duration($fast);
+        @include transition-timing-function($ease);
+      }
+    }
+  }
+
+  .navigation {
+    @include transform(translate3d(-50%, 0, 0));
+
+    color: $white;
+    font-family: $heading_font_family;
+    font-size: 2.5rem;
+    left: 50%;
+    margin-top: ($logo-size + ($logo-space * 2)) / 2 + $grid;
+    position: absolute;
+    text-transform: uppercase;
+    top: $distant-from-top;
+    width: 40%;
+  }
+
+  [data-route-to='works'] &,
+  &.animate-enter,
+  &.animate-appear,
+  &.animate-leave {
+    .background {
+      &:before {
+        @include transform(scale(1.1));
+      }
+    }
+
+    .overlay {
+      @include opacity(.7);
+    }
+
+    .frame {
+      @include transform(translate3d(-50%, -#{$distant-from-top}, 0));
+
+      border-width: 15px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .logo {
+      a {
+        &:before {
+          @include transform(scale(.8));
+        }
+      }
+    }
+  }
+
+  &.animate-enter {
+    .frame {
+      @include transition-delay(speed);
+    }
+  }
+
+  &.animate-enter-active,
+  &.animate-leave-active {
+    opacity: 0;
+  }
+
+  @include set-active-nav(('about', 'works', 'contact'));
+}

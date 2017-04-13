@@ -1,0 +1,10 @@
+@import '_import';
+
+::selection {
+	background: $green;
+	color: $white;
+}
+::-moz-selection {
+	background: $green;
+	color: $white;
+}

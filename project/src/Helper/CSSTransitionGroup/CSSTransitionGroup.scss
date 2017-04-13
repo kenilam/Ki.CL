@@ -1,0 +1,40 @@
+@import '_import';
+
+.animate-enter,
+.animate-appear,
+.animate-leave {
+  left: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.animate-enter-active,
+.animate-appear-active,
+.animate-leave-active {
+  @include transition-property(opacity, transform);
+  @include transition-duration($fast);
+  @include transition-timing-function($ease);
+}
+
+.animate-appear,
+.animate-enter {
+  @include opacity(0);
+
+  z-index: 1;
+
+  &.animate-enter-active {
+    @include opacity(1);
+  }
+}
+
+.animate-leave {
+  @include opacity(1);
+
+  z-index: 2;
+
+  &.animate-leave-active {
+    @include opacity(0);
+  }
+}

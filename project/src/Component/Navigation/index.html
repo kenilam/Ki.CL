@@ -1,0 +1,29 @@
+<nav className='navigation' data-list-direction={this.props.listDirection} aria-hidden={Object.keys(this.state.list).length === 0}>
+    {
+        (() => {
+            if (Object.keys(this.state.list).length > 0) {
+                return <ul>
+                    {Object.keys(this.state.list).map((name, key) => {
+                        return <li key={key}>
+                            <ReactRouter.Link
+                                to={this.state.list[name].route}
+                                title={`Go to ${this.state.siteName} | ${this.state.list[name].name}`}
+
+                                activeClassName='isCurrent'
+
+                                onMouseOut={this.props.onMouseOut}
+                                onMouseOver={this.props.onMouseOver}
+                                onMouseUp={this.props.onMouseUp}
+
+                                onTouchStart={this.props.onTouchStart}
+                                onTouchEnd={this.props.onTouchEnd}
+                            >{this.state.list[name].name}</ReactRouter.Link>
+                        </li>;
+                    })}
+                </ul>;
+            }
+            
+            return '';
+        })()
+    }
+</nav>

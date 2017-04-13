@@ -1,0 +1,589 @@
+{
+	"project": {
+		"id": 1177179,
+		"name": "Product Design | Ceramic and Houseware",
+		"published_on": 1301312593,
+		"created_on": 1301308924,
+		"modified_on": 1354645772,
+		"url": "https:\/\/www.behance.net\/gallery\/1177179\/Product-Design-Ceramic-and-Houseware",
+		"privacy": "public",
+		"fields": ["Product Design", "Branding"],
+		"covers": {
+			"202": "https:\/\/mir-s3-cdn-cf.behance.net\/projects\/202\/1177179.5448a1836dbe0.jpg",
+			"115": "https:\/\/mir-s3-cdn-cf.behance.net\/projects\/115\/1177179.5448a1836dbe0.jpg"
+		},
+		"mature_content": 0,
+		"mature_access": "allowed",
+		"owners": [{
+			"id": 383011,
+			"first_name": "Keni",
+			"last_name": "Lam",
+			"username": "kicl",
+			"city": "Santa Clara",
+			"state": "California",
+			"country": "United States",
+			"location": "Santa Clara, CA, USA",
+			"company": "EBay",
+			"occupation": "Design Engineer III",
+			"created_on": 1301305337,
+			"url": "https:\/\/www.behance.net\/kicl",
+			"images": {
+				"50": "https:\/\/mir-s3-cdn-cf.behance.net\/user\/50\/383011.53ada96c3681f.png",
+				"115": "https:\/\/mir-s3-cdn-cf.behance.net\/user\/115\/383011.53ada96c3681f.png",
+				"138": "https:\/\/mir-s3-cdn-cf.behance.net\/user\/138\/383011.53ada96c3681f.png"
+			},
+			"display_name": "Keni Lam",
+			"fields": ["Graphic Design", "Typography", "Print Design"],
+			"has_default_image": 0,
+			"website": "www.ki-cl.com"
+		}],
+		"stats": {
+			"views": 251,
+			"appreciations": 2,
+			"comments": 0
+		},
+		"canvas_width": 724,
+		"tags": ["ceramic", "product", "manufacture", "cushion", "creative"],
+		"description": "A series of Ceramic and Houseware Design in 2004 - 2006",
+		"editor_version": 3,
+		"modules": [{
+			"id": 8081275,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span class=\"sub-title\" style=\"text-align: left; display: inline; font-family: georgia, 'times new roman', times, serif; font-size: 14px;\">2004-2006<\/span><\/div>",
+			"text_plain": "2004-2006"
+		}, {
+			"id": 8081277,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span>Worked as a Senior Designer and was the first designer in the team. As well as the company's branding and its Identity, Created this series of product in a year and sold in markets such as Hong Kong, China, Japan and Thailand.<\/span><\/span><div><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span><br><\/span><\/span><\/div><div><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span>Concept was simple. Plain and Nature. With Simple Decoration.<\/span><\/span><\/div><div><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span><br><\/span><\/span><\/div><div><span style=\"color: rgb(59, 59, 59);\"><span><span class=\"yui_3_3_0_2_1301310326578350\"><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\">This series of products aimed to bring up the beauty of what materials can show.<\/span><\/span><\/span><\/span><\/div><div><span class=\"yui_3_3_0_2_1301310326578352\"><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span><br><\/span><\/span><\/span><\/div><div><span class=\"yui_3_3_0_2_1301310326578352\"><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span>Ceramic:<span>\t<span class=\"Apple-tab-span\">\t<\/span><\/span>New Bone China<\/span><\/span><\/span><\/div><div><span class=\"yui_3_3_0_2_1301310326578352\"><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span><\/span><\/span><\/span><span class=\"Apple-style-span\" style=\"font-family: georgia, 'times new roman', times, serif;\">Fabric:<span>\t\t<\/span>100% Linen \/ No-Dye Cotton<\/span><\/div><div><span class=\"yui_3_3_0_2_1301310326578356\"><span style=\"font-size: 12px; font-family: georgia, 'times new roman', times, serif;\"><span>Stationary:<span>\t<\/span>Recycled Material<\/span><\/span><\/span><\/div><\/div>",
+			"text_plain": "Worked as a Senior Designer and was the first designer in the team. As well as the company's branding and its Identity, Created this series of product in a year and sold in markets such as Hong Kong, China, Japan and Thailand.Concept was simple. Plain and Nature. With Simple Decoration.This series of products aimed to bring up the beauty of what materials can show.Ceramic:\t\tNew Bone ChinaFabric:\t\t100% Linen \/ No-Dye CottonStationary:\tRecycled Material"
+		}, {
+			"id": 8081279,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8081279\/disp\/837686ec6bea267cd61d6d6d73abea24.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8081279\/disp\/837686ec6bea267cd61d6d6d73abea24.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8081279\/hd\/837686ec6bea267cd61d6d6d73abea24.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8081279\/max_1200\/837686ec6bea267cd61d6d6d73abea24.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8081279\/orig\/837686ec6bea267cd61d6d6d73abea24.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8081281,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8081281\/disp\/1e146dedc257256013246817afeaaba9.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8081281\/disp\/1e146dedc257256013246817afeaaba9.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8081281\/hd\/1e146dedc257256013246817afeaaba9.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8081281\/max_1200\/1e146dedc257256013246817afeaaba9.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8081281\/orig\/1e146dedc257256013246817afeaaba9.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8081283,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8081283\/disp\/57c286ec5bfd1600096301403e51b109.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8081283\/disp\/57c286ec5bfd1600096301403e51b109.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8081283\/hd\/57c286ec5bfd1600096301403e51b109.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8081283\/max_1200\/57c286ec5bfd1600096301403e51b109.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8081283\/orig\/57c286ec5bfd1600096301403e51b109.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8081285,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span style=\" font-size: 28px;\" class=\"yui_3_3_0_2_1301310326578560\"><span class=\"yui_3_3_0_2_1301310326578619\"><span style=\"color: rgb(59, 59, 59);\"><span class=\"yui_3_3_0_2_130131601212549\"><span class=\"yui_3_3_0_2_1301316012125114\"><span class=\"yui_3_3_0_2_1301316012125152\"><span><span class=\"yui_3_3_0_2_130131625406089\"><span class=\"title\"><span class=\"title\">Brand &amp; Identity<\/span><\/span><\/span><\/span><\/span><\/span><\/span><\/span><\/span><\/span><div><span style=\" font-size: 28px;\" class=\"yui_3_3_0_2_1301310326578548\"><span style=\"color: rgb(59, 59, 59);\"><span><span class=\"yui_3_3_0_2_1301316012125135\"><span><span class=\"yui_3_3_0_2_1301316254060103\"><span class=\"sub-title\"><span class=\"title\"><span class=\"sub-title\">Company Logo | Brand Logo | Product Series Logo<\/span><\/span><\/span><\/span><\/span><\/span><\/span><\/span><br><\/span><br><span class=\"title\"><\/span><\/div><\/div>",
+			"text_plain": "Brand &amp; IdentityCompany Logo | Brand Logo | Product Series Logo"
+		}, {
+			"id": 8081287,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8081287\/disp\/46bc361ce45fddec1916bdc818845eee.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8081287\/disp\/46bc361ce45fddec1916bdc818845eee.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8081287\/hd\/46bc361ce45fddec1916bdc818845eee.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8081287\/max_1200\/46bc361ce45fddec1916bdc818845eee.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8081287\/orig\/46bc361ce45fddec1916bdc818845eee.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8081289,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8081289\/disp\/09e3f6d971234457b6709b65dad1cf4c.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8081289\/disp\/09e3f6d971234457b6709b65dad1cf4c.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8081289\/hd\/09e3f6d971234457b6709b65dad1cf4c.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8081289\/max_1200\/09e3f6d971234457b6709b65dad1cf4c.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8081289\/orig\/09e3f6d971234457b6709b65dad1cf4c.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8081291,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8081291\/disp\/682dc924575a3b3748dd0e95d8f45b35.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8081291\/disp\/682dc924575a3b3748dd0e95d8f45b35.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8081291\/hd\/682dc924575a3b3748dd0e95d8f45b35.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8081291\/max_1200\/682dc924575a3b3748dd0e95d8f45b35.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8081291\/orig\/682dc924575a3b3748dd0e95d8f45b35.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8082987,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span class=\"title\">Trade Show Display Design<\/span><div><span class=\"title\"><span class=\"sub-title\">Summer Sourcing Show 2005<\/span><\/span><\/div><\/div>",
+			"text_plain": "Trade Show Display DesignSummer Sourcing Show 2005"
+		}, {
+			"id": 8082989,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8082989\/disp\/f9aca6b6a9ad9a924fe1c14f357c6b23.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8082989\/disp\/f9aca6b6a9ad9a924fe1c14f357c6b23.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8082989\/hd\/f9aca6b6a9ad9a924fe1c14f357c6b23.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8082989\/max_1200\/f9aca6b6a9ad9a924fe1c14f357c6b23.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8082989\/orig\/f9aca6b6a9ad9a924fe1c14f357c6b23.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8082991,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span class=\"title\">Catalogue Design<\/span><div><span class=\"title\"><span class=\"sub-title\">A3 3X2 folded style | When unfold, it is a poster<\/span><\/span><\/div><\/div>",
+			"text_plain": "Catalogue DesignA3 3X2 folded style | When unfold, it is a poster"
+		}, {
+			"id": 8082993,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8082993\/disp\/d898fffd28613f88dc46795316bd62db.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8082993\/disp\/d898fffd28613f88dc46795316bd62db.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8082993\/hd\/d898fffd28613f88dc46795316bd62db.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8082993\/max_1200\/d898fffd28613f88dc46795316bd62db.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8082993\/orig\/d898fffd28613f88dc46795316bd62db.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8083285,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span class=\"title\">Poster Design<\/span><div><span class=\"title\"><span class=\"sub-title\"><span style=\"color: rgb(76, 76, 76); font-size: 14px; font-family: georgia, 'times new roman', times, serif;\"><\/span>Used on the Trade Show as a promotion gift to visiter<\/span><\/span><\/div><\/div>",
+			"text_plain": "Poster DesignUsed on the Trade Show as a promotion gift to visiter"
+		}, {
+			"id": 8083287,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8083287\/disp\/b88e366c0cccf333471b341b4a6a8914.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8083287\/disp\/b88e366c0cccf333471b341b4a6a8914.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8083287\/hd\/b88e366c0cccf333471b341b4a6a8914.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8083287\/max_1200\/b88e366c0cccf333471b341b4a6a8914.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8083287\/orig\/b88e366c0cccf333471b341b4a6a8914.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}, {
+			"id": 8083289,
+			"type": "text",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"text": "<div><span class=\"title\">Poster Design<\/span><div><span class=\"title\"><span class=\"sub-title\"><span style=\"color: rgb(76, 76, 76); font-size: 14px; font-family: georgia, 'times new roman', times, serif;\"><\/span>Display use on Trade Show<\/span><\/span><\/div><\/div>",
+			"text_plain": "Poster DesignDisplay use on Trade Show"
+		}, {
+			"id": 8083291,
+			"type": "image",
+			"full_bleed": 0,
+			"alignment": "center",
+			"caption_alignment": "left",
+			"src": "https:\/\/m1.behance.net\/rendition\/modules\/8083291\/disp\/c26742d991d4ab1cc07dd7e46344badf.jpg",
+			"sizes": {
+				"disp": "https:\/\/m1.behance.net\/rendition\/modules\/8083291\/disp\/c26742d991d4ab1cc07dd7e46344badf.jpg",
+				"max_1240": "https:\/\/m1.behance.net\/rendition\/modules\/8083291\/hd\/c26742d991d4ab1cc07dd7e46344badf.jpg",
+				"max_1200": "https:\/\/m1.behance.net\/rendition\/modules\/8083291\/max_1200\/c26742d991d4ab1cc07dd7e46344badf.jpg",
+				"original": "https:\/\/m1.behance.net\/rendition\/modules\/8083291\/orig\/c26742d991d4ab1cc07dd7e46344badf.jpg"
+			},
+			"dimensions": {
+				"disp": {
+					"width": 600,
+					"height": 426
+				},
+				"max_1240": {
+					"width": 675,
+					"height": 480
+				},
+				"max_1200": {
+					"width": 675,
+					"height": 480
+				},
+				"original": {
+					"width": 675,
+					"height": 480
+				}
+			},
+			"width": 600,
+			"height": 427
+		}],
+		"short_url": "http:\/\/on.be.net\/gnFYuw",
+		"copyright": {
+			"license": "cc by-nc-sa",
+			"description": "Attribution-NonCommercial-ShareAlike",
+			"license_id": 2
+		},
+		"tools": [{
+			"id": 185308071,
+			"title": "Adobe Illustrator",
+			"category": "9",
+			"category_label": "Software",
+			"category_id": 9,
+			"synonym": {
+				"tag_id": 185308071,
+				"name": "illustrator",
+				"title": "Adobe Illustrator",
+				"url": "https:\/\/creative.adobe.com\/products\/download\/illustrator?sdid=KSMIS"
+			},
+			"approved": "1",
+			"url": "\/search?tools=185308071"
+		}, {
+			"id": 185289859,
+			"title": "Adobe Photoshop",
+			"category": "9",
+			"category_label": "Software",
+			"category_id": 9,
+			"synonym": {
+				"tag_id": 185289859,
+				"name": "photoshop",
+				"title": "Adobe Photoshop",
+				"url": "https:\/\/creative.adobe.com\/products\/download\/photoshop?sdid=KSMIT"
+			},
+			"approved": "1",
+			"url": "\/search?tools=185289859"
+		}, {
+			"id": 38430,
+			"title": "Ceramics",
+			"category": "12",
+			"category_label": "Materials",
+			"category_id": 12,
+			"synonym": null,
+			"approved": "1",
+			"url": "\/search?tools=38430"
+		}, {
+			"id": 8989,
+			"title": "Recycled Materials",
+			"category": "12",
+			"category_label": "Materials",
+			"category_id": 12,
+			"synonym": null,
+			"approved": "1",
+			"url": "\/search?tools=8989"
+		}, {
+			"id": 10790,
+			"title": "Linen",
+			"category": "12",
+			"category_label": "Materials",
+			"category_id": 12,
+			"synonym": null,
+			"approved": "1",
+			"url": "\/search?tools=10790"
+		}, {
+			"id": 16526,
+			"title": "Cotton",
+			"category": "12",
+			"category_label": "Materials",
+			"category_id": 12,
+			"synonym": null,
+			"approved": "1",
+			"url": "\/search?tools=16526"
+		}],
+		"styles": {
+			"text": {
+				"title": {
+					"font_family": "georgia,\"times new roman\",times,serif",
+					"font_weight": "normal",
+					"color": "#4C4C4C",
+					"text_align": "left",
+					"line_height": "1.4em",
+					"font_size": "22px",
+					"text_decoration": "none",
+					"font_style": "normal",
+					"display": "inline"
+				},
+				"subtitle": {
+					"font_family": "georgia,\"times new roman\",times,serif",
+					"font_weight": "normal",
+					"color": "#4C4C4C",
+					"text_align": "left",
+					"line_height": "1.55em",
+					"font_size": "14px",
+					"text_decoration": "none",
+					"font_style": "italic",
+					"display": "inline"
+				},
+				"paragraph": {
+					"font_family": "georgia,\"times new roman\",times,serif",
+					"font_weight": "normal",
+					"color": "#4C4C4C",
+					"text_align": "left",
+					"line_height": "1.4em",
+					"font_size": "12px",
+					"text_decoration": "none",
+					"font_style": "normal",
+					"display": "inline"
+				},
+				"caption": {
+					"font_family": "arial,helvetica,sans-serif",
+					"font_weight": "normal",
+					"color": "#4C4C4C",
+					"text_align": "left",
+					"line_height": "1.45em",
+					"font_size": "11px",
+					"text_decoration": "none",
+					"font_style": "italic",
+					"display": "block"
+				},
+				"link": {
+					"font_family": "arial,helvetica,sans-serif",
+					"font_weight": "normal",
+					"color": "#333333",
+					"text_align": "left",
+					"line_height": "1.4em",
+					"font_size": "12px",
+					"text_decoration": "underline",
+					"font_style": "normal",
+					"display": "inline"
+				}
+			},
+			"background": {
+				"color": "EAEAEA"
+			},
+			"spacing": {
+				"project": {
+					"top_margin": 65
+				},
+				"modules": {
+					"bottom_margin": 54
+				}
+			},
+			"dividers": {
+				"font_size": "1px",
+				"line_height": "1px",
+				"height": "1px",
+				"border_color": "#A7A7A7",
+				"margin": "-1px auto 0",
+				"position": "relative",
+				"top": "50%",
+				"border_width": "1px 0px 0px 0px",
+				"border_style": "dotted"
+			}
+		}
+	}
+}

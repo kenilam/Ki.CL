@@ -1,0 +1,10 @@
+User-agent: *
+Disallow:/api
+Disallow:/app
+Disallow:/asset
+Disallow:/data
+Disallow:/fonts
+Disallow:/javascript
+Disallow:/stylesheet
+
+Sitemap: http://ki-cl.com/sitemap.xml

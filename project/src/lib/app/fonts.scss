@@ -1,0 +1,22 @@
+@import '_import';
+
+html {
+	font-family: $font_family;
+	font-size: $font_size;
+	letter-spacing: .2rem;
+	line-height: 1;
+}
+
+h1, h2, h3, h4, h5, label, legend {
+	font-family: $heading_font_family;
+}
+
+h1, h2, h3, h4, h5 {
+	text-transform: uppercase;
+}
+
+a {
+	@include transition(color, justify-content);
+	@include transition-duration($fast);
+	@include transition-timing-function($ease);
+}

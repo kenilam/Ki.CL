@@ -1,0 +1,27 @@
+<Router history={hashHistory}>
+	<Route
+		path={routeName}
+		component={
+			() => <header role='banner'>
+				<Logo
+					eventName={routeName}
+
+					onTouchStart={Header.routeTo}
+					onTouchEnd={Header.routeOut}
+
+					onMouseOver={Header.routeTo}
+					onMouseOut={Header.routeOut}
+				/>
+				<Navigation
+					eventName={routeName}
+
+					onTouchStart={Header.routeTo}
+					onTouchEnd={Header.routeOut}
+
+					onMouseOver={Header.routeTo}
+					onMouseOut={Header.routeOut}
+				/>
+			</header>
+		}
+	></Route>
+</Router>

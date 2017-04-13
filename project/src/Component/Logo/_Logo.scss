@@ -1,0 +1,35 @@
+@import '_import';
+
+@import '../../asset/fonts/_kicl';
+
+@mixin set_logo_size ($new_size) {
+  a {
+    font-size: $new_size;
+    height: $new_size;
+    width: $new_size * 2.4;
+  }
+
+  @include largemobile() {
+    @include make_logo_square($new_size);
+  }
+}
+
+@mixin make_logo_square ($new_size) {
+  a {
+    font-size: $new_size;
+    height: $new_size;
+    width: $new_size;
+
+    &:before {
+      @include content($kicl-square);
+    }
+  }
+}
+
+@mixin set_logo_color ($new_color) {
+  a {
+    &:before {
+      color: $new_color;
+    }
+  }
+}

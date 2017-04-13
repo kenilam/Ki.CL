@@ -1,0 +1,10 @@
+{
+	"name" : "experiments cube",
+	"route" : "experiments.cube",
+	"content" : {
+		"backdrop" : {
+			"image" : "/app/view/experiments/experiment/cube/asset/image/hero.png"
+		},
+		"message" : "A 3D Cube"
+	}
+}
