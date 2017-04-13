@@ -1,5 +1,0 @@
-(function webGL () {
-	'use strict';
-
-	
-}());
