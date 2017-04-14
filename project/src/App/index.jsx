@@ -1,9 +1,11 @@
 'use strict';
 
-class App {
-    constructor () {
-        return {template};
-    }
-}
+import Footer from './Footer';
+import Header from './Header';
+import View from './View';
 
-export default App;
+export {
+    Footer,
+    Header,
+    View
+};

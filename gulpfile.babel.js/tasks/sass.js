@@ -4,7 +4,7 @@ import sass from 'gulp-sass';
 
 import errorHandler from './errorHandler';
 
-import config from '../../config';
+import config from '^/config';
 
 class Compile {
 	constructor () {

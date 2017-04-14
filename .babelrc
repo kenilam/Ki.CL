@@ -5,10 +5,20 @@
 	"plugins": [
 		"transform-export-extensions",
 		[
-			"babel-plugin-root-import", {
+			"babel-plugin-root-import", [
+			{
+				"rootPathSuffix": ".",
+				"rootPathPrefix": "^"
+			},
+			{
 				"rootPathSuffix": "project/src",
 				"rootPathPrefix": "@"
+			},
+			{
+				"rootPathSuffix": "bower_components",
+				"rootPathPrefix": "#"
 			}
+		]
 		]
 	]
 }

@@ -1,152 +1,20 @@
 {
-  "bower" : {
-    "overrides" : {
-      "bourbon" : {
-        "debugging" : true,
-        "main" : [
-          "**/*.{sass,scss}"
-        ]
-      },
-      "breakpoint-sass" : {
-        "debugging" : true,
-        "main" : [
-          "**/*.{sass,scss}"
-        ]
-      },
-      "font-awesome" : {
-        "debugging" : true,
-        "main" : [
-          "**/*.{sass,scss,eot,svg,ttf,woff,woff2}"
-        ]
-      },
-      "html5shiv" : {
-        "debugging" : true,
-        "main" : [
-          "**/html5shiv.js",
-          "**/html5shiv-printshiv.js"
-        ]
-      },
-      "libsass-mixins" : {
-        "debugging" : true,
-        "main" : [
-          "**/*.{sass,scss}"
-        ]
-      },
-      "jquery" : {
-        "debugging" : true,
-        "main" : [
-          "dist/jquery.js"
-        ]
-      },
-      "moment" : {
-        "debugging" : true,
-        "main" : [
-          "moment.js"
-        ]
-      },
-      "normalize-css" : {
-        "debugging" : true,
-        "main" : [
-          "**/*.css"
-        ]
-      },
-      "normalize-opentype-css" : {
-        "debugging" : true,
-        "main" : [
-          "**/*.css"
-        ]
-      },
-      "react" : {
-        "debugging" : true,
-        "main" : [
-          "react.js"
-        ]
-      },
-      "react-plugins" : {
-        "debugging" : true,
-        "main" : [
-          "react-dom.js",
-          "react-with-addons.js"
-        ]
-      },
-      "react-mixin-manager" : {
-        "debugging" : true,
-        "main" : [
-          "react-mixin-manager.js"
-        ]
-      },
-      "react-events" : {
-        "debugging" : true,
-        "main" : [
-          "react-events.js"
-        ]
-      },
-      "react-router" : {
-        "debugging" : true,
-        "main" : [
-          "index.js"
-        ]
-      },
-      "classnames" : {
-        "debugging" : true,
-        "main" : [
-          "index.js"
-        ]
-      },
-      "reset-css" : {
-        "debugging" : true,
-        "main" : [
-          "reset.css"
-        ]
-      },
-      "css-element-queries" : {
-        "debugging" : true,
-        "main" : [
-          "src/**/*.js"
-        ]
-      },
-      "sassy-maps" : {
-        "debugging" : true,
-        "ignore" : true
-      },
-      "eventEmitter" : {
-        "debugging" : true,
-        "main" : [
-          "EventEmitter.js"
-        ]
-      },
-      "fetch" : {
-        "debugging" : true,
-        "main" : [
-          "fetch.js"
-        ]
-      }
+  "inject" : {
+    "index" : {
+      "fileRoot" : "bower_components",
+      "src" : [
+        "**/dist/html5shiv.js",
+        "**/dist/jquery.js",
+        "**/fetch.js",
+        "**/modernizr.js",
+
+        "**/*/font-awesome.css",
+        "**/font-awesome/fonts/*",
+        "**/*/reset.css",
+        "**/*/normalize.css",
+        "**/*/normalize-opentype.css"
+      ]
     }
-  },
-  
-  "filter" : {
-    "bower" : [
-      "**/*",
-      "!**/*/gulpfile.js",
-      "!**/*/jquery.js",
-      "!**/*/ResizeSensor.js",
-      "!**/*/react.js",
-      "!**/*/react-with-addons.js",
-      "!**/*/react-dom.js",
-      "!**/*/react-mixin-manager.js",
-      "!**/*/react-router/index.js",
-      "!**/*/reset.css"
-    ],
-    "priority" : [
-      "**/*/jquery.js",
-      "**/*/ResizeSensor.js",
-      "**/*/react.js",
-      "**/*/react-with-addons.js",
-      "**/*/react-dom.js",
-      "**/*/react-mixin-manager.js",
-      "**/*/react-router/index.js",
-      "**/*/reset.css"
-    ]
   },
 
   "jshint" : {
@@ -154,9 +22,6 @@
       "$",
       "ElementQueries",
       "ResizeSensor",
-      "React",
-      "ReactDOM",
-      "ReactRouter",
       "template",
       "classNames"
     ]
@@ -164,10 +29,10 @@
 
   "sass" : {
     "includePaths": [
+      "./bower_components/",
       "./project/src",
-      "./project/src/Lib/bower",
-      "./project/src/Lib/plugin",
-      "./project/src/Lib/app"
+      "./project/src/Asset",
+      "./project/src/Lib/App"
     ],
     "outputStyle": "compressed",
     "sourceMap": true,

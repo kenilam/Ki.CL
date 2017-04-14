@@ -1,18 +1,26 @@
 'use strict';
 
-import App from '@/App';
+import {
+    Footer,
+    Header,
+    View
+} from '@/App';
+
+import {
+    Async,
+    EventEmitter
+} from '@/Helper';
+
+import React from '#/react/react';
+import ReactDOM from '#/react/react-dom';
 
 class Index {
     constructor () {
-        this.appRoot = document.querySelector('app-root');
+        ReactDOM.render(<Footer/>, document.querySelector('[app-footer]'));
+        ReactDOM.render(<Header/>, document.querySelector('[app-header]'));
+        ReactDOM.render(<View/>, document.querySelector('[app-view]'));
 
-        this.render();
-    }
-
-    render () {
-        ReactDOM.render(new App(), this.appRoot);
-
-        this.appRoot.parentNode.replaceChild(this.appRoot.childNodes[0], this.appRoot);
+        Async.get('/data/resource.json').then(resource => EventEmitter.emit('data.resource', resource));
     }
 }
 
