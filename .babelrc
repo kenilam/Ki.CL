@@ -12,11 +12,7 @@
 			},
 			{
 				"rootPathSuffix": "project/src",
-				"rootPathPrefix": "@"
-			},
-			{
-				"rootPathSuffix": "bower_components",
-				"rootPathPrefix": "#"
+				"rootPathPrefix": "~"
 			}
 		]
 		]
