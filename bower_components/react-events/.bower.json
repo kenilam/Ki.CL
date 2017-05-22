@@ -1,0 +1,40 @@
+{
+  "name": "react-events",
+  "main": "react-events.js",
+  "version": "1.0.1",
+  "homepage": "https://github.com/jhudson8/react-events",
+  "authors": [
+    "Joe Hudson <joehud@gmail.com>"
+  ],
+  "description": "Declarative managed event bindings for react components",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "react",
+    "react-component",
+    "react-mixin-manager",
+    "events"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react-mixin-manager": ">=0.5.2"
+  },
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "dce6bf1fb410ea539a67b9483c217a87f03dc42f"
+  },
+  "_source": "https://github.com/jhudson8/react-events.git",
+  "_target": "^1.0.1",
+  "_originalSource": "react-events"
+}

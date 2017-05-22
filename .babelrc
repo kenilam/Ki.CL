@@ -1,20 +1,6 @@
 {
-	"presets": [
-		"es2015"
-	],
+	"presets" : ["es2015", "react"],
 	"plugins": [
-		"transform-export-extensions",
-		[
-			"babel-plugin-root-import", [
-			{
-				"rootPathSuffix": ".",
-				"rootPathPrefix": "^"
-			},
-			{
-				"rootPathSuffix": "project/src",
-				"rootPathPrefix": "~"
-			}
-		]
-		]
+		"transform-export-extensions"
 	]
 }

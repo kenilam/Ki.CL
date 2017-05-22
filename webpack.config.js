@@ -1,79 +1,115 @@
 'use strict';
 
+import autoprefixer from 'autoprefixer';
 import path from 'path';
 
-import HtmlWebpack from 'html-webpack-plugin';
 import ExtractText from 'extract-text-webpack-plugin';
-import OnlyIfChangedWebpack from 'only-if-changed-webpack-plugin';
+import HtmlWebpack from 'html-webpack-plugin';
+import OnlyIfChanged from 'only-if-changed-webpack-plugin';
 
-const fileName = {
-    js : 'app.js',
-    css : 'style.css'
-};
+import { HtmlWebpackRootReplace } from './Lib';
+
 const srcRoot = 'project/src';
-const destRoot = 'project/dev';
+const devRoot = 'project/dev';
+
+const entry = {
+    index : 'index.html',
+    js : 'App.jsx',
+    scss : 'App.scss',
+};
+
+const out = {
+    index : 'index.html',
+    js : 'javascript/app.js',
+    css : 'stylesheet/app.css'
+};
+
+const cacheRoot = 'tmp/cache';
 
 const opts = {
-    rootDir: __dirname,
+    rootDir: path.resolve(__dirname),
     devBuild: process.env.NODE_ENV !== 'production',
 };
 
 export default {
     devtool : 'source-map',
     entry : [
-        `./${srcRoot}/${fileName.js}`,
-        `./${srcRoot}/app.scss`
+        `./${srcRoot}/${entry.js}`,
+        `./${srcRoot}/${entry.scss}`
     ],
     output : {
-        path : `${opts.rootDir}/${destRoot}`,
-        filename : fileName.js,
-        pathinfo : opts.devBuild
+        filename : `${devRoot}/${out.js}`
+    },
+    resolve: {
+        extensions: ['.js', '.jsx', '.sass', '.scss'],
+        alias: {
+            '^' : opts.rootDir,
+            '~' : `${opts.rootDir}/${srcRoot}`
+        }
     },
     module : {
         rules : [
             {
                 test : /\.(js|jsx)$/,
-                exclude : /node_modules/,
-                loader : 'babel-loader',
-                query : {
-                    presets : ['react']
-                }
-            },
-            {
-                test : /\.css$/,
-                exclude : /node_modules/,
-                use : ExtractText.extract({
-                    fallback : 'style-loader',
-                    use : 'css-loader'
-                })
+                enforce : 'pre',
+                exclude: /node_modules/,
+                loaders : [
+                    'jshint-loader',
+                    'babel-loader'
+                ]
             },
             {
                 test : /\.(sass|scss)$/,
                 exclude : /node_modules/,
                 use : ExtractText.extract({
                     fallback: 'style-loader',
-                    use : ['css-loader', 'sass-loader']
+                    use: [
+                        {
+                            loader : 'css-loader',
+                            options : {
+                                importLoaders : 1
+                            }
+                        },
+                        {
+                            loader : 'postcss-loader',
+                            options : {
+                                plugins: loader => [
+                                    autoprefixer({
+                                        browsers: ['last 2 versions']
+                                    })
+                                ]
+                            }
+                        },
+                        {
+                            loader : 'sass-loader',
+                            options : {
+                                includePaths : [`${opts.rootDir}/${srcRoot}`]
+                            }
+                        }
+                    ]
                 })
-            },
-            {
-                test : /\.(gif|png|jpe?g|svg)$/i,
-                use : ['file-loader?name=[path][name].[ext]']
             }
         ]
     },
     plugins : [
-        new OnlyIfChangedWebpack({
-            cacheDirectory : path.join(process.cwd(), 'tmp/cache'),
+        new OnlyIfChanged({
+            cacheDirectory : `${opts.rootDir}/${cacheRoot}`,
             cacheIdentifier : opts
         }),
-        new HtmlWebpack({
-            inject : true,
-            template : `./${srcRoot}/index.html`
-        }),
         new ExtractText({
-            filename : fileName.css,
+            filename : `${devRoot}/${out.css}`,
             allChunks : true
-        })
+        }),
+        new HtmlWebpack({
+            filename: `${devRoot}/${out.index}`,
+            template : `./${srcRoot}/${entry.index}`,
+            alwaysWriteToDisk: true,
+            cache : true,
+            hash: true,
+            inject : true,
+            xhtml: true
+        }),
+        new HtmlWebpackRootReplace({ replacePath : `../../${devRoot}` })
     ],
     watch : true
 };

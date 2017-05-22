@@ -1,0 +1,12 @@
+{
+  "name": "react-router-dom",
+  "_cacheHeaders": {
+    "ETag": "W/\"20c62-15b63a4ee48\"",
+    "Content-Type": "application/javascript"
+  },
+  "_release": "e-tag:W/\"20c62-1",
+  "main": "index.js",
+  "_source": "https://unpkg.com/react-router-dom/umd/react-router-dom.js",
+  "_target": "*",
+  "_originalSource": "https://unpkg.com/react-router-dom/umd/react-router-dom.js"
+}
