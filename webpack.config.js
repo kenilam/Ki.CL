@@ -6,6 +6,7 @@ import path from 'path';
 import ExtractText from 'extract-text-webpack-plugin';
 import HtmlWebpack from 'html-webpack-plugin';
 import OnlyIfChanged from 'only-if-changed-webpack-plugin';
+import SassLint from 'sasslint-webpack-plugin';
 
 import { HtmlWebpackRootReplace } from './Lib';
 
@@ -96,10 +97,15 @@ export default {
             cacheDirectory : `${opts.rootDir}/${cacheRoot}`,
             cacheIdentifier : opts
         }),
+
         new ExtractText({
             filename : `${devRoot}/${out.css}`,
             allChunks : true
         }),
+        new SassLint({
+            glob : `./${srcRoot}/**/*.s?(a|c)ss`
+        }),
+
         new HtmlWebpack({
             filename: `${devRoot}/${out.index}`,
             template : `./${srcRoot}/${entry.index}`,
