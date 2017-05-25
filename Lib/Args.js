@@ -14,4 +14,4 @@ class Args {
     }
 }
 
-export default new Args();
+module.exports = new Args();

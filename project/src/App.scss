@@ -1,16 +1,10 @@
-$red: #d14;
-
 body {
   header {
-    background: url('/assets/images/london.whitechapel.jpg');
+    background: url('/assets/london.whitechapel.jpg');
     display: block;
   }
 
   footer {
     display: none;
-  }
-
-  h1 {
-    color: $red;
   }
 }

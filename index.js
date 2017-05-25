@@ -1,7 +1,7 @@
 'use strict';
 
-import webpack from 'webpack';
-import config from './webpack.config';
+const webpack = require('webpack');
+const config = require('./webpack.config');
 
 class App {
     constructor () {
@@ -22,4 +22,4 @@ class App {
     }
 }
 
-export default new App();
+module.exports = new App();

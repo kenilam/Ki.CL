@@ -1,9 +1,7 @@
 'use strict';
 
-import args from './Args';
-import HtmlWebpackRootReplace from './HtmlWebpackRootReplace';
+const args = require('./Args');
 
-export {
-    args,
-    HtmlWebpackRootReplace
-}
+module.exporst = {
+    args : args
+};

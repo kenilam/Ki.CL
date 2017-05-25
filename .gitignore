@@ -2,7 +2,7 @@
 .idea/
 *.log
 
-tmp/
+tmp
 
 project/dev
 project/build
