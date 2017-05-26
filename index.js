@@ -9,7 +9,7 @@ class App {
     }
 
     static run () {
-        webpack(config, (err, stats) => {
+        webpack(config).run((err, stats) => {
             if (err) {
                 throw new Error('webpack:build', err);
             }

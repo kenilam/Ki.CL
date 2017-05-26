@@ -1,12 +1,12 @@
 'use strict';
 
-import Partial from '~/Partial';
-import NewFile from '~/NewFile';
+import ReactDOM from 'react-dom';
+
+import View from './View';
 
 class App {
     constructor () {
-        this.partial = new Partial();
-        this.newFile = new NewFile();
+        ReactDOM.render(View(), document.querySelector('[app-root]'));
     }
 }
 

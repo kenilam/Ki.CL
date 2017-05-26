@@ -1,4 +1,8 @@
+$color: #f00;
+
 body {
+  background: $color;
+
   header {
     background: url('/assets/london.whitechapel.jpg');
     display: block;

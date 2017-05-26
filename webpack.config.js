@@ -12,6 +12,7 @@ const ExtractText =  require('extract-text-webpack-plugin');
 const HtmlWebpack =  require('html-webpack-plugin');
 const OnlyIfChanged =  require('only-if-changed-webpack-plugin');
 const SassLint =  require('sasslint-webpack-plugin');
+const stylishReporter = require('jshint-loader-stylish');
 
 const Plugin =  require('./Plugin');
 
@@ -81,9 +82,20 @@ module.exports = {
                 test : /\.jsx$/,
                 enforce : 'pre',
                 exclude: /node_modules/,
+                use: [
+                    {
+                        loader : 'jshint-loader',
+                        options : {
+                            reporter : stylishReporter()
+                        }
+                    }
+                ]
+            },
+            {
+                test : /\.jsx$/,
+                enforce : 'pre',
+                exclude: /node_modules/,
                 loaders : [
-                    'react-hot-loader/webpack',
-                    'jshint-loader',
                     'babel-loader'
                 ]
             },
