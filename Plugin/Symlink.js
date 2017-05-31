@@ -18,30 +18,30 @@ class Symlink {
     }
 
     makeSymlinks(option) {
-        const outputPath = this.compiler.options.output.path;
-        const originPath = path.join(outputPath, option.origin);
-
-        if (fs.existsSync(originPath)) {
-            const baseDir = __dirname;
-
-            process.chdir(outputPath);
-
-            const symlink = path.join(outputPath, option.symlink);
-            const dir = path.dirname(symlink);
-            const origin = path.relative(dir, originPath);
-
-            if (!fs.existsSync(dir)) {
-                shell.mkdir('-p', dir)
-            }
-
-            if (fs.existsSync(symlink)) {
-                fs.unlinkSync(symlink);
-            }
-
-            fs.symlinkSync(origin, symlink);
-
-            process.chdir(baseDir);
+        if (!fs.existsSync(option.origin)) {
+            return;
         }
+
+        option.symlink = option.symlink.replace('./', '');
+        option.origin = option.origin.replace('./', '');
+
+        process.chdir(path.resolve(__dirname).replace('Plugin', ''));
+
+        const dir = path.dirname(option.symlink);
+
+        if (!fs.existsSync(dir)) {
+            shell.mkdir('-p', dir)
+        }
+
+        if (fs.existsSync(option.symlink)) {
+            fs.unlink(option.symlink);
+        }
+
+        const relativePath = path.relative(option.symlink, option.origin);
+
+        fs.symlinkSync(relativePath, option.symlink);
+
+        process.chdir(path.resolve(__dirname));
     }
 
     afterEmit (compilation, callback) {

@@ -2,10 +2,17 @@
 
 import React from 'react';
 
+import { Sitemap } from '~/Component';
+
+Sitemap.set({
+    name : 'Home',
+    route : '/'
+}, 'home');
+
 const Home = () => (
-    <div>
+    <main role='main'>
         <h2>Home!!!!</h2>
-    </div>
+    </main>
 );
 
 export default Home;

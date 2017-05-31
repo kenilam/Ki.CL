@@ -1,7 +1,6 @@
 'use strict';
 
 const autoprefixer =  require('autoprefixer');
-const glob =  require('glob');
 const fs = require('fs');
 const path =  require('path');
 const shell = require('shelljs');
@@ -19,54 +18,43 @@ const Plugin =  require('./Plugin');
 const srcRoot = 'project/src';
 const devRoot = 'project/dev';
 
-const ext = {
-    symlink : [
-        'eot',
-        'svg',
-        'ttf',
-        'woff',
-        'woff2',
-        'otf',
-        'png',
-        'jpg',
-        'gif',
-        'ico',
-        'svg'
-    ]
-};
-
 const entry = {
     index : 'index.html',
     js : 'App.jsx',
     scss : 'App.scss',
-    symlink : `**/*.{${ext.symlink.join(',')}}`
+    symlink : `**/*.{eot,svg,ttf,woff,woff2,otf,png,jpg,gif,ico,svg}`
 };
 
 const out = {
     index : 'index.html',
-    js : 'javascript/app.js',
-    css : 'stylesheet/app.css'
+    js : 'app.js',
+    css : 'app.css'
 };
 
 const cacheRoot = 'tmp/cache';
 
 const opts = {
-    rootDir: path.resolve(__dirname),
-    devBuild: process.env.NODE_ENV !== 'production'
+    rootDir : path.resolve(__dirname),
+    devBuild : process.env.NODE_ENV !== 'production'
 };
 
-if (!fs.existsSync(cacheRoot)) {
+if (fs.existsSync(cacheRoot)) {
+    fs.readdirSync(cacheRoot).forEach(
+        file => fs.unlinkSync(`${cacheRoot}/${file}`)
+    );
+} else {
     shell.mkdir('-p', cacheRoot);
 }
 
 module.exports = {
     devtool : 'source-map',
+    context : `${opts.rootDir}/${srcRoot}`,
     entry : [
-        `./${srcRoot}/${entry.js}`,
-        `./${srcRoot}/${entry.scss}`
+        `./${entry.js}`,
+        `./${entry.scss}`
     ],
     output : {
-        path : `/${devRoot}`,
+        path : `${opts.rootDir}/${devRoot}`,
         filename : `${out.js}`
     },
     resolve: {
@@ -95,12 +83,10 @@ module.exports = {
                 test : /\.jsx$/,
                 enforce : 'pre',
                 exclude: /node_modules/,
-                loaders : [
-                    'babel-loader'
-                ]
+                loader : 'babel-loader'
             },
             {
-                test : /\.(sass|scss)$/,
+                test : /\.(css|sass|scss)$/,
                 exclude : /node_modules/,
                 use : ['css-hot-loader'].concat(ExtractText.extract({
                     fallback: 'style-loader',
@@ -131,10 +117,9 @@ module.exports = {
                 }))
             },
             {
-                test : /\.css$/,
-                exclude: /node_modules/,
-                loaders : [
-                    'style-loader'
+                test: /\.(gif|jpe?g|png|svg)$/i,
+                loaders: [
+                    'file-loader?name=[path][name].[ext]'
                 ]
             }
         ]
@@ -156,35 +141,27 @@ module.exports = {
             allChunks : true
         }),
         new SassLint({
-            glob : `./${srcRoot}/**/*.s?(a|c)ss`
+            glob : `./**/*.s?(a|c)ss`,
+            configFile : './sass-lint.yml'
         }),
 
         new webpack.HotModuleReplacementPlugin(),
 
         new HtmlWebpack({
             filename: `${out.index}`,
-            template : `./${srcRoot}/${entry.index}`,
+            template : `./${entry.index}`,
             alwaysWriteToDisk: true,
             cache : true,
             hash: false,
             inject : true,
             xhtml: true
-        }),
-        new Plugin.HtmlWebpackHtmlReplace({
-            replacePath : `../../${devRoot}/`
-        }),
-        new Plugin.Symlink(glob.sync(`./${srcRoot}/${entry.symlink}`).map(
-            file => ({
-                origin : file,
-                symlink : file.replace(srcRoot, devRoot)
-            })
-        ))
+        })
     ],
 
     watch : true,
 
     devServer: {
-        historyApiFallback : true,
+        // historyApiFallback : true,
         host : process.env.HOST,
         port : process.env.PORT,
         open : true,

@@ -1,14 +1,2 @@
-$color: #f00;
+@import './Component/Style';
 
-body {
-  background: $color;
-
-  header {
-    background: url('/assets/london.whitechapel.jpg');
-    display: block;
-  }
-
-  footer {
-    display: none;
-  }
-}
