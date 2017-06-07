@@ -9,6 +9,8 @@ import View from './View';
 
 import { GlobalHeader, GlobalFooter } from '~/Component';
 
+import './App.scss';
+
 class App {
     constructor () {
         this.scriptTag = document.querySelector('script');

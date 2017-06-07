@@ -1,43 +1,27 @@
 'use strict';
 
+import dot from 'dot-object';
+
+let map = {};
+
 class Sitemap {
-    constructor () {
-        this.map = {};
-    }
+    static set (notation, property) {
+        if (!notation) {
+            console.warning('notation is required to set sitemap');
 
-    set (property, mapping) {
-        mapping = mapping || '';
-
-        const steps = mapping.split('.');
-
-        let parent = this.map;
-
-        steps.forEach(
-            (step, index) => {
-                if (!parent[step]) {
-                    parent[step] = {};
-                }
-
-                if (index === steps.length - 1) {
-                    parent[step] = property;
-
-                    return;
-                }
-
-                parent = parent[step];
-            }
-        );
-    }
-
-    get (mapping) {
-        mapping = mapping || '';
-
-        try {
-            return eval(`this.map${mapping ? `.${mapping}` : ''}`);
-        } catch (error) {
-            return undefined;
+            return;
         }
+
+        dot.str(notation, property, map);
+    }
+
+    static get (notation) {
+        if (!notation) {
+            return map;
+        }
+
+        return dot.pick(notation, map);
     }
 }
 
-export default new Sitemap();
+export default Sitemap;

@@ -1,2 +1,13 @@
-@import './Component/Style';
+@import 'import';
+@import 'reset';
+@import './Component/Style.scss';
+@import './View/Style';
 
+body {
+  @include display-flex();
+  @include flex-direction(column);
+}
+
+main {
+  @include flex-grow(1);
+}

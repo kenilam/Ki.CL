@@ -4,15 +4,29 @@ import React from 'react';
 
 import { Sitemap } from '~/Component';
 
-Sitemap.set({
-    name : 'Home',
-    route : '/'
-}, 'home');
+import { DOM } from '~/Helper';
 
-const Home = () => (
-    <main role='main'>
-        <h2>Home!!!!</h2>
-    </main>
-);
+import resource from './resource.json';
+
+const routeName = 'home';
+
+Sitemap.set(routeName, resource.sitemap);
+
+class Home extends DOM.Component {
+    constructor (props) {
+        super(props);
+    }
+
+    render () {
+        return (
+            <section
+                data-route={routeName}
+                ref={element => this.element = element}
+            >
+                <h2>Home!!!!</h2>
+            </section>
+        );
+    }
+}
 
 export default Home;

@@ -1,3 +1,0 @@
-{
-  "cmd" : "install && cd bower_components/fbemitter && npm install && gulp"
-}

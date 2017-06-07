@@ -6,11 +6,12 @@ const path =  require('path');
 const shell = require('shelljs');
 const webpack = require('webpack');
 
+const Bourbon = require('bourbon');
 const CleanWebpack =  require('clean-webpack-plugin');
 const ExtractText =  require('extract-text-webpack-plugin');
 const HtmlWebpack =  require('html-webpack-plugin');
 const OnlyIfChanged =  require('only-if-changed-webpack-plugin');
-const SassLint =  require('sasslint-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 const stylishReporter = require('jshint-loader-stylish');
 
 const Plugin =  require('./Plugin');
@@ -38,6 +39,8 @@ const opts = {
     devBuild : process.env.NODE_ENV !== 'production'
 };
 
+const node_modules = `${opts.rootDir}/node_modules/`;
+
 if (fs.existsSync(cacheRoot)) {
     fs.readdirSync(cacheRoot).forEach(
         file => fs.unlinkSync(`${cacheRoot}/${file}`)
@@ -51,7 +54,10 @@ module.exports = {
     context : `${opts.rootDir}/${srcRoot}`,
     entry : [
         `./${entry.js}`,
-        `./${entry.scss}`
+        `./${entry.scss}`,
+        `/${opts.rootDir}/.stylelintrc`,
+        `/${opts.rootDir}/.jshintrc`,
+        `/${opts.rootDir}/.babelrc`
     ],
     output : {
         path : `${opts.rootDir}/${devRoot}`,
@@ -110,7 +116,11 @@ module.exports = {
                         {
                             loader : 'sass-loader',
                             options : {
-                                includePaths : [`${opts.rootDir}/${srcRoot}`]
+                                includePaths : [
+                                    `${node_modules}/compass-mixins/lib`,
+                                    `${opts.rootDir}/${srcRoot}`,
+                                    `${opts.rootDir}/${srcRoot}/Lib/Style`
+                                ]
                             }
                         }
                     ]
@@ -121,6 +131,10 @@ module.exports = {
                 loaders: [
                     'file-loader?name=[path][name].[ext]'
                 ]
+            },
+            {
+                test: /\.?rc$/,
+                use: 'rc-exports-loader'
             }
         ]
     },
@@ -140,12 +154,10 @@ module.exports = {
             filename : `${out.css}`,
             allChunks : true
         }),
-        new SassLint({
-            glob : `./**/*.s?(a|c)ss`,
-            configFile : './sass-lint.yml'
-        }),
 
-        new webpack.HotModuleReplacementPlugin(),
+        new StyleLintPlugin({
+            configFile : `${opts.rootDir}/.stylelintrc`
+        }),
 
         new HtmlWebpack({
             filename: `${out.index}`,
@@ -155,13 +167,23 @@ module.exports = {
             hash: false,
             inject : true,
             xhtml: true
-        })
+        }),
+
+        new webpack.optimize.OccurrenceOrderPlugin(true),
+
+        new webpack.HotModuleReplacementPlugin(),
+
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ],
 
     watch : true,
 
     devServer: {
-        // historyApiFallback : true,
+        historyApiFallback : true,
         host : process.env.HOST,
         port : process.env.PORT,
         open : true,

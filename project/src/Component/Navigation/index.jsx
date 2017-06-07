@@ -4,9 +4,11 @@ import React from 'react';
 
 import { NavLink, HashRouter as Router } from 'react-router-dom';
 
+import { DOM } from '~/Helper';
+
 import resource from './resource.json';
 
-class Navigation extends React.Component {
+class Navigation extends DOM.Component {
     render () {
         return (
             <Router>

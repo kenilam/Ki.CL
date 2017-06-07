@@ -4,9 +4,11 @@ import React from 'react';
 
 import { Navigation, Sitemap } from '~/Component';
 
+import { DOM } from '~/Helper';
+
 import resource from './resource.json';
 
-class GlobalFooter extends React.Component {
+class GlobalFooter extends DOM.Component {
     render () {
         return (
             <footer data-component-name={resource.name} role='contentinfo'>

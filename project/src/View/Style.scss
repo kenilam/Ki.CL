@@ -1,0 +1,28 @@
+main {
+  position: relative;
+
+  > section {
+    position: absolute;
+    top: 0;
+  }
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+
+  &.fade-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+  }
+}
+
+.fade-leave {
+  opacity: 1;
+  z-index: 1;
+
+  &.fade-leave-active {
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+  }
+}
