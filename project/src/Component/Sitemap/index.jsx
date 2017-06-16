@@ -22,6 +22,26 @@ class Sitemap {
 
         return dot.pick(notation, map);
     }
+
+    static filter (map, options) {
+        const filteredMap = {};
+
+        const names = Object.keys(map);
+
+        if (options.without) {
+            names.filter(
+                name => name !== options.without
+            ).forEach(
+                name => filteredMap[name] = map[name]
+            )
+        }
+
+        if (names.length === 0) {
+            return map;
+        }
+
+        return filteredMap;
+    }
 }
 
 export default Sitemap;

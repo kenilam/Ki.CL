@@ -1,7 +1,12 @@
-@import 'import';
 @import 'reset';
-@import './Component/Style.scss';
+@import 'import';
+@import './Component/Style';
 @import './View/Style';
+
+html {
+  background-color: $dark_white;
+  color: $darkest_grey;
+}
 
 body {
   @include display-flex();

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import CSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
 import { IndexRoute, HashRouter as Router, Route} from 'react-router-dom';
 
@@ -11,40 +11,66 @@ import { Sitemap } from '~/Component';
 import { DOM } from '~/Helper';
 
 import Home from './Home';
+import About from './About';
 import Works from './Works';
 
 class View extends DOM.Component {
-    constructor () {
-        super();
+    constructor (props) {
+        super(props);
 
         this.state = {
             style : {}
         };
 
-        this.home = <Home updateWrapperSize={this.updateViewSize.bind(this)}/>;
-        this.works = <Works updateWrapperSize={this.updateViewSize.bind(this)}/>;
+        this.home = <Home updateSizes={this.updateViewSize.bind(this)}/>;
+        this.about = <About updateSizes={this.updateViewSize.bind(this)}/>;
+        this.works = <Works updateSizes={this.updateViewSize.bind(this)}/>;
+
+        this.updateStyle = this.updateStyle.bind(this);
     }
 
-    onRouterUpdate (location) {
-        const pathname = location.pathname === '/' ? '/home' : location.pathname;
-
-        this.setState({ current : Sitemap.get(pathname.substr(1).replace(/\//g, '.')) });
+    updateStyle (style) {
+        this.setState(Object.assign(this.state.style, style));
     }
 
     updateViewSize ({height, width}) {
-        this.setState({style : { minHeight : height, minWidth : width}});
+        this.updateStyle({ minHeight : height, minWidth : width });
+    }
+
+    updateRoute ({ current }) {
+        if (!this.props.updateRoute) {
+            return;
+        }
+
+        this.props.updateRoute(current);
+    }
+
+    onRouteChange (location) {
+        const pathname = location.pathname === '/' ? '/home' : location.pathname;
+        const current = Sitemap.get(pathname.substr(1).replace(/\//g, '.'));
+
+        this.setState({ current : current })
+            .then(this.updateRoute.bind(this));
+    }
+
+    componentDidMount () {
+        DOM.Component.Events.on('view.updateStyle', this.updateStyle);
+    }
+
+    componentWillUnmount () {
+        DOM.Component.Events.off('view.updateStyle', this.updateStyle);
     }
 
     render () {
         return (
             <Router
-                ref={routerRef => {
-                    if (!routerRef || this.routeListener) {
+                ref={router => {
+                    if (!router || this.routeListener) {
                         return;
                     }
 
-                    this.routeListener = routerRef.history.listen(this.onRouterUpdate.bind(this));
-                    this.onRouterUpdate(routerRef.history.location);
+                    this.routeListener = router.history.listen(this.onRouteChange.bind(this));
+                    this.onRouteChange(router.history.location);
                 }}
             >
                 <Route render={({ location }) => (
@@ -54,7 +80,7 @@ class View extends DOM.Component {
                         transitionLeaveTimeout={1000}
                         component='main'
                         role='main'
-                        style={this.state.style}
+                        style={Object.assign({}, this.state.style)}
                     >
                         <Route
                             location={location}

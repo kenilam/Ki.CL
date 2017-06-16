@@ -1,0 +1,34 @@
+@import 'compass-mixins/lib/animate';
+@import 'compass-mixins/lib/compass';
+@import 'compass-mixins/lib/lemonade';
+
+$pure_white: #fff;
+$white: #f6f6f6;
+$darkest_white: shade($white, 10);
+$darker_white: shade($white, 6);
+$dark_white: shade($white, 3);
+
+$black: #141414;
+$light_black: tint($black, 3);
+$pitch_black: #000;
+
+$grey: #b7c4cc;
+$light_grey: tint($grey, 15);
+$lighter-grey: tint($light_grey, 30);
+$darker_grey: #3f3f3f;
+$darkest_grey: shade($darker_grey, 30);
+$dark_grey: tint($darker_grey, 20);
+
+$green: #8cdfbb;
+$blue: #b5e0e8;
+$orange: #f39943;
+$red: #be4e4d;
+$yellow: #e8e5b5;
+
+$linkedin: #0077b5;
+$twitter: #1dcaff;
+$googlePlus: #d34836;
+$behance: #053eff;
+$gitHub: #4183c4;
+
+$gold: #b0976d;

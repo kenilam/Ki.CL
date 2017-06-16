@@ -1,0 +1,24 @@
+@import 'compass';
+@import './clip-path';
+
+@mixin hidden () {
+  @include clip-path(polygon(0 0, 0 0, 0 0, 0 0));
+
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+@mixin unhidden () {
+  @include clip-path(0 0, 100% 0, 100% 100%, 0% 100%);
+
+  height: inherit;
+  left: inherit;
+  overflow: inherit;
+  position: inherit;
+  top: inherit;
+  width: inherit;
+}

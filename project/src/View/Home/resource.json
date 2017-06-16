@@ -1,6 +1,6 @@
 {
   "sitemap" : {
-    "name" : "Home",
+    "name" : "home",
     "route" : "/"
   }
 }

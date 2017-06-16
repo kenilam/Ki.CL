@@ -1,55 +1,56 @@
 'use strict';
 
-import { ResizeSensor } from 'css-element-queries';
-
+import AsyncEmitter from 'async-emitter';
 import React from 'react/lib/ReactWithAddons';
 
+import { ResizeSensor } from 'css-element-queries';
 import { extend } from 'jquery';
 
 import Unwrap from './Unwrap';
 
+const Events = new AsyncEmitter();
+
 class Component extends React.Component {
-
     static ResizeSensor = ResizeSensor;
-
     static Unwrap = Unwrap;
+    static Events = Events;
 
     constructor (props) {
         super(props);
 
         this.state = {};
+
+        this.updateSizes = this.updateSizes.bind(this);
     }
 
     setState (currentState) {
         return new Promise(
             resolve => super.setState(
                 previousState => extend(true, {}, previousState, currentState),
-                resolve
+                () => resolve(currentState)
             )
         )
     }
 
     updateSizes () {
-        if (!this.element) {
-            return;
-        }
-
-        if (this.props.updateWrapperSize) {
-            this.props.updateWrapperSize({
-                height: this.element.offsetHeight,
-                width: this.element.offsetWidth
-            });
-        }
+        this.props.updateSizes({
+            height: this.element.offsetHeight,
+            width: this.element.offsetWidth
+        });
     }
 
     componentDidMount () {
-        if (!this.element) {
+        if (this.handleScroll) {
+            window.addEventListener('scroll', this.handleScroll);
+        }
+
+        if (!this.element || !this.props.updateSizes) {
             return;
         }
 
         this.updateSizes();
 
-        new ResizeSensor(this.element, this.updateSizes.bind(this));
+        new ResizeSensor(this.element, this.updateSizes);
     }
 
     componentWillUnmount () {
@@ -58,6 +59,11 @@ class Component extends React.Component {
         }
 
         ResizeSensor.detach(this.element, this.updateSizes);
+
+        if (!this.handleScroll) {
+            return;
+        }
+        window.removeEventListener('scroll', this.handleScroll);
     }
 }
 

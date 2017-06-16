@@ -1,0 +1,15 @@
+@import 'import';
+
+.Navigation {
+  @include display-flex();
+  @include align-items(center);
+  @include rem(padding, $grid);
+
+  text-transform: capitalize;
+
+  a {
+    + a {
+      @include rem(padding-left, $grid * 2);
+    }
+  }
+}

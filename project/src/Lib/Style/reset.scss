@@ -1,4 +1,14 @@
-@import 'compass/reset';
+@import './compass';
+@import 'compass-mixins/lib/compass/reset';
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
 .fa {
   font-family: inherit;

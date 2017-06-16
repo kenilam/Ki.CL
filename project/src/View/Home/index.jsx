@@ -8,9 +8,7 @@ import { DOM } from '~/Helper';
 
 import resource from './resource.json';
 
-const routeName = 'home';
-
-Sitemap.set(routeName, resource.sitemap);
+Sitemap.set(resource.sitemap.name, resource.sitemap);
 
 class Home extends DOM.Component {
     constructor (props) {
@@ -20,7 +18,8 @@ class Home extends DOM.Component {
     render () {
         return (
             <section
-                data-route={routeName}
+                data-name={resource.name}
+                data-route={resource.route}
                 ref={element => this.element = element}
             >
                 <h2>Home!!!!</h2>

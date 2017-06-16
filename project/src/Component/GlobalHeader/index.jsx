@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Navigation, Sitemap } from '~/Component';
+import { Logo, Navigation, Sitemap } from '~/Component';
 
 import { DOM } from '~/Helper';
 
@@ -11,8 +11,9 @@ import resource from './resource.json';
 class GlobalHeader extends DOM.Component {
     render () {
         return (
-            <header data-component-name={resource.name} role='banner'>
-                <Navigation list={Sitemap.get()} />
+            <header className={resource.name} role='banner' ref={element => this.element = element}>
+                <Logo/>
+                <Navigation list={Sitemap.filter(Sitemap.get(), { without : 'home'})} />
             </header>
         );
     }

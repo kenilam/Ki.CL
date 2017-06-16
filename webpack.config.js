@@ -114,10 +114,10 @@ module.exports = {
                             }
                         },
                         {
-                            loader : 'sass-loader',
+                            loader : 'fast-sass-loader',
                             options : {
                                 includePaths : [
-                                    `${node_modules}/compass-mixins/lib`,
+                                    `${node_modules}`,
                                     `${opts.rootDir}/${srcRoot}`,
                                     `${opts.rootDir}/${srcRoot}/Lib/Style`
                                 ]
@@ -127,11 +127,17 @@ module.exports = {
                 }))
             },
             {
-                test: /\.(gif|jpe?g|png|svg)$/i,
+                test: /\.(gif|jpe?g|png|svg|woff|woff2|.[ot]tf|eot)$/i,
                 loaders: [
                     'file-loader?name=[path][name].[ext]'
                 ]
             },
+            { test: /\.svg$/, loader: 'url-loader?limit=65000&mimetype=image/svg+xml&name=public/fonts/[path][name].[ext]' },
+            { test: /\.woff$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff&name=public/fonts/[path][name].[ext]' },
+            { test: /\.woff2$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff2&name=public/fonts/[path][name].[ext]' },
+            { test: /\.[ot]tf$/, loader: 'url-loader?limit=65000&mimetype=application/octet-stream&name=public/fonts/[path][name].[ext]' },
+            { test: /\.eot$/, loader: 'url-loader?limit=65000&mimetype=application/vnd.ms-fontobject&name=public/fonts/[path][name].[ext]' },
+
             {
                 test: /\.?rc$/,
                 use: 'rc-exports-loader'
@@ -171,13 +177,7 @@ module.exports = {
 
         new webpack.optimize.OccurrenceOrderPlugin(true),
 
-        new webpack.HotModuleReplacementPlugin(),
-
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // })
+        new webpack.HotModuleReplacementPlugin()
     ],
 
     watch : true,

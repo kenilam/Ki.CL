@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Navigation, Sitemap } from '~/Component';
+import { Logo, Navigation, Sitemap } from '~/Component';
 
 import { DOM } from '~/Helper';
 
@@ -11,8 +11,9 @@ import resource from './resource.json';
 class GlobalFooter extends DOM.Component {
     render () {
         return (
-            <footer data-component-name={resource.name} role='contentinfo'>
-                <Navigation list={Sitemap.get()} />
+            <footer className={resource.name} role='contentinfo' ref={element => this.element = element}>
+                <Logo/>
+                <Navigation list={Sitemap.filter(Sitemap.get(), { without : 'home'})} />
             </footer>
         );
     }

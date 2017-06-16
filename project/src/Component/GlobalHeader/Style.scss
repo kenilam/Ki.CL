@@ -1,3 +1,23 @@
-[data-component-name='GlobalHeader'] {
-  display: block;
+@import 'import';
+
+.GlobalHeader {
+  @include display-flex();
+  @include align-items(stretch);
+  @include rem(padding, $grid);
+
+  background-color: $white;
+  top: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 2000;
+
+  .Navigation {
+    @include set-font-size(1.5);
+
+    text-transform: uppercase;
+
+    a {
+      font-family: $bold_font_family;
+    }
+  }
 }
