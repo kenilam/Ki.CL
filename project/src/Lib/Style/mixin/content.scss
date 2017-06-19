@@ -1,0 +1,5 @@
+@import 'import';
+
+@mixin content ($content: '\0020') {
+  content: $content;
+}

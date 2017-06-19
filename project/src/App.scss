@@ -11,15 +11,20 @@ html {
 body {
   @include display-flex();
   @include flex-direction(column);
+  @include transition-property(opacity);
+  @include transition-duration($fast);
+  @include transition-timing-function($easing);
+
+  will-change: opacity;
 }
 
 main {
   @include flex-grow(1);
 }
 
+// To prevent font flickering before Typekits are completely rendered
+:not(.wf-active) body,
+// To prevent unwanted element show up in dom when isInitialLoad (class inject and remove on JS)
 .isInitialLoad {
-  .GlobalHeader,
-  .GlobalFooter {
-    transition-duration: 0s;
-  }
+  @include opacity(0);
 }

@@ -3,6 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { TransitionGroup } from '~/Component';
+
 import { DOM } from '~/Helper';
 
 import View from '~/View';
@@ -41,17 +43,18 @@ class App {
         this.appendElement(<GlobalHeader updateSizes={this.updateViewSizes.bind(this)} />);
         this.appendElement(<GlobalFooter />);
 
-        this.body.insertBefore(this.body.querySelector('.GlobalHeader'), this.body.querySelector('main'));
-        this.view = this.body.querySelector('main');
+        this.header = this.body.querySelector('.GlobalHeader');
+
+        this.body.insertBefore(this.header, this.body.querySelector('main'));
 
         if (location.hash !== '#/') {
             return;
         }
 
         this.body.classList.add('isInitialLoad');
-        setTimeout(
-            () => this.body.classList.remove('isInitialLoad'),
-            DOM.Style.getTransitionDuration(this.view, true)
+
+        TransitionGroup.transitionEnd(this.header).then(
+            () => this.body.classList.remove('isInitialLoad')
         );
     }
 }

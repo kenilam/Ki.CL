@@ -41,15 +41,17 @@ const opts = {
 
 const node_modules = `${opts.rootDir}/node_modules/`;
 
-function urlLoader (test, options) {
+function assetLoader (test, options) {
     return {
         test: test,
-        use : {
-            loader : 'url-loader',
-            options  : Object.assign({
-                name : '[path][name].[ext]'
-            }, options)
-        }
+        use : [
+            {
+                loader : 'file-loader',
+                options  : Object.assign({
+                    name : '[path][name].[ext]'
+                }, options)
+            }
+        ]
     };
 }
 
@@ -137,25 +139,15 @@ module.exports = {
                 }))
             },
 
-            {
-                test: /\.(gif|jpe?g|png|svg|woff|woff2|.[ot]tf|eot)$/i,
-                use : [
-                    {
-                        loader : 'file-loader',
-                        options : {
-                            name : '[path][name].[ext]'
-                        }
-                    }
-                ]
-            },
+            assetLoader(/\.(gif)$/i, { mimetype : 'image/gif' }),
+            assetLoader(/\.(jpe?g)$/i, { mimetype : 'image/pjpeg' }),
+            assetLoader(/\.(png)$/i, { mimetype : 'image/png' }),
 
-            urlLoader(/\.(gif|jpe?g|png)$/i, { mimetype : 'image/[ext]' }),
-
-            urlLoader(/\.svg$/, { mimetype : 'image/svg+xml' }),
-            urlLoader(/\.woff$/, { mimetype : 'application/font-woff' }),
-            urlLoader(/\.woff2$/, { mimetype : 'application/font-woff2' }),
-            urlLoader(/\.[ot]tf$/, { mimetype : 'application/octet-stream' }),
-            urlLoader(/\.eot$/, { mimetype : 'application/vnd.ms-fontobject' }),
+            assetLoader(/\.svg$/, { mimetype : 'image/svg+xml' }),
+            assetLoader(/\.woff$/, { mimetype : 'application/font-woff' }),
+            assetLoader(/\.woff2$/, { mimetype : 'application/font-woff2' }),
+            assetLoader(/\.[ot]tf$/, { mimetype : 'application/octet-stream' }),
+            assetLoader(/\.eot$/, { mimetype : 'application/vnd.ms-fontobject' }),
 
             {
                 test: /\.?rc$/,

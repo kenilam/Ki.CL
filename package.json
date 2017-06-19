@@ -76,8 +76,8 @@
     "stylelint-config-standard": "^16.0.0",
     "stylelint-config-suitcss": "^11.0.0",
     "stylelint-webpack-plugin": "^0.7.0",
-    "url-loader": "^0.5.9",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "which-transition-end-event": "^0.1.0"
   }
 }

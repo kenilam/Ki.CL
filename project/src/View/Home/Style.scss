@@ -8,18 +8,34 @@
 }
 
 section[data-view=home] {
+  @include background-image(url('../../Asset/whitechapel.jpg'));
+  @include background-size(cover);
   @include display-flex();
   @include flex-direction(column);
   @include align-items(center);
   @include justify-content(center);
 
-  background-image: url('../../Asset/whitechapel.jpg');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
   height: 100vh;
   position: fixed;
   width: 100vw;
+
+  > * {
+    z-index: 1;
+  }
+
+  &::before {
+    @include content();
+
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+  }
 
   .Navigation {
     @include flex-direction(column);

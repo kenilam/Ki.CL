@@ -4,6 +4,8 @@ import React from 'react';
 
 import CSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
+import whichTransitionEndEvent from 'which-transition-end-event';
+
 import { DOM } from '~/Helper';
 
 import resource from './resource.json';
@@ -11,6 +13,12 @@ import resource from './resource.json';
 class TransitionGroup extends DOM.Component {
     static getSubstringUntilNth (str, pattern, n) {
         return str.split(pattern, n).join(pattern);
+    }
+
+    static transitionEnd (elm) {
+        return new Promise(
+            resolve => elm.addEventListener( whichTransitionEndEvent(true), resolve)
+        );
     }
 
     render () {

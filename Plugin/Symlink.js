@@ -17,7 +17,7 @@ class Symlink {
         }
     }
 
-    makeSymlinks(option) {
+    makeSymlinks (option) {
         if (!fs.existsSync(option.origin)) {
             return;
         }
