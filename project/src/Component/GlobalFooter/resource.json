@@ -1,3 +1,4 @@
 {
-  "name" : "GlobalFooter"
+  "name" : "GlobalFooter",
+  "inactiveInTheseViews" : ["home"]
 }

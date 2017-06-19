@@ -1,0 +1,38 @@
+@import 'import';
+
+[data-view=home] {
+  .GlobalFooter {
+    bottom: 0;
+    position: fixed;
+  }
+}
+
+section[data-view=home] {
+  @include display-flex();
+  @include flex-direction(column);
+  @include align-items(center);
+  @include justify-content(center);
+
+  background-image: url('../../Asset/whitechapel.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+
+  .Navigation {
+    @include flex-direction(column);
+    @include set-font-size(2);
+
+    text-transform: uppercase;
+
+    a {
+      font-family: $bold_font_family;
+
+      + a {
+        padding-top: 0;
+      }
+    }
+  }
+}

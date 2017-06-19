@@ -16,3 +16,10 @@ body {
 main {
   @include flex-grow(1);
 }
+
+.isInitialLoad {
+  .GlobalHeader,
+  .GlobalFooter {
+    transition-duration: 0s;
+  }
+}

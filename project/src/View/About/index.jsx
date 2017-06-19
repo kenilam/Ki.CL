@@ -11,16 +11,13 @@ import resource from './resource.json';
 Sitemap.set(resource.sitemap.name, resource.sitemap);
 
 class About extends DOM.Component {
-    constructor (props) {
-        super(props);
-    }
-
     render () {
         return (
             <section
-                data-name={resource.name}
-                data-route={resource.route}
+                data-route={resource.sitemap.route}
+                data-view={resource.sitemap.name}
                 ref={element => this.element = element}
+                style={this.props.style}
             >
                 <h2>About!!!!</h2>
             </section>

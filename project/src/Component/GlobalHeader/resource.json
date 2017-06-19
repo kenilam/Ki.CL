@@ -1,3 +1,4 @@
 {
-  "name" : "GlobalHeader"
+  "name" : "GlobalHeader",
+  "inactiveInTheseViews" : ["home"]
 }

@@ -12,4 +12,16 @@
       @include rem(padding-left, $grid * 2);
     }
   }
+
+  &.isColumnView {
+    @include flex-direction(column);
+
+    a {
+      + a {
+        @include rem(padding-top, $grid * 2);
+
+        padding-left: 0;
+      }
+    }
+  }
 }

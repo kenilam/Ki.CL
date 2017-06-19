@@ -1,14 +1,19 @@
 @import 'import';
 
 .GlobalHeader {
-  @include display-flex();
   @include align-items(stretch);
+  @include display-flex();
   @include rem(padding, $grid);
+  @include transition-property(border-bottom-color);
+  @include transition-duration($fast);
+  @include transition-timing-function($easing);
 
   background-color: $white;
+  border-bottom: 1px solid transparent;
   top: 0;
   position: fixed;
   width: 100vw;
+  will-change: border-bottom-color, box-shadow, transform;
   z-index: 2000;
 
   .Navigation {
@@ -19,5 +24,23 @@
     a {
       font-family: $bold_font_family;
     }
+  }
+
+  &.isInactive {
+    @include transform(translate3d(0, -100%, 0));
+
+    pointer-events: none;
+  }
+
+  &:not(.isScrolling) {
+    @include transition-property(transform);
+  }
+
+  &:not(.isScrolled) {
+    border-bottom-color: $lighter_grey;
+  }
+
+  &:not(.isScrolledAway).isScrolled {
+    @include box-shadow(0 1px 4px 2px rgba($black, 0.2));
   }
 }

@@ -1,0 +1,39 @@
+@import 'import';
+
+.TransitionGroup {
+  position: relative;
+
+  > * {
+    @include transition-property(opacity);
+    @include transition-duration($fast);
+    @include transition-timing-function($easing);
+
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  > .animate-enter:not(.animate-enter-active),
+  > .animate-leave:not(.animate-leave-active) {
+    @include transition-duration(0s);
+  }
+
+  > .animate-enter {
+    opacity: 0;
+    z-index: 2;
+
+    &.animate-enter-active {
+      opacity: 1;
+    }
+  }
+
+  > .animate-leave {
+    opacity: 1;
+    z-index: 1;
+
+    &.animate-leave-active {
+      opacity: 0;
+    }
+  }
+}

@@ -41,6 +41,18 @@ const opts = {
 
 const node_modules = `${opts.rootDir}/node_modules/`;
 
+function urlLoader (test, options) {
+    return {
+        test: test,
+        use : {
+            loader : 'url-loader',
+            options  : Object.assign({
+                name : '[path][name].[ext]'
+            }, options)
+        }
+    };
+}
+
 if (fs.existsSync(cacheRoot)) {
     fs.readdirSync(cacheRoot).forEach(
         file => fs.unlinkSync(`${cacheRoot}/${file}`)
@@ -82,15 +94,13 @@ module.exports = {
                         options : {
                             reporter : stylishReporter()
                         }
+                    },
+                    {
+                        loader : 'babel-loader'
                     }
                 ]
             },
-            {
-                test : /\.jsx$/,
-                enforce : 'pre',
-                exclude: /node_modules/,
-                loader : 'babel-loader'
-            },
+
             {
                 test : /\.(css|sass|scss)$/,
                 exclude : /node_modules/,
@@ -126,17 +136,26 @@ module.exports = {
                     ]
                 }))
             },
+
             {
                 test: /\.(gif|jpe?g|png|svg|woff|woff2|.[ot]tf|eot)$/i,
-                loaders: [
-                    'file-loader?name=[path][name].[ext]'
+                use : [
+                    {
+                        loader : 'file-loader',
+                        options : {
+                            name : '[path][name].[ext]'
+                        }
+                    }
                 ]
             },
-            { test: /\.svg$/, loader: 'url-loader?limit=65000&mimetype=image/svg+xml&name=public/fonts/[path][name].[ext]' },
-            { test: /\.woff$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff&name=public/fonts/[path][name].[ext]' },
-            { test: /\.woff2$/, loader: 'url-loader?limit=65000&mimetype=application/font-woff2&name=public/fonts/[path][name].[ext]' },
-            { test: /\.[ot]tf$/, loader: 'url-loader?limit=65000&mimetype=application/octet-stream&name=public/fonts/[path][name].[ext]' },
-            { test: /\.eot$/, loader: 'url-loader?limit=65000&mimetype=application/vnd.ms-fontobject&name=public/fonts/[path][name].[ext]' },
+
+            urlLoader(/\.(gif|jpe?g|png)$/i, { mimetype : 'image/[ext]' }),
+
+            urlLoader(/\.svg$/, { mimetype : 'image/svg+xml' }),
+            urlLoader(/\.woff$/, { mimetype : 'application/font-woff' }),
+            urlLoader(/\.woff2$/, { mimetype : 'application/font-woff2' }),
+            urlLoader(/\.[ot]tf$/, { mimetype : 'application/octet-stream' }),
+            urlLoader(/\.eot$/, { mimetype : 'application/vnd.ms-fontobject' }),
 
             {
                 test: /\.?rc$/,

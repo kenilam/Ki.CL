@@ -2,11 +2,9 @@
 
 import React from 'react';
 
-import CSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
+import { IndexRoute, HashRouter as Router, Route, Switch} from 'react-router-dom';
 
-import { IndexRoute, HashRouter as Router, Route} from 'react-router-dom';
-
-import { Sitemap } from '~/Component';
+import { Sitemap, TransitionGroup } from '~/Component';
 
 import { DOM } from '~/Helper';
 
@@ -19,49 +17,63 @@ class View extends DOM.Component {
         super(props);
 
         this.state = {
-            style : {}
+            route : {},
+            style : {
+                main : {},
+                section : {}
+            }
         };
 
-        this.home = <Home updateSizes={this.updateViewSize.bind(this)}/>;
-        this.about = <About updateSizes={this.updateViewSize.bind(this)}/>;
-        this.works = <Works updateSizes={this.updateViewSize.bind(this)}/>;
-
-        this.updateStyle = this.updateStyle.bind(this);
+        this.routeHandler = this.routeHandler.bind(this);
+        this.updateMainSizes = this.updateMainSizes.bind(this);
+        this.updateSectionHandler = this.updateSectionHandler.bind(this);
     }
 
-    updateStyle (style) {
-        this.setState(Object.assign(this.state.style, style));
-    }
+    routeHandler (location) {
+        const pathname = (location.pathname === '/' ? '/home' : location.pathname).split('/').join('.');
+        const current = Sitemap.get(pathname.substr(1));
 
-    updateViewSize ({height, width}) {
-        this.updateStyle({ minHeight : height, minWidth : width });
-    }
+        clearTimeout(this.routeHandlerTimer);
 
-    updateRoute ({ current }) {
-        if (!this.props.updateRoute) {
-            return;
+        this.setState({
+            route : current || {}
+        });
+
+        if (this.props.updateRoute) {
+            this.props.updateRoute(current || {});
         }
 
-        this.props.updateRoute(current);
+        if (current.name === 'home') {
+            if (!this.viewDuration) {
+                this.viewDuration = DOM.Style.getTransitionDuration(document.querySelector('main > section'), true);
+            }
+
+            this.routeHandlerTimer = setTimeout(
+                () => this.setState({ style : { main : { height : null } } }),
+                this.viewDuration
+            );
+        }
     }
 
-    onRouteChange (location) {
-        const pathname = location.pathname === '/' ? '/home' : location.pathname;
-        const current = Sitemap.get(pathname.substr(1).replace(/\//g, '.'));
+    updateMainSizes (sizes) {
+        this.setState({ style : { main : { height : sizes.height } } });
+    }
 
-        this.setState({ current : current })
-            .then(this.updateRoute.bind(this));
+    updateSectionHandler (style) {
+        this.setState({ style : { section : style } });
     }
 
     componentDidMount () {
-        DOM.Component.Events.on('view.updateStyle', this.updateStyle);
+        DOM.Component.Events.on('view.style', this.updateSectionHandler);
     }
 
     componentWillUnmount () {
-        DOM.Component.Events.off('view.updateStyle', this.updateStyle);
+        DOM.Component.Events.off('view.style', this.updateSectionHandler);
     }
 
     render () {
+        const pathname = location.hash.replace('#', '');
+
         return (
             <Router
                 ref={router => {
@@ -69,33 +81,39 @@ class View extends DOM.Component {
                         return;
                     }
 
-                    this.routeListener = router.history.listen(this.onRouteChange.bind(this));
-                    this.onRouteChange(router.history.location);
+                    this.routeListener = router.history.listen(this.routeHandler);
+                    this.routeHandler(router.history.location);
                 }}
             >
-                <Route render={({ location }) => (
-                    <CSSTransitionGroup
-                        transitionName='fade'
-                        transitionEnterTimeout={1000}
-                        transitionLeaveTimeout={1000}
-                        component='main'
-                        role='main'
-                        style={Object.assign({}, this.state.style)}
-                    >
-                        <Route
-                            location={location}
-                            key={location.pathname}
-                            path='/:view'
-                            children={({ match }) => {
-                                if (!match) {
-                                    return this.home;
-                                }
+                <TransitionGroup
+                    component='main'
+                    role='main'
+                    data={{ route : this.state.route }}
+                    style={this.state.style.main}
+                >
+                    <Route
+                        location={{ pathname : pathname }}
+                        key={pathname}
+                        path='/:view'
+                        children={({ match }) => {
+                            const view = match ? match.params.view : null;
 
-                                return this[match.params.view] ? this[match.params.view] : null;
-                            }}
-                        />
-                    </CSSTransitionGroup>
-                )}/>
+                            switch (view) {
+                                case 'about' : return <About
+                                    style={this.state.style.section}
+                                    updateSizes={this.updateMainSizes}
+                                />;
+
+                                case 'works' : return <Works
+                                    style={this.state.style.section}
+                                    updateSizes={this.updateMainSizes}
+                                />;
+
+                                default : return <Home/>;
+                            }
+                        }}
+                    />
+                </TransitionGroup>
             </Router>
         );
     }

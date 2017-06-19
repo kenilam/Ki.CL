@@ -4,12 +4,14 @@
   @include display-flex();
   @include align-items(stretch);
   @include rem(padding, $grid);
+  @include transition-property(transform);
+  @include transition-duration($fast);
+  @include transition-timing-function($easing);
 
   background-color: $white;
-  bottom: 0;
-  position: fixed;
+  border-top: 1px solid $lighter_grey;
+  position: relative;
   width: 100vw;
-  z-index: 2000;
 
   .Navigation {
     @include set-font-size(1.5);
@@ -19,5 +21,11 @@
     a {
       font-family: $bold_font_family;
     }
+  }
+
+  &.isInactive {
+    @include transform(translate3d(0, 100%, 0));
+
+    pointer-events: none;
   }
 }

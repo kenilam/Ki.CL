@@ -6,6 +6,7 @@ import Logo from './Logo';
 import Link from './Link';
 import Navigation from './Navigation';
 import Sitemap from './Sitemap';
+import TransitionGroup from './TransitionGroup';
 
 export {
     GlobalHeader,
@@ -13,5 +14,6 @@ export {
     Link,
     Logo,
     Navigation,
-    Sitemap
+    Sitemap,
+    TransitionGroup
 }

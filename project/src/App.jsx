@@ -14,24 +14,16 @@ class App {
         this.body = document.body;
         this.scriptTag = this.body.querySelector('script');
 
-        this.appendElement(<View updateRoute={this.updateRoute.bind(this)}/>);
-        this.appendElement(<GlobalHeader updateSizes={App.updateGlobalHeaderSizes.bind(this)} />);
-        this.appendElement(<GlobalFooter updateSizes={App.updateGlobalFooterSizes.bind(this)}/>);
-
-        this.body.insertBefore(this.body.querySelector('.GlobalHeader'), this.body.querySelector('main'));
+        this.initialState();
     }
 
-    static updateGlobalHeaderSizes (sizes) {
-        View.Events.emit('view.updateStyle', { marginTop : sizes.height  });
-    }
-
-    static updateGlobalFooterSizes (sizes) {
-        View.Events.emit('view.updateStyle', { marginBottom : sizes.height  });
+    updateViewSizes (sizes) {
+        View.Events.emit('view.style', {paddingTop : sizes.height});
     }
 
     updateRoute (route) {
-        this.body.dataset.view = route.name;
         this.body.dataset.route = route.route;
+        this.body.dataset.view = route.name;
     }
 
     appendElement (element) {
@@ -42,6 +34,25 @@ class App {
         ReactDOM.render(element, domElement);
 
         DOM.Unwrap.parent(domElement);
+    }
+
+    initialState () {
+        this.appendElement(<View updateRoute={this.updateRoute.bind(this)}/>);
+        this.appendElement(<GlobalHeader updateSizes={this.updateViewSizes.bind(this)} />);
+        this.appendElement(<GlobalFooter />);
+
+        this.body.insertBefore(this.body.querySelector('.GlobalHeader'), this.body.querySelector('main'));
+        this.view = this.body.querySelector('main');
+
+        if (location.hash !== '#/') {
+            return;
+        }
+
+        this.body.classList.add('isInitialLoad');
+        setTimeout(
+            () => this.body.classList.remove('isInitialLoad'),
+            DOM.Style.getTransitionDuration(this.view, true)
+        );
     }
 }
 

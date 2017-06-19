@@ -11,18 +11,25 @@ import resource from './resource.json';
 Sitemap.set(resource.sitemap.name.toLowerCase(), resource.sitemap);
 
 class Work extends DOM.Component {
-    constructor (props) {
-        super(props);
+
+    componentWillAppear (callback) {
+        callback();
+    }
+
+    componentDidAppear () {
+        debugger
     }
 
     render () {
         return (
             <section
-                data-name={resource.name}
-                data-route={resource.route}
+                data-route={resource.sitemap.route}
+                data-view={resource.sitemap.name}
                 ref={element => this.element = element}
+                style={this.props.style}
             >
                 <h2>Works!!!</h2>
+                <p>I am here</p>
             </section>
         );
     }
