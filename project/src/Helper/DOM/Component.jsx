@@ -1,6 +1,7 @@
 'use strict';
 
 import AsyncEmitter from 'async-emitter';
+import raf from 'raf';
 import React from 'react/lib/ReactWithAddons';
 
 import { ResizeSensor } from 'css-element-queries';
@@ -15,33 +16,86 @@ class Component extends React.Component {
     static Unwrap = Unwrap;
     static Events = Events;
 
-    ResizeHandler = {
-        add () {
-            if (this.element && this.props.updateSizes) {
-                this.updateSizes();
+    static requestAnimationFrame = raf;
+    static cancelAnimationFrame = raf.cancel;
 
-                new ResizeSensor(this.element, this.updateSizes);
+    Resizable = {
+        handler () {
+            const element = (this.element || this.refs.element);
+
+            cancelAnimationFrame(this.ResizableFrame);
+            this.ResizableFrame = requestAnimationFrame(
+                () => {
+                    if (this.resizeHandler) {
+                        this.resizeHandler({
+                            height: element.offsetHeight,
+                            width: element.offsetWidth
+                        });
+                    }
+
+                    if (this.props.resizeHandler) {
+                        this.props.resizeHandler({
+                            height: element.offsetHeight,
+                            width: element.offsetWidth
+                        });
+                    }
+                }
+            );
+        },
+        validate () {
+            return Boolean(this.element || this.refs.element) && Boolean(this.props.resizeHandler || this.resizeHandler);
+        },
+        add () {
+            if (!this.Resizable.validate()) {
+                return;
             }
+
+            this.Resizable.handler();
+
+            new ResizeSensor(this.element || this.refs.element, this.Resizable.handler);
         },
 
         detect () {
-            if (this.element && this.props.updateSizes) {
-                ResizeSensor.detach(this.element, this.updateSizes);
+            if (!this.Resizable.validate()) {
+                return;
             }
+
+            ResizeSensor.detach(this.element || this.refs.element, this.Resizable.handler);
         }
     };
 
-    ScrollHandler = {
+    Scrollable = {
+        handler : event => {
+            cancelAnimationFrame(this.ScrollableFrame);
+            this.ScrollableFrame = requestAnimationFrame(
+                () => {
+                    if (this.scrollHandler) {
+                        this.scrollHandler(event);
+                    }
+
+                    if (this.props.scrollHandler) {
+                        this.props.scrollHandler(event);
+                    }
+                }
+            );
+        },
+        validate () {
+            return Boolean(this.props.scrollHandler || this.scrollHandler);
+        },
         add () {
-            if (this.props.scrollHandler || this.scrollHandler) {
-                window.addEventListener('scroll', this.props.scrollHandler || this.scrollHandler);
+            if (!this.Scrollable.validate()) {
+                return;
             }
+
+            window.addEventListener('scroll', this.Scrollable.handler);
         },
 
         detect () {
-            if (this.props.scrollHandler || this.scrollHandler) {
-                window.removeEventListener('scroll', this.props.scrollHandler || this.scrollHandler);
+            if (!this.Scrollable.validate()) {
+                return;
             }
+
+            window.removeEventListener('scroll', this.Scrollable.handler);
         }
     };
 
@@ -50,13 +104,15 @@ class Component extends React.Component {
 
         this.state = {};
 
-        this.ScrollHandler.add = this.ScrollHandler.add.bind(this);
-        this.ScrollHandler.detect = this.ScrollHandler.detect.bind(this);
+        this.Scrollable.add = this.Scrollable.add.bind(this);
+        this.Scrollable.detect = this.Scrollable.detect.bind(this);
+        this.Scrollable.handler = this.Scrollable.handler.bind(this);
+        this.Scrollable.validate = this.Scrollable.validate.bind(this);
 
-        this.ResizeHandler.add = this.ResizeHandler.add.bind(this);
-        this.ResizeHandler.detect = this.ResizeHandler.detect.bind(this);
-
-        this.updateSizes = this.updateSizes.bind(this);
+        this.Resizable.add = this.Resizable.add.bind(this);
+        this.Resizable.detect = this.Resizable.detect.bind(this);
+        this.Resizable.handler = this.Resizable.handler.bind(this);
+        this.Resizable.validate = this.Resizable.validate.bind(this);
     }
 
     setState (currentState) {
@@ -68,25 +124,14 @@ class Component extends React.Component {
         )
     }
 
-    updateSizes () {
-        cancelAnimationFrame(this.updateSizesFrame);
-
-        this.updateSizesFrame = requestAnimationFrame(
-            () => this.props.updateSizes({
-                height: this.element.offsetHeight,
-                width: this.element.offsetWidth
-            })
-        );
-    }
-
     componentDidMount () {
-        this.ScrollHandler.add();
-        this.ResizeHandler.add();
+        this.Scrollable.add();
+        this.Resizable.add();
     }
 
     componentWillUnmount () {
-        this.ScrollHandler.detect();
-        this.ResizeHandler.detect();
+        this.Scrollable.detect();
+        this.Resizable.detect();
     }
 }
 

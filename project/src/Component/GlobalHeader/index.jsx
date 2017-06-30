@@ -58,8 +58,8 @@ class GlobalHeader extends DOM.Component {
     }
 
     setScrollState (scrollTop) {
-        cancelAnimationFrame(this.scroll.setScrollStateFrame);
-        this.scroll.setScrollStateFrame = requestAnimationFrame(
+        DOM.Component.cancelAnimationFrame(this.scroll.setScrollStateFrame);
+        this.scroll.setScrollStateFrame = DOM.Component.requestAnimationFrame(
             () => {
                 const isInactive = resource.inactiveInTheseViews.some(view => view === this.current.name);
 
@@ -73,8 +73,8 @@ class GlobalHeader extends DOM.Component {
     scrollHandler (event) {
         this.setScrollState(event.srcElement.scrollingElement.scrollTop);
 
-        cancelAnimationFrame(this.scroll.scrollHandlerFrame);
-        this.scroll.scrollHandlerFrame = requestAnimationFrame(
+        DOM.Component.cancelAnimationFrame(this.scroll.scrollHandlerFrame);
+        this.scroll.scrollHandlerFrame = DOM.Component.requestAnimationFrame(
             () => this.setScrollState(event.srcElement.scrollingElement.scrollTop)
         );
     }

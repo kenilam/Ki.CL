@@ -139,6 +139,16 @@ module.exports = {
                 }))
             },
 
+            {
+                test: /\.glsl$/,
+                loader: 'webpack-glsl-loader'
+            },
+
+            {
+                test: /\.?rc$/,
+                use: 'rc-exports-loader'
+            },
+
             assetLoader(/\.(gif)$/i, { mimetype : 'image/gif' }),
             assetLoader(/\.(jpe?g)$/i, { mimetype : 'image/pjpeg' }),
             assetLoader(/\.(png)$/i, { mimetype : 'image/png' }),
@@ -147,12 +157,7 @@ module.exports = {
             assetLoader(/\.woff$/, { mimetype : 'application/font-woff' }),
             assetLoader(/\.woff2$/, { mimetype : 'application/font-woff2' }),
             assetLoader(/\.[ot]tf$/, { mimetype : 'application/octet-stream' }),
-            assetLoader(/\.eot$/, { mimetype : 'application/vnd.ms-fontobject' }),
-
-            {
-                test: /\.?rc$/,
-                use: 'rc-exports-loader'
-            }
+            assetLoader(/\.eot$/, { mimetype : 'application/vnd.ms-fontobject' })
         ]
     },
     plugins : [
@@ -187,8 +192,8 @@ module.exports = {
         }),
 
         new webpack.optimize.OccurrenceOrderPlugin(true),
-
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ],
 
     watch : true,

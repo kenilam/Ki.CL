@@ -11,7 +11,9 @@ $thickest_font_weight: 700;
 @mixin set-font-size ($rate, $line_height: 1.5) {
   @include font-size($rate);
 
-  line-height: $line_height;
+  @if type_of($line-height) == 'number' {
+    line-height: $line_height;
+  }
 
   @if $rate >= 1 {
     font-weight: $thicker_font_weight;

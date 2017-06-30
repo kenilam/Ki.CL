@@ -22,8 +22,8 @@ class GlobalFooter extends DOM.Component {
     }
 
     setInactiveState () {
-        cancelAnimationFrame(this.setActiveStateFrame);
-        this.setActiveStateFrame = requestAnimationFrame(
+        DOM.Component.cancelAnimationFrame(this.setActiveStateFrame);
+        this.setActiveStateFrame = DOM.Component.requestAnimationFrame(
             () => this.setState({
                 isInactive : resource.inactiveInTheseViews.some(view => view === this.current.name)
             })

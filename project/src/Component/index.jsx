@@ -1,5 +1,6 @@
 'use strict';
 
+import Canvas from './Canvas';
 import GlobalHeader from './GlobalHeader';
 import GlobalFooter from './GlobalFooter';
 import Logo from './Logo';
@@ -9,6 +10,7 @@ import Sitemap from './Sitemap';
 import TransitionGroup from './TransitionGroup';
 
 export {
+    Canvas,
     GlobalHeader,
     GlobalFooter,
     Link,

@@ -39,8 +39,8 @@ class App {
     }
 
     initialState () {
-        this.appendElement(<View updateRoute={this.updateRoute.bind(this)}/>);
-        this.appendElement(<GlobalHeader updateSizes={this.updateViewSizes.bind(this)} />);
+        this.appendElement(<View routeHandler={this.updateRoute.bind(this)}/>);
+        this.appendElement(<GlobalHeader resizeHandler={this.updateViewSizes.bind(this)} />);
         this.appendElement(<GlobalFooter />);
 
         this.header = this.body.querySelector('.GlobalHeader');

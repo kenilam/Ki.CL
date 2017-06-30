@@ -1,5 +1,7 @@
 @import 'import';
 
+$homeGrid : $grid * 3;
+
 [data-view=home] {
   .GlobalFooter {
     bottom: 0;
@@ -7,34 +9,31 @@
   }
 }
 
+main[data-view=home] {
+  z-index: 3000;
+}
+
 section[data-view=home] {
-  @include background-image(url('../../Asset/whitechapel.jpg'));
-  @include background-size(cover);
   @include display-flex();
   @include flex-direction(column);
   @include align-items(center);
   @include justify-content(center);
+  @include rem(margin, $homeGrid);
 
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+  color: $black;
+  height: calc(100vh - #{$homeGrid * 2}rem);
   position: fixed;
-  width: 100vw;
+  width: calc(100vw - #{$homeGrid * 2}rem);
 
-  > * {
+  .Canvas {
+    background-color: $darkest_white;
+    position: absolute;
+    top: 0;
     z-index: 1;
   }
 
-  &::before {
-    @include content();
-
-    display: block;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 0;
+  > :not(.Canvas) {
+    z-index: 2;
   }
 
   .Navigation {

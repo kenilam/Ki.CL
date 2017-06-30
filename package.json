@@ -54,6 +54,7 @@
     "file-loader": "^0.11.2",
     "get-transition-duration": "^1.1.1",
     "glob": "^7.1.2",
+    "gsap": "^1.19.1",
     "html-webpack-harddisk-plugin": "^0.1.0",
     "html-webpack-plugin": "^2.28.0",
     "jquery": "^3.2.1",
@@ -62,8 +63,10 @@
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "only-if-changed-webpack-plugin": "0.0.1",
+    "pixi.js": "^4.5.3",
     "postcss-loader": "^2.0.6",
     "prop-types": "^15.5.10",
+    "raf": "^3.3.2",
     "rc-exports-loader": "0.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -76,8 +79,12 @@
     "stylelint-config-standard": "^16.0.0",
     "stylelint-config-suitcss": "^11.0.0",
     "stylelint-webpack-plugin": "^0.7.0",
+    "three": "^0.85.2",
     "webpack": "^2.6.1",
+    "webpack-dev-middleware": "^1.11.0",
     "webpack-dev-server": "^2.4.5",
+    "webpack-glsl-loader": "^1.0.1",
+    "webpack-hot-middleware": "^2.18.0",
     "which-transition-end-event": "^0.1.0"
   }
 }

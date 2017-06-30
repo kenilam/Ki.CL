@@ -39,8 +39,8 @@ class View extends DOM.Component {
             route : current || {}
         });
 
-        if (this.props.updateRoute) {
-            this.props.updateRoute(current || {});
+        if (this.props.routeHandler) {
+            this.props.routeHandler(current || {});
         }
 
         if (current.name === 'home') {
@@ -101,12 +101,12 @@ class View extends DOM.Component {
                             switch (view) {
                                 case 'about' : return <About
                                     style={this.state.style.section}
-                                    updateSizes={this.updateMainSizes}
+                                    resizeHandler={this.updateMainSizes}
                                 />;
 
                                 case 'works' : return <Works
                                     style={this.state.style.section}
-                                    updateSizes={this.updateMainSizes}
+                                    resizeHandler={this.updateMainSizes}
                                 />;
 
                                 default : return <Home/>;
