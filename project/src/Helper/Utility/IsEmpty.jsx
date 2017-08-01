@@ -14,7 +14,7 @@ class IsEmpty {
             return false;
         }
 
-        return Object.keys(variables).some(
+        return !Object.keys(variables).some(
             name => variables.hasOwnProperty(name) === true
         );
     }

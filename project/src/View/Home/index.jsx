@@ -43,16 +43,35 @@ class Home extends DOM.Component {
 
     componentDidMount () {
         super.componentDidMount();
-
-        this.updateCanvasStyles();
-        window.addEventListener('resize', this.updateCanvasStyles);
     }
 
     componentWillUnmount () {
         super.componentWillUnmount();
+    }
 
-        cancelAnimationFrame(this.updateCanvasStylesFrame);
-        window.removeEventListener('resize', this.updateCanvasStyles);
+    resizeHandler ({ width, height }) {
+        const logo = this.refs.element.querySelector('.Logo').getBoundingClientRect();
+        const nav = this.refs.element.querySelector('.Navigation').getBoundingClientRect();
+
+        const minHeight = logo.height + nav.height;
+        let minWidth = logo.width > nav.width ? logo.width : nav.width;
+
+        if (minHeight > minWidth) {
+            minWidth = minHeight;
+        }
+
+        this.setState({
+            style : {
+                background : {
+                    height : height,
+                    width : width
+                }
+            },
+            minSizes : {
+                height : minHeight + (Background.WebGL.particleSize.max * 2),
+                width : minWidth + (Background.WebGL.particleSize.max * 2)
+            }
+        });
     }
 
     render () {
@@ -64,8 +83,9 @@ class Home extends DOM.Component {
             >
                 <Background
                     className='background'
+                    particleCount={1000}
+                    minSizes={this.state.minSizes}
                     style={this.state.style.background}
-                    particleCount={200}
                 />
                 <Logo/>
                 <Navigation

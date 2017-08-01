@@ -1,78 +1,33 @@
 'use strict';
 
 import React from 'react';
-import * as PIXI from 'pixi.js';
-
-import { TweenLite, EasingPack } from 'gsap';
 
 import { DOM, Utility } from '~/Helper';
 
 import resource from './resource.json';
 
 class Canvas extends DOM.Component {
+    static WebGL = DOM.WebGL;
+
+    static loadAssets = Canvas.WebGL.loadAssets;
+
     constructor (props) {
         super(props);
 
-        this.animate = this.animate.bind(this);
-        this.draw = this.draw.bind(this);
+        this.props = props;
+
         this.resizeHandler = this.resizeHandler.bind(this);
         this.setup = this.setup.bind(this);
     }
 
-    static Engine = PIXI;
-    static Tween = TweenLite;
-    static Ease = Power0.easeInOut;
-
-    static loadAssets (resources) {
-        if (!Array.isArray(resources)) {
-            resources = [resources];
-        }
-
-        resources
-            .filter( resource => !Canvas.Engine.loader.resources[resource.name] )
-            .forEach( resource => Canvas.Engine.loader.add(resource.name, resource.url) );
-
-        return new Promise(
-            resolve => {
-                Canvas.Engine.loader.load();
-                Canvas.Engine.loader.once('complete', (loader, resources) => resolve({
-                    loader : loader,
-                    resources : resources
-                }));
-            }
-        );
-    }
-
-    animate () {}
-
-    draw () {}
-
     setup () {
-        this.app = new Canvas.Engine.Application(
-            {
-                antialias : true,
-                clearBeforeRender : true,
-                forceFXAA : true,
-                height : this.props.style.height,
-                legacy : true,
-                resolution : window.devicePixelRatio,
-                roundPixels : true,
-                transparent : true,
-                view : this.refs.canvas,
-                width : this.props.style.width
-            }
-        );
-
-        this.stage = this.app.stage;
-        this.renderer = this.app.renderer;
-
-        this.renderer.render(this.stage);
+        this.webGL = new DOM.WebGL({ refs: this.refs, props: this.props});
     }
 
     init () {
-        DOM.Component.cancelAnimationFrame(this.startframe);
-        this.startframe = DOM.Component.requestAnimationFrame(() => {
-            if (!Utility.IsEmpty.object(this.props.style)) {
+        DOM.Component.cancelAnimationFrame(this.initFrame);
+        this.initFrame = DOM.Component.requestAnimationFrame(() => {
+            if (Utility.IsEmpty.object(this.props.style)) {
                 this.init();
 
                 return;
@@ -82,8 +37,23 @@ class Canvas extends DOM.Component {
         });
     }
 
-    resizeHandler ({ width, height }) {
+    resizeHandler ({width, height}) {
+        return new Promise(
+            resolve => {
+                DOM.Component.cancelAnimationFrame(this.resizeHandlerFrame);
+                this.resizeHandlerFrame = DOM.Component.requestAnimationFrame(() => {
+                    if (!this.webGL) {
+                        this.resizeHandler({width, height});
 
+                        return;
+                    }
+
+                    this.webGL.setLimit({width, height});
+
+                    resolve();
+                });
+            }
+        );
     }
 
     componentDidMount () {
@@ -93,7 +63,9 @@ class Canvas extends DOM.Component {
     }
 
     componentWillUnmount () {
-        DOM.Component.cancelAnimationFrame(this.startframe);
+        super.componentDidMount();
+
+        DOM.Component.cancelAnimationFrame(this.initframe);
     }
 
     render () {

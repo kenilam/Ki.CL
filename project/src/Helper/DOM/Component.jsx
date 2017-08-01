@@ -21,20 +21,22 @@ class Component extends React.Component {
 
     Resizable = {
         handler () {
-            const element = (this.element || this.refs.element);
+            const self = this;
 
-            cancelAnimationFrame(this.ResizableFrame);
-            this.ResizableFrame = requestAnimationFrame(
+            const element = (self.element || self.refs.element);
+
+            cancelAnimationFrame(self.ResizableFrame);
+            self.ResizableFrame = requestAnimationFrame(
                 () => {
-                    if (this.resizeHandler) {
-                        this.resizeHandler({
+                    if (self.resizeHandler) {
+                        self.resizeHandler({
                             height: element.offsetHeight,
                             width: element.offsetWidth
                         });
                     }
 
-                    if (this.props.resizeHandler) {
-                        this.props.resizeHandler({
+                    if (self.props.resizeHandler) {
+                        self.props.resizeHandler({
                             height: element.offsetHeight,
                             width: element.offsetWidth
                         });
@@ -49,7 +51,7 @@ class Component extends React.Component {
             if (!this.Resizable.validate()) {
                 return;
             }
-
+            
             this.Resizable.handler();
 
             new ResizeSensor(this.element || this.refs.element, this.Resizable.handler);
@@ -66,15 +68,17 @@ class Component extends React.Component {
 
     Scrollable = {
         handler : event => {
-            cancelAnimationFrame(this.ScrollableFrame);
-            this.ScrollableFrame = requestAnimationFrame(
+            const self = this;
+
+            cancelAnimationFrame(self.ScrollableFrame);
+            self.ScrollableFrame = requestAnimationFrame(
                 () => {
-                    if (this.scrollHandler) {
-                        this.scrollHandler(event);
+                    if (self.scrollHandler) {
+                        self.scrollHandler(event);
                     }
 
-                    if (this.props.scrollHandler) {
-                        this.props.scrollHandler(event);
+                    if (self.props.scrollHandler) {
+                        self.props.scrollHandler(event);
                     }
                 }
             );

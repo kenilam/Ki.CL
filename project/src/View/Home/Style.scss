@@ -27,6 +27,8 @@ section[data-view=home] {
 
   .Canvas {
     background-color: $darkest_white;
+    border-radius: 0.3rem;
+    overflow: hidden;
     position: absolute;
     top: 0;
     z-index: 1;
@@ -48,6 +50,34 @@ section[data-view=home] {
       + a {
         padding-top: 0;
       }
+    }
+  }
+
+  &.animate-enter,
+  &.animate-leave,
+  .isInitialLoad & {
+    .Canvas {
+      @include transition-property(transform);
+      @include transition-duration($fast);
+      @include transition-timing-function($easing);
+      @include transform(scale(1.5));
+    }
+
+    .Logo,
+    .Navigation {
+      @include transition-property(opacity);
+      @include transition-duration($slow);
+      @include transition-timing-function($easing);
+      @include opacity(0);
+    }
+  }
+
+  &.animate-enter,
+  .isInitialLoad & {
+    .Canvas,
+    .Logo,
+    .Navigation {
+      @include transition-delay($slowest);
     }
   }
 }

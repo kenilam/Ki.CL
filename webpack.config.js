@@ -6,7 +6,6 @@ const path =  require('path');
 const shell = require('shelljs');
 const webpack = require('webpack');
 
-const Bourbon = require('bourbon');
 const CleanWebpack =  require('clean-webpack-plugin');
 const ExtractText =  require('extract-text-webpack-plugin');
 const HtmlWebpack =  require('html-webpack-plugin');
@@ -112,7 +111,8 @@ module.exports = {
                         {
                             loader : 'css-loader',
                             options : {
-                                constLoaders : 1
+                                constLoaders : 1,
+                                minimize : true
                             }
                         },
                         {
