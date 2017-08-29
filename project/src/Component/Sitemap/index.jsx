@@ -26,19 +26,23 @@ class Sitemap {
     static filter (map, options) {
         const filteredMap = {};
 
-        const names = Object.keys(map);
+        let names = Object.keys(map);
 
-        if (options.without) {
-            names.filter(
-                name => name !== options.without
-            ).forEach(
-                name => filteredMap[name] = map[name]
-            )
+        if (options) {
+            if (options.without) {
+                names = names.filter(
+                    name => ![].concat(options.without).some(without => without === name)
+                );
+            }
         }
 
         if (names.length === 0) {
             return map;
         }
+
+        names.forEach(
+            name => filteredMap[name] = map[name]
+        );
 
         return filteredMap;
     }

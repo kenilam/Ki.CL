@@ -14,33 +14,49 @@ main[data-view=home] {
 }
 
 section[data-view=home] {
-  @include display-flex();
-  @include flex-direction(column);
-  @include align-items(center);
-  @include justify-content(center);
-  @include rem(margin, $homeGrid);
+  @include transition-property(width);
+  @include transition-duration($fast);
+  @include transition-timing-function($easing);
+  @include transform(translate3d(-50%, -50%, 0));
 
+  border-radius: 50%;
+  border: 1px solid $light_grey;
   color: $black;
-  height: calc(100vh - #{$homeGrid * 2}rem);
+  left: 50%;
+  max-width: 30rem;
   position: fixed;
-  width: calc(100vw - #{$homeGrid * 2}rem);
+  top: 50%;
+  width: 30%;
+  will-change: width;
 
-  .Canvas {
-    background-color: $darkest_white;
-    border-radius: 0.3rem;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    z-index: 1;
+  &::before {
+    @include content();
+
+    display: block;
+    padding-top: 100%;
+    width: 100%;
   }
 
-  > :not(.Canvas) {
-    z-index: 2;
+  div {
+    @include display-flex();
+    @include flex-direction(column);
+    @include align-items(center);
+    @include justify-content(center);
+    @include transform(translate3d(-50%, -50%, 0));
+
+    min-height: 100%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+  }
+
+  .Logo {
+    @include set-font-size(4);
   }
 
   .Navigation {
-    @include flex-direction(column);
-    @include set-font-size(2);
+    @include set-font-size(3);
 
     text-transform: uppercase;
 
@@ -50,34 +66,6 @@ section[data-view=home] {
       + a {
         padding-top: 0;
       }
-    }
-  }
-
-  &.animate-enter,
-  &.animate-leave,
-  .isInitialLoad & {
-    .Canvas {
-      @include transition-property(transform);
-      @include transition-duration($fast);
-      @include transition-timing-function($easing);
-      @include transform(scale(1.5));
-    }
-
-    .Logo,
-    .Navigation {
-      @include transition-property(opacity);
-      @include transition-duration($slow);
-      @include transition-timing-function($easing);
-      @include opacity(0);
-    }
-  }
-
-  &.animate-enter,
-  .isInitialLoad & {
-    .Canvas,
-    .Logo,
-    .Navigation {
-      @include transition-delay($slowest);
     }
   }
 }

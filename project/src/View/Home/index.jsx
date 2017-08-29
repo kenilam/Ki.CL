@@ -17,24 +17,37 @@ class Home extends DOM.Component {
         super(props);
         
         this.state = {
-            style : {
-                background : {}
+            background : {
+                style : {},
+                minSizes : {}
             }
         };
 
-        this.updateCanvasStyles = this.updateCanvasStyles.bind(this);
+        this.updateBackgroundProps = this.updateBackgroundProps.bind(this);
     }
 
-    updateCanvasStyles () {
-        DOM.Component.cancelAnimationFrame(this.updateCanvasStylesFrame);
-        this.updateCanvasStylesFrame = DOM.Component.requestAnimationFrame(() => {
-            const sizes = this.refs.element.getBoundingClientRect();
+    updateBackgroundProps ({ width, height }) {
+        DOM.Component.cancelAnimationFrame(this.updateBackgroundPropsFrame);
+        this.updateBackgroundPropsFrame = DOM.Component.requestAnimationFrame(() => {
+            const logo = this.refs.element.querySelector('.Logo').getBoundingClientRect();
+            const nav = this.refs.element.querySelector('.Navigation').getBoundingClientRect();
+
+            const minHeight = logo.height + nav.height;
+            let minWidth = logo.width > nav.width ? logo.width : nav.width;
+
+            if (minHeight > minWidth) {
+                minWidth = minHeight;
+            }
 
             this.setState({
-                style : {
-                    background : {
-                        height : sizes.height,
-                        width : sizes.width
+                background : {
+                    style : {
+                        height : height,
+                        width : width
+                    },
+                    minSizes : {
+                        height : minHeight + (Background.WebGL.particleSize.max * 2),
+                        width : minWidth + (Background.WebGL.particleSize.max * 2)
                     }
                 }
             });
@@ -50,28 +63,7 @@ class Home extends DOM.Component {
     }
 
     resizeHandler ({ width, height }) {
-        const logo = this.refs.element.querySelector('.Logo').getBoundingClientRect();
-        const nav = this.refs.element.querySelector('.Navigation').getBoundingClientRect();
-
-        const minHeight = logo.height + nav.height;
-        let minWidth = logo.width > nav.width ? logo.width : nav.width;
-
-        if (minHeight > minWidth) {
-            minWidth = minHeight;
-        }
-
-        this.setState({
-            style : {
-                background : {
-                    height : height,
-                    width : width
-                }
-            },
-            minSizes : {
-                height : minHeight + (Background.WebGL.particleSize.max * 2),
-                width : minWidth + (Background.WebGL.particleSize.max * 2)
-            }
-        });
+        this.updateBackgroundProps({ width, height });
     }
 
     render () {
@@ -81,17 +73,10 @@ class Home extends DOM.Component {
                 data-view={resource.sitemap.name}
                 ref='element'
             >
-                <Background
-                    className='background'
-                    particleCount={1000}
-                    minSizes={this.state.minSizes}
-                    style={this.state.style.background}
-                />
-                <Logo/>
-                <Navigation
-                    columnView={true}
-                    list={Sitemap.filter(Sitemap.get(), { without : resource.sitemap.name })}
-                />
+                <div>
+                    <Logo/>
+                    <Navigation columnView list={Sitemap.filter(Sitemap.get(), { without : resource.sitemap.name })}/>
+                </div>
             </section>
         );
     }

@@ -8,6 +8,10 @@
   text-transform: capitalize;
 
   a {
+    @include display-flex();
+    @include align-items(center);
+    @include justify-content(center);
+
     + a {
       @include rem(padding-left, $grid * 2);
     }

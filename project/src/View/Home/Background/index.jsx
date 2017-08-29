@@ -36,16 +36,11 @@ class Background extends Canvas {
                         return;
                     }
 
-                    this.startTimer = setTimeout(
-                        () => {
-                            this.webGL.drawParticles(this.props.particleCount);
+                    this.webGL.drawParticles(this.props.particleCount);
 
-                            this.draw();
+                    this.draw();
 
-                            resolve();
-                        },
-                        300
-                    );
+                    resolve();
                 });
             }
         );
