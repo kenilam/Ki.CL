@@ -12,10 +12,11 @@ body {
   @include display-flex();
   @include flex-direction(column);
   @include transition-duration($speed);
-  @include transition-property(opacity);
+  @include transition-property(background-color, opacity);
   @include transition-timing-function($easing);
 
   will-change: opacity;
+  background-color: blue;
 }
 
 main {

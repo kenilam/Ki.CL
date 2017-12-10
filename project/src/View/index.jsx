@@ -119,4 +119,6 @@ class View extends DOM.Component {
     }
 }
 
+debgger
+
 export default View;

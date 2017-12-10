@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "node index --env development",
-    "build": "node index --env build",
+    "build": "node index --env production",
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\""
   },
   "keywords": [
