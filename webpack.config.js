@@ -62,10 +62,14 @@ if (fs.existsSync(cacheRoot)) {
     shell.mkdir('-p', cacheRoot);
 }
 
+console.log(process.env.PORT);
+
 module.exports = {
     devtool : 'source-map',
     context : `${opts.rootDir}/${srcRoot}`,
     entry : [
+        'webpack/hot/dev-server',
+        'webpack-hot-middleware/client',
         `./${entry.js}`,
         `./${entry.scss}`,
         `/${opts.rootDir}/.stylelintrc`,
@@ -73,6 +77,7 @@ module.exports = {
         `/${opts.rootDir}/.babelrc`
     ],
     output : {
+        publicPath : `/js/`,
         path : `${opts.rootDir}/${devRoot}`,
         filename : `${out.js}`
     },
@@ -196,12 +201,14 @@ module.exports = {
         new webpack.NoErrorsPlugin()
     ],
 
-    watch : true,
+    // watch : true,
 
     devServer: {
         historyApiFallback : true,
-        host : process.env.HOST,
-        port : process.env.PORT,
+        // host : process.env.HOST,
+        // port : process.env.PORT,
+        host : 'localhost',
+        port : 3000,
         open : true,
         hot : true,
         inline : true

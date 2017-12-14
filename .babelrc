@@ -1,7 +1,6 @@
 {
 	"presets" : [
-		"es2015",
-		"babel-preset-stage-1",
+		"env",
 		"react"
 	],
 	"env": {
