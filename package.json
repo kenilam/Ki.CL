@@ -1,0 +1,25 @@
+{
+  "name": "kicl",
+  "version": "0.0.1",
+  "description": "Codebase for www.ki-cl.com",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenilam/Ki.CL.git"
+  },
+  "scripts": {
+    "dev": "node index --env development",
+    "build": "node index --env production",
+    "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\""
+  },
+  "keywords": [
+    "Ki.CL",
+    "webpack"
+  ],
+  "author": "Keni Lam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenilam/Ki.CL/issues"
+  },
+  "homepage": "https://github.com/kenilam/Ki.CL#readme"
+}
