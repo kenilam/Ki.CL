@@ -1,5 +1,0 @@
-@import './rem';
-
-@mixin font-size($sizeValue) {
-  @include rem(font-size, $sizeValue);
-}
