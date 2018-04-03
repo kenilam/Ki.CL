@@ -1,0 +1,15 @@
+{
+    "siteName" : "Ki.CL",
+    "routes" : {
+        "home" : {
+            "path" : "/",
+            "name" : "Home",
+            "message" : "Ki.CL"
+        },
+        "about" : {
+            "path" : "/about",
+            "name" : "About",
+            "message" : "Ki.CL"
+        }
+    }
+}

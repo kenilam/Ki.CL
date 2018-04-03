@@ -1,20 +1,38 @@
 {
-	"presets" : [
-		"env",
-		"react"
-	],
-	"env": {
-		"development": {
-			"plugins": [["react-transform", {
-				"transforms": [{
-					"transform": "react-transform-hmr",
-					"imports": ["react"],
-					"locals": ["module"]
-				}]
-			}]]
-		}
-	},
-	"plugins": [
-		"transform-export-extensions"
-	]
+    "presets" : [
+        [
+            "env", {
+                "targets": {
+                    "browsers": ["last 2 versions", "safari >= 11"]
+                }
+            }
+        ],
+        "react"
+    ],
+    "plugins": [
+        [
+            "babel-plugin-root-import", [
+            {
+                "rootPathSuffix": ".",
+                "rootPathPrefix": "^"
+            },
+            {
+                "rootPathSuffix": ".Webpack",
+                "rootPathPrefix": "!"
+            },
+            {
+                "rootPathSuffix": "src",
+                "rootPathPrefix": "~"
+            }
+        ]
+        ],
+        [
+            "transform-class-properties", { "spec": true }
+        ],
+
+        "add-module-exports",
+        "transform-export-extensions",
+        "transform-object-rest-spread",
+        "react-hot-loader/babel"
+    ]
 }

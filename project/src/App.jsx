@@ -1,68 +1,29 @@
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { hot } from 'react-hot-loader';
 
-// import { TransitionGroup } from '~/Component';
+import State from 'State';
+import View from 'View';
 
-// import { DOM } from '~/Helper';
+import { GlobalHeader } from 'Component';
 
-// import View from '~/View';
+import './App.scss';
 
-// import { GlobalHeader, GlobalFooter } from '~/Component';
+const appRoot = document.querySelector('[app-root]');
 
-class App {
-    constructor () {
-        this.body = document.body;
-        // this.scriptTag = this.body.querySelector('script');
+const Component = () => [
+    <GlobalHeader key="GlobalHeader" />,
+    <View key="View" />
+];
 
-        // this.initialState();
-        
-        ReactDOM.render(<div>Keni</div>, document.body);
-    }
+const App = () => (
+    <State>
+        <Component />
+    </State>
+);
 
-    // updateViewSizes (sizes) {
-    //     View.Events.emit('view.style', {paddingTop : sizes.height});
-    // }
+const hotReload = hot(module);
 
-    // updateRoute (route) {
-    //     this.body.dataset.route = route.route;
-    //     this.body.dataset.view = route.name;
-    // }
+hotReload(Component);
 
-    // appendElement (element) {
-    //     const domElement = document.createElement('div');
-
-    //     this.scriptTag.parentNode.insertBefore(domElement, this.scriptTag);
-
-    //     ReactDOM.render(element, domElement);
-
-    //     DOM.Unwrap.parent(domElement);
-    // }
-
-    // initialState () {
-    //     this.appendElement(<View routeHandler={this.updateRoute.bind(this)}/>);
-    //     this.appendElement(<GlobalHeader resizeHandler={this.updateViewSizes.bind(this)} />);
-    //     this.appendElement(<GlobalFooter />);
-
-    //     this.header = this.body.querySelector('.GlobalHeader');
-
-    //     this.body.insertBefore(this.header, this.body.querySelector('main'));
-
-    //     if (location.hash !== '#/') {
-    //         return;
-    //     }
-
-    //     this.body.classList.add('isInitialLoad');
-
-    //     TransitionGroup.transitionEnd(this.header).then(
-    //         () => this.body.classList.remove('isInitialLoad')
-    //     );
-    // }
-}
-
-if (module.hot) {
-    
-}
-
-export default new App();
+ReactDOM.render(<App />, appRoot);
