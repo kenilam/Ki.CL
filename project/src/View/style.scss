@@ -1,0 +1,17 @@
+@import 'Core/Core';
+
+.view {
+    > .css-transition-enter-active,
+    > .css-transition-exit-active {
+        transition-property: opacity;
+    }
+
+    > .css-transition-enter,
+    > .css-transition-exit-active {
+        opacity: 0;
+    }
+
+    > .css-transition-enter-active {
+        opacity: 1;
+    }
+}

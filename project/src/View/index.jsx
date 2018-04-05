@@ -7,6 +7,8 @@ import { Transition } from 'Component';
 import About from './About';
 import Home from './Home';
 
+import './style.scss';
+
 const Component = ({ location, ...rest }) => (
     <Transition
         className="view"

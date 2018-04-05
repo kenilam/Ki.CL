@@ -6,10 +6,8 @@ import CSSTransition from './CSSTransition';
 
 import './style.scss';
 
-const defaultClassName = 'transition';
-
 const Transition = ({ className, childComponent, component, ...rest }) => {
-    className = classnames(className, defaultClassName);
+    className = classnames(className, 'transition');
 
     return (
         <TransitionGroup {...{ className, component }}>

@@ -1,0 +1,26 @@
+@import 'assets/fonts/kicl/fonts.scss';
+
+.logo {
+    position: relative;
+
+    &:before {
+        color: #000;
+        content: $kicl;
+        display: block;
+        font-family: $kicl_font_name;
+        position: relative;
+        text-indent: 0;
+        z-index: 1;
+    }
+
+    a {
+        color: transparent;
+        left: 0;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 2;
+    }
+}

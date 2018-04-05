@@ -4,6 +4,7 @@ import clean from './clean';
 import content from './content';
 import devServer from './devServer';
 import entry from './entry';
+import fonts from './fonts';
 import images from './images';
 import indexHTML from './indexHTML';
 import javascript from './javascript';
@@ -19,6 +20,7 @@ export {
     content,
 	devServer,
     entry,
+    fonts,
     images,
     indexHTML,
     javascript,

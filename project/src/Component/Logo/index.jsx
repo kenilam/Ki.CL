@@ -1,14 +1,13 @@
 import React from 'react';
-import { HashRouter as Router, NavLink } from 'react-router-dom';
+
+import { Link } from 'Component';
 
 import { Connector } from './State';
 
+import './style.scss';
+
 const Logo = ({ path, siteName }) => (
-    <Router>
-        <h1>
-            <NavLink to={path}>{siteName}</NavLink>
-        </h1>
-    </Router>
+    <Link to={path} text={siteName} component="h1" className="logo" />
 );
 
 const Component = Connector(Logo);

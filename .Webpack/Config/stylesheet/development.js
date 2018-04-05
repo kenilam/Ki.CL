@@ -32,22 +32,12 @@ const SCSSloaders = [].concat(
             sourceMap  : true,
             includePaths  : [
                 `${appRoot}/node_modules`,
-                `${appRoot}/src`
+                `${appRoot}/project`,
+                `${appRoot}/project/src`
             ]
         }
     }
 );
-
-const sassResources = glob.sync(`${appRoot}/src/**/_*.scss`);
-
-if (sassResources[0]) {
-    SCSSloaders.push({
-        loader : 'sass-resources-loader',
-        options : {
-            resources : sassResources
-        }
-    })
-}
 
 const config = {
     module : {
