@@ -26,6 +26,9 @@
             }
         ]
         ],
+        ["module-resolver", {
+            "root": ["./project/src", "./project/assets", "./project/content"]
+        }],
         [
             "transform-class-properties", { "spec": true }
         ],

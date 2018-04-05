@@ -1,17 +1,17 @@
 const config = {
-    module : {
-        rules : [
+    module: {
+        rules: [
             {
-                test : /\.(jpe?g|png|gif|svg)$/i,
-                exclude : /node_modules/,
-                use : [
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                exclude: /node_modules/,
+                use: [
                     {
-                        loader : 'file-loader'
+                        loader: 'file-loader'
                     }
                 ]
             }
         ]
     }
-}
+};
 
 export default config;

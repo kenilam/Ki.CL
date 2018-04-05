@@ -7,11 +7,8 @@ import { Args } from '!/Utilities';
 import { srcRoot as outputSrcRoot, tmpRoot } from './output';
 
 const config = {
-    plugins : [
-        new CleanWebpackPlugin([
-            tmpRoot,
-            outputSrcRoot
-        ], {
+    plugins: [
+        new CleanWebpackPlugin([tmpRoot, outputSrcRoot], {
             allowExternal: false,
             beforeEmit: false,
             verbose: Args.verbose,

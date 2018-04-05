@@ -1,21 +1,10 @@
-import { path as appRoot } from 'app-root-path';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
+import CopyPlugin from '!/Plugins/CopyPlugin';
 
 const srcRoot = 'project/content';
 
-const config = ({
-    plugins : [
-        new CopyWebpackPlugin([
-            {
-                cache : true,
-                debug : 'debug',
-                to : '[path]/[name].[ext]',
-                from : '**/*',
-                context : `${appRoot}/${srcRoot}`
-            }
-        ])
-    ]
-});
+const config = {
+    plugins: [new CopyPlugin({ srcRoot })]
+};
 
 export { srcRoot };
 export default config;

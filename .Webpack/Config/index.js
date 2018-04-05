@@ -18,7 +18,7 @@ export {
     bundleAnalyzer,
     clean,
     content,
-	devServer,
+    devServer,
     entry,
     fonts,
     images,
@@ -28,4 +28,4 @@ export {
     prodServer,
     resolve,
     stylesheet
-}
+};

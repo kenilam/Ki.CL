@@ -1,7 +1,5 @@
 import webpackMerge from 'webpack-merge';
 
-import { Args } from './Utilities';
-
 import {
     assets,
     bundleAnalyzer,

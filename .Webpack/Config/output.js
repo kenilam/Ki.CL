@@ -6,11 +6,11 @@ const tmpRoot = `${projectRoot}/.tmp`;
 const publicPath = '/';
 
 const config = {
-    output : {
-        hotUpdateChunkFilename : `${tmpRoot}/[id].[hash].hot-update.js`,
-        hotUpdateMainFilename : `${tmpRoot}/[hash].hot-update.js`,
-        filename : 'app.js',
-        path : `${appRoot}/${srcRoot}`,
+    output: {
+        hotUpdateChunkFilename: `${tmpRoot}/[id].[hash].hot-update.js`,
+        hotUpdateMainFilename: `${tmpRoot}/[hash].hot-update.js`,
+        filename: 'app.js',
+        path: `${appRoot}/${srcRoot}`,
 
         publicPath
     }

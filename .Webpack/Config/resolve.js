@@ -6,17 +6,15 @@ import { context } from './entry';
 
 const alias = {};
 
-fs.readdirSync( context ).forEach(
-	dir => {
-		const path = `${context}/${dir}`;
+fs.readdirSync(context).forEach(dir => {
+    const path = `${context}/${dir}`;
 
-		if ( !fs.statSync( path ).isDirectory() ) {
-			return;
-		}
+    if (!fs.statSync(path).isDirectory()) {
+        return;
+    }
 
-		alias[ dir ] = `${context}/${dir}`;
-	}
-);
+    alias[dir] = `${context}/${dir}`;
+});
 
 alias['^'] = appRoot;
 alias['~'] = context;
@@ -31,5 +29,5 @@ const resolve = {
 };
 
 export default {
-	resolve
-}
+    resolve
+};
