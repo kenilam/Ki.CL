@@ -7,7 +7,6 @@ import { Args } from '!/Utilities';
 import config from '^/ki-cl.config';
 
 import { srcRoot as assetsPath } from './assets';
-import { srcRoot as contentPath } from './content';
 import { publicPath } from './output';
 
 const host = config.localhost.host;
@@ -42,7 +41,7 @@ const optimization = {
     occurrenceOrder: true
 };
 
-const contentBase = ['', assetsPath, contentPath].map(path => `${path}/`);
+const contentBase = [assetsPath].map(path => `${path}/`);
 
 const devServer = {
     hot: true,

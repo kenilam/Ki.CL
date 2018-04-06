@@ -1,29 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { hot } from 'react-hot-loader';
 
-import State from 'State';
-import View from 'View';
+const { NODE_ENV } = process.env;
 
-import { GlobalHeader } from 'Component';
+const render = App => {
+    const appRoot = document.querySelector('[app-root]');
 
-import './App.scss';
+    ReactDOM.render(<App />, appRoot);
+};
 
-const appRoot = document.querySelector('[app-root]');
-
-const Component = () => [
-    <GlobalHeader key="GlobalHeader" />,
-    <View key="View" />
-];
-
-const App = () => (
-    <State>
-        <Component />
-    </State>
-);
-
-const hotReload = hot(module);
-
-hotReload(Component);
-
-ReactDOM.render(<App />, appRoot);
+import(`./App.${NODE_ENV}.jsx`).then(render);
