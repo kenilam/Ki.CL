@@ -11,7 +11,7 @@ import './style.scss';
 
 const Component = ({ location, ...rest }) => (
     <Transition
-        className="view"
+        className="view fade-in"
         component="main"
         childComponent="section"
         keyValue={location.pathname}
