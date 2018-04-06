@@ -23,17 +23,26 @@ const CSSloaders = [
     { loader: 'resolve-url-loader' }
 ];
 
-const SCSSloaders = [].concat(CSSloaders, {
-    loader: 'sass-loader',
-    options: {
-        sourceMap: true,
-        includePaths: [
-            `${appRoot}/node_modules`,
-            `${appRoot}/project`,
-            `${appRoot}/project/src`
-        ]
+const SCSSloaders = [].concat(
+    CSSloaders,
+    {
+        loader: 'fast-sass-loader',
+        options: {
+            sourceMap: true,
+            includePaths: [
+                `${appRoot}/node_modules`,
+                `${appRoot}/project`,
+                `${appRoot}/project/src`
+            ]
+        }
+    },
+    {
+        loader: 'sass-resources-loader',
+        options: {
+            resources: `${appRoot}/project/**/_*.scss`
+        }
     }
-});
+);
 
 const config = {
     module: {

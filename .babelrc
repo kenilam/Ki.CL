@@ -10,7 +10,6 @@
         "react"
     ],
     "plugins": [
-        "dynamic-import-webpack",
         [
             "babel-plugin-root-import", [
             {

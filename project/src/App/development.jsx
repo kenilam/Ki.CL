@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader';
 
-import App from './App.production';
+import App from './production';
 
 const Component = hot(module)(App);
 

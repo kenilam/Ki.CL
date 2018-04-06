@@ -21,6 +21,7 @@
     },
     "rules": {
         "prettier/prettier": "error",
+        "import/no-dynamic-require": 0,
         "import/extensions": 0,
         "import/no-unresolved": 0,
         "import/prefer-default-export": "1",

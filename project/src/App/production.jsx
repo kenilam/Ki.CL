@@ -5,7 +5,7 @@ import View from 'View';
 
 import { GlobalHeader } from 'Component';
 
-import './App.scss';
+import './style.scss';
 
 const Component = () => [
     <GlobalHeader key="GlobalHeader" />,
