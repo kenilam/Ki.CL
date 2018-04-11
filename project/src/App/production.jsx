@@ -1,15 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { hot } from 'react-hot-loader';
 
 import State from 'State';
 import View from 'View';
 
 import { GlobalHeader } from 'Component';
 
-import './App.scss';
-
-const appRoot = document.querySelector('[app-root]');
+import './style.scss';
 
 const Component = () => [
     <GlobalHeader key="GlobalHeader" />,
@@ -22,8 +18,4 @@ const App = () => (
     </State>
 );
 
-const hotReload = hot(module);
-
-hotReload(Component);
-
-ReactDOM.render(<App />, appRoot);
+export default App;

@@ -36,5 +36,14 @@
 ehthumbs.db
 Thumbs.db
 
+# Local Files #
+###############
 node_modules
+
+# IDE files #
+#############
 .idea
+
+# Local files #
+################
+project/build

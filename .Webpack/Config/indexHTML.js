@@ -7,7 +7,7 @@ export default {
 
             inject: 'body',
 
-            template: './index.html',
+            template: './Template/index.html',
 
             minify: {
                 caseSensitive: true,

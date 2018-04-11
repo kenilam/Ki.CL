@@ -1,9 +1,9 @@
 import assets from './assets';
 import bundleAnalyzer from './bundleAnalyzer';
 import clean from './clean';
-import content from './content';
 import devServer from './devServer';
 import entry from './entry';
+import environment from './environment';
 import fonts from './fonts';
 import images from './images';
 import indexHTML from './indexHTML';
@@ -17,9 +17,9 @@ export {
     assets,
     bundleAnalyzer,
     clean,
-    content,
     devServer,
     entry,
+    environment,
     fonts,
     images,
     indexHTML,

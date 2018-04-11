@@ -31,7 +31,7 @@ const config = {
     },
     plugins: [
         new ExtractTextPlugin({
-            filename: 'resources/[name]/styles.css',
+            filename: 'styles.css',
             allChunks: true
         })
     ]

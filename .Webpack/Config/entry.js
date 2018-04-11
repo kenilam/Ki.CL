@@ -1,6 +1,6 @@
 import { path as appRoot } from 'app-root-path';
 
-const entry = `./App.jsx`;
+const entry = `./entry.jsx`;
 const context = `${appRoot}/project/src`;
 
 export { context };

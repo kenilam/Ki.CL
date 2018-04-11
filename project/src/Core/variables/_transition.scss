@@ -1,4 +1,4 @@
-$ease: $ease-out-expo;
+$ease: cubic-bezier(0.19, 1, 0.22, 1);
 $speed: 1000ms;
 
 $fast: $speed / 2;
@@ -10,18 +10,19 @@ $slower: $speed * 3;
 $slowest: $speed * 4;
 
 @function vendor-prop-name ($prop-name, $prefix: (webkit moz o ms)) {
-	@return prefix($prop-name, $prefix);
+    @return prefix($prop-name, $prefix);
 }
 
 @function prefix ($property, $prefixes: (webkit moz o ms)) {
     $vendor-prefixed-properties: transform background-clip background-size clip-path backdrop-filter;
     $result: ();
-    @each $prefix in $prefixes {
-       @if index($vendor-prefixed-properties, $property) {
-         $property: -#{$prefix}-#{$property}
-       }
 
-       $result: append($result, $property);
+    @each $prefix in $prefixes {
+        @if index($vendor-prefixed-properties, $property) {
+            $property: -#{$prefix}-#{$property};
+        }
+
+        $result: append($result, $property);
     }
 
     @return $result;
@@ -29,6 +30,7 @@ $slowest: $speed * 4;
 
 @function trans-prefix ($transition, $prefix: moz) {
     $prefixed: ();
+
     @each $trans in $transition {
         $prop-name: nth($trans, 1);
         $vendor-prop-name: vendor-prop-name($prop-name, $prefix);
@@ -40,33 +42,37 @@ $slowest: $speed * 4;
 }
 
 @mixin set-will-change ($values...) {
-	$will-change: ();
+    $will-change: ();
 
-	@each $declaration in $values {
-		$prop: nth($declaration, 1);
+    @each $declaration in $values {
+        $prop: nth($declaration, 1);
 
         $prefix : vendor-prop-name($prop, webkit);
+
         @if #{$prop} != #{$prefix} {
-        	$will-change: append($will-change, $prefix, comma);
+            $will-change: append($will-change, $prefix, comma);
         }
 
         $prefix : vendor-prop-name($prop, moz);
+
         @if #{$prop} != #{$prefix} {
-        	$will-change: append($will-change, $prefix, comma);
+            $will-change: append($will-change, $prefix, comma);
         }
 
         $prefix : vendor-prop-name($prop, ms);
+
         @if #{$prop} != #{$prefix} {
-        	$will-change: append($will-change, $prefix, comma);
+            $will-change: append($will-change, $prefix, comma);
         }
 
         $prefix : vendor-prop-name($prop, o);
+
         @if #{$prop} != #{$prefix} {
-        	$will-change: append($will-change, $prefix, comma);
+            $will-change: append($will-change, $prefix, comma);
         }
 
         $will-change: append($will-change, $prop, comma);
-	}
+    }
 
     will-change: $will-change;
 }
@@ -79,7 +85,7 @@ $slowest: $speed * 4;
     transition: none;
 }
 
-@mixin set-transition ($values...) { 
+@mixin set-transition ($values...) {
     $transitions: ();
 
     @each $declaration in $values {
@@ -90,13 +96,15 @@ $slowest: $speed * 4;
         $length: length($declaration);
 
         @if $length > 1 {
-	        @for $i from 2 through $length {
-               $name : inspect(nth($declaration, $i));
+            @for $i from 2 through $length {
+                $name : inspect(nth($declaration, $i));
 
                 @if $name {
                     @if $i == 2 {
                         $prop-opts: append($prop-opts, nth($declaration, $i));
-                    } @else {
+                    }
+
+                    @else {
                         $prop-opts: append($prop-opts, $speed);
                     }
                 }
@@ -104,34 +112,37 @@ $slowest: $speed * 4;
                 @if $i == $length {
                     @if $name {
                         $prop-opts: append($prop-opts, nth($declaration, $i));
-                    } @else {
+                    }
+
+                    @else {
                         $prop-opts: append($prop-opts, $ease);
                     }
                 }
             }
-	    } @else {
-	    	$prop-opts: append(append($prop-opts, $speed), $ease);
-	    }
+        }
+
+        @else {
+            $prop-opts: append(append($prop-opts, $speed), $ease);
+        }
 
         $trans: ($prop $prop-opts);
         $transitions: append($transitions, $trans, comma);
     }
 
-    transition: $transitions;
     -webkit-transition: trans-prefix($transitions, webkit);
     -moz-transition: trans-prefix($transitions, moz);
     -ms-transition: trans-prefix($transitions, ms);
     -o-transition: trans-prefix($transitions, o);
+    transition: $transitions;
 
     @include set-will-change($values...);
 }
 
 @mixin unset-transition () {
-    transition: none;
     -webkit-transition: none;
     -moz-transition: none;
     -ms-transition: none;
     -o-transition: none;
-
+    transition: none;
     will-change: auto;
 }
