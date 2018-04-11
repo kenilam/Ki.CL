@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 
-import { routes, siteName } from 'content/resources';
+const mapStateToProps = state => {
+    const { routes, siteName } = state.resources;
 
-const mapStateToProps = () => ({
-    ...routes.home,
-    siteName
-});
+    return {
+        ...routes.home,
+        siteName
+    };
+};
 
 const Connector = connect(mapStateToProps);
 
