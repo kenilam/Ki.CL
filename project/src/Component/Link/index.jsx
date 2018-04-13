@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { HashRouter as Router, NavLink } from 'react-router-dom';
 
@@ -5,12 +7,20 @@ import classnames from 'classnames';
 
 import './style.scss';
 
+type Props = {
+    children: React.Node,
+    className: string,
+    component: string,
+    to: string,
+    text: string
+};
+
 const activeClassName = 'isActive';
 
-const Link = ({ className, component, to, text }) => {
+const Link = ({ children, className, component, to, text }: Props) => {
     let Wrapper;
 
-    const classNames = classnames(className);
+    className = classnames(className);
 
     if (component) {
         Wrapper = component;
@@ -19,19 +29,14 @@ const Link = ({ className, component, to, text }) => {
     return (
         <Router>
             {component ? (
-                <Wrapper className={classNames}>
-                    <NavLink to={to} exact activeClassName={activeClassName}>
+                <Wrapper {...{ className }}>
+                    <NavLink exact {...{ activeClassName, to }}>
                         {text}
                     </NavLink>
                 </Wrapper>
             ) : (
-                <NavLink
-                    to={to}
-                    exact
-                    className={className}
-                    activeClassName={activeClassName}
-                >
-                    {text}
+                <NavLink exact {...{ activeClassName, className, to }}>
+                    {text || children}
                 </NavLink>
             )}
         </Router>
