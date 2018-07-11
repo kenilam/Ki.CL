@@ -1,10 +1,20 @@
+// @flow
 import React from 'react';
 
 import { Logo, Nav } from 'Component';
 
 import { Connector } from './State';
 
-const GlobalHeader = ({ routes }) => (
+type routes = {
+    name: string,
+    path: string
+};
+
+type Props = {
+    routes: Array<routes>
+};
+
+const GlobalHeader = ({ routes }: Props) => (
     <header rule="banner">
         <Logo />
         <Nav {...{ routes }} />

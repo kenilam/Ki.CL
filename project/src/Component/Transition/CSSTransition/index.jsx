@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { CSSTransition as CSSTransitionInstance } from 'react-transition-group';
 
@@ -6,6 +7,14 @@ import transitionDuration from 'get-transition-duration';
 import classnames from 'classnames';
 
 import './style.scss';
+
+type Props = {
+    className: string | Array | Object,
+    children: React.Node,
+    component: React.Node,
+    keyValue: Number | string,
+    inValue: Number | string
+};
 
 const defaultClassName = 'css-transition';
 
@@ -26,7 +35,7 @@ const CSSTransition = ({
     component,
     keyValue,
     inValue
-}) => {
+}: Props) => {
     const Wrapper = component;
 
     className = classnames(className, defaultClassName);
@@ -38,7 +47,7 @@ const CSSTransition = ({
             in={inValue}
             addEndListener={addEndListener()}
         >
-            <Wrapper className={className}>{children}</Wrapper>
+            <Wrapper {...{ className }}>{children}</Wrapper>
         </CSSTransitionInstance>
     );
 };

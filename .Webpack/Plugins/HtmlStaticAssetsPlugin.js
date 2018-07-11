@@ -51,7 +51,7 @@ class HtmlStaticAssetsPlugin {
     }
 
     apply(compiler) {
-        compiler.plugin('compilation', this.compilation);
+        compiler.hooks.run.tap('compilation', this.compilation);
     }
 }
 
