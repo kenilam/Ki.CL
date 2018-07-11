@@ -3,7 +3,7 @@ import webpackMerge from 'webpack-merge';
 
 import { Args } from './Utilities';
 
-import dev from './development.babel';
+import { basicConfig as dev } from './development.babel';
 
 import { browser } from './Config/prodServer';
 
@@ -28,6 +28,7 @@ const errorHandler = error => {
 
 const statsHandler = (error, stats) =>
     new Promise((resolve, reject) => {
+        console.log(error);
         if (errorHandler(error)) {
             reject(error);
         }

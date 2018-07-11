@@ -1,37 +1,34 @@
 import browserSync from 'browser-sync';
 
-import { srcRoot as outSrcRoot } from '!/Config/output';
+import { srcRoot as baseDir } from '!/Config/output';
 
 import { Args } from '!/Utilities';
 
-import config from '^/ki-cl.config';
+import { localhost } from '^/ki-cl.config';
 
 const startPath = '';
 
 const browserConfig = {
-    browser: config.localhost.browser,
+    ...localhost,
 
-    files: [`${outSrcRoot}/**/*`],
+    startPath,
+
+    files: [`${baseDir}/**/*`],
 
     logConnections: true,
-    logPrefix: config.name,
     open: !Args.noBrowser,
-    port: config.localhost.port,
     reloadDelay: 0,
     reloadDebounce: 500,
 
     server: {
-        baseDir: outSrcRoot,
+        baseDir,
+
         directory: true
     },
 
     hooks: {
         'client:js': `___browserSync___.socket.on('disconnect', function () { window.close(); location.reload(); });`
-    },
-
-    ui: config.localhost.ui,
-
-    startPath
+    }
 };
 
 const browserInstance = browserSync.create();

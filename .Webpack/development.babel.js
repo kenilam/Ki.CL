@@ -18,10 +18,9 @@ import {
 
 const mode = process.env.NODE_ENV || 'development';
 
-const config = webpackMerge(
+const basicConfig = webpackMerge(
     assets,
     bundleAnalyzer,
-    devServer,
     clean,
     entry,
     environment,
@@ -31,10 +30,13 @@ const config = webpackMerge(
     javascript,
     output,
     resolve,
-    stylesheet,
-    { mode }
+    stylesheet
 );
 
+const config = webpackMerge(basicConfig, devServer, { mode });
+
 process.env.NODE_ENV = mode;
+
+export { basicConfig };
 
 export default config;

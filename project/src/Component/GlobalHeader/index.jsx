@@ -1,17 +1,13 @@
 import React from 'react';
 
-import { Link, Logo } from 'Component';
+import { Logo, Nav } from 'Component';
 
 import { Connector } from './State';
 
 const GlobalHeader = ({ routes }) => (
     <header rule="banner">
         <Logo />
-        <nav>
-            {routes.map(({ name, path }) => (
-                <Link to={path} text={name} key={name} />
-            ))}
-        </nav>
+        <Nav {...{ routes }} />
     </header>
 );
 

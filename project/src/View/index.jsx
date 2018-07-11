@@ -6,6 +6,7 @@ import { Transition } from 'Component';
 
 import About from './About';
 import Home from './Home';
+import Projects from './Projects';
 
 import './style.scss';
 
@@ -19,6 +20,7 @@ const Component = ({ location, ...rest }) => (
         <Switch location={location}>
             {About(rest)}
             {Home(rest)}
+            {Projects(rest)}
         </Switch>
     </Transition>
 );

@@ -7,25 +7,21 @@ const config = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['webpack-extract-css-hot-reload'].concat(
-                    ExtractTextPlugin.extract({
-                        use: CSSloaders.filter(
-                            ({ loader }) => loader !== 'style-loader'
-                        ),
-                        fallback: 'style-loader'
-                    })
-                )
+                use: ExtractTextPlugin.extract({
+                    use: CSSloaders.filter(
+                        ({ loader }) => loader !== 'style-loader'
+                    ),
+                    fallback: 'style-loader'
+                })
             },
             {
                 test: /\.scss$/,
-                use: ['webpack-extract-css-hot-reload'].concat(
-                    ExtractTextPlugin.extract({
-                        use: SCSSloaders.filter(
-                            ({ loader }) => loader !== 'style-loader'
-                        ),
-                        fallback: 'style-loader'
-                    })
-                )
+                use: ExtractTextPlugin.extract({
+                    use: SCSSloaders.filter(
+                        ({ loader }) => loader !== 'style-loader'
+                    ),
+                    fallback: 'style-loader'
+                })
             }
         ]
     },

@@ -3,7 +3,12 @@
     "routes" : {
         "home" : {
             "path" : "/",
-            "name" : "Home",
+            "name" : "Ki.CL",
+            "message" : "Ki.CL"
+        },
+        "projects" : {
+            "path" : "/projects",
+            "name" : "Projects",
             "message" : "Ki.CL"
         },
         "about" : {

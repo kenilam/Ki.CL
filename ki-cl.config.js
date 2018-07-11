@@ -1,8 +1,7 @@
 export default {
     name: 'Ki.CL',
     localhost: {
-        browser: 'safari',
-        logPrefix: 'digital-catalog',
+        logPrefix: 'Ki.CL',
         host: 'http://localhost',
         port: 3001,
         ui: {
