@@ -22,6 +22,19 @@ const Link = ({ children, className, component, to, text }: Props) => {
 
     className = classnames(className);
 
+    const Element = () => (
+        <NavLink
+            exact
+            {...{
+                activeClassName,
+                to,
+                className: !component ? className : null
+            }}
+        >
+            {text || children}
+        </NavLink>
+    );
+
     if (component) {
         Wrapper = component;
     }
@@ -30,14 +43,10 @@ const Link = ({ children, className, component, to, text }: Props) => {
         <Router>
             {component ? (
                 <Wrapper {...{ className }}>
-                    <NavLink exact {...{ activeClassName, to }}>
-                        {text}
-                    </NavLink>
+                    <Element />
                 </Wrapper>
             ) : (
-                <NavLink exact {...{ activeClassName, className, to }}>
-                    {text || children}
-                </NavLink>
+                <Element />
             )}
         </Router>
     );
