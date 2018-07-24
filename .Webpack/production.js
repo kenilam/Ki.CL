@@ -28,9 +28,10 @@ const errorHandler = error => {
 
 const statsHandler = (error, stats) =>
     new Promise((resolve, reject) => {
-        console.log(error);
         if (errorHandler(error)) {
             reject(error);
+            
+            return;
         }
 
         resolve(stats);

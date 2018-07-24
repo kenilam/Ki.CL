@@ -7,10 +7,12 @@ import { GlobalHeader } from 'Component';
 
 import './style.scss';
 
-const Component = () => [
-    <GlobalHeader key="GlobalHeader" />,
-    <View key="View" />
-];
+const Component = () => (
+    <React.Fragment>
+        <GlobalHeader />
+        <View />
+    </React.Fragment>
+);
 
 const App = () => (
     <State>
@@ -18,4 +20,4 @@ const App = () => (
     </State>
 );
 
-export default App;
+export { App };

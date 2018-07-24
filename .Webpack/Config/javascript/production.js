@@ -1,3 +1,5 @@
+// import formatter from 'eslint-friendly-formatter';
+
 const BabelLoader = {
     test: /\.(jsx|js)$/,
     enforce: 'pre',
@@ -19,8 +21,9 @@ const EsLintLoader = {
     exclude: /node_modules/,
     loader: 'eslint-loader',
     options: {
-        quite: true,
-        fix: true
+        cache: true,
+        fix: true,
+        quite: true
     }
 };
 

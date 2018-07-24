@@ -1,10 +1,8 @@
 import resources from 'content/resources';
 
-const initialState = { resources };
-
 const reducer = {
     resources() {
-        return initialState.resources;
+        return resources;
     }
 };
 

@@ -1,8 +1,6 @@
-import { hot } from 'react-hot-loader';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import renderer from './renderer';
-import App from './App';
+import App from './App.hot';
 
-const Component = hot(module)(App);
-
-renderer(Component);
+ReactDOM.render(<App />, document.querySelector('[app-root]'));
