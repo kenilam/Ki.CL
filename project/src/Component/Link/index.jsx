@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react';
 import { HashRouter as Router, NavLink } from 'react-router-dom';
 
@@ -18,7 +17,7 @@ type Props = {
 const activeClassName = 'isActive';
 
 const Link = ({ children, className, component, to, text }: Props) => {
-    let Wrapper;
+    const Wrapper = component;
 
     className = classnames(className);
 
@@ -28,20 +27,16 @@ const Link = ({ children, className, component, to, text }: Props) => {
             {...{
                 activeClassName,
                 to,
-                className: !component ? className : null
+                className: !Wrapper ? className : null
             }}
         >
             {text || children}
         </NavLink>
     );
 
-    if (component) {
-        Wrapper = component;
-    }
-
     return (
         <Router>
-            {component ? (
+            {Wrapper ? (
                 <Wrapper {...{ className }}>
                     <Element />
                 </Wrapper>

@@ -1,6 +1,7 @@
-import assets from './assets';
+import asset from './asset';
 import bundleAnalyzer from './bundleAnalyzer';
 import clean from './clean';
+import content from './content';
 import devServer from './devServer';
 import entry from './entry';
 import environment from './environment';
@@ -14,9 +15,10 @@ import resolve from './resolve';
 import stylesheet from './stylesheet';
 
 export {
-    assets,
+    asset,
     bundleAnalyzer,
     clean,
+    content,
     devServer,
     entry,
     environment,

@@ -3,11 +3,11 @@ import { Route } from 'react-router-dom';
 
 import { Connector, resources } from './State';
 
-const Projects = () => 'projects';
+const Component = () => 'Works';
 
-const Instance = Connector(Projects);
+const Instance = Connector(Component);
 
-const Component = props => (
+const Works = props => (
     <Route
         path={resources.path}
         exact
@@ -15,4 +15,4 @@ const Component = props => (
     />
 );
 
-export default Component;
+export default Works;

@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 
 import { routes } from 'content/resources';
 
-const resources = routes.projects;
+const resources = routes.works;
 
 const mapStateToProps = () => ({
-    ...routes.projects
+    ...resources
 });
 
 const Connector = connect(mapStateToProps);

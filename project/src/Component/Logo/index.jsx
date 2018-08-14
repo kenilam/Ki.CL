@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import { Link } from 'Component';
@@ -6,7 +7,12 @@ import { Connector } from './State';
 
 import './style.scss';
 
-const Logo = ({ path, siteName }) => (
+type Props = {
+    path: string,
+    siteName: string
+};
+
+const Logo = ({ path, siteName }: Props) => (
     <Link to={path} text={siteName} component="h1" className="logo" />
 );
 

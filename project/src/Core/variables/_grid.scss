@@ -1,160 +1,59 @@
-$min-grid: 40;
+$min-grid: 2rem;
 $grid: $min-grid * 2;
 $gutter: $min-grid / 2;
 $space: $gutter / 2;
 
-$mobile-size: 4;
-$largemobile-size: 6;
-$tablet-size: 9;
-$desktop-size: 12;
-$largedesktop-size: 15;
+$narrow-size: 360px;
+$mobile-size: 480px;
+$tablet-size: 740px;
+$desktop-size: 980px;
+$wide-size: 1300px;
 
-@function grid-size ($size) {
-	@return rem(($grid + $gutter) * $size - $gutter);
+// Configuration
+$mq-responsive: true;
+$mq-static-breakpoint: desktop;
+$mq-breakpoints: (
+    narrow: $narrow-size,
+    mobile: $mobile-size,
+    tablet: $tablet-size,
+    desktop: $desktop-size,
+    wide: $wide-size
+);
+
+@import '../../../../node_modules/sass-mq';
+
+@mixin narrower() {
+    @include mq($until: narrow) {
+        @content;
+    }
 }
 
-@function screen-size ($size) {
-	@return rem(($grid + $gutter) * $size + $gutter);
-};
-
-@function query-size ($min: false, $max: false, $screen: false, $ratio: false, $orientation: false) {
-	$size: rem($grid + $gutter);
-	$width : (min-width);
-
-	@if $min {
-		$min: screen-size($min);
-	}
-
-	@if $max {
-		$max: screen-size($max);
-	}
-
-	@if $min and not $max {
-		$width : (min-width $min);
-	}
-
-	@if $max and not $min {
-		$width : (max-width $max);
-	}
-
-	@if $min and $max {
-		$width : (width $min $max);
-	}
-
-	@if not $screen {
-		$screen: all;
-	}
-
-	@if $ratio {
-		$ratio: (min-resolution $ratio);
-	}
-
-	@if $orientation {
-		$orientation: (orientation $orientation);
-	}
-
-	@if $orientation and $ratio {
-		@return $screen $width, $ratio, $orientation;
-	}
-
-	@if $orientation and not $ratio {
-		@return $screen $width, $orientation;
-	}
-	
-	@if $ratio and not $orientation {
-		@return $screen $width, $ratio;
-	}
-
-	@return $screen $width;
+@mixin narrow() {
+    @include mq($until: mobile) {
+        @content;
+    }
 }
 
-@mixin smallmobile () {
-	@include breakpoint(query-size($max: $mobile-size - 0.1)) {
-		// smallmobile
-		@content;
-	}
-}
-@mixin smallmobile-landscape () {
-	@include breakpoint(query-size($max: $mobile-size - 0.1, $orientation: landscape)) {
-		// smallmobile-landscape
-		@content;
-	}
+@mixin mobile() {
+    @include mq($until: tablet) {
+        @content;
+    }
 }
 
-@mixin mobile () {
-	@include breakpoint(query-size($max: $largemobile-size - 0.1)) {
-		// mobile
-		@content;
-	}
-}
-@mixin mobile-landscape () {
-	@include breakpoint(query-size($max: $largemobile-size - 0.1, $orientation: landscape)) {
-		// mobile-landscape
-		@content;
-	}
+@mixin tablet() {
+    @include mq($until: desktop) {
+        @content;
+    }
 }
 
-@mixin largemobile () {
-	@include breakpoint(query-size($max: $tablet-size - 0.1)) {
-		// largemobile
-		@content;
-	}
-}
-@mixin largemobile-landscape () {
-	@include breakpoint(query-size($max: $tablet-size - 0.1, $orientation: landscape)) {
-		// largemobile-landscape
-		@content;
-	}
+@mixin desktop() {
+    @include mq($until: wide) {
+        @content;
+    }
 }
 
-@mixin tablet () {
-	@include breakpoint(query-size($max: $desktop-size - 0.1)) {
-		// tablet
-		@content;
-	}
-}
-@mixin tablet-landscape () {
-	@include breakpoint(query-size($max: $desktop-size - 0.1, $orientation: landscape)) {
-		// tablet-landscape
-		@content;
-	}
-}
-
-@mixin desktop () {
-	@include breakpoint(query-size($max: $largedesktop-size - 0.1)) {
-		// desktop
-		@content;
-	}
-}
-@mixin desktop-landscape () {
-	@include breakpoint(query-size($max: $largedesktop-size - 0.1, $orientation: landscape)) {
-		// desktop-landscape
-		@content;
-	}
-}
-
-@mixin largedesktop () {
-	@include breakpoint(query-size($min: $largedesktop-size)) {
-		// largedesktop
-		@content;
-	}
-}
-@mixin largedesktop-landscape () {
-	@include breakpoint(query-size($min: $largedesktop-size, $orientation: landscape)) {
-		// largedesktop-landscape
-		@content;
-	}
-}
-
-@mixin largestdesktop () {
-	@include breakpoint(query-size($min: $largedesktop-size + 0.1)) {
-		// largestdesktop
-		@content;
-	}
-}
-@mixin largestdesktop-landscape () {
-	@include breakpoint(query-size($min: $largedesktop-size + 0.1, $orientation: landscape)) {
-		// largestdesktop-landscape
-		@content;
-	}
+@mixin wide() {
+    @include mq($from: wide) {
+        @content;
+    }
 }

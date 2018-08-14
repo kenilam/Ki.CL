@@ -34,7 +34,8 @@ const CSSTransition = ({
     children,
     component,
     keyValue,
-    inValue
+    inValue,
+    ...rest
 }: Props) => {
     const Wrapper = component;
 
@@ -46,6 +47,7 @@ const CSSTransition = ({
             key={keyValue}
             in={inValue}
             addEndListener={addEndListener()}
+            {...rest}
         >
             <Wrapper {...{ className }}>{children}</Wrapper>
         </CSSTransitionInstance>

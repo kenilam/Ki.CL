@@ -19,14 +19,13 @@ const CSSloaders = [
                 path: `${appRoot}/.postcssrc.js`
             }
         }
-    },
-    { loader: 'resolve-url-loader' }
+    }
 ];
 
 const SCSSloaders = [].concat(
     CSSloaders,
     {
-        loader: 'fast-sass-loader',
+        loader: 'sass-loader',
         options: {
             sourceMap: true,
             includePaths: [

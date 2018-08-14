@@ -1,10 +1,11 @@
 import webpackMerge from 'webpack-merge';
 
 import {
-    assets,
+    asset,
     bundleAnalyzer,
     devServer,
     clean,
+    content,
     entry,
     environment,
     fonts,
@@ -19,9 +20,10 @@ import {
 const mode = process.env.NODE_ENV || 'development';
 
 const basicConfig = webpackMerge(
-    assets,
+    asset,
     bundleAnalyzer,
     clean,
+    content,
     entry,
     environment,
     fonts,

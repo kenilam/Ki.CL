@@ -1,6 +1,6 @@
 import CopyPlugin from '!/Plugins/CopyPlugin';
 
-const srcRoot = 'project/assets';
+const srcRoot = 'project/asset';
 
 const config = {
     plugins: [new CopyPlugin({ srcRoot })]

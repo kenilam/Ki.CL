@@ -1,0 +1,10 @@
+nav.navigation {
+    display: flex;
+    padding: .5rem;
+
+    > a {
+        + a {
+            margin-left: .5rem;
+        }
+    }
+}

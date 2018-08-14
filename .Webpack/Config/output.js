@@ -8,7 +8,9 @@ const publicPath = '/';
 const output = {
     filename: 'app.js',
     path: `${appRoot}/${srcRoot}`,
-    publicPath
+    publicPath,
+    hotUpdateChunkFilename: `${tmpRoot}/[id].[hash].hot-update.js`,
+    hotUpdateMainFilename: `${tmpRoot}/[hash].hot-update.js`
 };
 
 const config = { output };

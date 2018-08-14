@@ -32,6 +32,10 @@
         [
             "transform-class-properties", { "spec": true }
         ],
+        ["transform-runtime", {
+            "polyfill": false,
+            "regenerator": true
+        }],
 
         "add-module-exports",
         "transform-export-extensions",

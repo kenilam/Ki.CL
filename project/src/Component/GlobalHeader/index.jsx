@@ -1,9 +1,13 @@
 // @flow
 import React from 'react';
 
-import { Logo, Nav } from 'Component';
+import ReactResizeDetector from 'react-resize-detector';
+
+import { GraphicLayer, Logo, Nav } from 'Component';
 
 import { Connector } from './State';
+
+import './style.scss';
 
 type routes = {
     name: string,
@@ -11,13 +15,24 @@ type routes = {
 };
 
 type Props = {
-    routes: Array<routes>
+    height: Number,
+    routes: Array<routes>,
+    width: Number
 };
 
-const GlobalHeader = ({ routes }: Props) => (
-    <header rule="banner">
+const Content = ({ height, routes, width }: Props) => (
+    <React.Fragment>
         <Logo />
         <Nav {...{ routes }} />
+        <GraphicLayer height={height} width={width} />
+    </React.Fragment>
+);
+
+const GlobalHeader = props => (
+    <header rule="banner">
+        <ReactResizeDetector handleWidth handleHeight skipOnMount>
+            <Content {...props} />
+        </ReactResizeDetector>
     </header>
 );
 
