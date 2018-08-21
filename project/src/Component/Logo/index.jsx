@@ -16,6 +16,4 @@ const Logo = ({ path, siteName }: Props) => (
     <Link to={path} text={siteName} component="h1" className="logo" />
 );
 
-const Component = Connector(Logo);
-
-export default Component;
+export default Connector(Logo);

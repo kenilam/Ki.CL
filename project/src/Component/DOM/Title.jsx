@@ -7,7 +7,7 @@ const { routes, siteName } = resources;
 const separator = ' | ';
 
 const set = () => {
-    const views = hashToRoutes.toUpperCase().split('/');
+    const views = hashToRoutes.toUpperCase().split('.');
 
     document.title = `${siteName}${separator}${views.join(separator) ||
         routes.home.name.toUpperCase()}`;

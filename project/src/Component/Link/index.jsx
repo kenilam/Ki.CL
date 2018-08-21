@@ -30,7 +30,7 @@ const Link = ({ children, className, component, to, text }: Props) => {
                 className: !Wrapper ? className : null
             }}
         >
-            {text || children}
+            {text ? <span>{text}</span> : children}
         </NavLink>
     );
 

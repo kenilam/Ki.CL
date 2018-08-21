@@ -2,8 +2,10 @@
     position: relative;
 
     > .css-transition {
-        position: absolute;
-        top: 0;
-        left: 0;
+        &:not([class*='css-transition-enter-done']) {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     }
 }

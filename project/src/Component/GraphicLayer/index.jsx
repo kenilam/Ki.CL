@@ -29,6 +29,8 @@ const defaultOptions = {
 
 const { Stage } = PIXI;
 
+const { devicePixelRatio } = window;
+
 const GraphicLayer = ({
     className,
     children,
@@ -36,8 +38,8 @@ const GraphicLayer = ({
     options,
     width
 }: Props) => {
-    height /= window.devicePixelRatio;
-    width /= window.devicePixelRatio;
+    height /= devicePixelRatio;
+    width /= devicePixelRatio;
 
     return (
         <Stage
@@ -50,5 +52,5 @@ const GraphicLayer = ({
     );
 };
 
-export { PIXI };
+export { PIXI, devicePixelRatio };
 export default GraphicLayer;

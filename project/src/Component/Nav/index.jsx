@@ -19,7 +19,7 @@ type Props = {
 const Nav = ({ routes }: Props) => (
     <Router>
         <nav className="navigation">
-            {routes.map(({ name, path }: route) => (
+            {routes.map(({ name, path }) => (
                 <Link to={path} text={name} key={randomId} />
             ))}
         </nav>

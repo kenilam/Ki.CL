@@ -4,7 +4,7 @@ import React from 'react';
 import { HashRouter as Router, Switch, withRouter } from 'react-router-dom';
 
 import { DOM, Transition } from 'Component';
-
+import { hashToRoutes } from 'Helper';
 import { Connector } from 'State';
 
 import About from './About';
@@ -19,6 +19,7 @@ const updateDOMElements = () => {
 };
 
 const Component = ({ location, ...rest }) => {
+    const { pathname } = location;
     updateDOMElements();
 
     return (
@@ -26,9 +27,12 @@ const Component = ({ location, ...rest }) => {
             className="view fade-in"
             components={{
                 wrapper: 'main',
-                element: 'section'
+                element: 'section',
+                elementAttrs: {
+                    'data-routes': hashToRoutes
+                }
             }}
-            keyValue={location.pathname}
+            keyValue={pathname}
             onEnter={updateDOMElements}
         >
             <Switch location={location}>

@@ -11,9 +11,11 @@ import './style.scss';
 type Props = {
     className: string | Array | Object,
     children: React.Node,
-    component: React.Node,
+    component?: React.Node,
     keyValue: Number | string,
-    inValue: Number | string
+    inValue: Number | string,
+    mountOnEnter?: Boolean,
+    unmountOnExit?: Boolean
 };
 
 const defaultClassName = 'css-transition';
@@ -43,7 +45,7 @@ const CSSTransition = ({
 
     return (
         <CSSTransitionInstance
-            classNames={defaultClassName}
+            classNames={className}
             key={keyValue}
             in={inValue}
             addEndListener={addEndListener()}
@@ -52,6 +54,12 @@ const CSSTransition = ({
             <Wrapper {...{ className }}>{children}</Wrapper>
         </CSSTransitionInstance>
     );
+};
+
+CSSTransition.defaultProps = {
+    component: 'div',
+    mountOnEnter: true,
+    unmountOnExit: true
 };
 
 export default CSSTransition;

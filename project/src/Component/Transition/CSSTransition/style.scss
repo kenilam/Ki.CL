@@ -2,7 +2,9 @@
 @import './fadeIn';
 
 [class*='css-transition-'] {
-    pointer-events: none;
+    &:not([class*='css-transition-enter-done']) {
+        pointer-events: none;
+    }
 }
 
 .css-transition {

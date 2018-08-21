@@ -9,13 +9,17 @@ import './style.scss';
 
 type className = String;
 
+type elementAttrs = {};
+
 type components = {
+    className: Array<className> | className,
     element: String,
-    wrapper: String
+    wrapper: String,
+    elementAttrs: elementAttrs
 };
 
 type Props = {
-    className: Array<className>,
+    className: Array<className> | className,
     childComponent: React.Node,
     components: components
 };
@@ -26,13 +30,18 @@ const Transition = ({
     components,
     ...rest
 }: Props) => {
-    const { wrapper, element } = components;
+    const { wrapper, element, elementAttrs } = components;
 
     className = classnames(className, 'transition');
 
     return (
         <TransitionGroup {...{ className, component: wrapper }}>
-            {CSSTransition({ ...rest, component: element })}
+            {CSSTransition({
+                ...rest,
+                ...elementAttrs,
+                component: element,
+                className: components.className
+            })}
         </TransitionGroup>
     );
 };

@@ -9,7 +9,7 @@ import State, { Connector } from './State';
 
 import './style.scss';
 
-const Component = ({ children, updateWindowSize, windowSize }) => {
+const Background = ({ children, updateWindowSize, windowSize }) => {
     const className = 'background';
 
     const Component = children;
@@ -28,13 +28,13 @@ const Component = ({ children, updateWindowSize, windowSize }) => {
     );
 };
 
-const Instance = Connector(Component);
+const Instance = Connector(Background);
 
-const Background = props => (
+const Component = props => (
     <State>
         <Instance {...props} />
     </State>
 );
 
 export { TweenLite };
-export default Background;
+export default Component;

@@ -1,9 +1,11 @@
 // @flow
 import React from 'react';
 
-import ReactResizeDetector from 'react-resize-detector';
+import { HashRouter as Router, withRouter } from 'react-router-dom';
 
-import { GraphicLayer, Logo, Nav } from 'Component';
+import { Logo, Nav } from 'Component';
+
+import { CSSTransition } from 'Component/Transition';
 
 import { Connector } from './State';
 
@@ -20,22 +22,27 @@ type Props = {
     width: Number
 };
 
-const Content = ({ height, routes, width }: Props) => (
-    <React.Fragment>
-        <Logo />
-        <Nav {...{ routes }} />
-        <GraphicLayer height={height} width={width} />
-    </React.Fragment>
+const Component = ({ location, routes }: Props) => (
+    <CSSTransition
+        component="header"
+        rule="banner"
+        inValue={location.pathname !== '/'}
+    >
+        <React.Fragment>
+            <Logo />
+            <Nav {...{ routes }} />
+        </React.Fragment>
+    </CSSTransition>
 );
+
+const Instance = Connector(Component);
+
+const InstanceWithRouter = withRouter(Instance);
 
 const GlobalHeader = props => (
-    <header rule="banner">
-        <ReactResizeDetector handleWidth handleHeight skipOnMount>
-            <Content {...props} />
-        </ReactResizeDetector>
-    </header>
+    <Router>
+        <InstanceWithRouter {...props} />
+    </Router>
 );
 
-const Component = Connector(GlobalHeader);
-
-export default Component;
+export default GlobalHeader;

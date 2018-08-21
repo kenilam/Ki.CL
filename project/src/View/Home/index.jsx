@@ -1,13 +1,25 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import Fittext from 'react-fittext';
+
+import { Logo, Nav } from 'Component';
 
 import { Connector, resources } from './State';
 
-const Component = ({ message }) => message;
+import './style.scss';
 
-const Instance = Connector(Component);
+const Home = ({ routes }) => (
+    <Fittext>
+        <React.Fragment>
+            <Logo />
+            <Nav {...{ routes }} />
+        </React.Fragment>
+    </Fittext>
+);
 
-const Home = props => (
+const Instance = Connector(Home);
+
+const Component = props => (
     <Route
         path={resources.path}
         exact
@@ -15,4 +27,4 @@ const Home = props => (
     />
 );
 
-export default Home;
+export default Component;

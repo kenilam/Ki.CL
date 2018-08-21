@@ -1,6 +1,10 @@
 import PixiPlugin from 'gsap/PixiPlugin';
 
+import { routes } from 'content/resources';
+
 const { parseColor } = PixiPlugin;
+
+const home = routes.home.name.toLowerCase();
 
 class Helper {
     static get windowSize() {
@@ -10,7 +14,7 @@ class Helper {
     }
 
     static get hashToRoutes() {
-        return window.location.hash.substr(2);
+        return window.location.hash.substr(2).replace(/\//g, '.') || home;
     }
 
     static get randomId() {
@@ -19,7 +23,7 @@ class Helper {
     }
 
     static hex2Decimal(hex) {
-        return parseColor(hex, 'number');
+        return parseColor(hex.toUpperCase(), 'number');
     }
 }
 
