@@ -21,7 +21,7 @@ type Props = {
 const defaultClassName = 'css-transition';
 
 const addEndListener = endListenerTimer => (node, done) => {
-    const duration = transitionDuration(node);
+    const duration = transitionDuration(node, true);
 
     if (duration === 0) {
         done();

@@ -1,3 +1,30 @@
+@import 'Component/Logo/variables';
+
 header[rule='banner'] {
-    
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: $min-grid auto auto $min-grid;
+    grid-template-rows: $min-grid auto $min-grid;
+
+    transition-property: transform;
+
+    h1,
+    nav {
+        grid-row-start: 2;
+    }
+
+    h1 {
+        grid-column-start: 2;
+    }
+
+    nav {
+        grid-column-start: 3;
+        justify-self: end;
+    }
+
+    &.css-transition-enter,
+    &.css-transition-exit-active,
+    &.css-transition-exit-done {
+        transform: translate3d(0, -100%, 0);
+    }
 }

@@ -16,7 +16,10 @@
 }
 
 .css-transition-enter-active,
-.css-transition-exit-active {
+.css-transition-exit-active,
+.css-transition-enter-done,
+.css-transition-exit-done {
+    transition-property: unset;
     transition-duration: 1000ms;
     transition-timing-function: $easeOutExpo;
 }

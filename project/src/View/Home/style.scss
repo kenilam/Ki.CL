@@ -1,23 +1,48 @@
+$logo_size: 16vw;
+$logo_width: $logo_size * 2.4;
+
+$nav_size: 20vw;
+
 [data-routes^=home] {
+    display: grid;
+    grid-template-columns: $min-grid auto $min-grid;
+    grid-template-rows: $min-grid auto auto $min-grid;
+    align-content: end;
+    justify-content: end;
+
     height: 100vh;
+    position: absolute;
     width: 100vw;
-    
+
+    h1,
     nav {
-        display: flex;
-        flex-direction: column;
+        grid-column-start: 2;
+        align-self: start;
+    }
+
+    h1 {
+        grid-row-start: 2;
+
+        font-size: $logo_size;
+        width: $logo_width;
+
+        @include mobile () {
+            width: $logo_size;
+        }
+    }
+
+    nav {
+        grid-row-start: 3;
+        grid-auto-flow: row;
+        justify-content: start;
+        
         font-family: $heading_font_family;
-        font-size: 30vw;
-        font-weight: 100;
-        margin-top: $space;
-        padding: 0;
+        font-size: $nav_size;
         text-transform: uppercase;
 
         a {
-            color: $white;
-
-            + a{
-                margin-left: 0;
-                margin-top: $space;
+            &:not(:hover):not(:active) {
+                color: $dark_grey;
             }
         }
     }

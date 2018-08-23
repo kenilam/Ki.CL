@@ -13,14 +13,19 @@ import Works from './Works';
 
 import './style.scss';
 
-const updateDOMElements = () => {
+const onEnter = location => {
     DOM.Title.set();
-    DOM.Body.setRoutesAttr();
+    DOM.Body.setRoutesAttr('current', location.pathname);
+};
+
+const onExit = location => {
+    DOM.Body.setRoutesAttr('previous', location.pathname);
 };
 
 const Component = ({ location, ...rest }) => {
     const { pathname } = location;
-    updateDOMElements();
+
+    onEnter(location);
 
     return (
         <Transition
@@ -33,7 +38,8 @@ const Component = ({ location, ...rest }) => {
                 }
             }}
             keyValue={pathname}
-            onEnter={updateDOMElements}
+            onEnter={() => onEnter(location)}
+            onExit={() => onExit(location)}
         >
             <Switch location={location}>
                 {About(rest)}

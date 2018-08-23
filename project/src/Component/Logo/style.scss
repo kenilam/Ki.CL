@@ -1,15 +1,12 @@
-@import 'fonts/kicl/fonts.scss';
+@import 'fonts/kicl/fonts';
 
-$size: $min-grid;
+@import 'variables';
 
 .logo {
     font-size: $size;
     overflow: hidden;
     position: relative;
-    transition-property: width;
-    transition-timing-function: $ease;
-    transition-duration: $fast;
-    width: $size * 2.4;
+    width: $width;
 
     &:before {
         color: $white;

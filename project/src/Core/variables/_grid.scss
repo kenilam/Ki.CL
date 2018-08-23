@@ -22,6 +22,18 @@ $mq-breakpoints: (
 
 @import '../../../../node_modules/sass-mq';
 
+@mixin landscape ($props...) {
+    @include mq($props, $and: '(orientation: landscape)') {
+        @content;
+    }
+}
+
+@mixin portrait ($props...) {
+    @include mq($props, $and: '(orientation: portrait)') {
+        @content;
+    }
+}
+
 @mixin narrower() {
     @include mq($until: narrow) {
         @content;

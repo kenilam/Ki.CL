@@ -7,23 +7,31 @@ const { parseColor } = PixiPlugin;
 const home = routes.home.name.toLowerCase();
 
 class Helper {
+    static get hashToRoutes() {
+        return window.location.hash.substr(2).replace(/\//g, '.') || home;
+    }
+
+    static get randomId() {
+        return `${new Date().getTime()}_${Math.floor(Math.random() * 10000) +
+            1}`;
+    }
+
     static get windowSize() {
         const { innerHeight: height, innerWidth: width } = window;
 
         return { width, height };
     }
 
-    static get hashToRoutes() {
-        return window.location.hash.substr(2).replace(/\//g, '.') || home;
-    }
-
-    static get randomId() {
-        return `${new Date().getTime()}_${Math.floor(Math.random() * 1000) +
-            1}`;
+    static capitalize(string) {
+        return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
     }
 
     static hex2Decimal(hex) {
         return parseColor(hex.toUpperCase(), 'number');
+    }
+
+    static pathnameToRoutes(pathname) {
+        return pathname.substr(1).replace(/\//g, '.') || home;
     }
 }
 
