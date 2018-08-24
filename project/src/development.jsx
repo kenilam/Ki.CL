@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App.hot';
+import App, { appRoot } from './App.hot';
 
-ReactDOM.render(<App />, document.querySelector('[app-root]'));
+ReactDOM.render(<App />, appRoot);

@@ -2,9 +2,10 @@
 @import './fadeIn';
 
 [class*='css-transition-'] {
-    &:not([class*='css-transition-enter-done']) {
-        pointer-events: none;
-    }
+    pointer-events: none;
+    transition-property: unset;
+    transition-duration: 1000ms;
+    transition-timing-function: $easeOutExpo;
 }
 
 .css-transition {
@@ -13,13 +14,4 @@
 
 .css-transition-exit {
     z-index: 1;
-}
-
-.css-transition-enter-active,
-.css-transition-exit-active,
-.css-transition-enter-done,
-.css-transition-exit-done {
-    transition-property: unset;
-    transition-duration: 1000ms;
-    transition-timing-function: $easeOutExpo;
 }

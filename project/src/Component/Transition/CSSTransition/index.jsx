@@ -28,7 +28,12 @@ const addEndListener = endListenerTimer => (node, done) => {
     }
 
     window.clearTimeout(endListenerTimer);
-    endListenerTimer = window.setTimeout(() => done(), duration + 100);
+    endListenerTimer = window.setTimeout(done, duration);
+};
+
+const removeDoneClasses = node => {
+    node.classList.remove(`${defaultClassName}-exit-done`);
+    node.classList.remove(`${defaultClassName}-enter-done`);
 };
 
 const CSSTransition = ({
@@ -48,6 +53,8 @@ const CSSTransition = ({
             classNames={className}
             key={keyValue}
             in={inValue}
+            onEntered={removeDoneClasses}
+            onExited={removeDoneClasses}
             addEndListener={addEndListener()}
             {...rest}
         >

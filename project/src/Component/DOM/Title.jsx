@@ -1,4 +1,4 @@
-import { hashToRoutes } from 'Helper';
+import { pathnameToRoutes } from 'Helper';
 
 import resources from 'content/resources';
 
@@ -6,10 +6,10 @@ const { routes, siteName } = resources;
 
 const separator = ' | ';
 
-const set = () => {
-    const views = hashToRoutes.toUpperCase().split('.');
+const set = pathname => {
+    const views = pathnameToRoutes(pathname);
 
-    document.title = `${siteName}${separator}${views.join(separator) ||
+    document.title = `${siteName}${separator}${views.replace('.', separator) ||
         routes.home.name.toUpperCase()}`;
 };
 

@@ -4,7 +4,7 @@ import React from 'react';
 import { HashRouter as Router, Switch, withRouter } from 'react-router-dom';
 
 import { DOM, Transition } from 'Component';
-import { hashToRoutes } from 'Helper';
+import { pathnameToRoutes } from 'Helper';
 import { Connector } from 'State';
 
 import About from './About';
@@ -13,19 +13,19 @@ import Works from './Works';
 
 import './style.scss';
 
-const onEnter = location => {
-    DOM.Title.set();
-    DOM.Body.setRoutesAttr('current', location.pathname);
+const onEnter = pathname => {
+    DOM.Title.set(pathname);
+    DOM.Body.setRoutesAttr('current', pathname);
 };
 
-const onExit = location => {
-    DOM.Body.setRoutesAttr('previous', location.pathname);
+const onExit = pathname => {
+    DOM.Body.setRoutesAttr('previous', pathname);
 };
 
 const Component = ({ location, ...rest }) => {
     const { pathname } = location;
 
-    onEnter(location);
+    onEnter(pathname);
 
     return (
         <Transition
@@ -34,12 +34,12 @@ const Component = ({ location, ...rest }) => {
                 wrapper: 'main',
                 element: 'section',
                 elementAttrs: {
-                    'data-routes': hashToRoutes
+                    'data-routes': pathnameToRoutes(pathname)
                 }
             }}
             keyValue={pathname}
-            onEnter={() => onEnter(location)}
-            onExit={() => onExit(location)}
+            onEnter={() => onEnter(pathname)}
+            onExit={() => onExit(pathname)}
         >
             <Switch location={location}>
                 {About(rest)}

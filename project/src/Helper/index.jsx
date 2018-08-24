@@ -7,10 +7,6 @@ const { parseColor } = PixiPlugin;
 const home = routes.home.name.toLowerCase();
 
 class Helper {
-    static get hashToRoutes() {
-        return window.location.hash.substr(2).replace(/\//g, '.') || home;
-    }
-
     static get randomId() {
         return `${new Date().getTime()}_${Math.floor(Math.random() * 10000) +
             1}`;

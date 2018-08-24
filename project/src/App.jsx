@@ -20,4 +20,7 @@ const App = () => (
     </State>
 );
 
-export { App };
+const appRoot = document.querySelector('[app-root]');
+
+export { appRoot };
+export default App;
