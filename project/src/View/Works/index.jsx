@@ -3,6 +3,8 @@ import { Route } from 'react-router-dom';
 
 import { Connector, resources } from './State';
 
+import './style.scss';
+
 const Works = () => 'Works';
 
 const Instance = Connector(Works);

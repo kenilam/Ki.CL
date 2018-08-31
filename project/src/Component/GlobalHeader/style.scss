@@ -1,17 +1,15 @@
-@import 'Component/Logo/variables';
-
 $landscape : (
     width: 200px
 );
 
 header[rule='banner'] {
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: $logo-width auto $logo-width;
 
     font-family: $heading_font_family;
     font-size: 1.2rem;
     letter-spacing: .2rem;
-    padding: $min-grid;
+    padding: $min-grid $grid;
     text-transform: uppercase;
     transition-property: transform;
 
@@ -21,7 +19,7 @@ header[rule='banner'] {
 
     nav {
         grid-column-start: 2;
-        justify-self: end;
+        justify-self: center;
     }
 
     &.css-transition-enter:not(.css-transition-enter-active),
@@ -30,6 +28,18 @@ header[rule='banner'] {
     }
 
     @include tablet() {
-        padding: $space $min-grid $space $space;
+        grid-template-columns: $logo-size auto $logo-size;
+
+        padding: $space;
+    }
+
+    @include narrow() {
+        grid-template-columns: $logo-size auto;
+
+        padding-right: $min-grid;
+
+        nav {
+            justify-self: end;
+        }
     }
 }

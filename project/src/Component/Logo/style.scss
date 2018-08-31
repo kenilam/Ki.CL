@@ -3,10 +3,10 @@
 @import 'variables';
 
 .logo {
-    font-size: $size;
+    font-size: $logo-size;
     overflow: hidden;
     position: relative;
-    width: $width;
+    width: $logo-width;
 
     &:before {
         color: $light_black;
@@ -33,6 +33,6 @@
     }
 
     @include mobile () {
-        width: $size;
+        width: $logo-size;
     }
 }

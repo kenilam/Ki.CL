@@ -1,0 +1,36 @@
+.slide {
+    > .css-transition-enter-active,
+    > .css-transition-exit-active,
+    &.css-transition-enter-active,
+    &.css-transition-exit-active {
+        transition-property: transform;
+    }
+
+    &.transition-backward {
+        > .css-transition-enter,
+        > .css-transition-exit-active,
+        &.css-transition-enter,
+        &.css-transition-exit-active {
+            transform: translate3d(100%, 0, 0);
+        }
+
+        > .css-transition-enter-active,
+        &.css-transition-enter-active {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    &.transition-forward {
+        > .css-transition-enter,
+        > .css-transition-exit-active,
+        &.css-transition-enter,
+        &.css-transition-exit-active {
+            transform: translate3d(-100%, 0, 0);
+        }
+
+        > .css-transition-enter-active,
+        &.css-transition-enter-active {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+}

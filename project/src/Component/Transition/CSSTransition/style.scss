@@ -1,9 +1,10 @@
 @import 'easing';
-@import './fadeIn';
+@import 'fadeIn';
+@import 'slide';
 
 [class*='css-transition-'] {
     pointer-events: none;
-    transition-property: unset;
+    transition-property: none;
     transition-duration: 1000ms;
     transition-timing-function: $easeOutExpo;
 }
