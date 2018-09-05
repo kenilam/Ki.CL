@@ -5,19 +5,19 @@ import * as PIXI from '@inlet/react-pixi';
 
 import classnames from 'classnames';
 
-type className = String;
+type className = string;
 
 type options = {
-    height: Number,
-    width: Number
+    height: number,
+    width: number
 };
 
 type Props = {
-    className: Array<className> | String,
+    className: Array<className> | string,
     children: React.Node,
-    height: Number,
+    height: number,
     options: options,
-    width: Number
+    width: number
 };
 
 const { devicePixelRatio } = window;

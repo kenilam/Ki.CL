@@ -8,8 +8,8 @@ import { randomId } from 'Helper';
 import './style.scss';
 
 type route = {
-    name: String,
-    path: String
+    name: string,
+    path: string
 };
 
 type Props = {

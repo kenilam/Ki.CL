@@ -9,13 +9,13 @@ import classnames from 'classnames';
 import './style.scss';
 
 type Props = {
-    className: string | Array | Object,
+    className: string | Array | {},
     children: React.Node,
     component?: React.Node,
-    keyValue: Number | string,
-    inValue: Number | string,
-    mountOnEnter?: Boolean,
-    unmountOnExit?: Boolean
+    keyValue: number | string,
+    inValue: number | string,
+    mountOnEnter?: boolean,
+    unmountOnExit?: boolean
 };
 
 const defaultClassName = 'css-transition';

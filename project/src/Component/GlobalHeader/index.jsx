@@ -17,9 +17,9 @@ type routes = {
 };
 
 type Props = {
-    height: Number,
+    height: number,
     routes: Array<routes>,
-    width: Number
+    width: number
 };
 
 const Component = ({ location, routes }: Props) => (

@@ -5,7 +5,7 @@ const actions = {
 };
 
 const reducer = {
-    windowSize(state = windowSize, action) {
+    backgroundSize(state = windowSize, action) {
         switch (action.type) {
             case actions.update:
                 return windowSize;
@@ -17,11 +17,11 @@ const reducer = {
 };
 
 const mapStateToProps = state => ({
-    windowSize: state.windowSize
+    backgroundSize: state.backgroundSize
 });
 
 const mapDispatchToProps = {
-    updateWindowSize: () => ({
+    updateBackgroundSize: () => ({
         type: actions.update
     })
 };

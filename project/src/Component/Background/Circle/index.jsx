@@ -1,19 +1,37 @@
 // @flow
 import React from 'react';
 
-import { PIXI } from 'Component/GraphicLayer';
+import { randomId } from 'Helper';
 
-const { Graphics } = PIXI;
+import Particle, { rgb, size } from './Particle';
 
-const steps = 360;
-const ratio = steps / (Math.PI * 2);
-
-const draw = () => {
-    Array.from(Array(steps).keys()).forEach(angle => {
-        console.log(ratio * angle);
-    });
+type Props = {
+    height: number,
+    width: number
 };
 
-const Circle = () => <Graphics {...{ draw }} />;
+const count = 200;
 
+const particleHolder = Array.from(Array(count).keys()).map(() => ({
+    color: rgb(),
+    size: size()
+}));
+
+const ratio = count / (Math.PI * 2);
+
+const Circle = ({ height, width }: Props) =>
+    Array.from(Array(count).keys()).map((value, index) => (
+        <Particle
+            {...{
+                key: randomId,
+                height,
+                index,
+                ratio,
+                width,
+                ...particleHolder[index]
+            }}
+        />
+    ));
+
+export { count };
 export default Circle;

@@ -1,8 +1,6 @@
 // @flow
 import React from 'react';
 
-import { TweenLite } from 'gsap';
-
 import GraphicLayer from 'Component/GraphicLayer';
 
 import Circle from './Circle';
@@ -11,39 +9,40 @@ import State, { Connector } from './State';
 
 import './style.scss';
 
-type windowSize = {
-    height: String | Number,
-    width: String | Number
+type backgroundSize = {
+    height: string | number,
+    width: string | number
 };
 
 type Props = {
+    backgroundSize: backgroundSize,
     children: React.Node,
-    windowResizeHandler: Function,
-    windowSize: windowSize
+    updateBackgroundSize: Function
 };
 
-const onResize = (windowResizeHandler, animationFrame) => {
-    if (!windowResizeHandler) {
-        return;
+class Background extends React.Component<Props> {
+    componentDidMount() {
+        const { updateBackgroundSize } = this.props;
+
+        window.addEventListener('resize', updateBackgroundSize, false);
     }
 
-    window.cancelAnimationFrame(animationFrame);
-    animationFrame = window.requestAnimationFrame(windowResizeHandler);
-};
+    componentWillUnmount() {
+        const { updateBackgroundSize } = this.props;
 
-const Background = ({ children, windowResizeHandler, windowSize }: Props) => {
-    const className = 'background';
+        window.removeEventListener('resize', updateBackgroundSize, false);
+    }
 
-    onResize(windowResizeHandler);
+    render() {
+        const { backgroundSize, children } = this.props;
 
-    return (
-        <GraphicLayer {...{ className, ...windowSize }}>
-            {React.Children.map(children, child =>
-                React.cloneElement(child, { windowSize })
-            )}
-        </GraphicLayer>
-    );
-};
+        return (
+            <GraphicLayer {...{ className: 'background', ...backgroundSize }}>
+                {children}
+            </GraphicLayer>
+        );
+    }
+}
 
 const Instance = Connector(Background);
 
@@ -53,5 +52,5 @@ const Component = props => (
     </State>
 );
 
-export { TweenLite, Circle };
+export { Circle };
 export default Component;

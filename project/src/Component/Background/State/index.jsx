@@ -3,18 +3,18 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import multi from 'redux-multi';
 
-import WindowSize from './WindowSize';
+import BackgroundSize from './BackgroundSize';
 
 const reducer = combineReducers({
-    ...WindowSize.reducer
+    ...BackgroundSize.reducer
 });
 
 const mapStateToProps = state => ({
-    ...WindowSize.mapStateToProps(state)
+    ...BackgroundSize.mapStateToProps(state)
 });
 
 const mapDispatchToProps = {
-    ...WindowSize.mapDispatchToProps
+    ...BackgroundSize.mapDispatchToProps
 };
 
 const Connector = connect(
@@ -28,5 +28,5 @@ const store = createStore(reducer, enhancer);
 
 const State = ({ children }) => <Provider {...{ store }}>{children}</Provider>;
 
-export { Connector, WindowSize };
+export { Connector, BackgroundSize };
 export default State;

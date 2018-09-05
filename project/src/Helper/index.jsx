@@ -8,8 +8,8 @@ const home = routes.home.name.toLowerCase();
 
 class Helper {
     static get randomId() {
-        return `${new Date().getTime()}_${Math.floor(Math.random() * 10000) +
-            1}`;
+        return `${new Date().getTime()}_${Math.random() *
+            1000}_${new Date().getMilliseconds()}_${Math.random() * 1000}`;
     }
 
     static get windowSize() {

@@ -7,14 +7,14 @@ import CSSTransition from './CSSTransition';
 
 import './style.scss';
 
-type className = String;
+type className = string;
 
 type elementAttrs = {};
 
 type components = {
     className: Array<className> | className,
-    element: String,
-    wrapper: String,
+    element: string,
+    wrapper: string,
     elementAttrs: elementAttrs
 };
 
