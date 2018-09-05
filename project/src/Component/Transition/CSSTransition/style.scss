@@ -1,12 +1,12 @@
-@import 'easing';
-@import 'fadeIn';
-@import 'slide';
+@import 'style/easing';
+@import 'style/fadeIn';
+@import 'style/slide';
 
 [class*='css-transition-'] {
     pointer-events: none;
     transition-property: none;
-    transition-duration: 1000ms;
-    transition-timing-function: $easeOutExpo;
+    transition-duration: $speed;
+    transition-timing-function: $easeInOutQuart;
 }
 
 .css-transition {

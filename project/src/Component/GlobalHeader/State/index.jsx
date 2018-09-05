@@ -4,7 +4,9 @@ const mapStateToProps = state => {
     const { routes } = state.resources;
 
     return {
-        routes: Object.keys(routes).map(route => routes[route])
+        routes: Object.keys(routes)
+            .filter(route => route !== 'home')
+            .map(route => routes[route])
     };
 };
 

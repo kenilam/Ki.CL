@@ -1,10 +1,16 @@
 {
     "siteName" : "Ki.CL",
+    "description" : "",
     "routes" : {
         "home" : {
             "path" : "/",
             "name" : "Home",
-            "message" : "Home"
+            "content" : {
+                "profession": [
+                    "Interactive Design",
+                    "Graphic Design"
+                ]
+            }
         },
         "about" : {
             "path" : "/about",
@@ -15,6 +21,11 @@
             "path" : "/works",
             "name" : "Works",
             "message" : "Ki.CL"
+        },
+        "contact" : {
+            "path" : "/contact",
+            "name" : "Contact",
+            "message" : "Contact"
         }
     }
 }

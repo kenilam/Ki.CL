@@ -1,6 +1,50 @@
-main {
+.view {
     > section {
         min-height: 100vh;
         min-width: 100vw;
+    }
+}
+
+[data-current-routes^='home'] {
+    section[data-routes^='home'] {
+        &.css-transition-enter {
+            transform: translate3d(0, -100%, 0);
+        }
+
+        &.css-transition-enter-active {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    section:not([data-routes^='home']) {
+        &.css-transition-exit {
+            transform: translate3d(0, 0%, 0);
+        }
+
+        &.css-transition-exit-active {
+            transform: translate3d(0, 100%, 0);
+        }
+    }
+}
+
+[data-previous-routes^='home'] {
+    section[data-routes^='home'] {
+        &.css-transition-exit {
+            transform: translate3d(0, 0, 0);
+        }
+
+        &.css-transition-exit-active {
+            transform: translate3d(0, -100%, 0);
+        }
+    }
+
+    section:not([data-routes^='home']) {
+        &.css-transition-enter {
+            transform: translate3d(0, 100%, 0);
+        }
+
+        &.css-transition-enter-active {
+            transform: translate3d(0, 0, 0);
+        }
     }
 }

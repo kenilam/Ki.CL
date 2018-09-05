@@ -10,6 +10,7 @@ import { pathnameToRoutes } from 'Helper';
 import { Connector } from 'State';
 
 import About from './About';
+import Contact from './Contact';
 import Home from './Home';
 import Works from './Works';
 
@@ -77,6 +78,7 @@ const Component = ({ location, resources, ...rest }) => {
         >
             <Switch location={location}>
                 {About(rest)}
+                {Contact(rest)}
                 {Home(rest)}
                 {Works(rest)}
             </Switch>

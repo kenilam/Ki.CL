@@ -8,7 +8,7 @@ const mapStateToProps = () => ({
     routes: Object.keys(routes)
         .filter(name => name !== 'home')
         .map(route => routes[route]),
-    ...routes.home
+    ...resources
 });
 
 const Connector = connect(mapStateToProps);

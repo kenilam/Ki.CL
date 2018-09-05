@@ -1,7 +1,10 @@
+// @flow
 import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { Logo, Nav } from 'Component';
+
+import Profession from './Profession';
 
 import { Connector, resources } from './State';
 
@@ -10,6 +13,7 @@ import './style.scss';
 const Home = ({ routes }) => (
     <React.Fragment>
         <Logo />
+        <Profession />
         <Nav {...{ routes }} />
     </React.Fragment>
 );

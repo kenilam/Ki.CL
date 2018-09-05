@@ -1,0 +1,15 @@
+.profession {
+    display: grid;
+
+    justify-content: flex-start;
+    grid-auto-flow: column;
+    grid-gap: $space;
+
+    li {
+        height: $logo-size;
+    }
+
+    @include mobile () {
+        grid-auto-flow: row;
+    }
+}

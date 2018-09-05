@@ -1,13 +1,13 @@
 a {
-    color: $yellow;
+    color: $dark_grey;
     text-decoration: none;
-    transition-property: color;
-    transition-timing-function: $ease;
-    transition-duration: $slower;
 
     &:hover,
     &:active {
-        color: $blue;
+        color: $darker_grey;
+        transition-property: color;
+        transition-timing-function: $ease;
+        transition-duration: $slower;
     }
 
     &.isActive {
