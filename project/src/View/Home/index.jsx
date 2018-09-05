@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { Logo, Nav } from 'Component';
+import Background, { Circle } from 'Component/Background';
 
 import { Connector, resources } from './State';
 
@@ -11,6 +12,9 @@ const Home = ({ routes }) => (
     <React.Fragment>
         <Logo />
         <Nav {...{ routes }} />
+        <Background>
+            <Circle />
+        </Background>
     </React.Fragment>
 );
 
