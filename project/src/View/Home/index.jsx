@@ -3,6 +3,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { Logo, Nav } from 'Component';
+import Background, { Circle } from 'Component/Background';
 
 import Profession from './Profession';
 
@@ -15,6 +16,9 @@ const Home = ({ routes }) => (
         <Logo />
         <Profession />
         <Nav {...{ routes }} />
+        <Background>
+            <Circle />
+        </Background>
     </React.Fragment>
 );
 

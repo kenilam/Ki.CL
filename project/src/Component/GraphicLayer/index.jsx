@@ -20,16 +20,16 @@ type Props = {
     width: Number
 };
 
+const { devicePixelRatio } = window;
+
 const defaultOptions = {
     antialias: true,
-    resolution: window.devicePixelRatio,
+    resolution: devicePixelRatio,
     roundPixels: true,
     transparent: true
 };
 
 const { Stage } = PIXI;
-
-const { devicePixelRatio } = window;
 
 const GraphicLayer = ({
     className,
@@ -47,7 +47,9 @@ const GraphicLayer = ({
             options={Object.assign(defaultOptions, options)}
             {...{ height, width }}
         >
-            {children}
+            {React.Children.map(children, child =>
+                React.cloneElement(child, { height, width })
+            )}
         </Stage>
     );
 };
