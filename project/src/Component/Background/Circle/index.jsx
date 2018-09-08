@@ -3,19 +3,14 @@ import React from 'react';
 
 import { randomId } from 'Helper';
 
-import Particle, { rgb, size } from './Particle';
+import Particle from './Particle';
 
 type Props = {
     height: number,
     width: number
 };
 
-const count = 200;
-
-const particleHolder = Array.from(Array(count).keys()).map(() => ({
-    color: rgb(),
-    size: size()
-}));
+const count = 500;
 
 const ratio = count / (Math.PI * 2);
 
@@ -27,8 +22,7 @@ const Circle = ({ height, width }: Props) =>
                 height,
                 index,
                 ratio,
-                width,
-                ...particleHolder[index]
+                width
             }}
         />
     ));

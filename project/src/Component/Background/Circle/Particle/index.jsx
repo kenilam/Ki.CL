@@ -5,46 +5,27 @@ import { TweenLite } from 'gsap';
 
 import { PIXI } from 'Component/GraphicLayer';
 
-type color = number;
+import { randomNumberByRange, randomRgb2Hex } from 'Helper';
 
 type Props = {
-    color: Array<color>,
     height: number,
     index: number,
     ratio: number,
-    size: number,
     width: number
 };
 
-const ease = window.Linear.easeNone;
-
-const { rgb2hex } = window.PIXI.utils;
-
 const { Graphics } = PIXI;
 
-const sizes = {
-    max: 10,
-    min: 2
-};
+const blendMode = window.PIXI.BLEND_MODES.SCREEN_NPM;
 
-const rgb = () => {
-    const number = 255 - Math.random(255) + 1;
+const ease = window.Linear.easeIn;
 
-    return [number, number, number];
-};
+const duration = (max = 20, min = 8) => randomNumberByRange(max, min);
 
-const size = () => Math.floor(Math.random() * sizes.max) + sizes.min;
+const fillColor = (max = 100, min = 80) => randomRgb2Hex(max, min);
 
-const getPosition = ({ index, ratio, height, width }) => {
-    const centerY = height / 2;
-    const centerX = width / 2;
-    const radius = Math.min(centerX, centerY) / 1.2;
-
-    const x = centerX - radius * Math.cos(index / ratio);
-    const y = centerY - radius * Math.sin(index / ratio);
-
-    return { x, y };
-};
+const scale = (max = 100, min = 1) => randomNumberByRange(max, min) / 100;
+const size = (max = 20, min = 4) => randomNumberByRange(max, min) * scale();
 
 class Particle extends React.Component<Props> {
     constructor(props) {
@@ -52,65 +33,71 @@ class Particle extends React.Component<Props> {
 
         this.draw = this.draw.bind(this);
         this.move = this.move.bind(this);
+        this.position = this.position.bind(this);
     }
 
     componentWillUnmount() {
-        TweenLite.killTweensOf(this.graphic.position);
         TweenLite.killTweensOf(this.graphic);
-
-        window.cancelAnimationFrame(this.moveFrame);
+        TweenLite.killTweensOf(this.graphic.position);
     }
 
     draw(graphic) {
-        const { color, height, index, ratio, size, width } = this.props;
+        graphic.beginFill(fillColor()).arc(0, 0, size(), 0, Math.PI * 2);
+
+        TweenLite.set(graphic, {
+            pixi: {
+                scale: scale(),
+                blendMode
+            }
+        });
+
+        TweenLite.set(graphic.position, this.position());
 
         this.graphic = graphic;
 
-        this.graphic
-            .beginFill(rgb2hex(color))
-            .arc(0, 0, size, 0, Math.PI * 2).position = getPosition({
-            index,
-            ratio,
-            height,
-            width
-        });
-
-        this.move(index);
+        this.move();
     }
 
     move(index) {
-        const { height, ratio, width } = this.props;
+        const speed = duration();
 
-        const duration = (Math.floor(Math.random() * 2000) + 1000) / 1000;
+        index = index || this.props.index;
 
-        const scale = Math.floor(Math.random() * 2) + 0.1;
-        const fillColor = rgb2hex(rgb());
-
-        const isSmaller = scale > 0.1;
-
-        const alpha = isSmaller ? 1 : 0;
-
-        TweenLite.to(this.graphic.position, duration, {
-            ...getPosition({
-                index,
-                ratio,
-                height,
-                width
-            }),
+        TweenLite.to(this.graphic, speed, {
+            pixi: {
+                fillColor: fillColor(),
+                scale: scale(),
+                position: this.position(
+                    index + Math.floor(Math.random() * 18) - 18
+                )
+            },
             ease
         });
 
-        TweenLite.to(this.graphic, duration, {
-            pixi: {
-                alpha,
-                fillColor,
-                scale
-            },
+        TweenLite.to(this.graphic.position, speed, {
+            ...this.position(index + Math.floor(Math.random() * 18) - 18),
             ease,
             onComplete: () => {
-                this.move(index - Math.floor(Math.random() * 5) + 10);
+                this.move(index);
             }
         });
+    }
+
+    position(index) {
+        const { ratio, height, width } = this.props;
+
+        const centerY = height / 2;
+        const centerX = width / 2;
+        const radius =
+            Math.min(centerX, centerY) /
+            ((Math.floor(Math.random() * 20) + 12) / 10);
+
+        index = index || this.props.index;
+
+        const x = centerX - radius * Math.cos(index / ratio);
+        const y = centerY - radius * Math.sin(index / ratio);
+
+        return { x, y };
     }
 
     render() {
@@ -118,5 +105,4 @@ class Particle extends React.Component<Props> {
     }
 }
 
-export { rgb, size };
 export default Particle;

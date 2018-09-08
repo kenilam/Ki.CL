@@ -3,11 +3,6 @@ html {
     
     background-color: $white;
     color: $light_black;
-
-    // Prevent flickering on initial load
-    &:not(.wf-active) {
-        display: none;
-    }
 }
 
 body {
