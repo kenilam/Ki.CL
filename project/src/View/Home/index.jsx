@@ -2,33 +2,30 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { Logo, Nav } from 'Component';
-import Background, { Circle } from 'Component/Background';
+import { Logo } from 'Component';
 
+import { routes } from 'content/resources';
+
+import Background from './Background';
+import Navigation from './Navigation';
 import Profession from './Profession';
-
-import { Connector, resources } from './State';
 
 import './style.scss';
 
-const Home = ({ routes }) => (
+const Home = ({ history }) => (
     <React.Fragment>
         <Logo />
         <Profession />
-        <Nav {...{ routes }} />
-        <Background>
-            <Circle />
-        </Background>
+        <Navigation />
+        <Background {...{ history }} />
     </React.Fragment>
 );
 
-const Instance = Connector(Home);
-
 const Component = props => (
     <Route
-        path={resources.path}
+        path={routes.home.path}
         exact
-        component={match => <Instance {...{ match, ...props }} />}
+        component={match => <Home {...{ match, ...props }} />}
     />
 );
 

@@ -21,11 +21,11 @@ let previousRouteIndex = false;
 
 const onEnter = pathname => {
     DOM.Title.set(pathname);
-    DOM.Body.setRoutesAttr('current', pathname);
+    DOM.Body.routesAttr.set('current', pathname);
 };
 
 const onExit = pathname => {
-    DOM.Body.setRoutesAttr('previous', pathname);
+    DOM.Body.routesAttr.set('previous', pathname);
 };
 
 const routeDirection = (routes, pathname) => {

@@ -1,16 +1,24 @@
+$column : (
+    default: $logo-width,
+    mobile: $logo-size
+);
+
+$row : (
+    default: $logo-size,
+    mobile: ($logo-size * 2 + $space)
+);
+
 [data-routes^=home] {
     display: grid;
 
     align-items: center;
-    grid-template-columns: $logo-width auto auto;
-    grid-template-rows: auto $logo-size auto;
+    grid-template-columns: map-get($column, default) auto;
+    grid-template-rows: auto auto;
     grid-gap: $space;
     grid-template-areas:
-        '. . .'
-        'logo profession profession'
-        '. nav nav';
-
-    color: $red;
+        'logo profession'
+        '. nav';
+        
     font-family: $heading_font_family;
     padding: $grid;
 
@@ -18,15 +26,15 @@
     nav {
         font-size: 2.8rem;
         line-height: 1.6rem;
-        text-transform: uppercase;
+    }
+
+    h1,
+    ul {
+        align-self: end;
     }
 
     h1 {
         grid-area: logo;
-
-        &:before {
-            color: $red;
-        }
     }
 
     ul {
@@ -34,15 +42,31 @@
     }
 
     nav {
-        align-items: flex-start;
         grid-area: nav;
+        text-transform: uppercase;
+    }
+
+    h1,
+    ul,
+    nav {
+        position: relative;
+        z-index: 1;
+    }
+
+    canvas {
+        position: absolute;
+        z-index: 0;
     }
 
     @include mobile () {
-        align-items: flex-start;
-        grid-template-columns: $logo-size auto auto;
-        grid-template-rows: auto ($logo-size * 2 + $space) auto;
+        align-items: start;
+        grid-template-columns: auto;
+        grid-template-rows: auto $logo-size * 2 + $space auto;
+        grid-template-areas:
+            'logo'
+            'profession'
+            'nav';
 
-        padding: $space;
+        padding: map-get($column, mobile);
     }
 }

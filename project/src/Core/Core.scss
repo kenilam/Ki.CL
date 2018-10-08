@@ -9,3 +9,7 @@ body {
     font-family: $font_family;
     font-size: $font_size;
 }
+
+[aria-hidden="true"] {
+    visibility: hidden;
+}

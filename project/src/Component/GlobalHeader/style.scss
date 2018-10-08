@@ -9,7 +9,7 @@ header[rule='banner'] {
     font-family: $heading_font_family;
     font-size: 1.2rem;
     letter-spacing: .2rem;
-    padding: $min-grid $grid;
+    padding: $min-grid $min-grid;
     text-transform: uppercase;
     transition-property: transform;
 
@@ -24,13 +24,15 @@ header[rule='banner'] {
 
     &.css-transition-enter:not(.css-transition-enter-active),
     &.css-transition-exit-active {
-        transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, 110vh, 0);
     }
 
     @include tablet() {
-        grid-template-columns: $logo-size auto $logo-size;
-
         padding: $space;
+    }
+
+    @include mobile() {
+        grid-template-columns: $logo-size auto $logo-size;
     }
 
     @include narrow() {

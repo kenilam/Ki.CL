@@ -13,14 +13,15 @@ type route = {
 };
 
 type Props = {
+    onClick: Function,
     routes: Array<route>
 };
 
-const Nav = ({ routes }: Props) => (
+const Nav = ({ onClick, routes }: Props) => (
     <Router>
         <nav className="navigation">
             {routes.map(({ name, path }) => (
-                <Link to={path} text={name} key={randomId} />
+                <Link to={path} text={name} key={randomId} {...{ onClick }} />
             ))}
         </nav>
     </Router>

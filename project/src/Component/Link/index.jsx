@@ -10,13 +10,14 @@ type Props = {
     children: React.Node,
     className: string,
     component: string,
+    onClick: Function,
     to: string,
     text: string
 };
 
 const activeClassName = 'isActive';
 
-const Link = ({ children, className, component, to, text }: Props) => {
+const Link = ({ children, className, component, onClick, to, text }: Props) => {
     const Wrapper = component;
 
     className = classnames(className);
@@ -26,6 +27,7 @@ const Link = ({ children, className, component, to, text }: Props) => {
             exact
             {...{
                 activeClassName,
+                onClick,
                 to,
                 className: !Wrapper ? className : null
             }}

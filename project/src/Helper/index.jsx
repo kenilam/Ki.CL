@@ -1,45 +1,57 @@
+import { routes } from 'content/resources';
 import PixiPlugin from 'gsap/PixiPlugin';
 
-import { routes } from 'content/resources';
+import cssUnit from './cssUnit';
+import windowSize from './windowSize';
 
 const { parseColor } = PixiPlugin;
 
 const home = routes.home.name.toLowerCase();
 
 class Helper {
-    static get randomId() {
-        return `${new Date().getTime()}_${Math.random() *
-            1000}_${new Date().getMilliseconds()}_${Math.random() * 1000}`;
+    static capitalize(string) {
+        return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+    }
+
+    static isEmpty(obj) {
+        let condition = false;
+        const type = typeof obj;
+
+        switch (type) {
+            case 'object':
+                condition =
+                    Object.keys(obj).length === 0 && obj.constructor === Object;
+                break;
+
+            default:
+                condition = true;
+                break;
+        }
+
+        return condition;
+    }
+
+    static pathnameToRoutes(pathname) {
+        return pathname.substr(1).replace(/\//g, '.') || home;
+    }
+
+    static parseColor(hex) {
+        return parseColor(hex, 'number');
     }
 
     static randomNumberByRange(max = 100, min = 0) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    static randomRgb2Hex(max = 100, min = 0) {
-        return window.PIXI.utils.rgb2hex([
-            Helper.randomNumberByRange(max, min) / 100,
-            Helper.randomNumberByRange(max, min) / 100,
-            Helper.randomNumberByRange(max, min) / 100
-        ]);
+    static get randomId() {
+        return `${new Date().getTime()}_${Math.random() *
+            1000}_${new Date().getMilliseconds()}_${Math.random() * 1000}`;
     }
+
+    static cssUnit = cssUnit;
 
     static get windowSize() {
-        const { innerHeight: height, innerWidth: width } = window;
-
-        return { width, height };
-    }
-
-    static capitalize(string) {
-        return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
-    }
-
-    static hex2Decimal(hex) {
-        return parseColor(hex.toUpperCase(), 'number');
-    }
-
-    static pathnameToRoutes(pathname) {
-        return pathname.substr(1).replace(/\//g, '.') || home;
+        return windowSize();
     }
 }
 
