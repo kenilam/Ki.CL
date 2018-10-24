@@ -14,11 +14,11 @@ const absoluteUnit = value => {
 
 const viewportUnit = value => {
     const isVH = value.endsWith('vh');
-    const isViewportUnit = value.match(/\.(vh|vw)(?:\?.*|)$/i);
+    const isViewportUnit = value.endsWith('vh') || value.endsWith('vh');
     const isAbsoluteUnit = absoluteUnit(value);
 
     if (isAbsoluteUnit) {
-        return absoluteUnit(value);
+        return isAbsoluteUnit;
     }
 
     if (!isViewportUnit || !containNumber(value)) {
