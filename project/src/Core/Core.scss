@@ -1,0 +1,15 @@
+html {
+    @include font-smoothing();
+    
+    background-color: $white;
+    color: $light_black;
+}
+
+body {
+    font-family: $font_family;
+    font-size: $font_size;
+}
+
+[aria-hidden="true"] {
+    visibility: hidden;
+}

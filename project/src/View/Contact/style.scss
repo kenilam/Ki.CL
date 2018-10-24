@@ -1,0 +1,9 @@
+$backgroundColor: $yellow;
+
+[data-routes^=contact] {
+    background: $backgroundColor
+}
+
+:export {
+    backgroundColor: $backgroundColor;
+}

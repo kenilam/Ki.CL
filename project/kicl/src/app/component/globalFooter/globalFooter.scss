@@ -1,9 +1,0 @@
-@import '_import';
-
-.globalFooter {
-	@include display(flex);
-	@include align-content(center);
-	@include justify-content(center);
-
-	padding: rem($space);
-}

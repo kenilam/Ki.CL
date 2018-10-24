@@ -1,0 +1,45 @@
+{
+    "presets" : [
+        [
+            "env", {
+                "targets": {
+                    "browsers": ["last 2 versions", "safari >= 11"]
+                }
+            }
+        ],
+        "react"
+    ],
+    "plugins": [
+        [
+            "babel-plugin-root-import", [
+            {
+                "rootPathSuffix": ".",
+                "rootPathPrefix": "^"
+            },
+            {
+                "rootPathSuffix": ".Webpack",
+                "rootPathPrefix": "!"
+            },
+            {
+                "rootPathSuffix": "src",
+                "rootPathPrefix": "~"
+            }
+        ]
+        ],
+        ["module-resolver", {
+            "root": ["./project/src", "./project/assets", "./project/content"]
+        }],
+        [
+            "transform-class-properties", { "spec": true }
+        ],
+        ["transform-runtime", {
+            "polyfill": false,
+            "regenerator": true
+        }],
+
+        "add-module-exports",
+        "transform-export-extensions",
+        "transform-object-rest-spread",
+        "react-hot-loader/babel"
+    ]
+}

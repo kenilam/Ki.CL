@@ -1,0 +1,47 @@
+$landscape : (
+    width: 200px
+);
+
+header[rule='banner'] {
+    display: grid;
+    grid-template-columns: $logo-width auto $logo-width;
+
+    font-family: $heading_font_family;
+    font-size: 1.2rem;
+    letter-spacing: .2rem;
+    padding: $min-grid $min-grid;
+    text-transform: uppercase;
+    transition-property: transform;
+
+    h1 {
+        grid-column-start: 1;
+    }
+
+    nav {
+        grid-column-start: 2;
+        justify-self: center;
+    }
+
+    &.css-transition-enter:not(.css-transition-enter-active),
+    &.css-transition-exit-active {
+        transform: translate3d(0, 110vh, 0);
+    }
+
+    @include tablet() {
+        padding: $space;
+    }
+
+    @include mobile() {
+        grid-template-columns: $logo-size auto $logo-size;
+    }
+
+    @include narrow() {
+        grid-template-columns: $logo-size auto;
+
+        padding-right: $min-grid;
+
+        nav {
+            justify-self: end;
+        }
+    }
+}

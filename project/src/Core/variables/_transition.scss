@@ -1,0 +1,10 @@
+$ease: cubic-bezier(0.19, 1, 0.22, 1);
+$speed: 1000ms;
+
+$fast: $speed / 2;
+$faster: $fast / 2;
+$fastest: $faster / 2;
+
+$slow: $speed * 2;
+$slower: $speed * 3;
+$slowest: $speed * 4;

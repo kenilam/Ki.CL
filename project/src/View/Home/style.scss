@@ -1,0 +1,72 @@
+$column : (
+    default: $logo-width,
+    mobile: $logo-size
+);
+
+$row : (
+    default: $logo-size,
+    mobile: ($logo-size * 2 + $space)
+);
+
+[data-routes^=home] {
+    display: grid;
+
+    align-items: center;
+    grid-template-columns: map-get($column, default) auto;
+    grid-template-rows: auto auto;
+    grid-gap: $space;
+    grid-template-areas:
+        'logo profession'
+        '. nav';
+        
+    font-family: $heading_font_family;
+    padding: $grid;
+
+    ul,
+    nav {
+        font-size: 2.8rem;
+        line-height: 1.6rem;
+    }
+
+    h1,
+    ul {
+        align-self: end;
+    }
+
+    h1 {
+        grid-area: logo;
+    }
+
+    ul {
+        grid-area: profession;
+    }
+
+    nav {
+        grid-area: nav;
+        text-transform: uppercase;
+    }
+
+    h1,
+    ul,
+    nav {
+        position: relative;
+        z-index: 1;
+    }
+
+    canvas {
+        position: absolute;
+        z-index: 0;
+    }
+
+    @include mobile () {
+        align-items: start;
+        grid-template-columns: auto;
+        grid-template-rows: auto $logo-size * 2 + $space auto;
+        grid-template-areas:
+            'logo'
+            'profession'
+            'nav';
+
+        padding: map-get($column, mobile);
+    }
+}

@@ -1,0 +1,12 @@
+@import '../../Core/variables/_grid';
+@import '../Logo/_variables';
+
+@function globalHeader-height ($padding) {
+    @return $logo-size + ($padding * 2);
+}
+
+$globalHeader-height: $logo-size + ($min-grid * 2);
+$globalHeader-height: (
+    max: globalHeader-height($min-grid),
+    min: globalHeader-height($space)
+);
