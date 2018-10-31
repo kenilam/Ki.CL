@@ -6,16 +6,20 @@ import { TweenLite } from 'gsap';
 import { randomNumberByRange, windowSize } from 'Helper';
 
 const { EXCLUSION: blendMode } = PIXI.BLEND_MODES;
+const { easeNone: ease } = window.Linear;
 
 class Bubble {
     constructor() {
         this.create = this.create.bind(this);
         this.move = this.move.bind(this);
+        this.resize = this.resize.bind(this);
 
         this.create();
-        // this.move();
+        this.move();
 
-        return this.bubble;
+        return Object.assign(this.bubble, {
+            resize: this.resize
+        });
     }
 
     create() {
@@ -25,21 +29,23 @@ class Bubble {
 
         const radius = (width > height ? height : width) / 10;
 
-        const bubble = new PIXI.Graphics();
+        this.bubble = new PIXI.Graphics();
 
-        bubble
+        this.bubble
             .beginFill(0x000000)
-            .drawCircle(0, 0, randomNumberByRange(radius * 0.4, radius))
+            .drawCircle(0, 0, randomNumberByRange(radius * 0.4, radius / 0.4))
             .endFill().blendMode = blendMode;
 
-        TweenLite.set(bubble, {
+        TweenLite.set(this.bubble, {
             pixi: {
-                x: randomNumberByRange(center.x - 100, center.x + 100),
-                y: randomNumberByRange(center.y - 100, center.y + 100)
+                x: randomNumberByRange(
+                    center.x - center.x / 2,
+                    center.x + center.x / 2
+                ),
+                y: randomNumberByRange(0, height)
             }
         });
 
-        this.bubble = bubble;
         this.radius = radius;
     }
 
@@ -49,12 +55,12 @@ class Bubble {
 
         TweenLite.killTweensOf(this.bubble);
 
-        if (position.y <= 0) {
+        if (position.y <= -this.radius * 2) {
             TweenLite.set(this.bubble, {
                 pixi: {
                     y: randomNumberByRange(
                         height + this.radius,
-                        height + height
+                        height + this.radius * 2
                     )
                 },
                 onComplete: this.move
@@ -72,14 +78,45 @@ class Bubble {
                 x: position.x + randomNumberByRange(-2, 2),
                 y: position.y - randomNumberByRange(5, 10)
             },
-            ease: window.Linear.easeNone,
+            ease,
             onComplete: this.move
+        });
+    }
+
+    resize() {
+        const { height, width } = windowSize;
+
+        const { position, graphicsData } = this.bubble;
+        const { radius } = graphicsData[0].shape;
+        const size = width > height ? height : width;
+
+        this.bubble
+            .drawCircle(0, 0, size * (radius / size))
+            .endFill().blendMode = blendMode;
+
+        TweenLite.set(this.bubble, {
+            pixi: {
+                x: (width / position.x) * width,
+                y: (height / position.y) * height
+            }
         });
     }
 }
 
 class Lava {
     constructor(count = 10) {
+        this.count = count;
+
+        this.resizeHandler = this.resizeHandler.bind(this);
+
+        this.init();
+
+        return Object.assign(this.container, {
+            resizeHandler: this.resizeHandler
+        });
+    }
+
+    init() {
         this.container = new PIXI.Container();
 
         // this.base = new Bubble();
@@ -96,7 +133,7 @@ class Lava {
 
         // this.container.addChild(this.base);
 
-        this.bubbles = Array.from(Array(count).keys()).map(() => {
+        this.bubbles = Array.from(Array(this.count).keys()).map(() => {
             const bubble = new Bubble();
 
             this.container.addChild(bubble);
@@ -105,6 +142,12 @@ class Lava {
         });
 
         return this.container;
+    }
+
+    resizeHandler() {
+        this.bubbles.forEach(bubble => {
+            bubble.resize();
+        });
     }
 }
 
