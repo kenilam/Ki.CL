@@ -54,13 +54,13 @@ const Component = ({ location, resources, ...rest }) => {
     const { pathname } = location;
     const { routes } = resources;
 
-    onEnter(pathname);
-
     const className = classnames(
         'view',
         'slide',
         routeDirection(routes, pathname)
     );
+
+    onEnter(pathname);
 
     return (
         <Transition

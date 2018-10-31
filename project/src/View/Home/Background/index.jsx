@@ -202,8 +202,6 @@ class Canvas extends React.Component {
         container.addChild(left);
         container.addChild(right);
 
-        container.addChild(lava);
-
         return { graphics, mask, renderer, container };
     }
 
@@ -228,6 +226,8 @@ class Canvas extends React.Component {
             this.draw();
             this.fillColor({ freeze: true });
             this.update();
+
+            this.app.graphics.lava.resizeHandler();
         });
     }
 
