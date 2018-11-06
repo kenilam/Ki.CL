@@ -46,7 +46,7 @@ const CSSTransition = ({
 }: Props) => {
     const Wrapper = component;
 
-    className = classnames(className, defaultClassName);
+    className = classnames(defaultClassName, className);
 
     return (
         <CSSTransitionInstance

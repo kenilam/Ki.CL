@@ -13,41 +13,36 @@ $row : (
 
     align-items: center;
     grid-template-columns: map-get($column, default) auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: 50vh auto 50vh;
     grid-gap: $space;
     grid-template-areas:
         'logo profession'
-        '. nav';
-        
+        '. nav'
+        '. description';
+
     font-family: $heading_font_family;
     padding: $grid;
 
-    ul,
+    h1,
+    > ul,
+    nav,
+    p {
+        padding-bottom: $space * 2;
+    }
+
+    > ul,
     nav {
         font-size: 2.8rem;
         line-height: 1.6rem;
     }
 
     h1,
-    ul {
+    > ul {
         align-self: end;
     }
 
-    h1 {
-        grid-area: logo;
-    }
-
-    ul {
-        grid-area: profession;
-    }
-
-    nav {
-        grid-area: nav;
-        text-transform: uppercase;
-    }
-
     h1,
-    ul,
+    > ul,
     nav {
         position: relative;
         z-index: 1;
@@ -55,28 +50,71 @@ $row : (
 
     canvas {
         position: absolute;
+        top: 0;
         z-index: 0;
+    }
+
+    h1 {
+        grid-area: logo;
+    }
+
+    nav {
+        grid-area: nav;
+        text-transform: uppercase;
+    }
+
+    > :not(canvas) {
+        transition-duration: $fast;
+        transition-property: opacity, transform;
+        transition-timing-function: $easeOutCirc;
+    }
+
+    .description {
+        grid-area: description;
+    }
+
+    &[class*='css-transition-'] {
+        > :not(canvas) {
+            opacity: 0;
+            transform: translate3d(0, -10vh, 0);
+        }
     }
 
     @include mobile () {
         align-items: start;
         grid-template-columns: auto;
-        grid-template-rows: auto $logo-size * 2 + $space auto;
+        grid-template-rows: 50vh $logo-size * 2 + $space auto 100vh;
         grid-template-areas:
             'logo'
             'profession'
+            'description'
             'nav';
 
         padding: map-get($column, mobile);
+        
+        h1,
+        > ul,
+        nav,
+        p {
+            padding-bottom: $space;
+        }
     }
 }
 
 [data-current-routes^=home] {
     overflow: hidden;
+
+    header[rule=banner] {
+        &.css-transition-exit {
+            transition-delay: $speed;
+        }
+    }
     
     [data-routes^='home'] {
         &.css-transition-enter {
+            transition-delay: $fastest;
             transform: translate3d(0, -100%, 0);
+            z-index: 1;
         }
 
         &.css-transition-enter-active {
@@ -86,7 +124,9 @@ $row : (
 
     [data-routes]:not([data-routes^='home']) {
         &.css-transition-exit {
-            transform: translate3d(0, 0%, 0);
+            transition-delay: $faster;
+            transform: translate3d(0, 0, 0);
+            z-index: 2;
         }
 
         &.css-transition-exit-active {
@@ -98,7 +138,9 @@ $row : (
 [data-previous-routes^='home'] {
     [data-routes^='home'] {
         &.css-transition-exit {
+            transition-delay: $faster;
             transform: translate3d(0, 0, 0);
+            z-index: 1;
         }
 
         &.css-transition-exit-active {
@@ -109,6 +151,7 @@ $row : (
     [data-routes]:not([data-routes^='home']) {
         &.css-transition-enter {
             transform: translate3d(0, 100%, 0);
+            z-index: 2;
         }
 
         &.css-transition-enter-active {
