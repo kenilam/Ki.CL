@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import * as PIXI from 'pixi.js';
 
@@ -8,17 +9,17 @@ import { TweenLite } from 'gsap';
 import { DOM } from 'Component';
 import { cssUnit, windowSize } from 'Helper';
 
-import aboutStyles from 'View/About/style.scss';
-import contactStyles from 'View/Contact/style.scss';
-import worksStyles from 'View/Works/style.scss';
+import about from 'View/About/style.scss';
+import contact from 'View/Contact/style.scss';
+import works from 'View/Works/style.scss';
 
-import Lava from './Lava';
+// import Lava from './Lava';
 
 import style from './style.scss';
 
 const { routesAttr } = DOM.Body;
 
-const { delay, duration, leftColor, rightColor, size } = style;
+const { delay, duration, size } = style;
 
 const config = {
     renderer: {
@@ -32,22 +33,10 @@ const config = {
     },
     graphics: {
         color: {
-            home: {
-                left: leftColor,
-                right: rightColor
-            },
-            about: {
-                left: aboutStyles.backgroundColor,
-                right: aboutStyles.backgroundColor
-            },
-            contact: {
-                left: contactStyles.backgroundColor,
-                right: contactStyles.backgroundColor
-            },
-            works: {
-                left: worksStyles.backgroundColor,
-                right: worksStyles.backgroundColor
-            }
+            home: style,
+            about: about,
+            contact: contact,
+            works: works
         },
         delay: delay.replace('ms', '') / 1000,
         duration: duration.replace('ms', '') / 1000,
@@ -55,7 +44,7 @@ const config = {
     }
 };
 
-class Canvas extends React.Component {
+class Background extends React.Component {
     constructor(props) {
         super(props);
 
@@ -155,7 +144,7 @@ class Canvas extends React.Component {
 
             TweenLite.set(graphic, {
                 pixi: {
-                    fillColor: (freeze ? current : previous)[name]
+                    fillColor: (freeze ? current : previous)[`${name}Color`]
                 }
             });
 
@@ -166,7 +155,7 @@ class Canvas extends React.Component {
             TweenLite.to(graphic, duration, {
                 delay: previousRoute !== 'home' ? delay : 0,
                 pixi: {
-                    fillColor: current[name]
+                    fillColor: current[`${name}Color`]
                 }
             });
         }
@@ -188,17 +177,18 @@ class Canvas extends React.Component {
 
         const mask = new PIXI.Graphics();
 
-        const lava = new Lava();
+        // const lava = new Lava();
 
         const left = new PIXI.Graphics();
         const right = new PIXI.Graphics();
 
-        const graphics = { lava, left, right };
+        // const graphics = { lava, left, right };
+        const graphics = { left, right };
 
         left.mask = mask;
         right.mask = mask;
 
-        container.addChild(lava);
+        // container.addChild(lava);
         container.addChild(left);
         container.addChild(right);
 
@@ -227,7 +217,7 @@ class Canvas extends React.Component {
             this.fillColor({ freeze: true });
             this.update();
 
-            this.app.graphics.lava.resizeHandler();
+            // this.app.graphics.lava.resizeHandler();
         });
     }
 
@@ -236,4 +226,6 @@ class Canvas extends React.Component {
     }
 }
 
-export default Canvas;
+const Component = withRouter(Background);
+
+export default Component;

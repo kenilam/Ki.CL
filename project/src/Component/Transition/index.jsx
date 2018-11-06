@@ -24,6 +24,8 @@ type Props = {
     components: components
 };
 
+const defaultClassName = 'transition';
+
 const Transition = ({
     className,
     childComponent,
@@ -32,7 +34,7 @@ const Transition = ({
 }: Props) => {
     const { wrapper, element, elementAttrs } = components;
 
-    className = classnames(className, 'transition');
+    className = classnames(defaultClassName, className);
 
     return (
         <TransitionGroup {...{ className, component: wrapper }}>
