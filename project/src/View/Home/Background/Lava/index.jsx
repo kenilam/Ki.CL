@@ -111,9 +111,10 @@ class Lava {
 
         this.init();
 
-        return Object.assign(this.container, {
+        return {
+            ...this.container,
             resizeHandler: this.resizeHandler
-        });
+        };
     }
 
     init() {

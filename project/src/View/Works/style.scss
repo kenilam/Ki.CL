@@ -6,5 +6,5 @@ $backgroundColor: $blue;
 
 :export {
     leftColor: $backgroundColor;
-    rightColor: shade($backgroundColor, 30);
+    rightColor: $backgroundColor;
 }
