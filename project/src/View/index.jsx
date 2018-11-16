@@ -16,8 +16,7 @@ import Works from './Works';
 
 import './style.scss';
 
-let currentRouteIndex = -1;
-let previousRouteIndex = false;
+const routeIndex = { current: -1, previous: -1 };
 
 const onEnter = pathname => {
     DOM.Title.set(pathname);
@@ -28,39 +27,41 @@ const onExit = pathname => {
     DOM.Body.routesAttr.set('previous', pathname);
 };
 
-const routeDirection = (routes, pathname) => {
+const transitionDirectionByRoute = ({ allRoutes, currentRoute }) => {
     let direction = '';
 
-    currentRouteIndex = Object.keys(routes)
+    routeIndex.current = Object.keys(allRoutes)
         .map(route => `/${route.split('/')[0]}`)
-        .indexOf(`/${pathname.split('/')[1]}`);
+        .indexOf(`/${currentRoute.split('/')[1]}`);
 
-    if (previousRouteIndex !== true) {
-        if (currentRouteIndex > previousRouteIndex) {
+    if (routeIndex.previous >= 0) {
+        if (routeIndex.current > routeIndex.previous) {
             direction = 'transition-forward';
         }
 
-        if (currentRouteIndex < previousRouteIndex) {
+        if (routeIndex.current < routeIndex.previous) {
             direction = 'transition-backward';
         }
     }
 
-    previousRouteIndex = currentRouteIndex;
+    routeIndex.previous = routeIndex.current;
 
     return direction;
 };
 
 const Component = ({ location, resources, ...rest }) => {
-    const { pathname } = location;
-    const { routes } = resources;
+    const { pathname : currentRoute } = location;
+    const { routes : allRoutes } = resources;
+
+    const direction = transitionDirectionByRoute({ allRoutes, currentRoute });
 
     const className = classnames(
         'view',
         'slide',
-        routeDirection(routes, pathname)
+        direction
     );
 
-    onEnter(pathname);
+    onEnter(currentRoute);
 
     return (
         <Transition
@@ -69,12 +70,12 @@ const Component = ({ location, resources, ...rest }) => {
                 wrapper: 'main',
                 element: 'section',
                 elementAttrs: {
-                    'data-routes': pathnameToRoutes(pathname)
+                    'data-routes': pathnameToRoutes(currentRoute)
                 }
             }}
-            keyValue={pathname}
-            onEnter={() => onEnter(pathname)}
-            onExit={() => onExit(pathname)}
+            keyValue={currentRoute}
+            onEnter={() => onEnter(currentRoute)}
+            onExit={() => onExit(currentRoute)}
         >
             <Switch location={location}>
                 {About(rest)}
