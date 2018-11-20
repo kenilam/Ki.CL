@@ -3,7 +3,7 @@ export default {
     localhost: {
         logPrefix: 'Ki.CL',
         host: 'http://localhost',
-        port: 3001,
+        port: 3011,
         ui: {
             port: 3031,
             weinre: {
