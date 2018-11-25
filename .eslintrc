@@ -27,6 +27,9 @@
         "import/no-named-as-default-member": 0,
         "import/no-unresolved": 0,
         "import/prefer-default-export": "1",
+        "camelcase": [ "error", {
+            "properties": "always"
+        }],
         "indent": 0,
         "no-debugger": 0,
         "no-console": 0,
@@ -40,9 +43,9 @@
         "react/forbid-prop-types": 0,
         "react/jsx-filename-extension": 0,
         "jsx-a11y/anchor-is-valid": [ "error", {
-                "components": [ "Link" ],
-                "specialLink": [ "to", "hrefLeft", "hrefRight" ],
-                "aspects": [ "noHref", "invalidHref", "preferButton" ]
+            "components": [ "Link" ],
+            "specialLink": [ "to", "hrefLeft", "hrefRight" ],
+            "aspects": [ "noHref", "invalidHref", "preferButton" ]
         }]
     },
     "plugins": [

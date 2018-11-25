@@ -10,5 +10,12 @@ export default {
                 port: 3032
             }
         }
+    },
+
+    api: {
+        host: {
+            development: 'http://localhost:3100',
+            production: 'https://ki-cl.herokuapp.com'
+        }
     }
 };

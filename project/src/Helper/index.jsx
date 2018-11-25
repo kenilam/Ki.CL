@@ -1,4 +1,4 @@
-import { routes } from 'content/resources';
+import { routes, months } from 'content/resources';
 import PixiPlugin from 'gsap/PixiPlugin';
 
 import cssUnit from './cssUnit';
@@ -52,6 +52,41 @@ class Helper {
 
     static get windowSize() {
         return windowSize();
+    }
+
+    static monthNameOf (index) {
+        return months[index] || index;
+    }
+
+    static ordinalSuffixOf(number) {
+        const tenth = number % 10;
+        const hundredth = number % 100;
+
+        let suffix = 'th';
+
+        if (tenth === 1 && hundredth !== 11) {
+            suffix = 'st';
+        }
+
+        if (tenth === 2 && hundredth !== 12) {
+            suffix = 'nd';
+        }
+
+        if (tenth === 3 && hundredth !== 13) {
+            suffix = 'rd';
+        }
+        
+        return `${number}${suffix}`;
+    }
+
+    static timestampToDate (timestamp) {
+        const date = new Date(timestamp * 1000);
+
+        const yy = date.getFullYear();
+        const mm = Helper.monthNameOf(date.getMonth());
+        const dd = Helper.ordinalSuffixOf(date.getDay());
+
+        return `${dd} ${mm}, ${yy}`;
     }
 }
 

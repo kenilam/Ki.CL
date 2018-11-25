@@ -19,9 +19,13 @@ type Props = {
 };
 
 const defaultClassName = 'css-transition';
+const enterClassName =`${defaultClassName}-enter`;
+const exitClassName =`${defaultClassName}-exit`;
 
 const addEndListener = endListenerTimer => (node, done) => {
-    const duration = transitionDuration(node, true);
+    const nodes = Array.from(node.parentNode.querySelectorAll(`.${enterClassName}, .${exitClassName}`));
+
+    const duration = Math.max(...nodes.map(n => transitionDuration(n, true)));
 
     if (duration === 0) {
         done();
@@ -32,8 +36,8 @@ const addEndListener = endListenerTimer => (node, done) => {
 };
 
 const removeDoneClasses = node => {
-    node.classList.remove(`${defaultClassName}-exit-done`);
-    node.classList.remove(`${defaultClassName}-enter-done`);
+    node.classList.remove(`${enterClassName}-done`);
+    node.classList.remove(`${exitClassName}-done`);
 };
 
 const CSSTransition = ({

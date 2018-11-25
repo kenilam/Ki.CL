@@ -24,12 +24,31 @@
         "works" : {
             "path" : "/works",
             "name" : "Works",
-            "message" : "Ki.CL"
+            "message" : "Ki.CL",
+            "project" : {
+                "path" : "/works/:projectId",
+                "name" : "Works | Project",
+                "message" : "Ki.CL"
+            }
         },
         "contact" : {
             "path" : "/contact",
             "name" : "Contact",
             "message" : "Contact"
         }
-    }
+    },
+    "months" : [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ]
 }

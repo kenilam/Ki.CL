@@ -1,5 +1,9 @@
 $backgroundColor: $blue;
 
+[data-current-routes^=work] {
+    background: $backgroundColor;
+}
+
 [data-routes^=work] {
     background: $backgroundColor;
 }
