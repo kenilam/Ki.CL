@@ -82,9 +82,10 @@ $row : (
     }
 
     @include mobile () {
-        align-items: start;
+        align-content: end;
         grid-template-columns: auto;
-        grid-template-rows: 50vh $logo-size * 2 + $space auto 100vh;
+        grid-template-rows: auto auto auto auto;
+        grid-gap: $gutter;
         grid-template-areas:
             'logo'
             'profession'
@@ -94,8 +95,11 @@ $row : (
         padding: map-get($column, mobile);
         
         h1,
+        nav {
+            padding-bottom: 0;
+        }
+
         > ul,
-        nav,
         p {
             padding-bottom: $space;
         }
