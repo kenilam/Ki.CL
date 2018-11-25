@@ -1,37 +1,44 @@
+import units from 'units-css';
+
 import windowSize from 'Helper/windowSize';
 
-const containNumber = value => /\d/.test(value);
+const absoluteUnit = ({ value, unit }) => {
+    const isAbsoluteUnit = [
+        'em',
+        'pt',
+        'px',
+        'rem'
+    ].some( absUnit => unit === absUnit );
 
-const absoluteUnit = value => {
-    const isAbsoluteUnit = value.match(/\.(cm|mm|in|px|pt|pc)(?:\?.*|)$/i);
-
-    if (!isAbsoluteUnit || !containNumber(value)) {
+    if (!isAbsoluteUnit) {
         return false;
     }
 
-    return parseFloat(value.split('px')[0]);
+    return units.convert('px', `${value}${unit}`);
 };
 
-const viewportUnit = value => {
-    const isVH = value.endsWith('vh');
-    const isViewportUnit = value.endsWith('vh') || value.endsWith('vh');
-    const isAbsoluteUnit = absoluteUnit(value);
+const viewportUnit = ({ value, unit }) => {
+    const isViewportUnit = [
+        'vh',
+        'vw'
+    ].some( vUnit => unit === vUnit );;
 
-    if (isAbsoluteUnit) {
-        return isAbsoluteUnit;
-    }
-
-    if (!isViewportUnit || !containNumber(value)) {
+    if (!isViewportUnit) {
         return false;
     }
+
+    const isVH = unit === 'vh';
 
     const { height, width } = windowSize();
 
-    return parseFloat(value.split('v')[0] / 100) * (isVH ? height : width);
+    return parseFloat(value / 100 * (isVH ? height : width));
 };
 
-const cssUnit = value =>
-    absoluteUnit(value) || viewportUnit(value) || parseFloat(value);
+const cssUnit = value => {
+    const props = units.parse(value);
+
+    return absoluteUnit(props) || viewportUnit(props) || parseFloat(props);
+}
 
 export { absoluteUnit, viewportUnit };
 export default cssUnit;

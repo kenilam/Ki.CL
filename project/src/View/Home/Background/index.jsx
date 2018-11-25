@@ -19,7 +19,7 @@ import style from './style.scss';
 
 const { routesAttr } = DOM.Body;
 
-const { delay, duration, size } = style;
+const { delay, duration, size, minSize } = style;
 
 const config = {
     renderer: {
@@ -40,7 +40,8 @@ const config = {
         },
         delay: delay.replace('ms', '') / 1000,
         duration: duration.replace('ms', '') / 1000,
-        size
+        size: size,
+        minSize: minSize
     }
 };
 
@@ -95,9 +96,10 @@ class Background extends React.Component {
         const { mask, graphics } = this.app;
         const { left, right } = graphics;
         const { height, width } = windowSize;
-        const { size } = config.graphics;
+        
+        const { size, minSize } = config.graphics;
 
-        const space = cssUnit(size);
+        const space = Math.max(cssUnit(size), cssUnit(minSize));
 
         const center = width / 2;
 

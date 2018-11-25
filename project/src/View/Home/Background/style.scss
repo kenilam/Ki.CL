@@ -1,7 +1,8 @@
 :export {
     leftColor: $darker_grey;
     rightColor: $darkest_grey;
-    size: 1vh;
+    size: 2vh;
+    minSize: $gutter;
     duration: $fast;
     delay: $speed;
 }

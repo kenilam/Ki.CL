@@ -82,7 +82,8 @@
     "redux-multi": "^0.1.12",
     "sass-breakpoints": "^2.1.0",
     "sass-easing": "^1.0.3",
-    "sass-mq": "^5.0.0"
+    "sass-mq": "^5.0.0",
+    "units-css": "^0.4.0"
   },
   "devDependencies": {
     "app-root-path": "^2.1.0",
@@ -145,12 +146,12 @@
     "postcss-reporter": "^5.0.0",
     "prettier": "^1.15.1",
     "prettier-stylelint": "^0.4.2",
-    "react-styleguidist": "^7.3.11",
+    "react-styleguidist": "^8.0.6",
     "react-test-renderer": "^16.6.1",
     "redux-mock-store": "^1.5.3",
     "regenerator-runtime": "^0.11.1",
     "remote-redux-devtools": "^0.5.13",
-    "remotedev-server": "^0.2.6",
+    "remotedev-server": "^0.2.7",
     "resolve-url-loader": "^2.3.1",
     "sass-loader": "^7.1.0",
     "sass-resources-loader": "^1.3.5",
