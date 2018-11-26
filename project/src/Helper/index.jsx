@@ -1,5 +1,7 @@
-import { routes, months } from 'content/resources';
+import moment from 'moment';
 import PixiPlugin from 'gsap/PixiPlugin';
+
+import { routes, months } from 'content/resources';
 
 import cssUnit from './cssUnit';
 import windowSize from './windowSize';
@@ -79,14 +81,12 @@ class Helper {
     return `${number}${suffix}`;
   }
 
-  static timestampToDate (timestamp) {
-    const date = new Date(timestamp * 1000);
+  static toDate (timestamp, format = 'DD MMMM, YYYY') {
+    return moment(timestamp * 1000).format(format);
+  }
 
-    const yy = date.getFullYear();
-    const mm = Helper.monthNameOf(date.getMonth());
-    const dd = Helper.ordinalSuffixOf(date.getDay());
-
-    return `${dd} ${mm}, ${yy}`;
+  static agesAgo (timestamp) {
+    return moment(timestamp * 1000).fromNow();
   }
 }
 

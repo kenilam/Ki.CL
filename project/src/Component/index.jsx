@@ -1,10 +1,8 @@
-import DOM from './DOM';
-import Errors from './Errors';
-import GlobalHeader from './GlobalHeader';
-import Link from './Link';
-import Loader from './Loader';
-import Logo from './Logo';
-import Nav from './Nav';
-import Transition from './Transition';
-
-export { DOM, Errors, GlobalHeader, Link, Loader, Logo, Nav, Transition };
+export DOM from './DOM';
+export Errors from './Errors';
+export GlobalHeader from './GlobalHeader';
+export Link from './Link';
+export Loader from './Loader';
+export Logo from './Logo';
+export Nav from './Nav';
+export Transition from './Transition';

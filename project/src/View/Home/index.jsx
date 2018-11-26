@@ -6,10 +6,7 @@ import { Logo } from 'Component';
 
 import { routes } from 'content/resources';
 
-import Background from './Background';
-import Description from './Description';
-import Navigation from './Navigation';
-import Profession from './Profession';
+import { Background, Description, Navigation, Profession } from './Component';
 
 import './style.scss';
 

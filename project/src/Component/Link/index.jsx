@@ -17,9 +17,7 @@ type Props = {
 
 const activeClassName = 'isActive';
 
-const Link = ({ children, className, component, onClick, to, text, ...rest }: Props) => {
-  const Wrapper = component;
-
+const Link = ({ children, className, component: Wrapper, onClick, to, text, ...rest }: Props) => {
   className = classnames(className);
 
   const Element = () => (
