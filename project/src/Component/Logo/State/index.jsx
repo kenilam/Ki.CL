@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
-    const { routes, siteName } = state.resources;
+  const { routes, siteName } = state.resources;
 
-    return {
-        ...routes.home,
-        siteName
-    };
+  return {
+    ...routes.home,
+    siteName
+  };
 };
 
 const Connector = connect(mapStateToProps);

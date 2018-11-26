@@ -1,54 +1,54 @@
 {
-    "siteName" : "Ki.CL",
-    "description" : "",
-    "routes" : {
-        "home" : {
-            "path" : "/",
-            "name" : "Home",
-            "content" : {
-                "profession": [
-                    "Interactive Design",
-                    "Graphic Design"
-                ],
-                "description" : [
-                    "A California Based Creative / Digital Specialist.",
-                    "With over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
-                ]
-            }
-        },
-        "about" : {
-            "path" : "/about",
-            "name" : "About",
-            "message" : "Ki.CL"
-        },
-        "works" : {
-            "path" : "/works",
-            "name" : "Works",
-            "message" : "Ki.CL",
-            "project" : {
-                "path" : "/works/:projectId",
-                "name" : "Works | Project",
-                "message" : "Ki.CL"
-            }
-        },
-        "contact" : {
-            "path" : "/contact",
-            "name" : "Contact",
-            "message" : "Contact"
-        }
+  "siteName" : "Ki.CL",
+  "description" : "",
+  "routes" : {
+    "home" : {
+      "path" : "/",
+      "name" : "Home",
+      "content" : {
+        "profession": [
+          "Interactive Design",
+          "Graphic Design"
+        ],
+        "description" : [
+          "A California Based Creative / Digital Specialist.",
+          "With over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
+        ]
+      }
     },
-    "months" : [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    ]
+    "about" : {
+      "path" : "/about",
+      "name" : "About",
+      "message" : "Ki.CL"
+    },
+    "works" : {
+      "path" : "/works",
+      "name" : "Works",
+      "message" : "Ki.CL",
+      "project" : {
+        "path" : "/works/:projectId",
+        "name" : "Works | Project",
+        "message" : "Ki.CL"
+      }
+    },
+    "contact" : {
+      "path" : "/contact",
+      "name" : "Contact",
+      "message" : "Contact"
+    }
+  },
+  "months" : [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ]
 }

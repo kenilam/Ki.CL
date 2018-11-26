@@ -3,18 +3,18 @@
 @import 'Core/Core';
 
 [app-root] {
-    position: relative;
+  position: relative;
 }
 
 header[rule='banner'] {
-    min-width: 100vw;
-    position: fixed;
-    top: 0;
-    z-index: 2;
+  min-width: 100vw;
+  position: fixed;
+  top: 0;
+  z-index: 2;
 }
 
 main {
-    min-height: 100vh;
-    min-width: 100vw;
-    z-index: 1;
+  min-height: 100vh;
+  min-width: 100vw;
+  z-index: 1;
 }

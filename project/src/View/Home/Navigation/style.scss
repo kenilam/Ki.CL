@@ -1,20 +1,20 @@
 [data-routes^=home] .navigation {
-    align-self: start;
-    grid-gap: $space;
+  align-self: start;
+  grid-gap: $space;
 
-    align-items: start;
-    justify-content: start;
+  align-items: start;
+  justify-content: start;
+
+  a {
+    height: $logo-size;
+  }
+
+  @include mobile () {
+    grid-auto-flow: row;
+    grid-gap: $gutter;
 
     a {
-        height: $logo-size;
+      text-align: unset;
     }
-
-    @include mobile () {
-        grid-auto-flow: row;
-        grid-gap: $gutter;
-
-        a {
-            text-align: unset;
-        }
-    }
+  }
 }

@@ -1,31 +1,31 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
 
-            inject: 'body',
+      inject: 'body',
 
-            template: './Template/index.html',
+      template: './Template/index.html',
 
-            minify: {
-                caseSensitive: true,
-                collapseWhitespace: true,
-                sortAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                removeScriptTypeAttributes: true,
-                removeRedundantAttributes: true,
-                removeEmptyAttributes: true,
-                removeComments: true,
-                quoteCharacter: `'`,
+      minify: {
+        caseSensitive: true,
+        collapseWhitespace: true,
+        sortAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeRedundantAttributes: true,
+        removeEmptyAttributes: true,
+        removeComments: true,
+        quoteCharacter: `'`,
 
-                minifyCSS: true,
-                minifyJS: true,
-                minifyURLs: true
-            },
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true
+      },
 
-            xhtml: true
-        })
-    ]
+      xhtml: true
+    })
+  ]
 };

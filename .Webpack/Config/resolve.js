@@ -7,13 +7,13 @@ import { context } from './entry';
 const alias = {};
 
 fs.readdirSync(context).forEach(dir => {
-    const path = `${context}/${dir}`;
+  const path = `${context}/${dir}`;
 
-    if (!fs.statSync(path).isDirectory()) {
-        return;
-    }
+  if (!fs.statSync(path).isDirectory()) {
+    return;
+  }
 
-    alias[dir] = `${context}/${dir}`;
+  alias[dir] = `${context}/${dir}`;
 });
 
 alias['^'] = appRoot;
@@ -23,11 +23,11 @@ alias.assets = `${appRoot}/project/assets`;
 alias.content = `${appRoot}/project/content`;
 
 const resolve = {
-    modules: [`${appRoot}/node_modules`],
-    extensions: ['.js', '.jsx', '.scss', '.css', '.json', '.xml'],
-    alias
+  modules: [`${appRoot}/node_modules`],
+  extensions: ['.js', '.jsx', '.scss', '.css', '.json', '.xml'],
+  alias
 };
 
 export default {
-    resolve
+  resolve
 };

@@ -6,33 +6,33 @@ const { home } = resources.routes;
 const defaultAttr = home.name.toLowerCase();
 
 function get(prefix) {
-    return (document.body.dataset[`${prefix}Routes`] || defaultAttr).split('.');
+  return (document.body.dataset[`${prefix}Routes`] || defaultAttr).split('.');
 }
 
 function set(prefix, pathname) {
-    document.body.dataset[`${prefix}Routes`] = pathnameToRoutes(pathname);
+  document.body.dataset[`${prefix}Routes`] = pathnameToRoutes(pathname);
 }
 
 function observe(callback) {
-    const { MutationObserver } = window;
+  const { MutationObserver } = window;
 
-    const observer = new MutationObserver(mutations => {
-        mutations = mutations.filter(
-            mutation => mutation.type === 'attributes' && callback
-        );
+  const observer = new MutationObserver(mutations => {
+    mutations = mutations.filter(
+      mutation => mutation.type === 'attributes' && callback
+    );
 
-        if (mutations.length === 0) {
-            return;
-        }
+    if (mutations.length === 0) {
+      return;
+    }
 
-        callback();
-    });
+    callback();
+  });
 
-    observer.observe(document.body, {
-        attributes: true
-    });
+  observer.observe(document.body, {
+    attributes: true
+  });
 
-    return () => observer.disconnect();
+  return () => observer.disconnect();
 }
 
 const routesAttr = { get, observe, set };

@@ -5,6 +5,6 @@ const context = `${appRoot}/project/src`;
 
 export { context };
 export default {
-    entry,
-    context
+  entry,
+  context
 };

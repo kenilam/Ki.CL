@@ -1,17 +1,17 @@
 a {
-    color: $dark_grey;
-    text-decoration: none;
+  color: $dark_grey;
+  text-decoration: none;
 
-    &:hover,
-    &:active {
-        color: $darker_grey;
-        transition-property: color;
-        transition-timing-function: $ease;
-        transition-duration: $slower;
-    }
+  &:hover,
+  &:active {
+    color: $darker_grey;
+    transition-property: color;
+    transition-timing-function: $ease;
+    transition-duration: $slower;
+  }
 
-    &.isActive {
-        color: inherit;
-        pointer-events: none;
-    }
+  &.isActive {
+    color: inherit;
+    pointer-events: none;
+  }
 }

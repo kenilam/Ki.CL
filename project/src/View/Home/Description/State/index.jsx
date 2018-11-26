@@ -5,7 +5,7 @@ import { routes } from 'content/resources';
 const { description } = routes.home.content;
 
 const mapStateToProps = () => ({
-    description
+  description
 });
 
 const Connector = connect(mapStateToProps);

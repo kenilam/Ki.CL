@@ -12,18 +12,18 @@ import './style.scss';
 const Loader = () => 'loading';
 
 const Works = async () => {
-    const project = await fetch(API.works).then(data => data.json());
-    
-    return 'Works';
+  const project = await fetch(API.works).then(data => data.json());
+  
+  return 'Works';
 };
 
 const Instance = Connector(asyncReactor(Works, Loader));
 
 const Component = props => (
-    <Route
-        path={resources.path}
-        component={match => <Instance {...{ match, ...props }} />}
-    />
+  <Route
+    path={resources.path}
+    component={match => <Instance {...{ match, ...props }} />}
+  />
 );
 
 export default Component;

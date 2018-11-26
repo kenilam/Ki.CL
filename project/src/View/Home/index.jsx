@@ -14,21 +14,21 @@ import Profession from './Profession';
 import './style.scss';
 
 const Home = () => (
-    <React.Fragment>
-        <Logo />
-        <Description />
-        <Profession />
-        <Navigation />
-        <Background />
-    </React.Fragment>
+  <React.Fragment>
+    <Logo />
+    <Description />
+    <Profession />
+    <Navigation />
+    <Background />
+  </React.Fragment>
 );
 
 const Component = props => (
-    <Route
-        path={routes.home.path}
-        exact
-        component={match => <Home {...{ match, ...props }} />}
-    />
+  <Route
+    path={routes.home.path}
+    exact
+    component={match => <Home {...{ match, ...props }} />}
+  />
 );
 
 export default Component;

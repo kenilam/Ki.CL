@@ -1,10 +1,10 @@
 $backgroundColor: $red;
 
 [data-routes^=about] {
-    background: $backgroundColor;
+  background: $backgroundColor;
 }
 
 :export {
-    leftColor: $backgroundColor;
-    rightColor: $backgroundColor;
+  leftColor: $backgroundColor;
+  rightColor: $backgroundColor;
 }

@@ -10,15 +10,15 @@ import './style.scss';
 type description = string;
 
 type Props = {
-    description: Array<description>
+  description: Array<description>
 };
 
 const Description = ({ description }: Props) => (
-    <div className='description'>
-        {description.map(
-            paragraphic => <p key={randomId}>{paragraphic}</p> 
-        )}
-    </div>
+  <div className='description'>
+    {description.map(
+      paragraph => <p key={randomId}>{paragraph}</p> 
+    )}
+  </div>
 );
 
 const Component = Connector(Description);

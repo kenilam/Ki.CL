@@ -7,46 +7,47 @@ import classnames from 'classnames';
 import './style.scss';
 
 type Props = {
-    children: React.Node,
-    className: string,
-    component: string,
-    onClick: Function,
-    to: string,
-    text: string
+  children: React.Node,
+  className: string,
+  component: string,
+  onClick: Function,
+  to: string,
+  text: string
 };
 
 const activeClassName = 'isActive';
 
-const Link = ({ children, className, component, onClick, to, text }: Props) => {
-    const Wrapper = component;
+const Link = ({ children, className, component, onClick, to, text, ...rest }: Props) => {
+  const Wrapper = component;
 
-    className = classnames(className);
+  className = classnames(className);
 
-    const Element = () => (
-        <NavLink
-            exact
-            {...{
-                activeClassName,
-                onClick,
-                to,
-                className: !Wrapper ? className : null
-            }}
-        >
-            {text ? <span>{text}</span> : children}
-        </NavLink>
-    );
+  const Element = () => (
+    <NavLink
+      exact
+      {...{
+        activeClassName,
+        onClick,
+        to,
+        className: !Wrapper ? className : null,
+        ...rest
+      }}
+    >
+      {text ? <span>{text}</span> : children}
+    </NavLink>
+  );
 
-    return (
-        <Router>
-            {Wrapper ? (
-                <Wrapper {...{ className }}>
-                    <Element />
-                </Wrapper>
-            ) : (
-                <Element />
-            )}
-        </Router>
-    );
+  return (
+    <Router>
+      {Wrapper ? (
+        <Wrapper {...{ className }}>
+          <Element />
+        </Wrapper>
+      ) : (
+        <Element />
+      )}
+    </Router>
+  );
 };
 
 export default Link;

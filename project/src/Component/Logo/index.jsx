@@ -8,12 +8,12 @@ import { Connector } from './State';
 import './style.scss';
 
 type Props = {
-    path: string,
-    siteName: string
+  path: string,
+  siteName: string
 };
 
 const Logo = ({ path, siteName }: Props) => (
-    <Link to={path} text={siteName} component="h1" className="logo" />
+  <Link to={path} text={siteName} component="h1" className="logo" />
 );
 
 export default Connector(Logo);

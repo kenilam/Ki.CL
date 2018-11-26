@@ -4,18 +4,23 @@ import { Provider, connect } from 'react-redux';
 import multi from 'redux-multi';
 
 import Resources from './Resources';
+import Styles from './Styles';
 
 const reducer = combineReducers({
-    ...Resources.reducer
+  ...Resources.reducer,
+  ...Styles.reducer
 });
 
 const mapStateToProps = state => ({
-    ...Resources.mapStateToProps(state)
+  ...Resources.mapStateToProps(state),
+  ...Styles.mapStateToProps(state)
 });
 
-// const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  ...Styles.mapDispatchToProps(dispatch)
+});
 
-const Connector = connect(mapStateToProps);
+const Connector = connect(mapStateToProps, mapDispatchToProps);
 
 const enhancer = compose(applyMiddleware(multi));
 

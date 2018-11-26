@@ -19,72 +19,73 @@ import './style.scss';
 const routeIndex = { current: -1, previous: -1 };
 
 const onEnter = pathname => {
-    DOM.Title.set(pathname);
-    DOM.Body.routesAttr.set('current', pathname);
+  DOM.Title.set(pathname);
+  DOM.Body.routesAttr.set('current', pathname);
 };
 
 const onExit = pathname => {
-    DOM.Body.routesAttr.set('previous', pathname);
+  DOM.Body.routesAttr.set('previous', pathname);
 };
 
 const transitionDirectionByRoute = ({ allRoutes, currentRoute }) => {
-    let direction = '';
+  let direction = '';
 
-    routeIndex.current = Object.keys(allRoutes)
-        .map(route => `/${route.split('/')[0]}`)
-        .indexOf(`/${currentRoute.split('/')[1]}`);
+  routeIndex.current = Object.keys(allRoutes)
+    .map(route => `/${route.split('/')[0]}`)
+    .indexOf(`/${currentRoute.split('/')[1]}`);
 
-    if (routeIndex.previous >= 0) {
-        if (routeIndex.current > routeIndex.previous) {
-            direction = 'transition-forward';
-        }
-
-        if (routeIndex.current < routeIndex.previous) {
-            direction = 'transition-backward';
-        }
+  if (routeIndex.previous >= 0) {
+    if (routeIndex.current > routeIndex.previous) {
+      direction = 'transition-forward';
     }
 
-    routeIndex.previous = routeIndex.current;
+    if (routeIndex.current < routeIndex.previous) {
+      direction = 'transition-backward';
+    }
+  }
 
-    return direction;
+  routeIndex.previous = routeIndex.current;
+
+  return direction;
 };
 
-const Component = ({ location, resources, ...rest }) => {
-    const { pathname : currentRoute } = location;
-    const { routes : allRoutes } = resources;
+const Component = ({ location, resources, style, ...rest }) => {
+  const { pathname : currentRoute } = location;
+  const { routes : allRoutes } = resources;
 
-    const direction = transitionDirectionByRoute({ allRoutes, currentRoute });
+  const direction = transitionDirectionByRoute({ allRoutes, currentRoute });
 
-    const className = classnames(
-        'view',
-        'slide',
-        direction
-    );
+  const className = classnames(
+    'view',
+    'slide',
+    direction
+  );
 
-    onEnter(currentRoute);
+  onEnter(currentRoute);
 
-    return (
-        <Transition
-            {...{ className }}
-            components={{
-                wrapper: 'main',
-                element: 'section',
-                elementAttrs: {
-                    'data-routes': pathnameToRoutes(currentRoute)
-                }
-            }}
-            keyValue={currentRoute}
-            onEnter={() => onEnter(currentRoute)}
-            onExit={() => onExit(currentRoute)}
-        >
-            <Switch location={location}>
-                {About(rest)}
-                {Contact(rest)}
-                {Home(rest)}
-                {Works(rest)}
-            </Switch>
-        </Transition>
-    );
+  return (
+    <Transition
+      {...{ className }}
+      components={{
+        wrapper: 'main',
+        element: 'section',
+        elementProps: {
+          'data-routes': pathnameToRoutes(currentRoute),
+          style
+        }
+      }}
+      keyValue={currentRoute}
+      onEnter={() => onEnter(currentRoute)}
+      onExit={() => onExit(currentRoute)}
+    >
+      <Switch location={location}>
+        {About(rest)}
+        {Contact(rest)}
+        {Home(rest)}
+        {Works(rest)}
+      </Switch>
+    </Transition>
+  );
 };
 
 const Instance = Connector(Component);
@@ -92,9 +93,9 @@ const Instance = Connector(Component);
 const InstanceWithRouter = withRouter(Instance);
 
 const View = props => (
-    <Router>
-        <InstanceWithRouter {...props} />
-    </Router>
+  <Router>
+    <InstanceWithRouter {...props} />
+  </Router>
 );
 
 export default View;

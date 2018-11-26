@@ -15,19 +15,19 @@ import resolve from './resolve';
 import stylesheet from './stylesheet';
 
 export {
-    asset,
-    bundleAnalyzer,
-    clean,
-    content,
-    devServer,
-    entry,
-    environment,
-    fonts,
-    images,
-    indexHTML,
-    javascript,
-    output,
-    prodServer,
-    resolve,
-    stylesheet
+  asset,
+  bundleAnalyzer,
+  clean,
+  content,
+  devServer,
+  entry,
+  environment,
+  fonts,
+  images,
+  indexHTML,
+  javascript,
+  output,
+  prodServer,
+  resolve,
+  stylesheet
 };

@@ -5,7 +5,7 @@ import { routes } from 'content/resources';
 const resources = routes.works;
 
 const mapStateToProps = () => ({
-    ...resources
+  ...resources
 });
 
 const Connector = connect(mapStateToProps);

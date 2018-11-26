@@ -2,16 +2,16 @@
 @import 'style/slide';
 
 [class*='css-transition-'] {
-    pointer-events: none;
-    transition-property: none;
-    transition-duration: $speed;
-    transition-timing-function: $easeInOutQuart;
+  pointer-events: none;
+  transition-property: none;
+  transition-duration: $speed;
+  transition-timing-function: $easeInOutQuart;
 }
 
 .css-transition {
-    z-index: 2;
+  z-index: 2;
 }
 
 .css-transition-exit {
-    z-index: 1;
+  z-index: 1;
 }

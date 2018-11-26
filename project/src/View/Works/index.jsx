@@ -5,42 +5,47 @@ import { asyncReactor } from 'async-reactor';
 import API from 'API';
 import { randomId } from 'Helper';
 
-import { Project } from 'Component';
+import { Errors, Link, Loader } from 'Component';
 
 import { Connector, resources } from './State';
 
 import './style.scss';
 
-const Loader = () => 'loading';
-
-const ErrorStage = ({ error }) => (
-    <React.Fragment>
-        <h1>{error.message}</h1>
-        <p>{error.stack}</p>
-    </React.Fragment>
-);
+let projects;
 
 const Works = async () => {
-    try {
-        const projects = await fetch(API.works).then(data => data.json());
-        
-        return projects.map(
-            (project) => (
-                <Project key={randomId} {...project}/>
+  try {
+    projects = projects || await fetch(API.works).then(data => data.json());
+
+    return (
+      <nav>
+        <ul>
+          {
+            projects.map(
+              ({ cover, id, name }) => (
+                <li key={randomId}>
+                  <Link to={`/works/${id}`} title={name}>
+                    <img src={cover} alt={name}/>
+                  </Link>
+                </li>
+              )
             )
-        );
-    } catch (error) {
-        return <ErrorStage error={error} />;
-    }
+          }
+        </ul>
+      </nav>
+    );
+  } catch (error) {
+    return <Errors { ...{ error } } />;
+  }
 };
 
 const Instance = Connector(asyncReactor(Works, Loader));
 
 const Component = props => (
-    <Route
-        path={resources.path}
-        component={match => <Instance {...{ match, ...props }} />}
-    />
+  <Route
+    path={resources.path}
+    component={match => <Instance {...{ match, ...props }} />}
+  />
 );
 
 export default Component;

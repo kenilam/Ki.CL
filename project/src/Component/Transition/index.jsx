@@ -9,43 +9,43 @@ import './style.scss';
 
 type className = string;
 
-type elementAttrs = {};
+type elementProps = {};
 
 type components = {
-    className: Array<className> | className,
-    element: string,
-    wrapper: string,
-    elementAttrs: elementAttrs
+  className: Array<className> | className,
+  element: string,
+  wrapper: string,
+  elementProps: elementProps
 };
 
 type Props = {
-    className: Array<className> | className,
-    childComponent: React.Node,
-    components: components
+  className: Array<className> | className,
+  childComponent: React.Node,
+  components: components
 };
 
 const defaultClassName = 'transition';
 
 const Transition = ({
-    className,
-    childComponent,
-    components,
-    ...rest
+  className,
+  childComponent,
+  components,
+  ...rest
 }: Props) => {
-    const { wrapper, element, elementAttrs } = components;
+  const { wrapper, wrapperProps, element, elementProps } = components;
 
-    className = classnames(defaultClassName, className);
+  className = classnames(defaultClassName, className);
 
-    return (
-        <TransitionGroup {...{ className, component: wrapper }}>
-            {CSSTransition({
-                ...rest,
-                ...elementAttrs,
-                component: element,
-                className: components.className
-            })}
-        </TransitionGroup>
-    );
+  return (
+    <TransitionGroup {...{ className, ...wrapperProps, component: wrapper }}>
+      {CSSTransition({
+        ...rest,
+        ...elementProps,
+        component: element,
+        className: components.className
+      })}
+    </TransitionGroup>
+  );
 };
 
 export { CSSTransition };

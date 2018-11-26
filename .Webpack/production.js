@@ -13,36 +13,36 @@ const watch = !Args.noWatch;
 const config = webpackMerge(dev, { mode, watch });
 
 const errorHandler = error => {
-    if (!error) {
-        return;
-    }
+  if (!error) {
+    return;
+  }
 
-    console.error(error.stack || error);
+  console.error(error.stack || error);
 
-    if (error.details) {
-        console.error(error.details);
-    }
+  if (error.details) {
+    console.error(error.details);
+  }
 
-    return true;
+  return true;
 };
 
-const statsHandler = (error, stats) =>
-    new Promise((resolve, reject) => {
-        if (errorHandler(error)) {
-            reject(error);
-            
-            return;
-        }
+const statsHandler = async (error, stats) =>
+  new Promise((resolve, reject) => {
+    if (errorHandler(error)) {
+      reject(error);
+      
+      return;
+    }
 
-        resolve(stats);
-    });
+    resolve(stats);
+  });
 
 const production = new Promise((resolve, reject) =>
-    webpack(config, (error, stats) =>
-        statsHandler(error, stats)
-            .then(resolve)
-            .catch(reject)
-    )
+  webpack(config, (error, stats) =>
+    statsHandler(error, stats)
+      .then(resolve)
+      .catch(reject)
+  )
 );
 
 process.env.NODE_ENV = mode;

@@ -10,10 +10,10 @@ const Contact = () => 'Contact';
 const Instance = Connector(Contact);
 
 const Component = props => (
-    <Route
-        path={resources.path}
-        component={match => <Instance {...{ match, ...props }} />}
-    />
+  <Route
+    path={resources.path}
+    component={match => <Instance {...{ match, ...props }} />}
+  />
 );
 
 export default Component;

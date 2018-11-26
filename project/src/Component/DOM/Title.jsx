@@ -7,10 +7,10 @@ const { routes, siteName } = resources;
 const separator = ' | ';
 
 function set(pathname) {
-    const views = pathnameToRoutes(pathname);
+  const views = pathnameToRoutes(pathname).replace('.', separator);
+  const home = routes.home.name.toUpperCase();
 
-    document.title = `${siteName}${separator}${views.replace('.', separator) ||
-        routes.home.name.toUpperCase()}`;
+  document.title = `${siteName}${separator}${views || home}`;
 }
 
 export default { set };

@@ -1,16 +1,16 @@
 html {
-    @include font-smoothing();
-    
-    color: $light_black;
+  @include font-smoothing();
+  
+  color: $light_black;
 }
 
 body {
-    font-family: $font_family;
-    font-size: $font_size;
-    
-    background-color: $white;
+  font-family: $font_family;
+  font-size: $font_size;
+  
+  background-color: $white;
 }
 
 [aria-hidden="true"] {
-    visibility: hidden;
+  visibility: hidden;
 }
