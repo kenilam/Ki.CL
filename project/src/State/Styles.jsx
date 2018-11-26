@@ -2,7 +2,7 @@ const actions = {
   updateStyle : 'UPDATE_STYLES'
 }
 
-const reducer = {
+const reducers = {
   style(state = {}, action) {
     switch (action.type) {
       case actions.updateStyle:
@@ -24,4 +24,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default { mapStateToProps, mapDispatchToProps, reducer };
+export default { mapStateToProps, mapDispatchToProps, reducers };

@@ -6,9 +6,9 @@ import multi from 'redux-multi';
 import Resources from './Resources';
 import Styles from './Styles';
 
-const reducer = combineReducers({
-  ...Resources.reducer,
-  ...Styles.reducer
+let reducers = combineReducers({
+  ...Resources.reducers,
+  ...Styles.reducers
 });
 
 const mapStateToProps = state => ({
@@ -24,7 +24,7 @@ const Connector = connect(mapStateToProps, mapDispatchToProps);
 
 const enhancer = compose(applyMiddleware(multi));
 
-const store = createStore(reducer, enhancer);
+const store = createStore(reducers, enhancer);
 
 const State = ({ children }) => <Provider {...{ store }}>{children}</Provider>;
 
