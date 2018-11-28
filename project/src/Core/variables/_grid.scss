@@ -26,7 +26,7 @@ $mq-static-breakpoint: desktop;
   @include mq($and: '(orientation: #{$orientation})', $props...) {
     @if $content {
       @each $name, $value in $content {
-        #{$name} : $value
+        #{$name}: $value
       }
     }
     @else {
