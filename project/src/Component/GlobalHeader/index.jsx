@@ -1,10 +1,9 @@
 // @flow
 import React from 'react';
-import ResizeObserver from 'react-resize-observer';
 
 import { HashRouter as Router, withRouter } from 'react-router-dom';
 
-import { Logo, Nav } from 'Component';
+import { Logo, Nav, ResizeObserver } from 'Component';
 
 import { CSSTransition } from 'Component/Transition';
 
@@ -19,22 +18,22 @@ type routes = {
 
 type Props = {
   location: {},
-  onResize: Function,
+  resizeHandler: Function,
   routes: Array<routes>
 };
 
-const Component = ({ location, onResize, routes }: Props) => {
+const Component = ({ location, resizeHandler, routes }: Props) => {
   return (
     <CSSTransition
-      component="header"
-      rule="banner"
+      component={ResizeObserver}
+      componentClass='header'
+      rule='banner'
       inValue={location.pathname !== '/'}
-      onExited={onResize}
+      { ...{ resizeHandler } }
     >
       <React.Fragment>
         <Logo />
         <Nav {...{ routes }} />
-        <ResizeObserver {...{ onReflow: onResize }} />
       </React.Fragment>
     </CSSTransition>
   )
