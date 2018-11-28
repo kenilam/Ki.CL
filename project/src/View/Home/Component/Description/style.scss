@@ -1,4 +1,11 @@
 [data-routes^=home] .description {
   align-self: start;
   font-family: $font_family;
+  min-width: $grid * 7;
+  width: $grid * 7;
+
+  @include mobile () {
+    min-width: $grid * 4;
+    width: 60%;
+  }
 }
