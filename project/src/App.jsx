@@ -8,7 +8,7 @@ import { GlobalHeader } from 'Component';
 import './style.scss';
 
 const Component = ({ style, updateStyle }) => {
-  const resizeHandler = ({ height }) => {
+  const resizeHandler = ({ height } = {}) => {
     updateStyle({ paddingTop: height });
   }
 
