@@ -27,11 +27,11 @@ const Link = ({ children, className, component: Wrapper, onClick, to, text, ...r
         activeClassName,
         onClick,
         to,
-        className: !Wrapper ? className : null,
+        className: !Wrapper ? className: null,
         ...rest
       }}
     >
-      {text ? <span>{text}</span> : children}
+      {text ? <span>{text}</span>: children}
     </NavLink>
   );
 
@@ -41,7 +41,7 @@ const Link = ({ children, className, component: Wrapper, onClick, to, text, ...r
         <Wrapper {...{ className }}>
           <Element />
         </Wrapper>
-      ) : (
+      ): (
         <Element />
       )}
     </Router>
