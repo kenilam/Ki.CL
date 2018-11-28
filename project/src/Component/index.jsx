@@ -6,4 +6,5 @@ export Loader from './Loader';
 export Logo from './Logo';
 export Nav from './Nav';
 export ResizeObserver from './ResizeObserver';
+export Router from './Router';
 export Transition from './Transition';

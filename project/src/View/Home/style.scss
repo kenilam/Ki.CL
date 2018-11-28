@@ -1,9 +1,9 @@
-$column : (
+$column: (
   default: $logo-width,
   mobile: $logo-size
 );
 
-$row : (
+$row: (
   default: $logo-size,
   mobile: ($logo-size * 2 + $space)
 );

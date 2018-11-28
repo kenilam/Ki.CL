@@ -27,7 +27,7 @@ class Bubble {
 
     const center = { x: width / 2, y: height / 2 };
 
-    const radius = (width > height ? height : width) / 10;
+    const radius = (width > height ? height: width) / 10;
 
     this.bubble = new PIXI.Graphics();
 
@@ -74,7 +74,7 @@ class Bubble {
         rotation:
           this.bubble.rotation < 360
             ? this.bubble.rotation + randomNumberByRange(80, 100)
-            : 0,
+           : 0,
         x: position.x + randomNumberByRange(-2, 2),
         y: position.y - randomNumberByRange(5, 10)
       },
@@ -88,7 +88,7 @@ class Bubble {
 
     const { position, graphicsData } = this.bubble;
     const { radius } = graphicsData[0].shape;
-    const size = width > height ? height : width;
+    const size = width > height ? height: width;
 
     this.bubble
       .drawCircle(0, 0, size * (radius / size))

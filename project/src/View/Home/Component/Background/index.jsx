@@ -49,10 +49,6 @@ class Background extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
-
-    this.app = {};
-
     this.node = React.createRef();
 
     this.creatApp = this.creatApp.bind(this);
@@ -142,11 +138,15 @@ class Background extends React.Component {
     function changeFillColor(name) {
       const graphic = graphics[name];
 
+      if (!graphic) {
+        return;
+      }
+
       TweenLite.killTweensOf(graphic);
 
       TweenLite.set(graphic, {
         pixi: {
-          fillColor: (freeze ? current : previous)[`${name}Color`]
+          fillColor: (freeze ? current: previous)[`${name}Color`]
         }
       });
 
@@ -155,7 +155,7 @@ class Background extends React.Component {
       }
       
       TweenLite.to(graphic, duration, {
-        delay: previousRoute !== 'home' ? delay : 0,
+        delay: previousRoute !== 'home' ? delay: 0,
         pixi: {
           fillColor: current[`${name}Color`]
         }
