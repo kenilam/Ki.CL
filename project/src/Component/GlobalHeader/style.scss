@@ -1,4 +1,4 @@
-$landscape : (
+$landscape: (
   width: 200px
 );
 
@@ -29,6 +29,10 @@ header[rule='banner'] {
     opacity: 0;
 
     transform: translate3d(0, -100%, 0);
+  }
+
+  &.css-transition-enter-active {
+    transition-delay: $fast;
   }
 
   @include tablet() {

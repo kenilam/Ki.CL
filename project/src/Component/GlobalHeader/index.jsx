@@ -18,26 +18,25 @@ type routes = {
 
 type Props = {
   location: {},
-  resizeHandler: Function,
+  resizeHandler: (rect: {}) => void,
   routes: Array<routes>
 };
 
-const Component = ({ location, resizeHandler, routes }: Props) => {
-  return (
-    <CSSTransition
-      component={ResizeObserver}
-      componentClass='header'
-      rule='banner'
-      inValue={location.pathname !== '/'}
-      { ...{ resizeHandler } }
-    >
-      <React.Fragment>
-        <Logo />
-        <Nav {...{ routes }} />
-      </React.Fragment>
-    </CSSTransition>
-  )
-};
+const Component = ({ location, resizeHandler, routes }: Props) => (
+  <CSSTransition
+    component={ResizeObserver}
+    componentClass='header'
+    rule='banner'
+    inValue={ location.pathname !== '/' }
+    { ...{ resizeHandler: resizeHandler } }
+    onExited={ () => resizeHandler() }
+  >
+    <React.Fragment>
+      <Logo />
+      <Nav {...{ routes }} />
+    </React.Fragment>
+  </CSSTransition>
+);
 
 const Instance = Connector(Component);
 
