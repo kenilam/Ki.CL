@@ -14,6 +14,8 @@ type Props = {
   component?: React.Node,
   keyValue: number | string,
   inValue: number | string,
+  onEntered: (node: React.Node) => void,
+  onExited: (node: React.Node) => void,
   mountOnEnter?: boolean,
   unmountOnExit?: boolean
 };
@@ -46,24 +48,38 @@ const CSSTransition = ({
   component: Wrapper,
   keyValue,
   inValue,
+  onEntered,
+  onExited,
   ...rest
-}: Props) => {
-  className = classnames(defaultClassName, className);
+}: Props) => (
+  <CSSTransitionInstance
+    classNames={ defaultClassName }
+    key={keyValue}
+    in={inValue}
+    onEntered={ node => {
+      removeDoneClasses(node);
 
-  return (
-    <CSSTransitionInstance
-      classNames={className}
-      key={keyValue}
-      in={inValue}
-      onEntered={removeDoneClasses}
-      onExited={removeDoneClasses}
-      addEndListener={addEndListener()}
-      {...rest}
-    >
-      <Wrapper {...{ className }}>{children}</Wrapper>
-    </CSSTransitionInstance>
-  );
-};
+      if (!onEntered) {
+        return;
+      }
+
+      onEntered(node);
+    } }
+    onExited={ node => {
+      removeDoneClasses(node);
+
+      if (!onExited) {
+        return;
+      }
+
+      onExited(node);
+    } }
+    addEndListener={addEndListener()}
+    {...rest}
+  >
+    <Wrapper {...{ className: classnames(defaultClassName, className) }}>{children}</Wrapper>
+  </CSSTransitionInstance>
+);
 
 CSSTransition.defaultProps = {
   component: 'div',

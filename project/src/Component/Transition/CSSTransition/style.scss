@@ -9,9 +9,9 @@
 }
 
 .css-transition {
-  z-index: 2;
-}
-
-.css-transition-exit {
   z-index: 1;
+
+  + .css-transition {
+    z-index: 0;
+  }
 }
