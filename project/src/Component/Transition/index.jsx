@@ -32,12 +32,14 @@ const Transition = ({
   components,
   ...rest
 }: Props) => {
-  const { wrapper, wrapperProps, element, elementProps } = components;
-
-  className = classnames(defaultClassName, className);
+  const { element, elementProps, wrapper, wrapperProps } = components;
 
   return (
-    <TransitionGroup {...{ className, ...wrapperProps, component: wrapper }}>
+    <TransitionGroup { ...{
+      ...wrapperProps,
+      className: classnames(defaultClassName, className),
+      component: wrapper
+    } }>
       {CSSTransition({
         ...rest,
         ...elementProps,
