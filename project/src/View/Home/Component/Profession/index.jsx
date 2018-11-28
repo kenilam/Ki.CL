@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Profession = ({ profession }: Props) => (
-  <ul className="profession">
+  <ul className='profession'>
     {profession.map(area => (
       <li key={randomId}>{area}</li>
     ))}

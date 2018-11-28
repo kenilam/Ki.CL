@@ -8,13 +8,13 @@ import { GlobalHeader } from 'Component';
 import './style.scss';
 
 const Component = ({ style, updateStyle }) => {
-  const onResize = ({ height }) => {
+  const resizeHandler = ({ height }) => {
     updateStyle({ paddingTop: height });
   }
 
   return (
     <React.Fragment>
-      <GlobalHeader { ...{ onResize } } />
+      <GlobalHeader { ...{ resizeHandler } } />
       <View { ...{ style } } />
     </React.Fragment>
   )

@@ -153,7 +153,7 @@ class Background extends React.Component {
       if (freeze) {
         return;
       }
-
+      
       TweenLite.to(graphic, duration, {
         delay: previousRoute !== 'home' ? delay : 0,
         pixi: {

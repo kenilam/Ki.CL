@@ -19,7 +19,7 @@ type Props = {
 
 const Nav = ({ onClick, routes }: Props) => (
   <Router>
-    <nav className="navigation">
+    <nav className='navigation'>
       {routes.map(({ name, path }) => (
         <Link to={path} text={name} key={randomId} {...{ onClick }} />
       ))}

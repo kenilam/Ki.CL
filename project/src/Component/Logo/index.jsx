@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Logo = ({ path, siteName }: Props) => (
-  <Link to={path} text={siteName} component="h1" className="logo" />
+  <Link to={path} text={siteName} component='h1' className='logo' />
 );
 
 export default Connector(Logo);

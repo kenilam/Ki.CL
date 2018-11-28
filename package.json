@@ -84,6 +84,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-transition-group": "^2.5.0",
+    "reactjs-resize-observer": "^1.0.2",
     "redux": "^3.7.2",
     "redux-multi": "^0.1.12",
     "sass-breakpoints": "^2.1.0",
