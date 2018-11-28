@@ -31,7 +31,7 @@ const viewportUnit = ({ value, unit }) => {
 
   const { height, width } = windowSize();
 
-  return parseFloat(value / 100 * (isVH ? height : width));
+  return parseFloat(value / 100 * (isVH ? height: width));
 };
 
 const cssUnit = value => {
