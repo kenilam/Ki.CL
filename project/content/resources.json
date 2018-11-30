@@ -1,43 +1,50 @@
 {
-  "siteName" : "Ki.CL",
-  "description" : "",
-  "routes" : {
-    "home" : {
-      "path" : "/",
-      "name" : "Home",
-      "content" : {
+  "siteName": "Ki.CL",
+  "description": "",
+  "routes": {
+    "home": {
+      "path": "/",
+      "name": "Home",
+      "content": {
         "profession": [
           "Interactive Design",
           "Graphic Design"
         ],
-        "description" : [
+        "description": [
           "A California Based Creative / Digital Specialist.",
           "With over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
         ]
       }
     },
-    "about" : {
-      "path" : "/about",
-      "name" : "About",
-      "message" : "Ki.CL"
+    "about": {
+      "path": "/about",
+      "name": "About",
+      "message": "Ki.CL"
     },
-    "works" : {
-      "path" : "/works",
-      "name" : "Works",
-      "message" : "Ki.CL",
-      "project" : {
-        "path" : "/works/:projectId",
-        "name" : "Works | Project",
-        "message" : "Ki.CL"
+    "works": {
+      "path": "/works",
+      "name": "Works",
+      "message": "Ki.CL",
+      "project": {
+        "path": "/works/:projectId",
+        "name": "Works | Project",
+        "message": "Ki.CL"
       }
     },
-    "contact" : {
-      "path" : "/contact",
-      "name" : "Contact",
-      "message" : "Contact"
+    "contact": {
+      "path": "/contact",
+      "name": "Contact",
+      "message": "Contact"
     }
   },
-  "months" : [
+  "component": {
+    "loader": {
+      "content": {
+        "description": "loading..."
+      }
+    }
+  },
+  "months": [
     "January",
     "February",
     "March",

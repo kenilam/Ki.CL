@@ -1,0 +1,36 @@
+$spinnerColor: $darkest_white;
+$size: 3rem;
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: $spinnerColor;
+  font-family: $font_family;
+  font-size: $size;
+  height: 100%;
+  position: relative;
+  width: 100%;
+
+  .spinner {
+    animation: loader-animation $slow linear infinite;
+  }
+
+  span {
+    display: absolute;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    width: 0;
+  }
+}
+
+@keyframes loader-animation {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
