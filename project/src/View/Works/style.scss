@@ -1,4 +1,5 @@
 $backgroundColor: $darkest_white;
+$spinnerColor: $darkest_grey;
 
 [data-current-routes^=work] {
   background: $backgroundColor;
@@ -6,6 +7,16 @@ $backgroundColor: $darkest_white;
 
 [data-routes^=work] {
   background: $backgroundColor;
+
+  .loader,
+  .errors {
+    position: absolute;
+    top: 0;
+  }
+
+  .loader {
+    color: $spinnerColor;
+  }
 }
 
 :export {
