@@ -1,10 +1,12 @@
 import React from 'react';
 
+import './style.scss';
+
 const Errors = ({ errors }) => (
-  <React.Fragment>
+  <div className='errors'>
     <h1>{errors.message}</h1>
     <p>{errors.stack}</p>
-  </React.Fragment>
+  </div>
 );
 
 export default Errors;
