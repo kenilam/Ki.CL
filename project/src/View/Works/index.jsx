@@ -1,11 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { asyncReactor } from 'async-reactor';
 
 import API from 'API';
 import { randomId } from 'Helper';
 
-import { Errors, Loader } from 'Component';
+import { Preloader } from 'Component';
 
 import { Connector, resources } from './State';
 
@@ -15,23 +14,23 @@ import './style.scss';
 
 let projects;
 
-const Works = async () => {
-  try {
-    projects = projects || await fetch(API.works).then(data => data.json());
+const fetchProjects = async () => {
+  projects = await projects || fetch(API.works).then(data => data.json());
 
-    return (
-      <nav>
-        <ul>
-          { projects.map( project => <Work { ...{ ...project, key: randomId } } /> ) }
-        </ul>
-      </nav>
-    );
-  } catch (errors) {
-    return <Errors { ...{ errors } } />;
-  }
+  return projects;
 };
 
-const Instance = Connector(asyncReactor(Works, Loader));
+const Works = ({ data }) => {
+  return (
+    <nav rule='navigation'>
+      <ul>
+        { data.map( project => <Work { ...{ ...project, key: randomId } } /> ) }
+      </ul>
+    </nav>
+  );
+};
+
+const Instance = Connector(Preloader({ Component: Works, awaitFor: fetchProjects }));
 
 const Component = props => (
   <Route

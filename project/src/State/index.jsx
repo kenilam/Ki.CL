@@ -4,20 +4,20 @@ import { Provider, connect } from 'react-redux';
 import multi from 'redux-multi';
 
 import Resources from './Resources';
-import Styles from './Styles';
+import Style from './Style';
 
 let reducers = combineReducers({
   ...Resources.reducers,
-  ...Styles.reducers
+  ...Style.reducers
 });
 
 const mapStateToProps = state => ({
   ...Resources.mapStateToProps(state),
-  ...Styles.mapStateToProps(state)
+  ...Style.mapStateToProps(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...Styles.mapDispatchToProps(dispatch)
+  ...Style.mapDispatchToProps(dispatch)
 });
 
 const Connector = connect(mapStateToProps, mapDispatchToProps);

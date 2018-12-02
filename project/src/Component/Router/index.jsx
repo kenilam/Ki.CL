@@ -9,31 +9,35 @@ import { DOM, Transition } from 'Component';
 import { pathnameToRoutes } from 'Helper';
 import { Connector } from 'State';
 
-type location = {
+type Location = {
   pathname: String
 };
 
-type resources = {
+type Resources = {
   routes: Array
 };
+
+type Node = React.node;
 
 type Props = {
   children: React.Node,
   className: String,
-  location: location,
-  resources: resources,
-  transitionStyle: String,
+  location: Location,
+  onEnter?: (node: Node) => void,
+  onExit?: (node: Node) => void,
+  resources: Resources,
+  transitionStyle?: String,
   style: {}
 };
 
 const routeIndex = { current: -1, previous: -1 };
 
-const onEnter = pathname => {
+const enterHandler = pathname => {
   DOM.Title.set(pathname);
   DOM.Body.routesAttr.set('current', pathname);
 };
 
-const onExit = pathname => {
+const exitHandler = pathname => {
   DOM.Body.routesAttr.set('previous', pathname);
 };
 
@@ -63,6 +67,8 @@ const Component = ({
   children,
   className,
   location,
+  onEnter,
+  onExit,
   resources,
   transitionStyle,
   style,
@@ -89,8 +95,16 @@ const Component = ({
           }
         },
         keyValue: currentRoute,
-        onEnter: () => onEnter(currentRoute),
-        onExit: () => onExit(currentRoute)
+        onEnter: node => {
+          enterHandler(currentRoute);
+
+          onEnter(node);
+        },
+        onExit: node => {
+          exitHandler(currentRoute);
+
+          onExit(node);
+        }
       } }
     >
       <Switch location={location}>
@@ -110,10 +124,10 @@ const View = props => (
   </Router>
 );
 
-
-
-View.defaultProps = {
-  transitionStyle: 'slide'
+Component.defaultProps = {
+  transitionStyle: 'slide',
+  onEnter: () => {},
+  onExit: () => {}
 }
 
 export default View;

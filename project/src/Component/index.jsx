@@ -5,6 +5,7 @@ export Link from './Link';
 export Loader from './Loader';
 export Logo from './Logo';
 export Nav from './Nav';
+export Preloader from './Preloader';
 export ResizeObserver from './ResizeObserver';
 export Router from './Router';
 export Transition from './Transition';

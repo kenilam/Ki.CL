@@ -8,24 +8,34 @@ import classnames from 'classnames';
 
 import './style.scss';
 
+type Node = React.node;
+
 type Props = {
   className: string | Array | {},
-  children: React.Node,
-  component?: React.Node,
+  children: Node,
+  component?: Node,
   keyValue: number | string,
   inValue: number | string,
-  onEntered: (node: React.Node) => void,
-  onExited: (node: React.Node) => void,
+  onEntered?: (node: Node) => void,
+  onExited?: (node: Node) => void,
   mountOnEnter?: boolean,
   unmountOnExit?: boolean
 };
 
 const defaultClassName = 'css-transition';
+const elementClassName = `${defaultClassName}-element`;
 const enterClassName =`${defaultClassName}-enter`;
 const exitClassName =`${defaultClassName}-exit`;
 
+const endListenerClassNames = [
+  `.${enterClassName}`,
+  `.${exitClassName}`,
+  `.${enterClassName} > .${elementClassName}`,
+  `.${exitClassName} > .${elementClassName}`
+].join(',')
+
 const addEndListener = endListenerTimer => (node, done) => {
-  const nodes = Array.from(node.parentNode.querySelectorAll(`.${enterClassName}, .${exitClassName}`));
+  const nodes = Array.from(node.parentNode.querySelectorAll(endListenerClassNames));
 
   const duration = Math.max(...nodes.map(n => transitionDuration(n, true)));
 
@@ -84,7 +94,9 @@ const CSSTransition = ({
 CSSTransition.defaultProps = {
   component: 'div',
   mountOnEnter: true,
-  unmountOnExit: true
+  unmountOnExit: true,
+  onEntered: () => {},
+  onExited: () => {}
 };
 
 export default CSSTransition;

@@ -2,6 +2,8 @@
 import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 
+import classnames from 'classnames';
+
 import { Link } from 'Component';
 import { randomId } from 'Helper';
 
@@ -17,9 +19,9 @@ type Props = {
   routes: Array<route>
 };
 
-const Nav = ({ onClick, routes }: Props) => (
+const Nav = ({ className, onClick, routes }: Props) => (
   <Router>
-    <nav className='navigation'>
+    <nav className={ classnames(className, 'navigation') }>
       {routes.map(({ name, path }) => (
         <Link to={path} text={name} key={randomId} {...{ onClick }} />
       ))}

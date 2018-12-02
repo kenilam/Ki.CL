@@ -6,7 +6,12 @@ $exit-size: map-get($slide-transition-sizes, exit);
   > .css-transition-exit-active,
   &.css-transition-enter-active,
   &.css-transition-exit-active {
-    transition-property: transform;
+    transition-property: filter, transform;
+  }
+
+  > .css-transition-exit-active,
+  &.css-transition-exit-active {
+    filter: grayscale(1) brightness(.2);
   }
 
   &.transition-backward,

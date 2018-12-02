@@ -2,24 +2,24 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 import { CSSloaders, SCSSloaders } from './development';
 
+const extractLoaders = loaders => loaders.filter(
+  ({ loader }) => loader !== 'style-loader'
+);
+
 const config = {
   module: {
     rules: [
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          use: CSSloaders.filter(
-            ({ loader }) => loader !== 'style-loader'
-          ),
+          use: extractLoaders(CSSloaders),
           fallback: 'style-loader'
         })
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: SCSSloaders.filter(
-            ({ loader }) => loader !== 'style-loader'
-          ),
+          use: extractLoaders(SCSSloaders),
           fallback: 'style-loader'
         })
       }

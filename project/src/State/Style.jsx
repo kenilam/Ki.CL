@@ -1,5 +1,5 @@
 const actions = {
-  updateStyle: 'UPDATE_STYLES'
+  updateStyle: 'UPDATE_STYLE'
 }
 
 const reducers = {

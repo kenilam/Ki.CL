@@ -7,7 +7,7 @@ $spinnerColor: $darkest_grey;
 
 [data-routes^=work] {
   background: $backgroundColor;
-
+  
   .loader,
   .errors {
     position: absolute;

@@ -7,7 +7,9 @@ import { Connector } from './State';
 
 import './style.scss';
 
-const Navigation = ({ onClick, routes }) => <Nav {...{ onClick, routes }} />;
+const Navigation = ({ onClick, routes }) => (
+  <Nav className='css-transition-element' {...{ onClick, routes }} />
+);
 
 const Component = Connector(Navigation);
 

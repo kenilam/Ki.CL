@@ -1,0 +1,32 @@
+[data-current-routes^=home] {
+  header[rule=banner] {
+    &.css-transition-exit {
+      transition-delay: $speed;
+    }
+  }
+  
+  [data-routes^='home'] {
+    &.css-transition-enter {
+      transform: translate3d(0, -100vh, 0);
+    }
+
+    &.css-transition-enter-active {
+      transform: translate3d(0, 0, 0);
+    }
+
+    &.css-transition-exit-active {
+      filter: none;
+    }
+  }
+
+  [data-routes]:not([data-routes^='home']) {
+    &.css-transition-exit {
+      transform: translate3d(0, 0, 0);
+    }
+
+    &.css-transition-exit-active {
+      filter: none;
+      transform: translate3d(0, 100vh, 0);
+    }
+  }
+}

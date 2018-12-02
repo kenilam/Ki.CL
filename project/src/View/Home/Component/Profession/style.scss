@@ -1,15 +1,17 @@
-[data-routes^=home] .profession {
-  display: grid;
+.profession {
+  [data-routes^=home] & {
+    display: grid;
 
-  justify-content: flex-start;
-  grid-auto-flow: column;
-  grid-gap: $space;
+    justify-content: flex-start;
+    grid-auto-flow: column;
+    grid-gap: $space;
 
-  li {
-    height: $logo-size;
-  }
+    li {
+      height: $logo-size;
+    }
 
-  @include mobile () {
-    grid-auto-flow: row;
+    @include mobile () {
+      grid-auto-flow: row;
+    }
   }
 }

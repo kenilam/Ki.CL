@@ -38,7 +38,10 @@ const SCSSloaders = [].concat(
   {
     loader: 'sass-resources-loader',
     options: {
-      resources: `${appRoot}/project/**/_*.scss`
+      resources: [
+        `${appRoot}/node_modules/sass-{*}/**/_*.scss`,
+        `${appRoot}/project/**/_*.scss`
+      ]
     }
   }
 );

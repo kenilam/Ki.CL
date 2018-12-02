@@ -1,0 +1,22 @@
+[data-previous-routes^='home'] {
+  [data-routes^='home'] {
+    &.css-transition-exit {
+      transform: translate3d(0, 0, 0);
+    }
+
+    &.css-transition-exit-active {
+      filter: none;
+      transform: translate3d(0, -100vh, 0);
+    }
+  }
+
+  [data-routes]:not([data-routes^='home']) {
+    &.css-transition-enter {
+      transform: translate3d(0, 100vh, 0);
+    }
+
+    &.css-transition-enter-active {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}

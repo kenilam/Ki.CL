@@ -89,7 +89,6 @@
     "redux": "^3.7.2",
     "redux-multi": "^0.1.12",
     "sass-breakpoints": "^2.1.0",
-    "sass-easing": "^1.0.3",
     "sass-mq": "^5.0.0",
     "units-css": "^0.4.0"
   },

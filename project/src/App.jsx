@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import State, { Connector } from 'State';
@@ -7,7 +8,16 @@ import { GlobalHeader } from 'Component';
 
 import './style.scss';
 
-const Component = ({ style, updateStyle }) => {
+type Style = { paddingTop: Number };
+
+type UpdateStyle = { height: Number };
+
+type Props = {
+  style?: Style,
+  updateStyle?: (props: UpdateStyle) => void
+};
+
+const Component = ({ style, updateStyle }: Props) => {
   const resizeHandler = ({ height } = {}) => {
     updateStyle({ paddingTop: height });
   }
@@ -19,6 +29,11 @@ const Component = ({ style, updateStyle }) => {
     </React.Fragment>
   )
 };
+
+Component.defaultProps = {
+  style: { paddingTop : 0 },
+  updateStyle: () => {}
+}
 
 const Instance = Connector(Component);
 

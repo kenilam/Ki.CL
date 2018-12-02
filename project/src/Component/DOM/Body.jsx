@@ -32,7 +32,7 @@ function observe(callback) {
     attributes: true
   });
 
-  return () => observer.disconnect();
+  return observer;
 }
 
 const routesAttr = { get, observe, set };

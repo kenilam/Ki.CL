@@ -6,7 +6,7 @@ a {
   &:active {
     color: $darker_grey;
     transition-property: color;
-    transition-timing-function: $ease;
+    transition-timing-function: $easeIn;
     transition-duration: $slower;
   }
 

@@ -8,15 +8,15 @@ import { routes } from 'content/resources';
 
 import { Background, Description, Navigation, Profession } from './Component';
 
-import './style.scss';
+import './styles/style.scss';
 
 const Home = () => (
   <React.Fragment>
-    <Logo />
-    <Description />
-    <Profession />
-    <Navigation />
-    <Background />
+    <Logo className='css-transition-element' />
+    <Description/>
+    <Profession/>
+    <Navigation/>
+    <Background/>
   </React.Fragment>
 );
 

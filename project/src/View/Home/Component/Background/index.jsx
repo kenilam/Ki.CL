@@ -45,16 +45,27 @@ const config = {
   }
 };
 
+const container = new PIXI.Container();
+
+const mask = new PIXI.Graphics();
+
+// const lava = new Lava();
+
+const left = new PIXI.Graphics();
+const right = new PIXI.Graphics();
+
 class Background extends React.Component {
   constructor(props) {
     super(props);
 
+    this.isTweening = {};
+
     this.node = React.createRef();
 
+    this.attach = this.attach.bind(this);
     this.creatApp = this.creatApp.bind(this);
     this.draw = this.draw.bind(this);
     this.fillColor = this.fillColor.bind(this);
-    this.update = this.update.bind(this);
 
     this.historyHandler = this.historyHandler.bind(this);
     this.resizeHandler = this.resizeHandler.bind(this);
@@ -63,29 +74,34 @@ class Background extends React.Component {
   componentDidMount() {
     const { addEventListener } = window;
 
-    this.app = this.creatApp();
-
-    TweenLite.ticker.addEventListener('tick', this.update);
-
     addEventListener('resize', this.resizeHandler, false);
 
-    this.removeRoutesAttrObserver = routesAttr.observe(this.fillColor);
+    this.routesAttrObserver = routesAttr.observe(this.fillColor);
 
+    this.app = this.creatApp();
+
+    this.attach();
     this.draw();
     this.fillColor();
-    this.update();
+
+    TweenLite.ticker.addEventListener('tick', this.attach);
+  }
+
+  shouldComponentUpdate () {
+    return false;
   }
 
   componentWillUnmount() {
     const { cancelAnimationFrame, removeEventListener } = window;
 
-    cancelAnimationFrame(this.removeResizeHandlerAnimationFrame);
+    TweenLite.ticker.removeEventListener('tick', this.attach);
 
-    TweenLite.ticker.removeEventListener('tick', this.update);
+    cancelAnimationFrame(this.componentDidMountFrame);
+    cancelAnimationFrame(this.resizeHandlerFrame);
 
     removeEventListener('resize', this.resizeHandler, false);
 
-    this.removeRoutesAttrObserver();
+    this.routesAttrObserver.disconnect();
   }
 
   draw() {
@@ -125,8 +141,18 @@ class Background extends React.Component {
   }
 
   fillColor(props = { freeze: false }) {
-    const { freeze } = props;
+    if (!this.app) {
+      return;
+    }
+
     const { graphics } = this.app;
+
+    if (!graphics) {
+      return;
+    }
+
+    const { freeze } = props;
+
     const { delay, duration } = config.graphics;
 
     const currentRoute = routesAttr.get('current')[0];
@@ -135,31 +161,34 @@ class Background extends React.Component {
     const current = config.graphics.color[currentRoute];
     const previous = config.graphics.color[previousRoute];
 
-    function changeFillColor(name) {
+    const changeFillColor = name => {
       const graphic = graphics[name];
 
-      if (!graphic) {
+      if (!graphic || this.isTweening[name]) {
         return;
       }
 
-      TweenLite.killTweensOf(graphic);
+      const color = `${name}Color`;
 
-      TweenLite.set(graphic, {
-        pixi: {
-          fillColor: (freeze ? current: previous)[`${name}Color`]
-        }
-      });
+      const currentColor = current[color];
+      const previousColor = previous[color];
+
+      const onComplete = () => { this.isTweening[name] = false; }
+
+      this.isTweening[name] = true;
 
       if (freeze) {
+        TweenLite.set(graphic,
+          { pixi: { fillColor: currentColor }, onComplete }
+        );
+
         return;
       }
-      
-      TweenLite.to(graphic, duration, {
-        delay: previousRoute !== 'home' ? delay: 0,
-        pixi: {
-          fillColor: current[`${name}Color`]
-        }
-      });
+
+      TweenLite.fromTo(graphic, duration,
+        { pixi: { fillColor: previousColor } },
+        { pixi: { fillColor: currentColor }, onComplete }
+      ).delay(previousRoute !== 'home' && currentRoute === 'home' ? delay : 0);
     }
 
     changeFillColor('left');
@@ -175,15 +204,6 @@ class Background extends React.Component {
       view
     });
 
-    const container = new PIXI.Container();
-
-    const mask = new PIXI.Graphics();
-
-    // const lava = new Lava();
-
-    const left = new PIXI.Graphics();
-    const right = new PIXI.Graphics();
-
     // const graphics = { lava, left, right };
     const graphics = { left, right };
 
@@ -197,7 +217,7 @@ class Background extends React.Component {
     return { graphics, mask, renderer, container };
   }
 
-  update() {
+  attach() {
     const { renderer, container } = this.app;
 
     renderer.render(container);
@@ -211,20 +231,20 @@ class Background extends React.Component {
     const { cancelAnimationFrame, requestAnimationFrame } = window;
     const { height, width } = windowSize;
 
-    cancelAnimationFrame(this.removeResizeHandlerAnimationFrame);
-    this.removeResizeHandlerAnimationFrame = requestAnimationFrame(() => {
+    cancelAnimationFrame(this.resizeHandlerFrame);
+    this.resizeHandlerFrame = requestAnimationFrame(() => {
       this.app.renderer.resize(width, height);
 
       this.draw();
       this.fillColor({ freeze: true });
-      this.update();
+      this.attach();
 
       // this.app.graphics.lava.resizeHandler();
     });
   }
 
   render() {
-    return <canvas ref={this.node} />;
+    return <canvas className='background' ref={this.node} />;
   }
 }
 

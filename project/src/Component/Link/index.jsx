@@ -8,7 +8,7 @@ import './style.scss';
 
 type Props = {
   children: React.Node,
-  className: string,
+  className: {} | Array | String,
   component: string,
   onClick: Function,
   to: string,

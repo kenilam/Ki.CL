@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 
+import classnames from 'classnames';
+
 import { randomId } from 'Helper';
 
 import { Connector } from './State';
@@ -14,7 +16,7 @@ type Props = {
 };
 
 const Profession = ({ profession }: Props) => (
-  <ul className='profession'>
+  <ul className={ classnames('css-transition-element', 'profession') }>
     {profession.map(area => (
       <li key={randomId}>{area}</li>
     ))}

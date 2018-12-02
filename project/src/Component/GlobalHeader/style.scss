@@ -24,6 +24,10 @@ header[rule='banner'] {
     justify-self: center;
   }
 
+  &[class*='css-transition-'] {
+    transition-duration: $fast;
+  } 
+
   &.css-transition-enter:not(.css-transition-enter-active),
   &.css-transition-exit-active {
     opacity: 0;
@@ -32,7 +36,7 @@ header[rule='banner'] {
   }
 
   &.css-transition-enter-active {
-    transition-delay: $fast;
+    transition-delay: $speed;
   }
 
   @include tablet() {

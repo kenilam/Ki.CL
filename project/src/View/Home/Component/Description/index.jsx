@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 
+import classnames from 'classnames';
+
 import { randomId } from 'Helper';
 
 import { Connector } from './State';
@@ -14,7 +16,7 @@ type Props = {
 };
 
 const Description = ({ description }: Props) => (
-  <div className='description'>
+  <div className={ classnames('css-transition-element', 'description') }>
     {description.map(
       paragraph => <p key={randomId}>{paragraph}</p> 
     )}

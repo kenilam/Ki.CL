@@ -1,5 +1,9 @@
 $backgroundColor: $yellow;
 
+[data-current-routes^=contact] {
+  background: $backgroundColor;
+}
+
 [data-routes^=contact] {
   background: $backgroundColor;
 }
