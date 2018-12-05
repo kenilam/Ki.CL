@@ -1,0 +1,28 @@
+html {
+  @include font-smoothing();
+  
+  color: $light_black;
+}
+
+body {
+  font-family: $font_family;
+  font-size: $font_size;
+  
+  background-color: $white;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: $heading_font_family;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden;
+}

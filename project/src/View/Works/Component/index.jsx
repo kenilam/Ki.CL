@@ -1,1 +1,1 @@
-export Work from './Work';
+export Navigation from './Navigation';

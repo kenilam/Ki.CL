@@ -1,9 +1,9 @@
-.transition {
-  position: relative;
+.css-transition {
+  transition-duration: $speed;
+  transition-property: none;
+  transition-timing-function: $easeIn;
+}
 
-  > [class*='css-transition-'] {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+[class*='.css-transition-'] {
+  
 }

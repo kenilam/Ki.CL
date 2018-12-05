@@ -20,29 +20,29 @@ const activeClassName = 'isActive';
 const Link = ({ children, className, component: Wrapper, onClick, to, text, ...rest }: Props) => {
   className = classnames(className);
 
-  const Element = () => (
+  const Element = ({ className }) => (
     <NavLink
       exact
       {...{
         activeClassName,
         onClick,
         to,
-        className: !Wrapper ? className: null,
+        className,
         ...rest
       }}
     >
-      {text ? <span>{text}</span>: children}
+      { children }
     </NavLink>
   );
 
   return (
     <Router>
       {Wrapper ? (
-        <Wrapper {...{ className }}>
+        <Wrapper { ...{ className } }>
           <Element />
         </Wrapper>
       ): (
-        <Element />
+        <Element { ...{ className } }/>
       )}
     </Router>
   );

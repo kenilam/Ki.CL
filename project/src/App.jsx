@@ -1,46 +1,12 @@
 // @flow
 import React from 'react';
 
-import State, { Connector } from 'State';
-import View from 'View';
-
-import { GlobalHeader } from 'Component';
+import View from './View';
 
 import './style.scss';
 
-type Style = { paddingTop: Number };
-
-type UpdateStyle = { height: Number };
-
-type Props = {
-  style?: Style,
-  updateStyle?: (props: UpdateStyle) => void
-};
-
-const Component = ({ style, updateStyle }: Props) => {
-  const resizeHandler = ({ height } = {}) => {
-    updateStyle({ paddingTop: height });
-  }
-
-  return (
-    <React.Fragment>
-      <GlobalHeader { ...{ resizeHandler } } />
-      <View { ...{ style } } />
-    </React.Fragment>
-  )
-};
-
-Component.defaultProps = {
-  style: { paddingTop : 0 },
-  updateStyle: () => {}
-}
-
-const Instance = Connector(Component);
-
 const App = () => (
-  <State>
-    <Instance />
-  </State>
+  <View/>
 );
 
 const appRoot = document.querySelector('[app-root]');

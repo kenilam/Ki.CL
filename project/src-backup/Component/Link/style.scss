@@ -1,0 +1,17 @@
+a {
+  color: $dark_grey;
+  text-decoration: none;
+
+  &:hover,
+  &:active {
+    color: $darker_grey;
+    transition-property: color;
+    transition-timing-function: $easeIn;
+    transition-duration: $slower;
+  }
+
+  &.isActive {
+    color: inherit;
+    pointer-events: none;
+  }
+}

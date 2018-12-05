@@ -1,133 +1,38 @@
 // @flow
 import React from 'react';
+import { HashRouter, Route, Switch, withRouter } from 'react-router-dom';
 
-import classnames from 'classnames';
+import { Transition } from 'Component';
 
-import { HashRouter as Router, Switch, withRouter } from 'react-router-dom';
+import { pathByIndex } from './Utilities';
 
-import { DOM, Transition } from 'Component';
-import { pathnameToRoutes } from 'Helper';
-import { Connector } from 'State';
+type Location = {};
 
-type Location = {
-  pathname: String
-};
-
-type Resources = {
-  routes: Array
-};
-
-type Node = React.node;
+type RenderProps = { location: Location };
 
 type Props = {
-  children: React.Node,
-  className: String,
+  component?: React.Node,
   location: Location,
-  onEnter?: (node: Node) => void,
-  onExit?: (node: Node) => void,
-  resources: Resources,
-  transitionStyle?: String,
-  style: {}
+  render: (props: RenderProps) => void,
+  routeIndex: Number
 };
 
-const routeIndex = { current: -1, previous: -1 };
-
-const enterHandler = pathname => {
-  DOM.Title.set(pathname);
-  DOM.Body.routesAttr.set('current', pathname);
-};
-
-const exitHandler = pathname => {
-  DOM.Body.routesAttr.set('previous', pathname);
-};
-
-const directionByRoute = ({ routes, currentRoute }) => {
-  let direction = '';
-
-  routeIndex.current = Object.keys(routes)
-    .map(route => `/${route.split('/')[0]}`)
-    .indexOf(`/${currentRoute.split('/')[1]}`);
-
-  if (routeIndex.previous >= 0) {
-    if (routeIndex.current > routeIndex.previous) {
-      direction = 'transition-forward';
-    }
-
-    if (routeIndex.current < routeIndex.previous) {
-      direction = 'transition-backward';
-    }
-  }
-
-  routeIndex.previous = routeIndex.current;
-
-  return direction;
-};
-
-const Component = ({
-  children,
-  className,
-  location,
-  onEnter,
-  onExit,
-  resources,
-  transitionStyle,
-  style,
-  ...rest
-}: Props) => {
-  const { pathname: currentRoute } = location;
-  const { routes } = resources;
-
-  return (
-    <Transition
-      { ...{
-        className: classnames(
-          'router',
-          className,
-          transitionStyle,
-          directionByRoute({ routes, currentRoute })
-        ),
-        components: {
-          wrapper: 'main',
-          element: 'section',
-          elementProps: {
-            'data-routes': pathnameToRoutes(currentRoute),
-            style
-          }
-        },
-        keyValue: currentRoute,
-        onEnter: node => {
-          enterHandler(currentRoute);
-
-          onEnter(node);
-        },
-        onExit: node => {
-          exitHandler(currentRoute);
-
-          onExit(node);
-        }
-      } }
-    >
-      <Switch location={location}>
-        { React.Children.map(children, child => React.cloneElement(child, { ...rest }) ) }
-      </Switch>
-    </Transition>
-  );
-};
-
-const Instance = Connector(Component);
-
-const InstanceWithRouter = withRouter(Instance);
-
-const View = props => (
-  <Router>
-    <InstanceWithRouter {...props} />
-  </Router>
+const Router = ({ component, location, render, routeIndex }: Props) => (
+  <Transition { ...{ component, transitionKey: pathByIndex(location, routeIndex) } }>
+    { render({ location, Switch, Route }) }
+  </Transition>
 );
 
-Component.defaultProps = {
-  transitionStyle: 'slide',
-  onEnter: () => {},
-  onExit: () => {}
-}
+const Instance = withRouter(Router);
 
-export default View;
+const Component = props => (
+  <HashRouter>
+    <Instance { ...props }/>
+  </HashRouter>
+);
+
+Router.defaultProps = {
+  component: 'div'
+};
+
+export default Component;

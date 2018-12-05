@@ -1,54 +1,65 @@
 // @flow
 import React from 'react';
-import { TransitionGroup } from 'react-transition-group';
 import classnames from 'classnames';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import CSSTransition from './CSSTransition';
+import { addEndListener, parentClassNames, eventHanlder } from './Utilities';
 
 import './style.scss';
 
-type className = string;
+type ClassName = {} | String | Array<ClassName>;
 
-type elementProps = {};
+type Node = React.Node;
 
-type components = {
-  className: Array<className> | className,
-  element: string,
-  wrapper: string,
-  elementProps: elementProps
-};
+type TransitionEvent = (node: Node) => void;
 
 type Props = {
-  className: Array<className> | className,
-  childComponent: React.Node,
-  components: components
+  children: React.Node,
+  className?: ClassName | Array<ClassName>,
+  component?: React.Node | String,
+  transitionKey: String,
+  onEnter?: TransitionEvent,
+  onEntered?: TransitionEvent,
+  onExit?: TransitionEvent,
+  onExited?: TransitionEvent
 };
 
-const defaultClassName = 'transition';
+const { add, remove } = parentClassNames;
 
 const Transition = ({
+  children,
   className,
-  childComponent,
-  components,
+  component,
+  transitionKey,
+  onEnter,
+  onEntered,
+  onExit,
+  onExited,
   ...rest
-}: Props) => {
-  const { element, elementProps, wrapper, wrapperProps } = components;
-
-  return (
-    <TransitionGroup { ...{
-      ...wrapperProps,
-      className: classnames(defaultClassName, className),
-      component: wrapper
+}: Props) => (
+  <TransitionGroup { ...{ component } }>
+    <CSSTransition { ...{
+      classNames: classnames(className, Transition.defaultProps.className),
+      addEndListener: addEndListener(),
+      key: transitionKey,
+      onEnter: eventHanlder({ middleware: add }),
+      onEntered: eventHanlder({ event: 'entered', handler: onEntered, middleware: remove }),
+      onExit: eventHanlder({ middleware: add }),
+      onExited: eventHanlder({ event: 'exited', handler: onExited }),
+      ...rest
     } }>
-      {CSSTransition({
-        ...rest,
-        ...elementProps,
-        component: element,
-        className: components.className
-      })}
-    </TransitionGroup>
-  );
-};
+      { children }
+    </CSSTransition>
+  </TransitionGroup>
+);
 
-export { CSSTransition };
+Transition.defaultProps = {
+  className: 'css-transition',
+  component: 'div',
+  onEnter: () => {},
+  onEntered: () => {},
+  onExit: () => {},
+  onExited: () => {}
+}
+
 export default Transition;
