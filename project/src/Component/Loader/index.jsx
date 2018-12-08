@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 
 import IcoMoon from 'react-icomoon';
@@ -5,17 +6,21 @@ import IcoMoon from 'react-icomoon';
 import { component } from 'content/resources';
 
 const { content } = component.loader;
-const { description } = content;
 
 import './style.scss';
 
-const Loader = () => (
-  <p className='loader' aria-label={ description }>
+type Props = {
+  iconOnly: Boolean,
+  text: String
+};
+
+const Loader = ({ iconOnly, text }: Props) => (
+  <p className='loader' aria-label={ text || content.default.text }>
     <IcoMoon
       className='spinner'
       icon='spinner8'
     />
-    <span>{ description }</span>
+    { !iconOnly && <span>{ text || content.default.text }</span> }
   </p>
 );
 

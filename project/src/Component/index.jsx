@@ -1,4 +1,5 @@
 export Asynchronizer from './Asynchronizer';
+export CSSTransition from './CSSTransition';
 export Errors from './Errors';
 export Link from './Link';
 export Loader from './Loader';

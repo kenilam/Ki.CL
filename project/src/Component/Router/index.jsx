@@ -4,35 +4,33 @@ import { HashRouter, Route, Switch, withRouter } from 'react-router-dom';
 
 import { Transition } from 'Component';
 
-import { pathByIndex } from './Utilities';
+import { path } from './Utilities';
 
-type Location = {};
+const { byIndex, notationise } = path;
 
-type RenderProps = { location: Location };
-
-type Props = {
-  component?: React.Node,
-  location: Location,
-  render: (props: RenderProps) => void,
-  routeIndex: Number
-};
-
-const Router = ({ component, location, render, routeIndex }: Props) => (
-  <Transition { ...{ component, transitionKey: pathByIndex(location, routeIndex) } }>
-    { render({ location, Switch, Route }) }
+const Router = ({ children, location, routeIndex }) => (
+  <Transition { ...{
+    keyValue: byIndex(location, routeIndex),
+    onEnter () {
+      document.body.dataset['enteredRoutes'] = notationise(location);
+    },
+    onExit () {
+      document.body.dataset['exitedRoutes'] = notationise(location);
+    }
+  } }>
+    <Switch location={ location }>
+      { children }
+    </Switch>
   </Transition>
 );
 
 const Instance = withRouter(Router);
 
-const Component = props => (
+const Component = ({ children, routeIndex }) => (
   <HashRouter>
-    <Instance { ...props }/>
+    <Instance { ...{ children, routeIndex } } />
   </HashRouter>
-);
+)
 
-Router.defaultProps = {
-  component: 'div'
-};
-
+export { Route };
 export default Component;

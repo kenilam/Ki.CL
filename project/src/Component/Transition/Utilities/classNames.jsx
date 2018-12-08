@@ -1,19 +1,38 @@
-const parent = 'transition';
+import { duration } from 'Component/CSSTransition';
+import { debounce } from 'Helper';
 
-const node = 'css-transition';
+const base = 'transition';
 
-const element = `${node}-element`;
+const exist = node => node && node.parentNode;
 
-const enter = `${node}-enter`;
-const entered = `${enter}-done`;
-const exit = `${node}-exit`;
-const exited = `${exit}-done`;
+const contains = node => exist(node) && node.parentNode.classList.contains(base);
 
-const allSelectors = [
-  `.${enter}`,
-  `.${exit}`,
-  `.${enter} > .${element}`,
-  `.${exit} > .${element}`
-].join(',');
+const add = node => {
+  if (contains(node)) {
+    return;
+  }
 
-export { allSelectors, element, enter, entered, exit, exited, node, parent }
+  node.parentNode.classList.add(base);
+}
+
+const remove = async node => {
+  await debounce( duration(node) );
+
+  if (!exist(node)) {
+    return;
+  }
+
+  node.parentNode.classList.remove(base);
+}
+
+const toggle = async node => {
+    if (contains(node)) {
+        await remove(node);
+
+        return;
+    }
+
+    add(node);
+}
+
+export default { base, add, remove, toggle };

@@ -18,3 +18,7 @@ main {
   min-width: 100vw;
   z-index: 1;
 }
+
+[class*='css-transition-'] {
+  transition-duration: $speed;
+}

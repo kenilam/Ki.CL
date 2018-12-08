@@ -1,7 +1,7 @@
 {
   "siteName": "Ki.CL",
   "description": "",
-  "routes": {
+  "view": {
     "home": {
       "path": "/",
       "name": "Home",
@@ -25,10 +25,10 @@
       "path": "/works",
       "name": "Works",
       "message": "Ki.CL",
-      "project": {
-        "path": "/works/:projectId",
-        "name": "Works | Project",
-        "message": "Ki.CL"
+      "content": {
+        "loader": {
+          "text": "fetching projects..."
+        }
       }
     },
     "contact": {
@@ -40,7 +40,9 @@
   "component": {
     "loader": {
       "content": {
-        "description": "loading..."
+        "default" : {
+          "text": "loading..."
+        }
       }
     }
   },

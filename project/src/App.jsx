@@ -6,7 +6,9 @@ import View from './View';
 import './style.scss';
 
 const App = () => (
-  <View/>
+  <React.Fragment>
+    <View/>
+  </React.Fragment>
 );
 
 const appRoot = document.querySelector('[app-root]');

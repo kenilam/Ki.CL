@@ -1,65 +1,48 @@
 // @flow
 import React from 'react';
-import classnames from 'classnames';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { TransitionGroup } from 'react-transition-group';
 
-import { addEndListener, parentClassNames, eventHanlder } from './Utilities';
+import { CSSTransition } from 'Component';
 
-import './style.scss';
-
-type ClassName = {} | String | Array<ClassName>;
+import { classNames } from './Utilities';
 
 type Node = React.Node;
 
-type TransitionEvent = (node: Node) => void;
+type EventHandler = (node: Node) => void;
 
 type Props = {
-  children: React.Node,
-  className?: ClassName | Array<ClassName>,
-  component?: React.Node | String,
-  transitionKey: String,
-  onEnter?: TransitionEvent,
-  onEntered?: TransitionEvent,
-  onExit?: TransitionEvent,
-  onExited?: TransitionEvent
+  children: Node,
+  component?: Node,
+  keyValue: String,
+  onEnter?: EventHandler,
+  onExit?: EventHandler
 };
-
-const { add, remove } = parentClassNames;
 
 const Transition = ({
   children,
-  className,
   component,
-  transitionKey,
+  keyValue,
   onEnter,
-  onEntered,
   onExit,
-  onExited,
-  ...rest
 }: Props) => (
   <TransitionGroup { ...{ component } }>
-    <CSSTransition { ...{
-      classNames: classnames(className, Transition.defaultProps.className),
-      addEndListener: addEndListener(),
-      key: transitionKey,
-      onEnter: eventHanlder({ middleware: add }),
-      onEntered: eventHanlder({ event: 'entered', handler: onEntered, middleware: remove }),
-      onExit: eventHanlder({ middleware: add }),
-      onExited: eventHanlder({ event: 'exited', handler: onExited }),
-      ...rest
-    } }>
-      { children }
-    </CSSTransition>
+    { CSSTransition({
+      onEnter (node) {
+        onEnter(node);
+        classNames.add(node);
+      },
+      onEntered: classNames.remove,
+      onExit,
+      children,
+      keyValue
+    }) }
   </TransitionGroup>
 );
 
 Transition.defaultProps = {
-  className: 'css-transition',
-  component: 'div',
-  onEnter: () => {},
-  onEntered: () => {},
-  onExit: () => {},
-  onExited: () => {}
+  component: React.Fragment,
+  onEnter () {},
+  onExit () {}
 }
 
 export default Transition;

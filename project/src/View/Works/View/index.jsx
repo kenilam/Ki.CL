@@ -7,7 +7,6 @@ import Work from './Work';
 
 const View = () => (
   <Router
-    component={ React.Fragment }
     routeIndex={ 2 }
     render={ ({ location, Switch, Route }) => (
       <Switch location={ location }>
