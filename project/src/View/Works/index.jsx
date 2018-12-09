@@ -10,20 +10,23 @@ import { Navigation } from './Component';
 
 import View from './View';
 
+import './style';
+
 const { content } = resources.view.works;
 
-const Works = ({ data }) => (
-  <main>
-    <Navigation { ...{ data } }/>
-    <View/>
-  </main>
-);
-
-const Component = ({ match }) => Asynchronizer({
-  Component: Works,
+const Insance = props => Asynchronizer({
+  Component: Navigation,
   awaitFor: api,
   awaitMessage: content.loader.text,
-  expect: cache[match.url]
+  awaitExpect: cache[props.match.url],
+  ...props
 });
+
+const Component = props => (
+  <main data-routes='works'>
+    <Insance { ...props } />
+    <View { ...props } />
+  </main>
+);
 
 export default Component;

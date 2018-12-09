@@ -5,23 +5,43 @@ import IcoMoon from 'react-icomoon';
 
 import { component } from 'content/resources';
 
+import { debounce } from 'Helper';
+
 const { content } = component.loader;
 
 import './style.scss';
 
 type Props = {
-  iconOnly: Boolean,
-  text: String
+  iconOnly?: Boolean,
+  text?: String
 };
 
-const Loader = ({ iconOnly, text }: Props) => (
-  <p className='loader' aria-label={ text || content.default.text }>
-    <IcoMoon
-      className='spinner'
-      icon='spinner8'
-    />
-    { !iconOnly && <span>{ text || content.default.text }</span> }
-  </p>
-);
+class Loader extends React.Component<Props> {
+  async getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log(this, prevProps, prevState);
+    debugger;
+    await debounce(1000);
+
+    debugger;
+  }
+  render() {
+    const { iconOnly, text } = this.props;
+
+    return (
+      <p className='loader' aria-label={ text }>
+        <IcoMoon
+          className='spinner'
+          icon='spinner8'
+        />
+        { !iconOnly && <span>{ text }</span> }
+      </p>
+    );
+  }
+}
+
+Loader.defaultProps = {
+  iconOnly: false,
+  text: content.default.text
+}
 
 export default Loader;

@@ -11,7 +11,7 @@ type Props = {
   awaitProps: {},
   awaitDelay?: Number,
   awaitMessage: String,
-  expect: Array | String | {}
+  awaitExpect: Array | String | {}
 };
 
 const Asynchronizer = ({
@@ -20,21 +20,22 @@ const Asynchronizer = ({
   awaitProps, // Props that pass to awaitFor
   awaitDelay = Asynchronizer.defaultProps.awaitDelay,
   awaitMessage,
-  expect // Expected Data, return Component immediately if truly
+  awaitExpect, // Expected Data, return Component immediately if truly
+  ...rest
 }: Props) => {
-  if (expect) {
+  if (awaitExpect) {
     return (
-      <Component { ...{ data: expect } }/>
+      <Component { ...{ data: awaitExpect, ...rest } }/>
     );
   }
 
-  const Instance = async ({ ...rest }) => {
+  const Instance = async props => {
     const data = await awaitFor(awaitProps);
 
     await debounce(awaitDelay);
 
     return (
-      <Component {...{ data, ...rest } }/>
+      <Component {...{ data, ...props, ...rest } }/>
     );
   }
 

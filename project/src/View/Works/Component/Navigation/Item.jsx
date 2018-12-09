@@ -9,9 +9,9 @@ type Module = {
 };
 
 type Props = {
-  id: Number,
-  modules: Array<Module>,
-  name: String,
+  id?: Number,
+  modules?: Array<Module>,
+  name?: String,
   published_on: Number
 };
 
@@ -33,5 +33,11 @@ const Item = ({ id, modules, name, published_on: publishedOn }: Props) => {
     </li>
   );
 };
+
+Item.defaultProps = {
+  id: 12345,
+  modules: [ { type: 'image' }, { type: 'text' } ],
+  name: 'dummy'
+}
 
 export default Item;

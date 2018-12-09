@@ -1,0 +1,7 @@
+[data-routes|='works'] {
+  .loader {
+    + .view {
+      display: none;
+    }
+  }
+}

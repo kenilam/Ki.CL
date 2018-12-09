@@ -6,7 +6,7 @@ import { randomId } from 'Helper';
 import Item from './Item';
 
 type Props = {
-  data: Array
+  data?: Array
 };
 
 const Navigation = ({ data }: Props) => (
@@ -16,5 +16,13 @@ const Navigation = ({ data }: Props) => (
     </ul>
   </nav>
 );
+
+Navigation.defaultProps = {
+  data: [
+    { id: 123 },
+    { id: 234 },
+    { id: 345 }
+  ]
+}
 
 export default Navigation;

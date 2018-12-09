@@ -5,16 +5,16 @@ import { work as api, cache } from 'API';
 import { Asynchronizer } from 'Component';
 
 type Data = {
-  id: Number
+  id?: Number
 };
 
 type Props = {
-  data: Array<Data>
+  data?: Data
 };
 
-const Work = ({ data }: Props) => (
+const Work = ({ data, match }: Props) => (
   <React.Fragment>
-    <h2>{ data.id }</h2>
+    <h2>{ data.id || match.params.projectId }</h2>
   </React.Fragment>
 );
 
@@ -22,7 +22,8 @@ const Instance = ({ match }) => Asynchronizer({
   Component: Work,
   awaitFor: api,
   awaitProps: match.params,
-  expect: cache[match.url]
+  awaitExpect: cache[match.url],
+  match
 });
 
 const Component = ({ match }) => (
@@ -30,5 +31,9 @@ const Component = ({ match }) => (
     <Instance { ...{ match } } />
   </section>
 );
+
+Work.defaultProps = {
+  data: { id: 12345 }
+}
 
 export default Component;
