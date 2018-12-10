@@ -2,6 +2,15 @@
 @import 'Core/Reset';
 @import 'Core/Core';
 
+body {
+  transition-delay: $fast;
+  transition-duration: $slow;
+  transition-timing-function: $easeInExpo;
+  transition-property: opacity;
+
+  opacity: 1;
+}
+
 [app-root] {
   position: relative;
 }

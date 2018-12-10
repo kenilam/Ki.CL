@@ -2,10 +2,9 @@
 import React from 'react';
 
 import IcoMoon from 'react-icomoon';
+import Fittext from 'react-fittext';
 
 import { component } from 'content/resources';
-
-import { debounce } from 'Helper';
 
 const { content } = component.loader;
 
@@ -16,28 +15,17 @@ type Props = {
   text?: String
 };
 
-class Loader extends React.Component<Props> {
-  async getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log(this, prevProps, prevState);
-    debugger;
-    await debounce(1000);
-
-    debugger;
-  }
-  render() {
-    const { iconOnly, text } = this.props;
-
-    return (
-      <p className='loader' aria-label={ text }>
-        <IcoMoon
-          className='spinner'
-          icon='spinner8'
-        />
-        { !iconOnly && <span>{ text }</span> }
-      </p>
-    );
-  }
-}
+const Loader = ({ iconOnly, text }: Props) => (
+  <Fittext>
+    <p className='loader' aria-label={ text }>
+      <IcoMoon
+        className='spinner'
+        icon='spinner8'
+      />
+      { !iconOnly && <span>{ text }</span> }
+    </p>
+  </Fittext>
+);
 
 Loader.defaultProps = {
   iconOnly: false,

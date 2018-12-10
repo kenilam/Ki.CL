@@ -31,6 +31,16 @@
         }
       }
     },
+    "work": {
+      "path": "/works/:projectId",
+      "name": "Work",
+      "message": "Ki.CL",
+      "content": {
+        "loader": {
+          "text": "fetching project with the id of {{projectId}}..."
+        }
+      }
+    },
     "contact": {
       "path": "/contact",
       "name": "Contact",

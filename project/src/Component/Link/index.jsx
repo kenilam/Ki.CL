@@ -6,9 +6,13 @@ import classnames from 'classnames';
 
 import './style.scss';
 
+type Node = React.Node;
+
+type ClassName = {} | Array | String;
+
 type Props = {
-  children: React.Node,
-  className: {} | Array | String,
+  children: Node,
+  className: ClassName,
   component: string,
   onClick: Function,
   to: string,
