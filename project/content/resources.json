@@ -37,7 +37,7 @@
       "message": "Ki.CL",
       "content": {
         "loader": {
-          "text": "fetching project with the id of {{projectId}}..."
+          "text": "fetching project..."
         }
       }
     },

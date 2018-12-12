@@ -1,0 +1,12 @@
+.css-transition {
+  &[class*='css-transition-'][class*='-active'] {
+    transition-duration: $speed;
+    transition-property: opacity;
+    transition-timing-function: $easeIn;
+  }
+
+  &.css-transition-enter:not(.css-transition-enter-active),
+  &.css-transition-exit-active {
+    opacity: 0;
+  }
+}

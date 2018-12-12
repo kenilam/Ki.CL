@@ -6,12 +6,13 @@ import { CSSTransition } from 'Component';
 
 import { classNames } from './Utilities';
 
+import './style.scss';
+
 type Node = React.Node;
 
 type EventHandler = (node: Node) => void;
 
 type Props = {
-  children: Node,
   component?: Node,
   keyValue: String,
   onEnter?: EventHandler,
@@ -19,11 +20,11 @@ type Props = {
 };
 
 const Transition = ({
-  children,
   component,
   keyValue,
   onEnter,
   onExit,
+  ...rest
 }: Props) => (
   <TransitionGroup { ...{ component } }>
     { CSSTransition({
@@ -33,8 +34,8 @@ const Transition = ({
       },
       onEntered: classNames.remove,
       onExit,
-      children,
-      keyValue
+      keyValue,
+      ...rest
     }) }
   </TransitionGroup>
 );

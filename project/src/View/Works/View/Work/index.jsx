@@ -9,6 +9,8 @@ import { work as api, cache } from 'API';
 
 import resources from 'content/resources';
 
+import './style';
+
 type Data = {
   id?: Number
 };
@@ -26,7 +28,7 @@ const Work = ({ data, match }: Props) => (
 );
 
 const Instance = ({ match }) => (
-  <section className='view' data-routes={ `work.${match.params.projectId}` }>
+  <section data-routes={ `works.${match.params.projectId}` }>
     {
       Asynchronizer({
         Component: Work,

@@ -4,25 +4,33 @@ import React from 'react';
 import IcoMoon from 'react-icomoon';
 import Fittext from 'react-fittext';
 
+import { cssUnit } from 'Helper';
+
 import { component } from 'content/resources';
 
-const { content } = component.loader;
-
-import './style.scss';
+import { maxFontSize } from './style.scss';
 
 type Props = {
   iconOnly?: Boolean,
   text?: String
 };
 
+const { content } = component.loader;
+
 const Loader = ({ iconOnly, text }: Props) => (
-  <Fittext>
+  <Fittext maxFontSize={ cssUnit(maxFontSize) }>
     <p className='loader' aria-label={ text }>
+      <span>
       <IcoMoon
         className='spinner'
         icon='spinner8'
       />
-      { !iconOnly && <span>{ text }</span> }
+      <IcoMoon
+        className='spinner'
+        icon='spinner8'
+      />
+      </span>
+      { !iconOnly && <span className='text'>{ text }</span> }
     </p>
   </Fittext>
 );

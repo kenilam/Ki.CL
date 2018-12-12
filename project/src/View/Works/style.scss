@@ -1,7 +1,16 @@
-[data-routes|='works'] {
+[data-routes='works'] {
+  position: relative;
+  
   .loader {
-    + .view {
+    + section {
       display: none;
+    }
+  }
+
+  &.transition {
+    nav {
+      position: relative;
+      z-index: 1;
     }
   }
 }

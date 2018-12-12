@@ -11,7 +11,8 @@ type Props = {
   awaitProps: {},
   awaitDelay?: Number,
   awaitMessage: String,
-  awaitExpect: Array | String | {}
+  awaitExpect: Array | String | {},
+  iconOnly?: Boolean
 };
 
 const Asynchronizer = ({
@@ -21,6 +22,7 @@ const Asynchronizer = ({
   awaitDelay = Asynchronizer.defaultProps.awaitDelay,
   awaitMessage,
   awaitExpect, // Expected Data, return Component immediately if truly
+  iconOnly,
   ...rest
 }: Props) => {
   if (awaitExpect) {
@@ -39,11 +41,12 @@ const Asynchronizer = ({
     );
   }
 
-  return asyncReactor(Instance, () => <Loader { ...{ text: awaitMessage } } />, Errors)();
+  return asyncReactor(Instance, () => <Loader { ...{ iconOnly, text: awaitMessage } } />, Errors)();
 };
 
 Asynchronizer.defaultProps = {
-  awaitDelay: 1000
+  awaitDelay: 1000,
+  iconOnly: false
 }
 
 export default Asynchronizer;

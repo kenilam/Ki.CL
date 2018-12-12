@@ -29,9 +29,6 @@ const eventHandler = ({
 
   node.classList.remove(classNames.entered);
   node.classList.remove(classNames.exited);
-
-  await debounce( time );
-
   node.classList.remove(classNames.base);
 }
 

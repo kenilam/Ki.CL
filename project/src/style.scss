@@ -3,12 +3,13 @@
 @import 'Core/Core';
 
 body {
-  transition-delay: $fast;
-  transition-duration: $slow;
-  transition-timing-function: $easeInExpo;
-  transition-property: opacity;
+  transition-delay: $speed;
+  transition-duration: $speed;
+  transition-timing-function: $easeIn;
+  transition-property: opacity, transform;
 
   opacity: 1;
+  transform: scale3d(1, 1, 1);
 }
 
 [app-root] {
@@ -26,8 +27,4 @@ main {
   min-height: 100vh;
   min-width: 100vw;
   z-index: 1;
-}
-
-[class*='css-transition-'] {
-  transition-duration: $speed;
 }

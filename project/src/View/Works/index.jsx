@@ -12,7 +12,7 @@ import { Navigation } from './Component';
 
 import View from './View';
 
-import './style';
+import './style.scss';
 
 const { content, path } = resources.view.works;
 

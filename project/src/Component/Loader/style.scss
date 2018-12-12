@@ -1,3 +1,4 @@
+$spinnerBackground: $dark_white;
 $spinnerColor: $darkest_white;
 $size: 3rem;
 
@@ -13,12 +14,40 @@ $size: 3rem;
   position: relative;
   width: 100%;
 
-  .spinner {
-    animation: loader-animation $slow linear infinite;
+  span {
+    position: relative;
   }
 
-  span {
+  .spinner {
+    animation-name: loader-animation;
+    animation-duration: $slow;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    &:first-child {
+      animation-name: loader-background-animation;
+
+      color: $spinnerBackground;
+    }
+
+    &:last-child {
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+  }
+
+  .text {
     margin-left: $gutter;
+  }
+}
+
+@keyframes loader-background-animation {
+  0% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(180deg);
   }
 }
 
@@ -29,4 +58,8 @@ $size: 3rem;
   100% {
     transform: rotate(360deg);
   }
+}
+
+:export {
+  maxFontSize: $size;
 }

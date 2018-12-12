@@ -1,0 +1,16 @@
+.transition {
+  position: relative;
+
+  > .css-transition {
+    position: absolute;
+    top: 0;
+  }
+
+  > .css-transition-enter {
+    z-index: 2;
+  }
+
+  > .css-transition-exit {
+    z-index: 1;
+  }
+}

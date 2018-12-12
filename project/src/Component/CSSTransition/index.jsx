@@ -1,15 +1,21 @@
 // @flow
 import React from 'react';
 import { CSSTransition as CSSTransitionOrigin } from 'react-transition-group';
+import classnames from 'classnames';
 
 import { addEndListener, classNames, duration, eventHandler } from './Utilities';
 
+import './style.scss';
+
 type Node = React.Node;
+
+type ClassName = {} | Array | String;
 
 type EventHandler = (node: Node) => void;
 
 type Props = {
   children: Node,
+  className: ClassName,
   inValue: Boolean,
   keyValue: String,
   onEnter?: EventHandler,
@@ -20,6 +26,7 @@ type Props = {
 
 const CSSTransition = ({
   children,
+  className,
   inValue,
   keyValue,
   onEnter,
@@ -28,7 +35,7 @@ const CSSTransition = ({
   ...rest
 }: Props) => (
   <CSSTransitionOrigin
-    classNames={ classNames.base }
+    classNames={ classnames(classNames.base, className) }
     in={ inValue }
     key={ keyValue }
     onEnter={ eventHandler({ middleware: onEnter }) }
