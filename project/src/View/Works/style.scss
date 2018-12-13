@@ -2,7 +2,7 @@
   position: relative;
   
   .loader {
-    + section {
+    ~ section {
       display: none;
     }
   }

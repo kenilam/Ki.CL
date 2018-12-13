@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
-import { HashRouter, Route, Switch, withRouter } from 'react-router-dom';
+import { HashRouter, Switch, withRouter } from 'react-router-dom';
 import classnames from 'classnames';
 
 import { Transition } from 'Component';
 
 import { directionByRoute, path } from './Utilities';
+
+import { Route } from './Component';
 
 const { byIndex, notationise } = path;
 
@@ -18,32 +20,39 @@ type Props = {
 
 const Router = ({
   children,
+  className,
   location,
-  routeIndex
+  routeIndex,
+  ...rest
 }: Props) => (
   <Transition { ...{
-    className: classnames(
-      directionByRoute({ currentRoute: location.pathname })
-    ),
-    keyValue: byIndex(location, routeIndex),
     onEnter () {
       document.body.dataset['enteredRoutes'] = notationise(location);
     },
     onExit () {
       document.body.dataset['exitedRoutes'] = notationise(location);
-    }
+    },
+    ...rest
   } }>
-    <Switch location={ location }>
-      { children }
+    <Switch location={ location } transitionKey={ byIndex(location, routeIndex) }>
+      { React.Children.map(
+        children,
+        child => React.cloneElement(child, {
+          className: classnames(
+            className, directionByRoute({ currentRoute: location.pathname })
+          ),
+          ...rest
+        })
+      ) }
     </Switch>
   </Transition>
 );
 
 const Instance = withRouter(Router);
 
-const Component = ({ children, routes, routeIndex }) => (
+const Component = ({ children, routeIndex, transitionStyle }) => (
   <HashRouter>
-    <Instance { ...{ children, routes, routeIndex } } />
+    <Instance { ...{ children, routeIndex, transitionStyle } } />
   </HashRouter>
 );
 

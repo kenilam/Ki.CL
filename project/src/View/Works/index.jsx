@@ -16,21 +16,23 @@ import './style.scss';
 
 const { content, path } = resources.view.works;
 
-const Works = props => (
-  <main data-routes='works'>
-    {
-      Asynchronizer({
-        Component: Navigation,
+const Works = props => {
+  const { data, history, location, match, ...rest } = props;
+
+  return (
+    <main data-routes='works' { ...rest }>
+      <Asynchronizer { ...{
         awaitExpect: cache[props.match.url],
         awaitMessage: content.loader.text,
-        awaitFor: api,
-        ...props
-      })
-    }
-    <View { ...props } />
-  </main>
-);
+        awaitFor: api
+      } }>
+        <Navigation { ...props }/>
+      </Asynchronizer>
+      <View { ...props }/>
+    </main>
+  );
+}
 
-const Component = <Route { ...{ path, render: Works } } />;
+const Component = Route({ path, render: Works });
 
 export default Component;

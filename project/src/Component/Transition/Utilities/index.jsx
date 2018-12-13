@@ -1,1 +1,1 @@
-export classNames from './classNames';
+export parentClassNames from './parentClassNames';

@@ -7,15 +7,16 @@ import resources from 'content/resources';
 
 const { path } = resources.view.home;
 
-const Home = ({match }) => ([
-  <main key={ 123456 }>
-    <h1>{ match.url }</h1>
-  </main>,
-  <main key={ 1234567 }>
-    <h1>{ match.url }</h1>
-  </main>
-]);
+const Home = (props) => {
+  const { data, history, location, match, ...rest } = props;
 
-const Component = <Route exact { ...{ path, render: Home } } />;
+  return (
+    <main data-routes='home' { ...rest }>
+      <h1>{ match.url }</h1>
+    </main>
+  );
+}
+
+const Component = Route({ exact: true, path, render: Home });
 
 export default Component;

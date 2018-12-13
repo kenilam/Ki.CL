@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { CSSTransition as CSSTransitionOrigin } from 'react-transition-group';
-import classnames from 'classnames';
 
 import { addEndListener, classNames, duration, eventHandler } from './Utilities';
 
@@ -16,31 +15,32 @@ type EventHandler = (node: Node) => void;
 type Props = {
   children: Node,
   className: ClassName,
-  inValue: Boolean,
-  keyValue: String,
+  transitionIn: Boolean,
+  transitionKey: String,
+  transitionStyle: String,
   onEnter?: EventHandler,
   onEntered?: EventHandler,
   onExit?: EventHandler,
-  onExited?: EventHandler
+  unmountOnExit?: Boolean
 };
 
 const CSSTransition = ({
   children,
-  className,
-  inValue,
-  keyValue,
-  onEnter,
-  onEntered,
-  onExit,
+  transitionIn,
+  transitionKey,
+  onEnter = CSSTransition.defaultProps.onEnter,
+  onEntered = CSSTransition.defaultProps.onEntered,
+  onExit = CSSTransition.defaultProps.onExit,
+  unmountOnExit = CSSTransition.defaultProps.unmountOnExit,
   ...rest
 }: Props) => (
   <CSSTransitionOrigin
-    classNames={ classnames(classNames.base, className) }
-    in={ inValue }
-    key={ keyValue }
+    classNames={ classNames.base }
+    in={ transitionIn }
+    key={ transitionKey }
     onEnter={ eventHandler({ middleware: onEnter }) }
     onExit={ eventHandler({ middleware: onExit }) }
-    { ...{ addEndListener, onEntered, ...rest } }
+    { ...{ addEndListener, onEntered, unmountOnExit, ...rest } }
   >
     { children }
   </CSSTransitionOrigin>
@@ -50,7 +50,7 @@ CSSTransition.defaultProps = {
   onEnter () {},
   onEntered () {},
   onExit () {},
-  onExited () {}
+  unmountOnExit: true
 }
 
 export { duration };

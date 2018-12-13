@@ -2,16 +2,6 @@
 @import 'Core/Reset';
 @import 'Core/Core';
 
-body {
-  transition-delay: $speed;
-  transition-duration: $speed;
-  transition-timing-function: $easeIn;
-  transition-property: opacity, transform;
-
-  opacity: 1;
-  transform: scale3d(1, 1, 1);
-}
-
 [app-root] {
   position: relative;
 }

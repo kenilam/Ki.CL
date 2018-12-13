@@ -2,12 +2,17 @@
 import React from 'react';
 import { asyncReactor } from 'async-reactor';
 
-import { Errors, Loader } from 'Component';
+import { CSSTransition, Errors, Loader } from 'Component';
 import { debounce } from 'Helper';
 
+import State, { Connector } from './State';
+
+type AwaitForExpected = any;
+
+type AwaitFor = Promise<AwaitForExpected>;
+
 type Props = {
-  Component: React.Node,
-  awaitFor: () => void,
+  awaitFor: AwaitFor,
   awaitProps: {},
   awaitDelay?: Number,
   awaitMessage: String,
@@ -15,33 +20,60 @@ type Props = {
   iconOnly?: Boolean
 };
 
+const InstanceWithState = ({ children, show, showComponent }) => {
+  showComponent();
+
+  return (
+    <CSSTransition transitionIn={ show }>
+      { children }
+    </CSSTransition>
+  )
+}
+
+const Instance = Connector(InstanceWithState);
+
+const Component = props => (
+  <State>
+    <Instance { ...props }/>
+  </State>
+);
+
 const Asynchronizer = ({
-  Component, // Accual Component to be render
+  children, // Accual children to be render
   awaitFor, // function to await for
   awaitProps, // Props that pass to awaitFor
   awaitDelay = Asynchronizer.defaultProps.awaitDelay,
   awaitMessage,
-  awaitExpect, // Expected Data, return Component immediately if truly
+  awaitExpect, // Expected Data, return children immediately if truly
   iconOnly,
+  staticContext,
   ...rest
 }: Props) => {
   if (awaitExpect) {
     return (
-      <Component { ...{ data: awaitExpect, ...rest } }/>
+      <Component>
+        { React.cloneElement(children, { data: awaitExpect, ...rest }) }
+      </Component>
     );
   }
 
-  const Instance = async props => {
+  const AsyncComponent = async props => {
     const data = await awaitFor(awaitProps);
 
     await debounce(awaitDelay);
 
     return (
-      <Component {...{ data, ...props, ...rest } }/>
+      <Component>
+        { React.cloneElement(children, { data, ...rest, ...props }) }
+      </Component>
     );
   }
 
-  return asyncReactor(Instance, () => <Loader { ...{ iconOnly, text: awaitMessage } } />, Errors)();
+  return asyncReactor(
+    AsyncComponent,
+    () => <Loader { ...{ iconOnly, text: awaitMessage } } />,
+    Errors
+  )();
 };
 
 Asynchronizer.defaultProps = {

@@ -15,7 +15,12 @@ $size: 3rem;
   width: 100%;
 
   span {
+    display: block;
     position: relative;
+
+    + span {
+      margin-left: $gutter;
+    }
   }
 
   .spinner {
@@ -37,8 +42,15 @@ $size: 3rem;
     }
   }
 
-  .text {
-    margin-left: $gutter;
+  &[class*='css-transition-'][class*='-active'] {
+    transition-property: opacity, transform;
+  }
+
+  &.css-transition-enter {
+    &:not(.css-transition-enter-active) {
+      opacity: 0;
+      transform: scale3d(.1, .1, 0);
+    }
   }
 }
 

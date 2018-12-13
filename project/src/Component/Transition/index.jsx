@@ -4,7 +4,7 @@ import { TransitionGroup } from 'react-transition-group';
 
 import { CSSTransition } from 'Component';
 
-import { classNames } from './Utilities';
+import { parentClassNames } from './Utilities';
 
 import './style.scss';
 
@@ -13,30 +13,36 @@ type Node = React.Node;
 type EventHandler = (node: Node) => void;
 
 type Props = {
+  children: Node,
   component?: Node,
-  keyValue: String,
   onEnter?: EventHandler,
   onExit?: EventHandler
 };
 
 const Transition = ({
+  children,
   component,
-  keyValue,
   onEnter,
   onExit,
   ...rest
 }: Props) => (
   <TransitionGroup { ...{ component } }>
-    { CSSTransition({
-      onEnter (node) {
-        onEnter(node);
-        classNames.add(node);
-      },
-      onEntered: classNames.remove,
-      onExit,
-      keyValue,
-      ...rest
-    }) }
+    {
+      React.Children.map(
+        children,
+        child => CSSTransition({
+          onEnter (node) {
+            onEnter(node);
+            parentClassNames.add(node);
+          },
+          onExit,
+          onEntered: parentClassNames.remove,
+          transitionKey: child.props.transitionKey,
+          children: () => React.cloneElement(child, { ...rest }),
+          ...rest
+        })
+      )
+    }
   </TransitionGroup>
 );
 
