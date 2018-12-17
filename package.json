@@ -69,6 +69,7 @@
     "path-to-regexp": "^2.4.0",
     "pixi.js": "^4.8.3",
     "react": "^16.6.3",
+    "react-async": "^3.8.3",
     "react-dom": "^16.6.3",
     "react-element-resize": "^0.2.2",
     "react-fittext": "^1.0.0",

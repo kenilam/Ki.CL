@@ -1,10 +1,9 @@
 // @flow
 import React from 'react';
+import Async from 'react-async';
 
 import { CSSTransition, Errors, Loader } from 'Component';
 import { debounce } from 'Helper';
-
-import State, { Connector } from './State';
 
 type Node = React.Node;
 
@@ -30,71 +29,38 @@ const Preloader = ({
   awaitMessage,
   awaitExpect, // Expected Data, return Component immediately if truly,
   iconOnly = Preloader.defaultProps.iconOnly,
-  
-  data,
-  updateData,
-  
-  error,
-  catchError,
-  
-  show,
-  showComponent,
   ...rest
 }: Props) => {
   const pendingFor = async () => {
-    try {
-      const data = await awaitFor(awaitProps);
+    const data = await awaitFor(awaitProps);
+    
+    await debounce(awaitDelay);
 
-      await debounce(awaitDelay);
-
-      showComponent();
-      updateData(data);
-    } catch (errors) {
-      catchError(errors);
-    }
-  }
-
-  const Component = () => React.Children.map(
-    children, child => React.cloneElement(child, { data: awaitExpect || data, ...rest })
-  );
-
-  pendingFor();
-
-  if (awaitExpect) {
-    return (
-      <Component/>
-    );
-  }
-
-  if (error) {
-    return (
-      <Errors { ...{ error } } />
-    );
+    return data;
   }
 
   return (
-    <React.Fragment>
-      <CSSTransition in={ !show }>
-        <Loader { ...{ text: awaitMessage, iconOnly } } />
-      </CSSTransition>
-      <CSSTransition in={ show }>
-        <Component { ...{ data } } />
-      </CSSTransition>
-    </React.Fragment>
+    <Async promiseFn={ pendingFor }>
+      {({ data, error, isLoading }) => (
+        <React.Fragment>
+          <CSSTransition transitionIn={ Boolean(isLoading) }>
+            <Loader { ...{ iconOnly } }/>
+          </CSSTransition>
+          <CSSTransition transitionIn={ Boolean(error) }>
+            <Errors { ...{ errors: error } }/>
+          </CSSTransition>
+          <CSSTransition transitionIn={ Boolean(data) }>
+            { React.cloneElement(children, { data, ...rest }) }
+          </CSSTransition>
+        </React.Fragment>
+      )}
+    </Async>
   );
 }
-
-const Instance = Connector(Preloader);
-
-const Component = props => (
-  <State>
-    <Instance { ...props } />
-  </State>
-);
 
 Preloader.defaultProps = {
   awaitDelay: 1000,
   iconOnly: false
 }
 
-export default Component;
+export default Preloader;

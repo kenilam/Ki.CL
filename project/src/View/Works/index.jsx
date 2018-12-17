@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-import { Asynchronizer } from 'Component';
+import { Preloader } from 'Component';
 import { Route } from 'Component/Router';
 
 import { works as api, cache } from 'API';
@@ -18,16 +18,16 @@ const { content, path } = resources.view.works;
 
 const Works = props => {
   const { data, history, location, match, ...rest } = props;
-
+  
   return (
     <main data-routes='works' { ...rest }>
-      <Asynchronizer { ...{
+      <Preloader { ...{
         awaitExpect: cache[props.match.url],
         awaitMessage: content.loader.text,
         awaitFor: api
       } }>
         <Navigation { ...props }/>
-      </Asynchronizer>
+      </Preloader>
       <View { ...props }/>
     </main>
   );
