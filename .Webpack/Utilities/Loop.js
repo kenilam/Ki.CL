@@ -16,7 +16,7 @@ const recursive = nodes => {
   return result;
 };
 
-const loop = (...args) => {
+export default (...args) => {
   let callback = args[args.length - 1];
 
   if (typeof callback !== 'function') {
@@ -40,5 +40,3 @@ const loop = (...args) => {
     )
     .map(result => (callback ? callback(...result) : result));
 };
-
-export default loop;

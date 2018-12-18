@@ -1,5 +1,3 @@
-import Args from './Arguments';
-import Loop from './Loop';
-import Wildcard from './Wildcard';
-
-export { Args, Loop, Wildcard };
+export Args from './Arguments';
+export Loop from './Loop';
+export Wildcard from './Wildcard';
