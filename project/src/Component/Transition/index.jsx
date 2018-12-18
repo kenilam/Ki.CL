@@ -30,17 +30,31 @@ const Transition = ({
     {
       React.Children.map(
         children,
-        child => CSSTransition({
-          onEnter (node) {
-            onEnter(node);
-            parentClassNames.add(node);
-          },
-          onExit,
-          onEntered: parentClassNames.remove,
-          transitionKey: child.props.transitionKey,
-          children: () => React.cloneElement(child, { ...rest }),
-          ...rest
-        })
+        child => {
+          const { type } = child;
+
+          const {
+            transitionKey,
+            transitionIn,
+            transitionStyle,
+            ...props
+          } = child.props;
+
+          return CSSTransition({
+            onEnter (node) {
+              onEnter(node);
+              parentClassNames.add(node);
+            },
+            onExit,
+            onEntered: parentClassNames.remove,
+            transitionKey: child.props.transitionKey,
+            children: () => React.cloneElement(
+              React.createElement(type),
+              { ...rest, ...props }
+            ),
+            ...rest
+          })
+        }
       )
     }
   </TransitionGroup>

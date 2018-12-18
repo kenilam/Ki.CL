@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-import { Preloader } from 'Component';
+import { Asynchronizer } from 'Component';
 import { Route } from 'Component/Router';
 
 import { works as api, cache } from 'API';
@@ -17,17 +17,17 @@ import './style.scss';
 const { content, path } = resources.view.works;
 
 const Works = props => {
-  const { data, history, location, match, ...rest } = props;
+  const { history, location, match, ...rest } = props;
   
   return (
     <main data-routes='works' { ...rest }>
-      <Preloader { ...{
-        awaitExpect: cache[props.match.url],
+      <Asynchronizer { ...{
+        awaitExpect: cache[match.url],
         awaitMessage: content.loader.text,
         awaitFor: api
       } }>
         <Navigation { ...props }/>
-      </Preloader>
+      </Asynchronizer>
       <View { ...props }/>
     </main>
   );

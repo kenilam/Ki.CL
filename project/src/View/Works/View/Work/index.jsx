@@ -26,27 +26,19 @@ const Work = (props: Props) => {
   
   return (
     <section data-routes={ `works.${match.params.projectId}` } { ...rest }>
-      <h2>{ data.id || match.params.projectId }</h2>
+      <Asynchronizer { ...{
+        awaitExpect: cache[match.url],
+        awaitFor: api,
+        awaitProps: match.params,
+        awaitMessage: interpolate(content.loader.text, match.params),
+      } }>
+        <h2>{ data.id || match.params.projectId }</h2>
+      </Asynchronizer>
     </section>
   );
 }
 
-const Instance = props => {
-  const { match } = props;
-
-  return (
-    <Asynchronizer { ...{
-      awaitExpect: cache[match.url],
-      awaitFor: api,
-      awaitMessage: interpolate(content.loader.text, match.params),
-      awaitProps: match.params
-    } }>
-      <Work { ...props }/>
-    </Asynchronizer>
-  );
-}
-
-const Component = Route({ exact: true, path, render: Instance });
+const Component = Route({ exact: true, path, render: Work });
 
 Work.defaultProps = {
   data: { id: 12345 }

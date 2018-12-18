@@ -1,17 +1,18 @@
 // @flow
 import React from 'react';
-import { asyncReactor } from 'async-reactor';
+import Async from 'react-async';
 
 import { CSSTransition, Errors, Loader } from 'Component';
 import { debounce } from 'Helper';
 
-import State, { Connector } from './State';
+type Node = React.Node;
 
 type AwaitForExpected = any;
 
 type AwaitFor = Promise<AwaitForExpected>;
 
 type Props = {
+  children: Node,
   awaitFor: AwaitFor,
   awaitProps: {},
   awaitDelay?: Number,
@@ -20,61 +21,40 @@ type Props = {
   iconOnly?: Boolean
 };
 
-const InstanceWithState = ({ children, show, showComponent }) => {
-  showComponent();
-
-  return (
-    <CSSTransition transitionIn={ show }>
-      { children }
-    </CSSTransition>
-  )
-}
-
-const Instance = Connector(InstanceWithState);
-
-const Component = props => (
-  <State>
-    <Instance { ...props }/>
-  </State>
-);
-
 const Asynchronizer = ({
   children, // Accual children to be render
   awaitFor, // function to await for
   awaitProps, // Props that pass to awaitFor
-  awaitDelay = Asynchronizer.defaultProps.awaitDelay,
+  awaitDelay,
   awaitMessage,
-  awaitExpect, // Expected Data, return children immediately if truly
+  awaitExpect, // Expected Data, return Component immediately if truly,
   iconOnly,
-  staticContext,
   ...rest
-}: Props) => {
-  if (awaitExpect) {
-    return (
-      <Component>
-        { React.cloneElement(children, { data: awaitExpect, ...rest }) }
-      </Component>
-    );
-  }
+}: Props) => awaitExpect
+  ? React.cloneElement(children, { data: awaitExpect, ...rest })
+  : (
+    <Async promiseFn={ async () => {
+      const data = await awaitFor(awaitProps);
+      
+      await debounce(awaitDelay);
 
-  const AsyncComponent = async props => {
-    const data = await awaitFor(awaitProps);
-
-    await debounce(awaitDelay);
-
-    return (
-      <Component>
-        { React.cloneElement(children, { data, ...rest, ...props }) }
-      </Component>
-    );
-  }
-
-  return asyncReactor(
-    AsyncComponent,
-    () => <Loader { ...{ iconOnly, text: awaitMessage } } />,
-    Errors
-  )();
-};
+      return data;
+    } }>
+      {({ data, error, isLoading }) => (
+        <React.Fragment>
+          <CSSTransition transitionIn={ Boolean(isLoading) }>
+            <Loader { ...{ iconOnly } }/>
+          </CSSTransition>
+          <CSSTransition transitionIn={ Boolean(error) }>
+            <Errors { ...{ errors: error } }/>
+          </CSSTransition>
+          <CSSTransition transitionIn={ Boolean(data) }>
+            { React.cloneElement(children, { data, ...rest }) }
+          </CSSTransition>
+        </React.Fragment>
+      )}
+    </Async>
+  );
 
 Asynchronizer.defaultProps = {
   awaitDelay: 1000,

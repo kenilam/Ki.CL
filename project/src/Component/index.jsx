@@ -4,6 +4,5 @@ export Errors from './Errors';
 export Link from './Link';
 export Logo from './Logo';
 export Loader from './Loader';
-export Preloader from './Preloader';
 export Router from './Router';
 export Transition from './Transition';
