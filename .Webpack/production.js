@@ -3,14 +3,14 @@ import webpackMerge from 'webpack-merge';
 
 import { Args } from './Utilities';
 
-import { basicConfig as dev } from './development.babel';
+import { devConfig } from './development.babel';
 
 import { browser } from './Config/prodServer';
 
 const mode = process.env.NODE_ENV || 'production';
 const watch = !Args.noWatch;
 
-const config = webpackMerge(dev, { mode, watch });
+const config = webpackMerge(devConfig, { mode, watch });
 
 const errorHandler = error => {
   if (!error) {

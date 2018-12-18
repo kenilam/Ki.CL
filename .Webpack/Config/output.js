@@ -13,7 +13,5 @@ const output = {
   hotUpdateMainFilename: `${tmpRoot}/[hash].hot-update.js`
 };
 
-const config = { output };
-
 export { publicPath, srcRoot, tmpRoot, output };
-export default config;
+export default { output };

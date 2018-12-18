@@ -1,9 +1,7 @@
 import { path as appRoot } from 'app-root-path';
 
 const CSSloaders = [
-  {
-    loader: 'style-loader'
-  },
+  { loader: 'style-loader' },
   {
     loader: 'css-loader',
     options: {
@@ -15,9 +13,7 @@ const CSSloaders = [
     loader: 'postcss-loader',
     options: {
       sourceMap: true,
-      config: {
-        path: `${appRoot}/.postcssrc.js`
-      }
+      config: { path: `${appRoot}/.postcssrc.js` }
     }
   }
 ];
@@ -46,20 +42,12 @@ const SCSSloaders = [].concat(
   }
 );
 
-const config = {
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: CSSloaders
-      },
-      {
-        test: /\.scss$/,
-        use: SCSSloaders
-      }
-    ]
-  }
-};
+const rules = [
+  { test: /\.css$/, use: CSSloaders },
+  { test: /\.scss$/, use: SCSSloaders }
+];
 
 export { CSSloaders, SCSSloaders };
-export default config;
+export default {
+  module: { rules }
+};

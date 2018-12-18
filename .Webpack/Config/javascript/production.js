@@ -27,12 +27,9 @@ const EsLintLoader = {
   }
 };
 
-const config = {
-  module: {
-    rules: [BabelLoader, EsLintLoader]
-  }
-};
+const rules = [ BabelLoader, EsLintLoader ];
 
 export { EsLintLoader, BabelLoader };
-
-export default config;
+export default {
+  module: { rules }
+};

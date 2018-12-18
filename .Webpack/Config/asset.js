@@ -2,9 +2,9 @@ import CopyPlugin from '!/Plugins/CopyPlugin';
 
 const srcRoot = 'project/asset';
 
-const config = {
-  plugins: [new CopyPlugin({ srcRoot })]
-};
+const copier = new CopyPlugin({ srcRoot });
 
 export { srcRoot };
-export default config;
+export default {
+  plugins: [ copier ]
+};
