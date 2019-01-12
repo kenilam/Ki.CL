@@ -3,20 +3,14 @@ $grid: $min-grid * 2;
 $gutter: $min-grid / 2;
 $space: $gutter / 2;
 
-$narrow-size: 360px;
-$mobile-size: 480px;
-$tablet-size: 740px;
-$desktop-size: 980px;
-$widescreen-size: 1300px;
-
 // Configuration
 $mq-responsive: true;
 $mq-breakpoints: (
-  narrow: $narrow-size,
-  mobile: $mobile-size,
-  tablet: $tablet-size,
-  desktop: $desktop-size,
-  widescreen: $widescreen-size
+  narrow: $font_size * 23,
+  mobile: $font_size * 30,
+  tablet: $font_size * 46,
+  desktop: $font_size * 61,
+  widescreen: $font_size * 81
 );
 $mq-static-breakpoint: desktop;
 

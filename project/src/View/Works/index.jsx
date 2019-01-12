@@ -2,9 +2,9 @@
 import React from 'react';
 
 import { Asynchronizer } from 'Component';
-import { Route } from 'Component/Router';
+import { Route, path as pathUtil } from 'Component/Router';
 
-import { works as api, cache } from 'API';
+import { works as awaitFor, cache } from 'API';
 
 import resources from 'content/resources';
 
@@ -14,17 +14,20 @@ import View from './View';
 
 import './style.scss';
 
+const { notationise } = pathUtil;
 const { content, path } = resources.view.works;
+
+const routes = notationise({ pathname: path });
 
 const Works = props => {
   const { history, location, match, ...rest } = props;
   
   return (
-    <main data-routes='works' { ...rest }>
+    <main data-routes={ routes } { ...rest }>
       <Asynchronizer { ...{
         awaitExpect: cache[match.url],
         awaitMessage: content.loader.text,
-        awaitFor: api
+        awaitFor
       } }>
         <Navigation { ...props }/>
       </Asynchronizer>

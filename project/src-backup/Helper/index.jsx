@@ -1,7 +1,7 @@
 import moment from 'moment';
 import PixiPlugin from 'gsap/PixiPlugin';
 
-import { routes, months } from 'content/resources';
+import { routes, miscellaneous } from 'content/resources';
 
 import cssUnit from './cssUnit';
 import windowSize from './windowSize';
@@ -9,6 +9,8 @@ import windowSize from './windowSize';
 const { parseColor } = PixiPlugin;
 
 const home = routes.home.name.toLowerCase();
+
+const { months } = miscellaneous;
 
 class Helper {
   static capitalize(string) {

@@ -1,12 +1,20 @@
 // @flow
 import React from 'react';
 
-import { Router } from 'Component';
+import Router, { dataAttrs } from 'Component/Router';
+
+import { view } from 'content/resources';
 
 import Work from './Work';
 
+const { path: pathname } = view.works;
+
+const onEnter = () => { dataAttrs('exited', { pathname }); }
+const routeIndex = 2;
+const transitionStyle = 'fade';
+
 const View = () => (
-  <Router { ...{ routeIndex: 2, transitionStyle: 'fade' } }>
+  <Router { ...{ onEnter, routeIndex, transitionStyle } }>
     { Work }
   </Router>
 );

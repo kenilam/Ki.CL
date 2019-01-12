@@ -2,6 +2,13 @@
   "siteName": "Ki.CL",
   "description": "",
   "view": {
+    "PageNotFound": {
+      "path": "/404",
+      "name": "Page Not Found",
+      "content": {
+        "message": "{{pathname}} is not a valid route"
+      }
+    },
     "home": {
       "path": "/",
       "name": "Home",
@@ -56,18 +63,20 @@
       }
     }
   },
-  "months": [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ]
+  "miscellaneous": {
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
+  }
 }

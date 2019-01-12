@@ -19,7 +19,6 @@ const remove = async node => {
   await debounce( duration(node) );
 
   if (!exist(node)) {
-    debugger;
     return;
   }
 
