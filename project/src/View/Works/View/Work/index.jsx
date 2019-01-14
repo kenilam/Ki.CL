@@ -21,27 +21,32 @@ type Props = {
 
 const { content, path } = resources.view.work;
 
-const Work = (props: Props) => {
-  const { data, history, location, match, ...rest } = props;
-  
+const Work = ({ data, match }: Props) => (
+  <h2>{ data.id || match.params.projectId }</h2>
+);
+
+const Instance = ({ history, location, match, ...rest }) => {
+  const { params, url } = match;
+  const { projectId } = params;
+
   return (
-    <section data-routes={ `works.${match.params.projectId}` } { ...rest }>
+    <section data-routes={ `works.${projectId}` } { ...rest }>
       <Asynchronizer { ...{
-        awaitExpect: cache[match.url],
+        awaitExpect: cache[url],
         awaitFor: api,
-        awaitProps: match.params,
-        awaitMessage: interpolate(content.loader.text, match.params),
+        awaitProps: params,
+        awaitMessage: interpolate(content.loader.text, params),
       } }>
-        <h2>{ data.id || match.params.projectId }</h2>
+        <Work { ...{ match } }/>
       </Asynchronizer>
     </section>
   );
 }
 
-const Component = Route({ exact: true, path, render: Work });
+const Component = Route({ exact: true, path, render: Instance });
 
 Work.defaultProps = {
-  data: { id: 12345 }
+  data: {}
 }
 
 export default Component;

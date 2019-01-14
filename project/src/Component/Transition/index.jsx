@@ -50,7 +50,7 @@ const Transition = ({
             transitionKey: child.props.transitionKey,
             children: () => React.cloneElement(
               React.createElement(type),
-              { ...rest, ...props }
+              { ...props }
             ),
             ...rest
           })

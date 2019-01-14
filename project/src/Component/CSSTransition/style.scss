@@ -1,6 +1,6 @@
 .css-transition {
   &[class*='css-transition-'][class*='-active'] {
-    transition-duration: $speed;
+    transition-duration: $slowest;
     transition-property: opacity;
     transition-timing-function: $easeIn;
   }

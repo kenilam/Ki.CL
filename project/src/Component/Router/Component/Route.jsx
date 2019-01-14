@@ -14,10 +14,18 @@ const Route = ({
   computedMatch, exact, path, render: Component, staticContext, ...rest
 }: Props) => (
   <RouteOrigin
-    { ...{ path, exact, render: ({ computedMatch, staticContext, ...props }) => (
-      <Component { ...{ ...rest, ...props } } />
-    ) } }
+    { ...{
+      path,
+      exact,
+      render: ({ computedMatch, staticContext, ...props }) => (
+        <Component { ...{ ...rest, ...props } } />
+      )
+    } }
   />
 );
 
-export default Route;
+const Component = props => (
+  <Route { ...props } />
+);
+
+export default Component;

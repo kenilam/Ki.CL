@@ -7,6 +7,9 @@ const entered = `${enter}-done`;
 const exit = `${base}-exit`;
 const exited = `${exit}-done`;
 
+const transitionStylePrefix = `${base}-style-`;
+const transitionStyle = 'fade';
+
 const all = [
   `.${enter}`,
   `.${enter} > .${element}`,
@@ -14,4 +17,14 @@ const all = [
   `.${exit} > .${element}`
 ].join(',');
 
-export default { base, element, enter, entered, exit, exited, all };
+export default {
+  all,
+  base,
+  element,
+  enter,
+  entered,
+  exit,
+  exited,
+  transitionStylePrefix,
+  transitionStyle
+};

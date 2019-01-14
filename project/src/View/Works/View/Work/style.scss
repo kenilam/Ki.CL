@@ -1,4 +1,8 @@
 [data-routes*='works.'] {
-  position: fixed;
-  top: 0;
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  top: 50%;
+  width: 100%;
 }

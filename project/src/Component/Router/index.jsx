@@ -11,19 +11,16 @@ import { Route } from './Component';
 
 const { byIndex } = path;
 
-type ClassName = {} | Array | String;
-
 type EventHandler = (node: Node) => void;
 
 type Props = {
-  className?: ClassName,
   routeIndex: Number,
   onEnter?: EventHandler,
-  onExit?: EventHandler
+  onExit?: EventHandler,
+  transitionStyle: String
 };
 
 const defaultProps =  {
-  className: 'router',
   onEnter () {},
   onExit () {}
 };
@@ -40,6 +37,7 @@ const Router = ({
   dataAttrs('entered', location);
 
   const transitionKey = byIndex(location, routeIndex);
+  const { transitionStyle, ...props } = rest;
 
   return (
     <Transition { ...{
@@ -60,9 +58,10 @@ const Router = ({
           children,
           child => React.cloneElement(child, {
             className: classnames(
-              className, directionByRoute({ currentRoute: location.pathname })
+              className,
+              directionByRoute({ currentRoute: location.pathname })
             ),
-            ...rest
+            ...props
           })
         ) }
       </Switch>

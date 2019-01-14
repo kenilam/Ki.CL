@@ -13,4 +13,13 @@
       z-index: 1;
     }
   }
+
+  [data-entered-routes*='work.'] {
+    & {
+      section {
+        height: 100vh;
+        overflow: hidden;
+      }
+    }
+  }
 }

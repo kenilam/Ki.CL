@@ -5,19 +5,28 @@ import combineClassNames from 'classnames';
 import classNames from './classNames';
 import duration from './duration';
 
+const { base, entered, exited } = classNames;
+
 const eventHandler = ({
   middleware,
-  middlewareProps
+  middlewareProps,
+  transitionStyle
 } = {}) => async node => {
   if (!node) {
     return;
   }
 
-  const contains = node.classList.contains(classNames.base);
+  const style = `${classNames.transitionStylePrefix}${transitionStyle}`;
+
+  const { className, classList } = node;
+
+  const contains = classList.contains(base);
   
   if (!contains) {
-    node.className = combineClassNames(classNames.base, node.className);
+    node.className = combineClassNames(base, className);
   }
+
+  node.classList.add(style);
 
   if (middleware) {
     await middleware(node, { ...middlewareProps });
@@ -27,9 +36,10 @@ const eventHandler = ({
 
   await debounce( time );
 
-  node.classList.remove(classNames.entered);
-  node.classList.remove(classNames.exited);
-  node.classList.remove(classNames.base);
+  node.classList.remove(entered);
+  node.classList.remove(exited);
+  node.classList.remove(style);
+  node.classList.remove(base);
 }
 
 export default eventHandler;
