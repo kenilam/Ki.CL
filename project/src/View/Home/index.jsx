@@ -1,25 +1,27 @@
 // @flow
 import React from 'react';
 
-import { Route, path as pathUtil } from 'Component/Router';
+import { randomId } from 'Helper';
+import { Logo, Navigation } from 'Component';
 
 import resources from 'content/resources';
 
-const { notationise } = pathUtil;
-const { path } = resources.view.home;
+import './style.scss';
 
-const routes = notationise({ pathname: path });
+const { view } = resources;
+const { path, content } = view.home;
 
-const Home = (props) => {
-  const { data, history, location, match, ...rest } = props;
-
+const Home = () => {
   return (
-    <main data-routes={ routes } { ...rest }>
-      <h1>{ match.url }</h1>
+    <main>
+      <Logo/>
+      <h2>{ content.heading }</h2>
+      <p>{ content.description }</p>
+      <Navigation/>
     </main>
   );
 }
 
-const Component = Route({ exact: true, path, render: Home });
+Home.defaultProps = { content };
 
-export default Component;
+export default { exact: true, path, render: Home, key: randomId() };

@@ -1,4 +1,3 @@
 export addEndListener from './addEndListener';
-export classNames from './classNames';
+export classList from './classList';
 export duration from './duration';
-export eventHandler from './eventHandler';

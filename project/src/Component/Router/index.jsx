@@ -1,84 +1,100 @@
 // @flow
 import React from 'react';
-import { HashRouter, Redirect, Switch, withRouter } from 'react-router-dom';
-import classnames from 'classnames';
+import { HashRouter, Route, Switch, withRouter } from 'react-router-dom';
 
 import { Transition } from 'Component';
 
-import { dataAttrs, directionByRoute, path } from './Utilities';
+import { view } from 'content/resources';
 
-import { Route } from './Component';
+import { path } from './Utilities';
 
-const { byIndex } = path;
-
-type EventHandler = (node: Node) => void;
+type Node = React.Node;
 
 type Props = {
-  routeIndex: Number,
-  onEnter?: EventHandler,
-  onExit?: EventHandler,
-  transitionStyle: String
-};
+  children: Node;
+  routeIndex: Number;
+  transitionStyle: String;
 
-const defaultProps =  {
-  onEnter () {},
-  onExit () {}
+  onEnter?: (node: Node) => void;
+  onEntered?: (node: Node) => void;
+  onExit?: (node: Node) => void;
+  onExited?: (node: Node) => void;
 };
 
 const Router = ({
   children,
-  className,
-  location,
   routeIndex,
-  onEnter,
-  onExit,
-  ...rest
-}: Props) => {
-  dataAttrs('entered', location);
+  transitionStyle,
 
-  const transitionKey = byIndex(location, routeIndex);
-  const { transitionStyle, ...props } = rest;
+  onEnter = CSSTransition.defaultProps.onEnter,
+  onEntered = CSSTransition.defaultProps.onEntered,
+  onExit = CSSTransition.defaultProps.onExit,
+  onExited = CSSTransition.defaultProps.onExited
+}: Props) => {
+  const Transitions = ({ location, match }) => {
+    const pathChains = location.pathname.split('/');
+    const transitionKey = pathChains[routeIndex] || view.home.path;
+
+    const routes = path.notationise(location.pathname, routeIndex);
+
+    return (
+      Transition({
+          location,
+          match,
+          transitionKey,
+          transitionStyle,
+          children: (
+            <Switch location={ location }>
+              {
+                [].concat(children).map(
+                  ({ exact, key, path, render }) => (
+                    <Route
+                      exact={ exact }
+                      path={ path }
+                      render={ render }
+                      key={ key }
+                    />
+                  )
+                )
+              }
+            </Switch>
+          ),
+          onEnter(node) {
+            onEnter(node);
+
+            document.querySelector('body').dataset.enteredRoute = routes;
+
+            if (!node) {
+              return;
+            }
+
+            node.dataset.routes = routes;
+          },
+          onEntered,
+          onExit(node) {
+            onExit(node);
+
+            document.querySelector('body').dataset.exitedRoute = routes;
+          },
+          onExited
+        })
+    );
+  }
+
+  const TransitionsWithRouter = withRouter(Transitions);
 
   return (
-    <Transition { ...{
-      onEnter (node) {
-        dataAttrs('entered', location);
-
-        onEnter(node);
-      },
-      onExit (node) {
-        dataAttrs('exited', location);
-
-        onExit(node);
-      },
-      ...rest
-    } }>
-      <Switch { ...{ location, transitionKey } }>
-        { React.Children.map(
-          children,
-          child => React.cloneElement(child, {
-            className: classnames(
-              className,
-              directionByRoute({ currentRoute: location.pathname })
-            ),
-            ...props
-          })
-        ) }
-      </Switch>
-    </Transition>
+    <HashRouter>
+      <TransitionsWithRouter/>
+    </HashRouter>
   );
 }
 
-const Instance = withRouter(Router);
+Router.defaultProps = {
+  onEnter() {},
+  onEntered() {},
+  onExit() {},
+  onExited() {}
+}
 
-const Component = (props: Props) => (
-  <HashRouter>
-    <Instance { ...props } />
-  </HashRouter>
-);
-
-Router.defaultProps = defaultProps;
-Component.defaultProps = defaultProps;
-
-export { Redirect, Route, dataAttrs, path };
-export default Component;
+export default Router;

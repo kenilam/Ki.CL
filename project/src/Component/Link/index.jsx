@@ -15,19 +15,21 @@ type Props = {
   className: ClassName,
   component: string,
   onClick: Function,
-  to: string,
-  text: string
+  to: string
 };
 
 const activeClassName = 'isActive';
 
-const Link = ({ children, className, component: Wrapper, onClick, to, text, ...rest }: Props) => {
+const Link = ({ children, className, component: Wrapper, onClick, to }: Props) => {
   className = classnames(className);
 
   const Element = ({ className }) => (
     <NavLink
       exact
-      { ...{ activeClassName, className, onClick, to, ...rest } }
+      activeClassName={ activeClassName }
+      className={ className }
+      onClick={ onClick }
+      to={ to }
     >
       { children }
     </NavLink>

@@ -1,11 +1,7 @@
 const randomId = () => `${
   new Date().getTime()
 }_${
-  Math.random() * 1000
-}_${
-  new Date().getMilliseconds()
-}_${
-  Math.random() * 1000
+  Math.floor(Math.random() * 1000) + 1  
 }`;
 
 export default randomId;

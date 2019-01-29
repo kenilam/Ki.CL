@@ -5,22 +5,32 @@ import { Link } from 'Component';
 import { agesAgo, toDate } from 'Helper';
 
 type Module = {
-  type: String
+  type: string;
+};
+
+type Project = {
+  allow_comments: number;
+  cover: string;
+  description: string;
+  id: number;
+  modified_on: number;
+  modules: Array<Module>,
+  name: string;
+  published_on: number;
+  url: string
 };
 
 type Props = {
-  id?: Number,
-  modules?: Array<Module>,
-  name?: String,
-  published_on: Number
+  project?: Project;
 };
 
-const Item = ({ id, modules, name, published_on: publishedOn }: Props) => {
+const Item = ({ project }: Props) => {
+  const { id, modules, name, published_on: publishedOn } = project;
   const dateTime = toDate(publishedOn, 'YYYY-MM-DD');
   const age = agesAgo(publishedOn);
 
   const { src } = modules.filter(module => module.type === 'image')[0];
-
+debugger;
   return (
     <li>
       <figure>
@@ -35,9 +45,7 @@ const Item = ({ id, modules, name, published_on: publishedOn }: Props) => {
 };
 
 Item.defaultProps = {
-  id: 12345,
-  modules: [ { type: 'image' }, { type: 'text' } ],
-  name: 'dummy'
+  project: {}
 }
 
 export default Item;

@@ -1,18 +1,30 @@
-.transition {
+@import 'Component/CSSTransition/style';
+
+$className: 'transition';
+
+$cssClassName: 'css-transition';
+$cssEnterClassName: '#{$cssClassName}-enter';
+$cssExitClassName: '#{$cssClassName}-exit';
+
+.#{$className} {
   position: relative;
 
-  > .css-transition {
+  > .#{$cssClassName} {
     left: 50%;
     position: absolute;
     top: 50%;
     transform: translate3d(-50%, -50%, 0);
   }
 
-  > .css-transition-enter {
+  > .#{$cssEnterClassName} {
     z-index: 2;
   }
 
-  > .css-transition-exit {
+  > .#{$cssExitClassName} {
     z-index: 1;
   }
+}
+
+:export {
+  className: #{$className};
 }

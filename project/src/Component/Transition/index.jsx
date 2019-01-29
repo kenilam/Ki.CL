@@ -4,66 +4,62 @@ import { TransitionGroup } from 'react-transition-group';
 
 import { CSSTransition } from 'Component';
 
-import { parentClassNames } from './Utilities';
+import { className } from './style.scss';
 
-import './style.scss';
-
-type Node = React.Node;
-
-type EventHandler = (node: Node) => void;
-
-type Props = {
-  children: Node,
-  component?: Node,
-  onEnter?: EventHandler,
-  onExit?: EventHandler
-};
-
-const Transition = ({
+const Transition = ({ 
   children,
-  component,
-  onEnter,
-  onExit,
-  ...rest
-}: Props) => (
-  <TransitionGroup { ...{ component } }>
+  transitionKey,
+  transitionStyle,
+  onEnter = () => {},
+  onEntered = () => {},
+  onExit = () => {},
+  onExited = () => {}
+}) => (
+  <TransitionGroup component={React.Fragment}>
     {
-      React.Children.map(
+      CSSTransition({
         children,
-        child => {
-          const { type } = child;
+        transitionKey,
+        transitionStyle,
+        onEnter(node) {
+          onEnter(node);
 
-          const {
-            transitionKey,
-            transitionIn,
-            transitionStyle,
-            ...props
-          } = child.props;
+          if (!node || !node.parentNode) {
+            return;
+          }
 
-          return CSSTransition({
-            onEnter (node) {
-              onEnter(node);
-              parentClassNames.add(node);
-            },
-            onExit,
-            onEntered: parentClassNames.remove,
-            transitionKey: child.props.transitionKey,
-            children: () => React.cloneElement(
-              React.createElement(type),
-              { ...props }
-            ),
-            ...rest
-          })
+          node.parentNode.classList.add(className);
+        },
+        onEntered(node) {
+          onEntered(node);
+
+          if (!node || !node.parentNode) {
+            return;
+          }
+
+          node.parentNode.classList.remove(className);
+        },
+        onExit(node) {
+          onExit(node);
+
+          if (!node || !node.parentNode) {
+            return;
+          }
+
+          node.parentNode.classList.add(className);
+        },
+        onExited(node) {
+          onExited(node);
+
+          if (!node || !node.parentNode) {
+            return;
+          }
+
+          node.parentNode.classList.remove(className);
         }
-      )
+      })
     }
   </TransitionGroup>
 );
-
-Transition.defaultProps = {
-  component: React.Fragment,
-  onEnter () {},
-  onExit () {}
-}
 
 export default Transition;

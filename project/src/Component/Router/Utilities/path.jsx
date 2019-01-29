@@ -1,7 +1,13 @@
-const base = 'home';
+import { view } from 'content/resources';
 
-const byIndex = ({ pathname }, routeIndex) => pathname.split('/')[ routeIndex ] || base;
+const basePath = view.home.name.toLowerCase();
 
-const notationise = ({ pathname }) => pathname.substr(1).replace('/', '.') || base;
+const notationise = (path, routeIndex) => 
+  path
+    .substr(1)
+    .replace(/\//g, '.')
+    .split('.')
+    .splice(0, routeIndex || 0).join('.')
+  || basePath;
 
-export default { byIndex, notationise };
+export default { notationise };

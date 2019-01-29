@@ -1,13 +1,13 @@
 @import 'fonts/kicl/fonts';
 
 .logo {
+  color: $light_black;
   font-size: $logo-size;
   overflow: hidden;
   position: relative;
   width: $logo-width;
 
   &:before {
-    color: $light_black;
     content: $kicl;
     display: block;
     font-family: $kicl_font_name;

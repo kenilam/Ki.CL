@@ -7,12 +7,14 @@
       "name": "Page Not Found",
       "content": {
         "message": "{{pathname}} is not a valid route"
-      }
+      },
+      "excluded": true
     },
     "home": {
       "path": "/",
       "name": "Home",
       "content": {
+        "heading": "Welcome to Ki.CL",
         "profession": [
           "Interactive Design",
           "Graphic Design"
@@ -20,7 +22,10 @@
         "description": [
           "A California Based Creative / Digital Specialist.",
           "With over 10 years experience Keni has had the privilege of working for projects in many countries with the likes of Animative, Fantasy Interactive, User interface, Art and Photography, and more."
-        ]
+        ],
+        "background": {
+          "path": "asset/image/london.whitechapel.jpg"
+        }
       }
     },
     "about": {
@@ -36,15 +41,17 @@
         "loader": {
           "text": "fetching projects..."
         }
-      }
-    },
-    "work": {
-      "path": "/works/:projectId",
-      "name": "Work",
-      "message": "Ki.CL",
-      "content": {
-        "loader": {
-          "text": "fetching project..."
+      },
+      "view": {
+        "work": {
+          "path": "/works/:projectId",
+          "name": "Work",
+          "message": "Ki.CL",
+          "content": {
+            "loader": {
+              "text": "fetching project..."
+            }
+          }
         }
       }
     },

@@ -20,7 +20,13 @@ const { home } = view;
 const { path } = home;
 
 const Logo = ({ className, component }: Props) => (
-  <Link { ...{ text: siteName, to: path, className, component } } />
+  <Link
+    to={ path }
+    className={ className }
+    component={ component }
+  >
+    { siteName }
+  </Link>
 );
 
 Logo.defaultProps = {

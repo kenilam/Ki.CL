@@ -1,41 +1,34 @@
 // @flow
 import React from 'react';
 
+import { randomId } from 'Helper';
 import { Asynchronizer } from 'Component';
-import { Route, path as pathUtil } from 'Component/Router';
 
 import { works as awaitFor, cache } from 'API';
 
 import resources from 'content/resources';
 
-import { Navigation } from './Component';
+import { Lists } from './Component';
 
 import View from './View';
 
 import './style.scss';
 
-const { notationise } = pathUtil;
 const { content, path } = resources.view.works;
 
-const routes = notationise({ pathname: path });
-
-const Works = props => {
-  const { history, location, match, ...rest } = props;
-  
+const Works = ({ match }) => {
   return (
-    <main data-routes={ routes } { ...rest }>
+    <main>
       <Asynchronizer { ...{
         awaitExpect: cache[match.url],
         awaitMessage: content.loader.text,
         awaitFor
       } }>
-        <Navigation { ...props }/>
+        <Lists/>
       </Asynchronizer>
-      <View { ...props }/>
+      <View/>
     </main>
   );
 }
 
-const Component = Route({ path, render: Works });
-
-export default Component;
+export default { path, render: Works, key: randomId() };

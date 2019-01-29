@@ -1,1 +1,0 @@
-export parentClassNames from './parentClassNames';
