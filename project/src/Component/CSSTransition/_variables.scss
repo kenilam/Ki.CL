@@ -1,0 +1,11 @@
+$cssTransition: 'css-transition';
+
+$cssTransitionEnter: '#{$cssTransition}-enter';
+$cssTransitionEnterActive: '#{$cssTransitionEnter}-active';
+$cssTransitionEnterDone: '#{$cssTransitionEnter}-done';
+
+$cssTransitionExit: '#{$cssTransition}-exit';
+$exitActiveClassName: '#{$cssTransitionExit}-active';
+$cssTransitionExitDone: '#{$cssTransitionExit}-done';
+
+$cssTransitioStylePrefix: '#{$cssTransition}-style-';

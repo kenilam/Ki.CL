@@ -38,11 +38,11 @@ const Link = ({ children, className, component: Wrapper, onClick, to }: Props) =
   return (
     <Router>
       {Wrapper ? (
-        <Wrapper { ...{ className } }>
+        <Wrapper className={ className }>
           <Element />
         </Wrapper>
       ) : (
-        <Element { ...{ className } }/>
+        <Element className={ className }/>
       )}
     </Router>
   );

@@ -26,14 +26,14 @@ const Component = ({ location, resizeHandler, routes }: Props) => (
   <CSSTransition
     component={ResizeObserver}
     componentClass='header'
-    rule='banner'
     inValue={ location.pathname !== '/' }
-    { ...{ resizeHandler: resizeHandler } }
     onExited={ () => resizeHandler() }
+    resizeHandler={ resizeHandler }
+    rule='banner'
   >
     <React.Fragment>
       <Logo />
-      <Nav {...{ routes }} />
+      <Nav routes={ routes }/>
     </React.Fragment>
   </CSSTransition>
 );
@@ -42,9 +42,9 @@ const Instance = Connector(Component);
 
 const InstanceWithRouter = withRouter(Instance);
 
-const GlobalHeader = props => (
+const GlobalHeader = () => (
   <Router>
-    <InstanceWithRouter {...props} />
+    <InstanceWithRouter/>
   </Router>
 );
 

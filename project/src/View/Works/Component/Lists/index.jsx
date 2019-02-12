@@ -17,11 +17,7 @@ const Lists = ({ data }: Props) => (
 );
 
 Lists.defaultProps = {
-  data: [
-    { id: 123 },
-    { id: 234 },
-    { id: 345 }
-  ]
+  data: []
 }
 
 export default Lists;

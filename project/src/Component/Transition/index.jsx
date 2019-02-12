@@ -14,52 +14,60 @@ const Transition = ({
   onEntered = () => {},
   onExit = () => {},
   onExited = () => {}
-}) => (
-  <TransitionGroup component={React.Fragment}>
-    {
-      CSSTransition({
-        children,
-        transitionKey,
-        transitionStyle,
-        onEnter(node) {
-          onEnter(node);
+}) => {
+  const parent = document.querySelector(`.${className}`);
 
-          if (!node || !node.parentNode) {
-            return;
+  if (parent) {
+    parent.classList.remove(className);
+  }
+
+  return (
+    <TransitionGroup component={React.Fragment}>
+      {
+        CSSTransition({
+          children,
+          transitionKey,
+          transitionStyle,
+          onEnter(node) {
+            onEnter(node);
+
+            if (!node || !node.parentNode) {
+              return;
+            }
+
+            node.parentNode.classList.add(className);
+          },
+          onEntered(node) {
+            onEntered(node);
+
+            if (!node || !node.parentNode) {
+              return;
+            }
+
+            node.parentNode.classList.remove(className);
+          },
+          onExit(node) {
+            onExit(node);
+
+            if (!node || !node.parentNode) {
+              return;
+            }
+
+            node.parentNode.classList.add(className);
+          },
+          onExited(node) {
+            onExited(node);
+
+            if (!node || !node.parentNode) {
+              return;
+            }
+
+            node.parentNode.classList.remove(className);
           }
-
-          node.parentNode.classList.add(className);
-        },
-        onEntered(node) {
-          onEntered(node);
-
-          if (!node || !node.parentNode) {
-            return;
-          }
-
-          node.parentNode.classList.remove(className);
-        },
-        onExit(node) {
-          onExit(node);
-
-          if (!node || !node.parentNode) {
-            return;
-          }
-
-          node.parentNode.classList.add(className);
-        },
-        onExited(node) {
-          onExited(node);
-
-          if (!node || !node.parentNode) {
-            return;
-          }
-
-          node.parentNode.classList.remove(className);
-        }
-      })
-    }
-  </TransitionGroup>
-);
+        })
+      }
+    </TransitionGroup>
+  );
+}
 
 export default Transition;

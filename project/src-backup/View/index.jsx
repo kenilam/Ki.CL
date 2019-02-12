@@ -2,6 +2,7 @@
 import React from 'react';
 
 import { Router } from 'Component';
+import { path } from 'Component/Router/Utilities';
 
 import About from './About';
 import Contact from './Contact';
@@ -17,7 +18,18 @@ type Props = {
 };
 
 const View = ({ className, style, transitionStyle, ...rest }: Props) => (
-  <Router { ...{ className, transitionStyle, style } }>
+  <Router { ...{ className, transitionStyle, style } }
+    onEnter={ ({ location }) => {
+      const routes = path.notationise(location.pathname, 1);
+
+      body.dataset.enteredRoute = routes;
+    } }
+    onExit={ ({ location }) => {
+      const routes = path.notationise(location.pathname, 1);
+      
+      body.dataset.exitedRoute = routes;
+    } }
+  >
     {About(rest)}
     {Contact(rest)}
     {Home(rest)}

@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
 
-import { randomId } from 'Helper';
 import { Asynchronizer } from 'Component';
+import { Route } from 'Component/Router';
 
-import { works as awaitFor, cache } from 'API';
+import { works, caches } from 'API';
 
 import resources from 'content/resources';
 
@@ -14,21 +14,32 @@ import View from './View';
 
 import './style.scss';
 
-const { content, path } = resources.view.works;
+const {
+  view: {
+    works: {
+      content: {
+        loader
+      },
+      path
+    }
+  }
+} = resources;
 
-const Works = ({ match }) => {
-  return (
-    <main>
-      <Asynchronizer { ...{
-        awaitExpect: cache[match.url],
-        awaitMessage: content.loader.text,
-        awaitFor
-      } }>
-        <Lists/>
-      </Asynchronizer>
-      <View/>
-    </main>
-  );
-}
+const Works = () => (
+  <main data-routes='works'>
+    <Asynchronizer awaitCache={ caches[path] } awaitFor={ works } awaitMessage={ loader.text }>
+      {
+        ({ data }) => (
+          <React.Fragment>
+            <Lists data={ data }/>
+          </React.Fragment>
+        )
+      }
+    </Asynchronizer>
+    <View/>
+  </main>
+);
 
-export default { path, render: Works, key: randomId() };
+export default (
+  <Route path={ path } render={ Works } />
+);

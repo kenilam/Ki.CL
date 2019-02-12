@@ -3,18 +3,18 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import multi from 'redux-multi';
 
-import Show from './Show';
+import transitionStyle from './transitionStyle';
 
 let reducers = combineReducers({
-  ...Show.reducers
+  ...transitionStyle.reducers
 });
 
 const mapStateToProps = state => ({
-  ...Show.mapStateToProps(state)
+  ...transitionStyle.mapStateToProps(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...Show.mapDispatchToProps(dispatch)
+  ...transitionStyle.mapDispatchToProps(dispatch)
 });
 
 const Connector = connect(mapStateToProps, mapDispatchToProps);

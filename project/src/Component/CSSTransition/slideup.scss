@@ -1,0 +1,25 @@
+$style: 'slideup';
+
+.#{$cssTransitioStylePrefix}#{$style} {
+  &.#{$cssTransition} {
+    &[class*='#{$cssTransition}-'][class*='-active'] {
+      transition-property: transform;
+    }
+
+    &-exit {
+      overflow: hidden;
+    }
+
+    &-enter:not(.#{$cssTransitionEnterActive}) {
+      transform: translate3d(0, 100vh, 0);
+    }
+
+    &-exit-active {
+      transform: translate3d(0, -100vh, 0);
+    }
+  }
+}
+
+:export {
+  style: #{$style};
+}

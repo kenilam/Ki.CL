@@ -3,7 +3,7 @@
 import React from 'react';
 import Observer from 'reactjs-resize-observer';
 
-const ResizeObserver = ({ children, resizeHandler, ...rest }) => {
+const ResizeObserver = ({ children, resizeHandler }) => {
   const onResize = entry => {
     const rect = entry.target.getBoundingClientRect();
     
@@ -11,7 +11,7 @@ const ResizeObserver = ({ children, resizeHandler, ...rest }) => {
   }
 
   return (
-    <Observer { ...{ ...rest, onResize } }>
+    <Observer onResize={ onResize } }>
       {children}
     </Observer>
   );

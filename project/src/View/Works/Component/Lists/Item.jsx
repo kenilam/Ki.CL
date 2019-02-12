@@ -30,7 +30,7 @@ const Item = ({ project }: Props) => {
   const age = agesAgo(publishedOn);
 
   const { src } = modules.filter(module => module.type === 'image')[0];
-debugger;
+  
   return (
     <li>
       <figure>

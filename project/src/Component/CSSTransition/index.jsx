@@ -5,7 +5,10 @@ import classnames from 'classnames';
 
 import { addEndListener, classList } from './Utilities';
 
-import { className } from './style.scss';
+import { className, stylePrefix } from './style.scss';
+import { style as fade } from './fade.scss';
+import { style as slidedown } from './slidedown.scss';
+import { style as slideup } from './slideup.scss';
 
 type Node = React.Node;
 
@@ -14,7 +17,7 @@ type Props = {
   
   transitionKey: String;
   transitionIn: Boolean;
-  transitionStyle?: String;
+  transitionStyle?: fade | slidedown | slideup;
 
   mountOnEnter?: Boolean;
   unmountOnExit?: Boolean;
@@ -44,7 +47,7 @@ const CSSTransition = ({
   onExit = CSSTransition.defaultProps.onExit,
   onExited = CSSTransition.defaultProps.onExited
 }: Props) => {
-  const classNames = classnames(`${className}-style-${transitionStyle}`, className);
+  const classNames = transitionStyle? classnames(`${stylePrefix}${transitionStyle}`, className) : className;
 
   return (
     <Origin
@@ -61,15 +64,21 @@ const CSSTransition = ({
       } }
       onEntered={ node => {
         onEntered(node);
-        classList.remove(node, transitionStyle);
+        classList.remove(node);
       } }
       onExit={ node => {
         onExit(node);
         classList.add(node);
+
+        if (!node) {
+          return;
+        }
+
+        node.style.top = -window.kicl.ref.scrollTop;
       } }
       onExited={ node => {
         onExited(node);
-        classList.remove(node, transitionStyle);
+        classList.remove(node);
       } }
     >
       { children }
@@ -78,12 +87,11 @@ const CSSTransition = ({
 }
 
 CSSTransition.defaultProps = {
-  transitionStyle: 'fade',
-
+  transitionStyle: fade,
   mountOnEnter: true,
   unmountOnExit: true,
 
-  appear: true,
+  appear: false,
 
   onEnter() {},
   onEntered() {},
@@ -91,4 +99,10 @@ CSSTransition.defaultProps = {
   onExited() {}
 }
 
+export {
+  fade,
+  slidedown,
+  slideup,
+  stylePrefix
+};
 export default CSSTransition;

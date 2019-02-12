@@ -24,8 +24,8 @@ const Component = ({ style, updateStyle }: Props) => {
 
   return (
     <React.Fragment>
-      <GlobalHeader { ...{ resizeHandler } } />
-      <View { ...{ style } } />
+      <GlobalHeader resizeHandler={ resizeHandler } />
+      <View style={ style } />
     </React.Fragment>
   )
 };

@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@inlet/react-pixi": "^0.1.7",
+    "abortcontroller-polyfill": "^1.2.2",
     "async-reactor": "^1.2.2",
     "classnames": "^2.2.6",
     "css-reset-and-normalize-sass": "^0.1.2",

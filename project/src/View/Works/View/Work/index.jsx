@@ -2,9 +2,10 @@
 import React from 'react';
 
 import { Asynchronizer } from 'Component';
-import { interpolate, randomId } from 'Helper';
+import { Redirect, Route } from 'Component/Router';
+import { interpolate } from 'Helper';
 
-import { work as api, cache } from 'API';
+import { work } from 'API';
 
 import resources from 'content/resources';
 
@@ -24,18 +25,22 @@ const Work = ({ data, match }: Props) => (
   <h2>{ data.id || match.params.projectId }</h2>
 );
 
-const Instance = ({ data, match }) => {
-  const { params, url } = match;
-
+const Instance = ({ match }) => {
+  const { params } = match;
+  
   return (
-    <section>
-      <Asynchronizer { ...{
-        awaitExpect: cache[url],
-        awaitFor: api,
-        awaitProps: params,
-        awaitMessage: interpolate(content.loader.text, params),
-      } }>
-        <Work data={ data } match={ match }/>
+    <section data-routes={`works.${params.projectId}`}>
+      <Asynchronizer
+        awaitFor={ work }
+        awaitMessage={ interpolate(content.loader.text, params) }
+        awaitProps={ params }
+        awaitError={ () => (
+          <Redirect to='/works'/>
+        ) }
+      >
+        { ({ data }) => (
+          <Work data={ data } match={ match }/>
+        ) }
       </Asynchronizer>
     </section>
   );
@@ -45,4 +50,6 @@ Work.defaultProps = {
   data: {}
 }
 
-export default { exact: true, path, render: Instance, key: randomId() };
+export default (
+  <Route exact path={ path } render={ Instance } />
+);

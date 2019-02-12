@@ -19,7 +19,7 @@
   }
 
   &:before {
-    background-color: rgba($black, .5);
+    background-color: rgba($black, .6);
     content: '\0020';
     display: block;
     height: 100vh;
@@ -42,7 +42,6 @@
 
   nav {
     text-transform: uppercase;
-    line-height: .7;
     width: 100%;
 
     ul {
@@ -55,6 +54,16 @@
       &:hover {
         color: $orange;
       }
+    }
+  }
+}
+
+[data-entered-routes='home'] {
+  [data-routes='home'] {
+    @include setCSSTransitionProperty(transform);
+
+    &.#{$cssTransitionEnter}:not(.#{$cssTransitionEnterActive}) {
+      transform: translate3d(0, -100vh, 0);
     }
   }
 }

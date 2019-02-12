@@ -71,44 +71,45 @@ const Component = ({
   onExit,
   resources,
   transitionStyle,
-  style,
-  ...rest
+  style
 }: Props) => {
   const { pathname: currentRoute } = location;
   const { routes } = resources;
 
+  const className = classnames(
+    'router',
+    className,
+    transitionStyle,
+    directionByRoute({ routes, currentRoute })
+  );
+
+  const components = {
+    wrapper: 'main',
+    element: 'section',
+    elementProps: {
+      'data-routes': pathnameToRoutes(currentRoute),
+      style
+    }
+  };
+
   return (
     <Transition
-      { ...{
-        className: classnames(
-          'router',
-          className,
-          transitionStyle,
-          directionByRoute({ routes, currentRoute })
-        ),
-        components: {
-          wrapper: 'main',
-          element: 'section',
-          elementProps: {
-            'data-routes': pathnameToRoutes(currentRoute),
-            style
-          }
-        },
-        keyValue: currentRoute,
-        onEnter: node => {
-          enterHandler(currentRoute);
+      className={ className }
+      components={ components }
+      keyValue={ currentRoute }
+      onEnter={ node => {
+        enterHandler(currentRoute);
 
-          onEnter(node);
-        },
-        onExit: node => {
-          exitHandler(currentRoute);
+        onEnter(node);
+      } }
+      onExit={ node => {
+        exitHandler(currentRoute);
 
-          onExit(node);
-        }
+        onExit(node);
       } }
     >
-      <Switch location={location}>
-        { React.Children.map(children, child => React.cloneElement(child, { ...rest }) ) }
+      <Switch location={ location }>
+        { children }
       </Switch>
     </Transition>
   );

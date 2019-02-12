@@ -7,7 +7,7 @@ html {
 body {
   font-family: $font_family;
   font-size: $font_size;
-  line-height: 1.2;
+  line-height: $line_height;
   
   background-color: $white;
 }

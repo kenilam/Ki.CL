@@ -9,8 +9,6 @@ import { cssUnit } from 'Helper';
 
 import { component } from 'content/resources';
 
-import State, { Connector } from './State';
-
 import { maxFontSize } from './style.scss';
 
 type Props = {
@@ -19,40 +17,28 @@ type Props = {
   text?: String
 };
 
-const { content } = component.loader;
+const { loader: { content } } = component;
 
 const Spiner = () => <IcoMoon className='spinner' icon='spinner8'/>;
 
-const Loader = ({ iconOnly, show, showComponent, text }: Props) => {
-  showComponent();
-
-  return (
-    <CSSTransition transitionIn={ show }>
-      <Fittext maxFontSize={ cssUnit(maxFontSize) }>
-        <p className='loader' aria-label={ text }>
-          <span>
-            <Spiner/>
-            <Spiner/>
-          </span>
-          { !iconOnly && <span className='text'>{ text }</span> }
-        </p>
-      </Fittext>
-    </CSSTransition>
-  );
-};
-
-const Instance = Connector(Loader);
-
-const Component = props => (
-  <State>
-    <Instance { ...props } />
-  </State>
+const Loader = ({ iconOnly, show, text }: Props) => (
+  <CSSTransition transitionIn={ show }>
+    <Fittext maxFontSize={ cssUnit(maxFontSize) }>
+      <p className='loader' aria-label={ text }>
+        <span>
+          <Spiner/>
+          <Spiner/>
+        </span>
+        { !iconOnly && <span className='text'>{ text }</span> }
+      </p>
+    </Fittext>
+  </CSSTransition>
 );
 
 Loader.defaultProps = {
   iconOnly: false,
-  show: false,
+  show: true,
   text: content.default.text
 }
 
-export default Component;
+export default Loader;

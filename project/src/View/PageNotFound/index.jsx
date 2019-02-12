@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
 
-import { interpolate, randomId } from 'Helper';
+import { Route } from 'Component/Router';
+import { interpolate } from 'Helper';
 
 import resources from 'content/resources';
 
@@ -13,5 +14,6 @@ const PageNotFound = ({ location }) => (
   </main>
 );
 
-export { path };
-export default { exact: true, render: PageNotFound, key: randomId() };
+export default (
+  <Route exact path={ path } render={ PageNotFound } />
+);

@@ -1,26 +1,14 @@
-$className: 'css-transition';
-
-$enterClassName: '#{$className}-enter';
-$enterDoneClassName: '#{$enterClassName}-done';
-
-$exitClassName: '#{$className}-exit';
-$exitDoneClassName: '#{$exitClassName}-done';
-
-.#{$className} {
-  &[class*='#{$className}-'][class*='-active'] {
+.#{$cssTransition} {
+  &[class*='#{$cssTransition}-'][class*='-active'] {
     transition-duration: $speed;
-    transition-property: opacity;
+    transition-property: none;
     transition-timing-function: $easeIn;
-  }
-
-  &-enter:not(.#{$className}-enter-active),
-  &-exit-active {
-    opacity: 0;
   }
 }
 
 :export {
-  className: #{$className};
-  enterDoneClassName: #{$enterDoneClassName};
-  exitDoneClassName: #{$exitDoneClassName};
+  className: #{$cssTransition};
+  enterDoneClassName: #{$cssTransitionEnterDone};
+  exitDoneClassName: #{$cssTransitionExitDone};
+  stylePrefix: #{$cssTransitioStylePrefix};
 }

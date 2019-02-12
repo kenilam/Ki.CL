@@ -1,4 +1,7 @@
-import { className, enterDoneClassName, exitDoneClassName } from "Component/CSSTransition/style.scss";
+import { className, enterDoneClassName, exitDoneClassName, stylePrefix } from 'Component/CSSTransition/style.scss';
+import { style as fade } from 'Component/CSSTransition/fade.scss';
+import { style as slidedown } from 'Component/CSSTransition/slidedown.scss';
+import { style as slideup } from 'Component/CSSTransition/slideup.scss';
 
 function add (node) {
   if (!node) {
@@ -8,7 +11,7 @@ function add (node) {
   node.classList.add(className);
 }
 
-function remove (node, transitionStyle) {
+function remove (node) {
   if (!node) {
     return;
   }
@@ -17,7 +20,9 @@ function remove (node, transitionStyle) {
     className,
     enterDoneClassName,
     exitDoneClassName,
-    `${className}-style-${transitionStyle}`
+    `${stylePrefix}${fade}`,
+    `${stylePrefix}${slidedown}`,
+    `${stylePrefix}${slideup}`
   );
 }
 
