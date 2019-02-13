@@ -1,6 +1,6 @@
 $style: 'slideup';
 
-.#{$cssTransitioStylePrefix}#{$style} {
+.#{$cssTransitionStylePrefix}#{$style} {
   &.#{$cssTransition} {
     &[class*='#{$cssTransition}-'][class*='-active'] {
       transition-property: transform;

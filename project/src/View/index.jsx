@@ -10,7 +10,7 @@ import Works from './Works';
 const routeIndex = 1;
 
 const View = () => (
-  <Router routeIndex={ routeIndex }>
+  <Router routeIndex={ routeIndex } transitionStyle='slide'>
     { Home }
     { Works }
     { PageNotFound }

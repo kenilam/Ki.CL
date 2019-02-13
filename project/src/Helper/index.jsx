@@ -1,6 +1,7 @@
 export agesAgo from './agesAgo';
 export cssUnit from './cssUnit';
 export debounce from './debounce';
+export duration from './duration';
 export interpolate from './interpolate';
 export isEmpty from './isEmpty';
 export randomId from './randomId';

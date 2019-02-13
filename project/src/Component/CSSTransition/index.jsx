@@ -7,6 +7,7 @@ import { addEndListener, classList } from './Utilities';
 
 import { className, stylePrefix } from './style.scss';
 import { style as fade } from './fade.scss';
+import { style as slide } from './slide.scss';
 import { style as slidedown } from './slidedown.scss';
 import { style as slideup } from './slideup.scss';
 
@@ -101,6 +102,7 @@ CSSTransition.defaultProps = {
 
 export {
   fade,
+  slide,
   slidedown,
   slideup,
   stylePrefix

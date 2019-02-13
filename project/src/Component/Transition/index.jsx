@@ -14,60 +14,52 @@ const Transition = ({
   onEntered = () => {},
   onExit = () => {},
   onExited = () => {}
-}) => {
-  const parent = document.querySelector(`.${className}`);
+}) => (
+  <TransitionGroup component={React.Fragment}>
+    {
+      CSSTransition({
+        children,
+        transitionKey,
+        transitionStyle,
+        onEnter(node) {
+          onEnter(node);
 
-  if (parent) {
-    parent.classList.remove(className);
-  }
-
-  return (
-    <TransitionGroup component={React.Fragment}>
-      {
-        CSSTransition({
-          children,
-          transitionKey,
-          transitionStyle,
-          onEnter(node) {
-            onEnter(node);
-
-            if (!node || !node.parentNode) {
-              return;
-            }
-
-            node.parentNode.classList.add(className);
-          },
-          onEntered(node) {
-            onEntered(node);
-
-            if (!node || !node.parentNode) {
-              return;
-            }
-
-            node.parentNode.classList.remove(className);
-          },
-          onExit(node) {
-            onExit(node);
-
-            if (!node || !node.parentNode) {
-              return;
-            }
-
-            node.parentNode.classList.add(className);
-          },
-          onExited(node) {
-            onExited(node);
-
-            if (!node || !node.parentNode) {
-              return;
-            }
-
-            node.parentNode.classList.remove(className);
+          if (!node || !node.parentNode) {
+            return;
           }
-        })
-      }
-    </TransitionGroup>
-  );
-}
+          
+          node.parentNode.classList.add(className);
+        },
+        onEntered(node) {
+          onEntered(node);
+
+          if (!node || !node.parentNode) {
+            return;
+          }
+          
+          node.parentNode.classList.remove(className);
+        },
+        onExit(node) {
+          onExit(node);
+
+          if (!node || !node.parentNode) {
+            return;
+          }
+          
+          node.parentNode.classList.add(className);
+        },
+        onExited(node) {
+          onExited(node);
+
+          if (!node || !node.parentNode) {
+            return;
+          }
+          
+          node.parentNode.classList.remove(className);
+        }
+      })
+    }
+  </TransitionGroup>
+);
 
 export default Transition;

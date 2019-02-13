@@ -1,6 +1,4 @@
-import { debounce } from 'Helper';
-
-import duration from './duration';
+import { debounce, duration } from 'Helper';
 
 const addEndListener = async (node, done) => {
   await debounce( duration(node) );

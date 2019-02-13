@@ -6,7 +6,7 @@ import { Transition } from 'Component';
 
 import { view } from 'content/resources';
 
-import { path } from './Utilities';
+import { notationise } from './Utilities/path';
 
 type Node = React.Node;
 
@@ -48,25 +48,15 @@ const Router = ({
         transitionKey={ transitionKey }
         transitionStyle={ transitionStyle }
         onEnter={ (node) => {
-          const routes = path.notationise(location.pathname, routeIndex);
-
-          body.dataset.enteredRoutes = routes;
+          body.dataset.enteredRoutes = notationise(location.pathname, routeIndex);
 
           onEnter({ node, location, match });
-
-          if (!node) {
-            return;
-          }
-
-          node.dataset.routes = routes;
         } }
         onEntered={ (node) => {
           onEntered({ node, location, match });
         } }
         onExit={ (node) => {
-          const routes = path.notationise(location.pathname, routeIndex);
-
-          body.dataset.exitedRoutes = routes;
+          body.dataset.exitedRoutes = notationise(location.pathname, routeIndex);
 
           onExit({ node, location, match });
         } }
@@ -90,7 +80,7 @@ const Router = ({
       </HashRouter>;
 }
 
-body.dataset.enteredRoutes = window.location.hash.substr(2).replace(/\//g, '.') || 'home';
+body.dataset.enteredRoutes = notationise(window.location.hash);
 
 Router.defaultProps = {
   componentOnly: false,
