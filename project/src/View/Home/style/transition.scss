@@ -1,0 +1,114 @@
+body {
+  &[data-entered-routes='home'],
+  &[data-exited-routes='home'] {
+    .#{$transition} {
+      main {
+        &[data-routes='home'] {
+          z-index: 3;
+
+          h1,
+          h2,
+          p,
+          nav {
+            transition-property: opacity, transform;
+            transition-duration: $speed;
+            transition-timing-function: $easeIn;
+          }
+        }
+
+        &:not([data-routes='home']) {
+          &:after {
+            transition-duration: $speed;
+            transition-property: none;
+            transition-timing-function: $easeIn;
+
+            background-color: rgba($black, .9);
+            content: '\0020';
+            display: block;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 99;
+          }
+        }
+      }
+    }
+  }
+
+  // When Entering
+  &[data-entered-routes='home'] {
+    main {
+      &[data-routes='home'] {
+        &.#{$cssTransitionEnter}:not(.#{$cssTransitionEnterActive}) {
+          transform: translate3d(0, -110vh, 0) scale(1.2);
+
+          h1,
+          h2,
+          p,
+          nav {
+            opacity: 0;
+            transform: translate3d(0, 50vh, 0);
+          }
+        }
+      }
+
+      &:not([data-routes='home']) {
+        &.#{$cssTransitionExit}:not(.#{$cssTransitionExitActive}) {
+          &:after {
+            opacity: 0;
+          }
+        }
+
+        &.#{$cssTransitionExitActive} {
+          transform: translate3d(0, 70vh, 0);
+
+          &:after {
+            transition-property: opacity;
+          }
+        }
+      }
+    }
+  }
+
+  // When Exiting
+  &[data-exited-routes='home'] {
+    main {
+      &[data-routes='home'] {
+        position: relative;
+
+        &.#{$cssTransitionExitActive} {
+          transition-delay: $fastest;
+
+          transform: translate3d(0, -110vh, 0) scale(1.2);
+
+          h1,
+          h2,
+          p,
+          nav {
+            opacity: 0;
+            transform: translate3d(0, 30vh, 0);
+          }
+        }
+      }
+
+      &:not([data-routes='home']) {
+        &.#{$cssTransitionEnter}:not(.#{$cssTransitionEnterActive}) {
+          transform: translate3d(0, 70vh, 0);
+        }
+
+        &.#{$cssTransitionEnterActive}) {
+          transition-delay: $fastest;
+
+          &:after {
+            transition-delay: $faster;
+            transition-property: opacity;
+
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}

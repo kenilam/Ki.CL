@@ -1,0 +1,69 @@
+[data-routes='home'] {
+  display: grid;
+  grid-gap: $gutter;
+  align-content: center;
+  justify-items: center;
+
+  background-image: url('/image/london.whitechapel.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $white;
+  font-family: $heading_font_family;
+  font-size: 2rem;
+  text-align: center;
+
+  h1,
+  h2,
+  p,
+  nav {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:before {
+    background-color: rgba($black, .6);
+    content: '\0020';
+    display: block;
+    height: 100vh;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    z-index: 0;
+  }
+
+  .logo {
+    color: $white;
+  }
+
+  p {
+    font-family: $font_family;
+    font-size: 1rem;
+    max-width: 30rem;
+    width: calc(100vw - #{$gutter * 2});
+  }
+
+  nav {
+    text-transform: uppercase;
+    width: 100%;
+
+    ul {
+      grid-auto-flow: column;
+    }
+
+    a {
+      color: $white;
+
+      &:hover {
+        color: $orange;
+      }
+    }
+  }
+
+  &.#{$cssTransition} {
+    & {
+      z-index: 2;
+    }
+  }
+}

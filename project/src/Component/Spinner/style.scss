@@ -1,0 +1,115 @@
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $spinnerBackground;
+  color: $spinnerColor;
+  font-family: $font_family;
+  font-size: $spinnerSize;
+  left: 0;
+  height: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+
+  div {
+    display: block;
+    position: relative;
+  }
+
+  svg {
+    animation-name: loader-animation;
+    animation-duration: $slow;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    &:first-child {
+      animation-name: loader-background-animation;
+
+      color: shade($spinnerColor, 40);
+    }
+
+    &:last-child {
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+  }
+
+  p {
+    margin-top: $gutter;
+    font-size: $spinnerFontSize;
+  }
+
+  &[class*='css-transition-'][class*='-active'] {
+    transition-delay: $speed;
+    transition-duration: $slow;
+    transition-property: opacity;
+
+    div {
+      transition-delay: $fast;
+      transition-duration: $speed;
+      transition-property: opacity, transform;
+    }
+
+    p {
+      transition-delay: $fast;
+      transition-duration: $fast;
+      transition-property: opacity, transform;
+    }
+
+    svg {
+      transition-duration: $fast;
+      transition-property: color;
+    }
+  }
+
+  &.#{$cssTransitionEnter}:not(.#{$cssTransitionEnterActive}),
+  &.#{$cssTransitionExitActive} {
+    opacity: 0;
+
+    div,
+    p {
+      opacity: 0;
+    }
+
+    div {
+      transform: scale3d(2, 2, 0);
+    }
+
+    p {
+      transform: translate3d(0, 100%, 0);
+    }
+
+    svg {
+      color: $spinnerColor;
+    }
+  }
+}
+
+@keyframes loader-background-animation {
+  0% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes loader-animation {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+:export {
+  maxFontSize: $spinnerSize;
+}

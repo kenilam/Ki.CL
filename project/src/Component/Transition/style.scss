@@ -1,27 +1,19 @@
-@import 'Component/CSSTransition/style';
-
-$className: 'transition';
-
-$cssClassName: 'css-transition';
-$cssEnterClassName: '#{$cssClassName}-enter';
-$cssExitClassName: '#{$cssClassName}-exit';
-
-.#{$className} {
+.#{$transition} {
   pointer-events: none;
   position: relative;
 
-  > .#{$cssEnterClassName} {
+  > .#{$cssTransitionEnter} {
     left: 0%;
     position: absolute;
     top: 0;
     z-index: 2;
   }
 
-  > .#{$cssExitClassName} {
+  > .#{$cssTransitionExit} {
     z-index: 1;
   }
 }
 
 :export {
-  className: #{$className};
+  className: #{$transition};
 }

@@ -27,7 +27,11 @@ const {
 
 const Works = () => (
   <main data-routes='works'>
-    <Asynchronizer awaitCache={ caches[path] } awaitFor={ works } awaitMessage={ loader.text }>
+    <Asynchronizer
+      awaitCache={ caches[path] }
+      awaitFor={ works }
+      awaitMessage={ loader.text }
+    >
       {
         ({ data }) => (
           <React.Fragment>

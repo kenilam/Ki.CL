@@ -2,7 +2,7 @@
 import React from 'react';
 import Async from 'react-async';
 
-import { CSSTransition, Errors, Loader } from 'Component';
+import { CSSTransition, Errors, Spinner } from 'Component';
 import { debounce, isEmpty } from 'Helper';
 
 type Node = React.Node;
@@ -54,25 +54,21 @@ const Asynchronizer = ({
     } }>
       {({ data, error, isLoading }) => (
         <React.Fragment>
-          <CSSTransition transitionIn={ Boolean(isLoading) }>
-            <Loader
-              iconOnly={ iconOnly }
-              message={ awaitMessage }
-              show={ Boolean(isLoading) }
-            />
-          </CSSTransition>
-          <CSSTransition transitionIn={ Boolean(error) }>
-            {
-              awaitError
-                ? awaitError()
-                : <Errors errors={ error }/>
-            }
-          </CSSTransition>
           <CSSTransition transitionIn={ Boolean(data) }>
             <Component data={ data }>
               { children }
             </Component>
           </CSSTransition>
+          <Spinner
+            iconOnly={ iconOnly }
+            message={ awaitMessage }
+            show={ Boolean(isLoading) }
+          />
+          <Errors
+            errors={ error }
+            onError={ awaitError }
+            show={ Boolean(error) }
+          />
         </React.Fragment>
       )}
     </Async>

@@ -48,17 +48,30 @@ const Router = ({
         transitionKey={ transitionKey }
         transitionStyle={ transitionStyle }
         onEnter={ (node) => {
-          body.dataset.enteredRoutes = notationise(location.pathname, routeIndex);
-
           onEnter({ node, location, match });
+
+          // To Prevent the same route attrs
+          // when CSSTransition appear set to true
+          let enteredRoutes = notationise(window.location.hash, routeIndex);
+          const { exitedRoutes } = body.dataset;
+
+          if (body.dataset.enteredRoutes === enteredRoutes) {
+            return;
+          }
+
+          if (enteredRoutes === exitedRoutes) {
+            enteredRoutes = notationise(location.pathname, routeIndex);
+          }
+
+          body.dataset.enteredRoutes = enteredRoutes;
         } }
         onEntered={ (node) => {
           onEntered({ node, location, match });
         } }
         onExit={ (node) => {
-          body.dataset.exitedRoutes = notationise(location.pathname, routeIndex);
-
           onExit({ node, location, match });
+
+          body.dataset.exitedRoutes = notationise(location.pathname, routeIndex);
         } }
         onExited={ (node) => {
           onExited({ node, location, match });

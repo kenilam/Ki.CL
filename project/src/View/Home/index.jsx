@@ -1,26 +1,48 @@
 // @flow
 import React from 'react';
 
-import { Logo, Navigation } from 'Component';
+import { about, caches } from 'API';
+
+import { Asynchronizer, Logo, Navigation } from 'Component';
 import { Route } from 'Component/Router';
 
 import resources from 'content/resources';
 
-import './style.scss';
+import './style';
 
-const { view } = resources;
-const { path, content } = view.home;
+const {
+  view: {
+    home: {
+      content: {
+        loader,
+        heading
+      },
+      path
+    }
+  }
+} = resources;
 
 const Home = () => (
   <main data-routes='home'>
-    <Logo/>
-    <h2>{ content.heading }</h2>
-    <p>{ content.description }</p>
-    <Navigation/>
+    <Asynchronizer
+      awaitCache={ caches['/about'] }
+      awaitFor={ about }
+      awaitMessage={ loader.text }
+      iconOnly
+    >
+      {
+        ({ data }) => (
+          <React.Fragment>
+            <Logo/>
+            <h2>{ heading }</h2>
+            <p>{ data.sections.About }</p>
+            <Navigation/>
+          </React.Fragment>
+        )
+      }
+    </Asynchronizer>
   </main>
 );
-
-Home.defaultProps = { content };
 
 export default (
   <Route exact path={ path } render={ Home } />

@@ -1,0 +1,10 @@
+[data-routes='works'] {
+  position: relative;
+  
+  &.transition {
+    nav {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}

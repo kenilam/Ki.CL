@@ -3,7 +3,7 @@ export CSSTransition from './CSSTransition';
 export Errors from './Errors';
 export Link from './Link';
 export Logo from './Logo';
-export Loader from './Loader';
+export Spinner from './Spinner';
 export Navigation from './Navigation';
 export Router from './Router';
 export Transition from './Transition';

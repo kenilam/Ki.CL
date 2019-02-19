@@ -14,31 +14,37 @@ import { maxFontSize } from './style.scss';
 type Props = {
   iconOnly?: Boolean,
   show?: Boolean,
-  text?: String
+  message?: String
 };
 
-const { loader: { content } } = component;
+const {
+  loader: {
+    content: {
+      default: {
+        message
+      }
+    }
+  }
+} = component;
 
-const Spiner = () => <IcoMoon className='spinner' icon='spinner8'/>;
-
-const Loader = ({ iconOnly, show, text }: Props) => (
+const Spinner = ({ iconOnly, show, message }: Props) => (
   <CSSTransition transitionIn={ show }>
     <Fittext maxFontSize={ cssUnit(maxFontSize) }>
-      <p className='loader' aria-label={ text }>
-        <span>
-          <Spiner/>
-          <Spiner/>
-        </span>
-        { !iconOnly && <span className='text'>{ text }</span> }
-      </p>
+      <div className='spinner' aria-label={ message }>
+        <div>
+          <IcoMoon icon='spinner8'/>
+          <IcoMoon icon='spinner8'/>
+        </div>
+        { !iconOnly && <p className='text'>{ message }</p> }
+      </div>
     </Fittext>
   </CSSTransition>
 );
 
-Loader.defaultProps = {
+Spinner.defaultProps = {
   iconOnly: false,
   show: true,
-  text: content.default.text
+  message
 }
 
-export default Loader;
+export default Spinner;

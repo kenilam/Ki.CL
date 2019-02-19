@@ -18,7 +18,7 @@ type Props = {
   
   transitionKey: String;
   transitionIn: Boolean;
-  transitionStyle?: fade | slidedown | slideup;
+  transitionStyle?: 'custom' | fade | slidedown | slideup;
 
   mountOnEnter?: Boolean;
   unmountOnExit?: Boolean;
@@ -88,11 +88,11 @@ const CSSTransition = ({
 }
 
 CSSTransition.defaultProps = {
-  transitionStyle: fade,
+  transitionStyle: 'custom',
   mountOnEnter: true,
   unmountOnExit: true,
 
-  appear: false,
+  appear: true,
 
   onEnter() {},
   onEntered() {},
