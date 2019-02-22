@@ -7,7 +7,7 @@ use[0].options.name = name;
 images.use = use;
 
 export default {
-  module: {
-    rules: [ images ]
-  }
+    module: {
+        rules: [images]
+    }
 };

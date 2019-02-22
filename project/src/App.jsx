@@ -10,11 +10,11 @@ const App = View;
 const appRoot = document.querySelector('[app-root]');
 
 window.kicl = {
-  ref: {}
+    ref: {}
 };
 
 window.onscroll = event => {
-  window.kicl.ref.scrollTop = event.target.scrollingElement.scrollTop;
+    window.kicl.ref.scrollTop = event.target.scrollingElement.scrollTop;
 };
 
 export { appRoot };

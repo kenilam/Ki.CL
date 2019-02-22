@@ -15,35 +15,29 @@ import View from './View';
 import './style.scss';
 
 const {
-  view: {
-    works: {
-      content: {
-        loader
-      },
-      path
+    view: {
+        works: {
+            content: { loader },
+            path
+        }
     }
-  }
 } = resources;
 
 const Works = () => (
-  <main data-routes='works'>
-    <Asynchronizer
-      awaitCache={ caches[path] }
-      awaitFor={ works }
-      awaitMessage={ loader.text }
-    >
-      {
-        ({ data }) => (
-          <React.Fragment>
-            <Lists data={ data }/>
-          </React.Fragment>
-        )
-      }
-    </Asynchronizer>
-    <View/>
-  </main>
+    <main data-routes="works">
+        <Asynchronizer
+            awaitCache={caches[path]}
+            awaitFor={works}
+            awaitMessage={loader.text}
+        >
+            {({ data }) => (
+                <React.Fragment>
+                    <Lists data={data} />
+                </React.Fragment>
+            )}
+        </Asynchronizer>
+        <View />
+    </main>
 );
 
-export default (
-  <Route path={ path } render={ Works } />
-);
+export default <Route path={path} render={Works} />;

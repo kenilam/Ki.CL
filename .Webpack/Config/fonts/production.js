@@ -7,7 +7,7 @@ use[0].options.name = name;
 fonts.use = use;
 
 export default {
-  module: {
-    rules: [ fonts ]
-  }
+    module: {
+        rules: [fonts]
+    }
 };

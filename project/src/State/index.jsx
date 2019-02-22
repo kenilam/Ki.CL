@@ -3,17 +3,20 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import multi from 'redux-multi';
 
-let reducers = combineReducers({});
+const reducers = combineReducers({});
 
-const mapStateToProps = (
-  // state
-) => ({});
+const mapStateToProps = () =>
+    // state
+    ({});
 
-const mapDispatchToProps = (
-  // dispatch
-) => ({});
+const mapDispatchToProps = () =>
+    // dispatch
+    ({});
 
-const Connector = connect(mapStateToProps, mapDispatchToProps);
+const Connector = connect(
+    mapStateToProps,
+    mapDispatchToProps
+);
 
 const enhancer = compose(applyMiddleware(multi));
 

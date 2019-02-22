@@ -14,97 +14,93 @@ import { style as slideup } from './slideup.scss';
 type Node = React.Node;
 
 type Props = {
-  children: Node;
-  
-  transitionKey: String;
-  transitionIn: Boolean;
-  transitionStyle?: 'custom' | fade | slidedown | slideup;
+    children: Node,
 
-  mountOnEnter?: Boolean;
-  unmountOnExit?: Boolean;
+    transitionKey: String,
+    transitionIn: Boolean,
+    transitionStyle?: 'custom' | fade | slidedown | slideup,
 
-  appear?: Boolean;
+    mountOnEnter?: Boolean,
+    unmountOnExit?: Boolean,
 
-  onEnter?: (node: Node) => void;
-  onEntered?: (node: Node) => void;
-  onExit?: (node: Node) => void;
-  onExited?: (node: Node) => void;
+    appear?: Boolean,
+
+    onEnter?: (node: Node) => void,
+    onEntered?: (node: Node) => void,
+    onExit?: (node: Node) => void,
+    onExited?: (node: Node) => void
 };
 
 const CSSTransition = ({
-  children,
+    children,
 
-  transitionKey,
-  transitionIn,
-  transitionStyle = CSSTransition.defaultProps.transitionStyle,
+    transitionKey,
+    transitionIn,
+    transitionStyle = CSSTransition.defaultProps.transitionStyle,
 
-  mountOnEnter = CSSTransition.defaultProps.mountOnEnter,
-  unmountOnExit = CSSTransition.defaultProps.unmountOnExit,
+    mountOnEnter = CSSTransition.defaultProps.mountOnEnter,
+    unmountOnExit = CSSTransition.defaultProps.unmountOnExit,
 
-  appear = CSSTransition.defaultProps.appear,
+    appear = CSSTransition.defaultProps.appear,
 
-  onEnter = CSSTransition.defaultProps.onEnter,
-  onEntered = CSSTransition.defaultProps.onEntered,
-  onExit = CSSTransition.defaultProps.onExit,
-  onExited = CSSTransition.defaultProps.onExited
+    onEnter = CSSTransition.defaultProps.onEnter,
+    onEntered = CSSTransition.defaultProps.onEntered,
+    onExit = CSSTransition.defaultProps.onExit,
+    onExited = CSSTransition.defaultProps.onExited
 }: Props) => {
-  const classNames = transitionStyle? classnames(`${stylePrefix}${transitionStyle}`, className) : className;
+    const classNames = transitionStyle
+        ? classnames(`${stylePrefix}${transitionStyle}`, className)
+        : className;
 
-  return (
-    <Origin
-      classNames={ classNames }
-      in={ transitionIn }
-      key={ transitionKey }
-      addEndListener={ addEndListener }
-      mountOnEnter={ mountOnEnter }
-      unmountOnExit={ unmountOnExit }
-      appear={ appear }
-      onEnter={ node => {
-        onEnter(node);
-        classList.add(node);
-      } }
-      onEntered={ node => {
-        onEntered(node);
-        classList.remove(node);
-      } }
-      onExit={ node => {
-        onExit(node);
-        classList.add(node);
+    return (
+        <Origin
+            classNames={classNames}
+            in={transitionIn}
+            key={transitionKey}
+            addEndListener={addEndListener}
+            mountOnEnter={mountOnEnter}
+            unmountOnExit={unmountOnExit}
+            appear={appear}
+            onEnter={node => {
+                onEnter(node);
+                classList.add(node);
+            }}
+            onEntered={node => {
+                onEntered(node);
+                classList.remove(node);
+            }}
+            onExit={node => {
+                onExit(node);
+                classList.add(node);
 
-        if (!node) {
-          return;
-        }
+                if (!node) {
+                    return;
+                }
 
-        node.style.top = -window.kicl.ref.scrollTop;
-      } }
-      onExited={ node => {
-        onExited(node);
-        classList.remove(node);
-      } }
-    >
-      { children }
-    </Origin>
-  );
-}
+                node.style.top = -window.kicl.ref.scrollTop;
+            }}
+            onExited={node => {
+                onExited(node);
+                classList.remove(node);
+            }}
+        >
+            {children}
+        </Origin>
+    );
+};
 
 CSSTransition.defaultProps = {
-  transitionStyle: 'custom',
-  mountOnEnter: true,
-  unmountOnExit: true,
+    transitionStyle: 'custom',
+    mountOnEnter: true,
+    unmountOnExit: true,
 
-  appear: true,
+    appear: true,
 
-  onEnter() {},
-  onEntered() {},
-  onExit() {},
-  onExited() {}
-}
-
-export {
-  fade,
-  slide,
-  slidedown,
-  slideup,
-  stylePrefix
+    onEnter() {},
+    onEntered() {},
+    onExit() {},
+    onExited() {}
 };
+
+export { fade, slide, slidedown, slideup, stylePrefix };
 export default CSSTransition;

@@ -5,19 +5,22 @@ import multi from 'redux-multi';
 
 import transitionStyle from './transitionStyle';
 
-let reducers = combineReducers({
-  ...transitionStyle.reducers
+const reducers = combineReducers({
+    ...transitionStyle.reducers
 });
 
 const mapStateToProps = state => ({
-  ...transitionStyle.mapStateToProps(state)
+    ...transitionStyle.mapStateToProps(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  ...transitionStyle.mapDispatchToProps(dispatch)
+    ...transitionStyle.mapDispatchToProps(dispatch)
 });
 
-const Connector = connect(mapStateToProps, mapDispatchToProps);
+const Connector = connect(
+    mapStateToProps,
+    mapDispatchToProps
+);
 
 const enhancer = compose(applyMiddleware(multi));
 

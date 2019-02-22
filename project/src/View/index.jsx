@@ -10,11 +10,11 @@ import Works from './Works';
 const routeIndex = 1;
 
 const View = () => (
-  <Router routeIndex={ routeIndex } transitionStyle='slide'>
-    { Home }
-    { Works }
-    { PageNotFound }
-  </Router>
+    <Router routeIndex={routeIndex} transitionStyle="slide">
+        {Home}
+        {Works}
+        {PageNotFound}
+    </Router>
 );
 
 export default View;

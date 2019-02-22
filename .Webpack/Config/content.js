@@ -6,5 +6,5 @@ const copier = new CopyPlugin({ srcRoot });
 
 export { srcRoot };
 export default {
-  plugins: [ copier ]
+    plugins: [copier]
 };
