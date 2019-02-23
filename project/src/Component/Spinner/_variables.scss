@@ -1,4 +1,14 @@
-$spinnerBackground: $black;
-$spinnerColor: $darkest_white;
-$spinnerSize: 3rem;
-$spinnerFontSize: 1rem;
+$spinner: (
+  background: (
+    default: $black,
+    active: $white
+  ),
+  color: (
+    default: $dark_grey,
+    light: $white,
+    active: $green
+  ),
+  size: 3rem,
+  fontSize: 1rem,
+  z-index: 1000
+);

@@ -10,34 +10,43 @@ import resources from 'content/resources';
 
 import { Lists } from './Component';
 
+import State, { Connector } from './State';
 import View from './View';
 
-import './style.scss';
+import './style';
 
 const {
-    view: {
-        works: {
-            content: { loader },
-            path
-        }
+  view: {
+    works: {
+      content: { loader },
+      path
     }
+  }
 } = resources;
 
-const Works = () => (
-    <main data-routes="works">
-        <Asynchronizer
-            awaitCache={caches[path]}
-            awaitFor={works}
-            awaitMessage={loader.text}
-        >
-            {({ data }) => (
-                <React.Fragment>
-                    <Lists data={data} />
-                </React.Fragment>
-            )}
-        </Asynchronizer>
-        <View />
-    </main>
+const Works = ({ data, updateCurrentItem }) => (
+  <React.Fragment>
+    <Lists data={data} clickHandler={updateCurrentItem} />
+    <View />
+  </React.Fragment>
 );
 
-export default <Route path={path} render={Works} />;
+const Instance = Connector(Works);
+
+const Component = () => (
+  <main data-routes="works">
+    <Asynchronizer
+      awaitCache={caches[path]}
+      awaitFor={works}
+      awaitMessage={loader.text}
+    >
+      {({ data }) => (
+        <State>
+          <Instance data={data} />
+        </State>
+      )}
+    </Asynchronizer>
+  </main>
+);
+
+export default <Route path={path} render={Component} />;

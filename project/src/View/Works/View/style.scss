@@ -1,10 +1,7 @@
-[data-routes='works'] {
+[data-routes="works"] {
   position: relative;
-  
-  &.transition {
-    nav {
-      position: relative;
-      z-index: 1;
-    }
+
+  &[class*="css-transition-"][class*="-active"] {
+    transition-property: opacity, transform;
   }
 }

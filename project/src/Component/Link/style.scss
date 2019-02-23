@@ -5,9 +5,9 @@ a {
   &:hover,
   &:active {
     color: $darker_grey;
+    transition-duration: $fast;
     transition-property: color;
     transition-timing-function: $easeIn;
-    transition-duration: $fast;
   }
 
   &.isActive {

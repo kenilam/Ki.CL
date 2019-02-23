@@ -9,26 +9,26 @@ import { localhost } from '^/ki-cl.config';
 const startPath = '';
 
 const browserConfig = {
-    ...localhost,
+  ...localhost,
 
-    startPath,
+  startPath,
 
-    files: [`${baseDir}/**/*`],
+  files: [`${baseDir}/**/*`],
 
-    logConnections: true,
-    open: !Args.noBrowser,
-    reloadDelay: 0,
-    reloadDebounce: 500,
+  logConnections: true,
+  open: !Args.noBrowser,
+  reloadDelay: 0,
+  reloadDebounce: 500,
 
-    server: {
-        baseDir,
+  server: {
+    baseDir,
 
-        directory: true
-    },
+    directory: true
+  },
 
-    hooks: {
-        'client:js': `___browserSync___.socket.on('disconnect', function () { window.close(); location.reload(); });`
-    }
+  hooks: {
+    'client:js': `___browserSync___.socket.on('disconnect', function () { window.close(); location.reload(); });`
+  }
 };
 
 const browserInstance = browserSync.create();

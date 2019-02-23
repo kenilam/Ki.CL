@@ -6,16 +6,16 @@ import multi from 'redux-multi';
 const reducers = combineReducers({});
 
 const mapStateToProps = () =>
-    // state
-    ({});
+  // state
+  ({});
 
 const mapDispatchToProps = () =>
-    // dispatch
-    ({});
+  // dispatch
+  ({});
 
 const Connector = connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 );
 
 const enhancer = compose(applyMiddleware(multi));

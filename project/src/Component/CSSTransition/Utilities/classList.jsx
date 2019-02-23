@@ -1,36 +1,31 @@
 import {
-    className,
-    enterDoneClassName,
-    exitDoneClassName,
-    stylePrefix
-} from 'Component/CSSTransition/style.scss';
-import { style as fade } from 'Component/CSSTransition/fade.scss';
-import { style as slide } from 'Component/CSSTransition/slide.scss';
-import { style as slidedown } from 'Component/CSSTransition/slidedown.scss';
-import { style as slideup } from 'Component/CSSTransition/slideup.scss';
+  classname,
+  enterdoneclassname,
+  exitdoneclassname,
+  styleprefix
+} from 'Component/CSSTransition/style';
 
 function add(node) {
-    if (!node) {
-        return;
-    }
+  if (!node) {
+    return;
+  }
 
-    node.classList.add(className);
+  node.classList.add(classname);
 }
 
 function remove(node) {
-    if (!node) {
-        return;
-    }
+  if (!node) {
+    return;
+  }
 
-    node.classList.remove(
-        className,
-        enterDoneClassName,
-        exitDoneClassName,
-        `${stylePrefix}${fade}`,
-        `${stylePrefix}${slide}`,
-        `${stylePrefix}${slidedown}`,
-        `${stylePrefix}${slideup}`
-    );
+  node.classList.remove(
+    ...Array.from(node.classList).filter(className =>
+      className.startsWith(styleprefix)
+    ),
+    classname,
+    enterdoneclassname,
+    exitdoneclassname
+  );
 }
 
 export default { add, remove };

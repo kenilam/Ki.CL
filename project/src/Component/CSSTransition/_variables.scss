@@ -1,11 +1,11 @@
-$cssTransition: 'css-transition';
+$cssTransition: "css-transition";
 
-$cssTransitionEnter: '#{$cssTransition}-enter';
-$cssTransitionEnterActive: '#{$cssTransitionEnter}-active';
-$cssTransitionEnterDone: '#{$cssTransitionEnter}-done';
+$cssTransitionEnter: "#{$cssTransition}-enter";
+$cssTransitionEnterActive: "#{$cssTransitionEnter}-active";
+$cssTransitionEnterDone: "#{$cssTransitionEnter}-done";
 
-$cssTransitionExit: '#{$cssTransition}-exit';
-$cssTransitionExitActive: '#{$cssTransitionExit}-active';
-$cssTransitionExitDone: '#{$cssTransitionExit}-done';
+$cssTransitionExit: "#{$cssTransition}-exit";
+$cssTransitionExitActive: "#{$cssTransitionExit}-active";
+$cssTransitionExitDone: "#{$cssTransitionExit}-done";
 
-$cssTransitionStylePrefix: '#{$cssTransition}-style-';
+$cssTransitionStylePrefix: "#{$cssTransition}-style-";

@@ -1,9 +1,9 @@
 import { debounce, duration } from 'Helper';
 
 const addEndListener = async (node, done) => {
-    await debounce(duration(node));
+  await debounce(duration(node));
 
-    done();
+  done();
 };
 
 export default addEndListener;

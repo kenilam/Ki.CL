@@ -1,10 +1,11 @@
 import { path as appRoot } from 'app-root-path';
 
 const entry = ['babel-polyfill', `./${process.env.NODE_ENV}.jsx`];
-const context = `${appRoot}/project/src`;
+const contextRoot = `${appRoot}/project`;
+const context = `${contextRoot}/src`;
 
-export { context };
+export { context, contextRoot };
 export default {
-    entry,
-    context
+  entry,
+  context
 };

@@ -7,13 +7,13 @@ import { Args } from '!/Utilities';
 import { srcRoot as outputSrcRoot, tmpRoot } from './output';
 
 const cleaner = new CleanWebpackPlugin([tmpRoot, outputSrcRoot], {
-    allowExternal: false,
-    beforeEmit: false,
-    verbose: Args.verbose,
+  allowExternal: false,
+  beforeEmit: false,
+  verbose: Args.verbose,
 
-    root
+  root
 });
 
 export default {
-    plugins: [cleaner]
+  plugins: [cleaner]
 };

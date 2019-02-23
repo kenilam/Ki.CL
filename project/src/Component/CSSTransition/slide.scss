@@ -1,8 +1,8 @@
-$style: 'slide';
+$style: "slide";
 
 .#{$cssTransitionStylePrefix}#{$style} {
   &.#{$cssTransition} {
-    &[class*='#{$cssTransition}-'][class*='-active'] {
+    &[class*="#{$cssTransition}-"][class*="-active"] {
       transition-property: transform;
     }
 

@@ -1,8 +1,16 @@
 {
   "extends": [
+    "standard",
     "airbnb",
+    "plugin:flowtype/recommended",
     "plugin:prettier/recommended",
-    "prettier/react"
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/babel",
+    "prettier/flowtype",
+    "prettier/react",
+    "prettier/standard",
+    "eslint-config-prettier"
   ],
   "env": {
     "browser": true,
@@ -21,20 +29,24 @@
   },
   "rules": {
     "prettier/prettier": "error",
+    "autoFixOnSave": 0,
+    "camelcase": [ "error", {
+      "properties": "always"
+    }],
     "import/extensions": 0,
     "import/no-dynamic-require": 0,
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
     "import/no-unresolved": 0,
     "import/prefer-default-export": "1",
-    "camelcase": [ "error", {
-      "properties": "always"
-    }],
     "indent": 0,
+    "react/jsx-indent": 0,
+    "react/jsx-indent-props": 0,
     "no-debugger": 0,
     "no-console": 0,
     "no-param-reassign": 0,
     "no-shadow": 0,
+    "no-tabs": "error",
     "no-return-assign": 0,
     "quotes": 0,
     "react/no-string-refs": 1,
@@ -49,8 +61,11 @@
     }]
   },
   "plugins": [
-    "react",
+    "babel",
+    "flowtype",
+    "jest",
     "prettier",
-    "jest"
+    "react",
+    "standard"
   ]
 }

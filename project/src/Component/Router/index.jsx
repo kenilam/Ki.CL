@@ -1,11 +1,11 @@
 // @flow
 import React from 'react';
 import {
-    HashRouter,
-    Redirect,
-    Route,
-    Switch,
-    withRouter
+  HashRouter,
+  Redirect,
+  Route,
+  Switch,
+  withRouter
 } from 'react-router-dom';
 
 import { Transition } from 'Component';
@@ -17,108 +17,117 @@ import path from './Utilities/path';
 type Node = React.Node;
 
 type Props = {
-    children: Node,
-    componentOnly?: Boolean,
-    routeIndex: Number,
+  children: Node,
+  componentOnly?: Boolean,
+  routeIndex: Number,
 
-    transitionStyle: String,
+  transitionStyle: String,
 
-    onEnter?: (node: Node) => void,
-    onEntered?: (node: Node) => void,
-    onExit?: (node: Node) => void,
-    onExited?: (node: Node) => void
+  onEnter?: (node: Node) => void,
+  onEntered?: (node: Node) => void,
+  onEntering?: (node: Node) => void,
+  onExit?: (node: Node) => void,
+  onExited?: (node: Node) => void,
+  onExiting?: (node: Node) => void
 };
-
-const { notationise } = path;
 
 const body = document.querySelector('body');
 
 const Router = ({
-    children,
-    componentOnly,
-    routeIndex,
+  children,
+  componentOnly,
+  routeIndex,
 
-    transitionStyle,
+  transitionStyle,
 
-    onEnter,
-    onEntered,
-    onExit,
-    onExited
+  onEnter,
+  onEntered,
+  onEntering,
+  onExit,
+  onExited,
+  onExiting
 }: Props) => {
-    const Transitions = ({ location, match }) => {
-        const pathChains = location.pathname.split('/');
-        const transitionKey = pathChains[routeIndex] || view.home.path;
+  const Transitions = ({ location, match }) => {
+    const pathChains = location.pathname.split('/');
+    const transitionKey = pathChains[routeIndex] || view.home.path;
 
-        return (
-            <Transition
-                location={location}
-                match={match}
-                transitionKey={transitionKey}
-                transitionStyle={transitionStyle}
-                onEnter={node => {
-                    onEnter({ node, location, match });
+    location.query = path.query(location);
 
-                    // To Prevent the same route attrs
-                    // when CSSTransition appear set to true
-                    let enteredRoutes = notationise(
-                        window.location.hash,
-                        routeIndex
-                    );
-                    const { exitedRoutes } = body.dataset;
+    return (
+      <Transition
+        location={location}
+        match={match}
+        transitionKey={transitionKey}
+        transitionStyle={transitionStyle}
+        onEnter={node => {
+          onEnter({ location, node });
 
-                    if (body.dataset.enteredRoutes === enteredRoutes) {
-                        return;
-                    }
+          // To Prevent the same route attrs
+          // when CSSTransition appear set to true
+          let enteredRoutes = path.notationise(
+            window.location.hash,
+            routeIndex
+          );
+          const { exitedRoutes } = body.dataset;
 
-                    if (enteredRoutes === exitedRoutes) {
-                        enteredRoutes = notationise(
-                            location.pathname,
-                            routeIndex
-                        );
-                    }
+          if (body.dataset.enteredRoutes === enteredRoutes) {
+            return;
+          }
 
-                    body.dataset.enteredRoutes = enteredRoutes;
-                }}
-                onEntered={node => {
-                    onEntered({ node, location, match });
-                }}
-                onExit={node => {
-                    onExit({ node, location, match });
+          if (enteredRoutes === exitedRoutes) {
+            enteredRoutes = path.notationise(location.pathname, routeIndex);
+          }
 
-                    body.dataset.exitedRoutes = notationise(
-                        location.pathname,
-                        routeIndex
-                    );
-                }}
-                onExited={node => {
-                    onExited({ node, location, match });
-                }}
-            >
-                <Switch location={location}>{children}</Switch>
-            </Transition>
-        );
-    };
+          body.dataset.enteredRoutes = enteredRoutes;
+        }}
+        onEntered={node => {
+          onEntered({ location, node });
+        }}
+        onEntering={node => {
+          onEntering({ location, node });
+        }}
+        onExit={node => {
+          onExit({ location, node });
 
-    const Instance = withRouter(Transitions);
-
-    return componentOnly ? (
-        <Instance />
-    ) : (
-        <HashRouter>
-            <Instance />
-        </HashRouter>
+          body.dataset.exitedRoutes = path.notationise(
+            location.pathname,
+            routeIndex
+          );
+        }}
+        onExited={node => {
+          onExited({ location, node });
+        }}
+        onExiting={node => {
+          onExiting({ location, node });
+        }}
+      >
+        <Switch location={location}>{children}</Switch>
+      </Transition>
     );
+  };
+
+  const Instance = withRouter(Transitions);
+
+  return componentOnly ? (
+    <Instance />
+  ) : (
+    <HashRouter>
+      <Instance />
+    </HashRouter>
+  );
 };
 
-body.dataset.enteredRoutes = notationise(window.location.hash);
+body.dataset.enteredRoutes = path.notationise(window.location.hash);
 
 Router.defaultProps = {
-    componentOnly: false,
-    onEnter() {},
-    onEntered() {},
-    onExit() {},
-    onExited() {}
+  componentOnly: false,
+  onEnter() {},
+  onEntered() {},
+  onEntering() {},
+  onExit() {},
+  onExited() {},
+  onExiting() {}
 };
 
-export { Redirect, Route };
+export { Redirect, Route, withRouter };
 export default Router;

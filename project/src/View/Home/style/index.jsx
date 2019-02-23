@@ -1,2 +1,2 @@
-import './style.scss';
-import './transition.scss';
+import './style';
+import './transition';

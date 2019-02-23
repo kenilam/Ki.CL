@@ -8,26 +8,26 @@ import Error from './Error';
 import Show from './Show';
 
 const reducers = combineReducers({
-    ...Data.reducers,
-    ...Error.reducers,
-    ...Show.reducers
+  ...Data.reducers,
+  ...Error.reducers,
+  ...Show.reducers
 });
 
 const mapStateToProps = state => ({
-    ...Data.mapStateToProps(state),
-    ...Error.mapStateToProps(state),
-    ...Show.mapStateToProps(state)
+  ...Data.mapStateToProps(state),
+  ...Error.mapStateToProps(state),
+  ...Show.mapStateToProps(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    ...Data.mapDispatchToProps(dispatch),
-    ...Error.mapDispatchToProps(dispatch),
-    ...Show.mapDispatchToProps(dispatch)
+  ...Data.mapDispatchToProps(dispatch),
+  ...Error.mapDispatchToProps(dispatch),
+  ...Show.mapDispatchToProps(dispatch)
 });
 
 const Connector = connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 );
 
 const enhancer = compose(applyMiddleware(multi));

@@ -7,19 +7,19 @@ import { Navigation } from 'Component';
 import Item from './Item';
 
 type Props = {
-    data?: Array
+  data?: Array
 };
 
 const Lists = ({ data }: Props) => (
-    <Navigation>
-        {data.map(project => (
-            <Item project={project} key={randomId()} />
-        ))}
-    </Navigation>
+  <Navigation>
+    {data.map(project => (
+      <Item project={project} key={randomId()} />
+    ))}
+  </Navigation>
 );
 
 Lists.defaultProps = {
-    data: []
+  data: []
 };
 
 export default Lists;

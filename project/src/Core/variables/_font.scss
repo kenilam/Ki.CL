@@ -1,3 +1,5 @@
+@import "./colour";
+
 $default_font: sans-serif;
 $font_family: omnes-pro, $default_font;
 $heading_font_family: acumin-pro-extra-condensed, $default_font;
@@ -10,12 +12,13 @@ $thick_font_weight: 500;
 $thicker_font_weight: 700;
 
 @mixin font-smoothing($value: antialiased) {
-	@if $value == antialiased {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-	@else {
-		-webkit-font-smoothing: subpixel-antialiased;
-		-moz-osx-font-smoothing: auto;
-	}
+  @if $value == antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
 }

@@ -1,12 +1,12 @@
 .#{$transition} {
-  pointer-events: none;
   position: relative;
+  pointer-events: none;
 
   > .#{$cssTransitionEnter} {
-    left: 0%;
     position: absolute;
-    top: 0;
     z-index: 2;
+    top: 0;
+    left: 0%;
   }
 
   > .#{$cssTransitionExit} {
@@ -15,5 +15,5 @@
 }
 
 :export {
-  className: #{$transition};
+  classname: #{$transition};
 }

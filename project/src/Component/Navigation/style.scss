@@ -1,8 +1,8 @@
-[role='navigation'] {
+[role="navigation"] {
   ul {
     display: grid;
+    justify-content: center;
     grid-auto-flow: row;
     grid-gap: $gutter;
-    justify-content: center;
   }
 }

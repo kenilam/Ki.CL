@@ -1,5 +1,5 @@
 .#{$cssTransition} {
-  &[class*='#{$cssTransition}-'][class*='-active'] {
+  &[class*="#{$cssTransition}-"][class*="-active"] {
     transition-duration: $speed;
     transition-property: none;
     transition-timing-function: $easeIn;
@@ -7,8 +7,8 @@
 }
 
 :export {
-  className: #{$cssTransition};
-  enterDoneClassName: #{$cssTransitionEnterDone};
-  exitDoneClassName: #{$cssTransitionExitDone};
-  stylePrefix: #{$cssTransitionStylePrefix};
+  classname: #{$cssTransition};
+  enterdoneclassname: #{$cssTransitionEnterDone};
+  exitdoneclassname: #{$cssTransitionExitDone};
+  styleprefix: #{$cssTransitionStylePrefix};
 }

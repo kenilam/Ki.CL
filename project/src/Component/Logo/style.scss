@@ -1,36 +1,36 @@
-@import 'fonts/kicl/fonts';
+@import "fonts/kicl/fonts";
 
 .logo {
+  position: relative;
+  overflow: hidden;
+  width: $logo-width;
   color: $light_black;
   font-size: $logo-size;
-  overflow: hidden;
-  position: relative;
-  width: $logo-width;
-
-  &:before {
-    content: $kicl;
-    display: block;
-    font-family: $kicl_font_name;
-    position: relative;
-    text-indent: 0;
-    transition-property: color;
-    transition-timing-function: $ease;
-    transition-duration: $fast;
-    z-index: 1;
-  }
-
-  a {
-    color: transparent;
-    height: 100%;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 2;
-  }
 
   @include mobile () {
     width: $logo-size;
+  }
+
+  &::before {
+    position: relative;
+    z-index: 1;
+    display: block;
+    content: $kicl;
+    font-family: $kicl-font-name;
+    text-indent: 0;
+    transition-duration: $fast;
+    transition-property: color;
+    transition-timing-function: $ease;
+  }
+
+  a {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    color: transparent;
   }
 }

@@ -6,8 +6,8 @@
   @return mix(black, $color, $percentage);
 }
 
-$pure_white: #fff;
 $white: #f1efe9;
+$pure_white: #fff;
 $darkest_white: shade($white, 10);
 $darker_white: shade($white, 6);
 $dark_white: shade($white, 3);
@@ -16,7 +16,7 @@ $black: #141414;
 $light_black: tint($black, 3);
 $pitch_black: #000;
 
-$grey: #B7C4CC;
+$grey: #b7c4cc;
 $light_grey: tint($grey, 15);
 $lighter_grey: tint($light_grey, 30);
 $darker_grey: #3f3f3f;
@@ -27,12 +27,12 @@ $green: #8cdfbb;
 $blue: #b5e0e8;
 $orange: #f39943;
 $red: #be4e4d;
-$yellow: rgba(224, 180, 64, 1);
+$yellow: #e0b440;
 
-$linkedin: #0077B5;
-$twitter: #1DCAFF;
-$googlePlus: #D34836;
-$behance: #053EFF;
+$gold: #b0976d;
+
+$linkedin: #0077b5;
+$twitter: #1dcaff;
+$googlePlus: #d34836;
+$behance: #053eff;
 $gitHub: #4183c4;
-
-$gold: #B0976D;
