@@ -22,10 +22,10 @@ type Props = {
 const { content, path } = resources.view.works.view.work;
 
 const Work = ({ data, match }: Props) => (
-  <h2>{data.id || match.params.projectId}</h2>
+  <h2>{`${data.id || match.params.projectId}`}</h2>
 );
 
-const Instance = ({ match }) => {
+const Component = ({ match }) => {
   const { params } = match;
 
   return (
@@ -47,4 +47,4 @@ Work.defaultProps = {
   data: {}
 };
 
-export default <Route exact path={path} render={Instance} />;
+export default <Route exact path={path} render={Component} />;

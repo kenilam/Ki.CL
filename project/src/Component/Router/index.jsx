@@ -68,6 +68,7 @@ const Router = ({
             window.location.hash,
             routeIndex
           );
+
           const { exitedRoutes } = body.dataset;
 
           if (body.dataset.enteredRoutes === enteredRoutes) {

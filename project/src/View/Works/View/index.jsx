@@ -9,16 +9,10 @@ import './style';
 
 const routeIndex = 2;
 
-const View = () => {
-  const onEnter = ({ location, node }) => {
-    console.log(location, node);
-  };
-
-  return (
-    <Router routeIndex={routeIndex} onEnter={onEnter}>
-      {Work}
-    </Router>
-  );
-};
+const View = () => (
+  <Router routeIndex={routeIndex} transitionStyle="fade">
+    {Work}
+  </Router>
+);
 
 export default View;

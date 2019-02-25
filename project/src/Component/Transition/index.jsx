@@ -22,8 +22,8 @@ const Transition = ({
       children,
       transitionKey,
       transitionStyle,
-      onEnter(node) {
-        onEnter(node);
+      onEnter({ node }) {
+        onEnter({ node });
 
         if (!node || !node.parentNode) {
           return;
@@ -31,8 +31,8 @@ const Transition = ({
 
         node.parentNode.classList.add(classname);
       },
-      onEntered(node) {
-        onEntered(node);
+      onEntered({ node }) {
+        onEntered({ node });
 
         if (!node || !node.parentNode) {
           return;
@@ -40,20 +40,21 @@ const Transition = ({
 
         node.parentNode.classList.remove(classname);
       },
-      onEntering(node) {
-        onEntering(node);
+      onEntering({ node }) {
+        onEntering({ node });
       },
-      onExit(node) {
-        onExit(node);
+      onExit({ node }) {
+        onExit({ node });
 
         if (!node || !node.parentNode) {
           return;
         }
 
         node.parentNode.classList.add(classname);
+        node.style.top = -window.kicl.ref.scrollTop;
       },
-      onExited(node) {
-        onExited(node);
+      onExited({ node }) {
+        onExited({ node });
 
         if (!node || !node.parentNode) {
           return;
@@ -61,8 +62,8 @@ const Transition = ({
 
         node.parentNode.classList.remove(classname);
       },
-      onExiting(node) {
-        onExiting(node);
+      onExiting({ node }) {
+        onExiting({ node });
       }
     })}
   </TransitionGroup>

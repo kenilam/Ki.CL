@@ -65,36 +65,31 @@ const CSSTransition = ({
       in={transitionIn}
       key={transitionKey}
       addEndListener={addEndListener}
+      timeout={1200}
       mountOnEnter={mountOnEnter}
       unmountOnExit={unmountOnExit}
       appear={appear}
       onEnter={node => {
-        onEnter(node);
+        onEnter({ node });
         classList.add(node);
       }}
       onEntered={node => {
-        onEntered(node);
+        onEntered({ node });
         classList.remove(node);
       }}
       onEntering={node => {
-        onEntering(node);
+        onEntering({ node });
       }}
       onExit={node => {
-        onExit(node);
+        onExit({ node });
         classList.add(node);
-
-        if (!node) {
-          return;
-        }
-
-        node.style.top = -window.kicl.ref.scrollTop;
       }}
       onExited={node => {
-        onExited(node);
+        onExited({ node });
         classList.remove(node);
       }}
       onExiting={node => {
-        onExiting(node);
+        onExiting({ node });
       }}
     >
       {children}

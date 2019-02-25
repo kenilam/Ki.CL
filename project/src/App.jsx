@@ -2,6 +2,8 @@
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 import React from 'react';
 
+import './Core';
+import State from './State';
 import View from './View';
 
 import './style';
@@ -14,7 +16,11 @@ class App extends React.PureComponent {
   }
 
   render() {
-    return <View />;
+    return (
+      <State>
+        <View />
+      </State>
+    );
   }
 }
 

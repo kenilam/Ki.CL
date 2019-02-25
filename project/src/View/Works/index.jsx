@@ -8,9 +8,8 @@ import { works, caches } from 'API';
 
 import resources from 'content/resources';
 
-import { Lists } from './Component';
+import { List } from './Component';
 
-import State, { Connector } from './State';
 import View from './View';
 
 import './style';
@@ -24,14 +23,12 @@ const {
   }
 } = resources;
 
-const Works = ({ data, updateCurrentItem }) => (
+const Works = ({ data }) => (
   <React.Fragment>
-    <Lists data={data} clickHandler={updateCurrentItem} />
+    <List data={data} />
     <View />
   </React.Fragment>
 );
-
-const Instance = Connector(Works);
 
 const Component = () => (
   <main data-routes="works">
@@ -40,11 +37,7 @@ const Component = () => (
       awaitFor={works}
       awaitMessage={loader.text}
     >
-      {({ data }) => (
-        <State>
-          <Instance data={data} />
-        </State>
-      )}
+      {({ data }) => <Works data={data} />}
     </Asynchronizer>
   </main>
 );

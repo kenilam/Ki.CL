@@ -1,7 +1,4 @@
 [data-routes="works"] {
   position: relative;
-
-  &[class*="css-transition-"][class*="-active"] {
-    transition-property: opacity, transform;
-  }
+  background-color: $dark_white;
 }

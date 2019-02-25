@@ -7,17 +7,17 @@ const promises = {};
 const caches = {};
 
 const request = async ({ path }) => {
-  const headers = new Headers();
-
-  headers.append('Content-Type', 'application/json');
-  headers.append('Accept', 'application/json');
-
   try {
     if (!isEmpty(caches[path])) {
       return caches[path];
     }
 
     if (isEmpty(promises[path])) {
+      const headers = new Headers();
+
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+
       promises[path] = fetch(`${API_URL}/api${path}`, {
         mode: 'cors',
         credentials: 'include',

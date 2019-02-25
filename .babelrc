@@ -41,6 +41,7 @@
     ],
     ["@babel/transform-runtime"],
 
+    "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-export-extensions",
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-object-rest-spread",
