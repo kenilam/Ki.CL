@@ -28,20 +28,21 @@ const defaultProps = {
   items: Object.keys(view)
     .filter(page => !view[page].excluded && view[page].path !== basePath)
     .map(page => {
-      const { name, path } = view[page];
+      const { name } = view[page];
 
-      return { path, name, title: name };
+      return { ...view[page], title: name };
     })
 };
 
 const Navigation = ({ items, children }: Props) => (
   <nav role="navigation">
-    <ul>
-      {children ||
-        items.map(({ key = randomId(), name, path, title }) => (
+    {children || (
+      <ul>
+        {items.map(({ key = randomId(), name, path, title }) => (
           <Item name={name} path={path} title={title} key={key} />
         ))}
-    </ul>
+      </ul>
+    )}
   </nav>
 );
 

@@ -39,12 +39,17 @@
     [
       "transform-class-properties", { "spec": true }
     ],
-    ["@babel/transform-runtime"],
+    
+    [ "@babel/plugin-proposal-decorators", { "legacy": true } ],
 
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-private-methods",
+    "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-export-extensions",
-    "@babel/plugin-proposal-export-default-from",
-    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/transform-runtime",
+    
     "add-module-exports",
     "transform-export-extensions",
     "react-hot-loader/babel"

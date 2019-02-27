@@ -1,23 +1,7 @@
-$className: "kicl-works-component-item";
-$inViewClassName: "is-view";
-
-$rootMargin: 20vh;
-$itemSize: 100vh - ($rootMargin * 2);
-$itemMinSize: 10rem;
-
-$itemLinkSize: calc(100% - #{$grid});
-
-$colorAlpha: 0.9;
-
-$activeArea: (
-  top: 30vh,
-  bottom: 30vh
-);
-
-.#{$className} {
+.#{$viewWorksItem} {
   display: grid;
   width: 100%;
-  height: $itemSize;
+  height: $viewWorksItemSize;
   align-items: center;
   padding: 0 $grid;
   justify-items: center;
@@ -26,8 +10,9 @@ $activeArea: (
     position: relative;
     overflow: hidden;
     width: 100%;
-    max-width: $itemSize;
+    max-width: $viewWorksItemSize;
     border-radius: 50%;
+    mask-image: radial-gradient(white, black);
 
     &::before {
       display: block;
@@ -39,7 +24,6 @@ $activeArea: (
     img,
     figcaption,
     a {
-      transform-origin: top left;
       transition-duration: $fast;
       transition-timing-function: $easeIn;
     }
@@ -50,6 +34,7 @@ $activeArea: (
       top: 50%;
       left: 50%;
       transform: translate3d(-50%, -50%, 0);
+      transform-origin: top left;
     }
 
     figcaption,
@@ -67,22 +52,24 @@ $activeArea: (
     figcaption {
       width: 100%;
       height: 100%;
-      background-color: rgba($black, $colorAlpha);
+      align-items: center;
+      background-color: rgba($black, $viewWorksItemColorAlpha);
       transition-property: background-color, opacity, transform;
     }
 
     a {
-      width: $itemLinkSize;
-      height: $itemLinkSize;
+      width: $viewWorksItemLinkSize;
+      height: $viewWorksItemLinkSize;
       border: 3px solid $white;
       border-radius: 50%;
       color: $white;
       text-align: center;
-      transition-property: border-color, border-width, color;
+      transform-origin: center;
+      transition-property: border-color, border-width, color, transform;
     }
   }
 
-  &.#{$inViewClassName} {
+  &.#{$viewWorksItemInView} {
     pointer-events: none;
 
     figcaption {
@@ -91,18 +78,23 @@ $activeArea: (
     }
   }
 
-  &:not(.#{$inViewClassName}) {
+  &:not(.#{$viewWorksItemInView}) {
     figure {
       &:hover,
       &:focus {
+        img {
+          transform: scale(1) translate3d(-50%, -50%, 0);
+        }
+
         figcaption {
-          background-color: rgba($white, $colorAlpha);
+          background-color: rgba($white, $viewWorksItemColorAlpha);
         }
 
         a {
-          border-width: 10px;
+          border-width: 8px;
           border-color: $black;
           color: $black;
+          transform: scale(1.1);
         }
       }
     }
@@ -114,7 +106,6 @@ $activeArea: (
 }
 
 :export {
-  classname: #{$className};
-  inviewclassname: #{$inViewClassName};
-  rootmargin: $rootMargin;
+  classname: #{$viewWorksItem};
+  inviewclassname: #{$viewWorksItemInView};
 }

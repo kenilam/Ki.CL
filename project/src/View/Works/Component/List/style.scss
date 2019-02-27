@@ -2,10 +2,10 @@
   nav {
     display: grid;
     justify-content: stretch;
+    padding: 20vh 0;
 
     ul {
       justify-content: unset;
-      padding: 20vh 0;
       grid-gap: 20vh;
       justify-items: center;
     }

@@ -1,59 +1,69 @@
 // @flow
 import React from 'react';
+import autobind from 'autobind-decorator';
 
 import { randomId } from 'Helper';
+
 import { Navigation } from 'Component';
 
-import { Item } from './Component';
+import { Item } from 'View/Works/Component';
 
 import './style';
-
-const SCROLL_TO_VIEW_OPTIONS = {
-  behavior: 'smooth',
-  block: 'center',
-  inline: 'center'
-};
 
 type Props = {
   data?: Array
 };
 
-const changeHandler = ({ inView, path }) => {
-  if (!inView) {
-    return;
+const { cancelAnimationFrame, requestAnimationFrame } = window;
+
+class List extends React.PureComponent<Props> {
+  static defaultProps = {
+    data: []
+  };
+
+  componentDidMount() {
+    this.scrollMonitor();
   }
 
-  console.log(path);
-
-  // window.location.href = window.location.href.replace(
-  //   window.location.hash,
-  //   `#${path}`
-  // );
-};
-
-const clickHandler = ({ inView, event }) => {
-  if (inView) {
-    return;
+  componentWillUnmount() {
+    cancelAnimationFrame(this.scrollWatcher);
   }
 
-  event.target.scrollIntoView(SCROLL_TO_VIEW_OPTIONS);
-};
+  ref;
 
-const List = ({ data }: Props) => (
-  <Navigation>
-    {data.map(project => (
-      <Item
-        project={project}
-        key={randomId()}
-        changeHandler={changeHandler}
-        clickHandler={clickHandler}
-      />
-    ))}
-  </Navigation>
-);
+  scrollTop;
 
-List.defaultProps = {
-  data: []
-};
+  scrollWatcher;
+
+  @autobind
+  scrollMonitor() {
+    const {
+      document: {
+        scrollingElement: { scrollTop }
+      }
+    } = window;
+
+    if (scrollTop !== this.scrollTop) {
+      console.log(scrollTop);
+      this.scrollTop = scrollTop;
+    }
+
+    this.scrollWatcher = requestAnimationFrame(this.scrollMonitor);
+  }
+
+  render() {
+    const { data } = this.props;
+
+    return (
+      <Navigation>
+        <ul ref={node => (this.ref = node)}>
+          {data.map(project => (
+            <Item project={project} key={randomId()} />
+          ))}
+        </ul>
+      </Navigation>
+    );
+  }
+}
 
 export default List;
