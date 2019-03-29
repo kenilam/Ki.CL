@@ -1,12 +1,50 @@
-import { BabelLoader, EsLintLoader, TsLoader, TsLintLoader, plugins } from './production';
+import {
+  path as appRoot
+} from 'app-root-path';
 
-BabelLoader.use[0].options.plugins = ['react-hot-loader/babel'];
+import webpack from 'webpack';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-// EsLintLoader.options.fix = false;
+const Loaders = {
+  test: /\.(tsx|ts)$/,
+  enforce: 'pre',
+  exclude: /node_modules/,
+  use: [{
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true,
+      cacheIdentifier: true,
+      plugins: ['react-hot-loader/babel']
+    },
+  }, {
+    loader: 'ts-loader',
+    options: {
+      configFile: `${appRoot}/.tsconfig.json`,
+      transpileOnly: true,
+    },
+  }, ],
+};
 
-const rules = [BabelLoader, EsLintLoader, TsLoader, TsLintLoader];
+const plugins = [
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  new ForkTsCheckerWebpackPlugin({
+    tsconfig: `${appRoot}/.tsconfig.json`,
+    tslint: `${appRoot}/.tslint.json`,
+    tslintAutoFix: true,
+  })
+];
+
+const rules = [Loaders];
+
+export {
+  Loaders,
+  optimization,
+  plugins
+};
 
 export default {
-  module: { rules },
+  module: {
+    rules
+  },
   plugins,
 };

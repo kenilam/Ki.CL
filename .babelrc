@@ -1,5 +1,5 @@
 {
-  "presets" : [
+  "presets": [
     [
       "@babel/preset-env", {
         "targets": {
@@ -8,13 +8,12 @@
       }
     ],
     "@babel/preset-react",
-    "@babel/preset-flow"
+    "@babel/preset-typescript"
   ],
   "plugins": [
     [
       "babel-plugin-root-import", {
-        "paths": [
-          {
+        "paths": [{
             "rootPathSuffix": ".",
             "rootPathPrefix": "^"
           },
@@ -37,10 +36,14 @@
       ]
     }],
     [
-      "transform-class-properties", { "spec": true }
+      "transform-class-properties", {
+        "spec": true
+      }
     ],
-    
-    [ "@babel/plugin-proposal-decorators", { "legacy": true } ],
+
+    ["@babel/plugin-proposal-decorators", {
+      "legacy": true
+    }],
 
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-export-default-from",
@@ -49,7 +52,7 @@
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-export-extensions",
     "@babel/transform-runtime",
-    
+
     "add-module-exports",
     "transform-export-extensions",
     "react-hot-loader/babel"

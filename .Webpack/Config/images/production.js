@@ -1,4 +1,7 @@
-import { images, use } from './development';
+import {
+  images,
+  use
+} from './development';
 
 const name = '[hash].[ext]';
 

@@ -1,1 +1,0 @@
-export path from './path';

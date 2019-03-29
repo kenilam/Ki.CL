@@ -1,6 +1,10 @@
-import { argv } from 'yargs';
+import {
+  argv
+} from 'yargs';
 
-let { env } = argv;
+let {
+  env
+} = argv;
 
 if (!env) {
   env = {};

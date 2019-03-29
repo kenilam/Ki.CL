@@ -1,5 +1,0 @@
-@mixin setCSSTransitionProperty ($properties...) {
-  &[class*="#{$cssTransition}-"][class*="-active"] {
-    transition-property: $properties;
-  }
-}

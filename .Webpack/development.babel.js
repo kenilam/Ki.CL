@@ -3,7 +3,6 @@ import webpackMerge from 'webpack-merge';
 import {
   asset,
   bundleAnalyzer,
-  clean,
   content,
   devServer,
   entry,
@@ -12,6 +11,7 @@ import {
   images,
   indexHTML,
   javascript,
+  optimization,
   output,
   resolve,
   stylesheet,
@@ -22,7 +22,6 @@ const mode = process.env.NODE_ENV || 'development';
 const devConfig = webpackMerge(
   asset,
   bundleAnalyzer,
-  clean,
   content,
   entry,
   environment,
@@ -30,15 +29,20 @@ const devConfig = webpackMerge(
   images,
   indexHTML,
   javascript,
+  optimization,
   output,
   resolve,
   stylesheet,
 );
 
-const config = webpackMerge(devConfig, devServer, { mode });
+const config = webpackMerge(devConfig, devServer, {
+  mode
+});
 
 process.env.NODE_ENV = mode;
 
-export { devConfig };
+export {
+  devConfig
+};
 
 export default config;

@@ -1,15 +1,28 @@
-import { path as appRoot } from 'app-root-path';
+import {
+  path as appRoot
+} from 'app-root-path';
 
 import fs from 'fs';
 
-import { context } from '!/Config/entry';
+import {
+  contextRoot,
+  context
+} from '!/Config/entry';
 
 const alias = {
   '^': appRoot,
-  '~': context,
-  assets: `${appRoot}/project/assets`,
-  content: `${appRoot}/project/content`,
+  '~': context
 };
+
+fs.readdirSync(contextRoot).forEach((dir) => {
+  const path = `${contextRoot}/${dir}`;
+
+  if (!fs.statSync(path).isDirectory()) {
+    return;
+  }
+
+  alias[dir] = path;
+});
 
 fs.readdirSync(context).forEach((dir) => {
   const path = `${context}/${dir}`;
@@ -18,16 +31,18 @@ fs.readdirSync(context).forEach((dir) => {
     return;
   }
 
-  alias[dir] = `${context}/${dir}`;
+  alias[dir] = path;
 });
 
 const resolve = {
   modules: [`${appRoot}/node_modules`],
-  extensions: ['.js', '.jsx', '.scss', '.css', '.json', '.xml'],
+  extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json', '.xml'],
   alias,
 };
 
-export { resolve };
+export {
+  resolve
+};
 export default {
   resolve,
 };

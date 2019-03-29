@@ -1,4 +1,6 @@
-import { path as appRoot } from 'app-root-path';
+import {
+  path as appRoot
+} from 'app-root-path';
 
 const projectRoot = 'project';
 const srcRoot = `${projectRoot}/build`;
@@ -14,6 +16,11 @@ const output = {
 };
 
 export {
- publicPath, srcRoot, tmpRoot, output,
+  publicPath,
+  srcRoot,
+  tmpRoot,
+  output,
 };
-export default { output };
+export default {
+  output
+};

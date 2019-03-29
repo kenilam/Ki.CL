@@ -1,33 +1,40 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-import { CSSloaders, SCSSloaders } from './development';
+import {
+  CSSLoaders,
+  SCSSLoaders
+} from './development';
 
-const extractLoaders = loaders => loaders.filter(({ loader }) => loader !== 'style-loader');
+const fallback = 'style-loader';
 
-const extractText = new ExtractTextPlugin({
-  filename: 'styles.css',
-  allChunks: true,
-});
+const loaders = loaders => [].concat(
+  fallback,
+  MiniCssExtractPlugin.loader,
+  loaders.filter(({
+    loader
+  }) => loader !== fallback)
+);
 
-const css = {
-  test: /\.css$/,
-  use: ExtractTextPlugin.extract({
-    use: extractLoaders(CSSloaders),
-    fallback: 'style-loader',
-  }),
-};
+const rules = [{
+    test: /\.css$/,
+    use: loaders(CSSLoaders)
+  },
+  {
+    test: /\.scss$/,
+    use: loaders(SCSSLoaders)
+  },
+];
 
-const scss = {
-  test: /\.scss$/,
-  use: ExtractTextPlugin.extract({
-    use: extractLoaders(SCSSloaders),
-    fallback: 'style-loader',
-  }),
-};
-
-const rules = [css, scss];
+const plugins = [
+  new MiniCssExtractPlugin({
+    filename: 'style.css',
+    chunkFilename: 'style.[id].css',
+  })
+];
 
 export default {
-  module: { rules },
-  plugins: [extractText],
+  module: {
+    rules
+  },
+  plugins
 };

@@ -1,0 +1,7 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint-eslint-rules", "tslint-react"],
+  "rules": {
+    "arrow-parens": ["error", "as-needed"]
+  }
+}

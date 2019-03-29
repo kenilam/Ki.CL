@@ -5,7 +5,7 @@ const html = new HtmlWebpackPlugin({
 
   inject: 'body',
 
-  template: './Template/index.html',
+  template: 'Template/index.html',
 
   minify: {
     caseSensitive: true,

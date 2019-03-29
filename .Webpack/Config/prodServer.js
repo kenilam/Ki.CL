@@ -1,10 +1,16 @@
 import browserSync from 'browser-sync';
 
-import { srcRoot as baseDir } from '!/Config/output';
+import {
+  srcRoot as baseDir
+} from '!/Config/output';
 
-import { Args } from '!/Utilities';
+import {
+  Args
+} from '!/Utilities';
 
-import { localhost } from '^/ki-cl.config';
+import {
+  localhost
+} from '^/ki-cl.config';
 
 const startPath = '';
 
@@ -35,4 +41,6 @@ const browserInstance = browserSync.create();
 
 const browser = () => browserInstance.init(browserConfig);
 
-export { browser };
+export {
+  browser
+};

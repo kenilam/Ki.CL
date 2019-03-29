@@ -1,33 +1,42 @@
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 
-import { path as appRoot } from 'app-root-path';
+import {
+  path as appRoot
+} from 'app-root-path';
 import glob from 'glob';
 
-import { context, contextRoot } from '!/Config/entry';
+import {
+  context,
+  contextRoot
+} from '!/Config/entry';
 
-const CSSloaders = [
-  { loader: 'style-loader' },
+const CSSLoaders = [{
+    loader: 'style-loader'
+  },
   {
     loader: 'css-loader',
     options: {
-      sourceMap: true,
       importLoaders: 1,
+      sourceMap: true,
     },
   },
   {
     loader: 'postcss-loader',
     options: {
+      config: {
+        path: `${appRoot}/.postcssrc.js`
+      },
       sourceMap: true,
-      config: { path: `${appRoot}/.postcssrc.js` },
     },
   },
 ];
 
-const SCSSloaders = [].concat(CSSloaders, {
+const SCSSLoaders = [].concat(CSSLoaders, {
   loader: 'sass-loader',
   options: {
-    sourceMap: true,
     includePaths: [`${appRoot}/node_modules`, contextRoot, context],
+    sourceMap: true,
   },
 });
 
@@ -36,18 +45,14 @@ const resources = [
   `${contextRoot}/**/_*.scss`,
 ];
 
-const hasInitialResources = resources.some(path => glob.sync(path).length > 0);
-
-if (hasInitialResources) {
-  SCSSloaders.push({
-    loader: 'sass-resources-loader',
-    options: { sourceMap: true, resources },
-  });
-}
-
-const rules = [
-  { test: /\.css$/, use: CSSloaders },
-  { test: /\.scss$/, use: SCSSloaders },
+const rules = [{
+    test: /\.css$/,
+    use: CSSLoaders
+  },
+  {
+    test: /\.scss$/,
+    use: SCSSLoaders
+  },
 ];
 
 const plugins = [
@@ -56,10 +61,31 @@ const plugins = [
     context: contextRoot,
     fix: true,
   }),
+  new MiniCssExtractPlugin({
+    filename: 'style.css',
+    chunkFilename: 'style.[id].css',
+  })
 ];
 
-export { CSSloaders, SCSSloaders };
+const hasInitialResources = resources.some(path => glob.sync(path).length > 0);
+
+if (hasInitialResources) {
+  SCSSLoaders.push({
+    loader: 'sass-resources-loader',
+    options: {
+      sourceMap: true,
+      resources
+    },
+  });
+}
+
+export {
+  CSSLoaders,
+  SCSSLoaders
+};
 export default {
-  module: { rules },
+  module: {
+    rules
+  },
   plugins,
 };

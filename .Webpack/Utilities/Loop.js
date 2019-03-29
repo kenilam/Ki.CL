@@ -28,9 +28,12 @@ export default (...args) => {
     .concat(
       recursive(
         (callback ? args.splice(0, args.length - 1) : args)
-          .map(
-            (node, index) => [].concat(...[node]).map(value => ({ value, index })),
-          ),
+        .map(
+          (node, index) => [].concat(...[node]).map(value => ({
+            value,
+            index
+          })),
+        ),
       ),
     )
     .map(node => (Array.isArray(node) ? node.map(props => props.value) : [node.value]))
