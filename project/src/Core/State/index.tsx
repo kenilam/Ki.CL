@@ -1,15 +1,14 @@
-import * as React from "react";
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { Provider, connect } from "react-redux";
-import multi from "redux-multi";
+import { IState, Window } from './typings';
 
-interface IState {
-  children: React.ReactElement;
-}
+import * as React from 'react';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
 
 let reducers = {};
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const { default: multi } = require('redux-multi');
+
+const composeEnhancers = (window as Window).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(multi));
 

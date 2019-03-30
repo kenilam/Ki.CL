@@ -1,5 +1,9 @@
-import * as React from "react";
-import ReactDOM from "react-dom";
-import App, { appRoot } from "./App";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import App, { appRoot } from './App';
 
-ReactDOM.render(<App />, appRoot);
+import { loadPolyfill } from './Core';
+
+loadPolyfill().then(() => {
+  ReactDOM.render(<App />, appRoot);
+});

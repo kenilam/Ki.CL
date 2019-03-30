@@ -5,6 +5,9 @@ import {
 import webpack from 'webpack';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
+const tsconfig = `${appRoot}/.tsconfig.json`;
+const tslint = `${appRoot}/.tslint.json`;
+
 const Loaders = {
   test: /\.(tsx|ts)$/,
   enforce: 'pre',
@@ -19,8 +22,10 @@ const Loaders = {
   }, {
     loader: 'ts-loader',
     options: {
-      configFile: `${appRoot}/.tsconfig.json`,
-      transpileOnly: true,
+      configFile: tsconfig,
+      experimentalWatchApi: false,
+      happyPackMode: false,
+      transpileOnly: true
     },
   }, ],
 };
@@ -28,9 +33,10 @@ const Loaders = {
 const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new ForkTsCheckerWebpackPlugin({
-    tsconfig: `${appRoot}/.tsconfig.json`,
-    tslint: `${appRoot}/.tslint.json`,
-    tslintAutoFix: true,
+    async: false,
+    tsconfig: tsconfig,
+    tslint: tslint,
+    tslintAutoFix: true
   })
 ];
 
@@ -38,7 +44,6 @@ const rules = [Loaders];
 
 export {
   Loaders,
-  optimization,
   plugins
 };
 
@@ -46,5 +51,5 @@ export default {
   module: {
     rules
   },
-  plugins,
+  plugins
 };

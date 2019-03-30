@@ -1,32 +1,15 @@
-import * as React from "react";
+import * as React from 'react';
 
-import State from "./State";
+import Core from './Core';
+import View from './View';
 
-import "./style";
+const appRoot = document.querySelector('[app-root]');
 
-const appRoot = document.querySelector("[app-root]");
-
-interface IProps {}
-interface IState {}
-
-class App extends React.PureComponent<IProps, IState> {
-  public static getDerivedStateFromError(errors: any) {
-    return { errors };
-  }
-
-  public componentDidCatch(errors: any, info: any) {
-    debugger;
-    console.error(errors, info);
-  }
-
-  public render() {
-    return (
-      <State>
-        <div>hello world</div>
-      </State>
-    );
-  }
-}
+class App extends Core { }
 
 export { appRoot };
-export default App;
+export default () => (
+  <App>
+    <View>view</View>
+  </App>
+);

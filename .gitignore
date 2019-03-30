@@ -43,6 +43,7 @@ node_modules
 # IDE files #
 #############
 .idea
+tsconfig.json
 
 # Local files #
 ################
