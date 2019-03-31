@@ -3,7 +3,7 @@ import { TransitionGroup } from 'react-transition-group';
 
 import { CSSTransition } from '@Component';
 
-import { ITransition } from './typings';
+import { ITransition } from './spec';
 
 const Transition: React.FunctionComponent<ITransition> = ({ children, transitionKey }) => (
   <TransitionGroup>

@@ -1,8 +1,9 @@
-import { IState, Window } from './typings';
 
 import * as React from 'react';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
+
+import { IState, Window } from './spec';
 
 let reducers = {};
 

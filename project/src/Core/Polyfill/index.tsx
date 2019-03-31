@@ -1,4 +1,4 @@
-import { Window } from './typings';
+import { Window } from './spec';
 
 async function loadPolyfill(): Promise<any> {
   try {

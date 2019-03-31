@@ -1,9 +1,10 @@
-import { IProps, IState } from '@Core/typings';
 
 import * as React from 'react';
 
 import State from './State';
 import { loadPolyfill } from './Polyfill';
+
+import { IProps, IState } from './spec';
 
 import './Style';
 
