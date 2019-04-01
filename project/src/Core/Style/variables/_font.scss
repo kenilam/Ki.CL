@@ -1,0 +1,21 @@
+$a_isCurrent_font_weight: 400;
+$default_font: sans-serif !default;
+$font_family: 'omnes-pro', $default_font;
+$font_size: 16px;
+$font_weight: 300;
+$heading_font_family: 'acumin-pro-extra-condensed', $default_font;
+$line_height: 1.2;
+$thick_font_weight: 500;
+$thicker_font_weight: 700;
+
+@mixin font-smoothing($value: antialiased) {
+  @if $value==antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}

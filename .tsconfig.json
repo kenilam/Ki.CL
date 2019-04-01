@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
+    "baseUrl": "./project",
     "checkJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -17,8 +17,11 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "paths": {
-      "@*": ["./project/src/*"]
+      "@*": [
+        "src/*"
+      ]
     },
+    "resolveJsonModule": true,
     "sourceMap": true,
     "target": "es5",
     "typeRoots": ["./node_modules/@types"]

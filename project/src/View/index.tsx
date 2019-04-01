@@ -5,14 +5,14 @@ import { Route } from '@Component/Router';
 
 import { IProps } from './spec';
 
-interface IHome { }
+interface IHome {}
 const Home: React.FunctionComponent<IHome> = () => <section>Home</section>;
 
-interface IWorks { }
+interface IWorks {}
 const Works: React.FunctionComponent<IWorks> = () => <section>Works</section>;
 
 const View: React.FunctionComponent<IProps> = () => (
-  <Router>
+  <Router component='main' classNames='view'>
     <Route path='/' exact={true} render={Home} />
     <Route path='/works' render={Works} />
   </Router>

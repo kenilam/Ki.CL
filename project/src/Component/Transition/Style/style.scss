@@ -1,0 +1,20 @@
+.#{$transition} {
+  position: relative;
+
+  > [class*='#{$cssTransition}-'] {
+    position: absolute;
+
+    &.#{$cssTransitionEnter} {
+      z-index: 200;
+    }
+
+    &.#{$cssTransitionExit} {
+      z-index: 100;
+    }
+  }
+}
+
+:export {
+  childclassname: #{$transitionChild};
+  classname: #{$transition};
+}

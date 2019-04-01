@@ -27,6 +27,17 @@
   "javascript.implicitProjectConfig.checkJs": true,
   "god.tsconfig": "./.tsconfig.json",
   "copy-with-imports.path-relative-from-tsconfig": true,
-  "tsfmt.tsconfig.configPath": "./.tsconfig.json",
-  "tsfmt.tslint.configPath": "./.tslint.json"
+  "workbench.editor.labelFormat": "short",
+  "prettier.requireConfig": true,
+  "cSpell.language": "en,en-US,en-GB",
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "prettier.stylelintIntegration": true,
+  "prettier.proseWrap": "never",
+  "prettier.tslintIntegration": true,
+  "prettier.jsxBracketSameLine": true,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "html.format.endWithNewline": true,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true
 }
