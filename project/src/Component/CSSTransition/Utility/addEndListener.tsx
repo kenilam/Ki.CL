@@ -1,7 +1,7 @@
-import { EndHandler } from 'react-transition-group/Transition';
+import {EndHandler} from 'react-transition-group/Transition';
 import getTransitionDuration from 'get-transition-duration';
 
-import { className } from '@Component/CSSTransition/Style';
+import {className} from '@Component/CSSTransition/Style';
 
 const { setTimeout } = window;
 

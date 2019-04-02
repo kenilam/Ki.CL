@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { HashRouter, Route, Switch, withRouter } from 'react-router-dom';
-import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
+import {HashRouter, Route, Switch, withRouter} from 'react-router-dom';
+import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 
-import { Transition } from '@Component';
+import {Transition} from '@Component';
 
-import { IComponent, IProps } from './spec';
-import { bodyAttribute } from './Utility';
+import {IComponent, IProps} from './spec';
+import {bodyAttribute} from './Utility';
 
 const Router: React.FunctionComponent<IProps> = ({
   appear,
@@ -24,15 +24,13 @@ const Router: React.FunctionComponent<IProps> = ({
   const Component: React.FunctionComponent<IComponent> = ({
     children,
     location
-  } ) => {
+                                                          }) => {
     const onEnterHandler: EnterHandler = ( node, isAppearing ) => {
       bodyAttribute.add( 'enter', location );
-
       onEnter && onEnter( node, isAppearing );
     };
     const onExitHandler: ExitHandler = ( node ) => {
       bodyAttribute.add( 'exit', location );
-
       onEnter && onExit( node );
     };
 
@@ -53,7 +51,7 @@ const Router: React.FunctionComponent<IProps> = ({
         <Switch location={location}>{children}</Switch>
       </Transition>
     );
-  }
+  };
 
   const Instance = withRouter(Component);
 
