@@ -5,9 +5,10 @@ import View from './View';
 
 const appRoot = document.querySelector('[app-root]');
 
-class App extends Core { }
+class App extends Core {
+}
 
-export { appRoot };
+export {appRoot};
 export default () => (
   <App>
     <View>view</View>

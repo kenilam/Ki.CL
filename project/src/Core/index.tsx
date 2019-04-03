@@ -1,10 +1,9 @@
-
 import * as React from 'react';
+import {loadPolyfill} from './Polyfill';
+
+import {IProps, IState} from './spec';
 
 import State from './State';
-import { loadPolyfill } from './Polyfill';
-
-import { IProps, IState } from './spec';
 
 import './Style';
 

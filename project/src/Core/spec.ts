@@ -1,2 +1,5 @@
-export interface IProps { }
-export interface IState { }
+export interface IProps {
+}
+
+export interface IState {
+}

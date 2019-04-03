@@ -1,8 +1,7 @@
+import {CSSTransition} from '@Component';
+import classnames from 'classnames';
 import * as React from 'react';
 import {TransitionGroup} from 'react-transition-group';
-import classnames from 'classnames';
-
-import {CSSTransition} from '@Component';
 
 import {IProps} from './spec';
 

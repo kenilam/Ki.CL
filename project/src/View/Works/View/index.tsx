@@ -1,15 +1,13 @@
 import {Router} from '@Component';
 import * as React from 'react';
 
-import Home from './Home';
-
 import {IProps} from './spec';
-import Works from './Works';
+
+import Work from './Work';
 
 const View: React.FunctionComponent<IProps> = () => (
-  <Router component='main' classNames='view'>
-    {Home}
-    {Works}
+  <Router component='section' classNames='works-view'>
+    {Work}
   </Router>
 );
 

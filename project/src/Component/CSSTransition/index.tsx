@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { CSSTransition as Origin } from 'react-transition-group';
-import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 import classnames from 'classnames';
+import * as React from 'react';
+import {CSSTransition as Origin} from 'react-transition-group';
+import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 
-import { addEndListener, classNameModifier } from './Utility';
+import {IProps} from './spec';
 
-import { IProps } from './spec';
+import {className} from './Style';
 
-import { className } from './Style';
+import {addEndListener, classNameModifier} from './Utility';
 
 const CSSTransition: React.FunctionComponent<IProps> = ({
   appear = true,
@@ -23,21 +23,21 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
   transitionIn,
   transitionKey
 }) => {
-  const onEnterHandler: EnterHandler = ( node, isAppearing) => {
+  const onEnterHandler: EnterHandler = (node, isAppearing) => {
     classNameModifier.addDefault(node, classNames);
-    onEnter && onEnter( node, isAppearing);
+    onEnter && onEnter(node, isAppearing);
   };
-
-  const onEnteredHandler: EnterHandler = ( node, isAppearing) => {
+  
+  const onEnteredHandler: EnterHandler = (node, isAppearing) => {
     classNameModifier.removeDone(node);
-    onEntered && onEntered( node, isAppearing);
+    onEntered && onEntered(node, isAppearing);
   };
-
+  
   const onExitedHandler: ExitHandler = node => {
     classNameModifier.removeDone(node);
     onExited && onExited(node);
   };
-
+  
   return (
     <Origin
       addEndListener={!timeout && addEndListener}

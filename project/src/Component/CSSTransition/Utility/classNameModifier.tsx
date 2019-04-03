@@ -1,7 +1,6 @@
-import {CSSTransitionClassNames} from 'react-transition-group/CSSTransition';
-import classnames from 'classnames';
-
 import {className, enterDoneClassName, exitDoneClassName} from '@Component/CSSTransition/Style';
+import classnames from 'classnames';
+import {CSSTransitionClassNames} from 'react-transition-group/CSSTransition';
 
 const addDefault = (
   node: Element,
@@ -21,8 +20,12 @@ const addDefault = (
 };
 
 const removeDone = (node: Element) => {
+  if (!node) {
+    return;
+  }
+  
   node.classList.remove(enterDoneClassName);
   node.classList.remove(exitDoneClassName);
 };
 
-export default { addDefault, removeDone };
+export default {addDefault, removeDone};

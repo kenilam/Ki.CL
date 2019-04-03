@@ -14,7 +14,7 @@ $mq-static-breakpoint: desktop;
 
 @import '../../../../../node_modules/sass-mq';
 
-@mixin orientation ($orientation, $content: null, $props...) {
+@mixin orientation($orientation, $content: null, $props...) {
   @include mq($and: '(orientation: #{$orientation})', $props...) {
     @if $content {
       @each $name,
@@ -38,13 +38,13 @@ $mq-static-breakpoint: desktop;
   @include orientation($content: $portrait, $orientation: 'portrait', $props...);
 }
 
-@mixin landscape () {
+@mixin landscape() {
   @include orientation($orientation: 'landscape') {
     @content;
   }
 }
 
-@mixin portrait () {
+@mixin portrait() {
   @include orientation($orientation: 'portrait') {
     @content;
   }
