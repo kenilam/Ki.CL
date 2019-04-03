@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Ki.CL",
   "scripts": {
-    "flow": "flow",
-    "flow:typed": "./node_modules/.bin/flow-typed install",
     "guide": "npx babel-node styleguidist server",
     "test": "NODE_ENV=test jest",
     "test:watch": "jest --watch",

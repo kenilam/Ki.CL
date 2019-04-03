@@ -11,11 +11,11 @@ export default {
       }
     }
   },
-
+  
   api: {
     host: {
       development: 'http://localhost:3100',
       production: 'https://ki-cl.herokuapp.com'
     }
   }
-};
+}

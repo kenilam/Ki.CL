@@ -1,8 +1,14 @@
 {
   "defaultSeverity": "error",
-  "extends": ["tslint-eslint-rules", "tslint-react"],
+  "extends": [
+    "tslint-eslint-rules",
+    "tslint-react"
+  ],
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
     "jsx-no-multiline-js": false
   }
 }

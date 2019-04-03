@@ -59,7 +59,7 @@
   "component": {
     "spinner": {
       "content": {
-        "default" : {
+        "default": {
           "message": "loading..."
         }
       }

@@ -2,9 +2,7 @@ import {CSSTransition} from '@Component';
 import classnames from 'classnames';
 import * as React from 'react';
 import {TransitionGroup} from 'react-transition-group';
-
 import {IProps} from './spec';
-
 import {childClassName, className} from './Style';
 
 const Transition: React.FunctionComponent<IProps> = ({

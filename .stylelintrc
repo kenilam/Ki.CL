@@ -1,17 +1,27 @@
 {
   "plugins": [
-      "stylelint-scss",
-      "stylelint-order"
+    "stylelint-scss",
+    "stylelint-order"
   ],
   "extends": [
-      "stylelint-config-standard"
+    "stylelint-config-standard"
   ],
   "rules": {
-    "at-rule-empty-line-before": [ "always", {
-      "except": [ "blockless-after-blockless", "first-nested" ],
-      "ignore": ["after-comment"],
-    } ],
-    "at-rule-no-unknown": [ true, {
+    "at-rule-empty-line-before": [
+      "always",
+      {
+        "except": [
+          "blockless-after-blockless",
+          "first-nested"
+        ],
+        "ignore": [
+          "after-comment"
+        ],
+      }
+    ],
+    "at-rule-no-unknown": [
+      true,
+      {
         "ignoreAtRules": [
           "debug",
           "each",
@@ -34,14 +44,25 @@
     "block-opening-brace-newline-after": "always-multi-line",
     "block-opening-brace-space-after": "always-single-line",
     "block-opening-brace-space-before": "always",
-    "color-hex-case": [ "lower", { "severity": "warning" }
+    "color-hex-case": [
+      "lower",
+      {
+        "severity": "warning"
+      }
     ],
     "color-hex-length": "short",
     "color-no-invalid-hex": true,
-    "comment-empty-line-before": [ "always", {
-      "except": ["first-nested"],
-      "ignore": ["stylelint-commands"],
-    } ],
+    "comment-empty-line-before": [
+      "always",
+      {
+        "except": [
+          "first-nested"
+        ],
+        "ignore": [
+          "stylelint-commands"
+        ],
+      }
+    ],
     "comment-whitespace-inside": "always",
     "declaration-bang-space-after": "never",
     "declaration-bang-space-before": "always",

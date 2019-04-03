@@ -1,10 +1,7 @@
 import {Transition} from '@Component';
 import * as React from 'react';
-import {HashRouter, Route, Switch, withRouter} from 'react-router-dom';
-import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-
+import {HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {IComponent, IProps} from './spec';
-import {bodyAttribute} from './Utility';
 
 const Router: React.FunctionComponent<IProps> = ({
   appear,
@@ -23,24 +20,15 @@ const Router: React.FunctionComponent<IProps> = ({
   const Component: React.FunctionComponent<IComponent> = ({
     children, location
   }) => {
-    const onEnterHandler: EnterHandler = (node, isAppearing) => {
-      bodyAttribute.add('enter', location);
-      onEnter && onEnter(node, isAppearing);
-    };
-    const onExitHandler: ExitHandler = (node) => {
-      bodyAttribute.add('exit', location);
-      onEnter && onExit(node);
-    };
-    
     return (
       <Transition
         appear={appear}
         classNames={classNames}
         component={component}
-        onEnter={onEnterHandler}
+        onEnter={onEnter}
         onEntered={onEntered}
         onEntering={onEntering}
-        onExit={onExitHandler}
+        onExit={onExit}
         onExiting={onExiting}
         onExited={onExited}
         transitionIn={transitionIn}
@@ -60,6 +48,6 @@ const Router: React.FunctionComponent<IProps> = ({
   );
 };
 
-export {Route, Switch};
+export {Redirect, Route, Switch};
 
 export default Router;

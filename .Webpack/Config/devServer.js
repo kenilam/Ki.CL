@@ -1,27 +1,18 @@
-import open from 'opn';
-import remotedev from 'remotedev-server';
-import webpack from 'webpack';
+import { Args } from '!/Utilities'
 
-import {
-  Args
-} from '!/Utilities';
+import config from '^/ki-cl.config'
+import open from 'opn'
+import remotedev from 'remotedev-server'
+import webpack from 'webpack'
 
-import config from '^/ki-cl.config';
-
-import {
-  srcRoot as assetPath
-} from './asset';
-import {
-  srcRoot as contentPath
-} from './content';
-import {
-  publicPath
-} from './output';
+import { srcRoot as assetPath } from './asset'
+import { srcRoot as contentPath } from './content'
+import { publicPath } from './output'
 
 const {
   host,
   port
-} = config.localhost;
+} = config.localhost
 
 const stats = {
   all: false,
@@ -42,15 +33,15 @@ const stats = {
   timings: true,
   version: true,
   warnings: true,
-};
+}
 
 const optimization = {
   namedModules: true,
   noEmitOnErrors: true,
   occurrenceOrder: true,
-};
+}
 
-const contentBase = [assetPath, contentPath].map(path => `${path}/`);
+const contentBase = [assetPath, contentPath].map(path => `${path}/`)
 
 const devServer = {
   hot: true,
@@ -68,30 +59,30 @@ const devServer = {
     aggregateTimeout: 500,
     poll: 1000,
   },
-
+  
   contentBase,
   port,
   stats,
-};
+}
 
 remotedev({
   name: 'channel',
   realtime: true,
   port: 5000
-});
+})
 
-const browser = () => open(`${host}:${port}`);
+const browser = () => open(`${host}:${port}`)
 
 const plugins = [
   new webpack.NamedModulesPlugin(),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.EvalSourceMapDevToolPlugin(),
-];
+]
 
 export {
   browser,
   devServer
-};
+}
 
 export default {
   cache: true,
@@ -100,4 +91,4 @@ export default {
   optimization,
   // output,
   plugins,
-};
+}

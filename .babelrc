@@ -1,9 +1,13 @@
 {
   "presets": [
     [
-      "@babel/preset-env", {
+      "@babel/preset-env",
+      {
         "targets": {
-          "browsers": ["last 2 versions", "safari >= 11"]
+          "browsers": [
+            "last 2 versions",
+            "safari >= 11"
+          ]
         }
       }
     ],
@@ -12,8 +16,10 @@
   ],
   "plugins": [
     [
-      "babel-plugin-root-import", {
-        "paths": [{
+      "babel-plugin-root-import",
+      {
+        "paths": [
+          {
             "rootPathSuffix": ".",
             "rootPathPrefix": "^"
           },
@@ -28,23 +34,28 @@
         ]
       }
     ],
-    ["module-resolver", {
-      "root": [
-        "./project/src",
-        "./project/assets",
-        "./project/content"
-      ]
-    }],
     [
-      "transform-class-properties", {
+      "module-resolver",
+      {
+        "root": [
+          "./project/src",
+          "./project/assets",
+          "./project/content"
+        ]
+      }
+    ],
+    [
+      "transform-class-properties",
+      {
         "spec": true
       }
     ],
-
-    ["@babel/plugin-proposal-decorators", {
-      "legacy": true
-    }],
-
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-private-methods",
@@ -52,7 +63,6 @@
     "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-syntax-export-extensions",
     "@babel/transform-runtime",
-
     "add-module-exports",
     "transform-export-extensions",
     "react-hot-loader/babel"

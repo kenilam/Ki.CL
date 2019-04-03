@@ -1,10 +1,5 @@
-import {
-  BundleAnalyzerPlugin
-} from 'webpack-bundle-analyzer';
-
-import {
-  Args
-} from '!/Utilities';
+import { Args } from '!/Utilities'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 const plugins = Args.analyzer ? [
   new BundleAnalyzerPlugin({
@@ -12,8 +7,8 @@ const plugins = Args.analyzer ? [
     logLevel: 'warn',
     analyzerPort: 30001,
   }),
-] : [];
+] : []
 
 export default {
   plugins,
-};
+}

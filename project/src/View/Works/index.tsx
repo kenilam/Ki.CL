@@ -1,8 +1,6 @@
 import {Route} from "@Component/Router";
 import * as React from "react";
-
 import {IProps} from './spec';
-
 import View from './View';
 
 const Works = ({}: IProps) => (

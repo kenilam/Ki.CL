@@ -1,9 +1,6 @@
-import {
-  plugins,
-  resolve
-} from './develop';
+import { plugins, resolve } from './develop'
 
 export default {
   plugins,
   resolve
-};
+}

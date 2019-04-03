@@ -2,17 +2,15 @@ import classnames from 'classnames';
 import * as React from 'react';
 import {CSSTransition as Origin} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-
 import {IProps} from './spec';
-
 import {className} from './Style';
-
 import {addEndListener, classNameModifier} from './Utility';
 
 const CSSTransition: React.FunctionComponent<IProps> = ({
   appear = true,
   classNames,
   children,
+  mountOnEnter = true,
   onEnter,
   onEntered,
   onEntering,
@@ -21,7 +19,8 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
   onExiting,
   timeout = null,
   transitionIn,
-  transitionKey
+  transitionKey,
+  unmountOnExit = true
 }) => {
   const onEnterHandler: EnterHandler = (node, isAppearing) => {
     classNameModifier.addDefault(node, classNames);
@@ -45,6 +44,7 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
       classNames={classnames(classNames, className)}
       in={transitionIn}
       key={transitionKey}
+      mountOnEnter={mountOnEnter}
       onEnter={onEnterHandler}
       onEntered={onEnteredHandler}
       onEntering={onEntering}
@@ -52,6 +52,7 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
       onExited={onExitedHandler}
       onExiting={onExiting}
       timeout={timeout}
+      unmountOnExit={unmountOnExit}
     >
       {children}
     </Origin>

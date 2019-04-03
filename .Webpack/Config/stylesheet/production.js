@@ -1,11 +1,8 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-import {
-  CSSLoaders,
-  SCSSLoaders
-} from './development';
+import { CSSLoaders, SCSSLoaders } from './development'
 
-const fallback = 'style-loader';
+const fallback = 'style-loader'
 
 const loaders = loaders => [].concat(
   fallback,
@@ -13,28 +10,28 @@ const loaders = loaders => [].concat(
   loaders.filter(({
     loader
   }) => loader !== fallback)
-);
+)
 
 const rules = [{
-    test: /\.css$/,
-    use: loaders(CSSLoaders)
-  },
+  test: /\.css$/,
+  use: loaders(CSSLoaders)
+},
   {
     test: /\.scss$/,
     use: loaders(SCSSLoaders)
   },
-];
+]
 
 const plugins = [
   new MiniCssExtractPlugin({
     filename: 'style.css',
     chunkFilename: 'style.[id].css',
   })
-];
+]
 
 export default {
   module: {
     rules
   },
   plugins
-};
+}

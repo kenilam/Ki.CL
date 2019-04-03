@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import Core from './Core';
 import View from './View';
 

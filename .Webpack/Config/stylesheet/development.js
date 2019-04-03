@@ -1,19 +1,13 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import StyleLintPlugin from 'stylelint-webpack-plugin';
+import { context, contextRoot } from '!/Config/entry'
 
-import {
-  path as appRoot
-} from 'app-root-path';
-import glob from 'glob';
-
-import {
-  context,
-  contextRoot
-} from '!/Config/entry';
+import { path as appRoot } from 'app-root-path'
+import glob from 'glob'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import StyleLintPlugin from 'stylelint-webpack-plugin'
 
 const CSSLoaders = [{
-    loader: 'style-loader'
-  },
+  loader: 'style-loader'
+},
   {
     loader: 'css-loader',
     options: {
@@ -30,7 +24,7 @@ const CSSLoaders = [{
       sourceMap: true,
     },
   },
-];
+]
 
 const SCSSLoaders = [].concat(CSSLoaders, {
   loader: 'sass-loader',
@@ -38,22 +32,22 @@ const SCSSLoaders = [].concat(CSSLoaders, {
     includePaths: [`${appRoot}/node_modules`, contextRoot, context],
     sourceMap: true,
   },
-});
+})
 
 const resources = [
   `${appRoot}/node_modules/sass-{*}/**/_*.scss`,
   `${contextRoot}/**/_*.scss`,
-];
+]
 
 const rules = [{
-    test: /\.css$/,
-    use: CSSLoaders
-  },
+  test: /\.css$/,
+  use: CSSLoaders
+},
   {
     test: /\.scss$/,
     use: SCSSLoaders
   },
-];
+]
 
 const plugins = [
   new StyleLintPlugin({
@@ -65,9 +59,9 @@ const plugins = [
     filename: 'style.css',
     chunkFilename: 'style.[id].css',
   })
-];
+]
 
-const hasInitialResources = resources.some(path => glob.sync(path).length > 0);
+const hasInitialResources = resources.some(path => glob.sync(path).length > 0)
 
 if (hasInitialResources) {
   SCSSLoaders.push({
@@ -76,16 +70,16 @@ if (hasInitialResources) {
       sourceMap: true,
       resources
     },
-  });
+  })
 }
 
 export {
   CSSLoaders,
   SCSSLoaders
-};
+}
 export default {
   module: {
     rules
   },
   plugins,
-};
+}
