@@ -1,12 +1,12 @@
-$a_isCurrent_font_weight: 400;
-$default_font: sans-serif !default;
-$font_family: 'omnes-pro', $default_font;
-$font_size: 16px;
-$font_weight: 300;
-$heading_font_family: 'acumin-pro-extra-condensed', $default_font;
-$line_height: 1.2;
-$thick_font_weight: 500;
-$thicker_font_weight: 700;
+$a-isCurrent-font-weight: 400;
+$default-font: sans-serif !default;
+$font-family: 'omnes-pro', $default-font;
+$font-size: 16px;
+$font-weight: 300;
+$heading-font-family: 'acumin-pro-extra-condensed', $default-font;
+$line-height: 1.2;
+$thick-font-weight: 500;
+$thicker-font-weight: 700;
 
 @mixin font-smoothing($value: antialiased) {
   @if $value==antialiased {

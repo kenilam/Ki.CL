@@ -1,3 +1,8 @@
-import {childclassname as childClassName, classname as className} from './style.scss';
+import * as style from './style.scss';
+
+const {
+  childclassname: childClassName,
+  classname: className
+} = style;
 
 export {childClassName, className};

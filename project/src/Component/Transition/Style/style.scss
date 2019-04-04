@@ -1,14 +1,14 @@
 .#{$transition} {
   position: relative;
 
-  > [class*='#{$cssTransition}-'] {
+  > [class*='#{$css-transition}-'] {
     position: absolute;
 
-    &.#{$cssTransitionEnter} {
+    &.#{$css-transition-enter} {
       z-index: 200;
     }
 
-    &.#{$cssTransitionExit} {
+    &.#{$css-transition-exit} {
       z-index: 100;
     }
   }

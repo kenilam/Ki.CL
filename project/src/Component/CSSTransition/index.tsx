@@ -3,7 +3,7 @@ import * as React from 'react';
 import {CSSTransition as Origin} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 import {IProps} from './spec';
-import {className} from './Style';
+import * as Styles from './Style';
 import {addEndListener, classNameModifier} from './Utility';
 
 const CSSTransition: React.FunctionComponent<IProps> = ({
@@ -41,7 +41,7 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
     <Origin
       addEndListener={!timeout && addEndListener}
       appear={appear}
-      classNames={classnames(classNames, className)}
+      classNames={classnames(classNames, Styles.className)}
       in={transitionIn}
       key={transitionKey}
       mountOnEnter={mountOnEnter}

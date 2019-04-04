@@ -51,6 +51,12 @@
       }
     ],
     [
+      "react-css-modules",
+      {
+        "webpackHotModuleReloading": true
+      }
+    ],
+    [
       "@babel/plugin-proposal-decorators",
       {
         "legacy": true

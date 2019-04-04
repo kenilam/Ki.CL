@@ -1,17 +1,18 @@
 import { context, contextRoot } from '!/Config/entry'
-
 import { path as appRoot } from 'app-root-path'
 import glob from 'glob'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import StyleLintPlugin from 'stylelint-webpack-plugin'
 
-const CSSLoaders = [{
-  loader: 'style-loader'
-},
+const CSSLoaders = [
+  {
+    loader: 'style-loader'
+  },
   {
     loader: 'css-loader',
     options: {
-      importLoaders: 1,
+      camelCase: true,
+      importLoaders: 2,
+      modules: true,
       sourceMap: true,
     },
   },
@@ -19,34 +20,37 @@ const CSSLoaders = [{
     loader: 'postcss-loader',
     options: {
       config: {
-        path: `${appRoot}/.postcssrc.js`
+        path: appRoot
       },
       sourceMap: true,
     },
-  },
+  }
 ]
 
-const SCSSLoaders = [].concat(CSSLoaders, {
-  loader: 'sass-loader',
-  options: {
-    includePaths: [`${appRoot}/node_modules`, contextRoot, context],
-    sourceMap: true,
-  },
-})
+const SCSSLoaders = [].concat(CSSLoaders, [
+  {
+    loader: 'sass-loader',
+    options: {
+      includePaths: [`${appRoot}/node_modules`, contextRoot, context],
+      sourceMap: true,
+    },
+  }
+])
 
 const resources = [
   `${appRoot}/node_modules/sass-{*}/**/_*.scss`,
   `${contextRoot}/**/_*.scss`,
 ]
 
-const rules = [{
-  test: /\.css$/,
-  use: CSSLoaders
-},
+const rules = [
+  {
+    test: /\.css$/,
+    use: CSSLoaders
+  },
   {
     test: /\.scss$/,
     use: SCSSLoaders
-  },
+  }
 ]
 
 const plugins = [
@@ -54,10 +58,6 @@ const plugins = [
     files: ['**/*.scss'],
     context: contextRoot,
     fix: true,
-  }),
-  new MiniCssExtractPlugin({
-    filename: 'style.css',
-    chunkFilename: 'style.[id].css',
   })
 ]
 

@@ -1,13 +1,13 @@
-[class*='#{$cssTransition}-'] {
-  transition-duration: $speed;
+[class*='#{$css-transition}-'] {
+  transition-duration: #{$speed};
 }
 
 :export {
-  classname: #{$cssTransition};
-  enteractiveclassname: #{$cssTransitionEnterActive};
-  enterclassname: #{$cssTransitionEnter};
-  enterdoneclassname: #{$cssTransitionEnterDone};
-  exitactiveclassname: #{$cssTransitionExitActive};
-  exitclassname: #{$cssTransitionExit};
-  exitdoneclassname: #{$cssTransitionExitDone};
+  classname: #{$css-transition};
+  enteractiveclassname: #{$css-transition-enter-active};
+  enterclassname: #{$css-transition-enter};
+  enterdoneclassname: #{$css-transition-enter-done};
+  exitactiveclassname: #{$css-transition-exit-active};
+  exitclassname: #{$css-transition-exit};
+  exitdoneclassname: #{$css-transition-exit-done};
 }

@@ -1,12 +1,14 @@
-import {
-  classname as className,
-  enteractiveclassname as enterActiveClassName,
-  enterclassname as enterClassName,
-  enterdoneclassname as enterDoneClassName,
-  exitactiveclassname as exitActiveClassName,
-  exitclassname as exitClassName,
-  exitdoneclassname as exitDoneClassName,
-} from './style.scss';
+import * as style from './style.scss';
+
+const {
+  classname: className,
+  enteractiveclassname: enterActiveClassName,
+  enterclassname: enterClassName,
+  enterdoneclassname: enterDoneClassName,
+  exitactiveclassname: exitActiveClassName,
+  exitclassname: exitClassName,
+  exitdoneclassname: exitDoneClassName,
+} = style;
 
 export {
   className,

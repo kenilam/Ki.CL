@@ -1,12 +1,17 @@
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-
+// import ExtractCssChunks from 'extract-css-chunks-webpack-plugin'
 import { CSSLoaders, SCSSLoaders } from './development'
 
 const fallback = 'style-loader'
 
 const loaders = loaders => [].concat(
   fallback,
-  MiniCssExtractPlugin.loader,
+  // {
+  //   loader: ExtractCssChunks.loader,
+  //   options: {
+  //     hot: true,
+  //     reloadAll: true,
+  //   }
+  // },
   loaders.filter(({
     loader
   }) => loader !== fallback)
@@ -23,10 +28,13 @@ const rules = [{
 ]
 
 const plugins = [
-  new MiniCssExtractPlugin({
-    filename: 'style.css',
-    chunkFilename: 'style.[id].css',
-  })
+  // new ExtractCssChunks(
+  //   {
+  //     filename: 'style.css',
+  //     chunkFilename: 'style.[id].css',
+  //     orderWarning: true
+  //   }
+  // )
 ]
 
 export default {
