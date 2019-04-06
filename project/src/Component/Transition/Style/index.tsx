@@ -1,8 +1,3 @@
-import * as style from './style.scss';
+import style from './style.scss';
 
-const {
-  childclassname: childClassName,
-  classname: className
-} = style;
-
-export {childClassName, className};
+export default style;

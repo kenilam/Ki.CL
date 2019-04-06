@@ -1,4 +1,4 @@
-import {className, enterDoneClassName, exitDoneClassName} from '@Component/CSSTransition/Style';
+import Style from '@Component/CSSTransition/Style';
 import classnames from 'classnames';
 import {CSSTransitionClassNames} from 'react-transition-group/CSSTransition';
 
@@ -10,7 +10,7 @@ const addDefault = (
     return;
   }
   
-  node.classList.add(className);
+  node.classList.add(Style.cssTransition);
   
   if (!additionalClassNames) {
     return;
@@ -24,8 +24,8 @@ const removeDone = (node: Element) => {
     return;
   }
   
-  node.classList.remove(enterDoneClassName);
-  node.classList.remove(exitDoneClassName);
+  node.classList.remove(Style.cssTransitionEnterDone);
+  node.classList.remove(Style.cssTransitionExitDone);
 };
 
 export default {addDefault, removeDone};

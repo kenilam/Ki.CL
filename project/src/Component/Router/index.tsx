@@ -14,7 +14,7 @@ const Router: React.FunctionComponent<IProps> = ({
   onExit,
   onExiting,
   onExited,
-  routeIndex = 0,
+  routeIndex,
   transitionIn
 }) => {
   const Component: React.FunctionComponent<IComponent> = ({
@@ -48,6 +48,6 @@ const Router: React.FunctionComponent<IProps> = ({
   );
 };
 
-export {Redirect, Route, Switch};
+export {Redirect, Route, Switch, HashRouter as Router};
 
 export default Router;

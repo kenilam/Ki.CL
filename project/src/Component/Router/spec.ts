@@ -5,5 +5,5 @@ export interface IComponent extends RouteComponentProps {
 }
 
 export interface IProps extends ITransition {
-  routeIndex?: number;
+  routeIndex: number;
 }

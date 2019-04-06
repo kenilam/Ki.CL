@@ -1,0 +1,20 @@
+$className: get($global-header, 'default');
+
+.#{$className} {
+  display: grid;
+  grid-template-areas: 'logo .';
+  grid-template-columns: get($grid, 'wide') auto;
+  grid-template-rows: 1fr;
+  padding: get($grid, 'space');
+
+  .#{get($logo, 'default')} {
+    grid-area: logo;
+  }
+
+  @include mobile() {
+    grid-template-columns: get($grid, 'narrow') auto;
+    grid-template-rows: 1fr;
+  }
+}
+
+@value globalHeader: #{$className};

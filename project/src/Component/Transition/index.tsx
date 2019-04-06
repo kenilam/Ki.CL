@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import * as React from 'react';
 import {TransitionGroup} from 'react-transition-group';
 import {IProps} from './spec';
-import {childClassName, className} from './Style';
+import Style from './Style';
 
 const Transition: React.FunctionComponent<IProps> = ({
   appear,
@@ -20,12 +20,11 @@ const Transition: React.FunctionComponent<IProps> = ({
   transitionKey
 }) => (
   <TransitionGroup
-    className={classnames(classNames, className)}
+    className={classnames(classNames, Style.transition)}
     component={component}
   >
     {CSSTransition({
       appear,
-      classNames: childClassName,
       children,
       onEnter,
       onEntered,

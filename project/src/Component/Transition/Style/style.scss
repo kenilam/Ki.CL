@@ -1,20 +1,15 @@
-.#{$transition} {
+.#{get($transition, 'default')} {
   position: relative;
 
-  > [class*='#{$css-transition}-'] {
+  > [class*='#{get($css-transition, 'default')}-'] {
     position: absolute;
 
-    &.#{$css-transition-enter} {
+    &.#{get($css-transition, 'enter.default')} {
       z-index: 200;
     }
 
-    &.#{$css-transition-exit} {
+    &.#{get($css-transition, 'exit.default')} {
       z-index: 100;
     }
   }
-}
-
-:export {
-  childclassname: #{$transitionChild};
-  classname: #{$transition};
 }

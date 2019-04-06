@@ -1,0 +1,33 @@
+$shadowDistant: 2px;
+$shadowColor: #000;
+$shadowAlpha: 0.2;
+$shadowRGBA: rgba(red($shadowColor), green($shadowColor), blue($shadowColor), $shadowAlpha);
+$shadowDistantNegative: (-($shadowDistant / 2));
+
+@mixin box-shadow($property...) {
+  box-shadow: $property;
+}
+
+@mixin shadow-center() {
+  @include box-shadow(0 1px $shadowDistant $shadowDistant $shadowRGBA);
+}
+
+@mixin shadow-left() {
+  @include box-shadow($shadowDistantNegative 1px $shadowDistant $shadowDistant $shadowRGBA);
+}
+
+@mixin shadow-right() {
+  @include box-shadow(($shadowDistant / 2) 1px $shadowDistant $shadowDistant $shadowRGBA);
+}
+
+@mixin shadow-top() {
+  @include box-shadow(0 $shadowDistantNegative $shadowDistant $shadowDistant $shadowRGBA);
+}
+
+@mixin shadow-bottom() {
+  @include box-shadow(0 ($shadowDistant / 2) $shadowDistant $shadowDistant $shadowRGBA);
+}
+
+@mixin shadow-none() {
+  @include box-shadow(0 0 0 0 transparent);
+}

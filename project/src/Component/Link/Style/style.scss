@@ -1,0 +1,7 @@
+.#{get($link, 'default')} {
+  display: block;
+
+  &.#{get($link, 'active')} {
+    pointer-events: none;
+  }
+}

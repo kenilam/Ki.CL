@@ -4,7 +4,7 @@ import {IProps} from './spec';
 import View from './View';
 
 const Works = ({}: IProps) => (
-  <section>
+  <section data-routes='works'>
     <h1>Works</h1>
     <View />
   </section>

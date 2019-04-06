@@ -1,5 +1,34 @@
-[app-root] {
-  position: relative;
+html {
+  @include font-smoothing();
+
+  color: get($black, 'light');
+  font-family: get($font, 'font-family.normal');
+  font-size: get($font, 'font-size.normal');
+  font-weight: get($font, 'font-weight.normal');
+  letter-spacing: get($font, 'letter-spacing');
+  line-height: get($font, 'line-height');
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: get($font, 'font-family.bold');
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+a,
+button,
+[href] {
+  cursor: pointer;
 }
 
 header[rule='banner'] {
@@ -12,4 +41,14 @@ main {
   min-height: 100vh;
   min-width: 100vw;
   z-index: 1;
+}
+
+[app-root] {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden;
 }

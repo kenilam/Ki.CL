@@ -1,18 +1,16 @@
-$min-grid: 2rem;
-$grid: $min-grid * 2;
-$gutter: $min-grid / 2;
-$space: $gutter / 2;
-
 // Configuration
-$mq-responsive: true;
-$mq-breakpoints: (narrow: $font_size * 23,
-mobile: $font_size * 30,
-tablet: $font_size * 46,
-desktop: $font_size * 61,
-widescreen: $font_size * 81);
-$mq-static-breakpoint: desktop;
+$mqResponsive: true;
+$mqBreakpoints: (
+  narrow: $base-font-size * 23,
+  mobile: $base-font-size * 30,
+  tablet: $base-font-size * 46,
+  desktop: $base-font-size * 61,
+  widescreen: $base-font-size * 81
+);
 
-@import '../../../../../node_modules/sass-mq';
+$mqStaticBreakpoint: desktop;
+
+@import '../../../../node_modules/sass-mq';
 
 @mixin orientation($orientation, $content: null, $props...) {
   @include mq($and: '(orientation: #{$orientation})', $props...) {

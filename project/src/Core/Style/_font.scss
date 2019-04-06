@@ -1,0 +1,38 @@
+@mixin font-smoothing($value: antialiased) {
+  @if $value==antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @else {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+$base-font: sans-serif !default;
+$base-font-size: 16px !default;
+
+$font: (
+  font-family: (
+    normal: ('omnes-pro', $base-font),
+    bold: ('acumin-pro-extra-condensed', $base-font)
+  ),
+  font-size: (
+    normal: $base-font-size,
+    large: 2rem,
+    larger: 3rem,
+    largest: 4rem,
+    small: 0.8rem,
+    smaller: 0.6rem,
+    smallest: 0.4rem,
+  ),
+  font-weight: (
+    normal: 300,
+    light: 400,
+    bold: 500,
+    bolder: 700
+  ),
+  letter-spacing: 0.08rem,
+  line-height: 1.2
+);

@@ -1,0 +1,45 @@
+@function tint($color, $percentage) {
+  @return mix(#fff, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}
+
+$black: (
+  default: #141414,
+  light: tint(#141414, 10),
+  pure: #000,
+);
+$grey: (
+  default: #b7c4cc,
+  dark: shade(#b7c4cc, 10),
+  darker: shade(#b7c4cc, 6),
+  darkest: shade(#b7c4cc, 3),
+  light: tint(#b7c4cc, 15),
+  lighter: tint(#b7c4cc, 25),
+);
+$white: (
+  default: #f1efe9,
+  dark: shade(#f1efe9, 10),
+  darker: shade(#f1efe9, 6),
+  darkest: shade(#f1efe9, 3),
+  pure: #fff,
+);
+$green: #8cdfbb;
+$blue: #b5e0e8;
+$orange: #f39943;
+$red: #be4e4d;
+$yellow: #e0b440;
+$linkedin: #0077b5;
+$twitter: #1dcaff;
+$google: #d34836;
+$behance: #053eff;
+$gitHub: #4183c4;
+$gold: #b0976d;
+
+$color: (
+  black: $black,
+  grey: $grey,
+  white: $white
+);

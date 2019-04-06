@@ -1,6 +1,7 @@
 import { context, contextRoot } from '!/Config/entry'
 import { path as appRoot } from 'app-root-path'
 import glob from 'glob'
+import StylelintFormatter from 'stylelint-formatter-pretty'
 import StyleLintPlugin from 'stylelint-webpack-plugin'
 
 const CSSLoaders = [
@@ -14,6 +15,7 @@ const CSSLoaders = [
       importLoaders: 2,
       modules: true,
       sourceMap: true,
+      localIdentName: '[local]'
     },
   },
   {
@@ -55,9 +57,11 @@ const rules = [
 
 const plugins = [
   new StyleLintPlugin({
-    files: ['**/*.scss'],
+    console: true,
     context: contextRoot,
+    files: ['**/*.scss'],
     fix: true,
+    formatter: StylelintFormatter
   })
 ]
 
