@@ -1,0 +1,14 @@
+$className: get($css-transition-style, 'slide-up');
+$enter: get($css-transition, 'enter.default');
+$enterActive: get($css-transition, 'enter.active');
+$exit: get($css-transition, 'exit.default');
+$exitActive: get($css-transition, 'exit.active');
+
+.#{$className} {
+  transition-property: transform;
+
+  &.#{$enter}:not(.#{$enterActive}),
+  &.#{$exitActive} {
+    transform: translate3d(0, -100%, 0);
+  }
+}

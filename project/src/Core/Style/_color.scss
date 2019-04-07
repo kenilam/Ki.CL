@@ -1,9 +1,9 @@
 @function tint($color, $percentage) {
-  @return mix(#fff, $color, $percentage);
+  @return mix(#ffffff, $color, $percentage);
 }
 
 @function shade($color, $percentage) {
-  @return mix(#000, $color, $percentage);
+  @return mix(#000000, $color, $percentage);
 }
 
 $black: (

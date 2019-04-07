@@ -1,9 +1,9 @@
 import {Transition} from '@Component';
 import * as React from 'react';
-import {HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import {HashRouter as RouterProvider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {IComponent, IProps} from './spec';
 
-const Router: React.FunctionComponent<IProps> = ({
+const Router: React.FC<IProps> = ({
   appear,
   classNames,
   children,
@@ -15,9 +15,10 @@ const Router: React.FunctionComponent<IProps> = ({
   onExiting,
   onExited,
   routeIndex,
-  transitionIn
+  transitionIn,
+  transitionStyle
 }) => {
-  const Component: React.FunctionComponent<IComponent> = ({
+  const Component: React.FC<IComponent> = ({
     children, location
   }) => {
     return (
@@ -33,6 +34,7 @@ const Router: React.FunctionComponent<IProps> = ({
         onExited={onExited}
         transitionIn={transitionIn}
         transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
+        transitionStyle={transitionStyle}
       >
         <Switch location={location}>{children}</Switch>
       </Transition>
@@ -42,12 +44,12 @@ const Router: React.FunctionComponent<IProps> = ({
   const Instance = withRouter(Component);
   
   return (
-    <HashRouter>
+    <RouterProvider>
       <Instance>{children}</Instance>
-    </HashRouter>
+    </RouterProvider>
   );
 };
 
-export {Redirect, Route, Switch, HashRouter as Router};
+export {Redirect, Route, Switch, RouterProvider, withRouter};
 
 export default Router;

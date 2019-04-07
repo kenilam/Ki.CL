@@ -3,8 +3,8 @@ import * as React from 'react';
 import {IProps} from './spec';
 import Work from './Work';
 
-const View: React.FunctionComponent<IProps> = () => (
-  <Router component='section' classNames='works-view' routeIndex={1}>
+const View: React.FC<IProps> = () => (
+  <Router component={React.Fragment} classNames='works-view' routeIndex={1} transitionStyle='fade'>
     {Work}
   </Router>
 );

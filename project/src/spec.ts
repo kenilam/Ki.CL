@@ -1,6 +1,6 @@
 declare module '*.scss' {
   interface IClassNames {
-    [className: string]: string;
+    [className: string]: any;
   }
   
   const classNames: IClassNames;

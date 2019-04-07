@@ -1,15 +1,16 @@
 $className: get($css-transition, 'default');
 
 [class*='#{$className}-'] {
-  transition-duration: get($duration, 'normal');
+  transition-duration: get($duration, 'fast');
+  transition-property: none;
 }
 
 // @value in use to export classNames
 // when className is not in use in CSS
 @value cssTransition: #{$className};
-@value cssTransitionEnter: #{get($css-transition, 'enter.default')};
-@value cssTransitionEnterActive: #{get($css-transition, 'enter.active')};
-@value cssTransitionEnterDone: #{get($css-transition, 'enter.done')};
-@value cssTransitionExit: #{get($css-transition, 'exit.default')};
-@value cssTransitionExitActive: #{get($css-transition, 'exit.active')};
-@value cssTransitionExitDone: #{get($css-transition, 'exit.done')};
+@value enter: #{get($css-transition, 'enter.default')};
+@value enterActive: #{get($css-transition, 'enter.active')};
+@value enterDone: #{get($css-transition, 'enter.done')};
+@value exit: #{get($css-transition, 'exit.default')};
+@value exitActive: #{get($css-transition, 'exit.active')};
+@value exitDone: #{get($css-transition, 'exit.done')};

@@ -1,0 +1,14 @@
+$className: get($css-transition-style, 'fade');
+$enter: get($css-transition, 'enter.default');
+$enterActive: get($css-transition, 'enter.active');
+$exit: get($css-transition, 'exit.default');
+$exitActive: get($css-transition, 'exit.active');
+
+.#{$className} {
+  transition-property: opacity;
+
+  &.#{$enter}:not(.#{$enterActive}),
+  &.#{$exitActive} {
+    opacity: 0;
+  }
+}

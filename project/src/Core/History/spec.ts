@@ -1,4 +1,4 @@
-import {History, UnregisterCallback} from "history";
+import {History, UnregisterCallback} from 'history';
 import LocationListener = History.LocationListener;
 
 export interface IHandler extends LocationListener {

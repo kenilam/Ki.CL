@@ -1,0 +1,15 @@
+$name: get($kicl, 'name');
+
+@font-face {
+  font-family: $name;
+  font-style: normal;
+  font-weight: normal;
+  src: url('./asset/#{$name}.eot');
+  src:
+    url('./asset/#{$name}.eot') format('embedded-opentype'),
+    url('./asset/#{$name}.ttf') format('truetype'),
+    url('./asset/#{$name}.woff') format('woff'),
+    url('./asset/#{$name}.svg#kicl') format('svg');
+}
+
+@value fontName: #{$name};

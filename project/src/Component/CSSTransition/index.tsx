@@ -3,10 +3,10 @@ import * as React from 'react';
 import {CSSTransition as Origin} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 import {IProps} from './spec';
-import Style from './Style';
+import Style, {TransitionStyle} from './Style';
 import {addEndListener, classNameModifier} from './Utility';
 
-const CSSTransition: React.FunctionComponent<IProps> = ({
+const CSSTransition: React.FC<IProps> = ({
   appear = true,
   classNames,
   children,
@@ -20,10 +20,11 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
   timeout = null,
   transitionIn,
   transitionKey,
+  transitionStyle = 'custom',
   unmountOnExit = true
 }) => {
   const onEnterHandler: EnterHandler = (node, isAppearing) => {
-    classNameModifier.addDefault(node, classNames);
+    classNameModifier.addDefault(node, Style.cssTransition);
     onEnter && onEnter(node, isAppearing);
   };
   
@@ -41,7 +42,11 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
     <Origin
       addEndListener={!timeout && addEndListener}
       appear={appear}
-      classNames={classnames(classNames, Style.cssTransition)}
+      classNames={classnames(
+        classNames,
+        TransitionStyle[transitionStyle],
+        Style.cssTransition)
+      }
       in={transitionIn}
       key={transitionKey}
       mountOnEnter={mountOnEnter}
@@ -59,4 +64,5 @@ const CSSTransition: React.FunctionComponent<IProps> = ({
   );
 };
 
+export {Style, TransitionStyle};
 export default CSSTransition;

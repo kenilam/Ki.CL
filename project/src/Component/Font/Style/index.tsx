@@ -1,3 +1,7 @@
-import style from './kicl/style.scss';
+import kicl from './KICL';
+
+const style = {
+  kicl
+};
 
 export default style;

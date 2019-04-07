@@ -24,8 +24,8 @@ const removeDone = (node: Element) => {
     return;
   }
   
-  node.classList.remove(Style.cssTransitionEnterDone);
-  node.classList.remove(Style.cssTransitionExitDone);
+  node.classList.remove(Style.enterDone);
+  node.classList.remove(Style.exitDone);
 };
 
 export default {addDefault, removeDone};

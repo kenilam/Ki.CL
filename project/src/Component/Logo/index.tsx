@@ -7,7 +7,7 @@ import Style from './Style';
 
 const {home: {path}} = view;
 
-const Logo: React.FunctionComponent<IProps> = ({
+const Logo: React.FC<IProps> = ({
   className: additionalClassName,
   component = 'h1'
 }) => (

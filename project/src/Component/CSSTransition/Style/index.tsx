@@ -1,3 +1,8 @@
+import {IProps} from './spec';
 import style from './style.scss';
+import TransitionStyle from './TransitionStyle';
 
-export default style;
+const Style: IProps = style;
+
+export {TransitionStyle};
+export default Style;
