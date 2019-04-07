@@ -1,8 +1,8 @@
+interface IClassNames {
+  [index: string]: string;
+}
+
 declare module '*.scss' {
-  interface IClassNames {
-    [className: string]: any;
-  }
-  
   const classNames: IClassNames;
   export default classNames;
 }

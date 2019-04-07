@@ -1,3 +1,1 @@
-export interface IProps {
-  globalHeader: string;
-}
+export interface IProps extends IClassNames {}

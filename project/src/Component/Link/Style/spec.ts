@@ -1,4 +1,1 @@
-export interface IProps {
-  link: string;
-  isActive: string;
-}
+export interface IProps extends IClassNames {}

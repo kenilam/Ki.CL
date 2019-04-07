@@ -31,7 +31,7 @@ const Loaders = {
 const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new ForkTsCheckerWebpackPlugin({
-    async: false,
+    async: true,
     tsconfig: tsconfig,
     tslint: tslint,
     tslintAutoFix: true

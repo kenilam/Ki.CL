@@ -1,3 +1,1 @@
-export interface IProps {
-  fontName: string;
-}
+export interface IProps extends IClassNames {}
