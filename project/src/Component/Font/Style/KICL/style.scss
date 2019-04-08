@@ -11,5 +11,3 @@ $name: get($kicl, 'name');
     url('./asset/#{$name}.woff') format('woff'),
     url('./asset/#{$name}.svg#kicl') format('svg');
 }
-
-@value fontName: #{$name};

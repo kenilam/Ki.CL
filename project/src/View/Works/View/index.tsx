@@ -1,10 +1,15 @@
 import {Router} from '@Component';
+import {TransitionStyleName} from '@Component/CSSTransition';
 import * as React from 'react';
 import {IProps} from './spec';
 import Work from './Work';
 
 const View: React.FC<IProps> = () => (
-  <Router component={React.Fragment} classNames='works-view' routeIndex={1} transitionStyle='fade'>
+  <Router
+    classNames='works-view'
+    routeIndex={1}
+    transitionStyle={TransitionStyleName.fade}
+  >
     {Work}
   </Router>
 );

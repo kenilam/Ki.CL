@@ -1,8 +1,6 @@
 import { context, contextRoot } from '!/Config/entry'
 import { path as appRoot } from 'app-root-path'
-
 import fs from 'fs'
-
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 const alias = {
@@ -39,6 +37,8 @@ fs.readdirSync(context).forEach((dir) => {
   alias[dir] = path
 })
 
+alias['react-dom'] = '@hot-loader/react-dom'
+
 const resolve = {
   alias,
   extensions,
@@ -46,15 +46,4 @@ const resolve = {
   plugins,
 }
 
-export {
-  resolve,
-}
-export default {
-  resolve: Object.assign(
-    resolve, {
-      alias: Object.assign(resolve.alias, {
-        ['react-dom']: '@hot-loader/react-dom'
-      })
-    }
-  ),
-}
+export default resolve

@@ -1,6 +1,5 @@
-import { plugins, resolve } from './development'
+import resolve from './development'
 
-export default {
-  plugins,
-  resolve
-}
+delete resolve.alias['react-dom']
+
+export default resolve

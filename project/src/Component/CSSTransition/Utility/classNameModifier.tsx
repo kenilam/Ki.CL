@@ -19,13 +19,21 @@ const addDefault = (
   node.classList.add(classnames(additionalClassNames));
 };
 
-const removeDone = (node: Element) => {
+const removeDone = (
+  node: Element,
+  additionalClassNames: string | CSSTransitionClassNames
+) => {
   if (!node) {
     return;
   }
   
-  node.classList.remove(Style.enterDone);
-  node.classList.remove(Style.exitDone);
+  node.classList.remove(Style.cssTransition, Style.enterDone, Style.exitDone);
+  
+  if (!additionalClassNames) {
+    return;
+  }
+  
+  node.classList.remove(classnames(additionalClassNames));
 };
 
 export default {addDefault, removeDone};

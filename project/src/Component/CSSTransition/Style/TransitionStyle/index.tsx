@@ -2,6 +2,15 @@ import './custom.scss';
 import './fade.scss';
 import './slide-up.scss';
 import {IProps} from './spec';
-import style from './style.scss';
+import value from './value.scss';
 
-export default style as IProps;
+let TransitionStyleName: Partial<IProps> = {};
+
+Object.keys(value).forEach(
+  name => {
+    TransitionStyleName[name as keyof IProps] = name;
+  }
+);
+
+export {TransitionStyleName};
+export default value as IProps;

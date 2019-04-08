@@ -1,8 +1,7 @@
 import {IProps} from './spec';
-import style from './style.scss';
-import TransitionStyle from './TransitionStyle';
+import './style.scss';
+import TransitionStyle, {TransitionStyleName} from './TransitionStyle';
+import value from './value.scss';
 
-const Style: IProps = style;
-
-export {TransitionStyle};
-export default Style;
+export {TransitionStyle, TransitionStyleName};
+export default value as IProps;

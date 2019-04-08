@@ -31,12 +31,12 @@ const devConfig = webpackMerge(
   javascript,
   optimization,
   output,
-  resolve,
   stylesheet,
 )
 
 const config = webpackMerge(devConfig, devServer, {
-  mode
+  mode,
+  resolve,
 })
 
 process.env.NODE_ENV = mode

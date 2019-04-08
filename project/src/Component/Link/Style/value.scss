@@ -1,0 +1,2 @@
+@value link: #{get($link, 'default')};
+@value active: #{get($link, 'active')};

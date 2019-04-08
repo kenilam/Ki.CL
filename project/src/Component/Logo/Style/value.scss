@@ -1,0 +1,2 @@
+@value logo: #{get($logo, 'default')};
+@value square: #{get($logo, 'square')};

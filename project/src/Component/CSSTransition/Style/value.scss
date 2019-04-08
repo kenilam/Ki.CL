@@ -1,0 +1,7 @@
+@value cssTransition: #{get($css-transition, 'default')};
+@value enter: #{get($css-transition, 'enter.default')};
+@value enterActive: #{get($css-transition, 'enter.active')};
+@value enterDone: #{get($css-transition, 'enter.done')};
+@value exit: #{get($css-transition, 'exit.default')};
+@value exitActive: #{get($css-transition, 'exit.active')};
+@value exitDone: #{get($css-transition, 'exit.done')};

@@ -1,10 +1,8 @@
 import { Args } from '!/Utilities'
-
 import config from '^/ki-cl.config'
 import open from 'opn'
 import remotedev from 'remotedev-server'
 import webpack from 'webpack'
-
 import { srcRoot as assetPath } from './asset'
 import { srcRoot as contentPath } from './content'
 import { publicPath } from './output'

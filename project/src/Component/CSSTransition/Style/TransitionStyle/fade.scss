@@ -3,12 +3,14 @@ $enter: get($css-transition, 'enter.default');
 $enterActive: get($css-transition, 'enter.active');
 $exit: get($css-transition, 'exit.default');
 $exitActive: get($css-transition, 'exit.active');
+$exitDone: get($css-transition, 'exit.done');
 
 .#{$className} {
   transition-property: opacity;
 
   &.#{$enter}:not(.#{$enterActive}),
-  &.#{$exitActive} {
+  &.#{$exitActive},
+  &.#{$exitDone} {
     opacity: 0;
   }
 }

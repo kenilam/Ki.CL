@@ -1,0 +1,9 @@
+$enter: get($css-transition, 'enter.default');
+$exit: get($css-transition, 'exit.default');
+
+[data-routes='works'] {
+  &.#{$enter},
+  &.#{$exit} {
+    position: relative;
+  }
+}

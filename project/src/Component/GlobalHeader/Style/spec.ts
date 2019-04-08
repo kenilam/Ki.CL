@@ -1,1 +1,2 @@
-export interface IProps extends IClassNames {}
+export interface IProps extends IClassNames {
+}

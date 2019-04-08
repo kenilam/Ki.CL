@@ -1,15 +1,19 @@
+$enter: get($css-transition, 'enter.default');
+$exit: get($css-transition, 'exit.default');
+
 .#{get($transition, 'default')} {
   position: relative;
 
-  > [class*='#{get($css-transition, 'default')}-'] {
+  > .#{$enter},
+  > .#{$exit} {
     position: absolute;
+  }
 
-    &.#{get($css-transition, 'enter.default')} {
-      z-index: 200;
-    }
+  > .#{$enter} {
+    z-index: 200;
+  }
 
-    &.#{get($css-transition, 'exit.default')} {
-      z-index: 100;
-    }
+  > .#{$exit} {
+    z-index: 100;
   }
 }

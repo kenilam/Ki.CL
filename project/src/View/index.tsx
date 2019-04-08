@@ -1,12 +1,18 @@
 import {Router} from '@Component';
+import {TransitionStyleName} from '@Component/CSSTransition';
 import * as React from 'react';
 import Home from './Home';
 import PageNotFound from './PageNotFound';
 import {IProps} from './spec';
+import Style from './Style';
 import Works from './Works';
 
 const View: React.FC<IProps> = () => (
-  <Router component='main' classNames='view' routeIndex={0} transitionStyle='fade'>
+  <Router
+    classNames={Style.view}
+    routeIndex={0}
+    transitionStyle={TransitionStyleName.fade}
+  >
     {Home}
     {Works}
     {PageNotFound}

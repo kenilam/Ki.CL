@@ -1,6 +1,5 @@
 import {IProps} from './spec';
-import style from './style.scss';
+import './style.scss';
+import value from './value.scss';
 
-const Style: IProps = style;
-
-export default Style;
+export default value as IProps;

@@ -13,7 +13,7 @@ const Link: React.FC<IProps> = ({
 }) => {
   const Element = () => (
     <NavLink
-      activeClassName={Style.isActive}
+      activeClassName={Style.active}
       className={Style.link}
       exact={true}
       onClick={onClick}

@@ -1,13 +1,9 @@
 import colors from 'colors'
 import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
-
-import { clean, } from './Config'
-
+import { clean, resolve, } from './Config'
 import { browser, browserInstance } from './Config/prodServer'
-
 import { devConfig } from './development.babel'
-
 import { Args } from './Utilities'
 
 const mode = process.env.NODE_ENV || 'production'
@@ -15,15 +11,16 @@ const watch = !Args.noWatch
 
 const config = webpackMerge(devConfig, clean, {
   mode,
-  watch
+  resolve,
+  watch,
 })
 
 const FAILURE_MESSAGE = colors.red('Failures while starting application on production environment')
 const SUCCESS_MESSAGE = colors.green('App compiled successfully')
 
 const COLORS = {
-  red: '#D8000C',
-  yellow: '#9F6000'
+  red: '#d8000c',
+  yellow: '#9f6000'
 }
 
 class StatsReports {
@@ -46,7 +43,6 @@ class StatsReports {
         message: colors[color](concatMessage)
       })
     }
-    
     
     return this.results
   }

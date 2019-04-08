@@ -1,4 +1,6 @@
 $className: get($global-header, 'default');
+$enter: get($css-transition, 'enter.default');
+$exit: get($css-transition, 'exit.default');
 
 .#{$className} {
   display: grid;
@@ -6,6 +8,13 @@ $className: get($global-header, 'default');
   grid-template-columns: get($grid, 'wide') auto;
   grid-template-rows: 1fr;
   padding: get($grid, 'space');
+
+  &.#{$enter},
+  &.#{$exit} {
+    .#{get($transition, 'default')} & {
+      position: relative;
+    }
+  }
 
   .#{get($logo, 'default')} {
     grid-area: logo;
@@ -16,5 +25,3 @@ $className: get($global-header, 'default');
     grid-template-rows: 1fr;
   }
 }
-
-@value globalHeader: #{$className};

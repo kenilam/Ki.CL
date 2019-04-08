@@ -1,14 +1,21 @@
-import {view} from '$resources/data.json';
-import {Route} from '@Component/Router';
+import {GraphicLayer} from '@Component';
+import {Route, withRouter} from '@Component/Router';
 import * as React from 'react';
-import {IProps} from './spec';
+import methods from './Methods';
+import {IComponent, IProps} from './spec';
+import {connector} from './State';
+import './Style';
 
-const {home} = view;
-
-const Home: React.FC<IProps> = ({content = home.content}) => (
-  <section data-routes='home'>
-    {content.heading}
-  </section>
+const Home: React.FC<IProps> = ({windowSizes: {height, width}}) => (
+  <GraphicLayer height={height} width={width} />
 );
 
-export default <Route path='/' exact={true} render={Home} />;
+const Instance = connector(withRouter(methods(Home)));
+
+const Component: React.FC<IComponent> = () => (
+  <main data-routes='home'>
+    <Instance />
+  </main>
+);
+
+export default <Route path='/' exact={true} render={Component} />;
