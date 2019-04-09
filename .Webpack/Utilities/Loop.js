@@ -36,7 +36,7 @@ export default (...args) => {
       ),
     ),
   )
-  .map(node => (Array.isArray(node) ? node.map(props => props.value) : [node.value]))
+  .map(node => (Array.isArray(node) ? node.map(props => props.text) : [node.text]))
   .map(result =>
     // eslint-disable-next-line
     (callback ? callback(...result) : result))

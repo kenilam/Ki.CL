@@ -1,7 +1,2 @@
-import kicl from './KICL';
+import './KICL';
 
-const style = {
-  kicl
-};
-
-export default style;

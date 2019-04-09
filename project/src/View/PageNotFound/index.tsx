@@ -1,6 +1,6 @@
 import {Redirect, Route} from '@Component/Router';
 import * as React from 'react';
-import resources from 'resources/data.json';
+import resources from '$resources/data.json';
 import {IProps} from './spec';
 
 const {view: {home: {path}}} = resources;

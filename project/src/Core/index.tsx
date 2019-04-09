@@ -1,31 +1,19 @@
 import * as React from 'react';
-import History from './History';
+import {lifecycle, methods, staticMethods} from './Method';
 import {loadPolyfill} from './Polyfill';
-import {IProps, IState} from './spec';
+import {IProps} from './spec';
 import State from './State';
 import './Style';
 
-class Core extends React.PureComponent<IProps, IState> {
-  public static getDerivedStateFromError(error: Error) {
-    return {error};
-  }
+@lifecycle(methods)
+class Core extends React.PureComponent<IProps> {
+  static getDerivedStateFromError = staticMethods.getDerivedStateFromError;
   
-  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
-    console.error(error, errorInfo);
-  }
-  
-  public componentDidMount(): void {
-    History.create();
-  }
-  
-  public componentWillUnmount(): void {
-    History.remove();
-  }
-  
-  public render() {
+  render() {
     const {children} = this.props;
-    
-    return <State>{children}</State>;
+    return (
+      <State>{children}</State>
+    );
   }
 }
 

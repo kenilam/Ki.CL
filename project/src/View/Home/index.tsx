@@ -1,16 +1,18 @@
-import {GraphicLayer} from '@Component';
 import {Route, withRouter} from '@Component/Router';
 import * as React from 'react';
-import methods from './Methods';
+import {Graphic} from './Component';
+import method from './Method';
 import {IComponent, IProps} from './spec';
 import {connector} from './State';
 import './Style';
 
-const Home: React.FC<IProps> = ({windowSizes: {height, width}}) => (
-  <GraphicLayer height={height} width={width} />
+const Home: React.FC<IProps> = () => (
+  <React.Fragment>
+    <Graphic />
+  </React.Fragment>
 );
 
-const Instance = connector(withRouter(methods(Home)));
+const Instance = connector(withRouter(method(Home)));
 
 const Component: React.FC<IComponent> = () => (
   <main data-routes='home'>

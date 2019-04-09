@@ -1,3 +1,2 @@
-import style from './Style';
+import './Style';
 
-export default {style};
