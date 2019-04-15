@@ -1,15 +1,13 @@
-import {Route, withRouter} from '@Component/Router';
-import * as React from 'react';
-import {Graphic} from './Component';
+import { Route, withRouter } from '@Component/Router';
+import React from 'react';
 import method from './Method';
-import {IComponent, IProps} from './spec';
-import {connector} from './State';
+import { IComponent, IProps } from './spec';
+import { connector } from './State';
 import './Style';
+import { Graphic } from './Component';
 
 const Home: React.FC<IProps> = () => (
-  <React.Fragment>
-    <Graphic />
-  </React.Fragment>
+  <Graphic />
 );
 
 const Instance = connector(withRouter(method(Home)));

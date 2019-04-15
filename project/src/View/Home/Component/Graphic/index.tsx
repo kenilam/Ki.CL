@@ -1,24 +1,35 @@
-import {view} from '$resources/data.json';
-import {IHomeContent} from "$resources/spec";
-import GraphicLayer, {Text} from '@Component/GraphicLayer';
-import {connector} from '@View/Home/State';
-import * as React from 'react';
-import {IProps} from './spec';
-import Style from './Style';
+import WebGL from '@Component/WebGL';
+import { connector } from '@View/Home/State';
+import React from 'react';
+import { IProps } from './spec';
+import { IRenderProps } from '@Component/WebGL/spec';
 
-const {content: {heading}} = view.home as IHomeContent;
+const Graphic: React.FC<IProps> = ({ windowSizes: { height, width } }) => {
+  const render = async ({ app }: IRenderProps) => {
+    const asset = await app.assetLoader({
+      name: 'background',
+      url: '/asset/image/london.whitechapel.jpg'
+    });
 
-const Graphic: React.FC<IProps> = ({windowSizes: {height, width}}) => (
-  <GraphicLayer height={height} width={width}>
-    <Text
-      anchor={[0.5, 0.5]}
-      style={Style.text}
-      text={heading}
-      x={width / 2}
-      y={height / 2}
+    const background = PIXI.Sprite.fromImage(asset.url);
+
+    background.anchor.x = 0;
+    background.anchor.y = 0;
+
+    background.position.x = 0;
+    background.position.y = 0;
+
+    app.stage.addChild(background);
+  }
+
+  return (
+    <WebGL
+      height={height}
+      render={render}
+      width={width}
     />
-  </GraphicLayer>
-);
+  );
+}
 
 const Component = connector(Graphic);
 

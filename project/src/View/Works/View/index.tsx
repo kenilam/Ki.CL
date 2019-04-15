@@ -1,7 +1,7 @@
-import {Router} from '@Component';
-import {TransitionStyleName} from '@Component/CSSTransition';
-import * as React from 'react';
-import {IProps} from './spec';
+import { Router } from '@Component';
+import { TransitionStyleName } from '@Component/CSSTransition';
+import React from 'react';
+import { IProps } from './spec';
 import Work from './Work';
 
 const View: React.FC<IProps> = () => (

@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import * as React from 'react';
-import {CSSTransition as Origin} from 'react-transition-group';
-import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-import {IProps} from './spec';
-import Style, {TransitionStyle, TransitionStyleName} from './Style';
-import {addEndListener, classNameModifier} from './Utility';
+import React from 'react';
+import { CSSTransition as Origin } from 'react-transition-group';
+import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
+import { IProps } from './spec';
+import Style, { TransitionStyle, TransitionStyleName } from './Style';
+import { addEndListener, classNameModifier } from './Utility';
 
 const CSSTransition: React.FC<IProps> = ({
   appear = true,
@@ -27,17 +27,17 @@ const CSSTransition: React.FC<IProps> = ({
     classNameModifier.addDefault(node, TransitionStyle[transitionStyle]);
     onEnter && onEnter(node, isAppearing);
   };
-  
+
   const onEnteredHandler: EnterHandler = (node, isAppearing) => {
     classNameModifier.removeDone(node, TransitionStyle[transitionStyle]);
     onEntered && onEntered(node, isAppearing);
   };
-  
+
   const onExitHandler: ExitHandler = (node) => {
     classNameModifier.addDefault(node, TransitionStyle[transitionStyle]);
     onExit && onExit(node);
   };
-  
+
   return (
     <Origin
       addEndListener={!timeout && addEndListener}
@@ -60,5 +60,5 @@ const CSSTransition: React.FC<IProps> = ({
   );
 };
 
-export {Style, TransitionStyle, TransitionStyleName};
+export { Style, TransitionStyle, TransitionStyleName };
 export default CSSTransition;

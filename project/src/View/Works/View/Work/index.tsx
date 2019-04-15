@@ -1,10 +1,10 @@
-import {Route} from '@Component/Router';
-import * as React from 'react';
-import {IProps} from './spec';
+import { Route } from '@Component/Router';
+import React from 'react';
+import { IProps } from './spec';
 
-const Work = ({match}: IProps) => {
-  const {params: {projectId}} = match;
-  
+const Work = ({ match }: IProps) => {
+  const { params: { projectId } } = match;
+
   return (
     <section data-routes={`works.${projectId}`}>
       {projectId}

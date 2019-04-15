@@ -1,9 +1,9 @@
-import {Router} from '@Component';
-import {TransitionStyleName} from '@Component/CSSTransition';
-import * as React from 'react';
+import { Router } from '@Component';
+import { TransitionStyleName } from '@Component/CSSTransition';
+import React from 'react';
 import Home from './Home';
 import PageNotFound from './PageNotFound';
-import {IProps} from './spec';
+import { IProps } from './spec';
 import Style from './Style';
 import Works from './Works';
 

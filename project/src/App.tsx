@@ -1,5 +1,5 @@
-import {GlobalHeader} from '@Component';
-import * as React from 'react';
+import { GlobalHeader } from '@Component';
+import React from 'react';
 import Core from './Core';
 import View from './View';
 
@@ -12,5 +12,5 @@ const App = () => (
   </Core>
 );
 
-export {appRoot};
+export { appRoot };
 export default App;
