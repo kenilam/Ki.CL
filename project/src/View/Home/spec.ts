@@ -1,9 +1,9 @@
-import { RouteComponentProps } from 'react-router';
-
-export interface IComponent extends RouteComponentProps {
-
-}
-
-export interface IProps extends IComponent {
-
+declare namespace IHome {
+  import {RouteComponentProps} from './spec.import';
+  
+  interface Component extends RouteComponentProps {
+  }
+  
+  interface Props extends Component {
+  }
 }

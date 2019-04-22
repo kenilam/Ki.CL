@@ -1,7 +1,7 @@
-import { Transition } from '@Component';
+import {Transition} from '@Component';
 import React from 'react';
-import { HashRouter as RouterProvider, Redirect, Route, Switch, withRouter } from 'react-router-dom';
-import { IComponent, IProps } from './spec';
+import {HashRouter as RouterProvider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import {IComponent, IProps} from './spec';
 
 const Router: React.FC<IProps> = ({
   appear,
@@ -40,9 +40,9 @@ const Router: React.FC<IProps> = ({
       </Transition>
     );
   };
-
+  
   const Instance = withRouter(Component);
-
+  
   return (
     <RouterProvider>
       <Instance>{children}</Instance>
@@ -50,6 +50,6 @@ const Router: React.FC<IProps> = ({
   );
 };
 
-export { Redirect, Route, Switch, RouterProvider, withRouter };
+export {Redirect, Route, Switch, RouterProvider, withRouter};
 
 export default Router;

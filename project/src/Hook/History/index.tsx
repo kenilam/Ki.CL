@@ -1,15 +1,12 @@
 import {view} from '$resources/data.json';
-import {createHashHistory} from 'history';
-import {IHandler, IRemoveListener} from './spec';
-
-let remover: IRemoveListener;
+import {createHashHistory, Location} from 'history';
+import {useLayoutEffect} from 'react';
 
 const {body} = document;
-
 const defaultRoute = view.home.name.toLowerCase();
 const history = createHashHistory();
 
-const handler: IHandler = location => {
+const handler = (location: Location) => {
   const {enteredRoutes} = body.dataset;
   
   if (enteredRoutes) {
@@ -19,17 +16,12 @@ const handler: IHandler = location => {
   body.dataset.enteredRoutes = (location.pathname.substr(1) || defaultRoute).replace('/', '.');
 };
 
-const create = () => {
-  remover = history.listen(handler);
-  handler(history.location, null);
-};
-
-const remove = () => {
-  if (!remover) {
-    return;
-  }
-  
-  remover();
-};
-
-export default {create, remove};
+export default () => {
+  useLayoutEffect(() => {
+    const remove = history.listen(handler);
+    
+    return () => {
+      remove();
+    }
+  });
+}

@@ -1,4 +1,4 @@
-import { GlobalHeader } from '@Component';
+import {GlobalHeader} from '@Component';
 import React from 'react';
 import Core from './Core';
 import View from './View';
@@ -8,9 +8,9 @@ const appRoot = document.querySelector('[app-root]');
 const App = () => (
   <Core>
     <GlobalHeader />
-    <View>view</View>
+    <View />
   </Core>
 );
 
-export { appRoot };
+export {appRoot};
 export default App;

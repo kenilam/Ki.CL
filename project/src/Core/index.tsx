@@ -1,25 +1,20 @@
-import React, { useLayoutEffect } from 'react';
-import History from './History';
-import State from './State';
-import { loadPolyfill } from './Polyfill';
+import {history} from '@Hook';
+import React from 'react';
+import {loadPolyfill} from './Polyfill';
+
+import {IProps} from './spec';
 
 import './Style';
 
-import { IProps } from './spec';
-
-const Core = ({ children }: IProps) => {
-  useLayoutEffect(() => {
-    History.create();
-
-    return () => {
-      History.remove();
-    }
-  });
-
+const Core = ({children}: IProps) => {
+  history();
+  
   return (
-    <State>{children}</State>
-  )
-}
+    <>
+      {children}
+    </>
+  );
+};
 
-export { loadPolyfill };
+export {loadPolyfill};
 export default Core;
