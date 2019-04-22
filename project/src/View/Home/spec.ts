@@ -1,10 +1,9 @@
-import {IHomeContent} from '$resources/spec';
-import {RouteComponentProps} from 'react-router';
-import {IUpdateWindowSizes, IWindowSizes} from "./State/spec";
+import { RouteComponentProps } from 'react-router';
 
-export interface IComponent {
+export interface IComponent extends RouteComponentProps {
+
 }
 
-export interface IProps extends RouteComponentProps, IWindowSizes, IUpdateWindowSizes, IHomeContent {
+export interface IProps extends IComponent {
 
 }

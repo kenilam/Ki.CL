@@ -1,5 +1,10 @@
 $css-transition: (
   default: 'css-transition',
+  appear: (
+    default: 'css-transition-appear',
+    active: 'css-transition-appear-active',
+    done: 'css-transition-appear-done',
+  ),
   enter: (
     default: 'css-transition-enter',
     active: 'css-transition-enter-active',

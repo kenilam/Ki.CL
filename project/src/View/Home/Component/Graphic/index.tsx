@@ -1,10 +1,8 @@
-import WebGL from '@Component/WebGL';
-import { connector } from '@View/Home/State';
+import WebGL, { IRenderProps } from '@Component/WebGL';
 import React from 'react';
 import { IProps } from './spec';
-import { IRenderProps } from '@Component/WebGL/spec';
 
-const Graphic: React.FC<IProps> = ({ windowSizes: { height, width } }) => {
+const Graphic: React.FC<IProps> = ({ height, width }) => {
   const render = async ({ app }: IRenderProps) => {
     const asset = await app.assetLoader({
       name: 'background',
@@ -31,6 +29,4 @@ const Graphic: React.FC<IProps> = ({ windowSizes: { height, width } }) => {
   );
 }
 
-const Component = connector(Graphic);
-
-export default Component;
+export default Graphic;

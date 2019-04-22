@@ -1,20 +1,24 @@
-import React from 'react';
-import { lifecycle, methods, staticMethods } from './Method';
-import { loadPolyfill } from './Polyfill';
-import { IProps } from './spec';
+import React, { useLayoutEffect } from 'react';
+import History from './History';
 import State from './State';
+import { loadPolyfill } from './Polyfill';
+
 import './Style';
 
-@lifecycle(methods)
-class Core extends React.PureComponent<IProps> {
-  static getDerivedStateFromError = staticMethods.getDerivedStateFromError;
+import { IProps } from './spec';
 
-  render() {
-    const { children } = this.props;
-    return (
-      <State>{children}</State>
-    );
-  }
+const Core = ({ children }: IProps) => {
+  useLayoutEffect(() => {
+    History.create();
+
+    return () => {
+      History.remove();
+    }
+  });
+
+  return (
+    <State>{children}</State>
+  )
 }
 
 export { loadPolyfill };

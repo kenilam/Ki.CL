@@ -1,12 +1,10 @@
-import { IProps, IAssetLoaderProps, IApp } from './spec';
+import { IAssetLoaderProps, IApp, IProps, IRenderProps, } from './spec';
 import React, { PureComponent, RefObject, createRef } from 'react';
-import { boundMethod } from 'autobind-decorator';
-
-const { devicePixelRatio } = window;
+import Style from './Style';
 
 const OPTIONS = {
   autoResize: true,
-  resolution: devicePixelRatio,
+  resolution: window.devicePixelRatio,
   transparent: true
 }
 
@@ -40,28 +38,31 @@ class WebGL extends PureComponent<IProps> {
     render({ app: this.app });
   }
 
-  @boundMethod
-  private resizeHandler() {
-    const { height, width } = this.props;
-
+  public componentDidUpdate({ height, width }: IProps) {
     this.app.renderer.resize(width, height);
   }
 
   public componentDidMount() {
-    window.addEventListener('resize', this.resizeHandler);
     this.init();
   }
 
   public componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeHandler);
     window.clearTimeout(this.renderTimeout);
   }
 
   public render() {
     return (
-      <div className='webgl' ref={this.ref} />
+      <div className={Style.webGL} ref={this.ref} />
     );
   }
 }
 
+const app: IApp = new PIXI.Application(OPTIONS);
+const ref: RefObject<HTMLDivElement> = createRef();
+
+const WebGL = () => (
+  <div className={Style.webGL} ref={ref} />
+);
+
+export { IRenderProps }
 export default WebGL;

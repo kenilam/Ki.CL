@@ -10,5 +10,4 @@ const methods = {
   }
 };
 
-export { lifecycle, methods };
 export default lifecycle(methods);

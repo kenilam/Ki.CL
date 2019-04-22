@@ -1,6 +1,6 @@
-import {asyncReducers, connect} from '@Core/State';
-import {IMapStateToProps} from "@View/Home/State/spec";
-import {Dispatch} from "redux";
+import { asyncReducers, connect } from '@Core/State';
+import { IMapStateToProps } from "./spec";
+import { Dispatch } from "redux";
 
 import windowSizes from './windowSizes';
 
@@ -23,4 +23,4 @@ const connector = connect(
 
 asyncReducers(reducers);
 
-export {connector};
+export { connector };
