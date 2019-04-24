@@ -2,11 +2,11 @@ import classnames from 'classnames';
 import React from 'react';
 import {CSSTransition as Origin} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-import {IProps} from './spec';
+import * as ICSSTransition from './spec';
 import Style, {TransitionStyle, TransitionStyleName} from './Style';
 import {addEndListener, classNameModifier} from './Utility';
 
-const CSSTransition: React.FC<IProps> = ({
+const CSSTransition: React.FC<ICSSTransition.Props> = ({
   appear = true,
   classNames,
   children,

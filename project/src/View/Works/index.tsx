@@ -1,10 +1,10 @@
 import {Route} from '@Component/Router';
 import React from 'react';
-import {IProps} from './spec';
+import * as IWorks from './spec';
 import './Style';
 import View from './View';
 
-const Works: React.FC<IProps> = () => (
+const Works: React.FC<IWorks.Props> = () => (
   <main data-routes='works'>
     <h1>Works</h1>
     <View />

@@ -1,20 +1,22 @@
-import {Window} from './spec';
+import * as Polyfill from './spec';
+
+const {
+  IntersectionObserver,
+  AbortController,
+  fetch: Fetch
+}: Polyfill.Window = window;
 
 async function loadPolyfill(): Promise<any> {
   try {
-    if (typeof (window as Window).AbortController === 'undefined') {
+    if (typeof AbortController === 'undefined') {
       await import('abortcontroller-polyfill/dist/polyfill-patch-fetch');
     }
     
-    if (typeof (window as Window).IntersectionObserver === 'undefined') {
+    if (typeof IntersectionObserver === 'undefined') {
       await import('intersection-observer');
     }
     
-    if (typeof (window as Window).Promise === 'undefined') {
-      await import('promise-polyfill/src/polyfill');
-    }
-    
-    if (typeof (window as Window).fetch === 'undefined') {
+    if (typeof Fetch === 'undefined') {
       await import('unfetch/polyfill');
     }
     

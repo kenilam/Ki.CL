@@ -1,18 +1,16 @@
-import {view} from '$resources/data.json';
 import {CSSTransition, Logo} from '@Component';
 import {TransitionStyleName} from '@Component/CSSTransition';
-import {RouterProvider, withRouter} from '@Component/Router';
+import {Provider, withRouter} from '@Component/Router';
 import React from 'react';
-import {IComponent, IProps} from './spec';
+import * as IGlobalHeader from './spec';
 import Style from './Style';
 
-const {home: {path}} = view;
-
-const Component: React.FC<IComponent> = ({
-  location
+const Component: React.FC<IGlobalHeader.Component> = ({
+  location,
+  transitionInPaths
 }) => (
   <CSSTransition
-    transitionIn={location.pathname !== path}
+    transitionIn={transitionInPaths.indexOf(location.pathname) > -1}
     transitionStyle={TransitionStyleName.slideUp}
   >
     <header role='banner' className={Style.globalHeader}>
@@ -23,10 +21,10 @@ const Component: React.FC<IComponent> = ({
 
 const Instance = withRouter(Component);
 
-const GlobalHeader: React.FC<IProps> = () => (
-  <RouterProvider>
-    <Instance />
-  </RouterProvider>
+const GlobalHeader: React.FC<IGlobalHeader.Props> = ({transitionInPaths}) => (
+  <Provider>
+    <Instance transitionInPaths={transitionInPaths} />
+  </Provider>
 );
 
 export default GlobalHeader;

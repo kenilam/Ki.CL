@@ -1,9 +1,11 @@
-declare namespace IHome {
-  import {RouteComponentProps} from './spec.import';
-  
-  interface Component extends RouteComponentProps {
+import {RouteComponentProps} from 'react-router';
+
+declare module IHome {
+  export interface Component extends RouteComponentProps {
   }
   
-  interface Props extends Component {
+  export interface Props extends Component {
   }
 }
+
+export = IHome;

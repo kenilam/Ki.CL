@@ -1,12 +1,16 @@
 import {ElementType} from 'react';
 
-interface IClassName {
-  className?: string;
+declare module ILogo {
+  interface ClassNames extends IClassNames {
+  }
+  
+  interface Component {
+    component?: ElementType;
+  }
+  
+  interface Props extends Component {
+    className?: string;
+  }
 }
 
-interface IComponent {
-  component?: ElementType;
-}
-
-export interface IProps extends IClassName, IComponent {
-}
+export = ILogo;

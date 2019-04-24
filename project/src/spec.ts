@@ -7,6 +7,11 @@ declare module '*.scss' {
   export default classNames;
 }
 
+declare module '*.json' {
+  const value: any;
+  export default value;
+}
+
 declare module 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 declare module 'intersection-observer';
 declare module 'get-transition-duration';

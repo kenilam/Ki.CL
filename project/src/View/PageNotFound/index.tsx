@@ -1,12 +1,12 @@
 import resources from '$resources/data.json';
 import {Redirect, Route} from '@Component/Router';
 import React from 'react';
-import {IProps} from './spec';
+import * as IPageNotFound from './spec';
 
 const {view: {home: {path}}} = resources;
 
-const PageNotFound = ({history}: IProps) => {
-  // To prevents react-router as follow:
+const PageNotFound = ({history}: IPageNotFound.Props) => {
+  // To prevents react-router redirect twice with the warning as follow:
   // Warning: You tried to redirect to the same route you're currently on:
   return history.location.pathname !== path
     ? <Redirect to={path} />

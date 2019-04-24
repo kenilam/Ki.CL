@@ -1,7 +1,14 @@
 import {ElementType} from 'react';
 import {NavLinkProps} from 'react-router-dom';
 
-export interface IProps extends NavLinkProps {
-  className?: string;
-  component?: ElementType;
+declare module ILink {
+  interface ClassNames extends IClassNames {
+  }
+  
+  interface Props extends NavLinkProps {
+    className?: string;
+    component?: ElementType;
+  }
 }
+
+export = ILink;

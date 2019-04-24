@@ -1,4 +1,4 @@
-declare namespace IWindowSizes {
+declare module IWindowSizes {
   type Type = 'UPDATE_WINDOW_SIZES' | 'UPDATE_WINDOW';
   
   interface Actions extends Types, State {
@@ -17,3 +17,5 @@ declare namespace IWindowSizes {
     width: number,
   }
 }
+
+export = IWindowSizes;

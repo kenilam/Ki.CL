@@ -1,4 +1,8 @@
 import {RouteComponentProps} from 'react-router';
 
-export interface IProps extends RouteComponentProps {
+declare module IPageNotFound {
+  interface Props extends RouteComponentProps {
+  }
 }
+
+export = IPageNotFound;

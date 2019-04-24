@@ -1,7 +1,15 @@
 import {RouteComponentProps} from 'react-router';
 
-export interface IComponent extends RouteComponentProps {
+declare module IGlobalHeader {
+  interface ClassNames extends IClassNames {
+  }
+  
+  interface Component extends RouteComponentProps, Props {
+  
+  }
+  
+  interface Props {
+    transitionInPaths: string[];
+  }
 }
-
-export interface IProps {
-}
+export = IGlobalHeader;

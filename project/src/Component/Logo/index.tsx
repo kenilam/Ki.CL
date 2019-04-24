@@ -2,12 +2,12 @@ import {siteName, view} from '$resources/data.json';
 import {Link} from '@Component';
 import classnames from 'classnames';
 import React from 'react';
-import {IProps} from './spec';
+import * as ILogo from './spec';
 import Style from './Style';
 
 const {home: {path}} = view;
 
-const Logo: React.FC<IProps> = ({
+const Logo: React.FC<ILogo.Props> = ({
   className: additionalClassName,
   component = 'h1'
 }) => (

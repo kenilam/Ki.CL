@@ -1,4 +1,5 @@
 import {useEffect, useReducer} from 'react';
+import * as IWindowSizes from './spec';
 
 const actions = {
   windowSizes: 'UPDATE_WINDOW_SIZES' as IWindowSizes.Type

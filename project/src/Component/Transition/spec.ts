@@ -1,9 +1,19 @@
-import {IProps as ICSSTransition} from '@Component/CSSTransition/spec';
+import * as ICSSTransition from '@Component/CSSTransition/spec';
 import {ElementType} from 'react';
 import {ComponentTransitionGroupProps} from 'react-transition-group/TransitionGroup';
 
-interface IComponent extends ComponentTransitionGroupProps<ElementType> {
+declare module ITransition {
+  interface ClassNames {
+    transition: string;
+  }
+  
+  interface Component extends ComponentTransitionGroupProps<ElementType> {
+  
+  }
+  
+  interface Props extends Partial<Component>, ICSSTransition.Props {
+  
+  }
 }
 
-export interface IProps extends Partial<IComponent>, ICSSTransition {
-}
+export = ITransition;

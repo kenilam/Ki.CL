@@ -1,10 +1,10 @@
-import {RouterProvider} from '@Component/Router';
+import {Provider} from '@Component/Router';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {IProps} from './spec';
+import * as ILink from './spec';
 import Style from './Style';
 
-const Link: React.FC<IProps> = ({
+const Link: React.FC<ILink.Props> = ({
   children,
   className: wrapperClassName,
   component: Wrapper,
@@ -24,7 +24,7 @@ const Link: React.FC<IProps> = ({
   );
   
   return (
-    <RouterProvider>
+    <Provider>
       {
         Wrapper ? (
           <Wrapper className={wrapperClassName}>
@@ -32,7 +32,7 @@ const Link: React.FC<IProps> = ({
           </Wrapper>
         ) : <Element />
       }
-    </RouterProvider>
+    </Provider>
   );
 };
 

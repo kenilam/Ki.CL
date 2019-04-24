@@ -1,5 +1,5 @@
 import {view} from '$resources/data.json';
-import {createHashHistory, Location} from 'history';
+import {createHashHistory, Location, parsePath} from 'history';
 import {useLayoutEffect} from 'react';
 
 const {body} = document;
@@ -13,10 +13,14 @@ const handler = (location: Location) => {
     body.dataset.exitedRoute = enteredRoutes;
   }
   
-  body.dataset.enteredRoutes = (location.pathname.substr(1) || defaultRoute).replace('/', '.');
+  body.dataset.enteredRoutes = (
+    location.pathname.substr(1) || defaultRoute
+  ).replace('/', '.');
 };
 
 export default () => {
+  handler(parsePath(window.location.pathname));
+  
   useLayoutEffect(() => {
     const remove = history.listen(handler);
     

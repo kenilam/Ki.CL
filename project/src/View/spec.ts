@@ -1,2 +1,11 @@
-export interface IProps {
+declare module IView {
+  interface ClassName extends IClassNames {
+  
+  }
+  
+  interface Props {
+    
+  }
 }
+
+export = IView;

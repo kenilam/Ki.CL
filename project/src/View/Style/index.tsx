@@ -1,4 +1,4 @@
-import {IProps} from './spec';
+import * as IView from '@View/spec';
 import value from './value.scss';
 
-export default value as IProps;
+export default value as IView.ClassName;

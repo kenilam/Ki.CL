@@ -1,6 +1,9 @@
-export interface Window {
-  fetch?: typeof fetch;
-  AbortController?: typeof AbortController;
-  IntersectionObserver?: typeof IntersectionObserver;
-  Promise?: typeof Promise;
+declare module Polyfill {
+  interface Window {
+    fetch?: typeof fetch;
+    AbortController?: typeof AbortController;
+    IntersectionObserver?: typeof IntersectionObserver;
+  }
 }
+
+export = Polyfill;

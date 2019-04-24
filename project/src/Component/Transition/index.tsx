@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import React from 'react';
 import {TransitionGroup} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-import {IProps} from './spec';
+import * as ITransition from './spec';
 import Style from './Style';
 
-const Transition: React.FC<IProps> = ({
+const Transition: React.FC<ITransition.Props> = ({
   appear,
   classNames,
   children,

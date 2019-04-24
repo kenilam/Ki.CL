@@ -1,8 +1,23 @@
 import {CSSTransitionProps} from 'react-transition-group/CSSTransition';
-import {IProps as ITransitionStyle} from './Style/TransitionStyle/spec';
 
-export interface IProps extends Partial<CSSTransitionProps> {
-  transitionIn?: boolean;
-  transitionKey?: string;
-  transitionStyle?: keyof ITransitionStyle;
+declare module ICSSTransition {
+  interface ClassNames extends IClassNames {
+  
+  }
+  
+  interface Props extends Partial<CSSTransitionProps> {
+    transitionIn?: boolean;
+    transitionKey?: string;
+    transitionStyle?: keyof TransitionStyle;
+  }
+  
+  interface TransitionStyle {
+    custom: string;
+    fade: string;
+    slideUp: string;
+    
+    [key: string]: string;
+  }
 }
+
+export = ICSSTransition;
