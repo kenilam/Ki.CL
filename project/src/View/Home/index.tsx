@@ -1,22 +1,18 @@
 import data from '$resources/data.json';
-import {IResourcesData} from '$resources/spec';
+import IResources from '$resources/spec';
 import {Route, withRouter} from '@Component/Router';
-import {windowSizes} from '@Hook';
 import * as IHome from '@View/Home/spec';
 import * as React from 'react';
+import {Background} from './Component';
 import './Style';
 
-const {view: {home: {path}}} = (data as IResourcesData);
+const {view: {home: {path}}} = (data as IResources);
 
-const Home: React.FC<IHome.Props> = () => {
-  const {windowSizes: {height, width}} = windowSizes();
-  
-  return (
-    <main data-routes='home' style={{height, width}}>
-      Home
-    </main>
-  );
-};
+const Home: React.FC<IHome.Props> = () => (
+  <main data-routes='home'>
+    <Background />
+  </main>
+);
 
 const Instance = withRouter(Home);
 

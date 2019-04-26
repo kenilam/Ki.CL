@@ -1,11 +1,11 @@
 import data from '$resources/data.json';
-import {IResourcesData} from '$resources/spec';
+import * as IResources from '$resources/spec';
 import {GlobalHeader} from '@Component';
 import {history} from '@Hook';
 import React, {Fragment} from 'react';
 import View from './View';
 
-const {view} = (data as IResourcesData);
+const {view} = (data as IResources.data);
 
 const paths = Object.keys(view).filter(
   name => name !== 'home'

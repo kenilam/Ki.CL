@@ -38,5 +38,5 @@ export default () => {
     }
   });
   
-  return {windowSizes, updateWindowSizes};
+  return {sizes: windowSizes, updateWindowSizes};
 };
