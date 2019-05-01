@@ -3,12 +3,9 @@
     [
       "@babel/preset-env",
       {
-        "targets": {
-          "browsers": [
-            "last 2 versions",
-            "safari >= 11"
-          ]
-        }
+        "corejs": 3,
+        "debug": true,
+        "useBuiltIns": "usage"
       }
     ],
     "@babel/preset-react",

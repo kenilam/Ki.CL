@@ -1,74 +1,90 @@
 import * as PIXI from 'pixi.js';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {DependencyList, useCallback, useEffect, useState} from 'react';
 import * as IWebGL from './spec';
+import { TweenMax } from 'gsap';
 
 PIXI.settings.RESOLUTION = window.devicePixelRatio;
 
-const options: PIXI.RendererOptions = {
+const options = {
   antialias: true,
   autoResize: true,
   transparent: true
 };
 
 const WebGL: React.FC<IWebGL.Props> = ({
-  children,
   className,
+  height,
+  renderer,
   width,
-  height
 }) => {
-  let animateFrame: number;
+  let renderFrame: number;
   
-  const [app, updateApp] = useState<IWebGL.App>();
-  const [stage, updateStage] = useState<IWebGL.Stage>();
+  const [app, updateApp]: IWebGL.AppState = useState<IWebGL.App>();
+  const [stage, updateStage]: IWebGL.StageState = useState<IWebGL.Stage>();
+  const [graphics, updateGraphics]: IWebGL.RendererState = renderer();
   
-  function animate() {
+  function render() {
     if (!app || !stage) {
       return;
     }
     
     app.render(stage);
-    animateFrame = window.requestAnimationFrame(animate);
+    
+    renderFrame = window.requestAnimationFrame(render);
   }
   
-  const ref = useCallback((canvas: HTMLCanvasElement) => {
-    if (!canvas) {
-      return;
-    }
-    
-    if (!app) {
-      updateApp(
-        PIXI.autoDetectRenderer(
-          width,
-          height,
-          {...options, view: canvas}
-        )
-      );
-      
-      return;
-    }
-    
-    app.resize(width, height);
-  }, [width, height] as ReadonlyArray<React.PropsWithChildren<any>>);
-  
-  useEffect(() => {
+  function triggerRenderer() {
     if (!stage) {
       updateStage(new PIXI.Container());
       return;
     }
     
-    animate();
+    stage.removeChildren(0);
+    TweenMax.killAll(false);
     
+    graphics.map(
+      graphic => {
+        stage.addChild(graphic);
+      }
+    );
+  
+    updateGraphics({app, stage});
+  }
+  
+  const ref = useCallback((view: HTMLCanvasElement) => {
+    if (!view) {
+      return;
+    }
+    
+    if (!app) {
+      updateApp(
+        PIXI.autoDetectRenderer({
+          ...options,
+          height,
+          width,
+          view
+        })
+      );
+      return;
+    }
+  
+    app.resize(width, height);
+  }, [width, height] as DependencyList);
+  
+  useEffect(() => {
+    render();
+    
+    triggerRenderer();
+  
     return () => {
-      window.cancelAnimationFrame(animateFrame);
+      window.cancelAnimationFrame(renderFrame);
     }
   });
   
   return (
-    <canvas className={className} ref={ref}>
-      {app && stage && children({app, stage})}
-    </canvas>
+    <canvas className={className} ref={ref}/>
   );
 };
 
-export {PIXI as Engine};
+export {PIXI as Engine, TweenMax as Tween};
 export default WebGL;

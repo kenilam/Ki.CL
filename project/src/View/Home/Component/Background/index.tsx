@@ -1,27 +1,49 @@
-import WebGL, {Engine} from '@Component/WebGL';
+import WebGL, {Engine, Tween} from '@Component/WebGL';
 import {windowSizes} from '@Hook';
 import React from 'react';
 import * as IBackgorund from './spec';
 
+const graphics: IBackgorund.Graphics = [];
+
 const Background: React.FC<IBackgorund.Props> = () => {
   const {sizes: {height, width}} = windowSizes();
   
-  function render({stage}: IBackgorund.RenderProps) {
+  function updateRenderer({stage}: IBackgorund.RendererProps) {
+    const x = width / 2;
+    const y = height / 2;
+    
+    const circle = stage.getChildByName('circle');
+  
+    Tween.set(circle, {x, y});
+  }
+  
+  function renderer() {
     const radius = (height > width ? width : height) / 4;
-    const circle = new Engine.Graphics();
     
-    circle.beginFill(0x000000);
-    circle.drawCircle(width / 2, height / 2, radius);
-    circle.endFill();
+    if (graphics.length === 0) {
+      const circle = new Engine.Graphics();
+  
+      circle.beginFill(0x000000);
+      circle.drawCircle(0, 0, radius);
+      circle.endFill();
+      circle.name = 'circle';
+  
+      graphics.push(circle);
+    }
     
-    stage.removeChildren(0);
-    stage.addChild(circle);
+    return [
+      graphics,
+      updateRenderer
+    ] as IBackgorund.RendererState;
   }
   
   return (
-    <WebGL className='background' height={height} width={width}>
-      {render}
-    </WebGL>
+    <WebGL
+      className='background'
+      height={height}
+      renderer={renderer}
+      width={width}
+    />
   );
 };
 
