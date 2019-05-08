@@ -1,11 +1,11 @@
-import WebGL, {Engine, Tween, TweenSequence, gsap} from '@Component/WebGL';
-import {windowSizes} from '@Hook';
-import React, {useEffect, useState} from 'react';
+import WebGL, { Engine, Tween, TweenSequence, gsap } from '@Component/WebGL';
+import { windowSizes } from '@Hook';
+import React, { useEffect, useState } from 'react';
 import * as IBackgorund from "./spec";
 
-const {innerHeight, innerWidth} = window;
+const { innerHeight, innerWidth } = window;
 
-const FRAME = 16;
+const FRAME = 24;
 
 const MASK_FILL = 0x000000;
 
@@ -20,96 +20,99 @@ const INITIAL_ANIMATION_PROPERTIES = {
 
 const backfill = new Engine.Graphics();
 const hero: Engine.Container = new Engine.Container();
-const image = Engine.Sprite.from('/image/london.whitechapel.jpg');
+const texture = Engine.Texture.from('/image/noise.black.blur.jpg');
+const image = new Engine.TilingSprite(texture, innerWidth, innerHeight);
 const mask: Engine.Graphics = new Engine.Graphics();
 
 const drawGraphics: IBackgorund.DrawRect = (alpha, x, y, w, h, r) => {
   hero.alpha = alpha;
-  
+
   mask
-  .clear()
-  .beginFill(MASK_FILL)
-  .drawRoundedRect(x, y, w, h, r)
-  .endFill();
+    .clear()
+    .beginFill(MASK_FILL)
+    .drawRoundedRect(x, y, w, h, r)
+    .endFill();
 };
 
-const Background: React.FC<IBackgorund.Props> = () => {
+const Background: React.FC<IBackgorund.Props> = ({ onCompleteHanlder }) => {
   const [initialRun = true, updateInitialRun]: IBackgorund.InitialRunState = useState<IBackgorund.InitialRun>();
-  
-  const {sizes: {height, width}} = windowSizes();
-  
-  function onComplete() { updateInitialRun(false) }
-  
+
+  const { sizes: { height, width } } = windowSizes();
+
+  function onComplete() {
+    updateInitialRun(false);
+    onCompleteHanlder && onCompleteHanlder();
+  }
+
   function onUpdate() {
     const { alpha, height, radius, width, x, y } = INITIAL_ANIMATION_PROPERTIES;
-    
+
     drawGraphics(alpha, x, y, width, height, radius);
   }
-  
+
   function animations() {
     const sequence = new TweenSequence({ onComplete, onUpdate });
-  
+
     sequence.add(
-      Tween.to(INITIAL_ANIMATION_PROPERTIES, 1, {
-        alpha: 0.3,
-        height: FRAME * 4,
-        width: width - (FRAME * 2),
-        y: height / 2 - FRAME * 2,
-        x: FRAME,
-        
+      Tween.to(INITIAL_ANIMATION_PROPERTIES, 0.1, {
+        alpha: 1,
+        height: FRAME * 16,
+        width: FRAME * 2,
+        y: height / 2 - FRAME * 8,
+        x: width / 2 - FRAME,
+
         delay: 1,
-        ease: gsap.Expo.easeOut,
+        ease: gsap.Linear.ease,
       })
     );
-  
+
     sequence.add(
-      Tween.to(INITIAL_ANIMATION_PROPERTIES, 0.5, {
-        alpha: 1,
+      Tween.to(INITIAL_ANIMATION_PROPERTIES, 0.3, {
         height: height - (FRAME * 2),
         radius: FRAME,
+        width: width - (FRAME * 2),
+        x: FRAME,
         y: FRAME,
-        
-        ease: gsap.Expo.easeInOut,
+
+        ease: gsap.Back.easeOut,
       })
     );
-    
-    sequence.delay(1);
+
+    sequence.delay(0.5);
     sequence.pause();
-    
+
     return sequence;
   }
-  
+
   function onMount() {
     backfill.drawRect(0, 0, width, height);
-  
-    image.width = width * (width > height ? 1 : height / width);
-    image.height = height * (height > width ? 1 : width / height);
-    image.x = (width - image.width) / 2;
-    image.y = (height - image.height) / 2;
-    
+
+    image.height = height;
+    image.width = width;
+
     if (!initialRun) {
       drawGraphics(1, FRAME, FRAME, width - (FRAME * 2), height - (FRAME * 2), FRAME);
-      
+
       return;
     }
-  
+
     (animations()).restart();
-    
+
     hero.alpha = 0;
   }
-  
-  function onUnmount() {}
-  
+
+  function onUnmount() { }
+
   useEffect(() => {
     onMount();
-    
+
     return onUnmount;
   });
-  
+
   const renderer = (): IBackgorund.RendererState => [
     [hero] as IBackgorund.Graphics
   ];
-  
+
   return (
     <WebGL
       className='background'
@@ -127,8 +130,8 @@ hero.mask = mask;
 hero.addChild(backfill);
 hero.addChild(image);
 
-image.filters = [
-  new Engine.filters.CrossHatchFilter()
-];
+// image.filters = [
+//   new Engine.filters.SimpleLightmapFilter()
+// ]
 
 export default Background;
