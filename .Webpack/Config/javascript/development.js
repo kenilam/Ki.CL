@@ -2,6 +2,7 @@ import { path as appRoot } from 'app-root-path'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 import webpack from 'webpack'
+import { context } from '../entry'
 
 const tsconfig = `${appRoot}/.tsconfig.json`
 const tslint = `${appRoot}/.tslint.json`
@@ -32,9 +33,18 @@ const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new ForkTsCheckerWebpackPlugin({
     async: true,
+    formatter: 'codeframe',
+    formatterOptions: {
+      highlightCode: true,
+      lineAbove: 3,
+      lineBelow: 3,
+      forceColor: true,
+    },
+    measureCompilationTime: true,
     tsconfig: tsconfig,
     tslint: tslint,
-    tslintAutoFix: true
+    tslintAutoFix: true,
+    watch: context
   })
 ]
 

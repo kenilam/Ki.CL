@@ -1,9 +1,10 @@
+import * as gsap from 'gsap';
+import {TweenMax, TimelineMax} from 'gsap';
 import * as PIXI from 'pixi.js';
+import * as Filters from 'pixi-filters';
 import React, {DependencyList, useCallback, useEffect, useState} from 'react';
+import * as Geometry from './Geometry';
 import * as IWebGL from './spec';
-import { TweenMax } from 'gsap';
-
-PIXI.settings.RESOLUTION = window.devicePixelRatio;
 
 const options = {
   antialias: true,
@@ -27,8 +28,8 @@ const WebGL: React.FC<IWebGL.Props> = ({
     if (!app || !stage) {
       return;
     }
-    
-    app.render(stage);
+  
+    (app as PIXI.CanvasRenderer).render(stage);
     
     renderFrame = window.requestAnimationFrame(render);
   }
@@ -47,8 +48,8 @@ const WebGL: React.FC<IWebGL.Props> = ({
         stage.addChild(graphic);
       }
     );
-  
-    updateGraphics({app, stage});
+    
+    updateGraphics && updateGraphics({app, stage});
   }
   
   const ref = useCallback((view: HTMLCanvasElement) => {
@@ -63,28 +64,39 @@ const WebGL: React.FC<IWebGL.Props> = ({
           height,
           width,
           view
-        })
+        }) as PIXI.CanvasRenderer
       );
       return;
     }
-  
-    app.resize(width, height);
+    
+    (app as PIXI.CanvasRenderer).resize(width, height);
   }, [width, height] as DependencyList);
   
-  useEffect(() => {
-    render();
-    
-    triggerRenderer();
+  function onMount() {
   
-    return () => {
-      window.cancelAnimationFrame(renderFrame);
-    }
+    render();
+  
+    triggerRenderer();
+  }
+  
+  function onUnmount() {
+    window.cancelAnimationFrame(renderFrame);
+  }
+  
+  useEffect(() => {
+    onMount();
+    
+    return onUnmount;
   });
   
   return (
-    <canvas className={className} ref={ref}/>
+    <canvas className={className} ref={ref} />
   );
 };
 
-export {PIXI as Engine, TweenMax as Tween};
+PIXI.settings.RESOLUTION = window.devicePixelRatio;
+
+Object.assign(PIXI.filters, Filters);
+
+export {PIXI as Engine, Geometry, TweenMax as Tween, TimelineMax as TweenSequence, gsap};
 export default WebGL;
