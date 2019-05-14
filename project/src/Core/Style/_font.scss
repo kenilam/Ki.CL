@@ -16,7 +16,8 @@ $base-font-size: 16px !default;
 $font: (
   font-family: (
     normal: ('omnes-pro', $base-font),
-    bold: ('acumin-pro-extra-condensed', $base-font)
+    bold: ('acumin-pro-extra-condensed', $base-font),
+    special: ('alfarn', $base-font)
   ),
   font-size: (
     normal: $base-font-size,

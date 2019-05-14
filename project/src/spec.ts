@@ -18,3 +18,4 @@ declare module 'get-transition-duration';
 declare module 'promise-polyfill/src/polyfill';
 declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
+declare module 'units-css';

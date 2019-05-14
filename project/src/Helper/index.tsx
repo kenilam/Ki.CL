@@ -1,3 +1,4 @@
+import CSSUnits from './CSSUnits';
 import RandomId from './RandomId';
 
-export {RandomId};
+export { CSSUnits, RandomId };
