@@ -1,8 +1,14 @@
 {
   "defaultSeverity": "error",
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*.{j,t}s"
+    ]
+  },
   "extends": [
     "tslint-eslint-rules",
-    "tslint-react"
+    "tslint-react",
+    "tslint-react-hooks"
   ],
   "rules": {
     "arrow-parens": [
@@ -10,7 +16,6 @@
       "as-needed"
     ],
     "jsx-no-multiline-js": false,
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks-nesting": "error"
   }
 }

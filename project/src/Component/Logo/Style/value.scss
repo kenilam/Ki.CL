@@ -1,2 +1,2 @@
-@value logo: #{get($logo, 'default')};
-@value square: #{get($logo, 'square')};
+@value default: #{get($component-logo, 'default')};
+@value square: #{get($component-logo, 'square')};

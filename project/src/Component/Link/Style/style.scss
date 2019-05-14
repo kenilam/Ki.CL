@@ -1,7 +1,10 @@
-.#{get($link, 'default')} {
+$default: get($component-link, 'default');
+$active: get($component-link, 'active');
+
+[data-component=#{$default}] {
   display: block;
 
-  &.#{get($link, 'active')} {
+  &.#{$active} {
     pointer-events: none;
   }
 }

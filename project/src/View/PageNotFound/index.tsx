@@ -1,9 +1,10 @@
-import resources from '$resources/data.json';
+import data from '$resources/data.json';
+import IResources from "$resources/spec";
 import {Redirect, Route} from '@Component/Router';
 import React from 'react';
 import * as IPageNotFound from './spec';
 
-const {view: {home: {path}}} = resources;
+const {view: {home: {path}}}: IResources.Data = data;
 
 const PageNotFound = ({history}: IPageNotFound.Props) => {
   // To prevents react-router redirect twice with the warning as follow:

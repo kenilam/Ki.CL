@@ -1,10 +1,10 @@
 import * as gsap from 'gsap';
-import {TweenMax, TimelineMax} from 'gsap';
+import {TimelineMax, TweenMax} from 'gsap';
 import * as PIXI from 'pixi.js';
-import * as Filters from 'pixi-filters';
 import React, {DependencyList, useCallback, useEffect, useState} from 'react';
 import * as Geometry from './Geometry';
 import * as IWebGL from './spec';
+import Style from "./Style";
 
 const options = {
   antialias: true,
@@ -28,8 +28,8 @@ const WebGL: React.FC<IWebGL.Props> = ({
     if (!app || !stage) {
       return;
     }
-  
-    (app as PIXI.CanvasRenderer).render(stage);
+    
+    (app as PIXI.Renderer).render(stage);
     
     renderFrame = window.requestAnimationFrame(render);
   }
@@ -64,18 +64,18 @@ const WebGL: React.FC<IWebGL.Props> = ({
           height,
           width,
           view
-        }) as PIXI.CanvasRenderer
+        }) as PIXI.Renderer
       );
       return;
     }
     
-    (app as PIXI.CanvasRenderer).resize(width, height);
+    (app as PIXI.Renderer).resize(width, height);
   }, [width, height] as DependencyList);
   
   function onMount() {
-  
+    
     render();
-  
+    
     triggerRenderer();
   }
   
@@ -90,13 +90,15 @@ const WebGL: React.FC<IWebGL.Props> = ({
   });
   
   return (
-    <canvas className={className} ref={ref} />
+    <canvas
+      className={className}
+      data-component={Style.default}
+      ref={ref}
+    />
   );
 };
 
 PIXI.settings.RESOLUTION = window.devicePixelRatio;
-
-Object.assign(PIXI.filters, Filters);
 
 export {PIXI as Engine, Geometry, TweenMax as Tween, TimelineMax as TweenSequence, gsap};
 export default WebGL;

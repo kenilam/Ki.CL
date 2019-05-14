@@ -2,7 +2,11 @@ import * as PIXI from "pixi.js";
 import {Dispatch, SetStateAction} from "react";
 
 declare module IWebGL {
-  type App = PIXI.CanvasRenderer | PIXI.WebGLRenderer;
+  interface ClassNames extends IClassNames {
+    default: string;
+  }
+  
+  type App = PIXI.Renderer;
   type UpdateApp = Dispatch<SetStateAction<App>>;
   type AppState = [App, UpdateApp];
   
@@ -10,7 +14,7 @@ declare module IWebGL {
   type UpdateStage = Dispatch<SetStateAction<Stage>>;
   type StageState = [Stage, UpdateStage];
   
-  type Graphic = PIXI.Graphics | PIXI.Sprite;
+  type Graphic = any;
   type Graphics = Graphic[];
   type RendererProps = {
     app: App,
@@ -18,6 +22,8 @@ declare module IWebGL {
   }
   type UpdateRenderer = (props: RendererProps) => void;
   type RendererState = [Graphics, UpdateRenderer?];
+  
+  type TweenSequence = gsap.TimelineMax;
   
   interface Props {
     className: string;

@@ -14,7 +14,7 @@ const Link: React.FC<ILink.Props> = ({
   const Element = () => (
     <NavLink
       activeClassName={Style.active}
-      className={Style.link}
+      data-component={Style.default}
       exact={true}
       onClick={onClick}
       to={to}

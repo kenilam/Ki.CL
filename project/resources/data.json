@@ -1,6 +1,6 @@
 {
   "siteName": "Ki.CL",
-  "description": "",
+  "description": "UX and Eng Specialist",
   "view": {
     "pageNotFound": {
       "name": "Page Not Found",
@@ -11,6 +11,13 @@
     "home": {
       "path": "/",
       "name": "Home",
+      "component": {
+        "background": {
+          "content": {
+            "image": "/image/noise.black.blur.jpg"
+          }
+        }
+      },
       "content": {
         "heading": "Welcome to Ki.CL",
         "profession": [
@@ -58,9 +65,7 @@
   "component": {
     "spinner": {
       "content": {
-        "default": {
-          "message": "loading..."
-        }
+        "message": "loading..."
       }
     }
   },

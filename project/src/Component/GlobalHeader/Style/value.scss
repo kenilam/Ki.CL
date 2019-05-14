@@ -1,1 +1,1 @@
-@value globalHeader: #{get($global-header, 'default')};
+@value default: #{get($component-global-header, 'default')};

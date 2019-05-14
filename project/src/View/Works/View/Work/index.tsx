@@ -1,8 +1,8 @@
 import {Route} from '@Component/Router';
 import React from 'react';
-import {IProps} from './spec';
+import * as IWork from './spec';
 
-const Work = ({match}: IProps) => {
+const Work = ({match}: IWork.Props) => {
   const {params: {projectId}} = match;
   
   return (

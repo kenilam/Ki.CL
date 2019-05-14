@@ -1,8 +1,13 @@
 import {RouteComponentProps} from 'react-router';
 
-interface IMatchParams {
-  projectId: string;
+declare module IWork {
+  interface MatchParams {
+    projectId: string;
+  }
+  
+  interface Props extends RouteComponentProps<MatchParams> {
+  
+  }
 }
 
-export interface IProps extends RouteComponentProps<IMatchParams> {
-}
+export = IWork;

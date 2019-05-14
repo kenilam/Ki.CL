@@ -1,0 +1,5 @@
+$default: get($component-navigation, 'default');
+
+[data-component=#{$default}] {
+  display: grid;
+}

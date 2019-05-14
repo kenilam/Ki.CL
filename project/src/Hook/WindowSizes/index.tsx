@@ -20,8 +20,7 @@ const reducers = {
   },
 };
 
-export {initialStates, reducers, actions};
-export default () => {
+function WindowSizes() {
   const [{windowSizes}, dispatch] = useReducer(reducers.windowSizes, {windowSizes: initialStates.windowSizes});
   
   const updateWindowSizes = () => {
@@ -39,4 +38,7 @@ export default () => {
   });
   
   return {sizes: windowSizes, updateWindowSizes};
-};
+}
+
+export {initialStates, reducers, actions};
+export default WindowSizes;

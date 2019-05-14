@@ -13,7 +13,7 @@ const Component: React.FC<IGlobalHeader.Component> = ({
     transitionIn={transitionInPaths.indexOf(location.pathname) > -1}
     transitionStyle={TransitionStyleName.slideUp}
   >
-    <header role='banner' className={Style.globalHeader}>
+    <header role='banner' data-component={Style.default}>
       <Logo />
     </header>
   </CSSTransition>

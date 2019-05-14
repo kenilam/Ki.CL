@@ -1,8 +1,10 @@
-$className: get($global-header, 'default');
+$default: get($component-global-header, 'default');
 $enter: get($css-transition, 'enter.default');
 $exit: get($css-transition, 'exit.default');
 
-.#{$className} {
+$logo: get($component-logo, 'default');
+
+[data-component=#{$default}] {
   display: grid;
   grid-template-areas: 'logo .';
   grid-template-columns: get($grid, 'wide') auto;
@@ -16,7 +18,7 @@ $exit: get($css-transition, 'exit.default');
     }
   }
 
-  .#{get($logo, 'default')} {
+  .#{$logo} {
     grid-area: logo;
   }
 

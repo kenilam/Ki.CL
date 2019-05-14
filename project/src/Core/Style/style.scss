@@ -1,6 +1,7 @@
 html {
   @include font-smoothing();
 
+  background-color: get($white, 'default');
   color: get($black, 'light');
   font-family: get($font, 'font-family.normal');
   font-size: get($font, 'font-size.normal');

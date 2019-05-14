@@ -3,6 +3,8 @@ import {NavLinkProps} from 'react-router-dom';
 
 declare module ILink {
   interface ClassNames extends IClassNames {
+    default: string;
+    active: string;
   }
   
   interface Props extends NavLinkProps {

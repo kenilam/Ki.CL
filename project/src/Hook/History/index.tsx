@@ -18,9 +18,7 @@ const handler = (location: Location) => {
   ).replace('/', '.');
 };
 
-export default () => {
-  handler(parsePath(window.location.pathname));
-  
+function History() {
   useLayoutEffect(() => {
     const remove = history.listen(handler);
     
@@ -28,4 +26,8 @@ export default () => {
       remove();
     }
   });
+  
+  handler(parsePath(window.location.pathname));
 }
+
+export default History;

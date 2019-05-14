@@ -1,0 +1,5 @@
+$default: get($view-home-background, 'default');
+
+.#{$default} {
+  position: absolute;
+}

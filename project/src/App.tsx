@@ -5,7 +5,7 @@ import {history} from '@Hook';
 import React, {Fragment} from 'react';
 import View from './View';
 
-const {view} = (data as IResources.data);
+const {view}: IResources.Data = data;
 
 const paths = Object.keys(view).filter(
   name => name !== 'home'

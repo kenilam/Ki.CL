@@ -2,6 +2,8 @@ import {ElementType} from 'react';
 
 declare module ILogo {
   interface ClassNames extends IClassNames {
+    default: string;
+    square: string;
   }
   
   interface Component {
@@ -9,7 +11,6 @@ declare module ILogo {
   }
   
   interface Props extends Component {
-    className?: string;
   }
 }
 

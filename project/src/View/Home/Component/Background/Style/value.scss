@@ -1,0 +1,5 @@
+@value default: #{get($view-home-background, 'default')};
+@value align: 'center';
+@value fill: #{get($white, 'default')};
+@value fontFamily: #{get($font, 'font-family.bold')};
+@value fontSize: #{get($font, 'font-size.normal')};

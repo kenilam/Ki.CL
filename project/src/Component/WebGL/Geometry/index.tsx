@@ -7,7 +7,10 @@ const circle: IGeometry.Circle = ({density = DEFAULT_DENSITY, x, y, radius}) => 
   [].concat(
     ...Array.from(new Array(density * window.devicePixelRatio)).map(
       (value, degree) =>
-        !value && [x + (radius * Math.cos(degree)), y + (radius * Math.sin(degree))]
+        !value && [
+          x + (radius * Math.cos(degree)),
+          y + (radius * Math.sin(degree))
+        ]
     )
   )
 );

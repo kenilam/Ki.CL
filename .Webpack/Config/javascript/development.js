@@ -10,7 +10,7 @@ const tslint = `${appRoot}/.tslint.json`
 const Loaders = {
   test: /\.(tsx|ts)$/,
   enforce: 'pre',
-  exclude: /node_modules/,
+  exclude: [/node_modules\/\*\*/],
   use: [{
     loader: 'babel-loader',
     options: {
