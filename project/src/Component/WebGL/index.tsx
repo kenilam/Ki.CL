@@ -41,7 +41,6 @@ const WebGL: React.FC<IWebGL.Props> = ({
     }
     
     stage.removeChildren(0);
-    TweenMax.killAll(false);
     
     graphics.map(
       graphic => {
