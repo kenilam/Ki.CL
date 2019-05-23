@@ -1,5 +1,21 @@
 $default: get($component-navigation, 'default');
+$inline: get($component-navigation, 'inline');
 
-[data-component=#{$default}] {
+$gutter: #{get($grid, 'gutter')};
+
+[data-component='#{$default}'] {
   display: grid;
+  grid-column-gap: $gutter;
+  text-align: center;
+
+  > * {
+    align-self: center;
+    justify-self: center;
+  }
+
+  &.#{$inline} {
+    grid-auto-flow: column;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr;
+  }
 }

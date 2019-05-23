@@ -3,7 +3,7 @@ import React from 'react';
 import {HashRouter as Provider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import * as IRouter from './spec';
 
-const Router: React.FC<IRouter.Props> = ({
+const Router: React.FunctionComponent<IRouter.Props> = ({
   appear,
   classNames,
   children,
@@ -18,7 +18,7 @@ const Router: React.FC<IRouter.Props> = ({
   transitionIn,
   transitionStyle
 }) => {
-  const Component: React.FC<IRouter.Component> = ({
+  const Component: React.FunctionComponent<IRouter.Component> = ({
     children, location
   }) => {
     return (

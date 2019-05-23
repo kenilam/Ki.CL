@@ -10,11 +10,16 @@ const getAnimationDuration = (node: HTMLElement) =>
 const duration = (node: HTMLElement) => (
   node && node.parentNode ? (
     Math.max(
-      ...Array.from(
-        node.parentNode.querySelectorAll(`.${Style.cssTransition}`)
+      ...[].concat(
+        Array.from(
+          node.parentNode.querySelectorAll(`.${Style.cssTransition}`)
+        ),
+        Array.from(
+          node.querySelectorAll(`.${Style.cssTransition}`)
+        )
       ).map(
         (node: HTMLElement) => Math.max(
-          getTransitionDuration(node), getAnimationDuration(node)
+          getTransitionDuration(node, true), getAnimationDuration(node)
         )
       )
     )

@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import * as ILink from './spec';
 import Style from './Style';
 
-const Link: React.FC<ILink.Props> = ({
+const Link: React.FunctionComponent<ILink.Props> = ({
   children,
   className: wrapperClassName,
   component: Wrapper,

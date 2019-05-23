@@ -1,33 +1,32 @@
 import {view} from '$resources/data.json';
-import {createHashHistory, Location, parsePath} from 'history';
-import {useLayoutEffect} from 'react';
+import {createHashHistory} from 'history';
+import {useEffect} from 'react';
 
 const {body} = document;
 const defaultRoute = view.home.name.toLowerCase();
-const history = createHashHistory();
 
-const handler = (location: Location) => {
+const handler = () => {
   const {enteredRoutes} = body.dataset;
   
   if (enteredRoutes) {
-    body.dataset.exitedRoute = enteredRoutes;
+    body.dataset.exitedRoutes = enteredRoutes;
   }
   
   body.dataset.enteredRoutes = (
-    location.pathname.substr(1) || defaultRoute
+    window.location.hash.substr(2) || defaultRoute
   ).replace('/', '.');
 };
 
 function History() {
-  useLayoutEffect(() => {
-    const remove = history.listen(handler);
+  useEffect(() => {
+    const remove = createHashHistory().listen(handler);
     
     return () => {
       remove();
     }
   });
   
-  handler(parsePath(window.location.pathname));
+  handler();
 }
 
 export default History;

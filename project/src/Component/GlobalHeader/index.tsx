@@ -5,13 +5,13 @@ import React from 'react';
 import * as IGlobalHeader from './spec';
 import Style from './Style';
 
-const Component: React.FC<IGlobalHeader.Component> = ({
+const Component: React.FunctionComponent<IGlobalHeader.Component> = ({
   location,
   transitionInPaths
 }) => (
   <CSSTransition
     transitionIn={transitionInPaths.indexOf(location.pathname) > -1}
-    transitionStyle={TransitionStyleName.slideUp}
+    transitionStyle={TransitionStyleName.slideDown}
   >
     <header role='banner' data-component={Style.default}>
       <Logo />
@@ -21,7 +21,7 @@ const Component: React.FC<IGlobalHeader.Component> = ({
 
 const Instance = withRouter(Component);
 
-const GlobalHeader: React.FC<IGlobalHeader.Props> = ({transitionInPaths}) => (
+const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = ({transitionInPaths}) => (
   <Provider>
     <Instance transitionInPaths={transitionInPaths} />
   </Provider>

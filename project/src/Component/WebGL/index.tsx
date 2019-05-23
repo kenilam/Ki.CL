@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import React, {DependencyList, useCallback, useEffect, useState} from 'react';
 import * as Geometry from './Geometry';
 import * as IWebGL from './spec';
-import Style from "./Style";
+import Style from './Style';
 
 const options = {
   antialias: true,
@@ -12,29 +12,29 @@ const options = {
   transparent: true
 };
 
-const WebGL: React.FC<IWebGL.Props> = ({
+const WebGL: React.FunctionComponent<IWebGL.Props> = ({
   className,
   height,
-  renderer,
+  render,
   width,
 }) => {
-  let renderFrame: number;
+  let rendererFrame: number;
   
   const [app, updateApp]: IWebGL.AppState = useState<IWebGL.App>();
   const [stage, updateStage]: IWebGL.StageState = useState<IWebGL.Stage>();
-  const [graphics, updateGraphics]: IWebGL.RendererState = renderer();
+  const [graphics, updateGraphics]: IWebGL.RenderState = render();
   
-  function render() {
+  function renderer() {
     if (!app || !stage) {
       return;
     }
     
     (app as PIXI.Renderer).render(stage);
     
-    renderFrame = window.requestAnimationFrame(render);
+    rendererFrame = window.requestAnimationFrame(renderer);
   }
   
-  function triggerRenderer() {
+  function triggerRender() {
     if (!stage) {
       updateStage(new PIXI.Container());
       return;
@@ -73,13 +73,13 @@ const WebGL: React.FC<IWebGL.Props> = ({
   
   function onMount() {
     
-    render();
+    renderer();
     
-    triggerRenderer();
+    triggerRender();
   }
   
   function onUnmount() {
-    window.cancelAnimationFrame(renderFrame);
+    window.cancelAnimationFrame(rendererFrame);
   }
   
   useEffect(() => {
@@ -99,5 +99,5 @@ const WebGL: React.FC<IWebGL.Props> = ({
 
 PIXI.settings.RESOLUTION = window.devicePixelRatio;
 
-export {PIXI as Engine, Geometry, TweenMax as Tween, TimelineMax as TweenSequence, gsap};
+export {PIXI, Geometry, TweenMax as Tween, TimelineMax as TweenSequence, gsap};
 export default WebGL;

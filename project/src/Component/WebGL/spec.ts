@@ -1,5 +1,5 @@
-import * as PIXI from "pixi.js";
-import {Dispatch, SetStateAction} from "react";
+import * as PIXI from 'pixi.js';
+import {Dispatch, SetStateAction} from 'react';
 
 declare module IWebGL {
   interface ClassNames extends IClassNames {
@@ -20,8 +20,8 @@ declare module IWebGL {
     app: App,
     stage: Stage
   }
-  type UpdateRenderer = (props: RendererProps) => void;
-  type RendererState = [Graphics, UpdateRenderer?];
+  type UpdateRender = (props?: RendererProps) => void;
+  type RenderState = [Graphics, UpdateRender?];
   
   type TweenSequence = gsap.TimelineMax;
   
@@ -30,7 +30,7 @@ declare module IWebGL {
     height: number;
     width: number;
     
-    renderer(): RendererState;
+    render(): RenderState;
   }
 }
 

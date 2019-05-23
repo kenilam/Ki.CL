@@ -6,7 +6,7 @@ import Style from './Style';
 
 const {home: {path}} = view;
 
-const Logo: React.FC<ILogo.Props> = () => (
+const Logo: React.FunctionComponent<ILogo.Props> = () => (
   <h1 data-component={Style.default}>
     <Link
       to={path}

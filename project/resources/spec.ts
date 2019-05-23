@@ -5,25 +5,25 @@ declare module IResources {
     type Path = string;
     type Description = string;
     type SiteName = string;
-
+    
     interface Content {
       [name: string]: any;
     }
-
+    
     interface Component {
       content?: Content;
-
+      
       [name: string]: Content;
     }
-
+    
     interface Components {
       [name: string]: Component;
     }
-
+    
     interface Miscellaneous {
       months?: (string)[] | null;
     }
-
+    
     interface View {
       component?: Components;
       content?: Content;
@@ -32,12 +32,12 @@ declare module IResources {
       path?: Path;
       view?: Views;
     }
-
+    
     interface Views {
       [name: string]: View;
     }
   }
-
+  
   export class Data {
     component: IResources.Data.Component;
     description: IResources.Data.Description;

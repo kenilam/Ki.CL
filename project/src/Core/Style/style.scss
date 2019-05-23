@@ -30,6 +30,17 @@ a,
 button,
 [href] {
   cursor: pointer;
+  text-decoration: none;
+}
+
+[app-root] {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden;
 }
 
 header[rule='banner'] {
@@ -42,14 +53,4 @@ main {
   min-height: 100vh;
   min-width: 100vw;
   z-index: 1;
-}
-
-[app-root] {
-  min-height: 100vh;
-  min-width: 100vw;
-  position: relative;
-}
-
-[aria-hidden='true'] {
-  visibility: hidden;
 }

@@ -1,9 +1,11 @@
 $className: get($css-transition, 'default');
+$appear: #{get($css-transition, 'appear.default')};
 $enter: #{get($css-transition, 'enter.default')};
 $exit: #{get($css-transition, 'exit.default')};
 
+.#{$appear},
 .#{$enter},
 .#{$exit} {
-  transition-duration: get($duration, 'normal');
+  transition-duration: get($duration, 'fast');
   transition-property: none;
 }

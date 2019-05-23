@@ -1,13 +1,15 @@
-import * as INavigation from "@Component/Navigation/spec";
 import {RouteComponentProps} from 'react-router';
 
 declare module IHome {
-  interface Component extends RouteComponentProps {
+  interface ClassNames extends IClassNames {
+    gutter: string;
+    tweenTime: string;
   }
   
-  type clickHandler = INavigation.clickHandler;
+  interface Props extends RouteComponentProps {
+  }
   
-  interface Props extends Component {
+  interface Component {
   }
 }
 

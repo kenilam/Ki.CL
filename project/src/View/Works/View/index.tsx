@@ -4,7 +4,7 @@ import React from 'react';
 import * as IView from './spec';
 import Work from './Work';
 
-const View: React.FC<IView.Props> = () => (
+const View: React.FunctionComponent<IView.Props> = () => (
   <Router
     classNames='works-view'
     routeIndex={1}

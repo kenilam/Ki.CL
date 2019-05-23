@@ -1,3 +1,4 @@
-@value custom: #{get($css-transition-style, 'custom')};
-@value fade: #{get($css-transition-style, 'fade')};
-@value slideUp: #{get($css-transition-style, 'slide-up')};
+@import './custom';
+@import './fade';
+@import './slide-down';
+@import './slide-up';

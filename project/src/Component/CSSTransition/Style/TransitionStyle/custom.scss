@@ -1,5 +1,5 @@
 $className: get($css-transition-style, 'custom');
 
 .#{$className} {
-  transition-property: auto;
+  transition-property: none;
 }

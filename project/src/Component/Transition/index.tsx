@@ -6,7 +6,7 @@ import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 import * as ITransition from './spec';
 import Style from './Style';
 
-const Transition: React.FC<ITransition.Props> = ({
+const Transition: React.FunctionComponent<ITransition.Props> = ({
   appear,
   classNames,
   children,

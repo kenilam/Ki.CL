@@ -1,5 +1,76 @@
+@import './value';
+
+$appear: #{get($css-transition, 'appear.default')};
+$appear-active: #{get($css-transition, 'appear.active')};
+$enter: #{get($css-transition, 'enter.default')};
+$enter-active: #{get($css-transition, 'enter.active')};
+$exit: #{get($css-transition, 'exit.default')};
+$exit-active: #{get($css-transition, 'exit.active')};
+
+$global-header: get($component-global-header, 'default');
+
+$link: #{get($component-link, 'default')};
+$link-active: #{get($component-link, 'active')};
+$link-transition-duration: #{get($duration, 'fastest')};
+$link-transition-timing-function: #{get($ease, 'circ.in')};
+
+$navigation: #{get($component-navigation, 'default')};
+
+$webgl: #{get($component-webgl, 'default')};
+
+$color: #{get($white, 'default')};
+$hoverColor: #{get($black, 'default')};
+
+$gutter: #{get($grid, 'gutter')};
+
 [data-routes='home'] {
+  display: grid;
+  grid-template-areas: '.' '.' 'navigation' ' .';
+  grid-template-rows: 50vh 2rem $linkSize auto;
   left: 0;
+  padding: $gutter;
   position: absolute;
   top: 0;
+
+  [data-component='#{$link}'] {
+    align-items: center;
+    border: 2px solid $color;
+    border-radius: 50%;
+    color: $color;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    transition-duration: $link-transition-duration;
+    transition-property: background-color, color, transform;
+    transition-timing-function: $link-transition-timing-function;
+    width: $linkSize;
+    will-change: background-color, color, transform;
+
+    &:hover,
+    &.#{$link-active} {
+      background-color: $color;
+      color: $hoverColor;
+      transform: scale(1.3);
+    }
+  }
+
+  [data-component='#{$navigation}'] {
+    grid-area: navigation;
+    justify-self: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  [data-component='#{$webgl}'] {
+    position: absolute;
+    z-index: 1;
+  }
+}
+
+[data-entered-routes='home'] {
+  [data-component='#{global-header}'],
+  [data-routes='home'],
+  [data-routes]:not([data-routes='home']) {
+    transition-delay: 2000ms;
+  }
 }

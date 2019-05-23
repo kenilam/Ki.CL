@@ -22,8 +22,9 @@ declare module ICSSTransition {
   
   interface TransitionStyle {
     custom: string;
-    fade: string;
+    fade: string
     slideUp: string;
+    slideDown: string;
     
     [key: string]: string;
   }

@@ -7,7 +7,7 @@ import * as IView from './spec';
 import Style from './Style';
 import Works from './Works';
 
-const View: React.FC<IView.Props> = () => (
+const View: React.FunctionComponent<IView.Props> = () => (
   <Router
     classNames={Style.view}
     routeIndex={0}

@@ -1,5 +1,7 @@
-import * as ILink from "@Component/Link/spec";
-import {MouseEventHandler} from "react";
+import * as ICSSTransition from '@Component/CSSTransition/spec';
+import * as ILink from '@Component/Link/spec';
+import {LocationDescriptor} from 'history';
+import {MouseEvent} from 'react';
 
 declare module INavigation {
   type Link = ILink.Props;
@@ -7,14 +9,16 @@ declare module INavigation {
   
   interface ClassNames extends IClassNames {
     default: string;
+    inline: string;
   }
   
-  type clickHandler = MouseEventHandler<HTMLAnchorElement>;
+  type ClickHandler = (event: MouseEvent<HTMLAnchorElement>, to: LocationDescriptor) => void;
   
-  interface Props {
+  interface Props extends ICSSTransition.Props {
     className?: string;
+    inline?: boolean;
     items?: Links;
-    onClick?: clickHandler;
+    onClick?: ClickHandler;
   }
 }
 

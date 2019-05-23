@@ -1,4 +1,4 @@
-import * as IGeometry from "./spec";
+import * as IGeometry from './spec';
 
 const DEFAULT_DENSITY = 720;
 const DEFAULT_RADIUS = 0;

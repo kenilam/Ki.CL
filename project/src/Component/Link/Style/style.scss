@@ -1,7 +1,7 @@
 $default: get($component-link, 'default');
 $active: get($component-link, 'active');
 
-[data-component=#{$default}] {
+[data-component='#{$default}'] {
   display: block;
 
   &.#{$active} {

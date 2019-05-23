@@ -1,5 +1,5 @@
 import data from '$resources/data.json';
-import IResources from "$resources/spec";
+import IResources from '$resources/spec';
 import {Redirect, Route} from '@Component/Router';
 import React from 'react';
 import * as IPageNotFound from './spec';

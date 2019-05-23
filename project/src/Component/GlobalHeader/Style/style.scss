@@ -4,7 +4,7 @@ $exit: get($css-transition, 'exit.default');
 
 $logo: get($component-logo, 'default');
 
-[data-component=#{$default}] {
+[data-component='#{$default}'] {
   display: grid;
   grid-template-areas: 'logo .';
   grid-template-columns: get($grid, 'wide') auto;
@@ -18,7 +18,7 @@ $logo: get($component-logo, 'default');
     }
   }
 
-  .#{$logo} {
+  [data-component='#{$logo}'] {
     grid-area: logo;
   }
 

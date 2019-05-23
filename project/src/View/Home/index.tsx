@@ -1,30 +1,38 @@
 import data from '$resources/data.json';
 import IResources from '$resources/spec';
-import {Navigation} from "@Component";
+import {CSSTransition, Navigation} from '@Component';
+import {TransitionStyleName} from '@Component/CSSTransition';
 import {Route, withRouter} from '@Component/Router';
+import Graphic from '@View/Home/Graphic';
 import * as IHome from '@View/Home/spec';
-import * as React from 'react';
-import {Background} from './Component';
+import React, {useState} from 'react';
 import './Style';
 
 const {view: {home: {path}}}: IResources.Data = data;
 
-const Home: React.FC<IHome.Props> = () => {
-  const clickHandler: IHome.clickHandler = event => {
-    console.log(event);
-    debugger;
+const Home: React.FunctionComponent<IHome.Props> = ({history}) => {
+  const [renderNavigation, showNavigation] = useState(false);
+  
+  const isActiveRoute = history.location.pathname === path;
+  
+  const onComplete = () => {
+    showNavigation(isActiveRoute);
   };
   
   return (
     <main data-routes='home'>
-      <Background zoomIn={true} />
-      <Navigation onClick={clickHandler} />
+      <Graphic onComplete={onComplete} />
+      <CSSTransition
+        transitionIn={renderNavigation && isActiveRoute}
+        transitionStyle={TransitionStyleName.fade}
+      >
+        <Navigation inline={true} />
+      </CSSTransition>
     </main>
   );
 };
 
 const Instance = withRouter(Home);
-
-const Component: React.FC<IHome.Component> = () => <Instance />;
+const Component = () => <Instance />;
 
 export default <Route path={path} exact={true} render={Component} />;

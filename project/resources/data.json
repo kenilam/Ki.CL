@@ -12,10 +12,11 @@
       "path": "/",
       "name": "Home",
       "component": {
-        "background": {
+        "graphic": {
           "content": {
-            "slogan": "Ki\nCL",
-            "image": "/image/noise.black.blur.jpg"
+            "image": "/image/noise.black.blur.jpg",
+            "name": "KENI CHI LAM",
+            "slogan": "Ki\nCL"
           }
         }
       },

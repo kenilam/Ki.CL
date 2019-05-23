@@ -6,7 +6,7 @@ import * as ICSSTransition from './spec';
 import Style, {TransitionStyle, TransitionStyleName} from './Style';
 import {addEndListener, classNameModifier} from './Utility';
 
-const CSSTransition: React.FC<ICSSTransition.Props> = ({
+const CSSTransition: React.FunctionComponent<ICSSTransition.Props> = ({
   appear = true,
   classNames,
   children,
