@@ -12,9 +12,19 @@ const loaders = loaders => [].concat(
   //     reloadAll: true,
   //   }
   // },
-  loaders.filter(({
+  loaders
+  .filter(({
     loader
   }) => loader !== fallback)
+  .map(loader => Object.assign(
+    loader,
+    {
+      options: Object.assign(
+        loader.options,
+        { sourceMap: false }
+      )
+    }
+  ))
 )
 
 const rules = [{

@@ -68,9 +68,9 @@ $gutter: #{get($grid, 'gutter')};
 }
 
 [data-entered-routes='home'] {
-  [data-component='#{global-header}'],
-  [data-routes='home'],
-  [data-routes]:not([data-routes='home']) {
+  [data-component='#{global-header}'].#{$enter-active},
+  [data-routes]:not([data-routes='home']).#{$enter-active},
+  [data-routes='home'].#{$exit-active} {
     transition-delay: 2000ms;
   }
 }
