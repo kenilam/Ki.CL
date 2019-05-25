@@ -6,12 +6,13 @@ $enter: #{get($css-transition, 'enter.default')};
 $enter-active: #{get($css-transition, 'enter.active')};
 $exit: #{get($css-transition, 'exit.default')};
 $exit-active: #{get($css-transition, 'exit.active')};
+$exit-done: #{get($css-transition, 'exit.active')};
 
 $global-header: get($component-global-header, 'default');
 
 $link: #{get($component-link, 'default')};
 $link-active: #{get($component-link, 'active')};
-$link-transition-duration: #{get($duration, 'fastest')};
+$link-transition-duration: #{get($duration, 'faster')};
 $link-transition-timing-function: #{get($ease, 'circ.in')};
 
 $navigation: #{get($component-navigation, 'default')};
@@ -19,7 +20,7 @@ $navigation: #{get($component-navigation, 'default')};
 $webgl: #{get($component-webgl, 'default')};
 
 $color: #{get($white, 'default')};
-$hoverColor: #{get($black, 'default')};
+$hover-color: #{get($black, 'default')};
 
 $gutter: #{get($grid, 'gutter')};
 
@@ -49,7 +50,7 @@ $gutter: #{get($grid, 'gutter')};
     &:hover,
     &.#{$link-active} {
       background-color: $color;
-      color: $hoverColor;
+      color: $hover-color;
       transform: scale(1.3);
     }
   }
@@ -65,12 +66,28 @@ $gutter: #{get($grid, 'gutter')};
     position: absolute;
     z-index: 1;
   }
+
+  &.#{$enter},
+  &.#{$exit} {
+    z-index: 300;
+  }
+
+  &.#{$exit} {
+    transition-delay: 2000ms;
+  }
 }
 
-[data-entered-routes='home'] {
-  [data-component='#{global-header}'].#{$enter-active},
-  [data-routes]:not([data-routes='home']).#{$enter-active},
-  [data-routes='home'].#{$exit-active} {
+[data-exited-routes='home'] {
+  [data-component='#{$global-header}'].#{$enter}.#{$enter-active} {
     transition-delay: 2000ms;
+  }
+
+  [data-routes] {
+    &.#{$appear}.#{$appear-active},
+    &.#{$enter}.#{$enter-active},
+    &.#{$exit}.#{$exit-active},
+    &.#{$exit}.#{$exit-done} {
+      transition-delay: 2000ms;
+    }
   }
 }

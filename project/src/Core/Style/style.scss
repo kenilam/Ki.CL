@@ -10,6 +10,10 @@ html {
   line-height: get($font, 'line-height');
 }
 
+* {
+  color: get($black, 'default');
+}
+
 h1,
 h2,
 h3,
@@ -29,6 +33,7 @@ h2 {
 a,
 button,
 [href] {
+  color: $orange;
   cursor: pointer;
   text-decoration: none;
 }

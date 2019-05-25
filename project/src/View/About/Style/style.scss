@@ -1,2 +1,8 @@
 $enter: get($css-transition, 'enter.default');
 $exit: get($css-transition, 'exit.default');
+
+[data-routes='about'] {
+  h1 {
+    padding-top: 300px;
+  }
+}

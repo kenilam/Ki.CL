@@ -1,11 +1,10 @@
-import history from './History';
-import windowSizes from './WindowSizes';
+import WindowSizes from './WindowSizes';
 
 const State = () => {
   return {
-    ...windowSizes()
+    ...WindowSizes()
   };
 };
 
-export {history, windowSizes};
+export {WindowSizes};
 export default State;

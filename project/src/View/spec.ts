@@ -4,7 +4,6 @@ declare module IView {
   }
   
   interface Props {
-    
   }
 }
 

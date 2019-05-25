@@ -1,20 +1,20 @@
-$className: get($css-transition-style, 'fade');
+$style: get($css-transition-style, 'fade');
 $appear: get($css-transition, 'appear.default');
-$appearActive: get($css-transition, 'appear.active');
+$appear-active: get($css-transition, 'appear.active');
 $enter: get($css-transition, 'enter.default');
-$enterActive: get($css-transition, 'enter.active');
+$enter-active: get($css-transition, 'enter.active');
 $exit: get($css-transition, 'exit.default');
-$exitActive: get($css-transition, 'exit.active');
-$exitDone: get($css-transition, 'exit.done');
+$exit-active: get($css-transition, 'exit.active');
+$exit-done: get($css-transition, 'exit.done');
 
-.#{$className} {
+.#{$style} {
   transition-property: opacity;
   will-change: opacity;
 
-  &.#{$appear}:not(.#{$appearActive}),
-  &.#{$enter}:not(.#{$enterActive}),
-  &.#{$exitActive},
-  &.#{$exitDone} {
+  &.#{$appear}:not(.#{$appear-active}),
+  &.#{$enter}:not(.#{$enter-active}),
+  &.#{$exit}.#{$exit-active},
+  &.#{$exit}.#{$exit-done} {
     opacity: 0;
   }
 }

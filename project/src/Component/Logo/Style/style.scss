@@ -4,8 +4,8 @@ $square: get($component-logo, 'square');
 $content: get($kicl, 'content.default');
 $name: get($kicl, 'name');
 $size: get($grid, 'gutter');
-$transitionDuration: get($duration, 'fast');
-$transitionTimingFunction: get($ease, 'default.in');
+$transition-duration: get($duration, 'fast');
+$transition-timing-function: get($ease, 'default.in');
 
 [data-component='#{$default}'] {
   font-size: $size;
@@ -23,9 +23,9 @@ $transitionTimingFunction: get($ease, 'default.in');
     position: absolute;
     text-indent: 0;
     top: 0;
-    transition-duration: $transitionDuration;
+    transition-duration: $transition-duration;
     transition-property: color;
-    transition-timing-function: $transitionTimingFunction;
+    transition-timing-function: $transition-timing-function;
     will-change: color;
     z-index: 1;
   }

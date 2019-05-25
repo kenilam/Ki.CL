@@ -1,11 +1,12 @@
 import * as IWebGL from '@Component/WebGL/spec';
 import * as ITween from '@View/Home/Graphic/Tween/spec';
-import {RouteComponentProps} from "react-router";
+import {RouteComponentProps} from 'react-router';
 
 declare module IGraphic {
   type Handler = ITween.Handler;
   
   interface ClassNames extends IClassNames {
+    delay: string;
     default: string;
     duration: string;
   }

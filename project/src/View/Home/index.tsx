@@ -32,7 +32,6 @@ const Home: React.FunctionComponent<IHome.Props> = ({history}) => {
   );
 };
 
-const Instance = withRouter(Home);
-const Component = () => <Instance />;
+const Component = withRouter(Home);
 
-export default <Route path={path} exact={true} render={Component} />;
+export default <Route path={path} exact={true} component={Component} />;

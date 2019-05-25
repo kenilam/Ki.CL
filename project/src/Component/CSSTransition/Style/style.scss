@@ -1,11 +1,17 @@
-$className: get($css-transition, 'default');
-$appear: #{get($css-transition, 'appear.default')};
-$enter: #{get($css-transition, 'enter.default')};
-$exit: #{get($css-transition, 'exit.default')};
+$default: get($css-transition, 'default');
+$appear-active: #{get($css-transition, 'appear.active')};
+$enter-active: #{get($css-transition, 'enter.active')};
+$exit-active: #{get($css-transition, 'exit.active')};
 
-.#{$appear},
-.#{$enter},
-.#{$exit} {
-  transition-duration: get($duration, 'fast');
+$transition-duration: get($duration, 'normal');
+
+.#{$default} {
+  pointer-events: none;
+}
+
+.#{$appear-active},
+.#{$enter-active},
+.#{$exit-active} {
+  transition-duration: $transition-duration;
   transition-property: none;
 }

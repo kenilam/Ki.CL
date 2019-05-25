@@ -29,7 +29,7 @@ class Text extends PIXI.Container {
     width = 0,
     x = 0,
     y = 0
-  }: IText.UpdateProps) {
+  }: IText.UpdateProps = {}) {
     const styles = CSSUnitGroup(this.style);
     
     const {xGutter, yGutter} = styles;

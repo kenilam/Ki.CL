@@ -13,7 +13,7 @@ class RoundedRect extends PIXI.Graphics {
     width = 0,
     x = 0,
     y = 0
-  }: IRoundedRect.UpdateProps) {
+  }: IRoundedRect.UpdateProps = {}) {
     this
     .clear()
     .beginFill(fill)

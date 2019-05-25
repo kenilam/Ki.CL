@@ -1,9 +1,9 @@
 import data from '$resources/data.json';
 import IResources from '$resources/spec';
-import {withRouter} from "@Component/Router";
+import {withRouter} from '@Component/Router';
 import WebGL from '@Component/WebGL';
 import {CSSUnit} from '@Helper';
-import {windowSizes} from '@Hook';
+import {WindowSizes} from '@Hook';
 import * as IGraphic from '@View/Home/Graphic/spec';
 import React, {useEffect} from 'react';
 import {BackFill, Mask, Name, Slogan} from './Partial';
@@ -93,10 +93,13 @@ const Graphic: React.FunctionComponent<IGraphic.Props> = ({
       duration: 0,
       onUpdate() {
         mask.update({x: width / 2, y: height / 2});
+        name.update();
+        slogan.update();
       },
       pause: false
     }),
     new Tween({
+      delay: duration * 0.1,
       duration: duration * 0.1,
       ease: gsap.Linear.easeNone,
       onUpdate({value: alpha}) {
@@ -145,7 +148,7 @@ const Graphic: React.FunctionComponent<IGraphic.Props> = ({
     }
   );
   
-  windowSizes();
+  WindowSizes();
   
   useEffect(() => {
     resize();
@@ -154,6 +157,12 @@ const Graphic: React.FunctionComponent<IGraphic.Props> = ({
     
     return () => {
       tween.kill();
+      
+      if (mask.alpha < 1) {
+        mask.update({x: width / 2, y: height / 2});
+        name.update();
+        slogan.update();
+      }
     };
   });
   

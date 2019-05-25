@@ -1,8 +1,8 @@
 import {RouteComponentProps} from 'react-router';
 
-declare module IWorks {
+declare module IAbout {
   interface Props extends RouteComponentProps {
   }
 }
 
-export = IWorks;
+export = IAbout;

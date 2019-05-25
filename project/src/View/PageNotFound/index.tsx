@@ -14,4 +14,4 @@ const PageNotFound = ({history}: IPageNotFound.Props) => {
     : null;
 };
 
-export default <Route render={PageNotFound} />;
+export default <Route component={PageNotFound} />;

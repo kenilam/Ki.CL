@@ -1,4 +1,4 @@
-import * as IRoundedRect from "@View/Home/Graphic/Partial/Common/Rect/spec";
+import * as IRoundedRect from '@View/Home/Graphic/Partial/Common/Rect/spec';
 
 declare module IMask {
   interface Style extends IClassNames {

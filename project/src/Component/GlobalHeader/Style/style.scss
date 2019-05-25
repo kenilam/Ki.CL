@@ -1,29 +1,49 @@
 $default: get($component-global-header, 'default');
+
+$transition-parent: get($transition, 'default');
 $enter: get($css-transition, 'enter.default');
 $exit: get($css-transition, 'exit.default');
 
 $logo: get($component-logo, 'default');
+$navigation: get($component-navigation, 'default');
+
+$column: get($grid, 'wide');
+$column-narrow: get($grid, 'gutter');
+$font-family: get($font, 'font-family.bold');
+$font-size: get($font, 'font-size.medium');
+$space: get($grid, 'space');
 
 [data-component='#{$default}'] {
   display: grid;
-  grid-template-areas: 'logo .';
-  grid-template-columns: get($grid, 'wide') auto;
+  font-family: $font-family;
+  font-size: $font-size;
+  grid-template-areas: 'logo . navigation .';
+  grid-template-columns: $column auto auto $column-narrow;
   grid-template-rows: 1fr;
-  padding: get($grid, 'space');
-
-  &.#{$enter},
-  &.#{$exit} {
-    .#{get($transition, 'default')} & {
-      position: relative;
-    }
-  }
+  line-height: 1;
+  padding: $space;
+  position: sticky;
+  top: 0;
 
   [data-component='#{$logo}'] {
     grid-area: logo;
   }
 
+  [data-component='#{$navigation}'] {
+    grid-area: navigation;
+    justify-self: end;
+    text-transform: uppercase;
+  }
+
   @include mobile() {
-    grid-template-columns: get($grid, 'narrow') auto;
+    grid-template-columns: $column-narrow auto auto $column-narrow;
     grid-template-rows: 1fr;
+  }
+
+  &.#{$enter},
+  &.#{$exit} {
+    .#{$transition-parent} & {
+      position: sticky;
+    }
   }
 }

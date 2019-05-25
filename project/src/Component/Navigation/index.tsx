@@ -20,36 +20,34 @@ const DEFAULT_ITEMS: INavigation.Links = Object.keys(view).map(
   }
 ).filter(({to}) => Boolean(to) && to !== view.home.path);
 
-const Navigation: React.FunctionComponent<INavigation.Props> = ({className, inline = false, items, onClick}) => {
-  return (
-    <nav
-      className={classnames(
-        className,
-        {
-          'is-inline': inline
-        }
-      )}
-      data-component={Style.default}
-      role='navigation'
-    >
+const Navigation: React.FunctionComponent<INavigation.Props> = ({className, inline = false, items, onClick}) => (
+  <nav
+    className={classnames(
+      className,
       {
-        (items || DEFAULT_ITEMS).map(
-          ({children, to}) => (
-            <Link
-              to={to}
-              onClick={onClick && (event => {
-                event.preventDefault();
-                onClick(event, to);
-              })}
-              key={RandomId()}
-            >
-              {children}
-            </Link>
-          )
-        )
+        'is-inline': inline
       }
-    </nav>
-  );
-};
+    )}
+    data-component={Style.default}
+    role='navigation'
+  >
+    {
+      (items || DEFAULT_ITEMS).map(
+        ({children, to}) => (
+          <Link
+            to={to}
+            onClick={onClick && (event => {
+              event.preventDefault();
+              onClick(event, to);
+            })}
+            key={RandomId()}
+          >
+            {children}
+          </Link>
+        )
+      )
+    }
+  </nav>
+);
 
 export default Navigation;

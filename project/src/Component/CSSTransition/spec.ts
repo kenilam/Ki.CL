@@ -1,4 +1,5 @@
 import {CSSTransitionProps} from 'react-transition-group/CSSTransition';
+import {EndHandler, EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 
 declare module ICSSTransition {
   interface ClassNames extends IClassNames {
@@ -14,7 +15,17 @@ declare module ICSSTransition {
     exitDone: string;
   }
   
+  type OnEnter = EnterHandler;
+  type OnExit = ExitHandler;
+  
   interface Props extends Partial<CSSTransitionProps> {
+    addEndListener?: EndHandler;
+    onEnter?: EnterHandler;
+    onEntering?: EnterHandler;
+    onEntered?: EnterHandler;
+    onExit?: ExitHandler;
+    onExiting?: ExitHandler;
+    onExited?: ExitHandler;
     transitionIn?: boolean;
     transitionKey?: string;
     transitionStyle?: keyof TransitionStyle;
