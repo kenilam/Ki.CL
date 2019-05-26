@@ -3,7 +3,7 @@ $appear-active: #{get($css-transition, 'appear.active')};
 $enter-active: #{get($css-transition, 'enter.active')};
 $exit-active: #{get($css-transition, 'exit.active')};
 
-$transition-duration: get($duration, 'normal');
+$transition-duration: get($duration, 'fast');
 
 .#{$default} {
   pointer-events: none;

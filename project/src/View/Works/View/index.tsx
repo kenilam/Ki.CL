@@ -1,10 +1,9 @@
 import {Router} from '@Component';
 import {TransitionStyleName} from '@Component/CSSTransition';
 import React from 'react';
-import * as IView from './spec';
 import Work from './Work';
 
-const View: React.FunctionComponent<IView.Props> = () => (
+const View = (
   <Router
     classNames='works-view'
     routeIndex={1}

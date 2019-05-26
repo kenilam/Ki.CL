@@ -1,19 +1,30 @@
 $default: get($component-global-header, 'default');
 
 $transition-parent: get($transition, 'default');
+
+$appear: get($css-transition, 'appear.default');
+$appear-active: get($css-transition, 'appear.active');
 $enter: get($css-transition, 'enter.default');
+$enter-active: get($css-transition, 'enter.active');
 $exit: get($css-transition, 'exit.default');
+$exit-active: get($css-transition, 'exit.active');
+$exit-done: get($css-transition, 'exit.done');
 
 $logo: get($component-logo, 'default');
 $navigation: get($component-navigation, 'default');
 
 $column: get($grid, 'wide');
 $column-narrow: get($grid, 'gutter');
-$font-family: get($font, 'font-family.bold');
-$font-size: get($font, 'font-size.medium');
+
+$color: get($black, 'light');
+$font-family: get($font, 'font-family.normal');
+$font-size: get($font, 'font-size.normal');
 $space: get($grid, 'space');
 
 [data-component='#{$default}'] {
+  @include shadow-bottom();
+
+  background-color: get($white, 'pure');
   display: grid;
   font-family: $font-family;
   font-size: $font-size;
@@ -27,12 +38,23 @@ $space: get($grid, 'space');
 
   [data-component='#{$logo}'] {
     grid-area: logo;
+    transition-duration: get($duration, 'fastest');
+    transition-property: transform;
+    transition-timing-function: get($ease, 'circ.in');
+
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 
   [data-component='#{$navigation}'] {
     grid-area: navigation;
     justify-self: end;
     text-transform: uppercase;
+  }
+
+  a {
+    color: $color;
   }
 
   @include mobile() {
@@ -45,5 +67,12 @@ $space: get($grid, 'space');
     .#{$transition-parent} & {
       position: sticky;
     }
+  }
+
+  &.#{$appear}:not(.#{$appear-active}),
+  &.#{$enter}:not(.#{$enter-active}),
+  &.#{$exit}.#{$exit-active},
+  &.#{$exit}.#{$exit-done} {
+    transform: translate3d(0, -105%, 0);
   }
 }

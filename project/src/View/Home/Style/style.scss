@@ -77,16 +77,17 @@ $gutter: #{get($grid, 'gutter')};
   }
 }
 
-[data-exited-routes='home'] {
+[data-entered-routes='home'] {
   [data-component='#{$global-header}'].#{$enter}.#{$enter-active} {
     transition-delay: 2000ms;
   }
+}
 
+[data-exited-routes='home'] {
   [data-routes] {
     &.#{$appear}.#{$appear-active},
     &.#{$enter}.#{$enter-active},
-    &.#{$exit}.#{$exit-active},
-    &.#{$exit}.#{$exit-done} {
+    &.#{$exit}.#{$exit-active} {
       transition-delay: 2000ms;
     }
   }

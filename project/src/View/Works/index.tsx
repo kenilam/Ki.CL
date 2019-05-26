@@ -11,7 +11,7 @@ const {view: {works: {path}}}: IResources.Data = data;
 const Works: React.FunctionComponent<IWorks.Props> = () => (
   <main data-routes='works'>
     <h1>Works</h1>
-    <View />
+    {View}
   </main>
 );
 

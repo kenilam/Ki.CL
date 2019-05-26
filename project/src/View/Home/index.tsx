@@ -3,10 +3,10 @@ import IResources from '$resources/spec';
 import {CSSTransition, Navigation} from '@Component';
 import {TransitionStyleName} from '@Component/CSSTransition';
 import {Route, withRouter} from '@Component/Router';
-import Graphic from '@View/Home/Graphic';
 import * as IHome from '@View/Home/spec';
 import React, {useState} from 'react';
 import './Style';
+import WebGL from './WebGL';
 
 const {view: {home: {path}}}: IResources.Data = data;
 
@@ -21,7 +21,7 @@ const Home: React.FunctionComponent<IHome.Props> = ({history}) => {
   
   return (
     <main data-routes='home'>
-      <Graphic onComplete={onComplete} />
+      <WebGL onComplete={onComplete} />
       <CSSTransition
         transitionIn={renderNavigation && isActiveRoute}
         transitionStyle={TransitionStyleName.fade}

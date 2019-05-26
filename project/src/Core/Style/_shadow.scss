@@ -1,6 +1,6 @@
 $shadow-alpha: 0.2;
 $shadow-color: #000;
-$shadow-distant: 2px;
+$shadow-distant: 1px;
 $shadow-distant-negative: (-($shadow-distant / 2));
 $shadow-rgba: rgba(red($shadow-color), green($shadow-color), blue($shadow-color), $shadow-alpha);
 
