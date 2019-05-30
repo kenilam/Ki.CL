@@ -1,6 +1,6 @@
 import data from '$resources/data.json';
 import * as IResources from '$resources/spec';
-import {Text} from '@View/Home/WebGL/Common';
+import { Text } from '@View/Home/WebGL/Common';
 import style from './Style';
 
 const {
@@ -19,7 +19,7 @@ const {
 
 class Name extends Text {
   constructor() {
-    super({style, text, tick: false, zoom: false});
+    super( { style, text, tick: false, zoom: false } );
   }
 }
 

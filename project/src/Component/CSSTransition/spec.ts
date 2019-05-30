@@ -1,5 +1,5 @@
-import {CSSTransitionProps} from 'react-transition-group/CSSTransition';
-import {EndHandler, EnterHandler, ExitHandler} from 'react-transition-group/Transition';
+import { CSSTransitionProps } from 'react-transition-group/CSSTransition';
+import { EndHandler, EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 
 declare module ICSSTransition {
   interface ClassNames extends IClassNames {
@@ -36,8 +36,8 @@ declare module ICSSTransition {
     fade: string
     slideUp: string;
     slideDown: string;
-    
-    [key: string]: string;
+  
+    [ key: string ]: string;
   }
 }
 

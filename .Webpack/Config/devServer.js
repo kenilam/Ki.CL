@@ -10,7 +10,7 @@ import { publicPath } from './output'
 const {
   host,
   port
-} = config.localhost
+} = config.localhost;
 
 const stats = {
   all: false,
@@ -31,15 +31,15 @@ const stats = {
   timings: true,
   version: true,
   warnings: true,
-}
+};
 
 const optimization = {
   namedModules: true,
   noEmitOnErrors: true,
   occurrenceOrder: true,
-}
+};
 
-const contentBase = [assetPath, contentPath].map(path => `${path}/`)
+const contentBase = [ assetPath, contentPath ].map( path => `${ path }/` );
 
 const devServer = {
   hot: true,
@@ -51,7 +51,7 @@ const devServer = {
     errors: true,
   },
   progress: true,
-  publicPath: `${host}:${port}${publicPath}`,
+  publicPath: `${ host }:${ port }${ publicPath }`,
   watchContentBase: true,
   watchOptions: {
     aggregateTimeout: 500,
@@ -61,21 +61,23 @@ const devServer = {
   contentBase,
   port,
   stats,
-}
+};
 
-remotedev({
+remotedev( {
   name: 'channel',
   realtime: true,
   port: 5000
-})
+} );
 
-const browser = () => open(`${host}:${port}`)
+function browser() {
+  open( `${ host }:${ port }` );
+}
 
 const plugins = [
   new webpack.NamedModulesPlugin(),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.EvalSourceMapDevToolPlugin(),
-]
+];
 
 export {
   browser,

@@ -2,29 +2,31 @@ import { argv } from 'yargs'
 
 let {
   env
-} = argv
+} = argv;
 
 if (!env) {
   env = {}
 }
 
-const whichBoolean = type => Boolean(env[type]) || false
+function whichBoolean( type ) {
+  return Boolean( env[ type ] ) || false
+}
 
 class Arguments {
-  static get analyzer () {
-    return whichBoolean('analyzer')
+  static get analyzer() {
+    return whichBoolean( 'analyzer' )
   }
   
-  static get noBrowser () {
-    return whichBoolean('noBrowser')
+  static get noBrowser() {
+    return whichBoolean( 'noBrowser' )
   }
   
-  static get noWatch () {
-    return whichBoolean('noWatch')
+  static get noWatch() {
+    return whichBoolean( 'noWatch' )
   }
   
-  static get verbose () {
-    return whichBoolean('verbose')
+  static get verbose() {
+    return whichBoolean( 'verbose' )
   }
 }
 

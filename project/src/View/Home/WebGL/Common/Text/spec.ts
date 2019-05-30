@@ -1,4 +1,4 @@
-import {Alpha, Height, Width, X, Y} from '@View/Home/WebGL/Common/spec';
+import { Alpha, Height, Width, X, Y } from '@View/Home/WebGL/Common/spec';
 
 declare module IText {
   type Style = {

@@ -1,6 +1,6 @@
 import * as ICSSTransition from '@Component/CSSTransition/spec';
-import {ElementType} from 'react';
-import {ComponentTransitionGroupProps} from 'react-transition-group/TransitionGroup';
+import { ElementType } from 'react';
+import { ComponentTransitionGroupProps } from 'react-transition-group/TransitionGroup';
 
 declare module ITransition {
   interface ClassNames {

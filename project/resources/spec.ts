@@ -7,21 +7,21 @@ declare module IResources {
     type SiteName = string;
     
     interface Content {
-      [name: string]: any;
+      [ name: string ]: any;
     }
     
     interface Component {
       content?: Content;
-      
-      [name: string]: Content;
+  
+      [ name: string ]: Content;
     }
     
     interface Components {
-      [name: string]: Component;
+      [ name: string ]: Component;
     }
     
     interface Miscellaneous {
-      months?: (string)[] | null;
+      months?: ( string )[] | null;
     }
     
     interface View {
@@ -34,7 +34,7 @@ declare module IResources {
     }
     
     interface Views {
-      [name: string]: View;
+      [ name: string ]: View;
     }
   }
   

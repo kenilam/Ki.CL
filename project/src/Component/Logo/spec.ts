@@ -1,4 +1,4 @@
-import {ElementType} from 'react';
+import { ElementType } from 'react';
 
 declare module ILogo {
   interface ClassNames extends IClassNames {

@@ -1,6 +1,6 @@
 import * as ICSSTransition from '@Component/CSSTransition/spec';
 import * as ITransition from '@Component/Transition/spec';
-import {RouteComponentProps} from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 declare module IRouter {
   interface Component extends RouteComponentProps {

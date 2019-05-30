@@ -1,8 +1,8 @@
-function RandomId(range: number = 1000): string {
+function RandomId( range: number = 1000 ): string {
   return (
-    `${new Date().getTime()}_${Math.floor(Math.random() * range)}_${Math.floor(
+    `${ new Date().getTime() }_${ Math.floor( Math.random() * range ) }_${ Math.floor(
       Math.random() * range
-    )}`
+    ) }`
   );
 }
 

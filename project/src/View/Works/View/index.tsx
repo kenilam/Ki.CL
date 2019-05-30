@@ -1,5 +1,5 @@
-import {Router} from '@Component';
-import {TransitionStyleName} from '@Component/CSSTransition';
+import { Router } from '@Component';
+import { TransitionStyleName } from '@Component/CSSTransition';
 import React from 'react';
 import Work from './Work';
 

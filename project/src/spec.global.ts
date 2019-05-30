@@ -1,5 +1,5 @@
 interface IClassNames {
-  [index: string]: any;
+  [ index: string ]: any;
 }
 
 declare module '*.scss' {

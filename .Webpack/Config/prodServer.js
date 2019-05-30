@@ -3,7 +3,7 @@ import { Args } from '!/Utilities'
 import { localhost } from '^/ki-cl.config'
 import browserSync from 'browser-sync'
 
-const startPath = ''
+const startPath = '';
 
 const browserConfig = {
   ...localhost,
@@ -11,7 +11,7 @@ const browserConfig = {
   // files: [`${baseDir}/**/*`],
   logConnections: true,
   open: !Args.noBrowser,
-  plugins: ['bs-fullscreen-message'],
+  plugins: [ 'bs-fullscreen-message' ],
   reloadDelay: 0,
   reloadDebounce: 500,
   server: {
@@ -22,11 +22,11 @@ const browserConfig = {
   hooks: {
     'client:js': `___browserSync___.socket.on('disconnect', function () { window.close(); location.reload(); });`,
   },
-}
+};
 
-const browserInstance = browserSync.create()
+const browserInstance = browserSync.create();
 
-const browser = () => browserInstance.init(browserConfig)
+const browser = () => browserInstance.init( browserConfig );
 
 export {
   browser,

@@ -1,6 +1,6 @@
 import data from '$resources/data.json';
 import * as IResources from '$resources/spec';
-import {Text} from '@View/Home/WebGL/Common';
+import { Text } from '@View/Home/WebGL/Common';
 import style from './Style';
 
 const {
@@ -19,7 +19,7 @@ const {
 
 class Slogan extends Text {
   constructor() {
-    super({style, text});
+    super( { style, text } );
   }
 }
 

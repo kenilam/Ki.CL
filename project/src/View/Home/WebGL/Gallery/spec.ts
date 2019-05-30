@@ -1,4 +1,4 @@
-import {Alpha, Height, Radius, Width, X, Y} from '@View/Home/WebGL/Common/spec';
+import { Alpha, Height, Radius, Width, X, Y } from '@View/Home/WebGL/Common/spec';
 
 declare module IGallery {
   interface UpdateProps {

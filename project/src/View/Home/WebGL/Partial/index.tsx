@@ -3,4 +3,4 @@ import Mask from './Mask';
 import Name from './Name';
 import Slogan from './Slogan';
 
-export {BackFill, Mask, Name, Slogan};
+export { BackFill, Mask, Name, Slogan };

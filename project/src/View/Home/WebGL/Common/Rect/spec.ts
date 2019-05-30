@@ -1,4 +1,4 @@
-import {Alpha, Color, Height, Radius, Width, X, Y} from '@View/Home/WebGL/Common/spec';
+import { Alpha, Color, Height, Radius, Width, X, Y } from '@View/Home/WebGL/Common/spec';
 
 declare module IRoundedRect {
   interface UpdateProps {

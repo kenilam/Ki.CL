@@ -1,5 +1,5 @@
-import {ElementType} from 'react';
-import {NavLinkProps} from 'react-router-dom';
+import { ElementType } from 'react';
+import { NavLinkProps } from 'react-router-dom';
 
 declare module ILink {
   interface ClassNames extends IClassNames {

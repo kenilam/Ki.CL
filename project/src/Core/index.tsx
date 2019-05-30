@@ -1,4 +1,4 @@
-import {loadPolyfill} from './Polyfill';
+import { loadPolyfill } from './Polyfill';
 import './Style';
 
-export {loadPolyfill};
+export { loadPolyfill };
