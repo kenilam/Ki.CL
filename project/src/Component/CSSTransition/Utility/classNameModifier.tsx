@@ -1,6 +1,6 @@
 import Style from '@Component/CSSTransition/Style';
 import classnames from 'classnames';
-import { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
+import {CSSTransitionClassNames} from 'react-transition-group/CSSTransition';
 
 function addDefault(
   node: Element,
@@ -10,13 +10,13 @@ function addDefault(
     return;
   }
   
-  node.classList.add( Style.cssTransition );
+  node.classList.add(Style.cssTransition);
   
   if (!additionalClassNames) {
     return;
   }
   
-  node.classList.add( classnames( additionalClassNames ) );
+  node.classList.add(classnames(additionalClassNames));
 }
 
 function removeDone(
@@ -27,13 +27,13 @@ function removeDone(
     return;
   }
   
-  node.classList.remove( Style.cssTransition, Style.appearDone, Style.enterDone, Style.exitDone );
+  node.classList.remove(Style.cssTransition, Style.appearDone, Style.enterDone, Style.exitDone);
   
   if (!additionalClassNames) {
     return;
   }
   
-  node.classList.remove( classnames( additionalClassNames ) );
+  node.classList.remove(classnames(additionalClassNames));
 }
 
-export default { addDefault, removeDone };
+export default {addDefault, removeDone};

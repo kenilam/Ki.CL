@@ -1,17 +1,17 @@
-import { siteName, view } from '$resources/data.json';
-import { Link } from '@Component';
+import {siteName, view} from '$resources/data.json';
+import {Link} from '@Component';
 import React from 'react';
 import * as ILogo from './spec';
 import Style from './Style';
 
-const { home: { path } } = view;
+const {home: {path}} = view;
 
 const Logo: React.FunctionComponent<ILogo.Props> = () => (
-  <h1 data-component={ Style.default }>
+  <h1 data-component={Style.default}>
     <Link
-      to={ path }
+      to={path}
     >
-      { siteName }
+      {siteName}
     </Link>
   </h1>
 );

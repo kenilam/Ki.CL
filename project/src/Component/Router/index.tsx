@@ -1,7 +1,7 @@
-import { view } from '$resources/data.json';
-import { Transition } from '@Component';
+import {view} from '$resources/data.json';
+import {Transition} from '@Component';
 import React from 'react';
-import { HashRouter as Provider, Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import {HashRouter as Provider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import * as IRouter from './spec';
 
 const Router: React.FunctionComponent<IRouter.Props> = (
@@ -23,20 +23,20 @@ const Router: React.FunctionComponent<IRouter.Props> = (
 ) => {
   const Component: React.FunctionComponent<IRouter.Component> = (
     {
-      children, history: { location: { pathname } }, location
+      children, history: {location: {pathname}}, location
     }
   ) => {
     let enterFrame: number;
     let exitFrame: number;
     
     const routes = pathname === view.home.path
-                   ? view.home.name.toLowerCase()
-                   : pathname.substr( 1 ).replace( /\//g, '.' );
-    
-    const onEnterHandler: IRouter.OnEnter = ( node, done ) => {
+      ? view.home.name.toLowerCase()
+      : pathname.substr(1).replace(/\//g, '.');
+  
+    const onEnterHandler: IRouter.OnEnter = (node, done) => {
       document.body.dataset.enteredRoutes = routes;
-      
-      window.cancelAnimationFrame( enterFrame );
+    
+      window.cancelAnimationFrame(enterFrame);
       
       if (!onEnter) {
         return;
@@ -44,7 +44,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
       
       enterFrame = window.requestAnimationFrame(
         () => {
-          onEnter( node, done );
+          onEnter(node, done);
         }
       );
     };
@@ -52,7 +52,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     const onExitHandler: IRouter.OnExit = node => {
       document.body.dataset.exitedRoutes = routes;
   
-      window.cancelAnimationFrame( exitFrame );
+      window.cancelAnimationFrame(exitFrame);
       
       if (!onExit) {
         return;
@@ -60,7 +60,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
       
       exitFrame = window.requestAnimationFrame(
         () => {
-          onExit( node );
+          onExit(node);
         }
       );
     };
@@ -77,7 +77,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         onExiting={onExiting}
         onExited={onExited}
         transitionIn={transitionIn}
-        transitionKey={location.pathname.split( '/' )[ routeIndex + 1 ] || '/'}
+        transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
         transitionStyle={transitionStyle}
       >
         <Switch location={location}>{children}</Switch>
@@ -85,7 +85,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     );
   };
   
-  const Instance = withRouter( Component );
+  const Instance = withRouter(Component);
   
   return (
     <Provider>
@@ -94,6 +94,6 @@ const Router: React.FunctionComponent<IRouter.Props> = (
   );
 };
 
-export { Redirect, Route, Switch, Provider, withRouter };
+export {Redirect, Route, Switch, Provider, withRouter};
 
 export default Router;

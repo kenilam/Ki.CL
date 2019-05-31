@@ -6,5 +6,5 @@ const State = () => {
   };
 };
 
-export { WindowSizes };
+export {WindowSizes};
 export default State;

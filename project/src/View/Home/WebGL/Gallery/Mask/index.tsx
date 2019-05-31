@@ -1,5 +1,5 @@
-import { CSSUnitGroup } from '@Helper/CSSUnit';
-import { Rect } from '@View/Home/WebGL/Common';
+import {CSSUnitGroup} from '@Helper/CSSUnit';
+import {Rect} from '@View/Home/WebGL/Common';
 import * as IMask from './spec';
 import Style from './Style';
 
@@ -15,16 +15,16 @@ class Mask extends Rect {
       y = 0
     }: IMask.UpdateProps
   ) {
-    const { fill } = CSSUnitGroup( Style );
-    
-    super.update( {
+    const {fill} = CSSUnitGroup(Style);
+  
+    super.update({
       alpha,
       fill,
       height,
       width,
       x,
       y
-    } );
+    });
   }
 }
 

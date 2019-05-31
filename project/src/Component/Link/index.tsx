@@ -1,6 +1,6 @@
-import { Provider } from '@Component/Router';
+import {Provider} from '@Component/Router';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import * as ILink from './spec';
 import Style from './Style';
 
@@ -11,7 +11,7 @@ const Link: React.FunctionComponent<ILink.Props> = (
     component: Wrapper,
     onClick,
     to
-  } ) => {
+  }) => {
   const Element = () => (
     <NavLink
       activeClassName={Style.active}
@@ -29,9 +29,9 @@ const Link: React.FunctionComponent<ILink.Props> = (
       {
         Wrapper ? (
           <Wrapper className={wrapperClassName}>
-            <Element/>
+            <Element />
           </Wrapper>
-        ) : <Element/>
+        ) : <Element />
       }
     </Provider>
   );

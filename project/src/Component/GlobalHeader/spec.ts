@@ -1,4 +1,4 @@
-import { RouteComponentProps } from 'react-router';
+import {RouteComponentProps} from 'react-router';
 
 declare module IGlobalHeader {
   interface ClassNames extends IClassNames {

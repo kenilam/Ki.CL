@@ -4,7 +4,7 @@ import { optimization } from './development'
 
 const minimizer = [
   new OptimizeCSSAssetsPlugin(),
-  new TerserJSPlugin( {
+  new TerserJSPlugin({
     parallel: true,
     terserOptions: {
       ecma: 5,
@@ -12,11 +12,11 @@ const minimizer = [
       safari10: true,
       warnings: true
     }
-  } )
-];
+  })
+]
 
 export default {
-  optimization: Object.assign( optimization, {
+  optimization: Object.assign(optimization, {
     minimizer
-  } )
+  })
 }

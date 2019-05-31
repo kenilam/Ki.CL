@@ -1,3 +1,3 @@
 export interface Style {
-  [ name: string ]: any;
+  [name: string]: any;
 }

@@ -1,7 +1,7 @@
 // import ExtractCssChunks from 'extract-css-chunks-webpack-plugin'
 import { CSSLoaders, SCSSLoaders } from './development'
 
-const fallback = 'style-loader';
+const fallback = 'style-loader'
 
 const loaders = loaders => [].concat(
   fallback,
@@ -14,8 +14,8 @@ const loaders = loaders => [].concat(
   // },
   loaders
   .filter(
-    ( { loader } ) => loader !== fallback )
-  .map( loader => Object.assign(
+    ({ loader }) => loader !== fallback)
+  .map(loader => Object.assign(
     loader,
     {
       options: Object.assign(
@@ -23,18 +23,18 @@ const loaders = loaders => [].concat(
         { sourceMap: false }
       )
     }
-  ) )
-);
+  ))
+)
 
-const rules = [ {
+const rules = [{
   test: /\.css$/,
-  use: loaders( CSSLoaders )
+  use: loaders(CSSLoaders)
 },
   {
     test: /\.scss$/,
-    use: loaders( SCSSLoaders )
+    use: loaders(SCSSLoaders)
   },
-];
+]
 
 const plugins = [
   // new ExtractCssChunks(
@@ -44,7 +44,7 @@ const plugins = [
   //     orderWarning: true
   //   }
   // )
-];
+]
 
 export default {
   module: {

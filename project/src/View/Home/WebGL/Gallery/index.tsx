@@ -1,4 +1,4 @@
-import { PIXI } from '@Component/WebGL';
+import {PIXI} from '@Component/WebGL';
 import Mask from './Mask';
 import * as IGallery from './spec';
 
@@ -24,13 +24,13 @@ class Gallery extends PIXI.Container {
       y = 0
     }: IGallery.UpdateProps
   ) {
-    mask.update( {
+    mask.update({
       alpha,
       height,
       width,
       x,
       y
-    } );
+    });
   }
 }
 

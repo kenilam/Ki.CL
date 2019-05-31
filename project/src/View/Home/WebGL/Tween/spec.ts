@@ -1,4 +1,4 @@
-import { gsap } from '@Component/WebGL';
+import {gsap} from '@Component/WebGL';
 
 declare module ITween {
   type Delay = number;
@@ -25,7 +25,7 @@ declare module ITween {
     OUT: Value;
   }
   
-  type Handler = ( value?: Value ) => void;
+  type Handler = (value?: Value) => void;
 }
 
 export = ITween;

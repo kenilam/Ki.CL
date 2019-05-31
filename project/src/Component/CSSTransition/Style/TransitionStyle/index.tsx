@@ -4,11 +4,11 @@ import value from './value.scss';
 
 const TransitionStyleName: Partial<ICSSTransition.TransitionStyle> = {};
 
-Object.keys( value ).forEach(
+Object.keys(value).forEach(
   name => {
-    TransitionStyleName[ name ] = name;
+    TransitionStyleName[name] = name;
   }
 );
 
-export { TransitionStyleName };
+export {TransitionStyleName};
 export default value as ICSSTransition.TransitionStyle;

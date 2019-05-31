@@ -1,6 +1,6 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-const html = new HtmlWebpackPlugin( {
+const html = new HtmlWebpackPlugin({
   filename: 'index.html',
   
   inject: 'body',
@@ -24,8 +24,8 @@ const html = new HtmlWebpackPlugin( {
   },
   
   xhtml: true,
-} );
+})
 
 export default {
-  plugins: [ html ],
+  plugins: [html],
 }

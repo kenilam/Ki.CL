@@ -1,5 +1,5 @@
-import { CSSUnitGroup } from '@Helper/CSSUnit';
-import { Rect } from '@View/Home/WebGL/Common';
+import {CSSUnitGroup} from '@Helper/CSSUnit';
+import {Rect} from '@View/Home/WebGL/Common';
 import * as IBackFill from './spec';
 import Style from './Style';
 
@@ -15,16 +15,16 @@ class BackFill extends Rect {
       y = 0
     }: IBackFill.UpdateProps
   ) {
-    const { fill } = CSSUnitGroup( Style );
-    
-    super.update( {
+    const {fill} = CSSUnitGroup(Style);
+  
+    super.update({
       alpha,
       fill,
       height,
       width,
       x,
       y
-    } );
+    });
   }
 }
 

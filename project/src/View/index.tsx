@@ -1,5 +1,5 @@
-import { Router } from '@Component';
-import { TransitionStyleName } from '@Component/CSSTransition';
+import {Router} from '@Component';
+import {TransitionStyleName} from '@Component/CSSTransition';
 import React from 'react';
 import About from './About';
 import Home from './Home';
@@ -9,14 +9,14 @@ import Works from './Works';
 
 const View = (
   <Router
-    classNames={ Style.view }
-    routeIndex={ 0 }
-    transitionStyle={ TransitionStyleName.fade }
+    classNames={Style.view}
+    routeIndex={0}
+    transitionStyle={TransitionStyleName.fade}
   >
-    { About }
-    { Home }
-    { Works }
-    { PageNotFound }
+    {About}
+    {Home}
+    {Works}
+    {PageNotFound}
   </Router>
 );
 

@@ -22,15 +22,14 @@ async function loadPolyfill(): Promise<any> {
       await import('unfetch/polyfill');
     }
   
-    if (!( 'scrollBehavior' in document.documentElement.style )) {
+    if (!('scrollBehavior' in document.documentElement.style)) {
       smoothScroll = await import('smoothscroll-polyfill');
       
       smoothScroll.polyfill();
     }
-  }
-  catch (error) {
-    console.error( error );
+  } catch (error) {
+    console.error(error);
   }
 }
 
-export { loadPolyfill };
+export {loadPolyfill};

@@ -4,19 +4,19 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import webpack from 'webpack'
 import { context } from '../entry'
 
-const tsconfig = `${ appRoot }/.tsconfig.json`;
-const tslint = `${ appRoot }/.tslint.json`;
+const tsconfig = `${appRoot}/.tsconfig.json`
+const tslint = `${appRoot}/.tslint.json`
 
 const Loaders = {
   test: /\.(tsx|ts)$/,
   enforce: 'pre',
-  exclude: [ /node_modules\/\*\*/ ],
-  use: [ {
+  exclude: [/node_modules\/\*\*/],
+  use: [{
     loader: 'babel-loader',
     options: {
       cacheDirectory: true,
       cacheIdentifier: true,
-      plugins: [ 'react-hot-loader/babel' ]
+      plugins: ['react-hot-loader/babel']
     },
   }, {
     loader: 'ts-loader',
@@ -26,12 +26,12 @@ const Loaders = {
       happyPackMode: false,
       transpileOnly: true
     },
-  }, ],
-};
+  },],
+}
 
 const plugins = [
-  new webpack.IgnorePlugin( /^\.\/locale$/, /moment$/ ),
-  new ForkTsCheckerWebpackPlugin( {
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  new ForkTsCheckerWebpackPlugin({
     async: true,
     formatter: 'codeframe',
     formatterOptions: {
@@ -45,10 +45,10 @@ const plugins = [
     tslint: tslint,
     tslintAutoFix: true,
     watch: context
-  } )
-];
+  })
+]
 
-const rules = [ Loaders ];
+const rules = [Loaders]
 
 export {
   Loaders,

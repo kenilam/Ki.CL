@@ -17,7 +17,7 @@ import {
   stylesheet,
 } from './Config'
 
-const mode = process.env.NODE_ENV || 'development';
+const mode = process.env.NODE_ENV || 'development'
 
 const devConfig = webpackMerge(
   asset,
@@ -32,14 +32,14 @@ const devConfig = webpackMerge(
   optimization,
   output,
   stylesheet,
-);
+)
 
-const config = webpackMerge( devConfig, devServer, {
+const config = webpackMerge(devConfig, devServer, {
   mode,
   resolve,
-} );
+})
 
-process.env.NODE_ENV = mode;
+process.env.NODE_ENV = mode
 
 export {
   devConfig
