@@ -1,0 +1,19 @@
+$enter: get($css-transition, 'enter.default');
+$exit: get($css-transition, 'exit.default');
+
+.#{get($transition, 'default')} {
+  position: relative;
+
+  > .#{$enter},
+  > .#{$exit} {
+    position: absolute;
+  }
+
+  > .#{$enter} {
+    z-index: 200;
+  }
+
+  > .#{$exit} {
+    z-index: 100;
+  }
+}

@@ -1,0 +1,49 @@
+$default: get($component-logo, 'default');
+$square: get($component-logo, 'square');
+
+$content: get($kicl, 'content.default');
+$name: get($kicl, 'name');
+$size: get($grid, 'gutter');
+$transition-duration: get($duration, 'fast');
+$transition-timing-function: get($ease, 'default.in');
+
+[data-component='#{$default}'] {
+  font-size: $size;
+  height: $size;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: $content;
+    display: block;
+    font-family: $name;
+    font-size: inherit;
+    left: 0;
+    line-height: 1;
+    position: absolute;
+    text-indent: 0;
+    top: 0;
+    transition-duration: $transition-duration;
+    transition-property: color;
+    transition-timing-function: $transition-timing-function;
+    will-change: color;
+    z-index: 1;
+  }
+
+  a {
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+  .#{$square} {
+    width: $size;
+  }
+
+  @include mobile() {
+    width: $size;
+  }
+}

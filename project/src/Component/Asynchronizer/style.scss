@@ -1,9 +1,0 @@
-[class*="css-transition-"][class*="-active"] {
-  &.spinner,
-  &.errors {
-    ~ :not(.spinner):not(.errors) {
-      position: relative;
-      z-index: 100;
-    }
-  }
-}

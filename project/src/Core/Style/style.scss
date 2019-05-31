@@ -1,0 +1,61 @@
+html {
+  @include font-smoothing();
+
+  background-color: get($white, 'default');
+  color: get($black, 'light');
+  font-family: get($font, 'font-family.normal');
+  font-size: get($font, 'font-size.normal');
+  font-weight: get($font, 'font-weight.normal');
+  letter-spacing: get($font, 'letter-spacing');
+  line-height: get($font, 'line-height');
+}
+
+* {
+  color: get($black, 'default');
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: get($font, 'font-family.bold');
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+a,
+button,
+[href] {
+  color: $green;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+[app-root] {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+}
+
+[aria-hidden='true'] {
+  visibility: hidden;
+}
+
+header[rule='banner'] {
+  min-width: 100vw;
+  top: 0;
+  z-index: 10;
+}
+
+main {
+  min-height: 100vh;
+  min-width: 100vw;
+  z-index: 1;
+}

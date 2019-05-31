@@ -1,64 +1,89 @@
-import StyleLintPlugin from 'stylelint-webpack-plugin';
+import { context, contextRoot } from '!/Config/entry'
+import { path as appRoot } from 'app-root-path'
+import glob from 'glob'
+import StylelintFormatter from 'stylelint-formatter-pretty'
+import StyleLintPlugin from 'stylelint-webpack-plugin'
 
-import { path as appRoot } from 'app-root-path';
-import glob from 'glob';
-
-import { context, contextRoot } from '!/Config/entry';
-
-const CSSloaders = [
-  { loader: 'style-loader' },
+const CSSLoaders = [
+  {
+    loader: 'style-loader'
+  },
   {
     loader: 'css-loader',
     options: {
+      camelCase: true,
+      importLoaders: 2,
+      modules: true,
       sourceMap: true,
-      importLoaders: 1
-    }
+      localIdentName: '[local]'
+    },
   },
   {
     loader: 'postcss-loader',
     options: {
+      config: {
+        path: appRoot
+      },
       sourceMap: true,
-      config: { path: `${appRoot}/.postcssrc.js` }
-    }
+    },
   }
-];
+]
 
-const SCSSloaders = [].concat(CSSloaders, {
-  loader: 'sass-loader',
-  options: {
-    sourceMap: true,
-    includePaths: [`${appRoot}/node_modules`, contextRoot, context]
+const SCSSLoaders = [].concat(CSSLoaders, [
+  {
+    loader: 'sass-loader',
+    options: {
+      includePaths: [`${appRoot}/node_modules`, contextRoot, context],
+      sourceMap: true,
+    },
   }
-});
+])
 
 const resources = [
   `${appRoot}/node_modules/sass-{*}/**/_*.scss`,
-  `${contextRoot}/**/_*.scss`
-];
-
-const hasInitialResources = resources.some(path => glob.sync(path).length > 0);
-
-if (hasInitialResources) {
-  SCSSloaders.push({
-    loader: 'sass-resources-loader',
-    options: { sourceMap: true, resources }
-  });
-}
+  `${contextRoot}/**/_*.scss`,
+]
 
 const rules = [
-  { test: /\.css$/, use: CSSloaders },
-  { test: /\.scss$/, use: SCSSloaders }
-];
+  {
+    test: /\.css$/,
+    use: CSSLoaders
+  },
+  {
+    test: /\.scss$/,
+    use: SCSSLoaders
+  }
+]
 
 const plugins = [
   new StyleLintPlugin({
+    console: true,
+    context: contextRoot,
     files: ['**/*.scss'],
-    context: contextRoot
+    fix: true,
+    formatter: StylelintFormatter
   })
-];
+]
 
-export { CSSloaders, SCSSloaders };
+const hasInitialResources = resources.some(path => glob.sync(path).length > 0)
+
+if (hasInitialResources) {
+  SCSSLoaders.push({
+    loader: 'sass-resources-loader',
+    options: {
+      sourceMap: true,
+      resources
+    },
+  })
+}
+
+export {
+  CSSLoaders,
+  SCSSLoaders
+}
 export default {
-  module: { rules },
-  plugins
-};
+  module: {
+    rules
+  },
+  plugins,
+}

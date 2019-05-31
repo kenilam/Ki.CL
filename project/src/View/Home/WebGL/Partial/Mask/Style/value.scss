@@ -1,0 +1,3 @@
+@value radius: #{get($grid, 'narrow')};
+@value bleed: #{get($grid, 'narrow')};
+@value fill: #{get($black, 'default')};

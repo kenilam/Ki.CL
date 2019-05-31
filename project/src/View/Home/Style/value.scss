@@ -1,0 +1,3 @@
+$linkSize: #{get($grid, 'wide')};
+
+@value gutter: #{$linkSize};

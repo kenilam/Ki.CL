@@ -1,0 +1,85 @@
+// Configuration
+$mqResponsive: true;
+$mqBreakpoints: (
+  narrow: $base-font-size * 23,
+  mobile: $base-font-size * 30,
+  tablet: $base-font-size * 46,
+  desktop: $base-font-size * 61,
+  widescreen: $base-font-size * 81
+);
+
+$mqStaticBreakpoint: desktop;
+
+@import '../../../../node_modules/sass-mq';
+
+@mixin orientation($orientation, $content: null, $props...) {
+  @include mq($and: '(orientation: #{$orientation})', $props...) {
+    @if $content {
+      @each $name,
+        $value in $content {
+        #{$name}: $value;
+      }
+    }
+
+    @else {
+      @content;
+    }
+  }
+}
+
+@mixin query($landscape: null, $portrait: null, $props...) {
+  @include mq($props...) {
+    @content;
+  }
+
+  @include orientation($content: $landscape, $orientation: 'landscape', $props...);
+  @include orientation($content: $portrait, $orientation: 'portrait', $props...);
+}
+
+@mixin landscape() {
+  @include orientation($orientation: 'landscape') {
+    @content;
+  }
+}
+
+@mixin portrait() {
+  @include orientation($orientation: 'portrait') {
+    @content;
+  }
+}
+
+@mixin minimalscreen($props...) {
+  @include query($until: narrow, $props...) {
+    @content;
+  }
+}
+
+@mixin narrow($props...) {
+  @include query($until: mobile, $props...) {
+    @content;
+  }
+}
+
+@mixin mobile($props...) {
+  @include query($until: tablet, $props...) {
+    @content;
+  }
+}
+
+@mixin tablet($props...) {
+  @include query($until: desktop, $props...) {
+    @content;
+  }
+}
+
+@mixin desktop($props...) {
+  @include query($until: widescreen, $props...) {
+    @content;
+  }
+}
+
+@mixin widescreen($props...) {
+  @include query($from: widescreen, $props...) {
+    @content;
+  }
+}

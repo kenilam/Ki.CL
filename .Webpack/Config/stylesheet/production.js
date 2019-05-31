@@ -1,34 +1,54 @@
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+// import ExtractCssChunks from 'extract-css-chunks-webpack-plugin'
+import { CSSLoaders, SCSSLoaders } from './development'
 
-import { CSSloaders, SCSSloaders } from './development';
+const fallback = 'style-loader'
 
-const extractLoaders = loaders =>
-  loaders.filter(({ loader }) => loader !== 'style-loader');
+const loaders = loaders => [].concat(
+  fallback,
+  // {
+  //   loader: ExtractCssChunks.loader,
+  //   options: {
+  //     hot: true,
+  //     reloadAll: true,
+  //   }
+  // },
+  loaders
+  .filter(
+    ({ loader }) => loader !== fallback)
+  .map(loader => Object.assign(
+    loader,
+    {
+      options: Object.assign(
+        loader.options,
+        { sourceMap: false }
+      )
+    }
+  ))
+)
 
-const extractText = new ExtractTextPlugin({
-  filename: 'styles.css',
-  allChunks: true
-});
-
-const css = {
+const rules = [{
   test: /\.css$/,
-  use: ExtractTextPlugin.extract({
-    use: extractLoaders(CSSloaders),
-    fallback: 'style-loader'
-  })
-};
+  use: loaders(CSSLoaders)
+},
+  {
+    test: /\.scss$/,
+    use: loaders(SCSSLoaders)
+  },
+]
 
-const scss = {
-  test: /\.scss$/,
-  use: ExtractTextPlugin.extract({
-    use: extractLoaders(SCSSloaders),
-    fallback: 'style-loader'
-  })
-};
-
-const rules = [css, scss];
+const plugins = [
+  // new ExtractCssChunks(
+  //   {
+  //     filename: 'style.css',
+  //     chunkFilename: 'style.[id].css',
+  //     orderWarning: true
+  //   }
+  // )
+]
 
 export default {
-  module: { rules },
-  plugins: [extractText]
-};
+  module: {
+    rules
+  },
+  plugins
+}

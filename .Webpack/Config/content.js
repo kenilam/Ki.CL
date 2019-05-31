@@ -1,10 +1,15 @@
-import CopyPlugin from '!/Plugins/CopyPlugin';
+import CopyPlugin from '!/Plugins/CopyPlugin'
 
-const srcRoot = 'project/content';
+const srcRoot = 'project/content'
 
-const copier = new CopyPlugin({ srcRoot });
+const copier = new CopyPlugin({
+  srcRoot,
+  dest: 'content'
+})
 
-export { srcRoot };
+export {
+  srcRoot
+}
 export default {
-  plugins: [copier]
-};
+  plugins: [copier],
+}
