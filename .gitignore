@@ -48,7 +48,3 @@ tsconfig.json
 # Local files #
 ################
 project/build
-project/**/*.js
-project/**/*.js.map
-project/**/*.jsx
-project/**/*.jsx.map
