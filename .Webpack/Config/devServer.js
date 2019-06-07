@@ -74,8 +74,7 @@ function browser () {
 }
 
 const plugins = [
-  new webpack.NamedModulesPlugin(),
-  new webpack.HotModuleReplacementPlugin(),
+  new webpack.HotModuleReplacementPlugin({ multiStep: true }),
   new webpack.EvalSourceMapDevToolPlugin(),
 ]
 
