@@ -26,7 +26,7 @@ class Tween {
     }: ITween.Props
   ) {
     this.duration = duration;
-  
+    
     this.sequence = new gsap.TimelineMax({
       delay,
       duration,

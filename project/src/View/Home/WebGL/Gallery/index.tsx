@@ -1,18 +1,18 @@
 import {PIXI} from '@Component/WebGL';
 import Mask from './Mask';
 import * as IGallery from './spec';
+import Visualizer from './Visualizer';
 
 const mask = new Mask();
-
-// const experiments = [
-//   1, 2, 3, 4
-// ];
+const visualizer = new Visualizer();
 
 class Gallery extends PIXI.Container {
   constructor() {
     super();
     
     this.mask = mask;
+    
+    this.addChild(visualizer);
   }
   
   public update(
@@ -24,6 +24,13 @@ class Gallery extends PIXI.Container {
       y = 0
     }: IGallery.UpdateProps
   ) {
+    visualizer.update({
+      alpha,
+      height,
+      width,
+      x,
+      y
+    });
     mask.update({
       alpha,
       height,

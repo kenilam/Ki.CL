@@ -15,6 +15,16 @@ const circle: IGeometry.Circle = ({density = DEFAULT_DENSITY, x, y, radius}) => 
   )
 );
 
+const circularPoints: IGeometry.CircularPoints = ({density = DEFAULT_DENSITY, x, y, radius}) => (
+  Array.from(new Array(density)).map(
+    (value, degree) =>
+      !value && {
+        x: x + (radius * Math.cos(degree)),
+        y: y + (radius * Math.sin(degree))
+      }
+  )
+);
+
 const rect = ({height, width, x, y, radius = DEFAULT_RADIUS}: IGeometry.RectProps) => {
   const bottomLeft = [x + radius, y + height - radius];
   const bottomRight = [x + width - radius, y + height - radius];
@@ -29,5 +39,5 @@ const rect = ({height, width, x, y, radius = DEFAULT_RADIUS}: IGeometry.RectProp
   );
 };
 
-export {circle, rect};
+export {circle, circularPoints, rect};
 

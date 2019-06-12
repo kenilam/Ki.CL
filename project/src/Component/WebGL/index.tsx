@@ -30,9 +30,9 @@ const WebGL: React.FunctionComponent<IWebGL.Props> = (
     if (!app || !stage) {
       return;
     }
-  
+    
     (app as PIXI.Renderer).render(stage);
-  
+    
     rendererFrame = window.requestAnimationFrame(renderer);
   }
   
@@ -41,7 +41,7 @@ const WebGL: React.FunctionComponent<IWebGL.Props> = (
       updateStage(new PIXI.Container());
       return;
     }
-  
+    
     stage.removeChildren(0);
     
     graphics.map(
@@ -49,7 +49,7 @@ const WebGL: React.FunctionComponent<IWebGL.Props> = (
         stage.addChild(graphic);
       }
     );
-  
+    
     updateGraphics && updateGraphics({app, stage});
   }
   

@@ -36,7 +36,7 @@ declare module ICSSTransition {
     fade: string
     slideUp: string;
     slideDown: string;
-  
+    
     [key: string]: string;
   }
 }

@@ -82,8 +82,8 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
       x: width / 2 - width / 2,
       y: height / 2 - height / 2
     });
-    name.update({alpha: 1, height, width, y: name.height / 2});
-    slogan.update({alpha: 1, height, width, y: -slogan.height / 2});
+    name.update({alpha: 1, height, width, y: -name.height});
+    slogan.update({alpha: 1, height, width, y: -slogan.height});
   
     previousWindowSizes = {height, width};
   };
@@ -141,7 +141,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
       ease: gsap.Back.easeOut,
       onUpdate({value}) {
         gallery.update({
-          alpha: 1,
+          alpha: value,
           height: height,
           width: width * value,
           x: width / 2 - width / 2 * value
@@ -159,7 +159,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
       duration: duration * 0.4,
       ease: gsap.Back.easeOut,
       onUpdate({value: alpha}) {
-        slogan.update({alpha, height, width, y: -slogan.height / 2});
+        slogan.update({alpha, height, width, y: -slogan.height});
       },
       pause: false
     }),
@@ -167,7 +167,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
       duration: duration * 0.3,
       ease: gsap.Expo.easeIn,
       onUpdate({value: alpha}) {
-        name.update({alpha, height, width, y: name.height / 2});
+        name.update({alpha, height, width, y: -name.height});
       },
       pause: false
     })

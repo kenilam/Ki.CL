@@ -16,7 +16,7 @@ class Mask extends Rect {
     }: IMask.UpdateProps
   ) {
     const {fill} = CSSUnitGroup(Style);
-  
+    
     super.update({
       alpha,
       fill,

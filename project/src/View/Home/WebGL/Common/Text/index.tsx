@@ -33,7 +33,7 @@ class Text extends PIXI.Container {
     }: IText.UpdateProps = {}
   ) {
     const styles = CSSUnitGroup(this.style);
-  
+    
     const {xGutter, yGutter} = styles;
     
     this.alpha = alpha;
@@ -49,10 +49,10 @@ class Text extends PIXI.Container {
       this.scale.x = 2 - alpha;
       this.scale.y = 2 - alpha;
     }
-  
+    
     this.x = x + width / 2 - this.width / 2 + (xGutter ? xGutter : 0);
     this.y = y + height / 2 - this.height / 2 + (yGutter ? yGutter : 0);
-  
+    
     this.removeChildren(0);
     this.addChild(this.content);
   }

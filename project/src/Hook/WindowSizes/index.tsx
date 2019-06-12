@@ -24,7 +24,7 @@ function WindowSizes() {
   
   const updateWindowSizes = () => {
     const {innerHeight: height, innerWidth: width} = window;
-  
+    
     dispatch({type: actions.windowSizes, windowSizes: {height, width}});
   };
   

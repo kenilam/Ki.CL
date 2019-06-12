@@ -16,7 +16,7 @@ class BackFill extends Rect {
     }: IBackFill.UpdateProps
   ) {
     const {fill} = CSSUnitGroup(Style);
-  
+    
     super.update({
       alpha,
       fill,

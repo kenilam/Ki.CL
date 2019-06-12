@@ -27,7 +27,7 @@ $gutter: #{get($grid, 'gutter')};
 [data-routes='home'] {
   display: grid;
   grid-template-areas: '.' '.' 'navigation' ' .';
-  grid-template-rows: 50vh 2rem $linkSize auto;
+  grid-template-rows: 47vh 2rem $linkSize auto;
   left: 0;
   padding: $gutter;
   position: absolute;
