@@ -1,4 +1,4 @@
-import {PIXI} from '@Component/WebGL';
+import {gsap, PIXI, Tween} from '@Component/WebGL';
 import * as IPartial from '@View/Home/WebGL/Gallery/Visualizer/Partial/spec';
 import {Circle} from './Partial';
 
@@ -18,6 +18,10 @@ class Visualizer extends PIXI.Container {
   }
   
   private makeCircles(): IPartial.Circle[] {
+    const container = new PIXI.Container();
+    
+    this.addChild(container);
+    
     return (
       Array.from(
         new Array(PARTICLE_COUNTS)
@@ -26,8 +30,8 @@ class Visualizer extends PIXI.Container {
           const circle = new Circle({
             dimension: this.area * PARTICLE_RATIO
           });
-          
-          this.addChild(circle);
+  
+          container.addChild(circle);
           
           return circle;
         }
@@ -36,19 +40,28 @@ class Visualizer extends PIXI.Container {
   }
   
   private updateCircles(
-    { circles, props, distanceScale }: {
+    { circles, distanceScale, props }: {
       circles: IPartial.Circle[],
-      props: IVisualizer.UpdateProps,
-      distanceScale: number
+      distanceScale: number,
+      props: IVisualizer.UpdateProps
     }
   ) {
+    const { height, width, x, y, ...rest } = props;
+    
+    circles[0].parent.x = x + width / 2;
+    circles[0].parent.y = y + height / 2;
+    
     circles.forEach(
       (circle, index) => {
         circle.update({
-          ...props,
+          ...rest,
+          height,
+          width,
           dimension: this.area * PARTICLE_RATIO,
           distance: this.area / distanceScale,
           rotation: Math.PI * 2 / PARTICLE_COUNTS * index,
+          x: -width/2,
+          y: -height/2
         });
       }
     );
@@ -59,8 +72,37 @@ class Visualizer extends PIXI.Container {
   private readonly outer = this.makeCircles();
   private readonly external = this.makeCircles();
   
+  private readonly innerContainer = this.inner[0].parent;
+  private readonly middleContainer = this.middle[0].parent;
+  private readonly outerContainer = this.outer[0].parent;
+  private readonly externalContainer = this.external[0].parent;
+  
   constructor() {
     super();
+    
+    Tween.to(this.innerContainer, 7200, {
+      ease: gsap.Linear.easeNone,
+      rotation: 360,
+      repeat: -1
+    });
+  
+    Tween.to(this.middleContainer, 7200 * 2, {
+      ease: gsap.Linear.easeNone,
+      rotation: 360,
+      repeat: -1
+    });
+  
+    Tween.to(this.outerContainer, 7200 * 3, {
+      ease: gsap.Linear.easeNone,
+      rotation: 360,
+      repeat: -1
+    });
+  
+    Tween.to(this.externalContainer, 7200 * 4, {
+      ease: gsap.Linear.easeNone,
+      rotation: 360,
+      repeat: -1
+    });
   }
   
   public update(props: IVisualizer.UpdateProps) {
@@ -68,6 +110,10 @@ class Visualizer extends PIXI.Container {
     this.updateCircles({ circles: this.middle, props, distanceScale: 2.5} );
     this.updateCircles({ circles: this.outer, props, distanceScale: 2} );
     this.updateCircles({ circles: this.external, props, distanceScale: 1.5} );
+  }
+  
+  public destroy() {
+    super.destroy();
   }
 }
 

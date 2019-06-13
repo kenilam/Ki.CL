@@ -1,3 +1,5 @@
+import {SyntheticEvent} from "react";
+
 declare module IAudio {
   type Index = number;
   type UpdateIndex = (props: Index) => void;
@@ -7,7 +9,7 @@ declare module IAudio {
   type UpdateTracks = (props: Tracks) => void;
   type TracksState = [Tracks, UpdateTracks];
   
-  type Events = any;
+  interface Events extends SyntheticEvent<HTMLAudioElement, Event> {};
   
   interface Props {
     onAbort?: (event: Events) => void;
