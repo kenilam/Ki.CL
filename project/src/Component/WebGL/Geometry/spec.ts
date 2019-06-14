@@ -6,7 +6,9 @@ declare module IGeometry {
     y: number;
   }
   
-  type Circle = (props: CircleProps) => Array<{ x: number, y: number }>;
+  type Circle = (props: CircleProps) => Array<number>;
+  
+  type CircularPoints = (props: CircleProps) => Array<{ x: number, y: number }>;
   
   interface RectProps {
     height: number;

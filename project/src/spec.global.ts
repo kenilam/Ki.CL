@@ -13,9 +13,13 @@ declare module '*.json' {
 }
 
 declare module 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
-declare module 'intersection-observer';
+declare module 'bandcamp-scraper';
 declare module 'get-transition-duration';
+declare module 'intersection-observer' {
+  export type search = () => Promise<any>;
+}
 declare module 'promise-polyfill/src/polyfill';
+declare module 'react-audio-player';
 declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
 declare module 'units-css';

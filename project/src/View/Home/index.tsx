@@ -26,7 +26,8 @@ const Home: React.FunctionComponent<IHome.Props> = ({history}) => {
         transitionIn={renderNavigation && isActiveRoute}
         transitionStyle={TransitionStyleName.fade}
       >
-        <Navigation inline={true} />
+        <p>Coming Soon!</p>
+        {/*<Navigation inline={true} />*/}
       </CSSTransition>
     </main>
   );

@@ -17,7 +17,7 @@ class Mask extends Rect {
     }: IMask.UpdateProps
   ) {
     const {bleed, fill, radius: CSSRadius} = CSSUnitGroup(Style);
-  
+    
     super.update({
       alpha,
       fill,

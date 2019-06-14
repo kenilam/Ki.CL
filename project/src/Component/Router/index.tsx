@@ -32,10 +32,10 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     const routes = pathname === view.home.path
       ? view.home.name.toLowerCase()
       : pathname.substr(1).replace(/\//g, '.');
-  
+    
     const onEnterHandler: IRouter.OnEnter = (node, done) => {
       document.body.dataset.enteredRoutes = routes;
-    
+      
       window.cancelAnimationFrame(enterFrame);
       
       if (!onEnter) {
@@ -51,7 +51,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     
     const onExitHandler: IRouter.OnExit = node => {
       document.body.dataset.exitedRoutes = routes;
-  
+      
       window.cancelAnimationFrame(exitFrame);
       
       if (!onExit) {

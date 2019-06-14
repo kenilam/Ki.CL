@@ -21,7 +21,7 @@ async function loadPolyfill(): Promise<any> {
     if (typeof Fetch === 'undefined') {
       await import('unfetch/polyfill');
     }
-  
+    
     if (!('scrollBehavior' in document.documentElement.style)) {
       smoothScroll = await import('smoothscroll-polyfill');
       

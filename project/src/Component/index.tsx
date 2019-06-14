@@ -1,5 +1,6 @@
 import CSSTransition from './CSSTransition';
 import './Font';
+import AudioPlayer from './AudioPlayer';
 import GlobalHeader from './GlobalHeader';
 import Link from './Link';
 import Logo from './Logo';
@@ -9,6 +10,7 @@ import Transition from './Transition';
 import WebGL from './WebGL';
 
 export {
+  AudioPlayer,
   CSSTransition,
   GlobalHeader,
   Link,
