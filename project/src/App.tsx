@@ -1,6 +1,6 @@
 import data from '$resources/data.json';
 import * as IResources from '$resources/spec';
-import {AudioPlayer, GlobalHeader} from '@Component';
+import {GlobalHeader} from '@Component';
 import React, {Fragment} from 'react';
 import View from './View';
 
@@ -16,7 +16,6 @@ const appRoot = document.querySelector('[app-root]');
 
 const App = () => (
   <Fragment>
-    <AudioPlayer url={`${process.env.API_URL}/api/musics/calm`}/>
     <GlobalHeader transitionInPaths={paths} />
     {View}
   </Fragment>

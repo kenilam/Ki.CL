@@ -11,6 +11,7 @@ declare module IPartial {
   }
   
   interface Circle extends PIXI.Container {
+    graphic: PIXI.Graphics;
     update(porps: CircleUpdateProps): void;
   }
   

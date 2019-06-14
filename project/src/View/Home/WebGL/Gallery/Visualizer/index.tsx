@@ -1,13 +1,50 @@
 import {gsap, PIXI, Tween} from '@Component/WebGL';
-import * as IPartial from '@View/Home/WebGL/Gallery/Visualizer/Partial/spec';
+import {RandomNumber} from "@Helper";
+import autobind from "autobind-decorator";
 import {Circle} from './Partial';
 
 import IVisualizer from './spec';
 
-const PARTICLE_COUNTS = 20;
-const PARTICLE_RATIO = 0.01;
+const PARTICLE_COUNTS = 50;
+const PARTICLE_GROUP_COUNTS = 10;
+const PARTICLE_RATIO = 0.002;
+const ROTATION_DURATION = 10000;
+const SCALE_DURATION = 10;
+
+const GROUPS = Array.from(new Array(PARTICLE_GROUP_COUNTS));
+const CIRCLES = Array.from(new Array(PARTICLE_COUNTS));
 
 class Visualizer extends PIXI.Container {
+  private readonly rotations: {angle: number}[] = GROUPS.map(() => ({
+    angle: RandomNumber({start: 0, end: 360})
+  }));
+  private readonly circles: Circle[][] = GROUPS.map(
+    (value, index) => {
+      if (value) {
+        return;
+      }
+  
+      const container = new PIXI.Container();
+  
+      container.rotation = this.rotations[index].angle;
+      container.alpha = (index + 1) / GROUPS.length;
+  
+      this.addChild(container);
+  
+      return CIRCLES.map(
+        () => {
+          const circle = new Circle({
+            dimension: this.area * PARTICLE_RATIO
+          });
+      
+          container.addChild(circle);
+      
+          return circle;
+        }
+      );
+    }
+  );
+  
   private get area() {
     const {
       innerHeight: height,
@@ -17,103 +54,81 @@ class Visualizer extends PIXI.Container {
     return height > width ? width : height;
   }
   
-  private makeCircles(): IPartial.Circle[] {
-    const container = new PIXI.Container();
+  constructor() {
+    super();
     
-    this.addChild(container);
-    
-    return (
-      Array.from(
-        new Array(PARTICLE_COUNTS)
-      ).map(
-        () => {
-          const circle = new Circle({
-            dimension: this.area * PARTICLE_RATIO
-          });
-  
-          container.addChild(circle);
-          
-          return circle;
+    this.circles.forEach(
+      (circles, index) => {
+        if (!circles) {
+          return;
         }
-      )
-    );
-  }
-  
-  private updateCircles(
-    { circles, distanceScale, props }: {
-      circles: IPartial.Circle[],
-      distanceScale: number,
-      props: IVisualizer.UpdateProps
-    }
-  ) {
-    const { height, width, x, y, ...rest } = props;
-    
-    circles[0].parent.x = x + width / 2;
-    circles[0].parent.y = y + height / 2;
-    
-    circles.forEach(
-      (circle, index) => {
-        circle.update({
-          ...rest,
-          height,
-          width,
-          dimension: this.area * PARTICLE_RATIO,
-          distance: this.area / distanceScale,
-          rotation: Math.PI * 2 / PARTICLE_COUNTS * index,
-          x: -width/2,
-          y: -height/2
+        
+        const rotation = this.rotations[index];
+        
+        Tween.to(rotation, ROTATION_DURATION * ( index + 1), {
+          ease: gsap.Linear.easeNone,
+          angle: 360 * (index % 2 ? -1 : 1),
+          repeat: -1,
+          onUpdate: this.rotate(index)
         });
       }
     );
   }
   
-  private readonly inner = this.makeCircles();
-  private readonly middle = this.makeCircles();
-  private readonly outer = this.makeCircles();
-  private readonly external = this.makeCircles();
+  @autobind
+  private rotate(index: number) {
+    return () => {
+      const rotation = this.rotations[index].angle;
+      const circles = this.circles[index];
+      
+      circles[0].parent.rotation = rotation;
   
-  private readonly innerContainer = this.inner[0].parent;
-  private readonly middleContainer = this.middle[0].parent;
-  private readonly outerContainer = this.outer[0].parent;
-  private readonly externalContainer = this.external[0].parent;
+      const randomCircle = this.circles
+        [index]
+        [RandomNumber({start: 0, end: PARTICLE_COUNTS - 1})];
+      
+      if (
+        Tween.isTweening(randomCircle.graphic.scale)
+      ) {
+        return;
+      }
+      
+      const scaleUp = RandomNumber({start: 2, end: RandomNumber({start: 3, end: 5}) });
+      const delay = RandomNumber({start: 0, end: 10});
   
-  constructor() {
-    super();
-    
-    Tween.to(this.innerContainer, 7200, {
-      ease: gsap.Linear.easeNone,
-      rotation: 360,
-      repeat: -1
-    });
-  
-    Tween.to(this.middleContainer, 7200 * 2, {
-      ease: gsap.Linear.easeNone,
-      rotation: 360,
-      repeat: -1
-    });
-  
-    Tween.to(this.outerContainer, 7200 * 3, {
-      ease: gsap.Linear.easeNone,
-      rotation: 360,
-      repeat: -1
-    });
-  
-    Tween.to(this.externalContainer, 7200 * 4, {
-      ease: gsap.Linear.easeNone,
-      rotation: 360,
-      repeat: -1
-    });
+      Tween.fromTo(
+        randomCircle.graphic.scale,
+        SCALE_DURATION,
+        { x: 0, y: 0 },
+        { x: scaleUp, y: scaleUp, yoyo: true, repeat: 1, delay }
+      );
+    }
   }
   
-  public update(props: IVisualizer.UpdateProps) {
-    this.updateCircles({ circles: this.inner, props, distanceScale: 3} );
-    this.updateCircles({ circles: this.middle, props, distanceScale: 2.5} );
-    this.updateCircles({ circles: this.outer, props, distanceScale: 2} );
-    this.updateCircles({ circles: this.external, props, distanceScale: 1.5} );
-  }
+  public update({ height, width, x, y, ...rest }: IVisualizer.UpdateProps) {
+    this.circles.forEach(
+      (circles, index) => {
+        const parent = circles[0].parent;
   
-  public destroy() {
-    super.destroy();
+        parent.x = x + width / 2;
+        parent.y = y + height / 2;
+  
+        circles.forEach(
+          (circle, i) => {
+            circle.update({
+              ...rest,
+              height,
+              width,
+              dimension: this.area * PARTICLE_RATIO * (1 + index / 10),
+              distance: this.area / (3 - (index / 5)),
+              rotation: Math.PI * 2 / PARTICLE_COUNTS * i,
+              x: -width/2,
+              y: -height/2,
+            });
+          }
+        );
+      }
+    );
   }
 }
 

@@ -4,7 +4,7 @@ import * as IPartial from './spec';
 
 class Circle extends PIXI.Container {
   public readonly color: number = RandomColor().rgbNumber();
-  private graphic = new PIXI.Graphics();
+  public graphic = new PIXI.Graphics();
   
   constructor({dimension}: IPartial.CircleProps) {
     super();
@@ -20,7 +20,6 @@ class Circle extends PIXI.Container {
   
   update(
     {
-      alpha = 0,
       dimension,
       distance,
       height,
@@ -30,17 +29,16 @@ class Circle extends PIXI.Container {
       y = 0
     }: IPartial.CircleUpdateProps
   ) {
-    const graphic = this.getChildByName('graphic') as PIXI.Graphics;
-    
     this.x = x + width / 2;
     this.y = y + height / 2;
     this.rotation = rotation;
     
-    graphic.x = distance * alpha;
-    graphic.clear();
-    graphic.beginFill(this.color);
-    graphic.drawCircle(0, 0, dimension);
-    graphic.endFill();
+    this.graphic.x = distance;
+  
+    this.graphic.clear();
+    this.graphic.beginFill(this.color);
+    this.graphic.drawCircle(0, 0, dimension);
+    this.graphic.endFill();
   }
 }
 

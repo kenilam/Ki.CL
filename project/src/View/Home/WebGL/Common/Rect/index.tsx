@@ -1,5 +1,6 @@
 import {PIXI} from '@Component/WebGL';
 import * as IRoundedRect from './spec';
+import Color from 'color';
 
 class RoundedRect extends PIXI.Graphics {
   
@@ -18,7 +19,7 @@ class RoundedRect extends PIXI.Graphics {
   ) {
     this
     .clear()
-    .beginFill(fill)
+    .beginFill(Color(fill).rgbNumber())
     .drawRoundedRect(x, y, width, height, radius)
     .endFill();
     
