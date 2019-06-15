@@ -1,6 +1,6 @@
 import data from '$resources/data.json';
 import IResources from '$resources/spec';
-import {CSSTransition, Navigation} from '@Component';
+import {CSSTransition} from '@Component';
 import {TransitionStyleName} from '@Component/CSSTransition';
 import {Route, withRouter} from '@Component/Router';
 import * as IHome from '@View/Home/spec';

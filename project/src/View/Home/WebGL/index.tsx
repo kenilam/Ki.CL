@@ -54,7 +54,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
     if (mask.alpha >= 1) {
       return;
     }
-  
+    
     gallery.update({x: width / 2, y: height / 2});
     mask.update({x: width / 2, y: height / 2});
     name.update();
@@ -67,12 +67,12 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
     if (!windowSizesChanged() || mask.alpha === 0) {
       return;
     }
-  
+    
     gallery.update({alpha: 1, height: height, width: width});
-    mask.update({alpha: 1, height: height, width: width });
+    mask.update({alpha: 1, height: height, width: width});
     name.update({alpha: 1, height, width, y: -name.height});
     slogan.update({alpha: 1, height, width, y: -slogan.height});
-  
+    
     previousWindowSizes = {height, width};
   };
   
@@ -86,7 +86,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
     if (mask.alpha >= 1) {
       return;
     }
-  
+    
     tween.restart(true);
   };
   
@@ -94,7 +94,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
     if (isActiveRoute) {
       return;
     }
-  
+    
     tween.reverse(0);
   };
   
@@ -102,7 +102,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
     new Tween({
       duration: 0,
       onUpdate() {
-        gallery.update({ height, width });
+        gallery.update({height, width});
         mask.update({x: width / 2, y: height / 2});
         name.update();
         slogan.update();
@@ -157,7 +157,7 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
       duration: duration * 0.3,
       ease: gsap.Expo.easeIn,
       onUpdate({value: alpha}) {
-        gallery.update({ alpha, height, width });
+        gallery.update({alpha, height, width});
       },
       pause: false
     })
@@ -175,8 +175,8 @@ const Graphic: React.FunctionComponent<IWebGL.Props> = (
     animateOut();
     
     return () => {
-      tween.kill();
       reset();
+      tween.kill();
     };
   });
   

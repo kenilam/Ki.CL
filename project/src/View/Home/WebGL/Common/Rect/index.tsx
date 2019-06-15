@@ -1,6 +1,6 @@
 import {PIXI} from '@Component/WebGL';
-import * as IRoundedRect from './spec';
 import Color from 'color';
+import * as IRoundedRect from './spec';
 
 class RoundedRect extends PIXI.Graphics {
   

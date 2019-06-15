@@ -1,6 +1,6 @@
+import AudioPlayer from './AudioPlayer';
 import CSSTransition from './CSSTransition';
 import './Font';
-import AudioPlayer from './AudioPlayer';
 import GlobalHeader from './GlobalHeader';
 import Link from './Link';
 import Logo from './Logo';

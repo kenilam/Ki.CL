@@ -16,12 +16,18 @@ class Gallery extends PIXI.Container {
   }
   
   public update(
-    { alpha = 0, height = 0, width = 0, x = 0, y = 0 }: IGallery.UpdateProps
+    {alpha = 0, height = 0, width = 0, x = 0, y = 0}: IGallery.UpdateProps
   ) {
     this.alpha = alpha;
+    mask.update({height, width, x, y});
     
-    visualizer.update({ height, width, x, y });
-    mask.update({ height, width, x, y });
+    if (alpha === 0) {
+      visualizer.reset();
+      
+      return;
+    }
+    
+    visualizer.update({height, width, x, y});
   }
 }
 

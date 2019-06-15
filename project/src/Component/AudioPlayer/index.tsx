@@ -1,12 +1,12 @@
+import React, {DependencyList, useEffect, useState} from 'react';
 import * as IAudio from './spec';
-import React, {DependencyList, useEffect, useState} from "react";
 
-const AudioPlayer = ({ url }: IAudio.Props) => {
-  const [ index ]: IAudio.IndexState = useState(0);
-  const [ tracks, updateTracks]: IAudio.TracksState = useState();
+const AudioPlayer = ({url}: IAudio.Props) => {
+  const [index]: IAudio.IndexState = useState(0);
+  const [tracks, updateTracks]: IAudio.TracksState = useState();
   
   const controller = new AbortController();
-  const { signal } = controller;
+  const {signal} = controller;
   
   useEffect(
     () => {
@@ -14,7 +14,7 @@ const AudioPlayer = ({ url }: IAudio.Props) => {
         return;
       }
       
-      window.fetch(url, { signal })
+      window.fetch(url, {signal})
       .then(
         response => response.json()
       )
@@ -33,7 +33,7 @@ const AudioPlayer = ({ url }: IAudio.Props) => {
   
   return (
     <video controls={false} autoPlay={true}>
-      <source src={`${process.env.API_URL}${tracks? tracks[index].url: null}`} type="audio/mpeg"/>
+      <source src={`${process.env.API_URL}${tracks ? tracks[index].url : null}`} type='audio/mpeg' />
     </video>
   );
 };
