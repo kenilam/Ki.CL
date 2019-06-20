@@ -23,6 +23,8 @@ class Visualizer extends PIXI.Container {
         return;
       }
       
+      const dimension = this.area * PARTICLE_RATIO;
+      
       const container = new PIXI.Container();
       
       container.rotation = this.rotations[index].angle;
@@ -32,10 +34,8 @@ class Visualizer extends PIXI.Container {
       
       return CIRCLES.map(
         () => {
-          const circle = new Circle({
-            dimension: this.area * PARTICLE_RATIO
-          });
-          
+          const circle = new Circle({ dimension });
+  
           container.addChild(circle);
           
           return circle;
@@ -43,6 +43,7 @@ class Visualizer extends PIXI.Container {
       );
     }
   );
+  
   private rotationTween: Tween;
   
   constructor() {
