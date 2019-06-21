@@ -1,7 +1,6 @@
 import { Args } from '!/Utilities'
 import config from '^/ki-cl.config'
 import open from 'opn'
-import remotedev from 'remotedev-server'
 import webpack from 'webpack'
 import { srcRoot as assetPath } from './asset'
 import { srcRoot as contentPath } from './content'
@@ -62,12 +61,6 @@ const devServer = {
   port,
   stats,
 }
-
-remotedev({
-  name: 'channel',
-  realtime: true,
-  port: 5000
-})
 
 function browser () {
   open(`${host}:${port}`)
