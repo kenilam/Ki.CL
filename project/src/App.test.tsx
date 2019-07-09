@@ -8,7 +8,9 @@ describe('App', () => {
     const renderer = new ShallowRenderer();
     expect(
       renderer.render(
-        <Component/>
+        <Component>
+          <div>Child</div>
+        </Component>
       )
     ).toMatchSnapshot();
     

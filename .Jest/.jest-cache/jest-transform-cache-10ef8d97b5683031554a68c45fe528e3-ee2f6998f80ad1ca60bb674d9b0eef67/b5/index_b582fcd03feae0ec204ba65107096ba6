@@ -1,0 +1,31 @@
+a24c60d168199ed863140bcf1aed0cd6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Rect", {
+  enumerable: true,
+  get: function get() {
+    return _Rect["default"];
+  }
+});
+Object.defineProperty(exports, "Text", {
+  enumerable: true,
+  get: function get() {
+    return _Text["default"];
+  }
+});
+
+var _Rect = _interopRequireDefault(require("./Rect"));
+
+var _Text = _interopRequireDefault(require("./Text"));
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0EiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgUmVjdCBmcm9tICcuL1JlY3QnO1xuaW1wb3J0IFRleHQgZnJvbSAnLi9UZXh0JztcblxuZXhwb3J0IHtSZWN0LCBUZXh0fTtcbiJdfQ==

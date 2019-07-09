@@ -1,0 +1,67 @@
+c6af985c1f920c2cdb5953e0e1b71ff9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.regexp.exec");
+
+require("core-js/modules/es.string.match");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Router = require("@/Component/Router");
+
+var _react = _interopRequireDefault(require("react"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var Work = function Work(_ref) {
+  var match = _ref.match;
+  var projectId = match.params.projectId;
+  return _react["default"].createElement("section", {
+    "data-routes": "works.".concat(projectId)
+  }, projectId);
+};
+
+var _default = _react["default"].createElement(_Router.Route, {
+  path: "/works/:projectId",
+  exact: true,
+  render: Work
+});
+
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(Work, "Work", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Works/View/Work/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Works/View/Work/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJXb3JrIiwibWF0Y2giLCJwcm9qZWN0SWQiLCJwYXJhbXMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOzs7Ozs7Ozs7OztBQUdBLElBQU1BLElBQUksR0FBRyxTQUFQQSxJQUFPLE9BQTBCO0FBQUEsTUFBeEJDLEtBQXdCLFFBQXhCQSxLQUF3QjtBQUFBLE1BQ3JCQyxTQURxQixHQUNQRCxLQURPLENBQzlCRSxNQUQ4QixDQUNyQkQsU0FEcUI7QUFHckMsU0FDRTtBQUFTLG1DQUFzQkEsU0FBdEI7QUFBVCxLQUNHQSxTQURILENBREY7QUFLRCxDQVJEOztlQVVlLGdDQUFDLGFBQUQ7QUFBTyxFQUFBLElBQUksRUFBQyxtQkFBWjtBQUFnQyxFQUFBLEtBQUssRUFBRSxJQUF2QztBQUE2QyxFQUFBLE1BQU0sRUFBRUY7QUFBckQsRTs7Ozs7Ozs7Ozs7OzswQkFWVEEsSSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7Um91dGV9IGZyb20gJ0AvQ29tcG9uZW50L1JvdXRlcic7XG5pbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0ICogYXMgSVdvcmsgZnJvbSAnLi9zcGVjJztcblxuY29uc3QgV29yayA9ICh7bWF0Y2h9OiBJV29yay5Qcm9wcykgPT4ge1xuICBjb25zdCB7cGFyYW1zOiB7cHJvamVjdElkfX0gPSBtYXRjaDtcbiAgXG4gIHJldHVybiAoXG4gICAgPHNlY3Rpb24gZGF0YS1yb3V0ZXM9e2B3b3Jrcy4ke3Byb2plY3RJZH1gfT5cbiAgICAgIHtwcm9qZWN0SWR9XG4gICAgPC9zZWN0aW9uPlxuICApO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgPFJvdXRlIHBhdGg9Jy93b3Jrcy86cHJvamVjdElkJyBleGFjdD17dHJ1ZX0gcmVuZGVyPXtXb3JrfSAvPlxuIl19
