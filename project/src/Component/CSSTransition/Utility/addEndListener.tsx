@@ -1,4 +1,4 @@
-import Style from '@Component/CSSTransition/Style';
+import Style from '@/Component/CSSTransition/Style';
 import getTransitionDuration from 'get-transition-duration';
 import {EndHandler} from 'react-transition-group/Transition';
 

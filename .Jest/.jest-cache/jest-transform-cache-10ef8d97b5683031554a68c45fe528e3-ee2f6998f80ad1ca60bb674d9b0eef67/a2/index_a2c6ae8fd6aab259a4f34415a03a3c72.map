@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":["data"],"mappings":";;;;;;;;;;;AAAA;;;;;;;;;;;eAGeA,gB","sourcesContent":["import data from '$/resources/data.json';\nimport IResources from './spec';\n\nexport default data as IResources.Data;\n"]}

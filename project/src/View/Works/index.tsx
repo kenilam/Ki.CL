@@ -1,12 +1,11 @@
-import data from '$resources/data.json';
-import * as IResources from '$resources/spec';
-import {Route} from '@Component/Router';
+import resources from '$/resources';
+import {Route} from '@/Component/Router';
 import React from 'react';
 import * as IWorks from './spec';
 import './Style';
 import View from './View';
 
-const {view: {works: {path}}}: IResources.Data = data;
+const {view: {works: {path}}} = resources;
 
 const Works: React.FunctionComponent<IWorks.Props> = () => (
   <main data-routes='works'>

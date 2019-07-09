@@ -1,4 +1,4 @@
-import * as IHome from '@View/Home/spec';
+import * as IHome from '@/View/Home/spec';
 import './style.scss';
 import value from './value.scss';
 

@@ -1,0 +1,52 @@
+029ee84a1f848253790e04df00625f2d
+"use strict";
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+function RandomNumber(_ref) {
+  var _ref$start = _ref.start,
+      start = _ref$start === void 0 ? 0 : _ref$start,
+      _ref$end = _ref.end,
+      end = _ref$end === void 0 ? 100 : _ref$end;
+  return Math.floor(Math.random() * end) + start;
+}
+
+var _default = RandomNumber;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(RandomNumber, "RandomNumber", "/Users/keni.lam/Prototype/Ki.CL/project/src/Helper/RandomNumber.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Helper/RandomNumber.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlJhbmRvbU51bWJlci50c3giXSwibmFtZXMiOlsiUmFuZG9tTnVtYmVyIiwic3RhcnQiLCJlbmQiLCJNYXRoIiwiZmxvb3IiLCJyYW5kb20iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLFNBQVNBLFlBQVQsT0FBc0Q7QUFBQSx3QkFBL0JDLEtBQStCO0FBQUEsTUFBL0JBLEtBQStCLDJCQUF2QixDQUF1QjtBQUFBLHNCQUFwQkMsR0FBb0I7QUFBQSxNQUFwQkEsR0FBb0IseUJBQWQsR0FBYztBQUNwRCxTQUFPQyxJQUFJLENBQUNDLEtBQUwsQ0FBV0QsSUFBSSxDQUFDRSxNQUFMLEtBQWdCSCxHQUEzQixJQUFrQ0QsS0FBekM7QUFDRDs7ZUFFY0QsWTs7Ozs7Ozs7Ozs7OzBCQUpOQSxZIiwic291cmNlc0NvbnRlbnQiOlsiZnVuY3Rpb24gUmFuZG9tTnVtYmVyKHtzdGFydCA9IDAsIGVuZCA9IDEwMH0pOiBudW1iZXIge1xuICByZXR1cm4gTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogZW5kKSArIHN0YXJ0O1xufVxuXG5leHBvcnQgZGVmYXVsdCBSYW5kb21OdW1iZXI7XG4iXX0=

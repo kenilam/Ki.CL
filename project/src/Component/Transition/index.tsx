@@ -1,4 +1,4 @@
-import {CSSTransition} from '@Component';
+import {CSSTransition} from '@/Component';
 import classnames from 'classnames';
 import React from 'react';
 import {TransitionGroup} from 'react-transition-group';

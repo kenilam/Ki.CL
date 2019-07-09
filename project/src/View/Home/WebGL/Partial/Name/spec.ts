@@ -1,4 +1,4 @@
-import * as ICommonText from '@View/Home/WebGL/Common/Text/spec';
+import * as ICommonText from '@/View/Home/WebGL/Common/Text/spec';
 
 declare module IName {
   interface Props {

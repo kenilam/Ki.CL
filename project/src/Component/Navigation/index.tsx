@@ -1,13 +1,12 @@
-import data from '$resources/data.json';
-import IResources from '$resources/spec';
-import {Link} from '@Component';
-import * as INavigation from '@Component/Navigation/spec';
-import {RandomId} from '@Helper';
+import resources from '$/resources';
+import {Link} from '@/Component';
+import * as INavigation from '@/Component/Navigation/spec';
+import {RandomId} from '@/Helper';
 import classnames from 'classnames';
 import React from 'react';
 import Style from './Style';
 
-const {view}: IResources.Data = data;
+const {view} = resources;
 
 const DEFAULT_ITEMS: INavigation.Links = Object.keys(view).map(
   (viewName) => {

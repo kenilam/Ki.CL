@@ -1,0 +1,130 @@
+32841f9b8ff7a9abb6de251f8dc0bc57
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.fill");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _get2 = _interopRequireDefault(require("@babel/runtime/helpers/get"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _CSSUnit = require("@/Helper/CSSUnit");
+
+var _Common = require("@/View/Home/WebGL/Common");
+
+var _Style = _interopRequireDefault(require("./Style"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var BackFill =
+/*#__PURE__*/
+function (_Rect) {
+  (0, _inherits2["default"])(BackFill, _Rect);
+
+  function BackFill() {
+    var _getPrototypeOf2;
+
+    var _temp, _this;
+
+    (0, _classCallCheck2["default"])(this, BackFill);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return (0, _possibleConstructorReturn2["default"])(_this, (_temp = _this = (0, _possibleConstructorReturn2["default"])(this, (_getPrototypeOf2 = (0, _getPrototypeOf3["default"])(BackFill)).call.apply(_getPrototypeOf2, [this].concat(args))), Object.defineProperty((0, _assertThisInitialized2["default"])(_this), "name", {
+      enumerable: true,
+      writable: true,
+      value: 'mask'
+    }), _temp));
+  }
+
+  (0, _createClass2["default"])(BackFill, [{
+    key: "update",
+    value: function update(_ref) {
+      var _ref$alpha = _ref.alpha,
+          alpha = _ref$alpha === void 0 ? 0 : _ref$alpha,
+          _ref$height = _ref.height,
+          height = _ref$height === void 0 ? 0 : _ref$height,
+          _ref$width = _ref.width,
+          width = _ref$width === void 0 ? 0 : _ref$width,
+          _ref$x = _ref.x,
+          x = _ref$x === void 0 ? 0 : _ref$x,
+          _ref$y = _ref.y,
+          y = _ref$y === void 0 ? 0 : _ref$y;
+
+      var _CSSUnitGroup = (0, _CSSUnit.CSSUnitGroup)(_Style["default"]),
+          fill = _CSSUnitGroup.fill;
+
+      (0, _get2["default"])((0, _getPrototypeOf3["default"])(BackFill.prototype), "update", this).call(this, {
+        alpha: alpha,
+        fill: fill,
+        height: height,
+        width: width,
+        x: x,
+        y: y
+      });
+    }
+  }, {
+    key: "__reactstandin__regenerateByEval",
+    // @ts-ignore
+    value: function __reactstandin__regenerateByEval(key, code) {
+      // @ts-ignore
+      this[key] = eval(code);
+    }
+  }]);
+  return BackFill;
+}(_Common.Rect);
+
+var _default = BackFill;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(BackFill, "BackFill", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Partial/BackFill/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Partial/BackFill/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJCYWNrRmlsbCIsImFscGhhIiwiaGVpZ2h0Iiwid2lkdGgiLCJ4IiwieSIsIlN0eWxlIiwiZmlsbCIsIlJlY3QiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBRUE7Ozs7Ozs7Ozs7O0lBRU1BLFE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7YUFDVTs7Ozs7O2lDQVVaO0FBQUEsNEJBTkVDLEtBTUY7QUFBQSxVQU5FQSxLQU1GLDJCQU5VLENBTVY7QUFBQSw2QkFMRUMsTUFLRjtBQUFBLFVBTEVBLE1BS0YsNEJBTFcsQ0FLWDtBQUFBLDRCQUpFQyxLQUlGO0FBQUEsVUFKRUEsS0FJRiwyQkFKVSxDQUlWO0FBQUEsd0JBSEVDLENBR0Y7QUFBQSxVQUhFQSxDQUdGLHVCQUhNLENBR047QUFBQSx3QkFGRUMsQ0FFRjtBQUFBLFVBRkVBLENBRUYsdUJBRk0sQ0FFTjs7QUFBQSwwQkFDZSwyQkFBYUMsaUJBQWIsQ0FEZjtBQUFBLFVBQ09DLElBRFAsaUJBQ09BLElBRFA7O0FBR0EsNkdBQWE7QUFDWE4sUUFBQUEsS0FBSyxFQUFMQSxLQURXO0FBRVhNLFFBQUFBLElBQUksRUFBSkEsSUFGVztBQUdYTCxRQUFBQSxNQUFNLEVBQU5BLE1BSFc7QUFJWEMsUUFBQUEsS0FBSyxFQUFMQSxLQUpXO0FBS1hDLFFBQUFBLENBQUMsRUFBREEsQ0FMVztBQU1YQyxRQUFBQSxDQUFDLEVBQURBO0FBTlcsT0FBYjtBQVFEOzs7Ozs7Ozs7O0VBdEJvQkcsWTs7ZUF5QlJSLFE7Ozs7Ozs7Ozs7OzswQkF6QlRBLFEiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge0NTU1VuaXRHcm91cH0gZnJvbSAnQC9IZWxwZXIvQ1NTVW5pdCc7XG5pbXBvcnQge1JlY3R9IGZyb20gJ0AvVmlldy9Ib21lL1dlYkdML0NvbW1vbic7XG5pbXBvcnQgKiBhcyBJQmFja0ZpbGwgZnJvbSAnLi9zcGVjJztcbmltcG9ydCBTdHlsZSBmcm9tICcuL1N0eWxlJztcblxuY2xhc3MgQmFja0ZpbGwgZXh0ZW5kcyBSZWN0IHtcbiAgcHVibGljIG5hbWUgPSAnbWFzayc7XG4gIFxuICBwdWJsaWMgdXBkYXRlKFxuICAgIHtcbiAgICAgIGFscGhhID0gMCxcbiAgICAgIGhlaWdodCA9IDAsXG4gICAgICB3aWR0aCA9IDAsXG4gICAgICB4ID0gMCxcbiAgICAgIHkgPSAwXG4gICAgfTogSUJhY2tGaWxsLlVwZGF0ZVByb3BzXG4gICkge1xuICAgIGNvbnN0IHtmaWxsfSA9IENTU1VuaXRHcm91cChTdHlsZSk7XG4gICAgXG4gICAgc3VwZXIudXBkYXRlKHtcbiAgICAgIGFscGhhLFxuICAgICAgZmlsbCxcbiAgICAgIGhlaWdodCxcbiAgICAgIHdpZHRoLFxuICAgICAgeCxcbiAgICAgIHlcbiAgICB9KTtcbiAgfVxufVxuXG5leHBvcnQgZGVmYXVsdCBCYWNrRmlsbDtcbiJdfQ==

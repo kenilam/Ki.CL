@@ -1,14 +1,13 @@
-import data from '$resources/data.json';
-import IResources from '$resources/spec';
-import {CSSTransition} from '@Component';
-import {TransitionStyleName} from '@Component/CSSTransition';
-import {Route, withRouter} from '@Component/Router';
-import * as IHome from '@View/Home/spec';
+import resources from '$/resources';
+import {CSSTransition} from '@/Component';
+import {TransitionStyleName} from '@/Component/CSSTransition';
+import {Route, withRouter} from '@/Component/Router';
+import * as IHome from '@/View/Home/spec';
 import React, {useState} from 'react';
 import './Style';
 import WebGL from './WebGL';
 
-const {view: {home: {path}}}: IResources.Data = data;
+const {view: {home: {path}}} = resources;
 
 const Home: React.FunctionComponent<IHome.Props> = ({history}) => {
   const [renderNavigation, showNavigation] = useState(false);

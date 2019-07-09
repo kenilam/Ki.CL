@@ -1,4 +1,4 @@
-import * as ICSSTransition from '@Component/CSSTransition/spec';
+import * as ICSSTransition from '@/Component/CSSTransition/spec';
 import {ElementType} from 'react';
 import {ComponentTransitionGroupProps} from 'react-transition-group/TransitionGroup';
 

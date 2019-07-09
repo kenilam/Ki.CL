@@ -1,8 +1,10 @@
-import {view} from '$resources/data.json';
-import {Transition} from '@Component';
+import resources from '$/resources';
+import {Transition} from '@/Component';
 import React from 'react';
 import {HashRouter as Provider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import * as IRouter from './spec';
+
+const {view} = resources;
 
 const Router: React.FunctionComponent<IRouter.Props> = (
   {

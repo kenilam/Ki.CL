@@ -1,0 +1,132 @@
+a0d96bf9e4d16aee558b17864f44cf90
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.regexp.exec");
+
+require("core-js/modules/es.string.split");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _Component = require("@/Component");
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactTransitionGroup = require("react-transition-group");
+
+var _Style = _interopRequireDefault(require("./Style"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var Transition = function Transition(_ref) {
+  var appear = _ref.appear,
+      classNames = _ref.classNames,
+      children = _ref.children,
+      _ref$component = _ref.component,
+      component = _ref$component === void 0 ? _react["default"].Fragment : _ref$component,
+      onEnter = _ref.onEnter,
+      onEntered = _ref.onEntered,
+      onEntering = _ref.onEntering,
+      onExit = _ref.onExit,
+      onExited = _ref.onExited,
+      onExiting = _ref.onExiting,
+      transitionIn = _ref.transitionIn,
+      transitionKey = _ref.transitionKey,
+      transitionStyle = _ref.transitionStyle;
+  var className = (0, _classnames["default"])(classNames, _Style["default"].transition);
+
+  var onEnterHandler = function onEnterHandler(node, isAppearing) {
+    var _node$parentElement$c;
+
+    onEnter && onEnter(node, isAppearing);
+
+    if (!node || !node.parentElement) {
+      return;
+    }
+
+    (_node$parentElement$c = node.parentElement.classList).add.apply(_node$parentElement$c, (0, _toConsumableArray2["default"])(className.split(' ')));
+  };
+
+  var onEnteredHandler = function onEnteredHandler(node, isAppearing) {
+    var _node$parentElement$c2;
+
+    onEntered && onEntered(node, isAppearing);
+
+    if (!node || !node.parentElement) {
+      return;
+    }
+
+    (_node$parentElement$c2 = node.parentElement.classList).remove.apply(_node$parentElement$c2, (0, _toConsumableArray2["default"])(className.split(' ')));
+  };
+
+  var onExitHandler = function onExitHandler(node) {
+    var _node$parentElement$c3;
+
+    onExit && onExit(node);
+
+    if (!node || !node.parentElement) {
+      return;
+    }
+
+    (_node$parentElement$c3 = node.parentElement.classList).add.apply(_node$parentElement$c3, (0, _toConsumableArray2["default"])(className.split(' ')));
+  };
+
+  return _react["default"].createElement(_reactTransitionGroup.TransitionGroup, {
+    component: component
+  }, (0, _Component.CSSTransition)({
+    appear: appear,
+    children: children,
+    onEnter: onEnterHandler,
+    onEntered: onEnteredHandler,
+    onEntering: onEntering,
+    onExit: onExitHandler,
+    onExited: onExited,
+    onExiting: onExiting,
+    transitionIn: transitionIn,
+    transitionKey: transitionKey,
+    transitionStyle: transitionStyle
+  }));
+};
+
+var _default = Transition;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(Transition, "Transition", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/Transition/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/Transition/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJUcmFuc2l0aW9uIiwiYXBwZWFyIiwiY2xhc3NOYW1lcyIsImNoaWxkcmVuIiwiY29tcG9uZW50IiwiUmVhY3QiLCJGcmFnbWVudCIsIm9uRW50ZXIiLCJvbkVudGVyZWQiLCJvbkVudGVyaW5nIiwib25FeGl0Iiwib25FeGl0ZWQiLCJvbkV4aXRpbmciLCJ0cmFuc2l0aW9uSW4iLCJ0cmFuc2l0aW9uS2V5IiwidHJhbnNpdGlvblN0eWxlIiwiY2xhc3NOYW1lIiwiU3R5bGUiLCJ0cmFuc2l0aW9uIiwib25FbnRlckhhbmRsZXIiLCJub2RlIiwiaXNBcHBlYXJpbmciLCJwYXJlbnRFbGVtZW50IiwiY2xhc3NMaXN0IiwiYWRkIiwic3BsaXQiLCJvbkVudGVyZWRIYW5kbGVyIiwicmVtb3ZlIiwib25FeGl0SGFuZGxlciJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFHQTs7Ozs7Ozs7Ozs7QUFFQSxJQUFNQSxVQUFzRCxHQUFHLFNBQXpEQSxVQUF5RCxPQWdCMUQ7QUFBQSxNQWREQyxNQWNDLFFBZERBLE1BY0M7QUFBQSxNQWJEQyxVQWFDLFFBYkRBLFVBYUM7QUFBQSxNQVpEQyxRQVlDLFFBWkRBLFFBWUM7QUFBQSw0QkFYREMsU0FXQztBQUFBLE1BWERBLFNBV0MsK0JBWFdDLGtCQUFNQyxRQVdqQjtBQUFBLE1BVkRDLE9BVUMsUUFWREEsT0FVQztBQUFBLE1BVERDLFNBU0MsUUFUREEsU0FTQztBQUFBLE1BUkRDLFVBUUMsUUFSREEsVUFRQztBQUFBLE1BUERDLE1BT0MsUUFQREEsTUFPQztBQUFBLE1BTkRDLFFBTUMsUUFOREEsUUFNQztBQUFBLE1BTERDLFNBS0MsUUFMREEsU0FLQztBQUFBLE1BSkRDLFlBSUMsUUFKREEsWUFJQztBQUFBLE1BSERDLGFBR0MsUUFIREEsYUFHQztBQUFBLE1BRkRDLGVBRUMsUUFGREEsZUFFQztBQUNILE1BQU1DLFNBQVMsR0FBRyw0QkFBV2QsVUFBWCxFQUF1QmUsa0JBQU1DLFVBQTdCLENBQWxCOztBQUVBLE1BQU1DLGNBQTRCLEdBQUcsU0FBL0JBLGNBQStCLENBQUNDLElBQUQsRUFBT0MsV0FBUCxFQUF1QjtBQUFBOztBQUMxRGQsSUFBQUEsT0FBTyxJQUFJQSxPQUFPLENBQUNhLElBQUQsRUFBT0MsV0FBUCxDQUFsQjs7QUFFQSxRQUFJLENBQUNELElBQUQsSUFBUyxDQUFDQSxJQUFJLENBQUNFLGFBQW5CLEVBQWtDO0FBQ2hDO0FBQ0Q7O0FBRUQsNkJBQUFGLElBQUksQ0FBQ0UsYUFBTCxDQUFtQkMsU0FBbkIsRUFBNkJDLEdBQTdCLGtFQUFvQ1IsU0FBUyxDQUFDUyxLQUFWLENBQWdCLEdBQWhCLENBQXBDO0FBQ0QsR0FSRDs7QUFVQSxNQUFNQyxnQkFBOEIsR0FBRyxTQUFqQ0EsZ0JBQWlDLENBQUNOLElBQUQsRUFBT0MsV0FBUCxFQUF1QjtBQUFBOztBQUM1RGIsSUFBQUEsU0FBUyxJQUFJQSxTQUFTLENBQUNZLElBQUQsRUFBT0MsV0FBUCxDQUF0Qjs7QUFFQSxRQUFJLENBQUNELElBQUQsSUFBUyxDQUFDQSxJQUFJLENBQUNFLGFBQW5CLEVBQWtDO0FBQ2hDO0FBQ0Q7O0FBRUQsOEJBQUFGLElBQUksQ0FBQ0UsYUFBTCxDQUFtQkMsU0FBbkIsRUFBNkJJLE1BQTdCLG1FQUF1Q1gsU0FBUyxDQUFDUyxLQUFWLENBQWdCLEdBQWhCLENBQXZDO0FBQ0QsR0FSRDs7QUFVQSxNQUFNRyxhQUEwQixHQUFHLFNBQTdCQSxhQUE2QixDQUFDUixJQUFELEVBQVU7QUFBQTs7QUFDM0NWLElBQUFBLE1BQU0sSUFBSUEsTUFBTSxDQUFDVSxJQUFELENBQWhCOztBQUVBLFFBQUksQ0FBQ0EsSUFBRCxJQUFTLENBQUNBLElBQUksQ0FBQ0UsYUFBbkIsRUFBa0M7QUFDaEM7QUFDRDs7QUFFRCw4QkFBQUYsSUFBSSxDQUFDRSxhQUFMLENBQW1CQyxTQUFuQixFQUE2QkMsR0FBN0IsbUVBQW9DUixTQUFTLENBQUNTLEtBQVYsQ0FBZ0IsR0FBaEIsQ0FBcEM7QUFDRCxHQVJEOztBQVVBLFNBQ0UsZ0NBQUMscUNBQUQ7QUFBaUIsSUFBQSxTQUFTLEVBQUVyQjtBQUE1QixLQUNHLDhCQUFjO0FBQ2JILElBQUFBLE1BQU0sRUFBTkEsTUFEYTtBQUViRSxJQUFBQSxRQUFRLEVBQVJBLFFBRmE7QUFHYkksSUFBQUEsT0FBTyxFQUFFWSxjQUhJO0FBSWJYLElBQUFBLFNBQVMsRUFBRWtCLGdCQUpFO0FBS2JqQixJQUFBQSxVQUFVLEVBQVZBLFVBTGE7QUFNYkMsSUFBQUEsTUFBTSxFQUFFa0IsYUFOSztBQU9iakIsSUFBQUEsUUFBUSxFQUFSQSxRQVBhO0FBUWJDLElBQUFBLFNBQVMsRUFBVEEsU0FSYTtBQVNiQyxJQUFBQSxZQUFZLEVBQVpBLFlBVGE7QUFVYkMsSUFBQUEsYUFBYSxFQUFiQSxhQVZhO0FBV2JDLElBQUFBLGVBQWUsRUFBZkE7QUFYYSxHQUFkLENBREgsQ0FERjtBQWlCRCxDQWxFRDs7ZUFvRWVmLFU7Ozs7Ozs7Ozs7OzswQkFwRVRBLFUiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge0NTU1RyYW5zaXRpb259IGZyb20gJ0AvQ29tcG9uZW50JztcbmltcG9ydCBjbGFzc25hbWVzIGZyb20gJ2NsYXNzbmFtZXMnO1xuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCB7VHJhbnNpdGlvbkdyb3VwfSBmcm9tICdyZWFjdC10cmFuc2l0aW9uLWdyb3VwJztcbmltcG9ydCB7RW50ZXJIYW5kbGVyLCBFeGl0SGFuZGxlcn0gZnJvbSAncmVhY3QtdHJhbnNpdGlvbi1ncm91cC9UcmFuc2l0aW9uJztcbmltcG9ydCAqIGFzIElUcmFuc2l0aW9uIGZyb20gJy4vc3BlYyc7XG5pbXBvcnQgU3R5bGUgZnJvbSAnLi9TdHlsZSc7XG5cbmNvbnN0IFRyYW5zaXRpb246IFJlYWN0LkZ1bmN0aW9uQ29tcG9uZW50PElUcmFuc2l0aW9uLlByb3BzPiA9IChcbiAge1xuICAgIGFwcGVhcixcbiAgICBjbGFzc05hbWVzLFxuICAgIGNoaWxkcmVuLFxuICAgIGNvbXBvbmVudCA9IFJlYWN0LkZyYWdtZW50LFxuICAgIG9uRW50ZXIsXG4gICAgb25FbnRlcmVkLFxuICAgIG9uRW50ZXJpbmcsXG4gICAgb25FeGl0LFxuICAgIG9uRXhpdGVkLFxuICAgIG9uRXhpdGluZyxcbiAgICB0cmFuc2l0aW9uSW4sXG4gICAgdHJhbnNpdGlvbktleSxcbiAgICB0cmFuc2l0aW9uU3R5bGUsXG4gIH1cbikgPT4ge1xuICBjb25zdCBjbGFzc05hbWUgPSBjbGFzc25hbWVzKGNsYXNzTmFtZXMsIFN0eWxlLnRyYW5zaXRpb24pO1xuICBcbiAgY29uc3Qgb25FbnRlckhhbmRsZXI6IEVudGVySGFuZGxlciA9IChub2RlLCBpc0FwcGVhcmluZykgPT4ge1xuICAgIG9uRW50ZXIgJiYgb25FbnRlcihub2RlLCBpc0FwcGVhcmluZyk7XG4gICAgXG4gICAgaWYgKCFub2RlIHx8ICFub2RlLnBhcmVudEVsZW1lbnQpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG4gICAgXG4gICAgbm9kZS5wYXJlbnRFbGVtZW50LmNsYXNzTGlzdC5hZGQoLi4uY2xhc3NOYW1lLnNwbGl0KCcgJykpO1xuICB9O1xuICBcbiAgY29uc3Qgb25FbnRlcmVkSGFuZGxlcjogRW50ZXJIYW5kbGVyID0gKG5vZGUsIGlzQXBwZWFyaW5nKSA9PiB7XG4gICAgb25FbnRlcmVkICYmIG9uRW50ZXJlZChub2RlLCBpc0FwcGVhcmluZyk7XG4gICAgXG4gICAgaWYgKCFub2RlIHx8ICFub2RlLnBhcmVudEVsZW1lbnQpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG4gICAgXG4gICAgbm9kZS5wYXJlbnRFbGVtZW50LmNsYXNzTGlzdC5yZW1vdmUoLi4uY2xhc3NOYW1lLnNwbGl0KCcgJykpO1xuICB9O1xuICBcbiAgY29uc3Qgb25FeGl0SGFuZGxlcjogRXhpdEhhbmRsZXIgPSAobm9kZSkgPT4ge1xuICAgIG9uRXhpdCAmJiBvbkV4aXQobm9kZSk7XG4gICAgXG4gICAgaWYgKCFub2RlIHx8ICFub2RlLnBhcmVudEVsZW1lbnQpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG4gICAgXG4gICAgbm9kZS5wYXJlbnRFbGVtZW50LmNsYXNzTGlzdC5hZGQoLi4uY2xhc3NOYW1lLnNwbGl0KCcgJykpO1xuICB9O1xuICBcbiAgcmV0dXJuIChcbiAgICA8VHJhbnNpdGlvbkdyb3VwIGNvbXBvbmVudD17Y29tcG9uZW50fT5cbiAgICAgIHtDU1NUcmFuc2l0aW9uKHtcbiAgICAgICAgYXBwZWFyLFxuICAgICAgICBjaGlsZHJlbixcbiAgICAgICAgb25FbnRlcjogb25FbnRlckhhbmRsZXIsXG4gICAgICAgIG9uRW50ZXJlZDogb25FbnRlcmVkSGFuZGxlcixcbiAgICAgICAgb25FbnRlcmluZyxcbiAgICAgICAgb25FeGl0OiBvbkV4aXRIYW5kbGVyLFxuICAgICAgICBvbkV4aXRlZCxcbiAgICAgICAgb25FeGl0aW5nLFxuICAgICAgICB0cmFuc2l0aW9uSW4sXG4gICAgICAgIHRyYW5zaXRpb25LZXksXG4gICAgICAgIHRyYW5zaXRpb25TdHlsZVxuICAgICAgfSl9XG4gICAgPC9UcmFuc2l0aW9uR3JvdXA+XG4gICk7XG59O1xuXG5leHBvcnQgZGVmYXVsdCBUcmFuc2l0aW9uO1xuIl19

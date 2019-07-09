@@ -1,5 +1,5 @@
-import {PIXI, Tween} from '@Component/WebGL';
-import {RandomColor, RandomNumber} from '@Helper';
+import {PIXI, Tween} from '@/Component/WebGL';
+import {RandomColor, RandomNumber} from '@/Helper';
 import * as IPartial from './spec';
 
 const SCALE_DURATION = 10;

@@ -1,4 +1,4 @@
-import engine from 'units-css';
+import * as engine from 'units-css';
 import * as IHelper from './spec';
 
 const DOM_DEPENDED_UNITS = ['%', 'ch', 'em', 'ex'];
@@ -6,7 +6,7 @@ const TIME_UNITS = ['s', 'ms'];
 const BASE_UNIT = 'px';
 
 function CSSUnit(values: any): any {
-  let {value, unit} = engine.parse(values);
+  let {value, unit} = engine.parse(values || '');
   
   if (!value) {
     return values;

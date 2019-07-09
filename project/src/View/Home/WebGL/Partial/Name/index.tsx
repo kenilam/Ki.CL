@@ -1,6 +1,5 @@
-import data from '$resources/data.json';
-import * as IResources from '$resources/spec';
-import {Text} from '@View/Home/WebGL/Common';
+import resources from '$/resources';
+import {Text} from '@/View/Home/WebGL/Common';
 import style from './Style';
 
 const {
@@ -15,7 +14,7 @@ const {
       }
     }
   }
-}: IResources.Data = data;
+} = resources;
 
 class Name extends Text {
   constructor() {

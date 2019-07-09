@@ -1,4 +1,4 @@
-import {gsap} from '@Component/WebGL';
+import {gsap} from '@/Component/WebGL';
 
 declare module ITween {
   type Delay = number;

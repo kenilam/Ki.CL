@@ -1,6 +1,6 @@
-import {PIXI} from '@Component/WebGL';
-import {CharacterRanges, RandomNumber} from '@Helper';
-import {CSSUnitGroup} from '@Helper/CSSUnit';
+import {PIXI} from '@/Component/WebGL';
+import {CharacterRanges, RandomNumber} from '@/Helper';
+import {CSSUnitGroup} from '@/Helper/CSSUnit';
 import * as IText from './spec';
 
 const RANDOM_TEXT = CharacterRanges();

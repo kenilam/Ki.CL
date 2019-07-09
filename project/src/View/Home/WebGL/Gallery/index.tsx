@@ -1,4 +1,4 @@
-import {PIXI} from '@Component/WebGL';
+import {PIXI} from '@/Component/WebGL';
 import Mask from './Mask';
 import * as IGallery from './spec';
 import Visualizer from './Visualizer';

@@ -1,0 +1,26 @@
+9ea055f992c94a377cddc082f147f3f6
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var React = _interopRequireWildcard(require("react"));
+
+var _App = _interopRequireDefault(require("./App"));
+
+var _shallow = _interopRequireDefault(require("react-test-renderer/shallow"));
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+describe('App', function () {
+  test('should match with snapshot', function () {
+    // @ts-ignore
+    var renderer = new _shallow["default"]();
+    expect(renderer.render(React.createElement(_App["default"], null, React.createElement("div", null, "Child")))).toMatchSnapshot();
+  });
+});
+'';
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFwcC50ZXN0LnRzeCJdLCJuYW1lcyI6WyJkZXNjcmliZSIsInRlc3QiLCJyZW5kZXJlciIsIlNoYWxsb3dSZW5kZXJlciIsImV4cGVjdCIsInJlbmRlciIsInRvTWF0Y2hTbmFwc2hvdCJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7Ozs7OztBQUVBQSxRQUFRLENBQUMsS0FBRCxFQUFRLFlBQU07QUFDcEJDLEVBQUFBLElBQUksQ0FBQyw0QkFBRCxFQUErQixZQUFNO0FBQ3ZDO0FBQ0EsUUFBTUMsUUFBUSxHQUFHLElBQUlDLG1CQUFKLEVBQWpCO0FBQ0FDLElBQUFBLE1BQU0sQ0FDSkYsUUFBUSxDQUFDRyxNQUFULENBQ0Usb0JBQUMsZUFBRCxRQUNFLHlDQURGLENBREYsQ0FESSxDQUFOLENBTUVDLGVBTkY7QUFRRCxHQVhHLENBQUo7QUFZRCxDQWJPLENBQVI7QUFhRyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCBDb21wb25lbnQgZnJvbSAnLi9BcHAnO1xuaW1wb3J0IFNoYWxsb3dSZW5kZXJlciBmcm9tICdyZWFjdC10ZXN0LXJlbmRlcmVyL3NoYWxsb3cnO1xuXG5kZXNjcmliZSgnQXBwJywgKCkgPT4ge1xuICB0ZXN0KCdzaG91bGQgbWF0Y2ggd2l0aCBzbmFwc2hvdCcsICgpID0+IHtcbiAgICAvLyBAdHMtaWdub3JlXG4gICAgY29uc3QgcmVuZGVyZXIgPSBuZXcgU2hhbGxvd1JlbmRlcmVyKCk7XG4gICAgZXhwZWN0KFxuICAgICAgcmVuZGVyZXIucmVuZGVyKFxuICAgICAgICA8Q29tcG9uZW50PlxuICAgICAgICAgIDxkaXY+Q2hpbGQ8L2Rpdj5cbiAgICAgICAgPC9Db21wb25lbnQ+XG4gICAgICApXG4gICAgKS50b01hdGNoU25hcHNob3QoKTtcbiAgICBcbiAgfSk7XG59KTsnJ1xuIl19

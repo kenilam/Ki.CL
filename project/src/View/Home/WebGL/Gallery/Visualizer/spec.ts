@@ -1,4 +1,4 @@
-import * as IRoundedRect from '@View/Home/WebGL/Common/Rect/spec';
+import * as IRoundedRect from '@/View/Home/WebGL/Common/Rect/spec';
 import {RouteComponentProps} from 'react-router';
 
 declare module IVisualiser {

@@ -1,4 +1,4 @@
-import {PIXI} from '@Component/WebGL';
+import {PIXI} from '@/Component/WebGL';
 import Color from 'color';
 import * as IRoundedRect from './spec';
 

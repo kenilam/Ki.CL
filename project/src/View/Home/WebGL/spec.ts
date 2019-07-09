@@ -1,4 +1,4 @@
-import * as IComponentWebGL from '@Component/WebGL/spec';
+import * as IComponentWebGL from '@/Component/WebGL/spec';
 import {RouteComponentProps} from 'react-router';
 import * as ITween from './Tween/spec';
 

@@ -1,4 +1,4 @@
-import {Provider} from '@Component/Router';
+import {Provider} from '@/Component/Router';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import * as ILink from './spec';

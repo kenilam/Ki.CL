@@ -1,5 +1,5 @@
-import {CSSUnitGroup} from '@Helper/CSSUnit';
-import {Rect} from '@View/Home/WebGL/Common';
+import {CSSUnitGroup} from '@/Helper/CSSUnit';
+import {Rect} from '@/View/Home/WebGL/Common';
 import * as IBackFill from './spec';
 import Style from './Style';
 

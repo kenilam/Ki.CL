@@ -1,5 +1,5 @@
-import {gsap, PIXI, Tween} from '@Component/WebGL';
-import {RandomNumber} from '@Helper';
+import {gsap, PIXI, Tween} from '@/Component/WebGL';
+import {RandomNumber} from '@/Helper';
 import autobind from 'autobind-decorator';
 import {Circle} from './Partial';
 
