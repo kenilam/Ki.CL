@@ -1,0 +1,91 @@
+2423034f377ffa2cae1145e9d52cdc70
+{
+  "siteName": "Ki.CL",
+  "description": "UX and Eng Specialist",
+  "view": {
+    "pageNotFound": {
+      "name": "Page Not Found",
+      "content": {
+        "message": "{{pathname}} is not a valid route"
+      }
+    },
+    "home": {
+      "path": "/",
+      "name": "Home",
+      "component": {
+        "graphic": {
+          "content": {
+            "image": "/image/noise.black.blur.jpg",
+            "name": "KENI CHI LAM",
+            "slogan": "Ki\nCL"
+          }
+        }
+      },
+      "content": {
+        "heading": "Welcome to Ki.CL",
+        "profession": [
+          "Interactive Design",
+          "Graphic Design"
+        ],
+        "loader": {
+          "text": "fetching contents..."
+        }
+      }
+    },
+    "about": {
+      "path": "/about",
+      "name": "About",
+      "message": "Ki.CL"
+    },
+    "works": {
+      "path": "/works",
+      "name": "Works",
+      "message": "Ki.CL",
+      "content": {
+        "loader": {
+          "text": "fetching projects..."
+        }
+      },
+      "view": {
+        "work": {
+          "path": "/works/:projectId",
+          "name": "Work",
+          "message": "Ki.CL",
+          "content": {
+            "loader": {
+              "text": "fetching project..."
+            }
+          }
+        }
+      }
+    },
+    "contact": {
+      "path": "/contact",
+      "name": "Contact",
+      "message": "Contact"
+    }
+  },
+  "component": {
+    "spinner": {
+      "content": {
+        "message": "loading..."
+      }
+    }
+  },
+  "miscellaneous": {
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ]
+  }
+}

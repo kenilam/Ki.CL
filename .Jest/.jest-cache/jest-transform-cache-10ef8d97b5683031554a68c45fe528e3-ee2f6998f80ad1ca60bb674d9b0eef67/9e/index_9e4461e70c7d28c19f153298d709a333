@@ -1,0 +1,194 @@
+7cd83b91581b9d20153556ab5e26201b
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.array.filter");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.define-properties");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.object.get-own-property-descriptor");
+
+require("core-js/modules/es.object.get-own-property-descriptors");
+
+require("core-js/modules/es.object.keys");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "TweenSequence", {
+  enumerable: true,
+  get: function get() {
+    return gsap.TimelineMax;
+  }
+});
+Object.defineProperty(exports, "Tween", {
+  enumerable: true,
+  get: function get() {
+    return gsap.TweenMax;
+  }
+});
+exports.Geometry = exports.PIXI = exports.gsap = exports["default"] = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var gsap = _interopRequireWildcard(require("gsap"));
+
+exports.gsap = gsap;
+
+var PIXI = _interopRequireWildcard(require("pixi.js"));
+
+exports.PIXI = PIXI;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var Geometry = _interopRequireWildcard(require("./Geometry"));
+
+exports.Geometry = Geometry;
+
+var _Style = _interopRequireDefault(require("./Style"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; ownKeys(source, true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } else { ownKeys(arguments[i]).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(arguments[i], key)); }); } } return target; }
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var options = {
+  antialias: true,
+  autoResize: true,
+  transparent: true
+};
+
+var WebGL = function WebGL(_ref) {
+  var className = _ref.className,
+      height = _ref.height,
+      render = _ref.render,
+      width = _ref.width;
+  var rendererFrame;
+
+  var _useState = (0, _react.useState)(),
+      _useState2 = (0, _slicedToArray2["default"])(_useState, 2),
+      app = _useState2[0],
+      updateApp = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(),
+      _useState4 = (0, _slicedToArray2["default"])(_useState3, 2),
+      stage = _useState4[0],
+      updateStage = _useState4[1];
+
+  var _render = render(),
+      _render2 = (0, _slicedToArray2["default"])(_render, 2),
+      graphics = _render2[0],
+      updateGraphics = _render2[1];
+
+  function renderer() {
+    if (!app || !stage) {
+      return;
+    }
+
+    app.render(stage);
+    rendererFrame = window.requestAnimationFrame(renderer);
+  }
+
+  function triggerRender() {
+    if (!stage) {
+      updateStage(new PIXI.Container());
+      return;
+    }
+
+    stage.removeChildren(0);
+    graphics.map(function (graphic) {
+      stage.addChild(graphic);
+    });
+    updateGraphics && updateGraphics({
+      app: app,
+      stage: stage
+    });
+  }
+
+  var ref = (0, _react.useCallback)(function (view) {
+    if (!view) {
+      return;
+    }
+
+    if (!app) {
+      updateApp(PIXI.autoDetectRenderer(_objectSpread({}, options, {
+        height: height,
+        width: width,
+        view: view
+      })));
+      return;
+    }
+
+    app.resize(width, height);
+  }, [width, height]);
+
+  function onMount() {
+    renderer();
+    triggerRender();
+  }
+
+  function onUnmount() {
+    window.cancelAnimationFrame(rendererFrame);
+  }
+
+  (0, _react.useEffect)(function () {
+    onMount();
+    return onUnmount;
+  });
+  return _react["default"].createElement("canvas", {
+    className: className,
+    "data-component": _Style["default"]["default"],
+    ref: ref
+  });
+};
+
+__signature__(WebGL, "useState{[app, updateApp]: IWebGL.AppState}\nuseState{[stage, updateStage]: IWebGL.StageState}\nuseCallback{ref}\nuseEffect{}");
+
+PIXI.settings.RESOLUTION = window.devicePixelRatio;
+var _default = WebGL;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(options, "options", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/WebGL/index.tsx");
+  reactHotLoader.register(WebGL, "WebGL", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/WebGL/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/WebGL/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJvcHRpb25zIiwiYW50aWFsaWFzIiwiYXV0b1Jlc2l6ZSIsInRyYW5zcGFyZW50IiwiV2ViR0wiLCJjbGFzc05hbWUiLCJoZWlnaHQiLCJyZW5kZXIiLCJ3aWR0aCIsInJlbmRlcmVyRnJhbWUiLCJhcHAiLCJ1cGRhdGVBcHAiLCJzdGFnZSIsInVwZGF0ZVN0YWdlIiwiZ3JhcGhpY3MiLCJ1cGRhdGVHcmFwaGljcyIsInJlbmRlcmVyIiwid2luZG93IiwicmVxdWVzdEFuaW1hdGlvbkZyYW1lIiwidHJpZ2dlclJlbmRlciIsIlBJWEkiLCJDb250YWluZXIiLCJyZW1vdmVDaGlsZHJlbiIsIm1hcCIsImdyYXBoaWMiLCJhZGRDaGlsZCIsInJlZiIsInZpZXciLCJhdXRvRGV0ZWN0UmVuZGVyZXIiLCJyZXNpemUiLCJvbk1vdW50Iiwib25Vbm1vdW50IiwiY2FuY2VsQW5pbWF0aW9uRnJhbWUiLCJTdHlsZSIsInNldHRpbmdzIiwiUkVTT0xVVElPTiIsImRldmljZVBpeGVsUmF0aW8iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7Ozs7QUFFQTs7OztBQUNBOztBQUNBOzs7O0FBRUE7Ozs7Ozs7Ozs7Ozs7OztBQUVBLElBQU1BLE9BQU8sR0FBRztBQUNkQyxFQUFBQSxTQUFTLEVBQUUsSUFERztBQUVkQyxFQUFBQSxVQUFVLEVBQUUsSUFGRTtBQUdkQyxFQUFBQSxXQUFXLEVBQUU7QUFIQyxDQUFoQjs7QUFNQSxJQUFNQyxLQUE0QyxHQUFHLFNBQS9DQSxLQUErQyxPQU9oRDtBQUFBLE1BTERDLFNBS0MsUUFMREEsU0FLQztBQUFBLE1BSkRDLE1BSUMsUUFKREEsTUFJQztBQUFBLE1BSERDLE1BR0MsUUFIREEsTUFHQztBQUFBLE1BRkRDLEtBRUMsUUFGREEsS0FFQztBQUNILE1BQUlDLGFBQUo7O0FBREcsa0JBR3VDLHNCQUh2QztBQUFBO0FBQUEsTUFHSUMsR0FISjtBQUFBLE1BR1NDLFNBSFQ7O0FBQUEsbUJBSTZDLHNCQUo3QztBQUFBO0FBQUEsTUFJSUMsS0FKSjtBQUFBLE1BSVdDLFdBSlg7O0FBQUEsZ0JBS29ETixNQUFNLEVBTDFEO0FBQUE7QUFBQSxNQUtJTyxRQUxKO0FBQUEsTUFLY0MsY0FMZDs7QUFPSCxXQUFTQyxRQUFULEdBQW9CO0FBQ2xCLFFBQUksQ0FBQ04sR0FBRCxJQUFRLENBQUNFLEtBQWIsRUFBb0I7QUFDbEI7QUFDRDs7QUFFQUYsSUFBQUEsR0FBRCxDQUF1QkgsTUFBdkIsQ0FBOEJLLEtBQTlCO0FBRUFILElBQUFBLGFBQWEsR0FBR1EsTUFBTSxDQUFDQyxxQkFBUCxDQUE2QkYsUUFBN0IsQ0FBaEI7QUFDRDs7QUFFRCxXQUFTRyxhQUFULEdBQXlCO0FBQ3ZCLFFBQUksQ0FBQ1AsS0FBTCxFQUFZO0FBQ1ZDLE1BQUFBLFdBQVcsQ0FBQyxJQUFJTyxJQUFJLENBQUNDLFNBQVQsRUFBRCxDQUFYO0FBQ0E7QUFDRDs7QUFFRFQsSUFBQUEsS0FBSyxDQUFDVSxjQUFOLENBQXFCLENBQXJCO0FBRUFSLElBQUFBLFFBQVEsQ0FBQ1MsR0FBVCxDQUNFLFVBQUFDLE9BQU8sRUFBSTtBQUNUWixNQUFBQSxLQUFLLENBQUNhLFFBQU4sQ0FBZUQsT0FBZjtBQUNELEtBSEg7QUFNQVQsSUFBQUEsY0FBYyxJQUFJQSxjQUFjLENBQUM7QUFBQ0wsTUFBQUEsR0FBRyxFQUFIQSxHQUFEO0FBQU1FLE1BQUFBLEtBQUssRUFBTEE7QUFBTixLQUFELENBQWhDO0FBQ0Q7O0FBRUQsTUFBTWMsR0FBRyxHQUFHLHdCQUFZLFVBQUNDLElBQUQsRUFBNkI7QUFDbkQsUUFBSSxDQUFDQSxJQUFMLEVBQVc7QUFDVDtBQUNEOztBQUVELFFBQUksQ0FBQ2pCLEdBQUwsRUFBVTtBQUNSQyxNQUFBQSxTQUFTLENBQ1BTLElBQUksQ0FBQ1Esa0JBQUwsbUJBQ0s1QixPQURMO0FBRUVNLFFBQUFBLE1BQU0sRUFBTkEsTUFGRjtBQUdFRSxRQUFBQSxLQUFLLEVBQUxBLEtBSEY7QUFJRW1CLFFBQUFBLElBQUksRUFBSkE7QUFKRixTQURPLENBQVQ7QUFRQTtBQUNEOztBQUVBakIsSUFBQUEsR0FBRCxDQUF1Qm1CLE1BQXZCLENBQThCckIsS0FBOUIsRUFBcUNGLE1BQXJDO0FBQ0QsR0FsQlcsRUFrQlQsQ0FBQ0UsS0FBRCxFQUFRRixNQUFSLENBbEJTLENBQVo7O0FBb0JBLFdBQVN3QixPQUFULEdBQW1CO0FBRWpCZCxJQUFBQSxRQUFRO0FBRVJHLElBQUFBLGFBQWE7QUFDZDs7QUFFRCxXQUFTWSxTQUFULEdBQXFCO0FBQ25CZCxJQUFBQSxNQUFNLENBQUNlLG9CQUFQLENBQTRCdkIsYUFBNUI7QUFDRDs7QUFFRCx3QkFBVSxZQUFNO0FBQ2RxQixJQUFBQSxPQUFPO0FBRVAsV0FBT0MsU0FBUDtBQUNELEdBSkQ7QUFNQSxTQUNFO0FBQ0UsSUFBQSxTQUFTLEVBQUUxQixTQURiO0FBRUUsc0JBQWdCNEIsNEJBRmxCO0FBR0UsSUFBQSxHQUFHLEVBQUVQO0FBSFAsSUFERjtBQU9ELENBckZEOztjQUFNdEIsSzs7QUF1Rk5nQixJQUFJLENBQUNjLFFBQUwsQ0FBY0MsVUFBZCxHQUEyQmxCLE1BQU0sQ0FBQ21CLGdCQUFsQztlQUdlaEMsSzs7Ozs7Ozs7Ozs7OzBCQWhHVEosTzswQkFNQUksSyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAqIGFzIGdzYXAgZnJvbSAnZ3NhcCc7XG5pbXBvcnQge1RpbWVsaW5lTWF4LCBUd2Vlbk1heH0gZnJvbSAnZ3NhcCc7XG5pbXBvcnQgKiBhcyBQSVhJIGZyb20gJ3BpeGkuanMnO1xuaW1wb3J0IFJlYWN0LCB7RGVwZW5kZW5jeUxpc3QsIHVzZUNhbGxiYWNrLCB1c2VFZmZlY3QsIHVzZVN0YXRlfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgKiBhcyBHZW9tZXRyeSBmcm9tICcuL0dlb21ldHJ5JztcbmltcG9ydCAqIGFzIElXZWJHTCBmcm9tICcuL3NwZWMnO1xuaW1wb3J0IFN0eWxlIGZyb20gJy4vU3R5bGUnO1xuXG5jb25zdCBvcHRpb25zID0ge1xuICBhbnRpYWxpYXM6IHRydWUsXG4gIGF1dG9SZXNpemU6IHRydWUsXG4gIHRyYW5zcGFyZW50OiB0cnVlXG59O1xuXG5jb25zdCBXZWJHTDogUmVhY3QuRnVuY3Rpb25Db21wb25lbnQ8SVdlYkdMLlByb3BzPiA9IChcbiAge1xuICAgIGNsYXNzTmFtZSxcbiAgICBoZWlnaHQsXG4gICAgcmVuZGVyLFxuICAgIHdpZHRoLFxuICB9XG4pID0+IHtcbiAgbGV0IHJlbmRlcmVyRnJhbWU6IG51bWJlcjtcbiAgXG4gIGNvbnN0IFthcHAsIHVwZGF0ZUFwcF06IElXZWJHTC5BcHBTdGF0ZSA9IHVzZVN0YXRlPElXZWJHTC5BcHA+KCk7XG4gIGNvbnN0IFtzdGFnZSwgdXBkYXRlU3RhZ2VdOiBJV2ViR0wuU3RhZ2VTdGF0ZSA9IHVzZVN0YXRlPElXZWJHTC5TdGFnZT4oKTtcbiAgY29uc3QgW2dyYXBoaWNzLCB1cGRhdGVHcmFwaGljc106IElXZWJHTC5SZW5kZXJTdGF0ZSA9IHJlbmRlcigpO1xuICBcbiAgZnVuY3Rpb24gcmVuZGVyZXIoKSB7XG4gICAgaWYgKCFhcHAgfHwgIXN0YWdlKSB7XG4gICAgICByZXR1cm47XG4gICAgfVxuICAgIFxuICAgIChhcHAgYXMgUElYSS5SZW5kZXJlcikucmVuZGVyKHN0YWdlKTtcbiAgICBcbiAgICByZW5kZXJlckZyYW1lID0gd2luZG93LnJlcXVlc3RBbmltYXRpb25GcmFtZShyZW5kZXJlcik7XG4gIH1cbiAgXG4gIGZ1bmN0aW9uIHRyaWdnZXJSZW5kZXIoKSB7XG4gICAgaWYgKCFzdGFnZSkge1xuICAgICAgdXBkYXRlU3RhZ2UobmV3IFBJWEkuQ29udGFpbmVyKCkpO1xuICAgICAgcmV0dXJuO1xuICAgIH1cbiAgICBcbiAgICBzdGFnZS5yZW1vdmVDaGlsZHJlbigwKTtcbiAgICBcbiAgICBncmFwaGljcy5tYXAoXG4gICAgICBncmFwaGljID0+IHtcbiAgICAgICAgc3RhZ2UuYWRkQ2hpbGQoZ3JhcGhpYyk7XG4gICAgICB9XG4gICAgKTtcbiAgICBcbiAgICB1cGRhdGVHcmFwaGljcyAmJiB1cGRhdGVHcmFwaGljcyh7YXBwLCBzdGFnZX0pO1xuICB9XG4gIFxuICBjb25zdCByZWYgPSB1c2VDYWxsYmFjaygodmlldzogSFRNTENhbnZhc0VsZW1lbnQpID0+IHtcbiAgICBpZiAoIXZpZXcpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG4gICAgXG4gICAgaWYgKCFhcHApIHtcbiAgICAgIHVwZGF0ZUFwcChcbiAgICAgICAgUElYSS5hdXRvRGV0ZWN0UmVuZGVyZXIoe1xuICAgICAgICAgIC4uLm9wdGlvbnMsXG4gICAgICAgICAgaGVpZ2h0LFxuICAgICAgICAgIHdpZHRoLFxuICAgICAgICAgIHZpZXdcbiAgICAgICAgfSkgYXMgUElYSS5SZW5kZXJlclxuICAgICAgKTtcbiAgICAgIHJldHVybjtcbiAgICB9XG4gICAgXG4gICAgKGFwcCBhcyBQSVhJLlJlbmRlcmVyKS5yZXNpemUod2lkdGgsIGhlaWdodCk7XG4gIH0sIFt3aWR0aCwgaGVpZ2h0XSBhcyBEZXBlbmRlbmN5TGlzdCk7XG4gIFxuICBmdW5jdGlvbiBvbk1vdW50KCkge1xuICAgIFxuICAgIHJlbmRlcmVyKCk7XG4gICAgXG4gICAgdHJpZ2dlclJlbmRlcigpO1xuICB9XG4gIFxuICBmdW5jdGlvbiBvblVubW91bnQoKSB7XG4gICAgd2luZG93LmNhbmNlbEFuaW1hdGlvbkZyYW1lKHJlbmRlcmVyRnJhbWUpO1xuICB9XG4gIFxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIG9uTW91bnQoKTtcbiAgICBcbiAgICByZXR1cm4gb25Vbm1vdW50O1xuICB9KTtcbiAgXG4gIHJldHVybiAoXG4gICAgPGNhbnZhc1xuICAgICAgY2xhc3NOYW1lPXtjbGFzc05hbWV9XG4gICAgICBkYXRhLWNvbXBvbmVudD17U3R5bGUuZGVmYXVsdH1cbiAgICAgIHJlZj17cmVmfVxuICAgIC8+XG4gICk7XG59O1xuXG5QSVhJLnNldHRpbmdzLlJFU09MVVRJT04gPSB3aW5kb3cuZGV2aWNlUGl4ZWxSYXRpbztcblxuZXhwb3J0IHtQSVhJLCBHZW9tZXRyeSwgVHdlZW5NYXggYXMgVHdlZW4sIFRpbWVsaW5lTWF4IGFzIFR3ZWVuU2VxdWVuY2UsIGdzYXB9O1xuZXhwb3J0IGRlZmF1bHQgV2ViR0w7XG4iXX0=

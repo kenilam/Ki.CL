@@ -1,0 +1,58 @@
+0d66c90fb2aa3f62eced3cccf7c6ef1f
+"use strict";
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+function CharacterRanges() {
+  var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'a';
+  var stop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'z';
+  var idx;
+  var end;
+  var result = [];
+
+  for (idx = start.charCodeAt(0), end = stop.charCodeAt(0); idx <= end; ++idx) {
+    result.push(String.fromCharCode(idx));
+  }
+
+  return result;
+}
+
+var _default = CharacterRanges;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(CharacterRanges, "CharacterRanges", "/Users/keni.lam/Prototype/Ki.CL/project/src/Helper/CharacterRanges.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Helper/CharacterRanges.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkNoYXJhY3RlclJhbmdlcy50c3giXSwibmFtZXMiOlsiQ2hhcmFjdGVyUmFuZ2VzIiwic3RhcnQiLCJzdG9wIiwiaWR4IiwiZW5kIiwicmVzdWx0IiwiY2hhckNvZGVBdCIsInB1c2giLCJTdHJpbmciLCJmcm9tQ2hhckNvZGUiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLFNBQVNBLGVBQVQsR0FBa0U7QUFBQSxNQUF6Q0MsS0FBeUMsdUVBQXpCLEdBQXlCO0FBQUEsTUFBcEJDLElBQW9CLHVFQUFMLEdBQUs7QUFDaEUsTUFBSUMsR0FBSjtBQUNBLE1BQUlDLEdBQUo7QUFFQSxNQUFNQyxNQUFNLEdBQUcsRUFBZjs7QUFFQSxPQUFLRixHQUFHLEdBQUdGLEtBQUssQ0FBQ0ssVUFBTixDQUFpQixDQUFqQixDQUFOLEVBQTJCRixHQUFHLEdBQUdGLElBQUksQ0FBQ0ksVUFBTCxDQUFnQixDQUFoQixDQUF0QyxFQUEwREgsR0FBRyxJQUFJQyxHQUFqRSxFQUFzRSxFQUFFRCxHQUF4RSxFQUE2RTtBQUMzRUUsSUFBQUEsTUFBTSxDQUFDRSxJQUFQLENBQVlDLE1BQU0sQ0FBQ0MsWUFBUCxDQUFvQk4sR0FBcEIsQ0FBWjtBQUNEOztBQUVELFNBQU9FLE1BQVA7QUFDRDs7ZUFFY0wsZTs7Ozs7Ozs7Ozs7OzBCQWJOQSxlIiwic291cmNlc0NvbnRlbnQiOlsiZnVuY3Rpb24gQ2hhcmFjdGVyUmFuZ2VzKHN0YXJ0OiBzdHJpbmcgPSAnYScsIHN0b3A6IHN0cmluZyA9ICd6Jykge1xuICBsZXQgaWR4OiBudW1iZXI7XG4gIGxldCBlbmQ6IG51bWJlcjtcbiAgXG4gIGNvbnN0IHJlc3VsdCA9IFtdO1xuICBcbiAgZm9yIChpZHggPSBzdGFydC5jaGFyQ29kZUF0KDApLCBlbmQgPSBzdG9wLmNoYXJDb2RlQXQoMCk7IGlkeCA8PSBlbmQ7ICsraWR4KSB7XG4gICAgcmVzdWx0LnB1c2goU3RyaW5nLmZyb21DaGFyQ29kZShpZHgpKTtcbiAgfVxuICBcbiAgcmV0dXJuIHJlc3VsdDtcbn1cblxuZXhwb3J0IGRlZmF1bHQgQ2hhcmFjdGVyUmFuZ2VzO1xuIl19

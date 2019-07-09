@@ -1,0 +1,82 @@
+42d312dfb479b86a57c4b6a0b9ca7c45
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Style = _interopRequireDefault(require("@/Component/CSSTransition/Style"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+function addDefault(node, additionalClassNames) {
+  if (!node) {
+    return;
+  }
+
+  node.classList.add(_Style["default"].cssTransition);
+
+  if (!additionalClassNames) {
+    return;
+  }
+
+  node.classList.add((0, _classnames["default"])(additionalClassNames));
+}
+
+function removeDone(node, additionalClassNames) {
+  if (!node) {
+    return;
+  }
+
+  node.classList.remove(_Style["default"].cssTransition, _Style["default"].appearDone, _Style["default"].enterDone, _Style["default"].exitDone);
+
+  if (!additionalClassNames) {
+    return;
+  }
+
+  node.classList.remove((0, _classnames["default"])(additionalClassNames));
+}
+
+var _default = {
+  addDefault: addDefault,
+  removeDone: removeDone
+};
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(addDefault, "addDefault", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/classNameModifier.tsx");
+  reactHotLoader.register(removeDone, "removeDone", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/classNameModifier.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/classNameModifier.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNsYXNzTmFtZU1vZGlmaWVyLnRzeCJdLCJuYW1lcyI6WyJhZGREZWZhdWx0Iiwibm9kZSIsImFkZGl0aW9uYWxDbGFzc05hbWVzIiwiY2xhc3NMaXN0IiwiYWRkIiwiU3R5bGUiLCJjc3NUcmFuc2l0aW9uIiwicmVtb3ZlRG9uZSIsInJlbW92ZSIsImFwcGVhckRvbmUiLCJlbnRlckRvbmUiLCJleGl0RG9uZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7Ozs7Ozs7Ozs7QUFHQSxTQUFTQSxVQUFULENBQ0VDLElBREYsRUFFRUMsb0JBRkYsRUFHRTtBQUNBLE1BQUksQ0FBQ0QsSUFBTCxFQUFXO0FBQ1Q7QUFDRDs7QUFFREEsRUFBQUEsSUFBSSxDQUFDRSxTQUFMLENBQWVDLEdBQWYsQ0FBbUJDLGtCQUFNQyxhQUF6Qjs7QUFFQSxNQUFJLENBQUNKLG9CQUFMLEVBQTJCO0FBQ3pCO0FBQ0Q7O0FBRURELEVBQUFBLElBQUksQ0FBQ0UsU0FBTCxDQUFlQyxHQUFmLENBQW1CLDRCQUFXRixvQkFBWCxDQUFuQjtBQUNEOztBQUVELFNBQVNLLFVBQVQsQ0FDRU4sSUFERixFQUVFQyxvQkFGRixFQUdFO0FBQ0EsTUFBSSxDQUFDRCxJQUFMLEVBQVc7QUFDVDtBQUNEOztBQUVEQSxFQUFBQSxJQUFJLENBQUNFLFNBQUwsQ0FBZUssTUFBZixDQUFzQkgsa0JBQU1DLGFBQTVCLEVBQTJDRCxrQkFBTUksVUFBakQsRUFBNkRKLGtCQUFNSyxTQUFuRSxFQUE4RUwsa0JBQU1NLFFBQXBGOztBQUVBLE1BQUksQ0FBQ1Qsb0JBQUwsRUFBMkI7QUFDekI7QUFDRDs7QUFFREQsRUFBQUEsSUFBSSxDQUFDRSxTQUFMLENBQWVLLE1BQWYsQ0FBc0IsNEJBQVdOLG9CQUFYLENBQXRCO0FBQ0Q7O2VBRWM7QUFBQ0YsRUFBQUEsVUFBVSxFQUFWQSxVQUFEO0FBQWFPLEVBQUFBLFVBQVUsRUFBVkE7QUFBYixDOzs7Ozs7Ozs7Ozs7MEJBbENOUCxVOzBCQWlCQU8sVSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBTdHlsZSBmcm9tICdAL0NvbXBvbmVudC9DU1NUcmFuc2l0aW9uL1N0eWxlJztcbmltcG9ydCBjbGFzc25hbWVzIGZyb20gJ2NsYXNzbmFtZXMnO1xuaW1wb3J0IHtDU1NUcmFuc2l0aW9uQ2xhc3NOYW1lc30gZnJvbSAncmVhY3QtdHJhbnNpdGlvbi1ncm91cC9DU1NUcmFuc2l0aW9uJztcblxuZnVuY3Rpb24gYWRkRGVmYXVsdChcbiAgbm9kZTogRWxlbWVudCxcbiAgYWRkaXRpb25hbENsYXNzTmFtZXM6IHN0cmluZyB8IENTU1RyYW5zaXRpb25DbGFzc05hbWVzXG4pIHtcbiAgaWYgKCFub2RlKSB7XG4gICAgcmV0dXJuO1xuICB9XG4gIFxuICBub2RlLmNsYXNzTGlzdC5hZGQoU3R5bGUuY3NzVHJhbnNpdGlvbik7XG4gIFxuICBpZiAoIWFkZGl0aW9uYWxDbGFzc05hbWVzKSB7XG4gICAgcmV0dXJuO1xuICB9XG4gIFxuICBub2RlLmNsYXNzTGlzdC5hZGQoY2xhc3NuYW1lcyhhZGRpdGlvbmFsQ2xhc3NOYW1lcykpO1xufVxuXG5mdW5jdGlvbiByZW1vdmVEb25lKFxuICBub2RlOiBFbGVtZW50LFxuICBhZGRpdGlvbmFsQ2xhc3NOYW1lczogc3RyaW5nIHwgQ1NTVHJhbnNpdGlvbkNsYXNzTmFtZXNcbikge1xuICBpZiAoIW5vZGUpIHtcbiAgICByZXR1cm47XG4gIH1cbiAgXG4gIG5vZGUuY2xhc3NMaXN0LnJlbW92ZShTdHlsZS5jc3NUcmFuc2l0aW9uLCBTdHlsZS5hcHBlYXJEb25lLCBTdHlsZS5lbnRlckRvbmUsIFN0eWxlLmV4aXREb25lKTtcbiAgXG4gIGlmICghYWRkaXRpb25hbENsYXNzTmFtZXMpIHtcbiAgICByZXR1cm47XG4gIH1cbiAgXG4gIG5vZGUuY2xhc3NMaXN0LnJlbW92ZShjbGFzc25hbWVzKGFkZGl0aW9uYWxDbGFzc05hbWVzKSk7XG59XG5cbmV4cG9ydCBkZWZhdWx0IHthZGREZWZhdWx0LCByZW1vdmVEb25lfTtcbiJdfQ==
