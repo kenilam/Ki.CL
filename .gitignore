@@ -48,3 +48,4 @@ tsconfig.json
 # Local files #
 ################
 project/build
+.Jest/.jest-cache
