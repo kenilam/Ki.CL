@@ -1,4 +1,5 @@
 import AudioPlayer from './AudioPlayer';
+import Canvas from './Canvas';
 import CSSTransition from './CSSTransition';
 import './Font';
 import GlobalHeader from './GlobalHeader';
@@ -11,6 +12,7 @@ import WebGL from './WebGL';
 
 export {
   AudioPlayer,
+  Canvas,
   CSSTransition,
   GlobalHeader,
   Link,
