@@ -1,0 +1,67 @@
+5bd9c457dabe06613a5341a97611f965
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _resources = _interopRequireDefault(require("$/resources"));
+
+var _Router = require("@/Component/Router");
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./Style");
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var path = _resources["default"].view.about.path;
+
+var Works = function Works() {
+  return _react["default"].createElement("main", {
+    "data-routes": "about"
+  }, _react["default"].createElement("h1", null, "About"));
+};
+
+var _default = _react["default"].createElement(_Router.Route, {
+  path: path,
+  render: Works
+});
+
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(path, "path", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/About/index.tsx");
+  reactHotLoader.register(Works, "Works", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/About/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/About/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJwYXRoIiwicmVzb3VyY2VzIiwidmlldyIsImFib3V0IiwiV29ya3MiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7O0FBRUE7Ozs7Ozs7Ozs7O0lBRXNCQSxJLEdBQVVDLHFCLENBQXpCQyxJLENBQU9DLEssQ0FBUUgsSTs7QUFFdEIsSUFBTUksS0FBNEMsR0FBRyxTQUEvQ0EsS0FBK0M7QUFBQSxTQUNuRDtBQUFNLG1CQUFZO0FBQWxCLEtBQ0Usb0RBREYsQ0FEbUQ7QUFBQSxDQUFyRDs7ZUFNZSxnQ0FBQyxhQUFEO0FBQU8sRUFBQSxJQUFJLEVBQUVKLElBQWI7QUFBbUIsRUFBQSxNQUFNLEVBQUVJO0FBQTNCLEU7Ozs7Ozs7Ozs7Ozs7MEJBUk9KLEk7MEJBRWhCSSxLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHJlc291cmNlcyBmcm9tICckL3Jlc291cmNlcyc7XG5pbXBvcnQge1JvdXRlfSBmcm9tICdAL0NvbXBvbmVudC9Sb3V0ZXInO1xuaW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JztcbmltcG9ydCAqIGFzIElBYm91dCBmcm9tICcuL3NwZWMnO1xuaW1wb3J0ICcuL1N0eWxlJztcblxuY29uc3Qge3ZpZXc6IHthYm91dDoge3BhdGh9fX0gPSByZXNvdXJjZXM7XG5cbmNvbnN0IFdvcmtzOiBSZWFjdC5GdW5jdGlvbkNvbXBvbmVudDxJQWJvdXQuUHJvcHM+ID0gKCkgPT4gKFxuICA8bWFpbiBkYXRhLXJvdXRlcz0nYWJvdXQnPlxuICAgIDxoMT5BYm91dDwvaDE+XG4gIDwvbWFpbj5cbik7XG5cbmV4cG9ydCBkZWZhdWx0IDxSb3V0ZSBwYXRoPXtwYXRofSByZW5kZXI9e1dvcmtzfSAvPjtcbiJdfQ==

@@ -1,0 +1,89 @@
+9487a2512e9712ceb3bea113266a1383
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.array.from");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.parse-float");
+
+require("core-js/modules/es.string.iterator");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+
+var _Style = _interopRequireDefault(require("@/Component/CSSTransition/Style"));
+
+var _getTransitionDuration = _interopRequireDefault(require("get-transition-duration"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var _window = window,
+    setTimeout = _window.setTimeout;
+
+var getAnimationDuration = function getAnimationDuration(node) {
+  return parseFloat(node.style.animationDuration) || 0;
+};
+
+var duration = function duration(node) {
+  return node && node.parentNode ? Math.max.apply(Math, (0, _toConsumableArray2["default"])([].concat(Array.from(node.parentNode.querySelectorAll(".".concat(_Style["default"].cssTransition))), Array.from(node.querySelectorAll(".".concat(_Style["default"].cssTransition)))).map(function (node) {
+    return Math.max((0, _getTransitionDuration["default"])(node, true), getAnimationDuration(node));
+  }))) : 0;
+};
+
+var addEndListener = function addEndListener(node, done) {
+  var waitTime = duration(node);
+
+  if (waitTime === 0) {
+    done();
+    return;
+  }
+
+  setTimeout(done, duration(node));
+};
+
+var _default = addEndListener;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(setTimeout, "setTimeout", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/addEndListener.tsx");
+  reactHotLoader.register(getAnimationDuration, "getAnimationDuration", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/addEndListener.tsx");
+  reactHotLoader.register(duration, "duration", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/addEndListener.tsx");
+  reactHotLoader.register(addEndListener, "addEndListener", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/addEndListener.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/Utility/addEndListener.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFkZEVuZExpc3RlbmVyLnRzeCJdLCJuYW1lcyI6WyJ3aW5kb3ciLCJzZXRUaW1lb3V0IiwiZ2V0QW5pbWF0aW9uRHVyYXRpb24iLCJub2RlIiwicGFyc2VGbG9hdCIsInN0eWxlIiwiYW5pbWF0aW9uRHVyYXRpb24iLCJkdXJhdGlvbiIsInBhcmVudE5vZGUiLCJNYXRoIiwibWF4IiwiY29uY2F0IiwiQXJyYXkiLCJmcm9tIiwicXVlcnlTZWxlY3RvckFsbCIsIlN0eWxlIiwiY3NzVHJhbnNpdGlvbiIsIm1hcCIsImFkZEVuZExpc3RlbmVyIiwiZG9uZSIsIndhaXRUaW1lIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBOztBQUNBOzs7Ozs7Ozs7OztjQUdxQkEsTTtJQUFkQyxVLFdBQUFBLFU7O0FBRVAsSUFBTUMsb0JBQW9CLEdBQUcsU0FBdkJBLG9CQUF1QixDQUFDQyxJQUFEO0FBQUEsU0FDM0JDLFVBQVUsQ0FBQ0QsSUFBSSxDQUFDRSxLQUFMLENBQVdDLGlCQUFaLENBQVYsSUFBNEMsQ0FEakI7QUFBQSxDQUE3Qjs7QUFHQSxJQUFNQyxRQUFRLEdBQUcsU0FBWEEsUUFBVyxDQUFDSixJQUFEO0FBQUEsU0FDZkEsSUFBSSxJQUFJQSxJQUFJLENBQUNLLFVBQWIsR0FDRUMsSUFBSSxDQUFDQyxHQUFMLE9BQUFELElBQUksc0NBQ0MsR0FBR0UsTUFBSCxDQUNEQyxLQUFLLENBQUNDLElBQU4sQ0FDRVYsSUFBSSxDQUFDSyxVQUFMLENBQWdCTSxnQkFBaEIsWUFBcUNDLGtCQUFNQyxhQUEzQyxFQURGLENBREMsRUFJREosS0FBSyxDQUFDQyxJQUFOLENBQ0VWLElBQUksQ0FBQ1csZ0JBQUwsWUFBMEJDLGtCQUFNQyxhQUFoQyxFQURGLENBSkMsRUFPREMsR0FQQyxDQVFELFVBQUNkLElBQUQ7QUFBQSxXQUF1Qk0sSUFBSSxDQUFDQyxHQUFMLENBQ3JCLHVDQUFzQlAsSUFBdEIsRUFBNEIsSUFBNUIsQ0FEcUIsRUFDY0Qsb0JBQW9CLENBQUNDLElBQUQsQ0FEbEMsQ0FBdkI7QUFBQSxHQVJDLENBREQsRUFETixHQWVJLENBaEJXO0FBQUEsQ0FBakI7O0FBbUJBLElBQU1lLGNBQTBCLEdBQUcsU0FBN0JBLGNBQTZCLENBQUNmLElBQUQsRUFBT2dCLElBQVAsRUFBZ0I7QUFDakQsTUFBTUMsUUFBUSxHQUFHYixRQUFRLENBQUNKLElBQUQsQ0FBekI7O0FBRUEsTUFBSWlCLFFBQVEsS0FBSyxDQUFqQixFQUFvQjtBQUNsQkQsSUFBQUEsSUFBSTtBQUNKO0FBQ0Q7O0FBRURsQixFQUFBQSxVQUFVLENBQUNrQixJQUFELEVBQU9aLFFBQVEsQ0FBQ0osSUFBRCxDQUFmLENBQVY7QUFDRCxDQVREOztlQVdlZSxjOzs7Ozs7Ozs7Ozs7MEJBbkNSakIsVTswQkFFREMsb0I7MEJBR0FLLFE7MEJBbUJBVyxjIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFN0eWxlIGZyb20gJ0AvQ29tcG9uZW50L0NTU1RyYW5zaXRpb24vU3R5bGUnO1xuaW1wb3J0IGdldFRyYW5zaXRpb25EdXJhdGlvbiBmcm9tICdnZXQtdHJhbnNpdGlvbi1kdXJhdGlvbic7XG5pbXBvcnQge0VuZEhhbmRsZXJ9IGZyb20gJ3JlYWN0LXRyYW5zaXRpb24tZ3JvdXAvVHJhbnNpdGlvbic7XG5cbmNvbnN0IHtzZXRUaW1lb3V0fSA9IHdpbmRvdztcblxuY29uc3QgZ2V0QW5pbWF0aW9uRHVyYXRpb24gPSAobm9kZTogSFRNTEVsZW1lbnQpID0+XG4gIHBhcnNlRmxvYXQobm9kZS5zdHlsZS5hbmltYXRpb25EdXJhdGlvbikgfHwgMDtcblxuY29uc3QgZHVyYXRpb24gPSAobm9kZTogSFRNTEVsZW1lbnQpID0+IChcbiAgbm9kZSAmJiBub2RlLnBhcmVudE5vZGUgPyAoXG4gICAgTWF0aC5tYXgoXG4gICAgICAuLi5bXS5jb25jYXQoXG4gICAgICAgIEFycmF5LmZyb20oXG4gICAgICAgICAgbm9kZS5wYXJlbnROb2RlLnF1ZXJ5U2VsZWN0b3JBbGwoYC4ke1N0eWxlLmNzc1RyYW5zaXRpb259YClcbiAgICAgICAgKSxcbiAgICAgICAgQXJyYXkuZnJvbShcbiAgICAgICAgICBub2RlLnF1ZXJ5U2VsZWN0b3JBbGwoYC4ke1N0eWxlLmNzc1RyYW5zaXRpb259YClcbiAgICAgICAgKVxuICAgICAgKS5tYXAoXG4gICAgICAgIChub2RlOiBIVE1MRWxlbWVudCkgPT4gTWF0aC5tYXgoXG4gICAgICAgICAgZ2V0VHJhbnNpdGlvbkR1cmF0aW9uKG5vZGUsIHRydWUpLCBnZXRBbmltYXRpb25EdXJhdGlvbihub2RlKVxuICAgICAgICApXG4gICAgICApXG4gICAgKVxuICApIDogMFxuKTtcblxuY29uc3QgYWRkRW5kTGlzdGVuZXI6IEVuZEhhbmRsZXIgPSAobm9kZSwgZG9uZSkgPT4ge1xuICBjb25zdCB3YWl0VGltZSA9IGR1cmF0aW9uKG5vZGUpO1xuICBcbiAgaWYgKHdhaXRUaW1lID09PSAwKSB7XG4gICAgZG9uZSgpO1xuICAgIHJldHVybjtcbiAgfVxuICBcbiAgc2V0VGltZW91dChkb25lLCBkdXJhdGlvbihub2RlKSk7XG59O1xuXG5leHBvcnQgZGVmYXVsdCBhZGRFbmRMaXN0ZW5lcjtcbiJdfQ==

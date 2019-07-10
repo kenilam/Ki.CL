@@ -1,0 +1,166 @@
+703b5556b3e84103ae63e7dd88279a99
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.array.filter");
+
+require("core-js/modules/es.array.for-each");
+
+require("core-js/modules/es.array.iterator");
+
+require("core-js/modules/es.function.bind");
+
+require("core-js/modules/es.object.assign");
+
+require("core-js/modules/es.object.define-properties");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.object.get-own-property-descriptor");
+
+require("core-js/modules/es.object.get-own-property-descriptors");
+
+require("core-js/modules/es.object.keys");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/web.dom-collections.for-each");
+
+require("core-js/modules/web.dom-collections.iterator");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "gsap", {
+  enumerable: true,
+  get: function get() {
+    return _WebGL.gsap;
+  }
+});
+exports["default"] = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _WebGL = require("@/Component/WebGL");
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; ownKeys(source, true).forEach(function (key) { (0, _defineProperty2["default"])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } else { ownKeys(arguments[i]).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(arguments[i], key)); }); } } return target; }
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var TWEEN_VALUES = {
+  IN: {
+    value: 0
+  },
+  OUT: {
+    value: 1
+  }
+};
+
+var Tween =
+/*#__PURE__*/
+function () {
+  function Tween(_ref) {
+    var _ref$delay = _ref.delay,
+        delay = _ref$delay === void 0 ? 0 : _ref$delay,
+        duration = _ref.duration,
+        _ref$ease = _ref.ease,
+        ease = _ref$ease === void 0 ? _WebGL.gsap.Back.easeOut : _ref$ease,
+        onComplete = _ref.onComplete,
+        onStart = _ref.onStart,
+        onUpdate = _ref.onUpdate,
+        _ref$pause = _ref.pause,
+        pause = _ref$pause === void 0 ? true : _ref$pause;
+    (0, _classCallCheck2["default"])(this, Tween);
+    Object.defineProperty(this, "values", {
+      enumerable: true,
+      writable: true,
+      value: Object.assign(_objectSpread({}, TWEEN_VALUES.IN))
+    });
+    this.duration = duration;
+    this.sequence = new _WebGL.gsap.TimelineMax({
+      delay: delay,
+      duration: duration,
+      onComplete: onComplete && onComplete.bind(this, this.values),
+      onReverseComplete: onComplete && onComplete.bind(this, this.values),
+      onStart: onStart && onStart.bind(this, this.values),
+      onUpdate: onUpdate && onUpdate.bind(this, this.values),
+      pause: pause
+    });
+    this.sequence.add(_WebGL.gsap.TweenMax.set(this.values, TWEEN_VALUES.IN));
+    this.sequence.add(_WebGL.gsap.TweenMax.to(this.values, this.duration, _objectSpread({}, TWEEN_VALUES.OUT, {
+      ease: ease
+    })));
+  }
+
+  (0, _createClass2["default"])(Tween, [{
+    key: "kill",
+    value: function kill() {
+      this.sequence.kill();
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.kill();
+      this.values = TWEEN_VALUES.IN;
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this.sequence.reverse(0);
+    }
+  }, {
+    key: "start",
+    value: function start() {
+      this.sequence.restart(true);
+    }
+  }, {
+    key: "__reactstandin__regenerateByEval",
+    // @ts-ignore
+    value: function __reactstandin__regenerateByEval(key, code) {
+      // @ts-ignore
+      this[key] = eval(code);
+    }
+  }]);
+  return Tween;
+}();
+
+var _default = Tween;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(TWEEN_VALUES, "TWEEN_VALUES", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Tween/index.tsx");
+  reactHotLoader.register(Tween, "Tween", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Tween/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Tween/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJUV0VFTl9WQUxVRVMiLCJJTiIsInZhbHVlIiwiT1VUIiwiVHdlZW4iLCJkZWxheSIsImR1cmF0aW9uIiwiZWFzZSIsImdzYXAiLCJCYWNrIiwiZWFzZU91dCIsIm9uQ29tcGxldGUiLCJvblN0YXJ0Iiwib25VcGRhdGUiLCJwYXVzZSIsIk9iamVjdCIsImFzc2lnbiIsInNlcXVlbmNlIiwiVGltZWxpbmVNYXgiLCJiaW5kIiwidmFsdWVzIiwib25SZXZlcnNlQ29tcGxldGUiLCJhZGQiLCJUd2Vlbk1heCIsInNldCIsInRvIiwia2lsbCIsInJldmVyc2UiLCJyZXN0YXJ0Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7Ozs7Ozs7Ozs7Ozs7OztBQUlBLElBQU1BLFlBQTJCLEdBQUc7QUFDbENDLEVBQUFBLEVBQUUsRUFBRTtBQUFDQyxJQUFBQSxLQUFLLEVBQUU7QUFBUixHQUQ4QjtBQUVsQ0MsRUFBQUEsR0FBRyxFQUFFO0FBQUNELElBQUFBLEtBQUssRUFBRTtBQUFSO0FBRjZCLENBQXBDOztJQUtNRSxLOzs7QUFPSix1QkFVRTtBQUFBLDBCQVJFQyxLQVFGO0FBQUEsUUFSRUEsS0FRRiwyQkFSVSxDQVFWO0FBQUEsUUFQRUMsUUFPRixRQVBFQSxRQU9GO0FBQUEseUJBTkVDLElBTUY7QUFBQSxRQU5FQSxJQU1GLDBCQU5TQyxZQUFLQyxJQUFMLENBQVVDLE9BTW5CO0FBQUEsUUFMRUMsVUFLRixRQUxFQSxVQUtGO0FBQUEsUUFKRUMsT0FJRixRQUpFQSxPQUlGO0FBQUEsUUFIRUMsUUFHRixRQUhFQSxRQUdGO0FBQUEsMEJBRkVDLEtBRUY7QUFBQSxRQUZFQSxLQUVGLDJCQUZVLElBRVY7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBaEI0QkMsTUFBTSxDQUFDQyxNQUFQLG1CQUFrQmhCLFlBQVksQ0FBQ0MsRUFBL0I7QUFnQjVCO0FBQ0EsU0FBS0ssUUFBTCxHQUFnQkEsUUFBaEI7QUFFQSxTQUFLVyxRQUFMLEdBQWdCLElBQUlULFlBQUtVLFdBQVQsQ0FBcUI7QUFDbkNiLE1BQUFBLEtBQUssRUFBTEEsS0FEbUM7QUFFbkNDLE1BQUFBLFFBQVEsRUFBUkEsUUFGbUM7QUFHbkNLLE1BQUFBLFVBQVUsRUFBRUEsVUFBVSxJQUFJQSxVQUFVLENBQUNRLElBQVgsQ0FBZ0IsSUFBaEIsRUFBc0IsS0FBS0MsTUFBM0IsQ0FIUztBQUluQ0MsTUFBQUEsaUJBQWlCLEVBQUVWLFVBQVUsSUFBSUEsVUFBVSxDQUFDUSxJQUFYLENBQWdCLElBQWhCLEVBQXNCLEtBQUtDLE1BQTNCLENBSkU7QUFLbkNSLE1BQUFBLE9BQU8sRUFBRUEsT0FBTyxJQUFJQSxPQUFPLENBQUNPLElBQVIsQ0FBYSxJQUFiLEVBQW1CLEtBQUtDLE1BQXhCLENBTGU7QUFNbkNQLE1BQUFBLFFBQVEsRUFBRUEsUUFBUSxJQUFJQSxRQUFRLENBQUNNLElBQVQsQ0FBYyxJQUFkLEVBQW9CLEtBQUtDLE1BQXpCLENBTmE7QUFPbkNOLE1BQUFBLEtBQUssRUFBTEE7QUFQbUMsS0FBckIsQ0FBaEI7QUFVQSxTQUFLRyxRQUFMLENBQWNLLEdBQWQsQ0FDRWQsWUFBS2UsUUFBTCxDQUFjQyxHQUFkLENBQWtCLEtBQUtKLE1BQXZCLEVBQStCcEIsWUFBWSxDQUFDQyxFQUE1QyxDQURGO0FBR0EsU0FBS2dCLFFBQUwsQ0FBY0ssR0FBZCxDQUNFZCxZQUFLZSxRQUFMLENBQWNFLEVBQWQsQ0FBaUIsS0FBS0wsTUFBdEIsRUFBOEIsS0FBS2QsUUFBbkMsb0JBQWlETixZQUFZLENBQUNHLEdBQTlEO0FBQW1FSSxNQUFBQSxJQUFJLEVBQUpBO0FBQW5FLE9BREY7QUFHRDs7OzsyQkFFYTtBQUNaLFdBQUtVLFFBQUwsQ0FBY1MsSUFBZDtBQUNEOzs7NEJBRWM7QUFDYixXQUFLQSxJQUFMO0FBQ0EsV0FBS04sTUFBTCxHQUFjcEIsWUFBWSxDQUFDQyxFQUEzQjtBQUNEOzs7OEJBRWdCO0FBQ2YsV0FBS2dCLFFBQUwsQ0FBY1UsT0FBZCxDQUFzQixDQUF0QjtBQUNEOzs7NEJBRWM7QUFDYixXQUFLVixRQUFMLENBQWNXLE9BQWQsQ0FBc0IsSUFBdEI7QUFDRDs7Ozs7Ozs7Ozs7O2VBSVl4QixLOzs7Ozs7Ozs7Ozs7MEJBOURUSixZOzBCQUtBSSxLIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtnc2FwfSBmcm9tICdAL0NvbXBvbmVudC9XZWJHTCc7XG5pbXBvcnQgKiBhcyBJV2ViR0wgZnJvbSAnQC9Db21wb25lbnQvV2ViR0wvc3BlYyc7XG5pbXBvcnQgKiBhcyBJVHdlZW4gZnJvbSAnQC9WaWV3L0hvbWUvV2ViR0wvVHdlZW4vc3BlYyc7XG5cbmNvbnN0IFRXRUVOX1ZBTFVFUzogSVR3ZWVuLlZhbHVlcyA9IHtcbiAgSU46IHt2YWx1ZTogMH0sXG4gIE9VVDoge3ZhbHVlOiAxfSxcbn07XG5cbmNsYXNzIFR3ZWVuIHtcbiAgcHVibGljIHZhbHVlczogSVR3ZWVuLlZhbHVlID0gT2JqZWN0LmFzc2lnbih7Li4uVFdFRU5fVkFMVUVTLklOfSk7XG4gIFxuICBwdWJsaWMgc2VxdWVuY2U6IElXZWJHTC5Ud2VlblNlcXVlbmNlO1xuICBcbiAgcHJpdmF0ZSByZWFkb25seSBkdXJhdGlvbjogSVR3ZWVuLkR1cmF0aW9uO1xuICBcbiAgY29uc3RydWN0b3IoXG4gICAge1xuICAgICAgZGVsYXkgPSAwLFxuICAgICAgZHVyYXRpb24sXG4gICAgICBlYXNlID0gZ3NhcC5CYWNrLmVhc2VPdXQsXG4gICAgICBvbkNvbXBsZXRlLFxuICAgICAgb25TdGFydCxcbiAgICAgIG9uVXBkYXRlLFxuICAgICAgcGF1c2UgPSB0cnVlXG4gICAgfTogSVR3ZWVuLlByb3BzXG4gICkge1xuICAgIHRoaXMuZHVyYXRpb24gPSBkdXJhdGlvbjtcbiAgICBcbiAgICB0aGlzLnNlcXVlbmNlID0gbmV3IGdzYXAuVGltZWxpbmVNYXgoe1xuICAgICAgZGVsYXksXG4gICAgICBkdXJhdGlvbixcbiAgICAgIG9uQ29tcGxldGU6IG9uQ29tcGxldGUgJiYgb25Db21wbGV0ZS5iaW5kKHRoaXMsIHRoaXMudmFsdWVzKSxcbiAgICAgIG9uUmV2ZXJzZUNvbXBsZXRlOiBvbkNvbXBsZXRlICYmIG9uQ29tcGxldGUuYmluZCh0aGlzLCB0aGlzLnZhbHVlcyksXG4gICAgICBvblN0YXJ0OiBvblN0YXJ0ICYmIG9uU3RhcnQuYmluZCh0aGlzLCB0aGlzLnZhbHVlcyksXG4gICAgICBvblVwZGF0ZTogb25VcGRhdGUgJiYgb25VcGRhdGUuYmluZCh0aGlzLCB0aGlzLnZhbHVlcyksXG4gICAgICBwYXVzZVxuICAgIH0pO1xuICAgIFxuICAgIHRoaXMuc2VxdWVuY2UuYWRkKFxuICAgICAgZ3NhcC5Ud2Vlbk1heC5zZXQodGhpcy52YWx1ZXMsIFRXRUVOX1ZBTFVFUy5JTilcbiAgICApO1xuICAgIHRoaXMuc2VxdWVuY2UuYWRkKFxuICAgICAgZ3NhcC5Ud2Vlbk1heC50byh0aGlzLnZhbHVlcywgdGhpcy5kdXJhdGlvbiwgey4uLlRXRUVOX1ZBTFVFUy5PVVQsIGVhc2V9KVxuICAgICk7XG4gIH1cbiAgXG4gIHB1YmxpYyBraWxsKCkge1xuICAgIHRoaXMuc2VxdWVuY2Uua2lsbCgpO1xuICB9XG4gIFxuICBwdWJsaWMgcmVzZXQoKSB7XG4gICAgdGhpcy5raWxsKCk7XG4gICAgdGhpcy52YWx1ZXMgPSBUV0VFTl9WQUxVRVMuSU47XG4gIH1cbiAgXG4gIHB1YmxpYyByZXZlcnNlKCkge1xuICAgIHRoaXMuc2VxdWVuY2UucmV2ZXJzZSgwKTtcbiAgfVxuICBcbiAgcHVibGljIHN0YXJ0KCkge1xuICAgIHRoaXMuc2VxdWVuY2UucmVzdGFydCh0cnVlKTtcbiAgfVxufVxuXG5leHBvcnQge2dzYXB9XG5leHBvcnQgZGVmYXVsdCBUd2VlbjtcbiJdfQ==

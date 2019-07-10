@@ -1,4 +1,4 @@
-import * as ITransition from '@Component/Transition/spec';
+import * as ITransition from '@/Component/Transition/spec';
 import './style.scss';
 import value from './value.scss';
 

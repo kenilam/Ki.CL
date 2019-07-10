@@ -1,4 +1,4 @@
-import * as IVisualiser from '@View/Home/WebGL/Gallery/Visualizer/spec';
+import * as IVisualiser from '@/View/Home/WebGL/Gallery/Visualizer/spec';
 
 declare module IPartial {
   type Dimension = number;

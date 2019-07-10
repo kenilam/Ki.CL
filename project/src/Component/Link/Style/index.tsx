@@ -1,4 +1,4 @@
-import * as ILink from '@Component/Link/spec';
+import * as ILink from '@/Component/Link/spec';
 import './style.scss';
 import value from './value.scss';
 

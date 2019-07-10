@@ -20,10 +20,10 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "paths": {
-      "@*": [
+      "@/*": [
         "src/*"
       ],
-      "$*": [
+      "$/*": [
         "*"
       ]
     },

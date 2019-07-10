@@ -1,4 +1,4 @@
-import {Route} from '@Component/Router';
+import {Route} from '@/Component/Router';
 import React from 'react';
 import * as IWork from './spec';
 

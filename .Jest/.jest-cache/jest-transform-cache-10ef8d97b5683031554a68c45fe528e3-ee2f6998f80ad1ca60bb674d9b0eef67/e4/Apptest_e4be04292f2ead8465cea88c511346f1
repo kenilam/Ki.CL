@@ -1,0 +1,25 @@
+2b34dff0833b9cebbac04e6e1a4c7f80
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var React = _interopRequireWildcard(require("react"));
+
+var _App = _interopRequireDefault(require("./App"));
+
+var _shallow = _interopRequireDefault(require("react-test-renderer/shallow"));
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+describe('App', function () {
+  test('should match with snapshot', function () {
+    // @ts-ignore
+    var renderer = new _shallow["default"]();
+    expect(renderer.render(React.createElement(_App["default"], null, React.createElement("div", null, "Child")))).toMatchSnapshot();
+  });
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFwcC50ZXN0LnRzeCJdLCJuYW1lcyI6WyJkZXNjcmliZSIsInRlc3QiLCJyZW5kZXJlciIsIlNoYWxsb3dSZW5kZXJlciIsImV4cGVjdCIsInJlbmRlciIsInRvTWF0Y2hTbmFwc2hvdCJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7Ozs7OztBQUVBQSxRQUFRLENBQUMsS0FBRCxFQUFRLFlBQU07QUFDcEJDLEVBQUFBLElBQUksQ0FBQyw0QkFBRCxFQUErQixZQUFNO0FBQ3ZDO0FBQ0EsUUFBTUMsUUFBUSxHQUFHLElBQUlDLG1CQUFKLEVBQWpCO0FBQ0FDLElBQUFBLE1BQU0sQ0FDSkYsUUFBUSxDQUFDRyxNQUFULENBQ0Usb0JBQUMsZUFBRCxRQUNFLHlDQURGLENBREYsQ0FESSxDQUFOLENBTUVDLGVBTkY7QUFRRCxHQVhHLENBQUo7QUFZRCxDQWJPLENBQVIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgQ29tcG9uZW50IGZyb20gJy4vQXBwJztcbmltcG9ydCBTaGFsbG93UmVuZGVyZXIgZnJvbSAncmVhY3QtdGVzdC1yZW5kZXJlci9zaGFsbG93JztcblxuZGVzY3JpYmUoJ0FwcCcsICgpID0+IHtcbiAgdGVzdCgnc2hvdWxkIG1hdGNoIHdpdGggc25hcHNob3QnLCAoKSA9PiB7XG4gICAgLy8gQHRzLWlnbm9yZVxuICAgIGNvbnN0IHJlbmRlcmVyID0gbmV3IFNoYWxsb3dSZW5kZXJlcigpO1xuICAgIGV4cGVjdChcbiAgICAgIHJlbmRlcmVyLnJlbmRlcihcbiAgICAgICAgPENvbXBvbmVudD5cbiAgICAgICAgICA8ZGl2PkNoaWxkPC9kaXY+XG4gICAgICAgIDwvQ29tcG9uZW50PlxuICAgICAgKVxuICAgICkudG9NYXRjaFNuYXBzaG90KCk7XG4gICAgXG4gIH0pO1xufSk7XG4iXX0=

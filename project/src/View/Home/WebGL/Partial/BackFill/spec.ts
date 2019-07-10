@@ -1,4 +1,4 @@
-import * as ICommon from '@View/Home/WebGL/Common/spec';
+import * as ICommon from '@/View/Home/WebGL/Common/spec';
 
 declare module IBackFill {
   interface Style extends IClassNames {

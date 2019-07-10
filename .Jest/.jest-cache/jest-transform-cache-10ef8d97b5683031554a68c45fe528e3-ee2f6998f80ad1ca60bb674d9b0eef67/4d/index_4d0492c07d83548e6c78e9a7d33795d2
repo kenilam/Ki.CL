@@ -1,0 +1,93 @@
+dd68814e95912e60342473d95f3c68c9
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.function.name");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _resources = _interopRequireDefault(require("$/resources"));
+
+var _Common = require("@/View/Home/WebGL/Common");
+
+var _Style = _interopRequireDefault(require("./Style"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var text = _resources["default"].view.home.component.graphic.content.name;
+
+var Name =
+/*#__PURE__*/
+function (_Text) {
+  (0, _inherits2["default"])(Name, _Text);
+
+  function Name() {
+    (0, _classCallCheck2["default"])(this, Name);
+    return (0, _possibleConstructorReturn2["default"])(this, (0, _getPrototypeOf2["default"])(Name).call(this, {
+      style: _Style["default"],
+      text: text,
+      tick: false,
+      zoom: false
+    }));
+  }
+
+  (0, _createClass2["default"])(Name, [{
+    key: "__reactstandin__regenerateByEval",
+    // @ts-ignore
+    value: function __reactstandin__regenerateByEval(key, code) {
+      // @ts-ignore
+      this[key] = eval(code);
+    }
+  }]);
+  return Name;
+}(_Common.Text);
+
+var _default = Name;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(text, "text", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Partial/Name/index.tsx");
+  reactHotLoader.register(Name, "Name", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Partial/Name/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Home/WebGL/Partial/Name/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJ0ZXh0IiwicmVzb3VyY2VzIiwidmlldyIsImhvbWUiLCJjb21wb25lbnQiLCJncmFwaGljIiwiY29udGVudCIsIm5hbWUiLCJOYW1lIiwic3R5bGUiLCJ0aWNrIiwiem9vbSIsIlRleHQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBQ0E7O0FBQ0E7Ozs7Ozs7Ozs7O0lBUWtCQSxJLEdBTWRDLHFCLENBWEZDLEksQ0FDRUMsSSxDQUNFQyxTLENBQ0VDLE8sQ0FDRUMsTyxDQUNFQyxJOztJQVFOQyxJOzs7OztBQUNKLGtCQUFjO0FBQUE7QUFBQSwrR0FDTjtBQUFDQyxNQUFBQSxLQUFLLEVBQUxBLGlCQUFEO0FBQVFULE1BQUFBLElBQUksRUFBSkEsSUFBUjtBQUFjVSxNQUFBQSxJQUFJLEVBQUUsS0FBcEI7QUFBMkJDLE1BQUFBLElBQUksRUFBRTtBQUFqQyxLQURNO0FBRWI7Ozs7Ozs7Ozs7O0VBSGdCQyxZOztlQU1KSixJOzs7Ozs7Ozs7Ozs7MEJBZEdSLEk7MEJBUVpRLEkiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgcmVzb3VyY2VzIGZyb20gJyQvcmVzb3VyY2VzJztcbmltcG9ydCB7VGV4dH0gZnJvbSAnQC9WaWV3L0hvbWUvV2ViR0wvQ29tbW9uJztcbmltcG9ydCBzdHlsZSBmcm9tICcuL1N0eWxlJztcblxuY29uc3Qge1xuICB2aWV3OiB7XG4gICAgaG9tZToge1xuICAgICAgY29tcG9uZW50OiB7XG4gICAgICAgIGdyYXBoaWM6IHtcbiAgICAgICAgICBjb250ZW50OiB7XG4gICAgICAgICAgICBuYW1lOiB0ZXh0XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59ID0gcmVzb3VyY2VzO1xuXG5jbGFzcyBOYW1lIGV4dGVuZHMgVGV4dCB7XG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHN1cGVyKHtzdHlsZSwgdGV4dCwgdGljazogZmFsc2UsIHpvb206IGZhbHNlfSk7XG4gIH1cbn1cblxuZXhwb3J0IGRlZmF1bHQgTmFtZTtcbiJdfQ==

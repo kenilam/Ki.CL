@@ -1,0 +1,132 @@
+57069ed89a15820aa4a4fc94fc474372
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Style", {
+  enumerable: true,
+  get: function get() {
+    return _Style["default"];
+  }
+});
+Object.defineProperty(exports, "TransitionStyle", {
+  enumerable: true,
+  get: function get() {
+    return _Style.TransitionStyle;
+  }
+});
+Object.defineProperty(exports, "TransitionStyleName", {
+  enumerable: true,
+  get: function get() {
+    return _Style.TransitionStyleName;
+  }
+});
+exports["default"] = void 0;
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactTransitionGroup = require("react-transition-group");
+
+var _Style = _interopRequireWildcard(require("./Style"));
+
+var _Utility = require("./Utility");
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var CSSTransition = function CSSTransition(_ref) {
+  var _ref$appear = _ref.appear,
+      appear = _ref$appear === void 0 ? true : _ref$appear,
+      classNames = _ref.classNames,
+      children = _ref.children,
+      _ref$mountOnEnter = _ref.mountOnEnter,
+      mountOnEnter = _ref$mountOnEnter === void 0 ? true : _ref$mountOnEnter,
+      onEnter = _ref.onEnter,
+      onEntered = _ref.onEntered,
+      onEntering = _ref.onEntering,
+      onExit = _ref.onExit,
+      onExited = _ref.onExited,
+      onExiting = _ref.onExiting,
+      _ref$timeout = _ref.timeout,
+      timeout = _ref$timeout === void 0 ? null : _ref$timeout,
+      transitionIn = _ref.transitionIn,
+      transitionKey = _ref.transitionKey,
+      _ref$transitionStyle = _ref.transitionStyle,
+      transitionStyle = _ref$transitionStyle === void 0 ? 'custom' : _ref$transitionStyle,
+      _ref$unmountOnExit = _ref.unmountOnExit,
+      unmountOnExit = _ref$unmountOnExit === void 0 ? true : _ref$unmountOnExit;
+
+  var onEnterHandler = function onEnterHandler(node, isAppearing) {
+    _Utility.classNameModifier.addDefault(node, _Style.TransitionStyle[transitionStyle]);
+
+    onEnter && onEnter(node, isAppearing);
+  };
+
+  var onEnteredHandler = function onEnteredHandler(node, isAppearing) {
+    _Utility.classNameModifier.removeDone(node, _Style.TransitionStyle[transitionStyle]);
+
+    onEntered && onEntered(node, isAppearing);
+  };
+
+  var onExitHandler = function onExitHandler(node) {
+    _Utility.classNameModifier.addDefault(node, _Style.TransitionStyle[transitionStyle]);
+
+    onExit && onExit(node);
+  };
+
+  return _react["default"].createElement(_reactTransitionGroup.CSSTransition, {
+    addEndListener: !timeout && _Utility.addEndListener,
+    appear: appear,
+    classNames: (0, _classnames["default"])(classNames, _Style["default"].cssTransition),
+    "in": transitionIn,
+    key: transitionKey,
+    mountOnEnter: mountOnEnter,
+    onEnter: onEnterHandler,
+    onEntered: onEnteredHandler,
+    onEntering: onEntering,
+    onExit: onExitHandler,
+    onExited: onExited,
+    onExiting: onExiting,
+    timeout: timeout,
+    unmountOnExit: unmountOnExit
+  }, children);
+};
+
+var _default = CSSTransition;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(CSSTransition, "CSSTransition", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/CSSTransition/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJDU1NUcmFuc2l0aW9uIiwiYXBwZWFyIiwiY2xhc3NOYW1lcyIsImNoaWxkcmVuIiwibW91bnRPbkVudGVyIiwib25FbnRlciIsIm9uRW50ZXJlZCIsIm9uRW50ZXJpbmciLCJvbkV4aXQiLCJvbkV4aXRlZCIsIm9uRXhpdGluZyIsInRpbWVvdXQiLCJ0cmFuc2l0aW9uSW4iLCJ0cmFuc2l0aW9uS2V5IiwidHJhbnNpdGlvblN0eWxlIiwidW5tb3VudE9uRXhpdCIsIm9uRW50ZXJIYW5kbGVyIiwibm9kZSIsImlzQXBwZWFyaW5nIiwiY2xhc3NOYW1lTW9kaWZpZXIiLCJhZGREZWZhdWx0IiwiVHJhbnNpdGlvblN0eWxlIiwib25FbnRlcmVkSGFuZGxlciIsInJlbW92ZURvbmUiLCJvbkV4aXRIYW5kbGVyIiwiYWRkRW5kTGlzdGVuZXIiLCJTdHlsZSIsImNzc1RyYW5zaXRpb24iXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7QUFHQTs7QUFDQTs7Ozs7Ozs7Ozs7QUFFQSxJQUFNQSxhQUE0RCxHQUFHLFNBQS9EQSxhQUErRCxPQWtCaEU7QUFBQSx5QkFoQkRDLE1BZ0JDO0FBQUEsTUFoQkRBLE1BZ0JDLDRCQWhCUSxJQWdCUjtBQUFBLE1BZkRDLFVBZUMsUUFmREEsVUFlQztBQUFBLE1BZERDLFFBY0MsUUFkREEsUUFjQztBQUFBLCtCQWJEQyxZQWFDO0FBQUEsTUFiREEsWUFhQyxrQ0FiYyxJQWFkO0FBQUEsTUFaREMsT0FZQyxRQVpEQSxPQVlDO0FBQUEsTUFYREMsU0FXQyxRQVhEQSxTQVdDO0FBQUEsTUFWREMsVUFVQyxRQVZEQSxVQVVDO0FBQUEsTUFUREMsTUFTQyxRQVREQSxNQVNDO0FBQUEsTUFSREMsUUFRQyxRQVJEQSxRQVFDO0FBQUEsTUFQREMsU0FPQyxRQVBEQSxTQU9DO0FBQUEsMEJBTkRDLE9BTUM7QUFBQSxNQU5EQSxPQU1DLDZCQU5TLElBTVQ7QUFBQSxNQUxEQyxZQUtDLFFBTERBLFlBS0M7QUFBQSxNQUpEQyxhQUlDLFFBSkRBLGFBSUM7QUFBQSxrQ0FIREMsZUFHQztBQUFBLE1BSERBLGVBR0MscUNBSGlCLFFBR2pCO0FBQUEsZ0NBRkRDLGFBRUM7QUFBQSxNQUZEQSxhQUVDLG1DQUZlLElBRWY7O0FBQ0gsTUFBTUMsY0FBNEIsR0FBRyxTQUEvQkEsY0FBK0IsQ0FBQ0MsSUFBRCxFQUFPQyxXQUFQLEVBQXVCO0FBQzFEQywrQkFBa0JDLFVBQWxCLENBQTZCSCxJQUE3QixFQUFtQ0ksdUJBQWdCUCxlQUFoQixDQUFuQzs7QUFDQVQsSUFBQUEsT0FBTyxJQUFJQSxPQUFPLENBQUNZLElBQUQsRUFBT0MsV0FBUCxDQUFsQjtBQUNELEdBSEQ7O0FBS0EsTUFBTUksZ0JBQThCLEdBQUcsU0FBakNBLGdCQUFpQyxDQUFDTCxJQUFELEVBQU9DLFdBQVAsRUFBdUI7QUFDNURDLCtCQUFrQkksVUFBbEIsQ0FBNkJOLElBQTdCLEVBQW1DSSx1QkFBZ0JQLGVBQWhCLENBQW5DOztBQUNBUixJQUFBQSxTQUFTLElBQUlBLFNBQVMsQ0FBQ1csSUFBRCxFQUFPQyxXQUFQLENBQXRCO0FBQ0QsR0FIRDs7QUFLQSxNQUFNTSxhQUEwQixHQUFHLFNBQTdCQSxhQUE2QixDQUFDUCxJQUFELEVBQVU7QUFDM0NFLCtCQUFrQkMsVUFBbEIsQ0FBNkJILElBQTdCLEVBQW1DSSx1QkFBZ0JQLGVBQWhCLENBQW5DOztBQUNBTixJQUFBQSxNQUFNLElBQUlBLE1BQU0sQ0FBQ1MsSUFBRCxDQUFoQjtBQUNELEdBSEQ7O0FBS0EsU0FDRSxnQ0FBQyxtQ0FBRDtBQUNFLElBQUEsY0FBYyxFQUFFLENBQUNOLE9BQUQsSUFBWWMsdUJBRDlCO0FBRUUsSUFBQSxNQUFNLEVBQUV4QixNQUZWO0FBR0UsSUFBQSxVQUFVLEVBQUUsNEJBQVdDLFVBQVgsRUFBdUJ3QixrQkFBTUMsYUFBN0IsQ0FIZDtBQUlFLFVBQUlmLFlBSk47QUFLRSxJQUFBLEdBQUcsRUFBRUMsYUFMUDtBQU1FLElBQUEsWUFBWSxFQUFFVCxZQU5oQjtBQU9FLElBQUEsT0FBTyxFQUFFWSxjQVBYO0FBUUUsSUFBQSxTQUFTLEVBQUVNLGdCQVJiO0FBU0UsSUFBQSxVQUFVLEVBQUVmLFVBVGQ7QUFVRSxJQUFBLE1BQU0sRUFBRWlCLGFBVlY7QUFXRSxJQUFBLFFBQVEsRUFBRWYsUUFYWjtBQVlFLElBQUEsU0FBUyxFQUFFQyxTQVpiO0FBYUUsSUFBQSxPQUFPLEVBQUVDLE9BYlg7QUFjRSxJQUFBLGFBQWEsRUFBRUk7QUFkakIsS0FnQkdaLFFBaEJILENBREY7QUFvQkQsQ0F0REQ7O2VBeURlSCxhOzs7Ozs7Ozs7Ozs7MEJBekRUQSxhIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGNsYXNzbmFtZXMgZnJvbSAnY2xhc3NuYW1lcyc7XG5pbXBvcnQgUmVhY3QgZnJvbSAncmVhY3QnO1xuaW1wb3J0IHtDU1NUcmFuc2l0aW9uIGFzIE9yaWdpbn0gZnJvbSAncmVhY3QtdHJhbnNpdGlvbi1ncm91cCc7XG5pbXBvcnQge0VudGVySGFuZGxlciwgRXhpdEhhbmRsZXJ9IGZyb20gJ3JlYWN0LXRyYW5zaXRpb24tZ3JvdXAvVHJhbnNpdGlvbic7XG5pbXBvcnQgKiBhcyBJQ1NTVHJhbnNpdGlvbiBmcm9tICcuL3NwZWMnO1xuaW1wb3J0IFN0eWxlLCB7VHJhbnNpdGlvblN0eWxlLCBUcmFuc2l0aW9uU3R5bGVOYW1lfSBmcm9tICcuL1N0eWxlJztcbmltcG9ydCB7YWRkRW5kTGlzdGVuZXIsIGNsYXNzTmFtZU1vZGlmaWVyfSBmcm9tICcuL1V0aWxpdHknO1xuXG5jb25zdCBDU1NUcmFuc2l0aW9uOiBSZWFjdC5GdW5jdGlvbkNvbXBvbmVudDxJQ1NTVHJhbnNpdGlvbi5Qcm9wcz4gPSAoXG4gIHtcbiAgICBhcHBlYXIgPSB0cnVlLFxuICAgIGNsYXNzTmFtZXMsXG4gICAgY2hpbGRyZW4sXG4gICAgbW91bnRPbkVudGVyID0gdHJ1ZSxcbiAgICBvbkVudGVyLFxuICAgIG9uRW50ZXJlZCxcbiAgICBvbkVudGVyaW5nLFxuICAgIG9uRXhpdCxcbiAgICBvbkV4aXRlZCxcbiAgICBvbkV4aXRpbmcsXG4gICAgdGltZW91dCA9IG51bGwsXG4gICAgdHJhbnNpdGlvbkluLFxuICAgIHRyYW5zaXRpb25LZXksXG4gICAgdHJhbnNpdGlvblN0eWxlID0gJ2N1c3RvbScsXG4gICAgdW5tb3VudE9uRXhpdCA9IHRydWVcbiAgfVxuKSA9PiB7XG4gIGNvbnN0IG9uRW50ZXJIYW5kbGVyOiBFbnRlckhhbmRsZXIgPSAobm9kZSwgaXNBcHBlYXJpbmcpID0+IHtcbiAgICBjbGFzc05hbWVNb2RpZmllci5hZGREZWZhdWx0KG5vZGUsIFRyYW5zaXRpb25TdHlsZVt0cmFuc2l0aW9uU3R5bGVdKTtcbiAgICBvbkVudGVyICYmIG9uRW50ZXIobm9kZSwgaXNBcHBlYXJpbmcpO1xuICB9O1xuICBcbiAgY29uc3Qgb25FbnRlcmVkSGFuZGxlcjogRW50ZXJIYW5kbGVyID0gKG5vZGUsIGlzQXBwZWFyaW5nKSA9PiB7XG4gICAgY2xhc3NOYW1lTW9kaWZpZXIucmVtb3ZlRG9uZShub2RlLCBUcmFuc2l0aW9uU3R5bGVbdHJhbnNpdGlvblN0eWxlXSk7XG4gICAgb25FbnRlcmVkICYmIG9uRW50ZXJlZChub2RlLCBpc0FwcGVhcmluZyk7XG4gIH07XG4gIFxuICBjb25zdCBvbkV4aXRIYW5kbGVyOiBFeGl0SGFuZGxlciA9IChub2RlKSA9PiB7XG4gICAgY2xhc3NOYW1lTW9kaWZpZXIuYWRkRGVmYXVsdChub2RlLCBUcmFuc2l0aW9uU3R5bGVbdHJhbnNpdGlvblN0eWxlXSk7XG4gICAgb25FeGl0ICYmIG9uRXhpdChub2RlKTtcbiAgfTtcbiAgXG4gIHJldHVybiAoXG4gICAgPE9yaWdpblxuICAgICAgYWRkRW5kTGlzdGVuZXI9eyF0aW1lb3V0ICYmIGFkZEVuZExpc3RlbmVyfVxuICAgICAgYXBwZWFyPXthcHBlYXJ9XG4gICAgICBjbGFzc05hbWVzPXtjbGFzc25hbWVzKGNsYXNzTmFtZXMsIFN0eWxlLmNzc1RyYW5zaXRpb24pfVxuICAgICAgaW49e3RyYW5zaXRpb25Jbn1cbiAgICAgIGtleT17dHJhbnNpdGlvbktleX1cbiAgICAgIG1vdW50T25FbnRlcj17bW91bnRPbkVudGVyfVxuICAgICAgb25FbnRlcj17b25FbnRlckhhbmRsZXJ9XG4gICAgICBvbkVudGVyZWQ9e29uRW50ZXJlZEhhbmRsZXJ9XG4gICAgICBvbkVudGVyaW5nPXtvbkVudGVyaW5nfVxuICAgICAgb25FeGl0PXtvbkV4aXRIYW5kbGVyfVxuICAgICAgb25FeGl0ZWQ9e29uRXhpdGVkfVxuICAgICAgb25FeGl0aW5nPXtvbkV4aXRpbmd9XG4gICAgICB0aW1lb3V0PXt0aW1lb3V0fVxuICAgICAgdW5tb3VudE9uRXhpdD17dW5tb3VudE9uRXhpdH1cbiAgICA+XG4gICAgICB7Y2hpbGRyZW59XG4gICAgPC9PcmlnaW4+XG4gICk7XG59O1xuXG5leHBvcnQge1N0eWxlLCBUcmFuc2l0aW9uU3R5bGUsIFRyYW5zaXRpb25TdHlsZU5hbWV9O1xuZXhwb3J0IGRlZmF1bHQgQ1NTVHJhbnNpdGlvbjtcbiJdfQ==

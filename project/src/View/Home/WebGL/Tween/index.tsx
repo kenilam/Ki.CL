@@ -1,6 +1,6 @@
-import {gsap} from '@Component/WebGL';
-import * as IWebGL from '@Component/WebGL/spec';
-import * as ITween from '@View/Home/WebGL/Tween/spec';
+import {gsap} from '@/Component/WebGL';
+import * as IWebGL from '@/Component/WebGL/spec';
+import * as ITween from '@/View/Home/WebGL/Tween/spec';
 
 const TWEEN_VALUES: ITween.Values = {
   IN: {value: 0},

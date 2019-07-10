@@ -1,0 +1,85 @@
+47ae4ac29509db1d43bf243ca6c96f77
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.array.some");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Component = require("@/Component");
+
+var _CSSTransition = require("@/Component/CSSTransition");
+
+var _Router = require("@/Component/Router");
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Style = _interopRequireDefault(require("./Style"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var Component = function Component(_ref) {
+  var location = _ref.location,
+      transitionInPaths = _ref.transitionInPaths;
+  return _react["default"].createElement(_Component.CSSTransition, {
+    transitionIn: transitionInPaths.some(function (pathname) {
+      return pathname === location.pathname;
+    }),
+    transitionStyle: _CSSTransition.TransitionStyleName.slideDown
+  }, _react["default"].createElement("header", {
+    role: "banner",
+    "data-component": _Style["default"]["default"]
+  }, _react["default"].createElement(_Component.Logo, null), _react["default"].createElement(_Component.Navigation, {
+    inline: true
+  })));
+};
+
+var Instance = (0, _Router.withRouter)(Component);
+
+var GlobalHeader = function GlobalHeader(_ref2) {
+  var transitionInPaths = _ref2.transitionInPaths;
+  return _react["default"].createElement(_Router.Provider, null, _react["default"].createElement(Instance, {
+    transitionInPaths: transitionInPaths
+  }));
+};
+
+var _default = GlobalHeader;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(Component, "Component", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/GlobalHeader/index.tsx");
+  reactHotLoader.register(Instance, "Instance", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/GlobalHeader/index.tsx");
+  reactHotLoader.register(GlobalHeader, "GlobalHeader", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/GlobalHeader/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/Component/GlobalHeader/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJDb21wb25lbnQiLCJsb2NhdGlvbiIsInRyYW5zaXRpb25JblBhdGhzIiwic29tZSIsInBhdGhuYW1lIiwiVHJhbnNpdGlvblN0eWxlTmFtZSIsInNsaWRlRG93biIsIlN0eWxlIiwiSW5zdGFuY2UiLCJHbG9iYWxIZWFkZXIiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7QUFBQTs7QUFDQTs7QUFDQTs7QUFDQTs7QUFFQTs7Ozs7Ozs7Ozs7QUFFQSxJQUFNQSxTQUEyRCxHQUFHLFNBQTlEQSxTQUE4RDtBQUFBLE1BRWhFQyxRQUZnRSxRQUVoRUEsUUFGZ0U7QUFBQSxNQUdoRUMsaUJBSGdFLFFBR2hFQSxpQkFIZ0U7QUFBQSxTQU1sRSxnQ0FBQyx3QkFBRDtBQUNFLElBQUEsWUFBWSxFQUNWQSxpQkFBaUIsQ0FBQ0MsSUFBbEIsQ0FDRSxVQUFBQyxRQUFRO0FBQUEsYUFBSUEsUUFBUSxLQUFLSCxRQUFRLENBQUNHLFFBQTFCO0FBQUEsS0FEVixDQUZKO0FBTUUsSUFBQSxlQUFlLEVBQUVDLG1DQUFvQkM7QUFOdkMsS0FRRTtBQUFRLElBQUEsSUFBSSxFQUFDLFFBQWI7QUFBc0Isc0JBQWdCQztBQUF0QyxLQUNFLGdDQUFDLGVBQUQsT0FERixFQUVFLGdDQUFDLHFCQUFEO0FBQVksSUFBQSxNQUFNLEVBQUU7QUFBcEIsSUFGRixDQVJGLENBTmtFO0FBQUEsQ0FBcEU7O0FBcUJBLElBQU1DLFFBQVEsR0FBRyx3QkFBV1IsU0FBWCxDQUFqQjs7QUFFQSxJQUFNUyxZQUEwRCxHQUM5RCxTQURJQSxZQUNKO0FBQUEsTUFBRVAsaUJBQUYsU0FBRUEsaUJBQUY7QUFBQSxTQUNFLGdDQUFDLGdCQUFELFFBQ0UsZ0NBQUMsUUFBRDtBQUFVLElBQUEsaUJBQWlCLEVBQUVBO0FBQTdCLElBREYsQ0FERjtBQUFBLENBREY7O2VBT2VPLFk7Ozs7Ozs7Ozs7OzswQkE5QlRULFM7MEJBcUJBUSxROzBCQUVBQyxZIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHtDU1NUcmFuc2l0aW9uLCBMb2dvLCBOYXZpZ2F0aW9ufSBmcm9tICdAL0NvbXBvbmVudCc7XG5pbXBvcnQge1RyYW5zaXRpb25TdHlsZU5hbWV9IGZyb20gJ0AvQ29tcG9uZW50L0NTU1RyYW5zaXRpb24nO1xuaW1wb3J0IHtQcm92aWRlciwgd2l0aFJvdXRlcn0gZnJvbSAnQC9Db21wb25lbnQvUm91dGVyJztcbmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgKiBhcyBJR2xvYmFsSGVhZGVyIGZyb20gJy4vc3BlYyc7XG5pbXBvcnQgU3R5bGUgZnJvbSAnLi9TdHlsZSc7XG5cbmNvbnN0IENvbXBvbmVudDogUmVhY3QuRnVuY3Rpb25Db21wb25lbnQ8SUdsb2JhbEhlYWRlci5Db21wb25lbnQ+ID0gKFxuICB7XG4gICAgbG9jYXRpb24sXG4gICAgdHJhbnNpdGlvbkluUGF0aHNcbiAgfVxuKSA9PiAoXG4gIDxDU1NUcmFuc2l0aW9uXG4gICAgdHJhbnNpdGlvbkluPXtcbiAgICAgIHRyYW5zaXRpb25JblBhdGhzLnNvbWUoXG4gICAgICAgIHBhdGhuYW1lID0+IHBhdGhuYW1lID09PSBsb2NhdGlvbi5wYXRobmFtZVxuICAgICAgKVxuICAgIH1cbiAgICB0cmFuc2l0aW9uU3R5bGU9e1RyYW5zaXRpb25TdHlsZU5hbWUuc2xpZGVEb3dufVxuICA+XG4gICAgPGhlYWRlciByb2xlPSdiYW5uZXInIGRhdGEtY29tcG9uZW50PXtTdHlsZS5kZWZhdWx0fT5cbiAgICAgIDxMb2dvIC8+XG4gICAgICA8TmF2aWdhdGlvbiBpbmxpbmU9e3RydWV9IC8+XG4gICAgPC9oZWFkZXI+XG4gIDwvQ1NTVHJhbnNpdGlvbj5cbik7XG5cbmNvbnN0IEluc3RhbmNlID0gd2l0aFJvdXRlcihDb21wb25lbnQpO1xuXG5jb25zdCBHbG9iYWxIZWFkZXI6IFJlYWN0LkZ1bmN0aW9uQ29tcG9uZW50PElHbG9iYWxIZWFkZXIuUHJvcHM+ID1cbiAgKHt0cmFuc2l0aW9uSW5QYXRoc30pID0+IChcbiAgICA8UHJvdmlkZXI+XG4gICAgICA8SW5zdGFuY2UgdHJhbnNpdGlvbkluUGF0aHM9e3RyYW5zaXRpb25JblBhdGhzfSAvPlxuICAgIDwvUHJvdmlkZXI+XG4gICk7XG5cbmV4cG9ydCBkZWZhdWx0IEdsb2JhbEhlYWRlcjtcbiJdfQ==

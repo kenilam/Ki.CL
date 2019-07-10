@@ -1,4 +1,4 @@
-import * as IGraphic from '@View/Home/WebGL/spec';
+import * as IGraphic from '@/View/Home/WebGL/spec';
 import './style.scss';
 import value from './value.scss';
 

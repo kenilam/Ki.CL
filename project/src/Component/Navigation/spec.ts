@@ -1,5 +1,5 @@
-import * as ICSSTransition from '@Component/CSSTransition/spec';
-import * as ILink from '@Component/Link/spec';
+import * as ICSSTransition from '@/Component/CSSTransition/spec';
+import * as ILink from '@/Component/Link/spec';
 import {LocationDescriptor} from 'history';
 import {MouseEvent} from 'react';
 

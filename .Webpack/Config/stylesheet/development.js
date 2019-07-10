@@ -11,11 +11,11 @@ const CSSLoaders = [
   {
     loader: 'css-loader',
     options: {
-      camelCase: true,
+      // camelCase: true,
       importLoaders: 2,
       modules: true,
       sourceMap: true,
-      localIdentName: '[local]'
+      // localIdentName: '[local]'
     },
   },
   {

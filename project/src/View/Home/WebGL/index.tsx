@@ -1,9 +1,8 @@
-import data from '$resources/data.json';
-import IResources from '$resources/spec';
-import {withRouter} from '@Component/Router';
-import WebGL from '@Component/WebGL';
-import {CSSUnit} from '@Helper';
-import {WindowSizes} from '@Hook';
+import resources from '$/resources';
+import {withRouter} from '@/Component/Router';
+import WebGL from '@/Component/WebGL';
+import {CSSUnit} from '@/Helper';
+import {WindowSizes} from '@/Hook';
 import React, {useEffect} from 'react';
 import Gallery from './Gallery';
 import {BackFill, Mask, Name, Slogan} from './Partial';
@@ -11,7 +10,7 @@ import * as IWebGL from './spec';
 import Style from './Style';
 import Tween, {gsap} from './Tween';
 
-const {view: {home: {path}}}: IResources.Data = data;
+const {view: {home: {path}}} = resources;
 
 const delay = CSSUnit(Style.delay) / 1000;
 const duration = CSSUnit(Style.duration) / 1000;

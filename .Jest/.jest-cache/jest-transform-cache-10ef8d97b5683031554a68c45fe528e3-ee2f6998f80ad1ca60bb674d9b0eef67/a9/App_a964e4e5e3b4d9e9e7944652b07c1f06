@@ -1,0 +1,78 @@
+4ac11b57d9be960c290b7ba68c6107fc
+"use strict";
+
+var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.array.filter");
+
+require("core-js/modules/es.array.map");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.object.keys");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = exports.appRoot = void 0;
+
+var _data = _interopRequireDefault(require("$resources/data.json"));
+
+var _Component = require("@/Component");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _View = _interopRequireDefault(require("./View"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var view = _data["default"].view;
+var paths = Object.keys(view).filter(function (name) {
+  return 'home' !== name;
+}).map(function (name) {
+  return view[name].path;
+});
+var appRoot = document.querySelector('[app-root]');
+exports.appRoot = appRoot;
+
+var App = function App() {
+  return _react["default"].createElement(_react.Fragment, null, _react["default"].createElement(_Component.GlobalHeader, {
+    transitionInPaths: paths
+  }), _View["default"]);
+};
+
+var _default = App;
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(view, "view", "/Users/keni.lam/Prototype/Ki.CL/project/src/App.tsx");
+  reactHotLoader.register(paths, "paths", "/Users/keni.lam/Prototype/Ki.CL/project/src/App.tsx");
+  reactHotLoader.register(appRoot, "appRoot", "/Users/keni.lam/Prototype/Ki.CL/project/src/App.tsx");
+  reactHotLoader.register(App, "App", "/Users/keni.lam/Prototype/Ki.CL/project/src/App.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/App.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFwcC50c3giXSwibmFtZXMiOlsidmlldyIsImRhdGEiLCJwYXRocyIsIk9iamVjdCIsImtleXMiLCJmaWx0ZXIiLCJuYW1lIiwibWFwIiwicGF0aCIsImFwcFJvb3QiLCJkb2N1bWVudCIsInF1ZXJ5U2VsZWN0b3IiLCJBcHAiLCJWaWV3Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUE7O0FBRUE7O0FBQ0E7O0FBQ0E7Ozs7Ozs7Ozs7O0lBRU9BLEksR0FBeUJDLGdCLENBQXpCRCxJO0FBRVAsSUFBTUUsS0FBSyxHQUFHQyxNQUFNLENBQUNDLElBQVAsQ0FBWUosSUFBWixFQUFrQkssTUFBbEIsQ0FDWixVQUFBQyxJQUFJO0FBQUEsU0FBSSxXQUFXQSxJQUFmO0FBQUEsQ0FEUSxFQUVaQyxHQUZZLENBR1osVUFBQUQsSUFBSTtBQUFBLFNBQUlOLElBQUksQ0FBQ00sSUFBRCxDQUFKLENBQVdFLElBQWY7QUFBQSxDQUhRLENBQWQ7QUFNQSxJQUFNQyxPQUFPLEdBQUdDLFFBQVEsQ0FBQ0MsYUFBVCxDQUF1QixZQUF2QixDQUFoQjs7O0FBRUEsSUFBTUMsR0FBRyxHQUFHLFNBQU5BLEdBQU07QUFBQSxTQUNWLGdDQUFDLGVBQUQsUUFDRSxnQ0FBQyx1QkFBRDtBQUFjLElBQUEsaUJBQWlCLEVBQUVWO0FBQWpDLElBREYsRUFFR1csZ0JBRkgsQ0FEVTtBQUFBLENBQVo7O2VBUWVELEc7Ozs7Ozs7Ozs7OzswQkFsQlJaLEk7MEJBRURFLEs7MEJBTUFPLE87MEJBRUFHLEciLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZGF0YSBmcm9tICckcmVzb3VyY2VzL2RhdGEuanNvbic7XG5pbXBvcnQgKiBhcyBJUmVzb3VyY2VzIGZyb20gJyRyZXNvdXJjZXMvc3BlYyc7XG5pbXBvcnQge0dsb2JhbEhlYWRlcn0gZnJvbSAnQC9Db21wb25lbnQnO1xuaW1wb3J0IFJlYWN0LCB7RnJhZ21lbnR9IGZyb20gJ3JlYWN0JztcbmltcG9ydCBWaWV3IGZyb20gJy4vVmlldyc7XG5cbmNvbnN0IHt2aWV3fTogSVJlc291cmNlcy5EYXRhID0gZGF0YTtcblxuY29uc3QgcGF0aHMgPSBPYmplY3Qua2V5cyh2aWV3KS5maWx0ZXIoXG4gIG5hbWUgPT4gJ2hvbWUnICE9PSBuYW1lXG4pLm1hcChcbiAgbmFtZSA9PiB2aWV3W25hbWVdLnBhdGhcbik7XG5cbmNvbnN0IGFwcFJvb3QgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCdbYXBwLXJvb3RdJyk7XG5cbmNvbnN0IEFwcCA9ICgpID0+IChcbiAgPEZyYWdtZW50PlxuICAgIDxHbG9iYWxIZWFkZXIgdHJhbnNpdGlvbkluUGF0aHM9e3BhdGhzfSAvPlxuICAgIHtWaWV3fVxuICA8L0ZyYWdtZW50PlxuKTtcblxuZXhwb3J0IHthcHBSb290fTtcbmV4cG9ydCBkZWZhdWx0IEFwcDtcbiJdfQ==

@@ -1,0 +1,69 @@
+5766301869962398c629a12eceab4b00
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _resources = _interopRequireDefault(require("$/resources"));
+
+var _Router = require("@/Component/Router");
+
+var _react = _interopRequireDefault(require("react"));
+
+require("./Style");
+
+var _View = _interopRequireDefault(require("./View"));
+
+(function () {
+  var enterModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).enterModule;
+  enterModule && enterModule(module);
+})();
+
+var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
+  return a;
+};
+
+var path = _resources["default"].view.works.path;
+
+var Works = function Works() {
+  return _react["default"].createElement("main", {
+    "data-routes": "works"
+  }, _react["default"].createElement("h1", null, "Works"), _View["default"]);
+};
+
+var _default = _react["default"].createElement(_Router.Route, {
+  path: path,
+  component: Works
+});
+
+var _default2 = _default;
+exports["default"] = _default2;
+;
+
+(function () {
+  var reactHotLoader = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).default;
+
+  if (!reactHotLoader) {
+    return;
+  }
+
+  reactHotLoader.register(path, "path", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Works/index.tsx");
+  reactHotLoader.register(Works, "Works", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Works/index.tsx");
+  reactHotLoader.register(_default, "default", "/Users/keni.lam/Prototype/Ki.CL/project/src/View/Works/index.tsx");
+})();
+
+;
+
+(function () {
+  var leaveModule = (typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal : require('react-hot-loader')).leaveModule;
+  leaveModule && leaveModule(module);
+})();
+
+module.exports = exports.default;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6WyJwYXRoIiwicmVzb3VyY2VzIiwidmlldyIsIndvcmtzIiwiV29ya3MiLCJWaWV3Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7OztBQUFBOztBQUNBOztBQUNBOztBQUVBOztBQUNBOzs7Ozs7Ozs7OztJQUVzQkEsSSxHQUFVQyxxQixDQUF6QkMsSSxDQUFPQyxLLENBQVFILEk7O0FBRXRCLElBQU1JLEtBQTRDLEdBQUcsU0FBL0NBLEtBQStDO0FBQUEsU0FDbkQ7QUFBTSxtQkFBWTtBQUFsQixLQUNFLG9EQURGLEVBRUdDLGdCQUZILENBRG1EO0FBQUEsQ0FBckQ7O2VBT2UsZ0NBQUMsYUFBRDtBQUFPLEVBQUEsSUFBSSxFQUFFTCxJQUFiO0FBQW1CLEVBQUEsU0FBUyxFQUFFSTtBQUE5QixFOzs7Ozs7Ozs7Ozs7OzBCQVRPSixJOzBCQUVoQkksSyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCByZXNvdXJjZXMgZnJvbSAnJC9yZXNvdXJjZXMnO1xuaW1wb3J0IHtSb3V0ZX0gZnJvbSAnQC9Db21wb25lbnQvUm91dGVyJztcbmltcG9ydCBSZWFjdCBmcm9tICdyZWFjdCc7XG5pbXBvcnQgKiBhcyBJV29ya3MgZnJvbSAnLi9zcGVjJztcbmltcG9ydCAnLi9TdHlsZSc7XG5pbXBvcnQgVmlldyBmcm9tICcuL1ZpZXcnO1xuXG5jb25zdCB7dmlldzoge3dvcmtzOiB7cGF0aH19fSA9IHJlc291cmNlcztcblxuY29uc3QgV29ya3M6IFJlYWN0LkZ1bmN0aW9uQ29tcG9uZW50PElXb3Jrcy5Qcm9wcz4gPSAoKSA9PiAoXG4gIDxtYWluIGRhdGEtcm91dGVzPSd3b3Jrcyc+XG4gICAgPGgxPldvcmtzPC9oMT5cbiAgICB7Vmlld31cbiAgPC9tYWluPlxuKTtcblxuZXhwb3J0IGRlZmF1bHQgPFJvdXRlIHBhdGg9e3BhdGh9IGNvbXBvbmVudD17V29ya3N9IC8+O1xuIl19

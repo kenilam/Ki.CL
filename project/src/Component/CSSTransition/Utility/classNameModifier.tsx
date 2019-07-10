@@ -1,4 +1,4 @@
-import Style from '@Component/CSSTransition/Style';
+import Style from '@/Component/CSSTransition/Style';
 import classnames from 'classnames';
 import {CSSTransitionClassNames} from 'react-transition-group/CSSTransition';
 

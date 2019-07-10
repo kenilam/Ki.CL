@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;AAAA;;AACA","sourcesContent":["import Rect from './Rect';\nimport Text from './Text';\n\nexport {Rect, Text};\n"]}
