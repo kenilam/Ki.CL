@@ -4,7 +4,7 @@
   "description": "Ki.CL",
   "scripts": {
     "guide": "npx babel-node styleguidist server",
-    "test": "NODE_ENV=test jest --config ./.Jest/config.js --detectOpenHandles",
+    "test": "NODE_ENV=test jest --config ./.Jest/config.js --detectOpenHandles --changedSince=master",
     "test:watch": "npm run test -- --watch",
     "test:cover": "npm run test -- --coverage --detectOpenHandles --updateSnapshot",
     "lint": "npm run lint:tslint && npm run lint:stylelint",
