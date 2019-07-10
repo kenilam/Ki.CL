@@ -23,6 +23,8 @@ const html = new HtmlWebpackPlugin({
     minifyURLs: true,
   },
   
+  multiStep: false,
+  
   xhtml: true,
 })
 

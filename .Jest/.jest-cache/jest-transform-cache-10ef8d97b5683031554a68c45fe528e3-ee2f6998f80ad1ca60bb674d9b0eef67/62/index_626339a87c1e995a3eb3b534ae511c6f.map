@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.tsx"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;;AACA;;AACA;;AACA","sourcesContent":["import BackFill from './BackFill';\nimport Mask from './Mask';\nimport Name from './Name';\nimport Slogan from './Slogan';\n\nexport {BackFill, Mask, Name, Slogan};\n"]}

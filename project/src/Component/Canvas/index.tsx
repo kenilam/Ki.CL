@@ -1,7 +1,7 @@
 import * as ICanvas from './spec';
 import React, {useCallback} from 'react';
 import * as THREE from 'three';
-import OrbitControls from 'three-orbitcontrols';
+import { OrbitControls } from 'three-orbitcontrols-ts';
 
 const FOV = 75;
 const NEAR = 0.1;
