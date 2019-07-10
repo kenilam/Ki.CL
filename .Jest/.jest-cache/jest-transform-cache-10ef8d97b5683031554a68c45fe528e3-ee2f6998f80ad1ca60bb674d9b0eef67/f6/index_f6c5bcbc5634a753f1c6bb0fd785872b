@@ -1,9 +1,0 @@
-07f3fe7fa9ea3698e7c34bd606eb86d7
-"use strict";
-
-require("./Style");
-
-var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
-  return a;
-};
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0ICcuL1N0eWxlJztcbiJdfQ==
