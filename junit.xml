@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="1" failures="0" time="4.842">
-  <testsuite name="App" errors="0" failures="0" skipped="0" timestamp="2019-07-15T17:54:24" time="4.09" tests="1">
-    <testcase classname="App should match with snapshot" name="App should match with snapshot" time="0.007">
-    </testcase>
-  </testsuite>
-</testsuites>
