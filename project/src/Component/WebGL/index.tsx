@@ -1,105 +1,90 @@
-import * as gsap from 'gsap';
-import {TimelineMax, TweenMax} from 'gsap';
-import * as PIXI from 'pixi.js';
-import React, {DependencyList, useCallback, useEffect, useState} from 'react';
-import * as Geometry from './Geometry';
+import autobind from "autobind-decorator";
+import {WebGLRendererParameters} from "three";
 import * as IWebGL from './spec';
+import React, {createRef} from 'react';
+import * as THREE from 'three';
 import Style from './Style';
 
-const options = {
-  antialias: true,
-  autoResize: true,
-  transparent: true
+const FAR = 10000;
+const FOV = 35;
+const NEAR = 0.1;
+const RENDERER: WebGLRendererParameters = {
+  alpha: true,
+  antialias: true
 };
 
-const WebGL: React.FunctionComponent<IWebGL.Props> = (
-  {
-    className,
-    height,
-    render,
-    width,
+class WebGL extends React.PureComponent<IWebGL.Props> {
+  private ref = createRef<HTMLCanvasElement>();
+  
+  private animateFrame: number;
+  private get aspect() {
+    const {height, width} = this.props;
+    
+    return width / height;
   }
-) => {
-  let rendererFrame: number;
+  private camera: THREE.Camera;
+  private renderer: THREE.WebGLRenderer;
+  private scene: THREE.Scene;
   
-  const [app, updateApp]: IWebGL.AppState = useState<IWebGL.App>();
-  const [stage, updateStage]: IWebGL.StageState = useState<IWebGL.Stage>();
-  const [graphics, updateGraphics]: IWebGL.RenderState = render();
+  @autobind
+  private animate() {
+    const {height, scenes, width} = this.props;
   
-  function renderer() {
-    if (!app || !stage) {
-      return;
-    }
-    
-    (app as PIXI.Renderer).render(stage);
-    
-    rendererFrame = window.requestAnimationFrame(renderer);
-  }
+    this.componentWillUnmount();
   
-  function triggerRender() {
-    if (!stage) {
-      updateStage(new PIXI.Container());
-      return;
-    }
+    this.camera = new THREE.PerspectiveCamera(FOV, this.aspect,  NEAR,  FAR);
+    this.camera.position.set( 0, 0, 500 );
     
-    stage.removeChildren(0);
+    this.scene = new THREE.Scene();
+    this.scene.autoUpdate = true;
     
-    graphics.map(
-      graphic => {
-        stage.addChild(graphic);
-      }
-    );
-    
-    updateGraphics && updateGraphics({app, stage});
-  }
+    if (scenes) {
+      this.scene.add(...scenes.map(({graphic}) => graphic));
   
-  const ref = useCallback((view: HTMLCanvasElement) => {
-    if (!view) {
-      return;
-    }
-    
-    if (!app) {
-      updateApp(
-        PIXI.autoDetectRenderer({
-          ...options,
-          height,
-          width,
-          view
-        }) as PIXI.Renderer
+      scenes.forEach(
+        ({render}) => {
+          render && render();
+        }
       );
-      return;
     }
     
-    (app as PIXI.Renderer).resize(width, height);
-  }, [width, height] as DependencyList);
-  
-  function onMount() {
+    this.renderer.setSize(width, height);
+    this.renderer.render(this.scene, this.camera);
     
-    renderer();
-    
-    triggerRender();
+    this.animateFrame = window.requestAnimationFrame(this.animate);
   }
   
-  function onUnmount() {
-    window.cancelAnimationFrame(rendererFrame);
+  public componentDidMount(): void {
+    const {current: canvas} = this.ref;
+    
+    this.renderer = new THREE.WebGLRenderer({ ...RENDERER, canvas });
+    this.renderer.autoClear = true;
+    
+    this.renderer.setClearColor(0xffffff, 0);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    
+    this.animate();
   }
   
-  useEffect(() => {
-    onMount();
-    
-    return onUnmount;
-  });
   
-  return (
-    <canvas
-      className={className}
-      data-component={Style.default}
-      ref={ref}
-    />
-  );
-};
+  public componentWillUnmount(): void {
+    if (this.scene) {
+      this.scene.dispose();
+    }
+    
+    this.renderer.state.reset();
+    this.renderer.renderLists.dispose();
+    
+    window.cancelAnimationFrame(this.animateFrame);
+  }
+  
+  public render() {
+    return (
+      <canvas data-component={Style.default} ref={this.ref} />
+    )
+  }
+}
 
-PIXI.settings.RESOLUTION = window.devicePixelRatio;
-
-export {PIXI, Geometry, TweenMax as Tween, TimelineMax as TweenSequence, gsap};
+export {THREE};
 export default WebGL;
+

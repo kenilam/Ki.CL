@@ -1,7 +1,0 @@
-$default: get($view-home-graphic, 'default');
-
-[data-component='#{$default}'] {
-  left: 0;
-  position: absolute;
-  top: 0;
-}
