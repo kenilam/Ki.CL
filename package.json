@@ -78,7 +78,6 @@
     "scroll-behavior-polyfill": "^2.0.7",
     "smoothscroll-polyfill": "^0.4.4",
     "three": "^0.106.2",
-    "three-orbitcontrols-ts": "^0.1.2",
     "trianglify": "^2.0.0",
     "unescape": "^1.0.1",
     "unfetch": "^4.1.0",

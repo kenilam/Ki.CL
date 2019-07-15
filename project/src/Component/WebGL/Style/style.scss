@@ -1,0 +1,11 @@
+$default: get($component-canvas, 'default');
+
+$content: get($kicl, 'content.default');
+$name: get($kicl, 'name');
+$size: get($grid, 'gutter');
+$transition-duration: get($duration, 'fast');
+$transition-timing-function: get($ease, 'default.in');
+
+[data-component='#{$default}'] {
+  position: relative;
+}
