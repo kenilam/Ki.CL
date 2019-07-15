@@ -1,7 +1,7 @@
-import {WindowSizes} from '@/Hook';
+import {WindowSizes} from "@/Hook";
 import React from 'react';
 import {WebGL} from '@/Component';
-import Index from './Test';
+import Globe from './Globe';
 
 const Background = () => {
   const {
@@ -12,9 +12,8 @@ const Background = () => {
     <WebGL
       height={height}
       width={width}
-    >
-      <Index/>
-    </WebGL>
+      scenes={Globe}
+    />
   );
 };
 
