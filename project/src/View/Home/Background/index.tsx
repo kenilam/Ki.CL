@@ -1,7 +1,7 @@
 import {WindowSizes} from '@/Hook';
 import React from 'react';
 import {WebGL} from '@/Component';
-import Index from './Test';
+import Test from './Test';
 
 const Background = () => {
   const {
@@ -13,7 +13,7 @@ const Background = () => {
       height={height}
       width={width}
     >
-      <Index/>
+      <Test/>
     </WebGL>
   );
 };
