@@ -23,3 +23,4 @@ declare module 'react-audio-player';
 declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
 declare module 'units-css';
+declare module 'webgl-noise';
