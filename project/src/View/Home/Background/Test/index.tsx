@@ -1,16 +1,8 @@
 import autobind from "autobind-decorator";
 import React from 'react';
-import {Shaders, Node, GLSL} from '@/Component/WebGL';
+import {Node} from '@/Component/WebGL';
 import ITest from './spec';
-
-// @ts-ignore
-import fragmentShader from './shader.frag';
-
-const shaders = Shaders.create({
-  helloBlue: {
-    frag: GLSL`${fragmentShader()}`
-  }
-});
+import Shader from './Shader';
 
 class Index extends React.PureComponent<ITest.Props, ITest.State> {
   public state: ITest.State = {
@@ -57,7 +49,7 @@ class Index extends React.PureComponent<ITest.Props, ITest.State> {
     
     return (
       <Node
-        shader={shaders.helloBlue}
+        shader={Shader.helloBlue}
         uniforms={{blue}}
       />
     );
