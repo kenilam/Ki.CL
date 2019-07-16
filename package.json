@@ -55,10 +55,9 @@
     "gsap": "^2.1.3",
     "history": "^4.9.0",
     "install": "^0.12.2",
-    "intersection-observer": "^0.7.0",
+    "intersection-observer": "^0.6.0",
     "moment": "^2.24.0",
     "npm": "^6.9.0",
-    "intersection-observer": "^0.6.0",
     "path-to-regexp": "^3.0.0",
     "pixi.js": "^5.0.3",
     "react": "^16.8.6",
@@ -87,8 +86,7 @@
     "unescape": "^1.0.1",
     "unfetch": "^4.1.0",
     "units-css": "^0.4.0",
-    "which-transition-end-event": "^0.1.0",
-    "gl-react-dom": "latest"
+    "which-transition-end-event": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -157,6 +155,7 @@
     "fs": "0.0.1-security",
     "get-transition-duration": "^1.1.1",
     "glob": "^7.1.4",
+    "glsl-template-loader": "^1.2.0",
     "html-webpack-plugin": "^4.0.0-beta.5",
     "husky": "^2.3.0",
     "identity-obj-proxy": "^3.0.0",
