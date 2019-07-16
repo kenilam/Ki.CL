@@ -87,7 +87,8 @@
     "unescape": "^1.0.1",
     "unfetch": "^4.1.0",
     "units-css": "^0.4.0",
-    "which-transition-end-event": "^0.1.0"
+    "which-transition-end-event": "^0.1.0",
+    "gl-react-dom": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -131,8 +132,6 @@
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-glsl": "^1.0.0",
-    "babel-plugin-glslify": "^2.0.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-react-css-modules": "^5.2.6",
     "babel-plugin-rewire": "^1.2.0",
@@ -158,8 +157,6 @@
     "fs": "0.0.1-security",
     "get-transition-duration": "^1.1.1",
     "glob": "^7.1.4",
-    "glsl-template-loader": "^1.2.0",
-    "glslify": "^7.0.0",
     "html-webpack-plugin": "^4.0.0-beta.5",
     "husky": "^2.3.0",
     "identity-obj-proxy": "^3.0.0",
