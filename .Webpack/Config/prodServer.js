@@ -19,6 +19,7 @@ const browserConfig = {
     
     directory: true,
   },
+  https: true,
   hooks: {
     'client:js': `___browserSync___.socket.on('disconnect', function () { window.close(); location.reload(); });`,
   },

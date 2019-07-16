@@ -1,36 +1,20 @@
 import resources from '$/resources';
-import {CSSTransition} from '@/Component';
-import {TransitionStyleName} from '@/Component/CSSTransition';
+import {Logo, Navigation} from '@/Component';
 import {Route, withRouter} from '@/Component/Router';
+import Background from './Background';
 import * as IHome from '@/View/Home/spec';
-import React, {useState} from 'react';
+import React from 'react';
 import './Style';
-import WebGL from './WebGL';
 
 const {view: {home: {path}}} = resources;
 
-const Home: React.FunctionComponent<IHome.Props> = ({history}) => {
-  const [renderNavigation, showNavigation] = useState(false);
-  
-  const isActiveRoute = history.location.pathname === path;
-  
-  const onComplete = () => {
-    showNavigation(isActiveRoute);
-  };
-  
-  return (
-    <main data-routes='home'>
-      <WebGL onComplete={onComplete} />
-      <CSSTransition
-        transitionIn={renderNavigation && isActiveRoute}
-        transitionStyle={TransitionStyleName.fade}
-      >
-        <p>Coming Soon!</p>
-        {/*<Navigation inline={true} />*/}
-      </CSSTransition>
-    </main>
-  );
-};
+const Home: React.FunctionComponent<IHome.Props> = () => (
+  <main data-routes='home'>
+    <Background/>
+    <Logo/>
+    <Navigation inline={true} />
+  </main>
+);
 
 const Component = withRouter(Home);
 

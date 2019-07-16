@@ -19,7 +19,7 @@ $coming-soon-color: #{get($white, 'default')};
 
 $navigation: #{get($component-navigation, 'default')};
 
-$webgl: #{get($component-webgl, 'default')};
+$canvas: #{get($component-canvas, 'default')};
 
 $color: #{get($white, 'default')};
 $hover-color: #{get($black, 'default')};
@@ -65,8 +65,12 @@ $gutter: #{get($grid, 'gutter')};
     z-index: 2;
   }
 
-  [data-component='#{$webgl}'] {
+  [data-component='#{$canvas}'] {
+    height: 100vh;
+    left: 0;
     position: absolute;
+    top: 0;
+    width: 100vw;
     z-index: 1;
   }
 

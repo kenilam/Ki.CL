@@ -6,6 +6,7 @@ import devServer from './devServer'
 import entry from './entry'
 import environment from './environment'
 import fonts from './fonts'
+import glsl from './glsl'
 import images from './images'
 import indexHTML from './indexHTML'
 import javascript from './javascript'
@@ -24,6 +25,7 @@ export {
   entry,
   environment,
   fonts,
+  glsl,
   images,
   indexHTML,
   javascript,

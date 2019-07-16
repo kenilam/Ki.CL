@@ -1,37 +1,24 @@
-import * as PIXI from 'pixi.js';
-import {Dispatch, SetStateAction} from 'react';
+import {SurfaceProps} from 'gl-react-dom';
 
 declare module IWebGL {
-  interface ClassNames extends IClassNames {
+  interface ClassNames {
     default: string;
   }
   
-  type App = PIXI.Renderer;
-  type UpdateApp = Dispatch<SetStateAction<App>>;
-  type AppState = [App, UpdateApp];
-  
-  type Stage = PIXI.Container;
-  type UpdateStage = Dispatch<SetStateAction<Stage>>;
-  type StageState = [Stage, UpdateStage];
-  
   type Graphic = any;
-  type Graphics = Graphic[];
-  type RendererProps = {
-    app: App,
-    stage: Stage
-  }
-  type UpdateRender = (props?: RendererProps) => void;
-  type RenderState = [Graphics, UpdateRender?];
+  type Render = () => void;
   
-  type TweenSequence = gsap.TimelineMax;
+  // interface Scene {
+  //   graphic: Graphic;
+  //   render?: Render;
+  // }
   
-  interface Props {
-    className: string;
-    height: number;
-    width: number;
-    
-    render(): RenderState;
+  interface Props extends SurfaceProps {
   }
+  
+  // interface Props extends Sizes {
+  //   scenes?: Scene[];
+  // }
 }
 
 export = IWebGL;
