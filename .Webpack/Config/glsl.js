@@ -1,7 +1,11 @@
 const Loaders = {
   test: /\.(glsl|vert|frag)$/,
   exclude: /node_modules/,
-  loader: 'glsl-template-loader'
+  use: [
+    {
+      loader: 'glsl-template-loader'
+    }
+  ]
 }
 
 const rules = [Loaders]
