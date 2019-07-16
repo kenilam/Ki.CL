@@ -8,7 +8,9 @@ const alias = {
   '~': context
 }
 
-const extensions = ['.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json', '.xml']
+const extensions = [
+  '.glsl', '.js', '.jsx', '.ts', '.tsx', '.scss', '.css', '.json', '.xml'
+]
 
 const plugins = [new TsconfigPathsPlugin({
   configFile: `${appRoot}/.tsconfig.json`,
