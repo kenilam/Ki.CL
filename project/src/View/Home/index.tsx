@@ -1,5 +1,4 @@
 import resources from '$/resources';
-import {Logo, Navigation} from '@/Component';
 import {Route, withRouter} from '@/Component/Router';
 import Background from './Background';
 import * as IHome from '@/View/Home/spec';
@@ -11,8 +10,6 @@ const {view: {home: {path}}} = resources;
 const Home: React.FunctionComponent<IHome.Props> = () => (
   <main data-routes='home'>
     <Background/>
-    <Logo/>
-    <Navigation inline={true} />
   </main>
 );
 

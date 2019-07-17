@@ -65,6 +65,7 @@
     "react-dom": "^16.8.6",
     "react-element-resize": "^0.2.2",
     "react-fittext": "^1.0.0",
+    "react-gl-transition": "^1.19.2",
     "react-hot-loader": "^4.8.8",
     "react-html-parser": "^2.0.2",
     "react-icons": "^3.7.0",

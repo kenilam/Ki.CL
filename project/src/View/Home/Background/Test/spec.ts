@@ -1,6 +1,6 @@
 declare module ITest {
   interface State {
-    blue: number,
+    time: number,
     increment: boolean
   }
   

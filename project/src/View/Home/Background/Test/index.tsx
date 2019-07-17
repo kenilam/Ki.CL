@@ -6,7 +6,7 @@ import Shader from './Shader';
 
 class Index extends React.PureComponent<ITest.Props, ITest.State> {
   public state: ITest.State = {
-    blue: 0,
+    time: 0,
     increment: true
   };
   
@@ -15,8 +15,8 @@ class Index extends React.PureComponent<ITest.Props, ITest.State> {
   @autobind
   private updateBlue() {
     this.setState(
-      ({blue, increment}: ITest.State) => ({
-        blue: blue + ((increment? 1 : -1) * 0.001)
+      ({time, increment}: ITest.State) => ({
+        time: time + (increment? 1 : -1)
       }),
       this.shouldIncrement
     );
@@ -25,13 +25,19 @@ class Index extends React.PureComponent<ITest.Props, ITest.State> {
   }
   
   private shouldIncrement() {
-    const {blue} = this.state;
+    const {time} = this.state;
+    const {
+      innerHeight: height,
+      innerWidth: width
+    } = window;
     
-    if (blue <= 0) {
+    const limit = height > width ? width : height;
+    
+    if (time <= 0) {
       this.setState({increment: true});
     }
     
-    if (blue >= 1) {
+    if (time >= limit) {
       this.setState({increment: false});
     }
   }
@@ -45,12 +51,24 @@ class Index extends React.PureComponent<ITest.Props, ITest.State> {
   }
   
   public render() {
-    const {blue} = this.state;
+    const {time} = this.state;
+    
+    const colors = [
+      [ Math.cos(0.002*time), Math.sin(0.002*time), 0.2, 1 ],
+      [ Math.sin(0.002*time), -Math.cos(0.002*time), 0.1, 1 ],
+      [ 0.3, Math.sin(3+0.002*time), Math.cos(1+0.003*time), 1 ]
+    ];
+    
+    const particles = [
+      [ 0.3, 0.3 ],
+      [ 0.7, 0.5 ],
+      [ 0.4, 0.9 ]
+    ];
     
     return (
       <Node
-        shader={Shader.helloBlue}
-        uniforms={{blue}}
+        shader={Shader.gradients}
+        uniforms={{colors, particles}}
       />
     );
   }
