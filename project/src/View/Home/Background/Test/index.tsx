@@ -26,18 +26,12 @@ class Index extends React.PureComponent<ITest.Props, ITest.State> {
   
   private shouldIncrement() {
     const {time} = this.state;
-    const {
-      innerHeight: height,
-      innerWidth: width
-    } = window;
-    
-    const limit = height > width ? width : height;
     
     if (time <= 0) {
       this.setState({increment: true});
     }
     
-    if (time >= limit) {
+    if (time >= 1000) {
       this.setState({increment: false});
     }
   }
