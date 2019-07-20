@@ -11,24 +11,12 @@
     "home": {
       "path": "/",
       "name": "Home",
-      "component": {
-        "graphic": {
-          "content": {
-            "image": "/image/noise.black.blur.jpg",
-            "name": "KENI CHI LAM",
-            "slogan": "Ki\nCL"
-          }
-        }
-      },
       "content": {
-        "heading": "Welcome to Ki.CL",
-        "profession": [
-          "Interactive Design",
-          "Graphic Design"
-        ],
-        "loader": {
-          "text": "fetching contents..."
-        }
+        "heading": "KENI CHI LAM",
+        "messages": [
+          "Thank you for visiting!",
+          "I am currently reconstructing my site, please come back in a month or so, hopefully I will have more story to tell by then."
+        ]
       }
     },
     "about": {

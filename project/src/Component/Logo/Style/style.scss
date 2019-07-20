@@ -7,9 +7,9 @@ $size: get($grid, 'gutter');
 $transition-duration: get($duration, 'fast');
 $transition-timing-function: get($ease, 'default.in');
 
+@include set-logo-size($size);
+
 [data-component='#{$default}'] {
-  font-size: $size;
-  height: $size;
   overflow: hidden;
   position: relative;
 
@@ -37,13 +37,5 @@ $transition-timing-function: get($ease, 'default.in');
     top: 0;
     width: 100%;
     z-index: 2;
-  }
-
-  .#{$square} {
-    width: $size;
-  }
-
-  @include mobile() {
-    width: $size;
   }
 }
