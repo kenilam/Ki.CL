@@ -1,3 +1,4 @@
+@import '../../../Component/Logo/Style/mixins';
 @import './value';
 
 $appear: #{get($css-transition, 'appear.default')};
@@ -8,83 +9,58 @@ $exit: #{get($css-transition, 'exit.default')};
 $exit-active: #{get($css-transition, 'exit.active')};
 $exit-done: #{get($css-transition, 'exit.active')};
 
-$global-header: get($component-global-header, 'default');
-
-$link: #{get($component-link, 'default')};
-$link-active: #{get($component-link, 'active')};
-$link-transition-duration: #{get($duration, 'faster')};
-$link-transition-timing-function: #{get($ease, 'circ.in')};
-
 $coming-soon-color: #{get($white, 'default')};
 
-$navigation: #{get($component-navigation, 'default')};
+$global-header: get($component-global-header, 'default');
 
-$canvas: #{get($component-canvas, 'default')};
-
-$color: #{get($white, 'default')};
-$hover-color: #{get($black, 'default')};
+$logo: get($component-logo, 'default');
+$logo-font-size: get($font, 'font-size.largest');
 
 $gutter: #{get($grid, 'gutter')};
+$gap: #{get($grid, 'narrow')};
+$space: #{get($grid, 'narrow')};
 
 [data-routes='home'] {
   display: grid;
-  grid-template-areas: '.' '.' 'navigation' ' .';
-  grid-template-rows: 47vh 2rem $linkSize auto;
+  grid-gap: $gutter;
+  grid-template-areas:
+    '. . .'
+    '. logo .'
+    '. heading .'
+    '. article .'
+    '. . .';
+  grid-template-columns: minmax($gutter, 100%) auto minmax($gutter, 100%);
+  grid-template-rows: minmax($gutter, 100%) auto auto auto minmax($gutter, 100%);
   left: 0;
-  padding: $gutter;
+  padding: $gap;
   position: absolute;
+  text-align: center;
   top: 0;
 
-  [data-component='#{$link}'] {
-    align-items: center;
-    border: 2px solid $color;
-    border-radius: 50%;
-    color: $color;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    transition-duration: $link-transition-duration;
-    transition-property: background-color, color, transform;
-    transition-timing-function: $link-transition-timing-function;
-    width: $linkSize;
-    will-change: background-color, color, transform;
+  @include set-logo-size($logo-font-size);
 
-    &:hover,
-    &.#{$link-active} {
-      background-color: $color;
-      color: $hover-color;
-      transform: scale(1.3);
-    }
-  }
-
-  [data-component='#{$navigation}'],
-  p {
-    grid-area: navigation;
+  [data-component=#{$logo}],
+  h2,
+  article {
     justify-self: center;
-    position: relative;
-    z-index: 2;
   }
 
-  [data-component='#{$canvas}'] {
-    height: 100vh;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    z-index: 1;
+  [data-component=#{$logo}] {
+    grid-area: logo;
+  }
+
+  h2 {
+    grid-area: heading;
+  }
+
+  article {
+    grid-area: article;
   }
 
   p {
-    color: $coming-soon-color;
-  }
-
-  &.#{$enter},
-  &.#{$exit} {
-    z-index: 300;
-  }
-
-  &.#{$exit} {
-    transition-delay: 2000ms;
+    + p {
+      padding-top: $space;
+    }
   }
 }
 

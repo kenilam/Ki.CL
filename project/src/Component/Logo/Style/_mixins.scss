@@ -1,0 +1,18 @@
+$default: get($component-logo, 'default');
+$square: get($component-logo, 'square');
+
+@mixin set-logo-size($size) {
+  [data-component='#{$default}'] {
+    font-size: $size;
+    height: $size;
+    width: auto;
+
+    &.#{$square} {
+      width: $size;
+    }
+
+    @include mobile() {
+      width: $size;
+    }
+  }
+}
