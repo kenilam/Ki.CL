@@ -20,13 +20,13 @@ const Home: React.FunctionComponent<IHome.Props> = () => (
     <Logo isSquare={true}/>
     <h2>{heading}</h2>
     <article>
-    {
-      messages.map(
-        (text: string) => (
-          <p key={RandomId()}>{text}</p>
+      {
+        messages.map(
+          (text: string) => (
+            <p key={RandomId()}>{text}</p>
+          )
         )
-      )
-    }
+      }
     </article>
   </main>
 );

@@ -57,6 +57,7 @@
     "install": "^0.12.2",
     "intersection-observer": "^0.6.0",
     "moment": "^2.24.0",
+    "node": "^12.8.0",
     "npm": "^6.9.0",
     "path-to-regexp": "^3.0.0",
     "pixi.js": "^5.0.3",
