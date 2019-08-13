@@ -21,6 +21,10 @@ $gap: #{get($grid, 'narrow')};
 $space: #{get($grid, 'narrow')};
 
 [data-routes='home'] {
+  background-image: url('../../../../asset/image/big.sur.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60vw;
   display: grid;
   grid-gap: $gutter;
   grid-template-areas:

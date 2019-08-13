@@ -9,6 +9,7 @@ import Works from './Works';
 
 const View = (
   <Router
+    appear={true}
     classNames={Style.view}
     routeIndex={0}
     transitionStyle={TransitionStyleName.fade}
