@@ -5,11 +5,12 @@ import {GLSL, Node, Shaders} from 'gl-react';
 import Style from './Style';
 
 const WebGL = ({
+  className,
   children,
   height,
   width
 }: IWebGL.Props) => (
-  <div data-component={Style.default}>
+  <div className={className} data-component={Style.default}>
     <Surface
       height={height}
       width={width}

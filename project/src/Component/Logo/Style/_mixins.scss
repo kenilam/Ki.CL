@@ -5,7 +5,7 @@ $square: get($component-logo, 'square');
   [data-component='#{$default}'] {
     font-size: $size;
     height: $size;
-    width: auto;
+    width: $size * 2.4;
 
     &.#{$square} {
       width: $size;

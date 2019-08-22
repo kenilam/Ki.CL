@@ -5,6 +5,7 @@ import {RandomId} from "@/Helper";
 import * as IHome from '@/View/Home/spec';
 import React from 'react';
 import './Style';
+import Background from './Background';
 
 const {
   view: {
@@ -17,17 +18,20 @@ const {
 
 const Home: React.FunctionComponent<IHome.Props> = () => (
   <main data-routes='home'>
-    <Logo isSquare={true}/>
-    <h2>{heading}</h2>
-    <article>
-      {
-        messages.map(
-          (text: string) => (
-            <p key={RandomId()}>{text}</p>
+    <Background/>
+    <div>
+      <Logo isSquare={true}/>
+      <h2>{heading}</h2>
+      <article>
+        {
+          messages.map(
+            (text: string) => (
+              <p key={RandomId()}>{text}</p>
+            )
           )
-        )
-      }
-    </article>
+        }
+      </article>
+    </div>
   </main>
 );
 

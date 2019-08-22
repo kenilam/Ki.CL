@@ -14,35 +14,40 @@ $coming-soon-color: #{get($white, 'default')};
 $global-header: get($component-global-header, 'default');
 
 $logo: get($component-logo, 'default');
-$logo-font-size: get($font, 'font-size.largest');
+$logo-size: get($font, 'font-size.larger');
+
+$webGL: get($component-webGL, 'default');
 
 $gutter: #{get($grid, 'gutter')};
-$gap: #{get($grid, 'narrow')};
-$space: #{get($grid, 'narrow')};
+$space: #{get($grid, 'space')};
+
+$height: 60vw;
+$width: 80vw;
+$height-landscape: 60vh;
+$width-landscape: 80vh;
 
 [data-routes='home'] {
+  @include set-logo-size($logo-size);
+
   background-image: url('../../../../asset/image/big.sur.png');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 60vw 40vw;
+  background-size: $width $height;
   color: $red;
   display: grid;
-  grid-gap: $gutter;
   grid-template-areas:
     '. . .'
-    '. logo .'
-    '. heading .'
-    '. article .'
+    '. div .'
     '. . .';
-  grid-template-columns: minmax($gutter, 100%) auto minmax($gutter, 100%);
-  grid-template-rows: minmax($gutter, 30vw) auto auto auto minmax($gutter, 30vw);
-  left: 0;
-  padding: $gap;
-  position: absolute;
   text-align: center;
-  top: 0;
+  grid-template-columns: auto calc(#{$width} + #{$logo-size}) auto;
+  grid-template-rows: auto calc(#{$height} + #{$logo-size}) auto;
 
-  @include set-logo-size($logo-font-size);
+  @include landscape() {
+    background-size: $width-landscape $height-landscape;
+    grid-template-columns: auto calc(#{$width-landscape} + #{$logo-size}) auto;
+    grid-template-rows: auto calc(#{$height-landscape} + #{$logo-size}) auto;
+  }
 
   [data-component=#{$logo}],
   h2,
@@ -50,21 +55,57 @@ $space: #{get($grid, 'narrow')};
     justify-self: center;
   }
 
+  [data-component=#{$webGL}] {
+    background-color: get($black, "pure");
+    height: $height;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: $width;
+    z-index: 0;
+
+    @include landscape() {
+      height: $height-landscape;
+      widows: $width-landscape;
+    }
+  }
+
   [data-component=#{$logo}] {
     grid-area: logo;
+  }
+
+  article {
+    color: get($white, "default");
+    grid-area: article;
+  }
+
+  div:last-child {
+    display: grid;
+    grid-area: div;
+    grid-gap: $space;
+    grid-template-areas:
+      '. logo .'
+      '. heading .'
+      '. . .'
+      '. article .'
+      '. . .';
+    grid-template-columns: $gutter minmax(min-content, max-content) $gutter;
+    grid-template-rows: minmax(min-content, max-content) minmax(min-content, max-content) auto minmax(min-content, max-content) $gutter;
+    position: relative;
+    z-index: 1;
   }
 
   h2 {
     grid-area: heading;
   }
 
-  article {
-    grid-area: article;
-  }
-
   p {
     + p {
       padding-top: $space;
+    }
+
+    &:first-child {
+      font-size: get($font, "font-size.medium");
     }
   }
 }
