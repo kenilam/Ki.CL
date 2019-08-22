@@ -2,16 +2,12 @@ html {
   @include font-smoothing();
 
   background-color: get($white, 'default');
-  color: get($black, 'light');
+  color: get($black, 'default');
   font-family: get($font, 'font-family.normal');
   font-size: get($font, 'font-size.normal');
   font-weight: get($font, 'font-weight.normal');
   letter-spacing: get($font, 'letter-spacing');
   line-height: get($font, 'line-height');
-}
-
-* {
-  color: get($black, 'default');
 }
 
 h1,
