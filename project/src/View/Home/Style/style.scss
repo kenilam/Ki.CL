@@ -57,17 +57,12 @@ $width-landscape: 80vh;
 
   [data-component=#{$webGL}] {
     background-color: get($black, "pure");
-    height: $height;
+    height: 100vh;
     left: 0;
     position: absolute;
     top: 0;
-    width: $width;
+    width: 100vw;
     z-index: 0;
-
-    @include landscape() {
-      height: $height-landscape;
-      widows: $width-landscape;
-    }
   }
 
   [data-component=#{$logo}] {
