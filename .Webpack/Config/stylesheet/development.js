@@ -15,7 +15,7 @@ const CSSLoaders = [
       importLoaders: 2,
       modules: true,
       sourceMap: true,
-      // localIdentName: '[local]'
+      localIdentName: '[local]'
     },
   },
   {

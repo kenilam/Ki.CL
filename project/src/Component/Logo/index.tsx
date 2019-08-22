@@ -3,6 +3,7 @@ import {Link} from '@/Component';
 import React from 'react';
 import * as ILogo from './spec';
 import Style from './Style';
+import classnames from 'classnames';
 
 const {
   siteName,
@@ -11,14 +12,25 @@ const {
   }
 } = resources;
 
-const Logo: React.FunctionComponent<ILogo.Props> = () => (
-  <h1 data-component={Style.default}>
-    <Link
-      to={path}
+const Logo: React.FunctionComponent<ILogo.Props> = ({
+  isSquare = false
+}) => {
+  const className = classnames({
+    [Style.square]: isSquare
+  });
+  
+  return (
+    <h1
+      data-component={Style.default}
+      className={className}
     >
-      {siteName}
-    </Link>
-  </h1>
-);
+      <Link
+        to={path}
+      >
+        {siteName}
+      </Link>
+    </h1>
+  );
+};
 
 export default Logo;

@@ -11,6 +11,7 @@ declare module ILogo {
   }
   
   interface Props extends Component {
+    isSquare?: boolean;
   }
 }
 
