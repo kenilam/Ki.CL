@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import {CSSTransition as Origin} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-import * as ICSSTransition from './spec';
+import ICSSTransition from './spec';
 import Style, {TransitionStyle, TransitionStyleName} from './Style';
 import {addEndListener, classNameModifier} from './Utility';
 

@@ -1,5 +1,5 @@
 import * as engine from 'units-css';
-import * as IHelper from './spec';
+import IHelper from './spec';
 
 const DOM_DEPENDED_UNITS = ['%', 'ch', 'em', 'ex'];
 const TIME_UNITS = ['s', 'ms'];

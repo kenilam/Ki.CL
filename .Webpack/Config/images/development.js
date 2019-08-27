@@ -1,11 +1,16 @@
 const name = '[path][name].[ext]'
 
-const use = [{
+const use = [
+  {
   loader: 'file-loader',
-  options: {
-    name
+    options: {
+      name
+    },
   },
-},]
+  {
+    loader: 'image-webpack-loader',
+  }
+]
 
 const images = {
   test: /\.(jpe?g|png|gif|svg)$/i,

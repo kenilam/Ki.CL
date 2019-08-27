@@ -1,7 +1,7 @@
 import resources from '$/resources';
 import {Redirect, Route} from '@/Component/Router';
 import React from 'react';
-import * as IPageNotFound from './spec';
+import IPageNotFound from './spec';
 
 const {view: {home: {path}}} = resources;
 

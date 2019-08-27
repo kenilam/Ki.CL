@@ -1,5 +1,6 @@
 $style: get($css-transition-style, 'custom');
 
 .#{$style} {
-  transition-property: none;
+  transition-property: all;
+  will-change: auto;
 }

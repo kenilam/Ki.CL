@@ -1,5 +1,5 @@
-import * as ICSSTransition from '@/Component/CSSTransition/spec';
-import * as ITransition from '@/Component/Transition/spec';
+import ICSSTransition from '@/Component/CSSTransition/spec';
+import ITransition from '@/Component/Transition/spec';
 import {RouteComponentProps} from 'react-router-dom';
 
 declare module IRouter {
@@ -15,4 +15,4 @@ declare module IRouter {
   }
 }
 
-export = IRouter;
+export default IRouter;

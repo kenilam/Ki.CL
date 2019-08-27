@@ -3,4 +3,4 @@ declare module IApp {
   }
 }
 
-export = IApp;
+export default IApp;

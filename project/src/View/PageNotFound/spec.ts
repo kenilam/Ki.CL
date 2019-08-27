@@ -5,4 +5,4 @@ declare module IPageNotFound {
   }
 }
 
-export = IPageNotFound;
+export default IPageNotFound;

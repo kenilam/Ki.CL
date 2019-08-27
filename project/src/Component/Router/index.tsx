@@ -2,7 +2,7 @@ import resources from '$/resources';
 import {Transition} from '@/Component';
 import React from 'react';
 import {HashRouter as Provider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
-import * as IRouter from './spec';
+import IRouter from './spec';
 
 const {view} = resources;
 
@@ -20,7 +20,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     onExited,
     routeIndex,
     transitionIn,
-    transitionStyle
+    transitionStyle,
+    unmountOnExit,
   }
 ) => {
   const Component: React.FunctionComponent<IRouter.Component> = (
@@ -81,6 +82,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         transitionIn={transitionIn}
         transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
         transitionStyle={transitionStyle}
+        unmountOnExit={unmountOnExit}
       >
         <Switch location={location}>{children}</Switch>
       </Transition>

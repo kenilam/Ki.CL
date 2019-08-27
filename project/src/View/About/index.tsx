@@ -1,7 +1,7 @@
 import resources from '$/resources';
 import {Route} from '@/Component/Router';
 import React from 'react';
-import * as IAbout from './spec';
+import IAbout from './spec';
 import './Style';
 
 const {view: {about: {path}}} = resources;

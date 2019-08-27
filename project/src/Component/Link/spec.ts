@@ -13,4 +13,4 @@ declare module ILink {
   }
 }
 
-export = ILink;
+export default ILink;

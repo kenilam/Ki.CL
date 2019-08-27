@@ -13,4 +13,4 @@ declare module IGlobalHeader {
     transitionInPaths: string[];
   }
 }
-export = IGlobalHeader;
+export default IGlobalHeader;

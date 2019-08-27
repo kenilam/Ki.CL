@@ -1,11 +1,10 @@
 import resources from '$/resources';
-import {Logo} from '@/Component';
+import {Asynchronizer, Logo} from '@/Component';
 import {Route, withRouter} from '@/Component/Router';
 import {RandomId} from "@/Helper";
-import * as IHome from '@/View/Home/spec';
+import IHome from '@/View/Home/spec';
 import React from 'react';
 import './Style';
-import Background from './Background';
 
 const {
   view: {
@@ -16,24 +15,39 @@ const {
   }
 } = resources;
 
-const Home: React.FunctionComponent<IHome.Props> = () => (
-  <main data-routes='home'>
-    <Background/>
-    <div>
-      <Logo isSquare={true}/>
-      <h2>{heading}</h2>
-      <article>
-        {
-          messages.map(
-            (text: string) => (
-              <p key={RandomId()}>{text}</p>
-            )
-          )
-        }
-      </article>
-    </div>
-  </main>
-);
+const fetchImage = new Promise((resolve) => {
+  const img = new Image();
+  img.onload = () => {
+    resolve();
+  };
+  img.src = require('../../../asset/image/big.sur.png');
+});
+
+const Home: React.FunctionComponent<IHome.Props> = () => {
+  return (
+    <main data-routes='home'>
+      <Asynchronizer awaitFor={fetchImage}>
+        <div>
+          <Logo isSquare={true}/>
+          <h2>{heading}</h2>
+          <article>
+            {
+              messages.map(
+                (text: string) => (
+                  <p key={RandomId()}>
+                <span>
+                  {text}
+                </span>
+                  </p>
+                )
+              )
+            }
+          </article>
+        </div>
+      </Asynchronizer>
+    </main>
+  );
+};
 
 const Component = withRouter(Home);
 

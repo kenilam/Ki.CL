@@ -1,4 +1,4 @@
-$style: get($css-transition-style, 'fade');
+$style: get($css-transition-style, 'zoom-out');
 $appear: get($css-transition, 'appear.default');
 $appear-active: get($css-transition, 'appear.active');
 $enter: get($css-transition, 'enter.default');
@@ -8,13 +8,14 @@ $exit-active: get($css-transition, 'exit.active');
 $exit-done: get($css-transition, 'exit.done');
 
 .#{$style} {
-  transition-property: opacity;
-  will-change: opacity;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
 
   &.#{$appear}:not(.#{$appear-active}),
   &.#{$enter}:not(.#{$enter-active}),
   &.#{$exit}.#{$exit-active},
   &.#{$exit}.#{$exit-done} {
     opacity: 0;
+    transform: scale(1.3);
   }
 }

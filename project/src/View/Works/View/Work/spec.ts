@@ -10,4 +10,4 @@ declare module IWork {
   }
 }
 
-export = IWork;
+export default IWork;

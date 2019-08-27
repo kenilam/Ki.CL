@@ -5,4 +5,4 @@ declare module IAbout {
   }
 }
 
-export = IAbout;
+export default IAbout;

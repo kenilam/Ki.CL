@@ -15,4 +15,4 @@ declare module ILogo {
   }
 }
 
-export = ILogo;
+export default ILogo;

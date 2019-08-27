@@ -1,5 +1,5 @@
 import React, {DependencyList, useEffect, useState} from 'react';
-import * as IAudio from './spec';
+import IAudio from './spec';
 
 const AudioPlayer = ({url}: IAudio.Props) => {
   const [index]: IAudio.IndexState = useState(0);

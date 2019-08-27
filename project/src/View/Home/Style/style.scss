@@ -1,6 +1,7 @@
 @import '../../../Component/Logo/Style/mixins';
 @import './value';
 
+$cssTransition: #{get($css-transition, 'default')};
 $appear: #{get($css-transition, 'appear.default')};
 $appear-active: #{get($css-transition, 'appear.active')};
 $enter: #{get($css-transition, 'enter.default')};
@@ -19,79 +20,107 @@ $logo-size: get($font, 'font-size.larger');
 $webGL: get($component-webGL, 'default');
 
 $gutter: #{get($grid, 'gutter')};
-$space: #{get($grid, 'space')};
+$space: #{get($grid, 'narrow')};
 
 $height: 60vw;
 $width: 80vw;
 $height-landscape: 60vh;
 $width-landscape: 80vh;
 
+$heading-font-weight: get($font, "font-weight.bold");
+$heading-font-size: get($font, "font-size.medium");
+
+$highlight-background-color: get($black, "default");
+$highlight-line-height: get($font, "font-size.large");
+$highlight-space: get($grid, "space");
+
+$font-color: get($black, "default");
+
 [data-routes='home'] {
   @include set-logo-size($logo-size);
 
-  background-image: url('../../../../asset/image/big.sur.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: $width $height;
-  color: $red;
+  color: $font-color;
   display: grid;
   grid-template-areas:
     '. . .'
     '. div .'
     '. . .';
-  text-align: center;
   grid-template-columns: auto calc(#{$width} + #{$logo-size}) auto;
   grid-template-rows: auto calc(#{$height} + #{$logo-size}) auto;
+  text-align: center;
+  position: absolute;
+  top: 0;
 
   @include landscape() {
     background-size: $width-landscape $height-landscape;
-    grid-template-columns: auto calc(#{$width-landscape} + #{$logo-size}) auto;
-    grid-template-rows: auto calc(#{$height-landscape} + #{$logo-size}) auto;
+    grid-template-columns: auto calc(#{$width-landscape} + #{$gutter}) auto;
+    grid-template-rows: auto calc(#{$height-landscape} + #{$gutter}) auto;
   }
 
-  [data-component=#{$logo}],
+  h1,
   h2,
   article {
+    transition-duration: get($duration, 'normal');
+    transition-property: opacity, transform;
     justify-self: center;
-  }
-
-  [data-component=#{$webGL}] {
-    background-color: get($black, "pure");
-    height: 100vh;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    z-index: 0;
-  }
-
-  [data-component=#{$logo}] {
-    grid-area: logo;
   }
 
   article {
     color: get($white, "default");
     grid-area: article;
+    transition-delay: get($duration, 'fast');
   }
 
-  div:last-child {
+  div {
+    background-image: url('../../../../asset/image/big.sur.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: $width $height;
     display: grid;
     grid-area: div;
     grid-gap: $space;
     grid-template-areas:
+      '. . .'
       '. logo .'
       '. heading .'
       '. . .'
-      '. article .'
-      '. . .';
-    grid-template-columns: $gutter minmax(min-content, max-content) $gutter;
-    grid-template-rows: minmax(min-content, max-content) minmax(min-content, max-content) auto minmax(min-content, max-content) $gutter;
+      '. article .';
+    grid-template-columns: $gutter auto $gutter;
+    grid-template-rows: auto minmax(min-content, max-content) minmax(min-content, max-content) auto  minmax(min-content, max-content);
     position: relative;
     z-index: 1;
+
+    &.#{$appear-active},
+    &.#{$enter-active},
+    &.#{$exit-active} {
+      transition-duration: get($duration, 'normal');
+    }
+
+    &.#{$cssTransition} {
+      h1,
+      h2,
+      article {
+        opacity: 0;
+      }
+
+      h1 {
+        transform: scale(2);
+      }
+
+      article {
+        transform: translate3d(0, $gutter, 0);
+      }
+    }
+  }
+
+  h1 {
+    transition-delay: get($duration, 'fastest');
+    grid-area: logo;
   }
 
   h2 {
     grid-area: heading;
+    transition-delay: get($duration, 'faster');
   }
 
   p {
@@ -100,23 +129,20 @@ $width-landscape: 80vh;
     }
 
     &:first-child {
-      font-size: get($font, "font-size.medium");
+      span {
+        font-weight: $heading-font-weight;
+        font-size: $heading-font-size;
+      }
     }
-  }
-}
 
-[data-entered-routes='home'] {
-  [data-component='#{$global-header}'].#{$enter}.#{$enter-active} {
-    transition-delay: 2500ms;
-  }
-}
-
-[data-exited-routes='home'] {
-  [data-routes] {
-    &.#{$appear}.#{$appear-active},
-    &.#{$enter}.#{$enter-active},
-    &.#{$exit}.#{$exit-active} {
-      transition-delay: 2500ms;
+    &:last-child {
+      span {
+        background-color: $highlight-background-color;
+        box-shadow: -16px 0 0 $highlight-background-color;
+        line-height: $highlight-line-height;
+        padding: $highlight-space $highlight-space $highlight-space 0;
+        white-space: pre-wrap;
+      }
     }
   }
 }

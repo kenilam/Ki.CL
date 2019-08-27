@@ -1,7 +1,7 @@
 import resources from '$/resources';
 import {Link} from '@/Component';
 import React from 'react';
-import * as ILogo from './spec';
+import ILogo from './spec';
 import Style from './Style';
 import classnames from 'classnames';
 

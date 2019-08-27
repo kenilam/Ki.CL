@@ -5,4 +5,4 @@ declare module IWorks {
   }
 }
 
-export = IWorks;
+export default IWorks;

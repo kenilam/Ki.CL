@@ -4,4 +4,4 @@ declare module IView {
   }
 }
 
-export = IView;
+export default IView;

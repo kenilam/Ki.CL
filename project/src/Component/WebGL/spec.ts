@@ -22,4 +22,4 @@ declare module IWebGL {
   // }
 }
 
-export = IWebGL;
+export default IWebGL;

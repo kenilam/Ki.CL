@@ -13,4 +13,4 @@ declare module IHome {
   }
 }
 
-export = IHome;
+export default IHome;

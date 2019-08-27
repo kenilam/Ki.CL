@@ -1,4 +1,4 @@
-import * as IWebGL from "@/Component/WebGL/spec";
+import IWebGL from "@/Component/WebGL/spec";
 import React from 'react';
 import { Surface } from 'gl-react-dom';
 import {GLSL, Node, Shaders} from 'gl-react';
