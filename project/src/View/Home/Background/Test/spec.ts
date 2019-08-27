@@ -9,4 +9,4 @@ declare module ITest {
   }
 }
 
-export = ITest;
+export default ITest;

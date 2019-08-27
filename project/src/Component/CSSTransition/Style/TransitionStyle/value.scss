@@ -1,4 +1,5 @@
 @value custom: #{get($css-transition-style, 'custom')};
 @value fade: #{get($css-transition-style, 'fade')};
 @value slideDown: #{get($css-transition-style, 'slide-down')};
-@value slideUp: #{get($css-transition-style, 'slide-up')};
+@value zoomIn: #{get($css-transition-style, 'zoom-in')};
+@value zoomOut: #{get($css-transition-style, 'zoom-out')};

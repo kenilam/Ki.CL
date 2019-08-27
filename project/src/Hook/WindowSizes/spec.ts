@@ -18,4 +18,4 @@ declare module IWindowSizes {
   }
 }
 
-export = IWindowSizes;
+export default IWindowSizes;

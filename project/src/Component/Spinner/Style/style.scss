@@ -1,0 +1,61 @@
+$default: get($component-spinner, 'default');
+
+$color: get($black, 'light');
+$speed: get($duration, 'slow');
+$size: get($grid, 'gutter');
+
+[data-component='#{$default}'] {
+  animation-duration: $speed;
+  animation-iteration-count: infinite;
+  animation-name: #{$default};
+  animation-timing-function: linear;
+  color: $color;
+  fill: currentColor;
+  height: $size;
+  left: 50%;
+  position: absolute;
+  stroke: $color;
+  stroke-width: 1px;
+  transform: translate3d(-50%, -50%, 0);
+  top: 50%;
+  width: $size;
+  z-index: 10000;
+
+  circle {
+    animation-duration: $speed;
+    animation-iteration-count: infinite;
+    animation-name: #{$default}-circle;
+    animation-timing-function: ease-in-out;
+    transform-origin: 70% 30%;
+
+    + circle {
+      animation-delay: -$speed/2;
+      transform-origin: 70% 70%;
+    }
+  }
+
+  text {
+    opacity: 0;
+  }
+}
+
+@keyframes #{$default} {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes #{$default}-circle {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+}

@@ -10,7 +10,7 @@ declare module IAudio {
   type TracksState = [Tracks, UpdateTracks];
   
   interface Events extends SyntheticEvent<HTMLAudioElement, Event> {
-  };
+  }
   
   interface Props {
     onAbort?: (event: Events) => void;
@@ -22,4 +22,4 @@ declare module IAudio {
   }
 }
 
-export = IAudio;
+export default IAudio;

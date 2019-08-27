@@ -1,5 +1,5 @@
-import * as ICSSTransition from '@/Component/CSSTransition/spec';
-import * as ILink from '@/Component/Link/spec';
+import ICSSTransition from '@/Component/CSSTransition/spec';
+import ILink from '@/Component/Link/spec';
 import {LocationDescriptor} from 'history';
 import {MouseEvent} from 'react';
 
@@ -22,4 +22,4 @@ declare module INavigation {
   }
 }
 
-export = INavigation;
+export default INavigation;

@@ -36,9 +36,11 @@ declare module ICSSTransition {
     fade: string
     slideUp: string;
     slideDown: string;
+    zoomIn: string;
+    zoomOut: string;
     
     [key: string]: string;
   }
 }
 
-export = ICSSTransition;
+export default ICSSTransition;

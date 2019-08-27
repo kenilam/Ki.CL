@@ -1,4 +1,4 @@
-import * as ILink from '@/Component/Navigation/spec';
+import ILink from '@/Component/Navigation/spec';
 import './style.scss';
 import value from './value.scss';
 

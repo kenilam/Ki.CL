@@ -47,4 +47,4 @@ declare module IResources {
   }
 }
 
-export = IResources;
+export default IResources;

@@ -1,3 +1,4 @@
+import Asynchronizer from './Asynchronizer';
 import AudioPlayer from './AudioPlayer';
 import CSSTransition from './CSSTransition';
 import './Font';
@@ -10,6 +11,7 @@ import Transition from './Transition';
 import WebGL from './WebGL';
 
 export {
+  Asynchronizer,
   AudioPlayer,
   CSSTransition,
   GlobalHeader,

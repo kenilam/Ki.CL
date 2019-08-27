@@ -14,6 +14,7 @@ declare module IWebGL {
   // }
   
   interface Props extends SurfaceProps {
+    className?: string;
   }
   
   // interface Props extends Sizes {
@@ -21,4 +22,4 @@ declare module IWebGL {
   // }
 }
 
-export = IWebGL;
+export default IWebGL;

@@ -10,7 +10,7 @@ void main () {
   for (int i=0; i<3; i++) {
     vec4 c = colors[i];
     vec2 p = particles[i];
-    float d = c.a * smoothstep(0.6, 0.2, distance(p, uv));
+    float d = c.a * smoothstep(0.4, 0.1, distance(p, uv));
     sum += d * vec4(c.a * c.rgb, c.a);
   }
   if (sum.a > 1.0) {

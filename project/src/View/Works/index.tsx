@@ -1,7 +1,7 @@
 import resources from '$/resources';
 import {Route} from '@/Component/Router';
 import React from 'react';
-import * as IWorks from './spec';
+import IWorks from './spec';
 import './Style';
 import View from './View';
 

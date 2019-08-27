@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React from 'react';
 import {TransitionGroup} from 'react-transition-group';
 import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
-import * as ITransition from './spec';
+import ITransition from './spec';
 import Style from './Style';
 
 const Transition: React.FunctionComponent<ITransition.Props> = (
@@ -21,6 +21,7 @@ const Transition: React.FunctionComponent<ITransition.Props> = (
     transitionIn,
     transitionKey,
     transitionStyle,
+    unmountOnExit,
   }
 ) => {
   const className = classnames(classNames, Style.transition);
@@ -68,7 +69,8 @@ const Transition: React.FunctionComponent<ITransition.Props> = (
         onExiting,
         transitionIn,
         transitionKey,
-        transitionStyle
+        transitionStyle,
+        unmountOnExit
       })}
     </TransitionGroup>
   );

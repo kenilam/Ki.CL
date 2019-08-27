@@ -1,6 +1,6 @@
 import resources from '$/resources';
 import {Link} from '@/Component';
-import * as INavigation from '@/Component/Navigation/spec';
+import INavigation from '@/Component/Navigation/spec';
 import {RandomId} from '@/Helper';
 import classnames from 'classnames';
 import React from 'react';

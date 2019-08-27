@@ -1,4 +1,4 @@
-$default: get($component-canvas, 'default');
+$default: get($component-webGL, 'default');
 
 $content: get($kicl, 'content.default');
 $name: get($kicl, 'name');

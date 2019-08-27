@@ -1,4 +1,4 @@
-import * as IWebGL from '@/Component/WebGL/spec';
+import IWebGL from '@/Component/WebGL/spec';
 import './style.scss';
 import value from './value.scss';
 

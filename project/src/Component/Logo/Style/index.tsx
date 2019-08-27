@@ -1,4 +1,4 @@
-import * as ILogo from '@/Component/Logo/spec';
+import ILogo from '@/Component/Logo/spec';
 import './style.scss';
 import value from './value.scss';
 
