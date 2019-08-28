@@ -1,9 +1,17 @@
 declare module IAsynchronizer {
+  interface ClassNames extends IClassNames {
+    delay: string;
+  }
+  
   type IsLoading = boolean;
-  type StillLoading = (isLoading: boolean) => void;
+  type StillLoading = (isLoading: IsLoading) => void;
   type LoadingState = [IsLoading, StillLoading];
   
-  type awaitFor = Promise<any>;
+  type SpinnerRemoved = boolean;
+  type removeSpinner = (remove: SpinnerRemoved) => void;
+  type SpinnerState = [SpinnerRemoved, removeSpinner];
+  
+  type awaitFor = string;
   
   interface Props {
     awaitFor: awaitFor

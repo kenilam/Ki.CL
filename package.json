@@ -56,6 +56,7 @@
     "history": "^4.9.0",
     "install": "^0.12.2",
     "intersection-observer": "^0.6.0",
+    "is-image": "^3.0.0",
     "moment": "^2.24.0",
     "node": "^12.8.1",
     "npm": "^6.11.1",
