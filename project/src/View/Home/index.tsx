@@ -15,18 +15,10 @@ const {
   }
 } = resources;
 
-const fetchImage = new Promise((resolve) => {
-  const img = new Image();
-  img.onload = () => {
-    resolve();
-  };
-  img.src = require('../../../asset/image/big.sur.png');
-});
-
 const Home: React.FunctionComponent<IHome.Props> = () => {
   return (
     <main data-routes='home'>
-      <Asynchronizer awaitFor={fetchImage}>
+      <Asynchronizer awaitFor={require('../../../asset/image/big.sur.png')}>
         <div>
           <Logo isSquare={true}/>
           <h2>{heading}</h2>

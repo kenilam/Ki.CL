@@ -1,12 +1,13 @@
+import ICSSTransition from "@/Component/CSSTransition/spec";
+
 declare module ISpinner {
   interface ClassNames extends IClassNames {
     default: string;
   }
   
-  type Show = boolean;
-  
   interface Props {
-    show: Show
+    transitionIn: ICSSTransition.TransitionIn,
+    onExited?: ICSSTransition.OnExit
   }
 }
 

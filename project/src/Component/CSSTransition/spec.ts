@@ -18,6 +18,8 @@ declare module ICSSTransition {
   type OnEnter = EnterHandler;
   type OnExit = ExitHandler;
   
+  type TransitionIn = boolean;
+  
   interface Props extends Partial<CSSTransitionProps> {
     addEndListener?: EndHandler;
     onEnter?: EnterHandler;
@@ -26,7 +28,7 @@ declare module ICSSTransition {
     onExit?: ExitHandler;
     onExiting?: ExitHandler;
     onExited?: ExitHandler;
-    transitionIn?: boolean;
+    transitionIn?: TransitionIn;
     transitionKey?: string;
     transitionStyle?: keyof TransitionStyle;
   }

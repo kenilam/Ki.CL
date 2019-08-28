@@ -22,5 +22,20 @@ declare module 'promise-polyfill/src/polyfill';
 declare module 'react-audio-player';
 declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
-declare module 'units-css';
+declare module 'units-css' {
+  export function parse (s: string) {
+    const value: number;
+    const unit: string;
+    
+    return {value, unit};
+  }
+  export function convert (
+    BASE_UNIT: string,
+    values: any,
+    htmlBodyElement?: HTMLBodyElement
+  ) {
+    const value: number;
+    return value;
+  }
+}
 declare module 'webgl-noise';
