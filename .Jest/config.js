@@ -3,7 +3,7 @@
 
 const { path: rootPath } = require('app-root-path');
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
-const { compilerOptions } = require('../.tsconfig');
+const { compilerOptions } = require('../tsconfig');
 
 module.exports = {
   cacheDirectory: '.jest-cache',
