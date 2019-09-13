@@ -11,11 +11,12 @@ const CSSLoaders = [
   {
     loader: 'css-loader',
     options: {
-      // camelCase: true,
       importLoaders: 2,
-      modules: true,
-      sourceMap: true,
-      localIdentName: '[local]'
+      localsConvention: 'asIs',
+      modules: {
+        localIdentName: '[local]'
+      },
+      sourceMap: true
     },
   },
   {
@@ -33,8 +34,10 @@ const SCSSLoaders = [].concat(CSSLoaders, [
   {
     loader: 'sass-loader',
     options: {
-      includePaths: [`${appRoot}/node_modules`, contextRoot, context],
-      sourceMap: true,
+      sassOptions: {
+        includePaths: [`${appRoot}/node_modules`, contextRoot, context]
+      },
+      sourceMap: true
     },
   }
 ])
