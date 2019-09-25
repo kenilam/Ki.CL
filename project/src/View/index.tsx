@@ -21,8 +21,10 @@ const paths: IView.Paths = {
 const transitionStyle: IRouter.TransitionStyleFunction = (
   {location}
 ) => TransitionStyle.name[
-  [abortPath, worksPath].some(path => path === location.pathname) ? 'custom' : 'fade'
-];
+  [abortPath, worksPath].some(
+    path => location ? path === location.pathname : true
+  ) ? 'custom' : 'fade'
+  ];
 
 const View = (
   <Router

@@ -1,9 +1,9 @@
 import resources from '$/resources';
 import CSSTransition, {TransitionStyle} from '@/Component/CSSTransition';
 import React, {useState} from 'react';
+import {MdClose} from 'react-icons/md';
 import ICloseButton from './spec';
 import Style from './Style';
-import {MdClose} from 'react-icons/md';
 
 const {component: {closeButton: {content: {message}}}} = resources;
 
@@ -12,7 +12,9 @@ const CloseButton: React.FunctionComponent<ICloseButton.Props> = ({
 }) => {
   const [transitionIn, updateTransitionIn] = useState(true);
   
-  const clickHandler = () => { updateTransitionIn(false); };
+  const clickHandler = () => {
+    updateTransitionIn(false);
+  };
   
   return (
     <CSSTransition
@@ -26,7 +28,7 @@ const CloseButton: React.FunctionComponent<ICloseButton.Props> = ({
         onClick={clickHandler}
         title={message}
       >
-        <MdClose/>
+        <MdClose />
         <span>{message}</span>
       </button>
     </CSSTransition>

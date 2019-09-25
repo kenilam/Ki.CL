@@ -40,14 +40,14 @@ const Navigation: React.FunctionComponent<INavigation.Props> = ({
           onMouseOver &&
           (event => {
             event.preventDefault();
-            onMouseOver(event, to);
+            onMouseOver(event);
           })
         }
         onClick={
           onClick &&
           (event => {
             event.preventDefault();
-            onClick(event, to);
+            onClick(event);
           })
         }
         key={RandomId()}

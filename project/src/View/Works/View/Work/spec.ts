@@ -1,11 +1,15 @@
-import {RouteComponentProps} from 'react-router';
-
 declare module IWork {
-  interface MatchParams {
-    projectId: string;
+  interface Match {
+    params: Params;
   }
   
-  interface Props extends RouteComponentProps<MatchParams> {
+  type Param = 'projectId';
+  
+  type Params = {
+    [name in Param]: string;
+  }
+  
+  interface Props {
   
   }
 }

@@ -30,7 +30,7 @@ const Transition: React.FunctionComponent<ITransition.Props> = (
     if (node && node.parentElement) {
       node.parentElement.classList.add(...className.split(' '));
     }
-  
+    
     onEnter && onEnter(node, isAppearing);
   };
   

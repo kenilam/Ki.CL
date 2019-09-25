@@ -1,5 +1,3 @@
-import {RouteComponentProps} from 'react-router';
-
 declare module IAbout {
   interface Data {
     sections: {
@@ -7,7 +5,7 @@ declare module IAbout {
     }
   }
   
-  interface Props extends RouteComponentProps {
+  interface Props {
   }
 }
 
