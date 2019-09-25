@@ -1,5 +1,5 @@
 import resources from '$/resources';
-import {Route, withRouter} from '@/Component/Router';
+import {Route} from '@/Component/Router';
 import IHome from '@/View/Home/spec';
 import React from 'react';
 import './Style';
@@ -21,7 +21,9 @@ const Home: React.FunctionComponent<IHome.Props> = () => (
   </main>
 );
 
-const Component = withRouter(Home);
-
 export {awaitFor, path};
-export default <Route path={path} exact={true} component={Component} />;
+export default (
+  <Route path={path} exact={true}>
+    <Home/>
+  </Route>
+)

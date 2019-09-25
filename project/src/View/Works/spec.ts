@@ -1,7 +1,5 @@
-import {RouteComponentProps} from 'react-router';
-
 declare module IWorks {
-  interface Props extends RouteComponentProps {
+  interface Props {
   }
 }
 

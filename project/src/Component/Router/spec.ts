@@ -11,7 +11,7 @@ declare module IRouter {
   type OnExit = ICSSTransition.OnExit;
   
   type TransitionStyleFunction = (
-    props?: RouteComponentProps
+    props?: Partial<RouteComponentProps>
   ) => ITransitionStyle.Key;
   
   interface Props extends ITransition.Props {

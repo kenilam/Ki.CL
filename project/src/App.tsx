@@ -9,7 +9,7 @@ const appRoot = document.querySelector('[app-root]');
 const pathname = window.location.hash.substr(2) || 'home';
 const shouldWaitFor = awaitFor[pathname as IView.View];
 
-const App = (
+const App = () => (
   <Provider>
     <GlobalHeader />
     {View}
@@ -19,9 +19,9 @@ const App = (
 const Component = () => (
   shouldWaitFor ? (
     <Asynchronizer awaitFor={shouldWaitFor}>
-      {() => App}
+      {App}
     </Asynchronizer>
-  ) : App
+  ) : <App/>
 );
 
 export {appRoot};
