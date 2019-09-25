@@ -21,7 +21,7 @@ const {
 const transitionInPaths = [paths.home, paths.works];
 
 const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = () => {
-  const { pathname } = useLocation();
+  const {pathname} = useLocation();
   
   return useMemo(
     () => (

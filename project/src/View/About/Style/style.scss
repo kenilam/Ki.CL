@@ -24,14 +24,7 @@ $gap: get($grid, 'gutter');
 $space: get($grid, 'space');
 $max-width: get($grid, 'default') * 10;
 $underlay-background-color: get($black, 'pure');
-$grid-template-areas: 'close-button close-button . .'
-  '. . . .'
-  '. logo logo .'
-  '. h2 h2 .'
-  '. content content .'
-  '. go-home go-home .'
-  '. . . .'
-  '. . . .';
+$grid-template-areas: 'close-button close-button . .' '. . . .' '. logo logo .' '. h2 h2 .' '. content content .' '. go-home go-home .' '. . . .' '. . . .';
 $grid-template-rows: min-content auto max-content max-content max-content max-content auto $bleed;
 
 [data-routes='about'] {
@@ -52,8 +45,8 @@ $grid-template-rows: min-content auto max-content max-content max-content max-co
     grid-template-areas: $grid-template-areas;
     grid-template-columns: $gap auto auto $gap;
     grid-template-rows: $grid-template-rows;
-    min-height: 100vh;
     max-width: 100%;
+    min-height: 100vh;
 
     &.#{$cssTransition} {
       &.#{$appear-active},

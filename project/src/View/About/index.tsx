@@ -1,6 +1,6 @@
 import resources from '$/resources';
 import {Asynchronizer, CloseButton, Logo, Navigation} from '@/Component';
-import {TransitionStyle} from "@/Component/CSSTransition";
+import {TransitionStyle} from '@/Component/CSSTransition';
 import {Route, useHistory} from '@/Component/Router';
 import React from 'react';
 import IAbout from './spec';
@@ -8,7 +8,7 @@ import './Style';
 
 const {
   view: {
-    about: {path, content: { action, heading }}
+    about: {path, content: {action, heading}}
   }
 } = resources;
 
@@ -23,10 +23,10 @@ const Abort: React.FunctionComponent<IAbout.Props> = () => {
         {
           (data: IAbout.Data) => (
             <article>
-              <Logo/>
+              <Logo />
               <h2>{heading}</h2>
               <p>{data.sections.About}</p>
-              <CloseButton onExit={history.goBack}/>
+              <CloseButton onExit={history.goBack} />
               <Navigation
                 inline={true}
                 items={[
@@ -44,6 +44,6 @@ const Abort: React.FunctionComponent<IAbout.Props> = () => {
 export {path};
 export default (
   <Route path={path}>
-    <Abort/>
+    <Abort />
   </Route>
 );

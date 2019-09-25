@@ -6,7 +6,7 @@ import IWork from './spec';
 const {view: {works: {view: {work: {path}}}}} = resources;
 
 const Work: FunctionComponent<IWork.Props> = () => {
-  const { params: {projectId} }: IWork.Match = useRouteMatch({ path });
+  const {params: {projectId}}: IWork.Match = useRouteMatch({path});
   
   return (
     <section data-routes={`works.${projectId}`}>
@@ -17,6 +17,6 @@ const Work: FunctionComponent<IWork.Props> = () => {
 
 export default (
   <Route path={path} exact={true}>
-    <Work/>
+    <Work />
   </Route>
 )

@@ -21,7 +21,7 @@ const Component = () => (
     <Asynchronizer awaitFor={shouldWaitFor}>
       {App}
     </Asynchronizer>
-  ) : <App/>
+  ) : <App />
 );
 
 export {appRoot};

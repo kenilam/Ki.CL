@@ -34,7 +34,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
   
   const onEnterHandler: IRouter.OnEnter = (node, done) => {
     document.body.dataset.enteredRoutes = routes;
-  
+    
     onEnter && onEnter(node, done);
   };
   
@@ -45,7 +45,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
   };
   
   const style = transitionStyle instanceof Function
-    ? transitionStyle({ history, location })
+    ? transitionStyle({history, location})
     : transitionStyle;
   
   return (
