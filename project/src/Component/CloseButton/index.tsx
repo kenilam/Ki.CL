@@ -1,5 +1,5 @@
 import resources from '$/resources';
-import CSSTransition, {TransitionStyle} from '@/Component/CSSTransition';
+import CSSTransition from '@/Component/CSSTransition';
 import React, {useState} from 'react';
 import {MdClose} from 'react-icons/md';
 import ICloseButton from './spec';
@@ -18,8 +18,7 @@ const CloseButton: React.FunctionComponent<ICloseButton.Props> = ({
   
   return (
     <CSSTransition
-      transitionIn={transitionIn}
-      transitionStyle={TransitionStyle.name.fade}
+      in={transitionIn}
       onExited={onExit}
       unmountOnExit={false}
     >
@@ -32,7 +31,7 @@ const CloseButton: React.FunctionComponent<ICloseButton.Props> = ({
         <span>{message}</span>
       </button>
     </CSSTransition>
-  )
+  );
 };
 
 export default CloseButton;

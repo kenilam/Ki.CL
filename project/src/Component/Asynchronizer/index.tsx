@@ -1,5 +1,4 @@
 import {CSSTransition} from '@/Component';
-import {TransitionStyle} from '@/Component/CSSTransition';
 import Spinner from '@/Component/Spinner';
 import {CSSUnit, Fetch} from '@/Helper';
 import React, {useEffect, useState} from 'react';
@@ -10,17 +9,14 @@ const awaitDelay = CSSUnit(Style.delay);
 
 const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   awaitFor,
-  children,
-  transitionStyle = TransitionStyle.name.fade
+  children
 }) => {
   let awaitTimer: number;
   
   const [data, updateData]: IAsynchronizer.DataState = useState<IAsynchronizer.Data>(null);
   
-  const awaitComplete = (data: any) => {
-    return () => {
-      updateData(data);
-    }
+  const awaitComplete = (data: any) => () => {
+    updateData(data);
   };
   
   useEffect(() => {
@@ -40,13 +36,10 @@ const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   
   return (
     <React.Fragment>
-      <Spinner transitionIn={Boolean(!data)} />
+      <Spinner in={Boolean(!data)} />
       {
         Boolean(data) && (
-          <CSSTransition
-            transitionIn={Boolean(data)}
-            transitionStyle={transitionStyle}
-          >
+          <CSSTransition in={Boolean(data)}>
             {children(data)}
           </CSSTransition>
         )

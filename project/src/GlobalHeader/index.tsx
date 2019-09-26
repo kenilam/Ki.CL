@@ -18,20 +18,14 @@ const {
   }
 } = resources;
 
-const transitionInPaths = [paths.home, paths.works];
+const pathsToRender = [paths.home, paths.works];
 
 const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = () => {
   const {pathname} = useLocation();
   
   return useMemo(
     () => (
-      <CSSTransition
-        transitionIn={
-          transitionInPaths.some(
-            path => pathname === path
-          )
-        }
-      >
+      <CSSTransition in={pathsToRender.some(path => pathname === path)}>
         <header role='banner' data-component={Style.default}>
           <Logo isSquare={true} />
           <h2>{heading}</h2>

@@ -1,68 +1,56 @@
-import {CSSTransition} from '@/Component';
-import classnames from 'classnames';
-import React from 'react';
-import {TransitionGroup} from 'react-transition-group';
-import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
+import CSSTransition from '@/Component/CSSTransition';
+import React, {Fragment, FunctionComponent, ReactElement} from 'react';
+import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
 import Style from './Style';
 
-const Transition: React.FunctionComponent<ITransition.Props> = (
-  {
-    appear,
-    classNames,
-    children,
-    component = React.Fragment,
-    onEnter,
-    onEntered,
-    onEntering,
-    onExit,
-    onExited,
-    onExiting,
-    transitionIn,
-    transitionKey,
-    transitionStyle,
-    unmountOnExit,
-  }
-) => {
-  const className = classnames(classNames, Style.transition);
-  
-  const onEnterHandler: EnterHandler = (node, isAppearing) => {
-    if (node && node.parentElement) {
-      node.parentElement.classList.add(...className.split(' '));
+const Transition: FunctionComponent<ITransition.Props> = ({
+  appear = true,
+  children,
+  classNames,
+  onEntered,
+  onExited,
+  addEndListener: customEndListener,
+  ...props
+}) => {
+  const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
+    if (node) {
+      node.parentElement.classList.add(Style.default);
     }
     
-    onEnter && onEnter(node, isAppearing);
-  };
-  
-  const onEnteredHandler: EnterHandler = (node, isAppearing) => {
     onEntered && onEntered(node, isAppearing);
-    
-    if (node && node.parentElement) {
-      node.parentElement.classList.remove(...className.split(' '));
-    }
   };
   
-  const onExitHandler: ExitHandler = (node) => {
-    onExit && onExit(node);
+  const enteredHandler: ITransition.OnExit = (node) => {
+    if (node) {
+      node.parentElement.classList.remove(Style.default);
+    }
+    
+    onExited && onExited(node);
   };
   
   return (
-    <TransitionGroup component={component}>
-      {CSSTransition({
-        appear,
-        children,
-        onEnter: onEnterHandler,
-        onEntered: onEnteredHandler,
-        onEntering,
-        onExit: onExitHandler,
-        onExited,
-        onExiting,
-        transitionIn,
-        transitionKey,
-        transitionStyle,
-        unmountOnExit
-      })}
-    </TransitionGroup>
+    <Origin
+      component={Fragment}
+    >
+      {
+        React.Children.toArray(
+          children
+        ).map(
+          (child: ReactElement) => (
+            <CSSTransition
+              {...props}
+              classNames={classNames}
+              key={child.key}
+              onEnter={enterHandler}
+              onEntered={enteredHandler}
+            >
+              {child}
+            </CSSTransition>
+          )
+        )
+      }
+    </Origin>
   );
 };
 

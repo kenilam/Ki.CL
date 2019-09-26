@@ -1,6 +1,6 @@
 declare module IView {
   interface ClassName extends IClassNames {
-    view: string;
+    default: string;
   }
   
   type View = 'about' | 'works' | 'home';

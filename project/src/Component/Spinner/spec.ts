@@ -5,9 +5,7 @@ declare module ISpinner {
     default: string;
   }
   
-  interface Props {
-    transitionIn: ICSSTransition.TransitionIn,
-    onExited?: ICSSTransition.OnExit
+  interface Props extends ICSSTransition.Props {
   }
 }
 

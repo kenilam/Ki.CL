@@ -1,18 +1,14 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
-import {ElementType} from 'react';
-import {ComponentTransitionGroupProps} from 'react-transition-group/TransitionGroup';
 
 declare module ITransition {
   interface ClassNames {
-    transition: string;
+    default: string;
   }
   
-  interface Component extends ComponentTransitionGroupProps<ElementType> {
+  type OnEnter = ICSSTransition.OnEnter;
+  type OnExit = ICSSTransition.OnExit;
   
-  }
-  
-  interface Props extends Partial<Component>, ICSSTransition.Props {
-  
+  interface Props extends ICSSTransition.Props {
   }
 }
 
