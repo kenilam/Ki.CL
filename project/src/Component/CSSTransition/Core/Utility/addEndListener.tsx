@@ -1,4 +1,4 @@
-import Style from '@/Component/CSSTransition/Style';
+import Style from '@/Component/CSSTransition/Core/Style';
 import {CSSUnit} from '@/Helper';
 import getTransitionDuration from 'get-transition-duration';
 import {EndHandler} from 'react-transition-group/Transition';
@@ -22,10 +22,10 @@ const duration = (node: HTMLElement) => (
     Math.max(
       ...[].concat(
         Array.from(
-          node.parentNode.querySelectorAll(`.${Style.cssTransition}`)
+          node.parentNode.querySelectorAll(`.${Style.default}`)
         ),
         Array.from(
-          node.querySelectorAll(`.${Style.cssTransition}`)
+          node.querySelectorAll(`.${Style.default}`)
         ),
         Array.from(
           node.children

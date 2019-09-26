@@ -1,6 +1,5 @@
 import resources from '$/resources';
 import {Asynchronizer, CloseButton, Logo, Navigation} from '@/Component';
-import {TransitionStyle} from '@/Component/CSSTransition';
 import {Route, useHistory} from '@/Component/Router';
 import React from 'react';
 import IAbout from './spec';
@@ -19,7 +18,7 @@ const Abort: React.FunctionComponent<IAbout.Props> = () => {
   
   return (
     <main data-routes='about'>
-      <Asynchronizer awaitFor={api} transitionStyle={TransitionStyle.name.slideDown}>
+      <Asynchronizer awaitFor={api}>
         {
           (data: IAbout.Data) => (
             <article>

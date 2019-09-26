@@ -1,6 +1,5 @@
 import resources from '$/resources';
 import {Transition} from '@/Component';
-import * as History from 'history';
 import React from 'react';
 import {
   HashRouter as Provider,
@@ -25,36 +24,30 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     ...props
   }
 ) => {
-  const history = useHistory();
   const location = useLocation();
   
   const routes = location.pathname === view.home.path
     ? view.home.name.toLowerCase()
     : location.pathname.substr(1).replace(/\//g, '.');
   
-  const onEnterHandler: IRouter.OnEnter = (node, done) => {
+  const enterHandler: IRouter.OnEnter = (node, isAppearing) => {
     document.body.dataset.enteredRoutes = routes;
     
-    onEnter && onEnter(node, done);
+    onEnter && onEnter(node, isAppearing);
   };
   
-  const onExitHandler: IRouter.OnExit = node => {
+  const exitHandler: IRouter.OnExit = node => {
     document.body.dataset.exitedRoutes = routes;
     
     onExit && onExit(node);
   };
   
-  const style = transitionStyle instanceof Function
-    ? transitionStyle({history, location})
-    : transitionStyle;
-  
   return (
     <Transition
-      onEnter={onEnterHandler}
-      onExit={onExitHandler}
-      transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
-      transitionStyle={style}
       {...props}
+      key={location.pathname.split('/')[routeIndex + 1] || '/'}
+      onEnter={enterHandler}
+      onExit={exitHandler}
     >
       <Switch location={location}>{children}</Switch>
     </Transition>
@@ -62,7 +55,6 @@ const Router: React.FunctionComponent<IRouter.Props> = (
 };
 
 export {
-  History,
   Redirect,
   Route,
   Switch,
