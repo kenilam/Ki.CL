@@ -5,7 +5,7 @@ declare module ITest {
   }
   
   interface Props {
-  
+    
   }
 }
 

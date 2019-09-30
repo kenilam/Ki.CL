@@ -3,7 +3,7 @@ import React, {FunctionComponent} from 'react';
 import {CSSTransition as Origin} from 'react-transition-group';
 import ICSSTransition from './spec';
 import Style from './Style';
-import {addEndListener} from './Utility';
+import {addEndListener, duration} from './Utility';
 
 const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   addEndListener: customEndListener,
@@ -69,4 +69,5 @@ const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   );
 };
 
+export {duration};
 export default CSSTransition;

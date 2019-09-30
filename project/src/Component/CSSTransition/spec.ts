@@ -1,5 +1,5 @@
 import {CSSTransitionClassNames, CSSTransitionProps} from 'react-transition-group/CSSTransition';
-import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
+import {EndHandler, EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 
 declare module ICSSTransition {
   interface ClassNames extends CSSTransitionClassNames {
@@ -8,6 +8,7 @@ declare module ICSSTransition {
   
   type OnEnter = EnterHandler;
   type OnExit = ExitHandler;
+  type AddEndListener = EndHandler;
   
   interface Props extends Omit<CSSTransitionProps, 'timeout'> {
     timeout?: number | { appear?: number, enter?: number, exit?: number };

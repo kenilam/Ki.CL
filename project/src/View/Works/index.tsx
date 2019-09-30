@@ -16,5 +16,7 @@ const Works: React.FunctionComponent<IWorks.Props> = () => (
 
 export {path};
 export default (
-  <Route path={path} render={Works} />
+  <Route path={path}>
+    <Works />
+  </Route>
 );

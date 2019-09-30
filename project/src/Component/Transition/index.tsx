@@ -1,55 +1,61 @@
 import CSSTransition from '@/Component/CSSTransition';
-import React, {Fragment, FunctionComponent, ReactElement} from 'react';
+import ICSSTransition from '@/Component/CSSTransition/spec';
+import React, {Fragment, FunctionComponent} from 'react';
 import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
 import Style from './Style';
 
 const Transition: FunctionComponent<ITransition.Props> = ({
+  addEndListener: customEndListener,
   appear = true,
   children,
   classNames,
+  transitionKey,
+  onEnter,
   onEntered,
-  onExited,
-  addEndListener: customEndListener,
   ...props
 }) => {
+  const addEndListener: ICSSTransition.AddEndListener =
+    customEndListener ? (node, done) => {
+      done = () => {
+        node.parentElement.classList.remove(Style.default);
+        done();
+      };
+      
+      node.parentElement.classList.add(Style.default);
+      addEndListener(node, done);
+    } : null;
+  
   const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
-    if (node) {
+    if (node && !addEndListener) {
       node.parentElement.classList.add(Style.default);
     }
     
-    onEntered && onEntered(node, isAppearing);
+    onEnter && onEnter(node, isAppearing);
   };
   
-  const enteredHandler: ITransition.OnExit = (node) => {
-    if (node) {
+  const enteredHandler: ITransition.OnEnter = (node, isAppearing) => {
+    if (node && !addEndListener) {
       node.parentElement.classList.remove(Style.default);
     }
     
-    onExited && onExited(node);
+    onEntered && onEntered(node, isAppearing);
   };
   
   return (
     <Origin
       component={Fragment}
     >
-      {
-        React.Children.toArray(
-          children
-        ).map(
-          (child: ReactElement) => (
-            <CSSTransition
-              {...props}
-              classNames={classNames}
-              key={child.key}
-              onEnter={enterHandler}
-              onEntered={enteredHandler}
-            >
-              {child}
-            </CSSTransition>
-          )
-        )
-      }
+      <CSSTransition
+        {...props}
+        addEndListener={addEndListener}
+        classNames={classNames}
+        key={transitionKey}
+        onEnter={enterHandler}
+        onEntered={enteredHandler}
+      >
+        {children}
+      </CSSTransition>
     </Origin>
   );
 };

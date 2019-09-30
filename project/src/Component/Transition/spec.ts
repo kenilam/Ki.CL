@@ -9,6 +9,7 @@ declare module ITransition {
   type OnExit = ICSSTransition.OnExit;
   
   interface Props extends ICSSTransition.Props {
+    transitionKey?: string;
   }
 }
 

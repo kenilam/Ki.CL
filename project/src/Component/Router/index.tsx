@@ -45,7 +45,7 @@ const Router: React.FunctionComponent<IRouter.Props> = (
   return (
     <Transition
       {...props}
-      key={location.pathname.split('/')[routeIndex + 1] || '/'}
+      transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
       onEnter={enterHandler}
       onExit={exitHandler}
     >
