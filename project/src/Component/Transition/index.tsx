@@ -46,16 +46,22 @@ const Transition: FunctionComponent<ITransition.Props> = ({
     <Origin
       component={Fragment}
     >
-      <CSSTransition
-        {...props}
-        addEndListener={addEndListener}
-        classNames={classNames}
-        key={transitionKey}
-        onEnter={enterHandler}
-        onEntered={enteredHandler}
-      >
-        {children}
-      </CSSTransition>
+      {
+        React.Children.toArray(children).map(
+          (child, index) => (
+            <CSSTransition
+              {...props}
+              addEndListener={addEndListener}
+              classNames={classNames}
+              key={transitionKey || index}
+              onEnter={enterHandler}
+              onEntered={enteredHandler}
+            >
+              {child}
+            </CSSTransition>
+          )
+        )
+      }
     </Origin>
   );
 };
