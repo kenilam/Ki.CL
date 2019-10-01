@@ -1,11 +1,12 @@
 import {CSSTransitionClassNames, CSSTransitionProps} from 'react-transition-group/CSSTransition';
-import {EnterHandler, ExitHandler} from 'react-transition-group/Transition';
+import {EndHandler, EnterHandler, ExitHandler} from 'react-transition-group/Transition';
 
-declare module ICSSTransition {
+declare module ICore {
   interface ClassNames extends CSSTransitionClassNames {
     default: string;
   }
   
+  type AddEndListener = EndHandler;
   type OnEnter = EnterHandler;
   type OnExit = ExitHandler;
   
@@ -14,4 +15,4 @@ declare module ICSSTransition {
   }
 }
 
-export default ICSSTransition;
+export default ICore;

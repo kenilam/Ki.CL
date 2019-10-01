@@ -7,7 +7,7 @@ declare module ITransition {
   
   type OnEnter = ICSSTransition.OnEnter;
   
-  interface Props extends ICSSTransition.Props {
+  interface Props extends Omit<ICSSTransition.Props, 'classNames'> {
     transitionKey?: string;
   }
 }

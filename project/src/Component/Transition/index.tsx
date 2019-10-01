@@ -1,31 +1,18 @@
-import CSSTransition from '@/Component/CSSTransition';
-import ICSSTransition from '@/Component/CSSTransition/spec';
+import {TransitionStyle} from '@/Component/CSSTransition';
 import React, {Fragment, FunctionComponent} from 'react';
 import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
 import Style from './Style';
 
 const Transition: FunctionComponent<ITransition.Props> = ({
-  addEndListener: customEndListener,
+  addEndListener,
   appear = true,
   children,
-  classNames,
   transitionKey,
   onEnter,
   onEntered,
   ...props
 }) => {
-  const addEndListener: ICSSTransition.AddEndListener =
-    customEndListener ? (node, done) => {
-      done = () => {
-        node.parentElement.classList.remove(Style.default);
-        done();
-      };
-      
-      node.parentElement.classList.add(Style.default);
-      addEndListener(node, done);
-    } : null;
-  
   const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
     if (node && !addEndListener) {
       node.parentElement.classList.add(Style.default);
@@ -43,22 +30,19 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   };
   
   return (
-    <Origin
-      component={Fragment}
-    >
+    <Origin component={Fragment}>
       {
         React.Children.toArray(children).map(
           (child, index) => (
-            <CSSTransition
+            <TransitionStyle.SlideFromLeft
               {...props}
               addEndListener={addEndListener}
-              classNames={classNames}
               key={transitionKey || index}
               onEnter={enterHandler}
               onEntered={enteredHandler}
             >
               {child}
-            </CSSTransition>
+            </TransitionStyle.SlideFromLeft>
           )
         )
       }

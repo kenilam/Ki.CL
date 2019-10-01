@@ -1,11 +1,11 @@
 import classnames from 'classnames';
 import React, {FunctionComponent} from 'react';
-import {CSSTransition as Origin} from 'react-transition-group';
-import ICSSTransition from './spec';
+import {CSSTransition} from 'react-transition-group';
+import ICore from './spec';
 import Style from './Style';
 import {addEndListener, duration} from './Utility';
 
-const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
+const Core: FunctionComponent<ICore.Props> = ({
   addEndListener: customEndListener,
   appear = true,
   children,
@@ -18,8 +18,8 @@ const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   unmountOnExit = true,
   ...props
 }) => {
-  const enteredHandler: ICSSTransition.OnEnter = (node, isAppearing) => {
-    if (node) {
+  const enteredHandler: ICore.OnEnter = (node, isAppearing) => {
+    if (node && !addEndListener) {
       node.classList.remove(
         Style.default,
         Style.appear,
@@ -32,8 +32,8 @@ const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
     onEntered && onEntered(node, isAppearing);
   };
   
-  const exitedHandler: ICSSTransition.OnExit = (node) => {
-    if (node) {
+  const exitedHandler: ICore.OnExit = (node) => {
+    if (node && !addEndListener) {
       node.classList.remove(
         Style.default,
         Style.exit,
@@ -45,7 +45,7 @@ const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   };
   
   return (
-    <Origin
+    <CSSTransition
       {...props}
       appear={appear}
       addEndListener={customEndListener || addEndListener}
@@ -65,9 +65,9 @@ const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
       unmountOnExit={unmountOnExit}
     >
       {children}
-    </Origin>
+    </CSSTransition>
   );
 };
 
 export {duration};
-export default CSSTransition;
+export default Core;

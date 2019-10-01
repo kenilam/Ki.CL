@@ -1,4 +1,4 @@
-import {CSSTransition} from '@/Component';
+import {TransitionStyle} from '@/Component/CSSTransition';
 import Spinner from '@/Component/Spinner';
 import {CSSUnit, Fetch} from '@/Helper';
 import React, {useEffect, useState} from 'react';
@@ -39,9 +39,9 @@ const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
       <Spinner in={Boolean(!data)} />
       {
         Boolean(data) && (
-          <CSSTransition in={Boolean(data)}>
+          <TransitionStyle.ZoomIn in={Boolean(data)}>
             {children(data)}
-          </CSSTransition>
+          </TransitionStyle.ZoomIn>
         )
       }
     </React.Fragment>

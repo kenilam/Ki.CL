@@ -1,5 +1,5 @@
 $cssTransition: get($css-transition, 'default');
-$style: get($css-transition-style, 'zoom-out');
+$style: get($css-transition-slide-up, 'default');
 $appear: get($css-transition, 'appear.default');
 $appear-active: get($css-transition, 'appear.active');
 $enter: get($css-transition, 'enter.default');
@@ -17,6 +17,15 @@ $exit-done: get($css-transition, 'exit.done');
   &.#{$exit}.#{$exit-active},
   &.#{$exit-done} {
     opacity: 0;
-    transform: scale(1.3);
+  }
+
+  &.#{$appear}:not(.#{$appear-active}),
+  &.#{$enter}:not(.#{$enter-active}) {
+    transform: translate3d(0, -100%, 0);
+  }
+
+  &.#{$exit}.#{$exit-active},
+  &.#{$exit-done} {
+    transform: translate3d(0, 100%, 0);
   }
 }
