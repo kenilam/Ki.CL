@@ -1,17 +1,31 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
+import IStyle from '@/Component/CSSTransition/Style/spec';
 import React, {FunctionComponent} from 'react';
-import Core, {duration} from './Core';
-import * as TransitionStyle from './Style';
+import TransitionStyle from './Style';
 
 const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   children,
-  style = 'custom',
+  type,
   ...props
-}) => (
-  <Core {...props}>
-    {children}
-  </Core>
-);
+}) => {
+  const Component = (
+    TransitionStyle[`${
+      type[0].toUpperCase()
+    }${
+      type.substr(1)
+    }` as IStyle.Component]
+  );
+  
+  return (
+    <Component {...props}>
+      {children}
+    </Component>
+  );
+};
 
-export {duration, TransitionStyle};
+CSSTransition.defaultProps = {
+  type: 'custom'
+};
+
+export {TransitionStyle};
 export default CSSTransition;

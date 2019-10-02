@@ -1,5 +1,6 @@
 import resources from '$/resources';
 import {Asynchronizer, CloseButton, Logo, Navigation} from '@/Component';
+import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route, useHistory} from '@/Component/Router';
 import React from 'react';
 import IAbout from './spec';
@@ -12,6 +13,7 @@ const {
 } = resources;
 
 const api = `${process.env.API_URL}/api/about`;
+const transitionType: ICSSTransition.Type = 'slideFromRight';
 
 const Abort: React.FunctionComponent<IAbout.Props> = () => {
   const history = useHistory();
@@ -40,7 +42,7 @@ const Abort: React.FunctionComponent<IAbout.Props> = () => {
   );
 };
 
-export {path};
+export {path, transitionType};
 export default (
   <Route path={path}>
     <Abort />

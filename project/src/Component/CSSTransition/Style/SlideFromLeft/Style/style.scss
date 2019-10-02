@@ -8,24 +8,48 @@ $exit: get($css-transition, 'exit.default');
 $exit-active: get($css-transition, 'exit.active');
 $exit-done: get($css-transition, 'exit.done');
 
+$background-alpha: 0.8;
+$background-color: get($black, 'pure');
+$background-transition-duration: get($duration, 'normal');
+$background-transition-timing-function: get($ease, 'expo.out');
+
+$transition-delay: get($duration, 'normal');
+
 .#{$cssTransition}.#{$style} {
   transition-property: opacity, transform;
   will-change: opacity, transform;
+
+  &::before {
+    background-color: $background-color;
+    content: '\0020';
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: $background-alpha;
+    position: absolute;
+    top: 0;
+    transform: translate3d(100%, 0, 0);
+    transition-duration: $background-transition-duration;
+    transition-property: opacity;
+    transition-timing-function: $background-transition-timing-function;
+    width: 100%;
+    will-change: opacity;
+    z-index: 0;
+  }
+
+  &.#{$appear}:not(.#{$appear-active}),
+  &.#{$enter}:not(.#{$enter-active}) {
+    transition-delay: $transition-delay;
+  }
 
   &.#{$appear}:not(.#{$appear-active}),
   &.#{$enter}:not(.#{$enter-active}),
   &.#{$exit}.#{$exit-active},
   &.#{$exit-done} {
-    opacity: 0;
-  }
-
-  &.#{$appear}:not(.#{$appear-active}),
-  &.#{$enter}:not(.#{$enter-active}) {
     transform: translate3d(-100%, 0, 0);
-  }
 
-  &.#{$exit}.#{$exit-active},
-  &.#{$exit-done} {
-    transform: translate3d(100%, 0, 0);
+    &::before {
+      opacity: 0;
+    }
   }
 }

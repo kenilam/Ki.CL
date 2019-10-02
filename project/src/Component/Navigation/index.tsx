@@ -21,7 +21,7 @@ const DEFAULT_ITEMS: INavigation.Links = Object.keys(view)
 
 const Navigation: React.FunctionComponent<INavigation.Props> = ({
   className,
-  inline = false,
+  inline,
   items,
   onClick,
   onMouseOver,
@@ -57,5 +57,9 @@ const Navigation: React.FunctionComponent<INavigation.Props> = ({
     ))}
   </nav>
 );
+
+Navigation.defaultProps = {
+  inline: false
+};
 
 export default Navigation;

@@ -19,7 +19,7 @@ const Core: FunctionComponent<ICore.Props> = ({
   ...props
 }) => {
   const enteredHandler: ICore.OnEnter = (node, isAppearing) => {
-    if (node && !addEndListener) {
+    if (node && !customEndListener) {
       node.classList.remove(
         Style.default,
         Style.appear,
@@ -33,7 +33,7 @@ const Core: FunctionComponent<ICore.Props> = ({
   };
   
   const exitedHandler: ICore.OnExit = (node) => {
-    if (node && !addEndListener) {
+    if (node && !customEndListener) {
       node.classList.remove(
         Style.default,
         Style.exit,

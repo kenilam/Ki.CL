@@ -1,4 +1,4 @@
-import {TransitionStyle} from '@/Component/CSSTransition';
+import CSSTransition from '@/Component/CSSTransition';
 import React, {Fragment, FunctionComponent} from 'react';
 import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
@@ -34,7 +34,7 @@ const Transition: FunctionComponent<ITransition.Props> = ({
       {
         React.Children.toArray(children).map(
           (child, index) => (
-            <TransitionStyle.SlideFromLeft
+            <CSSTransition
               {...props}
               addEndListener={addEndListener}
               key={transitionKey || index}
@@ -42,7 +42,7 @@ const Transition: FunctionComponent<ITransition.Props> = ({
               onEntered={enteredHandler}
             >
               {child}
-            </TransitionStyle.SlideFromLeft>
+            </CSSTransition>
           )
         )
       }

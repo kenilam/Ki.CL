@@ -1,28 +1,35 @@
 import {Router} from '@/Component';
-import React from 'react';
-import About from './About';
-import Home, {awaitFor as homeAwaitFor, path as homePath} from './Home';
+import {useLocation} from '@/Component/Router';
+import React, {FunctionComponent} from 'react';
+import About, {path as aboutPath, transitionType as aboutTransitionType} from './About';
+import Home, {awaitFor as homeAwaitFor} from './Home';
 import PageNotFound from './PageNotFound';
 import IView from './spec';
-import Works, {path as worksPath} from './Works';
+import Works from './Works';
 
-const awaitFor: IView.AwaitFor = {
-  home: homeAwaitFor
+const AWAIT_FOR: IView.AwaitFor = {
+  homeAwaitFor: homeAwaitFor
 };
 
-const paths: IView.Paths = {
-  home: homePath,
-  works: worksPath
+const TRANSITION_TYPES: IView.TransitionType = {
+  [aboutPath]: aboutTransitionType
 };
 
-const View = (
-  <Router routeIndex={0}>
-    {About}
-    {Home}
-    {Works}
-    {PageNotFound}
-  </Router>
-);
+const View: FunctionComponent<IView.Props> = () => {
+  const {pathname} = useLocation();
+  
+  return (
+    <Router
+      routeIndex={0}
+      type={TRANSITION_TYPES[pathname]}
+    >
+      {About}
+      {Home}
+      {Works}
+      {PageNotFound}
+    </Router>
+  );
+};
 
-export {awaitFor, paths};
+export {AWAIT_FOR};
 export default View;

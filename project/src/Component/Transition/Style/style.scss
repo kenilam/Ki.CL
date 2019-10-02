@@ -1,7 +1,7 @@
-$enter: get($css-transition, 'enter.default');
-$exit: get($css-transition, 'exit.default');
-
 .#{get($transition, 'default')} {
+  $enter: get($css-transition, 'enter.default');
+  $exit: get($css-transition, 'exit.default');
+
   position: relative;
 
   > .#{$enter},
@@ -15,5 +15,10 @@ $exit: get($css-transition, 'exit.default');
 
   > .#{$exit} {
     z-index: 100;
+
+    &.#{get($css-transition-slide-from-left, 'default')},
+    &.#{get($css-transition-slide-from-right, 'default')} {
+      z-index: 300;
+    }
   }
 }

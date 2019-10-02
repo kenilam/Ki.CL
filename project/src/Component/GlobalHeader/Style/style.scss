@@ -2,28 +2,28 @@
 
 $default: get($component-global-header, 'default');
 
-$cssTransition: #{get($css-transition, 'default')};
-$appear: get($css-transition, 'appear.default');
-$appear-active: get($css-transition, 'appear.active');
-$enter: get($css-transition, 'enter.default');
-$enter-active: get($css-transition, 'enter.active');
-$exit: get($css-transition, 'exit.default');
-$exit-active: get($css-transition, 'exit.active');
-$exit-done: get($css-transition, 'exit.done');
-
-$transition-duration: get($duration, 'faster');
-
-$logo: get($component-logo, 'default');
-$navigation: get($component-navigation, 'default');
-
-$bleed: get($grid, 'default');
-$color: get($black, 'default');
-$gap: get($grid, 'gutter');
-$space: get($grid, 'narrow');
-
 @include set-global-header-color();
 
 [data-component='#{$default}'] {
+  $cssTransition: #{get($css-transition, 'default')};
+  $appear: get($css-transition, 'appear.default');
+  $appear-active: get($css-transition, 'appear.active');
+  $enter: get($css-transition, 'enter.default');
+  $enter-active: get($css-transition, 'enter.active');
+  $exit: get($css-transition, 'exit.default');
+  $exit-active: get($css-transition, 'exit.active');
+  $exit-done: get($css-transition, 'exit.done');
+
+  $transition-duration: get($duration, 'fast');
+
+  $logo: get($component-logo, 'default');
+  $navigation: get($component-navigation, 'default');
+
+  $bleed: get($grid, 'default');
+  $color: get($black, 'default');
+  $gap: get($grid, 'gutter');
+  $space: get($grid, 'narrow');
+
   display: grid;
   grid-gap: $gap;
   grid-template-areas: '. . . . . .' '. logo h2 . navigation .' '. . . . . .';

@@ -6,14 +6,13 @@ declare module ICSSTransition {
     default: string;
   }
   
-  type Style = IStyle.Type;
+  type Type = IStyle.Type;
   
-  type AddEndListener = ICore.AddEndListener;
   type OnEnter = ICore.OnEnter;
   type OnExit = ICore.OnExit;
   
   interface Props extends ICore.Props {
-    style?: Style;
+    type?: Type;
   }
 }
 

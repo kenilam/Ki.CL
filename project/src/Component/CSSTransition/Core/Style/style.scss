@@ -4,6 +4,7 @@ $enter-active: #{get($css-transition, 'enter.active')};
 $exit-active: #{get($css-transition, 'exit.active')};
 
 $transition-duration: get($duration, 'normal');
+$transition-timing-function: get($ease, 'expo.out');
 
 .#{$default} {
   pointer-events: none;
@@ -16,4 +17,5 @@ $transition-duration: get($duration, 'normal');
   animation-name: none;
   transition-duration: $transition-duration;
   transition-property: none;
+  transition-timing-function: $transition-timing-function;
 }

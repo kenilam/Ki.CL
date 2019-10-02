@@ -12,7 +12,7 @@ const {
   }
 } = resources;
 
-const Logo: React.FunctionComponent<ILogo.Props> = ({isSquare = false}) => {
+const Logo: React.FunctionComponent<ILogo.Props> = ({isSquare}) => {
   const className = classnames({
     [Style.square]: isSquare
   });
@@ -22,6 +22,10 @@ const Logo: React.FunctionComponent<ILogo.Props> = ({isSquare = false}) => {
       <Link to={path}>{siteName}</Link>
     </h1>
   );
+};
+
+Logo.defaultProps = {
+  isSquare: false
 };
 
 export default Logo;

@@ -1,3 +1,6 @@
+import ISelector from '@/Component/CSSTransition/Style/Selector/spec';
+import React from 'react';
+
 declare module IStyle {
   type Type =
     'custom' |
@@ -9,8 +12,18 @@ declare module IStyle {
     'zoomIn' |
     'zoomOut';
   
-  interface Props {
-    type?: Type;
+  type Component =
+    'Custom' |
+    'Fade' |
+    'SlideDown' |
+    'SlideFromLeft' |
+    'SlideFromRight' |
+    'SlideUp' |
+    'ZoomIn' |
+    'ZoomOut';
+  
+  type Types = {
+    [name in Component]: React.FunctionComponent<ISelector.Props>
   }
 }
 

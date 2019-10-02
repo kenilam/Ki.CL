@@ -48,7 +48,6 @@ const Router: React.FunctionComponent<IRouter.Props> = (
       transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
       onEnter={enterHandler}
       onExit={exitHandler}
-      classNames='keni'
     >
       <Switch location={location}>{children}</Switch>
     </Transition>
