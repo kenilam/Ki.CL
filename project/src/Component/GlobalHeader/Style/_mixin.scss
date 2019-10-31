@@ -1,14 +1,14 @@
 @mixin set-global-header-color($color: get($black, 'default')) {
   $default: get($component-global-header, 'default');
-  $navigation: get($component-navigation, 'default');
+  $logo: get($component-logo, 'default');
 
   [data-component='#{$default}'] {
     color: $color;
 
-    > [data-component=#{$navigation}] {
-      a {
-        color: $color;
-      }
+    [data-component=#{$logo}],
+    h2,
+    a {
+      color: $color;
     }
   }
 }

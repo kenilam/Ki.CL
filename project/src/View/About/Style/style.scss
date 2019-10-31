@@ -31,7 +31,6 @@ $grid-template-rows: min-content auto max-content max-content max-content max-co
   background-color: $background-color;
   color: $color;
   position: relative;
-  z-index: 2000;
 
   [data-component=#{$logo}],
   h2,

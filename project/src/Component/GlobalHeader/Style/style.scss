@@ -14,10 +14,11 @@ $default: get($component-global-header, 'default');
   $exit-active: get($css-transition, 'exit.active');
   $exit-done: get($css-transition, 'exit.done');
 
-  $transition-duration: get($duration, 'fast');
-
   $logo: get($component-logo, 'default');
   $navigation: get($component-navigation, 'default');
+
+  $transition-delay: get($duration, 'fast');
+  $transition-duration: get($duration, 'slowest');
 
   $bleed: get($grid, 'default');
   $color: get($black, 'default');
@@ -44,7 +45,6 @@ $default: get($component-global-header, 'default');
     grid-template-columns: auto;
     grid-template-rows: auto;
     text-transform: uppercase;
-    transition-property: font-weight;
   }
 
   @include tablet() {
@@ -78,36 +78,11 @@ $default: get($component-global-header, 'default');
   }
 
   &.#{$cssTransition} {
-    > * {
+    z-index: 1500;
+
+    &.#{$enter} {
+      transition-delay: $transition-delay;
       transition-duration: $transition-duration;
-      transition-property: opacity, transform;
-    }
-
-    &:not(.#{$exit}) {
-      > * {
-        transition-delay: $transition-duration;
-      }
-
-      h2 {
-        transition-delay: $transition-duration * 1.4;
-      }
-
-      > [data-component=#{$navigation}] {
-        transition-delay: $transition-duration * 1.8;
-      }
-    }
-
-    &.#{$exit} {
-      transition-delay: $transition-duration;
-    }
-
-    &.#{$appear}:not(.#{$appear-active}),
-    &.#{$enter}:not(.#{$enter-active}),
-    &.#{$exit}.#{$exit-active} {
-      > * {
-        opacity: 0;
-        transform: translate3d(0, -100%, 0);
-      }
     }
   }
 }

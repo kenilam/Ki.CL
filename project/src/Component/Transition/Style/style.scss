@@ -1,6 +1,7 @@
 .#{get($transition, 'default')} {
   $enter: get($css-transition, 'enter.default');
   $exit: get($css-transition, 'exit.default');
+  $exit-active: get($css-transition, 'exit.active');
 
   position: relative;
 
@@ -11,6 +12,10 @@
 
   > .#{$enter} {
     z-index: 200;
+
+    + .#{$exit}.#{$exit-active} {
+      opacity: 1;
+    }
   }
 
   > .#{$exit} {

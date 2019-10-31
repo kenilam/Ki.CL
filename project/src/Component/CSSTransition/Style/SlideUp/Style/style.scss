@@ -16,16 +16,6 @@ $exit-done: get($css-transition, 'exit.done');
   &.#{$enter}:not(.#{$enter-active}),
   &.#{$exit}.#{$exit-active},
   &.#{$exit-done} {
-    opacity: 0;
-  }
-
-  &.#{$appear}:not(.#{$appear-active}),
-  &.#{$enter}:not(.#{$enter-active}) {
-    transform: translate3d(0, -100%, 0);
-  }
-
-  &.#{$exit}.#{$exit-active},
-  &.#{$exit-done} {
     transform: translate3d(0, 100%, 0);
   }
 }

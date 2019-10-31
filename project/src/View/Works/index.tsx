@@ -1,4 +1,5 @@
 import resources from '$/resources';
+import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
 import React from 'react';
 import IWorks from './spec';
@@ -6,6 +7,7 @@ import './Style';
 import View from './View';
 
 const {view: {works: {path}}} = resources;
+const transitionType: ICSSTransition.Type = 'fade';
 
 const Works: React.FunctionComponent<IWorks.Props> = () => (
   <main data-routes='works'>
@@ -14,7 +16,7 @@ const Works: React.FunctionComponent<IWorks.Props> = () => (
   </main>
 );
 
-export {path};
+export {path, transitionType};
 export default (
   <Route path={path}>
     <Works />

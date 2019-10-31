@@ -13,7 +13,7 @@ $background-color: get($black, 'pure');
 $background-transition-duration: get($duration, 'normal');
 $background-transition-timing-function: get($ease, 'expo.out');
 
-$transition-delay: get($duration, 'normal');
+$transition-delay: get($duration, 'fastest');
 
 .#{$cssTransition}.#{$style} {
   transition-property: opacity, transform;
@@ -37,9 +37,15 @@ $transition-delay: get($duration, 'normal');
     z-index: 0;
   }
 
-  &.#{$appear}:not(.#{$appear-active}),
-  &.#{$enter}:not(.#{$enter-active}) {
+  &.#{$appear}.#{$appear-active},
+  &.#{$enter}.#{$enter-active} {
     transition-delay: $transition-delay;
+  }
+
+  &.#{$exit}.#{$exit-active} {
+    &::before {
+      transition-delay: $transition-delay;
+    }
   }
 
   &.#{$appear}:not(.#{$appear-active}),

@@ -1,5 +1,13 @@
-$background-color: get($black, 'default');
-
 [data-routes^='works'] {
+  $background-color: get($black, 'default');
+  $color: get($white, 'default');
+
   background-color: $background-color;
+  color: $color;
+}
+
+[data-entered-routes^='works'] {
+  $color: get($white, 'default');
+
+  @include set-global-header-color($color);
 }
