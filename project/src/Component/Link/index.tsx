@@ -10,34 +10,31 @@ const Link: React.FunctionComponent<ILink.Props> = (
     component: Wrapper,
     onClick,
     onMouseOver,
-    to
+    to,
+    ...rest
   }) => {
+  const Component = (
+    <NavLink
+      activeClassName={Style.active}
+      className={Wrapper && wrapperClassName}
+      data-component={Style.default}
+      exact={true}
+      onClick={onClick}
+      onMouseOver={onMouseOver}
+      to={to}
+      {...rest}
+    >
+      {children}
+    </NavLink>
+  );
+  
   return (
     Wrapper ? (
       <Wrapper className={wrapperClassName}>
-        <NavLink
-          activeClassName={Style.active}
-          data-component={Style.default}
-          exact={true}
-          onClick={onClick}
-          onMouseOver={onMouseOver}
-          to={to}
-        >
-          {children}
-        </NavLink>
+        {Component}
       </Wrapper>
     ) : (
-      <NavLink
-        activeClassName={Style.active}
-        data-component={Style.default}
-        className={wrapperClassName}
-        exact={true}
-        onClick={onClick}
-        onMouseOver={onMouseOver}
-        to={to}
-      >
-        {children}
-      </NavLink>
+      Component
     )
   );
 };

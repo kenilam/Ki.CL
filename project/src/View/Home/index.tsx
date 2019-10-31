@@ -1,5 +1,5 @@
 import resources from '$/resources';
-import {Navigation} from '@/Component';
+import {Logo, Navigation} from '@/Component';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
 import IHome from '@/View/Home/spec';
@@ -19,7 +19,8 @@ const {
 
 const Home: React.FunctionComponent<IHome.Props> = () => (
   <main data-routes='home'>
-    <Navigation />
+    <Logo/>
+    <Navigation/>
   </main>
 );
 

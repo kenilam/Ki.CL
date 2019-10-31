@@ -25,6 +25,7 @@ const Navigation: React.FunctionComponent<INavigation.Props> = ({
   items,
   onClick,
   onMouseOver,
+  ...rest
 }) => (
   <nav
     className={classnames(className, {
@@ -51,6 +52,7 @@ const Navigation: React.FunctionComponent<INavigation.Props> = ({
           })
         }
         key={RandomId()}
+        {...rest}
       >
         {children}
       </Link>
