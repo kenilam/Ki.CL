@@ -1,4 +1,3 @@
-import {Provider} from '@/Component/Router';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import ILink from './spec';
@@ -10,30 +9,33 @@ const Link: React.FunctionComponent<ILink.Props> = (
     className: wrapperClassName,
     component: Wrapper,
     onClick,
-    to
+    onMouseOver,
+    to,
+    ...rest
   }) => {
-  const Element = () => (
+  const Component = (
     <NavLink
       activeClassName={Style.active}
+      className={Wrapper && wrapperClassName}
       data-component={Style.default}
       exact={true}
       onClick={onClick}
+      onMouseOver={onMouseOver}
       to={to}
+      {...rest}
     >
       {children}
     </NavLink>
   );
   
   return (
-    <Provider>
-      {
-        Wrapper ? (
-          <Wrapper className={wrapperClassName}>
-            <Element />
-          </Wrapper>
-        ) : <Element />
-      }
-    </Provider>
+    Wrapper ? (
+      <Wrapper className={wrapperClassName}>
+        {Component}
+      </Wrapper>
+    ) : (
+      Component
+    )
   );
 };
 

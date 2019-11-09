@@ -1,0 +1,2 @@
+@value default: #{get($view-home-description, 'default')};
+@value lineBreak: #{get($view-home-description, 'line-break')};

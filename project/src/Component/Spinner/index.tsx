@@ -1,20 +1,17 @@
-import ISpinner from './spec';
+import {TransitionStyle} from '@/Component/CSSTransition';
 import React from 'react';
-import CSSTransition, {TransitionStyleName} from '@/Component/CSSTransition';
+import ISpinner from './spec';
 import Style from './Style';
 
-const Spinner: React.FunctionComponent<ISpinner.Props> = ({
-  transitionIn,
-  onExited
-}) => {
+const Spinner: React.FunctionComponent<ISpinner.Props> = props => {
   return (
-    <CSSTransition transitionIn={transitionIn} transitionStyle={TransitionStyleName.zoomIn} onExited={onExited}>
+    <TransitionStyle.ZoomIn {...props}>
       <svg data-component={Style.default}>
         <circle cx='70%' cy='30%' r='30%' />
         <circle cx='70%' cy='70%' r='30%' />
         <text>Loading</text>
       </svg>
-    </CSSTransition>
+    </TransitionStyle.ZoomIn>
   )
 };
 

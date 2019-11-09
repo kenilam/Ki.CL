@@ -1,4 +1,4 @@
-import { path as appRoot } from 'app-root-path'
+import {path as appRoot} from 'app-root-path'
 
 const projectRoot = 'project'
 const srcRoot = `${projectRoot}/build`

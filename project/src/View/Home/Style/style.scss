@@ -1,148 +1,139 @@
-@import '../../../Component/Logo/Style/mixins';
-@import './value';
-
-$cssTransition: #{get($css-transition, 'default')};
-$appear: #{get($css-transition, 'appear.default')};
-$appear-active: #{get($css-transition, 'appear.active')};
-$enter: #{get($css-transition, 'enter.default')};
-$enter-active: #{get($css-transition, 'enter.active')};
-$exit: #{get($css-transition, 'exit.default')};
-$exit-active: #{get($css-transition, 'exit.active')};
-$exit-done: #{get($css-transition, 'exit.active')};
-
-$coming-soon-color: #{get($white, 'default')};
-
-$global-header: get($component-global-header, 'default');
-
-$logo: get($component-logo, 'default');
-$logo-size: get($font, 'font-size.larger');
-
-$webGL: get($component-webGL, 'default');
-
-$gutter: #{get($grid, 'gutter')};
-$space: #{get($grid, 'narrow')};
-
-$height: 60vw;
-$width: 80vw;
-$height-landscape: 60vh;
-$width-landscape: 80vh;
-
-$heading-font-weight: get($font, "font-weight.bold");
-$heading-font-size: get($font, "font-size.medium");
-
-$highlight-background-color: get($black, "default");
-$highlight-line-height: get($font, "font-size.large");
-$highlight-space: get($grid, "space");
-
-$font-color: get($black, "default");
+@import 'value';
 
 [data-routes='home'] {
-  @include set-logo-size($logo-size);
+  $background-color: get($grey, 'default');
+  $grid-narrow: get($grid, 'narrow');
+  $grid-gutter: get($grid, 'gutter');
 
-  color: $font-color;
+  $css-transition: get($component-css-transition, 'default');
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+  $exit-done: get($component-css-transition, 'exit.done');
+
+  $render-transition-delay: get($duration, 'slow');
+
+  $logo: get($component-logo, 'default');
+  $logo-color: get($white, 'default');
+  $logo-size: 10vw;
+
+  $navigation-color: get($black, 'default');
+  $navigation-color-hover: get($grey, 'dark');
+  $navigation-font-size: get($font, 'font-size.small');
+  $navigation-gap: get($grid, 'space');
+  $navigation-transition-duration: get($duration, 'faster');
+  $navigation-transition-timing-function: get($ease, 'sine.in-out');
+
+  $background-transition-duration: get($duration, 'slow');
+  $background-transition-property: transform;
+  $background-transition-timing-function: get($ease, 'cubic.in-out');
+
+  @include set-logo-style($logo-size, $logo-color);
+
+  background-image: url($background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: grid;
-  grid-template-areas:
-    '. . .'
-    '. div .'
-    '. . .';
-  grid-template-columns: auto calc(#{$width} + #{$logo-size}) auto;
-  grid-template-rows: auto calc(#{$height} + #{$logo-size}) auto;
-  text-align: center;
-  position: absolute;
-  top: 0;
+  grid-template-columns: auto $grid-gutter 35vw $grid-narrow 35vw $grid-gutter auto;
+  grid-template-rows: auto $grid-narrow 30vh $grid-gutter 55vh;
 
-  @include landscape() {
-    background-size: $width-landscape $height-landscape;
-    grid-template-columns: auto calc(#{$width-landscape} + #{$gutter}) auto;
-    grid-template-rows: auto calc(#{$height-landscape} + #{$gutter}) auto;
+  &::before,
+  h1,
+  p {
+    position: relative;
   }
 
   h1,
-  h2,
-  article {
-    transition-duration: get($duration, 'normal');
-    transition-property: opacity, transform;
-    justify-self: center;
-  }
+  nav {
+    &.#{$css-transition} {
+      &.#{$appear-active},
+      &.#{$enter-active},
+      &.#{$exit-active} {
+        transition-property: opacity, transform;
+      }
 
-  article {
-    color: get($white, "default");
-    grid-area: article;
-    transition-delay: get($duration, 'fast');
-  }
-
-  div {
-    background-image: url('../../../../asset/image/big.sur.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: $width $height;
-    display: grid;
-    grid-area: div;
-    grid-gap: $space;
-    grid-template-areas:
-      '. . .'
-      '. logo .'
-      '. heading .'
-      '. . .'
-      '. article .';
-    grid-template-columns: $gutter auto $gutter;
-    grid-template-rows: auto minmax(min-content, max-content) minmax(min-content, max-content) auto  minmax(min-content, max-content);
-    position: relative;
-    z-index: 1;
-
-    &.#{$appear-active},
-    &.#{$enter-active},
-    &.#{$exit-active} {
-      transition-duration: get($duration, 'normal');
-    }
-
-    &.#{$cssTransition} {
-      h1,
-      h2,
-      article {
+      &.#{$appear}:not(.#{$appear-active}),
+      &.#{$enter}:not(.#{$enter-active}),
+      &.#{$exit}.#{$exit-active},
+      &.#{$exit-done} {
         opacity: 0;
       }
 
-      h1 {
-        transform: scale(2);
-      }
-
-      article {
-        transform: translate3d(0, $gutter, 0);
+      &.#{$enter-active} {
+        transition-delay: $render-transition-delay;
       }
     }
+  }
+
+  &::before {
+    background-color: $background-color;
+    content: '\0020';
+    display: block;
+    grid-column-end: 6;
+    grid-column-start: 3;
+    grid-row-end: 6;
+    grid-row-start: 3;
+    transition-duration: $background-transition-duration;
+    transition-property: $background-transition-property;
+    transition-timing-function: $background-transition-timing-function;
+    will-change: $background-transition-property;
+    z-index: 1;
   }
 
   h1 {
-    transition-delay: get($duration, 'fastest');
-    grid-area: logo;
-  }
-
-  h2 {
-    grid-area: heading;
-    transition-delay: get($duration, 'faster');
+    align-self: end;
+    grid-column-end: 3;
+    grid-column-start: 2;
+    grid-row-start: 3;
+    z-index: 2;
   }
 
   p {
-    + p {
-      padding-top: $space;
-    }
+    align-self: start;
+    grid-column-end: 7;
+    grid-column-start: 2;
+    grid-row-start: 5;
+    z-index: 3;
 
-    &:first-child {
-      span {
-        font-weight: $heading-font-weight;
-        font-size: $heading-font-size;
+    span {
+      &.#{$enter-active} {
+        transition-delay: $render-transition-delay;
       }
     }
+  }
 
-    &:last-child {
-      span {
-        background-color: $highlight-background-color;
-        box-shadow: -16px 0 0 $highlight-background-color;
-        line-height: $highlight-line-height;
-        padding: $highlight-space $highlight-space $highlight-space 0;
-        white-space: pre-wrap;
+  nav {
+    align-self: start;
+    font-size: $navigation-font-size;
+    grid-column-end: 7;
+    grid-column-start: 5;
+    grid-gap: $navigation-gap;
+    grid-row-start: 2;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    justify-self: end;
+    z-index: 3;
+
+    a {
+      color: $navigation-color;
+      justify-self: left;
+      transition-duration: $navigation-transition-duration;
+      transition-property: color;
+      transition-timing-function: $navigation-transition-timing-function;
+
+      &:hover {
+        color: $navigation-color-hover;
       }
+    }
+  }
+
+  &.#{$css-transition} {
+    &::before {
+      transform: scale(1.6);
     }
   }
 }

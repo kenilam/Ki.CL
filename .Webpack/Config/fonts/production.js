@@ -1,4 +1,4 @@
-import { fonts, use } from './development'
+import {fonts, use} from './development'
 
 const name = '[hash].[ext]'
 

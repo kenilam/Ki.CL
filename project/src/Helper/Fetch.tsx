@@ -1,6 +1,6 @@
 import isImage from 'is-image';
 
-function fetchImage (url: string) {
+function fetchImage(url: string) {
   const img = new Image();
   
   const cancel = () => {
@@ -13,7 +13,7 @@ function fetchImage (url: string) {
     }
   );
   
-  return { cancel, promise };
+  return {cancel, promise};
 }
 
 function Fetch(url: string) {
@@ -26,9 +26,12 @@ function Fetch(url: string) {
   const cancel = () => {
     controller.abort();
   };
-  const promise = fetch(url, { signal }).catch(() => {});
+  const promise = window.fetch(url, {signal})
+  .then(response => response.json())
+  .catch(() => {
+  });
   
-  return { cancel, promise }
+  return {cancel, promise}
 }
 
 export default Fetch;

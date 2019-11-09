@@ -1,4 +1,4 @@
-import { api } from '^/ki-cl.config'
+import {api} from '^/ki-cl.config'
 import webpack from 'webpack'
 
 process.env.API_URL = api.host[process.env.NODE_ENV]

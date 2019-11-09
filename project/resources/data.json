@@ -1,6 +1,6 @@
 {
   "siteName": "Ki.CL",
-  "description": "UX and Eng Specialist",
+  "description": "Creative/\r\nTech",
   "view": {
     "pageNotFound": {
       "name": "Page Not Found",
@@ -12,17 +12,19 @@
       "path": "/",
       "name": "Home",
       "content": {
-        "heading": "KENI LAM",
-        "messages": [
-          "Thank you for visiting!",
-          "I am revamping my site, please come back in a month or so, hopefully I will have more story to tell by then."
-        ]
+        "heading": "KENI LAM"
       }
     },
     "about": {
       "path": "/about",
       "name": "About",
-      "message": "Ki.CL"
+      "content": {
+        "heading": "About Me",
+        "action": {
+          "path": "/works",
+          "name": "Explore"
+        }
+      }
     },
     "works": {
       "path": "/works",
@@ -53,6 +55,22 @@
     }
   },
   "component": {
+    "closeButton": {
+      "content": {
+        "message": "Close"
+      }
+    },
+    "globalHeader": {
+      "content": {
+        "heading": "KENI LAM"
+      }
+    },
+    "logo": {
+      "content": {
+        "message": "Ki.CL | HOME",
+        "title": "Go Home"
+      }
+    },
     "spinner": {
       "content": {
         "message": "loading..."

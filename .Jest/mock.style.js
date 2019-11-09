@@ -6,19 +6,21 @@ module.exports = {
    * TODO: investigate what can be done to unify the usages
    */
   TransitionStyle: {
-    custom: 'custom',
-    fade: 'fade',
-    slideDown: 'slideDown',
-    slideUp: 'slideUp',
-    slideLeft: 'slideLeft',
-    slideRight: 'slideRight'
-  },
-  TransitionStyleName: {
-    custom: 'custom',
-    fade: 'fade',
-    slideDown: 'slideDown',
-    slideUp: 'slideUp',
-    slideLeft: 'slideLeft',
-    slideRight: 'slideRight'
+    name: {
+      custom: 'custom',
+      fade: 'fade',
+      slideDown: 'slideDown',
+      slideUp: 'slideUp',
+      slideLeft: 'slideLeft',
+      slideRight: 'slideRight'
+    },
+    style: {
+      custom: 'custom',
+      fade: 'fade',
+      slideDown: 'slideDown',
+      slideUp: 'slideUp',
+      slideLeft: 'slideLeft',
+      slideRight: 'slideRight'
+    }
   }
 };

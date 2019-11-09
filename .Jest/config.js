@@ -45,7 +45,7 @@ module.exports = {
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/../project/' }),
-    '\\.(css|scss)$': 'identity-obj-proxy',
+    '\\.(css|scss|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy',
     '\\/Style': '<rootDir>/mock.style.js'
   },
 

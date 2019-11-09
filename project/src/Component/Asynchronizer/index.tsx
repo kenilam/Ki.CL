@@ -1,64 +1,49 @@
-import {CSSTransition} from "@/Component";
-import {TransitionStyleName} from "@/Component/CSSTransition";
-import Spinner from "@/Component/Spinner";
-import IAsynchronizer from "./spec";
+import {TransitionStyle} from '@/Component/CSSTransition';
+import Spinner from '@/Component/Spinner';
+import {CSSUnit, Fetch} from '@/Helper';
 import React, {useEffect, useState} from 'react';
-import {CSSUnit, Fetch} from "@/Helper";
+import IAsynchronizer from './spec';
 import Style from './Style';
 
-const delay = CSSUnit(Style.delay);
+const awaitDelay = CSSUnit(Style.delay);
 
 const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   awaitFor,
   children
 }) => {
-  let stillLoadingTimer: number;
+  let awaitTimer: number;
   
-  const [
-    isLoading,
-    stillLoading
-  ]: IAsynchronizer.LoadingState = useState<IAsynchronizer.IsLoading>(true);
+  const [data, updateData]: IAsynchronizer.DataState = useState<IAsynchronizer.Data>(null);
   
-  const [
-    spinnerRemoved,
-    removeSpinner
-  ]: IAsynchronizer.SpinnerState = useState<IAsynchronizer.SpinnerRemoved>(false);
-  
-  const showChildren = () => {
-    removeSpinner(true);
-  };
-  
-  const awaitComplete = () => {
-    stillLoading(false);
+  const awaitComplete = (data: any) => () => {
+    updateData(data);
   };
   
   useEffect(() => {
-    if (isLoading && !spinnerRemoved) {
-      const { cancel, promise } = Fetch(awaitFor);
+    if (!data) {
+      const {cancel, promise} = Fetch(awaitFor);
       
-      promise
-      .then(
-        () => {
-          stillLoadingTimer = window.setTimeout(
-            awaitComplete,
-            delay
-          );
-        }
-      );
-  
+      promise.then(data => {
+        awaitTimer = window.setTimeout(awaitComplete(data), awaitDelay);
+      });
+      
       return () => {
-        window.clearTimeout(stillLoadingTimer);
+        window.clearTimeout(awaitTimer);
         cancel();
       };
     }
-  });
+  }, [data]);
   
   return (
     <React.Fragment>
-      <Spinner transitionIn={isLoading} onExited={showChildren}/>
-      <CSSTransition transitionIn={spinnerRemoved} transitionStyle={TransitionStyleName.fade}>
-        {children}
-      </CSSTransition>
+      <Spinner in={Boolean(!data)} />
+      {
+        Boolean(data) && (
+          <TransitionStyle.ZoomIn in={Boolean(data)}>
+            {children(data)}
+          </TransitionStyle.ZoomIn>
+        )
+      }
     </React.Fragment>
   );
 };

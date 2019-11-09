@@ -1,7 +1,11 @@
-import {RouteComponentProps} from 'react-router';
-
 declare module IAbout {
-  interface Props extends RouteComponentProps {
+  interface Data {
+    sections: {
+      About: string
+    }
+  }
+  
+  interface Props {
   }
 }
 

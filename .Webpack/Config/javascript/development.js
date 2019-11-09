@@ -1,8 +1,8 @@
-import { path as appRoot } from 'app-root-path'
+import {path as appRoot} from 'app-root-path'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 
 import webpack from 'webpack'
-import { context } from '../entry'
+import {context} from '../entry'
 
 const tsconfig = `${appRoot}/.tsconfig.json`
 const tslint = `${appRoot}/.tslint.json`

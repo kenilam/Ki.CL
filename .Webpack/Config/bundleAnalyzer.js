@@ -1,5 +1,5 @@
-import { Args } from '!/Utilities'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import {Args} from '!/Utilities'
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer'
 
 const plugins = Args.analyzer ? [
   new BundleAnalyzerPlugin({

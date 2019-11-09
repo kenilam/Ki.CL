@@ -1,103 +1,108 @@
 import resources from '$/resources';
-import {Transition} from '@/Component';
+import Transition from '@/Component/Transition';
 import React from 'react';
-import {HashRouter as Provider, Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import {
+  HashRouter as Provider,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  useRouteMatch
+} from 'react-router-dom';
 import IRouter from './spec';
 
 const {view} = resources;
 
 const Router: React.FunctionComponent<IRouter.Props> = (
   {
-    appear,
-    classNames,
     children,
-    component,
     onEnter,
     onEntered,
-    onEntering,
     onExit,
-    onExiting,
     onExited,
     routeIndex,
-    transitionIn,
     transitionStyle,
-    unmountOnExit,
+    ...props
   }
 ) => {
-  const Component: React.FunctionComponent<IRouter.Component> = (
-    {
-      children, history: {location: {pathname}}, location
-    }
-  ) => {
-    let enterFrame: number;
-    let exitFrame: number;
+  const childNodes = React.Children.map(
+    (
+      children as IRouter.ChildNode
+    ),
+    ({props: {children}}) => children
+  );
+  
+  const location = useLocation();
+  
+  const routes = location.pathname === view.home.path
+    ? view.home.name.toLowerCase()
+    : location.pathname.substr(1).replace(/\//g, '.');
+  
+  const enterHandler: IRouter.OnEnter = (node, isAppearing) => {
+    document.body.dataset.enteredRoutes = routes;
     
-    const routes = pathname === view.home.path
-      ? view.home.name.toLowerCase()
-      : pathname.substr(1).replace(/\//g, '.');
+    onEnter && onEnter(node, isAppearing);
     
-    const onEnterHandler: IRouter.OnEnter = (node, done) => {
-      document.body.dataset.enteredRoutes = routes;
-      
-      window.cancelAnimationFrame(enterFrame);
-      
-      if (!onEnter) {
-        return;
+    childNodes.forEach(
+      ({props}) => {
+        props.onEnter && props.onEnter(node, isAppearing);
       }
-      
-      enterFrame = window.requestAnimationFrame(
-        () => {
-          onEnter(node, done);
-        }
-      );
-    };
-    
-    const onExitHandler: IRouter.OnExit = node => {
-      document.body.dataset.exitedRoutes = routes;
-      
-      window.cancelAnimationFrame(exitFrame);
-      
-      if (!onExit) {
-        return;
-      }
-      
-      exitFrame = window.requestAnimationFrame(
-        () => {
-          onExit(node);
-        }
-      );
-    };
-    
-    return (
-      <Transition
-        appear={appear}
-        classNames={classNames}
-        component={component}
-        onEnter={onEnterHandler}
-        onEntered={onEntered}
-        onEntering={onEntering}
-        onExit={onExitHandler}
-        onExiting={onExiting}
-        onExited={onExited}
-        transitionIn={transitionIn}
-        transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
-        transitionStyle={transitionStyle}
-        unmountOnExit={unmountOnExit}
-      >
-        <Switch location={location}>{children}</Switch>
-      </Transition>
     );
   };
   
-  const Instance = withRouter(Component);
+  const enteredHandler: IRouter.OnEnter = (node, isAppearing) => {
+    childNodes.forEach(
+      ({props}) => {
+        props.onEntered && props.onEntered(node, isAppearing);
+      }
+    );
+  };
+  
+  const exitHandler: IRouter.OnExit = node => {
+    document.body.dataset.exitedRoutes = routes;
+    
+    onExit && onExit(node);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onExit && props.onExit(node);
+      }
+    );
+  };
+  
+  const exitedHandler: IRouter.OnExit = node => {
+    onExited && onExited(node);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onExited && props.onExited(node);
+      }
+    );
+  };
   
   return (
-    <Provider>
-      <Instance>{children}</Instance>
-    </Provider>
+    <Transition
+      {...props}
+      onEnter={enterHandler}
+      onEntered={enteredHandler}
+      onExit={exitHandler}
+      onExited={exitedHandler}
+      transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
+    >
+      <Switch location={location}>{children}</Switch>
+    </Transition>
   );
 };
 
-export {Redirect, Route, Switch, Provider, withRouter};
+export {
+  Redirect,
+  Route,
+  Switch,
+  Provider,
+  useHistory,
+  useLocation,
+  useRouteMatch
+};
 
 export default Router;

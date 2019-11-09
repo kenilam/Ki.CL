@@ -1,9 +1,12 @@
+$speed: 1000ms;
+
 $duration: (
-  normal: 1000ms,
-  fast: 500ms,
-  faster: 250ms,
-  fastest: 125ms,
-  slow: 2000ms,
-  slower: 3000ms,
-  slowest: 4000ms,
+  normal: $speed,
+  fast: $speed * 0.8,
+  faster: $speed * 0.6,
+  fastest: $speed * 0.2,
+  slow: $speed * 1.2,
+  slower: $speed * 1.6,
+  slowest: $speed * 1.8,
+  extreme: $speed * 8,
 );

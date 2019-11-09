@@ -5,9 +5,8 @@ $content: get($kicl, 'content.default');
 $name: get($kicl, 'name');
 $size: get($grid, 'gutter');
 $transition-duration: get($duration, 'fast');
-$transition-timing-function: get($ease, 'default.in');
 
-@include set-logo-size($size);
+@include set-logo-style($size);
 
 [data-component='#{$default}'] {
   overflow: hidden;
@@ -18,19 +17,22 @@ $transition-timing-function: get($ease, 'default.in');
     display: block;
     font-family: $name;
     font-size: inherit;
+    -webkit-font-smoothing: antialiased;
+    font-weight: unset;
     left: 0;
     line-height: 1;
+    -moz-osx-font-smoothing: grayscale;
     position: absolute;
     text-indent: 0;
     top: 0;
     transition-duration: $transition-duration;
     transition-property: color;
-    transition-timing-function: $transition-timing-function;
     will-change: color;
     z-index: 1;
   }
 
   a {
+    color: transparent;
     height: 100%;
     opacity: 0;
     position: absolute;

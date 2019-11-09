@@ -1,15 +1,50 @@
 import resources from '$/resources';
-import {Route} from '@/Component/Router';
+import {Asynchronizer, CloseButton, Logo, Navigation} from '@/Component';
+import ICSSTransition from '@/Component/CSSTransition/spec';
+import {Route, useHistory} from '@/Component/Router';
 import React from 'react';
 import IAbout from './spec';
 import './Style';
 
-const {view: {about: {path}}} = resources;
+const {
+  view: {
+    about: {path, content: {action, heading}}
+  }
+} = resources;
 
-const Works: React.FunctionComponent<IAbout.Props> = () => (
-  <main data-routes='about'>
-    <h1>About</h1>
-  </main>
+const api = `${process.env.API_URL}/api/about`;
+const transitionType: ICSSTransition.Type = 'slideFromRight';
+
+const Abort: React.FunctionComponent<IAbout.Props> = () => {
+  const history = useHistory();
+  
+  return (
+    <main data-routes='about'>
+      <Asynchronizer awaitFor={api}>
+        {
+          (data: IAbout.Data) => (
+            <article>
+              <Logo />
+              <h2>{heading}</h2>
+              <p>{data.sections.About}</p>
+              <CloseButton onExit={history.goBack} />
+              <Navigation
+                inline={true}
+                items={[
+                  {children: action.name, to: action.path}
+                ]}
+              />
+            </article>
+          )
+        }
+      </Asynchronizer>
+    </main>
+  );
+};
+
+export {path, transitionType};
+export default (
+  <Route path={path}>
+    <Abort />
+  </Route>
 );
-
-export default <Route path={path} render={Works} />;

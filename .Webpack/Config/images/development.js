@@ -2,7 +2,7 @@ const name = '[path][name].[ext]'
 
 const use = [
   {
-  loader: 'file-loader',
+    loader: 'file-loader',
     options: {
       name
     },

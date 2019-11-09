@@ -1,1 +1,1 @@
-@value view: #{get($view, 'default')};
+@value default: #{get($view, 'default')};

@@ -1,8 +1,8 @@
-import { path as appRoot } from 'app-root-path'
+import {path as appRoot} from 'app-root-path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 
 class CopyPlugin {
-  constructor ({ srcRoot, dest }) {
+  constructor({srcRoot, dest}) {
     return new CopyWebpackPlugin([{
       cache: true,
       debug: 'debug',

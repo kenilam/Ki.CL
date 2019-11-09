@@ -1,5 +1,5 @@
-import { context, contextRoot } from '!/Config/entry'
-import { path as appRoot } from 'app-root-path'
+import {context, contextRoot} from '!/Config/entry'
+import {path as appRoot} from 'app-root-path'
 import glob from 'glob'
 import StylelintFormatter from 'stylelint-formatter-pretty'
 import StyleLintPlugin from 'stylelint-webpack-plugin'

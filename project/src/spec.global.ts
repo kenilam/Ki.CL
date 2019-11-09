@@ -23,13 +23,14 @@ declare module 'react-audio-player';
 declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
 declare module 'units-css' {
-  export function parse (s: string) {
+  export function parse(s: string) {
     const value: number;
     const unit: string;
     
     return {value, unit};
   }
-  export function convert (
+  
+  export function convert(
     BASE_UNIT: string,
     values: any,
     htmlBodyElement?: HTMLBodyElement

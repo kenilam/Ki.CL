@@ -1,5 +1,5 @@
-import { context, contextRoot } from '!/Config/entry'
-import { path as appRoot } from 'app-root-path'
+import {context, contextRoot} from '!/Config/entry'
+import {path as appRoot} from 'app-root-path'
 import fs from 'fs'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 

@@ -1,10 +1,10 @@
-import { Args } from '!/Utilities'
+import {Args} from '!/Utilities'
 import config from '^/ki-cl.config'
 import open from 'opn'
 import webpack from 'webpack'
-import { srcRoot as assetPath } from './asset'
-import { srcRoot as contentPath } from './content'
-import { publicPath } from './output'
+import {srcRoot as assetPath} from './asset'
+import {srcRoot as contentPath} from './content'
+import {publicPath} from './output'
 
 const {
   host,
@@ -57,18 +57,18 @@ const devServer = {
     aggregateTimeout: 500,
     poll: 1000,
   },
-  
+
   contentBase,
   port,
   stats,
 }
 
-function browser () {
+function browser() {
   open(`${host}:${port}`)
 }
 
 const plugins = [
-  new webpack.HotModuleReplacementPlugin({ multiStep: true }),
+  new webpack.HotModuleReplacementPlugin({multiStep: true}),
   new webpack.EvalSourceMapDevToolPlugin(),
 ]
 

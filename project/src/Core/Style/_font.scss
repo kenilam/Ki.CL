@@ -16,7 +16,7 @@ $base-font-size: 16px !default;
 $font: (
   font-family: (
     normal: ('omnes-pro', $base-font),
-    bold: ('acumin-pro-extra-condensed', $base-font),
+    bold: ('acumin-pro-wide', $base-font),
     special: ('alfarn', $base-font)
   ),
   font-size: (
@@ -28,13 +28,19 @@ $font: (
     small: 0.8rem,
     smaller: 0.6rem,
     smallest: 0.4rem,
+    extreme: 10rem,
   ),
   font-weight: (
-    normal: 300,
-    light: 400,
+    lightest: 100,
+    lighter: 200,
+    light: 300,
+    normal: 400,
     bold: 500,
     bolder: 700
   ),
   letter-spacing: 0.08rem,
-  line-height: 1.2
+  line-height: (
+    default: 1.5,
+    wide: 1.8
+  )
 );

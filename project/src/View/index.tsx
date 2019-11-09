@@ -1,24 +1,32 @@
 import {Router} from '@/Component';
-import {TransitionStyleName} from '@/Component/CSSTransition';
-import React from 'react';
-import About from './About';
-import Home from './Home';
+import {useLocation} from '@/Component/Router';
+import React, {FunctionComponent} from 'react';
+import About, {path as aboutPath, transitionType as aboutTransitionType} from './About';
+import Home, {path as homePath, transitionType as homeTransitionType} from './Home';
 import PageNotFound from './PageNotFound';
-import Style from './Style';
-import Works from './Works';
+import IView from './spec';
+import Works, {path as workPath, transitionType as workTransitionType} from './Works';
 
-const View = (
-  <Router
-    appear={true}
-    classNames={Style.view}
-    routeIndex={0}
-    transitionStyle={TransitionStyleName.fade}
-  >
-    {About}
-    {Home}
-    {Works}
-    {PageNotFound}
-  </Router>
-);
+const TRANSITION_TYPES: IView.TransitionType = {
+  [aboutPath]: aboutTransitionType,
+  [homePath]: homeTransitionType,
+  [workPath]: workTransitionType
+};
+
+const View: FunctionComponent<IView.Props> = () => {
+  const {pathname} = useLocation();
+  
+  return (
+    <Router
+      routeIndex={0}
+      type={TRANSITION_TYPES[pathname]}
+    >
+      {About}
+      {Home}
+      {Works}
+      {PageNotFound}
+    </Router>
+  );
+};
 
 export default View;

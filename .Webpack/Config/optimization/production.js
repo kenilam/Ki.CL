@@ -1,6 +1,6 @@
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import TerserJSPlugin from 'terser-webpack-plugin'
-import { optimization } from './development'
+import {optimization} from './development'
 
 const minimizer = [
   new OptimizeCSSAssetsPlugin(),

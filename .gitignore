@@ -49,3 +49,4 @@ tsconfig.json
 ################
 project/build
 .Jest/.jest-cache
+*.icloud

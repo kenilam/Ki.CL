@@ -16,8 +16,8 @@ $size: get($grid, 'gutter');
   position: absolute;
   stroke: $color;
   stroke-width: 1px;
-  transform: translate3d(-50%, -50%, 0);
   top: 50%;
+  transform: translate3d(-50%, -50%, 0);
   width: $size;
   z-index: 10000;
 

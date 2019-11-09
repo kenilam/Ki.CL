@@ -1,6 +1,6 @@
-import { srcRoot as baseDir } from '!/Config/output'
-import { Args } from '!/Utilities'
-import { localhost } from '^/ki-cl.config'
+import {srcRoot as baseDir} from '!/Config/output'
+import {Args} from '!/Utilities'
+import {localhost} from '^/ki-cl.config'
 import browserSync from 'browser-sync'
 
 const startPath = ''
@@ -16,7 +16,7 @@ const browserConfig = {
   reloadDebounce: 500,
   server: {
     baseDir,
-    
+
     directory: true,
   },
   https: true,

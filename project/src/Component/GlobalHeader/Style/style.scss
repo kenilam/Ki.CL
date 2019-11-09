@@ -1,78 +1,88 @@
+@import 'value';
+
 $default: get($component-global-header, 'default');
 
-$transition-parent: get($transition, 'default');
-
-$appear: get($css-transition, 'appear.default');
-$appear-active: get($css-transition, 'appear.active');
-$enter: get($css-transition, 'enter.default');
-$enter-active: get($css-transition, 'enter.active');
-$exit: get($css-transition, 'exit.default');
-$exit-active: get($css-transition, 'exit.active');
-$exit-done: get($css-transition, 'exit.done');
-
-$logo: get($component-logo, 'default');
-$navigation: get($component-navigation, 'default');
-
-$column: get($grid, 'wide');
-$column-narrow: get($grid, 'gutter');
-
-$color: get($black, 'light');
-$font-family: get($font, 'font-family.normal');
-$font-size: get($font, 'font-size.normal');
-$space: get($grid, 'space');
+@include set-global-header-color();
 
 [data-component='#{$default}'] {
-  @include shadow-bottom();
+  $css-transition: #{get($component-css-transition, 'default')};
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+  $exit-done: get($component-css-transition, 'exit.done');
 
-  background-color: get($white, 'pure');
+  $logo: get($component-logo, 'default');
+  $navigation: get($component-navigation, 'default');
+
+  $transition-delay: get($duration, 'fast');
+  $transition-duration: get($duration, 'slowest');
+
+  $bleed: get($grid, 'default');
+  $color: get($black, 'default');
+  $gap: get($grid, 'gutter');
+  $space: get($grid, 'narrow');
+
   display: grid;
-  font-family: $font-family;
-  font-size: $font-size;
-  grid-template-areas: 'logo . navigation .';
-  grid-template-columns: $column auto auto $column-narrow;
-  grid-template-rows: 1fr;
-  line-height: 1;
-  padding: $space;
-  position: sticky;
-  top: 0;
+  grid-gap: $gap;
+  grid-template-areas: '. . . . . .' '. logo h2 . navigation .' '. . . . . .';
+  grid-template-columns: $gap max-content max-content auto max-content $gap;
+  grid-template-rows: $bleed max-content auto;
+  position: fixed;
+  width: 100vw;
+  z-index: 1500;
 
-  [data-component='#{$logo}'] {
-    grid-area: logo;
-    transition-duration: get($duration, 'fastest');
-    transition-property: transform;
-    transition-timing-function: get($ease, 'circ.in');
-
-    &:hover {
-      transform: scale(1.2);
-    }
+  > * {
+    align-self: center;
+    justify-self: center;
   }
 
-  [data-component='#{$navigation}'] {
+  > [data-component=#{$navigation}] {
     grid-area: navigation;
-    justify-self: end;
+    grid-gap: $gap;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
     text-transform: uppercase;
   }
 
-  a {
-    color: $color;
-  }
+  @include tablet() {
+    grid-gap: $space;
+    grid-template-areas: '. . . . . .' '. logo h2 . navigation .' '. . . . . .';
+    grid-template-columns: $gap max-content max-content auto max-content $gap;
+    grid-template-rows: $gap max-content auto;
 
-  @include mobile() {
-    grid-template-columns: $column-narrow auto auto $column-narrow;
-    grid-template-rows: 1fr;
-  }
+    > [data-component=#{$navigation}] {
+      grid-gap: $space;
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+    }
 
-  &.#{$enter},
-  &.#{$exit} {
-    .#{$transition-parent} & {
-      position: sticky;
+    h2 {
+      color: transparent;
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      width: 0;
     }
   }
 
-  &.#{$appear}:not(.#{$appear-active}),
-  &.#{$enter}:not(.#{$enter-active}),
-  &.#{$exit}.#{$exit-active},
-  &.#{$exit}.#{$exit-done} {
-    transform: translate3d(0, -105%, 0);
+  [data-component=#{$logo}] {
+    grid-area: logo;
+  }
+
+  h2 {
+    grid-area: h2;
+    white-space: pre;
+  }
+
+  &.#{$css-transition} {
+    z-index: 1500;
+
+    &.#{$enter} {
+      transition-delay: $transition-delay;
+      transition-duration: $transition-duration;
+    }
   }
 }

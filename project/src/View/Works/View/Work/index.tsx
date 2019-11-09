@@ -1,9 +1,12 @@
-import {Route} from '@/Component/Router';
-import React from 'react';
+import resources from '$/resources';
+import {Route, useRouteMatch} from '@/Component/Router';
+import React, {FunctionComponent} from 'react';
 import IWork from './spec';
 
-const Work = ({match}: IWork.Props) => {
-  const {params: {projectId}} = match;
+const {view: {works: {view: {work: {path}}}}} = resources;
+
+const Work: FunctionComponent<IWork.Props> = () => {
+  const {params: {projectId}}: IWork.Match = useRouteMatch({path});
   
   return (
     <section data-routes={`works.${projectId}`}>
@@ -12,4 +15,8 @@ const Work = ({match}: IWork.Props) => {
   );
 };
 
-export default <Route path='/works/:projectId' exact={true} render={Work} />
+export default (
+  <Route path={path} exact={true}>
+    <Work />
+  </Route>
+)

@@ -5,11 +5,4 @@ import RandomColor from './RandomColor';
 import RandomId from './RandomId';
 import RandomNumber from './RandomNumber';
 
-export {
-  CharacterRanges,
-  CSSUnit,
-  Fetch,
-  RandomColor,
-  RandomId,
-  RandomNumber
-};
+export {CharacterRanges, CSSUnit, Fetch, RandomColor, RandomId, RandomNumber};

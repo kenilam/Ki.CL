@@ -1,47 +1,18 @@
-import {CSSTransitionProps} from 'react-transition-group/CSSTransition';
-import {EndHandler, EnterHandler, ExitHandler} from 'react-transition-group/Transition';
+import ICore from './Core/spec';
+import IStyle from './Style/spec';
 
 declare module ICSSTransition {
-  interface ClassNames extends IClassNames {
-    cssTransition: string;
-    appear: string;
-    appearActive: string;
-    appearDone: string;
-    enter: string;
-    enterActive: string;
-    enterDone: string;
-    exit: string;
-    exitActive: string;
-    exitDone: string;
+  interface ClassNames extends ICore.ClassNames {
+    default: string;
   }
   
-  type OnEnter = EnterHandler;
-  type OnExit = ExitHandler;
+  type Type = IStyle.Type;
   
-  type TransitionIn = boolean;
+  type OnEnter = ICore.OnEnter;
+  type OnExit = ICore.OnExit;
   
-  interface Props extends Partial<CSSTransitionProps> {
-    addEndListener?: EndHandler;
-    onEnter?: EnterHandler;
-    onEntering?: EnterHandler;
-    onEntered?: EnterHandler;
-    onExit?: ExitHandler;
-    onExiting?: ExitHandler;
-    onExited?: ExitHandler;
-    transitionIn?: TransitionIn;
-    transitionKey?: string;
-    transitionStyle?: keyof TransitionStyle;
-  }
-  
-  interface TransitionStyle {
-    custom: string;
-    fade: string
-    slideUp: string;
-    slideDown: string;
-    zoomIn: string;
-    zoomOut: string;
-    
-    [key: string]: string;
+  interface Props extends ICore.Props {
+    type?: Type;
   }
 }
 

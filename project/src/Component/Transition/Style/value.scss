@@ -1,1 +1,1 @@
-@value transition: #{get($transition, 'default')};
+@value default: #{get($transition, 'default')};
