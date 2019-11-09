@@ -1,0 +1,48 @@
+$default: get($view-home-description, 'default');
+$line-break: get($view-home-description, 'line-break');
+
+[data-component=#{$default}] {
+  $css-transition: #{get($component-css-transition, 'default')};
+  $enter: #{get($component-css-transition, 'enter.default')};
+  $enter-active: #{get($component-css-transition, 'enter.active')};
+
+  $transition-duration: get($duration, 'extreme');
+  $transition-property: opacity, transform;
+  $transition-timing-function: get($ease, 'circ.out');
+
+  $color: get($grey, 'darker');
+  $font-family: get($font, 'font-family.bold');
+  $font-size: 15vmin;
+  $font-weight: get($font, 'font-weight.bold');
+  $line-height: 1;
+
+  color: $color;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  word-break: break-word;
+
+  span {
+    display: block;
+
+    &.#{$enter} {
+      &:not(.#{$enter-active}) {
+        opacity: 0;
+      }
+    }
+
+    &.#{$enter-active} {
+      transition-duration: $transition-duration;
+      transition-property: $transition-property;
+      transition-timing-function: $transition-timing-function;
+      will-change: $transition-property;
+    }
+  }
+
+  .#{$line-break} {
+    width: 100%;
+  }
+}

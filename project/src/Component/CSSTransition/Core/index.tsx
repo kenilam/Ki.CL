@@ -3,7 +3,7 @@ import React, {FunctionComponent} from 'react';
 import {CSSTransition} from 'react-transition-group';
 import ICore from './spec';
 import Style from './Style';
-import {addEndListener, duration} from './Utility';
+import {addEndListener, duration, getTransitionStyleByType} from './Utility';
 
 const Core: FunctionComponent<ICore.Props> = ({
   addEndListener: customEndListener,
@@ -18,6 +18,27 @@ const Core: FunctionComponent<ICore.Props> = ({
   unmountOnExit = true,
   ...props
 }) => {
+  const {
+    props: {
+      onEnter: childOnEnter,
+      onEntered: childOnEntered,
+      onExit: childOnExit,
+      onExited: childOnExited,
+    }
+  } = children as {
+    props: {
+      onEnter: ICore.OnEnter,
+      onEntered: ICore.OnEnter,
+      onExit: ICore.OnExit,
+      onExited: ICore.OnExit,
+    }
+  };
+  
+  const enterHandler: ICore.OnEnter = (node, isAppearing) => {
+    onEnter && onEnter(node, isAppearing);
+    childOnEnter && childOnEnter(node, isAppearing);
+  };
+  
   const enteredHandler: ICore.OnEnter = (node, isAppearing) => {
     if (node && !customEndListener) {
       node.classList.remove(
@@ -30,6 +51,12 @@ const Core: FunctionComponent<ICore.Props> = ({
     }
     
     onEntered && onEntered(node, isAppearing);
+    childOnEntered && childOnEntered(node, isAppearing);
+  };
+  
+  const exitHandler: ICore.OnExit = node => {
+    onExit && onExit(node);
+    childOnExit && childOnExit(node);
   };
   
   const exitedHandler: ICore.OnExit = (node) => {
@@ -42,6 +69,7 @@ const Core: FunctionComponent<ICore.Props> = ({
     }
     
     onExited && onExited(node);
+    childOnExited && childOnExited(node);
   };
   
   return (
@@ -58,9 +86,9 @@ const Core: FunctionComponent<ICore.Props> = ({
       }
       mountOnEnter={mountOnEnter}
       timeout={null}
-      onEnter={onEnter}
+      onEnter={enterHandler}
       onEntered={enteredHandler}
-      onExit={onExit}
+      onExit={exitHandler}
       onExited={exitedHandler}
       unmountOnExit={unmountOnExit}
     >
@@ -69,5 +97,5 @@ const Core: FunctionComponent<ICore.Props> = ({
   );
 };
 
-export {duration};
+export {duration, getTransitionStyleByType};
 export default Core;

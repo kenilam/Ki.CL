@@ -1,6 +1,6 @@
 {
   "siteName": "Ki.CL",
-  "description": "UX and Eng Specialist",
+  "description": "Creative/\r\nTech",
   "view": {
     "pageNotFound": {
       "name": "Page Not Found",
@@ -63,6 +63,12 @@
     "globalHeader": {
       "content": {
         "heading": "KENI LAM"
+      }
+    },
+    "logo": {
+      "content": {
+        "message": "Ki.CL | HOME",
+        "title": "Go Home"
       }
     },
     "spinner": {

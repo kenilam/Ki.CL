@@ -1,6 +1,5 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import ILink from '@/Component/Link/spec';
-import {MouseEventHandler} from "react";
 
 declare module INavigation {
   type Link = ILink.Props;
@@ -11,10 +10,10 @@ declare module INavigation {
     inline: string;
   }
   
-  interface ExtendedProps extends ILink.Props, ICSSTransition.Props {}
+  interface ExtendedProps extends Omit<ILink.Props, 'type'>, ICSSTransition.Props {
+  }
   
-  interface Props extends
-    Omit<ExtendedProps, 'in' | 'timeout' | 'title' | 'to' | 'type'> {
+  interface Props extends Omit<ExtendedProps, 'in' | 'timeout' | 'title' | 'to' | 'type'> {
     inline?: boolean;
     items?: Links;
   }

@@ -1,11 +1,11 @@
-$cssTransition: get($css-transition, 'default');
-$appear: get($css-transition, 'appear.default');
-$appear-active: get($css-transition, 'appear.active');
-$enter: get($css-transition, 'enter.default');
-$enter-active: get($css-transition, 'enter.active');
-$exit: get($css-transition, 'exit.default');
-$exit-active: get($css-transition, 'exit.active');
-$exit-done: get($css-transition, 'exit.active');
+$css-transition: get($component-css-transition, 'default');
+$appear: get($component-css-transition, 'appear.default');
+$appear-active: get($component-css-transition, 'appear.active');
+$enter: get($component-css-transition, 'enter.default');
+$enter-active: get($component-css-transition, 'enter.active');
+$exit: get($component-css-transition, 'exit.default');
+$exit-active: get($component-css-transition, 'exit.active');
+$exit-done: get($component-css-transition, 'exit.active');
 
 $transition-duration: get($duration, 'fast');
 $transition-delay: get($duration, 'fastest');
@@ -47,7 +47,7 @@ $grid-template-rows: min-content auto max-content max-content max-content max-co
     max-width: 100%;
     min-height: 100vh;
 
-    &.#{$cssTransition} {
+    &.#{$css-transition} {
       &.#{$appear-active},
       &.#{$enter-active},
       &.#{$exit-active} {

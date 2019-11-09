@@ -1,5 +1,5 @@
+import {getTransitionStyleByType} from '@/Component/CSSTransition/Core';
 import ICSSTransition from '@/Component/CSSTransition/spec';
-import IStyle from '@/Component/CSSTransition/Style/spec';
 import React, {FunctionComponent} from 'react';
 import TransitionStyle from './Style';
 
@@ -8,13 +8,7 @@ const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   type,
   ...props
 }) => {
-  const Component = (
-    TransitionStyle[`${
-      type[0].toUpperCase()
-    }${
-      type.substr(1)
-    }` as IStyle.Component]
-  );
+  const Component = getTransitionStyleByType(type);
   
   return (
     <Component {...props}>

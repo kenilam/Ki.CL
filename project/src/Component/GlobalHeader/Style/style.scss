@@ -5,14 +5,14 @@ $default: get($component-global-header, 'default');
 @include set-global-header-color();
 
 [data-component='#{$default}'] {
-  $cssTransition: #{get($css-transition, 'default')};
-  $appear: get($css-transition, 'appear.default');
-  $appear-active: get($css-transition, 'appear.active');
-  $enter: get($css-transition, 'enter.default');
-  $enter-active: get($css-transition, 'enter.active');
-  $exit: get($css-transition, 'exit.default');
-  $exit-active: get($css-transition, 'exit.active');
-  $exit-done: get($css-transition, 'exit.done');
+  $css-transition: #{get($component-css-transition, 'default')};
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+  $exit-done: get($component-css-transition, 'exit.done');
 
   $logo: get($component-logo, 'default');
   $navigation: get($component-navigation, 'default');
@@ -77,7 +77,7 @@ $default: get($component-global-header, 'default');
     white-space: pre;
   }
 
-  &.#{$cssTransition} {
+  &.#{$css-transition} {
     z-index: 1500;
 
     &.#{$enter} {

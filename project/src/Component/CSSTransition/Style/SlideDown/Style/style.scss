@@ -1,16 +1,16 @@
-$cssTransition: get($css-transition, 'default');
-$style: get($css-transition-slide-down, 'default');
-$appear: get($css-transition, 'appear.default');
-$appear-active: get($css-transition, 'appear.active');
-$enter: get($css-transition, 'enter.default');
-$enter-active: get($css-transition, 'enter.active');
-$exit: get($css-transition, 'exit.default');
-$exit-active: get($css-transition, 'exit.active');
-$exit-done: get($css-transition, 'exit.done');
+$css-transition: get($component-css-transition, 'default');
+$style: get($component-css-transition-slide-down, 'default');
+$appear: get($component-css-transition, 'appear.default');
+$appear-active: get($component-css-transition, 'appear.active');
+$enter: get($component-css-transition, 'enter.default');
+$enter-active: get($component-css-transition, 'enter.active');
+$exit: get($component-css-transition, 'exit.default');
+$exit-active: get($component-css-transition, 'exit.active');
+$exit-done: get($component-css-transition, 'exit.done');
 
-.#{$cssTransition}.#{$style} {
-  transition-property: opacity, transform;
-  will-change: opacity, transform;
+.#{$css-transition}.#{$style} {
+  transition-property: transform;
+  will-change: transform;
 
   &.#{$appear}:not(.#{$appear-active}),
   &.#{$enter}:not(.#{$enter-active}),

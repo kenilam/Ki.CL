@@ -1,6 +1,6 @@
-$appear-active: #{get($css-transition, 'appear.active')};
-$enter-active: #{get($css-transition, 'enter.active')};
-$exit-active: #{get($css-transition, 'exit.active')};
+$appear-active: #{get($component-css-transition, 'appear.active')};
+$enter-active: #{get($component-css-transition, 'enter.active')};
+$exit-active: #{get($component-css-transition, 'exit.active')};
 
 $default: get($component-close-button, 'default');
 

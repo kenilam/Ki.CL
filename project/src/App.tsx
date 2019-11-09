@@ -1,36 +1,16 @@
-import {Asynchronizer} from '@/Component';
-import {Provider, useLocation} from '@/Component/Router';
-import React, {Fragment, FunctionComponent} from 'react';
+import {Provider} from '@/Component/Router';
+import React from 'react';
 import GlobalHeader from './Component/GlobalHeader';
-import View, {AWAIT_FOR} from './View';
+import View from './View';
 
 const appRoot = document.querySelector('[app-root]');
 
 const App = () => (
-  <Fragment>
+  <Provider>
     <GlobalHeader />
     <View />
-  </Fragment>
-);
-
-const Instance: FunctionComponent = () => {
-  const {pathname} = useLocation();
-  const shouldWaitFor = AWAIT_FOR[pathname];
-  
-  return (
-    shouldWaitFor ? (
-      <Asynchronizer awaitFor={shouldWaitFor}>
-        {App}
-      </Asynchronizer>
-    ) : <App />
-  )
-};
-
-const Component = () => (
-  <Provider>
-    <Instance />
   </Provider>
 );
 
 export {appRoot};
-export default Component;
+export default App;

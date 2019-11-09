@@ -6,7 +6,9 @@ import ILogo from './spec';
 import Style from './Style';
 
 const {
-  siteName,
+  component: {
+    logo: {content: {message, title}}
+  },
   view: {
     home: {path}
   }
@@ -18,8 +20,8 @@ const Logo: React.FunctionComponent<ILogo.Props> = ({isSquare}) => {
   });
   
   return (
-    <h1 data-component={Style.default} className={className}>
-      <Link to={path}>{siteName}</Link>
+    <h1 data-component={Style.default} className={className} title={title}>
+      <Link to={path}>{message}</Link>
     </h1>
   );
 };

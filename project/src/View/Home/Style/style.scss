@@ -1,8 +1,139 @@
 @import 'value';
 
 [data-routes='home'] {
+  $background-color: get($grey, 'default');
+  $grid-narrow: get($grid, 'narrow');
+  $grid-gutter: get($grid, 'gutter');
+
+  $css-transition: get($component-css-transition, 'default');
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+  $exit-done: get($component-css-transition, 'exit.done');
+
+  $render-transition-delay: get($duration, 'slow');
+
+  $logo: get($component-logo, 'default');
+  $logo-color: get($white, 'default');
+  $logo-size: 10vw;
+
+  $navigation-color: get($black, 'default');
+  $navigation-color-hover: get($grey, 'dark');
+  $navigation-font-size: get($font, 'font-size.small');
+  $navigation-gap: get($grid, 'space');
+  $navigation-transition-duration: get($duration, 'faster');
+  $navigation-transition-timing-function: get($ease, 'sine.in-out');
+
+  $background-transition-duration: get($duration, 'slow');
+  $background-transition-property: transform;
+  $background-transition-timing-function: get($ease, 'cubic.in-out');
+
+  @include set-logo-style($logo-size, $logo-color);
+
   background-image: url($background-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  display: grid;
+  grid-template-columns: auto $grid-gutter 35vw $grid-narrow 35vw $grid-gutter auto;
+  grid-template-rows: auto $grid-narrow 30vh $grid-gutter 55vh;
+
+  &::before,
+  h1,
+  p {
+    position: relative;
+  }
+
+  h1,
+  nav {
+    &.#{$css-transition} {
+      &.#{$appear-active},
+      &.#{$enter-active},
+      &.#{$exit-active} {
+        transition-property: opacity, transform;
+      }
+
+      &.#{$appear}:not(.#{$appear-active}),
+      &.#{$enter}:not(.#{$enter-active}),
+      &.#{$exit}.#{$exit-active},
+      &.#{$exit-done} {
+        opacity: 0;
+      }
+
+      &.#{$enter-active} {
+        transition-delay: $render-transition-delay;
+      }
+    }
+  }
+
+  &::before {
+    background-color: $background-color;
+    content: '\0020';
+    display: block;
+    grid-column-end: 6;
+    grid-column-start: 3;
+    grid-row-end: 6;
+    grid-row-start: 3;
+    transition-duration: $background-transition-duration;
+    transition-property: $background-transition-property;
+    transition-timing-function: $background-transition-timing-function;
+    will-change: $background-transition-property;
+    z-index: 1;
+  }
+
+  h1 {
+    align-self: end;
+    grid-column-end: 3;
+    grid-column-start: 2;
+    grid-row-start: 3;
+    z-index: 2;
+  }
+
+  p {
+    align-self: start;
+    grid-column-end: 7;
+    grid-column-start: 2;
+    grid-row-start: 5;
+    z-index: 3;
+
+    span {
+      &.#{$enter-active} {
+        transition-delay: $render-transition-delay;
+      }
+    }
+  }
+
+  nav {
+    align-self: start;
+    font-size: $navigation-font-size;
+    grid-column-end: 7;
+    grid-column-start: 5;
+    grid-gap: $navigation-gap;
+    grid-row-start: 2;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    justify-self: end;
+    z-index: 3;
+
+    a {
+      color: $navigation-color;
+      justify-self: left;
+      transition-duration: $navigation-transition-duration;
+      transition-property: color;
+      transition-timing-function: $navigation-transition-timing-function;
+
+      &:hover {
+        color: $navigation-color-hover;
+      }
+    }
+  }
+
+  &.#{$css-transition} {
+    &::before {
+      transform: scale(1.6);
+    }
+  }
 }

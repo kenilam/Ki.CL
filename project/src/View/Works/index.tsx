@@ -7,7 +7,7 @@ import './Style';
 import View from './View';
 
 const {view: {works: {path}}} = resources;
-const transitionType: ICSSTransition.Type = 'fade';
+const transitionType: ICSSTransition.Type = 'slideUp';
 
 const Works: React.FunctionComponent<IWorks.Props> = () => (
   <main data-routes='works'>

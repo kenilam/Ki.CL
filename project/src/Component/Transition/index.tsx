@@ -8,17 +8,28 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   addEndListener,
   appear = true,
   children,
+  childFactory,
   transitionKey,
   onEnter,
   onEntered,
   ...props
 }) => {
+  const childNodes = React.Children.toArray(children) as {
+    props: ITransition.ChildActions
+  }[];
+  
   const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
     if (node && !addEndListener) {
       node.parentElement.classList.add(Style.default);
     }
     
     onEnter && onEnter(node, isAppearing);
+    
+    childNodes.forEach(
+      ({props: {onEnter}}) => {
+        onEnter && onEnter(node, isAppearing);
+      }
+    )
   };
   
   const enteredHandler: ITransition.OnEnter = (node, isAppearing) => {
@@ -27,12 +38,34 @@ const Transition: FunctionComponent<ITransition.Props> = ({
     }
     
     onEntered && onEntered(node, isAppearing);
+    
+    childNodes.forEach(
+      ({props: {onEntered}}) => {
+        onEntered && onEntered(node, isAppearing);
+      }
+    )
+  };
+  
+  const exitHandler: ITransition.OnEnter = node => {
+    childNodes.forEach(
+      ({props: {onExit}}) => {
+        onExit && onExit(node);
+      }
+    )
+  };
+  
+  const exitedHandler: ITransition.OnEnter = node => {
+    childNodes.forEach(
+      ({props: {onExited}}) => {
+        onExited && onExited(node);
+      }
+    )
   };
   
   return (
-    <Origin component={Fragment}>
+    <Origin childFactory={childFactory} component={Fragment}>
       {
-        React.Children.toArray(children).map(
+        childNodes.map(
           (child, index) => (
             <CSSTransition
               {...props}
@@ -40,6 +73,8 @@ const Transition: FunctionComponent<ITransition.Props> = ({
               key={transitionKey || index}
               onEnter={enterHandler}
               onEntered={enteredHandler}
+              onExit={exitHandler}
+              onExited={exitedHandler}
             >
               {child}
             </CSSTransition>

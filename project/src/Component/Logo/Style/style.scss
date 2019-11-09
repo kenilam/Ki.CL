@@ -6,7 +6,7 @@ $name: get($kicl, 'name');
 $size: get($grid, 'gutter');
 $transition-duration: get($duration, 'fast');
 
-@include set-logo-size($size);
+@include set-logo-style($size);
 
 [data-component='#{$default}'] {
   overflow: hidden;

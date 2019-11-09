@@ -1,5 +1,5 @@
 import resources from '$/resources';
-import {Transition} from '@/Component';
+import Transition from '@/Component/Transition';
 import React from 'react';
 import {
   HashRouter as Provider,
@@ -18,12 +18,21 @@ const Router: React.FunctionComponent<IRouter.Props> = (
   {
     children,
     onEnter,
+    onEntered,
     onExit,
+    onExited,
     routeIndex,
     transitionStyle,
     ...props
   }
 ) => {
+  const childNodes = React.Children.map(
+    (
+      children as IRouter.ChildNode
+    ),
+    ({props: {children}}) => children
+  );
+  
   const location = useLocation();
   
   const routes = location.pathname === view.home.path
@@ -34,20 +43,52 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     document.body.dataset.enteredRoutes = routes;
     
     onEnter && onEnter(node, isAppearing);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onEnter && props.onEnter(node, isAppearing);
+      }
+    );
+  };
+  
+  const enteredHandler: IRouter.OnEnter = (node, isAppearing) => {
+    childNodes.forEach(
+      ({props}) => {
+        props.onEntered && props.onEntered(node, isAppearing);
+      }
+    );
   };
   
   const exitHandler: IRouter.OnExit = node => {
     document.body.dataset.exitedRoutes = routes;
     
     onExit && onExit(node);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onExit && props.onExit(node);
+      }
+    );
+  };
+  
+  const exitedHandler: IRouter.OnExit = node => {
+    onExited && onExited(node);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onExited && props.onExited(node);
+      }
+    );
   };
   
   return (
     <Transition
       {...props}
-      transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
       onEnter={enterHandler}
+      onEntered={enteredHandler}
       onExit={exitHandler}
+      onExited={exitedHandler}
+      transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
     >
       <Switch location={location}>{children}</Switch>
     </Transition>

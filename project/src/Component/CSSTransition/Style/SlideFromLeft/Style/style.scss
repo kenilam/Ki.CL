@@ -1,52 +1,16 @@
-$cssTransition: get($css-transition, 'default');
-$style: get($css-transition-slide-from-left, 'default');
-$appear: get($css-transition, 'appear.default');
-$appear-active: get($css-transition, 'appear.active');
-$enter: get($css-transition, 'enter.default');
-$enter-active: get($css-transition, 'enter.active');
-$exit: get($css-transition, 'exit.default');
-$exit-active: get($css-transition, 'exit.active');
-$exit-done: get($css-transition, 'exit.done');
+$css-transition: get($component-css-transition, 'default');
+$style: get($component-css-transition-slide-from-left, 'default');
+$appear: get($component-css-transition, 'appear.default');
+$appear-active: get($component-css-transition, 'appear.active');
+$enter: get($component-css-transition, 'enter.default');
+$enter-active: get($component-css-transition, 'enter.active');
+$exit: get($component-css-transition, 'exit.default');
+$exit-active: get($component-css-transition, 'exit.active');
+$exit-done: get($component-css-transition, 'exit.done');
 
-$background-alpha: 0.8;
-$background-color: get($black, 'pure');
-$background-transition-duration: get($duration, 'normal');
-$background-transition-timing-function: get($ease, 'expo.out');
-
-$transition-delay: get($duration, 'fastest');
-
-.#{$cssTransition}.#{$style} {
-  transition-property: opacity, transform;
-  will-change: opacity, transform;
-
-  &::before {
-    background-color: $background-color;
-    content: '\0020';
-    display: block;
-    height: 100%;
-    left: 0;
-    opacity: $background-alpha;
-    position: absolute;
-    top: 0;
-    transform: translate3d(100%, 0, 0);
-    transition-duration: $background-transition-duration;
-    transition-property: opacity;
-    transition-timing-function: $background-transition-timing-function;
-    width: 100%;
-    will-change: opacity;
-    z-index: 0;
-  }
-
-  &.#{$appear}.#{$appear-active},
-  &.#{$enter}.#{$enter-active} {
-    transition-delay: $transition-delay;
-  }
-
-  &.#{$exit}.#{$exit-active} {
-    &::before {
-      transition-delay: $transition-delay;
-    }
-  }
+.#{$css-transition}.#{$style} {
+  transition-property: transform;
+  will-change: transform;
 
   &.#{$appear}:not(.#{$appear-active}),
   &.#{$enter}:not(.#{$enter-active}),

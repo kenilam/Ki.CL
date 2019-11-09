@@ -1,4 +1,3 @@
-import ICSSTransition from '@/Component/CSSTransition/spec';
 import ITransition from '@/Component/Transition/spec';
 import {RouteComponentProps} from 'react-router-dom';
 
@@ -6,10 +5,18 @@ declare module IRouter {
   interface Component extends RouteComponentProps {
   }
   
-  type OnEnter = ICSSTransition.OnEnter;
-  type OnExit = ICSSTransition.OnExit;
+  type OnEnter = ITransition.OnEnter;
+  type OnExit = ITransition.OnExit;
+  type ChildActions = ITransition.ChildActions;
+  type ChildNode = {
+    props: {
+      children: {
+        props: ChildActions
+      }
+    }
+  }
   
-  interface Props extends ITransition.Props {
+  interface Props extends Omit<ITransition.Props, 'transitionKey'> {
     routeIndex: number;
   }
 }
