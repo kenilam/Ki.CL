@@ -1,6 +1,6 @@
 import resources from '$/resources';
 import {CSSTransition} from '@/Component';
-import IDescription from '@/View/Home/Description/spec';
+import ISlogan from '@/View/Home/Slogan/spec';
 import classnames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
@@ -10,7 +10,7 @@ const {
   description
 } = resources;
 
-const Description: React.FunctionComponent<IDescription.Props> = ({
+const Slogan: React.FunctionComponent<ISlogan.Props> = ({
   render
 }) => {
   const [index, updateIndex] = useState(0);
@@ -62,4 +62,4 @@ const Description: React.FunctionComponent<IDescription.Props> = ({
   );
 };
 
-export default Description;
+export default Slogan;

@@ -4,6 +4,8 @@ import React, {FunctionComponent} from 'react';
 import IFade from './spec';
 import Style from './Style';
 
+const {default: className} = Style;
+
 const Fade: FunctionComponent<IFade.Props> = ({
   children,
   classNames,
@@ -11,10 +13,11 @@ const Fade: FunctionComponent<IFade.Props> = ({
 }) => (
   <Selector
     {...props}
-    classNames={classnames(classNames, Style.default)}
+    classNames={classnames(classNames, className)}
   >
     {children}
   </Selector>
 );
 
+export {className};
 export default Fade;

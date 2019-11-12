@@ -1,0 +1,7 @@
+[data-routes='home'] {
+  $logo: get($component-logo, 'default');
+  $logo-color: get($white, 'default');
+  $logo-size: 10vmin;
+
+  @include set-logo-style($logo-size, $logo-color);
+}

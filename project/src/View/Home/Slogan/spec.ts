@@ -1,4 +1,4 @@
-declare module IDescription {
+declare module ISlogan {
   interface ClassNames extends IClassNames {
   }
   
@@ -7,4 +7,4 @@ declare module IDescription {
   }
 }
 
-export default IDescription;
+export default ISlogan;

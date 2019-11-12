@@ -4,6 +4,8 @@ import React, {FunctionComponent} from 'react';
 import ISlideDown from './spec';
 import Style from './Style';
 
+const {default: className} = Style;
+
 const SlideDown: FunctionComponent<ISlideDown.Props> = ({
   children,
   classNames,
@@ -11,10 +13,11 @@ const SlideDown: FunctionComponent<ISlideDown.Props> = ({
 }) => (
   <Selector
     {...props}
-    classNames={classnames(classNames, Style.default)}
+    classNames={classnames(classNames, className)}
   >
     {children}
   </Selector>
 );
 
+export {className};
 export default SlideDown;

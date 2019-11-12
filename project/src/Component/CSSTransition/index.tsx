@@ -1,7 +1,7 @@
 import {getTransitionStyleByType} from '@/Component/CSSTransition/Core';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import React, {FunctionComponent} from 'react';
-import TransitionStyle from './Style';
+import TransitionStyle, {ClassNames as TransitionClassName} from './Style';
 
 const CSSTransition: FunctionComponent<ICSSTransition.Props> = ({
   children,
@@ -21,5 +21,5 @@ CSSTransition.defaultProps = {
   type: 'custom'
 };
 
-export {TransitionStyle};
+export {TransitionClassName, TransitionStyle};
 export default CSSTransition;

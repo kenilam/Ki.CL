@@ -1,0 +1,29 @@
+.#{get($component-transition, 'default')}.#{get($component-transition, 'slide-from-right')} {
+  $stand-alone: get($component-css-transition, 'stand-alone');
+  $slide-from-right: get($component-css-transition-slide-from-right, 'default');
+
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+
+  $transition-delay: get($duration, 'faster');
+
+  > :not(.#{$stand-alone}) {
+    &.#{$slide-from-right} {
+      &::before {
+        transform: translate3d(-100%, 0, 0);
+      }
+    }
+
+    &:not(.#{$slide-from-right}) {
+      transform: translateX(0);
+
+      &.#{$exit}.#{$exit-active} {
+        transform: translate3d(-20%, 0, 0);
+      }
+    }
+  }
+}

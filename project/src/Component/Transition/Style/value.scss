@@ -1,1 +1,1 @@
-@value default: #{get($transition, 'default')};
+@value default: #{get($component-transition, 'default')};
