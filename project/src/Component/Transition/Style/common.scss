@@ -1,0 +1,66 @@
+$transition: get($component-transition, 'default');
+
+.#{$transition} {
+  $css-transition: get($component-css-transition, 'default');
+  $stand-alone: get($component-css-transition, 'stand-alone');
+
+  $slide-from-right: get($component-css-transition-slide-from-right, 'default');
+  $slide-up: get($component-css-transition-slide-up, 'default');
+
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+
+  $transition-delay: get($duration, 'faster');
+
+  $background-alpha: 0.8;
+  $background-color: get($black, 'pure');
+  $background-transition-duration: get($duration, 'normal');
+  $background-transition-timing-function: get($ease, 'expo.out');
+
+  &[class*='#{$transition}-slide'] {
+    > :not(.#{$stand-alone}) {
+      &[class*='#{$css-transition}-slide'] {
+        &::before {
+          background-color: $background-color;
+          display: block;
+          height: 100%;
+          left: 0;
+          opacity: $background-alpha;
+          position: absolute;
+          top: 0;
+          transition-duration: $background-transition-duration;
+          transition-property: opacity;
+          transition-timing-function: $background-transition-timing-function;
+          width: 100%;
+          will-change: opacity;
+          z-index: 0;
+        }
+
+        &.#{$enter} {
+          &::before {
+            content: '\0020';
+          }
+
+          &.#{$enter-active} {
+            transition-delay: $transition-delay;
+          }
+
+          &:not(.#{$enter-active}) {
+            &::before {
+              opacity: 0;
+            }
+          }
+        }
+
+        &.#{$exit}.#{$exit-active} {
+          transition-delay: $transition-delay;
+          transition-property: transform;
+        }
+      }
+    }
+  }
+}

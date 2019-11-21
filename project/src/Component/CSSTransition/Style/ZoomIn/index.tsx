@@ -4,6 +4,8 @@ import React, {FunctionComponent} from 'react';
 import IZoomIn from './spec';
 import Style from './Style';
 
+const {default: className} = Style;
+
 const ZoomIn: FunctionComponent<IZoomIn.Props> = ({
   children,
   classNames,
@@ -11,10 +13,11 @@ const ZoomIn: FunctionComponent<IZoomIn.Props> = ({
 }) => (
   <Selector
     {...props}
-    classNames={classnames(classNames, Style.default)}
+    classNames={classnames(classNames, className)}
   >
     {children}
   </Selector>
 );
 
+export {className};
 export default ZoomIn;

@@ -1,76 +1,23 @@
-.#{get($transition, 'default')} {
-  $slide-down: get($component-css-transition-slide-down, 'default');
-  $slide-up: get($component-css-transition-slide-up, 'default');
-  $slide-from-left: get($component-css-transition-slide-from-left, 'default');
-  $slide-from-right: get($component-css-transition-slide-from-right, 'default');
+.#{get($component-transition, 'default')} {
+  $css-transition: get($component-css-transition, 'default');
+  $css-transition-stand-alone: get($component-css-transition, 'stand-alone');
 
-  $appear: get($component-css-transition, 'appear.default');
-  $appear-active: get($component-css-transition, 'appear.active');
   $enter: get($component-css-transition, 'enter.default');
-  $enter-active: get($component-css-transition, 'enter.active');
   $exit: get($component-css-transition, 'exit.default');
-  $exit-active: get($component-css-transition, 'exit.active');
-
-  $transition-delay: get($duration, 'fastest');
-
-  $background-alpha: 0.8;
-  $background-color: get($black, 'pure');
-  $background-transition-duration: get($duration, 'normal');
-  $background-transition-timing-function: get($ease, 'expo.out');
 
   position: relative;
 
-  > .#{$slide-from-left},
-  > .#{$slide-from-right} {
-    background-color: $background-color;
-    content: '\0020';
-    display: block;
-    height: 100%;
-    left: 0;
-    opacity: $background-alpha;
-    position: absolute;
-    top: 0;
-    transform: translate3d(100%, 0, 0);
-    transition-duration: $background-transition-duration;
-    transition-property: opacity;
-    transition-timing-function: $background-transition-timing-function;
-    width: 100%;
-    will-change: opacity;
-    z-index: 0;
-
-    &.#{$appear}.#{$appear-active},
-    &.#{$enter}.#{$enter-active} {
-      transition-delay: $transition-delay;
+  > :not(.#{$css-transition-stand-alone}) {
+    &.#{$css-transition} {
+      position: absolute;
     }
 
-    &.#{$exit}.#{$exit-active} {
-      &::before {
-        transition-delay: $transition-delay;
-      }
+    &.#{$enter} {
+      z-index: 200;
     }
-  }
 
-  > .#{$enter},
-  > .#{$exit} {
-    position: absolute;
-  }
-
-  > .#{$enter} {
-    z-index: 200;
-
-    + .#{$exit}.#{$exit-active} {
-      opacity: 1;
-    }
-  }
-
-  > .#{$exit} {
-    z-index: 100;
-
-    &.#{$slide-down},
-    &.#{$slide-up},
-    &.#{$slide-from-left},
-    &.#{$slide-from-right} {
-      z-index: 300;
+    &.#{$exit} {
+      z-index: 100;
     }
   }
 }

@@ -1,9 +1,10 @@
 import resources from '$/resources';
-import {CSSTransition, Logo, Navigation} from '@/Component';
 import Style from '@/Component/CSSTransition/Core/Style';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
-import Description from '@/View/Home/Description';
+import Logo from '@/View/Home/Logo';
+import Navigation from '@/View/Home/Navigation';
+import Slogan from '@/View/Home/Slogan';
 import IHome from '@/View/Home/spec';
 import React, {useEffect, useRef, useState} from 'react';
 import './Style';
@@ -65,13 +66,9 @@ const Home: React.FunctionComponent<IHome.Props> = () => {
   
   return (
     <main data-routes='home' ref={ref}>
-      <CSSTransition type='slideFromLeft' in={render}>
-        <Logo isSquare={true} />
-      </CSSTransition>
-      <Description render={render} />
-      <CSSTransition type='slideDown' in={render}>
-        <Navigation />
-      </CSSTransition>
+      <Logo render={render} />
+      <Slogan render={render} />
+      <Navigation render={render} />
     </main>
   );
 };

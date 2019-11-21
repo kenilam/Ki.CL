@@ -3,6 +3,7 @@ import React, {Fragment, FunctionComponent} from 'react';
 import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
 import Style from './Style';
+import {getTransitionClassNameByType} from './Utility';
 
 const Transition: FunctionComponent<ITransition.Props> = ({
   addEndListener,
@@ -12,15 +13,21 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   transitionKey,
   onEnter,
   onEntered,
+  type,
   ...props
 }) => {
   const childNodes = React.Children.toArray(children) as {
     props: ITransition.ChildActions
   }[];
   
+  const className = getTransitionClassNameByType(type);
+  
   const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
     if (node && !addEndListener) {
-      node.parentElement.classList.add(Style.default);
+      node.parentElement.className = '';
+      node.parentElement.classList.add(
+        Style.default, className
+      );
     }
     
     onEnter && onEnter(node, isAppearing);
@@ -34,7 +41,7 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   
   const enteredHandler: ITransition.OnEnter = (node, isAppearing) => {
     if (node && !addEndListener) {
-      node.parentElement.classList.remove(Style.default);
+      node.parentElement.className = '';
     }
     
     onEntered && onEntered(node, isAppearing);
@@ -75,6 +82,7 @@ const Transition: FunctionComponent<ITransition.Props> = ({
               onEntered={enteredHandler}
               onExit={exitHandler}
               onExited={exitedHandler}
+              type={type}
             >
               {child}
             </CSSTransition>
@@ -83,6 +91,10 @@ const Transition: FunctionComponent<ITransition.Props> = ({
       }
     </Origin>
   );
+};
+
+Transition.defaultProps = {
+  type: 'custom'
 };
 
 export default Transition;

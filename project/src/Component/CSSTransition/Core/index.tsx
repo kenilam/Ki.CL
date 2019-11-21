@@ -15,6 +15,7 @@ const Core: FunctionComponent<ICore.Props> = ({
   onEntered,
   onExit,
   onExited,
+  standAlone,
   unmountOnExit = true,
   ...props
 }) => {
@@ -46,7 +47,8 @@ const Core: FunctionComponent<ICore.Props> = ({
         Style.appear,
         Style.appearDone,
         Style.enter,
-        Style.enterDone
+        Style.enterDone,
+        Style.standAlone
       );
     }
     
@@ -64,7 +66,8 @@ const Core: FunctionComponent<ICore.Props> = ({
       node.classList.remove(
         Style.default,
         Style.exit,
-        Style.exitDone
+        Style.exitDone,
+        Style.standAlone
       );
     }
     
@@ -82,7 +85,12 @@ const Core: FunctionComponent<ICore.Props> = ({
       * css-transition and css-transition-enter ans etc.
       **/
       classNames={
-        classnames(classNames, Style.default, Style.default)
+        classnames(
+          classNames,
+          Style.default,
+          {[Style.standAlone]: standAlone},
+          Style.default
+        )
       }
       mountOnEnter={mountOnEnter}
       timeout={null}
@@ -95,6 +103,10 @@ const Core: FunctionComponent<ICore.Props> = ({
       {children}
     </CSSTransition>
   );
+};
+
+Core.defaultProps = {
+  standAlone: false
 };
 
 export {duration, getTransitionStyleByType};

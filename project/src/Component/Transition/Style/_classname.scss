@@ -1,3 +1,7 @@
-$transition: (
-  default: 'transition'
+$component-transition: (
+  default: 'transition',
+  slide-from-left: 'transition-slide-from-left',
+  slide-from-right: 'transition-slide-from-right',
+  slide-down: 'transition-slide-down',
+  slide-up: 'transition-slide-up',
 );

@@ -16,30 +16,29 @@
 
   $render-transition-delay: get($duration, 'slow');
 
-  $logo: get($component-logo, 'default');
-  $logo-color: get($white, 'default');
-  $logo-size: 10vw;
-
-  $navigation-color: get($black, 'default');
-  $navigation-color-hover: get($grey, 'dark');
-  $navigation-font-size: get($font, 'font-size.small');
   $navigation-gap: get($grid, 'space');
-  $navigation-transition-duration: get($duration, 'faster');
-  $navigation-transition-timing-function: get($ease, 'sine.in-out');
 
   $background-transition-duration: get($duration, 'slow');
   $background-transition-property: transform;
   $background-transition-timing-function: get($ease, 'cubic.in-out');
-
-  @include set-logo-style($logo-size, $logo-color);
 
   background-image: url($background-image);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   display: grid;
-  grid-template-columns: auto $grid-gutter 35vw $grid-narrow 35vw $grid-gutter auto;
+  grid-template-columns: $grid-narrow $grid-gutter 40vw $grid-gutter auto;
   grid-template-rows: auto $grid-narrow 30vh $grid-gutter 55vh;
+
+  @include tablet() {
+    grid-template-columns: $grid-narrow $grid-gutter 60vw $grid-gutter auto;
+    grid-template-rows: auto $grid-narrow 30vh $grid-gutter 55vh;
+  }
+
+  @include mobile() {
+    grid-template-columns: $grid-gutter $grid-narrow auto $grid-narrow $grid-gutter;
+    grid-template-rows: $grid-gutter $grid-narrow auto $grid-gutter auto;
+  }
 
   &::before,
   h1,
@@ -73,7 +72,7 @@
     background-color: $background-color;
     content: '\0020';
     display: block;
-    grid-column-end: 6;
+    grid-column-end: 4;
     grid-column-start: 3;
     grid-row-end: 6;
     grid-row-start: 3;
@@ -94,7 +93,7 @@
 
   p {
     align-self: start;
-    grid-column-end: 7;
+    grid-column-end: 5;
     grid-column-start: 2;
     grid-row-start: 5;
     z-index: 3;
@@ -107,28 +106,14 @@
   }
 
   nav {
-    align-self: start;
-    font-size: $navigation-font-size;
-    grid-column-end: 7;
-    grid-column-start: 5;
+    grid-column-end: 5;
+    grid-column-start: 3;
     grid-gap: $navigation-gap;
     grid-row-start: 2;
     grid-template-columns: auto;
     grid-template-rows: auto;
     justify-self: end;
     z-index: 3;
-
-    a {
-      color: $navigation-color;
-      justify-self: left;
-      transition-duration: $navigation-transition-duration;
-      transition-property: color;
-      transition-timing-function: $navigation-transition-timing-function;
-
-      &:hover {
-        color: $navigation-color-hover;
-      }
-    }
   }
 
   &.#{$css-transition} {

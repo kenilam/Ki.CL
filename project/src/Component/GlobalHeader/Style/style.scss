@@ -17,8 +17,7 @@ $default: get($component-global-header, 'default');
   $logo: get($component-logo, 'default');
   $navigation: get($component-navigation, 'default');
 
-  $transition-delay: get($duration, 'fast');
-  $transition-duration: get($duration, 'slowest');
+  $transition-delay: get($duration, 'slower');
 
   $bleed: get($grid, 'default');
   $color: get($black, 'default');
@@ -82,7 +81,6 @@ $default: get($component-global-header, 'default');
 
     &.#{$enter} {
       transition-delay: $transition-delay;
-      transition-duration: $transition-duration;
     }
   }
 }

@@ -6,13 +6,13 @@ $line-break: get($view-home-description, 'line-break');
   $enter: #{get($component-css-transition, 'enter.default')};
   $enter-active: #{get($component-css-transition, 'enter.active')};
 
-  $transition-duration: get($duration, 'extreme');
+  $transition-duration: get($duration, 'slow');
   $transition-property: opacity, transform;
   $transition-timing-function: get($ease, 'circ.out');
 
   $color: get($grey, 'darker');
   $font-family: get($font, 'font-family.bold');
-  $font-size: 15vmin;
+  $font-size: 10vmin;
   $font-weight: get($font, 'font-weight.bold');
   $line-height: 1;
 

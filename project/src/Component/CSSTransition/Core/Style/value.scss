@@ -8,3 +8,4 @@
 @value exit: #{get($component-css-transition, 'exit.default')};
 @value exitActive: #{get($component-css-transition, 'exit.active')};
 @value exitDone: #{get($component-css-transition, 'exit.done')};
+@value standAlone: #{get($component-css-transition, 'stand-alone')};

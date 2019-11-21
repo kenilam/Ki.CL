@@ -26,6 +26,7 @@ const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = () => {
   return (
     <CSSTransition
       in={RENDER_PATHS.some(path => pathname === path)}
+      standAlone={true}
       type='slideDown'
     >
       <header role='banner' data-component={Style.default}>

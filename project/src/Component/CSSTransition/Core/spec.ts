@@ -4,14 +4,16 @@ import {EndHandler, EnterHandler, ExitHandler} from 'react-transition-group/Tran
 declare module ICore {
   interface ClassNames extends CSSTransitionClassNames {
     default: string;
+    standAlone: string;
   }
   
-  type AddEndListener = EndHandler;
+  type EndListener = EndHandler;
   type OnEnter = EnterHandler;
   type OnExit = ExitHandler;
   
   interface Props extends Omit<CSSTransitionProps, 'timeout'> {
     timeout?: number | { appear?: number, enter?: number, exit?: number };
+    standAlone?: boolean;
   }
 }
 

@@ -1,0 +1,28 @@
+[data-routes='home'] {
+  $navigation-color: get($black, 'default');
+  $navigation-color-hover: get($grey, 'dark');
+  $navigation-font-size: get($font, 'font-size.small');
+  $navigation-gap: get($grid, 'space');
+  $navigation-transition-duration: get($duration, 'faster');
+  $navigation-transition-timing-function: get($ease, 'sine.in-out');
+
+  nav {
+    font-size: $navigation-font-size;
+    grid-gap: $navigation-gap;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    text-align: unset;
+
+    a {
+      color: $navigation-color;
+      justify-self: left;
+      transition-duration: $navigation-transition-duration;
+      transition-property: color;
+      transition-timing-function: $navigation-transition-timing-function;
+
+      &:hover {
+        color: $navigation-color-hover;
+      }
+    }
+  }
+}
