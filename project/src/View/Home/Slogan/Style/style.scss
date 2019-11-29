@@ -1,48 +1,11 @@
-$default: get($view-home-description, 'default');
-$line-break: get($view-home-description, 'line-break');
+$default: get($view-component-slogan, 'default');
 
-[data-component=#{$default}] {
-  $css-transition: #{get($component-css-transition, 'default')};
-  $enter: #{get($component-css-transition, 'enter.default')};
-  $enter-active: #{get($component-css-transition, 'enter.active')};
-
-  $transition-duration: get($duration, 'slow');
-  $transition-property: opacity, transform;
-  $transition-timing-function: get($ease, 'circ.out');
-
-  $color: get($grey, 'darker');
-  $font-family: get($font, 'font-family.bold');
-  $font-size: 10vmin;
-  $font-weight: get($font, 'font-weight.bold');
-  $line-height: 1;
-
-  color: $color;
-  display: flex;
-  flex-wrap: wrap;
-  font-family: $font-family;
-  font-size: $font-size;
-  font-weight: $font-weight;
-  line-height: $line-height;
+[data-view-component='#{$default}'] {
+  font-family: get($font, 'font-family.special');
+  font-weight: get($font, 'font-weight.boldest');
+  font-size: 10vmin;
+  line-height: get($font, 'line-height.narrower');
+  text-align: center;
+  white-space: pre-wrap;
   word-break: break-word;
-
-  span {
-    display: block;
-
-    &.#{$enter} {
-      &:not(.#{$enter-active}) {
-        opacity: 0;
-      }
-    }
-
-    &.#{$enter-active} {
-      transition-duration: $transition-duration;
-      transition-property: $transition-property;
-      transition-timing-function: $transition-timing-function;
-      will-change: $transition-property;
-    }
-  }
-
-  .#{$line-break} {
-    width: 100%;
-  }
 }

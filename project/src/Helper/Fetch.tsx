@@ -6,9 +6,12 @@ function fetchImage(url: string) {
   const cancel = () => {
     img.src = '';
   };
+  
   const promise = new Promise(
     resolve => {
-      img.onload = resolve;
+      img.onload = () => {
+        resolve(img);
+      };
       img.src = url;
     }
   );

@@ -1,65 +1,56 @@
 import resources from '$/resources';
-import {CSSTransition} from '@/Component';
-import ISlogan from '@/View/Home/Slogan/spec';
-import classnames from 'classnames';
-import React, {useEffect, useState} from 'react';
-
-import Style from './Style';
+import Phase from "@/View/Home/Phase";
+import ISlogan from "@/View/Home/Slogan/spec";
+import React from 'react';
+import Style from "./Style";
 
 const {
-  description
+  view: {
+    home: {
+      content: { slogan }
+    }
+  }
 } = resources;
 
-const Slogan: React.FunctionComponent<ISlogan.Props> = ({
-  render
-}) => {
-  const [index, updateIndex] = useState(0);
-  let incrementIndexFrame: number;
+let result: RegExpExecArray;
+let index = 0;
+let lastPhase: string;
+
+const phasesRegExp = new RegExp(/\[(.+)\]/g);
+const wordsRegExp = new RegExp(/[\w\d\s]+/g);
+const phases: ISlogan.Words = [];
+
+while ((result = phasesRegExp.exec(slogan)) !== null) {
+  const [placeholder, words] = result;
   
-  function incrementIndex() {
-    incrementIndexFrame = window.setTimeout(
-      () => {
-        updateIndex(index + 1);
-      },
-      100
-    );
-  }
-  
-  useEffect(
-    () => () => {
-      window.clearTimeout(incrementIndexFrame);
-    },
-    [index > description.length]
+  phases.push(slogan.substr(index, slogan.indexOf(placeholder) - index));
+  phases.push(
+    words.match(wordsRegExp).map(word => ({ word, render: false }))
   );
   
+  index = phasesRegExp.lastIndex;
+  
+  lastPhase = slogan.substr(index, slogan.length);
+}
+
+phases.push(lastPhase);
+
+const Slogan: React.FunctionComponent<ISlogan.Props> = () => {
   return (
-    <p aria-label={description} data-component={Style.default}>
-      {(new Array(description.length)).fill(null).map(
-        (value, position) => {
-          const letter = description[position];
-          const className = classnames({
-            [Style.lineBreak]: letter === '\n'
-          });
-          
-          return (
-            !value && (
-              <span key={position} className={className}>
-                <CSSTransition
-                  in={index >= position && render}
-                  onEntering={incrementIndex}
-                  type='slideUp'
-                >
-                  <span>
-                    {letter}
-                  </span>
-                </CSSTransition>
-              </span>
-            )
+    <p data-view-component={Style.default}>
+      {
+        phases.map(
+          words => (
+            typeof words === 'string'
+              ? words
+              : (
+                <Phase words={words}/>
+              )
           )
-        }
-      )}
+        )
+      }
     </p>
-  );
+  )
 };
 
 export default Slogan;

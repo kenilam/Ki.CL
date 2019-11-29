@@ -7,6 +7,7 @@ import Link from './Link';
 import Logo from './Logo';
 import Navigation from './Navigation';
 import Router from './Router';
+import Spinner from './Spinner';
 import Transition from './Transition';
 import WebGL from './WebGL';
 
@@ -19,6 +20,7 @@ export {
   Logo,
   Navigation,
   Router,
+  Spinner,
   Transition,
   WebGL
 };

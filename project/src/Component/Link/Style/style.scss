@@ -4,7 +4,7 @@ $active: get($component-link, 'active');
 [data-component='#{$default}'] {
   display: block;
   font-family: get($font, 'font-family.bold');
-  letter-spacing: get($font, 'font-size.smallest');
+  letter-spacing: get($grid, 'narrowest');
 
   &.#{$active} {
     pointer-events: none;

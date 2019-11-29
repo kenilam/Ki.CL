@@ -1,7 +1,7 @@
 $default: get($component-spinner, 'default');
 
 $color: get($black, 'light');
-$speed: get($duration, 'slow');
+$speed: get($duration, 'slowest');
 $size: get($grid, 'gutter');
 
 [data-component='#{$default}'] {

@@ -1,0 +1,5 @@
+@value default: #{get($view-component-phase, 'default')};
+@value lowerShadowColor: #{rgba($gold, 0.1)};
+@value lowerShadowDistance: #{get($grid, 'narrow')};
+@value upperShadowColor: #{rgba($blue, 0.1)};
+@value upperShadowDistance: #{get($grid, 'narrow')};

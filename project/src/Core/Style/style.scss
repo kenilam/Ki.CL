@@ -1,7 +1,7 @@
 html {
   @include font-smoothing();
 
-  background-color: get($white, 'default');
+  background-color: get($black, 'default');
   color: get($black, 'default');
   font-family: get($font, 'font-family.normal');
   font-size: get($font, 'font-size.normal');
@@ -10,12 +10,23 @@ html {
   line-height: get($font, 'line-height.default');
 }
 
+button {
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
 a,
 button,
 [href] {
   color: $green;
   cursor: pointer;
   text-decoration: none;
+
+  &:hover {
+    color: get($white, 'darker');
+  }
 }
 
 h1,
@@ -46,13 +57,6 @@ h5 {
 body {
   transition-duration: get($duration, 'slow');
   transition-property: background-color;
-}
-
-button {
-  background-color: transparent;
-  border: 0;
-  margin: 0;
-  padding: 0;
 }
 
 h1 {

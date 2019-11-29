@@ -1,5 +1,4 @@
-import {TransitionStyle} from '@/Component/CSSTransition';
-import Spinner from '@/Component/Spinner';
+import {CSSTransition, Spinner} from '@/Component';
 import {CSSUnit, Fetch} from '@/Helper';
 import React, {useEffect, useState} from 'react';
 import IAsynchronizer from './spec';
@@ -9,11 +8,12 @@ const awaitDelay = CSSUnit(Style.delay);
 
 const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   awaitFor,
-  children
+  children,
+  transitionType
 }) => {
   let awaitTimer: number;
   
-  const [data, updateData]: IAsynchronizer.DataState = useState<IAsynchronizer.Data>(null);
+  const [data, updateData] = useState(null);
   
   const awaitComplete = (data: any) => () => {
     updateData(data);
@@ -39,13 +39,17 @@ const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
       <Spinner in={Boolean(!data)} />
       {
         Boolean(data) && (
-          <TransitionStyle.ZoomIn in={Boolean(data)}>
+          <CSSTransition type={transitionType} in={Boolean(data)}>
             {children(data)}
-          </TransitionStyle.ZoomIn>
+          </CSSTransition>
         )
       }
     </React.Fragment>
   );
+};
+
+Asynchronizer.defaultProps = {
+  transitionType: 'zoomIn'
 };
 
 export default Asynchronizer;

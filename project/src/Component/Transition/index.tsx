@@ -3,7 +3,7 @@ import React, {Fragment, FunctionComponent} from 'react';
 import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
 import Style from './Style';
-import {getTransitionClassNameByType} from './Utility';
+import {getTransitionClassNameByType, transitionSizes} from './Utility';
 
 const Transition: FunctionComponent<ITransition.Props> = ({
   addEndListener,
@@ -23,12 +23,14 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   const className = getTransitionClassNameByType(type);
   
   const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
-    if (node && !addEndListener) {
+    if (node && node.parentElement && !addEndListener) {
       node.parentElement.className = '';
       node.parentElement.classList.add(
         Style.default, className
       );
     }
+    
+    transitionSizes.set(node);
     
     onEnter && onEnter(node, isAppearing);
     
@@ -40,9 +42,11 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   };
   
   const enteredHandler: ITransition.OnEnter = (node, isAppearing) => {
-    if (node && !addEndListener) {
+    if (node && node.parentElement && !addEndListener) {
       node.parentElement.className = '';
     }
+    
+    transitionSizes.unset(node);
     
     onEntered && onEntered(node, isAppearing);
     

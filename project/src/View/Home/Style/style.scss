@@ -1,124 +1,74 @@
-@import 'value';
-
 [data-routes='home'] {
-  $background-color: get($grey, 'default');
-  $grid-narrow: get($grid, 'narrow');
-  $grid-gutter: get($grid, 'gutter');
+  $padding: get($grid, 'default');
+  $padding-top: get($grid, 'gutter');
+  $grid-gap: get($grid, 'narrow');
 
-  $css-transition: get($component-css-transition, 'default');
-  $appear: get($component-css-transition, 'appear.default');
-  $appear-active: get($component-css-transition, 'appear.active');
-  $enter: get($component-css-transition, 'enter.default');
-  $enter-active: get($component-css-transition, 'enter.active');
-  $exit: get($component-css-transition, 'exit.default');
-  $exit-active: get($component-css-transition, 'exit.active');
-  $exit-done: get($component-css-transition, 'exit.done');
-
-  $render-transition-delay: get($duration, 'slow');
-
-  $navigation-gap: get($grid, 'space');
-
-  $background-transition-duration: get($duration, 'slow');
-  $background-transition-property: transform;
-  $background-transition-timing-function: get($ease, 'cubic.in-out');
-
-  background-image: url($background-image);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  color: get($white, 'default');
   display: grid;
-  grid-template-columns: $grid-narrow $grid-gutter 40vw $grid-gutter auto;
-  grid-template-rows: auto $grid-narrow 30vh $grid-gutter 55vh;
+  grid-gap: $grid-gap;
+  grid-template-areas: 'logo . navigation' 'slogan slogan slogan' 'show show show';
+  grid-template-columns: min-content auto min-content;
+  grid-template-rows: min-content auto min-content;
+  overflow: hidden;
+  padding: $padding-top $padding 0;
 
-  @include tablet() {
-    grid-template-columns: $grid-narrow $grid-gutter 60vw $grid-gutter auto;
-    grid-template-rows: auto $grid-narrow 30vh $grid-gutter 55vh;
-  }
-
-  @include mobile() {
-    grid-template-columns: $grid-gutter $grid-narrow auto $grid-narrow $grid-gutter;
-    grid-template-rows: $grid-gutter $grid-narrow auto $grid-gutter auto;
-  }
-
-  &::before,
-  h1,
-  p {
+  > * {
     position: relative;
-  }
-
-  h1,
-  nav {
-    &.#{$css-transition} {
-      &.#{$appear-active},
-      &.#{$enter-active},
-      &.#{$exit-active} {
-        transition-property: opacity, transform;
-      }
-
-      &.#{$appear}:not(.#{$appear-active}),
-      &.#{$enter}:not(.#{$enter-active}),
-      &.#{$exit}.#{$exit-active},
-      &.#{$exit-done} {
-        opacity: 0;
-      }
-
-      &.#{$enter-active} {
-        transition-delay: $render-transition-delay;
-      }
-    }
-  }
-
-  &::before {
-    background-color: $background-color;
-    content: '\0020';
-    display: block;
-    grid-column-end: 4;
-    grid-column-start: 3;
-    grid-row-end: 6;
-    grid-row-start: 3;
-    transition-duration: $background-transition-duration;
-    transition-property: $background-transition-property;
-    transition-timing-function: $background-transition-timing-function;
-    will-change: $background-transition-property;
     z-index: 1;
   }
 
-  h1 {
-    align-self: end;
-    grid-column-end: 3;
-    grid-column-start: 2;
-    grid-row-start: 3;
-    z-index: 2;
+  a {
+    color: get($white, 'default');
   }
 
-  p {
-    align-self: start;
-    grid-column-end: 5;
-    grid-column-start: 2;
-    grid-row-start: 5;
-    z-index: 3;
+  [data-component=#{get($component-logo, 'default')}] {
+    grid-area: logo;
+  }
 
-    span {
-      &.#{$enter-active} {
-        transition-delay: $render-transition-delay;
-      }
+  [data-component=#{get($component-navigation, 'default')}] {
+    font-weight: get($font, 'font-weight.bolder');
+    grid-area: navigation;
+    grid-gap: get($grid, 'narrower');
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    line-height: 1;
+
+    a {
+      justify-self: left;
+      text-align: unset;
     }
   }
 
-  nav {
-    grid-column-end: 5;
-    grid-column-start: 3;
-    grid-gap: $navigation-gap;
-    grid-row-start: 2;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    justify-self: end;
-    z-index: 3;
+  p {
+    align-self: center;
+    grid-area: slogan;
+
+    @include mobile() {
+      align-self: end;
+    }
   }
 
-  &.#{$css-transition} {
-    &::before {
-      transform: scale(1.6);
+  > section {
+    grid-area: show;
+    height: 100vh;
+    max-height: 30vh;
+    position: relative;
+    z-index: 0;
+
+    img {
+      filter: brightness(0.4);
+      width: 70vw;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      z-index: 0;
+
+      @include mobile() {
+        bottom: 0;
+        top: unset;
+        transform: translate3d(-50%, 0, 0);
+      }
     }
   }
 }

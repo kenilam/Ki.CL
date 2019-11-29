@@ -1,0 +1,8 @@
+$default: get($view-component-phase, 'default');
+
+[data-view-component='#{$default}'] {
+  display: initial;
+  transition-duration: get($duration, 'fastest');
+  transition-property: text-shadow;
+  transition-timing-function: get($ease, 'sine.in-out');
+}

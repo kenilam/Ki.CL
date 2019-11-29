@@ -16,7 +16,7 @@ declare module ITransition {
   }
   
   interface Props extends Omit<ICSSTransition.Props, 'classNames'> {
-    transitionKey?: string;
+    transitionKey?: number | string;
   }
 }
 
