@@ -9,6 +9,7 @@ const awaitDelay = CSSUnit(Style.delay);
 const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   awaitFor,
   children,
+  pendingFor,
   transitionType
 }) => {
   let awaitTimer: number;
@@ -20,7 +21,7 @@ const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   };
   
   useEffect(() => {
-    if (!data) {
+    if (!data && !pendingFor) {
       const {cancel, promise} = Fetch(awaitFor);
       
       promise.then(data => {
@@ -32,7 +33,7 @@ const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
         cancel();
       };
     }
-  }, [data]);
+  }, [data, pendingFor]);
   
   return (
     <React.Fragment>

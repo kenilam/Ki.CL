@@ -2,7 +2,7 @@ import resources from '$/resources';
 import {Asynchronizer, CloseButton, Logo, Navigation} from '@/Component';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route, useHistory} from '@/Component/Router';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import IAbout from './spec';
 import './Style';
 
@@ -17,10 +17,25 @@ const transitionType: ICSSTransition.Type = 'slideFromRight';
 
 const Abort: React.FunctionComponent<IAbout.Props> = () => {
   const history = useHistory();
+  const [shouldRender, rendered] = useState(false);
+  
+  const fetchAPI = () => {
+    rendered(true);
+  };
+  
+  useEffect(
+    () => {
+      window.addEventListener('Abort.Rendered', fetchAPI);
+      
+      return () => {
+        window.removeEventListener('Abort.Rendered', fetchAPI);
+      }
+    }
+  );
   
   return (
     <main data-routes='about'>
-      <Asynchronizer awaitFor={api}>
+      <Asynchronizer awaitFor={api} pendingFor={!shouldRender}>
         {
           (data: IAbout.Data) => (
             <article>
@@ -42,9 +57,14 @@ const Abort: React.FunctionComponent<IAbout.Props> = () => {
   );
 };
 
+const TransitionEvent = new Event('Abort.Rendered');
+const onEntered = () => {
+  window.dispatchEvent(TransitionEvent);
+};
+
 export {path, transitionType};
 export default (
   <Route path={path}>
-    <Abort />
+    <Abort onEntered={onEntered} />
   </Route>
 );

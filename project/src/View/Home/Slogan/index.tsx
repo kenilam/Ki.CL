@@ -1,13 +1,14 @@
 import resources from '$/resources';
-import Phase from "@/View/Home/Phase";
-import ISlogan from "@/View/Home/Slogan/spec";
+import {RandomId} from '@/Helper';
+import Phase from '@/View/Home/Phase';
+import ISlogan from '@/View/Home/Slogan/spec';
 import React from 'react';
-import Style from "./Style";
+import Style from './Style';
 
 const {
   view: {
     home: {
-      content: { slogan }
+      content: {slogan}
     }
   }
 } = resources;
@@ -25,7 +26,7 @@ while ((result = phasesRegExp.exec(slogan)) !== null) {
   
   phases.push(slogan.substr(index, slogan.indexOf(placeholder) - index));
   phases.push(
-    words.match(wordsRegExp).map(word => ({ word, render: false }))
+    words.match(wordsRegExp).map(word => ({word, render: false}))
   );
   
   index = phasesRegExp.lastIndex;
@@ -44,7 +45,7 @@ const Slogan: React.FunctionComponent<ISlogan.Props> = () => {
             typeof words === 'string'
               ? words
               : (
-                <Phase words={words}/>
+                <Phase words={words} key={RandomId()} />
               )
           )
         )

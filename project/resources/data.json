@@ -13,18 +13,7 @@
       "name": "Home",
       "content": {
         "heading": "KENI LAM",
-        "slogan": "Never stop\n[dreaming|making|liking|crafting|breathing|invent]\n[ideas|technologies|arts|designs|innovations]."
-      }
-    },
-    "about": {
-      "path": "/about",
-      "name": "About",
-      "content": {
-        "heading": "About Me",
-        "action": {
-          "path": "/works",
-          "name": "Explore"
-        }
+        "slogan": "I [dream|make|love|craft|breath|invent]\nstuffs\nthat are\n[interesting|creative|innovative|stunning]."
       }
     },
     "works": {
@@ -49,10 +38,24 @@
         }
       }
     },
+    "about": {
+      "path": "/about",
+      "name": "About",
+      "content": {
+        "heading": "About Me",
+        "action": {
+          "path": "/works",
+          "name": "Explore"
+        }
+      }
+    },
     "contact": {
       "path": "/contact",
       "name": "Contact",
-      "message": "Contact"
+      "content": {
+        "title": "LET'S TALK",
+        "message": "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly."
+      }
     }
   },
   "component": {

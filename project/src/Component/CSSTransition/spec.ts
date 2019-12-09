@@ -11,6 +11,13 @@ declare module ICSSTransition {
   type OnEnter = ICore.OnEnter;
   type OnExit = ICore.OnExit;
   
+  interface Events {
+    onEnter?: OnEnter;
+    onEntered?: OnEnter;
+    onExit?: OnExit;
+    onExited?: OnExit;
+  }
+  
   interface Props extends ICore.Props {
     type?: Type;
   }

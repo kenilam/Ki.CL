@@ -5,9 +5,9 @@
   [data-component='#{$default}'] {
     color: $color;
 
-    [data-component=#{$logo}],
+    [data-component=#{logo}],
     h2,
-    a {
+    a:not([aria-current='page']) {
       color: $color;
     }
   }

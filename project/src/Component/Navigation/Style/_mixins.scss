@@ -2,8 +2,12 @@
   $default: get($component-navigation, 'default');
 
   [data-component='#{$default}'] {
-    grid-auto-flow: column;
-    grid-template-columns: auto;
-    grid-template-rows: 1fr;
+    @include set-navigation-inline-content();
   }
+}
+
+@mixin set-navigation-inline-content() {
+  grid-auto-flow: column;
+  grid-template-columns: auto;
+  grid-template-rows: 1fr;
 }

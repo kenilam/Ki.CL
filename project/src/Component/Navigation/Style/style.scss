@@ -16,6 +16,6 @@ $gap: get($grid, 'gutter');
   }
 
   &.#{$inline} {
-    @include set-navigation-inline();
+    @include set-navigation-inline-content();
   }
 }

@@ -1,4 +1,4 @@
-.#{get($component-transition, 'default')}.#{get($component-transition, 'slide-up')} {
+.#{get($component-transition, 'default')} {
   $stand-alone: get($component-css-transition, 'stand-alone');
   $slide-up: get($component-css-transition-slide-up, 'default');
 
@@ -11,18 +11,20 @@
 
   $transition-delay: get($duration, 'faster');
 
+  .#{get($component-transition, 'slide-up')} {
+    > :not(.#{$stand-alone}) {
+      &.#{$slide-up} {
+        &::before {
+          transform: translate3d(0, -100%, 0);
+        }
+      }
+    }
+  }
+
   > :not(.#{$stand-alone}) {
     &.#{$slide-up} {
       &::before {
         transform: translate3d(0, -100%, 0);
-      }
-    }
-
-    &:not(.#{$slide-up}) {
-      transform: translateY(0);
-
-      &.#{$exit}.#{$exit-active} {
-        transform: translate3d(0, -20%, 0);
       }
     }
   }

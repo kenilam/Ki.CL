@@ -15,4 +15,8 @@ const Spinner: React.FunctionComponent<ISpinner.Props> = props => {
   )
 };
 
+Spinner.defaultProps = {
+  in: true
+};
+
 export default Spinner;

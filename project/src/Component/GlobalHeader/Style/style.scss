@@ -26,8 +26,8 @@ $default: get($component-global-header, 'default');
 
   display: grid;
   grid-gap: $gap;
-  grid-template-areas: '. . . . . .' '. logo h2 . navigation .' '. . . . . .';
-  grid-template-columns: $gap max-content max-content auto max-content $gap;
+  grid-template-areas: '. . . . .' '. logo . navigation .' '. . . . .';
+  grid-template-columns: $gap max-content auto max-content $gap;
   grid-template-rows: $bleed max-content auto;
   position: fixed;
   width: 100vw;

@@ -14,9 +14,8 @@ const unset = (node: HTMLElement) => {
     return;
   }
   
-  
   node.parentElement.style.height = null;
   node.parentElement.style.width = null;
 };
 
-export default { set, unset };
+export default {set, unset};

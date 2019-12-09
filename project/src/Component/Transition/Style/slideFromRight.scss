@@ -1,4 +1,4 @@
-.#{get($component-transition, 'default')}.#{get($component-transition, 'slide-from-right')} {
+.#{get($component-transition, 'default')} {
   $stand-alone: get($component-css-transition, 'stand-alone');
   $slide-from-right: get($component-css-transition-slide-from-right, 'default');
 
@@ -11,18 +11,20 @@
 
   $transition-delay: get($duration, 'faster');
 
+  .#{get($component-transition, 'slide-from-right')} {
+    > :not(.#{$stand-alone}) {
+      &.#{$slide-from-right} {
+        &::before {
+          transform: translate3d(-100%, 0, 0);
+        }
+      }
+    }
+  }
+
   > :not(.#{$stand-alone}) {
     &.#{$slide-from-right} {
       &::before {
         transform: translate3d(-100%, 0, 0);
-      }
-    }
-
-    &:not(.#{$slide-from-right}) {
-      transform: translateX(0);
-
-      &.#{$exit}.#{$exit-active} {
-        transform: translate3d(-20%, 0, 0);
       }
     }
   }

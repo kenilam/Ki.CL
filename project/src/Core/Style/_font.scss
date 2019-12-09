@@ -17,7 +17,7 @@ $font: (
   font-family: (
     normal: ('ariana-pro', $base-font),
     bold: ('acumin-pro-wide', $base-font),
-    special: ('alfarn', $base-font)
+    special: ('gilbert-color', $base-font)
   ),
   font-size: (
     normal: $base-font-size,
@@ -45,6 +45,6 @@ $font: (
     wide: 1.8,
     narrow: 1,
     narrower: 0.8,
-    marrowest: 0.5,
+    narrowest: 0.7,
   )
 );

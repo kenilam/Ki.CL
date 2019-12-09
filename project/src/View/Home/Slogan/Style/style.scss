@@ -1,11 +1,18 @@
 $default: get($view-component-slogan, 'default');
 
 [data-view-component='#{$default}'] {
-  font-family: get($font, 'font-family.special');
+  font-family: get($font, 'font-family.bold');
+  font-size: 15vmin;
   font-weight: get($font, 'font-weight.boldest');
-  font-size: 10vmin;
-  line-height: get($font, 'line-height.narrower');
-  text-align: center;
+  line-height: get($font, 'line-height.narrowest');
   white-space: pre-wrap;
   word-break: break-word;
+
+  @include tablet() {
+    font-size: 12vmin;
+  }
+
+  @include mobile() {
+    font-size: 10vmin;
+  }
 }

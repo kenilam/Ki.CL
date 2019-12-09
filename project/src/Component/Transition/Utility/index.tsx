@@ -1,4 +1,4 @@
-import getTransitionClassNameByType from './getTransitionClassNameByType';
-import transitionSizes from "@/Component/Transition/Utility/transitionSizes";
+import transitionSizes from '@/Component/Transition/Utility/transitionSizes';
+import classNames from './classNames';
 
-export {getTransitionClassNameByType, transitionSizes};
+export {classNames, transitionSizes};

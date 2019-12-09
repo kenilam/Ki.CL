@@ -10,15 +10,10 @@ const {
     about,
     contact,
     works
-  },
-  component: {
-    globalHeader: {
-      content: {heading}
-    }
   }
 } = resources;
 
-const RENDER_PATHS = [works.path];
+const RENDER_PATHS = [about.path, contact.path, works.path];
 
 const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = () => {
   const {pathname} = useLocation();
@@ -31,10 +26,10 @@ const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = () => {
     >
       <header role='banner' data-component={Style.default}>
         <Logo isSquare={true} />
-        <h2>{heading}</h2>
         <Navigation
           inline={true}
           items={[
+            {children: works.name, to: works.path},
             {children: about.name, to: about.path},
             {children: contact.name, to: contact.path}
           ]}

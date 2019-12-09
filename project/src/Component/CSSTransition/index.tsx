@@ -1,4 +1,4 @@
-import {getTransitionStyleByType} from '@/Component/CSSTransition/Core';
+import {duration, getTransitionStyleByType} from '@/Component/CSSTransition/Core';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import React, {FunctionComponent} from 'react';
 import TransitionStyle, {ClassNames as TransitionClassName} from './Style';
@@ -21,5 +21,5 @@ CSSTransition.defaultProps = {
   type: 'custom'
 };
 
-export {TransitionClassName, TransitionStyle};
+export {duration, TransitionClassName, TransitionStyle};
 export default CSSTransition;

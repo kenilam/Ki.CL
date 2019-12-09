@@ -2,8 +2,8 @@ import CSSTransition from '@/Component/CSSTransition';
 import React, {Fragment, FunctionComponent} from 'react';
 import {TransitionGroup as Origin} from 'react-transition-group';
 import ITransition from './spec';
-import Style from './Style';
-import {getTransitionClassNameByType, transitionSizes} from './Utility';
+import './Style';
+import {classNames, transitionSizes} from './Utility';
 
 const Transition: FunctionComponent<ITransition.Props> = ({
   addEndListener,
@@ -20,14 +20,11 @@ const Transition: FunctionComponent<ITransition.Props> = ({
     props: ITransition.ChildActions
   }[];
   
-  const className = getTransitionClassNameByType(type);
+  const className = classNames.getTransitionClassNameByType(type);
   
   const enterHandler: ITransition.OnEnter = (node, isAppearing) => {
-    if (node && node.parentElement && !addEndListener) {
-      node.parentElement.className = '';
-      node.parentElement.classList.add(
-        Style.default, className
-      );
+    if (!addEndListener) {
+      classNames.add(node, className);
     }
     
     transitionSizes.set(node);
@@ -42,8 +39,8 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   };
   
   const enteredHandler: ITransition.OnEnter = (node, isAppearing) => {
-    if (node && node.parentElement && !addEndListener) {
-      node.parentElement.className = '';
+    if (!addEndListener) {
+      classNames.remove(node, className);
     }
     
     transitionSizes.unset(node);

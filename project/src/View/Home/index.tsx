@@ -2,14 +2,14 @@ import resources from '$/resources';
 import {Logo, Navigation} from '@/Component';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
-import Slogan from "@/View/Home/Slogan";
+import Slogan from '@/View/Home/Slogan';
 import IHome from '@/View/Home/spec';
 import React from 'react';
 import './Style';
 
 const {
   view: {
-    home: { path }
+    home: {path}
   }
 } = resources;
 
@@ -18,11 +18,11 @@ const transitionType: ICSSTransition.Type = 'fade';
 
 const Home: React.FunctionComponent<IHome.Props> = () => (
   <main data-routes='home'>
-    <Logo/>
-    <Navigation/>
-    <Slogan/>
+    <Logo isSquare={true} />
+    <Navigation />
+    <Slogan />
     <section>
-      <img src={`../../..${api}`} alt='show'/>
+      <img src={`../../..${api}`} alt='show' />
     </section>
   </main>
 );

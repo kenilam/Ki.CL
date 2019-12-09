@@ -1,4 +1,7 @@
 [data-routes='home'] {
+  $logo: get($component-logo, 'default');
+  $navigation: get($component-navigation, 'default');
+
   $padding: get($grid, 'default');
   $padding-top: get($grid, 'gutter');
   $grid-gap: get($grid, 'narrow');
@@ -8,9 +11,14 @@
   grid-gap: $grid-gap;
   grid-template-areas: 'logo . navigation' 'slogan slogan slogan' 'show show show';
   grid-template-columns: min-content auto min-content;
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: min-content min-content auto;
   overflow: hidden;
   padding: $padding-top $padding 0;
+
+  @include mobile() {
+    grid-template-columns: min-content auto min-content;
+    grid-template-rows: min-content minmax(min-content, 30vh) auto;
+  }
 
   > * {
     position: relative;
@@ -21,11 +29,11 @@
     color: get($white, 'default');
   }
 
-  [data-component=#{get($component-logo, 'default')}] {
+  [data-component=#{$logo}] {
     grid-area: logo;
   }
 
-  [data-component=#{get($component-navigation, 'default')}] {
+  [data-component=#{$navigation}] {
     font-weight: get($font, 'font-weight.bolder');
     grid-area: navigation;
     grid-gap: get($grid, 'narrower');
@@ -34,40 +42,43 @@
     line-height: 1;
 
     a {
-      justify-self: left;
+      justify-self: right;
       text-align: unset;
     }
   }
 
   p {
-    align-self: center;
+    align-self: end;
     grid-area: slogan;
-
-    @include mobile() {
-      align-self: end;
-    }
   }
 
   > section {
     grid-area: show;
-    height: 100vh;
-    max-height: 30vh;
+    height: 100%;
+    justify-self: center;
+    overflow: hidden;
     position: relative;
+    width: 100%;
     z-index: 0;
 
+    @include landscape() {
+      overflow: unset;
+    }
+
     img {
+      bottom: 0;
       filter: brightness(0.4);
-      width: 70vw;
+      height: 100%;
       left: 50%;
+      max-width: 1200px;
       position: absolute;
       top: 50%;
       transform: translate3d(-50%, -50%, 0);
       z-index: 0;
 
-      @include mobile() {
-        bottom: 0;
-        top: unset;
-        transform: translate3d(-50%, 0, 0);
+      @include landscape() {
+        height: auto;
+        width: 100%;
       }
     }
   }

@@ -1,4 +1,4 @@
-import IPhase from "@/View/Home/Phase/spec";
+import IPhase from '@/View/Home/Phase/spec';
 
 declare module ISlogan {
   interface ClassNames extends IClassNames {

@@ -7,10 +7,12 @@ declare module IAsynchronizer {
   }
   
   type AwaitFor = string;
+  type PendingFor = boolean;
   type Children<T> = (data: T) => React.ReactNode;
   
   interface Props {
     awaitFor: AwaitFor,
+    pendingFor?: PendingFor,
     children: Children<any>,
     transitionType?: ICSSTransition.Type
   }

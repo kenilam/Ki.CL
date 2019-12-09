@@ -1,4 +1,4 @@
-.#{get($component-transition, 'default')}.#{get($component-transition, 'slide-down')} {
+.#{get($component-transition, 'default')} {
   $stand-alone: get($component-css-transition, 'stand-alone');
   $slide-down: get($component-css-transition-slide-down, 'default');
 
@@ -11,18 +11,20 @@
 
   $transition-delay: get($duration, 'faster');
 
+  &.#{get($component-transition, 'slide-down')} {
+    > :not(.#{$stand-alone}) {
+      &.#{$slide-down} {
+        &::before {
+          transform: translate3d(0, 100%, 0);
+        }
+      }
+    }
+  }
+
   > :not(.#{$stand-alone}) {
     &.#{$slide-down} {
       &::before {
         transform: translate3d(0, 100%, 0);
-      }
-    }
-
-    &:not(.#{$slide-down}) {
-      transform: translateY(0);
-
-      &.#{$exit}.#{$exit-active} {
-        transform: translate3d(0, 20%, 0);
       }
     }
   }

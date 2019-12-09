@@ -13,7 +13,7 @@ declare module IPhase {
   }
   
   interface Props {
-    words:  IPhase.Word[]
+    words: IPhase.Word[]
   }
 }
 

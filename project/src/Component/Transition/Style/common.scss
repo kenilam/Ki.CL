@@ -63,4 +63,62 @@ $transition: get($component-transition, 'default');
       }
     }
   }
+
+  > [class*='#{$css-transition}-slide']:not(.#{$stand-alone}) {
+    &::before {
+      background-color: $background-color;
+      content: '\0020';
+      display: block;
+      height: 100%;
+      left: 0;
+      opacity: $background-alpha;
+      position: absolute;
+      top: 0;
+      transition-duration: $background-transition-duration;
+      transition-property: opacity;
+      transition-timing-function: $background-transition-timing-function;
+      width: 100%;
+      will-change: opacity;
+      z-index: 0;
+    }
+
+    &.#{$enter} {
+      &.#{$enter-active} {
+        transition-delay: $transition-delay;
+      }
+
+      &:not(.#{$enter-active}) {
+        &::before {
+          opacity: 0;
+        }
+      }
+
+      + .#{$exit} {
+        z-index: 100;
+
+        &.#{$exit-active} {
+          transform: unset;
+        }
+      }
+    }
+
+    &.#{$exit} {
+      z-index: 300;
+
+      &::before {
+        opacity: $background-alpha;
+      }
+
+      &.#{$exit-active} {
+        transition-delay: $transition-delay;
+        transition-property: transform;
+
+        &::before {
+          opacity: 0;
+          transition-delay: $transition-delay + $transition-delay / 2;
+          transition-duration: $background-transition-duration - $transition-delay / 2;
+        }
+      }
+    }
+  }
 }
