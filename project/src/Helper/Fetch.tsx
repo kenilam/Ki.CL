@@ -1,4 +1,5 @@
 import isImage from 'is-image';
+import IHelper from './spec';
 
 function fetchImage(url: string) {
   const img = new Image();
@@ -19,7 +20,7 @@ function fetchImage(url: string) {
   return {cancel, promise};
 }
 
-function Fetch(url: string) {
+const Fetch: IHelper.Fetch = (url, options) => {
   if (isImage(url)) {
     return fetchImage(url);
   }
@@ -29,12 +30,18 @@ function Fetch(url: string) {
   const cancel = () => {
     controller.abort();
   };
-  const promise = window.fetch(url, {signal})
+  const promise = window.fetch(url,
+    {
+      headers: {'Content-type': 'application/json'},
+      method: 'GET',
+      ...options,
+      signal
+    }
+  )
   .then(response => response.json())
-  .catch(() => {
-  });
+  .catch(errors => errors);
   
   return {cancel, promise}
-}
+};
 
 export default Fetch;
