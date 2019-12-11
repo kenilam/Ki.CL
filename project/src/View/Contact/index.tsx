@@ -3,8 +3,8 @@ import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
 import {Fetch} from '@/Helper';
 import React, {FormEvent, useEffect, useState} from 'react';
-import IContact from "./spec";
-import IAbout from "./spec";
+import IContact from './spec';
+import IAbout from './spec';
 import './Style';
 
 const {
