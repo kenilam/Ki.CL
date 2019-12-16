@@ -13,7 +13,7 @@ const {
   }
 } = resources;
 
-const transitionType: ICSSTransition.Type = 'slideDown';
+const transitionType: ICSSTransition.Type = 'slideUp';
 
 const action = `${process.env.API_URL}/api/contact`;
 
@@ -61,13 +61,42 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
   
   return (
     <main data-routes='contact' onSubmit={onSubmit}>
-      <h1>{title}</h1>
-      <p>{message}</p>
       <form action={action}>
-        <input name='name' type='text' required={true} />
-        <input name='email' type='email' required={true} />
-        <input name='message' type='text' required={true} />
+        <h1>{title}</h1>
+        <p>{message}</p>
+        <label htmlFor='name'>
+          <span>Name</span>
+          <input
+            id='name'
+            name='name'
+            type='text'
+            placeholder='Your name here'
+            required={true}
+          />
+        </label>
+        <label htmlFor='email'>
+          <span>Email</span>
+          <input
+            id='email'
+            name='email'
+            type='email'
+            placeholder='Your email here'
+            required={true}
+          />
+        </label>
+        <label htmlFor='message'>
+          <span>Messages</span>
+          <textarea
+            id='message'
+            minLength={30}
+            maxLength={600}
+            name='message'
+            placeholder='Write your messages here'
+            required={true}
+          />
+        </label>
         <button type='submit'>send</button>
+        <button type='reset'>reset</button>
       </form>
     </main>
   );

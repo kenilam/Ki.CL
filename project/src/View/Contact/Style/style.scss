@@ -1,17 +1,180 @@
-$css-transition: get($component-css-transition, 'default');
-$appear: get($component-css-transition, 'appear.default');
-$appear-active: get($component-css-transition, 'appear.active');
-$enter: get($component-css-transition, 'enter.default');
-$enter-active: get($component-css-transition, 'enter.active');
-$exit: get($component-css-transition, 'exit.default');
-$exit-active: get($component-css-transition, 'exit.active');
-$exit-done: get($component-css-transition, 'exit.active');
-
-$background-color: get($black, 'light');
-$color: get($white, 'default');
-
 [data-routes='contact'] {
+  $css-transition: get($component-css-transition, 'default');
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+  $exit-done: get($component-css-transition, 'exit.active');
+
+  $background-color: get($black, 'light');
+  $text-color: get($white, 'default');
+  $space: get($grid, 'narrow');
+  $gutter: get($grid, 'default');
+  $gap: get($grid, 'gutter');
+
   background-color: $background-color;
-  color: $color;
-  position: relative;
+  color: $text-color;
+
+  form {
+    display: grid;
+    grid-template-areas:
+      '. . . . . . . .'
+      'h1 h1 h1 message message message message message'
+      'p p p message message message message message'
+      'name name name message message message message message'
+      'email email email message message message message message'
+      '. . . message message message message message'
+      '. . . submit submit submit reset reset';
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto repeat(4, min-content) auto $gutter;
+    min-height: 100vh;
+    padding: get($grid, 'wide') + $gutter 0 0 $gutter;
+
+    @include mobile() {
+      grid-template-areas:
+        '. h1 h1 h1 .'
+        '. p p p .'
+        '. name name name .'
+        '. email email email .'
+        '. message message message .'
+        'submit submit submit reset reset';
+      grid-template-columns: $gap repeat(3, 1fr) $gap;
+      grid-template-rows: repeat(4, min-content) auto $gutter;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  h1,
+  p,
+  [for=name],
+  [for=email] {
+    margin-right: $gutter;
+
+    @include mobile() {
+      margin-right: 0;
+    }
+  }
+
+  [for=name],
+  [for=email] {
+    border-bottom: 1px solid get($white, 'default');
+    margin-top: $gutter;
+    padding-bottom: $space;
+
+    @include mobile() {
+      margin-top: $space;
+    }
+  }
+
+  [type=submit],
+  [type=reset] {
+    bottom: 0;
+    position: sticky;
+  }
+
+  input,
+  textarea {
+    font-weight: get($font, 'font-weight.bolder');
+  }
+
+  input {
+    font-size: get($font, 'font-size.medium');
+    width: 100%;
+
+    @include mobile() {
+      font-size: unset;
+    }
+  }
+
+  textarea {
+    padding: $space;
+    resize: none;
+  }
+
+  h1 {
+    font-size: get($font, 'font-size.largest');
+    font-weight: get($font, 'font-weight.bolder');
+    line-height: get($font, 'line-height.narrow');
+    grid-area: h1;
+
+    @include mobile() {
+      font-size: get($font, 'font-size.medium');
+    }
+  }
+
+  p {
+    font-size: get($font, 'font-size.small');
+    grid-area: p;
+    margin-bottom: $space;
+    margin-top: $space;
+  }
+
+  span {
+    color: get($grey, 'dark');
+    font-size: get($font, 'font-size.small');
+
+    @include mobile() {
+      position: absolute;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+      width: 0;
+    }
+  }
+
+  label {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: min-content auto;
+
+    @include mobile() {
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+    }
+  }
+
+  [for=name] {
+    grid-area: name;
+  }
+
+  [for=email] {
+    grid-area: email;
+  }
+
+  [for=message] {
+    border-left: 1px solid get($white, 'default');
+    grid-area: message;
+
+    span {
+      padding: 0 $space;
+
+      @include mobile() {
+        padding: 0;
+        padding-bottom: $space;
+      }
+    }
+
+    @include mobile() {
+      border: 1px solid get($white, 'default');
+      margin-bottom: $gap;
+      margin-top: $gap;
+      min-height: 400px;
+      padding-bottom: 0;
+    }
+  }
+
+  [type=submit] {
+    background-color: $green;
+    color: get($black, 'default');
+    grid-area: submit;
+  }
+
+  [type=reset] {
+    background-color: get($grey, 'darkest');
+    color: $red;
+    grid-area: reset;
+  }
 }
