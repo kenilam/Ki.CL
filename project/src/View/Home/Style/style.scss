@@ -2,7 +2,8 @@
   $logo: get($component-logo, 'default');
   $navigation: get($component-navigation, 'default');
 
-  $padding: get($grid, 'default');
+  $space: get($grid, 'default');
+  $gap: get($grid, 'narrow');
   $padding-top: get($grid, 'gutter');
   $grid-gap: get($grid, 'narrow');
 
@@ -13,11 +14,12 @@
   grid-template-columns: min-content auto min-content;
   grid-template-rows: min-content min-content auto;
   overflow: hidden;
-  padding: $padding-top $padding 0;
+  padding: $padding-top $space 0;
 
   @include mobile() {
     grid-template-columns: min-content auto min-content;
     grid-template-rows: min-content minmax(min-content, 30vh) auto;
+    padding: $padding-top $gap 0;
   }
 
   > * {

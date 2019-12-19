@@ -13,7 +13,7 @@ const {
   }
 } = resources;
 
-const transitionType: ICSSTransition.Type = 'slideUp';
+const transitionType: ICSSTransition.Type = 'fade';
 
 const action = `${process.env.API_URL}/api/contact`;
 

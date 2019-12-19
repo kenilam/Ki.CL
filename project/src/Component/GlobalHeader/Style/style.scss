@@ -26,9 +26,10 @@ $default: get($component-global-header, 'default');
 
   display: grid;
   grid-gap: $gap;
-  grid-template-areas: '. . . . .' '. logo . navigation .' '. . . . .';
-  grid-template-columns: $gap max-content auto max-content $gap;
-  grid-template-rows: $bleed max-content auto;
+  grid-template-areas: 'logo navigation';
+  grid-template-columns: max-content auto;
+  grid-template-rows: auto;
+  padding: $gap;
   position: fixed;
   width: 100vw;
   z-index: 1500;
@@ -43,14 +44,12 @@ $default: get($component-global-header, 'default');
     grid-gap: $gap;
     grid-template-columns: auto;
     grid-template-rows: auto;
+    justify-self: end;
     text-transform: uppercase;
   }
 
   @include tablet() {
-    grid-gap: $space;
-    grid-template-areas: '. . . . . .' '. logo h2 . navigation .' '. . . . . .';
-    grid-template-columns: $gap max-content max-content auto max-content $gap;
-    grid-template-rows: $gap max-content auto;
+    padding: $space;
 
     > [data-component=#{$navigation}] {
       grid-gap: $space;

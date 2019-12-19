@@ -20,27 +20,27 @@
   form {
     display: grid;
     grid-template-areas:
-      '. . . . . . . .'
-      'h1 h1 h1 message message message message message'
-      'p p p message message message message message'
-      'name name name message message message message message'
-      'email email email message message message message message'
-      '. . . message message message message message'
-      '. . . submit submit submit reset reset';
-    grid-template-columns: repeat(7, 1fr);
+      '. . . .'
+      'h1 message message message'
+      'p message message message'
+      'name message message message'
+      'email message message message'
+      '. message message message'
+      '. submit submit reset';
+    grid-template-columns: 400px repeat(3, 1fr);
     grid-template-rows: auto repeat(4, min-content) auto $gutter;
     min-height: 100vh;
     padding: get($grid, 'wide') + $gutter 0 0 $gutter;
 
     @include mobile() {
       grid-template-areas:
-        '. h1 h1 h1 .'
-        '. p p p .'
-        '. name name name .'
-        '. email email email .'
-        '. message message message .'
-        'submit submit submit reset reset';
-      grid-template-columns: $gap repeat(3, 1fr) $gap;
+        '. h1 h1 .'
+        '. p p .'
+        '. name name .'
+        '. email email .'
+        '. message message .'
+        'submit submit reset reset';
+      grid-template-columns: $gap repeat(2, 1fr) $gap;
       grid-template-rows: repeat(4, min-content) auto $gutter;
       padding-left: 0;
       padding-right: 0;
@@ -61,8 +61,6 @@
   [for=name],
   [for=email] {
     border-bottom: 1px solid get($white, 'default');
-    margin-top: $gutter;
-    padding-bottom: $space;
 
     @include mobile() {
       margin-top: $space;
@@ -71,6 +69,8 @@
 
   [type=submit],
   [type=reset] {
+    @include shadow-top();
+
     bottom: 0;
     position: sticky;
   }
@@ -78,6 +78,7 @@
   input,
   textarea {
     font-weight: get($font, 'font-weight.bolder');
+    padding: $space;
   }
 
   input {
@@ -90,7 +91,6 @@
   }
 
   textarea {
-    padding: $space;
     resize: none;
   }
 
@@ -142,6 +142,11 @@
 
   [for=email] {
     grid-area: email;
+    margin-top: $gap;
+
+    @include mobile() {
+      margin-top: 0;
+    }
   }
 
   [for=message] {
@@ -161,7 +166,7 @@
       border: 1px solid get($white, 'default');
       margin-bottom: $gap;
       margin-top: $gap;
-      min-height: 400px;
+      min-height: 200px;
       padding-bottom: 0;
     }
   }
