@@ -10,6 +10,10 @@ declare module IContact {
   type Params = {
     [name: string]: FormDataEntryValue
   }
+  
+  type Render = boolean;
+  
+  type RenderIndex = number;
 }
 
 export default IContact;

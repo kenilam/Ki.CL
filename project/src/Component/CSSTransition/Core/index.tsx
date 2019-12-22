@@ -12,8 +12,10 @@ const Core: FunctionComponent<ICore.Props> = ({
   classNames,
   mountOnEnter = true,
   onEnter,
+  onEntering,
   onEntered,
   onExit,
+  onExiting,
   onExited,
   standAlone,
   unmountOnExit = true,
@@ -22,15 +24,19 @@ const Core: FunctionComponent<ICore.Props> = ({
   const {
     props: {
       onEnter: childOnEnter,
+      onEntering: childOnEntering,
       onEntered: childOnEntered,
       onExit: childOnExit,
+      onExiting: childOnExiting,
       onExited: childOnExited,
     }
   } = children as {
     props: {
       onEnter: ICore.OnEnter,
+      onEntering: ICore.OnEnter,
       onEntered: ICore.OnEnter,
       onExit: ICore.OnExit,
+      onExiting: ICore.OnExit,
       onExited: ICore.OnExit,
     }
   };
@@ -38,6 +44,11 @@ const Core: FunctionComponent<ICore.Props> = ({
   const enterHandler: ICore.OnEnter = (node, isAppearing) => {
     onEnter && onEnter(node, isAppearing);
     childOnEnter && childOnEnter(node, isAppearing);
+  };
+  
+  const enteringHandler: ICore.OnEnter = (node, isAppearing) => {
+    onEntering && onEntering(node, isAppearing);
+    childOnEntering && childOnEntering(node, isAppearing);
   };
   
   const enteredHandler: ICore.OnEnter = (node, isAppearing) => {
@@ -59,6 +70,11 @@ const Core: FunctionComponent<ICore.Props> = ({
   const exitHandler: ICore.OnExit = node => {
     onExit && onExit(node);
     childOnExit && childOnExit(node);
+  };
+  
+  const exitingHandler: ICore.OnExit = (node) => {
+    onExiting && onExiting(node);
+    childOnExiting && childOnExiting(node);
   };
   
   const exitedHandler: ICore.OnExit = (node) => {
@@ -95,8 +111,10 @@ const Core: FunctionComponent<ICore.Props> = ({
       mountOnEnter={mountOnEnter}
       timeout={null}
       onEnter={enterHandler}
+      onEntering={enteringHandler}
       onEntered={enteredHandler}
       onExit={exitHandler}
+      onExiting={exitingHandler}
       onExited={exitedHandler}
       unmountOnExit={unmountOnExit}
     >

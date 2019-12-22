@@ -13,8 +13,10 @@ declare module ICSSTransition {
   
   interface Events {
     onEnter?: OnEnter;
+    onEntering?: OnEnter;
     onEntered?: OnEnter;
     onExit?: OnExit;
+    onExiting?: OnExit;
     onExited?: OnExit;
   }
   

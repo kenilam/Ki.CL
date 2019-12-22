@@ -13,33 +13,28 @@
   $space: get($grid, 'narrow');
   $gutter: get($grid, 'default');
   $gap: get($grid, 'gutter');
+  $form-element-transition-duration: get($duration, 'slowest');
+  $form-element-transition-delay: get($duration, 'faster');
 
   background-color: $background-color;
   color: $text-color;
 
   form {
     display: grid;
-    grid-template-areas:
-      '. . . .'
-      'h1 message message message'
-      'p message message message'
-      'name message message message'
-      'email message message message'
-      '. message message message'
-      '. submit submit reset';
+    grid-template-areas: 'h1 message message message' 'p message message message' 'name message message message' 'email message message message' '. message message message' '. submit submit reset';
     grid-template-columns: 400px repeat(3, 1fr);
-    grid-template-rows: auto repeat(4, min-content) auto $gutter;
+    grid-template-rows: repeat(4, min-content) auto $gutter;
     min-height: 100vh;
     padding: get($grid, 'wide') + $gutter 0 0 $gutter;
 
-    @include mobile() {
-      grid-template-areas:
-        '. h1 h1 .'
-        '. p p .'
-        '. name name .'
-        '. email email .'
-        '. message message .'
-        'submit submit reset reset';
+    > * {
+      &.#{$css-transition} {
+        transition-duration: $form-element-transition-duration;
+      }
+    }
+
+    @include tablet() {
+      grid-template-areas: '. h1 h1 .' '. p p .' '. name name .' '. email email .' '. message message .' 'submit submit reset reset';
       grid-template-columns: $gap repeat(2, 1fr) $gap;
       grid-template-rows: repeat(4, min-content) auto $gutter;
       padding-left: 0;
@@ -53,16 +48,14 @@
   [for=email] {
     margin-right: $gutter;
 
-    @include mobile() {
+    @include tablet() {
       margin-right: 0;
     }
   }
 
   [for=name],
   [for=email] {
-    border-bottom: 1px solid get($white, 'default');
-
-    @include mobile() {
+    @include tablet() {
       margin-top: $space;
     }
   }
@@ -75,19 +68,14 @@
     position: sticky;
   }
 
-  input,
-  textarea {
-    font-weight: get($font, 'font-weight.bolder');
-    padding: $space;
+  button {
+    &.#{$css-transition} {
+      transition-delay: $form-element-transition-delay;
+    }
   }
 
   input {
-    font-size: get($font, 'font-size.medium');
     width: 100%;
-
-    @include mobile() {
-      font-size: unset;
-    }
   }
 
   textarea {
@@ -97,10 +85,10 @@
   h1 {
     font-size: get($font, 'font-size.largest');
     font-weight: get($font, 'font-weight.bolder');
-    line-height: get($font, 'line-height.narrow');
     grid-area: h1;
+    line-height: get($font, 'line-height.narrow');
 
-    @include mobile() {
+    @include tablet() {
       font-size: get($font, 'font-size.medium');
     }
   }
@@ -110,30 +98,6 @@
     grid-area: p;
     margin-bottom: $space;
     margin-top: $space;
-  }
-
-  span {
-    color: get($grey, 'dark');
-    font-size: get($font, 'font-size.small');
-
-    @include mobile() {
-      position: absolute;
-      height: 0;
-      opacity: 0;
-      overflow: hidden;
-      width: 0;
-    }
-  }
-
-  label {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: min-content auto;
-
-    @include mobile() {
-      grid-template-columns: auto;
-      grid-template-rows: auto;
-    }
   }
 
   [for=name] {
@@ -153,21 +117,11 @@
     border-left: 1px solid get($white, 'default');
     grid-area: message;
 
-    span {
-      padding: 0 $space;
-
-      @include mobile() {
-        padding: 0;
-        padding-bottom: $space;
-      }
-    }
-
-    @include mobile() {
+    @include tablet() {
       border: 1px solid get($white, 'default');
       margin-bottom: $gap;
       margin-top: $gap;
       min-height: 200px;
-      padding-bottom: 0;
     }
   }
 

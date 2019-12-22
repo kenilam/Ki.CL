@@ -18,8 +18,10 @@ const Router: React.FunctionComponent<IRouter.Props> = (
   {
     children,
     onEnter,
+    onEntering,
     onEntered,
     onExit,
+    onExiting,
     onExited,
     routeIndex,
     transitionStyle,
@@ -51,6 +53,18 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     );
   };
   
+  const enteringHandler: IRouter.OnEnter = (node, isAppearing) => {
+    document.body.dataset.enteredRoutes = routes;
+    
+    onEntering && onEntering(node, isAppearing);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onEntering && props.onEntering(node, isAppearing);
+      }
+    );
+  };
+  
   const enteredHandler: IRouter.OnEnter = (node, isAppearing) => {
     childNodes.forEach(
       ({props}) => {
@@ -71,6 +85,18 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     );
   };
   
+  const exitingHandler: IRouter.OnExit = node => {
+    document.body.dataset.exitedRoutes = routes;
+    
+    onExiting && onExiting(node);
+    
+    childNodes.forEach(
+      ({props}) => {
+        props.onExiting && props.onExiting(node);
+      }
+    );
+  };
+  
   const exitedHandler: IRouter.OnExit = node => {
     onExited && onExited(node);
     
@@ -85,8 +111,10 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     <Transition
       {...props}
       onEnter={enterHandler}
+      onEntering={enteringHandler}
       onEntered={enteredHandler}
       onExit={exitHandler}
+      onExiting={exitingHandler}
       onExited={exitedHandler}
       transitionKey={location.pathname.split('/')[routeIndex + 1] || '/'}
     >

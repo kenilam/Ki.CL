@@ -12,7 +12,11 @@ const Transition: FunctionComponent<ITransition.Props> = ({
   childFactory,
   transitionKey,
   onEnter,
+  onEntering,
   onEntered,
+  onExit,
+  onExiting,
+  onExited,
   type,
   ...props
 }) => {
@@ -38,6 +42,16 @@ const Transition: FunctionComponent<ITransition.Props> = ({
     )
   };
   
+  const enteringHandler: ITransition.OnEnter = (node, isAppearing) => {
+    onEntering && onEntering(node, isAppearing);
+    
+    childNodes.forEach(
+      ({props: {onEntering}}) => {
+        onEntering && onEntering(node, isAppearing);
+      }
+    )
+  };
+  
   const enteredHandler: ITransition.OnEnter = (node, isAppearing) => {
     if (!addEndListener) {
       classNames.remove(node, className);
@@ -54,7 +68,9 @@ const Transition: FunctionComponent<ITransition.Props> = ({
     )
   };
   
-  const exitHandler: ITransition.OnEnter = node => {
+  const exitHandler: ITransition.OnExit = node => {
+    onExit && onExit(node);
+    
     childNodes.forEach(
       ({props: {onExit}}) => {
         onExit && onExit(node);
@@ -62,7 +78,19 @@ const Transition: FunctionComponent<ITransition.Props> = ({
     )
   };
   
-  const exitedHandler: ITransition.OnEnter = node => {
+  const exitingHandler: ITransition.OnExit = node => {
+    onExiting && onExiting(node);
+    
+    childNodes.forEach(
+      ({props: {onExiting}}) => {
+        onExiting && onExiting(node);
+      }
+    )
+  };
+  
+  const exitedHandler: ITransition.OnExit = node => {
+    onExited && onExited(node);
+    
     childNodes.forEach(
       ({props: {onExited}}) => {
         onExited && onExited(node);
@@ -80,8 +108,10 @@ const Transition: FunctionComponent<ITransition.Props> = ({
               addEndListener={addEndListener}
               key={transitionKey || index}
               onEnter={enterHandler}
+              onEntering={enteringHandler}
               onEntered={enteredHandler}
               onExit={exitHandler}
+              onExiting={exitingHandler}
               onExited={exitedHandler}
               type={type}
             >

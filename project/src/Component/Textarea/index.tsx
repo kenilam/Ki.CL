@@ -1,0 +1,57 @@
+import {CSSTransition} from '@/Component';
+import ICSSTransition from '@/Component/CSSTransition/spec';
+import classnames from 'classnames';
+import React, {useRef} from 'react';
+import ITextarea from './spec';
+import Style from './Style';
+
+const TextArea: React.FunctionComponent<ITextarea.Props> = ({
+  autoFocus,
+  label,
+  id,
+  transitionIn,
+  transitionType,
+  mountOnEnter,
+  onEnter,
+  onEntering,
+  onEntered: onEnteredHandler,
+  onExit,
+  onExiting,
+  onExited,
+  resizable,
+  standAlone,
+  unmountOnExit,
+  ...props
+}) => {
+  let ref = useRef<HTMLTextAreaElement>();
+  
+  const onEntered: ICSSTransition.OnEnter = (node, isAppearing) => {
+    ref && ref.current.focus();
+    onEnteredHandler && onEnteredHandler(node, isAppearing);
+  };
+  
+  const className = classnames({[Style.resizable]: resizable});
+  
+  return (
+    <CSSTransition
+      in={transitionIn}
+      mountOnEnter={mountOnEnter}
+      onEnter={onEnter}
+      onEntering={onEntering}
+      onEntered={onEntered}
+      onExit={onExit}
+      onExiting={onExiting}
+      onExited={onExited}
+      standAlone={standAlone}
+      type={transitionType}
+      unmountOnExit={unmountOnExit}
+    >
+      <label className={className} data-component={Style.default} htmlFor={id}>
+        <span>{label}</span>
+        <textarea autoFocus={autoFocus} id={id} ref={ref} {...props} />
+      </label>
+    </CSSTransition>
+  );
+};
+
+export default TextArea;

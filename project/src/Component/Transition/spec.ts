@@ -10,8 +10,10 @@ declare module ITransition {
   
   interface ChildActions {
     onEnter?: OnEnter;
+    onEntering?: OnEnter;
     onEntered?: OnEnter;
     onExit?: OnExit;
+    onExiting?: OnExit;
     onExited?: OnExit;
   }
   
