@@ -24,7 +24,7 @@ const Input: React.FunctionComponent<IInput.Props> = ({
   const ref = useRef<HTMLInputElement>();
   
   const onEntered: ICSSTransition.OnEnter = (node, isAppearing) => {
-    ref && ref.current.focus();
+    autoFocus && ref && ref.current.focus();
     onEnteredHandler && onEnteredHandler(node, isAppearing);
   };
   

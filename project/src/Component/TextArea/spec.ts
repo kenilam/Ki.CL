@@ -1,7 +1,7 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import React from 'react';
 
-declare module ITextarea {
+declare module ITextArea {
   interface ClassNames extends IClassNames {
     default: string;
     resizable: string;
@@ -15,4 +15,4 @@ declare module ITextarea {
   }
 }
 
-export default ITextarea;
+export default ITextArea;

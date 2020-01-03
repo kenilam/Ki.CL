@@ -102,12 +102,20 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
   return (
     <main data-routes='contact' onSubmit={onSubmit}>
       <form action={action}>
-        <CSSTransition in={shouldRender} type='slideFromLeft' onEntering={onChildEntering(0)}
-                       onExiting={onChildExiting(0)}>
+        <CSSTransition
+          in={shouldRender}
+          type='slideFromLeft'
+          onEntering={onChildEntering(0)}
+          onExiting={onChildExiting(0)}
+        >
           <h1>{title}</h1>
         </CSSTransition>
-        <CSSTransition in={shouldRender && renderIndex >= 0} type='slideFromLeft' onEntering={onChildEntering(1)}
-                       onExiting={onChildExiting(1)}>
+        <CSSTransition
+          in={shouldRender && renderIndex >= 0}
+          type='slideFromLeft'
+          onEntering={onChildEntering(1)}
+          onExiting={onChildExiting(1)}
+        >
           <p>{message}</p>
         </CSSTransition>
         <Input
@@ -148,12 +156,20 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
           transitionType='slideUp'
           required={true}
         />
-        <CSSTransition in={shouldRender && renderIndex >= 4} type='slideUp' onEntering={onChildEntering(5)}
-                       onExiting={onChildExiting(5)}>
+        <CSSTransition
+          in={shouldRender && renderIndex >= 4}
+          type='slideUp'
+          onEntering={onChildEntering(5)}
+          onExiting={onChildExiting(5)}
+        >
           <button type='submit'>send</button>
         </CSSTransition>
-        <CSSTransition in={shouldRender && renderIndex >= 4} type='slideUp' onEntering={onChildEntering(5)}
-                       onExiting={onChildExiting(5)}>
+        <CSSTransition
+          in={shouldRender && renderIndex >= 4}
+          type='slideUp'
+          onEntering={onChildEntering(5)}
+          onExiting={onChildExiting(5)}
+        >
           <button type='reset'>reset</button>
         </CSSTransition>
       </form>
