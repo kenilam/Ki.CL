@@ -12,6 +12,7 @@ declare module IAsynchronizer {
   
   interface Props {
     awaitFor: AwaitFor,
+    awaitForOptions?: RequestInit,
     pendingFor?: PendingFor,
     children: Children<any>,
     transitionType?: ICSSTransition.Type

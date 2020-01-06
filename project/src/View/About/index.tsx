@@ -15,26 +15,26 @@ const {
 const api = `${process.env.API_URL}/api/about`;
 const transitionType: ICSSTransition.Type = 'slideFromRight';
 
-const Abort: React.FunctionComponent<IAbout.Props> = () => {
-  const [shouldRender, rendered] = useState(false);
+const About: React.FunctionComponent<IAbout.Props> = () => {
+  const [rendered, isRendered] = useState(false);
   
   const fetchAPI = () => {
-    rendered(true);
+    isRendered(true);
   };
   
   useEffect(
     () => {
-      window.addEventListener('Abort.Rendered', fetchAPI);
+      window.addEventListener('about.entering', fetchAPI);
       
       return () => {
-        window.removeEventListener('Abort.Rendered', fetchAPI);
+        window.removeEventListener('about.entering', fetchAPI);
       }
     }
   );
   
   return (
     <main data-routes='about'>
-      <Asynchronizer awaitFor={api} pendingFor={!shouldRender}>
+      <Asynchronizer awaitFor={api} pendingFor={!rendered}>
         {
           (data: IAbout.Data) => (
             <article>
@@ -55,14 +55,9 @@ const Abort: React.FunctionComponent<IAbout.Props> = () => {
   );
 };
 
-const TransitionEvent = new Event('Abort.Rendered');
-const onEntering = () => {
-  window.dispatchEvent(TransitionEvent);
-};
-
 export {path, transitionType};
 export default (
   <Route path={path}>
-    <Abort onEntering={onEntering} />
+    <About />
   </Route>
 );

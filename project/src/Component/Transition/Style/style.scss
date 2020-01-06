@@ -5,6 +5,7 @@
   $enter: get($component-css-transition, 'enter.default');
   $exit: get($component-css-transition, 'exit.default');
 
+  pointer-events: none;
   position: relative;
 
   > :not(.#{$css-transition-stand-alone}) {

@@ -41,6 +41,14 @@ const Router: React.FunctionComponent<IRouter.Props> = (
     ? view.home.name.toLowerCase()
     : location.pathname.substr(1).replace(/\//g, '.');
   
+  const EnterEvent = new Event(`${routes}.enter`);
+  const EnteringEvent = new Event(`${routes}.entering`);
+  const EnteredEvent = new Event(`${routes}.entered`);
+  
+  const ExitEvent = new Event(`${routes}.exit`);
+  const ExitingEvent = new Event(`${routes}.exiting`);
+  const ExitedEvent = new Event(`${routes}.exited`);
+  
   const enterHandler: IRouter.OnEnter = (node, isAppearing) => {
     document.body.dataset.enteredRoutes = routes;
     
@@ -51,6 +59,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         props.onEnter && props.onEnter(node, isAppearing);
       }
     );
+    
+    window.dispatchEvent(EnterEvent);
   };
   
   const enteringHandler: IRouter.OnEnter = (node, isAppearing) => {
@@ -63,6 +73,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         props.onEntering && props.onEntering(node, isAppearing);
       }
     );
+  
+    window.dispatchEvent(EnteringEvent);
   };
   
   const enteredHandler: IRouter.OnEnter = (node, isAppearing) => {
@@ -71,6 +83,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         props.onEntered && props.onEntered(node, isAppearing);
       }
     );
+  
+    window.dispatchEvent(EnteredEvent);
   };
   
   const exitHandler: IRouter.OnExit = node => {
@@ -83,6 +97,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         props.onExit && props.onExit(node);
       }
     );
+  
+    window.dispatchEvent(ExitEvent);
   };
   
   const exitingHandler: IRouter.OnExit = node => {
@@ -95,6 +111,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         props.onExiting && props.onExiting(node);
       }
     );
+  
+    window.dispatchEvent(ExitingEvent);
   };
   
   const exitedHandler: IRouter.OnExit = node => {
@@ -105,6 +123,8 @@ const Router: React.FunctionComponent<IRouter.Props> = (
         props.onExited && props.onExited(node);
       }
     );
+  
+    window.dispatchEvent(ExitedEvent);
   };
   
   return (

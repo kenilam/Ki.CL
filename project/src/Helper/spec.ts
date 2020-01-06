@@ -3,21 +3,9 @@ declare module IHelper {
     [name: string]: any;
   }
   
-  interface Options {
-    body: string;
-    method:
-      'DELETE' |
-      'GET' |
-      'HEAD' |
-      'PATCH' |
-      'POST' |
-      'PUT' |
-      'OPTIONS'
-  }
-  
   type Cancel = () => void;
   
-  type Fetch = (url: string, options?: Options) =>
+  type Fetch = (url: string, options?: RequestInit) =>
     { cancel: Cancel; promise: Promise<unknown> };
 }
 

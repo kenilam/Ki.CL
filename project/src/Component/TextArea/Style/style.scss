@@ -20,7 +20,7 @@ $gap: get($grid, 'gutter');
   grid-template-columns: auto;
   grid-template-rows: min-content auto;
 
-  @include mobile() {
+  @include tablet() {
     border: 1px solid get($white, 'default');
     grid-template-columns: auto;
     grid-template-rows: auto;

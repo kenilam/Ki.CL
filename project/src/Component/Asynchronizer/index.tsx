@@ -8,6 +8,7 @@ const awaitDelay = CSSUnit(Style.delay);
 
 const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   awaitFor,
+  awaitForOptions,
   children,
   pendingFor,
   transitionType
@@ -22,7 +23,7 @@ const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
   
   useEffect(() => {
     if (!data && !pendingFor) {
-      const {cancel, promise} = Fetch(awaitFor);
+      const {cancel, promise} = Fetch(awaitFor, awaitForOptions);
       
       promise.then(data => {
         awaitTimer = window.setTimeout(awaitComplete(data), awaitDelay);

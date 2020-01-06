@@ -5,7 +5,6 @@ import {Route} from '@/Component/Router';
 import {Fetch} from '@/Helper';
 import React, {FormEvent, useEffect, useState} from 'react';
 import IContact from './spec';
-import IAbout from './spec';
 import './Style';
 
 const {
@@ -18,15 +17,31 @@ const transitionType: ICSSTransition.Type = 'fade';
 
 const action = `${process.env.API_URL}/api/contact`;
 
-const Contact: React.FunctionComponent<IAbout.Props> = () => {
-  let childTransitionTimer: number;
+const Contact: React.FunctionComponent<IContact.Props> = () => {
+  let renderIndexTimer: number;
   
+  const [isValid, validate] =  useState<IContact.IsValid>(false);
   const [params, setParams] = useState<IContact.Params>(null);
   const [shouldRender, render] = useState<IContact.Render>(false);
-  const [renderIndex, updateRenderIndex] = useState<IContact.RenderIndex>(0);
+  const [renderIndex, updateRenderIndex] = useState<IContact.RenderIndex>(-1);
+  
+  const onChange = (event: FormEvent<HTMLFormElement>) => {
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email');
+    const message = data.get('message');
+    const name = data.get('name');
+  
+    validate(Boolean(email && message && name));
+  };
   
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    const data = new FormData(event.target as HTMLFormElement);
+    event.preventDefault();
+    
+    if (!isValid) {
+      return;
+    }
+    
+    const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const message = data.get('message');
     const name = data.get('name');
@@ -36,7 +51,7 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
     setParams({email, message, name});
   };
   
-  const onEntered = () => {
+  const onEntering = () => {
     render(true);
   };
   
@@ -44,39 +59,24 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
     render(false);
   };
   
-  const onChildEntering = (index: IContact.RenderIndex) => () => {
-    childTransitionTimer = window.setTimeout(() => updateRenderIndex(index), 300);
+  const changeRenderIndex = (index: IContact.RenderIndex) => () => {
+    window.clearTimeout(renderIndexTimer);
+    renderIndexTimer = window.setTimeout(() => updateRenderIndex(index), 300);
   };
   
-  const onChildExiting = (index: IContact.RenderIndex) => () => {
-    childTransitionTimer = window.setTimeout(() => updateRenderIndex(index), 300);
-  };
-  
-  useEffect(
-    () => () => {
-      window.clearTimeout(childTransitionTimer);
-    },
-    [renderIndex]
-  );
-  
-  useEffect(
-    () => {
-      window.addEventListener('view-entered', onEntered);
-      window.addEventListener('view-exit', onExit);
-      
-      return () => {
-        window.removeEventListener('view-entered', onEntered);
-        window.removeEventListener('view-exit', onExit);
-      }
-    },
-    [render]
-  );
+  const reset_renderIndex = changeRenderIndex(-1);
+  const set_renderIndex_to_0 = changeRenderIndex(0);
+  const set_renderIndex_to_1 = changeRenderIndex(1);
+  const set_renderIndex_to_2 = changeRenderIndex(2);
+  const set_renderIndex_to_3 = changeRenderIndex(3);
+  const set_renderIndex_to_4 = changeRenderIndex(4);
+  const set_renderIndex_to_5 = changeRenderIndex(5);
   
   useEffect(
     () => {
       let cancelFetch: IContact.CancelFetch;
       
-      if (params) {
+      if (isValid && params) {
         const {cancel, promise} = Fetch(
           action,
           {
@@ -87,34 +87,39 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
         
         cancelFetch = cancel;
         
-        promise.then(() => {
-          setParams(null);
-        });
+        promise.then(setParams);
       }
       
+      window.addEventListener('contact.entering', onEntering);
+      window.addEventListener('contact.exit', onExit);
+  
       return () => {
+        window.clearTimeout(renderIndexTimer);
+        
+        window.removeEventListener('contact.entering', onEntering);
+        window.removeEventListener('contact.exit', onExit);
+        
         cancelFetch && cancelFetch();
       };
-    },
-    [params]
+    }
   );
   
   return (
-    <main data-routes='contact' onSubmit={onSubmit}>
-      <form action={action}>
+    <main data-routes='contact'>
+      <form action={action} onChange={onChange} onSubmit={onSubmit}>
         <CSSTransition
           in={shouldRender}
           type='slideFromLeft'
-          onEntering={onChildEntering(0)}
-          onExiting={onChildExiting(0)}
+          onEntering={set_renderIndex_to_0}
+          onExiting={reset_renderIndex}
         >
           <h1>{title}</h1>
         </CSSTransition>
         <CSSTransition
           in={shouldRender && renderIndex >= 0}
           type='slideFromLeft'
-          onEntering={onChildEntering(1)}
-          onExiting={onChildExiting(1)}
+          onEntering={set_renderIndex_to_1}
+          onExiting={set_renderIndex_to_0}
         >
           <p>{message}</p>
         </CSSTransition>
@@ -123,8 +128,8 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
           id='name'
           label='Name'
           name='name'
-          onEntering={onChildEntering(2)}
-          onExiting={onChildExiting(2)}
+          onEntering={set_renderIndex_to_2}
+          onExiting={set_renderIndex_to_1}
           placeholder='Your name here'
           required={true}
           transitionIn={shouldRender && renderIndex >= 1}
@@ -135,8 +140,8 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
           id='email'
           label='Email'
           name='email'
-          onEntering={onChildEntering(3)}
-          onExiting={onChildExiting(3)}
+          onEntering={set_renderIndex_to_3}
+          onExiting={set_renderIndex_to_2}
           placeholder='Your email here'
           required={true}
           transitionIn={shouldRender && renderIndex >= 2}
@@ -149,8 +154,8 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
           maxLength={600}
           minLength={30}
           name='message'
-          onEntering={onChildEntering(4)}
-          onExiting={onChildExiting(4)}
+          onEntering={set_renderIndex_to_4}
+          onExiting={set_renderIndex_to_3}
           placeholder='Write your messages here'
           transitionIn={shouldRender && renderIndex >= 3}
           transitionType='slideUp'
@@ -159,16 +164,16 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
         <CSSTransition
           in={shouldRender && renderIndex >= 4}
           type='slideUp'
-          onEntering={onChildEntering(5)}
-          onExiting={onChildExiting(5)}
+          onEntering={set_renderIndex_to_5}
+          onExiting={set_renderIndex_to_4}
         >
-          <button type='submit'>send</button>
+          <button type='submit' disabled={!isValid}>send</button>
         </CSSTransition>
         <CSSTransition
           in={shouldRender && renderIndex >= 4}
           type='slideUp'
-          onEntering={onChildEntering(5)}
-          onExiting={onChildExiting(5)}
+          onEntering={set_renderIndex_to_5}
+          onExiting={set_renderIndex_to_4}
         >
           <button type='reset'>reset</button>
         </CSSTransition>
@@ -177,17 +182,9 @@ const Contact: React.FunctionComponent<IAbout.Props> = () => {
   );
 };
 
-const viewEnteredEvent = new Event('view-entered');
-const viewExitEvent = new Event('view-exited');
-
-const onEntering = () => {
-  window.dispatchEvent(viewEnteredEvent);
-};
-const onExit = () => window.dispatchEvent(viewExitEvent);
-
 export {path, transitionType};
 export default (
   <Route path={path}>
-    <Contact onEntering={onEntering} onExit={onExit} />
+    <Contact/>
   </Route>
 );

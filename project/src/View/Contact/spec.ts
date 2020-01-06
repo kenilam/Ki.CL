@@ -7,8 +7,10 @@ declare module IContact {
   
   type CancelFetch = IHelper.Cancel;
   
+  type IsValid = boolean;
+  
   type Params = {
-    [name: string]: FormDataEntryValue
+    [name in 'name' | 'email' | 'message']?: FormDataEntryValue
   }
   
   type Render = boolean;

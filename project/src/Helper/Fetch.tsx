@@ -33,7 +33,7 @@ const Fetch: IHelper.Fetch = (url, options) => {
   const promise = window.fetch(url,
     {
       headers: {'Content-type': 'application/json'},
-      method: 'GET',
+      method: options ? options.method : 'GET',
       ...options,
       signal
     }
