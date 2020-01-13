@@ -95,7 +95,7 @@ const Contact: React.FunctionComponent<IContact.Props> = () => {
 
       return () => {
         cancelFetch && cancelFetch();
-        
+
         clearTimeout(renderIndexTimer);
 
         removeEventListener('contact.entering', onEntering);
