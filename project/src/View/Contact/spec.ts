@@ -9,8 +9,10 @@ declare module IContact {
   
   type IsValid = boolean;
   
+  type Field = 'cta' | 'description' | 'email' | 'message' | 'name' | 'title';
+  
   type Params = {
-    [name in 'name' | 'email' | 'message']?: FormDataEntryValue
+    [name in Field]?: FormDataEntryValue
   }
   
   type Render = boolean;

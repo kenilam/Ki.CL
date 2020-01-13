@@ -54,7 +54,7 @@
       "name": "Contact",
       "content": {
         "title": "LET'S TALK",
-        "message": "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly."
+        "description": "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly."
       }
     }
   },

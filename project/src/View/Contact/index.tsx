@@ -9,7 +9,7 @@ import './Style';
 
 const {
   view: {
-    contact: {path, content: {title, message}}
+    contact: {path, content: {title, description}}
   }
 } = resources;
 
@@ -19,63 +19,63 @@ const action = `${process.env.API_URL}/api/contact`;
 
 const Contact: React.FunctionComponent<IContact.Props> = () => {
   let renderIndexTimer: number;
-  
+
   const [isValid, validate] =  useState<IContact.IsValid>(false);
   const [params, setParams] = useState<IContact.Params>(null);
   const [shouldRender, render] = useState<IContact.Render>(false);
-  const [renderIndex, updateRenderIndex] = useState<IContact.RenderIndex>(-1);
-  
+  const [renderFields, updateRenderFields] = useState<IContact.Field[]>([]);
+
+  const shouldRenderField = (field: IContact.Field) => shouldRender && renderFields.includes(field);
+  const addRenderField = (field: IContact.Field, asCallback = true) => {
+    const update = () => updateRenderFields(Array.from(new Set([...renderFields, field])));
+
+    if (asCallback) {
+      return () => setTimeout(update, 300);
+    }
+
+    update();
+  }
+;
   const onChange = (event: FormEvent<HTMLFormElement>) => {
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const message = data.get('message');
     const name = data.get('name');
-  
+
     validate(Boolean(email && message && name));
   };
-  
+
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     if (!isValid) {
       return;
     }
-    
+
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const message = data.get('message');
     const name = data.get('name');
-    
+
     event.preventDefault();
-    
+
     setParams({email, message, name});
   };
-  
+
   const onEntering = () => {
     render(true);
+    addRenderField('title', false);
   };
-  
+
   const onExit = () => {
     render(false);
+    updateRenderFields([]);
   };
-  
-  const changeRenderIndex = (index: IContact.RenderIndex) => () => {
-    window.clearTimeout(renderIndexTimer);
-    renderIndexTimer = window.setTimeout(() => updateRenderIndex(index), 300);
-  };
-  
-  const reset_renderIndex = changeRenderIndex(-1);
-  const set_renderIndex_to_0 = changeRenderIndex(0);
-  const set_renderIndex_to_1 = changeRenderIndex(1);
-  const set_renderIndex_to_2 = changeRenderIndex(2);
-  const set_renderIndex_to_3 = changeRenderIndex(3);
-  const set_renderIndex_to_4 = changeRenderIndex(4);
-  const set_renderIndex_to_5 = changeRenderIndex(5);
-  
+
   useEffect(
     () => {
       let cancelFetch: IContact.CancelFetch;
-      
+
       if (isValid && params) {
         const {cancel, promise} = Fetch(
           action,
@@ -84,55 +84,52 @@ const Contact: React.FunctionComponent<IContact.Props> = () => {
             method: 'POST'
           }
         );
-        
+
         cancelFetch = cancel;
-        
+
         promise.then(setParams);
       }
-      
-      window.addEventListener('contact.entering', onEntering);
-      window.addEventListener('contact.exit', onExit);
-  
+
+      addEventListener('contact.entering', onEntering);
+      addEventListener('contact.exit', onExit);
+
       return () => {
-        window.clearTimeout(renderIndexTimer);
-        
-        window.removeEventListener('contact.entering', onEntering);
-        window.removeEventListener('contact.exit', onExit);
-        
         cancelFetch && cancelFetch();
+        
+        clearTimeout(renderIndexTimer);
+
+        removeEventListener('contact.entering', onEntering);
+        removeEventListener('contact.exit', onExit);
       };
     }
   );
-  
+
   return (
     <main data-routes='contact'>
       <form action={action} onChange={onChange} onSubmit={onSubmit}>
         <CSSTransition
-          in={shouldRender}
+          in={shouldRenderField('title')}
           type='slideFromLeft'
-          onEntering={set_renderIndex_to_0}
-          onExiting={reset_renderIndex}
+          onEntering={addRenderField('description')}
         >
           <h1>{title}</h1>
         </CSSTransition>
         <CSSTransition
-          in={shouldRender && renderIndex >= 0}
+          in={shouldRenderField('description')}
           type='slideFromLeft'
-          onEntering={set_renderIndex_to_1}
-          onExiting={set_renderIndex_to_0}
+          onEntering={addRenderField('name')}
         >
-          <p>{message}</p>
+          <p>{description}</p>
         </CSSTransition>
         <Input
           autoFocus={true}
           id='name'
           label='Name'
           name='name'
-          onEntering={set_renderIndex_to_2}
-          onExiting={set_renderIndex_to_1}
+          onEntering={addRenderField('email')}
           placeholder='Your name here'
           required={true}
-          transitionIn={shouldRender && renderIndex >= 1}
+          transitionIn={shouldRenderField('name')}
           transitionType='slideFromLeft'
           type='text'
         />
@@ -140,11 +137,10 @@ const Contact: React.FunctionComponent<IContact.Props> = () => {
           id='email'
           label='Email'
           name='email'
-          onEntering={set_renderIndex_to_3}
-          onExiting={set_renderIndex_to_2}
+          onEntering={addRenderField('message')}
           placeholder='Your email here'
           required={true}
-          transitionIn={shouldRender && renderIndex >= 2}
+          transitionIn={shouldRenderField('email')}
           transitionType='slideFromLeft'
           type='email'
         />
@@ -154,28 +150,20 @@ const Contact: React.FunctionComponent<IContact.Props> = () => {
           maxLength={600}
           minLength={30}
           name='message'
-          onEntering={set_renderIndex_to_4}
-          onExiting={set_renderIndex_to_3}
+          onEntering={addRenderField('cta')}
           placeholder='Write your messages here'
-          transitionIn={shouldRender && renderIndex >= 3}
+          transitionIn={shouldRenderField('message')}
           transitionType='slideUp'
           required={true}
         />
         <CSSTransition
-          in={shouldRender && renderIndex >= 4}
+          in={shouldRenderField('cta')}
           type='slideUp'
-          onEntering={set_renderIndex_to_5}
-          onExiting={set_renderIndex_to_4}
         >
-          <button type='submit' disabled={!isValid}>send</button>
-        </CSSTransition>
-        <CSSTransition
-          in={shouldRender && renderIndex >= 4}
-          type='slideUp'
-          onEntering={set_renderIndex_to_5}
-          onExiting={set_renderIndex_to_4}
-        >
-          <button type='reset'>reset</button>
+          <div className='cta'>
+            <button type='submit' disabled={!isValid}>send</button>
+            <button type='reset'>reset</button>
+          </div>
         </CSSTransition>
       </form>
     </main>

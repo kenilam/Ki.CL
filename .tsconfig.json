@@ -10,8 +10,10 @@
     "importHelpers": true,
     "jsx": "preserve",
     "lib": [
-      "es2015",
-      "dom"
+      "es2017",
+      "dom",
+      "dom.iterable",
+      "scripthost"
     ],
     "module": "esNext",
     "moduleResolution": "node",
