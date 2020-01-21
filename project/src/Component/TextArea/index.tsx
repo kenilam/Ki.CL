@@ -7,20 +7,14 @@ import Style from './Style';
 
 const TextArea: React.FunctionComponent<ITextArea.Props> = ({
   autoFocus,
-  label,
+  in: transitionIn,
   id,
-  transitionIn,
-  transitionType,
-  mountOnEnter,
-  onEnter,
-  onEntering,
+  label,
+  maxLength,
+  minLength,
   onEntered: onEnteredHandler,
-  onExit,
-  onExiting,
-  onExited,
+  onEntering,
   resizable,
-  standAlone,
-  unmountOnExit,
   ...props
 }) => {
   let ref = useRef<HTMLTextAreaElement>();
@@ -34,21 +28,26 @@ const TextArea: React.FunctionComponent<ITextArea.Props> = ({
   
   return (
     <CSSTransition
+      {...props}
       in={transitionIn}
-      mountOnEnter={mountOnEnter}
-      onEnter={onEnter}
       onEntering={onEntering}
       onEntered={onEntered}
-      onExit={onExit}
-      onExiting={onExiting}
-      onExited={onExited}
-      standAlone={standAlone}
-      type={transitionType}
-      unmountOnExit={unmountOnExit}
     >
-      <label className={className} data-component={Style.default} htmlFor={id}>
+      <label
+        {...props}
+        className={className}
+        data-component={Style.default}
+        htmlFor={id}
+      >
         <span>{label}</span>
-        <textarea id={id} ref={ref} {...props} />
+        <textarea
+          {...props}
+          id={id}
+          maxLength={maxLength}
+          minLength={minLength}
+          name={id}
+          ref={ref}
+        />
       </label>
     </CSSTransition>
   );

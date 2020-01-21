@@ -7,11 +7,9 @@ declare module ITextArea {
     resizable: string;
   }
   
-  interface Props extends Omit<ICSSTransition.Props, 'in' | 'type'>, React.TextareaHTMLAttributes<null> {
+  interface Props extends Omit<React.TextareaHTMLAttributes<null>, 'type'>, ICSSTransition.Props {
     label?: string;
     resizable?: boolean;
-    transitionIn: boolean;
-    transitionType?: ICSSTransition.Type;
   }
 }
 

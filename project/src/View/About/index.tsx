@@ -1,5 +1,6 @@
 import resources from '$/resources';
-import {Asynchronizer, Logo, Navigation} from '@/Component';
+import * as API from '@/API';
+import {Logo, Navigation} from '@/Component';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
 import React, {useEffect, useState} from 'react';
@@ -12,7 +13,6 @@ const {
   }
 } = resources;
 
-const api = `${process.env.API_URL}/api/about`;
 const transitionType: ICSSTransition.Type = 'slideFromRight';
 
 const About: React.FunctionComponent<IAbout.Props> = () => {
@@ -34,9 +34,9 @@ const About: React.FunctionComponent<IAbout.Props> = () => {
   
   return (
     <main data-routes='about'>
-      <Asynchronizer awaitFor={api} pendingFor={!rendered}>
+      <API.About pendingFor={!rendered}>
         {
-          (data: IAbout.Data) => (
+          data => (
             <article>
               <Logo />
               <h2>{heading}</h2>
@@ -50,7 +50,7 @@ const About: React.FunctionComponent<IAbout.Props> = () => {
             </article>
           )
         }
-      </Asynchronizer>
+      </API.About>
     </main>
   );
 };

@@ -1,4 +1,4 @@
-@value default: #{get($view-component-phase, 'default')};
+@value default: #{get($view-home-slogan, 'default')};
 @value lowerShadowColor: #{rgba($gold, 0.2)};
 @value lowerShadowDistance: 0.6em;
 @value upperShadowColor: #{rgba($blue, 0.7)};

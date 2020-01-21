@@ -6,8 +6,8 @@ declare module ICSSTransition {
     default: string;
   }
   
+  type In = IStyle.In;
   type Type = IStyle.Type;
-  
   type OnEnter = ICore.OnEnter;
   type OnExit = ICore.OnExit;
   

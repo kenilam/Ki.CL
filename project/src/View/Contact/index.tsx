@@ -1,173 +1,61 @@
 import resources from '$/resources';
-import {CSSTransition, Input, TextArea} from '@/Component';
+import {Input, TextArea} from "@/Component";
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import {Route} from '@/Component/Router';
-import {Fetch} from '@/Helper';
-import React, {FormEvent, useEffect, useState} from 'react';
+import Description from './Description';
+import Title from './Title';
+import CTA from './CTA';
+import React from 'react';
 import IContact from './spec';
 import './Style';
+import State from './State';
+import * as API from '@/API';
+import {url} from '@/API/Contact';
 
 const {
   view: {
-    contact: {path, content: {title, description}}
+    contact: {
+      content: { email, message, name }, path
+    }
   }
 } = resources;
 
 const transitionType: ICSSTransition.Type = 'fade';
 
-const action = `${process.env.API_URL}/api/contact`;
+const renderFieldSteps: IContact.RenderField[] = ['title', 'description', 'name', 'email', 'message', 'cta'];
 
 const Contact: React.FunctionComponent<IContact.Props> = () => {
-  let renderIndexTimer: number;
-
-  const [isValid, validate] =  useState<IContact.IsValid>(false);
-  const [params, setParams] = useState<IContact.Params>(null);
-  const [shouldRender, render] = useState<IContact.Render>(false);
-  const [renderFields, updateRenderFields] = useState<IContact.Field[]>([]);
-
-  const shouldRenderField = (field: IContact.Field) => shouldRender && renderFields.includes(field);
-  const addRenderField = (field: IContact.Field, asCallback = true) => {
-    const update = () => updateRenderFields(Array.from(new Set([...renderFields, field])));
-
-    if (asCallback) {
-      return () => setTimeout(update, 300);
-    }
-
-    update();
-  }
-;
-  const onChange = (event: FormEvent<HTMLFormElement>) => {
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const message = data.get('message');
-    const name = data.get('name');
-
-    validate(Boolean(email && message && name));
-  };
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!isValid) {
-      return;
-    }
-
-    const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const message = data.get('message');
-    const name = data.get('name');
-
-    event.preventDefault();
-
-    setParams({email, message, name});
-  };
-
-  const onEntering = () => {
-    render(true);
-    addRenderField('title', false);
-  };
-
-  const onExit = () => {
-    render(false);
-    updateRenderFields([]);
-  };
-
-  useEffect(
-    () => {
-      let cancelFetch: IContact.CancelFetch;
-
-      if (isValid && params) {
-        const {cancel, promise} = Fetch(
-          action,
-          {
-            body: JSON.stringify(params),
-            method: 'POST'
-          }
-        );
-
-        cancelFetch = cancel;
-
-        promise.then(setParams);
-      }
-
-      addEventListener('contact.entering', onEntering);
-      addEventListener('contact.exit', onExit);
-
-      return () => {
-        cancelFetch && cancelFetch();
-
-        clearTimeout(renderIndexTimer);
-
-        removeEventListener('contact.entering', onEntering);
-        removeEventListener('contact.exit', onExit);
-      };
-    }
-  );
-
+  const { actions: { data: { shouldSubmit, ...params }, ...actions }, renderFields } = State('title');
+  
+  console.log(shouldSubmit);
+  
   return (
     <main data-routes='contact'>
-      <form action={action} onChange={onChange} onSubmit={onSubmit}>
-        <CSSTransition
-          in={shouldRenderField('title')}
-          type='slideFromLeft'
-          onEntering={addRenderField('description')}
-        >
-          <h1>{title}</h1>
-        </CSSTransition>
-        <CSSTransition
-          in={shouldRenderField('description')}
-          type='slideFromLeft'
-          onEntering={addRenderField('name')}
-        >
-          <p>{description}</p>
-        </CSSTransition>
-        <Input
-          autoFocus={true}
-          id='name'
-          label='Name'
-          name='name'
-          onEntering={addRenderField('email')}
-          placeholder='Your name here'
-          required={true}
-          transitionIn={shouldRenderField('name')}
-          transitionType='slideFromLeft'
-          type='text'
-        />
-        <Input
-          id='email'
-          label='Email'
-          name='email'
-          onEntering={addRenderField('message')}
-          placeholder='Your email here'
-          required={true}
-          transitionIn={shouldRenderField('email')}
-          transitionType='slideFromLeft'
-          type='email'
-        />
-        <TextArea
-          id='message'
-          label='Messages'
-          maxLength={600}
-          minLength={30}
-          name='message'
-          onEntering={addRenderField('cta')}
-          placeholder='Write your messages here'
-          transitionIn={shouldRenderField('message')}
-          transitionType='slideUp'
-          required={true}
-        />
-        <CSSTransition
-          in={shouldRenderField('cta')}
-          type='slideUp'
-        >
-          <div className='cta'>
-            <button type='submit' disabled={!isValid}>send</button>
-            <button type='reset'>reset</button>
-          </div>
-        </CSSTransition>
-      </form>
+      <API.ContactConfig transitionType='fade'>
+        {
+          config => (
+            <form {...actions} action={url}>
+              <Title {...renderFields.createState(renderFieldSteps.slice(0, 2))}/>
+              <Description {...renderFields.createState(renderFieldSteps.slice(1, 3))}/>
+              <Input {...renderFields.createState(renderFieldSteps.slice(2, 4), 'slideFromLeft')} {...name} autoFocus={true}/>
+              <Input {...renderFields.createState(renderFieldSteps.slice(3, 5), 'slideFromLeft')} {...email}/>
+              <TextArea {...renderFields.createState(renderFieldSteps.slice(4, 6), 'slideUp')} {...message} {...config.message}/>
+              <CTA {...renderFields.createState(renderFieldSteps.slice(5))}/>
+            </form>
+          )
+        }
+      </API.ContactConfig>
+      {
+        shouldSubmit && (
+          <API.Contact params={params}>
+            {
+              () => <span>Done</span>
+            }
+          </API.Contact>
+        )
+      }
     </main>
-  );
+  )
 };
 
 export {path, transitionType};

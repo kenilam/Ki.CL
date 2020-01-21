@@ -1,4 +1,4 @@
-$default: get($view-component-phase, 'default');
+$default: get($view-home-slogan, 'default');
 
 [data-view-component='#{$default}'] {
   display: initial;

@@ -48,7 +48,7 @@ $gap: get($grid, 'gutter');
     padding: $space;
   }
 
-  &:not(#{$resizable}) {
+  &:not(.#{$resizable}) {
     textarea {
       resize: none;
     }

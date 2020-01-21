@@ -1,0 +1,65 @@
+import ICSSTransition from "@/Component/CSSTransition/spec";
+import IContact from '@/View/Contact/spec';
+import {useState} from 'react';
+
+const DEBOUNCE_DURATION = 300;
+
+const RenderFields = (initialRenderField: IContact.RenderField) => {
+  let renderFieldsTimer: number;
+  const [values, updateValues] = useState<IContact.RenderField[]>([]);
+  
+  const addValue = (renderField: IContact.RenderField, debounce?: boolean = true) => {
+    const update = () => updateValues(Array.from(new Set([...values, renderField])));
+    
+    if (debounce) {
+      return () => {
+        clearTimeout(renderFieldsTimer);
+  
+        renderFieldsTimer = window.setTimeout(update, DEBOUNCE_DURATION);
+      }
+    }
+    
+    update();
+  };
+  
+  const shouldRender = (renderField: IContact.RenderField) => values.includes(renderField);
+  
+  const onInit = () => {
+    addValue(initialRenderField, false);
+  };
+  
+  const onExit = () => {
+    updateValues([]);
+  };
+  
+  const onUnmount = () => {
+    clearTimeout(renderFieldsTimer);
+  };
+  
+  /**
+   *
+   * @param renderFields {[boolean, ICSSTransition.OnEnter]}
+   * @param type {ICSSTransition.Type}
+   *
+   * @return { { in: ICSSTransition.In, onEntering?: ICSSTransition.OnEnter, type?: ICSSTransition.Type } }
+   */
+  const createState = (renderFields: IContact.RenderField[], type?:ICSSTransition.Type) => {
+    const values: { in: ICSSTransition.In, onEntering?: ICSSTransition.OnEnter, type?: ICSSTransition.Type } = {
+      in: shouldRender(renderFields[0])
+    };
+    
+    if (renderFields[1]) {
+      values.onEntering = addValue(renderFields[1]);
+    }
+    
+    if (type) {
+      values.type = type;
+    }
+    
+    return values;
+  };
+  
+  return { addValue, createState, onExit, onInit, onUnmount, values, shouldRender }
+};
+
+export default RenderFields;

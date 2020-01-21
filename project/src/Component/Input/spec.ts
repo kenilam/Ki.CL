@@ -6,10 +6,8 @@ declare module IInput {
     default: string;
   }
   
-  interface Props extends Omit<ICSSTransition.Props, 'in' | 'type'>, React.InputHTMLAttributes<null> {
+  interface Props extends Omit<React.InputHTMLAttributes<null>, 'type'>, ICSSTransition.Props {
     label?: string;
-    transitionIn: boolean;
-    transitionType?: ICSSTransition.Type;
   }
 }
 

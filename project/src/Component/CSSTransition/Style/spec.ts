@@ -2,6 +2,8 @@ import ISelector from '@/Component/CSSTransition/Style/Selector/spec';
 import React from 'react';
 
 declare module IStyle {
+  type In = boolean;
+  
   type Type =
     'custom' |
     'fade' |

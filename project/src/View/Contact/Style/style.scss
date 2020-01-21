@@ -8,8 +8,12 @@
   $exit-active: get($component-css-transition, 'exit.active');
   $exit-done: get($component-css-transition, 'exit.active');
 
+  $spinner: get($component-spinner, 'default');
+  $cta: get($view-contact-cta, 'default');
+
   $background-color: get($black, 'light');
-  $text-color: get($white, 'default');
+  $border: 1px solid get($white, 'default');
+  $color: get($white, 'default');
   $space: get($grid, 'narrow');
   $gutter: get($grid, 'default');
   $gap: get($grid, 'gutter');
@@ -17,7 +21,34 @@
   $form-element-transition-delay: get($duration, 'faster');
 
   background-color: $background-color;
-  color: $text-color;
+  color: $color;
+
+  h1,
+  p,
+  [for=name],
+  [for=email] {
+    margin-right: $gutter;
+
+    @include tablet() {
+      margin-right: 0;
+    }
+  }
+
+  p,
+  [for=name],
+  [for=email] {
+    margin-top: $gap;
+
+    @include tablet() {
+      margin-top: $space;
+    }
+  }
+
+  button {
+    &.#{$css-transition} {
+      transition-delay: $form-element-transition-delay;
+    }
+  }
 
   form {
     display: grid;
@@ -38,67 +69,16 @@
       grid-template-columns: $gap repeat(2, 1fr) $gap;
       grid-template-rows: repeat(4, min-content) auto $gutter;
       padding-left: 0;
-      padding-right: 0;
+      padding-top: $space + $gutter;
     }
-  }
-
-  h1,
-  p,
-  [for=name],
-  [for=email] {
-    margin-right: $gutter;
-
-    @include tablet() {
-      margin-right: 0;
-    }
-  }
-
-  [for=name],
-  [for=email] {
-    @include tablet() {
-      margin-top: $space;
-    }
-  }
-
-  [type=submit],
-  [type=reset] {
-    @include shadow-top();
-
-    bottom: 0;
-    height: 100%;
-    position: sticky;
-  }
-
-  button {
-    &.#{$css-transition} {
-      transition-delay: $form-element-transition-delay;
-    }
-  }
-
-  input {
-    width: 100%;
-  }
-
-  textarea {
-    resize: none;
   }
 
   h1 {
-    font-size: get($font, 'font-size.largest');
-    font-weight: get($font, 'font-weight.bolder');
     grid-area: h1;
-    line-height: get($font, 'line-height.narrow');
-
-    @include tablet() {
-      font-size: get($font, 'font-size.medium');
-    }
   }
 
   p {
-    font-size: get($font, 'font-size.small');
     grid-area: p;
-    margin-bottom: $space;
-    margin-top: $space;
   }
 
   [for=name] {
@@ -107,46 +87,25 @@
 
   [for=email] {
     grid-area: email;
-    margin-top: $gap;
-
-    @include mobile() {
-      margin-top: 0;
-    }
   }
 
   [for=message] {
-    border-left: 1px solid get($white, 'default');
+    border-left: $border;
     grid-area: message;
 
     @include tablet() {
-      border: 1px solid get($white, 'default');
+      border: $border;
       margin-bottom: $gap;
       margin-top: $gap;
       min-height: 200px;
     }
   }
 
-  [type=submit] {
-    background-color: $green;
-    color: get($black, 'default');
-    grid-area: submit;
-  }
-
-  [type=reset] {
-    background-color: get($grey, 'darkest');
-    color: $red;
-    grid-area: reset;
-  }
-
-  .cta {
-    display: grid;
+  [data-view-component='#{$cta}'] {
     grid-area: fieldset;
-    grid-template-areas: 'submit submit reset';
-    grid-template-columns: auto;
-    grid-template-rows: auto;
+  }
 
-    @include tablet() {
-      grid-template-areas: 'submit reset';
-    }
+  [data-component='#{$spinner}'] {
+    color: $color;
   }
 }

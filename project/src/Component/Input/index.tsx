@@ -6,19 +6,11 @@ import Style from './Style';
 
 const Input: React.FunctionComponent<IInput.Props> = ({
   autoFocus,
-  label,
   id,
-  transitionIn,
-  transitionType,
-  mountOnEnter,
-  onEnter,
-  onEntering,
+  in: transitionIn,
+  label,
   onEntered: onEnteredHandler,
-  onExit,
-  onExiting,
-  onExited,
-  standAlone,
-  unmountOnExit,
+  onEntering,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>();
@@ -30,21 +22,14 @@ const Input: React.FunctionComponent<IInput.Props> = ({
   
   return (
     <CSSTransition
+      {...props}
       in={transitionIn}
-      mountOnEnter={mountOnEnter}
-      onEnter={onEnter}
-      onEntering={onEntering}
       onEntered={onEntered}
-      onExit={onExit}
-      onExiting={onExiting}
-      onExited={onExited}
-      standAlone={standAlone}
-      type={transitionType}
-      unmountOnExit={unmountOnExit}
+      onEntering={onEntering}
     >
       <label htmlFor={id} data-component={Style.default}>
         <span>{label}</span>
-        <input ref={ref} id={id} {...props} />
+        <input {...props} ref={ref} id={id} name={id} />
       </label>
     </CSSTransition>
   );

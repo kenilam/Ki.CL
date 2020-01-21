@@ -6,7 +6,7 @@ import Style from './Style';
 
 const awaitDelay = CSSUnit(Style.delay);
 
-const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
+const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props<any>> = ({
   awaitFor,
   awaitForOptions,
   children,

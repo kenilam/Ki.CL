@@ -54,7 +54,28 @@
       "name": "Contact",
       "content": {
         "title": "LET'S TALK",
-        "description": "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly."
+        "description": "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+        "name": {
+          "id": "name",
+          "label": "Your Name",
+          "placeholder": "Your name here"
+        },
+        "email": {
+          "id": "email",
+          "label": "Your Email Address",
+          "placeholder": "Your email address here"
+        },
+        "message": {
+          "id": "message",
+          "label": "Your Messages",
+          "placeholder": "Your messages here"
+        },
+        "reset": {
+          "value": "reset"
+        },
+        "submit": {
+          "value": "send"
+        }
       }
     }
   },

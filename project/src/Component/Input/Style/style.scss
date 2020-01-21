@@ -16,6 +16,7 @@ $exit-done: get($component-css-transition, 'exit.active');
 
   input {
     padding: get($grid, 'narrow');
+    width: 100%;
   }
 
   label {

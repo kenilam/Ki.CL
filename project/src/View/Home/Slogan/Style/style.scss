@@ -1,4 +1,4 @@
-$default: get($view-component-slogan, 'default');
+$default: get($view-home-slogan, 'default');
 
 [data-view-component='#{$default}'] {
   font-family: get($font, 'font-family.bold');
