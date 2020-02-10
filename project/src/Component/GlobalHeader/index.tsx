@@ -6,21 +6,17 @@ import IGlobalHeader from './spec';
 import Style from './Style';
 
 const {
-  view: {
-    about,
-    contact,
-    works
-  }
+  view: { about, contact, home, works }
 } = resources;
 
-const RENDER_PATHS = [about.path, contact.path, works.path];
+const INVALID_PATHS = [home.path];
 
 const GlobalHeader: React.FunctionComponent<IGlobalHeader.Props> = () => {
   const {pathname} = useLocation();
   
   return (
     <CSSTransition
-      in={RENDER_PATHS.some(path => pathname === path)}
+      in={!INVALID_PATHS.some(path => pathname === path)}
       standAlone={true}
       type='slideDown'
     >

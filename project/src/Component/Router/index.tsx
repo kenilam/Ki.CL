@@ -8,11 +8,36 @@ import {
   Switch,
   useHistory,
   useLocation,
-  useRouteMatch
+  useParams,
+  useRouteMatch,
 } from 'react-router-dom';
 import IRouter from './spec';
 
 const {view} = resources;
+
+function getUrlParams<T>(): T {
+  const {search} = useLocation();
+  let result = {};
+  
+  search.slice(search.indexOf('?') + 1).split('&')
+    .forEach(hash => {
+      let [name, value]: IRouter.UrlParam[] = hash.split('=');
+      
+      value = parseInt(value) ? parseInt(value) : value;
+      
+      if (value === 'true') {
+        value = true;
+      }
+      
+      if (value === 'false') {
+        value = false;
+      }
+  
+      result = Object.assign(result, { [name]: value });
+    });
+  
+  return result as T;
+}
 
 const Router: React.FunctionComponent<IRouter.Props> = (
   {
@@ -148,8 +173,10 @@ export {
   Route,
   Switch,
   Provider,
+  getUrlParams,
   useHistory,
   useLocation,
+  useParams,
   useRouteMatch
 };
 

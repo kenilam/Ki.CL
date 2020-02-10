@@ -11,6 +11,7 @@ const Input: React.FunctionComponent<IInput.Props> = ({
   label,
   onEntered: onEnteredHandler,
   onEntering,
+  transitionType,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>();
@@ -26,6 +27,7 @@ const Input: React.FunctionComponent<IInput.Props> = ({
       in={transitionIn}
       onEntered={onEntered}
       onEntering={onEntering}
+      type={transitionType}
     >
       <label htmlFor={id} data-component={Style.default}>
         <span>{label}</span>

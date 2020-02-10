@@ -16,6 +16,11 @@ declare module IRouter {
     }
   }
   
+  type UrlParam = boolean | number | string;
+  type UrlParams<T> = {
+    [name as keyof T]: boolean | number | string
+  };
+  
   interface Props extends Omit<ITransition.Props, 'transitionKey'> {
     routeIndex: number;
   }

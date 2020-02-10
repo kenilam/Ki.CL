@@ -15,6 +15,7 @@ const TextArea: React.FunctionComponent<ITextArea.Props> = ({
   onEntered: onEnteredHandler,
   onEntering,
   resizable,
+  transitionType,
   ...props
 }) => {
   let ref = useRef<HTMLTextAreaElement>();
@@ -32,6 +33,7 @@ const TextArea: React.FunctionComponent<ITextArea.Props> = ({
       in={transitionIn}
       onEntering={onEntering}
       onEntered={onEntered}
+      type={transitionType}
     >
       <label
         {...props}

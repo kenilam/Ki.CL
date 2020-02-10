@@ -34,9 +34,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: get($font, 'font-family.bold');
-  font-weight: get($font, 'font-weight.light');
-  letter-spacing: get($font, 'font-size.smallest');
+  font-family: get($font, 'font-family.special');
   line-height: get($font, 'line-height.wide');
 }
 

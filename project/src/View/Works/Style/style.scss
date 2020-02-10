@@ -1,9 +1,36 @@
 [data-routes^='works'] {
+  $css-transition: get($component-css-transition, 'default');
+
   $background-color: get($black, 'default');
   $color: get($white, 'default');
 
   background-color: $background-color;
   color: $color;
+  display: grid;
+  grid-gap: get($grid, 'narrow');
+  grid-template-areas: '. . .' '. h1 .' '. . .';
+  grid-template-columns: auto min-content auto;
+  grid-template-rows: auto min-content auto;
+
+  h1 {
+    font-family: get($font, 'font-family.special');
+    font-size: 20vmin;
+    grid-area: h1;
+    text-transform: uppercase;
+    text-shadow:
+      0.5vmin -0.5vmin 0 rgba($orange, 0.6),
+      -0.5vmin 0.5vmin 0 rgba($green, 0.6);
+    transition-duration: get($duration, 'slowest');
+    transition-property: text-shadow, transform;
+    transition-timing-function: get($ease, 'expo.in-out');
+  }
+
+  &.#{$css-transition} {
+    h1 {
+      transform: translate3d(0, 100vh, 0);
+      text-shadow: none;
+    }
+  }
 }
 
 [data-entered-routes^='works'] {

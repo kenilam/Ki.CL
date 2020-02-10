@@ -27,8 +27,6 @@ const renderFieldSteps: IContact.RenderField[] = ['title', 'description', 'name'
 const Contact: React.FunctionComponent<IContact.Props> = () => {
   const { actions: { data: { shouldSubmit, ...params }, ...actions }, renderFields } = State('title');
   
-  console.log(shouldSubmit);
-  
   return (
     <main data-routes='contact'>
       <API.ContactConfig transitionType='fade'>
@@ -37,9 +35,9 @@ const Contact: React.FunctionComponent<IContact.Props> = () => {
             <form {...actions} action={url}>
               <Title {...renderFields.createState(renderFieldSteps.slice(0, 2))}/>
               <Description {...renderFields.createState(renderFieldSteps.slice(1, 3))}/>
-              <Input {...renderFields.createState(renderFieldSteps.slice(2, 4), 'slideFromLeft')} {...name} autoFocus={true}/>
-              <Input {...renderFields.createState(renderFieldSteps.slice(3, 5), 'slideFromLeft')} {...email}/>
-              <TextArea {...renderFields.createState(renderFieldSteps.slice(4, 6), 'slideUp')} {...message} {...config.message}/>
+              <Input {...renderFields.createState(renderFieldSteps.slice(2, 4), 'slideFromLeft')} {...name} type='name' required={true} autoFocus={true}/>
+              <Input {...renderFields.createState(renderFieldSteps.slice(3, 5), 'slideFromLeft')} {...email} type='email' required={true}/>
+              <TextArea {...renderFields.createState(renderFieldSteps.slice(4, 6), 'slideUp')} {...message} {...config.message} required={true}/>
               <CTA {...renderFields.createState(renderFieldSteps.slice(5))}/>
             </form>
           )

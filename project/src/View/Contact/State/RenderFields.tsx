@@ -43,8 +43,8 @@ const RenderFields = (initialRenderField: IContact.RenderField) => {
    *
    * @return { { in: ICSSTransition.In, onEntering?: ICSSTransition.OnEnter, type?: ICSSTransition.Type } }
    */
-  const createState = (renderFields: IContact.RenderField[], type?:ICSSTransition.Type) => {
-    const values: { in: ICSSTransition.In, onEntering?: ICSSTransition.OnEnter, type?: ICSSTransition.Type } = {
+  const createState = (renderFields: IContact.RenderField[], transitionType?:ICSSTransition.Type) => {
+    const values: { in: ICSSTransition.In, onEntering?: ICSSTransition.OnEnter, transitionType?: ICSSTransition.Type } = {
       in: shouldRender(renderFields[0])
     };
     
@@ -52,8 +52,8 @@ const RenderFields = (initialRenderField: IContact.RenderField) => {
       values.onEntering = addValue(renderFields[1]);
     }
     
-    if (type) {
-      values.type = type;
+    if (transitionType) {
+      values.transitionType = transitionType;
     }
     
     return values;
