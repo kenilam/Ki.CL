@@ -23,9 +23,6 @@ const duration = (node: HTMLElement) => (
         ),
         Array.from(
           node.querySelectorAll(`.${Style.default}`)
-        ),
-        Array.from(
-          node.children
         )
       ).map(
         (elm: HTMLElement) => Math.max(

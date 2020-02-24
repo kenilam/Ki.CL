@@ -5,6 +5,9 @@
   $enter: get($component-css-transition, 'enter.default');
   $exit: get($component-css-transition, 'exit.default');
 
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
   pointer-events: none;
   position: relative;
 
