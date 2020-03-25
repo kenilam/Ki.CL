@@ -14,8 +14,6 @@ const Loaders = {
   use: [{
     loader: 'babel-loader',
     options: {
-      cacheDirectory: true,
-      cacheIdentifier: true,
       plugins: ['react-hot-loader/babel']
     },
   }, {
