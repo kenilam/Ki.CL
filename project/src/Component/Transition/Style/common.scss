@@ -2,7 +2,7 @@ $transition: get($component-transition, 'default');
 
 .#{$transition} {
   $css-transition: get($component-css-transition, 'default');
-  $stand-alone: get($component-css-transition, 'stand-alone');
+  $stand-alone: get($component-css-transition, 'standalone');
 
   $slide-from-right: get($component-css-transition-slide-from-right, 'default');
   $slide-up: get($component-css-transition-slide-up, 'default');
@@ -21,9 +21,9 @@ $transition: get($component-transition, 'default');
   $background-transition-duration: get($duration, 'normal');
   $background-transition-timing-function: get($ease, 'expo.out');
 
-  &[class*='#{$transition}-slide'] {
+  &[class*='$transition}-slide'] {
     > :not(.#{$stand-alone}) {
-      &[class*='#{$css-transition}-slide'] {
+      &[class*='$css-transition}-slide'] {
         &::before {
           background-color: $background-color;
           display: block;
@@ -64,7 +64,7 @@ $transition: get($component-transition, 'default');
     }
   }
 
-  > [class*='#{$css-transition}-slide']:not(.#{$stand-alone}) {
+  > [class*="$css-transition}-slide"]not(.#{$stand-alone}) {
     &::before {
       background-color: $background-color;
       content: '\0020';
@@ -116,7 +116,9 @@ $transition: get($component-transition, 'default');
         &::before {
           opacity: 0;
           transition-delay: $transition-delay + $transition-delay / 2;
-          transition-duration: $background-transition-duration - $transition-delay / 2;
+          transition-duration:
+            $background-transition-duration -
+            $transition-delay / 2;
         }
       }
     }

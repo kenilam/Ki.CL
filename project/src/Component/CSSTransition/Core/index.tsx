@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import React, {FunctionComponent} from 'react';
-import {CSSTransition} from 'react-transition-group';
+import React, { FunctionComponent } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import ICore from './spec';
 import Style from './Style';
-import {addEndListener, duration, getTransitionStyleByType} from './Utility';
+import { addEndListener, duration, getTransitionStyleByType } from './Utility';
 
 const Core: FunctionComponent<ICore.Props> = ({
   addEndListener: customEndListener,
@@ -17,7 +17,7 @@ const Core: FunctionComponent<ICore.Props> = ({
   onExit,
   onExiting,
   onExited,
-  standAlone,
+  standalone,
   unmountOnExit = true,
   ...props
 }) => {
@@ -29,28 +29,36 @@ const Core: FunctionComponent<ICore.Props> = ({
       onExit: childOnExit,
       onExiting: childOnExiting,
       onExited: childOnExited,
-    }
+    },
   } = children as {
     props: {
-      onEnter: ICore.OnEnter,
-      onEntering: ICore.OnEnter,
-      onEntered: ICore.OnEnter,
-      onExit: ICore.OnExit,
-      onExiting: ICore.OnExit,
-      onExited: ICore.OnExit,
+      onEnter: ICore.OnEnter;
+      onEntering: ICore.OnEnter;
+      onEntered: ICore.OnEnter;
+      onExit: ICore.OnExit;
+      onExiting: ICore.OnExit;
+      onExited: ICore.OnExit;
+    };
+  };
+
+  const enterHandler: ICore.OnEnter = (node, isAppearing) => {
+    if (onEnter) {
+      onEnter(node, isAppearing);
+    }
+    if (childOnEnter) {
+      childOnEnter(node, isAppearing);
     }
   };
-  
-  const enterHandler: ICore.OnEnter = (node, isAppearing) => {
-    onEnter && onEnter(node, isAppearing);
-    childOnEnter && childOnEnter(node, isAppearing);
-  };
-  
+
   const enteringHandler: ICore.OnEnter = (node, isAppearing) => {
-    onEntering && onEntering(node, isAppearing);
-    childOnEntering && childOnEntering(node, isAppearing);
+    if (onEntering) {
+      onEntering(node, isAppearing);
+    }
+    if (childOnEntering) {
+      childOnEntering(node, isAppearing);
+    }
   };
-  
+
   const enteredHandler: ICore.OnEnter = (node, isAppearing) => {
     if (node && !customEndListener) {
       node.classList.remove(
@@ -59,55 +67,65 @@ const Core: FunctionComponent<ICore.Props> = ({
         Style.appearDone,
         Style.enter,
         Style.enterDone,
-        Style.standAlone
+        Style.standalone
       );
     }
-    
-    onEntered && onEntered(node, isAppearing);
-    childOnEntered && childOnEntered(node, isAppearing);
+
+    if (onEntered) {
+      onEntered(node, isAppearing);
+    }
+    if (childOnEntered) {
+      childOnEntered(node, isAppearing);
+    }
   };
-  
-  const exitHandler: ICore.OnExit = node => {
-    onExit && onExit(node);
-    childOnExit && childOnExit(node);
+
+  const exitHandler: ICore.OnExit = (node) => {
+    if (onExit) {
+      onExit(node);
+    }
+    if (childOnExit) {
+      childOnExit(node);
+    }
   };
-  
+
   const exitingHandler: ICore.OnExit = (node) => {
-    onExiting && onExiting(node);
-    childOnExiting && childOnExiting(node);
+    if (onExiting) {
+      onExiting(node);
+    }
+    if (childOnExiting) {
+      childOnExiting(node);
+    }
   };
-  
+
   const exitedHandler: ICore.OnExit = (node) => {
     if (node && !customEndListener) {
       node.classList.remove(
         Style.default,
         Style.exit,
         Style.exitDone,
-        Style.standAlone
+        Style.standalone
       );
     }
-    
-    onExited && onExited(node);
-    childOnExited && childOnExited(node);
+
+    if (onExited) {
+      onExited(node);
+    }
+    if (childOnExited) {
+      childOnExited(node);
+    }
   };
-  
+
   return (
     <CSSTransition
       {...props}
       appear={appear}
       addEndListener={customEndListener || addEndListener}
-      /**
-      * A little trick to insert additional className from parent,
-      * css-transition and css-transition-enter ans etc.
-      **/
-      classNames={
-        classnames(
-          classNames,
-          Style.default,
-          {[Style.standAlone]: standAlone},
-          Style.default
-        )
-      }
+      classNames={classnames(
+        classNames,
+        Style.default,
+        { [Style.standalone]: standalone },
+        Style.default
+      )}
       mountOnEnter={mountOnEnter}
       timeout={null}
       onEnter={enterHandler}
@@ -124,8 +142,8 @@ const Core: FunctionComponent<ICore.Props> = ({
 };
 
 Core.defaultProps = {
-  standAlone: false
+  standalone: false,
 };
 
-export {duration, getTransitionStyleByType};
+export { duration, getTransitionStyleByType };
 export default Core;

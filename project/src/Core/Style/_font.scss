@@ -15,9 +15,18 @@ $base-font-size: 16px !default;
 
 $font: (
   font-family: (
-    normal: ('ariana-pro', $base-font),
-    bold: ('acumin-pro-wide', $base-font),
-    special: ('gilbert-color', $base-font)
+    normal: (
+      'ariana-pro',
+      $base-font,
+    ),
+    bold: (
+      'acumin-pro-wide',
+      $base-font,
+    ),
+    special: (
+      'gilbert-color',
+      $base-font,
+    ),
   ),
   font-size: (
     normal: $base-font-size,
@@ -37,7 +46,7 @@ $font: (
     normal: 400,
     bold: 500,
     bolder: 700,
-    boldest: 900
+    boldest: 900,
   ),
   letter-spacing: 0.08rem,
   line-height: (
@@ -46,5 +55,5 @@ $font: (
     narrow: 1,
     narrower: 0.8,
     narrowest: 0.7,
-  )
+  ),
 );

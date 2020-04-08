@@ -1,8 +1,5 @@
-import ICSSTransition from '@/Component/CSSTransition/spec';
-
-declare module IAbout {
-  interface Props extends ICSSTransition.Events {
-  }
+declare namespace IAbout {
+  interface Props {}
 }
 
 export default IAbout;

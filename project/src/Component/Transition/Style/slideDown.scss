@@ -1,5 +1,5 @@
-.#{get($component-transition, 'default')} {
-  $stand-alone: get($component-css-transition, 'stand-alone');
+.#{get($component-transition, "default")} {
+  $stand-alone: get($component-css-transition, 'standalone');
   $slide-down: get($component-css-transition-slide-down, 'default');
 
   $appear: get($component-css-transition, 'appear.default');
@@ -11,7 +11,7 @@
 
   $transition-delay: get($duration, 'faster');
 
-  &.#{get($component-transition, 'slide-down')} {
+  &.#{get($component-transition, "slide-down")} {
     > :not(.#{$stand-alone}) {
       &.#{$slide-down} {
         &::before {

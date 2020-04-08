@@ -1,6 +1,3 @@
-declare module IWorks {
-  interface Props {
-  }
-}
+declare namespace IWorks {}
 
 export default IWorks;

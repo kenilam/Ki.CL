@@ -1,14 +1,8 @@
 import ISelector from '@/Component/CSSTransition/Style/Selector/spec';
 
-declare module ISlideFromRight {
-  interface ClassNames extends ISelector.ClassNames {
-  }
-  
-  type OnEnter = ISelector.OnEnter;
-  type OnExit = ISelector.OnExit;
-  
-  interface Props extends ISelector.Props {
-  }
+declare namespace ISlideFromRight {
+  type ClassNames = ISelector.ClassNames;
+  type Props = ISelector.Props;
 }
 
 export default ISlideFromRight;

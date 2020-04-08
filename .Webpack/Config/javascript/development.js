@@ -1,31 +1,34 @@
-import {path as appRoot} from 'app-root-path'
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import { path as appRoot } from 'app-root-path';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-import webpack from 'webpack'
-import {context} from '../entry'
+import webpack from 'webpack';
+import { context } from '../entry';
 
-const tsconfig = `${appRoot}/.tsconfig.json`
-const tslint = `${appRoot}/.tslint.json`
+const tsconfig = `${appRoot}/tsconfig.json`;
+const tslint = `${appRoot}/tslint.json`;
 
 const Loaders = {
   test: /\.(tsx|ts)$/,
   enforce: 'pre',
   exclude: [/node_modules\/\*\*/],
-  use: [{
-    loader: 'babel-loader',
-    options: {
-      plugins: ['react-hot-loader/babel']
+  use: [
+    {
+      loader: 'babel-loader',
+      options: {
+        plugins: ['react-hot-loader/babel'],
+      },
     },
-  }, {
-    loader: 'ts-loader',
-    options: {
-      configFile: tsconfig,
-      experimentalWatchApi: false,
-      happyPackMode: false,
-      transpileOnly: true
+    {
+      loader: 'ts-loader',
+      options: {
+        configFile: tsconfig,
+        experimentalWatchApi: false,
+        happyPackMode: false,
+        transpileOnly: true,
+      },
     },
-  },],
-}
+  ],
+};
 
 const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -42,20 +45,17 @@ const plugins = [
     tsconfig: tsconfig,
     tslint: tslint,
     tslintAutoFix: true,
-    watch: context
-  })
-]
+    watch: context,
+  }),
+];
 
-const rules = [Loaders]
+const rules = [Loaders];
 
-export {
-  Loaders,
-  plugins
-}
+export { Loaders, plugins };
 
 export default {
   module: {
-    rules
+    rules,
   },
-  plugins
-}
+  plugins,
+};

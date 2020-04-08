@@ -1,9 +1,9 @@
-interface IClassNames {
-  [index: string]: any;
-}
+type IClassNames<T extends string> = {
+  [name in T]: string;
+};
 
 declare module '*.scss' {
-  const classNames: IClassNames;
+  const classNames: IClassNames<string>;
   export default classNames;
 }
 
@@ -16,27 +16,24 @@ declare module 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 declare module 'bandcamp-scraper';
 declare module 'get-transition-duration';
 declare module 'intersection-observer' {
-  export type search = () => Promise<any>;
+  export function search(): Promise<any>;
 }
 declare module 'promise-polyfill/src/polyfill';
 declare module 'react-audio-player';
 declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
 declare module 'units-css' {
-  export function parse(s: string) {
-    const value: number;
-    const unit: string;
-    
-    return {value, unit};
-  }
-  
+  export function parse(
+    s: string
+  ): {
+    value: number;
+    unit: string;
+  };
+
   export function convert(
     BASE_UNIT: string,
     values: any,
     htmlBodyElement?: HTMLBodyElement
-  ) {
-    const value: number;
-    return value;
-  }
+  ): number;
 }
 declare module 'webgl-noise';

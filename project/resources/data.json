@@ -58,12 +58,14 @@
         "name": {
           "id": "name",
           "label": "Your Name",
-          "placeholder": "Your name here"
+          "placeholder": "Your name here",
+          "type": "name"
         },
         "email": {
           "id": "email",
           "label": "Your Email Address",
-          "placeholder": "Your email address here"
+          "placeholder": "Your email address here",
+          "type": "email"
         },
         "message": {
           "id": "message",

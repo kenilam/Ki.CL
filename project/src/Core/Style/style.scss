@@ -61,14 +61,14 @@ h1 {
   font-size: get($font, 'font-size.medium');
 }
 
-header[rule='banner'] {
-  min-width: 100vw;
-  top: 0;
-  z-index: 10;
-}
-
 main {
   min-height: 100vh;
   min-width: 100vw;
   z-index: 1;
+}
+
+body > header {
+  min-width: 100vw;
+  top: 0;
+  z-index: 10;
 }

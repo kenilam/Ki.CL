@@ -2,21 +2,21 @@
   $default: get($component-logo, 'default');
   $square: get($component-logo, 'square');
 
-  [data-component='#{$default}'] {
-    @if $color {
-      color: $color;
-    }
-
+  [data-component="#{$default}"] {
     font-size: $size;
     height: $size;
     width: $size * 2.4;
+
+    @include mobile() {
+      width: $size;
+    }
 
     &.#{$square} {
       width: $size;
     }
 
-    @include mobile() {
-      width: $size;
+    @if $color {
+      color: $color;
     }
   }
 }

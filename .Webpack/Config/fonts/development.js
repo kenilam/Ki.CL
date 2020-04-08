@@ -1,24 +1,23 @@
-const name = '[path][name].[ext]'
+const name = '[path][name].[ext]';
 
-const use = [{
-  loader: 'file-loader',
-  options: {
-    name
-  }
-}]
+const use = [
+  {
+    loader: 'file-loader',
+    options: {
+      name,
+    },
+  },
+];
 
 const fonts = {
   test: /\.(eot|ttf|woff|svg)$/i,
   exclude: /node_modules/,
-  use
-}
+  use,
+};
 
-export {
-  fonts,
-  use
-}
+export { fonts, use };
 export default {
   module: {
-    rules: [fonts]
-  }
-}
+    rules: [fonts],
+  },
+};

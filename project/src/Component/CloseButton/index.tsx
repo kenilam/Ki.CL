@@ -1,27 +1,29 @@
 import resources from '$/resources';
 import CSSTransition from '@/Component/CSSTransition';
-import React, {useState} from 'react';
-import {MdClose} from 'react-icons/md';
+import React, { useState } from 'react';
+import { MdClose } from 'react-icons/md';
 import ICloseButton from './spec';
 import Style from './Style';
 
-const {component: {closeButton: {content: {message}}}} = resources;
+const {
+  component: {
+    closeButton: {
+      content: { message },
+    },
+  },
+} = resources;
 
 const CloseButton: React.FunctionComponent<ICloseButton.Props> = ({
-  onExit
+  onExit,
 }) => {
   const [transitionIn, updateTransitionIn] = useState(true);
-  
+
   const clickHandler = () => {
     updateTransitionIn(false);
   };
-  
+
   return (
-    <CSSTransition
-      in={transitionIn}
-      onExited={onExit}
-      unmountOnExit={false}
-    >
+    <CSSTransition in={transitionIn} onExited={onExit} unmountOnExit={false}>
       <button
         data-component={Style.default}
         onClick={clickHandler}

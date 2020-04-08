@@ -1,11 +1,10 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
 
-declare module ISpinner {
-  interface ClassNames extends IClassNames {
-    default: string;
-  }
-  
+declare namespace ISpinner {
+  type ClassNames = IClassNames<'default' | 'withoverlay'>;
+
   interface Props extends ICSSTransition.Props {
+    withOverlay?: boolean;
   }
 }
 

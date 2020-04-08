@@ -1,5 +1,5 @@
-.#{get($component-transition, 'default')} {
-  $stand-alone: get($component-css-transition, 'stand-alone');
+.#{get($component-transition, "default")} {
+  $stand-alone: get($component-css-transition, 'standalone');
   $slide-from-left: get($component-css-transition-slide-from-left, 'default');
 
   $appear: get($component-css-transition, 'appear.default');
@@ -11,7 +11,7 @@
 
   $transition-delay: get($duration, 'faster');
 
-  .#{get($component-transition, 'slide-from-left')} {
+  .#{get($component-transition, "slide-from-left")} {
     > :not(.#{$stand-alone}) {
       &.#{$slide-from-left} {
         &::before {

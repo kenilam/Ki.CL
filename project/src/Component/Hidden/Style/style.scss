@@ -1,0 +1,12 @@
+@import 'value';
+
+$default: get($component-hidden, 'default');
+
+[data-component="efault}"] [data-component].#{$default} {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}

@@ -1,4 +1,4 @@
-$default: get($component-webGL, 'default');
+$default: get($component-webgl, 'default');
 
 $content: get($kicl, 'content.default');
 $name: get($kicl, 'name');
@@ -6,6 +6,6 @@ $size: get($grid, 'gutter');
 $transition-duration: get($duration, 'fast');
 $transition-timing-function: get($ease, 'default.in');
 
-[data-component='#{$default}'] {
+[data-component="#{$default}"] {
   position: relative;
 }

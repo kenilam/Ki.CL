@@ -8,7 +8,6 @@
   $exit-active: get($component-css-transition, 'exit.active');
   $exit-done: get($component-css-transition, 'exit.active');
 
-  $spinner: get($component-spinner, 'default');
   $cta: get($view-contact-cta, 'default');
 
   $background-color: get($black, 'light');
@@ -25,8 +24,8 @@
 
   h1,
   p,
-  [for=name],
-  [for=email] {
+  [for='name'],
+  [for='email'] {
     margin-right: $gutter;
 
     @include tablet() {
@@ -35,8 +34,8 @@
   }
 
   p,
-  [for=name],
-  [for=email] {
+  [for='name'],
+  [for='email'] {
     margin-top: $gap;
 
     @include tablet() {
@@ -58,18 +57,18 @@
     min-height: 100vh;
     padding: get($grid, 'wide') + $gutter 0 0 $gutter;
 
-    > * {
-      &.#{$css-transition} {
-        transition-duration: $form-element-transition-duration;
-      }
-    }
-
     @include tablet() {
       grid-template-areas: '. h1 h1 .' '. p p .' '. name name .' '. email email .' '. message message .' 'fieldset fieldset fieldset fieldset';
       grid-template-columns: $gap repeat(2, 1fr) $gap;
       grid-template-rows: repeat(4, min-content) auto $gutter;
       padding-left: 0;
       padding-top: $space + $gutter;
+    }
+
+    > * {
+      &.#{$css-transition} {
+        transition-duration: $form-element-transition-duration;
+      }
     }
   }
 
@@ -81,15 +80,15 @@
     grid-area: p;
   }
 
-  [for=name] {
+  [for='name'] {
     grid-area: name;
   }
 
-  [for=email] {
+  [for='email'] {
     grid-area: email;
   }
 
-  [for=message] {
+  [for='message'] {
     border-left: $border;
     grid-area: message;
 
@@ -101,11 +100,7 @@
     }
   }
 
-  [data-view-component='#{$cta}'] {
+  [data-view-component="#{$cta}"] {
     grid-area: fieldset;
-  }
-
-  [data-component='#{$spinner}'] {
-    color: $color;
   }
 }

@@ -1,6 +1,6 @@
 $default: get($view-contact-cta, 'default');
 
-[data-view-component='#{$default}'] {
+[data-view-component="#{$default}"] {
   display: grid;
   grid-template-areas: 'submit submit reset';
   grid-template-columns: auto;
@@ -10,8 +10,8 @@ $default: get($view-contact-cta, 'default');
     grid-template-areas: 'submit reset';
   }
 
-  [type=submit],
-  [type=reset] {
+  [type='submit'],
+  [type='reset'] {
     @include shadow-top();
 
     bottom: 0;
@@ -19,13 +19,13 @@ $default: get($view-contact-cta, 'default');
     position: sticky;
   }
 
-  [type=submit] {
+  [type='submit'] {
     background-color: $green;
     color: get($black, 'default');
     grid-area: submit;
   }
 
-  [type=reset] {
+  [type='reset'] {
     background-color: get($grey, 'darkest');
     color: $red;
     grid-area: reset;

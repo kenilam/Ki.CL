@@ -1,10 +1,13 @@
 $default: get($component-spinner, 'default');
+$with-overlay: get($component-spinner, 'withoverlay');
 
-$color: get($black, 'light');
-$speed: get($duration, 'slowest');
-$size: get($grid, 'gutter');
+[data-component="#{$default}"] {
+  $background-color: get($black, 'light');
+  $background-opacity: 0.5;
+  $color: get($white, 'default');
+  $speed: get($duration, 'slowest');
+  $size: get($grid, 'gutter');
 
-[data-component='#{$default}'] {
   animation-duration: $speed;
   animation-iteration-count: infinite;
   animation-name: #{$default};
@@ -36,6 +39,20 @@ $size: get($grid, 'gutter');
 
   text {
     opacity: 0;
+  }
+
+  &.#{with-overlay} {
+    &::before {
+      background-color: rgba($background-color, $background-opacity);
+      content: '\0020';
+      display: block;
+      height: 100%;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      width: 100%;
+    }
   }
 }
 

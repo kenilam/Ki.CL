@@ -1,7 +1,5 @@
-declare module IView {
-  interface Props {
-  
-  }
+declare namespace IView {
+  interface Props {}
 }
 
 export default IView;

@@ -13,7 +13,7 @@ $exit-done: get($component-css-transition, 'exit.active');
 $space: get($grid, 'narrow');
 $gap: get($grid, 'gutter');
 
-[data-component='#{$default}'] {
+[data-component="#{$default}"] {
   display: grid;
   font-size: get($font, 'font-size.normal');
   font-weight: get($font, 'font-weight.bolder');

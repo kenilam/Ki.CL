@@ -1,11 +1,12 @@
-import {CSSTransition} from '@/Component';
+import { CSSTransition } from '@/Component';
 import ICSSTransition from '@/Component/CSSTransition/spec';
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import IInput from './spec';
 import Style from './Style';
 
 const Input: React.FunctionComponent<IInput.Props> = ({
   autoFocus,
+  className,
   id,
   in: transitionIn,
   label,
@@ -15,12 +16,16 @@ const Input: React.FunctionComponent<IInput.Props> = ({
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>();
-  
+
   const onEntered: ICSSTransition.OnEnter = (node, isAppearing) => {
-    autoFocus && ref && ref.current.focus();
-    onEnteredHandler && onEnteredHandler(node, isAppearing);
+    if (autoFocus && ref) {
+      ref.current.focus();
+    }
+    if (onEnteredHandler) {
+      onEnteredHandler(node, isAppearing);
+    }
   };
-  
+
   return (
     <CSSTransition
       {...props}
@@ -29,7 +34,7 @@ const Input: React.FunctionComponent<IInput.Props> = ({
       onEntering={onEntering}
       type={transitionType}
     >
-      <label htmlFor={id} data-component={Style.default}>
+      <label className={className} data-component={Style.default} htmlFor={id}>
         <span>{label}</span>
         <input {...props} ref={ref} id={id} name={id} />
       </label>

@@ -14,7 +14,6 @@ $transition-delay-alternative-component: get($duration, 'faster');
 $close-button: get($component-close-button, 'default');
 $navigation: get($component-navigation, 'default');
 $logo: get($component-logo, 'default');
-$spinner: get($component-spinner, 'default');
 
 $background-color: get($black, 'light');
 $background-opacity: 0.5;
@@ -24,15 +23,17 @@ $gap: get($grid, 'gutter');
 $space: get($grid, 'space');
 $max-width: get($grid, 'default') * 10;
 $underlay-background-color: get($black, 'pure');
-$grid-template-areas: 'close-button close-button . .' '. . . .' '. logo logo .' '. h2 h2 .' '. content content .' '. go-home go-home .' '. . . .' '. . . .';
-$grid-template-rows: min-content auto max-content max-content max-content max-content auto $bleed;
+$grid-template-areas: 'close-button close-button . .' '. . . .' '. logo logo .'
+  '. h2 h2 .' '. content content .' '. go-home go-home .' '. . . .' '. . . .';
+$grid-template-rows: min-content auto max-content max-content max-content
+  max-content auto $bleed;
 
 [data-routes='about'] {
   background-color: $background-color;
   color: $color;
   position: relative;
 
-  [data-component=#{$logo}],
+  [data-component="#{$logo}"],
   h2,
   p {
     justify-self: center;
@@ -77,36 +78,24 @@ $grid-template-rows: min-content auto max-content max-content max-content max-co
     text-align: center;
   }
 
-  [data-component=#{$close-button}] {
+  [data-component="#{$close-button}"] {
     grid-area: close-button;
     justify-self: start;
   }
 
-  article > [data-component=#{$navigation}] {
+  article > [data-component="#{$navigation}"] {
     grid-area: go-home;
     justify-self: center;
   }
 
-  [data-component=#{$logo}] {
+  [data-component="#{$logo}"] {
     grid-area: logo;
   }
 
-  [data-component=#{$spinner}] {
-    color: $color;
-  }
-
   body:not([data-exited-routes]) & {
-    [data-component=#{$close-button}] {
+    [data-component="#{$close-button}"] {
       opacity: 0;
       pointer-events: none;
-    }
-  }
-
-  @include tablet() {
-    article {
-      grid-template-areas: $grid-template-areas;
-      grid-template-columns: $space auto auto $space;
-      grid-template-rows: $grid-template-rows;
     }
   }
 }

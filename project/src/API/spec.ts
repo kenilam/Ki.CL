@@ -1,56 +1,58 @@
 import IAsynchronizer from '@/Component/Asynchronizer/spec';
 
-declare module IApi {
+declare namespace IApi {
   interface Props<T> {
-    children: IAsynchronizer.Children<T>
+    children: IAsynchronizer.Children<T>;
   }
-  
-  module About {
+
+  namespace About {
     interface Data {
       sections: {
-        About: string
-      }
+        About: string;
+      };
     }
-    
-    interface Props extends Omit<
-      IAsynchronizer.Props<Data>,
-      'awaitFor' | 'awaitForOptions' | 'transitionType'
+
+    interface Props
+      extends Omit<
+        IAsynchronizer.Props<Data>,
+        'awaitFor' | 'awaitForOptions' | 'transitionType'
       > {}
   }
-  
-  module Contact {
+
+  namespace Contact {
     interface Data {
       sections: {
-        About: string
-      }
+        About: string;
+      };
     }
-  
-    type Field = 'email' | 'message' | 'name';
+
+    type Status = IAsynchronizer.Status;
+
+    type Field = 'email' | 'id' | 'message' | 'name';
     type Value = boolean | number | string | FormDataEntryValue;
     type Params = {
       [name in Field]: Value;
-    }
-    
-    interface Props extends Omit<
-      IAsynchronizer.Props<Data>,
-      'awaitFor' | 'awaitForOptions' | 'transitionType'
-    > {
-      params: Params
+    };
+
+    interface Props
+      extends Omit<
+        IAsynchronizer.Props<Data>,
+        'awaitFor' | 'awaitForOptions' | 'transitionType'
+      > {
+      params: Params;
     }
   }
-  
-  module ContactConfig {
+
+  namespace ContactConfig {
     interface Data {
       message: {
-        maxLength: number,
-        minLength: number
-      }
+        maxLength: number;
+        minLength: number;
+      };
     }
-    
-    interface Props extends Omit<
-      IAsynchronizer.Props<ContactConfig.Data>,
-      'awaitFor'
-      > {}
+
+    interface Props
+      extends Omit<IAsynchronizer.Props<ContactConfig.Data>, 'awaitFor'> {}
   }
 }
 

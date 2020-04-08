@@ -1,9 +1,9 @@
-import {srcRoot as baseDir} from '!/Config/output'
-import {Args} from '!/Utilities'
-import {localhost} from '^/ki-cl.config'
-import browserSync from 'browser-sync'
+import { srcRoot as baseDir } from '!/Config/output';
+import { Args } from '!/Utilities';
+import { localhost } from '^/ki-cl.config';
+import browserSync from 'browser-sync';
 
-const startPath = ''
+const startPath = '';
 
 const browserConfig = {
   ...localhost,
@@ -23,14 +23,10 @@ const browserConfig = {
   hooks: {
     'client:js': `___browserSync___.socket.on('disconnect', function () { window.close(); location.reload(); });`,
   },
-}
+};
 
-const browserInstance = browserSync.create()
+const browserInstance = browserSync.create();
 
-const browser = () => browserInstance.init(browserConfig)
+const browser = () => browserInstance.init(browserConfig);
 
-export {
-  browser,
-  browserInstance,
-  browserSync
-}
+export { browser, browserInstance, browserSync };

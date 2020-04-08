@@ -1,11 +1,9 @@
-import ICSSTransition from "@/Component/CSSTransition/spec";
+import ICSSTransition from '@/Component/CSSTransition/spec';
 
-declare module IDescription {
-  interface ClassNames extends IClassNames {
-    default: string;
-  }
-  
-  interface Props extends ICSSTransition.Props {}
+declare namespace IDescription {
+  type ClassNames = IClassNames<'default'>;
+
+  interface Props extends Omit<ICSSTransition.Props, 'type'> {}
 }
 
 export default IDescription;

@@ -1,16 +1,7 @@
-import {ElementType} from 'react';
+declare namespace ILogo {
+  type ClassNames = IClassNames<'default' | 'square'>;
 
-declare module ILogo {
-  interface ClassNames extends IClassNames {
-    default: string;
-    square: string;
-  }
-  
-  interface Component {
-    component?: ElementType;
-  }
-  
-  interface Props extends Component {
+  interface Props {
     isSquare?: boolean;
   }
 }

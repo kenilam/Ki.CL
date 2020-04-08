@@ -3,6 +3,7 @@ import AudioPlayer from './AudioPlayer';
 import CloseButton from './CloseButton';
 import CSSTransition from './CSSTransition';
 import './Font';
+import Hidden from './Hidden';
 import Input from './Input';
 import Link from './Link';
 import Logo from './Logo';
@@ -18,6 +19,7 @@ export {
   AudioPlayer,
   CloseButton,
   CSSTransition,
+  Hidden,
   Input,
   Link,
   Logo,
@@ -26,5 +28,5 @@ export {
   Spinner,
   TextArea,
   Transition,
-  WebGL
+  WebGL,
 };

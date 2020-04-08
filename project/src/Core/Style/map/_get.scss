@@ -15,7 +15,7 @@
 //
 // @return Anything
 // ---------------------------------------------------------
-@function get ($map, $key) {
+@function get($map, $key) {
   $keys: str-split($key, '.');
 
   @if not deep-map-check($map, $keys...) {

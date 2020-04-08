@@ -7,15 +7,15 @@ export default {
     ui: {
       port: 3031,
       weinre: {
-        port: 3032
-      }
-    }
+        port: 3032,
+      },
+    },
   },
-  
+
   api: {
     host: {
       development: 'http://localhost:3100',
-      production: 'https://ki-cl.herokuapp.com'
-    }
-  }
-}
+      production: 'https://ki-cl.herokuapp.com',
+    },
+  },
+};

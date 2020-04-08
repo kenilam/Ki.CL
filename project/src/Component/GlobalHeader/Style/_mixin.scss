@@ -2,12 +2,12 @@
   $default: get($component-global-header, 'default');
   $logo: get($component-logo, 'default');
 
-  [data-component='#{$default}'] {
+  [data-component="#{$default}"] {
     color: $color;
 
-    [data-component=#{logo}],
+    [data-component="#{logo}"],
     h2,
-    a:not([aria-current='page']) {
+    a:not([aria-current="page"]) {
       color: $color;
     }
   }

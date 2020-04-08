@@ -11,7 +11,7 @@
 //
 // @return List
 // ---------------------------------------------------------
-@function str-explode ($string, $delimiter: '') {
+@function str-explode($string, $delimiter: '') {
   @if type-of($string) != 'string' {
     @error 'The argument $string: `#{$string}` is of incorrect type: `#{type-of($string)}`. Type of `String` is required!';
   }

@@ -1,16 +1,10 @@
 import ICore from '@/Component/CSSTransition/Core/spec';
 
-declare module ISelector {
-  interface ClassNames extends ICore.ClassNames {
-  }
-  
-  type Style = string;
-  
+declare namespace ISelector {
+  type ClassNames = ICore.ClassNames;
   type OnEnter = ICore.OnEnter;
   type OnExit = ICore.OnExit;
-  
-  interface Props extends ICore.Props {
-  }
+  type Props = ICore.Props;
 }
 
 export default ISelector;

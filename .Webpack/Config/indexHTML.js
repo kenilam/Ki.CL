@@ -1,11 +1,10 @@
-import {path as appRoot} from 'app-root-path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const html = new HtmlWebpackPlugin({
   filename: 'index.html',
 
   inject: 'body',
-  
+
   template: 'Template/index.html',
 
   minify: {
@@ -27,8 +26,8 @@ const html = new HtmlWebpackPlugin({
   multiStep: false,
 
   xhtml: true,
-})
+});
 
 export default {
   plugins: [html],
-}
+};

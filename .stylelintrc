@@ -1,11 +1,14 @@
 {
   "plugins": [
-    "stylelint-scss",
-    "stylelint-order"
+    "stylelint-order",
+    "stylelint-prettier",
+    "stylelint-scss"
   ],
   "extends": [
-    "stylelint-config-standard",
     "stylelint-config-css-modules",
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-standard",
+    "stylelint-config-recommended",
     "stylelint-config-recommended-scss"
   ],
   "rules": {
@@ -22,6 +25,9 @@
       }
     ],
     "at-rule-no-unknown": null,
+    "max-nesting-depth": 6,
+    "prettier/prettier": true,
+    "selector-attribute-quotes": "always",
     "scss/at-rule-no-unknown": [
       true,
       {
@@ -29,6 +35,9 @@
           "value"
         ]
       }
+    ],
+    "scss/dollar-variable-pattern": [
+      "[^\\d]"
     ],
     "selector-pseudo-class-no-unknown": [
       true,
@@ -40,6 +49,9 @@
           "local"
         ]
       }
+    ],
+    "string-quotes" : [
+      "single"
     ]
   }
 }

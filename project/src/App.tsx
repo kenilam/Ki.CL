@@ -1,4 +1,4 @@
-import {Provider} from '@/Component/Router';
+import { Provider } from '@/Component/Router';
 import React from 'react';
 import GlobalHeader from './Component/GlobalHeader';
 import View from './View';
@@ -12,5 +12,5 @@ const App = () => (
   </Provider>
 );
 
-export {appRoot};
+export { appRoot };
 export default App;

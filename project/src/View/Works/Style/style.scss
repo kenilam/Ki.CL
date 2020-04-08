@@ -2,7 +2,6 @@
   $css-transition: get($component-css-transition, 'default');
   $css-transition-enter: get($component-css-transition, 'enter.default');
   $css-transition-enter-active: get($component-css-transition, 'enter.active');
-
   $background-color: get($black, 'default');
   $color: get($white, 'default');
 
@@ -15,10 +14,10 @@
   grid-template-rows: auto min-content auto;
 
   h1 {
-    animation-name: works-h1-animation;
     animation-duration: get($duration, 'extreme') * 3;
-    animation-timing-function: linear;
     animation-iteration-count: infinite;
+    animation-name: works-h1-animation;
+    animation-timing-function: linear;
     color: transparent;
     font-family: get($font, 'font-family.special');
     font-size: 20vmin;
@@ -28,13 +27,11 @@
     transition-property: text-shadow, transform;
     transition-timing-function: get($ease, 'expo.in-out');
   }
-
   &.#{$css-transition}.#{$css-transition-enter}:not(.#{$css-transition-enter-active}) {
     h1 {
       transform: translate3d(0, 100vh, 0);
     }
   }
-
   &.#{$css-transition}.#{$css-transition-enter} {
     h1 {
       animation: unset;
@@ -47,33 +44,23 @@
 
 @keyframes works-h1-animation {
   0% {
-    text-shadow:
-      0 -0.5vmin 0 rgba($yellow, 0.6),
-      -0.5vmin 0 0 rgba($green, 0.1);
+    text-shadow: 0 -0.5vmin 0 rgba($yellow, 0.6), -0.5vmin 0 0 rgba($green, 0.1);
   }
 
   25% {
-    text-shadow:
-      -0.5vmin 0 0 rgba($yellow, 0.1),
-      0 -0.5vmin 0 rgba($green, 0.6);
+    text-shadow: -0.5vmin 0 0 rgba($yellow, 0.1), 0 -0.5vmin 0 rgba($green, 0.6);
   }
 
   50% {
-    text-shadow:
-      0 0.5vmin 0 rgba($yellow, 0.6),
-      0.5vmin 0 0 rgba($green, 0.1);
+    text-shadow: 0 0.5vmin 0 rgba($yellow, 0.6), 0.5vmin 0 0 rgba($green, 0.1);
   }
 
   75% {
-    text-shadow:
-      0.5vmin 0 0 rgba($yellow, 0.1),
-      0 0.5vmin 0 rgba($green, 0.6);
+    text-shadow: 0.5vmin 0 0 rgba($yellow, 0.1), 0 0.5vmin 0 rgba($green, 0.6);
   }
 
   100% {
-    text-shadow:
-      0 -0.5vmin 0 rgba($yellow, 0.6),
-      -0.5vmin 0 0 rgba($green, 0.1);
+    text-shadow: 0 -0.5vmin 0 rgba($yellow, 0.6), -0.5vmin 0 0 rgba($green, 0.1);
   }
 }
 

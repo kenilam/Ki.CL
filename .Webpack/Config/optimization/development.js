@@ -2,10 +2,8 @@ const optimization = {
   namedModules: true,
   runtimeChunk: 'single',
   splitChunks: {
-    chunks: 'all'
-  }
-}
+    chunks: 'all',
+  },
+};
 
-export {
-  optimization
-}
+export { optimization };

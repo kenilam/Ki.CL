@@ -1,7 +1,7 @@
-import {CSSTransition} from '@/Component';
+import { CSSTransition } from '@/Component';
 import ICSSTransition from '@/Component/CSSTransition/spec';
 import classnames from 'classnames';
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import ITextArea from './spec';
 import Style from './Style';
 
@@ -18,15 +18,19 @@ const TextArea: React.FunctionComponent<ITextArea.Props> = ({
   transitionType,
   ...props
 }) => {
-  let ref = useRef<HTMLTextAreaElement>();
-  
+  const ref = useRef<HTMLTextAreaElement>();
+
   const onEntered: ICSSTransition.OnEnter = (node, isAppearing) => {
-    autoFocus && ref && ref.current.focus();
-    onEnteredHandler && onEnteredHandler(node, isAppearing);
+    if (autoFocus && ref) {
+      ref.current.focus();
+    }
+    if (onEnteredHandler) {
+      onEnteredHandler(node, isAppearing);
+    }
   };
-  
-  const className = classnames({[Style.resizable]: resizable});
-  
+
+  const className = classnames({ [Style.resizable]: resizable });
+
   return (
     <CSSTransition
       {...props}

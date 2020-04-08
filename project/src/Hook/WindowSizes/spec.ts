@@ -1,20 +1,19 @@
-declare module IWindowSizes {
+declare namespace IWindowSizes {
   type Type = 'UPDATE_WINDOW_SIZES' | 'UPDATE_WINDOW';
-  
-  interface Actions extends Types, State {
-  }
-  
+
+  interface Actions extends Types, State {}
+
   interface State {
-    windowSizes: Values
+    windowSizes: Values;
   }
-  
+
   interface Types {
-    type: Type
+    type: Type;
   }
-  
+
   interface Values {
-    height: number,
-    width: number,
+    height: number;
+    width: number;
   }
 }
 

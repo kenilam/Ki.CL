@@ -9,12 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "jsx": "preserve",
-    "lib": [
-      "es2017",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ],
+    "lib": ["es2017", "dom", "dom.iterable", "scripthost"],
     "module": "esNext",
     "moduleResolution": "node",
     "noEmitHelpers": true,
@@ -22,24 +17,14 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "$/*": [
-        "*"
-      ]
+      "@/*": ["src/*"],
+      "$/*": ["*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,
     "target": "es5"
   },
-  "exclude": [
-    "node_modules",
-    "node_modules/**/*.{j,t}s",
-    "project/build"
-  ],
-  "include": [
-    "project/src/**/*"
-  ],
+  "exclude": ["node_modules", "project/build"],
+  "include": ["project/src/**/*"],
   "sourceMap": true
 }

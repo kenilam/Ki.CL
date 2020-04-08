@@ -1,6 +1,6 @@
-.#{get($component-transition, 'default')} {
+.#{get($component-transition, "default")} {
   $css-transition: get($component-css-transition, 'default');
-  $css-transition-stand-alone: get($component-css-transition, 'stand-alone');
+  $css-transition-stand-alone: get($component-css-transition, 'standalone');
 
   $enter: get($component-css-transition, 'enter.default');
   $exit: get($component-css-transition, 'exit.default');
