@@ -2,7 +2,8 @@
 
 $default: get($component-hidden, 'default');
 
-[data-component="efault}"] [data-component].#{$default} {
+[data-component="#{$default}"],
+[data-component].#{$default} {
   height: 0;
   opacity: 0;
   overflow: hidden;

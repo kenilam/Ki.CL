@@ -4,7 +4,7 @@ $default: get($component-global-header, 'default');
 
 @include set-global-header-color();
 
-[data-component="{$default}"] {
+[data-component="#{$default}"] {
   $css-transition: #{get($component-css-transition, 'default')};
   $appear: get($component-css-transition, 'appear.default');
   $appear-active: get($component-css-transition, 'appear.active');
@@ -35,9 +35,9 @@ $default: get($component-global-header, 'default');
   z-index: 1500;
 
   @include tablet() {
-    padding: $space;
+    padding: $gap $space;
 
-    > [data-component="{$navigation}"] {
+    > [data-component="#{$navigation}"] {
       grid-gap: $space;
       grid-template-columns: auto;
       grid-template-rows: auto;
@@ -57,7 +57,7 @@ $default: get($component-global-header, 'default');
     justify-self: center;
   }
 
-  > [data-component="{$navigation}"] {
+  > [data-component="#{$navigation}"] {
     grid-area: navigation;
     grid-gap: $gap;
     grid-template-columns: auto;
@@ -66,7 +66,7 @@ $default: get($component-global-header, 'default');
     text-transform: uppercase;
   }
 
-  [data-component="{$logo}"] {
+  [data-component="#{$logo}"] {
     grid-area: logo;
   }
 
