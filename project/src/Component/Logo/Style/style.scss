@@ -8,7 +8,7 @@ $transition-duration: get($duration, 'fast');
 
 @include set-logo-style($size);
 
-[data-component='#{$default}'] {
+[data-component="#{$default}"] {
   overflow: hidden;
   position: relative;
 
@@ -18,10 +18,10 @@ $transition-duration: get($duration, 'fast');
     font-family: $name;
     font-size: inherit;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-weight: unset;
     left: 0;
     line-height: 1;
-    -moz-osx-font-smoothing: grayscale;
     position: absolute;
     text-indent: 0;
     top: 0;

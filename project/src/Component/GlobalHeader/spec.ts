@@ -1,9 +1,5 @@
-declare module IGlobalHeader {
-  interface ClassNames extends IClassNames {
-    default: string;
-  }
-  
-  interface Props {
-  }
+declare namespace IGlobalHeader {
+  type ClassNames = IClassNames<'default'>;
+  interface Props {}
 }
 export default IGlobalHeader;

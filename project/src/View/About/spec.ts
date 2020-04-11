@@ -1,12 +1,5 @@
-declare module IAbout {
-  interface Data {
-    sections: {
-      About: string
-    }
-  }
-  
-  interface Props {
-  }
+declare namespace IAbout {
+  interface Props {}
 }
 
 export default IAbout;

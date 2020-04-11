@@ -1,103 +1,94 @@
-import colors from 'colors'
-import webpack from 'webpack'
-import webpackMerge from 'webpack-merge'
-import {clean, resolve,} from './Config'
-import {browser, browserInstance} from './Config/prodServer'
-import {devConfig} from './development.babel'
-import {Args} from './Utilities'
+import colors from 'colors';
+import webpack from 'webpack';
+import webpackMerge from 'webpack-merge';
+import { clean, resolve as resolveConfig } from './Config';
+import { browser, browserInstance } from './Config/prodServer';
+import { devConfig } from './development.babel';
+import { Args, Logger } from './Utilities';
 
-const mode = process.env.NODE_ENV || 'production'
-const watch = !Args.noWatch
+const mode = process.env.NODE_ENV || 'production';
+const watch = !Args.noWatch;
 
 const config = webpackMerge(devConfig, clean, {
   mode,
-  resolve,
+  resolve: resolveConfig,
   watch,
-})
+});
 
-const FAILURE_MESSAGE = colors.red('Failures while starting application on production environment')
-const SUCCESS_MESSAGE = colors.green('App compiled successfully')
+const FAILURE_MESSAGE = colors.red(
+  'Failures while starting application on production environment'
+);
+const SUCCESS_MESSAGE = colors.green('App compiled successfully');
 
 const COLORS = {
   red: '#d8000c',
-  yellow: '#9f6000'
-}
+  yellow: '#9f6000',
+};
 
 class StatsReports {
   constructor(reports, color, maxLength = 10) {
-    const length = reports.length
-    const extraLength = length - maxLength
-    const concatMessage = `${extraLength} more...`
+    const length = reports.length;
+    const extraLength = length - maxLength;
+    const concatMessage = `${extraLength} more...`;
 
-    reports = reports.slice(0, maxLength)
+    reports = reports.slice(0, maxLength);
 
-    this.results = reports.slice(0, maxLength).map(
-      report => ({
-        html: `<p style='color:${COLORS[color]}'>${report}</p>`,
-        message: colors[color](report)
-      })
-    )
+    this.results = reports.slice(0, maxLength).map((report) => ({
+      html: `<p style='color:${COLORS[color]}'>${report}</p>`,
+      message: colors[color](report),
+    }));
 
     if (extraLength > 0) {
       this.results.push({
         html: `<p>${concatMessage}</p>`,
-        message: colors[color](concatMessage)
-      })
+        message: colors[color](concatMessage),
+      });
     }
 
-    return this.results
+    return this.results;
   }
 }
 
-const statsHandler = async stats => new Promise(
-  (resolve, reject) => {
-    let errorMessages
+const statsHandler = async (stats) =>
+  new Promise((resolve, reject) => {
+    let errorMessages;
 
     const {
-      compilation: {
-        errors
-      }
-    } = stats
+      compilation: { errors },
+    } = stats;
 
     if (stats.hasErrors()) {
-      errorMessages = new StatsReports(errors.map(
-        ({message}) => message),
+      errorMessages = new StatsReports(
+        errors.map(({ message }) => message),
         'red'
-      )
+      );
 
-      errorMessages.forEach(
-        ({message}) => console.error(message))
+      errorMessages.forEach(({ message }) => Logger.error(message));
 
       browserInstance.sockets.emit('fullscreen:message', {
         title: 'Webpack Error:',
-        body: errorMessages.map(({
-                                   html
-                                 }) => html).join(''),
-        timeout: 100000
-      })
+        body: errorMessages.map(({ html }) => html).join(''),
+        timeout: 100000,
+      });
 
-      reject(errors)
+      reject(errors);
 
-      return
+      return;
     }
 
-    console.log(SUCCESS_MESSAGE)
-    resolve(stats)
-  }
-)
+    Logger.log(SUCCESS_MESSAGE);
+    resolve(stats);
+  });
 
-const production = new Promise(
-  (resolve, reject) => webpack(
-    config,
-    (errors, stats) => statsHandler(stats)
-      .then(resolve)
-      .catch(reject)
+const production = new Promise((resolve, reject) =>
+  webpack(config, (errors, stats) =>
+    statsHandler(stats).then(resolve).catch(reject)
   )
-)
+);
 
-process.env.NODE_ENV = mode
+process.env.NODE_ENV = mode;
 
-export default production.then(browser).catch(errors => {
-  console.error(FAILURE_MESSAGE)
-  console.error(errors)
-})
+export default production.then(browser).catch((errors) => {
+  Logger.error(FAILURE_MESSAGE);
+  Logger.error(errors);
+});

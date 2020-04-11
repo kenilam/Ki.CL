@@ -1,7 +1,6 @@
 import Core from '@/Component/CSSTransition/Core';
-import ICSSTransition from '@/Component/CSSTransition/Core/spec';
 import classnames from 'classnames';
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import ISelector from './spec';
 
 const Selector: FunctionComponent<ISelector.Props> = ({
@@ -12,23 +11,27 @@ const Selector: FunctionComponent<ISelector.Props> = ({
   ...props
 }) => {
   const className = classnames(classNames);
-  
-  const enteredHandler: ICSSTransition.OnEnter = (node, isAppearing) => {
+
+  const enteredHandler: ISelector.OnEnter = (node, isAppearing) => {
     if (node) {
       node.classList.remove(...className.split(' '));
     }
-    
-    onEntered && onEntered(node, isAppearing);
+
+    if (onEntered) {
+      onEntered(node, isAppearing);
+    }
   };
-  
-  const exitedHandler: ICSSTransition.OnExit = (node) => {
+
+  const exitedHandler: ISelector.OnExit = (node) => {
     if (node) {
       node.classList.remove(...className.split(' '));
     }
-    
-    onExited && onExited(node);
+
+    if (onExited) {
+      onExited(node);
+    }
   };
-  
+
   return (
     <Core
       {...props}

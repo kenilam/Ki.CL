@@ -12,18 +12,8 @@
       "path": "/",
       "name": "Home",
       "content": {
-        "heading": "KENI LAM"
-      }
-    },
-    "about": {
-      "path": "/about",
-      "name": "About",
-      "content": {
-        "heading": "About Me",
-        "action": {
-          "path": "/works",
-          "name": "Explore"
-        }
+        "heading": "KENI LAM",
+        "slogan": "I [dream|make|love|craft|breath|invent]\nstuffs\nthat are\n[interesting|creative|innovative|stunning]."
       }
     },
     "works": {
@@ -48,10 +38,47 @@
         }
       }
     },
+    "about": {
+      "path": "/about",
+      "name": "About",
+      "content": {
+        "heading": "About Me",
+        "action": {
+          "path": "/works",
+          "name": "Explore"
+        }
+      }
+    },
     "contact": {
       "path": "/contact",
       "name": "Contact",
-      "message": "Contact"
+      "content": {
+        "title": "LET'S TALK",
+        "description": "I am glad that you want to get in touch. Please fill out this form and I'll be in touch shortly.",
+        "name": {
+          "id": "name",
+          "label": "Your Name",
+          "placeholder": "Your name here",
+          "type": "name"
+        },
+        "email": {
+          "id": "email",
+          "label": "Your Email Address",
+          "placeholder": "Your email address here",
+          "type": "email"
+        },
+        "message": {
+          "id": "message",
+          "label": "Your Messages",
+          "placeholder": "Your messages here"
+        },
+        "reset": {
+          "value": "reset"
+        },
+        "submit": {
+          "value": "send"
+        }
+      }
     }
   },
   "component": {

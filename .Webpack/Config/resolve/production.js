@@ -1,5 +1,5 @@
-import resolve from './development'
+import resolve from './development';
 
-delete resolve.alias['react-dom']
+delete resolve.alias['react-dom'];
 
-export default resolve
+export default resolve;

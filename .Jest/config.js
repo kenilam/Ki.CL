@@ -3,7 +3,7 @@
 
 const { path: rootPath } = require('app-root-path');
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
-const { compilerOptions } = require('../.tsconfig.json');
+const { compilerOptions } = require('../tsconfig.json');
 
 module.exports = {
   cacheDirectory: '.jest-cache',
@@ -34,7 +34,7 @@ module.exports = {
       },
       tsConfig: {
         jsx: 'react',
-        esModuleInterop: true
+        esModuleInterop: true,
       },
     },
   },
@@ -44,9 +44,11 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/../project/' }),
+    ...pathsToModuleNameMapper(compilerOptions.paths, {
+      prefix: '<rootDir>/../project/',
+    }),
     '\\.(css|scss|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy',
-    '\\/Style': '<rootDir>/mock.style.js'
+    '\\/Style': '<rootDir>/mock.style.js',
   },
 
   notify: true,
@@ -59,37 +61,30 @@ module.exports = {
   reporters: ['jest-dot-reporter', 'jest-junit'],
 
   // roots
-  roots: [
-    rootPath,
-    `${rootPath}/.Jest`
-  ],
+  roots: [rootPath, `${rootPath}/.Jest`],
 
   setupFilesAfterEnv: [
     'jest-canvas-mock',
     '<rootDir>/setup.js',
-    '<rootDir>/setup.enzyme.js'
+    '<rootDir>/setup.enzyme.js',
   ],
 
-  testEnvironment: "jest-environment-jsdom-fourteen",
+  testEnvironment: 'jest-environment-jsdom-fourteen',
 
   // An array of regexp pattern strings that are matched all test paths
-  testMatch: [
-    '**/*.test.ts?(x)'
-  ],
+  testMatch: ['**/*.test.ts?(x)'],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: [
-    '/node_modules/'
-  ],
+  testPathIgnorePatterns: ['/node_modules/'],
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.ts?(x)$': '<rootDir>/transform.js'
+    '^.+\\.ts?(x)$': '<rootDir>/transform.js',
   },
 
   // Indicates whether each individual test should be reported during the run
   verbose: true,
 
   // Whether to use watchman for file crawling
-  watchman: true
+  watchman: true,
 };

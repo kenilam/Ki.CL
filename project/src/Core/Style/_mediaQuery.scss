@@ -5,18 +5,15 @@ $mqBreakpoints: (
   mobile: $base-font-size * 30,
   tablet: $base-font-size * 46,
   desktop: $base-font-size * 61,
-  widescreen: $base-font-size * 81
+  wide: $base-font-size * 81,
 );
-
-$mqStaticBreakpoint: desktop;
 
 @import '../../../../node_modules/sass-mq';
 
 @mixin orientation($orientation, $content: null, $props...) {
   @include mq($and: '(orientation: #{$orientation})', $props...) {
     @if $content {
-      @each $name,
-        $value in $content {
+      @each $name, $value in $content {
         #{$name}: $value;
       }
     }
@@ -28,12 +25,20 @@ $mqStaticBreakpoint: desktop;
 }
 
 @mixin query($landscape: null, $portrait: null, $props...) {
+  @include orientation(
+    $content: $landscape,
+    $orientation: 'landscape',
+    $props...
+  );
+  @include orientation(
+    $content: $portrait,
+    $orientation: 'portrait',
+    $props...
+  );
+
   @include mq($props...) {
     @content;
   }
-
-  @include orientation($content: $landscape, $orientation: 'landscape', $props...);
-  @include orientation($content: $portrait, $orientation: 'portrait', $props...);
 }
 
 @mixin landscape() {
@@ -73,13 +78,13 @@ $mqStaticBreakpoint: desktop;
 }
 
 @mixin desktop($props...) {
-  @include query($until: widescreen, $props...) {
+  @include query($until: wide, $props...) {
     @content;
   }
 }
 
 @mixin widescreen($props...) {
-  @include query($from: widescreen, $props...) {
+  @include query($from: wide, $props...) {
     @content;
   }
 }

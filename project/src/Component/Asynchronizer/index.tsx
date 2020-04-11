@@ -1,51 +1,55 @@
-import {TransitionStyle} from '@/Component/CSSTransition';
-import Spinner from '@/Component/Spinner';
-import {CSSUnit, Fetch} from '@/Helper';
-import React, {useEffect, useState} from 'react';
+import { CSSTransition, Spinner } from '@/Component';
+import { CSSUnit, Fetch } from '@/Helper';
+import React, { useEffect, useState } from 'react';
 import IAsynchronizer from './spec';
 import Style from './Style';
 
 const awaitDelay = CSSUnit(Style.delay);
 
-const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props> = ({
+const Asynchronizer: React.FunctionComponent<IAsynchronizer.Props<any>> = ({
   awaitFor,
-  children
+  awaitForOptions,
+  children,
+  pendingFor,
+  transitionType,
 }) => {
   let awaitTimer: number;
-  
-  const [data, updateData]: IAsynchronizer.DataState = useState<IAsynchronizer.Data>(null);
-  
+
+  const [data, updateData] = useState(null);
+
   const awaitComplete = (data: any) => () => {
     updateData(data);
   };
-  
+
   useEffect(() => {
-    if (!data) {
-      const {cancel, promise} = Fetch(awaitFor);
-      
-      promise.then(data => {
+    if (!data && !pendingFor) {
+      const { cancel, promise } = Fetch(awaitFor, awaitForOptions);
+
+      promise.then((data) => {
         awaitTimer = window.setTimeout(awaitComplete(data), awaitDelay);
       });
-      
+
       return () => {
         window.clearTimeout(awaitTimer);
         cancel();
       };
     }
-  }, [data]);
-  
+  }, [data, pendingFor]);
+
   return (
     <React.Fragment>
       <Spinner in={Boolean(!data)} />
-      {
-        Boolean(data) && (
-          <TransitionStyle.ZoomIn in={Boolean(data)}>
-            {children(data)}
-          </TransitionStyle.ZoomIn>
-        )
-      }
+      {Boolean(data) && (
+        <CSSTransition type={transitionType} in={Boolean(data)}>
+          {children({ data, success: true })}
+        </CSSTransition>
+      )}
     </React.Fragment>
   );
+};
+
+Asynchronizer.defaultProps = {
+  transitionType: 'zoomIn',
 };
 
 export default Asynchronizer;

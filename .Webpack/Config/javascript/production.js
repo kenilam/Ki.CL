@@ -1,12 +1,12 @@
-import {Loaders, plugins} from './development'
+import { Loaders, plugins } from './development';
 
-delete Loaders.use[0].options.plugins
+delete Loaders.use[0].options.plugins;
 
-const rules = [Loaders]
+const rules = [Loaders];
 
 export default {
   module: {
-    rules
+    rules,
   },
   plugins,
-}
+};

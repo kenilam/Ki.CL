@@ -1,15 +1,12 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
 
-declare module ICloseButton {
-  interface ClassNames extends IClassNames {
-    default: string;
-    fontSize: string;
-  }
-  
+declare namespace ICloseButton {
+  type ClassNames = IClassNames<'default' | 'fontSize'>;
+
   type OnExit = ICSSTransition.OnExit;
-  
+
   interface Props {
-    onExit: OnExit
+    onExit: OnExit;
   }
 }
 

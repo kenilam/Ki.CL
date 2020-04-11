@@ -1,5 +1,5 @@
-declare module IResources {
-  module Data {
+declare namespace IResources {
+  namespace Data {
     type Message = string;
     type Name = string;
     type Path = string;
@@ -21,7 +21,7 @@ declare module IResources {
     }
 
     interface Miscellaneous {
-      months?: (string)[] | null;
+      months?: string[] | null;
     }
 
     interface View {

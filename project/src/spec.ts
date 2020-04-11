@@ -1,6 +1,5 @@
-declare module IApp {
-  interface Props {
-  }
+declare namespace IApp {
+  interface Props {}
 }
 
 export default IApp;

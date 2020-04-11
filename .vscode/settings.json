@@ -1,11 +1,14 @@
 {
-  'editor.formatOnSave': true,
-  'tslint.autoFixOnSave': true,
-  'search.exclude': {
-    '**/build': true,
-    '**/node_modules': true
+  "tslint.autoFixOnSave": true,
+  "search.exclude": {
+    "**/build": true,
+    "**/node_modules": true
   },
-  'files.insertFinalNewline': true,
-  'typescript.preferences.importModuleSpecifier': 'non-relative',
-  'editor.tabSize': 2
+  "files.insertFinalNewline": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "editor.tabSize": 2,
+  "prettier.jsxSingleQuote": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "prettier.singleQuote": true
 }

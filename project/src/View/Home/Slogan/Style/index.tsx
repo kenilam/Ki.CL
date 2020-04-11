@@ -1,5 +1,5 @@
-import IHome from '@/View/Home/spec';
+import IPhase from '@/View/Home/Phase/spec';
 import './style.scss';
 import value from './value.scss';
 
-export default value as IHome.ClassNames;
+export default value as IPhase.ClassNames;

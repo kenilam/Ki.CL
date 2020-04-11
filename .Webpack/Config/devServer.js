@@ -1,15 +1,12 @@
-import {Args} from '!/Utilities'
-import config from '^/ki-cl.config'
-import open from 'opn'
-import webpack from 'webpack'
-import {srcRoot as assetPath} from './asset'
-import {srcRoot as contentPath} from './content'
-import {publicPath} from './output'
+import { Args } from '!/Utilities';
+import config from '^/ki-cl.config';
+import open from 'opn';
+import webpack from 'webpack';
+import { srcRoot as assetPath } from './asset';
+import { srcRoot as contentPath } from './content';
+import { publicPath } from './output';
 
-const {
-  host,
-  port
-} = config.localhost
+const { host, port } = config.localhost;
 
 const stats = {
   all: false,
@@ -30,15 +27,15 @@ const stats = {
   timings: true,
   version: true,
   warnings: true,
-}
+};
 
 const optimization = {
   namedModules: true,
   noEmitOnErrors: true,
   occurrenceOrder: true,
-}
+};
 
-const contentBase = [assetPath, contentPath].map(path => `${path}/`)
+const contentBase = [assetPath, contentPath].map((path) => `${path}/`);
 
 const devServer = {
   https: true,
@@ -61,21 +58,18 @@ const devServer = {
   contentBase,
   port,
   stats,
-}
+};
 
 function browser() {
-  open(`${host}:${port}`)
+  open(`${host}:${port}`);
 }
 
 const plugins = [
-  new webpack.HotModuleReplacementPlugin({multiStep: true}),
+  new webpack.HotModuleReplacementPlugin({ multiStep: true }),
   new webpack.EvalSourceMapDevToolPlugin(),
-]
+];
 
-export {
-  browser,
-  devServer
-}
+export { browser, devServer };
 
 export default {
   cache: true,
@@ -84,4 +78,4 @@ export default {
   optimization,
   // output,
   plugins,
-}
+};

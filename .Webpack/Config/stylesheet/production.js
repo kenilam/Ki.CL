@@ -1,40 +1,37 @@
 // import ExtractCssChunks from 'extract-css-chunks-webpack-plugin'
-import {CSSLoaders, SCSSLoaders} from './development'
+import { CSSLoaders, SCSSLoaders } from './development';
 
-const fallback = 'style-loader'
+const fallback = 'style-loader';
 
-const loaders = loaders => [].concat(
-  fallback,
-  // {
-  //   loader: ExtractCssChunks.loader,
-  //   options: {
-  //     hot: true,
-  //     reloadAll: true,
-  //   }
-  // },
-  loaders
-    .filter(
-      ({loader}) => loader !== fallback)
-    .map(loader => Object.assign(
-      loader,
-      {
-        options: Object.assign(
-          loader.options,
-          {sourceMap: false}
-        )
-      }
-    ))
-)
+const loaders = (rest) =>
+  [].concat(
+    fallback,
+    // {
+    //   loader: ExtractCssChunks.loader,
+    //   options: {
+    //     hot: true,
+    //     reloadAll: true,
+    //   }
+    // },
+    rest
+      .filter(({ loader }) => loader !== fallback)
+      .map((loader) =>
+        Object.assign(loader, {
+          options: Object.assign(loader.options, { sourceMap: false }),
+        })
+      )
+  );
 
-const rules = [{
-  test: /\.css$/,
-  use: loaders(CSSLoaders)
-},
+const rules = [
+  {
+    test: /\.css$/,
+    use: loaders(CSSLoaders),
+  },
   {
     test: /\.scss$/,
-    use: loaders(SCSSLoaders)
+    use: loaders(SCSSLoaders),
   },
-]
+];
 
 const plugins = [
   // new ExtractCssChunks(
@@ -44,11 +41,11 @@ const plugins = [
   //     orderWarning: true
   //   }
   // )
-]
+];
 
 export default {
   module: {
-    rules
+    rules,
   },
-  plugins
-}
+  plugins,
+};

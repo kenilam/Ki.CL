@@ -9,7 +9,7 @@ $font-size: get($font, 'font-size.large');
 $gap: get($grid, 'narrow');
 $transition-duration: get($duration, 'faster');
 
-[data-component='#{$default}'] {
+[data-component="#{$default}"] {
   color: $color;
   font-size: $font-size;
   padding: $gap;

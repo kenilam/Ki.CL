@@ -1,18 +1,17 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import ILink from './spec';
 import Style from './Style';
 
-const Link: React.FunctionComponent<ILink.Props> = (
-  {
-    children,
-    className: wrapperClassName,
-    component: Wrapper,
-    onClick,
-    onMouseOver,
-    to,
-    ...rest
-  }) => {
+const Link: React.FunctionComponent<ILink.Props> = ({
+  children,
+  className: wrapperClassName,
+  component: Wrapper,
+  onClick,
+  onMouseOver,
+  to,
+  ...rest
+}) => {
   const Component = (
     <NavLink
       activeClassName={Style.active}
@@ -27,15 +26,11 @@ const Link: React.FunctionComponent<ILink.Props> = (
       {children}
     </NavLink>
   );
-  
-  return (
-    Wrapper ? (
-      <Wrapper className={wrapperClassName}>
-        {Component}
-      </Wrapper>
-    ) : (
-      Component
-    )
+
+  return Wrapper ? (
+    <Wrapper className={wrapperClassName}>{Component}</Wrapper>
+  ) : (
+    Component
   );
 };
 

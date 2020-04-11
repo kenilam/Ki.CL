@@ -2,7 +2,12 @@ $shadow-alpha: 0.2;
 $shadow-color: #000;
 $shadow-distant: 1px;
 $shadow-distant-negative: (-($shadow-distant / 2));
-$shadow-rgba: rgba(red($shadow-color), green($shadow-color), blue($shadow-color), $shadow-alpha);
+$shadow-rgba: rgba(
+  red($shadow-color),
+  green($shadow-color),
+  blue($shadow-color),
+  $shadow-alpha
+);
 
 @mixin box-shadow($property...) {
   box-shadow: $property;
@@ -13,19 +18,27 @@ $shadow-rgba: rgba(red($shadow-color), green($shadow-color), blue($shadow-color)
 }
 
 @mixin shadow-left() {
-  @include box-shadow($shadow-distant-negative 1px $shadow-distant $shadow-distant $shadow-rgba);
+  @include box-shadow(
+    $shadow-distant-negative 1px $shadow-distant $shadow-distant $shadow-rgba
+  );
 }
 
 @mixin shadow-right() {
-  @include box-shadow(($shadow-distant / 2) 1px $shadow-distant $shadow-distant $shadow-rgba);
+  @include box-shadow(
+    ($shadow-distant / 2) 1px $shadow-distant $shadow-distant $shadow-rgba
+  );
 }
 
 @mixin shadow-top() {
-  @include box-shadow(0 $shadow-distant-negative $shadow-distant $shadow-distant $shadow-rgba);
+  @include box-shadow(
+    0 $shadow-distant-negative $shadow-distant $shadow-distant $shadow-rgba
+  );
 }
 
 @mixin shadow-bottom() {
-  @include box-shadow(0 ($shadow-distant / 2) $shadow-distant $shadow-distant $shadow-rgba);
+  @include box-shadow(
+    0 ($shadow-distant / 2) $shadow-distant $shadow-distant $shadow-rgba
+  );
 }
 
 @mixin shadow-none() {

@@ -17,5 +17,9 @@ $exit-done: get($component-css-transition, 'exit.done');
   &.#{$exit}.#{$exit-active},
   &.#{$exit-done} {
     transform: translate3d(0, -100%, 0);
+
+    &::before {
+      opacity: 0;
+    }
   }
 }

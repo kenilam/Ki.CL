@@ -1,26 +1,31 @@
 import ICSSTransition from '@/Component/CSSTransition/spec';
+import { path as aboutPath } from './About';
+import { path as contactPath } from './Contact';
+import { path as homePath } from './Home';
+import { path as workPath } from './Works';
 
-declare module IView {
-  interface ClassName extends IClassNames {
-    default: string;
-  }
-  
+const paths = [aboutPath, contactPath, homePath, workPath];
+
+declare namespace IView {
+  type ClassNames = IClassNames<'default'>;
+
   type View = 'about' | 'works' | 'home';
-  
+
   type AwaitFor = {
     [name: string]: string;
-  }
-  
+  };
+
+  type TransitionTypePaths = typeof paths[number];
+
   type TransitionType = {
-    [path: string]: ICSSTransition.Type
-  }
-  
+    [path in TransitionTypePaths]: ICSSTransition.Type;
+  };
+
   type Paths = {
     [name in View]?: string;
-  }
-  
-  interface Props {
-  }
+  };
+
+  interface Props {}
 }
 
 export default IView;

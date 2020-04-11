@@ -1,6 +1,6 @@
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
-import TerserJSPlugin from 'terser-webpack-plugin'
-import {optimization} from './development'
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import TerserJSPlugin from 'terser-webpack-plugin';
+import { optimization } from './development';
 
 const minimizer = [
   new OptimizeCSSAssetsPlugin(),
@@ -10,13 +10,13 @@ const minimizer = [
       ecma: 5,
       ie8: true,
       safari10: true,
-      warnings: true
-    }
-  })
-]
+      warnings: true,
+    },
+  }),
+];
 
 export default {
   optimization: Object.assign(optimization, {
-    minimizer
-  })
-}
+    minimizer,
+  }),
+};

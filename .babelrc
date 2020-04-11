@@ -34,11 +34,7 @@
     [
       "module-resolver",
       {
-        "root": [
-          "./project/src",
-          "./project/assets",
-          "./project/content"
-        ]
+        "root": ["./project/src", "./project/assets", "./project/content"]
       }
     ],
     [

@@ -1,0 +1,106 @@
+[data-routes='contact'] {
+  $css-transition: get($component-css-transition, 'default');
+  $appear: get($component-css-transition, 'appear.default');
+  $appear-active: get($component-css-transition, 'appear.active');
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+  $exit-done: get($component-css-transition, 'exit.active');
+
+  $cta: get($view-contact-cta, 'default');
+
+  $background-color: get($black, 'light');
+  $border: 1px solid get($white, 'default');
+  $color: get($white, 'default');
+  $space: get($grid, 'narrow');
+  $gutter: get($grid, 'default');
+  $gap: get($grid, 'gutter');
+  $form-element-transition-duration: get($duration, 'slowest');
+  $form-element-transition-delay: get($duration, 'faster');
+
+  background-color: $background-color;
+  color: $color;
+
+  h1,
+  p,
+  [for='name'],
+  [for='email'] {
+    margin-right: $gutter;
+
+    @include tablet() {
+      margin-right: 0;
+    }
+  }
+
+  p,
+  [for='name'],
+  [for='email'] {
+    margin-top: $gap;
+
+    @include tablet() {
+      margin-top: $space;
+    }
+  }
+
+  button {
+    &.#{$css-transition} {
+      transition-delay: $form-element-transition-delay;
+    }
+  }
+
+  form {
+    display: grid;
+    grid-template-areas: 'h1 message message message' 'p message message message' 'name message message message' 'email message message message' '. message message message' '. fieldset fieldset fieldset';
+    grid-template-columns: 400px repeat(3, 1fr);
+    grid-template-rows: repeat(4, min-content) auto $gutter;
+    min-height: 100vh;
+    padding: get($grid, 'wide') + $gutter 0 0 $gutter;
+
+    @include tablet() {
+      grid-template-areas: '. h1 h1 .' '. p p .' '. name name .' '. email email .' '. message message .' 'fieldset fieldset fieldset fieldset';
+      grid-template-columns: $gap repeat(2, 1fr) $gap;
+      grid-template-rows: repeat(4, min-content) auto $gutter;
+      padding-left: 0;
+      padding-top: $space + $gutter;
+    }
+
+    > * {
+      &.#{$css-transition} {
+        transition-duration: $form-element-transition-duration;
+      }
+    }
+  }
+
+  h1 {
+    grid-area: h1;
+  }
+
+  p {
+    grid-area: p;
+  }
+
+  [for='name'] {
+    grid-area: name;
+  }
+
+  [for='email'] {
+    grid-area: email;
+  }
+
+  [for='message'] {
+    border-left: $border;
+    grid-area: message;
+
+    @include tablet() {
+      border: $border;
+      margin-bottom: $gap;
+      margin-top: $gap;
+      min-height: 200px;
+    }
+  }
+
+  [data-view-component="#{$cta}"] {
+    grid-area: fieldset;
+  }
+}
