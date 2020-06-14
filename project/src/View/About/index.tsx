@@ -1,11 +1,11 @@
-import resources from '$/resources';
-import * as API from '@/API';
-import { Logo, Navigation } from '@/Component';
-import ICSSTransition from '@/Component/CSSTransition/spec';
-import { Route } from '@/Component/Router';
-import React, { useEffect, useState } from 'react';
-import IAbout from './spec';
-import './Style';
+import resources from "$/resources";
+import * as API from "@/API";
+import { Logo, Navigation } from "@/Components";
+import { types } from "@/Components/CSSTransition/Type";
+import { Route } from "@/Components/Router";
+import React from "react";
+import "./Style";
+import Spec from "./spec";
 
 const {
   view: {
@@ -16,41 +16,25 @@ const {
   },
 } = resources;
 
-const transitionType: ICSSTransition.Type = 'slideFromRight';
+const transitionType = types.SlideFromRight;
 
-const About: React.FunctionComponent<IAbout.Props> = () => {
-  const [rendered, isRendered] = useState(false);
-
-  const fetchAPI = () => {
-    isRendered(true);
-  };
-
-  useEffect(() => {
-    window.addEventListener('about.entering', fetchAPI);
-
-    return () => {
-      window.removeEventListener('about.entering', fetchAPI);
-    };
-  });
-
-  return (
-    <main data-routes='about'>
-      <API.About pendingFor={!rendered}>
-        {({ data }) => (
-          <article>
-            <Logo />
-            <h2>{heading}</h2>
-            <p>{data.sections.About}</p>
-            <Navigation
-              inline={true}
-              items={[{ children: action.name, to: action.path }]}
-            />
-          </article>
-        )}
-      </API.About>
-    </main>
-  );
-};
+const About: React.FunctionComponent<Spec.Props> = () => (
+  <main data-routes="about">
+    <API.About>
+      {({ result }) => (
+        <article>
+          <Logo />
+          <h2>{heading}</h2>
+          <p>{result.sections.About}</p>
+          <Navigation
+            inline={true}
+            items={[{ children: action.name, to: action.path }]}
+          />
+        </article>
+      )}
+    </API.About>
+  </main>
+);
 
 export { path, transitionType };
 export default (

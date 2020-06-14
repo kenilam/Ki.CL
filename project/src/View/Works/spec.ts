@@ -1,3 +1,7 @@
-declare namespace IWorks {}
+import CSSTransition from "@/Components/CSSTransition/spec";
 
-export default IWorks;
+declare namespace Spec {
+  type Type = CSSTransition.Type;
+}
+
+export default Spec;

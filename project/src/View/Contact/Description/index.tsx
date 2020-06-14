@@ -1,8 +1,8 @@
-import { TransitionStyle } from '@/Component/CSSTransition';
-import IDescription from './spec';
-import React from 'react';
-import Style from './Style';
-import resources from '$/resources';
+import resources from "$/resources";
+import { Types } from "@/Components/CSSTransition";
+import React from "react";
+import Style from "./Style";
+import Spec from "./spec";
 
 const {
   view: {
@@ -12,10 +12,10 @@ const {
   },
 } = resources;
 
-const Description: React.FunctionComponent<IDescription.Props> = (props) => (
-  <TransitionStyle.SlideFromLeft {...props}>
+const Description: React.FunctionComponent<Spec.Props> = (props) => (
+  <Types.SlideFromLeft {...props}>
     <p data-view-component={Style.default}>{description}</p>
-  </TransitionStyle.SlideFromLeft>
+  </Types.SlideFromLeft>
 );
 
 export default Description;

@@ -1,10 +1,11 @@
-import ICSSTransition from '@/Component/CSSTransition/spec';
-import IApi from '@/API/spec';
+import CSSTransition from "@/Components/CSSTransition/spec";
 
-declare namespace ICTA {
-  type ClassNames = IClassNames<'default'>;
+declare namespace Spec {
+  type ClassName = ClassNames<"default">;
 
-  interface Props extends ICSSTransition.Props, IApi.Contact.Status {}
+  type Props = Omit<CSSTransition.Props, "type"> & {
+    disabled: boolean;
+  };
 }
 
-export default ICTA;
+export default Spec;

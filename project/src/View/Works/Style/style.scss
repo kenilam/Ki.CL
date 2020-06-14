@@ -1,7 +1,4 @@
 [data-routes^='works'] {
-  $css-transition: get($component-css-transition, 'default');
-  $css-transition-enter: get($component-css-transition, 'enter.default');
-  $css-transition-enter-active: get($component-css-transition, 'enter.active');
   $background-color: get($black, 'default');
   $color: get($white, 'default');
 
@@ -26,19 +23,6 @@
     transition-duration: get($duration, 'slowest');
     transition-property: text-shadow, transform;
     transition-timing-function: get($ease, 'expo.in-out');
-  }
-  &.#{$css-transition}.#{$css-transition-enter}:not(.#{$css-transition-enter-active}) {
-    h1 {
-      transform: translate3d(0, 100vh, 0);
-    }
-  }
-  &.#{$css-transition}.#{$css-transition-enter} {
-    h1 {
-      animation: unset;
-      text-shadow:
-        0 -0.5vmin 0 rgba($yellow, 0.6),
-        -0.5vmin 0 0 rgba($green, 0.6);
-    }
   }
 }
 

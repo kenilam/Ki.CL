@@ -1,9 +1,9 @@
-declare namespace IWork {
+declare namespace Spec {
   interface Match {
     params: Params;
   }
 
-  type Param = 'projectId';
+  type Param = "projectId";
 
   type Params = {
     [name in Param]: string;
@@ -12,4 +12,4 @@ declare namespace IWork {
   interface Props {}
 }
 
-export default IWork;
+export default Spec;

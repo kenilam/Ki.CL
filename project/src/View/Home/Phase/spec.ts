@@ -1,20 +1,20 @@
-declare namespace IPhase {
-  type ClassNames = IClassNames<
-    | 'default'
-    | 'lowerShadowColor'
-    | 'lowerShadowDistance'
-    | 'upperShadowColor'
-    | 'upperShadowDistance'
+declare namespace Spec {
+  type ClassName = ClassNames<
+    | "default"
+    | "lowerShadowColor"
+    | "lowerShadowDistance"
+    | "upperShadowColor"
+    | "upperShadowDistance"
   >;
 
-  interface Word {
+  type Word = {
     word: string;
     render: boolean;
-  }
+  };
 
-  interface Props {
-    words: IPhase.Word[];
-  }
+  type Props = {
+    words: Spec.Word[];
+  };
 }
 
 export default IPhase;

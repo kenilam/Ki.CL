@@ -8,6 +8,7 @@
   $exit-active: get($component-css-transition, 'exit.active');
   $exit-done: get($component-css-transition, 'exit.active');
 
+  $spinner: get($component-spinner, 'default');
   $cta: get($view-contact-cta, 'default');
 
   $background-color: get($black, 'light');
@@ -16,8 +17,15 @@
   $space: get($grid, 'narrow');
   $gutter: get($grid, 'default');
   $gap: get($grid, 'gutter');
-  $form-element-transition-duration: get($duration, 'slowest');
-  $form-element-transition-delay: get($duration, 'faster');
+
+  $transition-duration: get($duration, 'slowest');
+  $transition-delay: get($duration, 'faster');
+  $transition-timing-function: get($ease, 'circ.out');
+
+  $loading: get($view-contact, 'loading');
+  $form-filter: blur(2px) grayscale(50%);
+  $form-transition-duration: get($duration, 'faster');
+  $form-transform: scale(0.9);
 
   background-color: $background-color;
   color: $color;
@@ -45,29 +53,49 @@
 
   button {
     &.#{$css-transition} {
-      transition-delay: $form-element-transition-delay;
+      transition-delay: $transition-delay;
     }
   }
 
   form {
     display: grid;
-    grid-template-areas: 'h1 message message message' 'p message message message' 'name message message message' 'email message message message' '. message message message' '. fieldset fieldset fieldset';
-    grid-template-columns: 400px repeat(3, 1fr);
+    grid-template-areas:
+      'h1 message message'
+      'p message message'
+      'name message message'
+      'email message message'
+      '. message message'
+      '. submit reset';
+    grid-template-columns: 400px repeat(2, 1fr);
     grid-template-rows: repeat(4, min-content) auto $gutter;
     min-height: 100vh;
     padding: get($grid, 'wide') + $gutter 0 0 $gutter;
+    transition-duration: $form-transition-duration;
+    transition-property: filter, transform;
+    transition-timing-function: $transition-timing-function;
 
     @include tablet() {
-      grid-template-areas: '. h1 h1 .' '. p p .' '. name name .' '. email email .' '. message message .' 'fieldset fieldset fieldset fieldset';
+      grid-template-areas:
+        '. h1 h1 .'
+        '. p p .'
+        '. name name .'
+        '. email email .'
+        '. message message .'
+        'submit submit reset reset';
       grid-template-columns: $gap repeat(2, 1fr) $gap;
       grid-template-rows: repeat(4, min-content) auto $gutter;
       padding-left: 0;
       padding-top: $space + $gutter;
     }
 
+    &.#{$loading} {
+      filter: $form-filter;
+      transform: $form-transform;
+    }
+
     > * {
       &.#{$css-transition} {
-        transition-duration: $form-element-transition-duration;
+        transition-duration: $transition-duration;
       }
     }
   }
@@ -100,7 +128,26 @@
     }
   }
 
+  [type='submit'] {
+    grid-area: submit;
+  }
+
+  [type='reset'] {
+    grid-area: reset;
+  }
+
   [data-view-component="#{$cta}"] {
-    grid-area: fieldset;
+    border-left: $border;
+
+    /* autoprefixer: ignore next */
+    display: contents;
+
+    @include tablet() {
+      border: unset;
+    }
+  }
+
+  [data-component="#{$spinner}"] {
+    fill: $color;
   }
 }

@@ -1,5 +1,5 @@
-declare namespace IView {
+declare namespace Spec {
   interface Props {}
 }
 
-export default IView;
+export default Spec;

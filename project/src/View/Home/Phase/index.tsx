@@ -1,14 +1,14 @@
-import { RandomId, RandomNumber } from '@/Helper';
-import IPhase from '@/View/Home/Phase/spec';
-import React, { useEffect, useState } from 'react';
-import Style from './Style';
+import { RandomId, RandomNumber } from "@/Helper";
+import Spec from "@/View/Home/Phase/spec";
+import React, { useEffect, useState } from "react";
+import Style from "./Style";
 
 const TOGGLE_TIME = 150;
 const WAIT_TIME = 4000;
 
 let debounce = TOGGLE_TIME;
 
-const Phase: React.FunctionComponent<IPhase.Props> = ({ words }) => {
+const Phase: React.FunctionComponent<Spec.Props> = ({ words }) => {
   let indexTimer: number;
   const end = words.length;
   const [index, updateIndex] = useState(RandomNumber({ start: 0, end }));

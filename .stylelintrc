@@ -28,6 +28,12 @@
     "max-nesting-depth": 6,
     "prettier/prettier": true,
     "selector-attribute-quotes": "always",
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": [ "attribute" ]
+      }
+    ],
     "scss/at-rule-no-unknown": [
       true,
       {

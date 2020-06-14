@@ -23,10 +23,18 @@
     "no-empty-interface": false,
     "no-implicit-dependencies": false,
     "no-namespace": [true, "allow-declarations"],
+    "no-object-literal-type-assertion": false,
     "no-shadowed-variable": false,
     "no-submodule-imports": false,
     "prettier": true,
     "react-hooks-nesting": "error",
-    "quotes": "single"
+    "quotes": "single",
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first"
+      }
+    ]
   }
 }

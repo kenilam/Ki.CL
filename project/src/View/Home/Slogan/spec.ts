@@ -1,10 +1,10 @@
-import IPhase from '@/View/Home/Phase/spec';
+import IPhase from "@/View/Home/Phase/spec";
 
-declare namespace ISlogan {
-  type ClassNames = IClassNames<'default'>;
+declare namespace Spec {
+  type ClassName = ClassNames<"default">;
   type Words = (IPhase.Word[] | string)[];
 
   interface Props {}
 }
 
-export default ISlogan;
+export default Spec;

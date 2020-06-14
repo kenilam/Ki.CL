@@ -1,5 +1,8 @@
-declare namespace IAbout {
-  interface Props {}
+import CSSTransition from "@/Components/CSSTransition/spec";
+
+declare namespace Spec {
+  type Type = CSSTransition.Type;
+  type Props = {};
 }
 
-export default IAbout;
+export default Spec;

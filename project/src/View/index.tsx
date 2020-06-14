@@ -1,42 +1,27 @@
-import { Router } from '@/Component';
-import { useLocation } from '@/Component/Router';
-import React, { FunctionComponent } from 'react';
-import About, {
-  path as aboutPath,
-  transitionType as aboutTransitionType,
-} from './About';
-import Contact, {
-  path as contactPath,
-  transitionType as contactTransitionType,
-} from './Contact';
-import Home, {
-  path as homePath,
-  transitionType as homeTransitionType,
-} from './Home';
-import PageNotFound from './PageNotFound';
-import IView from './spec';
-import Works, {
-  path as workPath,
-  transitionType as workTransitionType,
-} from './Works';
+import { Router } from "@/Components";
+import React, { FunctionComponent } from "react";
+import { useLocation } from "react-router-dom";
+import About, * as AboutSettings from "./About";
+import Contact, * as ContactSettings from "./Contact";
+import Home, * as HomeSettings from "./Home";
+import Works, * as WorksSettings from "./Works";
+import Spec from "./spec";
 
-const TRANSITION_TYPES: IView.TransitionType = {
-  [aboutPath]: aboutTransitionType,
-  [contactPath]: contactTransitionType,
-  [homePath]: homeTransitionType,
-  [workPath]: workTransitionType,
+const transitionTypes: Spec.TransitionTypes = {
+  [AboutSettings.path]: AboutSettings.transitionType,
+  [ContactSettings.path]: ContactSettings.transitionType,
+  [HomeSettings.path]: HomeSettings.transitionType,
+  [WorksSettings.path]: WorksSettings.transitionType,
 };
 
-const View: FunctionComponent<IView.Props> = () => {
-  const { pathname } = useLocation<IView.TransitionTypePaths>();
-
+const View: FunctionComponent<Spec.Props> = () => {
+  const { pathname } = useLocation();
   return (
-    <Router routeIndex={0} transitionType={TRANSITION_TYPES[pathname]}>
+    <Router appear={true} routeIndex={0} type={transitionTypes[pathname]}>
       {About}
       {Contact}
       {Home}
       {Works}
-      {PageNotFound}
     </Router>
   );
 };
