@@ -1,0 +1,31 @@
+import CSSTransition from "@/Components/CSSTransition/spec";
+import React from "react";
+
+declare namespace Spec {
+  type ClassName = ClassNames<"delay">;
+
+  type AwaitFor = string;
+  type PreventBy = boolean;
+  type Children<T> = (data: Data<T>) => React.ReactNode;
+
+  type Status = {
+    error?: boolean;
+    success?: boolean;
+  };
+
+  type Data<T> = Status & {
+    result?: T;
+  };
+
+  type Props<T> = {
+    awaitFor: AwaitFor;
+    awaitForOptions?: RequestInit;
+    preventBy?: PreventBy;
+    children: Children<T>;
+    onError?: (data: Data<T>) => void;
+    onSuccess?: (data: Data<T>) => void;
+    transitionType?: CSSTransition.Type;
+  };
+}
+
+export default Spec;

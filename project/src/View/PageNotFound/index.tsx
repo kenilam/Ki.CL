@@ -1,7 +1,7 @@
-import resources from '$/resources';
-import { Redirect, Route, useLocation } from '@/Component/Router';
-import React, { FunctionComponent } from 'react';
-import IPageNotFound from './spec';
+import resources from "$/resources";
+import { useLocation, Redirect, Route } from "@/Components/Router";
+import React, { FunctionComponent } from "react";
+import Spec from "./spec";
 
 const {
   view: {
@@ -9,7 +9,7 @@ const {
   },
 } = resources;
 
-const PageNotFound: FunctionComponent<IPageNotFound.Props> = () => {
+const PageNotFound: FunctionComponent<Spec.Props> = () => {
   const location = useLocation();
 
   // To prevents react-router redirect twice with the warning as follow:

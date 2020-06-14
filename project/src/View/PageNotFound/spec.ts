@@ -1,5 +1,5 @@
-declare namespace IPageNotFound {
+declare namespace Spec {
   interface Props {}
 }
 
-export default IPageNotFound;
+export default Spec;

@@ -1,14 +1,15 @@
-declare namespace IHelper {
+declare namespace Spec {
   interface Style {
     [name: string]: any;
   }
 
   type Cancel = () => void;
+  type Trigger<T> = () => Promise<T>;
 
-  type Fetch = (
-    url: string,
-    options?: RequestInit
-  ) => { cancel: Cancel; promise: Promise<unknown> };
+  type Fetch<T> = {
+    cancel: Cancel;
+    trigger: Trigger<T>;
+  };
 }
 
-export default IHelper;
+export default Spec;

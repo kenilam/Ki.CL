@@ -1,0 +1,60 @@
+.#{get($component-transition, "default")} {
+  $css-transition: get($component-css-transition, 'default');
+
+  $enter: get($component-css-transition, 'enter.default');
+  $enter-active: get($component-css-transition, 'enter.active');
+  $exit: get($component-css-transition, 'exit.default');
+  $exit-active: get($component-css-transition, 'exit.active');
+
+  $css-transition-stand-alone: get($component-css-transition, 'standalone');
+
+  $slide-from-left: get($component-css-transition-slide-from-left, 'default');
+  $slide-from-right: get($component-css-transition-slide-from-right, 'default');
+
+  $slide-down: get($component-css-transition-slide-down, 'default');
+  $slide-up: get($component-css-transition-slide-up, 'default');
+
+  $exit-distance: 5rem;
+
+  @mixin transition-type($type) {
+    &[data-transition-type="#{$type}"] {
+      > .#{$css-transition} {
+        &:not(.#{$css-transition-stand-alone}) {
+          @content;
+        }
+      }
+    }
+  }
+
+  @include transition-type($slide-from-right) {
+    &.#{$exit} {
+      &.#{$exit-active} {
+        transform: translate3d(-$exit-distance, 0, 0);
+      }
+    }
+  }
+
+  @include transition-type($slide-from-left) {
+    &.#{$exit} {
+      &.#{$exit-active} {
+        transform: translate3d($exit-distance, 0, 0);
+      }
+    }
+  }
+
+  @include transition-type($slide-down) {
+    &.#{$exit} {
+      &.#{$exit-active} {
+        transform: translate3d(0, $exit-distance, 0);
+      }
+    }
+  }
+
+  @include transition-type($slide-up) {
+    &.#{$exit} {
+      &.#{$exit-active} {
+        transform: translate3d(0, -$exit-distance, 0);
+      }
+    }
+  }
+}

@@ -1,3 +1,7 @@
-declare namespace IHome {}
+import CSSTransition from "@/Components/CSSTransition/spec";
 
-export default IHome;
+declare namespace Spec {
+  type Type = CSSTransition.Type;
+}
+
+export default Spec;

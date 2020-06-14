@@ -11,7 +11,6 @@ $transition-duration: get($duration, 'fast');
 $transition-delay: get($duration, 'fastest');
 $transition-delay-alternative-component: get($duration, 'faster');
 
-$close-button: get($component-close-button, 'default');
 $navigation: get($component-navigation, 'default');
 $logo: get($component-logo, 'default');
 
@@ -23,10 +22,6 @@ $gap: get($grid, 'gutter');
 $space: get($grid, 'space');
 $max-width: get($grid, 'default') * 10;
 $underlay-background-color: get($black, 'pure');
-$grid-template-areas: 'close-button close-button . .' '. . . .' '. logo logo .'
-  '. h2 h2 .' '. content content .' '. go-home go-home .' '. . . .' '. . . .';
-$grid-template-rows: min-content auto max-content max-content max-content
-  max-content auto $bleed;
 
 [data-routes='about'] {
   background-color: $background-color;
@@ -42,9 +37,9 @@ $grid-template-rows: min-content auto max-content max-content max-content
   article {
     display: grid;
     grid-gap: $gap;
-    grid-template-areas: $grid-template-areas;
-    grid-template-columns: $gap auto auto $gap;
-    grid-template-rows: $grid-template-rows;
+    grid-template-areas: '. . .' '. logo .' '. h2 .' '. content .' '. go-home .' '. . .';
+    grid-template-columns: $gap auto $gap;
+    grid-template-rows: min-content auto max-content max-content max-content max-content auto;
     max-width: 100%;
     min-height: 100vh;
 
@@ -76,11 +71,7 @@ $grid-template-rows: min-content auto max-content max-content max-content
     grid-area: content;
     max-width: $max-width;
     text-align: center;
-  }
-
-  [data-component="#{$close-button}"] {
-    grid-area: close-button;
-    justify-self: start;
+    white-space: pre-line;
   }
 
   article > [data-component="#{$navigation}"] {
@@ -89,13 +80,7 @@ $grid-template-rows: min-content auto max-content max-content max-content
   }
 
   [data-component="#{$logo}"] {
+    align-self: end;
     grid-area: logo;
-  }
-
-  body:not([data-exited-routes]) & {
-    [data-component="#{$close-button}"] {
-      opacity: 0;
-      pointer-events: none;
-    }
   }
 }

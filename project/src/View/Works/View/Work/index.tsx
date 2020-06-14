@@ -1,7 +1,7 @@
-import resources from '$/resources';
-import { Route, useRouteMatch } from '@/Component/Router';
-import React, { FunctionComponent } from 'react';
-import IWork from './spec';
+import resources from "$/resources";
+import { useRouteMatch, Route } from "@/Components/Router";
+import React, { FunctionComponent } from "react";
+import Spec from "./spec";
 
 const {
   view: {
@@ -13,10 +13,10 @@ const {
   },
 } = resources;
 
-const Work: FunctionComponent<IWork.Props> = () => {
+const Work: FunctionComponent<Spec.Props> = () => {
   const {
     params: { projectId },
-  }: IWork.Match = useRouteMatch({ path });
+  }: Spec.Match = useRouteMatch({ path });
 
   return <section data-routes={`works.${projectId}`}>{projectId}</section>;
 };

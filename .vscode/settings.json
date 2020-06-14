@@ -10,5 +10,9 @@
   "prettier.jsxSingleQuote": true,
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.lintTask.enable": true,
+  "eslint.format.enable": true,
+  "eslint.debug": true
 }
