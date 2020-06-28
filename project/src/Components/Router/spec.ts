@@ -1,6 +1,6 @@
-import Transition from "@/Components/Transition/spec";
+import Transition from '@/Components/Transition/spec';
 
-declare namespace Spec {
+declare module Spec {
   type Enter = Transition.Enter;
   type Exit = Transition.Exit;
 

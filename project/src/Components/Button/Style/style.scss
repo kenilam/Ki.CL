@@ -9,13 +9,13 @@ $exit: get($component-css-transition, 'exit.default');
 $exit-active: get($component-css-transition, 'exit.active');
 $exit-done: get($component-css-transition, 'exit.active');
 
-[data-component="#{$default}"] {
-  &[type='submit'] {
+[data-component=#{$default}] {
+  &[type=submit] {
     background-color: $green;
     color: get($black, 'default');
   }
 
-  &[type='reset'] {
+  &[type=reset] {
     background-color: get($grey, 'darkest');
     color: $red;
   }

@@ -1,3 +1,3 @@
-import useHandlers from "./useHandlers";
+import useHandlers from './useHandlers';
 
 export { useHandlers };

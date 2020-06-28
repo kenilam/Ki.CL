@@ -1,15 +1,15 @@
-declare namespace Spec {
+declare module Spec {
   interface Match {
     params: Params;
   }
 
-  type Param = "projectId";
+  type Param = 'projectId';
 
   type Params = {
     [name in Param]: string;
   };
 
-  interface Props {}
+  type Props = unknown;
 }
 
 export default Spec;

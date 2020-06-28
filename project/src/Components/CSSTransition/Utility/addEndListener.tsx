@@ -1,5 +1,5 @@
-import Spec from "@/Components/CSSTransition/spec";
-import duration from "./duration";
+import Spec from '@/Components/CSSTransition/spec';
+import duration from './duration';
 
 const addEndListener: Spec.AddEndListener = (node, done) => {
   const waitTime = duration(node);

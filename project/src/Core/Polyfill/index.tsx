@@ -1,4 +1,4 @@
-import * as Polyfill from './spec';
+import Polyfill from './spec';
 
 const {
   IntersectionObserver,
@@ -6,8 +6,8 @@ const {
   fetch: Fetch,
 }: Polyfill.Window = window;
 
-async function loadPolyfill(): Promise<any> {
-  let smoothScroll: { polyfill(): void } | any;
+async function loadPolyfill(): Promise<void> {
+  let smoothScroll: { polyfill(): void } | null;
 
   try {
     if (typeof AbortController === 'undefined') {

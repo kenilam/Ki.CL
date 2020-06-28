@@ -1,7 +1,7 @@
 $default: get($component-spinner, 'default');
 $with-overlay: get($component-spinner, 'withoverlay');
 
-[data-component="#{$default}"] {
+[data-component=#{$default}] {
   $background-color: get($black, 'light');
   $background-opacity: 0.5;
   $color: get($white, 'default');

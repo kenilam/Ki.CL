@@ -8,10 +8,12 @@ import Style from './Style';
 const {
   view: {
     home: {
-      content: { slogan },
+      content,
     },
   },
 } = resources;
+
+const slogan = content.slogen as string;
 
 let result: RegExpExecArray;
 let index = 0;

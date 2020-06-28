@@ -1,19 +1,19 @@
-import { Omit } from "@/spec.helpers";
-import { Key } from "react";
+import { Omit } from '@/spec.helpers';
+import { Key } from 'react';
 import {
   CSSTransitionClassNames,
   CSSTransitionProps,
-} from "react-transition-group/CSSTransition";
+} from 'react-transition-group/CSSTransition';
 import {
   EndHandler,
   EnterHandler,
   ExitHandler,
-} from "react-transition-group/Transition";
-import Origin from "./Type/spec";
+} from 'react-transition-group/Transition';
+import Origin from './Type/spec';
 
-declare namespace Spec {
+declare module Spec {
   type ClassName = CSSTransitionClassNames &
-    ClassNames<"default" | "standalone">;
+    ClassNames<'default' | 'standalone'>;
 
   type Enter = EnterHandler<null>;
   type Exit = ExitHandler<null>;
@@ -24,7 +24,7 @@ declare namespace Spec {
 
   type Type = Origin.Type;
 
-  type Props = Omit<CSSTransitionProps, "addEndListener"> & {
+  type Props = Omit<CSSTransitionProps, 'addEndListener'> & {
     addEndListener?: AddEndListener;
     standalone?: boolean;
     transitionKey?: Key;

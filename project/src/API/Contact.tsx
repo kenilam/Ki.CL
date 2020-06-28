@@ -1,6 +1,6 @@
-import Spec from "@/API/spec";
-import { Asynchronizer } from "@/Components";
-import React, { FunctionComponent } from "react";
+import Spec from '@/API/spec';
+import { Asynchronizer } from '@/Components';
+import React, { FunctionComponent } from 'react';
 
 const url = `${process.env.API_URL}/api/contact`;
 
@@ -19,7 +19,7 @@ const Contact: FunctionComponent<Spec.Contact.Props> = ({
   ...rest
 }) => {
   const awaitForOptions = {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(params),
   };
 

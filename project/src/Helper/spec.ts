@@ -1,5 +1,5 @@
-declare namespace Spec {
-  interface Style {
+declare module Spec {
+  type Style = {
     [name: string]: any;
   }
 

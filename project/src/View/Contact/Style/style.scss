@@ -136,6 +136,13 @@
     }
 
     &.#{$css-transition} {
+      transition-delay: $transition-delay * 4;
+    }
+  }
+
+  [type='submit'],
+  [type='reset'] {
+    &.#{$css-transition} {
       transition-delay: $transition-delay * 3;
     }
   }
@@ -148,7 +155,7 @@
     grid-area: reset;
   }
 
-  [data-view-component="#{$cta}"] {
+  [data-view-component=#{$cta}] {
     border-left: $border;
 
     /* autoprefixer: ignore next */
@@ -157,13 +164,9 @@
     @include tablet() {
       border: unset;
     }
-
-    &.#{$css-transition} {
-      transition-delay: $transition-delay * 4;
-    }
   }
 
-  [data-component="#{$spinner}"] {
+  [data-component=#{$spinner}] {
     fill: $color;
   }
 }

@@ -1,7 +1,7 @@
-import Api from "@/API/spec";
-import { SyntheticEvent } from "react";
+import Api from '@/API/spec';
+import { SyntheticEvent } from 'react';
 
-declare namespace Spec {
+declare module Spec {
   type Actions = {
     type: Type;
     data?: Data;
@@ -24,7 +24,7 @@ declare namespace Spec {
 
   type Reducer = (state: Data, actions: Actions) => void;
 
-  type Type = "CHANGE" | "RENDER" | "ERROR" | "SUBMIT" | "SUCCESS" | "RESET";
+  type Type = 'CHANGE' | 'RENDER' | 'ERROR' | 'SUBMIT' | 'SUCCESS' | 'RESET';
 
   type Types = {
     [name in Type]: Type;

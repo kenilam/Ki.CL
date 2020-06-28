@@ -1,4 +1,4 @@
-[data-routes='home'] {
+[data-routes=home] {
   $logo: get($component-logo, 'default');
   $navigation: get($component-navigation, 'default');
   $background-color: get($black, 'default');
@@ -31,12 +31,10 @@
   a {
     color: get($white, 'default');
   }
-
-  [data-component="#{$logo}"] {
+  [data-component=#{$logo}] {
     grid-area: logo;
   }
-
-  [data-component="#{$navigation}"] {
+  [data-component=#{$navigation}] {
     font-weight: get($font, 'font-weight.bolder');
     grid-area: navigation;
     grid-gap: get($grid, 'narrower');
@@ -87,12 +85,12 @@
   }
 }
 
-[data-entered-routes='home'] {
+[data-entered-routes=home] {
   $exit-active: #{get($component-css-transition, 'exit.active')};
 
   $global-header: get($component-global-header, 'default');
 
-  [data-component="#{$global-header}"] {
+  [data-component=#{$global-header}] {
     &.#{$exit-active} {
       transform: unset;
     }

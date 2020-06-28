@@ -1,6 +1,6 @@
 $default: get($view-home-slogan, 'default');
 
-[data-view-component="{$default}"] {
+[data-view-component=#{$default}] {
   display: initial;
   transition-duration: get($duration, 'faster');
   transition-property: text-shadow;

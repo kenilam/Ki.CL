@@ -12,28 +12,8 @@
     "stylelint-config-recommended-scss"
   ],
   "rules": {
-    "at-rule-empty-line-before": [
-      "always",
-      {
-        "except": [
-          "blockless-after-blockless",
-          "first-nested"
-        ],
-        "ignore": [
-          "after-comment"
-        ]
-      }
-    ],
     "at-rule-no-unknown": null,
     "max-nesting-depth": 6,
-    "prettier/prettier": true,
-    "selector-attribute-quotes": "always",
-    "selector-no-qualifying-type": [
-      true,
-      {
-        "ignore": [ "attribute" ]
-      }
-    ],
     "scss/at-rule-no-unknown": [
       true,
       {
@@ -56,8 +36,11 @@
         ]
       }
     ],
-    "string-quotes" : [
-      "single"
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": ["attribute"]
+      }
     ]
   }
 }

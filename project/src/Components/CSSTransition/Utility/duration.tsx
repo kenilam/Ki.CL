@@ -1,11 +1,11 @@
-import Style from "@/Components/CSSTransition/Style";
-import { CSSUnit } from "@/Helper";
-import getTransitionDuration from "get-transition-duration";
+import Style from '@/Components/CSSTransition/Style';
+import { CSSUnit } from '@/Helper';
+import getTransitionDuration from 'get-transition-duration';
 
 const getAnimationDuration = (node: HTMLElement) => {
   const styles = window.getComputedStyle(node);
 
-  if (styles.animationName === "none") {
+  if (styles.animationName === 'none') {
     return 0;
   }
 

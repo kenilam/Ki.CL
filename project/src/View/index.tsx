@@ -1,11 +1,11 @@
-import { Router } from "@/Components";
-import React, { FunctionComponent } from "react";
-import { useLocation } from "react-router-dom";
-import About, * as AboutSettings from "./About";
-import Contact, * as ContactSettings from "./Contact";
-import Home, * as HomeSettings from "./Home";
-import Works, * as WorksSettings from "./Works";
-import Spec from "./spec";
+import { Router } from '@/Components';
+import React, { FunctionComponent } from 'react';
+import { useLocation } from 'react-router-dom';
+import About, * as AboutSettings from './About';
+import Contact, * as ContactSettings from './Contact';
+import Home, * as HomeSettings from './Home';
+import Works, * as WorksSettings from './Works';
+import Spec from './spec';
 
 const transitionTypes: Spec.TransitionTypes = {
   [AboutSettings.path]: AboutSettings.transitionType,

@@ -1,7 +1,7 @@
-import { CSSTransition } from "@/Components";
-import React, { useRef } from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import { CSSTransition } from '@/Components';
+import React, { useRef } from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const Input: React.FunctionComponent<Spec.Props> = ({
   autoFocus,

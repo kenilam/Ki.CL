@@ -2,27 +2,27 @@ type ClassNames<T extends string> = {
   [name in T]: string;
 };
 
-declare module "*.scss" {
+declare module '*.scss' {
   const classNames: ClassNames<string>;
   export default classNames;
 }
 
-declare module "*.json" {
-  const value: any;
+declare module '*.json' {
+  const value: void;
   export default value;
 }
 
-declare module "abortcontroller-polyfill/dist/polyfill-patch-fetch";
-declare module "bandcamp-scraper";
-declare module "get-transition-duration";
-declare module "intersection-observer" {
-  export function search(): Promise<any>;
+declare module 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
+declare module 'bandcamp-scraper';
+declare module 'get-transition-duration';
+declare module 'intersection-observer' {
+  export function search(): Promise<void>;
 }
-declare module "promise-polyfill/src/polyfill";
-declare module "react-audio-player";
-declare module "react-pure-lifecycle";
-declare module "unfetch/polyfill";
-declare module "units-css" {
+declare module 'promise-polyfill/src/polyfill';
+declare module 'react-audio-player';
+declare module 'react-pure-lifecycle';
+declare module 'unfetch/polyfill';
+declare module 'units-css' {
   export function parse(
     s: string
   ): {
@@ -32,8 +32,8 @@ declare module "units-css" {
 
   export function convert(
     BASE_UNIT: string,
-    values: any,
+    values: string | number,
     htmlBodyElement?: HTMLBodyElement
   ): number;
 }
-declare module "webgl-noise";
+declare module 'webgl-noise';

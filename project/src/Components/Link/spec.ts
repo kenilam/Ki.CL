@@ -1,8 +1,8 @@
-import { ComponentType } from "react";
-import { NavLinkProps } from "react-router-dom";
+import { ComponentType } from 'react';
+import { NavLinkProps } from 'react-router-dom';
 
-declare namespace ILink {
-  type ClassName = ClassNames<"default" | "active">;
+declare module Spec {
+  type ClassName = ClassNames<'default' | 'active'>;
 
   type Props = NavLinkProps & {
     className?: string;
@@ -10,4 +10,4 @@ declare namespace ILink {
   };
 }
 
-export default ILink;
+export default Spec;

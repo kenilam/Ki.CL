@@ -1,8 +1,8 @@
-import { CSSTransition } from "@/Components";
-import classnames from "classnames";
-import React, { useRef } from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import { CSSTransition } from '@/Components';
+import classnames from 'classnames';
+import React, { useRef } from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const TextArea: React.FunctionComponent<Spec.Props> = ({
   autoFocus,

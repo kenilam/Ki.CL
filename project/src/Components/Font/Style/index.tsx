@@ -1,1 +1,1 @@
-import "./KICL";
+import './KICL';

@@ -6,6 +6,6 @@ $size: get($grid, 'gutter');
 $transition-duration: get($duration, 'fast');
 $transition-timing-function: get($ease, 'default.in');
 
-[data-component="#{$default}"] {
+[data-component=#{$default}] {
   position: relative;
 }

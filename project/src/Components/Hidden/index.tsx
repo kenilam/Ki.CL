@@ -1,7 +1,7 @@
-import classnames from "classnames";
-import React from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import classnames from 'classnames';
+import React from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const Hidden: React.FunctionComponent<Spec.Props> = ({
   children,
@@ -12,11 +12,11 @@ const Hidden: React.FunctionComponent<Spec.Props> = ({
     children,
     (child: React.DetailedReactHTMLElement<Spec.Child, null>) => {
       const props: Spec.Child = {
-        ["data-component"]: Style.default,
+        ['data-component']: Style.default,
       };
 
       if (useClassName) {
-        delete props["data-component"];
+        delete props['data-component'];
 
         props.className = classnames(
           className,

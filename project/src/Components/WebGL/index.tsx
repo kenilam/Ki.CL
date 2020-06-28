@@ -1,8 +1,8 @@
-import { GLSL, Node, Shaders } from "gl-react";
-import { Surface } from "gl-react-dom";
-import React from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import { GLSL, Node, Shaders } from 'gl-react';
+import { Surface } from 'gl-react-dom';
+import React from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const WebGL = ({ className, children, height, width }: Spec.Props) => (
   <div className={className} data-component={Style.default}>

@@ -28,8 +28,7 @@ $underlay-background-color: get($black, 'pure');
   color: $color;
   position: relative;
 
-  [data-component="#{$logo}"],
-  h2,
+  [data-component=#{$logo}] h2,
   p {
     justify-self: center;
   }
@@ -74,12 +73,12 @@ $underlay-background-color: get($black, 'pure');
     white-space: pre-line;
   }
 
-  article > [data-component="#{$navigation}"] {
+  article > [data-component=#{$navigation}] {
     grid-area: go-home;
     justify-self: center;
   }
 
-  [data-component="#{$logo}"] {
+  [data-component=#{$logo}] {
     align-self: end;
     grid-area: logo;
   }

@@ -5,7 +5,6 @@ import webpack from 'webpack';
 import { context } from '../entry';
 
 const tsconfig = `${appRoot}/tsconfig.json`;
-const tslint = `${appRoot}/tslint.json`;
 
 const Loaders = {
   test: /\.(tsx|ts)$/,
@@ -34,6 +33,9 @@ const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new ForkTsCheckerWebpackPlugin({
     async: true,
+    eslint: {
+      files: `${context}/**/*.{ts,tsx,js,jsx}`
+    },
     typescript: {
       configFile: tsconfig
     }

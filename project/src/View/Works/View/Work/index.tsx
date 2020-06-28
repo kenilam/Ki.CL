@@ -1,7 +1,7 @@
-import resources from "$/resources";
-import { useRouteMatch, Route } from "@/Components/Router";
-import React, { FunctionComponent } from "react";
-import Spec from "./spec";
+import resources from '$/resources';
+import { useRouteMatch, Route } from '@/Components/Router';
+import React, { FunctionComponent } from 'react';
+import Spec from './spec';
 
 const {
   view: {

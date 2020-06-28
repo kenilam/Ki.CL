@@ -1,6 +1,8 @@
 @import './transitionTypes';
 
-.#{get($component-transition, "default")} {
+$default: get($component-transition, 'default');
+
+.#{$default} {
   $css-transition: get($component-css-transition, 'default');
   $css-transition-stand-alone: get($component-css-transition, 'standalone');
 

@@ -1,22 +1,24 @@
-import resources from "$/resources";
-import { Link } from "@/Components";
-import classnames from "classnames";
-import React from "react";
-import Style from "./Style";
-import ILogo from "./spec";
+import resources from '$/resources';
+import { Link } from '@/Components';
+import classnames from 'classnames';
+import React from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const {
   component: {
-    logo: {
-      content: { message, title },
-    },
+    logo,
   },
   view: {
     home: { path },
   },
 } = resources;
 
-const Logo: React.FunctionComponent<ILogo.Props> = ({ isSquare }) => {
+const content = logo.content as { message: string, title: string };
+const message = content.message as string;
+const title = content.title as string;
+
+const Logo: React.FunctionComponent<Spec.Props> = ({ isSquare }) => {
   const className = classnames({
     [Style.square]: isSquare,
   });

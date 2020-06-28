@@ -1,10 +1,10 @@
-declare namespace Spec {
+declare module Spec {
   type ClassName = ClassNames<
-    | "default"
-    | "lowerShadowColor"
-    | "lowerShadowDistance"
-    | "upperShadowColor"
-    | "upperShadowDistance"
+    | 'default'
+    | 'lowerShadowColor'
+    | 'lowerShadowDistance'
+    | 'upperShadowColor'
+    | 'upperShadowDistance'
   >;
 
   type Word = {

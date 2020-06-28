@@ -1,10 +1,10 @@
-import resources from "$/resources";
-import { Link } from "@/Components";
-import Spec from "@/Components/Navigation/spec";
-import { RandomId } from "@/Helper";
-import classnames from "classnames";
-import React from "react";
-import Style from "./Style";
+import resources from '$/resources';
+import { Link } from '@/Components';
+import Spec from '@/Components/Navigation/spec';
+import { RandomId } from '@/Helper';
+import classnames from 'classnames';
+import React from 'react';
+import Style from './Style';
 
 const { view } = resources;
 
@@ -29,10 +29,10 @@ const Navigation: React.FunctionComponent<Spec.Props> = ({
 }) => (
   <nav
     className={classnames(className, {
-      "is-inline": inline,
+      'is-inline': inline,
     })}
     data-component={Style.default}
-    role="navigation"
+    role='navigation'
   >
     {(items || DEFAULT_ITEMS).map(({ children, to }) => (
       <Link

@@ -1,4 +1,6 @@
-.#{get($component-transition, "default")} {
+$default: get($component-transition, 'default');
+
+.#{$default} {
   $css-transition: get($component-css-transition, 'default');
 
   $enter: get($component-css-transition, 'enter.default');
@@ -17,7 +19,7 @@
   $exit-distance: 50%;
 
   @mixin transition-type($type) {
-    &[data-transition-type="#{$type}"] {
+    &[data-transition-type=#{$type}] {
       > .#{$css-transition} {
         &:not(.#{$css-transition-stand-alone}) {
           &.#{$enter} {

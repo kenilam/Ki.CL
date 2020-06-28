@@ -1,5 +1,5 @@
-declare namespace IResources {
-  namespace Data {
+declare module Spec {
+  module Data {
     type Message = string;
     type Name = string;
     type Path = string;
@@ -7,7 +7,7 @@ declare namespace IResources {
     type SiteName = string;
 
     interface Content {
-      [name: string]: any;
+      [name: string]: Record<string, unknown> | string
     }
 
     interface Component {
@@ -39,12 +39,12 @@ declare namespace IResources {
   }
 
   export class Data {
-    component: IResources.Data.Component;
-    description: IResources.Data.Description;
-    miscellaneous: IResources.Data.Miscellaneous;
-    siteName: IResources.Data.SiteName;
-    view: IResources.Data.Views;
+    component: Spec.Data.Component;
+    description: Spec.Data.Description;
+    miscellaneous: Spec.Data.Miscellaneous;
+    siteName: Spec.Data.SiteName;
+    view: Spec.Data.Views;
   }
 }
 
-export default IResources;
+export default Spec;
