@@ -1,23 +1,11 @@
 import classnames from "classnames";
 import React, { FunctionComponent } from "react";
 import { CSSTransition as Origin } from "react-transition-group";
+import { useHandlers } from "./Hook";
 import Style from "./Style";
 import * as Types from "./Type";
 import { addEndListener } from "./Utility";
 import Spec from "./spec";
-
-const { classNames } = Types;
-
-const DEFAULT_CLASS_LISTS = [
-  Style.default,
-  Style.appear,
-  Style.appearDone,
-  Style.enter,
-  Style.enterDone,
-  Style.exit,
-  Style.exitDone,
-  Style.standalone,
-];
 
 const CSSTransition: FunctionComponent<Spec.Props> = ({
   addEndListener: customEndListener,
@@ -31,25 +19,12 @@ const CSSTransition: FunctionComponent<Spec.Props> = ({
   type,
   ...rest
 }) => {
-  const onEntered: Spec.Enter = (node, isAppearing) => {
-    if (node && !customEndListener) {
-      node.classList.remove(...DEFAULT_CLASS_LISTS, classNames[type]);
-    }
-
-    if (enteredHandler) {
-      enteredHandler(node, isAppearing);
-    }
-  };
-
-  const onExited: Spec.Exit = (node) => {
-    if (node && !customEndListener) {
-      node.classList.remove(...DEFAULT_CLASS_LISTS, classNames[type]);
-    }
-
-    if (exitedHandler) {
-      exitedHandler(node);
-    }
-  };
+  const { onEntered, onExited } = useHandlers({
+    addEndListener: customEndListener,
+    onEntered: enteredHandler,
+    onExited: exitedHandler,
+    type,
+  });
 
   const props = {
     ...rest,

@@ -17,4 +17,4 @@ declare namespace Spec {
   };
 }
 
-export default IPhase;
+export default Spec;

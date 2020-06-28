@@ -13,9 +13,9 @@ const {
 } = resources;
 
 const Description: React.FunctionComponent<Spec.Props> = (props) => (
-  <Types.SlideFromLeft {...props}>
+  <Types.SlideUp {...props}>
     <p data-view-component={Style.default}>{description}</p>
-  </Types.SlideFromLeft>
+  </Types.SlideUp>
 );
 
 export default Description;

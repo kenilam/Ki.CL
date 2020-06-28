@@ -16,7 +16,6 @@
   grid-template-rows: min-content min-content auto;
   overflow: hidden;
   padding: $padding-top $space 0;
-  z-index: 2000;
 
   @include mobile() {
     grid-template-columns: min-content auto min-content;

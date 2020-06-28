@@ -3,7 +3,6 @@ import config from '^/ki-cl.config';
 import open from 'opn';
 import webpack from 'webpack';
 import { srcRoot as assetPath } from './asset';
-import { srcRoot as contentPath } from './content';
 import { publicPath } from './output';
 
 const { host, port } = config.localhost;
@@ -35,7 +34,7 @@ const optimization = {
   occurrenceOrder: true,
 };
 
-const contentBase = [assetPath, contentPath].map((path) => `${path}/`);
+const contentBase = [assetPath].map((path) => `${path}/`);
 
 const devServer = {
   https: true,

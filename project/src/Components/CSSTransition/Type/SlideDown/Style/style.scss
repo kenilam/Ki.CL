@@ -9,17 +9,14 @@ $exit-active: get($component-css-transition, 'exit.active');
 $exit-done: get($component-css-transition, 'exit.done');
 
 .#{$css-transition}.#{$style} {
-  transition-property: transform;
-  will-change: transform;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
 
   &.#{$appear}:not(.#{$appear-active}),
   &.#{$enter}:not(.#{$enter-active}),
   &.#{$exit}.#{$exit-active},
   &.#{$exit-done} {
+    opacity: 0;
     transform: translate3d(0, -100%, 0);
-
-    &::before {
-      opacity: 0;
-    }
   }
 }

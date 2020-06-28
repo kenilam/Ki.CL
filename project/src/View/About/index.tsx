@@ -5,7 +5,6 @@ import { types } from "@/Components/CSSTransition/Type";
 import { Route } from "@/Components/Router";
 import React from "react";
 import "./Style";
-import Spec from "./spec";
 
 const {
   view: {
@@ -18,14 +17,14 @@ const {
 
 const transitionType = types.SlideFromRight;
 
-const About: React.FunctionComponent<Spec.Props> = () => (
+const About = (
   <main data-routes="about">
     <API.About>
-      {({ result }) => (
+      {(data) => (
         <article>
           <Logo />
           <h2>{heading}</h2>
-          <p>{result.sections.About}</p>
+          <p>{data?.result?.sections?.About}</p>
           <Navigation
             inline={true}
             items={[{ children: action.name, to: action.path }]}
@@ -37,8 +36,4 @@ const About: React.FunctionComponent<Spec.Props> = () => (
 );
 
 export { path, transitionType };
-export default (
-  <Route path={path}>
-    <About />
-  </Route>
-);
+export default <Route path={path}>{About}</Route>;

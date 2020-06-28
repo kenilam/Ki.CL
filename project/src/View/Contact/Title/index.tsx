@@ -13,9 +13,9 @@ const {
 } = resources;
 
 const Title: React.FunctionComponent<Spec.Props> = (props) => (
-  <Types.SlideFromLeft {...props}>
+  <Types.Fade {...props}>
     <h1 data-view-component={Style.default}>{title}</h1>
-  </Types.SlideFromLeft>
+  </Types.Fade>
 );
 
 export default Title;

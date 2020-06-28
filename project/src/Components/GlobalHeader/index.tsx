@@ -16,7 +16,7 @@ const GlobalHeader: React.FunctionComponent<Spec.Props> = () => {
   const { pathname } = useLocation();
 
   return (
-    <Types.Fade
+    <Types.SlideDown
       in={!INVALID_PATHS.some((path) => pathname === path)}
       standalone={true}
     >
@@ -31,7 +31,7 @@ const GlobalHeader: React.FunctionComponent<Spec.Props> = () => {
           ]}
         />
       </header>
-    </Types.Fade>
+    </Types.SlideDown>
   );
 };
 

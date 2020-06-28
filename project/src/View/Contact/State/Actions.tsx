@@ -4,6 +4,7 @@ import Spec from "./spec";
 const types: Spec.Types = {
   CHANGE: "CHANGE",
   ERROR: "ERROR",
+  RENDER: "RENDER",
   RESET: "RESET",
   SUBMIT: "SUBMIT",
   SUCCESS: "SUCCESS",
@@ -15,6 +16,7 @@ const initialData: Spec.Data = {
   message: null,
   name: null,
   shouldSubmit: false,
+  shouldRender: false,
 };
 
 const getFormData = (event: SyntheticEvent<HTMLFormElement>): Spec.Data => {
@@ -30,47 +32,55 @@ const getFormData = (event: SyntheticEvent<HTMLFormElement>): Spec.Data => {
 };
 
 const Actions = (): Spec.Props => {
-  const reducer: Spec.Reducer = (form, actions) => {
-    const { type, data } = actions;
-
-    const fields = data || ({} as Spec.Data);
+  const reducer: Spec.Reducer = (current, actions) => {
+    const { data: next = {} as Spec.Data, type } = actions;
 
     const hasChange =
-      Object.values(fields).filter((value) => value !== null).length > 0 &&
-      (fields.email !== form.email ||
-        fields.id !== form.id ||
-        fields.message !== form.message ||
-        fields.name !== form.name);
+      Object.values(next).some((value) => value !== null) &&
+      (next.email !== current.email ||
+        next.id !== current.id ||
+        next.message !== current.message ||
+        next.name !== current.name);
+
+    const data = {
+      ...current,
+      ...next,
+      hasChange,
+    };
 
     switch (type) {
       case types.CHANGE:
         return {
-          ...fields,
-          hasChange,
+          ...data,
           shouldSubmit: false,
         };
       case types.ERROR:
         return {
-          ...fields,
-          hasChange,
+          ...data,
           shouldSubmit: false,
         };
+      case types.RENDER:
+        return {
+          ...data,
+          shouldRender: true,
+        };
       case types.RESET:
-        return initialData;
+        return {
+          ...initialData,
+          shouldRender: true,
+        };
       case types.SUBMIT:
         return {
-          ...fields,
-          hasChange,
+          ...data,
           shouldSubmit: true,
         };
       case types.SUCCESS:
         return {
-          ...fields,
-          hasChange,
+          ...data,
           shouldSubmit: false,
         };
       default:
-        return form;
+        return current;
     }
   };
 
@@ -82,6 +92,10 @@ const Actions = (): Spec.Props => {
 
   const onError: Spec.OnError = () => {
     dispatch({ type: types.ERROR });
+  };
+
+  const onRender: Spec.OnRender = () => {
+    dispatch({ type: types.RENDER });
   };
 
   const onReset: Spec.OnReset = (event) => {
@@ -101,6 +115,7 @@ const Actions = (): Spec.Props => {
     data,
     onChange,
     onError,
+    onRender,
     onReset,
     onSuccess,
     onSubmit,

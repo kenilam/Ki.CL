@@ -7,14 +7,4 @@ $default: get($view-contact-cta, 'default');
     height: 100%;
     position: sticky;
   }
-
-  [type='submit'] {
-    background-color: $green;
-    color: get($black, 'default');
-  }
-
-  [type='reset'] {
-    background-color: get($grey, 'darkest');
-    color: $red;
-  }
 }

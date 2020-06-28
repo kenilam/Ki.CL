@@ -19,7 +19,7 @@
   $gap: get($grid, 'gutter');
 
   $transition-duration: get($duration, 'slowest');
-  $transition-delay: get($duration, 'faster');
+  $transition-delay: get($duration, 'fastest');
   $transition-timing-function: get($ease, 'circ.out');
 
   $loading: get($view-contact, 'loading');
@@ -48,12 +48,6 @@
 
     @include tablet() {
       margin-top: $space;
-    }
-  }
-
-  button {
-    &.#{$css-transition} {
-      transition-delay: $transition-delay;
     }
   }
 
@@ -108,12 +102,26 @@
     grid-area: p;
   }
 
+  button {
+    &.#{$css-transition} {
+      transition-delay: $transition-delay;
+    }
+  }
+
   [for='name'] {
     grid-area: name;
+
+    &.#{$css-transition} {
+      transition-delay: $transition-delay;
+    }
   }
 
   [for='email'] {
     grid-area: email;
+
+    &.#{$css-transition} {
+      transition-delay: $transition-delay * 2;
+    }
   }
 
   [for='message'] {
@@ -125,6 +133,10 @@
       margin-bottom: $gap;
       margin-top: $gap;
       min-height: 200px;
+    }
+
+    &.#{$css-transition} {
+      transition-delay: $transition-delay * 3;
     }
   }
 
@@ -144,6 +156,10 @@
 
     @include tablet() {
       border: unset;
+    }
+
+    &.#{$css-transition} {
+      transition-delay: $transition-delay * 4;
     }
   }
 

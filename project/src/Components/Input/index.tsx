@@ -10,7 +10,6 @@ const Input: React.FunctionComponent<Spec.Props> = ({
   in: transitionIn,
   label,
   onEntered: onEnteredHandler,
-  onEntering,
   transitionType,
   ...props
 }) => {
@@ -20,6 +19,7 @@ const Input: React.FunctionComponent<Spec.Props> = ({
     if (autoFocus && ref) {
       ref.current.focus();
     }
+
     if (onEnteredHandler) {
       onEnteredHandler(node, isAppearing);
     }
@@ -30,7 +30,6 @@ const Input: React.FunctionComponent<Spec.Props> = ({
       {...props}
       in={transitionIn}
       onEntered={onEntered}
-      onEntering={onEntering}
       type={transitionType}
     >
       <label className={className} data-component={Style.default} htmlFor={id}>

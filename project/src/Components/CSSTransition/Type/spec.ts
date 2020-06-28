@@ -9,7 +9,7 @@ declare namespace Spec {
     | "ZoomOut";
 
   type Types = {
-    [type in Type]?: string;
+    [type in Type]?: Type;
   };
 
   type ClassNames = {
