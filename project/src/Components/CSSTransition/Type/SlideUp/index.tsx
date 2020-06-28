@@ -1,12 +1,12 @@
-import CSSTransition from "@/Components/CSSTransition";
-import classnames from "classnames";
-import React, { FunctionComponent } from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import CSSTransition from '@/Components/CSSTransition';
+import classnames from 'classnames';
+import React, { FunctionComponent } from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const { default: className } = Style;
 
-const type: Spec.Type = "SlideUp";
+const type: Spec.Type = 'SlideUp';
 
 const SlideUp: FunctionComponent<Spec.Props> = ({
   children,

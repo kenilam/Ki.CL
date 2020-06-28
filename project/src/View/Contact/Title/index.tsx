@@ -1,8 +1,8 @@
-import resources from "$/resources";
-import { Types } from "@/Components/CSSTransition";
-import React from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import resources from '$/resources';
+import { Types } from '@/Components/CSSTransition';
+import React from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const {
   view: {

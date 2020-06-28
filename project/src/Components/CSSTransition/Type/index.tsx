@@ -1,36 +1,36 @@
-import Fade, { className as FadeClassName, type as FadeType } from "./Fade";
+import Fade, { className as FadeClassName, type as FadeType } from './Fade';
 
 import SlideDown, {
   className as SlideDownClassName,
   type as SlideDownType,
-} from "./SlideDown";
+} from './SlideDown';
 
 import SlideFromLeft, {
   className as SlideFromLeftClassName,
   type as SlideFromLeftType,
-} from "./SlideFromLeft";
+} from './SlideFromLeft';
 
 import SlideFromRight, {
   className as SlideFromRightClassName,
   type as SlideFromRightType,
-} from "./SlideFromRight";
+} from './SlideFromRight';
 
 import SlideUp, {
   className as SlideUpClassName,
   type as SlideUpType,
-} from "./SlideUp";
+} from './SlideUp';
 
 import ZoomIn, {
   className as ZoomInClassName,
   type as ZoomInType,
-} from "./ZoomIn";
+} from './ZoomIn';
 
 import ZoomOut, {
   className as ZoomOutClassName,
   type as ZoomOutType,
-} from "./ZoomOut";
+} from './ZoomOut';
 
-import Spec from "./spec";
+import Spec from './spec';
 
 const classNames: Spec.ClassNames = {
   Fade: FadeClassName,

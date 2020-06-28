@@ -1,9 +1,9 @@
-import { CSSTransition } from "@/Components";
-import React, { Fragment, FunctionComponent } from "react";
-import { TransitionGroup } from "react-transition-group";
-import "./Style";
-import { classNames, transitionSizes } from "./Utility";
-import Spec from "./spec";
+import { CSSTransition } from '@/Components';
+import React, { Fragment, FunctionComponent } from 'react';
+import { TransitionGroup } from 'react-transition-group';
+import './Style';
+import { classNames, transitionSizes } from './Utility';
+import Spec from './spec';
 
 const Transition: FunctionComponent<Spec.Props> = ({
   children,

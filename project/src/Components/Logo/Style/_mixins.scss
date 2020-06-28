@@ -2,7 +2,7 @@
   $default: get($component-logo, 'default');
   $square: get($component-logo, 'square');
 
-  [data-component="#{$default}"] {
+  [data-component=#{$default}] {
     font-size: $size;
     height: $size;
     width: $size * 2.4;

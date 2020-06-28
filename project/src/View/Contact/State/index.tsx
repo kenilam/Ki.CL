@@ -1,4 +1,4 @@
-import Actions from "./Actions";
+import Actions from './Actions';
 
 const State = () => {
   const actions = Actions();

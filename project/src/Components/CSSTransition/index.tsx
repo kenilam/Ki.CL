@@ -1,11 +1,11 @@
-import classnames from "classnames";
-import React, { FunctionComponent } from "react";
-import { CSSTransition as Origin } from "react-transition-group";
-import { useHandlers } from "./Hook";
-import Style from "./Style";
-import * as Types from "./Type";
-import { addEndListener } from "./Utility";
-import Spec from "./spec";
+import classnames from 'classnames';
+import React, { FunctionComponent } from 'react';
+import { CSSTransition as Origin } from 'react-transition-group';
+import { useHandlers } from './Hook';
+import Style from './Style';
+import * as Types from './Type';
+import { addEndListener } from './Utility';
+import Spec from './spec';
 
 const CSSTransition: FunctionComponent<Spec.Props> = ({
   addEndListener: customEndListener,

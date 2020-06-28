@@ -1,5 +1,5 @@
-import isImage from "is-image";
-import Spec from "./spec";
+import isImage from 'is-image';
+import Spec from './spec';
 
 function fetchImage<T>(url: string): Spec.Fetch<T> {
   const img = new Image();
@@ -36,8 +36,8 @@ function Fetch<T>(url: string, options?: RequestInit): Spec.Fetch<T> {
     window
       .fetch(url, {
         ...options,
-        headers: { "Content-type": "application/json" },
-        method: options ? options.method : "GET",
+        headers: { 'Content-type': 'application/json' },
+        method: options ? options.method : 'GET',
         signal,
       })
       .then((response) => response.json())

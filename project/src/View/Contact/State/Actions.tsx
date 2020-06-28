@@ -1,13 +1,13 @@
-import { useReducer, SyntheticEvent } from "react";
-import Spec from "./spec";
+import { useReducer, SyntheticEvent } from 'react';
+import Spec from './spec';
 
 const types: Spec.Types = {
-  CHANGE: "CHANGE",
-  ERROR: "ERROR",
-  RENDER: "RENDER",
-  RESET: "RESET",
-  SUBMIT: "SUBMIT",
-  SUCCESS: "SUCCESS",
+  CHANGE: 'CHANGE',
+  ERROR: 'ERROR',
+  RENDER: 'RENDER',
+  RESET: 'RESET',
+  SUBMIT: 'SUBMIT',
+  SUCCESS: 'SUCCESS',
 };
 
 const initialData: Spec.Data = {
@@ -22,10 +22,10 @@ const initialData: Spec.Data = {
 const getFormData = (event: SyntheticEvent<HTMLFormElement>): Spec.Data => {
   const data = new FormData(event.currentTarget);
 
-  const email = data.get("email") || null;
-  const id = data.get("id") || null;
-  const message = data.get("message") || null;
-  const name = data.get("name") || null;
+  const email = data.get('email') || null;
+  const id = data.get('id') || null;
+  const message = data.get('message') || null;
+  const name = data.get('name') || null;
   const shouldSubmit = Boolean(email) && Boolean(message) && Boolean(name);
 
   return { email, id, message, name, shouldSubmit };

@@ -1,13 +1,13 @@
-import CSSTransition from "@/Components/CSSTransition";
-import classnames from "classnames";
-import React, { FunctionComponent } from "react";
-import { useHandlers } from "../../Hook";
-import Style from "./Style";
-import Spec from "./spec";
+import CSSTransition from '@/Components/CSSTransition';
+import classnames from 'classnames';
+import React, { FunctionComponent } from 'react';
+import { useHandlers } from '../../Hook';
+import Style from './Style';
+import Spec from './spec';
 
 const { default: className } = Style;
 
-const type: Spec.Type = "Fade";
+const type: Spec.Type = 'Fade';
 
 const Fade: FunctionComponent<Spec.Props> = ({
   addEndListener,

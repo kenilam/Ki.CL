@@ -1,4 +1,4 @@
-declare module Polyfill {
+declare module Spec {
   interface Window {
     fetch?: typeof fetch;
     AbortController?: typeof AbortController;
@@ -6,4 +6,4 @@ declare module Polyfill {
   }
 }
 
-export = Polyfill;
+export default Spec;

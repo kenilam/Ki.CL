@@ -1,7 +1,7 @@
 @mixin set-navigation-inline() {
   $default: get($component-navigation, 'default');
 
-  [data-component="#{$default}"] {
+  [data-component=#{$default}] {
     @include set-navigation-inline-content();
   }
 }

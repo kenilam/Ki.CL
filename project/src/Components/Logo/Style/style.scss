@@ -8,7 +8,7 @@ $transition-duration: get($duration, 'fast');
 
 @include set-logo-style($size);
 
-[data-component="#{$default}"] {
+[data-component=#{$default}] {
   overflow: hidden;
   position: relative;
 

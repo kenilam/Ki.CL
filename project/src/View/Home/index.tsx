@@ -1,10 +1,10 @@
-import resources from "$/resources";
-import { Logo, Navigation } from "@/Components";
-import { types } from "@/Components/CSSTransition/Type";
-import { Route } from "@/Components/Router";
-import Slogan from "@/View/Home/Slogan";
-import React from "react";
-import "./Style";
+import resources from '$/resources';
+import { Logo, Navigation } from '@/Components';
+import { types } from '@/Components/CSSTransition/Type';
+import { Route } from '@/Components/Router';
+import Slogan from '@/View/Home/Slogan';
+import React from 'react';
+import './Style';
 
 const {
   view: {
@@ -12,17 +12,17 @@ const {
   },
 } = resources;
 
-const api = "/asset/image/big.sur.png";
+const api = '/asset/image/big.sur.png';
 
 const transitionType = types.ZoomOut;
 
 const Home = (
-  <main data-routes="home">
+  <main data-routes='home'>
     <Logo isSquare={true} />
     <Navigation />
     <Slogan />
     <section>
-      <img src={`../../..${api}`} alt="show" />
+      <img src={`../../..${api}`} alt='show' />
     </section>
   </main>
 );

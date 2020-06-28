@@ -1,4 +1,4 @@
-[data-routes^='works'] {
+[data-routes^=works] {
   $background-color: get($black, 'default');
   $color: get($white, 'default');
 
@@ -48,7 +48,7 @@
   }
 }
 
-[data-entered-routes^='works'] {
+[data-entered-routes^=works] {
   $color: get($white, 'default');
 
   @include set-global-header-color($color);

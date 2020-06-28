@@ -1,6 +1,6 @@
-import { SyntheticEvent } from "react";
+import { SyntheticEvent } from 'react';
 
-declare namespace Spec {
+declare module Spec {
   type Index = number;
   type UpdateIndex = (props: Index) => void;
   type IndexState = [Index, UpdateIndex];

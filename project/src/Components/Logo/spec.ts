@@ -1,5 +1,5 @@
-declare namespace Spec {
-  type ClassName = ClassNames<"default" | "square">;
+declare module Spec {
+  type ClassName = ClassNames<'default' | 'square'>;
 
   interface Props {
     isSquare?: boolean;

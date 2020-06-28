@@ -1,6 +1,6 @@
 $default: get($view-contact-cta, 'default');
 
-[data-view-component="#{$default}"] {
+[data-view-component=#{$default}] {
   [type='submit'],
   [type='reset'] {
     bottom: 0;

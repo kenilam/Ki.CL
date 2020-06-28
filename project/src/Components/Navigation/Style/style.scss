@@ -3,7 +3,7 @@ $inline: get($component-navigation, 'inline');
 
 $gap: get($grid, 'gutter');
 
-[data-component="#{$default}"] {
+[data-component=#{$default}] {
   display: grid;
   grid-gap: $gap;
   grid-template-columns: auto;

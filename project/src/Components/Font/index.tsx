@@ -1,1 +1,1 @@
-import "./Style";
+import './Style';

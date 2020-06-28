@@ -7,9 +7,9 @@
     "test": "NODE_ENV=test jest --config ./.Jest/config.js --detectOpenHandles --changedSince=master",
     "test:watch": "npm run test -- --watch",
     "test:cover": "npm run test -- --coverage --detectOpenHandles --updateSnapshot",
-    "lint": "npm run lint:tslint && npm run lint:stylelint",
+    "lint": "npm run lint:eslint && npm run lint:stylelint",
     "lint:stylelint": "stylelint 'project/**/*.scss' --fix",
-    "lint:tslint": "tslint '(project,.Webpack)/**/*.(js,jsx,ts,tsx)' --fix",
+    "lint:eslint": "eslint 'project/src/**/*.(js,jsx,ts,tsx)' --fix",
     "dev": "NODE_ENV=development webpack-dev-server --config .Webpack/development.babel.js",
     "prod": "NODE_ENV=production babel-node .Webpack/production.js"
   },
@@ -23,10 +23,10 @@
       "concurrent"
     ],
     "{.Webpack,project}/**/*.{js,jsx,ts,tsx}": [
-      "npm run lint:tslint"
+      "eslint --fix"
     ],
     "project/**/*.scss": [
-      "npm run lint:stylelint"
+      "stylelint --fix"
     ]
   },
   "author": "Keni Lam",
@@ -119,6 +119,8 @@
     "@types/react-test-renderer": "^16.9.2",
     "@types/react-transition-group": "^4.4.0",
     "@types/smoothscroll-polyfill": "^0.3.1",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
     "app-root-path": "^3.0.0",
     "autoprefixer": "^9.8.4",
     "babel-jest": "^26.1.0",
@@ -144,6 +146,10 @@
     "declaration-bundler-webpack-plugin": "^1.0.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.0",
     "fast-sass-loader": "^1.5.0",
     "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^5.0.5",
@@ -204,13 +210,6 @@
     "ts-jest": "^26.1.1",
     "ts-loader": "^7.0.5",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "tslint": "^6.1.2",
-    "tslint-config-airbnb": "^5.11.2",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-eslint-rules": "^5.4.0",
-    "tslint-plugin-prettier": "^2.3.0",
-    "tslint-react": "^5.0.0",
-    "tslint-react-hooks": "^2.2.2",
     "typescript": "^3.9.5",
     "underscore.string": "^3.3.5",
     "webpack": "^4.43.0",

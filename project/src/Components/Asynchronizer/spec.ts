@@ -1,8 +1,8 @@
-import CSSTransition from "@/Components/CSSTransition/spec";
-import React from "react";
+import CSSTransition from '@/Components/CSSTransition/spec';
+import React from 'react';
 
-declare namespace Spec {
-  type ClassName = ClassNames<"delay">;
+declare module Spec {
+  type ClassName = ClassNames<'delay'>;
 
   type AwaitFor = string;
   type PreventFor = boolean;
@@ -19,7 +19,7 @@ declare namespace Spec {
 
   type Props<T> = Pick<
     CSSTransition.Props,
-    "onEnter" | "onEntered" | "onEntering" | "onExit" | "onExited" | "onExiting"
+    'onEnter' | 'onEntered' | 'onEntering' | 'onExit' | 'onExited' | 'onExiting'
   > & {
     awaitFor: AwaitFor;
     awaitForOptions?: RequestInit;

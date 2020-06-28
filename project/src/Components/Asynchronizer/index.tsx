@@ -1,8 +1,8 @@
-import { CSSTransition, Spinner } from "@/Components";
-import { CSSUnit, Fetch } from "@/Helper";
-import React, { useCallback, useEffect, useState } from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import { CSSTransition, Spinner } from '@/Components';
+import { CSSUnit, Fetch } from '@/Helper';
+import React, { useCallback, useEffect, useState } from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const awaitDelay = CSSUnit(Style.delay);
 
@@ -105,7 +105,7 @@ function Asynchronizer<T>({
 
 Asynchronizer.defaultProps = {
   preventFor: true,
-  transitionType: "Fade",
-} as Partial<Spec.Props<any>>;
+  transitionType: 'Fade',
+} as Partial<Spec.Props<null>>;
 
 export default Asynchronizer;

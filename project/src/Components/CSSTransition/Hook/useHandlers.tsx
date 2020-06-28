@@ -1,6 +1,6 @@
-import Spec from "@/Components/CSSTransition/spec";
-import Style from "../Style";
-import * as Types from "../Type";
+import Spec from '@/Components/CSSTransition/spec';
+import Style from '../Style';
+import * as Types from '../Type';
 
 const DEFAULT_CLASS_LISTS = [
   Style.default,

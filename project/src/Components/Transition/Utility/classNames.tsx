@@ -1,8 +1,8 @@
-import Style from "@/Components/Transition/Style";
+import Style from '@/Components/Transition/Style';
 
-const CLASSNAMES_FILTER_WITHOUT = ["css-transition"];
+const CLASSNAMES_FILTER_WITHOUT = ['css-transition'];
 
-const CLASSNAMES_FILTER_MATCH = ["appear", "enter", "exit"];
+const CLASSNAMES_FILTER_MATCH = ['appear', 'enter', 'exit'];
 
 const getTransitionType = (node: HTMLElement) =>
   Array.from(node.classList).filter(
@@ -30,7 +30,7 @@ const remove = (node: HTMLElement) => {
   }
 
   const onRemove = () => {
-    node.parentElement.removeAttribute("data-transition-type");
+    node.parentElement.removeAttribute('data-transition-type');
     node.parentElement.classList.remove(Style.default);
   };
 

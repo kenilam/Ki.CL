@@ -1,6 +1,6 @@
-import CSSTransition from "@/Components/CSSTransition/spec";
+import CSSTransition from '@/Components/CSSTransition/spec';
 
-declare namespace Spec {
+declare module Spec {
   type ClassName = CSSTransition.ClassName;
   type Props = CSSTransition.Props;
   type Type = CSSTransition.Type;

@@ -1,6 +1,6 @@
-import Origin from "@/Components/Asynchronizer/spec";
+import Origin from '@/Components/Asynchronizer/spec';
 
-declare namespace Spec {
+declare module Spec {
   namespace About {
     type Data = {
       sections: {
@@ -10,7 +10,7 @@ declare namespace Spec {
 
     type Props = Omit<
       Origin.Props<Data>,
-      "awaitFor" | "awaitForOptions" | "transitionType"
+      'awaitFor' | 'awaitForOptions' | 'transitionType'
     >;
   }
 
@@ -23,7 +23,7 @@ declare namespace Spec {
 
     type Status = Origin.Status;
 
-    type Field = "email" | "id" | "message" | "name";
+    type Field = 'email' | 'id' | 'message' | 'name';
     type Value = boolean | number | string | FormDataEntryValue;
     type Params = {
       [name in Field]: Value;
@@ -31,7 +31,7 @@ declare namespace Spec {
 
     type Props = Omit<
       Origin.Props<Data>,
-      "awaitFor" | "awaitForOptions" | "transitionType"
+      'awaitFor' | 'awaitForOptions' | 'transitionType'
     > & {
       params: Params;
     };
@@ -47,7 +47,7 @@ declare namespace Spec {
 
     type Props = Omit<
       Origin.Props<ContactConfig.Data>,
-      "awaitFor" | "transitionType"
+      'awaitFor' | 'transitionType'
     >;
   }
 }

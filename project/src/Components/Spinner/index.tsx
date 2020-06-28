@@ -1,8 +1,8 @@
-import { Types } from "@/Components/CSSTransition";
-import classnames from "classnames";
-import React from "react";
-import Style from "./Style";
-import Spec from "./spec";
+import { Types } from '@/Components/CSSTransition';
+import classnames from 'classnames';
+import React from 'react';
+import Style from './Style';
+import Spec from './spec';
 
 const Spinner: React.FunctionComponent<Spec.Props> = ({
   withOverlay,
@@ -15,8 +15,8 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
   return (
     <Types.ZoomIn {...props}>
       <svg className={className} data-component={Style.default}>
-        <circle cx="70%" cy="30%" r="30%" />
-        <circle cx="70%" cy="70%" r="30%" />
+        <circle cx='70%' cy='30%' r='30%' />
+        <circle cx='70%' cy='70%' r='30%' />
         <text>Loading</text>
       </svg>
     </Types.ZoomIn>

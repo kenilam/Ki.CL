@@ -1,12 +1,12 @@
-declare namespace Spec {
+declare module Spec {
   type Type =
-    | "Fade"
-    | "SlideDown"
-    | "SlideFromLeft"
-    | "SlideFromRight"
-    | "SlideUp"
-    | "ZoomIn"
-    | "ZoomOut";
+    | 'Fade'
+    | 'SlideDown'
+    | 'SlideFromLeft'
+    | 'SlideFromRight'
+    | 'SlideUp'
+    | 'ZoomIn'
+    | 'ZoomOut';
 
   type Types = {
     [type in Type]?: Type;

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, DependencyList } from "react";
-import Spec from "./spec";
+import React, { useEffect, useState, DependencyList } from 'react';
+import Spec from './spec';
 
 const AudioPlayer = ({ url }: Spec.Props) => {
   const [index]: Spec.IndexState = useState(0);
@@ -32,7 +32,7 @@ const AudioPlayer = ({ url }: Spec.Props) => {
     <video controls={false} autoPlay={true}>
       <source
         src={`${process.env.API_URL}${tracks ? tracks[index].url : null}`}
-        type="audio/mpeg"
+        type='audio/mpeg'
       />
     </video>
   );

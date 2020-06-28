@@ -1,7 +1,7 @@
-import { RandomId, RandomNumber } from "@/Helper";
-import Spec from "@/View/Home/Phase/spec";
-import React, { useEffect, useState } from "react";
-import Style from "./Style";
+import { RandomId, RandomNumber } from '@/Helper';
+import Spec from '@/View/Home/Phase/spec';
+import React, { useEffect, useState } from 'react';
+import Style from './Style';
 
 const TOGGLE_TIME = 150;
 const WAIT_TIME = 4000;

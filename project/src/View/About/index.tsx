@@ -1,24 +1,27 @@
-import resources from "$/resources";
-import * as API from "@/API";
-import { Logo, Navigation } from "@/Components";
-import { types } from "@/Components/CSSTransition/Type";
-import { Route } from "@/Components/Router";
-import React from "react";
-import "./Style";
+import resources from '$/resources';
+import * as API from '@/API';
+import { Logo, Navigation } from '@/Components';
+import { types } from '@/Components/CSSTransition/Type';
+import { Route } from '@/Components/Router';
+import React from 'react';
+import './Style';
 
 const {
   view: {
     about: {
       path,
-      content: { action, heading },
+      content,
     },
   },
 } = resources;
 
+const action = content.action as { name: string, path: string };
+const heading = content.heading;
+
 const transitionType = types.SlideFromRight;
 
 const About = (
-  <main data-routes="about">
+  <main data-routes='about'>
     <API.About>
       {(data) => (
         <article>

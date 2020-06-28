@@ -1,7 +1,7 @@
-import { SurfaceProps } from "gl-react-dom";
+import { SurfaceProps } from 'gl-react-dom';
 
-declare namespace Spec {
-  type ClassName = ClassNames<"default">;
+declare module Spec {
+  type ClassName = ClassNames<'default'>;
 
   type Graphic = any;
   type Render = () => void;

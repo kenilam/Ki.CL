@@ -1,5 +1,5 @@
-declare namespace IApp {
-  interface Props {}
+declare module Spec {
+  type Props = unknown;
 }
 
-export default IApp;
+export default Spec;

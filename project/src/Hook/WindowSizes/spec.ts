@@ -1,4 +1,4 @@
-declare namespace IWindowSizes {
+declare module Spec {
   type Type = 'UPDATE_WINDOW_SIZES' | 'UPDATE_WINDOW';
 
   interface Actions extends Types, State {}
@@ -17,4 +17,4 @@ declare namespace IWindowSizes {
   }
 }
 
-export default IWindowSizes;
+export default Spec;

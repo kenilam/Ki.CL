@@ -1,13 +1,13 @@
-import CSSTransition from "@/Components/CSSTransition/spec";
+import CSSTransition from '@/Components/CSSTransition/spec';
 
-declare namespace Spec {
-  type ClassName = ClassNames<"default">;
+declare module Spec {
+  type ClassName = ClassNames<'default'>;
 
   type TransitionTypes = {
     [path: string]: CSSTransition.Type;
   };
 
-  interface Props {}
+  type Props = unknown;
 }
 
 export default Spec;

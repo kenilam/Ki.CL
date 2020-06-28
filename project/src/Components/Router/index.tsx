@@ -1,5 +1,5 @@
-import { Transition } from "@/Components";
-import React, { FunctionComponent } from "react";
+import { Transition } from '@/Components';
+import React, { FunctionComponent } from 'react';
 import {
   useHistory,
   useLocation,
@@ -9,32 +9,32 @@ import {
   Redirect,
   Route,
   Switch,
-} from "react-router-dom";
-import Spec from "./spec";
+} from 'react-router-dom';
+import Spec from './spec';
 
-const body = document.querySelector("body");
+const body = document.querySelector('body');
 
 const getDataRoutes = (pathname: string) =>
-  pathname.substr(1).replace("/", ".") || "home";
+  pathname.substr(1).replace('/', '.') || 'home';
 
 function useUrlParams<T extends string>(names: T[]) {
   const { search } = useLocation();
   let result = {} as Spec.UrlParams<T>;
 
   search
-    .slice(search.indexOf("?") + 1)
-    .split("&")
-    .filter((hash) => names.includes(hash.split("=")[0] as T))
+    .slice(search.indexOf('?') + 1)
+    .split('&')
+    .filter((hash) => names.includes(hash.split('=')[0] as T))
     .forEach((hash) => {
-      const [name, value] = hash.split("=");
+      const [name, value] = hash.split('=');
 
       let params: Spec.UrlParam = Number(value) ? Number(value) : value;
 
-      if (params === "true") {
+      if (params === 'true') {
         params = true;
       }
 
-      if (params === "false") {
+      if (params === 'false') {
         params = false;
       }
 
@@ -73,7 +73,7 @@ const Router: FunctionComponent<Spec.Props> = ({
 
   const { pathname } = location;
 
-  const transitionKey = pathname.split("/")[routeIndex + 1];
+  const transitionKey = pathname.split('/')[routeIndex + 1];
 
   return Transition({
     ...props,

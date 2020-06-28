@@ -1,5 +1,5 @@
-declare namespace Spec {
-  interface Props {}
+declare module Spec {
+  type Props = unknown;
 }
 
 export default Spec;

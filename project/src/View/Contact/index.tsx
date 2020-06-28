@@ -1,25 +1,29 @@
-import resources from "$/resources";
-import API, { url, Config } from "@/API/Contact";
-import { Hidden, Input, TextArea } from "@/Components";
-import { types } from "@/Components/CSSTransition/Type";
-import { Route } from "@/Components/Router";
-import classnames from "classnames";
-import React from "react";
-import CTA from "./CTA";
-import Description from "./Description";
-import State from "./State";
-import Style from "./Style";
-import Title from "./Title";
-import Spec from "./spec";
+import resources from '$/resources';
+import API, { url, Config } from '@/API/Contact';
+import { Hidden, Input, TextArea } from '@/Components';
+import { types } from '@/Components/CSSTransition/Type';
+import { Route } from '@/Components/Router';
+import classnames from 'classnames';
+import React from 'react';
+import CTA from './CTA';
+import Description from './Description';
+import State from './State';
+import Style from './Style';
+import Title from './Title';
+import Spec from './spec';
 
 const {
   view: {
     contact: {
-      content: { email, message, name },
+      content,
       path,
     },
   },
 } = resources;
+
+const email = content.email as string;
+const message = content.message as string;
+const name = content.name as string;
 
 const transitionType = types.Fade;
 
@@ -43,7 +47,7 @@ const Contact: React.FunctionComponent<Spec.Props> = () => {
   });
 
   return (
-    <main data-routes="contact">
+    <main data-routes='contact'>
       <Config onEntering={onRender}>
         {(data) => {
           return (
@@ -51,7 +55,7 @@ const Contact: React.FunctionComponent<Spec.Props> = () => {
               <Title in={data.success && shouldRender} />
               <Description in={data.success && shouldRender} />
               <Hidden useClassName={true}>
-                <Input id="id" in={data.success && shouldRender} label="id" />
+                <Input id='id' in={data.success && shouldRender} label='id' />
               </Hidden>
               <Input
                 {...name}

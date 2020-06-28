@@ -9,7 +9,7 @@ $exit: get($component-css-transition, 'exit.default');
 $exit-active: get($component-css-transition, 'exit.active');
 $exit-done: get($component-css-transition, 'exit.active');
 
-[data-component="#{$default}"] {
+[data-component=#{$default}] {
   border-bottom: 1px solid get($white, 'default');
   font-size: get($font, 'font-size.medium');
   font-weight: get($font, 'font-weight.bolder');
