@@ -5,7 +5,7 @@ declare namespace Spec {
   type ClassName = ClassNames<"delay">;
 
   type AwaitFor = string;
-  type PreventBy = boolean;
+  type PreventFor = boolean;
   type Children<T> = (data: Data<T>) => React.ReactNode;
 
   type Status = {
@@ -17,10 +17,13 @@ declare namespace Spec {
     result?: T;
   };
 
-  type Props<T> = {
+  type Props<T> = Pick<
+    CSSTransition.Props,
+    "onEnter" | "onEntered" | "onEntering" | "onExit" | "onExited" | "onExiting"
+  > & {
     awaitFor: AwaitFor;
     awaitForOptions?: RequestInit;
-    preventBy?: PreventBy;
+    preventFor?: PreventFor;
     children: Children<T>;
     onError?: (data: Data<T>) => void;
     onSuccess?: (data: Data<T>) => void;

@@ -1,18 +1,18 @@
-import { EndHandler } from "react-transition-group/Transition";
+import Spec from "@/Components/CSSTransition/spec";
 import duration from "./duration";
 
-const addEndListener: EndHandler = (node, done) => {
+const addEndListener: Spec.AddEndListener = (node, done) => {
   const waitTime = duration(node);
 
   node.ontransitionend = null;
   node.ontransitionrun = null;
 
   if (waitTime === 0) {
-    node.ontransitionrun = done;
+    done();
     return;
   }
 
-  node.ontransitionend = done;
+  window.setTimeout(done, waitTime);
 };
 
 export default addEndListener;

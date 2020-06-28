@@ -1,4 +1,4 @@
-import Spec from "@/View/Home/Phase/spec";
+import Spec from "@/Components/Input/spec";
 import "./style.scss";
 import value from "./value.scss";
 

@@ -14,7 +14,7 @@ const {
 
 const api = "/asset/image/big.sur.png";
 
-const transitionType = types.Fade;
+const transitionType = types.ZoomOut;
 
 const Home = (
   <main data-routes="home">

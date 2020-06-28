@@ -3,14 +3,16 @@ import React, { useRef } from "react";
 import Style from "./Style";
 import Spec from "./spec";
 
-const Input: React.FunctionComponent<Spec.Props> = ({
+const Button: React.FunctionComponent<Spec.Props> = ({
   autoFocus,
+  children,
   className,
   id,
   in: transitionIn,
   label,
   onEntered: onEnteredHandler,
   transitionType,
+  type,
   ...props
 }) => {
   const ref = useRef<HTMLInputElement>();
@@ -32,12 +34,16 @@ const Input: React.FunctionComponent<Spec.Props> = ({
       onEntered={onEntered}
       type={transitionType}
     >
-      <label className={className} data-component={Style.default} htmlFor={id}>
-        <span>{label}</span>
-        <input {...props} ref={ref} id={id} name={id} />
-      </label>
+      <button
+        className={className}
+        data-component={Style.default}
+        ref={ref}
+        type={type}
+      >
+        {children}
+      </button>
     </CSSTransition>
   );
 };
 
-export default Input;
+export default Button;

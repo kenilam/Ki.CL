@@ -15,19 +15,32 @@ declare namespace Spec {
   type ClassName = CSSTransitionClassNames &
     ClassNames<"default" | "standalone">;
 
-  type Enter = EnterHandler;
-  type Exit = ExitHandler;
+  type Enter = EnterHandler<null>;
+  type Exit = ExitHandler<null>;
+
+  type AddEndListener = EndHandler<null>;
 
   type In = boolean;
 
   type Type = Origin.Type;
 
   type Props = Omit<CSSTransitionProps, "addEndListener"> & {
-    addEndListener?: EndHandler;
+    addEndListener?: AddEndListener;
     standalone?: boolean;
     transitionKey?: Key;
     type?: Type;
   };
+
+  type UseHandlersProps = {
+    addEndListener?: AddEndListener;
+    onEntered: Enter;
+    onExited: Exit;
+    type: Type;
+  };
+
+  type UseHandlers = (
+    props: UseHandlersProps
+  ) => { onEntered: Enter; onExited: Exit };
 }
 
 export default Spec;

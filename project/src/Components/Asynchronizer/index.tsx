@@ -6,18 +6,25 @@ import Spec from "./spec";
 
 const awaitDelay = CSSUnit(Style.delay);
 
+const DEFAULT_DATA: Spec.Data<null> = {
+  success: false,
+  result: null,
+  error: false,
+};
+
 function Asynchronizer<T>({
   awaitFor,
   awaitForOptions,
   children,
   onError,
   onSuccess,
-  preventBy,
+  preventFor,
   transitionType,
+  ...rest
 }: Spec.Props<T>) {
   let awaitTimer: number;
 
-  const [data, updateData] = useState<Spec.Data<T>>(null);
+  const [data, updateData] = useState<Spec.Data<T>>(DEFAULT_DATA);
 
   const fetch = useCallback(() => {
     const { cancel: abort, trigger: origin } = Fetch<T>(
@@ -72,37 +79,33 @@ function Asynchronizer<T>({
       cancel,
       trigger,
     };
-  }, [preventBy]);
+  }, [preventFor]);
 
   useEffect(() => {
     const { cancel, trigger } = fetch();
 
-    if (preventBy) {
+    if (preventFor) {
       trigger();
     }
 
     return () => {
       cancel();
     };
-  }, [preventBy]);
+  }, [preventFor]);
 
-  const ready = Boolean(data);
-
-  return preventBy ? (
-    <React.Fragment>
-      <Spinner in={!ready} />
-      {ready ? (
-        <CSSTransition type={transitionType} in={ready}>
-          {children(data)}
-        </CSSTransition>
-      ) : null}
-    </React.Fragment>
+  return preventFor ? (
+    <>
+      <Spinner in={!data.success} />
+      <CSSTransition {...rest} type={transitionType} in={data.success}>
+        {children(data)}
+      </CSSTransition>
+    </>
   ) : null;
 }
 
 Asynchronizer.defaultProps = {
-  transitionType: "ZoomIn",
-  preventBy: true,
+  preventFor: true,
+  transitionType: "Fade",
 } as Partial<Spec.Props<any>>;
 
 export default Asynchronizer;

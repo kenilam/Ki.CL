@@ -3,7 +3,6 @@ import webpackMerge from 'webpack-merge';
 import {
   asset,
   bundleAnalyzer,
-  content,
   devServer,
   entry,
   environment,
@@ -23,7 +22,6 @@ const mode = process.env.NODE_ENV || 'development';
 const devConfig = webpackMerge(
   asset,
   bundleAnalyzer,
-  content,
   entry,
   environment,
   fonts,

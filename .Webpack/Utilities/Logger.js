@@ -1,5 +1,5 @@
-import Origin from 'logger';
+import Origin from 'simple-node-logger';
 
-const Logger = Origin.createLogger();
+const Logger = Origin.createSimpleLogger();
 
 export default Logger;

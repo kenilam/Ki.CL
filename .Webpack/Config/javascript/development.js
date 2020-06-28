@@ -34,18 +34,9 @@ const plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new ForkTsCheckerWebpackPlugin({
     async: true,
-    formatter: 'codeframe',
-    formatterOptions: {
-      highlightCode: true,
-      lineAbove: 3,
-      lineBelow: 3,
-      forceColor: true,
-    },
-    measureCompilationTime: true,
-    tsconfig: tsconfig,
-    tslint: tslint,
-    tslintAutoFix: true,
-    watch: context,
+    typescript: {
+      configFile: tsconfig
+    }
   }),
 ];
 

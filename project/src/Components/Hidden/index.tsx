@@ -29,7 +29,7 @@ const Hidden: React.FunctionComponent<Spec.Props> = ({
     }
   );
 
-  return <React.Fragment>{Component}</React.Fragment>;
+  return <>{Component}</>;
 };
 
 export default Hidden;

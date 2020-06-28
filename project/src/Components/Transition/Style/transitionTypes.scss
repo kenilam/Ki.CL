@@ -14,12 +14,20 @@
   $slide-down: get($component-css-transition-slide-down, 'default');
   $slide-up: get($component-css-transition-slide-up, 'default');
 
-  $exit-distance: 5rem;
+  $exit-distance: 50%;
 
   @mixin transition-type($type) {
     &[data-transition-type="#{$type}"] {
       > .#{$css-transition} {
         &:not(.#{$css-transition-stand-alone}) {
+          &.#{$enter} {
+            transition-property: transform;
+
+            &:not(.#{$enter-active}) {
+              opacity: 1;
+            }
+          }
+
           @content;
         }
       }
