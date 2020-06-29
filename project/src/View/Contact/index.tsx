@@ -1,15 +1,13 @@
 import resources from '$/resources';
 import API, { url, Config } from '@/API/Contact';
-import { Hidden, Input, TextArea } from '@/Components';
-import { types } from '@/Components/CSSTransition/Type';
-import { Route } from '@/Components/Router';
+import { Hidden, Input, TextArea } from '@/Component'
+import { types } from '@/Component/CSSTransition/Type';
+import { Route } from '@/Component/Router';
 import classnames from 'classnames';
 import React from 'react';
-import CTA from './CTA';
-import Description from './Description';
+import { CTA, Description, Title } from './Component';
 import State from './State';
 import Style from './Style';
-import Title from './Title';
 import Spec from './spec';
 
 const {

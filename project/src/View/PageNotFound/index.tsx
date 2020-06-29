@@ -1,5 +1,5 @@
 import resources from '$/resources';
-import { useLocation, Redirect, Route } from '@/Components/Router';
+import { useLocation, Redirect, Route } from '@/Component/Router';
 import React, { FunctionComponent } from 'react';
 import Spec from './spec';
 

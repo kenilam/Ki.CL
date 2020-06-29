@@ -1,4 +1,4 @@
-import { Router } from '@/Components';
+import { Router } from '@/Component'
 import React, { FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
 import About, * as AboutSettings from './About';

@@ -1,7 +1,7 @@
 import resources from '$/resources';
-import { Logo, Navigation } from '@/Components';
-import { types } from '@/Components/CSSTransition/Type';
-import { Route } from '@/Components/Router';
+import { Logo, Navigation } from '@/Component'
+import { types } from '@/Component/CSSTransition/Type';
+import { Route } from '@/Component/Router';
 import Slogan from '@/View/Home/Slogan';
 import React from 'react';
 import './Style';

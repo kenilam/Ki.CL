@@ -1,6 +1,6 @@
-import { Provider } from '@/Components/Router';
+import { Provider } from '@/Component/Router';
 import React from 'react';
-import GlobalHeader from './Components/GlobalHeader';
+import GlobalHeader from './Component/GlobalHeader';
 import View from './View';
 
 const appRoot = document.querySelector('[app-root]');

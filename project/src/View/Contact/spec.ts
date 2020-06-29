@@ -1,4 +1,4 @@
-import CSSTransition from '@/Components/CSSTransition/spec';
+import CSSTransition from '@/Component/CSSTransition/spec';
 import State from './State/spec';
 
 declare module Spec {

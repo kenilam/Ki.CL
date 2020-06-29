@@ -1,4 +1,6 @@
 [data-routes^=works] {
+  $webGL: get($component-webgl, 'default');
+
   $background-color: get($black, 'default');
   $color: get($white, 'default');
 
@@ -9,6 +11,7 @@
   grid-template-areas: '. . .' '. h1 .' '. . .';
   grid-template-columns: auto min-content auto;
   grid-template-rows: auto min-content auto;
+  position: relative;
 
   h1 {
     animation-duration: get($duration, 'extreme') * 3;
@@ -19,10 +22,19 @@
     font-family: get($font, 'font-family.special');
     font-size: 20vmin;
     grid-area: h1;
+    position: relative;
     text-transform: uppercase;
     transition-duration: get($duration, 'slowest');
     transition-property: text-shadow, transform;
     transition-timing-function: get($ease, 'expo.in-out');
+    z-index: 1;
+  }
+
+  [data-component=#{$webGL}] {
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 0;
   }
 }
 

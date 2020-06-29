@@ -81,5 +81,6 @@ $underlay-background-color: get($black, 'pure');
   [data-component=#{$logo}] {
     align-self: end;
     grid-area: logo;
+    justify-self: center;
   }
 }

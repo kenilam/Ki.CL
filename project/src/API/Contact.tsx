@@ -1,5 +1,5 @@
 import Spec from '@/API/spec';
-import { Asynchronizer } from '@/Components';
+import { Asynchronizer } from '@/Component';
 import React, { FunctionComponent } from 'react';
 
 const url = `${process.env.API_URL}/api/contact`;

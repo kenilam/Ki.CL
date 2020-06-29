@@ -1,4 +1,4 @@
-import CSSTransition from '@/Components/CSSTransition/spec';
+import CSSTransition from '@/Component/SSTransition/spec';
 
 declare module Spec {
   type Type = CSSTransition.Type;
