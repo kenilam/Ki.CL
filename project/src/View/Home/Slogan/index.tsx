@@ -13,7 +13,7 @@ const {
   },
 } = resources;
 
-const slogan = content.slogen as string;
+const slogan = content.slogan as string;
 
 let result: RegExpExecArray;
 let index = 0;
