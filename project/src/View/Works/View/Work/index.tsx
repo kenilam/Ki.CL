@@ -1,5 +1,5 @@
 import resources from '$/resources';
-import { useRouteMatch, Route } from '@/Components/Router';
+import { useRouteMatch, Route } from '@/Component/Router';
 import React, { FunctionComponent } from 'react';
 import Spec from './spec';
 

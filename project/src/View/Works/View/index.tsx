@@ -1,4 +1,4 @@
-import { Router } from '@/Components';
+import { Router } from '@/Component'
 import React from 'react';
 import Work from './Work';
 

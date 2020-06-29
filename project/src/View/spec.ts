@@ -1,4 +1,4 @@
-import CSSTransition from '@/Components/CSSTransition/spec';
+import CSSTransition from '@/Component/CSSTransition/spec';
 
 declare module Spec {
   type ClassName = ClassNames<'default'>;

@@ -60,7 +60,6 @@
     "react-dom": "^16.13.1",
     "react-element-resize": "^0.2.3",
     "react-fittext": "^1.0.0",
-    "react-gl-transition": "^1.19.2",
     "react-hot-loader": "^4.12.21",
     "react-html-parser": "^2.0.2",
     "react-icons": "^3.10.0",

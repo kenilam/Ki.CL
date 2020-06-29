@@ -1,4 +1,4 @@
-import Origin from '@/Components/Asynchronizer/spec';
+import Origin from '@/Component/Asynchronizer/spec';
 
 declare module Spec {
   namespace About {
