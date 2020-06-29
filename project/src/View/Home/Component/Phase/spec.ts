@@ -1,16 +1,20 @@
-export type ClassName = ClassNames<
-  | 'default'
-  | 'lowerShadowColor'
-  | 'lowerShadowDistance'
-  | 'upperShadowColor'
-  | 'upperShadowDistance'
->;
+declare module Spec {
+  type ClassName = ClassNames<
+    | 'default'
+    | 'lowerShadowColor'
+    | 'lowerShadowDistance'
+    | 'upperShadowColor'
+    | 'upperShadowDistance'
+  >;
 
-export type Word = {
-  word: string;
-  render: boolean;
-};
+  type Word = {
+    word: string;
+    render: boolean;
+  };
 
-export type Props = {
-  words: Word[];
-};
+  type Props = {
+    words: Spec.Word[];
+  };
+}
+
+export default Spec;

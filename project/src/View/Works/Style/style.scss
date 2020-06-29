@@ -95,6 +95,12 @@
   }
 }
 
+[data-entered-routes^=works] {
+  $color: get($black, 'default');
+
+  @include set-global-header-color($color);
+}
+
 @keyframes works-h1-animation {
   0% {
     text-shadow: 0 -0.5vmin 0 rgba($yellow, 0.6), -0.5vmin 0 0 rgba($green, 0.1);
