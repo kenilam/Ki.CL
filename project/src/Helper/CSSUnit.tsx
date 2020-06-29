@@ -5,7 +5,7 @@ const DOM_DEPENDED_UNITS = ['%', 'ch', 'em', 'ex'];
 const TIME_UNITS = ['s', 'ms'];
 const BASE_UNIT = 'px';
 
-function CSSUnit(values: string): number {
+function CSSUnit(values: number | string): number {
   const { value, unit } = engine.parse(values || '');
 
   if (value < 0) {

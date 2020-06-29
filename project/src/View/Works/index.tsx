@@ -12,7 +12,7 @@ const {
   },
 } = resources;
 
-const transitionType = types.SlideUp;
+const transitionType = types.ZoomOut;
 
 const Works = (
   <main data-routes='works'>
