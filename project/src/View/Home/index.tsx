@@ -2,7 +2,7 @@ import resources from '$/resources';
 import { Logo, Navigation } from '@/Component'
 import { types } from '@/Component/CSSTransition/Type';
 import { Route } from '@/Component/Router';
-import Slogan from '@/View/Home/Slogan';
+import { Slogan } from '@/View/Home/Component';
 import React from 'react';
 import './Style';
 

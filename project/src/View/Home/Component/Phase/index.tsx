@@ -1,5 +1,5 @@
 import { RandomId, RandomNumber } from '@/Helper';
-import Spec from '@/View/Home/Phase/spec';
+import Spec from './spec';
 import React, { useEffect, useState } from 'react';
 import Style from './Style';
 

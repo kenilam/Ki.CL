@@ -1,4 +1,4 @@
-import Phase from '@/View/Home/Phase/spec';
+import Phase from '@/View/Home/Component/Phase/spec';
 
 declare module Spec {
   type ClassName = ClassNames<'default'>;

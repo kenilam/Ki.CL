@@ -1,4 +1,4 @@
-import Spec from '@/View/Home/Slogan/spec';
+import Spec from '@/View/Home/Component/Slogan/spec';
 import './style.scss';
 import value from './value.scss';
 
