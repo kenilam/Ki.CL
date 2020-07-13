@@ -1,5 +1,8 @@
-declare module Spec {
-  type Props = unknown;
-}
+import { Data } from '@/API/Works/spec';
+import * as Work from '@/API/Work/spec';
 
-export default Spec;
+export type Match = Work.Match;
+
+export type Props = {
+  data: Data
+};

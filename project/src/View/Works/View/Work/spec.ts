@@ -1,15 +1,11 @@
-declare module Spec {
-  interface Match {
-    params: Params;
-  }
+import * as Work from '@/API/Work/spec';
 
-  type Param = 'projectId';
+export type Match = Work.Match;
 
-  type Params = {
-    [name in Param]: string;
-  };
+export type Param = 'work';
 
-  type Props = unknown;
-}
+export type Params = {
+  [name in Param]: string;
+};
 
-export default Spec;
+export type Props = unknown;

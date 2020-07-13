@@ -10,7 +10,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Spec from './spec';
+import { Enter, Exit, Props, UrlParams, UrlParam } from './spec';
 
 const body = document.querySelector('body');
 
@@ -19,7 +19,7 @@ const getDataRoutes = (pathname: string) =>
 
 function useUrlParams<T extends string>(names: T[]) {
   const { search } = useLocation();
-  let result = {} as Spec.UrlParams<T>;
+  let result = {} as UrlParams<T>;
 
   search
     .slice(search.indexOf('?') + 1)
@@ -28,7 +28,7 @@ function useUrlParams<T extends string>(names: T[]) {
     .forEach((hash) => {
       const [name, value] = hash.split('=');
 
-      let params: Spec.UrlParam = Number(value) ? Number(value) : value;
+      let params: UrlParam = Number(value) ? Number(value) : value;
 
       if (params === 'true') {
         params = true;
@@ -44,25 +44,32 @@ function useUrlParams<T extends string>(names: T[]) {
   return result;
 }
 
-const Router: FunctionComponent<Spec.Props> = ({
+const Router: FunctionComponent<Props> = ({
   children: Component,
   onEnter: enterHandler,
   onExit: exitHandler,
   routeIndex,
+  transitionType: type,
   ...props
 }) => {
   const location = useLocation();
+  
+  const { pathname } = location;
 
-  const onEnter: Spec.Enter = (node, isAppearing) => {
-    if (enterHandler) {
+  const onEnter: Enter = (node, isAppearing) => {
+    if (enterHandler && node) {
       enterHandler(node, isAppearing);
     }
 
+    if (body.dataset.enteredRoutes) {
+      body.dataset.exitedRoutes = body.dataset.enteredRoutes;
+    }
+    
     body.dataset.enteredRoutes = getDataRoutes(pathname);
   };
 
-  const onExit: Spec.Exit = (node) => {
-    if (exitHandler) {
+  const onExit: Exit = (node) => {
+    if (exitHandler && node) {
       exitHandler(node);
     }
 
@@ -70,8 +77,6 @@ const Router: FunctionComponent<Spec.Props> = ({
   };
 
   const children = <Switch location={location}>{Component}</Switch>;
-
-  const { pathname } = location;
 
   const transitionKey = pathname.split('/')[routeIndex + 1];
 
@@ -81,6 +86,7 @@ const Router: FunctionComponent<Spec.Props> = ({
     onEnter,
     onExit,
     transitionKey,
+    type,
   });
 };
 

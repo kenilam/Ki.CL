@@ -4,7 +4,7 @@ const CLASSNAMES_FILTER_WITHOUT = ['css-transition'];
 
 const CLASSNAMES_FILTER_MATCH = ['appear', 'enter', 'exit'];
 
-const getTransitionType = (node: HTMLElement) =>
+const getType = (node: HTMLElement) =>
   Array.from(node.classList).filter(
     (name) =>
       !CLASSNAMES_FILTER_MATCH.some((search) => name.includes(search)) &&
@@ -17,7 +17,11 @@ const add = (node: HTMLElement) => {
   }
 
   const onAdd = () => {
-    node.parentElement.dataset.transitionType = getTransitionType(node);
+    if (!node || !node.parentElement) {
+      return;
+    }
+
+    node.parentElement.dataset.transitionType = getType(node);
     node.parentElement.classList.add(Style.default);
   };
 

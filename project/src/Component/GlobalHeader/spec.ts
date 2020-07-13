@@ -1,5 +1,2 @@
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
-  type Props = unknown;
-}
-export default Spec;
+export type ClassName = ClassNames<'default'>;
+export type Props = unknown;

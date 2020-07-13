@@ -1,9 +1,9 @@
 import React, { useEffect, useState, DependencyList } from 'react';
-import Spec from './spec';
+import { IndexState, Props, TracksState } from './spec';
 
-const AudioPlayer = ({ url }: Spec.Props) => {
-  const [index]: Spec.IndexState = useState(0);
-  const [tracks, updateTracks]: Spec.TracksState = useState();
+const AudioPlayer = ({ url }: Props) => {
+  const [index]: IndexState = useState(0);
+  const [tracks, updateTracks]: TracksState = useState();
 
   const controller = new AbortController();
   const { signal } = controller;

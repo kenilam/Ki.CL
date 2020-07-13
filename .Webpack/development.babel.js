@@ -1,4 +1,4 @@
-import webpackMerge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 
 import {
   asset,
@@ -19,7 +19,7 @@ import {
 
 const mode = process.env.NODE_ENV || 'development';
 
-const devConfig = webpackMerge(
+const basic = merge(
   asset,
   bundleAnalyzer,
   entry,
@@ -34,13 +34,13 @@ const devConfig = webpackMerge(
   stylesheet
 );
 
-const config = webpackMerge(devConfig, devServer, {
+const config = merge(basic, devServer, {
   mode,
   resolve,
 });
 
 process.env.NODE_ENV = mode;
 
-export { devConfig };
+export { basic };
 
 export default config;

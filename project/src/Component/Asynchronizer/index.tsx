@@ -2,11 +2,11 @@ import { CSSTransition, Spinner } from '@/Component';
 import { CSSUnit, Fetch } from '@/Helper';
 import React, { useCallback, useEffect, useState } from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Data, Props } from './spec';
 
 const awaitDelay = CSSUnit(Style.delay);
 
-const DEFAULT_DATA: Spec.Data<null> = {
+const DEFAULT_DATA: Data<null> = {
   success: false,
   result: null,
   error: false,
@@ -21,10 +21,10 @@ function Asynchronizer<T>({
   preventFor,
   transitionType,
   ...rest
-}: Spec.Props<T>) {
+}: Props<T>) {
   let awaitTimer: number;
 
-  const [data, updateData] = useState<Spec.Data<T>>(DEFAULT_DATA);
+  const [data, updateData] = useState<Data<T>>(DEFAULT_DATA);
 
   const fetch = useCallback(() => {
     const { cancel: abort, trigger: origin } = Fetch<T>(
@@ -96,7 +96,12 @@ function Asynchronizer<T>({
   return preventFor ? (
     <>
       <Spinner in={!data.success} />
-      <CSSTransition {...rest} type={transitionType} in={data.success}>
+      <CSSTransition
+        {...rest}
+        type={transitionType}
+        in={data.success}
+        standalone={true}
+      >
         {children(data)}
       </CSSTransition>
     </>
@@ -106,6 +111,6 @@ function Asynchronizer<T>({
 Asynchronizer.defaultProps = {
   preventFor: true,
   transitionType: 'Fade',
-} as Partial<Spec.Props<null>>;
+} as Partial<Props<null>>;
 
 export default Asynchronizer;

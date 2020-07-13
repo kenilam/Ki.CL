@@ -1,16 +1,12 @@
-import CSSTransition from '@/Component/CSSTransition/spec';
-import React from 'react';
+import * as CSSTransition from '@/Component/CSSTransition/spec';
+import { InputHTMLAttributes } from 'react';
 
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
+export type ClassName = ClassNames<'default'>;
 
-  type Enter = CSSTransition.Enter;
+export type Enter = CSSTransition.Enter;
 
-  type Props = React.InputHTMLAttributes<null> &
-    Omit<CSSTransition.Props, 'type'> & {
-      label?: string;
-      transitionType?: CSSTransition.Type;
-    };
-}
-
-export default Spec;
+export type Props = InputHTMLAttributes<null> &
+  Omit<CSSTransition.Props, 'type'> & {
+    label?: string;
+    transitionType?: CSSTransition.Type
+  };

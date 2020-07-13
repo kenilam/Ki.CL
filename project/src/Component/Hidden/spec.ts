@@ -1,14 +1,10 @@
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
+export type ClassName = ClassNames<'default'>;
 
-  type Child = {
-    className?: string;
-    ['data-component']?: ClassName['default'];
-  };
+export type Child = {
+  className?: string;
+  ['data-component']?: ClassName['default'];
+};
 
-  type Props = Child & {
-    useClassName?: boolean;
-  };
-}
-
-export default Spec;
+export type Props = Child & {
+  useClassName?: boolean;
+};

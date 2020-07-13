@@ -1,7 +1,7 @@
 import resources from '$/resources';
 import { useLocation, Redirect, Route } from '@/Component/Router';
 import React, { FunctionComponent } from 'react';
-import Spec from './spec';
+import { Props } from './spec';
 
 const {
   view: {
@@ -9,7 +9,7 @@ const {
   },
 } = resources;
 
-const PageNotFound: FunctionComponent<Spec.Props> = () => {
+const PageNotFound: FunctionComponent<Props> = () => {
   const location = useLocation();
 
   // To prevents react-router redirect twice with the warning as follow:

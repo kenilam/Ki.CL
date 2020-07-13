@@ -1,24 +1,20 @@
 import { SyntheticEvent } from 'react';
 
-declare module Spec {
-  type Index = number;
-  type UpdateIndex = (props: Index) => void;
-  type IndexState = [Index, UpdateIndex];
+export type Index = number;
+export type UpdateIndex = (props: Index) => void;
+export type IndexState = [Index, UpdateIndex];
 
-  type Tracks = unknown[];
-  type UpdateTracks = (props: Tracks) => void;
-  type TracksState = [Tracks, UpdateTracks];
+export type Tracks = unknown[];
+export type UpdateTracks = (props: Tracks) => void;
+export type TracksState = [Tracks, UpdateTracks];
 
-  type Events = SyntheticEvent<HTMLAudioElement, Event>;
+export type Events = SyntheticEvent<HTMLAudioElement, Event>;
 
-  type Props = {
-    onAbort?: (event: Events) => void;
-    onListen?: (event: Events) => void;
-    onPause?: (event: Events) => void;
-    onPlay?: (event: Events) => void;
-    volume?: number;
-    url: string;
-  };
-}
-
-export default Spec;
+export type Props = {
+  onAbort?: (event: Events) => void;
+  onListen?: (event: Events) => void;
+  onPause?: (event: Events) => void;
+  onPlay?: (event: Events) => void;
+  volume?: number;
+  url: string;
+};

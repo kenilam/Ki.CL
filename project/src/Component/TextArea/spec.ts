@@ -1,17 +1,13 @@
-import CSSTransition from '@/Component/CSSTransition/spec';
+import * as CSSTransition from '@/Component/CSSTransition/spec';
 import React from 'react';
 
-declare module Spec {
-  type ClassName = ClassNames<'default' | 'resizable'>;
+export type ClassName = ClassNames<'default' | 'resizable'>;
 
-  type Enter = CSSTransition.Enter;
+export type Enter = CSSTransition.Enter;
 
-  type Props = React.TextareaHTMLAttributes<null> &
-    Omit<CSSTransition.Props, 'type'> & {
-      label?: string;
-      resizable?: boolean;
-      transitionType: CSSTransition.Type;
-    };
-}
-
-export default Spec;
+export type Props = React.TextareaHTMLAttributes<null> &
+  Omit<CSSTransition.Props, 'type'> & {
+    label?: string;
+    resizable?: boolean;
+    transitionType: CSSTransition.Type
+  };

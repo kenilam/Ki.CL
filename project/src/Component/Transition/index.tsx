@@ -3,16 +3,16 @@ import React, { Fragment, FunctionComponent } from 'react';
 import { TransitionGroup } from 'react-transition-group';
 import './Style';
 import { classNames, transitionSizes } from './Utility';
-import Spec from './spec';
+import { Enter, Props } from './spec';
 
-const Transition: FunctionComponent<Spec.Props> = ({
+const Transition: FunctionComponent<Props> = ({
   children,
   childFactory,
   onEnter: enterHandler,
   onEntered: enteredHandler,
   ...props
 }) => {
-  const onEnter: Spec.Enter = (node, isAppearing) => {
+  const onEnter: Enter = (node, isAppearing) => {
     classNames.add(node);
     transitionSizes.set(node);
 
@@ -21,7 +21,7 @@ const Transition: FunctionComponent<Spec.Props> = ({
     }
   };
 
-  const onEntered: Spec.Enter = (node, isAppearing) => {
+  const onEntered: Enter = (node, isAppearing) => {
     classNames.remove(node);
     transitionSizes.unset(node);
 
@@ -32,12 +32,14 @@ const Transition: FunctionComponent<Spec.Props> = ({
 
   return (
     <TransitionGroup childFactory={childFactory} component={Fragment}>
-      {CSSTransition({
-        ...props,
-        children,
-        onEnter,
-        onEntered,
-      })}
+      {
+        CSSTransition({
+          ...props,
+          children,
+          onEnter,
+          onEntered
+        })
+      }
     </TransitionGroup>
   );
 };

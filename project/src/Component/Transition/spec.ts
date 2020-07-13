@@ -1,13 +1,13 @@
-import CSSTransition from '@/Component/CSSTransition/spec';
+import * as CSSTransition from '@/Component/CSSTransition/spec';
 import { TransitionGroupProps } from 'react-transition-group/TransitionGroup';
 
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
+export type ClassName = ClassNames<
+  'default' |
+  'exitFilter' |
+  'exitTransitionDuration' |
+  'exitTransitionTimingFunction'
+>;
+export type Enter = CSSTransition.Enter;
+export type Exit = CSSTransition.Exit;
 
-  type Enter = CSSTransition.Enter;
-  type Exit = CSSTransition.Exit;
-
-  type Props = TransitionGroupProps & CSSTransition.Props;
-}
-
-export default Spec;
+export type Props = TransitionGroupProps & CSSTransition.Props;

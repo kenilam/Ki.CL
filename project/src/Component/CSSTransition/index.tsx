@@ -5,9 +5,9 @@ import { useHandlers } from './Hook';
 import Style from './Style';
 import * as Types from './Type';
 import { addEndListener } from './Utility';
-import Spec from './spec';
+import { Props } from './spec';
 
-const CSSTransition: FunctionComponent<Spec.Props> = ({
+const CSSTransition: FunctionComponent<Props> = ({
   addEndListener: customEndListener,
   children,
   classNames: classes,
@@ -26,6 +26,13 @@ const CSSTransition: FunctionComponent<Spec.Props> = ({
     type,
   });
 
+  const classNames = classnames(
+    classes,
+    Style.default,
+    { [Style.standalone]: standalone },
+    Style.default
+  )
+
   const props = {
     ...rest,
     onEntered,
@@ -33,12 +40,7 @@ const CSSTransition: FunctionComponent<Spec.Props> = ({
     timeout,
     key,
     addEndListener: !timeout ? customEndListener || addEndListener : null,
-    classNames: classnames(
-      classes,
-      Style.default,
-      { [Style.standalone]: standalone },
-      Style.default
-    ),
+    classNames,
   };
 
   if (type && Types[type]) {
@@ -51,8 +53,9 @@ const CSSTransition: FunctionComponent<Spec.Props> = ({
 };
 
 CSSTransition.defaultProps = {
+  standalone: false,
   unmountOnExit: true,
-} as Spec.Props;
+} as Props;
 
 export { Types };
 export default CSSTransition;

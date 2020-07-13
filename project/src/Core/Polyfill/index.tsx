@@ -1,10 +1,10 @@
-import Polyfill from './spec';
+import { Window } from './spec';
 
 const {
   IntersectionObserver,
   AbortController,
   fetch: Fetch,
-}: Polyfill.Window = window;
+}: Window = window;
 
 async function loadPolyfill(): Promise<void> {
   let smoothScroll: { polyfill(): void } | null;

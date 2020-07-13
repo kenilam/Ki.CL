@@ -1,7 +1,9 @@
 import resources from '$/resources';
 import { useRouteMatch, Route } from '@/Component/Router';
+import API from '@/API/Work';
 import React, { FunctionComponent } from 'react';
-import Spec from './spec';
+import './Style';
+import { Match, Props } from './spec';
 
 const {
   view: {
@@ -13,12 +15,32 @@ const {
   },
 } = resources;
 
-const Work: FunctionComponent<Spec.Props> = () => {
-  const {
-    params: { projectId },
-  }: Spec.Match = useRouteMatch({ path });
+const Work: FunctionComponent<Props> = () => {
+  const match: Match = useRouteMatch({ path });
 
-  return <section data-routes={`works.${projectId}`}>{projectId}</section>;
+  if (!match) {
+    return null;
+  }
+
+  const {
+    params: { work },
+  } = match;
+
+  return (
+    <section data-routes={`works.${work}`}>
+      <API>
+        {
+          ({ result }) => (
+            <article>
+              <h1>
+                {result?.toString()}
+              </h1>
+            </article>
+          )
+        }
+      </API>
+    </section>
+  );
 };
 
 export default (

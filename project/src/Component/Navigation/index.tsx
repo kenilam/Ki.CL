@@ -1,6 +1,6 @@
 import resources from '$/resources';
 import { Link } from '@/Component'
-import Spec from '@/Component/Navigation/spec';
+import { Links, Props } from '@/Component/Navigation/spec';
 import { RandomId } from '@/Helper';
 import classnames from 'classnames';
 import React from 'react';
@@ -8,18 +8,15 @@ import Style from './Style';
 
 const { view } = resources;
 
-const DEFAULT_ITEMS: Spec.Links = Object.keys(view)
-  .map((item) => {
-    const { name, path } = view[item];
+const DEFAULT_ITEMS: Links = Object.values(view)
+  .filter(
+    route => route?.path && route?.path !== view.home.path
+  )
+  .map(
+    ({ name: children, path: to }) => ({ children, to })
+  );
 
-    return {
-      children: name,
-      to: path,
-    };
-  })
-  .filter(({ to }) => Boolean(to) && to !== view.home.path);
-
-const Navigation: React.FunctionComponent<Spec.Props> = ({
+const Navigation: React.FunctionComponent<Props> = ({
   className,
   inline,
   items,
@@ -33,6 +30,7 @@ const Navigation: React.FunctionComponent<Spec.Props> = ({
     })}
     data-component={Style.default}
     role='navigation'
+    {...rest}
   >
     {(items || DEFAULT_ITEMS).map(({ children, to }) => (
       <Link
@@ -52,7 +50,6 @@ const Navigation: React.FunctionComponent<Spec.Props> = ({
           })
         }
         key={RandomId()}
-        {...rest}
       >
         {children}
       </Link>

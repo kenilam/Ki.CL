@@ -1,0 +1,24 @@
+$default: get($view-works-navigation, 'default');
+
+[data-view-component=#{$default}] {
+  $background-color: get($white, 'default');
+  $size: get($grid, 'narrower');
+
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+
+  a {
+    background-color: rgba($background-color, 0.7);
+    border-radius: 50%;
+    color: transparent;
+    overflow: hidden;
+    padding-top: $size;
+    position: relative;
+    width: $size;
+  }
+
+  span {
+    opacity: 0;
+    position: absolute;
+  }
+}

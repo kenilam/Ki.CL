@@ -1,7 +1,7 @@
 import resources from '$/resources';
 import { RandomId } from '@/Helper';
-import Phase from '@/View/Home/Phase';
-import ISlogan from '@/View/Home/Slogan/spec';
+import Phase from '@/View/Home/Component/Phase';
+import { Props, Words } from './spec';
 import React from 'react';
 import Style from './Style';
 
@@ -21,7 +21,7 @@ let lastPhase: string;
 
 const phasesRegExp = new RegExp(/\[(.+)\]/g);
 const wordsRegExp = new RegExp(/[\w\d\s]+/g);
-const phases: ISlogan.Words = [];
+const phases: Words = [];
 
 while ((result = phasesRegExp.exec(slogan)) !== null) {
   const [placeholder, words] = result;
@@ -38,7 +38,7 @@ while ((result = phasesRegExp.exec(slogan)) !== null) {
 
 phases.push(lastPhase);
 
-const Slogan: React.FunctionComponent<ISlogan.Props> = () => {
+const Slogan: React.FunctionComponent<Props> = () => {
   return (
     <p data-view-component={Style.default}>
       {phases.map((words) =>

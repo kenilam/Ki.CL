@@ -1,11 +1,7 @@
-import CSSTransition from '@/Component/CSSTransition/spec';
+import * as CSSTransition from '@/Component/CSSTransition/spec';
 
-declare module Spec {
-  type ClassName = ClassNames<'default' | 'withoverlay'>;
+export type ClassName = ClassNames<'default' | 'withoverlay'>;
 
-  type Props = CSSTransition.Props & {
-    withOverlay?: boolean;
-  };
-}
-
-export default Spec;
+export type Props = CSSTransition.Props & {
+  withOverlay?: boolean;
+};

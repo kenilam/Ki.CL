@@ -30,9 +30,9 @@ import ZoomOut, {
   type as ZoomOutType,
 } from './ZoomOut';
 
-import Spec from './spec';
+import { ClassNames, Types } from './spec';
 
-const classNames: Spec.ClassNames = {
+const classNames: ClassNames = {
   Fade: FadeClassName,
   SlideDown: SlideDownClassName,
   SlideUp: SlideUpClassName,
@@ -42,7 +42,7 @@ const classNames: Spec.ClassNames = {
   ZoomOut: ZoomOutClassName,
 };
 
-const types: Spec.Types = {
+const types: Types = {
   Fade: FadeType,
   SlideDown: SlideDownType,
   SlideUp: SlideUpType,

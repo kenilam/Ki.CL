@@ -1,9 +1,5 @@
-declare module Spec {
-  type ClassName = ClassNames<'default' | 'square'>;
+export type ClassName = ClassNames<'default' | 'square'>;
 
-  interface Props {
-    isSquare?: boolean;
-  }
+export interface Props {
+  isSquare?: boolean;
 }
-
-export default Spec;

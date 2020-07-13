@@ -2,9 +2,9 @@ import { Types } from '@/Component/CSSTransition';
 import classnames from 'classnames';
 import React from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
-const Spinner: React.FunctionComponent<Spec.Props> = ({
+const Spinner: React.FunctionComponent<Props> = ({
   withOverlay,
   ...props
 }) => {
@@ -13,7 +13,10 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
   });
 
   return (
-    <Types.ZoomIn {...props}>
+    <Types.ZoomIn
+      {...props}
+      standalone={true}
+    >
       <svg className={className} data-component={Style.default}>
         <circle cx='70%' cy='30%' r='30%' />
         <circle cx='70%' cy='70%' r='30%' />
@@ -25,6 +28,6 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
 
 Spinner.defaultProps = {
   in: true,
-} as Spec.Props;
+} as Props;
 
 export default Spinner;

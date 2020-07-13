@@ -1,6 +1,7 @@
 import { context, contextRoot } from '!/Config/entry';
 import { path as appRoot } from 'app-root-path';
 import glob from 'glob';
+// import ExtractCssChunks from 'extract-css-chunks-webpack-plugin';
 import StylelintFormatter from 'stylelint-formatter-pretty';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
 
@@ -8,6 +9,12 @@ const CSSLoaders = [
   {
     loader: 'style-loader',
   },
+  // {
+  //   loader: ExtractCssChunks.loader,
+  //   options: {
+  //     hmr: process.env.NODE_ENV === 'development',
+  //   },
+  // },
   {
     loader: 'css-loader',
     options: {
@@ -59,6 +66,10 @@ const rules = [
 ];
 
 const plugins = [
+  // new ExtractCssChunks({
+  //   filename: '[name].[hash].css',
+  //   chunkFilename: '[id].[hash].css',
+  // }),
   new StyleLintPlugin({
     console: true,
     context: contextRoot,

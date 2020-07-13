@@ -24,7 +24,7 @@ declare module 'react-pure-lifecycle';
 declare module 'unfetch/polyfill';
 declare module 'units-css' {
   export function parse(
-    s: string
+    s: number | string
   ): {
     value: number;
     unit: string;

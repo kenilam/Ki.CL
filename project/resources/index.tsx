@@ -1,4 +1,4 @@
 import data from '$/resources/data.json';
-import IResources from './spec';
+import { Data } from './spec';
 
-export default data as IResources.Data;
+export default data as Data;

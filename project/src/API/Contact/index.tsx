@@ -1,10 +1,10 @@
-import Spec from '@/API/spec';
+import { Config, Props } from './spec';
 import { Asynchronizer } from '@/Component';
 import React, { FunctionComponent } from 'react';
 
 const url = `${process.env.API_URL}/api/contact`;
 
-const Config: FunctionComponent<Spec.ContactConfig.Props> = ({
+const Config: FunctionComponent<Config['Props']> = ({
   children,
   ...rest
 }) => (
@@ -13,7 +13,7 @@ const Config: FunctionComponent<Spec.ContactConfig.Props> = ({
   </Asynchronizer>
 );
 
-const Contact: FunctionComponent<Spec.Contact.Props> = ({
+const Contact: FunctionComponent<Props> = ({
   children,
   params,
   ...rest

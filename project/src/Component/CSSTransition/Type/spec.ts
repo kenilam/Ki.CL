@@ -1,20 +1,16 @@
-declare module Spec {
-  type Type =
-    | 'Fade'
-    | 'SlideDown'
-    | 'SlideFromLeft'
-    | 'SlideFromRight'
-    | 'SlideUp'
-    | 'ZoomIn'
-    | 'ZoomOut';
+export type Type =
+  | 'Fade'
+  | 'SlideDown'
+  | 'SlideFromLeft'
+  | 'SlideFromRight'
+  | 'SlideUp'
+  | 'ZoomIn'
+  | 'ZoomOut';
 
-  type Types = {
-    [type in Type]?: Type;
-  };
+export type Types = {
+  [type in Type]?: Type;
+};
 
-  type ClassNames = {
-    [type in Type]?: string;
-  };
-}
-
-export default Spec;
+export type ClassNames = {
+  [type in Type]?: string;
+};

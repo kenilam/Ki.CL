@@ -1,4 +1,4 @@
-import Spec from '@/View/spec';
+import { ClassName } from '@/View/spec';
 import value from './value.scss';
 
-export default value as Spec.ClassName;
+export default value as ClassName;

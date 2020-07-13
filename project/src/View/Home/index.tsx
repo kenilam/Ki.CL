@@ -2,7 +2,7 @@ import resources from '$/resources';
 import { Logo, Navigation } from '@/Component'
 import { types } from '@/Component/CSSTransition/Type';
 import { Route } from '@/Component/Router';
-import Slogan from '@/View/Home/Slogan';
+import { Slogan } from '@/View/Home/Component';
 import React from 'react';
 import './Style';
 
@@ -12,7 +12,7 @@ const {
   },
 } = resources;
 
-const api = '/asset/image/big.sur.png';
+const hero = '/asset/image/big.sur.png';
 
 const transitionType = types.ZoomOut;
 
@@ -22,7 +22,7 @@ const Home = (
     <Navigation />
     <Slogan />
     <section>
-      <img src={`../../..${api}`} alt='show' />
+      <img src={hero} alt='show' />
     </section>
   </main>
 );
