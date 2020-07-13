@@ -30,41 +30,29 @@ $default: get($component-transition, 'default');
             }
           }
 
-          @content;
+          &.#{$exit} {
+            &.#{$exit-active} {
+              @content;
+            }
+          }
         }
       }
     }
   }
 
   @include transition-type($slide-from-right) {
-    &.#{$exit} {
-      &.#{$exit-active} {
-        transform: translate3d(-$exit-distance, 0, 0);
-      }
-    }
+    transform: translate3d(-$exit-distance, 0, 0);
   }
 
   @include transition-type($slide-from-left) {
-    &.#{$exit} {
-      &.#{$exit-active} {
-        transform: translate3d($exit-distance, 0, 0);
-      }
-    }
+    transform: translate3d($exit-distance, 0, 0);
   }
 
   @include transition-type($slide-down) {
-    &.#{$exit} {
-      &.#{$exit-active} {
-        transform: translate3d(0, $exit-distance, 0);
-      }
-    }
+    transform: translate3d(0, $exit-distance, 0);
   }
 
   @include transition-type($slide-up) {
-    &.#{$exit} {
-      &.#{$exit-active} {
-        transform: translate3d(0, -$exit-distance, 0);
-      }
-    }
+    transform: translate3d(0, -$exit-distance, 0);
   }
 }

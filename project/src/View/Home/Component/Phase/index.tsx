@@ -1,5 +1,5 @@
 import { RandomId, RandomNumber } from '@/Helper';
-import Spec from './spec';
+import { Props } from './spec';
 import React, { useEffect, useState } from 'react';
 import Style from './Style';
 
@@ -8,7 +8,7 @@ const WAIT_TIME = 4000;
 
 let debounce = TOGGLE_TIME;
 
-const Phase: React.FunctionComponent<Spec.Props> = ({ words }) => {
+const Phase: React.FunctionComponent<Props> = ({ words }) => {
   let indexTimer: number;
   const end = words.length;
   const [index, updateIndex] = useState(RandomNumber({ start: 0, end }));

@@ -1,7 +1,7 @@
 import WebGL, { GLSL, Node, Shaders } from '@/Component/WebGL';
 import React, { FunctionComponent, useCallback, useState, useEffect } from 'react';
-import Spec from './spec';
-import { WindowSizes } from '@/Hook';
+import { Props } from './spec';
+import { useWindowSizes } from '@/Hook';
 import { RandomNumber } from '@/Helper';
 
 const RATE = 0.001;
@@ -19,16 +19,16 @@ const { graphic } = Shaders.create({
   }
 });
 
-const Background: FunctionComponent<Spec.Props> = () => {
+const Background: FunctionComponent<Props> = () => {
   const [ blue, setBlue ] = useState(RandomNumber() / 100);
-  const [ plus, shouldAdd ] = useState(true); 
-  const { sizes: { height, width } } = WindowSizes();
+  const [ plusBlue, increaseBlue ] = useState(true); 
+  const { sizes: { height, width } } = useWindowSizes();
 
   let timer: number;
 
   const update = useCallback(
     () => {
-      if (plus) {
+      if (plusBlue) {
         setBlue(
           last => last + RATE
         );
@@ -40,17 +40,17 @@ const Background: FunctionComponent<Spec.Props> = () => {
         last => last - RATE
       );
     },
-    [ plus ]
+    [ plusBlue ]
   );
 
   useEffect(
     () => {
       if (blue >= 1) {
-        shouldAdd(false);
+        increaseBlue(false);
       }
 
       if (blue <= 0) {
-        shouldAdd(true);
+        increaseBlue(true);
       }
     },
     [ blue ]

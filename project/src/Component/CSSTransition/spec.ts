@@ -9,38 +9,35 @@ import {
   EnterHandler,
   ExitHandler,
 } from 'react-transition-group/Transition';
-import Origin from './Type/spec';
 
-declare module Spec {
-  type ClassName = CSSTransitionClassNames &
-    ClassNames<'default' | 'standalone'>;
+import * as Origin from './Type/spec';
 
-  type Enter = EnterHandler<null>;
-  type Exit = ExitHandler<null>;
+export type ClassName = CSSTransitionClassNames &
+  ClassNames<'default' | 'standalone'>;
 
-  type AddEndListener = EndHandler<null>;
+export type Enter = EnterHandler<null>;
+export type Exit = ExitHandler<null>;
 
-  type In = boolean;
+export type AddEndListener = EndHandler<null>;
 
-  type Type = Origin.Type;
+export type In = boolean;
 
-  type Props = Omit<CSSTransitionProps, 'addEndListener'> & {
-    addEndListener?: AddEndListener;
-    standalone?: boolean;
-    transitionKey?: Key;
-    type?: Type;
-  };
+export type Props = Omit<CSSTransitionProps, 'addEndListener'> & {
+  addEndListener?: AddEndListener;
+  standalone?: boolean;
+  transitionKey?: Key;
+  type?: Origin.Type;
+};
 
-  type UseHandlersProps = {
-    addEndListener?: AddEndListener;
-    onEntered: Enter;
-    onExited: Exit;
-    type: Type;
-  };
+export type Type = Origin.Type;
 
-  type UseHandlers = (
-    props: UseHandlersProps
-  ) => { onEntered: Enter; onExited: Exit };
-}
+export type UseHandlersProps = {
+  addEndListener?: AddEndListener;
+  onEntered: Enter;
+  onExited: Exit;
+  type: Origin.Type;
+};
 
-export default Spec;
+export type UseHandlers = (
+  props: UseHandlersProps
+) => { onEntered: Enter; onExited: Exit };

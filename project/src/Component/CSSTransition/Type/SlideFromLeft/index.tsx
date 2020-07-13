@@ -1,15 +1,15 @@
 import CSSTransition from '@/Component/CSSTransition';
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
-import { useHandlers } from '../../Hook';
+import { useHandlers } from '@/Component/CSSTransition/Hook';
 import Style from './Style';
-import Spec from './spec';
+import { Props, Type } from './spec';
 
 const { default: className } = Style;
 
-const type: Spec.Type = 'SlideFromLeft';
+const type: Type = 'SlideFromLeft';
 
-const SlideFromLeft: FunctionComponent<Spec.Props> = ({
+const SlideFromLeft: FunctionComponent<Props> = ({
   addEndListener,
   children,
   classNames,

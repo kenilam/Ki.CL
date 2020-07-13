@@ -1,14 +1,14 @@
 import isImage from 'is-image';
-import Spec from './spec';
+import { Fetch, Trigger } from '@/Helper/spec';
 
-function fetchImage<T>(url: string): Spec.Fetch<T> {
+function fetchImage<T>(url: string): Fetch<T> {
   const img = new Image();
 
   const cancel = () => {
     delete img.src;
   };
 
-  const trigger: Spec.Trigger<T> = () =>
+  const trigger: Trigger<T> = () =>
     new Promise((resolve) => {
       img.onload = () => {
         resolve();
@@ -19,7 +19,7 @@ function fetchImage<T>(url: string): Spec.Fetch<T> {
   return { cancel, trigger };
 }
 
-function Fetch<T>(url: string, options?: RequestInit): Spec.Fetch<T> {
+function Fetch<T>(url: string, options?: RequestInit): Fetch<T> {
   if (isImage(url)) {
     return fetchImage(url);
   }

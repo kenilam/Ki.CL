@@ -3,7 +3,7 @@ import { Link } from '@/Component'
 import classnames from 'classnames';
 import React from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
 const {
   component: {
@@ -18,7 +18,7 @@ const content = logo.content as { message: string, title: string };
 const message = content.message as string;
 const title = content.title as string;
 
-const Logo: React.FunctionComponent<Spec.Props> = ({ isSquare }) => {
+const Logo: React.FunctionComponent<Props> = ({ isSquare }) => {
   const className = classnames({
     [Style.square]: isSquare,
   });

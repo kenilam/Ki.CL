@@ -2,9 +2,9 @@ import { CSSTransition } from '@/Component'
 import classnames from 'classnames';
 import React, { useRef } from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Enter, Props } from './spec';
 
-const TextArea: React.FunctionComponent<Spec.Props> = ({
+const TextArea: React.FunctionComponent<Props> = ({
   autoFocus,
   in: transitionIn,
   id,
@@ -19,7 +19,7 @@ const TextArea: React.FunctionComponent<Spec.Props> = ({
 }) => {
   const ref = useRef<HTMLTextAreaElement>();
 
-  const onEntered: Spec.Enter = (node, isAppearing) => {
+  const onEntered: Enter = (node, isAppearing) => {
     if (autoFocus && ref) {
       ref.current.focus();
     }

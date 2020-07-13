@@ -1,9 +1,9 @@
 import { CSSTransition } from '@/Component';
 import React, { useRef } from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Enter, Props } from './spec';
 
-const Button: React.FunctionComponent<Spec.Props> = ({
+const Button: React.FunctionComponent<Props> = ({
   autoFocus,
   children,
   className,
@@ -17,7 +17,7 @@ const Button: React.FunctionComponent<Spec.Props> = ({
 }) => {
   const ref = useRef<HTMLInputElement>();
 
-  const onEntered: Spec.Enter = (node, isAppearing) => {
+  const onEntered: Enter = (node, isAppearing) => {
     if (autoFocus && ref) {
       ref.current.focus();
     }

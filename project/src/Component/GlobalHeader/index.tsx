@@ -4,7 +4,7 @@ import { Types } from '@/Component/CSSTransition';
 import { useLocation } from '@/Component/Router';
 import React from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
 const {
   view: { about, contact, home, works },
@@ -12,7 +12,7 @@ const {
 
 const INVALID_PATHS = [home.path];
 
-const GlobalHeader: React.FunctionComponent<Spec.Props> = () => {
+const GlobalHeader: React.FunctionComponent<Props> = () => {
   const { pathname } = useLocation();
 
   return (

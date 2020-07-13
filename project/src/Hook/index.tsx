@@ -1,10 +1,10 @@
-import WindowSizes from './WindowSizes';
+import useWindowSizes from './useWindowSizes';
 
 const State = () => {
   return {
-    ...WindowSizes(),
+    ...useWindowSizes(),
   };
 };
 
-export { WindowSizes };
+export { useWindowSizes };
 export default State;

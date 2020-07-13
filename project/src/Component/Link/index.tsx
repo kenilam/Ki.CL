@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
-const Link: React.FunctionComponent<Spec.Props> = ({
+const Link: React.FunctionComponent<Props> = ({
   children,
   className,
   component: Wrapper,

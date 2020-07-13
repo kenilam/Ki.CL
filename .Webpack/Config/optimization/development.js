@@ -6,4 +6,4 @@ const optimization = {
   },
 };
 
-export { optimization };
+export default { optimization };

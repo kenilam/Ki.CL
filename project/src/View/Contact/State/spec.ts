@@ -1,44 +1,40 @@
-import Api from '@/API/spec';
+import * as Api from '@/API/Contact/spec';
 import { SyntheticEvent } from 'react';
 
-declare module Spec {
-  type Actions = {
-    type: Type;
-    data?: Data;
-  };
+type Params = Api.Params;
 
-  type Params = Api.Contact.Params;
+export type Data = Params & {
+  hasChange?: boolean;
+  shouldRender?: boolean;
+  shouldSubmit?: boolean;
+};
 
-  type Data = Params & {
-    hasChange?: boolean;
-    shouldRender?: boolean;
-    shouldSubmit?: boolean;
-  };
+export type OnChange = (event: SyntheticEvent<HTMLFormElement>) => void;
+export type OnError = () => void;
+export type OnRender = () => void;
+export type OnReset = (event: SyntheticEvent<HTMLFormElement>) => void;
+export type OnSubmit = (event: SyntheticEvent<HTMLFormElement>) => void;
+export type OnSuccess = () => void;
 
-  type OnChange = (event: SyntheticEvent<HTMLFormElement>) => void;
-  type OnError = () => void;
-  type OnRender = () => void;
-  type OnReset = (event: SyntheticEvent<HTMLFormElement>) => void;
-  type OnSubmit = (event: SyntheticEvent<HTMLFormElement>) => void;
-  type OnSuccess = () => void;
+export type Type = 'CHANGE' | 'RENDER' | 'ERROR' | 'SUBMIT' | 'SUCCESS' | 'RESET';
 
-  type Reducer = (state: Data, actions: Actions) => void;
+export type Actions = {
+  type: Type;
+  data?: Data;
+};
 
-  type Type = 'CHANGE' | 'RENDER' | 'ERROR' | 'SUBMIT' | 'SUCCESS' | 'RESET';
+export type Reducer = (state: Data, actions: Actions) => void;
 
-  type Types = {
-    [name in Type]: Type;
-  };
+export type Types = {
+  [name in Type]: Type;
+};
 
-  type Props = {
-    data?: Data;
-    onChange: OnChange;
-    onError: OnError;
-    onRender: OnRender;
-    onReset: OnReset;
-    onSuccess: OnSuccess;
-    onSubmit: OnSubmit;
-  };
-}
-
-export default Spec;
+export type Props = {
+  data?: Data;
+  onChange: OnChange;
+  onError: OnError;
+  onRender: OnRender;
+  onReset: OnReset;
+  onSuccess: OnSuccess;
+  onSubmit: OnSubmit;
+};

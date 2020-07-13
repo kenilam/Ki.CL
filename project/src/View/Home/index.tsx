@@ -12,7 +12,7 @@ const {
   },
 } = resources;
 
-const api = '/asset/image/big.sur.png';
+const hero = '/asset/image/big.sur.png';
 
 const transitionType = types.ZoomOut;
 
@@ -22,7 +22,7 @@ const Home = (
     <Navigation />
     <Slogan />
     <section>
-      <img src={`../../..${api}`} alt='show' />
+      <img src={hero} alt='show' />
     </section>
   </main>
 );

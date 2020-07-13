@@ -1,4 +1,4 @@
-import Spec from '@/Component/CSSTransition/spec';
+import { Enter, Exit, UseHandlers } from '@/Component/CSSTransition/spec';
 import Style from '../Style';
 import * as Types from '../Type';
 
@@ -13,7 +13,7 @@ const DEFAULT_CLASS_LISTS = [
   Style.standalone,
 ];
 
-const useHandlers: Spec.UseHandlers = ({
+const useHandlers: UseHandlers = ({
   addEndListener,
   onEntered: enteredHandler,
   onExited: exitedHandler,
@@ -22,7 +22,7 @@ const useHandlers: Spec.UseHandlers = ({
   const { classNames } = Types;
   const className = classNames[type];
 
-  const onEntered: Spec.Enter = (node, isAppearing) => {
+  const onEntered: Enter = (node, isAppearing) => {
     if (node && !addEndListener) {
       node.classList.remove(...DEFAULT_CLASS_LISTS, className);
     }
@@ -32,7 +32,7 @@ const useHandlers: Spec.UseHandlers = ({
     }
   };
 
-  const onExited: Spec.Exit = (node) => {
+  const onExited: Exit = (node) => {
     if (node && !addEndListener) {
       node.classList.remove(...DEFAULT_CLASS_LISTS, className);
     }

@@ -1,15 +1,15 @@
 import colors from 'colors';
 import webpack from 'webpack';
-import webpackMerge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import { clean, resolve as resolveConfig } from './Config';
 import { browser, browserInstance } from './Config/prodServer';
-import { devConfig } from './development.babel';
+import { basic } from './development.babel';
 import { Args, Logger } from './Utilities';
 
 const mode = process.env.NODE_ENV || 'production';
 const watch = !Args.noWatch;
 
-const config = webpackMerge(devConfig, clean, {
+const config = merge(basic, clean, {
   mode,
   resolve: resolveConfig,
   watch,

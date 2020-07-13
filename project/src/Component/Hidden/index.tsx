@@ -1,17 +1,17 @@
 import classnames from 'classnames';
 import React from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Child, Props } from './spec';
 
-const Hidden: React.FunctionComponent<Spec.Props> = ({
+const Hidden: React.FunctionComponent<Props> = ({
   children,
   className,
   useClassName,
 }) => {
   const Component = React.Children.map(
     children,
-    (child: React.DetailedReactHTMLElement<Spec.Child, null>) => {
-      const props: Spec.Child = {
+    (child: React.DetailedReactHTMLElement<Child, null>) => {
+      const props: Child = {
         ['data-component']: Style.default,
       };
 

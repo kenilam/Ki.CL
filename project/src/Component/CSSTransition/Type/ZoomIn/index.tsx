@@ -1,15 +1,15 @@
 import CSSTransition from '@/Component/CSSTransition';
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
-import { useHandlers } from '../../Hook';
+import { useHandlers } from '@/Component/CSSTransition/Hook';
 import Style from './Style';
-import Spec from './spec';
+import { Props, Type } from './spec';
 
 const { default: className } = Style;
 
-const type: Spec.Type = 'ZoomIn';
+const type: Type = 'ZoomIn';
 
-const ZoomIn: FunctionComponent<Spec.Props> = ({
+const ZoomIn: FunctionComponent<Props> = ({
   addEndListener,
   children,
   classNames,

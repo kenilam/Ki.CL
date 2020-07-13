@@ -1,4 +1,4 @@
-// import ExtractCssChunks from 'extract-css-chunks-webpack-plugin'
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import { CSSLoaders, SCSSLoaders } from './development';
 
 const fallback = 'style-loader';

@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "command": "npm run dev -- --env.analyzer",
+      "name": "Run npm run dev",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "command": "npm run prod -- --env.analyzer",
+      "name": "Run npm run prod",
+      "request": "launch",
+      "type": "node-terminal"
+    }
+  ]
+}

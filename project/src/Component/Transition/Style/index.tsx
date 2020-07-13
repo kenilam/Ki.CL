@@ -1,5 +1,5 @@
-import Spec from '@/Component/Transition/spec';
+import { ClassName } from '@/Component/Transition/spec';
 import './style.scss';
 import value from './value.scss';
 
-export default value as Spec.ClassName;
+export default value as ClassName;

@@ -1,23 +1,19 @@
 import { SurfaceProps } from 'gl-react-dom';
 
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
+export type ClassName = ClassNames<'default'>;
 
-  type Graphic = any;
-  type Render = () => void;
+export type Graphic = unknown;
+export type Render = () => void;
 
-  // interface Scene {
-  //   graphic: Graphic;
-  //   render?: Render;
-  // }
+// interface Scene {
+//   graphic: Graphic;
+//   render?: Render;
+// }
 
-  type Props = SurfaceProps & {
-    className?: string;
-  };
+export type Props = SurfaceProps & {
+  className?: string;
+};
 
-  // interface Props extends Sizes {
-  //   scenes?: Scene[];
-  // }
-}
-
-export default Spec;
+// interface Props extends Sizes {
+//   scenes?: Scene[];
+// }

@@ -1,7 +1,3 @@
-declare module Spec{
-  type Props = unknown;
+export type Props = unknown;
 
-  type Operator = 'minus' | 'plus';
-}
-
-export default Spec;
+export type Operator = 'minus' | 'plus';

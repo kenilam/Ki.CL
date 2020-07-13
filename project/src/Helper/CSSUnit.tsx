@@ -1,5 +1,5 @@
 import * as engine from 'units-css';
-import Spec from './spec';
+import { Style } from '@/Helper/spec';
 
 const DOM_DEPENDED_UNITS = ['%', 'ch', 'em', 'ex'];
 const TIME_UNITS = ['s', 'ms'];
@@ -23,8 +23,8 @@ function CSSUnit(values: number | string): number {
   return engine.convert(BASE_UNIT, value, document.querySelector('body'));
 }
 
-function CSSUnitGroup(style: Spec.Style) {
-  const props: Spec.Style = {};
+function CSSUnitGroup(style: Style) {
+  const props: Style = {};
 
   Object.keys(style).forEach((name) => {
     props[name] = CSSUnit(style[name]);

@@ -3,7 +3,7 @@ import { Button } from '@/Component'
 import { types } from '@/Component/CSSTransition/Type';
 import React from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
 const transitionType = types.SlideUp;
 
@@ -18,7 +18,7 @@ const {
 const reset = content.reset as { value: string };
 const submit = content.submit as { value: string };
 
-const CTA: React.FunctionComponent<Spec.Props> = ({ disabled, ...props }) => (
+const CTA: React.FunctionComponent<Props> = ({ disabled, ...props }) => (
   <fieldset data-view-component={Style.default}>
     <Button {...props} transitionType={transitionType} type='reset'>
       {reset.value}

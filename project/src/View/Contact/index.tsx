@@ -8,7 +8,7 @@ import React from 'react';
 import { CTA, Description, Title } from './Component';
 import State from './State';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
 const {
   view: {
@@ -25,7 +25,7 @@ const name = content.name as string;
 
 const transitionType = types.Fade;
 
-const Contact: React.FunctionComponent<Spec.Props> = () => {
+const Contact: React.FunctionComponent<Props> = () => {
   const {
     actions: { data, onError, onRender, onSuccess, ...actions },
   } = State();

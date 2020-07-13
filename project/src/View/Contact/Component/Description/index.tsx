@@ -2,7 +2,7 @@ import resources from '$/resources';
 import { Types } from '@/Component/CSSTransition';
 import React from 'react';
 import Style from './Style';
-import Spec from './spec';
+import { Props } from './spec';
 
 const {
   view: {
@@ -12,7 +12,7 @@ const {
   },
 } = resources;
 
-const Description: React.FunctionComponent<Spec.Props> = (props) => (
+const Description: React.FunctionComponent<Props> = (props) => (
   <Types.SlideUp {...props}>
     <p data-view-component={Style.default}>{description}</p>
   </Types.SlideUp>

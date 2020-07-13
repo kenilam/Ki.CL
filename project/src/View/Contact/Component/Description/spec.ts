@@ -1,9 +1,5 @@
-import CSSTransition from '@/Component/Transition/spec';
+import * as CSSTransition from '@/Component/Transition/spec';
 
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
+export type ClassName = ClassNames<'default'>;
 
-  type Props = Omit<CSSTransition.Props, 'type'>;
-}
-
-export default Spec;
+export type Props = Omit<CSSTransition.Props, 'type'>;

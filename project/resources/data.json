@@ -13,7 +13,7 @@
       "name": "Home",
       "content": {
         "heading": "KENI LAM",
-        "slogan": "I [dream|make|love|craft|breath|invent]\nstuffs\nthat are\n[interesting|creative|innovative|stunning]."
+        "slogan": "I [dream|make|love|craft|breath|adore]\nthings\nthat are\n[interesting|creative|innovative|stunning]."
       }
     },
     "works": {
@@ -27,7 +27,7 @@
       },
       "view": {
         "work": {
-          "path": "/works/:projectId",
+          "path": "/works/:work",
           "name": "Work",
           "message": "Ki.CL",
           "content": {
