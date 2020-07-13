@@ -89,6 +89,10 @@ const rules = [
 ];
 
 const plugins = [
+  // new ExtractCssChunks({
+  //   filename: '[name].[hash].css',
+  //   chunkFilename: '[id].[hash].css',
+  // }),
   new StyleLintPlugin({
     console: true,
     context: contextRoot,

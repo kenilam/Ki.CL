@@ -1,7 +1,7 @@
 {
-  "name": "tesla-grid",
+  "name": "ki-cl",
 "version": "0.0.0",
-  "description": "Tesla Grid",
+  "description": "Ki.CL",
   "scripts": {
     "guide": "npx babel-node styleguidist server",
     "test": "NODE_ENV=test jest --config ./.Jest/config.js --detectOpenHandles --changedSince=master",
@@ -35,10 +35,9 @@
     "url": "https://stash.teslamotors.com/users/kenlam/repos/grid"
   },
   "bugs": {
-    "url": "https://stash.teslamotors.com/users/kenlam/repos/grid"
+    "url": "https://github.com/kenilam/Ki.CL/issues"
   },
   "devDependencies": {
-    "@Tesla/design-system-react": "3.2.0",
     "@babel/core": "^7.10.4",
     "@babel/node": "^7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -187,19 +186,6 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "dependencies": {
-    "@tesla/react-tds": "7.1.6",
-    "@tesla/tds-buttons": "3.5.0",
-    "@tesla/tds-core": "3.5.0",
-    "@tesla/tds-fonts": "3.5.0",
-    "@tesla/tds-icons": "3.5.0",
-    "@tesla/tds-layout": "3.5.0",
-    "@tesla/tds-modals": "3.5.0",
-    "@tesla/tds-navigation": "3.5.0",
-    "@tesla/tds-notifications": "3.5.0",
-    "@tesla/tds-search": "3.5.0",
-    "@tesla/tds-tabs": "3.5.0",
-    "@tesla/tds-tokens": "3.5.0",
-    "@tesla/tds-tooltips": "3.5.0",
     "abortcontroller-polyfill": "^1.4.0",
     "async-reactor": "^1.2.2",
     "autobind-decorator": "^2.4.0",

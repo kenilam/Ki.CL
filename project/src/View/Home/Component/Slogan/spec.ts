@@ -1,10 +1,6 @@
-import Phase from '@/View/Home/Component/Phase/spec';
+import { Word } from '@/View/Home/Component/Phase/spec';
 
-declare module Spec {
-  type ClassName = ClassNames<'default'>;
-  type Words = (Phase.Word[] | string)[];
-  
-  type Props = unknown;
-}
+export type ClassName = ClassNames<'default'>;
+export type Words = (Word[] | string)[];
 
-export default Spec;
+export type Props = unknown;

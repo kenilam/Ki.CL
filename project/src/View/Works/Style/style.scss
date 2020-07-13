@@ -95,10 +95,22 @@
   }
 }
 
-[data-entered-routes^=works] {
-  $color: get($black, 'default');
+  [data-entered-routes^=works] & {
+    $color: get($black, 'default');
 
-  @include set-global-header-color($color);
+    @include set-global-header-color($header-color);
+  }
+
+  [data-entered-routes^='works.'] & {
+    h1,
+    [data-component=#{$webGL}] {
+      filter: brightness(0) grayscale(30%);
+    }
+
+    h1 {
+      transform: translate3d(0, -50%, 0);
+    }
+  }
 }
 
 @keyframes works-h1-animation {
