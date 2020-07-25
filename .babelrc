@@ -4,7 +4,7 @@
       "@babel/preset-env",
       {
         "corejs": 3,
-        "debug": true,
+        "debug": false,
         "useBuiltIns": "usage"
       }
     ],
@@ -34,7 +34,7 @@
     [
       "module-resolver",
       {
-        "root": ["./project/src", "./project/assets", "./project/content"]
+        "root": ["./Project/src", "./Project/assets", "./Project/content"]
       }
     ],
     [

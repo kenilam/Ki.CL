@@ -6,6 +6,7 @@ import entry from './entry';
 import environment from './environment';
 import fonts from './fonts';
 import glsl from './glsl';
+import graphql from './graphql';
 import images from './images';
 import indexHTML from './indexHTML';
 import javascript from './javascript';
@@ -24,6 +25,7 @@ export {
   environment,
   fonts,
   glsl,
+  graphql,
   images,
   indexHTML,
   javascript,

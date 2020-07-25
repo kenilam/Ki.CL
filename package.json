@@ -1,15 +1,15 @@
 {
-  "name": "ki-cl",
-  "version": "1.0.0",
-  "description": "Ki.CL",
+  "name": "tesla-grid",
+"version": "0.0.0",
+  "description": "Tesla Grid",
   "scripts": {
     "guide": "npx babel-node styleguidist server",
     "test": "NODE_ENV=test jest --config ./.Jest/config.js --detectOpenHandles --changedSince=master",
     "test:watch": "npm run test -- --watch",
     "test:cover": "npm run test -- --coverage --detectOpenHandles --updateSnapshot",
     "lint": "npm run lint:eslint && npm run lint:stylelint",
-    "lint:stylelint": "stylelint 'project/**/*.scss' --fix",
-    "lint:eslint": "eslint 'project/src/**/*.(js,jsx,ts,tsx)' --fix",
+    "lint:stylelint": "stylelint 'Project/**/*.scss' --fix",
+    "lint:eslint": "eslint '{.Webpack,Project}/src/**/*.(js,jsx,ts,tsx)' --fix",
     "dev": "NODE_ENV=development webpack-dev-server --config .Webpack/development.babel.js",
     "prod": "NODE_ENV=production babel-node .Webpack/production.js"
   },
@@ -22,22 +22,23 @@
     "options": [
       "concurrent"
     ],
-    "{.Webpack,project}/**/*.{js,jsx,ts,tsx}": [
+    "{.Webpack,Project}/**/*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ],
-    "project/**/*.scss": [
+    "Project/**/*.scss": [
       "stylelint --fix"
     ]
   },
   "author": "Keni Lam",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kenilam/Ki.CL.git"
+    "url": "https://stash.teslamotors.com/users/kenlam/repos/grid"
   },
   "bugs": {
-    "url": "https://github.com/kenilam/Ki.CL/issues"
+    "url": "https://stash.teslamotors.com/users/kenlam/repos/grid"
   },
   "devDependencies": {
+    "@Tesla/design-system-react": "3.2.0",
     "@babel/core": "^7.10.4",
     "@babel/node": "^7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -98,6 +99,8 @@
     "css-hot-loader": "^1.4.4",
     "css-loader": "^3.6.0",
     "declaration-bundler-webpack-plugin": "^1.0.3",
+    "dotenv": "8.2.0",
+    "dotenv-webpack": "^2.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^7.4.0",
@@ -133,6 +136,8 @@
     "opn": "^6.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "path": "^0.12.7",
+    "postcss-exclude-files": "1.0.15",
+    "postcss-ignore-plugin": "0.2.1",
     "postcss-import": "^12.0.1",
     "postcss-js": "^2.0.3",
     "postcss-loader": "^3.0.0",
@@ -151,13 +156,14 @@
     "simple-node-logger": "^18.12.24",
     "strip-ansi": "^6.0.0",
     "style-loader": "^1.2.1",
-    "stylelint": "^13.6.1",
+    "stylelint": "13.6.1",
     "stylelint-config-css-modules": "^2.2.0",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-formatter-pretty": "^2.1.0",
+    "stylelint-postcss-ignore": "0.1.0",
     "stylelint-prettier": "^1.1.2",
     "stylelint-scss": "^3.18.0",
     "stylelint-webpack-plugin": "^2.1.0",
@@ -172,6 +178,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-extract-css-hot-reload": "^1.0.3",
+    "webpack-graphql-loader": "^1.0.2",
     "webpack-merge": "^5.0.9",
     "webpack-zip-files-plugin": "^1.0.0",
     "xml-loader": "^1.2.1",
@@ -180,6 +187,19 @@
     "zip-webpack-plugin": "^3.0.0"
   },
   "dependencies": {
+    "@tesla/react-tds": "7.1.6",
+    "@tesla/tds-buttons": "3.5.0",
+    "@tesla/tds-core": "3.5.0",
+    "@tesla/tds-fonts": "3.5.0",
+    "@tesla/tds-icons": "3.5.0",
+    "@tesla/tds-layout": "3.5.0",
+    "@tesla/tds-modals": "3.5.0",
+    "@tesla/tds-navigation": "3.5.0",
+    "@tesla/tds-notifications": "3.5.0",
+    "@tesla/tds-search": "3.5.0",
+    "@tesla/tds-tabs": "3.5.0",
+    "@tesla/tds-tokens": "3.5.0",
+    "@tesla/tds-tooltips": "3.5.0",
     "abortcontroller-polyfill": "^1.4.0",
     "async-reactor": "^1.2.2",
     "autobind-decorator": "^2.4.0",

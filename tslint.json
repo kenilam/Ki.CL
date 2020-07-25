@@ -1,0 +1,32 @@
+{
+  "defaultSeverity": "error",
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**/*.{j,t}s"
+    ]
+  },
+  "extends": [
+    "tslint-eslint-rules",
+    "tslint-react",
+    "tslint-react-hooks",
+    "tslint:latest",
+    "tslint-plugin-prettier",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "jsx-no-multiline-js": false,
+    "no-conditional-assignment": false,
+    "no-empty-interface": false,
+    "no-implicit-dependencies": false,
+    "no-namespace": [true, "allow-declarations"],
+    "no-shadowed-variable": false,
+    "no-submodule-imports": false,
+    "prettier": true,
+    "react-hooks-nesting": "error",
+    "quotes": "single"
+  }
+}

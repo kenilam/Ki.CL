@@ -1,6 +1,6 @@
 import CopyPlugin from '!/Plugins/CopyPlugin';
 
-const srcRoot = 'project/asset';
+const srcRoot = 'Project/asset';
 
 const copier = new CopyPlugin({
   srcRoot,

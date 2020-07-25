@@ -11,7 +11,6 @@ const use = [
 
 const fonts = {
   test: /\.(eot|ttf|woff|svg)$/i,
-  exclude: /node_modules/,
   use,
 };
 

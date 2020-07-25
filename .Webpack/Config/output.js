@@ -1,6 +1,6 @@
 import { path as appRoot } from 'app-root-path';
 
-const projectRoot = 'project';
+const projectRoot = 'Project';
 const srcRoot = `${projectRoot}/build`;
 const tmpRoot = `${projectRoot}/.tmp`;
 const publicPath = '/';

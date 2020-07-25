@@ -1,94 +1,29 @@
-import colors from 'colors';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 import { clean, resolve as resolveConfig } from './Config';
-import { browser, browserInstance } from './Config/prodServer';
 import { basic } from './development.babel';
-import { Args, Logger } from './Utilities';
+import { Args } from './Utilities';
+import { errorHandler, launch, statsHandler } from './Config/prodServer';
 
 const mode = process.env.NODE_ENV || 'production';
 const watch = !Args.noWatch;
-
-const config = merge(basic, clean, {
+const additional = {
   mode,
   resolve: resolveConfig,
   watch,
-});
-
-const FAILURE_MESSAGE = colors.red(
-  'Failures while starting application on production environment'
-);
-const SUCCESS_MESSAGE = colors.green('App compiled successfully');
-
-const COLORS = {
-  red: '#d8000c',
-  yellow: '#9f6000',
 };
 
-class StatsReports {
-  constructor(reports, color, maxLength = 10) {
-    const length = reports.length;
-    const extraLength = length - maxLength;
-    const concatMessage = `${extraLength} more...`;
+const config = merge(basic, clean, additional);
 
-    reports = reports.slice(0, maxLength);
-
-    this.results = reports.slice(0, maxLength).map((report) => ({
-      html: `<p style='color:${COLORS[color]}'>${report}</p>`,
-      message: colors[color](report),
-    }));
-
-    if (extraLength > 0) {
-      this.results.push({
-        html: `<p>${concatMessage}</p>`,
-        message: colors[color](concatMessage),
-      });
-    }
-
-    return this.results;
-  }
-}
-
-const statsHandler = async (stats) =>
-  new Promise((resolve, reject) => {
-    let errorMessages;
-
-    const {
-      compilation: { errors },
-    } = stats;
-
-    if (stats.hasErrors()) {
-      errorMessages = new StatsReports(
-        errors.map(({ message }) => message),
-        'red'
-      );
-
-      errorMessages.forEach(({ message }) => Logger.error(message));
-
-      browserInstance.sockets.emit('fullscreen:message', {
-        title: 'Webpack Error:',
-        body: errorMessages.map(({ html }) => html).join(''),
-        timeout: 100000,
-      });
-
-      reject(errors);
-
-      return;
-    }
-
-    Logger.log(SUCCESS_MESSAGE);
-    resolve(stats);
-  });
-
-const production = new Promise((resolve, reject) =>
-  webpack(config, (errors, stats) =>
-    statsHandler(stats).then(resolve).catch(reject)
+const production = new Promise(
+  (resolve, reject) => (
+    webpack(
+      config,
+      (errors, stats) => statsHandler(stats).then(resolve).catch(reject)
+    )
   )
 );
 
 process.env.NODE_ENV = mode;
 
-export default production.then(browser).catch((errors) => {
-  Logger.error(FAILURE_MESSAGE);
-  Logger.error(errors);
-});
+export default production.then(launch).catch(errorHandler);

@@ -41,6 +41,9 @@
       {
         "ignore": ["attribute"]
       }
+    ],
+    "selector-list-comma-newline-after":[
+      "always"
     ]
   }
 }

@@ -1,11 +1,10 @@
-import { Args } from '!/Utilities';
-import config from '^/ki-cl.config';
+import { Args, Env } from '!/Utilities';
 import open from 'opn';
 import webpack from 'webpack';
 import { srcRoot as assetPath } from './asset';
 import { publicPath } from './output';
 
-const { host, port } = config.localhost;
+const { HOST, PORT } = Env;
 
 const stats = {
   all: false,
@@ -47,7 +46,7 @@ const devServer = {
     errors: true,
   },
   progress: true,
-  publicPath: `${host}:${port}${publicPath}`,
+  publicPath: `${HOST}:${PORT}${publicPath}`,
   watchContentBase: true,
   watchOptions: {
     aggregateTimeout: 500,
@@ -55,18 +54,25 @@ const devServer = {
   },
 
   contentBase,
-  port,
+  port: PORT,
   stats,
 };
 
 function browser() {
-  open(`${host}:${port}`);
+  open(`${HOST}:${PORT}`);
 }
 
 const plugins = [
   new webpack.HotModuleReplacementPlugin({ multiStep: true }),
   new webpack.EvalSourceMapDevToolPlugin(),
 ];
+
+if (Args.verbose && process.env.NODE_ENV === 'development') {
+  console.log('');
+  console.log('Dev Server launching with below from .env');
+  console.log(Env);
+  console.log('');
+}
 
 export { browser, devServer };
 
