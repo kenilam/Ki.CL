@@ -49,3 +49,7 @@ node_modules
 project/build
 .Jest/.jest-cache
 *.icloud
+
+# Env files #
+#############
+.env.*
