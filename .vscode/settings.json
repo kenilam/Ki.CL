@@ -13,5 +13,10 @@
   "eslint.alwaysShowStatus": true,
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,
-  "eslint.debug": true
+  "eslint.debug": true,
+  "cSpell.words": [
+    "abortcontroller",
+    "smoothscroll",
+    "unfetch"
+  ]
 }
