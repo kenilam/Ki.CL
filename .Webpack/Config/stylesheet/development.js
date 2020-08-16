@@ -16,8 +16,8 @@ const css = {
   loader: 'css-loader',
   options: {
     importLoaders: 2,
-    localsConvention: 'asIs',
     modules: {
+      exportLocalsConvention: 'asIs',
       localIdentName: '[local]',
     },
     sourceMap: true,
