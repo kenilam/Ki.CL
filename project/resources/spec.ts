@@ -9,9 +9,7 @@ type Content = {
 }
 
 type Component = {
-  content?: Content;
-
-  [name: string]: Content;
+  content: Content;
 }
 
 type Components = {
@@ -19,30 +17,28 @@ type Components = {
 }
 
 type Miscellaneous = {
-  months?: string[] | null;
+  months: string[] | null;
 }
 
 type View = {
-  component?: Components;
-  content?: Content;
-  message?: Message;
+  component: Components;
+  content: Content;
+  message: Message;
   name: Name;
-  path?: Path;
-  view?: Views;
+  path: Path;
+  view: Views;
 }
 
 type Routes = 'about' | 'contact' | 'home' | 'pageNotFound' | 'works' | 'work';
 
 type Views = {
-  [name in Routes]?: View;
+  [name in Routes]: View;
 }
 
-export class Data {
+export type Data  = {
   component: Component;
   description: Description;
   miscellaneous: Miscellaneous;
   siteName: SiteName;
   view: Views;
 }
-
-export default { Data };

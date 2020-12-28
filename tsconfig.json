@@ -2,30 +2,43 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./Project",
-    "checkJs": true,
+    "baseUrl": "./project",
+    "checkJs": false,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "importsNotUsedAsValues": "preserve",
     "jsx": "preserve",
-    "lib": ["es2017", "dom", "dom.iterable", "scripthost"],
-    "module": "esNext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2015",
+      "es2015.collection",
+      "es2015.iterable",
+      "es2017",
+      "es2020",
+      "scripthost"
+    ],
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmitHelpers": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "outDir": "./project/build",
     "paths": {
       "@/*": ["src/*"],
       "$/*": ["*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,
+    "strict": true,
     "target": "es5"
   },
-  "exclude": ["node_modules", "Project/build"],
-  "include": ["Project/src/**/*"],
-  "sourceMap": true
+  "include": ["project/**/*"],
+  "sourceMap": false
 }

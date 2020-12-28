@@ -1,0 +1,17 @@
+node_modules/
+
+/*.*
+
+*.css
+*.eot
+*.png
+*.scss
+*.svg
+*.ttf
+*.woff
+
+*.json
+*.snap
+*.html
+
+project/build/

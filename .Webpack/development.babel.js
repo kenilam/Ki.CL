@@ -3,6 +3,7 @@ import { merge } from 'webpack-merge';
 import {
   asset,
   bundleAnalyzer,
+  clean,
   devServer,
   entry,
   environment,
@@ -14,7 +15,7 @@ import {
   optimization,
   output,
   resolve,
-  stylesheet,
+  stylesheet
 } from './Config';
 
 const mode = process.env.NODE_ENV || 'development';
@@ -22,13 +23,14 @@ const mode = process.env.NODE_ENV || 'development';
 const basic = merge(
   asset,
   bundleAnalyzer,
+  clean,
   entry,
   environment,
   fonts,
+  glsl,
   images,
   indexHTML,
   javascript,
-  glsl,
   optimization,
   output,
   stylesheet

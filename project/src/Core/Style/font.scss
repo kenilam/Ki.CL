@@ -1,0 +1,32 @@
+:root {
+  // font-family
+  --kicl-font-family: 'ariana-pro', #{$base-font};
+  --kicl-font-family-bold: 'acumin-pro-wide', #{$base-font};
+  --kicl-font-family-special: 'gilbert-color', #{$base-font};
+  // font-size
+  --kicl-font-size-extreme: 10rem;
+  --kicl-font-size-largest: 4rem;
+  --kicl-font-size-larger: 3rem;
+  --kicl-font-size-large: 2rem;
+  --kicl-font-size: #{$base-font-size};
+  --kicl-font-size-medium: 1.5rem;
+  --kicl-font-size-small: 0.8rem;
+  --kicl-font-size-smaller: 0.6rem;
+  --kicl-font-size-smallest: 0.4rem;
+  // font-weight
+  --kicl-font-weight-lightest: 100;
+  --kicl-font-weight-lighter: 200;
+  --kicl-font-weight-light: 300;
+  --kicl-font-weight: 400;
+  --kicl-font-weight-bold: 500;
+  --kicl-font-weight-bolder: 700;
+  --kicl-font-weight-boldest: 900;
+  // letter-spacing
+  --kicl-letter-spacing: 0.08rem;
+  // line-height
+  --kicl-line-height-narrowest: 0.7;
+  --kicl-line-height-narrower: 0.8;
+  --kicl-line-height-narrow: 1;
+  --kicl-line-height: 1.5;
+  --kicl-line-height-wide: 1.8;
+}

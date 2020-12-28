@@ -1,13 +1,13 @@
-html {
+* {
   @include font-smoothing();
 
-  background-color: get($black, 'default');
-  color: get($black, 'default');
-  font-family: get($font, 'font-family.normal');
-  font-size: get($font, 'font-size.normal');
-  font-weight: get($font, 'font-weight.normal');
-  letter-spacing: get($font, 'letter-spacing');
-  line-height: get($font, 'line-height.default');
+  background-color: var(--kicl-color-black);
+  color: var(--kicl-color-white);
+  font-family: var(--kicl-font-family);
+  font-size: var(--kicl-font-size);
+  font-weight: var(--kicl-font-weight);
+  letter-spacing: var(--kicl-letter-spacing);
+  line-height: var(--kicl-line-height);
 }
 
 button {
@@ -16,13 +16,13 @@ button {
   margin: 0;
   padding: 0;
   text-transform: uppercase;
-  transition-duration: get($duration, 'faster');
+  transition-duration: var(--kicl-duration-faster);
   transition-property: background-color;
-  transition-timing-function: get($ease, 'circ.out');
+  transition-timing-function: var(--kicl-ease-circ-out);
 
   &[type] {
     &:disabled {
-      background-color: get($white, 'darkest');
+      background-color: var(--kicl-white-darkest);
       cursor: not-allowed;
     }
   }
@@ -31,12 +31,12 @@ button {
 a,
 button,
 [href] {
-  color: $green;
+  color: var(--kicl-color-green);
   cursor: pointer;
   text-decoration: none;
 
   &:hover {
-    color: get($white, 'darker');
+    color: var(--kicl-white--darker);
   }
 }
 
@@ -45,8 +45,8 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: get($font, 'font-family.special');
-  line-height: get($font, 'line-height.wide');
+  font-family: var(--kicl-font-family-special);
+  line-height: var(--kicl-line-height-wide);
 }
 
 [app-root] {
@@ -59,17 +59,14 @@ h5 {
   visibility: hidden;
 }
 
-* {
-  transition-timing-function: get($ease, 'quad.in');
-}
-
 body {
-  transition-duration: get($duration, 'slow');
+  transition-duration: var(--kicl-duration-slow);
   transition-property: background-color;
+  transition-timing-function: var(--kicl-ease-quad-in);
 }
 
 h1 {
-  font-size: get($font, 'font-size.medium');
+  font-size: var(--kicl-font-size-medium);
 }
 
 main {

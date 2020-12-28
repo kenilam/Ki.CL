@@ -1,4 +1,4 @@
-import resources from '$/resources';
+import { data } from '$/resources';
 import { Link } from '@/Component'
 import classnames from 'classnames';
 import React from 'react';
@@ -7,16 +7,17 @@ import { Props } from './spec';
 
 const {
   component: {
-    logo,
+    logo: {
+      content: {
+        message,
+        title
+      }
+    }
   },
   view: {
     home: { path },
   },
-} = resources;
-
-const content = logo.content as { message: string, title: string };
-const message = content.message as string;
-const title = content.title as string;
+} = data;
 
 const Logo: React.FunctionComponent<Props> = ({ isSquare }) => {
   const className = classnames({

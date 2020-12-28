@@ -1,9 +1,9 @@
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserJSPlugin from 'terser-webpack-plugin';
 import { optimization } from './development';
 
 const minimizer = [
-  new OptimizeCSSAssetsPlugin(),
+  new CssMinimizerPlugin(),
   new TerserJSPlugin({
     parallel: true,
     terserOptions: {
@@ -17,6 +17,6 @@ const minimizer = [
 
 export default {
   optimization: Object.assign(optimization, {
-    minimizer,
+    minimizer
   }),
 };

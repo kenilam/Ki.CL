@@ -1,4 +1,15 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
+
+import { Uuid, IsProd } from '!/Utilities';
+
+const htmlInline = new ScriptExtHtmlWebpackPlugin({
+  custom: {
+    test: /\.js$/,
+    attribute: "nonce",
+    value: IsProd ? Uuid.nonce : ""
+  }
+})
 
 const html = new HtmlWebpackPlugin({
   filename: 'index.html',
@@ -29,5 +40,5 @@ const html = new HtmlWebpackPlugin({
 });
 
 export default {
-  plugins: [html],
+  plugins: [html, htmlInline],
 };

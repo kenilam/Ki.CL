@@ -1,33 +1,19 @@
-import { Router } from '@/Component'
-import React, { FunctionComponent } from 'react';
-import { useLocation } from 'react-router-dom';
-import About, * as AboutSettings from './About';
-import Contact, * as ContactSettings from './Contact';
-import Home, * as HomeSettings from './Home';
-import Works, * as WorksSettings from './Works';
-import { Props, Types } from './spec';
+import React from 'react';
 
-const transitionTypes: Types = {
-  [AboutSettings.path]: AboutSettings.transitionType,
-  [ContactSettings.path]: ContactSettings.transitionType,
-  [HomeSettings.path]: HomeSettings.transitionType,
-  [WorksSettings.path]: WorksSettings.transitionType,
-};
+import { Routes } from '@/Component';
 
-const View: FunctionComponent<Props> = () => {
-  const { pathname } = useLocation();
+import Contact from './Contact';
+import Home from './Home';
+import Works from './Works';
+
+const View: React.FunctionComponent = () => {
   return (
-    <Router
-      appear={true}
-      routeIndex={0}
-      transitionType={transitionTypes[pathname]}
-    >
-      {About}
+    <Routes component='main' level={1} transition='fade'>
       {Contact}
       {Home}
       {Works}
-    </Router>
+    </Routes>
   );
-};
+}
 
 export default View;

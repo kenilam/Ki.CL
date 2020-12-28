@@ -1,19 +1,7 @@
 @mixin set-logo-style($size, $color: null) {
-  $default: get($component-logo, 'default');
-  $square: get($component-logo, 'square');
-
-  [data-component=#{$default}] {
+  [data-component=#{$component-logo}] {
     font-size: $size;
     height: $size;
-    width: $size * 2.4;
-
-    @include mobile() {
-      width: $size;
-    }
-
-    &.#{$square} {
-      width: $size;
-    }
 
     @if $color {
       color: $color;

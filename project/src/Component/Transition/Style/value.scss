@@ -1,1 +1,13 @@
-@value default: #{get($component-transition, 'default')};
+@value default: #{$component-transition};
+@value appear-done: #{appear-done};
+@value enter-done: #{enter-done};
+@value exit-done: #{exit-done};
+@value fade: #{$component-transition-fade};
+@value slide-from-bottom: #{$component-transition-slide-from-bottom};
+@value slide-from-left: #{$component-transition-slide-from-left};
+@value slide-from-right: #{$component-transition-slide-from-right};
+@value slide-from-top: #{$component-transition-slide-from-top};
+@value zoom-in: #{$component-transition-zoom-in};
+@value zoom-out: #{$component-transition-zoom-out};
+@value enter-done: #{$component-transition-enter-done};
+@value exit-done: #{$component-transition-exit-done};

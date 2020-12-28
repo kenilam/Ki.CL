@@ -1,0 +1,15 @@
+[data-component=#{$component-transition}] {
+  &.#{$component-transition-slide-from-right} {
+    --kicl-component-transition-slide-out-to-right: 100%;
+
+    transition-property: transform;
+    will-change: transform;
+
+    &.#{$component-transition-slide-from-right}-enter {
+      transform: translate3d(var(--kicl-component-transition-slide-out-to-right), 0, 0);
+    }
+    &.#{$component-transition-slide-from-right}-exit-active {
+      transform: translate3d(var(--kicl-component-transition-slide-out-to-right), 0, 0);
+    }
+  }
+};

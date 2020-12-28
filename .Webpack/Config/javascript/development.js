@@ -2,7 +2,9 @@ import { path as appRoot } from 'app-root-path';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 import webpack from 'webpack';
-import { context } from '../entry';
+import { context } from '!/Config/entry';
+
+import { IsProd, Args } from '!/Utilities';
 
 const tsconfig = `${appRoot}/tsconfig.json`;
 
@@ -26,7 +28,19 @@ const Loaders = [
         },
       },
     ],
-  }
+  },
+  {
+    test: /\.(js|jsx)?$/,
+    exclude: [/node_modules\/\*\*/],
+    use: [
+      {
+        loader: 'babel-loader',
+        options: {
+          plugins: ['react-hot-loader/babel'],
+        },
+      },
+    ],
+  },
 ];
 
 const plugins = [
@@ -37,10 +51,11 @@ const plugins = [
       files: `${context}/**/*.{ts,tsx,js,jsx}`
     },
     typescript: {
+      memoryLimit: 8092,
       configFile: tsconfig
-    }
-  }),
-];
+    },
+  })
+]
 
 const rules = Loaders;
 

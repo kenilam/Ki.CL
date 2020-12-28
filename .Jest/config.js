@@ -58,7 +58,7 @@ module.exports = {
   preset: 'ts-jest', // will use node_modules/ts-jest/jest-preset.js
 
   // Use this configuration option to add custom reporters to Jest
-  reporters: ['jest-dot-reporter', 'jest-junit'],
+  reporters: ['jest-progress-bar-reporter', 'jest-junit'],
 
   // roots
   roots: [rootPath, `${rootPath}/.Jest`],

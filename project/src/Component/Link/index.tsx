@@ -12,8 +12,9 @@ const Link: React.FunctionComponent<Props> = ({
   to,
   ...rest
 }) => {
-  const Component = (
+  return (
     <NavLink
+      {...rest}
       activeClassName={Style.active}
       className={Wrapper && className}
       data-component={Style.default}
@@ -21,16 +22,9 @@ const Link: React.FunctionComponent<Props> = ({
       onClick={onClick}
       onMouseOver={onMouseOver}
       to={to}
-      {...rest}
     >
       {children}
     </NavLink>
-  );
-
-  return Wrapper ? (
-    <Wrapper className={className}>{Component}</Wrapper>
-  ) : (
-    Component
   );
 };
 

@@ -13,7 +13,6 @@
   ],
   "rules": {
     "at-rule-no-unknown": null,
-    "max-nesting-depth": 6,
     "scss/at-rule-no-unknown": [
       true,
       {
@@ -25,6 +24,8 @@
     "scss/dollar-variable-pattern": [
       "[^\\d]"
     ],
+    "max-nesting-depth": null,
+    "selector-max-compound-selectors": 4,
     "selector-pseudo-class-no-unknown": [
       true,
       {
@@ -32,14 +33,15 @@
           "export",
           "import",
           "global",
-          "local"
+          "local",
+          "value"
         ]
       }
     ],
     "selector-no-qualifying-type": [
       true,
       {
-        "ignore": ["attribute"]
+        "ignore": ["attribute", "class", "id"]
       }
     ],
     "selector-list-comma-newline-after":[

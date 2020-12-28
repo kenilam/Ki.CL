@@ -1,9 +1,7 @@
 const optimization = {
-  namedModules: true,
-  runtimeChunk: 'single',
-  splitChunks: {
-    chunks: 'all',
-  },
+  emitOnErrors: false,
+  chunkIds: 'total-size',
+  moduleIds: 'deterministic',
 };
 
 export default { optimization };

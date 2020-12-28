@@ -1,34 +1,36 @@
-$default: get($component-logo, 'default');
-$square: get($component-logo, 'square');
+:root {
+  --kicl-font-family-kicl: 'kicl';
+}
 
-$content: get($kicl, 'content.default');
-$name: get($kicl, 'name');
-$size: get($grid, 'gutter');
-$transition-duration: get($duration, 'fast');
-
-@include set-logo-style($size);
-
-[data-component=#{$default}] {
+[data-component=#{$component-logo}] {
+  font-family: var(--kicl-font-family-kicl);
   overflow: hidden;
   position: relative;
+  transition-duration: var(--kicl-duration);
+  transition-property: color;
+  transition-timing-function: var(--kicl-ease-in);
 
   &::before {
-    content: $content;
+    content: '#{$component-logo-content}';
     display: block;
-    font-family: $name;
     font-size: inherit;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-weight: unset;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
     left: 0;
     line-height: 1;
     position: absolute;
     text-indent: 0;
+    text-transform: none;
     top: 0;
-    transition-duration: $transition-duration;
-    transition-property: color;
     will-change: color;
     z-index: 1;
+
+    @include mobile() {
+      content: '#{$component-logo-content-square}';
+    }
   }
 
   a {
@@ -40,4 +42,22 @@ $transition-duration: get($duration, 'fast');
     width: 100%;
     z-index: 2;
   }
+
+  &.#{$component-logo-is-square} {
+    &::before {
+      content: '#{$component-logo-content-square}';
+    }
+  }
+}
+
+@include set-logo-style($gutter);
+
+@font-face {
+  font-family: 'kicl';
+  src: url('./asset/kicl.eot?tl2izl');
+  src:
+    url('./asset/kicl.eot?tl2izl#iefix') format('embedded-opentype'),
+    url('./asset/kicl.ttf?tl2izl') format('truetype'),
+    url('./asset/kicl.woff?tl2izl') format('woff'),
+    url('./asset/kicl.svg?tl2izl#kicl') format('svg');
 }

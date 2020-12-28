@@ -1,4 +1,4 @@
 import data from '$/resources/data.json';
-import { Data } from './spec';
+import imageExtension from '$/resources/image.extension.json';
 
-export default data as Data;
+export { data, imageExtension };

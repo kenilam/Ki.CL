@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "lint-staged",
+    "prepare-commit-msg": "./githooks/prepare-commit-msg $HUSKY_GIT_PARAMS"
+  }
+}

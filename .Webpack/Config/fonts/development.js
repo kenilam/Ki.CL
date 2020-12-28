@@ -1,4 +1,4 @@
-const name = '[path][name].[ext]';
+const name = 'asset/[name].[ext]';
 
 const use = [
   {
@@ -10,7 +10,7 @@ const use = [
 ];
 
 const fonts = {
-  test: /\.(eot|ttf|woff|svg)$/i,
+  test: /\.(eot|ttf|woff)$/i,
   use,
 };
 

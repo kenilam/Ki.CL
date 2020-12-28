@@ -1,1 +1,1 @@
-export default require(`./${process.env.NODE_ENV}.js`);
+export default require(`./${process.env.NODE_ENV}.js`).default;

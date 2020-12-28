@@ -1,44 +1,7 @@
-@import './transitionTypes';
+[data-component=#{$component-transition}] {
+  --kicl-component-transition-duration: var(--kicl-duration-slow);
+  --kicl-component-transition-ease: var(--kicl-ease-expo-in);
 
-$default: get($component-transition, 'default');
-
-.#{$default} {
-  $css-transition: get($component-css-transition, 'default');
-  $css-transition-stand-alone: get($component-css-transition, 'standalone');
-
-  $enter: get($component-css-transition, 'enter.default');
-  $enter-active: get($component-css-transition, 'enter.active');
-  $exit: get($component-css-transition, 'exit.default');
-  $exit-active: get($component-css-transition, 'exit.active');
-
-  $exit-filter: brightness(0) grayscale(100%);
-  $exit-transition-duration: get($duration, 'normal');
-  $exit-transition-timing-function: get($ease, 'expo.out');
-
-  max-height: 100vh;
-  max-width: 100vw;
-  overflow: hidden;
-  pointer-events: none;
-  position: relative;
-
-  > .#{$css-transition} {
-    &:not(.#{$css-transition-stand-alone}) {
-      position: absolute;
-
-      &.#{$enter} {
-        z-index: 200;
-      }
-
-      &.#{$exit} {
-        opacity: unset;
-        transform: unset;
-        transition-property: filter, transform;
-        z-index: 100;
-
-        &.#{$exit-active} {
-          filter: $exit-filter;
-        }
-      }
-    }
-  }
-}
+  transition-duration: var(--kicl-component-transition-duration);
+  transition-timing-function: var(--kicl-component-transition-ease);
+};

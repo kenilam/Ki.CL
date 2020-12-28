@@ -1,12 +1,9 @@
-$default: get($component-link, 'default');
-$active: get($component-link, 'active');
-
-[data-component=#{$default}] {
+[data-component=#{$component-link}] {
   display: block;
-  font-family: get($font, 'font-family.bold');
-  letter-spacing: get($grid, 'narrowest');
+  font-family: var(--kicl-font-family-bold);
+  letter-spacing: var(--kicl-gutter-narrowest);
 
-  &.#{$active} {
+  &.#{$component-link-is-active} {
     pointer-events: none;
   }
 }
