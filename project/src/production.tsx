@@ -1,8 +1,8 @@
-import { loadPolyfill } from '@/Core';
+import { Polyfill } from '@/Core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App, { appRoot } from './App';
 
-loadPolyfill().then(() => {
+Polyfill.load().then(() => {
   ReactDOM.render(<App />, appRoot);
 });

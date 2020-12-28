@@ -1,4 +1,4 @@
-import classNames from './classNames';
-import transitionSizes from './transitionSizes';
+import addEndListener from './addEndListener';
+import duration from './duration';
 
-export { classNames, transitionSizes };
+export { addEndListener, duration };

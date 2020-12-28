@@ -2,11 +2,8 @@ import { context, contextRoot } from '!/Config/entry';
 import { path as appRoot } from 'app-root-path';
 import glob from 'glob';
 
-import Stylelint from 'stylelint';
 import StylelintFormatter from 'stylelint-formatter-pretty';
 import StyleLintPlugin from 'stylelint-webpack-plugin';
-
-import ExcludeFiles from 'postcss-exclude-files';
 
 const style = {
   loader: 'style-loader',
@@ -24,39 +21,16 @@ const css = {
   },
 };
 
-const postcss = {
-  loader: 'postcss-loader',
-  options: {
-    config: {
-      path: appRoot,
-    },
-    sourceMap: 'inline'
-  },
-};
 
-const postcss_exclude = {
-  loader: 'postcss-loader',
-  options: {
-    config: {
-      path: appRoot,
-    },
-    sourceMap: 'inline',
-    plugins: [
-      ExcludeFiles({
-        filter: '**/node_modules/**',
-        plugins: [
-          Stylelint
-        ]
-      }),
-    ]
-  },
+const postcss = {
+  loader: 'postcss-loader'
 };
 
 const sass = {
   loader: 'sass-loader',
   options: {
     sassOptions: {
-      includePaths: [`${appRoot}/node_modules`, contextRoot, context],
+      includePaths: [contextRoot, context],
     },
     sourceMap: true,
   },
@@ -74,7 +48,7 @@ const resources = {
 };
 
 const BasicLoaders = [ style, css ];
-const CSSLoaders = [ ...BasicLoaders, postcss_exclude, sass ];
+const CSSLoaders = [ ...BasicLoaders, postcss ];
 const SCSSLoaders = [ ...BasicLoaders, postcss, sass ];
 
 const rules = [
@@ -96,11 +70,11 @@ const plugins = [
   new StyleLintPlugin({
     console: true,
     context: contextRoot,
-    files: ['**/*.scss'],
+    files: ['**/*.{css,scss}'],
     fix: true,
     formatter: StylelintFormatter,
-    quiet: true,
-  }),
+    quiet: false,
+  })
 ];
 
 const hasInitialResources = resources.options.resources.some(

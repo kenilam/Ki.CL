@@ -15,6 +15,10 @@ class Arguments {
     return whichBoolean('analyzer');
   }
 
+  static get debug() {
+    return whichBoolean('debug');
+  }
+
   static get noBrowser() {
     return whichBoolean('noBrowser');
   }
@@ -25,6 +29,10 @@ class Arguments {
 
   static get verbose() {
     return whichBoolean('verbose');
+  }
+
+  static get noLint() {
+    return whichBoolean('noLint');
   }
 }
 

@@ -6,44 +6,6 @@
   @return mix(#000000, $color, $percentage);
 }
 
-$black: (
-  default: #141414,
-  light: tint(#141414, 10),
-  pure: #000,
-);
-$grey: (
-  default: #bcbcbc,
-  dark: shade(#bcbcbc, 30),
-  darker: shade(#bcbcbc, 60),
-  darkest: shade(#bcbcbc, 80),
-  light: tint(#bcbcbc, 15),
-  lighter: tint(#bcbcbc, 25),
-);
-$white: (
-  default: #f1efe9,
-  dark: shade(#f1efe9, 30),
-  darker: shade(#f1efe9, 60),
-  darkest: shade(#f1efe9, 80),
-  light: tint(#f1efe9, 15),
-  lighter: tint(#f1efe9, 25),
-  pure: #fff,
-);
-
-$green: #8cdfbb;
-$blue: #b5e0e8;
-$orange: #f39943;
-$red: #be4e4d;
-$yellow: #e0b440;
-
-$linkedin: #0077b5;
-$twitter: #1dcaff;
-$google: #d34836;
-$behance: #053eff;
-$github: #4183c4;
-$gold: #b0976d;
-
-$color: (
-  black: $black,
-  grey: $grey,
-  white: $white,
-);
+$black: #141414;
+$grey: #bcbcbc;
+$white: #f1efe9;

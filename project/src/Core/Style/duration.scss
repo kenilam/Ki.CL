@@ -1,0 +1,10 @@
+:root {
+  --kicl-duration-extreme: #{$speed * 8};
+  --kicl-duration-slowest: #{$speed * 1.8};
+  --kicl-duration-slower: #{$speed * 1.6};
+  --kicl-duration-slow: #{$speed * 1.2};
+  --kicl-duration: #{$speed};
+  --kicl-duration-fast: #{$speed * 0.8};
+  --kicl-duration-faster: #{$speed * 0.6};
+  --kicl-duration-fastest: #{$speed * 0.2};
+}

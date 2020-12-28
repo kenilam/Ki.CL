@@ -1,15 +1,14 @@
-import { Provider } from '@/Component/Router';
 import React from 'react';
-import GlobalHeader from './Component/GlobalHeader';
-import View from './View';
+
+import { Router } from '@/Component';
+import View from '@/View';
 
 const appRoot = document.querySelector('[app-root]');
 
 const App = () => (
-  <Provider>
-    <GlobalHeader />
-    <View />
-  </Provider>
+  <Router>
+    <View/>
+  </Router>
 );
 
 export { appRoot };

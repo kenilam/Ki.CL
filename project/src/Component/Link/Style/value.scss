@@ -1,2 +1,2 @@
-@value default: #{get($component-link, 'default')};
-@value active: #{get($component-link, 'active')};
+@value default: #{$component-link};
+@value active: #{$component-link-is-active};

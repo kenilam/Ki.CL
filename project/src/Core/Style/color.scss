@@ -1,0 +1,31 @@
+:root {
+  // black
+  --kicl-color-black: #{$black};
+  --kicl-color-black-light: #{tint($black, 20)};
+  --kicl-color-black-pure: #000;
+  // grey
+  --kicl-color-grey-darker: #{shade($grey, 60)};
+  --kicl-color-grey-dark: #{shade($grey, 30)};
+  --kicl-color-grey: #{$grey};
+  --kicl-color-grey-light: #{tint($grey, 25)};
+  --kicl-color-grey-lighter: #{tint($grey, 50)};
+  // white
+  --kicl-color-white-darker: #{shade($white, 50)};
+  --kicl-color-white-dark: #{shade($white, 25)};
+  --kicl-color-white: #{$white};
+  --kicl-color-white-light: #{tint($white, 25)};
+  --kicl-color-white-lighter: #{tint($white, 50)};
+  --kicl-color-white-pure: #fff;
+  // theme color
+  --kicl-color-green: #8cdfbb;
+  --kicl-color-blue: #b5e0e8;
+  --kicl-color-orange: #f39943;
+  --kicl-color-red: #be4e4d;
+  --kicl-color-yellow: #e0b440;
+  --kicl-color-linkedin: #0077b5;
+  --kicl-color-twitter: #1dcaff;
+  --kicl-color-google: #d34836;
+  --kicl-color-behance: #053eff;
+  --kicl-color-github: #4183c4;
+  --kicl-color-gold: #b0976d;
+}

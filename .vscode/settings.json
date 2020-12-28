@@ -1,22 +1,8 @@
 {
-  "search.exclude": {
-    "**/build": true,
-    "**/node_modules": true
-  },
-  "files.insertFinalNewline": true,
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "editor.tabSize": 2,
-  "prettier.jsxSingleQuote": true,
-  "javascript.preferences.quoteStyle": "single",
-  "typescript.preferences.quoteStyle": "single",
-  "prettier.singleQuote": true,
-  "eslint.alwaysShowStatus": true,
-  "eslint.lintTask.enable": true,
-  "eslint.format.enable": true,
-  "eslint.debug": true,
   "cSpell.words": [
-    "abortcontroller",
-    "smoothscroll",
-    "unfetch"
+    "Asynchronizer",
+    "behance",
+    "kicl",
+    "linkedin"
   ]
 }

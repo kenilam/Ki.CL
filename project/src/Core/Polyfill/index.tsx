@@ -6,7 +6,7 @@ const {
   fetch: Fetch,
 }: Window = window;
 
-async function loadPolyfill(): Promise<void> {
+async function load(): Promise<void> {
   let smoothScroll: { polyfill(): void } | null;
 
   try {
@@ -32,4 +32,4 @@ async function loadPolyfill(): Promise<void> {
   }
 }
 
-export { loadPolyfill };
+export { load };

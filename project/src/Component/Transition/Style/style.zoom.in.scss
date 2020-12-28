@@ -1,0 +1,17 @@
+[data-component=#{$component-transition}] {
+  &.#{$component-transition-zoom-in} {
+    --kicl-component-transition-zoom-out: 0.8;
+
+    transition-property: opacity, transform;
+    will-change: opacity, transform;
+
+    &.#{$component-transition-zoom-in}-enter {
+      opacity: 0;
+      transform: var(--kicl-component-transition-zoom-out);
+    }
+    &.#{$component-transition-zoom-in}-exit-active {
+      opacity: 0;
+      transform: var(--kicl-component-transition-zoom-out);
+    }
+  }
+};

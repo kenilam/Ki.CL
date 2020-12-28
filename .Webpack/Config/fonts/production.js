@@ -1,6 +1,6 @@
 import { fonts, use } from './development';
 
-const name = '[hash].[ext]';
+const name = 'asset/[fullhash].[ext]';
 
 use[0].options.name = name;
 

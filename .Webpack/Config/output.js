@@ -1,19 +1,23 @@
 import { path as appRoot } from 'app-root-path';
 
-const projectRoot = 'Project';
+const tmp = '.tmp';
+const projectRoot = 'project';
 const srcRoot = `${projectRoot}/build`;
-const tmpRoot = `${projectRoot}/.tmp`;
+const tmpRoot = `${projectRoot}/${tmp}`;
 const publicPath = '/';
 
 const output = {
   filename: 'app.js',
+  hotUpdateChunkFilename: `${tmpRoot}/[id].[fullhash].[hash].hot-update.js`,
+  hotUpdateMainFilename: `${tmpRoot}/[fullhash].[hash].hot-update.js`,
   path: `${appRoot}/${srcRoot}`,
-  publicPath,
-  hotUpdateChunkFilename: `${tmpRoot}/[id].[hash].hot-update.js`,
-  hotUpdateMainFilename: `${tmpRoot}/[hash].hot-update.js`,
+  publicPath
 };
 
-export { publicPath, srcRoot, tmpRoot, output };
+const target = 'web';
+
+export { publicPath, srcRoot, target, tmpRoot, output, tmp };
 export default {
   output,
+  target
 };

@@ -1,13 +1,33 @@
-import * as CSSTransition from '@/Component/CSSTransition/spec';
-import { TransitionGroupProps } from 'react-transition-group/TransitionGroup';
+import { CSSTransitionProps } from 'react-transition-group/CSSTransition';
 
-export type ClassName = ClassNames<
-  'default' |
-  'exitFilter' |
-  'exitTransitionDuration' |
-  'exitTransitionTimingFunction'
->;
-export type Enter = CSSTransition.Enter;
-export type Exit = CSSTransition.Exit;
+export type ClassName = (
+  ClassNames<
+    | 'default'
+    | 'appear-done'
+    | 'enter-done'
+    | 'exit-done'
+    | 'fade'
+    | 'slide-from-bottom'
+    | 'slide-from-left'
+    | 'slide-from-right'
+    | 'slide-from-top'
+    | 'zoom-in'
+    | 'zoom-out'
+  >
+)
 
-export type Props = TransitionGroupProps & CSSTransition.Props;
+export type Transition = (
+  | 'fade'
+  | 'slide-from-bottom'
+  | 'slide-from-left'
+  | 'slide-from-right'
+  | 'slide-from-top'
+  | 'zoom-in'
+  | 'zoom-out'
+)
+
+export type Props = Omit<CSSTransitionProps, 'addEndListener' | 'key' | 'timeout'> & {
+  component?: React.ElementType,
+  transition?: Transition
+  transitionKey?: React.Key
+}

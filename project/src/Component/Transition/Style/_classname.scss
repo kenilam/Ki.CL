@@ -1,7 +1,16 @@
-$component-transition: (
-  default: 'transition',
-  slide-from-left: 'transition-slide-from-left',
-  slide-from-right: 'transition-slide-from-right',
-  slide-down: 'transition-slide-down',
-  slide-up: 'transition-slide-up',
-);
+$component-transition: 'transition';
+
+$component-transition-appear: 'appear';
+$component-transition-appear-done: 'appear-done';
+$component-transition-enter: 'enter';
+$component-transition-enter-done: 'enter-done';
+$component-transition-exit: 'exit';
+$component-transition-exit-done: 'exit-done';
+
+$component-transition-fade: 'fade';
+$component-transition-slide-from-bottom: 'slide-from-bottom';
+$component-transition-slide-from-left: 'slide-from-left';
+$component-transition-slide-from-right: 'slide-from-right';
+$component-transition-slide-from-top: 'slide-from-top';
+$component-transition-zoom-in: 'zoom-in';
+$component-transition-zoom-out: 'zoom-out';

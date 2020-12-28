@@ -1,8 +1,0 @@
-$default: get($view-home-slogan, 'default');
-
-[data-view-component=#{$default}] {
-  display: initial;
-  transition-duration: get($duration, 'faster');
-  transition-property: text-shadow;
-  transition-timing-function: get($ease, 'sine.in-out');
-}

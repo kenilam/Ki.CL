@@ -1,4 +1,4 @@
-const name = '[path][name].[ext]';
+const name = 'asset/[name].[ext]';
 
 const use = [
   {
@@ -13,8 +13,7 @@ const use = [
 ];
 
 const images = {
-  test: /\.(jpe?g|png|gif|svg)$/i,
-  exclude: /node_modules/,
+  test: /\.(gif|png|jpe?g|svg)$/i,
   use,
 };
 

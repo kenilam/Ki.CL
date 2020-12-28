@@ -1,0 +1,14 @@
+[data-component=#{$component-transition}] {
+  &.#{$component-transition-fade} {
+    --kicl-component-transition-fade-out-opacity: 0;
+
+    transition-property: opacity;
+    will-change: opacity;
+
+    &.#{$component-transition-fade}-appear:not(.#{$component-transition-fade}-appear-active),
+    &.#{$component-transition-fade}-enter:not(.#{$component-transition-fade}-enter-active),
+    &.#{$component-transition-fade}-exit-active {
+      opacity: var(--kicl-component-transition-fade-out-opacity);
+    }
+  }
+};
