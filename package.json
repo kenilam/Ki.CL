@@ -145,7 +145,7 @@
     "glsl-template-loader": "1.2.0",
     "helmet": "4.2.0",
     "hpp": "0.2.3",
-    "html-webpack-plugin": "4.5.1",
+    "html-webpack-plugin": "5.3.1",
     "http-server": "0.12.3",
     "husky": "4.3.7",
     "identity-obj-proxy": "3.0.0",
