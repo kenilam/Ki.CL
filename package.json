@@ -109,7 +109,7 @@
     "core-js": "3.8.2",
     "css-hot-loader": "1.4.4",
     "css-loader": "5.0.1",
-    "css-minimizer-webpack-plugin": "1.1.5",
+    "css-minimizer-webpack-plugin": "1.3.0",
     "css-reset-and-normalize-sass": "0.1.2",
     "cssnano": "4.1.10",
     "cz-conventional-changelog": "3.3.0",
