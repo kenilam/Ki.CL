@@ -140,7 +140,7 @@
     "fork-ts-checker-webpack-plugin": "6.0.8",
     "get-transition-duration": "1.1.1",
     "gl-react": "4.1.0",
-    "gl-react-dom": "5.0.0",
+    "gl-react-dom": "5.1.0",
     "glob": "7.1.6",
     "glsl-template-loader": "1.2.0",
     "helmet": "4.2.0",
