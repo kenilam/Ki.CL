@@ -105,7 +105,7 @@
     "commitizen": "4.2.2",
     "compression": "1.7.4",
     "connect-history-api-fallback": "1.6.0",
-    "copy-webpack-plugin": "7.0.0",
+    "copy-webpack-plugin": "8.1.1",
     "core-js": "3.8.2",
     "css-hot-loader": "1.4.4",
     "css-loader": "5.0.1",
