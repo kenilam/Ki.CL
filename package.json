@@ -85,7 +85,7 @@
     "@typescript-eslint/eslint-plugin": "4.12.0",
     "@typescript-eslint/parser": "4.12.0",
     "@ungap/url-search-params": "0.2.2",
-    "abortcontroller-polyfill": "1.5.0",
+    "abortcontroller-polyfill": "1.7.3",
     "app-root-dir": "1.0.2",
     "app-root-path": "3.0.0",
     "autobind-decorator": "2.4.0",
