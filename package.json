@@ -198,7 +198,7 @@
     "smoothscroll-polyfill": "0.4.4",
     "stream-browserify": "3.0.0",
     "style-loader": "2.0.0",
-    "stylelint": "13.8.0",
+    "stylelint": "13.13.1",
     "stylelint-config-css-modules": "2.2.0",
     "stylelint-config-idiomatic-order": "8.1.0",
     "stylelint-config-recommended": "3.0.0",
