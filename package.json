@@ -65,7 +65,7 @@
     "@babel/preset-react": "7.12.10",
     "@babel/preset-typescript": "7.12.7",
     "@babel/register": "7.12.10",
-    "@commitlint/cli": "11.0.0",
+    "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "11.0.0",
     "@hot-loader/react-dom": "17.0.1",
     "@jedmao/location": "3.0.0",
