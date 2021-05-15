@@ -189,7 +189,7 @@
     "react-test-renderer": "17.0.1",
     "react-transition-group": "4.4.1",
     "resize-observer-polyfill": "1.5.1",
-    "sass-loader": "10.1.0",
+    "sass-loader": "10.2.0",
     "sass-mq": "5.0.1",
     "sass-resources-loader": "2.1.1",
     "script-ext-html-webpack-plugin": "2.1.5",
