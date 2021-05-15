@@ -173,7 +173,7 @@
     "postcss": "8.2.3",
     "postcss-exclude-files": "1.0.15",
     "postcss-ignore-plugin": "0.2.1",
-    "postcss-import": "14.0.0",
+    "postcss-import": "14.0.2",
     "postcss-js": "3.0.3",
     "postcss-loader": "4.1.0",
     "postcss-preset-env": "6.7.0",
