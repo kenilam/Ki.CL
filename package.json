@@ -228,6 +228,6 @@
     "webpack-merge": "5.7.3",
     "whatwg-fetch": "3.5.0",
     "which-transition-end-event": "0.1.0",
-    "yargs": "16.2.0"
+    "yargs": "17.0.1"
   }
 }
