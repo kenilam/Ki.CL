@@ -159,7 +159,7 @@
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-enzyme": "7.1.2",
     "jest-junit": "12.0.0",
-    "jest-progress-bar-reporter": "1.0.18",
+    "jest-progress-bar-reporter": "1.0.21",
     "jest-watch-master": "1.0.0",
     "jsdom": "16.4.0",
     "lint-staged": "10.5.3",
