@@ -170,7 +170,7 @@
     "open": "7.3.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",
     "path": "0.12.7",
-    "postcss": "8.2.3",
+    "postcss": "8.2.10",
     "postcss-exclude-files": "1.0.15",
     "postcss-ignore-plugin": "0.2.1",
     "postcss-import": "14.0.0",
