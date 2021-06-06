@@ -137,7 +137,7 @@
     "extract-css-chunks-webpack-plugin": "4.9.0",
     "file-loader": "6.2.0",
     "file-saver": "2.0.5",
-    "fork-ts-checker-webpack-plugin": "6.0.8",
+    "fork-ts-checker-webpack-plugin": "6.2.10",
     "get-transition-duration": "1.1.1",
     "gl-react": "4.1.0",
     "gl-react-dom": "5.0.0",
