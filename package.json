@@ -175,7 +175,7 @@
     "postcss-ignore-plugin": "0.2.1",
     "postcss-import": "14.0.0",
     "postcss-js": "3.0.3",
-    "postcss-loader": "4.1.0",
+    "postcss-loader": "4.3.0",
     "postcss-preset-env": "6.7.0",
     "postcss-reporter": "7.0.2",
     "postcss-scss": "3.0.4",
