@@ -108,7 +108,7 @@
     "copy-webpack-plugin": "7.0.0",
     "core-js": "3.8.2",
     "css-hot-loader": "1.4.4",
-    "css-loader": "5.0.1",
+    "css-loader": "5.2.6",
     "css-minimizer-webpack-plugin": "1.1.5",
     "css-reset-and-normalize-sass": "0.1.2",
     "cssnano": "4.1.10",
