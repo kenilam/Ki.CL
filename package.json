@@ -209,7 +209,7 @@
     "stylelint-prettier": "1.1.2",
     "stylelint-scss": "3.18.0",
     "stylelint-webpack-plugin": "2.1.1",
-    "subscriptions-transport-ws": "0.9.18",
+    "subscriptions-transport-ws": "0.9.19",
     "terser-webpack-plugin": "5.0.3",
     "three": "0.124.0",
     "ts-jest": "26.4.4",
