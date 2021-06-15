@@ -208,7 +208,7 @@
     "stylelint-formatter-pretty": "2.1.1",
     "stylelint-prettier": "1.1.2",
     "stylelint-scss": "3.18.0",
-    "stylelint-webpack-plugin": "2.1.1",
+    "stylelint-webpack-plugin": "2.2.0",
     "subscriptions-transport-ws": "0.9.18",
     "terser-webpack-plugin": "5.0.3",
     "three": "0.124.0",
