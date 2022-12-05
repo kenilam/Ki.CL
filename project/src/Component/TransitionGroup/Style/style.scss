@@ -1,9 +1,0 @@
-[data-dynamic-component=#{$component-transition-group}] {
-  position: relative;
-
-  > [data-component=#{$component-transition}][class*=#{$component-transition-exit}] {
-    left: 0;
-    position: absolute;
-    top: 0;
-  }
-};

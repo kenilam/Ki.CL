@@ -14,4 +14,13 @@ node_modules/
 *.snap
 *.html
 
-project/build/
+yarn-error.log
+
+build/
+config/
+scripts/
+
+App/build/
+App/Assets/
+
+lighthouse/

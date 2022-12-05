@@ -46,9 +46,8 @@ node_modules
 
 # Local files #
 ################
-project/build
-.Jest/.jest-cache
-*.icloud
+App/.Caches
+App/build
 
 # Env files #
 #############

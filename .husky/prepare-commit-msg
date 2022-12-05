@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Get the current branch name
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+# Get the JIRA number
+JIRA=$(echo $BRANCH_NAME | grep -o -E '[0-9A-Z]+-[0-9]+')
+
+#Check if this a normal commit, or an amend
+IS_NORMAL_COMMIT=$(grep -c "$JIRA" $1)
+
+# Prepend the JIRA number to the commit message
+# sed usage: sed (script) parameters file
+# 1 = only first line
+# s = substitution operation
+# $ = add to the end of line
+# so the below is saying "1s/$/JIRA" => add JIRA ticket # to tend of the first line
+if [ -n "$JIRA" ] && [ "$IS_NORMAL_COMMIT" -eq 0 ]; then
+#     script     params        file
+  sed -i.bak -e "1s/$/ $JIRA/" $1
+fi

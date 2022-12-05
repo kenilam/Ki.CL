@@ -1,9 +1,0 @@
-[data-component=#{$component-link}] {
-  display: block;
-  font-family: var(--kicl-font-family-bold);
-  letter-spacing: var(--kicl-gutter-narrowest);
-
-  &.#{$component-link-is-active} {
-    pointer-events: none;
-  }
-}

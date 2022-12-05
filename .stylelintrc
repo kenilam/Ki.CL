@@ -8,15 +8,27 @@
     "stylelint-config-css-modules",
     "stylelint-config-sass-guidelines",
     "stylelint-config-standard",
+    "stylelint-config-standard-scss",
     "stylelint-config-recommended",
     "stylelint-config-recommended-scss"
   ],
+  "ignoreFiles": ["node_modules/**/*."],
   "rules": {
-    "at-rule-no-unknown": null,
+    "custom-property-pattern": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "declaration-colon-space-after": null,
+    "declaration-property-value-disallowed-list": null,
+    "keyframes-name-pattern": null,
+    "max-line-length": null,
+    "max-nesting-depth": 6,
+    "no-missing-end-of-source-newline": null,
     "scss/at-rule-no-unknown": [
       true,
       {
         "ignoreAtRules": [
+          "if",
+          "include",
+          "mixin",
           "value"
         ]
       }
@@ -24,8 +36,21 @@
     "scss/dollar-variable-pattern": [
       "[^\\d]"
     ],
-    "max-nesting-depth": null,
+    "scss/operator-no-newline-after": null,
+    "selector-class-pattern": [
+      "(kicl--[a-z]+)|(has-[a-z]+)|(is-[a-z]+)|(enter|enter-[a-z]+|entering|entering-[a-z]+|exit|exit-[a-z]+)",
+      {
+        "resolveNestedSelectors": false
+      }
+    ],
+    "selector-list-comma-newline-after": "always",
     "selector-max-compound-selectors": 4,
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": ["attribute", "class", "id"]
+      }
+    ],
     "selector-pseudo-class-no-unknown": [
       true,
       {
@@ -33,19 +58,10 @@
           "export",
           "import",
           "global",
-          "local",
-          "value"
+          "local"
         ]
       }
     ],
-    "selector-no-qualifying-type": [
-      true,
-      {
-        "ignore": ["attribute", "class", "id"]
-      }
-    ],
-    "selector-list-comma-newline-after":[
-      "always"
-    ]
+    "string-quotes": "single"
   }
 }

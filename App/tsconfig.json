@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../",
+    "paths": {
+      "^/*": ["*"],
+      "@/*": ["App/*"]
+    }
+  },
+  "exclude": [
+    "App/.Caches/**/*",
+    "App/build/**/*"
+  ]
+}
