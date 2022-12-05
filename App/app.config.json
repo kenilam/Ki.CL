@@ -1,0 +1,13 @@
+{
+  "name": "App",
+  "port": 3001,
+  "remote": {
+    "localhost": {
+      "host": "http://localhost:3001"
+    },
+    "Production": {
+      "host": "https://ki-cl.com"
+    }
+  },
+  "exposes": []
+}

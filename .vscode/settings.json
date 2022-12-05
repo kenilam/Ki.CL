@@ -1,8 +1,6 @@
 {
+  "editor.tabSize": 2,
   "cSpell.words": [
-    "Asynchronizer",
-    "behance",
-    "kicl",
-    "linkedin"
+    "kicl"
   ]
 }

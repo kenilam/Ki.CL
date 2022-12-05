@@ -1,7 +1,0 @@
-[data-component=#{$component-transition}] {
-  --kicl-component-transition-duration: var(--kicl-duration-slow);
-  --kicl-component-transition-ease: var(--kicl-ease-expo-in);
-
-  transition-duration: var(--kicl-component-transition-duration);
-  transition-timing-function: var(--kicl-component-transition-ease);
-};
