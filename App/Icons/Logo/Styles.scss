@@ -1,0 +1,22 @@
+:root {
+  --kicl--components--logo--block-size: var(--kicl-font-size-medium);
+  --kicl--components--logo--fill: currentcolor;
+  --kicl--components--logo--transition-duration: var(--kicl-duration);
+  --kicl--components--logo--transition-timing-function:
+    var(
+      --kicl-ease-quint-in-out
+    );
+  --kicl--components--logo--transition-property: block-size, fill;
+}
+
+.kicl--components--logo {
+  block-size: var(--kicl--components--logo--block-size);
+  fill: var(--kicl--components--logo--fill);
+  transition-duration: var(--kicl--components--logo--transition-duration);
+  transition-property: var(--kicl--components--logo--transition-property);
+  transition-timing-function:
+    var(
+      --kicl--components--logo--transition-timing-function
+    );
+  will-change: var(--kicl--components--logo--transition-property);
+}

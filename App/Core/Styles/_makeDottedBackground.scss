@@ -1,0 +1,9 @@
+@mixin make-dotted-background() {
+  background-image:
+    radial-gradient(
+      var(--kicl-dotted-background-image-color) 1px,
+      transparent 0
+    );
+  background-position: -9px -9px;
+  background-size: 3px 3px;
+}

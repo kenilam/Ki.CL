@@ -1,0 +1,10 @@
+* {
+  @include font-smoothing;
+
+  box-sizing: border-box;
+  font-family: var(--kicl-font-family);
+  font-size: var(--kicl-font-size);
+  font-weight: var(--kicl-font-weight);
+  letter-spacing: var(--kicl-letter-spacing);
+  line-height: var(--kicl-line-height);
+}

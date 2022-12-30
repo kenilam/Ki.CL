@@ -1,0 +1,27 @@
+.kicl--animation--style--zoom-out {
+  --kicl--animation--transition-property: opacity, transform;
+  --kicl--animation--style--zoom-out--transform--translate-x: 0;
+  --kicl--animation--style--zoom-out--transform--translate-y: 0;
+  --kicl--animation--style--zoom-out--transform--scale: 1;
+  --kicl--animation--style--zoom-out--opacity: 1;
+
+  opacity: var(--kicl--animation--style--zoom-out--opacity);
+  transform:
+    translate3d(
+      var(--kicl--animation--style--zoom-out--transform--translate-x),
+      var(--kicl--animation--style--zoom-out--transform--translate-y),
+      0
+    )
+    scale(var(--kicl--animation--style--zoom-out--transform--scale));
+  transform-origin: center;
+
+  &.kicl--animation--enter:not(.kicl--animation--enter-active) {
+    --kicl--animation--style--zoom-out--opacity: 0;
+    --kicl--animation--style--zoom-out--transform--scale: 1.2;
+  }
+
+  &.kicl--animation--exit-active {
+    --kicl--animation--style--zoom-out--opacity: 0;
+    --kicl--animation--style--zoom-out--transform--scale: 1.2;
+  }
+}

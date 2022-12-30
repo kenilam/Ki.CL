@@ -1,1 +1,3 @@
 import './Styles';
+
+export default {};
