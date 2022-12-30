@@ -1,0 +1,9 @@
+.kicl--animation-group {
+  position: relative;
+
+  &--animation {
+    > &.kicl--animation--exit {
+      position: absolute;
+    }
+  }
+}

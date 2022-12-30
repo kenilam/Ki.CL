@@ -1,0 +1,26 @@
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--kicl-font-family-special);
+  line-height: var(--kicl-line-height-wide);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: var(--kicl-font-weight-bolder);
+}
+
+h1 {
+  font-size: var(--kicl-font-size-large);
+}
+
+h2 {
+  font-size: var(--kicl-font-size-medium);
+}
+
+h4 {
+  font-size: var(--kicl-font-size-small);
+}

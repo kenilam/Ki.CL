@@ -1,0 +1,26 @@
+:root {
+  --kicl-body-background-color: var(--kicl-color-grey-lighter);
+  --kicl-body-color: var(--kicl-color-grey-darker);
+  --kicl-body-transition-duration: var(--kicl-duration-slow);
+  --kicl-body-transition-property: background-color, background-image;
+  --kicl-body-transition-timing-function: var(--kicl-ease-quad-in);
+}
+
+.kicl--theme--dark {
+  --kicl-body-background-color: var(--kicl-color-black-light);
+}
+
+body {
+  @include make-dotted-background;
+
+  align-content: start;
+  background-color: var(--kicl-body-background-color);
+  color: var(--kicl-color-grey-darker);
+  display: grid;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+  transition-duration: var(--kicl-body-transition-duration);
+  transition-property: var(--kicl-body-transition-property);
+  transition-timing-function: var(--kicl-body-transition-timing-function);
+}

@@ -3,17 +3,17 @@
   --kicl-font-family: 'ariana-pro', #{$base-font};
   --kicl-font-family-bold: 'acumin-pro-wide', #{$base-font};
   --kicl-font-family-special: 'gilbert-color', #{$base-font};
+  --kicl-font-size: #{$base-font-size};
 
   // font-size
-  --kicl-font-size-extreme: 10rem;
-  --kicl-font-size-largest: 4rem;
-  --kicl-font-size-larger: 3rem;
-  --kicl-font-size-large: 2rem;
-  --kicl-font-size: #{$base-font-size};
-  --kicl-font-size-medium: 1.5rem;
-  --kicl-font-size-small: 0.8rem;
-  --kicl-font-size-smaller: 0.6rem;
   --kicl-font-size-smallest: 0.4rem;
+  --kicl-font-size-smaller: 0.6rem;
+  --kicl-font-size-small: 0.8rem;
+  --kicl-font-size-medium: 1.5rem;
+  --kicl-font-size-large: 2rem;
+  --kicl-font-size-larger: 3rem;
+  --kicl-font-size-largest: 4rem;
+  --kicl-font-size-extreme: 10rem;
 
   // font-weight
   --kicl-font-weight-lightest: 100;
@@ -28,9 +28,10 @@
   --kicl-letter-spacing: 0.08rem;
 
   // line-height
-  --kicl-line-height-narrowest: 0.7;
-  --kicl-line-height-narrower: 0.8;
-  --kicl-line-height-narrow: 1;
+  --kicl-line-height-dense: 0.7;
+  --kicl-line-height-narrowest: 0.8;
+  --kicl-line-height-narrower: 1;
+  --kicl-line-height-narrow: 1.2;
   --kicl-line-height: 1.5;
   --kicl-line-height-wide: 1.8;
 }

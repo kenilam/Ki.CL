@@ -1,0 +1,15 @@
+:root {
+  --kicl-size: #{$size};
+  --kicl-size-hair: 0.2px;
+  --kicl-size-1px: 1px;
+  --kicl-size-2px: 2px;
+  --kicl-size-3px: 3px;
+  --kicl-size-half: calc(var(--kicl-size) * 0.5);
+  --kicl-size-2x: calc(var(--kicl-size) * 2);
+  --kicl-size-3x: calc(var(--kicl-size) * 3);
+  --kicl-size-4x: calc(var(--kicl-size) * 4);
+  --kicl-size-5x: calc(var(--kicl-size) * 5);
+  --kicl-size-6x: calc(var(--kicl-size) * 6);
+  --kicl-size-7x: calc(var(--kicl-size) * 7);
+  --kicl-size-8x: calc(var(--kicl-size) * 8);
+}

@@ -5,16 +5,16 @@
   --kicl-color-black-pure: #000;
 
   // grey
+  --kicl-color-grey: #{$grey};
   --kicl-color-grey-darker: #{shade($grey, 60)};
   --kicl-color-grey-dark: #{shade($grey, 30)};
-  --kicl-color-grey: #{$grey};
   --kicl-color-grey-light: #{tint($grey, 25)};
   --kicl-color-grey-lighter: #{tint($grey, 50)};
 
   // white
+  --kicl-color-white: #{$white};
   --kicl-color-white-darker: #{shade($white, 50)};
   --kicl-color-white-dark: #{shade($white, 25)};
-  --kicl-color-white: #{$white};
   --kicl-color-white-light: #{tint($white, 25)};
   --kicl-color-white-lighter: #{tint($white, 50)};
   --kicl-color-white-pure: #fff;
@@ -47,14 +47,18 @@
 @include make-variable-class('color', 'white-light');
 @include make-variable-class('color', 'white-lighter');
 @include make-variable-class('color', 'white-pure');
+
+// Special Colours
 @include make-variable-class('color', 'green');
 @include make-variable-class('color', 'blue');
 @include make-variable-class('color', 'orange');
 @include make-variable-class('color', 'red');
-@include make-variable-class('color', 'yellww');
+@include make-variable-class('color', 'yellow');
+@include make-variable-class('color', 'gold');
+
+// Brand Colours
 @include make-variable-class('color', 'linkedin');
 @include make-variable-class('color', 'twitter');
 @include make-variable-class('color', 'google');
 @include make-variable-class('color', 'behance');
 @include make-variable-class('color', 'github');
-@include make-variable-class('color', 'gold');

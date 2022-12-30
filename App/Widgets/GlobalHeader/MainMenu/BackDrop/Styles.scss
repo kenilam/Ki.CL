@@ -1,0 +1,29 @@
+:root {
+  --kicl--widgets--global-header--main-menu--back-drop--background-color:
+    var(
+      --kicl--widgets--global-header--main-menu--menu--background-color
+    );
+}
+
+.kicl--widgets--global-header--main-menu--back-drop {
+  background-color:
+    var(
+      --kicl--widgets--global-header--main-menu--back-drop--background-color
+    );
+  block-size: 100vh;
+  content: '';
+  display: block;
+  inline-size: 100vw;
+  left: 0;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+
+  &.kicl--animation--enter {
+    --kicl--animation--transition-delay: var(--kicl-duration-fast);
+  }
+
+  &.kicl--animation--exit {
+    --kicl--animation--transition-duration: var(--kicl-duration-faster);
+  }
+}

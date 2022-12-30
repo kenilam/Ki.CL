@@ -1,0 +1,20 @@
+.kicl--animation--style--slide-down {
+  --kicl--animation--transition-property: transform;
+  --kicl--animation--style--slide-down--transform--translate-x: 0;
+  --kicl--animation--style--slide-down--transform--translate-y: 0;
+
+  transform:
+    translate3d(
+      var(--kicl--animation--style--slide-down--transform--translate-x),
+      var(--kicl--animation--style--slide-down--transform--translate-y),
+      0
+    );
+
+  &.kicl--animation--enter:not(.kicl--animation--enter-active) {
+    --kicl--animation--style--slide-down--transform--translate-y: -100%;
+  }
+
+  &.kicl--animation--exit-active {
+    --kicl--animation--style--slide-down--transform--translate-y: -100%;
+  }
+}
