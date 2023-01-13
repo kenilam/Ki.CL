@@ -2,16 +2,17 @@ import React, { PropsWithChildren, useContext } from 'react';
 
 // Hooks
 import { useResizeObserver } from '@/Hooks';
-import { useMainMenu, DEFAULT_MAIN_MENU, MAIN_MENU_PARAMS } from './Hooks';
+import {
+  useGlobalHeader,
+  DEFAULT_GLOBAL_HEADER,
+  GLOBAL_HEADER_PARAMS,
+} from './Hooks';
 
-type Props = {
-  node: React.MutableRefObject<HTMLElement | null>;
-  rect?: DOMRect;
-};
-
-const DEFAULT: typeof DEFAULT_MAIN_MENU & Props = {
-  ...DEFAULT_MAIN_MENU,
+const DEFAULT: typeof DEFAULT_GLOBAL_HEADER &
+  ReturnType<typeof useResizeObserver<HTMLMenuElement>> = {
+  ...DEFAULT_GLOBAL_HEADER,
   node: { current: null },
+  rect: undefined,
 };
 
 const Context = React.createContext(DEFAULT);
@@ -19,12 +20,12 @@ const Context = React.createContext(DEFAULT);
 const GlobalHeaderProvider: React.FunctionComponent<PropsWithChildren> = ({
   children,
 }) => {
-  const MainMenu = useMainMenu();
+  const GlobalHeader = useGlobalHeader();
 
-  const { node, rect } = useResizeObserver();
+  const { node, rect } = useResizeObserver<HTMLMenuElement>();
 
   const value = {
-    ...MainMenu,
+    ...GlobalHeader,
     node,
     rect,
   };
@@ -38,5 +39,5 @@ const useGlobalHeaderContext = () => {
   return Contexts;
 };
 
-export { useGlobalHeaderContext, MAIN_MENU_PARAMS };
+export { useGlobalHeaderContext, GLOBAL_HEADER_PARAMS };
 export default GlobalHeaderProvider;

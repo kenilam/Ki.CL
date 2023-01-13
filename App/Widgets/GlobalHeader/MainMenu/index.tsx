@@ -2,7 +2,7 @@ import React from 'react';
 
 // Components
 import BackDrop from './BackDrop';
-import Menu from './Menu';
+import Menu, { CLASS_NAME } from './Menu';
 import Toggle from './Toggle';
 
 const MainMenu: React.FunctionComponent = () => {
@@ -15,4 +15,5 @@ const MainMenu: React.FunctionComponent = () => {
   );
 };
 
+export { CLASS_NAME };
 export default MainMenu;

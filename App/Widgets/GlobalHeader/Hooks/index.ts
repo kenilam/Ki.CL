@@ -1,8 +1,8 @@
-import useMainMenu, {
-  DEFAULT as DEFAULT_MAIN_MENU,
-  PARAMS as MAIN_MENU_PARAMS,
-} from './useMainMenu';
+import useGlobalHeader, {
+  DEFAULT as DEFAULT_GLOBAL_HEADER,
+  PARAMS as GLOBAL_HEADER_PARAMS,
+} from './useGlobalHeader';
 
-export { useMainMenu, DEFAULT_MAIN_MENU, MAIN_MENU_PARAMS };
+export { useGlobalHeader, DEFAULT_GLOBAL_HEADER, GLOBAL_HEADER_PARAMS };
 
 export default {};

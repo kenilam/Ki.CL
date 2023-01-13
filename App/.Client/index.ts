@@ -130,9 +130,6 @@ const getConfig = ({
                   .dirname(file)
                   .replace(`${appRoot}/App`, '@');
 
-                console.log(dirname);
-                console.log(basename);
-
                 return `@import '${dirname}/${basename}';`;
               })
               .join(' '),

@@ -4,7 +4,13 @@ import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 
 // Animation
-import Animation, { ANIMATION_STYLES } from '@/Animation';
+import Animation, { AnimationProps, ANIMATION_STYLES } from '@/Animation';
+
+// Helpers
+import { CSSUnit } from '@/Helper';
+
+// Contexts
+import { useMenuContext } from '@/Widgets/GlobalHeader/MainMenu/Menu/Context';
 
 // Components
 import { HyperLink as Origin } from '@/Components';
@@ -17,21 +23,35 @@ import './Styles.scss';
 
 const CLASS_NAME = 'kicl--widgets--global-header--main-menu--menu--hyper-link';
 
+const DEBOUNCE = CSSUnit({
+  values: window
+    .getComputedStyle(document.documentElement)
+    .getPropertyValue('--kicl-duration-fastest'),
+});
+
 const HyperLink: React.FunctionComponent<
   Required<PropsWithChildren> & Spec.Props
-> = ({ in: _in, to, children, ...props }) => {
+> = ({ index, children, ...props }) => {
+  const { incrementIndex, ...MenuContext } = useMenuContext();
+
+  const match = MenuContext.index >= index;
+
   const className = classNames(CLASS_NAME, {
-    'is-hidden': !_in,
+    'is-hidden': !match,
   });
+
+  const onEntering: AnimationProps['onEntering'] = () => {
+    window.setTimeout(incrementIndex, DEBOUNCE);
+  };
 
   return (
     <Animation
-      {...props}
       animationStyle={ANIMATION_STYLES['slide-down']}
-      in={_in}
+      in={match}
+      onEntering={onEntering}
       unmountOnExit={false}
     >
-      <Origin className={className} to={to}>
+      <Origin {...props} className={className}>
         {children}
       </Origin>
     </Animation>

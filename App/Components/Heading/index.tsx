@@ -23,4 +23,7 @@ const Heading: React.FunctionComponent<
   );
 };
 
+type HeadingProps = Spec.Props;
+
+export { type HeadingProps };
 export default Heading;

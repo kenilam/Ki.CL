@@ -21,4 +21,7 @@ const Span: React.FunctionComponent<
   );
 };
 
+type SpanProps = Spec.Props;
+
+export { type SpanProps };
 export default Span;

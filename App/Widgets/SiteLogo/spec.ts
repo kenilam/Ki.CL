@@ -1,3 +1,3 @@
-import { HyperLinkProps } from '@/Components';
+import { HeadingProps } from '@/Components';
 
-export type Props = Omit<HyperLinkProps, 'className' | 'to'>;
+export type Props = HeadingProps;

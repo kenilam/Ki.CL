@@ -1,13 +1,13 @@
 // Router
-import { useLocation } from '@/Router';
+import { useLocation, useSearchParams } from '@/Router';
 
 // Constants
 import { TICK } from '@/Core/Constants';
 
 const PARAMS = 'MainMenu';
 
-const DEFAULT: ReturnType<typeof useMainMenu> = {
-  deleteParams() {
+const DEFAULT: ReturnType<typeof useGlobalHeader> = {
+  deleteURLSearchParams() {
     return false;
   },
   location: {
@@ -19,34 +19,44 @@ const DEFAULT: ReturnType<typeof useMainMenu> = {
   },
   open: new URLSearchParams(window.location.search).get(PARAMS) === TICK,
   search: new URLSearchParams(window.location.search),
-  setParams() {
+  setURLSearchParams() {
+    return false;
+  },
+  updateURLSearchParams() {
     return false;
   },
 };
 
-const useMainMenu = () => {
+const useGlobalHeader = () => {
   const location = useLocation();
 
   const search = new URLSearchParams(location.search);
 
+  const [, setSearch] = useSearchParams(search);
+
   const open = search.get(PARAMS) === TICK;
 
-  const setParams = () => {
+  const setURLSearchParams = () => {
     search.set(PARAMS, TICK);
   };
 
-  const deleteParams = () => {
+  const deleteURLSearchParams = () => {
     search.delete(PARAMS);
   };
 
+  const updateURLSearchParams = () => {
+    setSearch(search);
+  };
+
   return {
-    deleteParams,
+    deleteURLSearchParams,
     location,
     open,
     search,
-    setParams,
+    setURLSearchParams,
+    updateURLSearchParams,
   };
 };
 
 export { DEFAULT, PARAMS };
-export default useMainMenu;
+export default useGlobalHeader;

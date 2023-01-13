@@ -1,0 +1,19 @@
+:root {
+  --kicl--components--button--transition-duration: var(--kicl-duration);
+  --kicl--components--button--transition-property: color, font-size;
+  --kicl--components--button--transition-timing-function:
+    var(
+      --kicl-ease-quint-in-out
+    );
+}
+
+.kicl--components--button {
+  display: inline-grid;
+  transition-duration: var(--kicl--components--button--transition-duration);
+  transition-property: var(--kicl--components--button--transition-property);
+  transition-timing-function:
+    var(
+      --kicl--components--button--transition-timing-function
+    );
+  will-change: var(--kicl--components--button--transition-property);
+}

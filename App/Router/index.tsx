@@ -13,6 +13,7 @@ import {
   redirect,
   useLocation,
   useNavigate,
+  useSearchParams,
 } from 'react-router-dom';
 
 // Components
@@ -34,6 +35,7 @@ export {
   type NavLinkProps,
   useLocation,
   useNavigate,
+  useSearchParams,
 };
 
 export default Router;
