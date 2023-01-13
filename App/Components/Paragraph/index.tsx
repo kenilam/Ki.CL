@@ -21,4 +21,7 @@ const Paragraph: React.FunctionComponent<
   );
 };
 
+type ParagraphProps = Spec.Props;
+
+export { type ParagraphProps };
 export default Paragraph;

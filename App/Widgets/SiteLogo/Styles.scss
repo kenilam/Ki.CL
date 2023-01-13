@@ -1,10 +1,10 @@
 .kicl--widgets--site-logo {
-  .kicl--components--hyper-link {
+  &--hyper-link {
     display: grid;
     line-height: 1;
   }
 
-  .kicl--components--span {
+  &--span {
     block-size: 0;
     inline-size: 0;
     opacity: 0;

@@ -12,37 +12,54 @@ import * as Spec from './Spec';
 // Styles
 import './Styles.scss';
 
-const Menu: React.FunctionComponent<
+const CLASS_NAME = 'kicl--components--menu';
+
+const Menu = React.forwardRef<
+  HTMLMenuElement,
   Required<PropsWithChildren> & PropsWithRef<Spec.Props>
-> = ({
-  children,
-  className: origin = '',
-  dense = false,
-  orientation = 'horizontal',
-  ...rest
-}) => {
-  const className = classNames(
-    'kicl--components--menu',
+>(
+  (
     {
-      'kicl--components--menu--dense': dense,
-      [`kicl--components--menu--orientation--${orientation}`]: orientation,
+      children,
+      className: origin = '',
+      dense = false,
+      orientation = 'horizontal',
+      ...rest
     },
-    origin
-  );
+    ref
+  ) => {
+    const className = classNames(
+      CLASS_NAME,
+      {
+        [`${CLASS_NAME}--dense`]: dense,
+        [`${CLASS_NAME}--orientation--${orientation}`]: orientation,
+      },
+      origin
+    );
 
-  return (
-    <menu {...rest} className={className}>
-      {React.Children.toArray(children).map((child) => {
-        let key = String(child);
+    return (
+      <menu {...rest} className={className} ref={ref}>
+        {React.Children.toArray(children).map((child) => {
+          let key = String(child);
 
-        if (React.isValidElement(child)) {
-          key = String(child.key);
-        }
+          if (React.isValidElement(child)) {
+            key = String(child.key);
+          }
 
-        return <ListItem key={key}>{child}</ListItem>;
-      })}
-    </menu>
-  );
-};
+          return (
+            <ListItem className={`${CLASS_NAME}--list-item`} key={key}>
+              {child}
+            </ListItem>
+          );
+        })}
+      </menu>
+    );
+  }
+);
 
+Menu.displayName = 'Menu';
+
+type MenuProps = Spec.Props;
+
+export { type MenuProps };
 export default Menu;

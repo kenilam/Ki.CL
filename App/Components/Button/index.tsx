@@ -9,19 +9,19 @@ import * as Spec from './Spec';
 // Styles
 import './Styles.scss';
 
-const Span: React.FunctionComponent<
+const Button: React.FunctionComponent<
   Required<PropsWithChildren> & PropsWithRef<Spec.Props>
 > = ({ children, className: origin = '', ...rest }) => {
-  const className = classNames('kicl--components--span', origin);
+  const className = classNames('kicl--components--button', origin);
 
   return (
-    <span {...rest} className={className}>
+    <button {...rest} className={className}>
       {children}
-    </span>
+    </button>
   );
 };
 
-type SpanProps = Spec.Props;
+type ButtonProps = Spec.Props;
 
-export { type SpanProps };
-export default Span;
+export { type ButtonProps };
+export default Button;

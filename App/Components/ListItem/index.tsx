@@ -21,4 +21,7 @@ const ListItem: React.FunctionComponent<
   );
 };
 
+type ListItemProps = Spec.Props;
+
+export { type ListItemProps };
 export default ListItem;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithRef } from 'react';
 
 // Components
 import { Heading, HyperLink, Span } from '@/Components';
@@ -12,12 +12,16 @@ import * as Spec from './spec';
 // Styles
 import './Styles.scss';
 
-const SiteLogo: React.FunctionComponent<Spec.Props> = (props) => {
+const SiteLogo: React.FunctionComponent<PropsWithRef<Spec.Props>> = (props) => {
   return (
-    <Heading className='kicl--widgets--site-logo' title='Ki.CL'>
-      <HyperLink {...props} to='/'>
+    <Heading
+      {...props}
+      className='kicl--widgets--site-logo'
+      title='Ki.CL | HOME'
+    >
+      <HyperLink className='kicl--widgets--site-logo--hyper-link' to='/'>
         <Logo />
-        <Span>Ki.CL</Span>
+        <Span className='kicl--widgets--site-logo--span'>Ki.CL</Span>
       </HyperLink>
     </Heading>
   );

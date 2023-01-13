@@ -12,13 +12,13 @@ import { useGlobalHeaderContext } from '@/Widgets/GlobalHeader/Context';
 const CLASS_NAME = 'kicl--widgets--global-header--main-menu';
 
 const Toggle: React.FunctionComponent = () => {
-  const { location, open, search, setParams, deleteParams } =
+  const { deleteURLSearchParams, location, open, search, setURLSearchParams } =
     useGlobalHeaderContext();
 
   if (open) {
-    deleteParams();
+    deleteURLSearchParams();
   } else {
-    setParams();
+    setURLSearchParams();
   }
 
   const to: HyperLinkProps['to'] = {

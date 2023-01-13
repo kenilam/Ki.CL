@@ -129,13 +129,7 @@
     display: grid;
   }
 
-  &--hyper-link {
-    --kicl--animation--transition-duration: var(--kicl-duration-fastest);
-
-    text-transform: capitalize;
-  }
-
-  .kicl--components--list-item {
+  .kicl--components--menu--list-item {
     overflow: hidden;
     padding-block-end:
       var(
