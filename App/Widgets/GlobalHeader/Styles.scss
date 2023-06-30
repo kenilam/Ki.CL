@@ -2,7 +2,6 @@
   --kicl--widgets--global-header--background-color: var(--kicl-color-white);
   --kicl--widgets--global-header--block-size: 0;
   --kicl--widgets--global-header--border-color: var(--kicl-color-grey-lighter);
-  --kicl--widgets--global-header--border-radius: var(--kicl-gutter-wide);
   --kicl--widgets--global-header--padding-block: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-wide);
   --kicl--widgets--global-header--inline-size:
@@ -14,7 +13,6 @@
   --kicl--widgets--global-header--transition-property:
     background-color,
     border-color,
-    border-radius,
     padding;
   --kicl--widgets--global-header--transition-timing-function:
     var(
@@ -33,11 +31,6 @@
   border-block-end:
     var(--kicl-size-hair) solid
     var(--kicl--widgets--global-header--border-color);
-  border-bottom-left-radius: var(--kicl--widgets--global-header--border-radius);
-  border-bottom-right-radius:
-    var(
-      --kicl--widgets--global-header--border-radius
-    );
   border-inline:
     var(--kicl-size-hair) solid
     var(--kicl--widgets--global-header--border-color);
@@ -74,7 +67,6 @@
   }
 
   &:has(~ menu:not(.is-closed)) {
-    --kicl--widgets--global-header--border-radius: 0;
     --kicl--widgets--global-header--transition-delay: 0s;
   }
 

@@ -1,0 +1,25 @@
+.kicl--animation--style--slide-from-right {
+  --kicl--animation--transition-property: opacity, transform;
+  --kicl--animation--style--slide-from-right--opacity: 1;
+  --kicl--animation--style--slide-from-right--transform--translate-x: 0;
+  --kicl--animation--style--slide-from-right--transform--translate-y: 0;
+
+  opacity: var(--kicl--animation--style--slide-from-right--opacity);
+  transform:
+    translate3d(
+      var(--kicl--animation--style--slide-from-right--transform--translate-x),
+      var(--kicl--animation--style--slide-from-right--transform--translate-y),
+      0
+    );
+
+  &.kicl--animation--appear:not(.kicl--animation--appear-active),
+  &.kicl--animation--enter:not(.kicl--animation--enter-active) {
+    --kicl--animation--style--slide-from-right--opacity: 0;
+    --kicl--animation--style--slide-from-right--transform--translate-x: 100%;
+  }
+
+  &.kicl--animation--exit-active {
+    --kicl--animation--style--slide-from-right--opacity: 0;
+    --kicl--animation--style--slide-from-right--transform--translate-x: 100%;
+  }
+}

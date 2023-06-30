@@ -1,0 +1,14 @@
+[data-routes='works.fishtank'] {
+  block-size: 100vh;
+  inline-size: 100vw;
+  overflow: hidden;
+}
+
+.kicl--view--works--rolling-ball {
+  block-size: 100vh;
+  inline-size: 100vw;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+}

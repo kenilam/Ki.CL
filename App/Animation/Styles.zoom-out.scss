@@ -15,6 +15,7 @@
     scale(var(--kicl--animation--style--zoom-out--transform--scale));
   transform-origin: center;
 
+  &.kicl--animation--appear:not(.kicl--animation--appear-active),
   &.kicl--animation--enter:not(.kicl--animation--enter-active) {
     --kicl--animation--style--zoom-out--opacity: 0;
     --kicl--animation--style--zoom-out--transform--scale: 1.2;

@@ -11,6 +11,7 @@ import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import eslint from 'vite-plugin-eslint';
 // import federation from '@originjs/vite-plugin-federation';
 import inspect from 'vite-plugin-inspect';
+import mkcert from 'vite-plugin-mkcert';
 import react from '@vitejs/plugin-react';
 import stylelint from 'vite-plugin-stylelint';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -60,6 +61,7 @@ const getConfig = ({
 }: Props = DEFAULT) =>
   defineConfig((env) => {
     const result: ReturnType<typeof defineConfig> = {
+      assetsInclude: ['**/*.glb'],
       base: '/',
       build: {
         dynamicImportVarsOptions: {},
@@ -125,6 +127,7 @@ const getConfig = ({
                 ignore: [`${appRoot}/node_modules/**/*.scss`],
               })
               .map((file) => {
+                console.log(`>>> ${file}`);
                 const basename = nodePath.basename(file);
                 const dirname = nodePath
                   .dirname(file)
@@ -134,7 +137,6 @@ const getConfig = ({
               })
               .join(' '),
           },
-          // scss: { additionalData: `@import "${pathSrc}/scss/variables";` },
         },
       },
       envDir: appRoot,
@@ -173,6 +175,7 @@ const getConfig = ({
         //   remotes: getRemotes(remoteGlob),
         // }),
         inspect(),
+        mkcert(),
         react({
           jsxRuntime: 'classic',
         }),
@@ -200,6 +203,7 @@ const getConfig = ({
       },
       server: {
         hmr: true,
+        https: true,
         open,
         port: config.port,
         proxy,

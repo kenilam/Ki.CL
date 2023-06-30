@@ -4,6 +4,7 @@ node_modules/
 
 *.css
 *.eot
+*.glb
 *.png
 *.scss
 *.svg

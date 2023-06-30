@@ -3,6 +3,25 @@
     var(
       --kicl--widgets--global-header--main-menu--menu--background-color
     );
+  --kicl--widgets--global-header--main-menu--back-drop--transition-duration:
+    var(
+      --kicl--widgets--global-header--main-menu--menu--transition-duration
+    );
+  --kicl--widgets--global-header--main-menu--back-drop--transition-property:
+    var(
+      --kicl--widgets--global-header--main-menu--menu--transition-property
+    );
+  --kicl--widgets--global-header--main-menu--back-drop--transition-timing-function:
+    var(
+      --kicl--widgets--global-header--main-menu--menu--transition-timing-function
+    );
+}
+
+.kicl--theme--dark {
+  --kicl--widgets--global-header--main-menu--back-drop--background-color:
+    var(
+      --kicl--widgets--global-header--main-menu--menu--background-color
+    );
 }
 
 .kicl--widgets--global-header--main-menu--back-drop {
@@ -17,6 +36,18 @@
   left: 0;
   position: fixed;
   top: 0;
+  transition-duration:
+    var(
+      --kicl--widgets--global-header--main-menu--back-drop--transition-duration
+    );
+  transition-property:
+    var(
+      --kicl--widgets--global-header--main-menu--back-drop--transition-property
+    );
+  transition-timing-function:
+    var(
+      --kicl--widgets--global-header--main-menu--back-drop--transition-timing-function
+    );
   z-index: 1000;
 
   &.kicl--animation--enter {

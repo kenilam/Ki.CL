@@ -1,4 +1,4 @@
-import React, { PropsWithRef } from 'react';
+import React, { type PropsWithRef } from 'react';
 
 // Components
 import { Heading, HyperLink, Span } from '@/Components';

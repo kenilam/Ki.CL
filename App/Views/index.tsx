@@ -16,6 +16,7 @@ import { GlobalHeader } from '@/Widgets';
 
 // Views
 import About from './About';
+import Home from './Home';
 import Works from './Works';
 
 // Styles
@@ -38,18 +39,23 @@ const Layout: React.FunctionComponent = () => {
     document.title = `Ki.CL | ${routes.join(' | ').toUpperCase()}`;
   });
 
+  const [, animationKey] = location.pathname.split('/');
+
   return (
     <>
       <GlobalHeader />
-      <AnimationGroup
-        animationKey={location.pathname}
-        animationStyle={ANIMATION_STYLES['zoom-in']}
-      >
-        <Routes location={location}>
-          <Route path='about' element={<About />} />
-          <Route path='works' element={<Works />} />
-        </Routes>
-      </AnimationGroup>
+      <main className='kicl--view'>
+        <AnimationGroup
+          animationKey={animationKey}
+          animationStyle={ANIMATION_STYLES['zoom-out']}
+        >
+          <Routes location={location}>
+            {About}
+            {Home}
+            {Works}
+          </Routes>
+        </AnimationGroup>
+      </main>
     </>
   );
 };
@@ -58,7 +64,9 @@ const ErrorElement: React.FunctionComponent = () => {
   return (
     <>
       <GlobalHeader />
-      <ERROR_ELEMENT />
+      <main className='kicl--view'>
+        <ERROR_ELEMENT />
+      </main>
     </>
   );
 };
@@ -66,10 +74,7 @@ const ErrorElement: React.FunctionComponent = () => {
 const App: React.FunctionComponent = () => {
   return (
     <Router>
-      <Route path='/' errorElement={<ErrorElement />} element={<Layout />}>
-        <Route path='about' />
-        <Route path='works' />
-      </Route>
+      <Route path='/' errorElement={<ErrorElement />} element={<Layout />} />
     </Router>
   );
 };

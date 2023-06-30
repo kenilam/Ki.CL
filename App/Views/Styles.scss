@@ -1,13 +1,15 @@
 .kicl--view {
+  align-content: center;
   align-items: center;
+  block-size: calc(100dvh - var(--kicl--widgets--global-header--block-size));
   display: grid;
+  inline-size: 100dvw;
   justify-content: center;
-  min-block-size: calc(100vh - var(--kicl--widgets--global-header--block-size));
-  min-inline-size: 100vw;
+  justify-items: center;
   z-index: 100;
 
   &.kicl--animation--exit {
-    min-block-size: 100vh;
+    min-block-size: 100dvh;
     padding-block-start: var(--kicl--widgets--global-header--block-size);
   }
 }
