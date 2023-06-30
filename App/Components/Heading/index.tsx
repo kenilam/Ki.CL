@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, PropsWithRef } from 'react';
+import React, { type PropsWithChildren, type PropsWithRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';

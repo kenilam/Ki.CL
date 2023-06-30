@@ -1,11 +1,15 @@
 :root {
-  --kicl--components--hyper-link--box-shadow-block-size: 0;
+  --kicl--components--hyper-link--box-shadow-block-size: var(--kicl-size-1px);
   --kicl--components--hyper-link--box-shadow-block-size-active:
     var(
       --kicl-size-2px
     );
   --kicl--components--hyper-link--font-weight: var(--kicl-font-weight-bold);
   --kicl--components--hyper-link--text-color: var(--kicl-color-grey-darker);
+  --kicl--components--hyper-link--text-color-active:
+    var(
+      --kicl-color-black-light
+    );
   --kicl--components--hyper-link--transition-duration:
     var(
       --kicl-duration-fast
@@ -22,6 +26,10 @@
 
 .kicl--theme--dark {
   --kicl--components--hyper-link--text-color: var(--kicl-color-white);
+  --kicl--components--hyper-link--text-color-active:
+    var(
+      --kicl-color-white-dark
+    );
 }
 
 .kicl--components--hyper-link {
@@ -29,6 +37,8 @@
   cursor: pointer;
   display: inline-grid;
   font-weight: var(--kicl--components--hyper-link--font-weight);
+  line-height: 1;
+  padding-block-end: var(--kicl-gutter-narrowest);
   text-decoration: none;
   transition-duration: var(--kicl--components--hyper-link--transition-duration);
   transition-property: var(--kicl--components--hyper-link--transition-property);
@@ -50,7 +60,10 @@
         var(
           --kicl--components--hyper-link--box-shadow-block-size-active
         );
-      --kicl--components--hyper-link--text-color: var(--kicl-color-black-light);
+      --kicl--components--hyper-link--text-color:
+        var(
+          --kicl--components--hyper-link--text-color-active
+        );
     }
 
     &[aria-current] {

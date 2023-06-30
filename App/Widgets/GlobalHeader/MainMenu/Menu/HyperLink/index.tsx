@@ -1,10 +1,10 @@
-import React, { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 // Libraries
 import classNames from 'classnames';
 
 // Animation
-import Animation, { AnimationProps, ANIMATION_STYLES } from '@/Animation';
+import Animation, { type AnimationProps, ANIMATION_STYLES } from '@/Animation';
 
 // Helpers
 import { CSSUnit } from '@/Helper';
@@ -46,10 +46,9 @@ const HyperLink: React.FunctionComponent<
 
   return (
     <Animation
-      animationStyle={ANIMATION_STYLES['slide-down']}
+      animationStyle={ANIMATION_STYLES['slide-from-top']}
       in={match}
       onEntering={onEntering}
-      unmountOnExit={false}
     >
       <Origin {...props} className={className}>
         {children}

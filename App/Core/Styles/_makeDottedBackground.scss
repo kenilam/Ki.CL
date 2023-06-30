@@ -1,4 +1,5 @@
 @mixin make-dotted-background() {
+  background-blend-mode: screen;
   background-image:
     radial-gradient(
       var(--kicl-dotted-background-image-color) 1px,

@@ -1,5 +1,5 @@
 // Routes
-import { NavLinkProps } from '@/Router';
+import { type NavLinkProps } from '@/Router';
 
 export type Props = NavLinkProps & {
   unstyled?: boolean;

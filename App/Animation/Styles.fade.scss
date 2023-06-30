@@ -4,6 +4,7 @@
 
   opacity: var(--kicl--animation--style--fade--opacity);
 
+  &.kicl--animation--appear:not(.kicl--animation--appear-active),
   &.kicl--animation--enter:not(.kicl--animation--enter-active) {
     --kicl--animation--style--fade--opacity: 0;
   }

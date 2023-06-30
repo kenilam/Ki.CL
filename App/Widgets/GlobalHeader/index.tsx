@@ -1,22 +1,36 @@
 import React, { useEffect } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
+// Animation
+import Animation, { ANIMATION_STYLES } from '@/Animation';
+
 // Widgets
 import { SiteLogo } from '@/Widgets';
 
 // Components
-import MainMenu, { CLASS_NAME as MAIN_MENU_CLASS_NAME } from './MainMenu';
+import { CLASS_NAME as MAIN_MENU_CLASS_NAME } from './MainMenu';
 import Style from './Style';
 
 // Context
-import GlobalHeaderProvider, { useGlobalHeaderContext } from './Context';
+import GlobalHeaderProvider, {
+  useGlobalHeaderContext,
+  GLOBAL_HEADER_PARAMS,
+} from './Context';
+
+// Type
+import * as Spec from './spec';
 
 // Styles
 import './Styles.scss';
 
 const CLASS_NAME = 'kicl--widgets--global-header';
 
-const Contents: React.FunctionComponent = () => {
-  const { deleteURLSearchParams, node, updateURLSearchParams } =
+type Props = Omit<Spec.Props, 'minimal'>;
+
+const Contents: React.FunctionComponent<Props> = ({ in: transitionIn }) => {
+  const { deleteURLSearchParams, minimal, node, updateURLSearchParams } =
     useGlobalHeaderContext();
 
   useEffect(() => {
@@ -49,21 +63,34 @@ const Contents: React.FunctionComponent = () => {
     };
   });
 
+  const className = classNames(CLASS_NAME, {
+    [`${CLASS_NAME}--is-minimal`]: minimal,
+  });
+
   return (
-    <header className={CLASS_NAME} ref={node}>
-      <Style />
-      <SiteLogo />
-      <MainMenu />
-    </header>
+    <Animation
+      animationStyle={ANIMATION_STYLES['slide-from-top']}
+      in={transitionIn}
+    >
+      <header className={className} ref={node}>
+        <Style />
+        <SiteLogo />
+        {/* <MainMenu /> */}
+      </header>
+    </Animation>
   );
 };
 
-const GlobalHeader: React.FunctionComponent = () => {
+const GlobalHeader: React.FunctionComponent<Spec.Props> = ({
+  minimal = true,
+  ...props
+}) => {
   return (
-    <GlobalHeaderProvider>
-      <Contents />
+    <GlobalHeaderProvider minimal={minimal}>
+      <Contents {...props} />
     </GlobalHeaderProvider>
   );
 };
 
+export { GLOBAL_HEADER_PARAMS };
 export default GlobalHeader;

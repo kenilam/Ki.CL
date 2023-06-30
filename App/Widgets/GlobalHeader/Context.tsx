@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useContext } from 'react';
+import React, { type PropsWithChildren, useContext } from 'react';
 
 // Hooks
 import { useResizeObserver } from '@/Hooks';
@@ -8,24 +8,32 @@ import {
   GLOBAL_HEADER_PARAMS,
 } from './Hooks';
 
-const DEFAULT: typeof DEFAULT_GLOBAL_HEADER &
+// Type
+import * as Spec from './spec';
+
+type Props = Omit<Spec.Props, 'in'>;
+
+const DEFAULT: Props &
+  typeof DEFAULT_GLOBAL_HEADER &
   ReturnType<typeof useResizeObserver<HTMLMenuElement>> = {
   ...DEFAULT_GLOBAL_HEADER,
+  minimal: false,
   node: { current: null },
   rect: undefined,
 };
 
 const Context = React.createContext(DEFAULT);
 
-const GlobalHeaderProvider: React.FunctionComponent<PropsWithChildren> = ({
-  children,
-}) => {
+const GlobalHeaderProvider: React.FunctionComponent<
+  PropsWithChildren<Props>
+> = ({ children, minimal }) => {
   const GlobalHeader = useGlobalHeader();
 
   const { node, rect } = useResizeObserver<HTMLMenuElement>();
 
   const value = {
     ...GlobalHeader,
+    minimal,
     node,
     rect,
   };

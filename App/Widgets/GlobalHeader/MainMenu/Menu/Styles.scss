@@ -36,7 +36,7 @@
 .kicl--theme--dark {
   --kicl--widgets--global-header--main-menu--menu--border-color:
     var(
-      --kicl-color-grey-dark
+      --kicl-color-grey-darker
     );
   --kicl--widgets--global-header--main-menu--menu--background-color:
     var(
@@ -45,8 +45,8 @@
 }
 
 .kicl--widgets--global-header--main-menu--menu {
-  --kicl--animation--style--slide-down--transform--translate-x: -50%;
-  --kicl--animation--style--slide-down--transform--translate-y: 0;
+  --kicl--animation--style--slide-from-top--transform--translate-x: -50%;
+  --kicl--animation--style--slide-from-top--transform--translate-y: 0;
 
   background-color:
     var(
@@ -57,14 +57,10 @@
     var(--kicl-size-hair) solid
     var(--kicl--widgets--global-header--main-menu--menu--border-color);
   border-block-start-color: transparent;
-  border-bottom-left-radius: var(--kicl-gutter-wide);
-  border-bottom-right-radius: var(--kicl-gutter-wide);
   inline-size:
     var(
       --kicl--widgets--global-header--main-menu--menu--inline-size
     );
-  justify-content: end;
-  justify-items: end;
   left: 50%;
   padding: var(--kicl-gutter-wider);
   padding-block:
@@ -93,6 +89,12 @@
       );
   }
 
+  &,
+  menu {
+    justify-content: end;
+    justify-items: end;
+  }
+
   &.kicl--animation {
     --kicl--animation--transition-duration: var(--kicl-duration);
   }
@@ -100,8 +102,8 @@
   &:not(.kicl--animation) {
     transform:
       translate3d(
-        var(--kicl--animation--style--slide-down--transform--translate-x),
-        var(--kicl--animation--style--slide-down--transform--translate-y),
+        var(--kicl--animation--style--slide-from-top--transform--translate-x),
+        var(--kicl--animation--style--slide-from-top--transform--translate-y),
         0
       );
     transition-duration:
@@ -118,7 +120,7 @@
       );
 
     &.is-closed {
-      --kicl--animation--style--slide-down--transform--translate-y: -100%;
+      --kicl--animation--style--slide-from-top--transform--translate-y: -100%;
 
       opacity: 0;
       pointer-events: none;

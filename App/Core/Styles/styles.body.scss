@@ -8,6 +8,7 @@
 
 .kicl--theme--dark {
   --kicl-body-background-color: var(--kicl-color-black-light);
+  --kicl-body-color: var(--kicl-color-white);
 }
 
 body {
@@ -15,10 +16,10 @@ body {
 
   align-content: start;
   background-color: var(--kicl-body-background-color);
-  color: var(--kicl-color-grey-darker);
+  color: var(--kicl-body-color);
   display: grid;
-  min-height: 100vh;
-  min-width: 100vw;
+  min-block-size: 100dvh;
+  min-inline-size: 100dvw;
   position: relative;
   transition-duration: var(--kicl-body-transition-duration);
   transition-property: var(--kicl-body-transition-property);

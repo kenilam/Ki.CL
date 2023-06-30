@@ -1,9 +1,9 @@
-import React, { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 
 // Libraries
 import {
+  type NavLinkProps,
   NavLink,
-  NavLinkProps,
   Outlet,
   Route,
   RouterProvider,
@@ -12,6 +12,8 @@ import {
   createRoutesFromElements,
   redirect,
   useLocation,
+  useMatch,
+  useMatches,
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
@@ -34,6 +36,8 @@ export {
   redirect,
   type NavLinkProps,
   useLocation,
+  useMatch,
+  useMatches,
   useNavigate,
   useSearchParams,
 };

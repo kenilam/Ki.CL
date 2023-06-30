@@ -10,14 +10,21 @@ import { CSSUnit } from '@/Helper';
 // Animation
 import Animation, { AnimationProps, ANIMATION_STYLES } from '@/Animation';
 
-// Components
-import { Menu as Origin } from '@/Components';
-
 // Context
 import { useGlobalHeaderContext } from '@/Widgets/GlobalHeader/Context';
-import MenuProvider, { useMenuContext, DEFAULT } from './Context';
+import MenuProvider, {
+  useMenuContext,
+  DEFAULT,
+} from '@/Widgets/GlobalHeader/MainMenu/Menu/Context';
+
+// Views
+import { PATH as ABOUT_PATH } from '@/Views/About';
+import { PATH as WORKS_PATH } from '@/Views/Works';
+import { PATH as ROLLING_BALL_PATH } from '@/Views/Works/RollingBall';
+import { PATH as FISH_TANK_PATH } from '@/Views/Works/FishTank';
 
 // Components
+import { Menu as Origin } from '@/Components';
 import HyperLink from './HyperLink';
 
 // Styles
@@ -59,19 +66,27 @@ const Component: React.FunctionComponent = () => {
 
   return ReactDOM.createPortal(
     <Animation
-      animationStyle={ANIMATION_STYLES['slide-down']}
+      animationStyle={ANIMATION_STYLES['slide-from-top']}
       in={open}
       onEntering={onEntering}
       onExited={onExited}
-      unmountOnExit={false}
     >
       <Origin className={className} orientation='vertical'>
-        <HyperLink index={1} to='/about'>
+        <HyperLink index={1} to={ABOUT_PATH}>
           about
         </HyperLink>
-        <HyperLink index={2} to='/works'>
+        <HyperLink index={2} to={WORKS_PATH}>
           works
         </HyperLink>
+
+        <Origin className='kicl-font-size' orientation='vertical'>
+          <HyperLink index={3} to={`${WORKS_PATH}/${ROLLING_BALL_PATH}`}>
+            Rolling Ball
+          </HyperLink>
+          <HyperLink index={4} to={`${WORKS_PATH}/${FISH_TANK_PATH}`}>
+            Fish Tank
+          </HyperLink>
+        </Origin>
       </Origin>
     </Animation>,
     node.current.parentElement

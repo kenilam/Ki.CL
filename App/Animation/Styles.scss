@@ -8,6 +8,7 @@
 .kicl--animation {
   pointer-events: none;
 
+  &.kicl--animation--appear-active,
   &.kicl--animation--enter-active,
   &.kicl--animation--exit-active {
     transition-delay: var(--kicl--animation--transition-delay);
