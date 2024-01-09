@@ -197,7 +197,7 @@
     "simple-node-logger": "18.12.24",
     "smoothscroll-polyfill": "0.4.4",
     "stream-browserify": "3.0.0",
-    "style-loader": "2.0.0",
+    "style-loader": "3.3.4",
     "stylelint": "13.8.0",
     "stylelint-config-css-modules": "2.2.0",
     "stylelint-config-idiomatic-order": "8.1.0",
