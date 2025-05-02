@@ -1,4 +1,4 @@
-import React, { PropsWithRef } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -9,7 +9,7 @@ import * as Spec from './Spec';
 // Styles
 import './Styles.scss';
 
-const Menu: React.FunctionComponent<PropsWithRef<Spec.Props>> = ({
+const Menu: React.FunctionComponent<Spec.Props> = ({
   className: origin = '',
   open = false,
   ...rest

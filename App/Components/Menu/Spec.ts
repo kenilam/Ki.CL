@@ -1,6 +1,5 @@
-type Orientation = 'horizontal' | 'vertical';
+import React from 'react';
 
-export type Props = React.MenuHTMLAttributes<HTMLMenuElement> & {
-  orientation?: Orientation;
-  dense?: boolean;
-};
+import { LayoutProps } from '@/Components';
+
+export type Props = React.MenuHTMLAttributes<HTMLMenuElement> & LayoutProps;

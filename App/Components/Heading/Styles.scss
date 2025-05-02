@@ -1,16 +1,11 @@
-.kicl--components--paragraph {
-  --kicl--components--text--transition-duration: var(--kicl-duration);
-  --kicl--components--text--transition-property: color, font-size;
-  --kicl--components--text--transition-timing-function:
-    var(
-      --kicl-ease-quint-in-out
-    );
+:root {
+  --kicl--components--heading--padding-block-end: 0;
+}
 
-  transition-duration: var(--kicl--components--text--transition-duration);
-  transition-property: var(--kicl--components--text--transition-property);
-  transition-timing-function:
-    var(
-      --kicl--components--text--transition-timing-function
-    );
-  will-change: var(--kicl--components--text--transition-property);
+.kicl--components--heading {
+  padding-block-end: var(--kicl--components--heading--padding-block-end);
+
+  &:not(&--is-dense):has(+ *) {
+    --kicl--components--heading--padding-block-end: var(--kicl-gutter);
+  }
 }

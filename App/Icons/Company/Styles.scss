@@ -1,0 +1,41 @@
+:root {
+  --kicl--icons--company--block-size: var(--kicl-font-size-large);
+  --kicl--icons--company--inline-size: var(--kicl-font-size-large);
+}
+
+.kicl--icons--company {
+  block-size: var(--kicl--icons--company--block-size);
+  inline-size: var(--kicl--icons--company--inline-size);
+  line-height: 1;
+
+  &--font-size {
+    &--small {
+      --kicl--icons--company--block-size: var(--kicl-font-size-small);
+      --kicl--icons--company--inline-size: var(--kicl-font-size-small);
+    }
+
+    &--medium {
+      --kicl--icons--company--block-size: var(--kicl-font-size-medium);
+      --kicl--icons--company--inline-size: var(--kicl-font-size-medium);
+    }
+
+    &--large {
+      --kicl--icons--company--block-size: var(--kicl-font-size-larger);
+      --kicl--icons--company--inline-size: var(--kicl-font-size-larger);
+    }
+
+    &--larger {
+      --kicl--icons--company--block-size: var(--kicl-font-size-largest);
+      --kicl--icons--company--inline-size: var(--kicl-font-size-largest);
+    }
+
+    &--largest {
+      --kicl--icons--company--block-size: var(--kicl-font-size-extreme);
+      --kicl--icons--company--inline-size: var(--kicl-font-size-extreme);
+    }
+  }
+
+  svg {
+    fill: currentcolor;
+  }
+}

@@ -1,44 +1,78 @@
-import React, { type PropsWithChildren } from 'react';
+import React, { PropsWithChildren } from 'react';
 
 // Libraries
 import {
-  type NavLinkProps,
+  Link,
+  LinkProps,
   NavLink,
+  NavLinkProps,
+  Navigate,
+  NavigateProps,
   Outlet,
+  PathMatch,
   Route,
   RouterProvider,
   Routes,
+  ScrollRestoration,
+  ScrollRestorationProps,
   createBrowserRouter,
   createRoutesFromElements,
   redirect,
   useLocation,
   useMatch,
-  useMatches,
   useNavigate,
+  useParams,
+  useRoutes,
   useSearchParams,
 } from 'react-router-dom';
 
+// Analytic
+import { TagManager } from '@/Analytic';
+
+// Hooks
+import useMatchPattern, { Props as MatchPatternProps } from './useMatchPattern';
+
 // Components
 import ErrorElement from './ErrorElement';
+import * as HttpStatus from './HttpStatus';
+import MatchedRoute from './MatchedRoute';
 
 const Router: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   const router = createBrowserRouter(createRoutesFromElements(children));
 
-  return <RouterProvider router={router} />;
+  router.subscribe(TagManager.routerSubscriber);
+
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export {
   ErrorElement,
+  HttpStatus,
+  Link,
+  MatchedRoute,
   NavLink,
+  Navigate,
   Outlet,
   Route,
   Routes,
+  ScrollRestoration,
   redirect,
+  type LinkProps,
   type NavLinkProps,
+  type MatchPatternProps,
+  type NavigateProps,
+  type PathMatch,
+  type ScrollRestorationProps,
   useLocation,
   useMatch,
-  useMatches,
+  useMatchPattern,
   useNavigate,
+  useParams,
+  useRoutes,
   useSearchParams,
 };
 

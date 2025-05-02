@@ -1,5 +1,5 @@
 import Color from 'color';
-import * as Spec from './spec';
+import * as Spec from './Spec';
 
 const RandomColor: Spec.RandomColor = (prop) => {
   if (prop?.hex) {

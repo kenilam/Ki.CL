@@ -1,0 +1,56 @@
+.kicl--components--button {
+  &:not(&--unstyled, &--look-like-hyperlink) {
+    &.kicl--components--button--variant {
+      &--primary {
+        &.kicl--components--button--level--info {
+          --kicl-body-color: var(--kicl-color-white);
+        }
+      }
+
+      &--secondary {
+        --kicl-body-color: var(--kicl--components--button--background-color);
+        --kicl--components--button--backdrop-filter: blur(var(--kicl-size-2x));
+
+        backdrop-filter: var(--kicl--components--button--backdrop-filter);
+        background-color: #{rgba($black, 0.1)};
+
+        @at-root .kicl--theme--dark & {
+          background-color: #{rgba($white, 0.02)};
+        }
+
+        @at-root .kicl--theme--light & {
+          background-color: #{rgba($black, 0.1)};
+        }
+
+        &[class~='kicl--components--button--level--error'],
+        &[class~='kicl--components--button--level--warning'] {
+          background-color: #{rgba($black, 0.8)};
+
+          @at-root .kicl--theme--dark & {
+            background-color: #{rgba($white, 0.02)};
+          }
+
+          @at-root .kicl--theme--light & {
+            background-color: #{rgba($black, 0.8)};
+          }
+        }
+      }
+
+      &--tertiary {
+        --kicl-body-color: var(--kicl--components--button--background-color);
+        --kicl--components--button--border-color: transparent;
+
+        background-color: transparent;
+      }
+
+      &--ghost {
+        --kicl-body-color: var(--kicl--components--button--background-color);
+        --kicl--components--button--border-color: var(
+          --kicl--components--button--background-color
+        );
+
+        background-color: transparent;
+      }
+    }
+  }
+}

@@ -4,10 +4,10 @@ import React, { useEffect } from 'react';
 import { useRouteError } from 'react-router-dom';
 
 // Components
-import { Heading, Paragraph } from '@/Components';
+import { Heading, Text } from '@/Components';
 
 // Spec
-import * as Spec from './spec';
+import * as Spec from './Spec';
 
 const ErrorElement: React.FunctionComponent = () => {
   const errors = useRouteError() as Spec.RouterError | Error;
@@ -26,11 +26,11 @@ const ErrorElement: React.FunctionComponent = () => {
     root.dataset.routes = 'errors';
 
     if (errors instanceof Error) {
-      document.title = `Ki.CL | ${errors?.message.toUpperCase()}`;
+      document.title = `Loci | ${errors?.message.toUpperCase()}`;
       return;
     }
 
-    document.title = `Ki.CL | ${errors?.status}`;
+    document.title = `Loci | ${errors?.status}`;
   });
 
   if (!errors) {
@@ -41,7 +41,7 @@ const ErrorElement: React.FunctionComponent = () => {
     return (
       <>
         <Heading is='h1'>{`${errors?.message}`}</Heading>
-        <Paragraph>{`${errors?.stack}`}</Paragraph>
+        <Text>{`${errors?.stack}`}</Text>
       </>
     );
   }
@@ -49,7 +49,7 @@ const ErrorElement: React.FunctionComponent = () => {
   return (
     <>
       <Heading is='h1'>{`${errors?.status}: ${errors?.statusText}`}</Heading>
-      <Paragraph>{`${errors?.error}`}</Paragraph>
+      <Text>{`${errors?.error}`}</Text>
     </>
   );
 };

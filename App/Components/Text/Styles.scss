@@ -1,0 +1,35 @@
+:root {
+  --kicl--components--text--font-size: inherit;
+  --kicl--components--text--padding-block-end: 0;
+  --kicl--components--text--padding-block-start: 0;
+  --kicl--components--text--transition-duration: var(
+    --kicl-transition-duration
+  );
+  --kicl--components--text--transition-property: color, font-size;
+  --kicl--components--text--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
+}
+
+.kicl--components--text {
+  --kicl--components--text--color: var(--kicl-body-color);
+
+  color: var(--kicl--components--text--color);
+  font-size: var(--kicl--components--text--font-size);
+  padding-block-end: var(--kicl--components--text--padding-block-end);
+  padding-block-start: var(--kicl--components--text--padding-block-start);
+  transition-duration: var(--kicl--components--text--transition-duration);
+  transition-property: var(--kicl--components--text--transition-property);
+  transition-timing-function: var(
+    --kicl--components--text--transition-timing-function
+  );
+  will-change: var(--kicl--components--text--transition-property);
+
+  & + &:not(&--is-dense) {
+    --kicl--components--text--padding-block-start: var(--kicl-gutter);
+  }
+
+  &:has(+ a):not(&--is-dense) {
+    --kicl--components--text--padding-block-end: var(--kicl-gutter);
+  }
+}

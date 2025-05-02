@@ -1,0 +1,70 @@
+:root {
+  --kicl--widgets--infinite-scroll--animation-direction: normal;
+  --kicl--widgets--infinite-scroll--block-size: auto;
+  --kicl--widgets--infinite-scroll--inline-size: 100%;
+  --kicl--widgets--infinite-scroll--speed: 5000ms;
+  --kicl--widgets--infinite-scroll--mask-image-gap: var(--kicl-size-2x);
+}
+
+.kicl--widgets--infinite-scroll {
+  block-size: var(--kicl--widgets--infinite-scroll--block-size);
+  inline-size: var(--kicl--widgets--infinite-scroll--inline-size);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 var(--kicl--widgets--infinite-scroll--mask-image-gap),
+    #000 calc(100% - var(--kicl--widgets--infinite-scroll--mask-image-gap)),
+    transparent 100%
+  );
+  overflow: hidden;
+  position: relative;
+
+  &--wrapper {
+    display: grid;
+    gap: var(--kicl-gutter-wide);
+    grid-auto-flow: column;
+    position: absolute;
+  }
+
+  &--element {
+    animation-direction: backwards;
+    animation-direction: var(
+      --kicl--widgets--infinite-scroll--animation-direction
+    );
+    animation-duration: var(--kicl--widgets--infinite-scroll--speed);
+    animation-iteration-count: infinite;
+    animation-name: infinite-scroll;
+    animation-timing-function: linear;
+    display: grid;
+    gap: var(--kicl-gutter-wide);
+    grid-auto-flow: column;
+    max-inline-size: unset;
+    will-change: transform;
+
+    + #{&} {
+      padding-block-start: 0;
+    }
+  }
+
+  &--animation-direction--normal {
+    --kicl--widgets--infinite-scroll--animation-direction: normal;
+  }
+
+  &--animation-direction--reverse {
+    --kicl--widgets--infinite-scroll--animation-direction: reverse;
+  }
+
+  * + & &--wrapper {
+    padding-block-start: var(--kicl-gutter);
+  }
+}
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}

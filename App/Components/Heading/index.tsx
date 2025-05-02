@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren, type PropsWithRef } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -9,19 +9,29 @@ import * as Spec from './Spec';
 // Styles
 import './Styles.scss';
 
-const Heading: React.FunctionComponent<
-  Required<PropsWithChildren> & PropsWithRef<Spec.Props>
-> = ({ children, className: origin = '', is = 'h1', ...rest }) => {
-  const className = classNames('kicl--components--heading', origin);
+const CLASS_NAME = 'kicl--components--heading';
 
-  const Component = is;
+const Heading = React.forwardRef<HTMLHeadingElement, Spec.Props>(
+  ({ children, className: origin = '', dense, is = 'h1', ...rest }, ref) => {
+    const className = classNames(
+      CLASS_NAME,
+      {
+        [`${CLASS_NAME}--is-dense`]: dense,
+      },
+      origin
+    );
 
-  return (
-    <Component {...rest} className={className} data-is={is}>
-      {children}
-    </Component>
-  );
-};
+    const Component = is;
+
+    return (
+      <Component {...rest} className={className} data-is={is} ref={ref}>
+        {children}
+      </Component>
+    );
+  }
+);
+
+Heading.displayName = 'Heading';
 
 type HeadingProps = Spec.Props;
 

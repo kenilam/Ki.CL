@@ -1,0 +1,42 @@
+:root {
+  --kicl--components--slide-out--transform--translate-y: 100%;
+  --kicl--components--slide-out--transform--translate-x: 100%;
+}
+
+.kicl--components--slide-out.kicl--components--slide-out {
+  &.kicl--components--animation--appear:not(
+      .kicl--components--animation--appear-active
+    ),
+  &.kicl--components--animation--enter:not(
+      .kicl--components--animation--enter-active
+    ) {
+    --kicl--components--animation--style--slide-from-bottom--transform--translate-y: var(
+      --kicl--components--slide-out--transform--translate-y
+    );
+    --kicl--components--animation--style--slide-from-top--transform--translate-y: calc(
+      -1 * var(--kicl--components--slide-out--transform--translate-y)
+    );
+    --kicl--components--animation--style--slide-from-left--transform--translate-x: calc(
+      -1 * var(--kicl--components--slide-out--transform--translate-x)
+    );
+    --kicl--components--animation--style--slide-from-right--transform--translate-x: var(
+      --kicl--components--slide-out--transform--translate-x
+    );
+  }
+
+  &.kicl--components--animation--exit-active,
+  &.kicl--components--animation--exit-done {
+    --kicl--components--animation--style--slide-from-bottom--transform--translate-y: var(
+      --kicl--components--slide-out--transform--translate-y
+    );
+    --kicl--components--animation--style--slide-from-top--transform--translate-y: calc(
+      -1 * var(--kicl--components--slide-out--transform--translate-y)
+    );
+    --kicl--components--animation--style--slide-from-left--transform--translate-x: calc(
+      -1 * var(--kicl--components--slide-out--transform--translate-x)
+    );
+    --kicl--components--animation--style--slide-from-right--transform--translate-x: var(
+      --kicl--components--slide-out--transform--translate-x
+    );
+  }
+}

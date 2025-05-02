@@ -6,6 +6,7 @@
 
   // grey
   --kicl-color-grey: #{$grey};
+  --kicl-color-grey-darkest: #{shade($grey, 90)};
   --kicl-color-grey-darker: #{shade($grey, 60)};
   --kicl-color-grey-dark: #{shade($grey, 30)};
   --kicl-color-grey-light: #{tint($grey, 25)};
@@ -19,46 +20,96 @@
   --kicl-color-white-lighter: #{tint($white, 50)};
   --kicl-color-white-pure: #fff;
 
-  // special color
-  --kicl-color-green: #8cdfbb;
-  --kicl-color-blue: #b5e0e8;
-  --kicl-color-orange: #f39943;
-  --kicl-color-red: #be4e4d;
-  --kicl-color-yellow: #e0b440;
-  --kicl-color-linkedin: #0077b5;
-  --kicl-color-twitter: #1dcaff;
-  --kicl-color-google: #d34836;
-  --kicl-color-behance: #053eff;
-  --kicl-color-github: #4183c4;
-  --kicl-color-gold: #b0976d;
+  // Colors
+  --kicl-color-blue: #{$blue};
+  --kicl-color-green: #{$green};
+  --kicl-color-orange: #{$orange};
+  --kicl-color-red: #{$red};
+  --kicl-color-yellow: #{$yellow};
+
+  // functional
+  --kicl-color-warning: var(--kicl-color-yellow);
+  --kicl-color-info: var(--kicl-color-blue);
+  --kicl-color-error: var(--kicl-color-red);
+  --kicl-color-confirm: var(--kicl-color-green);
 }
 
-@include make-variable-class('color', 'black');
-@include make-variable-class('color', 'black-light');
-@include make-variable-class('color', 'black-pure');
-@include make-variable-class('color', 'grey-darker');
-@include make-variable-class('color', 'grey-dark');
-@include make-variable-class('color', 'grey');
-@include make-variable-class('color', 'grey-light');
-@include make-variable-class('color', 'grey-lighter');
-@include make-variable-class('color', 'white-darker');
-@include make-variable-class('color', 'white-dark');
-@include make-variable-class('color', 'white');
-@include make-variable-class('color', 'white-light');
-@include make-variable-class('color', 'white-lighter');
-@include make-variable-class('color', 'white-pure');
+.kicl-color-gradient-rotate-0deg {
+  --kicl-color-gradient-rotate: 0deg;
+}
 
-// Special Colours
-@include make-variable-class('color', 'green');
-@include make-variable-class('color', 'blue');
-@include make-variable-class('color', 'orange');
-@include make-variable-class('color', 'red');
-@include make-variable-class('color', 'yellow');
-@include make-variable-class('color', 'gold');
+.kicl-color-gradient-rotate-90deg {
+  --kicl-color-gradient-rotate: 90deg;
+}
 
-// Brand Colours
-@include make-variable-class('color', 'linkedin');
-@include make-variable-class('color', 'twitter');
-@include make-variable-class('color', 'google');
-@include make-variable-class('color', 'behance');
-@include make-variable-class('color', 'github');
+.kicl-color-gradient-rotate-180deg {
+  --kicl-color-gradient-rotate: 180deg;
+}
+
+.kicl-color-gradient-rotate-270deg {
+  --kicl-color-gradient-rotate: 270deg;
+}
+
+.kicl-background-color-body-color {
+  background-color: var(kicl-body-color);
+}
+
+.kicl-color-body-color {
+  color: var(kicl-body-color);
+}
+
+.kicl-fill-body-color {
+  fill: var(kicl-body-color);
+}
+
+@mixin make-color-variable-class($identifier: null) {
+  @include make-variable-class('color', $identifier);
+
+  @if $identifier {
+    .kicl-background-color-#{$identifier} {
+      fill: var(--kicl-color-#{$identifier});
+    }
+
+    .kicl-color-#{$identifier} {
+      --kicl-body-color: var(--kicl-color-#{$identifier});
+    }
+
+    .kicl-fill-#{$identifier} {
+      fill: var(--kicl-color-#{$identifier});
+    }
+  }
+}
+
+// Color Black
+@include make-color-variable-class('black');
+@include make-color-variable-class('black-light');
+@include make-color-variable-class('black-pure');
+
+// Color Grey
+@include make-color-variable-class('grey-darker');
+@include make-color-variable-class('grey-dark');
+@include make-color-variable-class('grey');
+@include make-color-variable-class('grey-light');
+@include make-color-variable-class('grey-lighter');
+@include make-color-variable-class('grey-darkest');
+
+// Color White
+@include make-color-variable-class('white-darker');
+@include make-color-variable-class('white-dark');
+@include make-color-variable-class('white');
+@include make-color-variable-class('white-light');
+@include make-color-variable-class('white-lighter');
+@include make-color-variable-class('white-pure');
+
+// Color Palette
+@include make-color-variable-class('blue');
+@include make-color-variable-class('green');
+@include make-color-variable-class('orange');
+@include make-color-variable-class('red');
+@include make-color-variable-class('yellow');
+
+// Color Status
+@include make-color-variable-class('confirm');
+@include make-color-variable-class('error');
+@include make-color-variable-class('info');
+@include make-color-variable-class('warning');

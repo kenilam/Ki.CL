@@ -1,15 +1,35 @@
-.kicl--view {
-  align-content: center;
-  align-items: center;
-  block-size: calc(100dvh - var(--kicl--widgets--global-header--block-size));
-  display: grid;
-  inline-size: 100dvw;
-  justify-content: center;
-  justify-items: center;
-  z-index: 100;
+:root {
+  --kicl--views--min-block-size: calc(
+    100dvh - var(--kicl--widgets--global-footer--block-size)
+  );
+  --kicl--views--padding-block-end: var(--kicl-gutter-wider);
+  --kicl--views--padding-block-start: calc(
+    var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter)
+  );
+  --kicl--views--padding-inline-end: var(--kicl-gutter-widest);
+  --kicl--views--padding-inline-start: var(--kicl-gutter-widest);
 
-  &.kicl--animation--exit {
-    min-block-size: 100dvh;
-    padding-block-start: var(--kicl--widgets--global-header--block-size);
+  @include tablet {
+    --kicl--views--padding-block-start: calc(
+      var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-wider)
+    );
+  }
+}
+
+.kicl--view {
+  max-inline-size: 100dvw;
+  min-block-size: var(--kicl--views--min-block-size);
+  min-inline-size: 100dvw;
+  padding-block-end: var(--kicl--views--padding-block-end);
+  padding-block-start: var(--kicl--views--padding-block-start);
+  padding-inline-end: var(--kicl--views--padding-inline-end);
+  padding-inline-start: var(--kicl--views--padding-inline-start);
+
+  &.kicl--views--full-screen,
+  &:has(> .kicl--views--full-screen) {
+    --kicl--views--padding-block-end: 0;
+    --kicl--views--padding-block-start: 0;
+    --kicl--views--padding-inline-end: 0;
+    --kicl--views--padding-inline-start: 0;
   }
 }

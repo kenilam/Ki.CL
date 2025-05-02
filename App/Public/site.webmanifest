@@ -1,0 +1,14 @@
+{
+  "name":"Loci",
+  "short_name":"Loci",
+  "icons":[
+    {
+      "src":"images/icon.png",
+      "sizes":"any",
+      "type":"image/png"
+    }
+  ],
+  "theme_color":"#000000",
+  "background_color":"#000000",
+  "display":"standalone"
+}

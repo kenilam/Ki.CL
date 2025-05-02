@@ -1,1 +1,31 @@
-export type Props = React.HTMLAttributes<HTMLButtonElement>;
+import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+
+import { LayoutProps } from '@/Components';
+
+type Size = 'large' | 'small';
+type Level = 'confirm' | 'error' | 'info' | 'warning';
+type Variant = 'primary' | 'secondary' | 'tertiary' | 'ghost';
+
+export type Props = Required<PropsWithChildren> &
+  ButtonHTMLAttributes<HTMLButtonElement> &
+  Pick<
+    LayoutProps,
+    | 'autoFlow'
+    | 'alignContent'
+    | 'alignItems'
+    | 'gap'
+    | 'justifyContent'
+    | 'justifyItems'
+  > & {
+    bold?: boolean;
+    level?: Level;
+    lookLikeHyperLink?: boolean;
+    size?: Size;
+    unstyled?: boolean;
+    variant?: Variant;
+  };
+
+export type GetButtonClassNamesProps = Pick<
+  Props,
+  'bold' | 'className' | 'disabled' | 'level' | 'size' | 'variant' | 'unstyled'
+>;

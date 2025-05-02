@@ -1,0 +1,31 @@
+.kicl--components--button {
+  &:not(&--unstyled, &--look-like-hyperlink) {
+    &.kicl--components--button--level {
+      &--confirm {
+        --kicl--components--button--background-color: var(--kicl-color-confirm);
+      }
+
+      &--error {
+        --kicl--components--button--background-color: var(--kicl-color-error);
+      }
+
+      &--info {
+        --kicl--components--button--background-color: var(--kicl-color-info);
+      }
+
+      &--warning {
+        --kicl--components--button--background-color: var(--kicl-color-warning);
+
+        &.kicl--components--button--variant--primary {
+          --kicl-body-color: var(--kicl-color-grey-darker);
+        }
+      }
+    }
+
+    &.disabled,
+    &[aria-disabled='true'] {
+      --kicl--components--button--background-color: var(--kicl-color-grey-dark);
+      --kicl-body-color: var(--kicl-color-grey-darker);
+    }
+  }
+}

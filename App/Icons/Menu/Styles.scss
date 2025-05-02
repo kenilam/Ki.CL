@@ -2,15 +2,11 @@
   --kicl--icons--menu--block-size: var(--kicl-font-size-medium);
   --kicl--icons--menu--fill: currentcolor;
   --kicl--icons--menu--paths--transition-delay: 0;
-  --kicl--icons--menu--transition-duration: var(--kicl-duration);
-  --kicl--icons--menu--transition-timing-function:
-    var(
-      --kicl-ease-quint-in-out
-    );
-  --kicl--icons--menu--transition-property:
-    block-size,
-    fill,
-    inline-size,
+  --kicl--icons--menu--transition-duration: var(--kicl-transition-duration);
+  --kicl--icons--menu--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
+  --kicl--icons--menu--transition-property: block-size, fill, inline-size,
     transform;
   --kicl--icons--menu--rect--inline-size--spaces: var(--kicl-size-2x);
   --kicl--icons--menu--cross--transform--rotate: 45deg;
@@ -22,10 +18,9 @@
   fill: var(--kicl--icons--menu--fill);
   transition-duration: var(--kicl--icons--menu--transition-duration);
   transition-property: var(--kicl--icons--menu--transition-property);
-  transition-timing-function:
-    var(
-      --kicl--icons--menu--transition-timing-function
-    );
+  transition-timing-function: var(
+    --kicl--icons--menu--transition-timing-function
+  );
   will-change: var(--kicl--icons--menu--transition-property);
 
   g,
@@ -33,20 +28,18 @@
     transition-delay: var(--kicl--icons--menu--paths--transition-delay);
     transition-duration: var(--kicl--icons--menu--transition-duration);
     transition-property: var(--kicl--icons--menu--transition-property);
-    transition-timing-function:
-      var(
-        --kicl--icons--menu--transition-timing-function
-      );
+    transition-timing-function: var(
+      --kicl--icons--menu--transition-timing-function
+    );
     will-change: var(--kicl--icons--menu--transition-property);
   }
 
   rect {
     block-size: var(--kicl-size);
     fill: var(--kicl--icons--menu--fill);
-    inline-size:
-      calc(
-        100% - var(--kicl--icons--menu--rect--inline-size--spaces) * 2
-      );
+    inline-size: calc(
+      100% - var(--kicl--icons--menu--rect--inline-size--spaces) * 2
+    );
   }
 
   &--is-open {
@@ -58,10 +51,9 @@
     [data-parts='cross'] {
       g,
       rect {
-        --kicl--icons--menu--paths--transition-delay:
-          var(
-            --kicl-duration-fastest
-          );
+        --kicl--icons--menu--paths--transition-delay: var(
+          --kicl-transition-duration-fastest
+        );
       }
     }
   }
@@ -73,52 +65,46 @@
     }
 
     g + g {
-      transform:
-        rotate(
-          calc(-1 * var(--kicl--icons--menu--cross--transform--rotate))
-        );
+      transform: rotate(
+        calc(-1 * var(--kicl--icons--menu--cross--transform--rotate))
+      );
     }
 
     rect {
-      inline-size:
-        calc(
-          100% - var(--kicl--icons--menu--rect--inline-size--spaces) * 2
-        );
-      transform:
-        translate3d(
-          calc(var(--kicl--icons--menu--rect--inline-size--spaces) * 1),
-          calc(50% - var(--kicl--icons--menu--block-size) / 111),
-          0
-        );
+      inline-size: calc(
+        100% - var(--kicl--icons--menu--rect--inline-size--spaces) * 2
+      );
+      transform: translate3d(
+        calc(var(--kicl--icons--menu--rect--inline-size--spaces) * 1),
+        calc(50% - var(--kicl--icons--menu--block-size) / 111),
+        0
+      );
     }
   }
 
   [data-parts='lines'] {
     rect {
-      transform:
-        translate3d(
-          var(--kicl--icons--menu--rect--inline-size--spaces),
-          var(--kicl--icons--menu--lines--transform--translateY),
-          0
-        );
+      transform: translate3d(
+        var(--kicl--icons--menu--rect--inline-size--spaces),
+        var(--kicl--icons--menu--lines--transform--translateY),
+        0
+      );
     }
 
     rect + rect {
-      transform:
-        translate3d(
-          var(--kicl--icons--menu--rect--inline-size--spaces),
-          50%,
-          0
-        );
+      transform: translate3d(
+        var(--kicl--icons--menu--rect--inline-size--spaces),
+        50%,
+        0
+      );
     }
 
     rect:last-child {
-      transform:
-        translate3d(
-          var(--kicl--icons--menu--rect--inline-size--spaces),
-          calc(100% - var(--kicl--icons--menu--lines--transform--translateY)),
-          0
-        );
+      transform: translate3d(
+        var(--kicl--icons--menu--rect--inline-size--spaces),
+        calc(100% - var(--kicl--icons--menu--lines--transform--translateY)),
+        0
+      );
     }
   }
 
@@ -131,10 +117,9 @@
     [data-parts='lines'] {
       g,
       rect {
-        --kicl--icons--menu--paths--transition-delay:
-          var(
-            --kicl-duration-fastest
-          );
+        --kicl--icons--menu--paths--transition-delay: var(
+          --kicl-transition-duration-fastest
+        );
       }
     }
   }

@@ -1,0 +1,36 @@
+.kicl--components--animation--style--zoom-out {
+  --kicl--components--animation--transition-property: opacity, transform;
+  --kicl--components--animation--style--zoom-out--transform--translate-x: 0;
+  --kicl--components--animation--style--zoom-out--transform--translate-y: 0;
+  --kicl--components--animation--style--zoom-out--transform--scale: 1;
+  --kicl--components--animation--style--zoom-out--opacity: 1;
+
+  opacity: var(--kicl--components--animation--style--zoom-out--opacity);
+  transform: translate3d(
+      var(
+        --kicl--components--animation--style--zoom-out--transform--translate-x
+      ),
+      var(
+        --kicl--components--animation--style--zoom-out--transform--translate-y
+      ),
+      0
+    )
+    scale(var(--kicl--components--animation--style--zoom-out--transform--scale));
+  transform-origin: center;
+
+  &.kicl--components--animation--appear:not(
+      .kicl--components--animation--appear-active
+    ),
+  &.kicl--components--animation--enter:not(
+      .kicl--components--animation--enter-active
+    ) {
+    --kicl--components--animation--style--zoom-out--opacity: 0;
+    --kicl--components--animation--style--zoom-out--transform--scale: 1.2;
+  }
+
+  &.kicl--components--animation--exit-active,
+  &.kicl--components--animation--exit-done {
+    --kicl--components--animation--style--zoom-out--opacity: 0;
+    --kicl--components--animation--style--zoom-out--transform--scale: 1.2;
+  }
+}

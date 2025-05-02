@@ -10,7 +10,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -27,8 +26,10 @@
     "strictNullChecks": true,
     "target": "esnext",
     "module": "esnext",
-    "types": ["jest", "node", "vite/client"],
-    "useDefineForClassFields": true
+    "types": ["jest", "node"],
+    "useDefineForClassFields": true,
   },
-  "exclude": ["node_modules/**/*"]
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }

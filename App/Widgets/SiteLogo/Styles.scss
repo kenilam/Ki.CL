@@ -1,14 +1,12 @@
 .kicl--widgets--site-logo {
+  padding: 0;
+
   &--hyper-link {
-    display: grid;
+    font-size: inherit;
     line-height: 1;
   }
 
-  &--span {
-    block-size: 0;
-    inline-size: 0;
-    opacity: 0;
-    overflow: hidden;
-    position: fixed;
+  &--with-name {
+    --kicl--widgets--site-logo--padding-inline-end: var(--kicl-gutter-wide);
   }
 }

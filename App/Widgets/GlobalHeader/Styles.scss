@@ -1,76 +1,64 @@
 :root {
-  --kicl--widgets--global-header--background-color: var(--kicl-color-white);
+  --kicl--widgets--global-header--background-color: rgb(207 212 228 / 20%);
+  --kicl--widgets--global-header--backdrop-filter: blur(var(--kicl-gutter));
   --kicl--widgets--global-header--block-size: 0;
-  --kicl--widgets--global-header--border-color: var(--kicl-color-grey-lighter);
-  --kicl--widgets--global-header--padding-block: var(--kicl-gutter);
-  --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-wide);
-  --kicl--widgets--global-header--inline-size:
-    calc(
-      100vw - var(--kicl-gutter-widest) * 4
-    );
-  --kicl--widgets--global-header--transition-delay: var(--kicl-duration);
-  --kicl--widgets--global-header--transition-duration: var(--kicl-duration);
-  --kicl--widgets--global-header--transition-property:
-    background-color,
-    border-color,
-    padding;
-  --kicl--widgets--global-header--transition-timing-function:
-    var(
-      --kicl-ease-quint-in-out
-    );
-}
+  --kicl--widgets--global-header--font-size: var(--kicl-font-size-small);
+  --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter);
+  --kicl--widgets--global-header--padding-block-start: var(--kicl-gutter);
+  --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-widest);
+  --kicl--widgets--global-header--left: 50%;
+  --kicl--widgets--global-header--top: 0;
+  --kicl--widgets--global-header--inline-size: 100vw;
+  --kicl--widgets--global-header--bleed: calc(
+    var(--kicl--widgets--global-header--block-size) +
+      (var(--kicl--widgets--global-header--top) * 2)
+  );
 
-.kicl--theme--dark {
-  --kicl--widgets--global-header--border-color: var(--kicl-color-grey-dark);
-  --kicl--widgets--global-header--background-color: var(--kicl-color-black);
+  @include tablet {
+    --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter-wide);
+    --kicl--widgets--global-header--padding-block-start: var(
+      --kicl-gutter-wide
+    );
+  }
 }
 
 .kicl--widgets--global-header {
-  align-items: center;
+  --kicl--components--animation--style--slide-from-top--transform--translate-x: -50%;
+  --kicl--components--hyper-link--text-color: var(--kicl-body-color);
+
+  backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
   background-color: var(--kicl--widgets--global-header--background-color);
-  border-block-end:
-    var(--kicl-size-hair) solid
-    var(--kicl--widgets--global-header--border-color);
-  border-inline:
-    var(--kicl-size-hair) solid
-    var(--kicl--widgets--global-header--border-color);
-  display: grid;
-  gap: var(--kicl-gutter);
-  grid-auto-flow: column;
+  font-size: var(--kicl--widgets--global-header--font-size);
   inline-size: var(--kicl--widgets--global-header--inline-size);
-  justify-content: space-between;
-  justify-self: center;
-  padding-block: var(--kicl--widgets--global-header--padding-block);
+  inset-block-start: var(--kicl--widgets--global-header--top);
+  inset-inline-start: var(--kicl--widgets--global-header--left);
+  padding-block-end: var(--kicl--widgets--global-header--padding-block-end);
+  padding-block-start: var(--kicl--widgets--global-header--padding-block-start);
   padding-inline: var(--kicl--widgets--global-header--padding-inline);
-  position: sticky;
-  top: 0;
-  transition-delay: var(--kicl--widgets--global-header--transition-delay);
-  transition-duration: var(--kicl--widgets--global-header--transition-duration);
-  transition-property: var(--kicl--widgets--global-header--transition-property);
-  transition-timing-function:
-    var(
-      --kicl--widgets--global-header--transition-timing-function
+  position: fixed;
+  text-transform: uppercase;
+  z-index: 100001;
+
+  &:not(.kicl--components--animation) {
+    transform: translate3d(
+      var(
+        --kicl--components--animation--style--slide-from-top--transform--translate-x
+      ),
+      0,
+      0
     );
-  will-change: var(--kicl--widgets--global-header--transition-property);
-  z-index: 10000;
-
-  @include tablet {
-    --kicl--widgets--global-header--padding-block: var(--kicl-gutter-wide);
-    --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-wider);
-  }
-
-  @include mobile {
-    --kicl--widgets--global-header--inline-size:
-      calc(
-        100vw - var(--kicl--widgets--global-header--block-size) * 2
-      );
+    transition-duration: var(--kicl-transition-duration-fast);
+    transition-property: background-color, padding;
+    transition-timing-function: var(
+      --kicl--components--animation--transition-timing-function
+    );
   }
 
   &:has(~ menu:not(.is-closed)) {
     --kicl--widgets--global-header--transition-delay: 0s;
   }
 
-  &:has(~ menu.kicl--animation--enter) {
+  &:has(~ menu.kicl--components--animation--enter) {
     --kicl--widgets--global-header--transition-duration: 0s;
   }
 }

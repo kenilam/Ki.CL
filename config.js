@@ -1,7 +1,7 @@
 export default {
-  name: 'Ki.CL',
+  name: 'Kicl',
   localhost: {
-    logPrefix: 'Ki.CL',
+    logPrefix: 'Kicl',
     host: 'http://localhost',
     port: 3011,
     ui: {
@@ -9,13 +9,6 @@ export default {
       weinre: {
         port: 3032,
       },
-    },
-  },
-
-  api: {
-    host: {
-      development: 'http://localhost:3100',
-      production: 'https://ki-cl.herokuapp.com',
     },
   },
 };

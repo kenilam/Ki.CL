@@ -16,12 +16,11 @@
   "rules": {
     "custom-property-pattern": null,
     "declaration-block-no-redundant-longhand-properties": null,
-    "declaration-colon-space-after": null,
     "declaration-property-value-disallowed-list": null,
     "keyframes-name-pattern": null,
-    "max-line-length": null,
     "max-nesting-depth": 6,
-    "no-missing-end-of-source-newline": null,
+    "no-descending-specificity": null,
+    "scss/at-import-partial-extension-disallowed-list": "never",
     "scss/at-rule-no-unknown": [
       true,
       {
@@ -36,14 +35,14 @@
     "scss/dollar-variable-pattern": [
       "[^\\d]"
     ],
+    "scss/load-no-partial-leading-underscore": null,
     "scss/operator-no-newline-after": null,
     "selector-class-pattern": [
-      "(kicl--[a-z]+)|(has-[a-z]+)|(is-[a-z]+)|(enter|enter-[a-z]+|entering|entering-[a-z]+|exit|exit-[a-z]+)",
+      "(kicl-[a-z]+)|(kicl--[a-z]+)|(has-[a-z]+)|(is-[a-z]+)|(enter|enter-[a-z]+|entering|entering-[a-z]+|exit|exit-[a-z]+)|(keen-([a-z]+))|disabled|react-datepicker",
       {
         "resolveNestedSelectors": false
       }
     ],
-    "selector-list-comma-newline-after": "always",
     "selector-max-compound-selectors": 4,
     "selector-no-qualifying-type": [
       true,
@@ -61,7 +60,6 @@
           "local"
         ]
       }
-    ],
-    "string-quotes": "single"
+    ]
   }
 }

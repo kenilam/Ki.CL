@@ -1,0 +1,28 @@
+.kicl--components--animation--style--blur {
+  --kicl--components--animation--transition-property: filter, opacity;
+  --kicl--components--animation--style--blur--filter--blur: 0;
+  --kicl--components--animation--style--blur--opacity: 1;
+
+  filter: blur(var(--kicl--components--animation--style--blur--filter--blur));
+  opacity: var(--kicl--components--animation--style--blur--opacity);
+
+  &.kicl--components--animation--appear:not(
+      .kicl--components--animation--appear-active
+    ),
+  &.kicl--components--animation--enter:not(
+      .kicl--components--animation--enter-active
+    ) {
+    --kicl--components--animation--style--blur--filter--blur: var(
+      --kicl-gutter-narrow
+    );
+    --kicl--components--animation--style--blur--opacity: 0;
+  }
+
+  &.kicl--components--animation--exit-active,
+  &.kicl--components--animation--exit-done {
+    --kicl--components--animation--style--blur--filter--blur: var(
+      --kicl-gutter-narrow
+    );
+    --kicl--components--animation--style--blur--opacity: 0;
+  }
+}
