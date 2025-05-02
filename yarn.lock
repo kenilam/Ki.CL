@@ -22,7 +22,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.24.7, @babel/code-frame@npm:^7.27.1":
+"@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/code-frame@npm:7.27.1"
   dependencies:
@@ -40,30 +40,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.24.7":
-  version: 7.24.7
-  resolution: "@babel/core@npm:7.24.7"
-  dependencies:
-    "@ampproject/remapping": "npm:^2.2.0"
-    "@babel/code-frame": "npm:^7.24.7"
-    "@babel/generator": "npm:^7.24.7"
-    "@babel/helper-compilation-targets": "npm:^7.24.7"
-    "@babel/helper-module-transforms": "npm:^7.24.7"
-    "@babel/helpers": "npm:^7.24.7"
-    "@babel/parser": "npm:^7.24.7"
-    "@babel/template": "npm:^7.24.7"
-    "@babel/traverse": "npm:^7.24.7"
-    "@babel/types": "npm:^7.24.7"
-    convert-source-map: "npm:^2.0.0"
-    debug: "npm:^4.1.0"
-    gensync: "npm:^1.0.0-beta.2"
-    json5: "npm:^2.2.3"
-    semver: "npm:^6.3.1"
-  checksum: d69e1de08345a91cf44056606e17f1454f53a5bd05913fab059ba616aebe90828d3972823d42865d7f0195ffcfc1755a7a474d864cfa067949dc2b3845a1a4b7
-  languageName: node
-  linkType: hard
-
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.9, @babel/core@npm:^7.24.5":
+"@babel/core@npm:7.27.1, @babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.9, @babel/core@npm:^7.24.5":
   version: 7.27.1
   resolution: "@babel/core@npm:7.27.1"
   dependencies:
@@ -86,7 +63,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/generator@npm:^7.24.7, @babel/generator@npm:^7.27.1, @babel/generator@npm:^7.7.2":
+"@babel/generator@npm:^7.27.1, @babel/generator@npm:^7.7.2":
   version: 7.27.1
   resolution: "@babel/generator@npm:7.27.1"
   dependencies:
@@ -293,7 +270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helpers@npm:^7.24.7, @babel/helpers@npm:^7.27.1":
+"@babel/helpers@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/helpers@npm:7.27.1"
   dependencies:
@@ -321,7 +298,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.23.9, @babel/parser@npm:^7.24.7, @babel/parser@npm:^7.27.1":
+"@babel/parser@npm:^7.1.0, @babel/parser@npm:^7.14.7, @babel/parser@npm:^7.20.7, @babel/parser@npm:^7.23.9, @babel/parser@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/parser@npm:7.27.1"
   dependencies:
@@ -1686,7 +1663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.24.7, @babel/template@npm:^7.25.9, @babel/template@npm:^7.27.1, @babel/template@npm:^7.3.3":
+"@babel/template@npm:^7.25.9, @babel/template@npm:^7.27.1, @babel/template@npm:^7.3.3":
   version: 7.27.1
   resolution: "@babel/template@npm:7.27.1"
   dependencies:
@@ -1697,7 +1674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.24.7, @babel/traverse@npm:^7.27.1":
+"@babel/traverse@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/traverse@npm:7.27.1"
   dependencies:
@@ -1712,7 +1689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.0.0, @babel/types@npm:^7.20.7, @babel/types@npm:^7.24.7, @babel/types@npm:^7.27.1, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4":
+"@babel/types@npm:^7.0.0, @babel/types@npm:^7.20.7, @babel/types@npm:^7.27.1, @babel/types@npm:^7.3.3, @babel/types@npm:^7.4.4":
   version: 7.27.1
   resolution: "@babel/types@npm:7.27.1"
   dependencies:
@@ -3389,16 +3366,6 @@ __metadata:
   bin:
     browsers: lib/cjs/main-cli.js
   checksum: 50bdfdacbef0c3c9e7814593e13e67fba4511fe4ab3989cda9bd17cfc0fba54fc419529bd1feadad6c6d58a7fb3833dbac7e0446c2703566170edc2104a284c3
-  languageName: node
-  linkType: hard
-
-"@react-oauth/google@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@react-oauth/google@npm:0.12.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 78c3ce71b6c27f8b6cb0e143546387c1d1dd0c5636c78f8f49a1c478362594551c773182b1c2944878436e123f08fa0d185b83581e75d9274207b4a9ebf1d241
   languageName: node
   linkType: hard
 
@@ -5342,52 +5309,6 @@ __metadata:
     hpp: "npm:^0.2.3"
     is-image: "npm:^4.0.0"
     is-video: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple"
-  dependencies:
-    react-apple-signin-auth: "npm:^1.1.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google"
-  dependencies:
-    "@react-oauth/google": "npm:0.12.1"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents@workspace:App/Views/Authentication/Contents":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents@workspace:App/Views/Authentication/Contents"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication@workspace:App/Views/Authentication":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication@workspace:App/Views/Authentication"
   languageName: unknown
   linkType: soft
 
@@ -12015,7 +11936,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "kicl@workspace:."
   dependencies:
-    "@babel/core": "npm:7.24.7"
+    "@babel/core": "npm:7.27.1"
     "@babel/node": "npm:7.24.7"
     "@babel/plugin-proposal-class-properties": "npm:7.18.6"
     "@babel/plugin-proposal-decorators": "npm:7.24.7"
@@ -15438,16 +15359,6 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 3dec0a5ac3d9400f510ed9eccc86c5a503ba6bf6865c30e16d57bcf6c53f4f2854138ede1e645d7e3fa6f6cd293daa384a1e4e0bd505688e79b0150ef2642949
-  languageName: node
-  linkType: hard
-
-"react-apple-signin-auth@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "react-apple-signin-auth@npm:1.1.1"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 65d79839e3d2cf1288258a2a700c4543d63a8096d1618d9dc901e2327bff8032f92793d6873cc58c1263a1d3960f38e5125cfbe28a25e47cacbecfaedc740c26
   languageName: node
   linkType: hard
 
