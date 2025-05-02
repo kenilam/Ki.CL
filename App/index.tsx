@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Core
@@ -7,7 +7,12 @@ import '@/Core';
 // App
 import App from '@/App';
 
+// Sentry
+import * as Analytic from '@/Analytic';
+
 (() => {
+  Analytic.init();
+
   const appRoot = document.querySelector('app-root');
 
   if (!appRoot) {
@@ -16,7 +21,9 @@ import App from '@/App';
 
   const root = ReactDOM.createRoot(appRoot);
 
-  root.render(<App />);
+  root.render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
 })();
-
-export default {};

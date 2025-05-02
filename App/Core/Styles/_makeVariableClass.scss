@@ -1,11 +1,13 @@
 @mixin make-variable-class($property, $identifier: null) {
   @if $identifier {
-    .kicl-#{$property}-#{$identifier} {
+    .kicl-#{$property}-#{$identifier}.kicl-#{$property}-#{$identifier} {
       #{$property}: var(--kicl-#{$property}-#{$identifier});
+      @content;
     }
   } @else {
-    .kicl-#{$property} {
+    .kicl-#{$property}.kicl-#{$property} {
       #{$property}: var(--kicl-#{$property});
+      @content;
     }
   }
 }

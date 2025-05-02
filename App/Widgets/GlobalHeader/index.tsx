@@ -1,96 +1,71 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 // Libraries
 import classNames from 'classnames';
 
-// Animation
-import Animation, { ANIMATION_STYLES } from '@/Animation';
-
 // Widgets
 import { SiteLogo } from '@/Widgets';
 
+// Hooks
+import { useResponsive } from '@/Hooks';
+
 // Components
-import { CLASS_NAME as MAIN_MENU_CLASS_NAME } from './MainMenu';
-import Style from './Style';
+import { Animation, Layout } from '@/Components';
+
+// Partials
+import Navigation from './Navigation';
 
 // Context
-import GlobalHeaderProvider, {
-  useGlobalHeaderContext,
-  GLOBAL_HEADER_PARAMS,
-} from './Context';
-
-// Type
-import * as Spec from './spec';
+import GlobalHeaderProvider, { useGlobalHeaderContext } from './Context';
 
 // Styles
 import './Styles.scss';
 
 const CLASS_NAME = 'kicl--widgets--global-header';
 
-type Props = Omit<Spec.Props, 'minimal'>;
+const Contents: React.FunctionComponent = () => {
+  const { node } = useGlobalHeaderContext();
 
-const Contents: React.FunctionComponent<Props> = ({ in: transitionIn }) => {
-  const { deleteURLSearchParams, minimal, node, updateURLSearchParams } =
-    useGlobalHeaderContext();
+  const { isTablet } = useResponsive();
 
-  useEffect(() => {
-    const onClick: Parameters<typeof window.addEventListener>[1] = (event) => {
-      const target = event.target as HTMLElement;
-
-      if (!target) {
-        return;
-      }
-
-      const isGlobalHeader =
-        target === node.current || target.closest(`.${CLASS_NAME}`);
-
-      const isMainMenu =
-        target === document.querySelector(`.${MAIN_MENU_CLASS_NAME}`) ||
-        target.closest(`.${MAIN_MENU_CLASS_NAME}`);
-
-      if (isGlobalHeader || isMainMenu) {
-        return;
-      }
-
-      deleteURLSearchParams();
-      updateURLSearchParams();
-    };
-
-    window.addEventListener('click', onClick);
-
-    return () => {
-      window.removeEventListener('click', onClick);
-    };
-  });
-
-  const className = classNames(CLASS_NAME, {
-    [`${CLASS_NAME}--is-minimal`]: minimal,
-  });
+  const className = classNames('kicl-font-size-small', CLASS_NAME);
 
   return (
-    <Animation
-      animationStyle={ANIMATION_STYLES['slide-from-top']}
-      in={transitionIn}
+    <Layout
+      alignItems='center'
+      autoFlow='column'
+      gap={isTablet ? 'wider' : 'normal'}
+      justifyContent='space-between'
+      ref={node}
     >
-      <header className={className} ref={node}>
-        <Style />
+      <header className={className} role='banner'>
         <SiteLogo />
-        {/* <MainMenu /> */}
+        <Navigation />
       </header>
-    </Animation>
+    </Layout>
   );
 };
 
-const GlobalHeader: React.FunctionComponent<Spec.Props> = ({
-  minimal = true,
-  ...props
-}) => {
+const GlobalHeader: React.FunctionComponent = () => {
+  const { rect, show } = useGlobalHeaderContext();
+
   return (
-    <GlobalHeaderProvider minimal={minimal}>
-      <Contents {...props} />
-    </GlobalHeaderProvider>
+    <>
+      {ReactDOM.createPortal(
+        <style data-widget-global-header-uuid={`${CLASS_NAME}--css-variables`}>
+          {`:root {
+              --${CLASS_NAME}--block-size: ${rect?.height || 0}px;
+            }`}
+        </style>,
+        window.document.body
+      )}
+      <Animation animationStyle='slide-from-top' in={show}>
+        <Contents />
+      </Animation>
+    </>
   );
 };
 
-export { GLOBAL_HEADER_PARAMS };
+export { GlobalHeaderProvider, useGlobalHeaderContext };
 export default GlobalHeader;

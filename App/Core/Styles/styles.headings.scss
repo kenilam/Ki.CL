@@ -1,26 +1,61 @@
+:root {
+  --kicl-heading-background: none;
+  --kicl-heading-transition-duration: var(--kicl-transition-duration);
+  --kicl-heading-transition-property: background, color, font-size;
+  --kicl-heading-transition-timing-function: var(--kicl-ease-quint-in-out);
+}
+
 h1,
 h2,
 h3,
 h4,
-h5 {
-  font-family: var(--kicl-font-family-special);
-  line-height: var(--kicl-line-height-wide);
+h5,
+h6,
+.kicl-look-like-h1.kicl-look-like-h1,
+.kicl-look-like-h2.kicl-look-like-h2,
+.kicl-look-like-h3.kicl-look-like-h3,
+.kicl-look-like-h4.kicl-look-like-h4,
+.kicl-look-like-h5.kicl-look-like-h5,
+.kicl-look-like-h6.kicl-look-like-h6 {
+  --kicl-heading-font-color: var(--kicl-body-color);
+  --kicl-heading-font-family: var(--kicl-font-family);
+  --kicl-heading-font-size: var(--kicl-font-size);
+  --kicl-heading-font-weight: var(--kicl-font-weight-bolder);
+
+  background: var(--kicl-heading-background);
+  color: var(--kicl-heading-font-color);
+  font-family: var(--kicl-heading-font-family);
+  font-size: var(--kicl-heading-font-size);
+  font-weight: var(--kicl-heading-font-weight);
+  line-height: var(--kicl-line-height);
+  transition-duration: var(--kicl-heading-transition-duration);
+  transition-property: var(--kicl-heading-transition-property);
+  transition-timing-function: var(--kicl-heading-transition-timing-function);
+  will-change: var(--kicl-heading-transition-property);
+}
+
+.kicl-look-like-h1.kicl-look-like-h1,
+.kicl-look-like-h2.kicl-look-like-h2,
+.kicl-look-like-h3.kicl-look-like-h3,
+.kicl-look-like-h4.kicl-look-like-h4,
+.kicl-look-like-h5.kicl-look-like-h5,
+.kicl-look-like-h6.kicl-look-like-h6 {
+  & + & {
+    padding-block-start: var(--kicl-gutter-wide);
+  }
 }
 
 h1,
+.kicl-look-like-h1.kicl-look-like-h1 {
+  --kicl-heading-font-size: var(--kicl-font-size-large);
+}
+
 h2,
-h3 {
-  font-weight: var(--kicl-font-weight-bolder);
+.kicl-look-like-h2.kicl-look-like-h2 {
+  --kicl-heading-font-size: var(--kicl-font-size-medium);
 }
 
-h1 {
-  font-size: var(--kicl-font-size-large);
-}
-
-h2 {
-  font-size: var(--kicl-font-size-medium);
-}
-
-h4 {
-  font-size: var(--kicl-font-size-small);
+h5,
+.kicl-look-like-h5.kicl-look-like-h5 {
+  --kicl-heading-font-weight: var(--kicl-font-weight-bold);
 }

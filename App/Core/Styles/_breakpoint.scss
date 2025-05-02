@@ -1,0 +1,59 @@
+$narrow: 16 * 22;
+$mobile: 16 * 30;
+$tablet: 16 * 46;
+$desktop: 16 * 61;
+$wide: 16 * 81;
+$wider: 16 * 90;
+
+@use 'include-media' with (
+  $breakpoints: (
+    'narrow': $narrow,
+    'mobile': $mobile,
+    'tablet': $tablet,
+    'desktop': $desktop,
+    'wide': $wide,
+    'wider': $wider,
+  )
+);
+
+@mixin query($props...) {
+  @include include-media.media($props...) {
+    @content;
+  }
+}
+
+@mixin narrow {
+  @include query('≤narrow') {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @include query('>narrow', '≤mobile') {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include query('>mobile', '≤tablet') {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include query('>tablet', '≤desktop') {
+    @content;
+  }
+}
+
+@mixin wide {
+  @include query('>desktop', '≤wide') {
+    @content;
+  }
+}
+
+@mixin wider {
+  @include query('>wide', '≤wider') {
+    @content;
+  }
+}

@@ -1,30 +1,22 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 // Routes
 import { Route as Origin } from '@/Router';
 
 // Components
-import { Heading, HyperLink } from '@/Components';
+import { Spinner } from '@/Components';
 
-// Widgets
-import { UnderConstruction } from '@/Widgets';
+const PATH = '';
 
-// Styles
-import './Styles.scss';
+const Contents = React.lazy(() => import('./Contents'));
 
-const CLASS_NAME = 'kicl--view--home';
-
-const Home = () => {
+const Lazy: React.FunctionComponent = () => {
   return (
-    <section className={CLASS_NAME}>
-      <Heading className='kicl-font-size-extreme' is='h1'>
-        Hello!
-      </Heading>
-      <UnderConstruction heading='Working on it'>
-        <HyperLink to='mailto:hello@ki-cl.com'>Email me instead?</HyperLink>
-      </UnderConstruction>
-    </section>
+    <Suspense fallback={<Spinner className='kicl--views--full-screen' />}>
+      <Contents />
+    </Suspense>
   );
 };
 
-export default <Origin index element={<Home />} />;
+export { PATH };
+export default <Origin path={PATH} element={<Lazy />} />;
