@@ -303,11 +303,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/node@npm:7.24.7":
-  version: 7.24.7
-  resolution: "@babel/node@npm:7.24.7"
+"@babel/node@npm:7.27.1":
+  version: 7.27.1
+  resolution: "@babel/node@npm:7.27.1"
   dependencies:
-    "@babel/register": "npm:^7.24.6"
+    "@babel/register": "npm:^7.27.1"
     commander: "npm:^6.2.0"
     core-js: "npm:^3.30.2"
     node-environment-flags: "npm:^1.0.5"
@@ -317,7 +317,7 @@ __metadata:
     "@babel/core": ^7.0.0-0
   bin:
     babel-node: ./bin/babel-node.js
-  checksum: 9c673228f5bfc93294908e67eed149a7d48d0b2ae67f529d0329621d1e844b637727c4ccd00accbade6aaecb7916c7f5e4e48ee6565290df9e5c5419384114dd
+  checksum: c22df67814d7ad27187156578cd88e507991322dfd6ee06881da4cb1fe783117b517ec44a86119cfb591eb4c471805d216caff6228e8d919869b2a3573d45ef1
   languageName: node
   linkType: hard
 
@@ -1664,7 +1664,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:^7.24.6":
+"@babel/register@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/register@npm:7.27.1"
   dependencies:
@@ -3389,16 +3389,6 @@ __metadata:
   bin:
     browsers: lib/cjs/main-cli.js
   checksum: 50bdfdacbef0c3c9e7814593e13e67fba4511fe4ab3989cda9bd17cfc0fba54fc419529bd1feadad6c6d58a7fb3833dbac7e0446c2703566170edc2104a284c3
-  languageName: node
-  linkType: hard
-
-"@react-oauth/google@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@react-oauth/google@npm:0.12.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 78c3ce71b6c27f8b6cb0e143546387c1d1dd0c5636c78f8f49a1c478362594551c773182b1c2944878436e123f08fa0d185b83581e75d9274207b4a9ebf1d241
   languageName: node
   linkType: hard
 
@@ -5342,52 +5332,6 @@ __metadata:
     hpp: "npm:^0.2.3"
     is-image: "npm:^4.0.0"
     is-video: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple"
-  dependencies:
-    react-apple-signin-auth: "npm:^1.1.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google"
-  dependencies:
-    "@react-oauth/google": "npm:0.12.1"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents@workspace:App/Views/Authentication/Contents":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents@workspace:App/Views/Authentication/Contents"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication@workspace:App/Views/Authentication":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication@workspace:App/Views/Authentication"
   languageName: unknown
   linkType: soft
 
@@ -12016,7 +11960,7 @@ __metadata:
   resolution: "kicl@workspace:."
   dependencies:
     "@babel/core": "npm:7.24.7"
-    "@babel/node": "npm:7.24.7"
+    "@babel/node": "npm:7.27.1"
     "@babel/plugin-proposal-class-properties": "npm:7.18.6"
     "@babel/plugin-proposal-decorators": "npm:7.24.7"
     "@babel/plugin-proposal-export-default-from": "npm:7.24.7"
@@ -15438,16 +15382,6 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 3dec0a5ac3d9400f510ed9eccc86c5a503ba6bf6865c30e16d57bcf6c53f4f2854138ede1e645d7e3fa6f6cd293daa384a1e4e0bd505688e79b0150ef2642949
-  languageName: node
-  linkType: hard
-
-"react-apple-signin-auth@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "react-apple-signin-auth@npm:1.1.1"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 65d79839e3d2cf1288258a2a700c4543d63a8096d1618d9dc901e2327bff8032f92793d6873cc58c1263a1d3960f38e5125cfbe28a25e47cacbecfaedc740c26
   languageName: node
   linkType: hard
 
