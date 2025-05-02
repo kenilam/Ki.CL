@@ -3392,16 +3392,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-oauth/google@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@react-oauth/google@npm:0.12.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 78c3ce71b6c27f8b6cb0e143546387c1d1dd0c5636c78f8f49a1c478362594551c773182b1c2944878436e123f08fa0d185b83581e75d9274207b4a9ebf1d241
-  languageName: node
-  linkType: hard
-
 "@react-spring/animated@npm:~9.7.5":
   version: 9.7.5
   resolution: "@react-spring/animated@npm:9.7.5"
@@ -4030,10 +4020,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/app-root-path@npm:1.2.8":
-  version: 1.2.8
-  resolution: "@types/app-root-path@npm:1.2.8"
-  checksum: bd6bb987590b998fa64d8e5356058d95f5192c35c1a16b5d4cc3c33b9a7e1ef3225ea5d3aa9f2962474be1fd0de88eb51d1d6d8d2f9aad21c204352ce6a122d7
+"@types/app-root-path@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@types/app-root-path@npm:3.1.0"
+  dependencies:
+    app-root-path: "npm:*"
+  checksum: f6536f046eac08c66893c47bbd62e219e22fa833d8c5b05011c4b44e22d0d9ecf3d349a0abec323608b08cdf8b8f6bc21b3672df684a0b915af2097ab6177f37
   languageName: node
   linkType: hard
 
@@ -5275,7 +5267,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app-root-path@npm:3.1.0":
+"app-root-path@npm:*, app-root-path@npm:3.1.0":
   version: 3.1.0
   resolution: "app-root-path@npm:3.1.0"
   checksum: 2221b035915c0abff24ef6654fa3ca2ed2a28b3f65090df118c0f83a03db61172d404e367081b2daa24a034cc3dbd75d1d5576128d3b1c58f735696708866cb2
@@ -5342,52 +5334,6 @@ __metadata:
     hpp: "npm:^0.2.3"
     is-image: "npm:^4.0.0"
     is-video: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple"
-  dependencies:
-    react-apple-signin-auth: "npm:^1.1.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google"
-  dependencies:
-    "@react-oauth/google": "npm:0.12.1"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents@workspace:App/Views/Authentication/Contents":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents@workspace:App/Views/Authentication/Contents"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication@workspace:App/Views/Authentication":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication@workspace:App/Views/Authentication"
   languageName: unknown
   linkType: soft
 
@@ -12033,7 +11979,7 @@ __metadata:
     "@commitlint/config-conventional": "npm:19.2.2"
     "@eslint/js": "npm:^9.4.0"
     "@faker-js/faker": "npm:^8.4.1"
-    "@types/app-root-path": "npm:1.2.8"
+    "@types/app-root-path": "npm:3.1.0"
     "@types/body-parser": "npm:^1.19.5"
     "@types/events": "npm:3.0.3"
     "@types/node": "npm:20.14.2"
@@ -15438,16 +15384,6 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 3dec0a5ac3d9400f510ed9eccc86c5a503ba6bf6865c30e16d57bcf6c53f4f2854138ede1e645d7e3fa6f6cd293daa384a1e4e0bd505688e79b0150ef2642949
-  languageName: node
-  linkType: hard
-
-"react-apple-signin-auth@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "react-apple-signin-auth@npm:1.1.1"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 65d79839e3d2cf1288258a2a700c4543d63a8096d1618d9dc901e2327bff8032f92793d6873cc58c1263a1d3960f38e5125cfbe28a25e47cacbecfaedc740c26
   languageName: node
   linkType: hard
 
