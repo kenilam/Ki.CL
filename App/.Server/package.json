@@ -4,7 +4,7 @@
   "dependencies": {
     "colors": "1.4.0",
     "compression": "^1.7.4",
-    "express": "4.19.2",
+    "express": "4.20.0",
     "hpp": "^0.2.3",
     "is-image": "^4.0.0",
     "is-video": "^2.0.0"
