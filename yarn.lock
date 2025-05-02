@@ -3392,16 +3392,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-oauth/google@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@react-oauth/google@npm:0.12.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 78c3ce71b6c27f8b6cb0e143546387c1d1dd0c5636c78f8f49a1c478362594551c773182b1c2944878436e123f08fa0d185b83581e75d9274207b4a9ebf1d241
-  languageName: node
-  linkType: hard
-
 "@react-spring/animated@npm:~9.7.5":
   version: 9.7.5
   resolution: "@react-spring/animated@npm:9.7.5"
@@ -5345,52 +5335,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple"
-  dependencies:
-    react-apple-signin-auth: "npm:^1.1.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google"
-  dependencies:
-    "@react-oauth/google": "npm:0.12.1"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents@workspace:App/Views/Authentication/Contents":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents@workspace:App/Views/Authentication/Contents"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication@workspace:App/Views/Authentication":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication@workspace:App/Views/Authentication"
-  languageName: unknown
-  linkType: soft
-
 "app.views@workspace:App/Views":
   version: 0.0.0-use.local
   resolution: "app.views@workspace:App/Views"
@@ -5754,25 +5698,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:10.4.19":
-  version: 10.4.19
-  resolution: "autoprefixer@npm:10.4.19"
-  dependencies:
-    browserslist: "npm:^4.23.0"
-    caniuse-lite: "npm:^1.0.30001599"
-    fraction.js: "npm:^4.3.7"
-    normalize-range: "npm:^0.1.2"
-    picocolors: "npm:^1.0.0"
-    postcss-value-parser: "npm:^4.2.0"
-  peerDependencies:
-    postcss: ^8.1.0
-  bin:
-    autoprefixer: bin/autoprefixer
-  checksum: 5cb4d90eebb4c8444c955a15215f5ded4d1be5d1ef5e79de1bca6733664769eb89bd404fb92ce2c6684df0cad5260d31de99233ad02232e5bbbdf8e7c6161447
-  languageName: node
-  linkType: hard
-
-"autoprefixer@npm:^10.4.19":
+"autoprefixer@npm:10.4.21, autoprefixer@npm:^10.4.19":
   version: 10.4.21
   resolution: "autoprefixer@npm:10.4.21"
   dependencies:
@@ -6219,7 +6145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.22.3, browserslist@npm:^4.23.0, browserslist@npm:^4.24.0, browserslist@npm:^4.24.4":
+"browserslist@npm:^4.22.3, browserslist@npm:^4.24.0, browserslist@npm:^4.24.4":
   version: 4.24.4
   resolution: "browserslist@npm:4.24.4"
   dependencies:
@@ -6438,7 +6364,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001599, caniuse-lite@npm:^1.0.30001688, caniuse-lite@npm:^1.0.30001702":
+"caniuse-lite@npm:^1.0.30001688, caniuse-lite@npm:^1.0.30001702":
   version: 1.0.30001716
   resolution: "caniuse-lite@npm:1.0.30001716"
   checksum: e53016d9336cfbc2c722e1ef415af8489990ba4f87886b033d9263f29655540464492a1559fc858380ddb75098e1266cdcb17050696f2f9e1d9bce34d0c45f89
@@ -12042,7 +11968,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.13.0"
     "@ungap/url-search-params": "npm:0.2.2"
     app-root-path: "npm:3.1.0"
-    autoprefixer: "npm:10.4.19"
+    autoprefixer: "npm:10.4.21"
     babel-plugin-transform-import-meta: "npm:^2.2.1"
     body-parser: "npm:^1.20.2"
     commitizen: "npm:4.3.0"
@@ -15438,16 +15364,6 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 3dec0a5ac3d9400f510ed9eccc86c5a503ba6bf6865c30e16d57bcf6c53f4f2854138ede1e645d7e3fa6f6cd293daa384a1e4e0bd505688e79b0150ef2642949
-  languageName: node
-  linkType: hard
-
-"react-apple-signin-auth@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "react-apple-signin-auth@npm:1.1.1"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 65d79839e3d2cf1288258a2a700c4543d63a8096d1618d9dc901e2327bff8032f92793d6873cc58c1263a1d3960f38e5125cfbe28a25e47cacbecfaedc740c26
   languageName: node
   linkType: hard
 

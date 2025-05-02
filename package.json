@@ -75,7 +75,7 @@
     "@types/events": "3.0.3",
     "@ungap/url-search-params": "0.2.2",
     "app-root-path": "3.1.0",
-    "autoprefixer": "10.4.19",
+    "autoprefixer": "10.4.21",
     "body-parser": "^1.20.2",
     "core-js": "3.37.1",
     "cross-env": "7.0.3",
