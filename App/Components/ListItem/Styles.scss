@@ -1,16 +1,16 @@
 .kicl--components--list-item {
-  --kicl--components--list-item--transition-duration: var(--kicl-duration);
+  --kicl--components--list-item--transition-duration: var(
+    --kicl-transition-duration
+  );
   --kicl--components--list-item--transition-property: color, font-size;
-  --kicl--components--list-item--transition-timing-function:
-    var(
-      --kicl-ease-quint-in-out
-    );
+  --kicl--components--list-item--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
 
   transition-duration: var(--kicl--components--list-item--transition-duration);
   transition-property: var(--kicl--components--list-item--transition-property);
-  transition-timing-function:
-    var(
-      --kicl--components--list-item--transition-timing-function
-    );
+  transition-timing-function: var(
+    --kicl--components--list-item--transition-timing-function
+  );
   will-change: var(--kicl--components--list-item--transition-property);
 }

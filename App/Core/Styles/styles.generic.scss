@@ -1,10 +1,118 @@
 * {
   @include font-smoothing;
 
+  background: 0;
+  border: 0;
   box-sizing: border-box;
   font-family: var(--kicl-font-family);
-  font-size: var(--kicl-font-size);
+  font-size: inherit;
   font-weight: var(--kicl-font-weight);
   letter-spacing: var(--kicl-letter-spacing);
   line-height: var(--kicl-line-height);
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --kicl-outline-color: var(--kicl-color-grey-darker);
+  --kicl-outline-style: none;
+  --kicl-outline-width: var(--kicl-size-1px);
+}
+
+.kicl--theme--dark {
+  --kicl-outline-color: var(--kicl-color-white-dark);
+}
+
+.kicl--theme--light {
+  --kicl-outline-color: var(--kicl-color-grey-darker);
+}
+
+a,
+button,
+input[type='checkbox'],
+input[type='radio'],
+label,
+select {
+  cursor: pointer;
+}
+
+*:disabled,
+*[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: not-allowed;
+
+  *:disabled,
+  *[aria-disabled='true'] {
+    opacity: 1;
+  }
+}
+
+a,
+textarea,
+select,
+input,
+button {
+  outline-color: var(--kicl-outline-color);
+  outline-style: var(--kicl-outline-style);
+  outline-width: var(--kicl-outline-width);
+
+  &:focus {
+    --kicl-outline-style: dashed;
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition:
+      background-color 600000s 0s,
+      color 600000s 0s;
+  }
+
+  &::placeholder {
+    color: var(--kicl-body-color);
+    opacity: 0.5;
+  }
+}
+
+select,
+input,
+button {
+  line-height: 1;
+}
+
+a,
+button {
+  &.disabled,
+  &[aria-disabled='true'] {
+    --kicl-button-filter: brightness(0.7) grayscale(0.5);
+
+    pointer-events: none;
+  }
+}
+
+input {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @at-root .kicl--theme--dark
+      &[type='date' i]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    outline-color: var(--kicl-outline-color);
+    outline-style: var(--kicl-outline-style);
+    outline-width: var(--kicl-outline-width);
+
+    &:not(:focus) {
+      --kicl-outline-style: none;
+    }
+
+    &:focus {
+      --kicl-outline-style: dashed;
+    }
+  }
+}
+
+svg {
+  fill: currentcolor;
 }

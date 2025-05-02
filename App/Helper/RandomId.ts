@@ -1,4 +1,4 @@
-import * as Spec from '@/Helper/spec';
+import * as Spec from '^/App/Helper/_Spec';
 
 const RandomId: Spec.RandomId = (prop) => {
   const range = prop?.range || 1;

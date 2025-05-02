@@ -1,0 +1,34 @@
+:root {
+  --kicl--views--components--video--background: var(--kicl-color-white);
+  --kicl--views--components--video--object-fit: contain;
+}
+
+.kicl--theme--dark {
+  --kicl--views--components--video--background: var(--kicl-color-black);
+}
+
+.kicl--theme--light {
+  --kicl--views--components--video--background: var(--kicl-color-white);
+}
+
+.kicl--components--video {
+  background: var(--kicl--views--components--video--background);
+  block-size: var(--kicl--views--components--video--block-size);
+  inline-size: var(--kicl--views--components--video--inline-size);
+  overflow: hidden;
+  position: relative;
+
+  &--object-fit--cover {
+    --kicl--views--components--video--object-fit: cover;
+  }
+
+  &--object-fit--fill {
+    --kicl--views--components--video--object-fit: fill;
+  }
+
+  video {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: var(--kicl--views--components--video--object-fit);
+  }
+}

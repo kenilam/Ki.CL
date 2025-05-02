@@ -5,10 +5,13 @@
     "paths": {
       "^/*": ["*"],
       "@/*": ["App/*"]
-    }
+    },
+    "types": ["jest", "node", "vite/client"]
   },
   "exclude": [
-    "App/.Caches/**/*",
-    "App/build/**/*"
+    ".Caches/**/*",
+    "build/**/*",
+    "API/Client/Types/**/*",
+    "node_modules/**/*"
   ]
 }

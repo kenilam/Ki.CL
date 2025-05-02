@@ -1,0 +1,93 @@
+:root {
+  --kicl--components--spinner--animation-delay: 0s;
+  --kicl--components--spinner--animation-duration: var(
+    --kicl-transition-duration-slowest
+  );
+  --kicl--components--spinner--animation-iteration-count: infinite;
+  --kicl--components--spinner--animation-name: kicl--components--spinner;
+  --kicl--components--spinner--animation-timing-function: var(
+    --kicl-ease-expo-out
+  );
+  --kicl--components--spinner--backdrop-filter: none;
+  --kicl--components--spinner--background-color: transparent;
+  --kicl--components--spinner--position: relative;
+  --kicl--components--spinner--block-size: inherit;
+  --kicl--components--spinner--inset-block-start: initial;
+  --kicl--components--spinner--inset-inline-start: initial;
+  --kicl--components--spinner--inline-size: inherit;
+  --kicl--components--spinner--svg--padding: 0;
+  --kicl--components--spinner--svg--scale: 1;
+  --kicl--components--spinner--svg--block-size: 100%;
+  --kicl--components--spinner--svg--inline-size: 100%;
+}
+
+.kicl--components--spinner {
+  backdrop-filter: var(--kicl--components--spinner--backdrop-filter);
+  background-color: var(--kicl--components--spinner--background-color);
+  block-size: var(--kicl--components--spinner--block-size);
+  inline-size: var(--kicl--components--spinner--inline-size);
+  inset-block-start: var(--kicl--components--spinner--inset-block-start);
+  inset-inline-start: var(--kicl--components--spinner--inset-inline-start);
+  position: var(--kicl--components--spinner--position);
+
+  &--icon {
+    animation-delay: var(--kicl--components--spinner--animation-delay);
+    animation-duration: var(--kicl--components--spinner--animation-duration);
+    animation-iteration-count: var(
+      --kicl--components--spinner--animation-iteration-count
+    );
+    animation-name: var(--kicl--components--spinner--animation-name);
+    animation-timing-function: var(
+      --kicl--components--spinner--animation-timing-function
+    );
+    block-size: var(--kicl--components--spinner--svg--block-size);
+    inline-size: var(--kicl--components--spinner--svg--inline-size);
+  }
+
+  &--position--overlay:not(&--no-backdrop) {
+    --kicl--components--spinner--backdrop-filter: blur(var(--kicl-size-half));
+    --kicl--components--spinner--background-color: #{rgba($white, 0.1)};
+
+    @at-root .kicl--theme--dark & {
+      --kicl--components--spinner--background-color: #{rgba($black, 0.4)};
+    }
+
+    @at-root .kicl--theme--light & {
+      --kicl--components--spinner--background-color: #{rgba($white, 0.1)};
+    }
+  }
+
+  &--position--overlay {
+    --kicl--components--spinner--block-size: 100%;
+    --kicl--components--spinner--inset-block-start: 0;
+    --kicl--components--spinner--inset-inline-start: 0;
+    --kicl--components--spinner--inline-size: 100%;
+    --kicl--components--spinner--position: absolute;
+
+    z-index: 1000;
+
+    @at-root *:has(> &) {
+      position: relative;
+    }
+  }
+
+  &--no-backdrop {
+    --kicl--components--spinner--backdrop-filter: unset;
+    --kicl--components--spinner--background-color: unset;
+  }
+
+  &--size--small &--icon {
+    --kicl--components--spinner--svg--scale: 0.8;
+  }
+
+  &--size--smaller &--icon {
+    --kicl--components--spinner--svg--scale: 0.5;
+  }
+}
+
+@keyframes kicl--components--spinner {
+  to {
+    transform: rotate(360deg)
+      scale(var(--kicl--components--spinner--svg--scale));
+  }
+}
