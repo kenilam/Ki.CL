@@ -1,6 +1,9 @@
-// Animation
-import { type AnimationProps } from '@/Animation';
+import React from 'react';
 
-export type Props = Pick<AnimationProps, 'in'> & {
-  minimal?: boolean;
+export type Context = {
+  showHeader: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export type Props = {
+  show?: boolean;
 };

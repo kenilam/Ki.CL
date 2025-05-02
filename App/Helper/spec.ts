@@ -15,7 +15,7 @@ export type Trigger = () => Promise<{ src?: string }>;
 
 export type Fetch = (
   url?: string,
-  options?: RequestInit
+  options?: globalThis.RequestInit
 ) => {
   cancel: Cancel;
   trigger: Trigger;

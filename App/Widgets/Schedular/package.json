@@ -1,0 +1,11 @@
+{
+  "name": "app.widgets.schedular",
+  "version": "0.0.1",
+  "main": "index.tsx",
+  "dependencies": {
+    "react-datepicker": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/react-datepicker": "^6.2.0"
+  }
+}

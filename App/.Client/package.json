@@ -1,0 +1,29 @@
+{
+  "name": "app.client",
+  "version": "0.0.1",
+  "type": "module",
+  "dependencies": {
+    "@rollup/plugin-dynamic-import-vars": "2.1.2",
+    "@vite/vitejs-client": "2.2.10",
+    "@vitejs/plugin-react": "4.3.1",
+    "glob": "10.4.1",
+    "rollup-plugin-terser": "7.0.2",
+    "vite-plugin-checker": "^0.6.4",
+    "vite-plugin-commonjs": "0.10.1",
+    "vite-plugin-dynamic-import": "1.5.0",
+    "vite-plugin-env-compatible": "2.0.1",
+    "vite-plugin-eslint": "1.8.1",
+    "vite-plugin-graphql-codegen": "^3.3.8",
+    "vite-plugin-graphql-loader": "^3.0.1",
+    "vite-plugin-html-env": "1.2.8",
+    "vite-plugin-inspect": "0.8.4",
+    "vite-plugin-radar": "^0.9.6",
+    "vite-plugin-stylelint": "^5.3.1",
+    "vite-tsconfig-paths": "4.3.2",
+    "whatwg-fetch": "3.6.20"
+  },
+  "devDependencies": {
+    "@types/glob": "8.1.0",
+    "vite-plugin-mkcert": "^1.17.5"
+  }
+}

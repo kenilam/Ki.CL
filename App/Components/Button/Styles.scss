@@ -1,19 +1,44 @@
-:root {
-  --kicl--components--button--transition-duration: var(--kicl-duration);
-  --kicl--components--button--transition-property: color, font-size;
-  --kicl--components--button--transition-timing-function:
-    var(
-      --kicl-ease-quint-in-out
-    );
-}
-
 .kicl--components--button {
-  display: inline-grid;
-  transition-duration: var(--kicl--components--button--transition-duration);
-  transition-property: var(--kicl--components--button--transition-property);
-  transition-timing-function:
-    var(
-      --kicl--components--button--transition-timing-function
-    );
-  will-change: var(--kicl--components--button--transition-property);
+  --kicl-body-color: var(--kicl-color-white);
+  --kicl-layout--inline-size: fit-content;
+  --kicl--components--button--background-color: var(--kicl-color-grey-darker);
+  --kicl--components--button--border-color: transparent;
+  --kicl--components--button--border-radius: var(--kicl-gutter-narrow);
+  --kicl--components--button--border-width: var(--kicl-size-hair);
+
+  border-radius: var(--kicl--components--button--border-radius);
+  overflow: hidden;
+
+  @at-root .kicl--theme--dark & {
+    --kicl-body-color: var(--kicl-color-grey-darker);
+    --kicl--components--button--background-color: var(--kicl-color-white);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl-body-color: var(--kicl-color-white);
+    --kicl--components--button--background-color: var(--kicl-color-grey-darker);
+  }
+
+  &:not(&--unstyled, &--look-like-hyperlink) {
+    background-color: var(--kicl--components--button--background-color);
+    border: var(--kicl--components--button--border-width) solid
+      var(--kicl--components--button--border-color);
+    color: var(--kicl-body-color);
+    text-transform: uppercase;
+  }
+
+  &:has(> svg:only-child) {
+    --kicl--components--button--border-radius: 50%;
+
+    backdrop-filter: blur(var(--kicl-gutter));
+    display: grid;
+  }
+
+  &:disabled {
+    --kicl--components--button--cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: 1px dashed var(--kicl-body-color);
+  }
 }

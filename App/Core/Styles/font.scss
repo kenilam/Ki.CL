@@ -1,8 +1,8 @@
 :root {
   // font-family
-  --kicl-font-family: 'ariana-pro', #{$base-font};
-  --kicl-font-family-bold: 'acumin-pro-wide', #{$base-font};
-  --kicl-font-family-special: 'gilbert-color', #{$base-font};
+  --kicl-font-family: 'mic-32-new-web', #{$base-font};
+  --kicl-font-family-bold: 'mic-32-new-web', #{$base-font};
+  --kicl-font-family-special: 'mic-32-new-rounded-web', #{$base-font};
   --kicl-font-size: #{$base-font-size};
 
   // font-size
@@ -13,16 +13,17 @@
   --kicl-font-size-large: 2rem;
   --kicl-font-size-larger: 3rem;
   --kicl-font-size-largest: 4rem;
-  --kicl-font-size-extreme: 10rem;
+  --kicl-font-size-huge: min(20dvw, 5rem);
+  --kicl-font-size-extreme: min(25dvw, 10rem);
 
   // font-weight
   --kicl-font-weight-lightest: 100;
   --kicl-font-weight-lighter: 200;
   --kicl-font-weight-light: 300;
   --kicl-font-weight: 400;
-  --kicl-font-weight-bold: 500;
+  --kicl-font-weight-bold: 600;
   --kicl-font-weight-bolder: 700;
-  --kicl-font-weight-boldest: 900;
+  --kicl-font-weight-boldest: 800;
 
   // letter-spacing
   --kicl-letter-spacing: 0.08rem;
@@ -34,12 +35,65 @@
   --kicl-line-height-narrow: 1.2;
   --kicl-line-height: 1.5;
   --kicl-line-height-wide: 1.8;
+
+  // font-style
+  --kicl-font-style-italic: italic;
+  --kicl-font-style-oblique: oblique;
+}
+
+.kicl-text-transform-capitalize {
+  text-transform: capitalize;
+}
+
+.kicl-text-transform-lowercase {
+  text-transform: lowercase;
+}
+
+.kicl-text-transform-none {
+  text-transform: none;
+}
+
+.kicl-text-transform-uppercase {
+  text-transform: uppercase;
+}
+
+.kicl-font-style-normal {
+  font-style: normal;
+}
+
+.kicl-font-style-italic {
+  font-style: italic;
+}
+
+.kicl-font-style-oblique {
+  font-style: oblique;
+}
+
+.kicl-text-align-start {
+  text-align: start;
+}
+
+.kicl-text-align-center {
+  text-align: center;
+}
+
+.kicl-text-align-end {
+  text-align: end;
+}
+
+.kicl-text-align-justify {
+  text-align: justify;
+}
+
+.kicl-text-nowrap {
+  white-space: nowrap;
 }
 
 @include make-variable-class('font-family');
 @include make-variable-class('font-family', 'bold');
 @include make-variable-class('font-family', 'special');
 @include make-variable-class('font-size', 'extreme');
+@include make-variable-class('font-size', 'huge');
 @include make-variable-class('font-size', 'largest');
 @include make-variable-class('font-size', 'larger');
 @include make-variable-class('font-size', 'large');
@@ -48,6 +102,8 @@
 @include make-variable-class('font-size', 'small');
 @include make-variable-class('font-size', 'smaller');
 @include make-variable-class('font-size', 'smallest');
+@include make-variable-class('font-style', 'italic');
+@include make-variable-class('font-style', 'oblique');
 @include make-variable-class('font-weight', 'lightest');
 @include make-variable-class('font-weight', 'lighter');
 @include make-variable-class('font-weight', 'light');

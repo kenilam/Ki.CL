@@ -1,11 +1,12 @@
+@import '@/Core/Styles/_breakpoint';
+
 // Configuration
 $mqResponsive: true;
 $mqBreakpoints: (
-  narrow: $base-font-size * 23,
-  mobile: $base-font-size * 30,
-  tablet: $base-font-size * 46,
-  desktop: $base-font-size * 61,
-  wide: $base-font-size * 81,
+  mobile: $mobile,
+  tablet: $tablet,
+  desktop: $desktop,
+  wide: $wide,
 );
 
 @import '^/node_modules/sass-mq';
@@ -47,12 +48,6 @@ $mqBreakpoints: (
 
 @mixin portrait() {
   @include orientation($orientation: 'portrait') {
-    @content;
-  }
-}
-
-@mixin minimalscreen($props...) {
-  @include query($until: narrow, $props...) {
     @content;
   }
 }

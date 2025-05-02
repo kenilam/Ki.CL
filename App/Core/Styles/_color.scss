@@ -1,11 +1,18 @@
 @function tint($color, $percentage) {
-  @return mix(#ffffff, $color, $percentage + 0%);
+  @return color.mix(#ffffff, $color, $percentage + 0%);
 }
 
 @function shade($color, $percentage) {
-  @return mix(#000000, $color, $percentage + 0%);
+  @return color.mix(#000000, $color, $percentage + 0%);
 }
 
+$black-pure: #000;
+$white-pure: #fff;
 $black: #141414;
 $grey: #bcbcbc;
-$white: #f1efe9;
+$white: #f4f5f2;
+$blue: #1d88bd;
+$green: #0dae6b;
+$orange: #d97904;
+$red: #f27777;
+$yellow: #e8cf54;

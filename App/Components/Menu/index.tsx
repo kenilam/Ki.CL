@@ -4,15 +4,28 @@ import React, { PropsWithChildren, PropsWithRef } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { ListItem } from '@/Components';
-
-// Spec
-import * as Spec from './Spec';
+import { Layout, ListItem } from '@/Components';
 
 // Styles
 import './Styles.scss';
 
+// Spec
+import * as Spec from './Spec';
+
 const CLASS_NAME = 'kicl--components--menu';
+
+const GAPS: Spec.Props['gap'][] = [
+  'extreme',
+  'narrow',
+  'narrower',
+  'narrowest',
+  'normal',
+  'wide',
+  'wider',
+  'widest',
+];
+
+const DEFAULT_GAP: Spec.Props['gap'] = 'normal';
 
 const Menu = React.forwardRef<
   HTMLMenuElement,
@@ -21,38 +34,56 @@ const Menu = React.forwardRef<
   (
     {
       children,
-      className: origin = '',
-      dense = false,
-      orientation = 'horizontal',
+      className: _className = '',
+
+      alignContent,
+      alignItems,
+      autoFlow = 'column',
+      frames,
+      fullScreen,
+      gap = 'normal',
+      justifyContent,
+      justifyItems,
+      wrap,
+
       ...rest
     },
     ref
   ) => {
-    const className = classNames(
-      CLASS_NAME,
-      {
-        [`${CLASS_NAME}--dense`]: dense,
-        [`${CLASS_NAME}--orientation--${orientation}`]: orientation,
-      },
-      origin
-    );
+    if (typeof gap !== 'boolean' && ![...GAPS, undefined].includes(gap)) {
+      gap = DEFAULT_GAP;
+    }
+
+    const className = classNames(CLASS_NAME, _className);
 
     return (
-      <menu {...rest} className={className} ref={ref}>
-        {React.Children.toArray(children).map((child) => {
-          let key = String(child);
+      <Layout
+        alignContent={alignContent}
+        alignItems={alignItems}
+        autoFlow={autoFlow}
+        frames={frames}
+        fullScreen={fullScreen}
+        gap={gap}
+        justifyContent={justifyContent}
+        justifyItems={justifyItems}
+        wrap={wrap}
+      >
+        <menu {...rest} className={className} ref={ref}>
+          {React.Children.toArray(children).map((child) => {
+            let key = String(child);
 
-          if (React.isValidElement(child)) {
-            key = String(child.key);
-          }
+            if (React.isValidElement(child)) {
+              key = String(child.key);
+            }
 
-          return (
-            <ListItem className={`${CLASS_NAME}--list-item`} key={key}>
-              {child}
-            </ListItem>
-          );
-        })}
-      </menu>
+            return (
+              <ListItem className={`${CLASS_NAME}--list-item`} key={key}>
+                {child}
+              </ListItem>
+            );
+          })}
+        </menu>
+      </Layout>
     );
   }
 );

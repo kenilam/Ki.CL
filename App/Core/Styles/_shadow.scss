@@ -1,48 +1,109 @@
 @use 'sass:color';
+@use 'sass:math';
 
 $shadow-alpha: 0.2;
 $shadow-color: #000;
-$shadow-distant: 1px;
+$shadow-distant: 0.7rem;
 $shadow-distant-negative: calc(-1 * $shadow-distant / 2);
-$shadow-rgba: rgba(
-  color.red($shadow-color),
-  color.green($shadow-color),
-  color.blue($shadow-color),
-  $shadow-alpha
-);
+$shadow-rgba: #{rgba($shadow-color, $shadow-alpha)};
 
 @mixin box-shadow($property...) {
   box-shadow: $property;
 }
 
-@mixin shadow-center() {
+@mixin box-shadow-center() {
   @include box-shadow(0 1px $shadow-distant $shadow-distant $shadow-rgba);
 }
 
-@mixin shadow-left() {
+@mixin box-shadow-left() {
   @include box-shadow(
     $shadow-distant-negative 1px $shadow-distant $shadow-distant $shadow-rgba
   );
 }
 
-@mixin shadow-right() {
+@mixin box-shadow-right() {
   @include box-shadow(
-    ($shadow-distant / 2) 1px $shadow-distant $shadow-distant $shadow-rgba
+    math.div($shadow-distant, 2) 1px $shadow-distant $shadow-distant
+      $shadow-rgba
   );
 }
 
-@mixin shadow-top() {
+@mixin box-shadow-top() {
   @include box-shadow(
     0 $shadow-distant-negative $shadow-distant $shadow-distant $shadow-rgba
   );
 }
 
-@mixin shadow-bottom() {
+@mixin box-shadow-bottom() {
   @include box-shadow(
-    0 ($shadow-distant / 2) $shadow-distant $shadow-distant $shadow-rgba
+    0 math.div($shadow-distant, 2) $shadow-distant $shadow-distant $shadow-rgba
   );
 }
 
-@mixin shadow-none() {
+@mixin box-shadow-none() {
   @include box-shadow(0 0 0 0 transparent);
+}
+
+@mixin text-shadow($property...) {
+  text-shadow: $property;
+}
+
+@mixin text-shadow-center() {
+  @include text-shadow(0 0 $shadow-distant $shadow-rgba);
+}
+
+@mixin text-shadow-left() {
+  @include text-shadow($shadow-distant-negative 0 $shadow-distant $shadow-rgba);
+}
+
+@mixin text-shadow-right() {
+  @include text-shadow(
+    math.div($shadow-distant, 2) 0 $shadow-distant $shadow-rgba
+  );
+}
+
+@mixin text-shadow-top() {
+  @include text-shadow(0 $shadow-distant-negative $shadow-distant $shadow-rgba);
+}
+
+@mixin text-shadow-bottom() {
+  @include text-shadow(
+    0 math.div($shadow-distant, 2) $shadow-distant $shadow-rgba
+  );
+}
+
+@mixin text-shadow-none() {
+  @include text-shadow(0 0 0 0 transparent);
+}
+
+@mixin drop-shadow($property...) {
+  filter: drop-shadow($property);
+}
+
+@mixin drop-shadow-center() {
+  @include drop-shadow(0 0 $shadow-distant $shadow-rgba);
+}
+
+@mixin drop-shadow-left() {
+  @include drop-shadow($shadow-distant-negative 0 $shadow-distant $shadow-rgba);
+}
+
+@mixin drop-shadow-right() {
+  @include drop-shadow(
+    math.div($shadow-distant, 2) 0 $shadow-distant $shadow-rgba
+  );
+}
+
+@mixin drop-shadow-top() {
+  @include drop-shadow(0 $shadow-distant-negative $shadow-distant $shadow-rgba);
+}
+
+@mixin drop-shadow-bottom() {
+  @include drop-shadow(
+    0 math.div($shadow-distant, 2) $shadow-distant $shadow-rgba
+  );
+}
+
+@mixin drop-shadow-none() {
+  @include drop-shadow(0 0 0 0 transparent);
 }

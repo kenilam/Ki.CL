@@ -1,0 +1,106 @@
+@mixin make-layout($grid...) {
+  $class: '.kicl-layout';
+  $frames: '';
+
+  @each $value in $grid {
+    $class: '#{$class}--#{$value}';
+    $frames: '#{$frames} #{$value}';
+  }
+
+  .kicl-layout {
+    &#{$class} {
+      --kicl-layout--grid-frames: #{$frames};
+
+      &.kicl-layout--wrap {
+        @if list.length($grid) == 3 {
+          > *:nth-child(3n + 1) {
+            grid-column-end: 2;
+            grid-column-start: 1;
+          }
+
+          > *:nth-child(3n + 2) {
+            grid-column-end: 3;
+            grid-column-start: 2;
+          }
+
+          > *:nth-child(3n + 3) {
+            grid-column-end: 4;
+            grid-column-start: 3;
+          }
+
+          > *:nth-child(odd),
+          > *:nth-child(even) {
+            @include mobile {
+              grid-column-end: unset;
+              grid-column-start: unset;
+            }
+          }
+        }
+
+        @if list.length($grid) == 4 {
+          > *:nth-child(4n + 1) {
+            grid-column-end: 2;
+            grid-column-start: 1;
+          }
+
+          > *:nth-child(4n + 2) {
+            grid-column-end: 3;
+            grid-column-start: 2;
+          }
+
+          > *:nth-child(4n + 3) {
+            grid-column-end: 4;
+            grid-column-start: 3;
+          }
+
+          > *:nth-child(4n + 4) {
+            grid-column-end: 5;
+            grid-column-start: 4;
+          }
+
+          > *:nth-child(odd) {
+            @include tablet {
+              grid-column-end: 2;
+              grid-column-start: 1;
+            }
+          }
+
+          > *:nth-child(even) {
+            @include tablet {
+              grid-column-end: 3;
+              grid-column-start: 2;
+            }
+          }
+
+          > *:nth-child(odd),
+          > *:nth-child(even) {
+            @include mobile {
+              grid-column-end: unset;
+              grid-column-start: unset;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin make-layout-gap($size: '') {
+  $gap: '';
+
+  @if $size {
+    $gap: '--kicl-gutter-#{$size}';
+  } @else {
+    $gap: '--kicl-gutter';
+  }
+
+  @if $size == 'normal' {
+    $gap: '--kicl-gutter';
+  }
+
+  .kicl-layout {
+    &.kicl-layout--gap--#{$size} {
+      --kicl-layout--gap: var(#{$gap});
+    }
+  }
+}

@@ -1,0 +1,13 @@
+:root {
+  --kicl--widgets--schedular--header--padding-inline: var(--kicl-gutter-wide);
+
+  @include mobile {
+    --kicl--widgets--schedular--header--padding-inline: var(
+      --kicl-gutter-widest
+    );
+  }
+}
+
+.kicl--widgets--schedular--header {
+  padding-inline: var(--kicl--widgets--schedular--header--padding-inline);
+}

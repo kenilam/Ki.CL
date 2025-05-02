@@ -1,0 +1,31 @@
+:root {
+  --kicl--components--animation--transition-delay: 0s;
+  --kicl--components--animation--transition-duration: var(
+    --kicl-transition-duration-slowest
+  );
+  --kicl--components--animation--transition-property: none;
+  --kicl--components--animation--transition-timing-function: var(
+    --kicl-ease-expo-out
+  );
+}
+
+.kicl--components--animation {
+  &.kicl--components--animation--appear-active,
+  &.kicl--components--animation--enter-active,
+  &.kicl--components--animation--exit-active,
+  &.kicl--components--animation--appear-done,
+  &.kicl--components--animation--enter-done,
+  &.kicl--components--animation--exit-done {
+    transition-delay: var(--kicl--components--animation--transition-delay);
+    transition-duration: var(
+      --kicl--components--animation--transition-duration
+    );
+    transition-property: var(
+      --kicl--components--animation--transition-property
+    );
+    transition-timing-function: var(
+      --kicl--components--animation--transition-timing-function
+    );
+    will-change: var(--kicl--components--animation--transition-property);
+  }
+}

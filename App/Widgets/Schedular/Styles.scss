@@ -1,0 +1,87 @@
+.kicl--widgets--schedular {
+  position: relative;
+  text-align: center;
+
+  .react-datepicker {
+    &__day-names,
+    &__header,
+    &__month,
+    &__month-container,
+    &__week {
+      display: grid;
+    }
+
+    &__month,
+    &__month-container,
+    &__week {
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      justify-items: center;
+    }
+
+    &__day-names,
+    &__month,
+    &__week {
+      gap: var(--kicl-gutter-narrow);
+    }
+
+    &__header,
+    &__month-container {
+      gap: var(--kicl-gutter);
+    }
+
+    &__time-list-item--disabled {
+      block-size: 0;
+      inline-size: 0;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+    }
+
+    &__aria-live {
+      position: absolute;
+      opacity: 0;
+      inline-size: 0;
+      block-size: 0;
+      overflow: hidden;
+    }
+
+    &__day--disabled {
+      pointer-events: none;
+    }
+
+    &__day-names {
+      grid-auto-flow: column;
+    }
+
+    &__day-name {
+      grid-auto-flow: column;
+    }
+
+    &__header {
+      inline-size: 100%;
+      position: relative;
+    }
+
+    &__month {
+      grid-auto-flow: row;
+    }
+
+    &__navigation {
+      position: absolute;
+
+      &--previous {
+        inset-inline-start: 0;
+      }
+
+      &--next {
+        inset-inline-end: 0;
+      }
+    }
+
+    &__week {
+      grid-auto-flow: column;
+    }
+  }
+}

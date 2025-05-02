@@ -2,27 +2,52 @@ import React, { useEffect } from 'react';
 
 // Routes
 import Router, {
-  useLocation,
-  ErrorElement as ERROR_ELEMENT,
-  Routes,
+  ErrorElement,
+  HttpStatus,
+  Outlet,
   Route,
+  ScrollRestoration,
+  useLocation,
 } from '@/Router';
 
-// Animation
-import { ANIMATION_STYLES, AnimationGroup } from '@/Animation';
-
 // Widgets
-import { GlobalHeader } from '@/Widgets';
+import { GlobalHeader, GlobalHeaderProvider } from '@/Widgets';
+
+// Components
+import { Layout } from '@/Components';
+
+// Hooks
+import { useResponsive } from '@/Hooks';
 
 // Views
-import About from './About';
 import Home from './Home';
-import Works from './Works';
 
 // Styles
 import './Styles.scss';
 
-const Layout: React.FunctionComponent = () => {
+const Contents: React.FunctionComponent = () => {
+  return (
+    <>
+      <ScrollRestoration />
+      <GlobalHeader />
+      <Layout
+        alignContent='start'
+        alignItems='start'
+        gap='none'
+        justifyContent='stretch'
+        justifyItems='center'
+      >
+        <main className='kicl--view'>
+          <Outlet />
+        </main>
+      </Layout>
+    </>
+  );
+};
+
+const Element: React.FunctionComponent = () => {
+  useResponsive();
+
   const location = useLocation();
 
   useEffect(() => {
@@ -36,47 +61,25 @@ const Layout: React.FunctionComponent = () => {
 
     root.dataset.routes = routes.join('.');
 
-    document.title = `Ki.CL | ${routes.join(' | ').toUpperCase()}`;
+    document.title = `Ki.CL | ${routes.join(' | ')}`;
   });
 
-  const [, animationKey] = location.pathname.split('/');
-
   return (
-    <>
-      <GlobalHeader />
-      <main className='kicl--view'>
-        <AnimationGroup
-          animationKey={animationKey}
-          animationStyle={ANIMATION_STYLES['zoom-out']}
-        >
-          <Routes location={location}>
-            {About}
-            {Home}
-            {Works}
-          </Routes>
-        </AnimationGroup>
-      </main>
-    </>
+    <GlobalHeaderProvider show={false}>
+      <Contents />
+    </GlobalHeaderProvider>
   );
 };
 
-const ErrorElement: React.FunctionComponent = () => {
-  return (
-    <>
-      <GlobalHeader />
-      <main className='kicl--view'>
-        <ERROR_ELEMENT />
-      </main>
-    </>
-  );
-};
-
-const App: React.FunctionComponent = () => {
+const Views: React.FunctionComponent = () => {
   return (
     <Router>
-      <Route path='/' errorElement={<ErrorElement />} element={<Layout />} />
+      <Route path='*' errorElement={<ErrorElement />} element={<Element />}>
+        <Route path='*' element={<HttpStatus.Status404 />} />
+        {Home}
+      </Route>
     </Router>
   );
 };
 
-export default App;
+export default Views;
