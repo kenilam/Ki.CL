@@ -1,0 +1,317 @@
+.kicl-layout {
+  --kicl-layout--auto-flow: initial;
+  --kicl-layout--display: grid;
+  --kicl-layout--full-screen--max-inline-size: 100vw;
+  --kicl-layout--gap: 0;
+  --kicl-layout--grid-frames: repeat(1fr, 12);
+  --kicl-layout--inline-size: 100%;
+  --kicl-layout--margin: initial;
+
+  display: var(--kicl-layout--display);
+  gap: var(--kicl-layout--gap);
+  inline-size: var(--kicl-layout--inline-size);
+  max-inline-size: var(--kicl-layout--full-screen--max-inline-size);
+  margin: var(--kicl-layout--margin);
+
+  &.kicl-layout--display {
+    &--inline-grid {
+      --kicl-layout--display: inline-grid;
+      --kicl-layout--inline-size: auto;
+    }
+
+    &--grid {
+      --kicl-layout--display: grid;
+    }
+
+    &--flex {
+      --kicl-layout--display: flex;
+
+      flex-direction: var(--kicl-layout--auto-flow);
+    }
+  }
+
+  &.kicl-layout--row {
+    --kicl-layout--auto-flow: row;
+  }
+
+  &.kicl-layout--column.kicl-layout--column {
+    --kicl-layout--auto-flow: column;
+  }
+
+  &.kicl-layout--display--grid,
+  &.kicl-layout--display--inline-grid {
+    grid-auto-flow: var(--kicl-layout--auto-flow);
+
+    &.kicl-layout--row {
+      grid-template-columns: unset;
+      grid-template-rows: var(--kicl-layout--grid-frames);
+    }
+
+    &.kicl-layout--column.kicl-layout--column {
+      grid-template-columns: var(--kicl-layout--grid-frames);
+      grid-template-rows: unset;
+
+      @include tablet {
+        --kicl-layout--auto-flow: column;
+      }
+    }
+
+    &.kicl-layout--dense.kicl-layout--dense {
+      --kicl-layout--auto-flow: dense;
+    }
+
+    &.kicl-layout--revert.kicl-layout--revert {
+      --kicl-layout--auto-flow: revert;
+    }
+  }
+
+  &:not(.kicl-layout--full-screen) {
+    --kicl-layout--full-screen--max-inline-size: auto;
+  }
+
+  &#{&}--align-content {
+    @mixin align-content($justify) {
+      &--#{$justify} {
+        align-content: #{$justify};
+      }
+    }
+
+    @include align-content('baseline');
+    @include align-content('center');
+    @include align-content('end');
+    @include align-content('revert');
+    @include align-content('start');
+    @include align-content('stretch');
+    @include align-content('space-around');
+    @include align-content('space-between');
+    @include align-content('space-evenly');
+  }
+
+  &#{&}--align-items {
+    @mixin align-items($justify) {
+      &--#{$justify} {
+        align-items: #{$justify};
+      }
+    }
+
+    @include align-items('baseline');
+    @include align-items('center');
+    @include align-items('end');
+    @include align-items('revert');
+    @include align-items('start');
+    @include align-items('stretch');
+  }
+
+  &#{&}--justify-items {
+    @mixin justify-items($justify) {
+      &--#{$justify} {
+        justify-items: #{$justify};
+      }
+    }
+
+    @include justify-items('baseline');
+    @include justify-items('center');
+    @include justify-items('end');
+    @include justify-items('revert');
+    @include justify-items('start');
+    @include justify-items('stretch');
+  }
+
+  &#{&}--justify-content {
+    @mixin justify-content($justify) {
+      &--#{$justify} {
+        justify-content: #{$justify};
+      }
+    }
+
+    @include justify-content('baseline');
+    @include justify-content('center');
+    @include justify-content('end');
+    @include justify-content('revert');
+    @include justify-content('start');
+    @include justify-content('stretch');
+    @include justify-content('space-around');
+    @include justify-content('space-between');
+    @include justify-content('space-evenly');
+  }
+}
+
+@include make-layout-gap('none');
+@include make-layout-gap('narrow');
+@include make-layout-gap('narrower');
+@include make-layout-gap('narrowest');
+@include make-layout-gap('normal');
+@include make-layout-gap('wide');
+@include make-layout-gap('wider');
+@include make-layout-gap('widest');
+@include make-layout-gap('extreme');
+@include make-layout(auto, max-content);
+@include make-layout(1fr, max-content);
+@include make-layout(auto, min-content);
+@include make-layout(1fr, min-content);
+@include make-layout(max-content, auto);
+@include make-layout(max-content, 1fr);
+@include make-layout(min-content, auto);
+@include make-layout(min-content, 1fr);
+@include make-layout(auto, max-content, max-content);
+@include make-layout(max-content, auto, max-content);
+@include make-layout(max-content, max-content, auto);
+@include make-layout(auto, min-content, min-content);
+@include make-layout(min-content, auto, min-content);
+@include make-layout(min-content, min-content, auto);
+@include make-layout(max-content, auto, auto);
+@include make-layout(auto, max-content, auto);
+@include make-layout(auto, auto, max-content);
+@include make-layout(min-content, auto, auto);
+@include make-layout(auto, min-content, auto);
+@include make-layout(auto, auto, min-content);
+@include make-layout(1fr, 1fr);
+@include make-layout(1fr, 1fr, 1fr);
+@include make-layout(1fr, 1fr, 1fr, 1fr);
+@include make-layout(1fr, 11fr);
+@include make-layout(2fr, 10fr);
+@include make-layout(3fr, 9fr);
+@include make-layout(4fr, 8fr);
+@include make-layout(5fr, 7fr);
+@include make-layout(6fr, 6fr);
+@include make-layout(7fr, 5fr);
+@include make-layout(8fr, 4fr);
+@include make-layout(9fr, 3fr);
+@include make-layout(10fr, 2fr);
+@include make-layout(11fr, 1fr);
+@include make-layout(1fr, 1fr, 10fr);
+@include make-layout(1fr, 2fr, 9fr);
+@include make-layout(1fr, 3fr, 8fr);
+@include make-layout(1fr, 4fr, 7fr);
+@include make-layout(1fr, 5fr, 6fr);
+@include make-layout(1fr, 6fr, 5fr);
+@include make-layout(1fr, 7fr, 4fr);
+@include make-layout(1fr, 8fr, 3fr);
+@include make-layout(1fr, 9fr, 2fr);
+@include make-layout(1fr, 10fr, 1fr);
+@include make-layout(2fr, 1fr, 9fr);
+@include make-layout(2fr, 2fr, 8fr);
+@include make-layout(2fr, 3fr, 7fr);
+@include make-layout(2fr, 4fr, 6fr);
+@include make-layout(2fr, 5fr, 5fr);
+@include make-layout(2fr, 6fr, 4fr);
+@include make-layout(2fr, 7fr, 3fr);
+@include make-layout(2fr, 8fr, 2fr);
+@include make-layout(2fr, 9fr, 1fr);
+@include make-layout(3fr, 1fr, 8fr);
+@include make-layout(3fr, 2fr, 7fr);
+@include make-layout(3fr, 3fr, 6fr);
+@include make-layout(3fr, 4fr, 5fr);
+@include make-layout(3fr, 5fr, 4fr);
+@include make-layout(3fr, 6fr, 3fr);
+@include make-layout(3fr, 7fr, 2fr);
+@include make-layout(3fr, 8fr, 1fr);
+@include make-layout(4fr, 1fr, 7fr);
+@include make-layout(4fr, 2fr, 6fr);
+@include make-layout(4fr, 3fr, 5fr);
+@include make-layout(4fr, 4fr, 4fr);
+@include make-layout(4fr, 5fr, 3fr);
+@include make-layout(4fr, 6fr, 2fr);
+@include make-layout(4fr, 7fr, 1fr);
+@include make-layout(5fr, 1fr, 6fr);
+@include make-layout(5fr, 2fr, 5fr);
+@include make-layout(5fr, 3fr, 4fr);
+@include make-layout(5fr, 4fr, 3fr);
+@include make-layout(5fr, 5fr, 2fr);
+@include make-layout(5fr, 6fr, 1fr);
+@include make-layout(6fr, 1fr, 5fr);
+@include make-layout(6fr, 2fr, 4fr);
+@include make-layout(6fr, 3fr, 3fr);
+@include make-layout(6fr, 4fr, 2fr);
+@include make-layout(6fr, 5fr, 1fr);
+@include make-layout(7fr, 1fr, 4fr);
+@include make-layout(7fr, 2fr, 3fr);
+@include make-layout(7fr, 3fr, 2fr);
+@include make-layout(7fr, 4fr, 1fr);
+@include make-layout(8fr, 1fr, 3fr);
+@include make-layout(8fr, 2fr, 2fr);
+@include make-layout(8fr, 3fr, 1fr);
+@include make-layout(9fr, 1fr, 2fr);
+@include make-layout(9fr, 2fr, 1fr);
+@include make-layout(10fr, 1fr, 1fr);
+@include make-layout(9fr, 1fr, 1fr, 1fr);
+@include make-layout(8fr, 2fr, 1fr, 1fr);
+@include make-layout(8fr, 1fr, 2fr, 1fr);
+@include make-layout(8fr, 1fr, 1fr, 2fr);
+@include make-layout(7fr, 3fr, 1fr, 1fr);
+@include make-layout(7fr, 2fr, 2fr, 1fr);
+@include make-layout(7fr, 1fr, 3fr, 1fr);
+@include make-layout(7fr, 1fr, 2fr, 2fr);
+@include make-layout(7fr, 1fr, 1fr, 3fr);
+@include make-layout(6fr, 4fr, 1fr, 1fr);
+@include make-layout(6fr, 3fr, 2fr, 1fr);
+@include make-layout(6fr, 2fr, 3fr, 1fr);
+@include make-layout(6fr, 1fr, 4fr, 1fr);
+@include make-layout(6fr, 1fr, 3fr, 2fr);
+@include make-layout(6fr, 1fr, 2fr, 3fr);
+@include make-layout(6fr, 1fr, 1fr, 4fr);
+@include make-layout(5fr, 5fr, 1fr, 1fr);
+@include make-layout(5fr, 4fr, 2fr, 1fr);
+@include make-layout(5fr, 3fr, 3fr, 1fr);
+@include make-layout(5fr, 2fr, 4fr, 1fr);
+@include make-layout(5fr, 1fr, 5fr, 1fr);
+@include make-layout(5fr, 1fr, 4fr, 2fr);
+@include make-layout(5fr, 1fr, 3fr, 3fr);
+@include make-layout(5fr, 1fr, 2fr, 4fr);
+@include make-layout(5fr, 1fr, 1fr, 5fr);
+@include make-layout(4fr, 6fr, 1fr, 1fr);
+@include make-layout(4fr, 5fr, 2fr, 1fr);
+@include make-layout(4fr, 4fr, 3fr, 1fr);
+@include make-layout(4fr, 3fr, 4fr, 1fr);
+@include make-layout(4fr, 2fr, 5fr, 1fr);
+@include make-layout(4fr, 1fr, 6fr, 1fr);
+@include make-layout(4fr, 1fr, 5fr, 2fr);
+@include make-layout(4fr, 1fr, 4fr, 3fr);
+@include make-layout(4fr, 1fr, 3fr, 4fr);
+@include make-layout(4fr, 1fr, 2fr, 5fr);
+@include make-layout(4fr, 1fr, 1fr, 6fr);
+@include make-layout(3fr, 3fr, 3fr, 3fr);
+@include make-layout(3fr, 7fr, 1fr, 1fr);
+@include make-layout(3fr, 6fr, 2fr, 1fr);
+@include make-layout(3fr, 5fr, 3fr, 1fr);
+@include make-layout(3fr, 4fr, 4fr, 1fr);
+@include make-layout(3fr, 3fr, 5fr, 1fr);
+@include make-layout(3fr, 2fr, 6fr, 1fr);
+@include make-layout(3fr, 1fr, 7fr, 1fr);
+@include make-layout(3fr, 1fr, 6fr, 2fr);
+@include make-layout(3fr, 1fr, 5fr, 3fr);
+@include make-layout(3fr, 1fr, 4fr, 4fr);
+@include make-layout(3fr, 1fr, 3fr, 5fr);
+@include make-layout(3fr, 1fr, 2fr, 6fr);
+@include make-layout(3fr, 1fr, 1fr, 7fr);
+@include make-layout(2fr, 8fr, 1fr, 1fr);
+@include make-layout(2fr, 7fr, 1fr, 1fr);
+@include make-layout(2fr, 6fr, 2fr, 1fr);
+@include make-layout(2fr, 5fr, 3fr, 1fr);
+@include make-layout(2fr, 4fr, 4fr, 1fr);
+@include make-layout(2fr, 3fr, 5fr, 1fr);
+@include make-layout(2fr, 2fr, 6fr, 1fr);
+@include make-layout(2fr, 1fr, 7fr, 1fr);
+@include make-layout(2fr, 1fr, 6fr, 2fr);
+@include make-layout(2fr, 1fr, 5fr, 3fr);
+@include make-layout(2fr, 1fr, 4fr, 4fr);
+@include make-layout(2fr, 1fr, 3fr, 5fr);
+@include make-layout(2fr, 1fr, 2fr, 6fr);
+@include make-layout(2fr, 1fr, 1fr, 7fr);
+@include make-layout(1fr, 9fr, 1fr, 1fr);
+@include make-layout(1fr, 8fr, 2fr, 1fr);
+@include make-layout(1fr, 7fr, 3fr, 1fr);
+@include make-layout(1fr, 6fr, 4fr, 1fr);
+@include make-layout(1fr, 5fr, 5fr, 1fr);
+@include make-layout(1fr, 4fr, 6fr, 1fr);
+@include make-layout(1fr, 3fr, 7fr, 1fr);
+@include make-layout(1fr, 2fr, 8fr, 1fr);
+@include make-layout(1fr, 1fr, 9fr, 1fr);
+@include make-layout(1fr, 1fr, 8fr, 2fr);
+@include make-layout(1fr, 1fr, 7fr, 3fr);
+@include make-layout(1fr, 1fr, 6fr, 4fr);
+@include make-layout(1fr, 1fr, 5fr, 5fr);
+@include make-layout(1fr, 1fr, 4fr, 6fr);
+@include make-layout(1fr, 1fr, 3fr, 7fr);
+@include make-layout(1fr, 1fr, 2fr, 8fr);
+@include make-layout(1fr, 1fr, 1fr, 9fr);

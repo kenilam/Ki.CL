@@ -1,31 +1,34 @@
-import { path as appRoot } from 'app-root-path';
+import appRoot from 'app-root-path';
 
 import * as nodePath from 'path';
 
 import { glob } from 'glob';
 
-import { defineConfig, splitVendorChunkPlugin, UserConfig } from 'vite';
+import { defineConfig, UserConfig } from 'vite';
 
+import checker from 'vite-plugin-checker';
 import dynamicImport from 'vite-plugin-dynamic-import';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
-import eslint from 'vite-plugin-eslint';
-// import federation from '@originjs/vite-plugin-federation';
 import inspect from 'vite-plugin-inspect';
 import mkcert from 'vite-plugin-mkcert';
 import react from '@vitejs/plugin-react';
 import stylelint from 'vite-plugin-stylelint';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { VitePluginRadar } from 'vite-plugin-radar';
 import { terser } from 'rollup-plugin-terser';
+
+import * as dotenv from 'dotenv';
+
+import { getAlias } from './Helper';
 
 import configJSON from '../app.config.json';
 import tsconfigJSON from '../tsconfig.json';
-import {
-  getAlias,
-  // getExposes,
-  getRemotes,
-} from './Helper';
 
-const CACHE_DIR = '.Caches';
+dotenv.config({ path: `${appRoot.path}/.env` });
+
+const OPEN = `https://${configJSON.host}.${configJSON.domain}:${process.env.PORT}`;
+
+console.log(OPEN);
 
 type PreviewServer = Exclude<
   UserConfig['preview'] | UserConfig['server'],
@@ -38,34 +41,68 @@ type Props = {
   config?: typeof configJSON;
   open?: Open;
   proxy?: Proxy;
-  remoteGlob?: Parameters<typeof getRemotes>[number];
   root?: string;
   tsconfig?: typeof tsconfigJSON;
 };
 
-const DEFAULT: Omit<Required<Props>, 'proxy'> = {
+const DEFAULT: Omit<Required<Props>, 'proxy' | 'open'> = {
   config: configJSON,
-  open: false,
-  remoteGlob: `${appRoot}/App/**/app.config.json`,
-  root: appRoot,
+  root: appRoot.path,
   tsconfig: tsconfigJSON,
 };
 
+console.log(process.env);
+
 const getConfig = ({
   config = DEFAULT.config,
-  open = DEFAULT.open,
-  // remoteGlob = DEFAULT.remoteGlob,
   root = DEFAULT.root,
   proxy,
   tsconfig = DEFAULT.tsconfig,
 }: Props = DEFAULT) =>
-  defineConfig((env) => {
+  defineConfig(async (env) => {
+    const plugins: UserConfig['plugins'] = [
+      dynamicImport(),
+      checker({
+        root: `${appRoot.path}/App`,
+        eslint: {
+          lintCommand: `eslint '${appRoot.path}/App/**/*.{js,jsx,ts,tsx}'`,
+          useFlatConfig: true,
+          dev: {
+            overrideConfig: {
+              fix: true,
+            },
+          },
+        },
+      }),
+      inspect(),
+      mkcert({
+        hosts: [configJSON.host, `${configJSON.host}.${configJSON.domain}`],
+      }),
+      react(),
+      stylelint({
+        build: true,
+        configBasedir: appRoot.path,
+        cwd: `${appRoot.path}`,
+        fix: true,
+        lintInWorker: false,
+        test: true,
+      }),
+      tsconfigPaths({
+        root: `${appRoot.path}/App`,
+      }),
+      VitePluginRadar({
+        // Google Analytics tag injection
+        analytics: {
+          id: String(process.env.GA_TRACKING_CODE),
+        },
+      }),
+    ];
+
     const result: ReturnType<typeof defineConfig> = {
-      assetsInclude: ['**/*.glb'],
+      assetsInclude: ['**/*.glb', '**/*.mov', '**/*.png', '**/*.md'],
       base: '/',
       build: {
-        dynamicImportVarsOptions: {},
-        cssCodeSplit: env.mode === 'development' || undefined,
+        cssCodeSplit: true,
         commonjsOptions: {
           exclude: [
             'node_modules/lodash-es/**',
@@ -80,6 +117,10 @@ const getConfig = ({
         outDir: 'build',
         reportCompressedSize: true,
         rollupOptions: {
+          external: ['reactjs-social-login'],
+          input: {
+            [config.name]: `${root}/${config.name}/index.html`,
+          },
           preserveEntrySignatures: 'allow-extension',
           plugins: [
             dynamicImportVars(),
@@ -88,16 +129,18 @@ const getConfig = ({
                 global_defs: {
                   exports: 'document',
                   module: 'document',
-                  process: '{}',
+                  process: JSON.stringify(process.env || {}),
                 },
               },
             }),
           ],
-          input: {
-            [config.name]: `${root}/${config.name}/index.html`,
-          },
           output: {
-            minifyInternalExports: false,
+            manualChunks(id) {
+              if (id.includes('node_modules')) {
+                return 'vendor';
+              }
+            },
+            minifyInternalExports: env.mode === 'production',
             preserveModules: false,
             preserveModulesRoot: `${root}/${config.name}`,
             sourcemap: true,
@@ -116,96 +159,81 @@ const getConfig = ({
         },
         write: true,
       },
-      cacheDir: CACHE_DIR,
       clearScreen: false,
       css: {
         devSourcemap: true,
+        modules: {
+          scopeBehaviour: 'global',
+          exportGlobals: true,
+        },
         preprocessorOptions: {
           scss: {
-            additionalData: glob
-              .sync(`${appRoot}/App/**/_*.scss`, {
-                ignore: [`${appRoot}/node_modules/**/*.scss`],
-              })
-              .map((file) => {
-                console.log(`>>> ${file}`);
-                const basename = nodePath.basename(file);
-                const dirname = nodePath
-                  .dirname(file)
-                  .replace(`${appRoot}/App`, '@');
+            additionalData(source: string, filename: string) {
+              const basename = nodePath.basename(filename);
+              const extname = nodePath.extname(filename);
 
-                return `@import '${dirname}/${basename}';`;
-              })
-              .join(' '),
+              if (basename.startsWith('_') || extname !== '.scss') {
+                return source;
+              }
+
+              const imports = glob
+                .sync(`${appRoot.path}/App/**/_*.scss`.replace(/\\/g, '/'), {
+                  ignore: [
+                    `${appRoot.path}/node_modules/**/*.scss`.replace(
+                      /\\/g,
+                      '/'
+                    ),
+                  ],
+                })
+                .map((file) => {
+                  const basename = nodePath.basename(file);
+                  const dirname = nodePath
+                    .dirname(file)
+                    .replace(`${appRoot.path}/App`, '@');
+
+                  return `@import '${dirname}/${basename}';`;
+                })
+                .join(' ');
+
+              const content = `
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:math';
+${imports}
+${source}`;
+
+              return content;
+            },
           },
         },
       },
-      envDir: appRoot,
+      envDir: appRoot.path,
       esbuild: {
         sourcemap: true,
         target: ['esnext'],
         treeShaking: true,
         logOverride: { 'this-is-undefined-in-esm': 'silent' },
-        minifyWhitespace: false,
-        minifyIdentifiers: false,
+        minifyWhitespace: env.mode === 'production',
+        minifyIdentifiers: env.mode === 'production',
       },
       define: {
         'process.env': process.env,
-        'process.env.NODE_ENV': JSON.stringify(env.mode),
       },
       logLevel: 'error',
-      optimizeDeps: {
-        esbuildOptions: {
-          keepNames: true,
-        },
-      },
-      plugins: [
-        dynamicImport(),
-        eslint({
-          cache: true,
-          failOnError: true,
-          failOnWarning: true,
-          emitError: true,
-          emitWarning: true,
-          fix: true,
-          exclude: ['**/node_modules/**', '**/Prototype/**'],
-        }),
-        // federation({
-        //   name: config.name,
-        //   exposes: getExposes({ config, root }),
-        //   remotes: getRemotes(remoteGlob),
-        // }),
-        inspect(),
-        mkcert(),
-        react({
-          jsxRuntime: 'classic',
-        }),
-        splitVendorChunkPlugin(),
-        stylelint({
-          cache: true,
-          cacheLocation: `${root}/${config.name}/.Caches`,
-          emitError: true,
-          emitErrorAsWarning: false,
-          emitWarning: true,
-          emitWarningAsError: false,
-        }),
-        tsconfigPaths({
-          root: appRoot,
-        }),
-      ],
+      plugins,
       preview: {
-        open,
-        port: config.port,
+        open: OPEN,
+        port: Number(process.env.PORT),
         proxy,
       },
-      publicDir: 'Public',
+      publicDir: './Public',
       resolve: {
         alias: getAlias(tsconfig),
       },
       server: {
         hmr: true,
-        https: true,
-        open,
-        port: config.port,
+        open: OPEN,
+        port: Number(process.env.PORT),
         proxy,
         strictPort: true,
         watch: {

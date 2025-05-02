@@ -1,3 +1,3 @@
 import { HeadingProps } from '@/Components';
 
-export type Props = HeadingProps;
+export type Props = Omit<HeadingProps, 'children'>;

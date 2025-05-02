@@ -1,8 +1,8 @@
+import appRoot from 'app-root-path';
+
 import { UserConfig } from 'vite';
 
-import { path as root } from 'app-root-path';
-
-import Fixtures from './Fixtures';
+import Env from './Env';
 
 import { getConfig } from './.Client';
 
@@ -10,12 +10,14 @@ type Config = Exclude<UserConfig['preview'] | UserConfig['server'], undefined>;
 
 let proxy: Config['proxy'] = {};
 
-Object.values({ ...Fixtures }).forEach((config) => {
-  proxy = { ...config.proxy };
+Object.values({ ...Env }).forEach((config) => {
+  proxy = {
+    ...proxy,
+    ...config.proxy,
+  };
 });
 
 export default getConfig({
-  open: true,
   proxy,
-  root,
+  root: appRoot.path,
 });

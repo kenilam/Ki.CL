@@ -1,4 +1,4 @@
-import { path as appRoot } from 'app-root-path';
+import appRoot from 'app-root-path';
 
 import { AliasOptions } from 'vite';
 
@@ -12,15 +12,15 @@ const getAlias = (config: typeof tsconfig) => {
 
   const { compilerOptions } = config;
 
-  type Paths = typeof compilerOptions.paths;
-
   const { paths } = compilerOptions;
 
   Object.keys(compilerOptions.paths).forEach((name) => {
     const find = name.replace('/*', '');
 
     const path = paths[name]
-      .map((path) => `${appRoot}/${path.replace('/*', '').replace('*', '')}`)
+      .map(
+        (path) => `${appRoot.path}/${path.replace('/*', '').replace('*', '')}`
+      )
       .join(',');
 
     alias[find] = path;

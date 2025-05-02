@@ -1,21 +1,3 @@
 .kicl--components--menu {
-  display: grid;
-
-  &:not(.kicl--components--menu--dense) {
-    gap: var(--kicl-gutter);
-  }
-
-  &--orientation {
-    &--horizontal {
-      grid-auto-flow: column;
-      justify-content: start;
-      justify-items: center;
-    }
-
-    &--vertical {
-      align-content: start;
-      align-items: center;
-      grid-auto-flow: row;
-    }
-  }
+  inline-size: auto;
 }

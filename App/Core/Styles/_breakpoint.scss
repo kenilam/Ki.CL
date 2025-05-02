@@ -1,0 +1,59 @@
+$narrow: $base-font-size * 22;
+$mobile: $base-font-size * 30;
+$tablet: $base-font-size * 46;
+$desktop: $base-font-size * 61;
+$wide: $base-font-size * 81;
+$wider: $base-font-size * 90;
+
+@use '@sass-collective/breakpoint' with (
+  $screens: (
+    'xs': $narrow,
+    'sm': $mobile,
+    'md': $tablet,
+    'lg': $desktop,
+    'xl': $wide,
+    '2xl': $wider,
+  )
+);
+
+@mixin query($props...) {
+  @include breakpoint.only($props...) {
+    @content;
+  }
+}
+
+@mixin narrow {
+  @include query(xs) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @include query(sm) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include query(md) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include query(lg) {
+    @content;
+  }
+}
+
+@mixin wide {
+  @include query(xl) {
+    @content;
+  }
+}
+
+@mixin wider {
+  @include query(2xl) {
+    @content;
+  }
+}

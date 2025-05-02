@@ -1,6 +1,5 @@
 {
   "editor.tabSize": 2,
-  "cSpell.words": [
-    "kicl"
-  ]
+  "cSpell.words": ["kicl", "hashify", "rehype", "Swiper", "Upsert"],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
