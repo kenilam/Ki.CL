@@ -176,7 +176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-module-imports@npm:^7.24.7, @babel/helper-module-imports@npm:^7.27.1":
+"@babel/helper-module-imports@npm:^7.27.1":
   version: 7.27.1
   resolution: "@babel/helper-module-imports@npm:7.27.1"
   dependencies:
@@ -1285,19 +1285,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-runtime@npm:7.24.7":
-  version: 7.24.7
-  resolution: "@babel/plugin-transform-runtime@npm:7.24.7"
+"@babel/plugin-transform-runtime@npm:7.27.1":
+  version: 7.27.1
+  resolution: "@babel/plugin-transform-runtime@npm:7.27.1"
   dependencies:
-    "@babel/helper-module-imports": "npm:^7.24.7"
-    "@babel/helper-plugin-utils": "npm:^7.24.7"
+    "@babel/helper-module-imports": "npm:^7.27.1"
+    "@babel/helper-plugin-utils": "npm:^7.27.1"
     babel-plugin-polyfill-corejs2: "npm:^0.4.10"
-    babel-plugin-polyfill-corejs3: "npm:^0.10.1"
+    babel-plugin-polyfill-corejs3: "npm:^0.11.0"
     babel-plugin-polyfill-regenerator: "npm:^0.6.1"
     semver: "npm:^6.3.1"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: b879477b1430c890c8c6c9769c94f1f5c8a540ad7ec44971a354efdeab5c8cd45598f6eaaeb98adf740bc7d69d1db30480ad62d525ee866c81190f8341572526
+  checksum: 3a8f866a58dc44216e12b7237289a82176f26ad0d875a33ea150b25712967dac8e165e50dc27ef7030c9792b3519142f99bef4b5b7fa8cabb397851348de6cf1
   languageName: node
   linkType: hard
 
@@ -3392,16 +3392,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-oauth/google@npm:0.12.1":
-  version: 0.12.1
-  resolution: "@react-oauth/google@npm:0.12.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 78c3ce71b6c27f8b6cb0e143546387c1d1dd0c5636c78f8f49a1c478362594551c773182b1c2944878436e123f08fa0d185b83581e75d9274207b4a9ebf1d241
-  languageName: node
-  linkType: hard
-
 "@react-spring/animated@npm:~9.7.5":
   version: 9.7.5
   resolution: "@react-spring/animated@npm:9.7.5"
@@ -5345,52 +5335,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.apple@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Apple"
-  dependencies:
-    react-apple-signin-auth: "npm:^1.1.0"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant.google@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant/Google"
-  dependencies:
-    "@react-oauth/google": "npm:0.12.1"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in.variant@workspace:App/Views/Authentication/Contents/Form/SocialSignIn/Variant"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form.social.sign.in@workspace:App/Views/Authentication/Contents/Form/SocialSignIn"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents.form@workspace:App/Views/Authentication/Contents/Form"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication.contents@workspace:App/Views/Authentication/Contents":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication.contents@workspace:App/Views/Authentication/Contents"
-  languageName: unknown
-  linkType: soft
-
-"app.views.authentication@workspace:App/Views/Authentication":
-  version: 0.0.0-use.local
-  resolution: "app.views.authentication@workspace:App/Views/Authentication"
-  languageName: unknown
-  linkType: soft
-
 "app.views@workspace:App/Views":
   version: 0.0.0-use.local
   resolution: "app.views@workspace:App/Views"
@@ -5900,7 +5844,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-polyfill-corejs3@npm:^0.10.1, babel-plugin-polyfill-corejs3@npm:^0.10.4":
+"babel-plugin-polyfill-corejs3@npm:^0.10.4":
   version: 0.10.6
   resolution: "babel-plugin-polyfill-corejs3@npm:0.10.6"
   dependencies:
@@ -12024,7 +11968,7 @@ __metadata:
     "@babel/plugin-proposal-private-methods": "npm:7.18.6"
     "@babel/plugin-syntax-dynamic-import": "npm:7.8.3"
     "@babel/plugin-transform-modules-commonjs": "npm:7.24.7"
-    "@babel/plugin-transform-runtime": "npm:7.24.7"
+    "@babel/plugin-transform-runtime": "npm:7.27.1"
     "@babel/preset-env": "npm:7.24.7"
     "@babel/preset-react": "npm:7.24.7"
     "@babel/preset-typescript": "npm:7.24.7"
@@ -15438,16 +15382,6 @@ __metadata:
   bin:
     rc: ./cli.js
   checksum: 3dec0a5ac3d9400f510ed9eccc86c5a503ba6bf6865c30e16d57bcf6c53f4f2854138ede1e645d7e3fa6f6cd293daa384a1e4e0bd505688e79b0150ef2642949
-  languageName: node
-  linkType: hard
-
-"react-apple-signin-auth@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "react-apple-signin-auth@npm:1.1.1"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 65d79839e3d2cf1288258a2a700c4543d63a8096d1618d9dc901e2327bff8032f92793d6873cc58c1263a1d3960f38e5125cfbe28a25e47cacbecfaedc740c26
   languageName: node
   linkType: hard
 
