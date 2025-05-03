@@ -2482,7 +2482,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.25.1, @eslint/js@npm:^9.25.1":
+"@eslint/js@npm:9.26.0":
+  version: 9.26.0
+  resolution: "@eslint/js@npm:9.26.0"
+  checksum: 27bde111a35c081f97745b262ad4c9e9656bf8620f8267a7423e203a7410f8f8a2cb1a7f69360b741881b58dfff17773d2771835e324a4eab734d7c9befc45b3
+  languageName: node
+  linkType: hard
+
+"@eslint/js@npm:^9.25.1":
   version: 9.25.1
   resolution: "@eslint/js@npm:9.25.1"
   checksum: a39df236df3beccbef860b5deef28a7486b64cf12a662e34158511dda9a130fcde2f43ab0b479c0373ac42dbd3ae01de78eac44aa4969378bfe1abe730d09206
@@ -2510,58 +2517,6 @@ __metadata:
   version: 9.7.0
   resolution: "@faker-js/faker@npm:9.7.0"
   checksum: c5b5c0875806497f00baad2b3c77865af407d06fb4d138abedca890c4a7c86c8216f267930e135b166735aa1c4e49fd5d93a6c91fec7000a1d4f1b8137dd89c5
-  languageName: node
-  linkType: hard
-
-"@floating-ui/core@npm:^1.6.0":
-  version: 1.6.9
-  resolution: "@floating-ui/core@npm:1.6.9"
-  dependencies:
-    "@floating-ui/utils": "npm:^0.2.9"
-  checksum: ce3f2dfb59bfed30b7a0ef6f2bb65f386a55918a168450252877e98e229585dd2e7e17a0b60fcf6409382dca675451deb1cad4c9c855de9e01f523ad345a1012
-  languageName: node
-  linkType: hard
-
-"@floating-ui/dom@npm:^1.0.0":
-  version: 1.6.13
-  resolution: "@floating-ui/dom@npm:1.6.13"
-  dependencies:
-    "@floating-ui/core": "npm:^1.6.0"
-    "@floating-ui/utils": "npm:^0.2.9"
-  checksum: 38c49680fb34ad8a97e5fb9abe0912812f355e306cf94a1b2e9281d8ec749fc8e383d787121c89f61e7247784e2a9dfa32b60c800b752dcea5b7026393017ccc
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react-dom@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "@floating-ui/react-dom@npm:2.1.2"
-  dependencies:
-    "@floating-ui/dom": "npm:^1.0.0"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 98fb43b2bc7705605744d2b4626fac85e38d9a92e58c572f1cd4fe968042ea5399ac1eb0233c279cffc5544eb0c81864cb1a54394b548768924537373557242e
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react@npm:^0.27.3":
-  version: 0.27.8
-  resolution: "@floating-ui/react@npm:0.27.8"
-  dependencies:
-    "@floating-ui/react-dom": "npm:^2.1.2"
-    "@floating-ui/utils": "npm:^0.2.9"
-    tabbable: "npm:^6.0.0"
-  peerDependencies:
-    react: ">=17.0.0"
-    react-dom: ">=17.0.0"
-  checksum: c2ddb5ba22edc56326669363f699b877d79786f360942113993a68ab2e7339c2e76cc224283f4258a4309762a773504ca80c8084a6f889524837976950034331
-  languageName: node
-  linkType: hard
-
-"@floating-ui/utils@npm:^0.2.9":
-  version: 0.2.9
-  resolution: "@floating-ui/utils@npm:0.2.9"
-  checksum: 25051fd262a90a2cb940fb99148b005b67ce1a83b29626665ce09e7b943471e9786fc4d1c54376be26bab1dadaaa0e14855e485982fb99f80fed5cdb04cce1f5
   languageName: node
   linkType: hard
 
@@ -3102,6 +3057,24 @@ __metadata:
   version: 0.10.17
   resolution: "@mediapipe/tasks-vision@npm:0.10.17"
   checksum: f29ff71bc9164cc7ff3e92625850fa58f58687690e40bc38363ebdf434b1428747a1753e188b55f3838db4cb4118f126e1e446dfc0b0a1bd0474dc6c0c8de578
+  languageName: node
+  linkType: hard
+
+"@modelcontextprotocol/sdk@npm:^1.8.0":
+  version: 1.11.0
+  resolution: "@modelcontextprotocol/sdk@npm:1.11.0"
+  dependencies:
+    content-type: "npm:^1.0.5"
+    cors: "npm:^2.8.5"
+    cross-spawn: "npm:^7.0.3"
+    eventsource: "npm:^3.0.2"
+    express: "npm:^5.0.1"
+    express-rate-limit: "npm:^7.5.0"
+    pkce-challenge: "npm:^5.0.0"
+    raw-body: "npm:^3.0.0"
+    zod: "npm:^3.23.8"
+    zod-to-json-schema: "npm:^3.24.1"
+  checksum: f56658d8cf9b61fac831ed8791c4f9c738922775325c83a0c27ba3367e96bd99e7f3f250332cd58acc0eb8cc88c73bdf46bd2414c76dc00c16c981edb11a3faa
   languageName: node
   linkType: hard
 
@@ -4573,15 +4546,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-datepicker@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "@types/react-datepicker@npm:7.0.0"
-  dependencies:
-    react-datepicker: "npm:*"
-  checksum: 9621f04047e6f19be54dbdc82f84dc73b73c965965e1d5e0ea933c55e01123d431d099d851977428dda7e985961cde54de966a32e9b0fa892823a5819b380c9a
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:18.3.7":
   version: 18.3.7
   resolution: "@types/react-dom@npm:18.3.7"
@@ -5321,15 +5285,6 @@ __metadata:
 "app.views@workspace:App/Views":
   version: 0.0.0-use.local
   resolution: "app.views@workspace:App/Views"
-  languageName: unknown
-  linkType: soft
-
-"app.widgets.schedular@workspace:App/Widgets/Schedular":
-  version: 0.0.0-use.local
-  resolution: "app.widgets.schedular@workspace:App/Widgets/Schedular"
-  dependencies:
-    "@types/react-datepicker": "npm:^7.0.0"
-    react-datepicker: "npm:^8.3.0"
   languageName: unknown
   linkType: soft
 
@@ -6719,13 +6674,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "clsx@npm:2.1.1"
-  checksum: df4cde0b46988958c8514b90cb4aec523e94c625183d07a4e6e594b856cd441dac4a13945a6840cb59caf91619d4c3abbda6135fd5a23a87a381b44f5420b5b0
-  languageName: node
-  linkType: hard
-
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -7109,6 +7057,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cors@npm:^2.8.5":
+  version: 2.8.5
+  resolution: "cors@npm:2.8.5"
+  dependencies:
+    object-assign: "npm:^4"
+    vary: "npm:^1"
+  checksum: 8451ae4bb9710e6cc03c61283b226747397162b54d12cf77e257184e6bd568387864d6a817bba9752c2febb686fe45a14b7b0ce6f68e3e70d25df2ba6e17e80e
+  languageName: node
+  linkType: hard
+
 "cosmiconfig-typescript-loader@npm:^6.1.0":
   version: 6.1.0
   resolution: "cosmiconfig-typescript-loader@npm:6.1.0"
@@ -7466,13 +7424,6 @@ __metadata:
     es-errors: "npm:^1.3.0"
     is-data-view: "npm:^1.0.1"
   checksum: e02a0f4463daa69f2de9d98e3cd0f978388614fcd78a8325510b6e2d24fb2035a3e2ada2473e73dba7abb552e5e5d37b075d5133f0405dbd6684aff256daddca
-  languageName: node
-  linkType: hard
-
-"date-fns@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "date-fns@npm:4.1.0"
-  checksum: 05a235ccfa162cf03ec30b0405d551f5010e45786fe6363b070bbcffd77d65760f1e7e0faeb58d49f8a9a63a0c01e02d38218ce21a87de7d50079a01617310ae
   languageName: node
   linkType: hard
 
@@ -8530,9 +8481,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:9.25.1":
-  version: 9.25.1
-  resolution: "eslint@npm:9.25.1"
+"eslint@npm:9.26.0":
+  version: 9.26.0
+  resolution: "eslint@npm:9.26.0"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.2.0"
     "@eslint-community/regexpp": "npm:^4.12.1"
@@ -8540,11 +8491,12 @@ __metadata:
     "@eslint/config-helpers": "npm:^0.2.1"
     "@eslint/core": "npm:^0.13.0"
     "@eslint/eslintrc": "npm:^3.3.1"
-    "@eslint/js": "npm:9.25.1"
+    "@eslint/js": "npm:9.26.0"
     "@eslint/plugin-kit": "npm:^0.2.8"
     "@humanfs/node": "npm:^0.16.6"
     "@humanwhocodes/module-importer": "npm:^1.0.1"
     "@humanwhocodes/retry": "npm:^0.4.2"
+    "@modelcontextprotocol/sdk": "npm:^1.8.0"
     "@types/estree": "npm:^1.0.6"
     "@types/json-schema": "npm:^7.0.15"
     ajv: "npm:^6.12.4"
@@ -8569,6 +8521,7 @@ __metadata:
     minimatch: "npm:^3.1.2"
     natural-compare: "npm:^1.4.0"
     optionator: "npm:^0.9.3"
+    zod: "npm:^3.24.2"
   peerDependencies:
     jiti: "*"
   peerDependenciesMeta:
@@ -8576,7 +8529,7 @@ __metadata:
       optional: true
   bin:
     eslint: bin/eslint.js
-  checksum: 1f6dc88642fac8302de2abe3fa1bae1837bd02d2dd07493ad0e1fe1430f6c47fff877c589caac0cd70e8203fcc117324cafea6f3e82898479a4571ab148c4c19
+  checksum: 734e7d55264d659616dff37c02cdd460198baa239ef10e5cab34bfe1246e4d650e5b6c08fd72af31c84c97a7fa90b0313db2ff1d54152cf26d1092bdf6712ff8
   languageName: node
   linkType: hard
 
@@ -8675,6 +8628,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventsource-parser@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "eventsource-parser@npm:3.0.1"
+  checksum: f0a2fa357095d15ea1474211ed88b8432e58109099db1523bb8d22b2148f783d4e7c28ae240815fa2ae78d73ce2f3490429ca7034526d42db1a4629c20348f1a
+  languageName: node
+  linkType: hard
+
+"eventsource@npm:^3.0.2":
+  version: 3.0.6
+  resolution: "eventsource@npm:3.0.6"
+  dependencies:
+    eventsource-parser: "npm:^3.0.1"
+  checksum: 98996c8735d1f2c92e31563be4ad5b33ab2d4d48f124326717e4861d72504de48978633b406af8f35d0d857babc1a6f0c475dc81eb8eb8ef15cc73fc73ea614f
+  languageName: node
+  linkType: hard
+
 "execa@npm:^5.0.0":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
@@ -8745,7 +8714,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:5.1.0":
+"express-rate-limit@npm:^7.5.0":
+  version: 7.5.0
+  resolution: "express-rate-limit@npm:7.5.0"
+  peerDependencies:
+    express: ^4.11 || 5 || ^5.0.0-beta.1
+  checksum: 1190c29cbe08b7bb1e4a608084f2245f9642e3e83ccb49421f5a1568dbc619323f19042fdc2aa5866868a627901fbd6b8fa463eb2198a0fdd784ec29005043f3
+  languageName: node
+  linkType: hard
+
+"express@npm:5.1.0, express@npm:^5.0.1":
   version: 5.1.0
   resolution: "express@npm:5.1.0"
   dependencies:
@@ -11909,7 +11887,7 @@ __metadata:
     cypress-audit: "npm:1.1.0"
     cz-conventional-changelog: "npm:3.3.0"
     dotenv: "npm:16.5.0"
-    eslint: "npm:9.25.1"
+    eslint: "npm:9.26.0"
     eslint-plugin-jsx-a11y: "npm:^6.10.2"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-refresh: "npm:^0.4.20"
@@ -13714,7 +13692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.1.1":
+"object-assign@npm:^4, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: f5cd1f2f1e82e12207e4f2377d9d7d90fbc0d9822a6afa717a6dcab6930d8925e1ebbbb25df770c31ff11335ee423459ba65ffa2e53999926c328b806b4d73d6
@@ -14412,6 +14390,13 @@ __metadata:
   version: 4.0.7
   resolution: "pirates@npm:4.0.7"
   checksum: 8d3cd6cfdd8601a65ad30d5c20ae18785a7138d28784d7e37fce6a10e08a82359a8deb4389c9e1d22fa326a69c82fc58823e0e4549006098dc021e22b9bb2a74
+  languageName: node
+  linkType: hard
+
+"pkce-challenge@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "pkce-challenge@npm:5.0.0"
+  checksum: 15ea58be5aac7398718c1710fbcf60024bc2f22e95ac192a39710a6b989f923623fe5fb3f3d4515f227d1ca70de9f977fde68f99726414acebfefb092fc7c1da
   languageName: node
   linkType: hard
 
@@ -15346,20 +15331,6 @@ __metadata:
     react: 15.x || 16.x
     react-dom: 15.x || 16.x
   checksum: ede4810186dc6ebdbda99f57c682bed91650abee6d9471151cb7ac38f2e08b081c28f5ab60235b583bd8b02f1f1ae46e79b74cb3c1fed5bb2a8c569af772e91b
-  languageName: node
-  linkType: hard
-
-"react-datepicker@npm:*, react-datepicker@npm:^8.3.0":
-  version: 8.3.0
-  resolution: "react-datepicker@npm:8.3.0"
-  dependencies:
-    "@floating-ui/react": "npm:^0.27.3"
-    clsx: "npm:^2.1.1"
-    date-fns: "npm:^4.1.0"
-  peerDependencies:
-    react: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
-    react-dom: ^16.9.0 || ^17 || ^18 || ^19 || ^19.0.0-rc
-  checksum: 95fd55ebea165e08c1c8b8f93c688b590326ddd9f5d5786288a39c333221bf6a69a7acb4e0676df35ca31f6e10d1f61b541036323ddbbd8883d87e219077d73f
   languageName: node
   linkType: hard
 
@@ -17297,13 +17268,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tabbable@npm:^6.0.0":
-  version: 6.2.0
-  resolution: "tabbable@npm:6.2.0"
-  checksum: 7c9d83bb10e6f3cd5273c669e1c2fa0b1b79eda4e815e2e407c1689e90a6488d16c8e8c85caa7b88f746a5460efcc4bbc4900a9cf41c1651f22db3970013c69a
-  languageName: node
-  linkType: hard
-
 "table@npm:^6.9.0":
   version: 6.9.0
   resolution: "table@npm:6.9.0"
@@ -18370,7 +18334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vary@npm:^1.1.2, vary@npm:~1.1.2":
+"vary@npm:^1, vary@npm:^1.1.2, vary@npm:~1.1.2":
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: b1db20d4be443aec48b8efab73386f83d947b7033b6b2f5a0c7ba4a1f9bc0200cb4cb396712468761f8edfe48dd68a6fdee7c65689b90937a2d767c714d25883
@@ -19186,7 +19150,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.24.1":
+"zod-to-json-schema@npm:^3.24.1":
+  version: 3.24.5
+  resolution: "zod-to-json-schema@npm:3.24.5"
+  peerDependencies:
+    zod: ^3.24.1
+  checksum: 6419fae5c3caeb14d78a92fb92c60f0e56d7e3e6eacbbc551442f2989fa8250ad8ff6c527548656c9ac51387514597878739426ac8d7162d754a2b8d69ae7aae
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.23.8, zod@npm:^3.24.1, zod@npm:^3.24.2":
   version: 3.24.3
   resolution: "zod@npm:3.24.3"
   checksum: bd55d60a9cbb8f78f9651951040d865415e05ed3e48c8aaa3af25bf00ed7bcb59724610734577dee7c791d80484532a0e98356f0361b89fe6aea82f13fc90b35
