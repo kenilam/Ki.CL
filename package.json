@@ -136,5 +136,5 @@
     "stylelint-prettier": "5.0.3",
     "stylelint-scss": "6.11.1"
   },
-  "packageManager": "yarn@3.3.0"
+  "packageManager": "yarn@4.9.1"
 }
