@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "react-router-dom": "6",
+    "react-router-dom": "7",
     "urlpattern-polyfill": "^10.0.0"
   }
 }
