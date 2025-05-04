@@ -11909,7 +11909,6 @@ __metadata:
     lint-staged: "npm:15.5.1"
     nodemon: "npm:^3.1.10"
     path: "npm:0.12.7"
-    postcss: "npm:8.5.3"
     postcss-exclude-files: "npm:1.0.15"
     postcss-ignore-plugin: "npm:0.2.1"
     postcss-import: "npm:16.1.0"
@@ -14946,6 +14945,17 @@ __metadata:
     picocolors: "npm:^0.2.1"
     source-map: "npm:^0.6.1"
   checksum: 9/5027f2aac0ee8c9746c4ef0ea31c7ed85153af1c9a2aeafc4950961cbfbaf8a1bbd4494e95556ba1f0f0c4735eb33e95efd9622d7ffbc73911819f24800f10de
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.5.3":
+  version: 8.5.3
+  resolution: "postcss@npm:8.5.3"
+  dependencies:
+    nanoid: "npm:^3.3.8"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 7f613ebef29653bf88aca06a50e64aca4452a40e96623c9b129628542371a555f15cd9d09de73ceceab1ba5c038a162e3166fd5613e7007c0ca474a4b2253bb9
   languageName: node
   linkType: hard
 
