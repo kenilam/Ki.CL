@@ -13,6 +13,11 @@ clean.build:
 	yarn run clean:build
 	@echo done
 
+clean.remotes.renovate:
+	@echo ⌛ cleaning remotes renovate...
+	yarn run clean:remotes.renovate
+	@echo done
+
 clean.remote.branches:
 	@echo ⌛ cleaning build...
 	@IGNORE_BRANCHES="$(IGNORE_BRANCHES)" yarn run clean:remote:branches

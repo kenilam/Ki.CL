@@ -12,6 +12,7 @@
     "build:client": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run build:client",
     "build:server": "cross-env DEBUG=true VERBOSE=true yarn workspace app run build:server",
     "clean:build": "cross-env DEBUG=true VERBOSE=true rm -rf App/build App/.Caches",
+    "clean:remotes.renovate": "bash -c '\n  git fetch --prune > /dev/null;\n  branches=$(git branch -r --list \"origin/renovate/*\" | sed \"s/origin\\///\");\n  if [[ -z \"$branches\" ]]; then echo \"✅ No renovate branches found.\"; exit 0; fi;\n  echo \"⚠️  The following renovate branches will be deleted:\"; echo \"$branches\" | sed \"s/^/  - origin\\//\";\n  read -p \"Do you want to delete these branches? (y/N): \" confirm;\n  if [[ \"$confirm\" != \"y\" && \"$confirm\" != \"Y\" ]]; then echo \"❌ Aborted.\"; exit 1; fi;\n  for b in $branches; do echo \"Deleting origin/$b\"; git push origin --delete \"$b\"; done\n'",
     "clean:yarn": "rm -rf node_modules && yarn cache clean && rm yarn.lock",
     "deploy": "yarn run build:client && yarn run ftp",
     "development": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run development",
