@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { Animation, Layout } from '@/Components';
 
@@ -23,7 +20,7 @@ const Home: React.FunctionComponent = () => {
         justifyContent='center'
         justifyItems='center'
       >
-        <section className={classNames('kicl--theme--light', CLASS_NAME)}>
+        <section className={CLASS_NAME}>
           <Header />
         </section>
       </Layout>

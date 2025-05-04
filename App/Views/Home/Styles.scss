@@ -1,16 +1,36 @@
 :root {
   --kicl--views--home--block-size: 100dvh;
+  --kicl--views--home--background: linear-gradient(232deg,
+  #{color.adjust($orange, $lightness: 20%)},
+  #{color.adjust($green, $lightness: 30%)},
+  #{color.adjust($red, $lightness: 20%)},
+  #{color.adjust($blue, $lightness: 20%)},
+  #{color.adjust($yellow, $lightness: 30%)});
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--home--background: linear-gradient(232deg,
+    #{color.adjust($orange, $blackness: 30%)},
+    #{color.adjust($green, $blackness: 30%)},
+    #{color.adjust($red, $blackness: 50%)},
+    #{color.adjust($blue, $blackness: 30%)},
+    #{color.adjust($yellow, $blackness: 30%)});
+  }
 }
 
 .kicl--views--home {
+  --kicl--components--animation--transition-delay: 0s;
+  --kicl--components--animation--transition-duration: var(--kicl-transition-duration-slowest);
+  --kicl--components--animation--transition-property: background;
+  --kicl--components--animation--transition-timing-function: var(--kicl-ease-expo-out);
+
+  transition-delay: var(--kicl--components--animation--transition-delay);
+  transition-duration: var(--kicl--components--animation--transition-duration);
+  transition-property: var(--kicl--components--animation--transition-property);
+  transition-timing-function: var(--kicl--components--animation--transition-timing-function);
+  will-change: var(--kicl--components--animation--transition-property);
   animation: kicl--views--background 60s ease infinite;
   background-blend-mode: screen;
-  background: linear-gradient(232deg,
-  #{color.adjust($orange, $lightness: 50%)},
-  #{color.adjust($green, $lightness: 50%)},
-  #{color.adjust($red, $lightness: 28%)},
-  #{color.adjust($blue, $lightness: 50%)},
-  #{color.adjust($yellow, $lightness: 30%)});
+  background: var(--kicl--views--home--background);
   background-size: 800% 800%;
   block-size: var(--kicl--views--home--block-size);
 

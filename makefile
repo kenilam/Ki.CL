@@ -8,11 +8,19 @@ server:
 	yarn run build:server
 	@echo done
 
-clean:
-	@echo ⌛ cleaning...
-	rm -rf node_modules
-	yarn cache clean
-	rm yarn.lock
+clean.build:
+	@echo ⌛ cleaning build...
+	yarn run clean:build
+	@echo done
+
+clean.remote.branches:
+	@echo ⌛ cleaning build...
+	@IGNORE_BRANCHES="$(IGNORE_BRANCHES)" yarn run clean:remote:branches
+	@echo done
+
+clean.yarn:
+	@echo ⌛ cleaning yarn...
+	yarn run clean:yarn
 	@echo done
 
 install:
