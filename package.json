@@ -14,7 +14,7 @@
     "clean:build": "cross-env DEBUG=true VERBOSE=true rm -rf App/build App/.Caches",
     "clean:yarn": "rm -rf node_modules && yarn cache clean && rm yarn.lock",
     "deploy": "yarn run build:client && yarn run ftp",
-    "development": "yarn run clean && cross-env DEBUG=true VERBOSE=true yarn workspace app run development",
+    "development": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run development",
     "ftp": "yarn workspace app run ftp",
     "lighthouse": "babel-node ./lighthouse/lightHouseTest.js",
     "lint:eslint": "eslint 'App/**/*.{js,jsx,ts,tsx}' --fix",
@@ -22,7 +22,7 @@
     "lint:stylelint": "stylelint 'App/**/*.{css,scss}' --fix",
     "prepare": "husky",
     "preview": "cross-env DEBUG=true VERBOSE=true yarn workspace app run preview",
-    "production": "yarn run clean && cross-env DEBUG=true VERBOSE=true yarn workspace app run production",
+    "production": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run production",
     "start": "yarn install && yarn run development",
     "test": "npx jest"
   },
