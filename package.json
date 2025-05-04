@@ -9,21 +9,22 @@
     "App"
   ],
   "scripts": {
-    "build:client": "yarn run clean && cross-env DEBUG=true VERBOSE=true yarn workspace app run build:client",
+    "build:client": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run build:client",
     "build:server": "cross-env DEBUG=true VERBOSE=true yarn workspace app run build:server",
-    "development": "yarn run clean && cross-env DEBUG=true VERBOSE=true yarn workspace app run development",
+    "clean:build": "cross-env DEBUG=true VERBOSE=true rm -rf App/build App/.Caches",
+    "clean:yarn": "rm -rf node_modules && yarn cache clean && rm yarn.lock",
     "deploy": "yarn run build:client && yarn run ftp",
+    "development": "yarn run clean && cross-env DEBUG=true VERBOSE=true yarn workspace app run development",
     "ftp": "yarn workspace app run ftp",
-    "clean": "cross-env DEBUG=true VERBOSE=true rm -rf App/build App/.Caches",
     "lighthouse": "babel-node ./lighthouse/lightHouseTest.js",
     "lint:eslint": "eslint 'App/**/*.{js,jsx,ts,tsx}' --fix",
     "lint:staged": "lint-staged",
     "lint:stylelint": "stylelint 'App/**/*.{css,scss}' --fix",
+    "prepare": "husky",
     "preview": "cross-env DEBUG=true VERBOSE=true yarn workspace app run preview",
     "production": "yarn run clean && cross-env DEBUG=true VERBOSE=true yarn workspace app run production",
     "start": "yarn install && yarn run development",
-    "test": "npx jest",
-    "prepare": "husky"
+    "test": "npx jest"
   },
   "repository": {
     "type": "git",
