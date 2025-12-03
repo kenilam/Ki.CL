@@ -2525,6 +2525,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formatjs/ecma402-abstract@npm:2.3.6":
+  version: 2.3.6
+  resolution: "@formatjs/ecma402-abstract@npm:2.3.6"
+  dependencies:
+    "@formatjs/fast-memoize": "npm:2.2.7"
+    "@formatjs/intl-localematcher": "npm:0.6.2"
+    decimal.js: "npm:^10.4.3"
+    tslib: "npm:^2.8.0"
+  checksum: 10c0/63be2a73d3168bf45ab5d50db58376e852db5652d89511ae6e44f1fa03ad96ebbfe9b06a1dfaa743db06e40eb7f33bd77530b9388289855cca79a0e3fc29eacf
+  languageName: node
+  linkType: hard
+
 "@formatjs/fast-memoize@npm:2.2.7":
   version: 2.2.7
   resolution: "@formatjs/fast-memoize@npm:2.2.7"
@@ -2555,14 +2567,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/intl-displaynames@npm:6.8.11":
-  version: 6.8.11
-  resolution: "@formatjs/intl-displaynames@npm:6.8.11"
+"@formatjs/intl-displaynames@npm:6.8.13":
+  version: 6.8.13
+  resolution: "@formatjs/intl-displaynames@npm:6.8.13"
   dependencies:
-    "@formatjs/ecma402-abstract": "npm:2.3.4"
-    "@formatjs/intl-localematcher": "npm:0.6.1"
+    "@formatjs/ecma402-abstract": "npm:2.3.6"
+    "@formatjs/intl-localematcher": "npm:0.6.2"
     tslib: "npm:^2.8.0"
-  checksum: 10c0/d9061e0cf9dba7df6910ef90ba2343f6e71bcaf12210890623cf53e1947fc52bcf68fba0bfa6d5c1f0360d18c2884e16147e7ae2cbabfd90561337634a68f10b
+  checksum: 10c0/8547a0735f4775725b3e17dc5c6b5c14a735d1bd599498b42b25c618f5caee4ff0575c7caab0dea0ddf537e70d13c0e1eda179655411f156030b7167ab5af1d9
   languageName: node
   linkType: hard
 
@@ -2572,6 +2584,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.8.0"
   checksum: 10c0/bacbedd508519c1bb5ca2620e89dc38f12101be59439aa14aa472b222915b462cb7d679726640f6dcf52a05dd218b5aa27ccd60f2e5010bb96f1d4929848cde0
+  languageName: node
+  linkType: hard
+
+"@formatjs/intl-localematcher@npm:0.6.2":
+  version: 0.6.2
+  resolution: "@formatjs/intl-localematcher@npm:0.6.2"
+  dependencies:
+    tslib: "npm:^2.8.0"
+  checksum: 10c0/22a17a4c67160b6c9f52667914acfb7b79cd6d80630d4ac6d4599ce447cb89d2a64f7d58fa35c3145ddb37fef893f0a45b9a55e663a4eb1f2ae8b10a89fac235
   languageName: node
   linkType: hard
 
@@ -5301,7 +5322,7 @@ __metadata:
   dependencies:
     "@babel/preset-env": "npm:^7.27.1"
     "@babel/preset-react": "npm:^7.27.1"
-    "@formatjs/intl-displaynames": "npm:6.8.11"
+    "@formatjs/intl-displaynames": "npm:6.8.13"
     "@google-cloud/secret-manager": "npm:^6.0.1"
     "@ipregistry/client": "npm:^6.0.0"
     "@jest/globals": "npm:^29.7.0"

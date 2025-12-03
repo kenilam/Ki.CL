@@ -20,7 +20,7 @@
     "production": "yarn run build:client && yarn run preview"
   },
   "dependencies": {
-    "@formatjs/intl-displaynames": "6.8.11",
+    "@formatjs/intl-displaynames": "6.8.13",
     "@google-cloud/secret-manager": "^6.0.1",
     "@ipregistry/client": "^6.0.0",
     "@react-spring/three": "^9.7.5",
