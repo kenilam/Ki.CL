@@ -7,7 +7,7 @@
     "@vite/vitejs-client": "2.2.10",
     "@vitejs/plugin-react": "4.4.1",
     "clean-css": "^5.3.3",
-    "glob": "11.0.2",
+    "glob": "11.1.0",
     "rollup-plugin-terser": "7.0.2",
     "vite-plugin-checker": "^0.9.1",
     "vite-plugin-commonjs": "0.10.4",
