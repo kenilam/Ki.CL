@@ -89,7 +89,7 @@
     "lighthouse": "12.6.0",
     "nodemon": "^3.1.10",
     "path": "0.12.7",
-    "postcss": "8.5.3",
+    "postcss": "8.5.10",
     "postcss-exclude-files": "1.0.15",
     "postcss-ignore-plugin": "0.2.1",
     "postcss-import": "16.1.0",
