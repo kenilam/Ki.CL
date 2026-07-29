@@ -38,6 +38,21 @@
     }
   }
 
+  /*
+   * One step along the gutter scale from the default, which is
+   * `narrowest`/`narrow`. The scale runs none, narrowest, narrower, narrow,
+   * base — so the steps are exact rather than invented fractions.
+   */
+  &--size--small {
+    --kicl--components--badge--padding-block: var(--kicl-gutter-none);
+    --kicl--components--badge--padding-inline: var(--kicl-gutter-narrower);
+  }
+
+  &--size--large {
+    --kicl--components--badge--padding-block: var(--kicl-gutter-narrower);
+    --kicl--components--badge--padding-inline: var(--kicl-gutter);
+  }
+
   &--variant--secondary {
     --kicl--components--badge--background-color: var(--kicl-color-grey-light);
     --kicl--components--badge--color: var(--kicl-color-grey-darker);

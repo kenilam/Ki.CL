@@ -94,6 +94,7 @@
     "@types/body-parser": "1.19.6",
     "@types/node": "26",
     "@types/node-sass": "4.11.8",
+    "@vitejs/devtools": "^0.4.9",
     "commitizen": "4.3.2",
     "cz-conventional-changelog": "3.3.0",
     "lint-staged": "17.2.0",
