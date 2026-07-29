@@ -72,17 +72,11 @@
     "vite": "8.1.5"
   },
   "devDependencies": {
-    "@babel/preset-env": "8.0.2",
-    "@babel/preset-react": "8.0.1",
-    "@jest/globals": "30.4.1",
-    "@testing-library/react": "16.3.2",
-    "@types/babel__preset-env": "7.10.0",
     "@types/d3-hierarchy": "3.1.7",
     "@types/enzyme": "3.10.19",
     "@types/graphql-upload": "17.0.0",
     "@types/highlight-words-core": "1.2.3",
     "@types/humanize-duration": "3.27.4",
-    "@types/jest": "30.0.0",
     "@types/lodash": "4.17.24",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
@@ -94,13 +88,9 @@
     "@types/smoothscroll-polyfill": "0.3.4",
     "@types/three": "0.185.1",
     "@types/uuid": "11.0.0",
-    "babel-jest": "30.4.1",
     "enzyme": "3.11.0",
     "enzyme-to-json": "3.6.2",
-    "jest": "30.4.2",
-    "jest-environment-jsdom": "30.4.1",
     "mock-local-storage": "1.1.24",
-    "react-test-renderer": "19.2.8",
-    "ts-jest": "29.4.12"
+    "react-test-renderer": "19.2.8"
   }
 }
