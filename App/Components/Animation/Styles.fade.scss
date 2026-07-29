@@ -5,11 +5,11 @@
   opacity: var(--kicl--components--animation--style--fade--opacity);
 
   &.kicl--components--animation--appear:not(
-      .kicl--components--animation--appear-active
-    ),
-  &.kicl--components--animation--enter:not(
-      .kicl--components--animation--enter-active
-    ) {
+    .kicl--components--animation--appear-active
+  ),
+    &.kicl--components--animation--enter:not(
+    .kicl--components--animation--enter-active
+  ) {
     --kicl--components--animation--style--fade--opacity: 0;
   }
 

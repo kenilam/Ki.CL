@@ -7,23 +7,23 @@
 
   opacity: var(--kicl--components--animation--style--zoom-in--opacity);
   transform: translate3d(
-      var(
-        --kicl--components--animation--style--zoom-in--transform--translate-x
-      ),
-      var(
-        --kicl--components--animation--style--zoom-in--transform--translate-y
-      ),
-      0
-    )
+    var(
+      --kicl--components--animation--style--zoom-in--transform--translate-x
+    ),
+    var(
+      --kicl--components--animation--style--zoom-in--transform--translate-y
+    ),
+    0
+  )
     scale(var(--kicl--components--animation--style--zoom-in--transform--scale));
   transform-origin: center;
 
   &.kicl--components--animation--appear:not(
-      .kicl--components--animation--appear-active
-    ),
-  &.kicl--components--animation--enter:not(
-      .kicl--components--animation--enter-active
-    ) {
+    .kicl--components--animation--appear-active
+  ),
+    &.kicl--components--animation--enter:not(
+    .kicl--components--animation--enter-active
+  ) {
     --kicl--components--animation--style--zoom-in--opacity: 0;
     --kicl--components--animation--style--zoom-in--transform--scale: 0.8;
   }

@@ -554,8 +554,6 @@ export interface Tax28 {
 }
 
 const get = async () => {
-  let loading = true;
-
   const response = await window.fetch(
     'https://rest.ensembl.org/cafe/genetree/id/ENSGT00390000003602?content-type=application/json',
     {
@@ -582,11 +580,13 @@ const get = async () => {
     }
   } catch (_error) {
     error = new Error((_error as Error).message);
-  } finally {
-    loading = false;
   }
 
-  return { data, error, loading };
+  /*
+   * Always settled by the time this returns — it is awaited. The store flips
+   * `loading` to true before calling and reads it back false from here.
+   */
+  return { data, error, loading: false };
 };
 
 export { get };

@@ -27,7 +27,9 @@ const getEnv = async (observer?: AbortController) => {
 
     return env;
   } catch (error) {
-    throw new Error(error as string);
+    // Keep the original: `new Error(error as string)` stringified it to
+    // "[object Object]" and threw away the stack that said what actually failed.
+    throw new Error('Failed to load client environment', { cause: error });
   }
 };
 
