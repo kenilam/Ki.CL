@@ -47,26 +47,34 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
       `${CLASS_NAME}--element`
     );
 
-    const Child = React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
-          ...child?.props,
-          className: classNames(child?.props?.className, elementClassName),
-        });
-      }
-      return child;
-    });
+    /*
+     * React 19 types `ReactElement.props` as `unknown`, so a clone that merges
+     * the child's own props has to say what shape it expects.
+     */
+    const withClassName = (
+      child: React.ReactElement,
+      extra?: Record<string, unknown>
+    ) => {
+      const props = child.props as Record<string, unknown> & {
+        className?: string;
+      };
 
-    const Shadow = React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(child, {
-          ...child?.props,
-          className: classNames(child?.props?.className, elementClassName),
-          'aria-hidden': 'true',
-        });
-      }
-      return child;
-    });
+      return React.cloneElement(child as React.ReactElement<typeof props>, {
+        ...props,
+        className: classNames(props.className, elementClassName),
+        ...extra,
+      });
+    };
+
+    const Child = React.Children.map(children, (child) =>
+      React.isValidElement(child) ? withClassName(child) : child
+    );
+
+    const Shadow = React.Children.map(children, (child) =>
+      React.isValidElement(child)
+        ? withClassName(child, { 'aria-hidden': 'true' })
+        : child
+    );
 
     const Style = ReactDOM.createPortal(
       <style data-widget-infinite-scroll-uuid={`${uniqueClass}--css-variables`}>

@@ -5,12 +5,13 @@ export {
   hasSession,
   getApiKey,
 } from './utils';
-export * from './generated/hooks';
+export * from './generated/graphql';
+export { gql } from '@apollo/client';
 export {
-  gql,
   useQuery,
   useMutation,
   useLazyQuery,
   useSubscription,
   useApolloClient,
-} from '@apollo/client';
+  skipToken,
+} from '@apollo/client/react';

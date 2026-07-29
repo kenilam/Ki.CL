@@ -1,4 +1,4 @@
-import { GetFileExtension } from '^/App/Helper/_Spec';
+import { GetFileExtension } from '@/Helper/Spec';
 
 const getFileExtension: GetFileExtension = (prop) => {
   if (typeof prop?.path !== 'string') {

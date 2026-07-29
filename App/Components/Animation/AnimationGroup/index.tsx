@@ -59,17 +59,17 @@ const AnimationGroup: React.FunctionComponent<
       node?.parentElement?.classList.add(CLASS_NAME);
     }
 
-    enterHandler?.(node, isAppearing);
+    enterHandler?.(isAppearing);
 
-    addEndListener(node, () => {
+    addEndListener({ current: node })(() => {
       window.dispatchEvent(eventDispatcher.enter.event);
     });
   };
 
   const onEntering: EnterHandler<undefined> = (node, isAppearing) => {
-    enteringHandler?.(node, isAppearing);
+    enteringHandler?.(isAppearing);
 
-    addEndListener(node, () => {
+    addEndListener({ current: node })(() => {
       window.dispatchEvent(eventDispatcher.entering.event);
     });
   };
@@ -81,7 +81,7 @@ const AnimationGroup: React.FunctionComponent<
 
     enteredHandler?.(node);
 
-    addEndListener(node, () => {
+    addEndListener({ current: node })(() => {
       window.dispatchEvent(eventDispatcher.entered.event);
     });
   };
@@ -91,9 +91,9 @@ const AnimationGroup: React.FunctionComponent<
       node?.parentElement?.classList.add(CLASS_NAME);
     }
 
-    exitHandler?.(node);
+    exitHandler?.();
 
-    addEndListener(node, () => {
+    addEndListener({ current: node })(() => {
       window.dispatchEvent(eventDispatcher.exit.event);
     });
   };
@@ -103,17 +103,17 @@ const AnimationGroup: React.FunctionComponent<
       node?.parentElement?.classList.remove(CLASS_NAME);
     }
 
-    exitedHandler?.(node);
+    exitedHandler?.();
 
-    addEndListener(node, () => {
+    addEndListener({ current: node })(() => {
       window.dispatchEvent(eventDispatcher.exited.event);
     });
   };
 
   const onExiting: ExitHandler<undefined> = (node) => {
-    exitingHandler?.(node);
+    exitingHandler?.();
 
-    addEndListener(node, () => {
+    addEndListener({ current: node })(() => {
       window.dispatchEvent(eventDispatcher.exiting.event);
     });
   };
@@ -135,7 +135,7 @@ const AnimationGroup: React.FunctionComponent<
 
   return (
     <TransitionGroup component={component} ref={ref}>
-      {Animation}
+      {Animation as React.ReactElement}
     </TransitionGroup>
   );
 };

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import { hasSession, getApiKey, useKicl_ExchangeToken } from 'api/provider';
+import {
+  hasSession,
+  getApiKey,
+  useMutation,
+  Kicl_ExchangeTokenDocument,
+} from 'api/provider';
 
 import { Spinner, Text } from '@/Components';
 
@@ -27,7 +32,7 @@ async function ensureApiKeyCookie(): Promise<void> {
 const TreeOfLife: React.FunctionComponent = () => {
   const [sessionReady, setSessionReady] = useState(() => hasSession());
   const [bootstrapError, setBootstrapError] = useState<string | null>(null);
-  const [exchangeToken] = useKicl_ExchangeToken();
+  const [exchangeToken] = useMutation(Kicl_ExchangeTokenDocument);
 
   useEffect(() => {
     if (sessionReady) {

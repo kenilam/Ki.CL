@@ -27,7 +27,12 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
     const text = String(children);
 
     return (
-      <Text {...props} ref={ref}>
+      /*
+       * `is` arrives as the whole union, so TypeScript cannot pick the
+       * matching branch of the polymorphic props through a spread. The
+       * value is correct by construction; only the narrowing is lost.
+       */
+      <Text {...(props as React.ComponentProps<typeof Text>)} ref={ref}>
         {text.split('').map((letter, index) => {
           const key = `${index}`;
 

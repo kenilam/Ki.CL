@@ -2,12 +2,23 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "paths": {
-      "^/*": ["../*"],
-      "@/*": ["./*"],
-      "api": ["./@mf-types/api"],
-      "api/*": ["./@mf-types/api/*"]
+      "^/*": [
+        "../*"
+      ],
+      "@/*": [
+        "./*"
+      ],
+      "api": [
+        "./@mf-types/api"
+      ],
+      "api/*": [
+        "./@mf-types/api/*"
+      ]
     },
-    "types": ["node", "vite/client"]
+    "types": [
+      "node",
+      "vite/client"
+    ]
   },
   "include": [
     "**/*"
@@ -15,8 +26,23 @@
   "exclude": [
     ".Caches/**/*",
     "@mf-types/**/*",
-    "build/**/*",
     "API/Client/Types/**/*",
+    "Views/Experiments/TreeOfLife/v1/**/*",
+    "Views/Experiments/TreeOfLife/v10/**/*",
+    "Views/Experiments/TreeOfLife/v11/**/*",
+    "Views/Experiments/TreeOfLife/v12/**/*",
+    "Views/Experiments/TreeOfLife/v13/**/*",
+    "Views/Experiments/TreeOfLife/v14/**/*",
+    "Views/Experiments/TreeOfLife/v15-broken/**/*",
+    "Views/Experiments/TreeOfLife/v2/**/*",
+    "Views/Experiments/TreeOfLife/v3/**/*",
+    "Views/Experiments/TreeOfLife/v4/**/*",
+    "Views/Experiments/TreeOfLife/v5/**/*",
+    "Views/Experiments/TreeOfLife/v6/**/*",
+    "Views/Experiments/TreeOfLife/v7/**/*",
+    "Views/Experiments/TreeOfLife/v8/**/*",
+    "Views/Experiments/TreeOfLife/v9/**/*",
+    "build/**/*",
     "node_modules/**/*"
   ]
 }

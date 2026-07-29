@@ -1,4 +1,4 @@
-import * as Spec from '^/App/Helper/_Spec';
+import * as Spec from '@/Helper/Spec';
 
 const DEFAULT_VALUES = { start: 0, end: 100 };
 

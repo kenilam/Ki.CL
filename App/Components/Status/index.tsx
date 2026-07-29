@@ -44,7 +44,7 @@ const Status: React.FunctionComponent<Spec.Props> = ({
     _className
   );
 
-  let Icon = <></>;
+  let Icon: React.ReactNode = <></>;
 
   if (level) {
     Icon = LEVELS[level];
