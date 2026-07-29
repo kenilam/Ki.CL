@@ -13,23 +13,46 @@ browser rather than at build.
 
 ## Patch: `@graphql-codegen/typescript-react-apollo` 4.4.2
 
-`Backend/.yarn/patches/@graphql-codegen-typescript-react-apollo-npm-4.4.2-*.patch`
+`Backend/.yarn/patches/@graphql-codegen-typescript-react-apollo-npm-4.4.2-*.patch`,
+applied to both the `esm` and `cjs` builds.
 
-**What:** `(node.variableDefinitions ?? []).reduce(...)` in `_buildHooksJSDoc`,
-in both the `esm` and `cjs` builds.
+This plugin targets Apollo Client 3 and is unmaintained against 4 — its last
+release was April 2026 and its graphql peer still caps at `^16`. Three separate
+fixes are needed to make it usable here.
 
-**Why:** graphql 17 leaves `variableDefinitions` `undefined` on an operation
-that declares no variables, where graphql 16 always supplied an empty array.
-The plugin calls `.reduce` on it unguarded, so codegen dies with
-`Cannot read properties of undefined (reading 'reduce')`. Four of our
-operations take no variables — `kicl_Me`, `kicl_ExchangeToken`,
-`kicl_RefreshToken`, `kicl_SignOut` — so this is not an edge case for us.
+1. **`(node.variableDefinitions ?? []).reduce(...)`** in `_buildHooksJSDoc`.
+   graphql 17 leaves `variableDefinitions` `undefined` on an operation with no
+   variables, where 16 supplied an empty array, so codegen died with
+   `Cannot read properties of undefined (reading 'reduce')`. Four of our
+   operations take no variables — `kicl_Me`, `kicl_ExchangeToken`,
+   `kicl_RefreshToken`, `kicl_SignOut`.
 
-**Re-check:** 4.4.2 was the latest as of this writing and its peer range still
-caps at graphql `^16`. Drop the patch once a release declares `^17` and
-generates without it: remove the `patch:` protocol from `Codegen/package.json`,
-delete the patch file, then `yarn codegen` and confirm
-`Client/src/generated/hooks.ts` is written.
+2. **A `withSuspenseQuery` opt-out.** Suspense hooks were generated
+   unconditionally and their overloads are written against Apollo Client 3, so
+   they do not typecheck under 4. The option also had to be added to the
+   visitor's config whitelist — it builds `this.config` from an explicit list of
+   keys, so an unknown option never arrives and the gate silently does nothing.
+
+3. **`BaseMutationOptions` → `MutationHookOptions`.** Apollo Client 4 dropped
+   the former. `MutationFunction` is likewise gone, handled by config rather
+   than patch (`withMutationFn: false`) since the alias had no consumers.
+
+Two related config changes live in `Codegen/codegen.ts`, not the patch: the
+`typescript` plugin was dropped from the `hooks.ts` output because
+`typescript-operations` now emits the base types itself and every input, enum
+and scalar was being declared twice; and `provider.tsx` no longer parameterises
+`ApolloClient`, which is non-generic in Apollo Client 4.
+
+**Symptom if this regresses:** the remote still builds, but its DTS step fails
+with `#TYPE-001` and the type archive the Frontend consumes is never
+regenerated — so Frontend types silently go stale rather than erroring. Verify
+with `yarn workspace @ki-cl/client run build` and check `Client/dist/types.zip`
+is rewritten.
+
+**Re-check / migration:** the durable fix is to move the hooks output to the
+`client` preset, which is already generating into `Client/src/generated/` and is
+Apollo Client 4-native. That would retire this plugin and all three patches. Do
+it when there is appetite for updating the Frontend's `useKicl_*` call sites.
 
 ---
 
