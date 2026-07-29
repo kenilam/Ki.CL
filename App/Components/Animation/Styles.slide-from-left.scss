@@ -18,11 +18,11 @@
   );
 
   &.kicl--components--animation--appear:not(
-      .kicl--components--animation--appear-active
-    ),
-  &.kicl--components--animation--enter:not(
-      .kicl--components--animation--enter-active
-    ) {
+    .kicl--components--animation--appear-active
+  ),
+    &.kicl--components--animation--enter:not(
+    .kicl--components--animation--enter-active
+  ) {
     --kicl--components--animation--style--slide-from-left--transform--opacity: 0;
     --kicl--components--animation--style--slide-from-left--transform--translate-x: calc(
       -1 * min(var(--kicl-size-2x), 10%)

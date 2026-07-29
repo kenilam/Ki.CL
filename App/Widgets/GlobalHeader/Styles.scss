@@ -10,7 +10,7 @@
   --kicl--widgets--global-header--inline-size: 100vw;
   --kicl--widgets--global-header--bleed: calc(
     var(--kicl--widgets--global-header--block-size) +
-      (var(--kicl--widgets--global-header--top) * 2)
+    (var(--kicl--widgets--global-header--top) * 2)
   );
 
   @include tablet {

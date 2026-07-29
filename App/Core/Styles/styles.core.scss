@@ -4,7 +4,7 @@ app-root {
 
 .kicl-hidden {
   border-width: 0;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   block-size: 1px;
   margin: -1px;
   overflow: hidden;
