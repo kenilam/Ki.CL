@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "react",
+    "jsx-a11y",
+    "oxc"
+  ],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/build/**",
+    "**/.Caches/**",
+    "**/Types/**",
+    "**/@mf-types/**",
+    "App/Views/Experiments/TreeOfLife/v[0-9]*/**",
+    "App/Views/Experiments/TreeOfLife/v15-broken/**"
+  ],
+  "env": {
+    "es2024": true,
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "none",
+        "destructuredArrayIgnorePattern": "^_",
+        "ignoreRestSiblings": true,
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}

@@ -7,6 +7,7 @@ import { glob } from 'glob';
 import { defineConfig, UserConfig } from 'vite';
 
 import checker from 'vite-plugin-checker';
+import oxlint from 'vite-plugin-oxlint';
 import dynamicImport from 'vite-plugin-dynamic-import';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import inspect from 'vite-plugin-inspect';
@@ -147,16 +148,9 @@ const getConfig = ({
       plugins.push(
         checker({
           root: `${appRoot.path}/App`,
-          eslint: {
-            lintCommand: `eslint '${appRoot.path}/App/**/*.{js,jsx,ts,tsx}' --ignore-pattern '@mf-types/**'`,
-            useFlatConfig: true,
-            dev: {
-              overrideConfig: {
-                fix: true,
-              },
-            },
-          },
+          typescript: true,
         }),
+        oxlint(),
         mkcert({
           hosts: [configJSON.host, `${configJSON.host}.${configJSON.domain}`],
         }),

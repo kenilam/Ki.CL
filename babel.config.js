@@ -1,5 +1,3 @@
-const { path: appRoot } = require('app-root-path');
-
 module.exports = function (api) {
   api.cache(true);
 

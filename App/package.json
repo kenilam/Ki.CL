@@ -76,7 +76,6 @@
     "@babel/preset-react": "8.0.1",
     "@jest/globals": "30.4.1",
     "@testing-library/react": "16.3.2",
-    "@testing-library/react-hooks": "8.0.1",
     "@types/babel__preset-env": "7.10.0",
     "@types/d3-hierarchy": "3.1.7",
     "@types/enzyme": "3.10.19",

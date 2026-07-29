@@ -52,12 +52,11 @@ const Thumbnail: React.FunctionComponent<Spec.Props> = ({ counts }) => {
             }
 
             return (
-              <Layout alignContent='center' justifyItems='center'>
+              <Layout alignContent='center' justifyItems='center' key={key}>
                 <Button
                   aria-disabled={isCurrent}
                   className='kicl-color-grey-darker'
                   aria-pressed={isCurrent}
-                  key={key}
                   onClick={clickHandler(index)}
                   title={title}
                   unstyled
