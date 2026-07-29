@@ -30,7 +30,6 @@ const Image: React.FunctionComponent<Spec.Props> = ({
   ),
   onError: errorHandler,
   onLoad: loadHandler,
-  onResize: resizeHandler,
   ...props
 }) => {
   const [loadingState, isLoading] = useState(!!data);
@@ -62,10 +61,6 @@ const Image: React.FunctionComponent<Spec.Props> = ({
     loadHandler?.(event);
   };
 
-  const onResize: Spec.Props['onResize'] = (event) => {
-    resizeHandler?.(event);
-  };
-
   return (
     <Layout
       alignContent='center'
@@ -82,7 +77,6 @@ const Image: React.FunctionComponent<Spec.Props> = ({
           src={data}
           alt={alt}
           loading={loading}
-          onResize={onResize}
           onLoad={onLoad}
           onError={onError}
         />
