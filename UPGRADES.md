@@ -14,8 +14,6 @@ browser rather than at build.
 ## Patch: `@graphql-codegen/typescript-react-apollo` 4.4.2
 
 `Backend/.yarn/patches/@graphql-codegen-typescript-react-apollo-npm-4.4.2-*.patch`
-(the patch lives in Backend, which owns codegen; it is listed here because the
-hooks it generates are what this repo consumes through the `api` remote)
 
 **What:** `(node.variableDefinitions ?? []).reduce(...)` in `_buildHooksJSDoc`,
 in both the `esm` and `cjs` builds.
@@ -35,28 +33,41 @@ delete the patch file, then `yarn codegen` and confirm
 
 ---
 
-## Hold: `typescript` at 6.0.3, not 7.x
+## Resolved: TypeScript 7, by moving to Oxlint
 
-**Why:** TypeScript 7 is the native port. `typescript-eslint` refuses it by
-explicit version check — `typescript-eslint does not support TS 7.0` — thrown
-from `@typescript-eslint/parser` and `eslint-plugin` before any linting starts,
-so lint is lost entirely on both repos. Its peer range is `>=4.8.4 <6.1.0`,
-which 6.0.3 satisfies.
-
-TS 7 itself is fine for us: typechecking both repos on 7.0.2 gave the same zero
-errors as 6.0.3. Only the lint toolchain blocks it.
-
-**The documented side-by-side workaround does not work with our layout.** It
-aliases eslint's `typescript` to the `@typescript/typescript6` compat package
-(which is published, at 6.0.2) while `tsc` runs 7. But `typescript` is a *peer*
-dependency of the typescript-eslint packages, so with Yarn's node-modules
-linker it resolves to the hoisted root copy — `resolutions` entries targeting
-`@typescript-eslint/*/typescript` are ignored, and the parser still loads 7.0.2.
+Both repos run TypeScript 7.0.2. This was blocked while ESLint was in use —
+`typescript-eslint` refuses TS 7 by explicit version check, throwing before any
+linting starts, and the documented side-by-side workaround does not work with
+this layout: `typescript` is a *peer* dependency of the typescript-eslint
+packages, so under Yarn's node-modules linker it resolves to the hoisted root
+copy and `resolutions` targeting `@typescript-eslint/*/typescript` are ignored.
 Verified, not assumed.
 
-**Re-check:** typescript-eslint issue #10940 tracks support for TS >= 7.1. When
-a release lands, bump `typescript` to 7 in both repos and confirm `yarn lint`
-runs. Until then 6.0.3 is the newest version the whole toolchain accepts.
+Oxlint does not use the TypeScript compiler API, so the constraint disappears.
+The migration was cheap because neither repo used type-aware rules — both
+configs were on the plain `recommended` sets, and the only hand-configured
+rules were `no-unused-vars` options and `no-namespace: allowDeclarations`.
+
+**What Oxlint does not do:** type-aware rules such as `no-floating-promises`.
+`oxlint-tsgolint` is the upstream work for that and is still early. If a
+type-aware rule is ever needed, the options are to wait for it or to reintroduce
+ESLint for a type-checked subset — which would reintroduce the TS 7 conflict.
+
+**Two rules are deliberately relaxed** in `.oxlintrc.json`, both in the
+Frontend:
+
+- `jsx-a11y/prefer-tag-over-role` is off. It wants native elements instead of
+  ARIA roles, which is wrong for headless components — Select, Checkbox,
+  RadioGroup, Popover, Spinner and Calendar all use roles on non-semantic
+  elements by design.
+- `react-hooks/exhaustive-deps` is a warning, not an error. Several of the
+  dependencies it objects to are deliberate and documented — `Context.tsx`
+  lists `data` and the lazy result purely as change signals, never reading
+  them, which the rule reports as unnecessary.
+
+**Frozen archives are ignored.** `TreeOfLife/v1`–`v14` and `v15-broken` are kept
+as references and are not maintained; Oxlint's stricter default rule set found
+40 findings in them against 18 in live code.
 
 ---
 
