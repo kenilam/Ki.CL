@@ -7,7 +7,7 @@
       "api": ["./@mf-types/api"],
       "api/*": ["./@mf-types/api/*"]
     },
-    "types": ["jest", "node", "vite/client"]
+    "types": ["node", "vite/client"]
   },
   "include": [
     "**/*"
