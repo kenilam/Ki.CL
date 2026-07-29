@@ -13,7 +13,10 @@ const CLASS_NAME = 'kicl--components--badge';
  * https://ui.shadcn.com/docs/components/base/badge
  */
 const Badge = React.forwardRef<HTMLElement, Props>(
-  ({ children, className, is = 'span', variant = 'default', ...rest }, ref) => {
+  (
+    { children, className, is = 'span', size, variant = 'default', ...rest },
+    ref
+  ) => {
     const Component = is as BadgeIs;
 
     return (
@@ -24,6 +27,7 @@ const Badge = React.forwardRef<HTMLElement, Props>(
         className={classNames(
           CLASS_NAME,
           `${CLASS_NAME}--variant--${variant}`,
+          size && `${CLASS_NAME}--size--${size}`,
           'kicl-font-weight',
           'kicl-line-height-narrow',
           className
@@ -42,9 +46,10 @@ Badge.displayName = 'Badge';
 export type {
   Props as BadgeProps,
   BadgeIs,
+  BadgeSize,
   BadgeLabelProps,
   BadgeVariant,
 } from './Spec';
-export { BADGE_VARIANTS } from './Spec';
+export { BADGE_VARIANTS, BADGE_SIZES } from './Spec';
 export { BadgeLabel };
 export default Badge;

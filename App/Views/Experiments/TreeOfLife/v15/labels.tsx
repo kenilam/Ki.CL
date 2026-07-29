@@ -377,6 +377,13 @@ export const Labels: React.FunctionComponent = () => {
           key={key}
           is='span'
           variant='outline'
+          /*
+           * The routed taxon's own chip is a step larger, on the same signal
+           * that colours its border — so the label you are actually reading is
+           * distinguished by weight as well as by hue, and still reads as one
+           * when the accent is hard to pick out against the tree behind it.
+           */
+          size={label.accent ? 'large' : undefined}
           className={PILL_CLASS}
           style={
             label.accent
