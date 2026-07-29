@@ -171,7 +171,7 @@ const getConfig = ({
       );
     }
 
-    const result: ReturnType<typeof defineConfig> = {
+    const result: UserConfig = {
       assetsInclude: ['**/*.glb', '**/*.mov', '**/*.png', '**/*.md'],
       base: '/',
       build: {
@@ -222,7 +222,6 @@ const getConfig = ({
             preserveModules: false,
             preserveModulesRoot: `${root}/${config.name}`,
             sourcemap: true,
-            validate: true,
           },
         },
         sourcemap: true,
@@ -233,11 +232,6 @@ const getConfig = ({
         watch: process.argv.includes('--watch')
           ? {
               clearScreen: false,
-              chokidar: {
-                alwaysStat: true,
-                persistent: true,
-                usePolling: true,
-              },
             }
           : null,
       },
@@ -265,14 +259,6 @@ const getConfig = ({
         },
       },
       envDir: appRoot.path,
-      esbuild: {
-        sourcemap: !production,
-        target: ['esnext'],
-        treeShaking: true,
-        logOverride: { 'this-is-undefined-in-esm': 'silent' },
-        minifyWhitespace: env.mode === 'production',
-        minifyIdentifiers: env.mode === 'production',
-      },
       define: {
         'process.env': process.env,
       },

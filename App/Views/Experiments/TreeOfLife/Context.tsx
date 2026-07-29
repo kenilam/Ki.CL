@@ -17,9 +17,6 @@ import {
 // Routes
 import { useParams } from '@/Router';
 
-// Cache
-import { appendSubtrees } from './cache';
-
 // Chain
 import walkChain, { type Chain } from './chain';
 
@@ -72,18 +69,13 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
   });
 
   /*
-   * Graft each batch onto the tree already in the cache, so it keeps
-   * accumulating rather than only ever showing the last response. Apollo has
-   * written the response by the time this resolves, so the stitch reads the
-   * nodes back out of the cache from the same ids the fetch asked for.
+   * Apollo's normalised cache already merges each response into the tree it is
+   * accumulating — `TreeOfLifeNode` is keyed on `nodeId`, so a node fetched
+   * twice is one entity and new `ancestor`/`descendants` links land on it
+   * automatically. A hand-rolled stitch on top of that was measured to change
+   * nothing, so the fetch is the lazy query itself.
    */
-  const fetch: typeof lazy = async (...props) => {
-    const loaded = await lazy(...props);
-
-    appendSubtrees(...props);
-
-    return loaded;
-  };
+  const fetch = lazy;
 
   useEffect(() => {
     if (!params.nodeId) {
