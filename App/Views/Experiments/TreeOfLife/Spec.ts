@@ -1,6 +1,17 @@
 import type React from 'react';
 
-import type { Kicl_TreeOfLifeSubtreeHookResult } from 'api/provider';
+import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/provider';
+import type { useQuery } from '@apollo/client/react';
+
+/**
+ * The subtree query's result, as Apollo types it.
+ *
+ * Indexed off `useQuery.Result` rather than restated: Apollo Client 4 infers
+ * everything from the `TypedDocumentNode` handed to the hook, and it removed
+ * `ApolloError` outright, so naming the error type here would be inventing a
+ * name the library no longer has.
+ */
+type SubtreeResult = useQuery.Result<Kicl_TreeOfLifeSubtreeQuery>;
 
 /** Route params for the node route — mirrors `PARAM` in `./constants`. */
 export type Params = {
@@ -27,16 +38,16 @@ export type TaxonNode = {
  * Value the provider supplies: the route params as they are, plus the subtree
  * query for whichever node they name.
  *
- * The query members are indexed off the generated hook result rather than
+ * The query members are indexed off Apollo's own result type rather than
  * restated, so regenerating `@mf-types/api` after a schema change carries
  * through here instead of drifting.
  */
 export type Context = {
   /** `useParams` makes every key optional — a param exists once it matches. */
   params: Readonly<Partial<Params>>;
-  data: Kicl_TreeOfLifeSubtreeHookResult['data'];
-  loading: Kicl_TreeOfLifeSubtreeHookResult['loading'];
-  error: Kicl_TreeOfLifeSubtreeHookResult['error'];
+  data: SubtreeResult['data'];
+  loading: SubtreeResult['loading'];
+  error: SubtreeResult['error'];
   /**
    * Look a node up by id in whatever subtree is currently loaded. Consumers
    * hold ids rather than node objects, so nothing can render from a copy that

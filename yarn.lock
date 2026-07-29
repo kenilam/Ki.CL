@@ -1689,16 +1689,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@module-federation/vite@npm:^1.1.0":
-  version: 1.19.1
-  resolution: "@module-federation/vite@npm:1.19.1"
+"@module-federation/vite@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "@module-federation/vite@npm:1.20.0"
   dependencies:
     "@module-federation/dts-plugin": "npm:2.8.0"
     "@module-federation/runtime": "npm:2.8.0"
     "@module-federation/sdk": "npm:2.8.0"
   peerDependencies:
     vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-  checksum: 10c0/1e6cfac739ae187c3af6e7695f76a92fb751c98c9bf03894c3ad5ecc37b8a90ccc06c6ca8523e31f6cffbe2f98d6e4e5b23feaceae848174da26a33c0d52c450
+  checksum: 10c0/e6f88c45b4956e6508cc10ec18a75a874b48bbabadcd6f764b1f159beb55f61ad1b71ecd842130760c35208726b23673eae1ef99283bb84d03ef2cfa5dba6f44
   languageName: node
   linkType: hard
 
@@ -3773,7 +3773,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app.client@workspace:App/.Client"
   dependencies:
-    "@module-federation/vite": "npm:^1.1.0"
+    "@module-federation/vite": "npm:^1.20.0"
     "@rollup/plugin-dynamic-import-vars": "npm:2.1.5"
     "@rollup/plugin-terser": "npm:^0.4.4"
     "@types/glob": "npm:8.1.0"
@@ -8740,7 +8740,6 @@ __metadata:
     ts-node: "npm:10.9.2"
     tslib: "npm:2.8.1"
     typescript: "npm:7"
-    vite-plugin-oxlint: "npm:^2.1.2"
     yargs: "npm:18.1.0"
   languageName: unknown
   linkType: soft
@@ -10604,13 +10603,6 @@ __metadata:
     registry-url: "npm:^5.0.0"
     semver: "npm:^6.2.0"
   checksum: 10c0/60c29fe357af43f96c92c334aa0160cebde44e8e65c1e5f9b065efb3f501af812f268ec967a07757b56447834ef7f71458ebbab94425a9f09c271f348f9b764f
-  languageName: node
-  linkType: hard
-
-"package-manager-detector@npm:^1.6.0":
-  version: 1.8.0
-  resolution: "package-manager-detector@npm:1.8.0"
-  checksum: 10c0/4c8e2c47fdc874465d3b3b11934401db9d73470ccbdabeb092e46cb94abbc491d5befc8c271b5ea1ae9c6a881f44c2997e011873365bde9fd6c3dc001221ff7a
   languageName: node
   linkType: hard
 
@@ -14599,19 +14591,6 @@ __metadata:
   peerDependencies:
     vite: ">=3"
   checksum: 10c0/75769450dc54d756da3d0d00e005572dcdce84c12bd90f6b598fdba98be1e9fd59acea3854e30702bc198bf9c84e6235a91c0c2c521e885ada350b63d5686f68
-  languageName: node
-  linkType: hard
-
-"vite-plugin-oxlint@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "vite-plugin-oxlint@npm:2.1.2"
-  dependencies:
-    cross-spawn: "npm:^7.0.6"
-    package-manager-detector: "npm:^1.6.0"
-  peerDependencies:
-    oxlint: ">=0.9.0"
-    vite: ">=5.0.0"
-  checksum: 10c0/e2e715ba6072be193e171f6f6a52f383f07f8c35e797e0e8194f37f8c693a2256fb6f061777d3a97ef8f585c4eb74cd478851f19efad874890d7d5fd4fc95aef
   languageName: node
   linkType: hard
 

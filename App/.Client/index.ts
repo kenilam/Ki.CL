@@ -7,7 +7,6 @@ import { glob } from 'glob';
 import { defineConfig, UserConfig } from 'vite';
 
 import checker from 'vite-plugin-checker';
-import oxlint from 'vite-plugin-oxlint';
 import dynamicImport from 'vite-plugin-dynamic-import';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import inspect from 'vite-plugin-inspect';
@@ -148,9 +147,30 @@ const getConfig = ({
       plugins.push(
         checker({
           root: `${appRoot.path}/App`,
+          /*
+           * Both run through the one checker rather than a second plugin — it
+           * has native oxlint support and reports them together.
+           *
+           * This version takes a `lintCommand`, not the `fix`/`quiet`/
+           * `configFile` options documented against later releases. `--fix`
+           * matches what the eslint arm did in dev; `.oxlintrc.json` is found
+           * by default.
+           */
+          oxlint: {
+            lintCommand: 'oxlint --fix',
+            /*
+             * Errors only in the overlay. `exhaustive-deps` is deliberately a
+             * warning — several of its findings are intentional — and the
+             * default logLevel includes warnings, which put a blocking panel
+             * over the app for something we have already decided about. They
+             * still print to the terminal.
+             */
+            dev: {
+              logLevel: ['error'],
+            },
+          },
           typescript: true,
         }),
-        oxlint(),
         mkcert({
           hosts: [configJSON.host, `${configJSON.host}.${configJSON.domain}`],
         }),

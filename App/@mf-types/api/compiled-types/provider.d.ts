@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApolloClient, type NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient } from '@apollo/client';
 interface KiclProviderProps {
   uri?: string;
   /** WebSocket URL. Defaults to uri with http→ws. */
@@ -9,7 +9,7 @@ interface KiclProviderProps {
 export declare function getKiclClient(
   uri?: string,
   wsUri?: string
-): ApolloClient<NormalizedCacheObject>;
+): ApolloClient;
 export declare function KiclProvider({
   uri,
   wsUri,

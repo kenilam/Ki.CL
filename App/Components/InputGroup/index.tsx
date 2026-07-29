@@ -70,7 +70,7 @@ const InputGroupButton = React.forwardRef<
     }
     unstyled={variant === 'ghost' || variant === 'link'}
     className={classNames(`${CLASS_NAME}__button`, className)}
-    {...rest}
+    {...(rest as React.ComponentProps<typeof Button>)}
   />
 ));
 

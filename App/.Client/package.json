@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "@module-federation/vite": "^1.1.0",
+    "@module-federation/vite": "^1.20.0",
     "@rollup/plugin-dynamic-import-vars": "2.1.5",
     "@rollup/plugin-terser": "^0.4.4",
     "@vite/vitejs-client": "2.2.10",

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import {
-  TaxonVisualStatus,
-  useKicl_TaxonVisual,
-  useKicl_TaxonVisualUpdated,
-  useKicl_TreeOfLifeSubtreeLazyQuery,
+  useQuery,
+  useSubscription,
+  useLazyQuery,
+  skipToken,
+  Kicl_TaxonVisualDocument,
+  Kicl_TaxonVisualUpdatedDocument,
+  Kicl_TreeOfLifeSubtreeDocument,
 } from 'api/provider';
 
 import { Image, Layout, Skeleton, Status, Text } from '@/Components';
@@ -36,9 +39,7 @@ const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v14';
 
 function disclaimerForScore(
   score:
-    | { overall: number; taxonMatch: number; pass: boolean }
-    | null
-    | undefined
+    { overall: number; taxonMatch: number; pass: boolean } | null | undefined
 ): string {
   if (!score) {
     return DISCLAIMER_DEFAULT;
@@ -94,7 +95,9 @@ const TaxonVisualPanel: React.FC<Props> = ({
   } | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
-  const [fetchSubtree] = useKicl_TreeOfLifeSubtreeLazyQuery();
+  const [fetchSubtree] = useLazyQuery(Kicl_TreeOfLifeSubtreeDocument, {
+    fetchPolicy: 'network-only',
+  });
 
   useEffect(() => {
     if (!eligible || ottId == null || !name) {
@@ -111,10 +114,10 @@ const TaxonVisualPanel: React.FC<Props> = ({
     };
   }, [eligible, ottId, name, rank]);
 
-  const { data, loading, error } = useKicl_TaxonVisual(
+  const { data, loading, error } = useQuery(
+    Kicl_TaxonVisualDocument,
     debounced
       ? {
-          skip: false,
           variables: {
             ottId: debounced.ottId,
             name: debounced.name,
@@ -122,27 +125,31 @@ const TaxonVisualPanel: React.FC<Props> = ({
           },
           fetchPolicy: 'network-only',
         }
-      : { skip: true }
+      : skipToken
   );
 
   const queryVisual = data?.TaxonVisual;
   const awaitingGeneration =
     Boolean(debounced) &&
     !error &&
-    (!queryVisual || queryVisual.status === TaxonVisualStatus.Pending);
+    (!queryVisual || queryVisual.status === 'PENDING');
 
-  const { data: subscriptionData } = useKicl_TaxonVisualUpdated(
-    awaitingGeneration && debounced
-      ? {
-          skip: false,
-          variables: { ottId: debounced.ottId },
-        }
-      : { skip: true }
+  const { data: subscriptionData } = useSubscription(
+    Kicl_TaxonVisualUpdatedDocument,
+    {
+      /*
+       * `useSubscription` has no `skipToken` equivalent — that is a `useQuery`
+       * affordance — so it keeps the `skip` option, which means variables have
+       * to satisfy the type even on the skipped pass.
+       */
+      variables: { ottId: debounced?.ottId ?? 0 },
+      skip: !(awaitingGeneration && debounced),
+    }
   );
 
   const visual = subscriptionData?.TaxonVisualUpdated ?? queryVisual;
   const settled =
-    visual && visual.status !== TaxonVisualStatus.Pending
+    visual && visual.status !== 'PENDING'
       ? `${visual.status}:${visual.ottId}:${visual.nodeId ?? ''}`
       : null;
 
@@ -163,7 +170,6 @@ const TaxonVisualPanel: React.FC<Props> = ({
           variables: visualOttId
             ? { ottId: visualOttId, heightLimit: 1 }
             : { nodeId, heightLimit: 1 },
-          fetchPolicy: 'network-only',
         });
         const raw = result.data?.TreeOfLifeSubtree;
         if (!cancelled && raw?.nodeId) {
@@ -196,28 +202,21 @@ const TaxonVisualPanel: React.FC<Props> = ({
 
   const imageUrl = node.asset?.url ?? null;
   const status = node.visualStatus ?? visual?.status;
-  const failed =
-    Boolean(error) ||
-    status === TaxonVisualStatus.Error ||
-    status === TaxonVisualStatus.Exhausted;
+  const failed = Boolean(error) || status === 'ERROR' || status === 'EXHAUSTED';
 
   const isGenerating =
     !imageUrl &&
     !failed &&
     (!debounced || loading || refreshing || awaitingGeneration || !visual);
 
-  if (
-    error ||
-    status === TaxonVisualStatus.Error ||
-    status === TaxonVisualStatus.Exhausted
-  ) {
+  if (error || status === 'ERROR' || status === 'EXHAUSTED') {
     return (
       <Status
         in
         level='warning'
         title='Oops!'
         message={
-          status === TaxonVisualStatus.Exhausted
+          status === 'EXHAUSTED'
             ? EXHAUSTED_MESSAGE
             : error
               ? 'Could not load visual.'

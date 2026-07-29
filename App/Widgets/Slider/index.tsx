@@ -45,7 +45,11 @@ const Component: React.FunctionComponent<PropsWithChildren<SliderProps>> = ({
     return null;
   }
 
-  const { children, ...props } = element.props;
+  // React 19 types `props` as `unknown`; name the shape this reads from it.
+  const { children, ...props } = element.props as Record<string, unknown> & {
+    children?: React.ReactNode;
+    className?: string;
+  };
 
   const Nodes = React.Children.toArray(children)
     .map((child) => {
@@ -62,7 +66,7 @@ const Component: React.FunctionComponent<PropsWithChildren<SliderProps>> = ({
     {
       ...props,
       className: classNames(
-        element.props.className,
+        props.className,
         'keen-slider',
         `${CLASS_NAME}--container`
       ),

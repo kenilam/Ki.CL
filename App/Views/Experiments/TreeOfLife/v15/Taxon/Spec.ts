@@ -1,5 +1,5 @@
 import type { Vector3Tuple } from 'three';
-import type { Kicl_TreeOfLifeSubtreeData } from 'api/provider';
+import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/provider';
 
 /**
  * One taxon as the query returns it. `TreeOfLifeSubtree` is nullable — the
@@ -7,7 +7,7 @@ import type { Kicl_TreeOfLifeSubtreeData } from 'api/provider';
  * a node, so the null is stripped here rather than guarded at every use.
  */
 export type Taxon = NonNullable<
-  Kicl_TreeOfLifeSubtreeData['TreeOfLifeSubtree']
+  Kicl_TreeOfLifeSubtreeQuery['TreeOfLifeSubtree']
 >;
 
 /** What a taxon reports once it has finished arriving or leaving. */

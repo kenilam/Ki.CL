@@ -10,8 +10,10 @@ import React, {
 
 // API
 import {
-  useKicl_TreeOfLifeSubtree,
-  useKicl_TreeOfLifeSubtreesLazyQuery,
+  useQuery,
+  useLazyQuery,
+  Kicl_TreeOfLifeSubtreeDocument,
+  Kicl_TreeOfLifeSubtreesDocument,
 } from 'api/provider';
 
 // Routes
@@ -59,14 +61,20 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
    */
   const [animate, setAnimate] = useState(false);
 
-  const { data, ...TreeOfLifeSubtree } = useKicl_TreeOfLifeSubtree({
-    variables: { nodeId: params.nodeId },
-    fetchPolicy: 'cache-first',
-  });
+  const { data, ...TreeOfLifeSubtree } = useQuery(
+    Kicl_TreeOfLifeSubtreeDocument,
+    {
+      variables: { nodeId: params.nodeId },
+      fetchPolicy: 'cache-first',
+    }
+  );
 
-  const [lazy, TreeOfLifeSubtreeLazy] = useKicl_TreeOfLifeSubtreesLazyQuery({
-    fetchPolicy: 'cache-first',
-  });
+  const [lazy, TreeOfLifeSubtreeLazy] = useLazyQuery(
+    Kicl_TreeOfLifeSubtreesDocument,
+    {
+      fetchPolicy: 'cache-first',
+    }
+  );
 
   /*
    * Apollo's normalised cache already merges each response into the tree it is

@@ -103,7 +103,19 @@ const List = React.forwardRef<HTMLOListElement | HTMLUListElement, Spec.Props>(
         justifyItems={justifyItems}
         wrap={wrap}
       >
-        <Switch {...rest} className={className} is={is} ref={ref}>
+        {/*
+          `is` arrives as the whole union, so TypeScript cannot pick the
+          matching branch of the polymorphic props through a spread. The value
+          is correct by construction; only the narrowing is lost.
+        */}
+        <Switch
+          {...({
+            ...rest,
+            className,
+            is,
+          } as React.ComponentProps<typeof Switch>)}
+          ref={ref}
+        >
           {children}
         </Switch>
       </Layout>

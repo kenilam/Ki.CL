@@ -51,15 +51,15 @@
 }
 
 .kicl-background-color-body-color {
-  background-color: var(kicl-body-color);
+  background-color: var(--kicl-body-color);
 }
 
 .kicl-color-body-color {
-  color: var(kicl-body-color);
+  color: var(--kicl-body-color);
 }
 
 .kicl-fill-body-color {
-  fill: var(kicl-body-color);
+  fill: var(--kicl-body-color);
 }
 
 @mixin make-color-variable-class($identifier: null) {
