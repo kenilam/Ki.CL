@@ -26,9 +26,6 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 
-// Analytic
-import { TagManager } from '@/Analytic';
-
 // Hooks
 import useMatchPattern, { Props as MatchPatternProps } from './useMatchPattern';
 
@@ -39,8 +36,6 @@ import MatchedRoute from './MatchedRoute';
 
 const Router: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   const router = createBrowserRouter(createRoutesFromElements(children));
-
-  router.subscribe(TagManager.routerSubscriber);
 
   return (
     <>

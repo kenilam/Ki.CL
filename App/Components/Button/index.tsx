@@ -3,9 +3,6 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Analytic
-import * as Analytic from '@/Analytic';
-
 // Components
 import { getHyperLinkClassNames, Layout } from '@/Components';
 
@@ -83,12 +80,6 @@ const Button = React.forwardRef<HTMLButtonElement, Spec.Props>(
       [`${CLASS_NAME}--look-like-hyperlink`]: lookLikeHyperLink && !unstyled,
     });
 
-    const onClick: typeof clickHandler = (event) => {
-      Analytic.onClick(event);
-
-      clickHandler?.(event);
-    };
-
     return (
       <Layout
         alignContent={alignContent}
@@ -102,7 +93,7 @@ const Button = React.forwardRef<HTMLButtonElement, Spec.Props>(
           {...rest}
           className={className}
           disabled={disabled}
-          onClick={onClick}
+          onClick={clickHandler}
           ref={ref}
           tabIndex={disabled ? -1 : undefined}
           type={type}

@@ -1,8 +1,0 @@
-{
-  "name": "api.open-tree-of-life",
-  "version": "0.0.1",
-  "type": "module",
-  "dependencies": {
-    "newick-js": "^1.2.1"
-  }
-}
