@@ -6,9 +6,6 @@ import classNames from 'classnames';
 // Routes
 import { NavLink } from '@/Router';
 
-// Analytic
-import * as Analytic from '@/Analytic';
-
 // Components
 import { getButtonClassNames, Layout, Text } from '@/Components';
 
@@ -66,8 +63,6 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
         event.preventDefault();
         return;
       }
-
-      Analytic.onClick(event);
 
       if (status.isHash) {
         event.preventDefault();

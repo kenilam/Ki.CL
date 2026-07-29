@@ -7,12 +7,7 @@ import '@/Core';
 // App
 import App from '@/App';
 
-// Sentry
-import * as Analytic from '@/Analytic';
-
 (() => {
-  Analytic.init();
-
   const appRoot = document.querySelector('app-root');
 
   if (!appRoot) {

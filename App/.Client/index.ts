@@ -14,7 +14,6 @@ import mkcert from 'vite-plugin-mkcert';
 import react from '@vitejs/plugin-react';
 import stylelint from 'vite-plugin-stylelint';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { VitePluginRadar } from 'vite-plugin-radar';
 import terser from '@rollup/plugin-terser';
 import { federation } from '@module-federation/vite';
 
@@ -141,12 +140,6 @@ const getConfig = ({
         // Runtime Vite aliases only — `api/*` stays a TS path to `@mf-types`
         // and must not shadow the Module Federation remote.
         projects: [`${appRoot.path}/App/tsconfig.vite.json`],
-      }),
-      VitePluginRadar({
-        // Google Analytics tag injection
-        analytics: {
-          id: String(process.env.GA_TRACKING_CODE),
-        },
       }),
     ];
 
