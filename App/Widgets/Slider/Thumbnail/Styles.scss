@@ -1,14 +1,7 @@
 :root {
-  --kicl--widgets--slider--thumbnail--button--color: var(
-    --kicl--widgets--slider--color
-  );
-  --kicl--widgets--slider--thumbnail--button--transition-duration: var(
-    --kicl-transition-duration
-  );
+  --kicl--widgets--slider--thumbnail--button--transition-duration: var(--kicl-transition-duration);
   --kicl--widgets--slider--thumbnail--button--transition-property: filter;
-  --kicl--widgets--slider--thumbnail--button--transition-timing-function: var(
-    --kicl-ease-out
-  );
+  --kicl--widgets--slider--thumbnail--button--transition-timing-function: var(--kicl-ease-out);
   --kicl--widgets--slider--thumbnail--button--current--filter: brightness(0);
 }
 
@@ -28,20 +21,11 @@
   }
 
   button {
-    color: var(--kicl--widgets--slider--thumbnail--button--color);
     padding: var(--kicl-gutter-narrower);
-    transition-duration: var(
-      --kicl--widgets--slider--thumbnail--button--transition-duration
-    );
-    transition-property: var(
-      --kicl--widgets--slider--thumbnail--button--transition-property
-    );
-    transition-timing-function: var(
-      --kicl--widgets--slider--thumbnail--button--transition-timing-function
-    );
-    will-change: var(
-      --kicl--widgets--slider--thumbnail--button--transition-property
-    );
+    transition-duration: var(--kicl--widgets--slider--thumbnail--button--transition-duration);
+    transition-property: var(--kicl--widgets--slider--thumbnail--button--transition-property);
+    transition-timing-function: var(--kicl--widgets--slider--thumbnail--button--transition-timing-function);
+    will-change: var(--kicl--widgets--slider--thumbnail--button--transition-property);
 
     &[aria-disabled='true'] {
       filter: var(--kicl--widgets--slider--thumbnail--button--current--filter);

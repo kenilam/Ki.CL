@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 
 // Env
 import { EnvProvider, useEnvContext } from '@/Env/Client';
@@ -12,6 +12,10 @@ import { Spinner } from '@/Components';
 // View
 import View from '@/Views';
 
+const KiclProvider = lazy(() =>
+  import('api/provider').then(({ KiclProvider }) => ({ default: KiclProvider }))
+);
+
 const Contents: React.FunctionComponent = () => {
   const { loading } = useEnvContext();
 
@@ -20,9 +24,13 @@ const Contents: React.FunctionComponent = () => {
   }
 
   return (
-    <LocalStorageProvider>
-      <View />
-    </LocalStorageProvider>
+    <Suspense fallback={<Spinner />}>
+      <KiclProvider>
+        <LocalStorageProvider>
+          <View />
+        </LocalStorageProvider>
+      </KiclProvider>
+    </Suspense>
   );
 };
 

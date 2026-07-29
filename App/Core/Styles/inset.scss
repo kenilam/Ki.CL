@@ -1,0 +1,31 @@
+// Inset is a distance, so it has no keyword scale of its own — it borrows the
+// gutter scale, which is what every other spacing decision in the system is
+// measured in. Aliasing rather than restating keeps one source of truth: change
+// a gutter and the insets follow.
+// The logical longhands are generated alongside the shorthand because insetting
+// a corner (`inset-block-start` + `inset-inline-end`) is the common case, and
+// the shorthand cannot express it.
+$inset-properties:
+  inset, inset-block, inset-inline, inset-block-start, inset-block-end,
+  inset-inline-start, inset-inline-end;
+$inset-sizes: none, narrowest, narrower, narrow, wide, wider, widest, extreme;
+
+:root {
+  @each $property in $inset-properties {
+    --kicl-#{$property}: var(--kicl-gutter);
+    --kicl-#{$property}-auto: auto;
+
+    @each $size in $inset-sizes {
+      --kicl-#{$property}-#{$size}: var(--kicl-gutter-#{$size});
+    }
+  }
+}
+
+@each $property in $inset-properties {
+  @include make-variable-class($property);
+  @include make-variable-class($property, 'auto');
+
+  @each $size in $inset-sizes {
+    @include make-variable-class($property, $size);
+  }
+}

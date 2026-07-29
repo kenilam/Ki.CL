@@ -1,0 +1,55 @@
+.kicl--components--checkbox {
+  --kicl--components--checkbox--background-color: transparent;
+  --kicl--components--checkbox--border-color: var(--kicl-color-grey-darker);
+  --kicl--components--checkbox--border-radius: var(--kicl-size-half);
+  --kicl--components--checkbox--border-width: var(--kicl-size-1px);
+  --kicl--components--checkbox--checked-background: var(--kicl-color-grey-darker);
+  --kicl--components--checkbox--checked-color: var(--kicl-color-white-pure);
+  --kicl--components--checkbox--size: var(--kicl-size-2x);
+
+  align-items: center;
+  background-color: var(--kicl--components--checkbox--background-color);
+  border: var(--kicl--components--checkbox--border-width) solid
+    var(--kicl--components--checkbox--border-color);
+  border-radius: var(--kicl--components--checkbox--border-radius);
+  block-size: var(--kicl--components--checkbox--size);
+  color: var(--kicl--components--checkbox--checked-color);
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  inline-size: var(--kicl--components--checkbox--size);
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+
+  &--checked,
+  &--indeterminate {
+    --kicl--components--checkbox--background-color: var(--kicl--components--checkbox--checked-background);
+    --kicl--components--checkbox--border-color: var(--kicl--components--checkbox--checked-background);
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+
+  &[aria-invalid='true'] {
+    --kicl--components--checkbox--border-color: var(--kicl-color-error);
+  }
+
+  &__icon {
+    block-size: 0.85em;
+    inline-size: 0.85em;
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--checkbox--border-color: var(--kicl-color-grey);
+    --kicl--components--checkbox--checked-background: var(--kicl-color-white);
+    --kicl--components--checkbox--checked-color: var(--kicl-color-grey-darker);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--checkbox--border-color: var(--kicl-color-grey-darker);
+    --kicl--components--checkbox--checked-background: var(--kicl-color-grey-darker);
+    --kicl--components--checkbox--checked-color: var(--kicl-color-white-pure);
+  }
+}

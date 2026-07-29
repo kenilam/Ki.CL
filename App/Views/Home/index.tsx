@@ -12,7 +12,7 @@ const Contents = React.lazy(() => import('./Contents'));
 
 const Lazy: React.FunctionComponent = () => {
   return (
-    <Suspense fallback={<Spinner className='kicl--views--full-screen' />}>
+    <Suspense fallback={<Spinner />}>
       <Contents />
     </Suspense>
   );

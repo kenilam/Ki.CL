@@ -8,7 +8,6 @@
 
 .kicl--widgets--slider {
   padding-block: var(--kicl--widgets--slider--padding-block);
-  position: relative;
 
   &--container:not([data-keen-slider-disabled]) {
     overflow: visible;

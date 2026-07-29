@@ -1,0 +1,50 @@
+.kicl--views--experiments--tree-of-life--v15 {
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+
+  // r3f positions its canvas absolutely, so the stage is pinned to the box
+  // `Layout fullScreen` establishes rather than sized against it.
+  &__stage {
+    inset: 0;
+  }
+
+  // Screen-space label host. Positioned by `labels.tsx`, which does its own
+  // collision avoidance. `position` and `pointer-events` come from utility
+  // classes on the element itself.
+  &__labels {
+    inset: 0;
+    z-index: 1;
+  }
+
+  // `Badge` with `variant='outline'` supplies the chip itself — background,
+  // border, radius, padding, backdrop blur. What is left is only what a chip
+  // that *floats* needs: seated by transform from the origin, hidden until the
+  // frame loop finds it a clear seat, and never wrapping mid-name.
+  // Leaving is instant: this rule carries no transition, and a transition is
+  // read from the state being moved *into*.
+  &__label {
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+    white-space: nowrap;
+    will-change: transform;
+
+    // Arriving fades, after a pause. Seats are recontested every frame, so a
+    // label near a contested spot toggles repeatedly; the delay means a seat
+    // has to be held for a moment before anything is drawn, which swallows the
+    // flicker instead of rendering it as a smear of half-lit text. Coming back
+    // the other way there is nothing to swallow — the seat is already gone, so
+    // the label should be too.
+    &[data-seated='true'] {
+      opacity: 1;
+      transition: opacity var(--kicl-transition-duration-fast)
+        var(--kicl-transition-duration);
+    }
+  }
+
+  canvas {
+    touch-action: none;
+  }
+}

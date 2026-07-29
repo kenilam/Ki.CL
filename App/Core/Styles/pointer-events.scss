@@ -1,0 +1,37 @@
+// The last four values come from SVG, where the presentation attribute spells
+// them camelCase (`visiblePainted`). As CSS values they are ASCII
+// case-insensitive like every other keyword, so they are written lowercase
+// here to match the rest of the codebase.
+:root {
+  --kicl-pointer-events-all: all;
+  --kicl-pointer-events-auto: auto;
+  --kicl-pointer-events-fill: fill;
+  --kicl-pointer-events-none: none;
+  --kicl-pointer-events-painted: painted;
+  --kicl-pointer-events-stroke: stroke;
+  --kicl-pointer-events-visible: visible;
+  --kicl-pointer-events-visible-fill: visiblefill;
+  --kicl-pointer-events-visible-painted: visiblepainted;
+  --kicl-pointer-events-visible-stroke: visiblestroke;
+  --kicl-pointer-events-inherit: inherit;
+  --kicl-pointer-events-initial: initial;
+  --kicl-pointer-events-revert: revert;
+  --kicl-pointer-events-revert-layer: revert-layer;
+  --kicl-pointer-events-unset: unset;
+}
+
+@include make-variable-class('pointer-events', 'all');
+@include make-variable-class('pointer-events', 'auto');
+@include make-variable-class('pointer-events', 'fill');
+@include make-variable-class('pointer-events', 'none');
+@include make-variable-class('pointer-events', 'painted');
+@include make-variable-class('pointer-events', 'stroke');
+@include make-variable-class('pointer-events', 'visible');
+@include make-variable-class('pointer-events', 'visible-fill');
+@include make-variable-class('pointer-events', 'visible-painted');
+@include make-variable-class('pointer-events', 'visible-stroke');
+@include make-variable-class('pointer-events', 'inherit');
+@include make-variable-class('pointer-events', 'initial');
+@include make-variable-class('pointer-events', 'revert');
+@include make-variable-class('pointer-events', 'revert-layer');
+@include make-variable-class('pointer-events', 'unset');

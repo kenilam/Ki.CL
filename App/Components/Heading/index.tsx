@@ -24,7 +24,12 @@ const Heading = React.forwardRef<HTMLHeadingElement, Spec.Props>(
     const Component = is;
 
     return (
-      <Component {...rest} className={className} data-is={is} ref={ref}>
+      <Component
+        {...(rest as React.HTMLAttributes<HTMLHeadingElement>)}
+        className={className}
+        data-is={is}
+        ref={ref}
+      >
         {children}
       </Component>
     );

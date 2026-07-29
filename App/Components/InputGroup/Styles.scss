@@ -1,0 +1,96 @@
+.kicl--components--input-group {
+  --kicl--components--input-group--background-color: var(--kicl-color-white-pure);
+  --kicl--components--input-group--border-color: var(--kicl-color-grey-darker);
+  --kicl--components--input-group--border-radius: var(--kicl-gutter-narrower);
+  --kicl--components--input-group--border-width: var(--kicl-size-1px);
+  --kicl--components--input-group--gap: var(--kicl-gutter-narrowest);
+  --kicl--components--input-group--padding-block: var(--kicl-gutter-narrowest);
+  --kicl--components--input-group--padding-inline: var(--kicl-gutter-narrow);
+
+  align-items: center;
+  background-color: var(--kicl--components--input-group--background-color);
+  border: var(--kicl--components--input-group--border-width) solid
+    var(--kicl--components--input-group--border-color);
+  border-radius: var(--kicl--components--input-group--border-radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kicl--components--input-group--gap);
+  inline-size: 100%;
+  padding-block: var(--kicl--components--input-group--padding-block);
+  padding-inline: var(--kicl--components--input-group--padding-inline);
+
+  &:focus-within {
+    outline-color: var(--kicl-outline-color);
+    outline-style: dashed;
+    outline-width: var(--kicl-outline-width);
+  }
+
+  &:has([aria-invalid='true']) {
+    --kicl--components--input-group--border-color: var(--kicl-color-error);
+  }
+
+  &__addon {
+    align-items: center;
+    color: var(--kicl-body-color);
+    display: inline-flex;
+    flex-shrink: 0;
+    gap: var(--kicl-gutter-narrowest);
+
+    &--inline-start {
+      order: -1;
+    }
+
+    &--inline-end {
+      margin-inline-start: auto;
+    }
+
+    &--block-start {
+      flex-basis: 100%;
+      order: -2;
+    }
+
+    &--block-end {
+      flex-basis: 100%;
+      order: 2;
+    }
+  }
+
+  &__control {
+    --kicl--components--input--border-width: 0;
+    --kicl--components--input--padding-block: 0;
+    --kicl--components--input--padding-inline: 0;
+    --kicl--components--textarea--border-width: 0;
+    --kicl--components--textarea--padding-block: 0;
+    --kicl--components--textarea--padding-inline: 0;
+
+    background: transparent;
+    border: 0;
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    padding: 0;
+
+    // Group owns the dashed focus ring.
+    &:focus {
+      --kicl-outline-style: none;
+    }
+  }
+
+  &__text {
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  &__button {
+    --kicl-layout--inline-size: auto;
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--input-group--background-color: var(--kicl-color-grey-darker);
+    --kicl--components--input-group--border-color: var(--kicl-color-grey);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--input-group--background-color: var(--kicl-color-white-pure);
+    --kicl--components--input-group--border-color: var(--kicl-color-grey-darker);
+  }
+}

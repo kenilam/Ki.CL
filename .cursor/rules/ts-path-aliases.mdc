@@ -1,0 +1,30 @@
+---
+description: Prefer TypeScript path aliases over relative imports
+globs: App/**/*.{ts,tsx}
+alwaysApply: true
+---
+
+# TypeScript path aliases (Frontend)
+
+Prefer configured path aliases over `../` climbs. Same-folder `./` is fine.
+
+| Alias | Maps to | Use for |
+|-------|---------|---------|
+| `@/*` | `App/*` | App modules (`@/Components`, `@/Views/...`, `@/Icons`, …) |
+| `api` / `api/*` | federated remote types | GraphQL hooks/types from `api/provider` |
+| `^/*` | repo root | Rare cross-package paths outside App |
+
+```ts
+// ❌
+import { labelFor } from '../tree';
+import { Button } from '../../../Components';
+
+// ✅
+import { labelFor } from '@/Views/Experiments/TreeOfLife/tree';
+import { Button } from '@/Components';
+import { TaxonVisualStatus, useKicl_TaxonVisual } from 'api/provider';
+```
+
+When editing imports, rewrite reachable relatives to the matching alias in the same change.
+
+**Exception:** Vite/bootstrap config under `App/.Client` and `App/.Server` may keep relatives for JSON/config loaded before aliases exist (e.g. `getAlias.ts` → `../../tsconfig.json`).

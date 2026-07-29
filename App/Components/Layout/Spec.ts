@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type AlignContent =
   | 'baseline'
   | 'center'
@@ -223,7 +225,7 @@ export type Frames =
   | '1fr--1fr--2fr--8fr'
   | '1fr--1fr--1fr--9fr';
 
-export type Props = {
+export type Props = Pick<React.HTMLAttributes<HTMLElement>, 'className'> & {
   alignContent?: AlignContent;
   alignItems?: AlignItems;
   autoFlow?: AutoFlow;

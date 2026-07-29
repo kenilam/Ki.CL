@@ -39,7 +39,6 @@ const Status: React.FunctionComponent<Spec.Props> = ({
   const className = classNames(
     CLASS_NAME,
     {
-      [`kicl-color-${level}`]: level,
       [`kicl-text-align-${align}`]: align,
     },
     _className
@@ -60,7 +59,7 @@ const Status: React.FunctionComponent<Spec.Props> = ({
   const Title = <Text is='span'>{heading || TITLES.error}</Text>;
 
   const Messages = message ? (
-    <Text className='kicl-font-size-small kicl-color-white' is='p'>
+    <Text className='kicl-font-size-small kicl-color-grey-dark' is='p'>
       {message}
     </Text>
   ) : null;
@@ -84,7 +83,10 @@ const Status: React.FunctionComponent<Spec.Props> = ({
             justifyContent={align}
             justifyItems={align}
           >
-            <Heading is='h4'>
+            <Heading
+              className={level ? `kicl-color-${level}` : undefined}
+              is='h4'
+            >
               {Icon}
               {Title}
             </Heading>

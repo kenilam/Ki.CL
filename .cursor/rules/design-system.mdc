@@ -1,0 +1,76 @@
+---
+description: Prefer App Components + kicl utility classes over raw DOM and SCSS color/fill/font
+globs: App/**/*.{tsx,ts,scss}
+alwaysApply: true
+---
+
+# Design system: Components + utilities
+
+## Prefer `@/Components` over raw DOM
+
+When a shared component exists, use it instead of the raw element:
+
+| Need | Use |
+|------|-----|
+| Paragraph / inline copy | `Text` (`is`: p \| span \| blockquote \| q \| cite; `lookLike`: h* \| blockquote) |
+| Headings | `Heading` (`is="h1"`…`"h6"`) or `Text lookLike="h*"` |
+| Buttons | `Button` (`unstyled` when chrome is view-local) |
+| Labels / chips | `Badge` (`is`: span \| div \| a \| button \| li \| time \| mark \| abbr; `variant`: default \| secondary \| destructive \| outline \| ghost); nest `BadgeLabel` before the value for a keyed chip |
+| Surfaces / panels | `Card` (`is`: div \| aside \| article \| section \| form \| li; `size`: default \| xs \| sm \| md \| lg \| xl \| xxl \| max → `kicl-inline-size-*`) with `CardHeader` / `CardTitle` / `CardDescription` / `CardAction` / `CardContent` / `CardFooter` |
+| Lists | `List` / `ListItem` |
+| Layout / grid / flex | `Layout` (clones **one** child only) — never hand-roll `display: grid|flex` + `gap` / align / justify in view SCSS |
+| Images / status / forms | `Image`, `Skeleton`, `Status`, `Spinner`, `Form*`, `Input`, `InputGroup*`, `Textarea`, `Checkbox`, `RadioGroup` / `RadioGroupItem`, `Select*` , `DatePicker` (`Popover` + `Calendar`), `Switch`, `Details` + `Summary` (disclosure; `Summary` lives under Details) |
+
+Do not invent parallel wrappers. Exception: SVG-only nodes (`<text>`, `<circle>`, …) stay SVG; still attach `kicl-*` classes where they apply (`kicl-color-*`, `kicl-font-size*`).
+
+`Layout` owns stacking, gaps, alignment, and column frames (`frames`, `gap`, `autoFlow`, `justify*`, `align*`). View SCSS keeps positioning/chrome, not layout algorithms.
+
+## Prefer utility classes over SCSS for color / fill / type
+
+| Concern | Use in JSX `className` | Do **not** set in view SCSS |
+|---------|------------------------|-----------------------------|
+| Text color | `kicl-color-*` | `color: var(--kicl-color-*)` |
+| SVG / icons | `kicl-color-*` (global `svg { fill: currentcolor }`) | `fill:` / `kicl-fill-*` |
+| Position | `kicl-position-*` (absolute \| fixed \| relative \| …) | `position:` (including `var(--kicl-position-*)`) |
+| Inline size | `kicl-inline-size-*` (xs \| sm \| md \| lg \| xl \| xxl \| max) | `inline-size:` for those fixed widths |
+| Font size | `kicl-font-size` / `-smallest`…`-extreme` | `font-size: var(--kicl-font-size*)` |
+| Weight / family / line-height / align | matching `kicl-font-*` / `kicl-line-height-*` / `kicl-text-*` | same via `var(--kicl-*)` |
+
+`kicl-color-*` also sets `--kicl-body-color`. Do not use `kicl-fill-*` on SVGs or icon wrappers.
+
+## Spacing / size tokens (no invented calcs)
+
+For `padding`, `margin`, `inset*`, `border-radius`, `border-width`, prefer existing tokens — do **not** invent `calc(var(--kicl-*) * n)` scales:
+
+| Scale | Tokens |
+|-------|--------|
+| Gutter | `--kicl-gutter-none` … `-narrowest` `-narrower` `-narrow` `--kicl-gutter` `-wide` `-wider` `-widest` `-extreme` |
+| Size | `--kicl-size-hair` `-1px` `-2px` `-3px` `-half` `--kicl-size` `-2x`…`-20x` |
+| Inline size | `--kicl-inline-size-xs`…`-max` (aliases → size tokens; prefer `kicl-inline-size-*` in JSX) |
+
+```scss
+// ❌
+padding: calc(var(--kicl-gutter-narrow) * 1.7) var(--kicl-gutter);
+border: 1px solid …;
+border-radius: calc(var(--kicl-gutter-narrow) * 0.65);
+
+// ✅
+padding: var(--kicl-gutter);
+border: var(--kicl-size-1px) solid …;
+border-radius: var(--kicl-size-half);
+```
+
+`background` / `border-color` still use `var(--kicl-color-*)` in SCSS (`kicl-background-color-*` sets **fill**). SVG `stroke` halos stay as vars.
+
+## Rewrite legacy patterns
+
+If you touch UI that uses raw DOM or SCSS `color`/`fill`/`font-size` / invented spacing calcs, migrate in the same change.
+
+```tsx
+// ❌
+<p className="foo">…</p>
+// foo { color: var(--kicl-color-grey-dark); font-size: var(--kicl-font-size-small); }
+
+// ✅
+<Text className="foo kicl-font-size-small kicl-color-grey-dark">…</Text>
+```

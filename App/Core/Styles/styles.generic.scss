@@ -51,7 +51,8 @@ a,
 textarea,
 select,
 input,
-button {
+button,
+summary {
   outline-color: var(--kicl-outline-color);
   outline-style: var(--kicl-outline-style);
   outline-width: var(--kicl-outline-width);
@@ -97,7 +98,7 @@ input {
   white-space: nowrap;
 
   @at-root .kicl--theme--dark
-      &[type='date' i]::-webkit-calendar-picker-indicator {
+  &[type='date' i]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     outline-color: var(--kicl-outline-color);
     outline-style: var(--kicl-outline-style);

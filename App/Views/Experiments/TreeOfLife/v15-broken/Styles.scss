@@ -1,0 +1,91 @@
+.kicl--views--experiments--tree-of-life--v15 {
+  background-color: var(--kicl-body-background-color);
+  block-size: 100dvb;
+  inline-size: 100dvi;
+  max-block-size: 100dvb;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+
+  // r3f mounts its own wrapper div + canvas; it needs explicit fill or the
+  // canvas collapses to a narrow strip inside the grid cell. Scoped to the
+  // stage class on purpose — a bare `> div` also matched the fixed panel
+  // slot and, being more specific than a concatenated BEM class, silently
+  // reset its inset to 0.
+  &__stage {
+    block-size: 100%;
+    inline-size: 100%;
+    inset: 0;
+  }
+
+  canvas {
+    block-size: 100%;
+    display: block;
+    inline-size: 100%;
+    touch-action: none;
+  }
+
+  // Screen-space label host. Positioned by labels.tsx, which does its own
+  // collision avoidance — hence absolute children and no pointer events.
+  &__labels {
+    block-size: 100%;
+    inline-size: 100%;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__label {
+    background-color: var(--kicl-color-white);
+    border: var(--kicl-size-1px) solid var(--kicl-color-grey-light);
+    border-radius: var(--kicl-size);
+    color: var(--kicl-color-grey-darker);
+    font-size: var(--kicl-font-size-smaller);
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    padding: var(--kicl-gutter-narrowest) var(--kicl-gutter-narrow);
+    pointer-events: none;
+    position: absolute;
+    transition: opacity var(--kicl-transition-duration-fast);
+    white-space: nowrap;
+    will-change: transform;
+  }
+
+  // Single fixed host for search + details. Hugs its cards so it never
+  // blankets the canvas, and deliberately carries no overflow — clipping
+  // here was cutting off the Details plate.
+  &__panels {
+    inline-size: fit-content;
+    inset-block-start: var(--kicl-gutter-wide);
+    inset-inline-start: var(--kicl-gutter-wide);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  // Only the cards themselves take pointer events.
+  &__panel {
+    max-inline-size: 100%;
+    pointer-events: auto;
+    user-select: text;
+  }
+
+  // Top-right, inset clear of the edge and of the panels on the left.
+  &__status {
+    inline-size: auto;
+    inset-block-start: var(--kicl-gutter-wide);
+    inset-inline-end: var(--kicl-gutter-wide);
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  &__credit {
+    inset-block-end: var(--kicl-gutter-wide);
+    inset-inline-end: var(--kicl-gutter-wide);
+    inset-inline-start: var(--kicl-gutter-wide);
+    margin-inline: auto;
+    pointer-events: none;
+    width: fit-content;
+    z-index: 3;
+  }
+}

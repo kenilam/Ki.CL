@@ -29,7 +29,11 @@ const Contents: React.FunctionComponent = () => {
 
   const { isTablet } = useResponsive();
 
-  const className = classNames('kicl-font-size-small', CLASS_NAME);
+  const className = classNames(
+    'kicl-font-size-small',
+    'kicl-position-fixed',
+    CLASS_NAME
+  );
 
   return (
     <Layout

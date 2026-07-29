@@ -40,12 +40,14 @@ UL.displayName = 'List.UL';
 const Switch = React.forwardRef<
   HTMLOListElement | HTMLUListElement,
   Spec.Switch
->(({ is, ...props }, ref) => {
+>(({ is = 'ul', ...props }, ref) => {
+  const hostProps = props as React.HTMLAttributes<HTMLElement>;
+
   switch (is) {
     case 'ol':
       return (
         <OL
-          {...props}
+          {...hostProps}
           data-is={is}
           ref={ref as React.ForwardedRef<HTMLOListElement>}
         />
@@ -53,13 +55,15 @@ const Switch = React.forwardRef<
     case 'ul':
       return (
         <UL
-          {...props}
+          {...hostProps}
           data-is={is}
           ref={ref as React.ForwardedRef<HTMLUListElement>}
         />
       );
-    default:
-      throw new Error(`Unsupported node type: ${is}`);
+    default: {
+      const _exhaustive: never = is;
+      throw new Error(`Unsupported node type: ${_exhaustive}`);
+    }
   }
 });
 

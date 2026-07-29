@@ -1,13 +1,9 @@
 :root {
   --kicl--components--spinner--animation-delay: 0s;
-  --kicl--components--spinner--animation-duration: var(
-    --kicl-transition-duration-slowest
-  );
+  --kicl--components--spinner--animation-duration: var(--kicl-transition-duration-slowest);
   --kicl--components--spinner--animation-iteration-count: infinite;
   --kicl--components--spinner--animation-name: kicl--components--spinner;
-  --kicl--components--spinner--animation-timing-function: var(
-    --kicl-ease-expo-out
-  );
+  --kicl--components--spinner--animation-timing-function: var(--kicl-ease-expo-out);
   --kicl--components--spinner--backdrop-filter: none;
   --kicl--components--spinner--background-color: transparent;
   --kicl--components--spinner--position: relative;
@@ -16,9 +12,8 @@
   --kicl--components--spinner--inset-inline-start: initial;
   --kicl--components--spinner--inline-size: inherit;
   --kicl--components--spinner--svg--padding: 0;
-  --kicl--components--spinner--svg--scale: 1;
-  --kicl--components--spinner--svg--block-size: 100%;
-  --kicl--components--spinner--svg--inline-size: 100%;
+  --kicl--components--spinner--svg--block-size: var(--kicl-size-2x);
+  --kicl--components--spinner--svg--inline-size: var(--kicl-size-2x);
 }
 
 .kicl--components--spinner {
@@ -33,15 +28,21 @@
   &--icon {
     animation-delay: var(--kicl--components--spinner--animation-delay);
     animation-duration: var(--kicl--components--spinner--animation-duration);
-    animation-iteration-count: var(
-      --kicl--components--spinner--animation-iteration-count
-    );
+    animation-iteration-count: var(--kicl--components--spinner--animation-iteration-count);
     animation-name: var(--kicl--components--spinner--animation-name);
-    animation-timing-function: var(
-      --kicl--components--spinner--animation-timing-function
-    );
+    animation-timing-function: var(--kicl--components--spinner--animation-timing-function);
     block-size: var(--kicl--components--spinner--svg--block-size);
     inline-size: var(--kicl--components--spinner--svg--inline-size);
+  }
+
+  &--position--inline {
+    --kicl--components--spinner--block-size: auto;
+    --kicl--components--spinner--inline-size: auto;
+
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 0;
   }
 
   &--position--overlay:not(&--no-backdrop) {
@@ -76,18 +77,19 @@
     --kicl--components--spinner--background-color: unset;
   }
 
-  &--size--small &--icon {
-    --kicl--components--spinner--svg--scale: 0.8;
+  &--size--small {
+    --kicl--components--spinner--svg--block-size: var(--kicl-size);
+    --kicl--components--spinner--svg--inline-size: var(--kicl-size);
   }
 
-  &--size--smaller &--icon {
-    --kicl--components--spinner--svg--scale: 0.5;
+  &--size--smaller {
+    --kicl--components--spinner--svg--block-size: var(--kicl-size-half);
+    --kicl--components--spinner--svg--inline-size: var(--kicl-size-half);
   }
 }
 
 @keyframes kicl--components--spinner {
   to {
-    transform: rotate(360deg)
-      scale(var(--kicl--components--spinner--svg--scale));
+    transform: rotate(360deg);
   }
 }

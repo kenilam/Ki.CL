@@ -7,8 +7,17 @@ const tsPlugin = require('@typescript-eslint/eslint-plugin');
 
 module.exports = [
   {
+    // Generated / federated types — not hand-written source
+    ignores: [
+      '**/node_modules/**',
+      '**/Types/**',
+      '**/@mf-types/**',
+      '**/build/**',
+      '**/.Caches/**',
+    ],
+  },
+  {
     files: ['**/*.{ts,tsx}'],
-    ignores: ['**/node_modules/*', '**/Types/*'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: {

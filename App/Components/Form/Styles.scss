@@ -1,0 +1,38 @@
+.kicl--components--form {
+  display: grid;
+  gap: var(--kicl-gutter-narrow);
+
+  &__item {
+    display: grid;
+    gap: var(--kicl-gutter-narrowest);
+    min-inline-size: 0;
+  }
+
+  &__label {
+    letter-spacing: 0.01em;
+
+    &__required {
+      margin-inline-start: 0.2em;
+    }
+
+    @at-root .kicl--theme--dark & {
+      color: var(--kicl-color-white-dark);
+
+      --kicl-body-color: var(--kicl-color-white-dark);
+    }
+  }
+
+  &__description {
+    margin: 0;
+
+    @at-root .kicl--theme--dark & {
+      color: var(--kicl-color-white-darker);
+
+      --kicl-body-color: var(--kicl-color-white-darker);
+    }
+  }
+
+  &__message {
+    margin: 0;
+  }
+}

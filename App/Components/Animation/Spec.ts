@@ -53,13 +53,12 @@ export type AnimationStyles = {
   [name in AnimationStyle]?: AnimationStyle;
 };
 
-export type Props<Ref extends HTMLElement | undefined = undefined> =
-  PropsWithChildren<
-    Omit<CSSTransitionProps<Ref>, 'addEndListener' | 'key'> & {
-      animationEasing?: AnimationEasing;
-      animationKey?: string;
-      animationStyle?: AnimationStyle;
-      animationDelay?: number;
-      animationDuration?: AnimationDuration;
-    }
-  >;
+export type Props = PropsWithChildren<
+  Omit<CSSTransitionProps, 'addEndListener' | 'key'> & {
+    animationEasing?: AnimationEasing;
+    animationKey?: string;
+    animationStyle?: AnimationStyle;
+    animationDelay?: number;
+    animationDuration?: AnimationDuration;
+  }
+>;

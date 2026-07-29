@@ -40,12 +40,14 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
   ...rest
 }) => {
   const isOverlay = position === 'overlay';
+  // Overlay can stagger icon vs backdrop; inline indicators must appear
+  // immediately or short fetches never show a spinner.
+  const stagger = isOverlay ? DELAY : 0;
 
   const className = classNames(
     CLASS_NAME,
     {
       'kicl-font-size-large': isOverlay,
-      'kicl-font-size-normal': !isOverlay,
       [`${CLASS_NAME}--no-backdrop`]: !hasBackdrop,
       [`${CLASS_NAME}--position--${position}`]: position,
       [`${CLASS_NAME}--size--${size}`]: size,
@@ -53,11 +55,12 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
     _className
   );
 
-  const spinnerAnimationDelay = transitionIn ? DURATION : animationDuration;
-  const spinnerDelay = transitionIn ? animationDelay + DELAY : animationDelay;
+  const entering = Boolean(transitionIn);
+  const spinnerAnimationDelay = entering ? DURATION : animationDuration;
+  const spinnerDelay = entering ? animationDelay + stagger : animationDelay;
 
-  const wrapperAnimationDelay = transitionIn ? animationDuration : DURATION;
-  const wrapperDelay = transitionIn ? animationDelay : animationDelay + DELAY;
+  const wrapperAnimationDelay = entering ? animationDuration : DURATION;
+  const wrapperDelay = entering ? animationDelay : animationDelay + stagger;
 
   const Contents = (
     <Animation
@@ -67,12 +70,13 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
       in={transitionIn}
     >
       <Layout
+        display={isOverlay ? 'grid' : 'inline-grid'}
         alignContent='center'
         alignItems='center'
         justifyContent='center'
         justifyItems='center'
       >
-        <Text className={className} is='span' role='progressbar'>
+        <Text className={className} is='span' role='progressbar' unstyled>
           <Animation
             {...rest}
             animationDelay={spinnerDelay}
@@ -86,7 +90,7 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
             onExited={onExited}
             onExiting={onExiting}
           >
-            <Layout>
+            <Layout display={isOverlay ? 'grid' : 'inline-grid'}>
               <Text is='span'>
                 <Ri.RiLoader3Line className={`${CLASS_NAME}--icon`} />
               </Text>

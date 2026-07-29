@@ -1,0 +1,10 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "type": "module",
+  "workspaces": [
+    "Ensembl",
+    "OpenTreeOfLife",
+    "Unsplash"
+  ]
+}

@@ -4,7 +4,7 @@ import React from 'react';
 import * as Icons from '@/Icons';
 
 // Components
-import { Animation, HyperLink, Layout, Navigation } from '@/Components';
+import { HyperLink, Layout, Navigation } from '@/Components';
 
 const CLASS_NAME = 'kicl--views--home--header--aside';
 
@@ -22,6 +22,10 @@ const Aside: React.FunctionComponent = () => {
         <Navigation
           alignContent='center'
           alignItems='center'
+          animation={{
+            animationDelay: 800,
+            animationStyle: 'slide-from-bottom',
+          }}
           autoFlow='column'
           className='kicl-font-size-medium'
           justifyContent='center'
@@ -30,6 +34,7 @@ const Aside: React.FunctionComponent = () => {
           <HyperLink
             lookLikeButton
             size='small'
+            title='link to my LinkedIn profile'
             to='https://www.linkedin.com/in/kenilam'
             variant='ghost'
           >
@@ -38,21 +43,21 @@ const Aside: React.FunctionComponent = () => {
           <HyperLink
             lookLikeButton
             size='small'
+            title='link to my Github profile'
             to='https://github.com/kenilam'
             variant='ghost'
           >
             <Icons.Ri.RiGithubLine />
           </HyperLink>
-          <Animation>
-            <HyperLink
-              lookLikeButton
-              size='small'
-              to='mailto:hello@ki-cl.com'
-              variant='ghost'
-            >
-              <Icons.Ri.RiMailLine />
-            </HyperLink>
-          </Animation>
+          <HyperLink
+            lookLikeButton
+            size='small'
+            title='Send me a email'
+            to='mailto:hello@ki-cl.com'
+            variant='ghost'
+          >
+            <Icons.Ri.RiMailLine />
+          </HyperLink>
         </Navigation>
       </aside>
     </Layout>

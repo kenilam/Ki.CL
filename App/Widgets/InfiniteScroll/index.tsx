@@ -33,9 +33,14 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
 
     const uniqueClass = `${CLASS_NAME}--${id}`;
 
-    const className = classNames(CLASS_NAME, uniqueClass, {
-      [`${CLASS_NAME}--animation-direction--${direction}`]: direction,
-    });
+    const className = classNames(
+      CLASS_NAME,
+      uniqueClass,
+      'kicl-position-relative',
+      {
+        [`${CLASS_NAME}--animation-direction--${direction}`]: direction,
+      }
+    );
 
     const elementClassName = classNames(
       props.className,
@@ -81,7 +86,10 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
       <>
         {Style}
         <div className={className} ref={ref}>
-          <div className={`${CLASS_NAME}--wrapper`} ref={node}>
+          <div
+            className={`${CLASS_NAME}--wrapper kicl-position-absolute`}
+            ref={node}
+          >
             {Shadow}
             {Child}
             {Shadow}

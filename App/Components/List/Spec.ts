@@ -1,16 +1,12 @@
-import React from 'react';
+import type { LayoutProps } from '@/Components';
+import type { PolymorphicIsProps } from '@/Components/polymorphic';
 
-import { LayoutProps } from '@/Components';
+export type ListIs = 'ol' | 'ul';
 
-type Node =
-  | React.HTMLAttributes<HTMLOListElement>
-  | React.HTMLAttributes<HTMLUListElement>;
+export type Switch = PolymorphicIsProps<ListIs, object, 'ul'>;
 
-type Switch = Node & {
-  is?: Extract<keyof React.JSX.IntrinsicElements, 'ol' | 'ul'>;
-};
+export type Node = Switch;
 
-type Props = LayoutProps & Switch;
+export type Props = LayoutProps & Switch;
 
-export { type Node, type Props, type Switch };
 export default {};

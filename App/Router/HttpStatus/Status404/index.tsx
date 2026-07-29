@@ -52,7 +52,13 @@ const Status404: React.FunctionComponent = () => {
 
   return (
     <Animation>
-      <Layout alignContent='center' autoFlow='row' justifyItems='center'>
+      <Layout
+        alignContent='center'
+        alignItems='center'
+        justifyContent='center'
+        justifyItems='center'
+        fullScreen
+      >
         <section className={className}>
           <Layout
             alignContent='center'

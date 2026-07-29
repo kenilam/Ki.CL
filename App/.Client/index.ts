@@ -15,7 +15,8 @@ import react from '@vitejs/plugin-react';
 import stylelint from 'vite-plugin-stylelint';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { VitePluginRadar } from 'vite-plugin-radar';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
+import { federation } from '@module-federation/vite';
 
 import * as dotenv from 'dotenv';
 
@@ -27,6 +28,12 @@ import tsconfigJSON from '../tsconfig.json';
 dotenv.config({ path: `${appRoot.path}/.env` });
 
 const OPEN = `https://${configJSON.host}.${configJSON.domain}:${process.env.PORT}`;
+
+const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
+// Same-origin via Vite proxy — avoids mixed-content (HTTPS host → HTTP remote)
+// and CORS on ES module loads. Override with absolute URL in production if needed.
+const API_REMOTE_ENTRY =
+  process.env.KICL_API_REMOTE_ENTRY || '/client/remoteEntry.js';
 
 const imports = {
   scss: glob
@@ -75,12 +82,65 @@ const getConfig = ({
 
     console.log(`Running in ${env.mode} mode`);
 
+    const backendProxy: Proxy = {
+      '/api': {
+        target: BACKEND_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/graphql': {
+        target: BACKEND_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
+      '/client': {
+        target: BACKEND_URL,
+        changeOrigin: true,
+        secure: false,
+      },
+      '/assets': {
+        target: BACKEND_URL,
+        changeOrigin: true,
+        secure: false,
+      },
+    };
+
     const plugins: UserConfig['plugins'] = [
+      // Federation must run early so shared virtual modules exist before dep optimize
+      federation({
+        name: 'kicl',
+        // Client SPA host — avoid pulling Node SSR entry loaders into the browser graph.
+        target: 'web',
+        moduleParseIdleTimeout: 60,
+        remotes: {
+          api: {
+            type: 'module',
+            name: 'api',
+            entry: API_REMOTE_ENTRY,
+          },
+        },
+        shared: {
+          react: { singleton: true, eager: true, requiredVersion: '^19.0.0' },
+          'react-dom': {
+            singleton: true,
+            eager: true,
+            requiredVersion: '^19.0.0',
+          },
+          '@apollo/client': { singleton: true, requiredVersion: '^3.11.0' },
+        },
+        dts: {
+          consumeTypes: true,
+        },
+      }),
       dynamicImport(),
       inspect(),
       react(),
       tsconfigPaths({
-        root: `${appRoot.path}/App`,
+        // Runtime Vite aliases only — `api/*` stays a TS path to `@mf-types`
+        // and must not shadow the Module Federation remote.
+        projects: [`${appRoot.path}/App/tsconfig.vite.json`],
       }),
       VitePluginRadar({
         // Google Analytics tag injection
@@ -95,7 +155,7 @@ const getConfig = ({
         checker({
           root: `${appRoot.path}/App`,
           eslint: {
-            lintCommand: `eslint '${appRoot.path}/App/**/*.{js,jsx,ts,tsx}'`,
+            lintCommand: `eslint '${appRoot.path}/App/**/*.{js,jsx,ts,tsx}' --ignore-pattern '@mf-types/**'`,
             useFlatConfig: true,
             dev: {
               overrideConfig: {
@@ -143,7 +203,12 @@ const getConfig = ({
           },
           preserveEntrySignatures: 'allow-extension',
           plugins: [
-            dynamicImportVars(),
+            // App-local variable dynamic imports only — MF's ssrEntryLoader uses
+            // `import(/* @vite-ignore */ id)` which this plugin cannot analyze.
+            dynamicImportVars({
+              exclude: [/node_modules/],
+              warnOnError: true,
+            }),
             terser({
               compress: {
                 global_defs: {
@@ -169,15 +234,19 @@ const getConfig = ({
         },
         sourcemap: true,
         target: 'esnext',
-        watch: {
-          clearScreen: false,
-          chokidar: {
-            alwaysStat: true,
-            persistent: false,
-            usePolling: true,
-          },
-        },
-        write: true,
+        // Any non-null `build.watch` puts `vite build` into watch mode and the
+        // process can exit before Rollup finishes (especially with
+        // chokidar.persistent: false). Only enable when `--watch` is passed.
+        watch: process.argv.includes('--watch')
+          ? {
+              clearScreen: false,
+              chokidar: {
+                alwaysStat: true,
+                persistent: true,
+                usePolling: true,
+              },
+            }
+          : null,
       },
       clearScreen: false,
       css: {
@@ -215,21 +284,44 @@ const getConfig = ({
         'process.env': process.env,
       },
       logLevel: 'error',
+      // Shared MF packages must not be prebundled — esbuild would bake in
+      // virtual:mf loadShare imports that then fail at runtime from .vite/deps.
+      optimizeDeps: {
+        exclude: [
+          'react',
+          'react-dom',
+          'react/jsx-runtime',
+          'react/jsx-dev-runtime',
+          '@apollo/client',
+        ],
+      },
       plugins,
       preview: {
         open: OPEN,
         port: Number(process.env.PORT),
-        proxy,
+        proxy: {
+          ...backendProxy,
+          ...proxy,
+        },
       },
       publicDir: './Public',
       resolve: {
         alias: getAlias(tsconfig),
       },
       server: {
-        hmr: true,
+        host: `${config.host}.${config.domain}`,
+        hmr: {
+          protocol: 'wss',
+          host: `${config.host}.${config.domain}`,
+          port: Number(process.env.PORT),
+          clientPort: Number(process.env.PORT),
+        },
         open: OPEN,
         port: Number(process.env.PORT),
-        proxy,
+        proxy: {
+          ...backendProxy,
+          ...proxy,
+        },
         strictPort: true,
         watch: {
           alwaysStat: true,

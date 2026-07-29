@@ -9,9 +9,6 @@ import { Heading, HyperLink, Layout } from '@/Components';
 // Icons
 import { Logo } from '@/Icons';
 
-// Styles
-import './Styles.scss';
-
 // Spec
 import * as Spec from './Spec';
 
@@ -29,7 +26,7 @@ const SiteLogo: React.FunctionComponent<Spec.Props> = ({ ...props }) => {
         alignItems='center'
         justifyContent='center'
       >
-        <HyperLink className={`${CLASS_NAME}--hyper-link`} to='/' unstyled>
+        <HyperLink className='kicl-line-height-narrower' to='/' unstyled>
           <Logo />
         </HyperLink>
       </Layout>

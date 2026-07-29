@@ -1,0 +1,83 @@
+import React, { useEffect, useState } from 'react';
+
+import { hasSession, getApiKey, useKicl_ExchangeToken } from 'api/provider';
+
+import { Spinner, Text } from '@/Components';
+
+import Canvas from './v15';
+
+const INTROSPECTION_BODY = JSON.stringify({
+  operationName: 'IntrospectionQuery',
+  query: '{ __typename }',
+});
+
+async function ensureApiKeyCookie(): Promise<void> {
+  if (getApiKey()) {
+    return;
+  }
+
+  await fetch('/graphql', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: INTROSPECTION_BODY,
+  });
+}
+
+const TreeOfLife: React.FunctionComponent = () => {
+  const [sessionReady, setSessionReady] = useState(() => hasSession());
+  const [bootstrapError, setBootstrapError] = useState<string | null>(null);
+  const [exchangeToken] = useKicl_ExchangeToken();
+
+  useEffect(() => {
+    if (sessionReady) {
+      return;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        await ensureApiKeyCookie();
+
+        const apiKey = getApiKey();
+        await exchangeToken({
+          context: apiKey ? { headers: { 'x-api-key': apiKey } } : undefined,
+        });
+
+        if (!cancelled) {
+          setSessionReady(hasSession());
+          if (!hasSession()) {
+            setBootstrapError('Unable to establish an anonymous session');
+          }
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setBootstrapError(
+            error instanceof Error ? error.message : 'Session bootstrap failed'
+          );
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sessionReady, exchangeToken]);
+
+  if (bootstrapError) {
+    return (
+      <Text className='kicl-color-error kicl-font-size-small'>
+        {bootstrapError}
+      </Text>
+    );
+  }
+
+  if (!sessionReady) {
+    return <Spinner position='inline' />;
+  }
+
+  return <Canvas />;
+};
+
+export default TreeOfLife;

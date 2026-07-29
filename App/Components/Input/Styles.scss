@@ -1,0 +1,45 @@
+.kicl--components--input {
+  --kicl--components--input--background-color: var(--kicl-color-white-pure);
+  --kicl--components--input--border-color: var(--kicl-color-grey-darker);
+  --kicl--components--input--border-radius: var(--kicl-gutter-narrower);
+  --kicl--components--input--border-width: var(--kicl-size-1px);
+  --kicl--components--input--color: var(--kicl-body-color);
+  --kicl--components--input--padding-block: var(--kicl-gutter-narrowest);
+  --kicl--components--input--padding-inline: var(--kicl-gutter-narrow);
+
+  background-color: var(--kicl--components--input--background-color);
+  border: var(--kicl--components--input--border-width) solid
+    var(--kicl--components--input--border-color);
+  border-radius: var(--kicl--components--input--border-radius);
+  color: var(--kicl--components--input--color);
+  font: inherit;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  padding-block: var(--kicl--components--input--padding-block);
+  padding-inline: var(--kicl--components--input--padding-inline);
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &[aria-invalid='true'] {
+    --kicl--components--input--border-color: var(--kicl-color-error);
+  }
+
+  &[type='file'] {
+    padding-block: var(--kicl-gutter-narrowest);
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--input--background-color: var(--kicl-color-grey-darker);
+    --kicl--components--input--border-color: var(--kicl-color-grey);
+    --kicl--components--input--color: var(--kicl-body-color);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--input--background-color: var(--kicl-color-white-pure);
+    --kicl--components--input--border-color: var(--kicl-color-grey-darker);
+    --kicl--components--input--color: var(--kicl-color-grey-darker);
+  }
+}

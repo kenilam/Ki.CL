@@ -2,7 +2,6 @@
   --kicl--widgets--global-header--background-color: rgb(207 212 228 / 20%);
   --kicl--widgets--global-header--backdrop-filter: blur(var(--kicl-gutter));
   --kicl--widgets--global-header--block-size: 0;
-  --kicl--widgets--global-header--font-size: var(--kicl-font-size-small);
   --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-block-start: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-widest);
@@ -28,14 +27,12 @@
 
   backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
   background-color: var(--kicl--widgets--global-header--background-color);
-  font-size: var(--kicl--widgets--global-header--font-size);
   inline-size: var(--kicl--widgets--global-header--inline-size);
   inset-block-start: var(--kicl--widgets--global-header--top);
   inset-inline-start: var(--kicl--widgets--global-header--left);
   padding-block-end: var(--kicl--widgets--global-header--padding-block-end);
   padding-block-start: var(--kicl--widgets--global-header--padding-block-start);
   padding-inline: var(--kicl--widgets--global-header--padding-inline);
-  position: fixed;
   text-transform: uppercase;
   z-index: 100001;
 

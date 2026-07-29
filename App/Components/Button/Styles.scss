@@ -5,9 +5,21 @@
   --kicl--components--button--border-color: transparent;
   --kicl--components--button--border-radius: var(--kicl-gutter-narrow);
   --kicl--components--button--border-width: var(--kicl-size-hair);
+  --kicl--components--button--transition-duration: var(--kicl-transition-duration-fast);
+  --kicl--components--button--transition-property:
+    border-color, border-block, border-inline, border-radius, box-shadow, color,
+    filter, font-size, opacity, padding;
+  --kicl--components--button--transition-timing-function: var(--kicl-ease-quint-in-out);
 
   border-radius: var(--kicl--components--button--border-radius);
   overflow: hidden;
+
+  &#{&} {
+    transition-duration: var(--kicl--components--button--transition-duration);
+    transition-property: var(--kicl--components--button--transition-property);
+    transition-timing-function: var(--kicl--components--button--transition-timing-function);
+    will-change: var(--kicl--components--button--transition-property);
+  }
 
   @at-root .kicl--theme--dark & {
     --kicl-body-color: var(--kicl-color-grey-darker);

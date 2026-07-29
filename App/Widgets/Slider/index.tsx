@@ -112,7 +112,7 @@ const Component: React.FunctionComponent<PropsWithChildren<SliderProps>> = ({
 
   return (
     <Layout fullScreen justifyItems='center'>
-      <div className={CLASS_NAME}>
+      <div className={`${CLASS_NAME} kicl-position-relative`}>
         {Component}
         <Thumbnail {...rest} counts={Nodes.length} />
       </div>
