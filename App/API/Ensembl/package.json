@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "unsplash-js": "^7.0.19"
+    "unsplash-js": "7"
   }
 }
