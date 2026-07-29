@@ -1,0 +1,55 @@
+---
+description: Prefer CSS custom properties and design tokens in Frontend SCSS
+globs: App/**/*.{scss,css,tsx}
+alwaysApply: true
+---
+
+# CSS variables first
+
+When writing or editing Frontend styles/components, prefer CSS custom properties (design tokens and component vars) over raw lengths, `%` fills, or one-off calcs.
+
+## Do
+
+- Size icons/spinners/chrome with tokens: `var(--kicl-size-*)`, gutters `var(--kicl-gutter-*)`, durations `var(--kicl-transition-duration-*)`.
+- Position in JSX: `kicl-position-*` utility classes (see design-system rule) — do not set `position` in SCSS.
+- Component SCSS: define defaults on `:root` as `--kicl--components--{name}--*`, apply via `var(...)`, override those vars in modifiers — not duplicate property blocks with magic numbers.
+- Colors/fills/type in JSX: prefer `kicl-*` utility classes (see design-system rule); in SCSS backgrounds/borders still use `var(--kicl-color-*)`.
+
+```scss
+// ✅ Spinner icon — token, not parent %
+--kicl--components--spinner--svg--block-size: var(--kicl-size-2x);
+--kicl--components--spinner--svg--inline-size: var(--kicl-size-2x);
+
+// ✅ Modifier overrides the variable
+&--position--overlay {
+  --kicl--components--spinner--block-size: 100%;
+  --kicl--components--spinner--inline-size: 100%;
+}
+```
+
+```tsx
+// ✅ Position via utility class
+<div className="kicl-position-absolute" />
+```
+
+## Don't
+
+```scss
+// ❌ Icon fills the overlay container
+--kicl--components--spinner--svg--block-size: 100%;
+--kicl--components--spinner--svg--inline-size: 100%;
+
+// ❌ Position in SCSS (use `kicl-position-*` in JSX)
+position: absolute;
+position: var(--kicl-position-absolute);
+
+// ❌ Invented scales
+width: calc(var(--kicl-gutter) * 1.7);
+font-size: 14px;
+```
+
+## Spinner specifically
+
+- Overlay may be `100%` for the **backdrop** box only.
+- The **icon** stays a fixed token (`--kicl-size-2x` by default); size variants should adjust component vars / scale, not stretch to the parent.
+- Page/route loading fallbacks: prefer `position="inline"` when a full-bleed overlay isn’t intended.

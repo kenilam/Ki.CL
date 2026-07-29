@@ -1,11 +1,104 @@
 :root {
-  --kicl--components--image--block-size: auto;
-  --kicl--components--image--inline-size: 100%;
-  --kicl--components--image--object-fit: cover;
+  --kicl--components--details--content--opacity: 0;
+  --kicl--components--details--content--transition-duration: var(--kicl-transition-duration);
+  --kicl--components--details--content--transition-timing-function: var(--kicl-ease-quint-in-out);
+  --kicl--components--details--summary--margin-block-end: 0;
+  --kicl--components--details--summary--marker--inline-size: 1em;
+  --kicl--components--details--summary--marker--block-size: 1em;
+  --kicl--components--details--summary--marker--closed--opacity: 1;
+  --kicl--components--details--summary--marker--open--opacity: 0;
+  --kicl--components--details--summary--marker--transition-duration: var(--kicl-transition-duration-fast);
+  --kicl--components--details--summary--marker--transition-timing-function: var(--kicl-ease-quint-in-out);
 }
 
 .kicl--components--details {
-  block-size: var(--kicl--components--image--block-size);
-  inline-size: var(--kicl--components--image--inline-size);
-  object-fit: var(--kicl--components--image--object-fit);
+  display: block;
+
+  @supports (interpolate-size: allow-keywords) {
+    interpolate-size: allow-keywords;
+  }
+
+  // Native content slot — fade + height (height needs interpolate-size).
+  &::details-content {
+    block-size: 0;
+    opacity: var(--kicl--components--details--content--opacity);
+    overflow: clip;
+    transition-duration: var(--kicl--components--details--content--transition-duration);
+    transition-property: block-size, content-visibility, opacity;
+    transition-timing-function: var(--kicl--components--details--content--transition-timing-function);
+    transition-behavior: allow-discrete;
+  }
+
+  &[open]::details-content {
+    --kicl--components--details--content--opacity: 1;
+
+    block-size: auto;
+  }
+
+  &__summary {
+    align-items: start;
+    cursor: pointer;
+    display: flex;
+    gap: var(--kicl-gutter-narrow);
+    list-style: none;
+    margin-block-end: var(--kicl--components--details--summary--margin-block-end);
+    outline-color: var(--kicl-outline-color);
+    outline-style: var(--kicl-outline-style);
+    outline-width: var(--kicl-outline-width);
+    transition-duration: var(--kicl--components--details--content--transition-duration);
+    transition-property: margin-block-end;
+    transition-timing-function: var(--kicl--components--details--content--transition-timing-function);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::marker {
+      content: '';
+    }
+
+    &:focus,
+    &:focus-visible {
+      --kicl-outline-style: dashed;
+    }
+
+    &:focus:not(:focus-visible) {
+      --kicl-outline-style: none;
+    }
+  }
+
+  // Remix Line icons — same stroke language as RiCloseLine / Select.
+  &__marker {
+    align-self: center;
+    block-size: var(--kicl--components--details--summary--marker--block-size);
+    color: inherit;
+    display: grid;
+    flex-shrink: 0;
+    font-size: inherit;
+    inline-size: var(--kicl--components--details--summary--marker--inline-size);
+    margin-inline-start: auto;
+  }
+
+  &__marker-icon {
+    block-size: 100%;
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    transition-duration: var(--kicl--components--details--summary--marker--transition-duration);
+    transition-property: opacity;
+    transition-timing-function: var(--kicl--components--details--summary--marker--transition-timing-function);
+
+    &--closed {
+      opacity: var(--kicl--components--details--summary--marker--closed--opacity);
+    }
+
+    &--open {
+      opacity: var(--kicl--components--details--summary--marker--open--opacity);
+    }
+  }
+
+  &[open] > &__summary {
+    --kicl--components--details--summary--margin-block-end: var(--kicl-gutter-narrow);
+    --kicl--components--details--summary--marker--closed--opacity: 0;
+    --kicl--components--details--summary--marker--open--opacity: 1;
+  }
 }

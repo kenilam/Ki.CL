@@ -1,0 +1,80 @@
+.kicl--components--card {
+  --kicl--components--card--background-color: var(--kicl-color-white-pure);
+  --kicl--components--card--border-color: var(--kicl-color-grey-light);
+  --kicl--components--card--border-radius: var(--kicl-size-half);
+  --kicl--components--card--border-width: var(--kicl-size-1px);
+  --kicl--components--card--color: var(--kicl-body-color);
+  --kicl--components--card--spacing: var(--kicl-gutter);
+
+  background-color: var(--kicl--components--card--background-color);
+  border: var(--kicl--components--card--border-width) solid
+    var(--kicl--components--card--border-color);
+  border-radius: var(--kicl--components--card--border-radius);
+  color: var(--kicl--components--card--color);
+  display: flex;
+  flex-direction: column;
+  gap: var(--kicl--components--card--spacing);
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow: hidden;
+  padding: var(--kicl--components--card--spacing);
+
+  &--size--xs,
+  &--size--sm {
+    --kicl--components--card--spacing: var(--kicl-gutter-narrow);
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--card--background-color: var(--kicl-color-grey-darker);
+    --kicl--components--card--border-color: var(--kicl-color-grey-dark);
+    --kicl--components--card--color: var(--kicl-body-color);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--card--background-color: var(--kicl-color-white-pure);
+    --kicl--components--card--border-color: var(--kicl-color-grey-light);
+    --kicl--components--card--color: var(--kicl-body-color);
+  }
+}
+
+.kicl--components--card__header {
+  --kicl--components--card__header--gap: var(--kicl-gutter-narrow);
+
+  display: grid;
+  gap: var(--kicl--components--card__header--gap);
+  grid-auto-rows: min-content;
+
+  &:has([data-slot='card-action']) {
+    align-items: start;
+    grid-template-columns: 1fr auto;
+  }
+
+  &:has([data-slot='card-description']) {
+    grid-template-rows: auto auto;
+  }
+}
+
+.kicl--components--card__title {
+  margin: 0;
+}
+
+.kicl--components--card__description {
+  margin: 0;
+}
+
+.kicl--components--card__action {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+}
+
+.kicl--components--card__content {
+  min-inline-size: 0;
+}
+
+.kicl--components--card__footer {
+  align-items: center;
+  display: flex;
+  gap: var(--kicl-gutter-narrowest);
+  min-inline-size: 0;
+}

@@ -1,0 +1,68 @@
+// Single-keyword values only. The two-value syntax (`display: block flow`) is
+// omitted because an identifier per pair would run to dozens of classes, and
+// `run-in` because no engine implements it.
+:root {
+  --kicl-display-block: block;
+  --kicl-display-contents: contents;
+  --kicl-display-flex: flex;
+  --kicl-display-flow-root: flow-root;
+  --kicl-display-grid: grid;
+  --kicl-display-inline: inline;
+  --kicl-display-inline-block: inline-block;
+  --kicl-display-inline-flex: inline-flex;
+  --kicl-display-inline-grid: inline-grid;
+  --kicl-display-inline-table: inline-table;
+  --kicl-display-list-item: list-item;
+  --kicl-display-none: none;
+  --kicl-display-ruby: ruby;
+  --kicl-display-ruby-base: ruby-base;
+  --kicl-display-ruby-base-container: ruby-base-container;
+  --kicl-display-ruby-text: ruby-text;
+  --kicl-display-ruby-text-container: ruby-text-container;
+  --kicl-display-table: table;
+  --kicl-display-table-caption: table-caption;
+  --kicl-display-table-cell: table-cell;
+  --kicl-display-table-column: table-column;
+  --kicl-display-table-column-group: table-column-group;
+  --kicl-display-table-footer-group: table-footer-group;
+  --kicl-display-table-header-group: table-header-group;
+  --kicl-display-table-row: table-row;
+  --kicl-display-table-row-group: table-row-group;
+  --kicl-display-inherit: inherit;
+  --kicl-display-initial: initial;
+  --kicl-display-revert: revert;
+  --kicl-display-revert-layer: revert-layer;
+  --kicl-display-unset: unset;
+}
+
+@include make-variable-class('display', 'block');
+@include make-variable-class('display', 'contents');
+@include make-variable-class('display', 'flex');
+@include make-variable-class('display', 'flow-root');
+@include make-variable-class('display', 'grid');
+@include make-variable-class('display', 'inline');
+@include make-variable-class('display', 'inline-block');
+@include make-variable-class('display', 'inline-flex');
+@include make-variable-class('display', 'inline-grid');
+@include make-variable-class('display', 'inline-table');
+@include make-variable-class('display', 'list-item');
+@include make-variable-class('display', 'none');
+@include make-variable-class('display', 'ruby');
+@include make-variable-class('display', 'ruby-base');
+@include make-variable-class('display', 'ruby-base-container');
+@include make-variable-class('display', 'ruby-text');
+@include make-variable-class('display', 'ruby-text-container');
+@include make-variable-class('display', 'table');
+@include make-variable-class('display', 'table-caption');
+@include make-variable-class('display', 'table-cell');
+@include make-variable-class('display', 'table-column');
+@include make-variable-class('display', 'table-column-group');
+@include make-variable-class('display', 'table-footer-group');
+@include make-variable-class('display', 'table-header-group');
+@include make-variable-class('display', 'table-row');
+@include make-variable-class('display', 'table-row-group');
+@include make-variable-class('display', 'inherit');
+@include make-variable-class('display', 'initial');
+@include make-variable-class('display', 'revert');
+@include make-variable-class('display', 'revert-layer');
+@include make-variable-class('display', 'unset');

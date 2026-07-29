@@ -2,11 +2,10 @@
   inline-size: 100dvw;
   overflow: hidden;
   padding-inline: var(--kicl-gutter-extreme);
-  position: relative;
   text-wrap: balance;
 
   aside {
-    padding-block-start: var(--kicl-gutter-widest);
+    padding-block-start: var(--kicl-gutter-wide);
   }
 
   > * {

@@ -1,0 +1,41 @@
+:root {
+  --kicl--components--skeleton--aspect-ratio: auto;
+  --kicl--components--skeleton--background-color: var(--kicl-color-grey-lighter);
+  --kicl--components--skeleton--block-size: auto;
+  --kicl--components--skeleton--border-radius: var(--kicl-size-half);
+  --kicl--components--skeleton--inline-size: 100%;
+  --kicl--components--skeleton--animation-duration: var(--kicl-transition-duration-slower);
+  --kicl--components--skeleton--animation-name: kicl--components--skeleton--pulse;
+  --kicl--components--skeleton--animation-timing-function: var(--kicl-ease-quad-in-out);
+}
+
+.kicl--theme--dark {
+  --kicl--components--skeleton--background-color: var(--kicl-color-grey-dark);
+}
+
+.kicl--theme--light {
+  --kicl--components--skeleton--background-color: var(--kicl-color-grey-lighter);
+}
+
+.kicl--components--skeleton {
+  animation-duration: var(--kicl--components--skeleton--animation-duration);
+  animation-iteration-count: infinite;
+  animation-name: var(--kicl--components--skeleton--animation-name);
+  animation-timing-function: var(--kicl--components--skeleton--animation-timing-function);
+  aspect-ratio: var(--kicl--components--skeleton--aspect-ratio);
+  background-color: var(--kicl--components--skeleton--background-color);
+  block-size: var(--kicl--components--skeleton--block-size);
+  border-radius: var(--kicl--components--skeleton--border-radius);
+  inline-size: var(--kicl--components--skeleton--inline-size);
+}
+
+@keyframes kicl--components--skeleton--pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}

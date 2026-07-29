@@ -21,10 +21,11 @@ const Image: React.FunctionComponent<Spec.Props> = ({
   alt,
   data,
   isFullscreen = false,
+  loading = 'lazy',
   title,
   placeholder = (
     <Ri.RiFileUnknowLine
-      className={classNames('kicl-fill-warning', 'kicl-font-size-large')}
+      className={classNames('kicl-color-warning', 'kicl-font-size-large')}
     />
   ),
   onError: errorHandler,
@@ -32,14 +33,14 @@ const Image: React.FunctionComponent<Spec.Props> = ({
   onResize: resizeHandler,
   ...props
 }) => {
-  const [loading, isLoading] = useState(!!data);
+  const [loadingState, isLoading] = useState(!!data);
   const [error, setError] = useState<Error>();
 
   const className = classNames(
     CLASS_NAME,
     {
       [`${CLASS_NAME}--is-fullscreen`]: isFullscreen,
-      [`${CLASS_NAME}--is-loading`]: loading,
+      [`${CLASS_NAME}--is-loading`]: loadingState,
       [`${CLASS_NAME}--has-error`]: !!error,
     },
     props.className
@@ -80,12 +81,13 @@ const Image: React.FunctionComponent<Spec.Props> = ({
         <img
           src={data}
           alt={alt}
+          loading={loading}
           onResize={onResize}
           onLoad={onLoad}
           onError={onError}
         />
         <Animation
-          in={!loading && !!error}
+          in={!loadingState && !!error}
           animationDuration='faster'
           animationStyle='blur'
         >
@@ -96,7 +98,7 @@ const Image: React.FunctionComponent<Spec.Props> = ({
           </Layout>
         </Animation>
         <Spinner
-          in={loading && !error}
+          in={loadingState && !error}
           animationDuration='faster'
           size='smaller'
         />

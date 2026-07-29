@@ -1,4 +1,8 @@
 :root {
+  --kicl-transition-duration-1m: #{$speed * 100};
+  --kicl-transition-duration-30s: #{$speed * 50};
+  --kicl-transition-duration-15s: #{$speed * 25};
+  --kicl-transition-duration-6s: #{$speed * 10};
   --kicl-transition-duration-extreme: #{$speed * 8};
   --kicl-transition-duration-slowest: #{$speed * 1.8};
   --kicl-transition-duration-slower: #{$speed * 1.6};

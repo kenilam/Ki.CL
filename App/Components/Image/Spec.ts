@@ -6,7 +6,7 @@ export type Props = Omit<
 > &
   Pick<
     React.ImgHTMLAttributes<HTMLImageElement>,
-    'alt' | 'onError' | 'onLoad' | 'onResize'
+    'alt' | 'loading' | 'onError' | 'onLoad' | 'onResize'
   > & {
     isFullscreen?: boolean;
     placeholder?: React.ReactNode;

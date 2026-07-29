@@ -17,17 +17,14 @@
     transparent 100%
   );
   overflow: hidden;
-  position: relative;
 
   &--wrapper {
     display: grid;
     gap: var(--kicl-gutter-wide);
     grid-auto-flow: column;
-    position: absolute;
   }
 
   &--element {
-    animation-direction: backwards;
     animation-direction: var(
       --kicl--widgets--infinite-scroll--animation-direction
     );

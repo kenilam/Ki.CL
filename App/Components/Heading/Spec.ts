@@ -1,14 +1,14 @@
-import React, { PropsWithChildren } from 'react';
+import type { JSX, PropsWithChildren } from 'react';
 
-type Is = Extract<
-  keyof React.JSX.IntrinsicElements,
-  'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
->;
+import type { PolymorphicIsProps } from '@/Components/polymorphic';
 
-export type HTMLAttributes = React.JSX.IntrinsicElements[Is];
+export type HeadingIs = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-export type Props = Required<PropsWithChildren> &
-  HTMLAttributes & {
-    dense?: boolean;
-    is?: Is;
-  };
+type OwnProps = PropsWithChildren<{
+  dense?: boolean;
+}>;
+
+export type Props = PolymorphicIsProps<HeadingIs, OwnProps, 'h1'>;
+
+/** @deprecated Prefer element-specific props via `is` — kept for existing imports. */
+export type HTMLAttributes = JSX.IntrinsicElements[HeadingIs];

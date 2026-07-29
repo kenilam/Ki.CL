@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -60,6 +60,8 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
     },
     ref
   ) => {
+    const node = useRef<HTMLDialogElement>(null);
+
     const [transitionIn, setTransitionIn] = useState(open);
 
     useEffect(() => {
@@ -68,7 +70,7 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
       }
 
       setTransitionIn(open);
-    }, [open]);
+    }, [`${open}`]);
 
     const id = uuid();
 
@@ -86,40 +88,40 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
       uniqueClass
     );
 
-    const onEnter: AnimationProps['onEnter'] = (node, isAppear) => {
-      if (!node) {
+    const onEnter: AnimationProps['onEnter'] = (isAppear) => {
+      if (!node.current) {
         return;
       }
 
-      if (!node?.open) {
+      if (!node.current.open) {
         if (isModal) {
-          node?.showModal();
+          node.current.showModal();
         } else {
-          node?.show();
+          node.current.show();
         }
 
-        node.inert = true;
+        node.current.inert = true;
 
         return;
       }
 
-      onEnterHandler?.(node, isAppear);
+      onEnterHandler?.(isAppear);
     };
 
-    const onEntered: AnimationProps['onEntered'] = (node, isAppear) => {
-      if (!node) {
+    const onEntered: AnimationProps['onEntered'] = (isAppear) => {
+      if (!node.current) {
         return;
       }
 
-      node.inert = false;
+      node.current.inert = false;
 
-      onEnteredHandler?.(node, isAppear);
+      onEnteredHandler?.(isAppear);
     };
 
-    const onExited: AnimationProps['onExited'] = (node) => {
-      node?.close();
+    const onExited: AnimationProps['onExited'] = () => {
+      node.current?.close();
 
-      onExitedHandler?.(node);
+      onExitedHandler?.();
     };
 
     const onCancel: Spec.Props['onCancel'] = (event) => {
@@ -244,6 +246,7 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
         animationEasing={animationEasing}
         animationStyle={animationStyle}
         in={transitionIn}
+        nodeRef={node}
         onEnter={onEnter}
         onEntered={onEntered}
         onEntering={onEnteringHandler}

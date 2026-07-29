@@ -34,25 +34,30 @@ h6,
   will-change: var(--kicl-heading-transition-property);
 }
 
-.kicl-look-like-h1.kicl-look-like-h1,
-.kicl-look-like-h2.kicl-look-like-h2,
 .kicl-look-like-h3.kicl-look-like-h3,
 .kicl-look-like-h4.kicl-look-like-h4,
 .kicl-look-like-h5.kicl-look-like-h5,
 .kicl-look-like-h6.kicl-look-like-h6 {
-  & + & {
-    padding-block-start: var(--kicl-gutter-wide);
+  &--variant--secondary {
+    --kicl-heading-font-color: rgb(var(--kicl-body-color), 0.8);
+    --kicl-heading-font-size: calc(var(--kicl-font-size) * 0.8);
   }
 }
 
-h1,
 .kicl-look-like-h1.kicl-look-like-h1 {
   --kicl-heading-font-size: var(--kicl-font-size-large);
+
+  &--variant--secondary {
+    --kicl-heading-font-size: calc(var(--kicl-font-size-large) * 0.8);
+  }
 }
 
-h2,
 .kicl-look-like-h2.kicl-look-like-h2 {
   --kicl-heading-font-size: var(--kicl-font-size-medium);
+
+  &--variant--secondary {
+    --kicl-heading-font-size: calc(var(--kicl-font-size-medium) * 0.8);
+  }
 }
 
 h5,

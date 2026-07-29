@@ -1,0 +1,136 @@
+.kicl--components--badge {
+  --kicl--components--badge--background-color: var(--kicl-color-grey-darker);
+  --kicl--components--badge--border-color: transparent;
+  --kicl--components--badge--border-width: var(--kicl-size-1px);
+  --kicl--components--badge--color: var(--kicl-color-white-pure);
+  --kicl--components--badge--padding-block: var(--kicl-gutter-narrowest);
+  --kicl--components--badge--padding-inline: var(--kicl-gutter-narrow);
+
+  align-items: center;
+  background-color: var(--kicl--components--badge--background-color);
+  border: var(--kicl--components--badge--border-width) solid
+    var(--kicl--components--badge--border-color);
+  border-radius: var(--kicl-size-half);
+  color: var(--kicl--components--badge--color);
+  display: inline-flex;
+  gap: var(--kicl-gutter-narrowest);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  padding-block: var(--kicl--components--badge--padding-block);
+  padding-inline: var(--kicl--components--badge--padding-inline);
+  vertical-align: middle;
+  white-space: normal;
+
+  // Icons / spinner sit inline like shadcn data-icon slots.
+  :is(svg, .kicl--components--spinner) {
+    block-size: 1em;
+    flex-shrink: 0;
+    inline-size: 1em;
+  }
+
+  // Prefix inside the chip — trailing “:” before the value.
+  > .kicl--components--badge__label {
+    opacity: 0.72;
+
+    &::after {
+      content: ':';
+    }
+  }
+
+  &--variant--secondary {
+    --kicl--components--badge--background-color: var(--kicl-color-grey-light);
+    --kicl--components--badge--color: var(--kicl-color-grey-darker);
+  }
+
+  &--variant--destructive {
+    --kicl--components--badge--background-color: var(--kicl-color-error);
+    --kicl--components--badge--color: var(--kicl-color-white-pure);
+  }
+
+  &--variant--outline,
+  &--variant--ghost {
+    --kicl--components--badge--backdrop-filter: blur(var(--kicl-size-2x));
+
+    backdrop-filter: var(--kicl--components--badge--backdrop-filter);
+  }
+
+  &--variant--outline {
+    --kicl--components--badge--background-color: transparent;
+    --kicl--components--badge--border-color: var(--kicl-color-grey-dark);
+    --kicl--components--badge--color: var(--kicl-body-color);
+  }
+
+  &--variant--ghost {
+    --kicl--components--badge--background-color: transparent;
+    --kicl--components--badge--border-color: transparent;
+    --kicl--components--badge--color: var(--kicl-body-color);
+  }
+
+  // App dark theme (body). Light islands re-apply base tokens below.
+  @at-root .kicl--theme--dark & {
+    --kicl--components--badge--background-color: var(--kicl-color-white);
+    --kicl--components--badge--color: var(--kicl-color-grey-darker);
+
+    &--variant--secondary {
+      --kicl--components--badge--background-color: var(--kicl-color-grey-dark);
+      --kicl--components--badge--color: var(--kicl-color-white);
+    }
+
+    // The base above paints these dark-theme chips white, and these two are
+    // defined by *not* being painted — so each has to hand the background back.
+    // Nesting puts them at `.kicl--theme--dark .…--variant--outline`, which
+    // outranks the unthemed variant rule that made it transparent in the first
+    // place; without this an outline badge is an opaque white block, and its
+    // `--kicl-body-color` text is white on white.
+    &--variant--outline {
+      --kicl--components--badge--background-color: transparent;
+      --kicl--components--badge--border-color: var(--kicl-color-grey);
+      --kicl--components--badge--color: var(--kicl-body-color);
+    }
+
+    &--variant--ghost {
+      --kicl--components--badge--background-color: transparent;
+      --kicl--components--badge--color: var(--kicl-body-color);
+    }
+
+    &--variant--destructive {
+      --kicl--components--badge--background-color: var(--kicl-color-error);
+      --kicl--components--badge--color: var(--kicl-color-white-pure);
+    }
+  }
+
+  // Light theme island (e.g. TreeOfLife poster) — reset after dark so nested
+  // `.kicl--theme--light` wins when both ancestors match.
+  @at-root .kicl--theme--light & {
+    --kicl--components--badge--background-color: var(--kicl-color-grey-darker);
+    --kicl--components--badge--border-color: transparent;
+    --kicl--components--badge--color: var(--kicl-color-white-pure);
+
+    &--variant--secondary {
+      --kicl--components--badge--background-color: var(--kicl-color-grey-light);
+      --kicl--components--badge--color: var(--kicl-color-grey-darker);
+    }
+
+    &--variant--destructive {
+      --kicl--components--badge--background-color: var(--kicl-color-error);
+      --kicl--components--badge--color: var(--kicl-color-white-pure);
+    }
+
+    &--variant--outline {
+      --kicl--components--badge--background-color: transparent;
+      --kicl--components--badge--border-color: var(--kicl-color-grey-dark);
+      --kicl--components--badge--color: var(--kicl-color-grey-darker);
+    }
+
+    &--variant--ghost {
+      --kicl--components--badge--background-color: transparent;
+      --kicl--components--badge--border-color: transparent;
+      --kicl--components--badge--color: var(--kicl-color-grey-darker);
+    }
+  }
+}
+
+.kicl--components--badge__label {
+  flex-shrink: 0;
+}

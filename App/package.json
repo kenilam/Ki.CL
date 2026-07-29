@@ -20,8 +20,10 @@
     "production": "yarn run build:client && yarn run preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.0",
     "@formatjs/intl-displaynames": "6.8.11",
     "@google-cloud/secret-manager": "^6.0.1",
+    "@hookform/resolvers": "^5.4.0",
     "@ipregistry/client": "^6.0.0",
     "@react-spring/three": "^9.7.5",
     "@react-three/drei": "^10.0.7",
@@ -32,8 +34,11 @@
     "color": "^5.0.0",
     "concurrently": "^9.1.2",
     "country-codes-list": "^2.0.0",
+    "d3-hierarchy": "^3.1.2",
     "get-transition-duration": "1.1.1",
+    "graphql": "^16.9.0",
     "graphql-upload": "^17.0.0",
+    "graphql-ws": "^5.16.0",
     "gsap": "^3.13.0",
     "humanize-duration": "^3.32.1",
     "include-media": "^2.0.0",
@@ -47,6 +52,7 @@
     "react": "19.1.0",
     "react-bidirectional-infinite-scroll": "^2.0.1",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.82.0",
     "react-horizontal-infinite-scroll": "^1.0.2",
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
@@ -64,6 +70,7 @@
     "ts-node": "^10.9.2",
     "units-css": "0.4.0",
     "uuid": "^11.1.0",
+    "valibot": "^1.4.2",
     "vite": "6.3.4"
   },
   "devDependencies": {
@@ -73,6 +80,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/babel__preset-env": "^7.10.0",
+    "@types/d3-hierarchy": "^3.1.7",
     "@types/enzyme": "^3.10.18",
     "@types/graphql-upload": "^17.0.0",
     "@types/highlight-words-core": "1.2.3",

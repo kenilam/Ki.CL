@@ -108,17 +108,21 @@
 .kicl-layout {
   --kicl-layout--auto-flow: initial;
   --kicl-layout--display: grid;
-  --kicl-layout--full-screen--max-inline-size: 100vw;
+  --kicl-layout--full-screen--max-inline-size: 100dvi;
+  --kicl-layout--full-screen--min-block-size: 100dvb;
   --kicl-layout--gap: 0;
   --kicl-layout--grid-frames: repeat(1fr, 12);
+  --kicl-layout--block-size: auto;
   --kicl-layout--inline-size: 100%;
   --kicl-layout--margin: initial;
 
+  block-size: var(--kicl-layout--block-size);
   display: var(--kicl-layout--display);
   gap: var(--kicl-layout--gap);
   inline-size: var(--kicl-layout--inline-size);
-  max-inline-size: var(--kicl-layout--full-screen--max-inline-size);
   margin: var(--kicl-layout--margin);
+  max-inline-size: var(--kicl-layout--full-screen--max-inline-size);
+  min-block-size: var(--kicl-layout--full-screen--min-block-size);
 
   &.kicl-layout--display {
     &--inline-grid {
@@ -172,8 +176,14 @@
     }
   }
 
+  &.kicl-layout--full-screen {
+    --kicl-layout--block-size: var(--kicl-layout--full-screen--max-block-size);
+    --kicl-layout--inline-size: var(--kicl-layout--full-screen--max-inline-size);
+  }
+
   &:not(.kicl-layout--full-screen) {
     --kicl-layout--full-screen--max-inline-size: auto;
+    --kicl-layout--full-screen--min-block-size: auto;
   }
 
   &#{&}--align-content {

@@ -1,0 +1,23 @@
+:root {
+  --kicl-position-absolute: absolute;
+  --kicl-position-fixed: fixed;
+  --kicl-position-relative: relative;
+  --kicl-position-static: static;
+  --kicl-position-sticky: sticky;
+  --kicl-position-inherit: inherit;
+  --kicl-position-initial: initial;
+  --kicl-position-revert: revert;
+  --kicl-position-revert-layer: revert-layer;
+  --kicl-position-unset: unset;
+}
+
+@include make-variable-class('position', 'absolute');
+@include make-variable-class('position', 'fixed');
+@include make-variable-class('position', 'relative');
+@include make-variable-class('position', 'static');
+@include make-variable-class('position', 'sticky');
+@include make-variable-class('position', 'inherit');
+@include make-variable-class('position', 'initial');
+@include make-variable-class('position', 'revert');
+@include make-variable-class('position', 'revert-layer');
+@include make-variable-class('position', 'unset');

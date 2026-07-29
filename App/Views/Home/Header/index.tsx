@@ -20,7 +20,7 @@ const CLASS_NAME = 'kicl--views--home--header';
 
 const Header: React.FunctionComponent = () => {
   return (
-    <Animation animationDelay={1000} animationStyle='zoom-out'>
+    <Animation animationDelay={300} animationStyle='zoom-out'>
       <Layout
         alignContent='center'
         alignItems='center'
@@ -30,7 +30,11 @@ const Header: React.FunctionComponent = () => {
         justifyItems='center'
       >
         <header
-          className={classNames('kicl-text-align-center', CLASS_NAME)}
+          className={classNames(
+            'kicl-text-align-center',
+            'kicl-position-relative',
+            CLASS_NAME
+          )}
           id={ID}
           role='banner'
         >

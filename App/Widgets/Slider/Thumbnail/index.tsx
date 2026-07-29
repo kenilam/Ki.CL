@@ -55,6 +55,7 @@ const Thumbnail: React.FunctionComponent<Spec.Props> = ({ counts }) => {
               <Layout alignContent='center' justifyItems='center'>
                 <Button
                   aria-disabled={isCurrent}
+                  className='kicl-color-grey-darker'
                   aria-pressed={isCurrent}
                   key={key}
                   onClick={clickHandler(index)}

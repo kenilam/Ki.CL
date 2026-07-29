@@ -1,0 +1,27 @@
+---
+description: Prefer single quotes in TS/JS/JSX (Prettier)
+globs: App/**/*.{ts,tsx,js,jsx}
+alwaysApply: true
+---
+
+# Quotes
+
+Prefer **single quotes** over double quotes in TypeScript/JavaScript and JSX.
+
+Matches `.prettierrc`: `singleQuote: true`, `jsxSingleQuote: true`.
+
+```tsx
+// ❌
+import { Ri } from "@/Icons";
+<div data-slot="details" className="kicl-color-grey-dark" />
+querySelector('[data-slot="select-trigger"]');
+
+// ✅
+import { Ri } from '@/Icons';
+<div data-slot='details' className='kicl-color-grey-dark' />
+querySelector(`[data-slot='select-trigger']`);
+```
+
+When a string needs nested quotes (selectors, documented attrs), prefer a **template literal** with single quotes inside — not a single-quoted string wrapping double quotes. Same in JSDoc: `` `is='a'` ``, `` `role='none'` ``.
+
+Exceptions: JSON, strings that contain apostrophes where escaping would hurt readability, and generated/vendor files.

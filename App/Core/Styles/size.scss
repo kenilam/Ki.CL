@@ -16,4 +16,29 @@
   --kicl-size-10x: calc(var(--kicl-size) * 10);
   --kicl-size-11x: calc(var(--kicl-size) * 11);
   --kicl-size-12x: calc(var(--kicl-size) * 12);
+  --kicl-size-13x: calc(var(--kicl-size) * 13);
+  --kicl-size-14x: calc(var(--kicl-size) * 14);
+  --kicl-size-15x: calc(var(--kicl-size) * 15);
+  --kicl-size-16x: calc(var(--kicl-size) * 16);
+  --kicl-size-17x: calc(var(--kicl-size) * 17);
+  --kicl-size-18x: calc(var(--kicl-size) * 18);
+  --kicl-size-19x: calc(var(--kicl-size) * 19);
+  --kicl-size-20x: calc(var(--kicl-size) * 20);
+
+  // Semantic inline-size scale (aliases → size tokens)
+  --kicl-inline-size-xs: var(--kicl-size-4x);
+  --kicl-inline-size-sm: var(--kicl-size-6x);
+  --kicl-inline-size-md: var(--kicl-size-10x);
+  --kicl-inline-size-lg: var(--kicl-size-14x);
+  --kicl-inline-size-xl: var(--kicl-size-16x);
+  --kicl-inline-size-xxl: var(--kicl-size-18x);
+  --kicl-inline-size-max: var(--kicl-size-18x);
 }
+
+@include make-variable-class('inline-size', 'xs');
+@include make-variable-class('inline-size', 'sm');
+@include make-variable-class('inline-size', 'md');
+@include make-variable-class('inline-size', 'lg');
+@include make-variable-class('inline-size', 'xl');
+@include make-variable-class('inline-size', 'xxl');
+@include make-variable-class('inline-size', 'max');

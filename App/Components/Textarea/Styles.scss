@@ -1,0 +1,45 @@
+.kicl--components--textarea {
+  --kicl--components--textarea--background-color: var(--kicl-color-white-pure);
+  --kicl--components--textarea--border-color: var(--kicl-color-grey-darker);
+  --kicl--components--textarea--border-radius: var(--kicl-gutter-narrower);
+  --kicl--components--textarea--border-width: var(--kicl-size-1px);
+  --kicl--components--textarea--color: var(--kicl-body-color);
+  --kicl--components--textarea--min-block-size: var(--kicl-size-8x);
+  --kicl--components--textarea--padding-block: var(--kicl-gutter-narrower);
+  --kicl--components--textarea--padding-inline: var(--kicl-gutter-narrow);
+
+  background-color: var(--kicl--components--textarea--background-color);
+  border: var(--kicl--components--textarea--border-width) solid
+    var(--kicl--components--textarea--border-color);
+  border-radius: var(--kicl--components--textarea--border-radius);
+  color: var(--kicl--components--textarea--color);
+  field-sizing: content;
+  font: inherit;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-block-size: var(--kicl--components--textarea--min-block-size);
+  min-inline-size: 0;
+  padding-block: var(--kicl--components--textarea--padding-block);
+  padding-inline: var(--kicl--components--textarea--padding-inline);
+  resize: vertical;
+  white-space: pre-wrap;
+
+  &:disabled {
+    cursor: not-allowed;
+    resize: none;
+  }
+
+  &[aria-invalid='true'] {
+    --kicl--components--textarea--border-color: var(--kicl-color-error);
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--textarea--background-color: var(--kicl-color-grey-darker);
+    --kicl--components--textarea--border-color: var(--kicl-color-grey);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--textarea--background-color: var(--kicl-color-white-pure);
+    --kicl--components--textarea--border-color: var(--kicl-color-grey-darker);
+  }
+}

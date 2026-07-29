@@ -1,15 +1,20 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "../",
     "paths": {
-      "^/*": ["*"],
-      "@/*": ["App/*"]
+      "^/*": ["../*"],
+      "@/*": ["./*"],
+      "api": ["./@mf-types/api"],
+      "api/*": ["./@mf-types/api/*"]
     },
     "types": ["jest", "node", "vite/client"]
   },
+  "include": [
+    "**/*"
+  ],
   "exclude": [
     ".Caches/**/*",
+    "@mf-types/**/*",
     "build/**/*",
     "API/Client/Types/**/*",
     "node_modules/**/*"

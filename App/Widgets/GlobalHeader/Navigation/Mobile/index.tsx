@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from '@/Router';
 
 // Components
-import { SlideOut, HyperLink, Layout, Navigation } from '@/Components';
+import { Dialog, HyperLink, Layout, Navigation } from '@/Components';
 
 // Icons
 import { Ri } from '@/Icons';
@@ -74,7 +74,7 @@ const Mobile: React.FunctionComponent = () => {
   return (
     <>
       {Toggle}
-      <SlideOut onExited={onExited} open={hasNavigation}>
+      <Dialog onExited={onExited} open={hasNavigation}>
         <Layout justifyItems='start' gap='widest'>
           <section className={CLASS_NAME}>
             <Navigation
@@ -90,7 +90,7 @@ const Mobile: React.FunctionComponent = () => {
             </Navigation>
           </section>
         </Layout>
-      </SlideOut>
+      </Dialog>
     </>
   );
 };

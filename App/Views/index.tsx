@@ -20,6 +20,7 @@ import { Layout } from '@/Components';
 import { useResponsive } from '@/Hooks';
 
 // Views
+import Experiments from './Experiments';
 import Home from './Home';
 
 // Styles
@@ -74,8 +75,9 @@ const Element: React.FunctionComponent = () => {
 const Views: React.FunctionComponent = () => {
   return (
     <Router>
-      <Route path='*' errorElement={<ErrorElement />} element={<Element />}>
+      <Route path='/' errorElement={<ErrorElement />} element={<Element />}>
         <Route path='*' element={<HttpStatus.Status404 />} />
+        {Experiments}
         {Home}
       </Route>
     </Router>

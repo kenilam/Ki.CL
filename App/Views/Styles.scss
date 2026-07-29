@@ -1,35 +1,11 @@
 :root {
   --kicl--views--min-block-size: calc(
-    100dvh - var(--kicl--widgets--global-footer--block-size)
+    100dvh - var(--kicl--widgets--global-footer--block-size, 0px)
   );
-  --kicl--views--padding-block-end: var(--kicl-gutter-wider);
-  --kicl--views--padding-block-start: calc(
-    var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter)
-  );
-  --kicl--views--padding-inline-end: var(--kicl-gutter-widest);
-  --kicl--views--padding-inline-start: var(--kicl-gutter-widest);
-
-  @include tablet {
-    --kicl--views--padding-block-start: calc(
-      var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-wider)
-    );
-  }
 }
 
 .kicl--view {
   max-inline-size: 100dvw;
   min-block-size: var(--kicl--views--min-block-size);
   min-inline-size: 100dvw;
-  padding-block-end: var(--kicl--views--padding-block-end);
-  padding-block-start: var(--kicl--views--padding-block-start);
-  padding-inline-end: var(--kicl--views--padding-inline-end);
-  padding-inline-start: var(--kicl--views--padding-inline-start);
-
-  &.kicl--views--full-screen,
-  &:has(> .kicl--views--full-screen) {
-    --kicl--views--padding-block-end: 0;
-    --kicl--views--padding-block-start: 0;
-    --kicl--views--padding-inline-end: 0;
-    --kicl--views--padding-inline-start: 0;
-  }
 }

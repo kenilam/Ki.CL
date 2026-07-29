@@ -68,15 +68,17 @@ const Navigation = React.forwardRef<
             );
 
             if (animation) {
-              const animationDelay = (animation.animationDelay || 0) * index;
-              const animationEasing =
-                animation.animationEasing || 'ease-expo-out';
+              const animationProps =
+                typeof animation === 'boolean' ? {} : animation;
+
+              const animationDelay =
+                (animationProps.animationDelay || 0) + 100 * (index + 1);
 
               return (
                 <Animation
-                  {...animation}
+                  {...animationProps}
                   animationDelay={animationDelay}
-                  animationEasing={animationEasing}
+                  key={key}
                 >
                   {Item}
                 </Animation>
