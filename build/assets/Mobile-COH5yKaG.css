@@ -1,0 +1,10 @@
+:root {
+  --kicl--widgets--global-header--navigation--mobile--padding-block: var(
+    --kicl-gutter-widest
+  );
+}
+.kicl--widgets--global-header--navigation--mobile {
+  padding-block: var(
+    --kicl--widgets--global-header--navigation--mobile--padding-block
+  );
+}

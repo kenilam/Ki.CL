@@ -127,7 +127,7 @@ const getConfig = ({
             eager: true,
             requiredVersion: '^19.0.0',
           },
-          '@apollo/client': { singleton: true, requiredVersion: '^3.11.0' },
+          '@apollo/client': { singleton: true, requiredVersion: '^4.0.0' },
         },
         dts: {
           consumeTypes: true,

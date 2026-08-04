@@ -55,6 +55,26 @@ export type LabelInput = {
  */
 const registry = new Map<string, LabelInput>();
 
+/**
+ * Where each label currently sits, remembered between frames.
+ *
+ * Held as a bearing and an offset from its node rather than as a screen
+ * position: an absolute seat means nothing once the camera moves, whereas an
+ * offset stays meaningful and can be carried, compared and eased.
+ */
+type Seat = {
+  ring: number;
+  angle: number;
+  /** Current offset from the node, eased toward the chosen bearing. */
+  dx: number;
+  dy: number;
+  started: boolean;
+  /** Whether it is currently displayed, so hiding can want more than showing. */
+  shown: boolean;
+};
+
+const seats = new Map<string, Seat>();
+
 /*
  * Membership is React's business, so changes to it have to be announced.
  * Registration happens in a taxon's effect, and every taxon's effect runs in
@@ -80,16 +100,102 @@ function getVersion(): number {
   return version;
 }
 
-export function registerLabel(key: string, input: LabelInput): () => void {
-  registry.set(key, input);
-  publish();
+/**
+ * Add or update a label.
+ *
+ * Membership and content are separate on purpose. A taxon's label changes
+ * whenever the route does — its priority and accent both depend on what is
+ * focused — and if that were expressed as unregister-then-register, the entry
+ * would leave the map for an instant and React would tear the pill down and
+ * build a new one. A taxon present in both the old and new lineage would blink
+ * on every navigation despite never actually going anywhere.
+ *
+ * So only a change React has to see re-renders the layer. Position and
+ * priority are read by the frame loop straight off the registry, so moving a
+ * label costs nothing.
+ */
+export function setLabel(key: string, input: LabelInput): void {
+  const previous = registry.get(key);
 
-  return () => {
-    if (registry.get(key) === input) {
-      registry.delete(key);
-      publish();
-    }
-  };
+  // Back before the sweep ran — a re-parent, not a departure.
+  pending.delete(key);
+
+  registry.set(key, input);
+
+  if (
+    !previous ||
+    previous.text !== input.text ||
+    previous.accent !== input.accent
+  ) {
+    publish();
+  }
+}
+
+/**
+ * Keys whose taxon has unmounted but which may be about to come straight back.
+ *
+ * A taxon that appears in both the old and the new lineage still unmounts when
+ * the recursion re-parents it — it was drawn under one ancestor and is now
+ * drawn under another — and React tears the component down and builds a new one
+ * for the new position. Removing on that cleanup destroyed the pill and rebuilt
+ * it, which is a blink for a label that never actually went anywhere: measured,
+ * 11 of 18 labels present in both lineages were being rebuilt.
+ *
+ * So removal is deferred by a frame. Anything re-registered in the meantime is
+ * a re-parent and keeps its element; anything still pending has genuinely gone.
+ */
+const pending = new Set<string>();
+let sweeping = 0;
+
+/**
+ * How long a departed label is held before it is really dropped.
+ *
+ * Long enough to outlast the mount cascade: the replacement tree arrives a
+ * slice per frame, so a taxon's counterpart can be a second or more behind the
+ * unmount. A single frame of grace — which is what this was first written as —
+ * expired long before the taxon came back, and the label was rebuilt anyway.
+ */
+const REMOVAL_GRACE = 2500;
+
+export function isPendingRemoval(key: string): boolean {
+  return pending.has(key);
+}
+
+function sweep(): void {
+  sweeping = 0;
+
+  if (pending.size === 0) {
+    return;
+  }
+
+  pending.forEach((key) => {
+    registry.delete(key);
+    // A remembered bearing outlives its label otherwise, and the tree churns
+    // through thousands of them across a session.
+    seats.delete(key);
+  });
+
+  pending.clear();
+  publish();
+}
+
+/**
+ * Drop a label, unless its taxon comes back.
+ *
+ * The element is kept alive in the meantime but hidden, so a taxon that is
+ * merely being re-parented reuses its pill instead of having a new one built —
+ * which is what made a label blink on a route change despite never leaving the
+ * tree. Nothing stale is drawn, because a pending label is not seated.
+ */
+export function removeLabel(key: string): void {
+  if (!registry.has(key)) {
+    return;
+  }
+
+  pending.add(key);
+
+  window.clearTimeout(sweeping);
+  sweeping = window.setTimeout(sweep, REMOVAL_GRACE);
 }
 
 type Projected = {
@@ -208,6 +314,38 @@ function cost(grid: Grid, l: number, t: number, r: number, b: number): number {
 /** Candidate seats: two rings of eight bearings, nearest ring tried first. */
 const SEAT_ANGLES = Array.from({ length: 8 }, (_, i) => (i / 8) * Math.PI * 2);
 const SEAT_RINGS = [1, 1.8];
+
+/**
+ * How much better a challenger has to be before a label gives up its bearing.
+ *
+ * Seats used to be re-elected from scratch every frame and handed to whoever
+ * won by a single occupied cell — and a cell is 12px, so a sub-pixel drift
+ * during a zoom was enough to flip a label from above its node to below it.
+ * Requiring a real margin means a bearing is kept until it is properly blocked,
+ * which is what stops the jumping.
+ */
+const INCUMBENT_MARGIN = 3;
+
+/**
+ * How covered a label has to become before it gives up and hides.
+ *
+ * Appearing needs a properly clear seat; disappearing needs real obstruction.
+ * The two thresholds differ on purpose — with a single one, a label sitting
+ * near the boundary flips every time the grid shifts under it, and the tree
+ * mounts in slices, so the grid shifts constantly for the first second after a
+ * route change. Measured before this: 14 of 18 labels blinking, the worst
+ * toggling 18 times inside a second.
+ */
+const HIDE_ABOVE = 6;
+
+/**
+ * How quickly a label slides to a new bearing, per second.
+ *
+ * Only the *offset* from the node is damped. The node's own projected position
+ * is used live, so panning and zooming track exactly with no lag — what eases
+ * is the rare change of side, which would otherwise be a teleport.
+ */
+const SETTLE_EASE = 12;
 
 const GAP_PX = 10;
 const EDGE_PAD = 12;
@@ -331,7 +469,17 @@ export const Labels: React.FunctionComponent = () => {
             const width = pill.offsetWidth;
             const height = pill.offsetHeight;
 
-            let best: { x: number; y: number; cost: number } | null = null;
+            const held = seats.get(item.key);
+
+            /*
+             * Score every bearing, but let the one already in use keep it
+             * unless a challenger is meaningfully better. Without that a label
+             * changes side the instant another wins by a single grid cell,
+             * which under a moving camera happens constantly.
+             */
+            let best: { ring: number; angle: number; cost: number } | null =
+              null;
+            let incumbent: number | null = null;
 
             SEAT_RINGS.forEach((ring) => {
               SEAT_ANGLES.forEach((angle) => {
@@ -349,44 +497,115 @@ export const Labels: React.FunctionComponent = () => {
                   return;
                 }
 
-                const seat = cost(grid, x, y, x + width, y + height);
+                const score = cost(grid, x, y, x + width, y + height);
 
-                if (!best || seat < best.cost) {
-                  best = { x, y, cost: seat };
+                if (held && held.ring === ring && held.angle === angle) {
+                  incumbent = score;
+                }
+
+                if (!best || score < best.cost) {
+                  best = { ring, angle, cost: score };
                 }
               });
             });
 
-            const seat = best as { x: number; y: number; cost: number } | null;
+            const winner = best as {
+              ring: number;
+              angle: number;
+              cost: number;
+            } | null;
 
-            if (
-              item.key !== hovered &&
-              (!seat || (seat.cost > 0 && item.priority < FORCE_PLACE_PRIORITY))
-            ) {
-              // Nowhere clear, and not important enough to sit on something.
-              pill.dataset.seated = 'false';
+            // Keep the current bearing unless it is properly beaten.
+            const standing: number | null = incumbent;
+            const keep =
+              held !== undefined &&
+              standing !== null &&
+              (winner === null || standing <= winner.cost + INCUMBENT_MARGIN);
 
-              return;
-            }
+            const chosen =
+              keep && held && standing !== null
+                ? { ring: held.ring, angle: held.angle, cost: standing }
+                : winner;
 
             /*
-             * Seated state is an attribute, not an inline opacity, so the
-             * stylesheet can make arriving and leaving behave differently — a
-             * transition is read from the state being entered, and only the
+             * Asymmetric thresholds: a label has to find a clear seat to
+             * appear, but has to be properly buried before it will go. A single
+             * threshold makes anything sitting near it flicker, which is most
+             * labels while the tree is still mounting.
+             */
+            const forced =
+              item.key === hovered || item.priority >= FORCE_PLACE_PRIORITY;
+            // Its taxon has gone; the element is only being kept in case it
+            // comes back, so it must not be drawn in the meantime.
+            const departing = isPendingRemoval(item.key);
+            const wasShown = held?.shown ?? false;
+            const show =
+              !departing &&
+              (forced ||
+                (chosen !== null &&
+                  (wasShown ? chosen.cost <= HIDE_ABOVE : chosen.cost === 0)));
+
+            /*
+             * The transform is written either way, so a hidden pill keeps
+             * tracking its node — otherwise it freezes where it was and
+             * teleports whenever it comes back.
+             *
+             * Seated state is an attribute rather than an inline opacity, so
+             * the stylesheet can make arriving and leaving behave differently:
+             * a transition is read from the state being entered, and only the
              * seated rule carries one.
              */
+            pill.dataset.seated = show ? 'true' : 'false';
+
             /*
-             * A hovered label is placed even when every candidate seat was
-             * rejected — off-screen ones included — so it falls back to sitting
-             * just clear of the body it names.
+             * A hovered label with no usable bearing — every candidate off the
+             * edge, say — still has to go somewhere, so it sits just clear of
+             * the body it names.
              */
-            const placed = seat ?? {
-              x: item.x + item.radiusPx + GAP_PX,
-              y: item.y - height / 2,
+            const bearing = chosen ?? {
+              ring: SEAT_RINGS[0] as number,
+              angle: 0,
               cost: 0,
             };
 
-            pill.dataset.seated = 'true';
+            const reach = item.radiusPx * bearing.ring + GAP_PX;
+            const targetX = Math.cos(bearing.angle) * reach - width / 2;
+            const targetY = Math.sin(bearing.angle) * reach - height / 2;
+
+            const seat: Seat = held ?? {
+              ring: bearing.ring,
+              angle: bearing.angle,
+              dx: targetX,
+              dy: targetY,
+              started: false,
+              shown: false,
+            };
+
+            seat.ring = bearing.ring;
+            seat.angle = bearing.angle;
+            seat.shown = show;
+
+            /*
+             * Ease the offset, never the position. The node's own projected
+             * point is used live below, so panning and zooming track it exactly
+             * — what is damped is only the change of side, which would
+             * otherwise read as a jump.
+             */
+            if (seat.started) {
+              const step = 1 - Math.exp(-SETTLE_EASE * (1 / 60));
+
+              seat.dx += (targetX - seat.dx) * step;
+              seat.dy += (targetY - seat.dy) * step;
+            } else {
+              seat.dx = targetX;
+              seat.dy = targetY;
+              seat.started = true;
+            }
+
+            seats.set(item.key, seat);
+
+            const placed = { x: item.x + seat.dx, y: item.y + seat.dy };
+
             pill.style.transform = `translate3d(${Math.round(placed.x)}px, ${Math.round(placed.y)}px, 0)`;
 
             mark(grid, placed.x, placed.y, placed.x + width, placed.y + height);
@@ -408,9 +627,10 @@ export const Labels: React.FunctionComponent = () => {
     >
       {[...registry.entries()].map(([key, label]) => (
         <Badge
+          data-node={key}
           key={key}
           is='span'
-          variant='outline'
+          variant={label.accent ? 'secondary' : 'outline'}
           /*
            * The routed taxon's own chip is a step larger, on the same signal
            * that colours its border — so the label you are actually reading is
@@ -422,7 +642,8 @@ export const Labels: React.FunctionComponent = () => {
           style={
             label.accent
               ? ({
-                  '--kicl--components--badge--border-color': label.accent,
+                  '--kicl--components--badge--background-color': label.accent,
+                  '--kicl--components--badge--color': `contrast-color(var(--kicl--components--badge--background-color))`,
                 } as React.CSSProperties)
               : undefined
           }

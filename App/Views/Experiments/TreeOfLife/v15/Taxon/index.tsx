@@ -36,8 +36,9 @@ import {
 
 // Labels
 import {
-  registerLabel,
+  removeLabel,
   setHovered,
+  setLabel,
 } from '@/Views/Experiments/TreeOfLife/v15/labels';
 
 // Zoom
@@ -291,7 +292,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
       return chains.includes(nodeId) ? 2 : 1;
     })();
 
-    return registerLabel(nodeId, {
+    setLabel(nodeId, {
       text,
       position: tip.toArray(),
       priority,
@@ -299,7 +300,17 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
       // Only the routed taxon carries an accent, so it means one thing.
       accent: nodeId === focus ? color : undefined,
     });
+
+    return undefined;
   }, [taxon, isRoot, nodeId, focus, chains, tip, size, form, color]);
+
+  /*
+   * Removal is keyed to the taxon alone, not to everything its label depends
+   * on. Priority and accent both move with the route, so a combined effect
+   * would drop the label out of the registry and put it straight back on every
+   * navigation — and React would rebuild the pill rather than keep it.
+   */
+  useEffect(() => () => removeLabel(nodeId), [nodeId]);
 
   useEffect(() => setAnchor(nodeId, tip.toArray()), [nodeId, tip]);
 
