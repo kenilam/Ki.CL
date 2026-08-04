@@ -157,6 +157,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   endWidth,
   size,
   play,
+  withinFocus = false,
   onEntered,
   onExited,
 }) => {
@@ -410,7 +411,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
      * turns that into something to watch: growth leaves the focus and travels
      * outward a level at a time, which is what the control claims it does.
      */
-    if (animate && state !== 'enter') {
+    if (animate && withinFocus && state !== 'enter') {
       return undefined;
     }
 
@@ -423,7 +424,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     );
 
     return () => cancelAnimationFrame(frame);
-  }, [revealed, descendants.length, animate, state]);
+  }, [revealed, descendants.length, animate, withinFocus, state]);
 
   const mounting = useMemo(
     () => descendants.slice(0, revealed),
@@ -452,7 +453,8 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     spring.start({
       grown: play === 'enter' ? 1 : 0,
       // Held centrally, so the whole tree jumps or plays together.
-      immediate: !animate,
+      // Only below the routed taxon; everything else snaps into place.
+      immediate: !(animate && withinFocus),
       onRest: (result: { value: { grown: number } }) => {
         if (result.value.grown > 0.99) {
           entered.current = true;
@@ -472,7 +474,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         }
       },
     });
-  }, [play, animate, spring, tip, color, start, startColor]);
+  }, [play, animate, withinFocus, spring, tip, color, start, startColor]);
 
   /*
    * The spring owns the timeline; this only applies its current value to the
@@ -590,6 +592,12 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
           endWidth={decay(endWidth, WIDTH_TAPER, MIN_WIDTH)}
           size={decay(size, SIZE_TAPER, MIN_SIZE)}
           play={state}
+          /*
+           * True from the routed taxon's children downward — this taxon being
+           * the focus is what opens the subtree, so its descendants inherit it
+           * and everything above stays snapped.
+           */
+          withinFocus={withinFocus || nodeId === focus}
         />
       ))}
     </group>
