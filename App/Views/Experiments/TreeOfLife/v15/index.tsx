@@ -24,9 +24,6 @@ import Depth from './Depth';
 // Details
 import Details from './Details';
 
-// Focus
-import Focus from './Focus';
-
 // Labels
 import { Labels, LabelProjector } from './labels';
 
@@ -131,13 +128,6 @@ const Canvas: React.FunctionComponent = () => {
             <Depth focus={focus} />
 
             <LabelProjector />
-
-            {/*
-              Last in the tree so the composer wraps a finished scene — it
-              replaces the default render, and anything mounted after it would
-              not be in the pass it reads.
-            */}
-            <Focus focus={focus} />
 
             <CameraRig
               nodeId={focus}
