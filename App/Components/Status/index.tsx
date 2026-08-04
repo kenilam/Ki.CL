@@ -72,7 +72,7 @@ const Status: React.FunctionComponent<Spec.Props> = ({
         autoFlow='row'
         gap='none'
         justifyContent='center'
-        justifyItems='center'
+        justifyItems='start'
       >
         <div className={className}>
           <Layout

@@ -157,6 +157,27 @@ let sweeping = 0;
  */
 const REMOVAL_GRACE = 2500;
 
+/**
+ * Every taxon currently drawn, by node id.
+ *
+ * The registry already knows exactly this — it is populated by each taxon as
+ * it mounts and emptied as it leaves — so anything wanting "what is on screen"
+ * can read it here rather than assembling a second list that would drift.
+ * Pending removals are excluded: their taxon has gone even if the pill is
+ * being held a moment in case it returns.
+ */
+export function drawnTaxa(): string[] {
+  return [...registry.keys()].filter((key) => !pending.has(key));
+}
+
+/*
+ * The same store the layer subscribes to, exposed so anything listing the drawn
+ * taxa re-reads when that set changes. `drawnTaxa` builds a fresh array on every
+ * call, so it cannot be the snapshot itself — the version is, and callers derive
+ * the list from it.
+ */
+export { subscribe as subscribeDrawn, getVersion as drawnVersion };
+
 export function isPendingRemoval(key: string): boolean {
   return pending.has(key);
 }
