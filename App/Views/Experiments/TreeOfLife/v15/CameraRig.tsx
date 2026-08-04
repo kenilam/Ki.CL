@@ -101,6 +101,9 @@ const TRAVEL_EASE = 3.2;
  */
 const SETTLE_FRAMES = 6;
 
+/** The fixed panels, which read a wheel as their own scroll. */
+const CHROME_CLASS = 'kicl--views--experiments--tree-of-life--v15__chrome';
+
 /** Radians of orbit per pixel dragged. */
 const DRAG_SENSITIVITY = 0.005;
 
@@ -302,7 +305,25 @@ const CameraRig: React.FunctionComponent<Props> = ({
    * and the picture from ever disagreeing.
    */
   useEffect(() => {
+    /*
+     * Listened for on the window, not on the canvas.
+     *
+     * The labels are a sibling layer rather than children of the canvas, and
+     * each is a link, so a wheel turned with the pointer over a name went to
+     * the name and bubbled up past the canvas without ever reaching it —
+     * zooming died wherever the tree was densest, which is exactly where the
+     * names are. Catching it higher up means the pointer can be anywhere.
+     *
+     * The panels are the exception: they are for reading, and a wheel over
+     * them should scroll them rather than move the camera.
+     */
     const onWheel = (event: WheelEvent) => {
+      const target = event.target as Element | null;
+
+      if (target?.closest?.(`.${CHROME_CLASS}`)) {
+        return;
+      }
+
       event.preventDefault();
 
       wanted.current = Math.min(
@@ -340,13 +361,13 @@ const CameraRig: React.FunctionComponent<Props> = ({
       dragging = false;
     };
 
-    canvas.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('wheel', onWheel, { passive: false });
     canvas.addEventListener('pointerdown', onDown);
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
 
     return () => {
-      canvas.removeEventListener('wheel', onWheel);
+      window.removeEventListener('wheel', onWheel);
       canvas.removeEventListener('pointerdown', onDown);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);
