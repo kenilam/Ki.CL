@@ -111,12 +111,6 @@ const Canvas: React.FunctionComponent = () => {
             dpr={[1, 2]}
             gl={{ antialias: true, alpha: true }}
           >
-            {/*
-              Weighted toward ambient and sky rather than direct light. Lambert
-              multiplies the base colour by whatever lands on it, so a strong
-              key carves a dark underside into every body and the tree reads as
-              moulded plastic.
-            */}
             <ambientLight intensity={0.88} />
             <hemisphereLight args={['#ffffff', '#cfdcd5', 0.46]} />
             <directionalLight position={[4, 8, 6]} intensity={0.19} />
@@ -156,13 +150,8 @@ const Canvas: React.FunctionComponent = () => {
 
       <Labels />
 
-      {/*
-        Both panels sit outside the Canvas, fixed to the left, so they are
-        ordinary DOM — readable text at a fixed size rather than something
-        projected into the scene and fighting the camera.
-      */}
       <Layout
-        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-start-narrow`}
+        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start kicl-inset-inline-start`}
         autoFlow='row'
         gap='narrow'
       >
@@ -172,39 +161,20 @@ const Canvas: React.FunctionComponent = () => {
         </div>
       </Layout>
 
-      {/*
-        Inset from the top-right corner rather than all four sides: `Layout`
-        gives the wrapper `inline-size: 100%`, so setting `inset-inline-start`
-        as well would over-constrain it and push a full-width box past the right
-        edge. Insetting only the end pulls the whole strip inward, and
-        `justifyContent='end'` lands the control a gutter in from the corner.
-      */}
       <Layout
-        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-end-narrow`}
+        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start kicl-inset-inline-end`}
         alignItems='center'
         autoFlow='column'
         justifyContent='end'
         gap='narrower'
       >
         <div>
-          {/* `in` is what drives the enter transition — without it the
-              Spinner mounts but never animates, so it stays invisible. */}
           <Spinner
             size='small'
             in={loading}
             position='inline'
             hasBackdrop={false}
           />
-
-          {/*
-            Lit while the tree plays out — the icon shows the state it is
-            *in*, not the state clicking it would reach.
-          */}
-          {/*
-            `alignItems`/`gap` reach the icon and the label directly: Layout
-            clones its only child rather than wrapping it, so Button's layout
-            props land on the `button` element and make it the grid.
-          */}
           <Button
             unstyled
             type='button'

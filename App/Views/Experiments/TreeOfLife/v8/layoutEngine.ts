@@ -57,7 +57,7 @@ export type ViewportSize = {
 };
 
 const MAX_CHILDREN = 14;
-const HEIGHT_LIMIT_DEFAULT = 4;
+const HEIGHT_LIMIT_DEFAULT = 3;
 const REPULSION_ITERS = 48;
 /** Convert CSS pixels → world units (sphere fits the smaller canvas side). */
 const PIXEL_TO_WORLD = 0.01;

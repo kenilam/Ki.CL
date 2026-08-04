@@ -13,6 +13,7 @@ import {
   type TreeNode,
   ROOT_OTT_ID,
   mergeSubtree,
+  fromSubtreeNode,
   labelFor,
 } from '@/Views/Experiments/TreeOfLife/tree';
 import { layoutPhylogeneticFan, type LayoutLink } from './layout';
@@ -22,7 +23,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v6';
 const BACKGROUND = '#f7f4ef';
 /** Deeper initial fetch → denser canopy closer to the poster. */
-const HEIGHT_LIMIT = 4;
+const HEIGHT_LIMIT = 3;
 
 type BranchProps = {
   link: LayoutLink;
@@ -282,7 +283,7 @@ const Canvas: React.FunctionComponent = () => {
       return;
     }
 
-    setTree((current) => current ?? (root as TreeNode));
+    setTree((current) => current ?? fromSubtreeNode(root));
   }, [data]);
 
   const onExpand = async (node: TreeNode) => {
@@ -299,7 +300,8 @@ const Canvas: React.FunctionComponent = () => {
           : { nodeId: node.nodeId, heightLimit: HEIGHT_LIMIT },
       });
 
-      const subtree = result.data?.TreeOfLifeSubtree as TreeNode | undefined;
+      const raw = result.data?.TreeOfLifeSubtree;
+      const subtree = raw ? fromSubtreeNode(raw) : undefined;
       if (subtree?.nodeId) {
         setTree((current) =>
           current ? mergeSubtree(current, subtree) : subtree

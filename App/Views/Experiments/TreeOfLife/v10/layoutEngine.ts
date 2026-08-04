@@ -53,7 +53,7 @@ export type ViewportSize = {
 };
 
 const MAX_CHILDREN = 16;
-const HEIGHT_LIMIT_DEFAULT = 4;
+const HEIGHT_LIMIT_DEFAULT = 3;
 /** Upward fan span — classic poster mushroom / coral silhouette. */
 const FAN_SPAN = Math.PI * 1.05;
 

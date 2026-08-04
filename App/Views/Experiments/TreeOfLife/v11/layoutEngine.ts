@@ -56,7 +56,7 @@ export type ViewportSize = {
 };
 
 const MAX_CHILDREN = 18;
-const HEIGHT_LIMIT_DEFAULT = 4;
+const HEIGHT_LIMIT_DEFAULT = 3;
 const REPULSION_ITERS = 72;
 
 type Vec = { x: number; y: number };

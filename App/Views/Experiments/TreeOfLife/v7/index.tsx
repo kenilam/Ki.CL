@@ -21,6 +21,7 @@ import {
   type TreeNode,
   ROOT_OTT_ID,
   mergeSubtree,
+  fromSubtreeNode,
 } from '@/Views/Experiments/TreeOfLife/tree';
 import {
   computeTreeLayout,
@@ -109,7 +110,7 @@ const Canvas: React.FunctionComponent = () => {
     if (!root?.nodeId) {
       return;
     }
-    setTree((current) => current ?? (root as TreeNode));
+    setTree((current) => current ?? fromSubtreeNode(root));
   }, [data]);
 
   const onExpand = async (layoutNode: LayoutNode) => {
@@ -127,7 +128,8 @@ const Canvas: React.FunctionComponent = () => {
           : { nodeId: node.nodeId, heightLimit: HEIGHT_LIMIT_DEFAULT },
       });
 
-      const subtree = result.data?.TreeOfLifeSubtree as TreeNode | undefined;
+      const raw = result.data?.TreeOfLifeSubtree;
+      const subtree = raw ? fromSubtreeNode(raw) : undefined;
       if (subtree?.nodeId) {
         setTree((current) =>
           current ? mergeSubtree(current, subtree) : subtree
