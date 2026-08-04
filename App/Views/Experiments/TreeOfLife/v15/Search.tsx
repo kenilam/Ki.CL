@@ -13,7 +13,19 @@ import {
 } from 'api/provider';
 
 // Components
-import { Card, CardContent, Input, Layout, Text } from '@/Components';
+import {
+  Card,
+  CardContent,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  Layout,
+  Text,
+} from '@/Components';
+
+// Icons
+import { Ri } from '@/Icons';
 
 // Router
 import { useNavigate } from '@/Router';
@@ -121,7 +133,15 @@ const Search: React.FunctionComponent = () => {
     [version, find]
   );
 
-  const found: Option[] = (data?.TaxonSearch ?? [])
+  /*
+   * The last response outlives the query that asked for it — clearing the field
+   * does not unsend a request. Without this the dropdown keeps offering matches
+   * for a word that is no longer there, instead of falling back to what is on
+   * screen.
+   */
+  const searching = query.trim().length >= MIN_LENGTH;
+
+  const found: Option[] = (searching ? (data?.TaxonSearch ?? []) : [])
     .filter((result: Result) => Boolean(result.nodeId))
     .map((result: Result) => ({
       nodeId: result.nodeId as string,
@@ -159,15 +179,42 @@ const Search: React.FunctionComponent = () => {
       <CardContent>
         <Layout autoFlow='row' gap='narrow'>
           <div>
-            <Input
-              type='search'
-              value={query}
-              list={LIST_ID}
-              placeholder='Find a taxon…'
-              autoComplete='off'
-              aria-label='Find a taxon by name'
-              onChange={(event) => choose(event.target.value)}
-            />
+            {/*
+              The browser draws its own controls on this input — a cancel cross
+              for `type='search'` and a picker triangle for `list` — and neither
+              is one of ours. They are suppressed in the stylesheet and replaced
+              here with the app's own icons, so the field matches everything
+              else on the page.
+            */}
+            <InputGroup className={`${CLASS_NAME}__search`}>
+              <InputGroupAddon align='inline-start'>
+                <Ri.RiSearchLine aria-hidden />
+              </InputGroupAddon>
+
+              <InputGroupInput
+                type='search'
+                value={query}
+                list={LIST_ID}
+                placeholder='Find a taxon…'
+                autoComplete='off'
+                aria-label='Find a taxon by name'
+                onChange={(event) => choose(event.target.value)}
+              />
+
+              {query ? (
+                <InputGroupAddon align='inline-end'>
+                  <InputGroupButton
+                    size='icon-xs'
+                    variant='ghost'
+                    type='button'
+                    aria-label='Clear the search'
+                    onClick={() => setQuery('')}
+                  >
+                    <Ri.RiCloseLine aria-hidden />
+                  </InputGroupButton>
+                </InputGroupAddon>
+              ) : null}
+            </InputGroup>
 
             <datalist id={LIST_ID}>
               {options.map((option) => (

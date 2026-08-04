@@ -60,6 +60,41 @@
   }
 
   /*
+   * Suppress the user-agent controls on the search field.
+   *
+   * `type='search'` draws a cancel cross and `list` draws a picker triangle,
+   * both in the browser's own shapes rather than the app's. The clear button is
+   * replaced with our icon; the triangle simply goes, since the list still
+   * opens on focus, on typing and on arrow-down.
+   *
+   * Scoped to this panel rather than added to the global input rules — nothing
+   * else in the app pairs a search field with a datalist, and a blanket rule
+   * would be deciding for pages that have not asked.
+   */
+  &__search {
+    input::-webkit-search-cancel-button,
+    input::-webkit-search-decoration,
+    input::-webkit-calendar-picker-indicator {
+      appearance: none;
+      display: none;
+    }
+
+    /*
+     * Safari draws the datalist arrow as a different pseudo-element than
+     * Chromium does, which is why the triangle survived the rule above on one
+     * browser and not the other.
+     *
+     * In its own block on purpose: a selector list is discarded whole if any
+     * one selector in it is unparseable, so naming an engine-specific pseudo
+     * alongside the others would risk taking the working rule down with it.
+     */
+    input::-webkit-list-button {
+      appearance: none;
+      display: none;
+    }
+  }
+
+  /*
    * Secondary text inside the panels.
    *
    * Expressed as a fraction of whatever colour the surface has already set,
