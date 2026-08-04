@@ -33,8 +33,8 @@ import { getAnchor } from './anchors';
  * do nothing at another. Tied to the focus it always means the same thing: the
  * taxon you are looking at is clear, and everything behind it recedes.
  */
-const NEAR_AT = 0.85;
-const FAR_AT = 3.2;
+const NEAR_AT = 0.78;
+const FAR_AT = 2.1;
 
 /**
  * The colour distance fades toward — a cool, desaturated blue, a little above
