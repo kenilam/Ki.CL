@@ -97,10 +97,18 @@ function applyAuthorization(headers: {
  * it and forward `/api/client/remoteEntry.js` unchanged, which the API does not
  * serve.
  *
- * `/assets` keeps its own name on purpose. Image URLs are stored in the
- * database as `/assets/taxon-visual/*.png`, so moving the prefix would orphan
- * every record already written.
+ * The image route is narrowed to the bucket segment, not all of `/assets`.
+ * The built client emits its own bundles there — `/assets/mf-entry-*.js` — so
+ * forwarding the whole prefix sent the application's own JavaScript to an API
+ * that has never heard of it, and the site served a blank page with a 404 for
+ * its bootstrap. The API only ever serves images beneath `/assets/{bucket}/`,
+ * which is what this matches.
+ *
+ * The prefix keeps its name on purpose: image URLs are stored in the database
+ * as `/assets/taxon-visual/*`, so moving it would orphan every record already
+ * written.
  */
+const ASSET_BUCKET = process.env.KICL_STORAGE_BUCKET_ID || 'taxon-visual';
 const ROUTES: Array<{
   path: string;
   rewrite?: Record<string, string>;
@@ -108,7 +116,7 @@ const ROUTES: Array<{
 }> = [
   { path: '/api/client', rewrite: { '^/api/client': '/client' } },
   { path: '/api', ws: true },
-  { path: '/assets' },
+  { path: `/assets/${ASSET_BUCKET}` },
 ];
 
 export async function warmIdToken(): Promise<void> {
