@@ -596,6 +596,22 @@ const CameraRig: React.FunctionComponent<Props> = ({
      * Settle the near pose first. Until the route's taxon has been framed there
      * is nothing to pull back *from*, so the camera is left where it opened.
      */
+
+    /*
+     * Close the gate the moment the route moves, not once the camera gets
+     * around to framing.
+     *
+     * The framing below cannot run until the new focus has an anchor, which is
+     * several fetches away — and the announcement used to sit after that, so a
+     * stale `true` survived the whole climb. The new tree therefore mounted its
+     * clade in full on its very first frame, and the camera only reset it
+     * afterwards: every descendant drawn, thrown away, then drawn again once
+     * the flight finished.
+     */
+    if (framed.current !== nodeId) {
+      setSettled(false);
+    }
+
     if (framed.current !== nodeId && nodeId && anchor && ancestorId) {
       const count = anchorCount();
 
