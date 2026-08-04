@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useSyncExternalStore } from 'react';
 
 // Components
-import { Badge } from '@/Components';
+import { Badge, HyperLink } from '@/Components';
+
+import { toPath } from '@/Views/Experiments/TreeOfLife/constants';
 
 import THREE, { Fiber } from '@/Three';
 
@@ -397,10 +399,15 @@ const CLASS_ROOT = 'kicl--views--experiments--tree-of-life--v15';
  * carries the chip's background, border, radius, padding and backdrop blur.
  * The local class adds only what a *floating* chip needs.
  */
+/*
+ * Each pill takes pointer events, so a name can be followed to its taxon. The
+ * layer beneath stays transparent to them, so a drag begun anywhere else still
+ * reaches the canvas and turns the view — only a drag begun on a name does not.
+ */
 const PILL_CLASS = [
   `${CLASS_ROOT}__label`,
   'kicl-position-absolute',
-  'kicl-pointer-events-none',
+  'kicl-pointer-events-auto',
   'kicl-font-size-smaller',
 ].join(' ');
 
@@ -652,18 +659,17 @@ export const Labels: React.FunctionComponent = () => {
       className={`${CLASS_ROOT}__labels kicl-position-absolute kicl-pointer-events-none`}
     >
       {[...registry.entries()].map(([key, label]) => (
-        <Badge
+        /*
+         * The link is the seated element, not the chip inside it: the frame
+         * loop transforms whatever it holds a reference to, and reads
+         * `data-seated` off the same node to fade it in. Custom properties set
+         * here inherit down to the `Badge`, so the accent still reaches it.
+         */
+        <HyperLink
+          unstyled
           data-node={key}
           key={key}
-          is='span'
-          variant={label.accent ? 'secondary' : 'outline'}
-          /*
-           * The routed taxon's own chip is a step larger, on the same signal
-           * that colours its border — so the label you are actually reading is
-           * distinguished by weight as well as by hue, and still reads as one
-           * when the accent is hard to pick out against the tree behind it.
-           */
-          size={label.accent ? 'large' : 'small'}
+          to={toPath(key)}
           className={PILL_CLASS}
           style={
             label.accent
@@ -673,7 +679,7 @@ export const Labels: React.FunctionComponent = () => {
                 } as React.CSSProperties)
               : undefined
           }
-          ref={(node: HTMLElement | null) => {
+          ref={(node: HTMLAnchorElement | null) => {
             if (node) {
               pillsRef.current.set(key, node);
             } else {
@@ -681,8 +687,21 @@ export const Labels: React.FunctionComponent = () => {
             }
           }}
         >
-          {label.text}
-        </Badge>
+          <Badge
+            is='span'
+            variant={label.accent ? 'secondary' : 'outline'}
+            /*
+             * The routed taxon's own chip is a step larger, on the same signal
+             * that colours its border — so the label you are actually reading
+             * is distinguished by weight as well as by hue, and still reads as
+             * one when the accent is hard to pick out against the tree behind
+             * it.
+             */
+            size={label.accent ? 'large' : 'small'}
+          >
+            {label.text}
+          </Badge>
+        </HyperLink>
       ))}
     </div>
   );
