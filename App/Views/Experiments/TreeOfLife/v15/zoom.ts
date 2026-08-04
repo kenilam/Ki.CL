@@ -49,8 +49,14 @@ export function isPulledBack(): boolean {
  * stalls the very motion it interrupts, so the fan waits until the camera has
  * arrived. It flips twice per navigation, not once per frame, so the
  * subscription costs nothing between moves.
+ *
+ * Starts false so a cold load is covered too. Landing straight on a URL never
+ * flies — the first framing of a session snaps rather than sweeping in from the
+ * opening standoff — so without this the gate was already open on the very
+ * first frame and the heaviest clade in the tree mounted in the same commit as
+ * everything else.
  */
-let arrived = true;
+let arrived = false;
 
 const listeners = new Set<() => void>();
 

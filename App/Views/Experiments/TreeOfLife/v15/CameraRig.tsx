@@ -90,6 +90,17 @@ const ZOOM_EASE = 7;
  */
 const TRAVEL_EASE = 3.2;
 
+/**
+ * Frames to hold after a framing before the tree is told the camera has
+ * arrived.
+ *
+ * A flight takes long enough that this changes nothing for a route change. It
+ * exists for the cold load, which has no flight at all: without a beat the gate
+ * opens on the same frame the tree first mounts, and the clade lands in that
+ * commit — which is the one case the deferral was written for.
+ */
+const SETTLE_FRAMES = 6;
+
 /** Radians of orbit per pixel dragged. */
 const DRAG_SENSITIVITY = 0.005;
 
@@ -238,6 +249,8 @@ const CameraRig: React.FunctionComponent<Props> = ({
     distance: 1,
   });
   const travel = useRef(1);
+  /** Frames since the last framing, so arrival is announced a beat late. */
+  const held = useRef(0);
   /** Scratch for the blended pose, so a flight allocates nothing per frame. */
   const flying = useRef<Pose>({
     target: new THREE.Vector3(),
@@ -614,6 +627,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
         settle(perspective, anchor, ancestor);
         travel.current = first ? 1 : 0;
+        held.current = 0;
         framed.current = nodeId;
         waiting.current = null;
         wanted.current = 0;
@@ -646,7 +660,9 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
     // Held back until the camera stops, so the heaviest clades do not mount
     // mid-flight and stall the move.
-    setSettled(travel.current === 1);
+    held.current += 1;
+
+    setSettled(travel.current === 1 && held.current >= SETTLE_FRAMES);
 
     zoom.current +=
       (wanted.current - zoom.current) * (1 - Math.exp(-ZOOM_EASE * delta));

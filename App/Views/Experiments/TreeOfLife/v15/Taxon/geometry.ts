@@ -205,15 +205,35 @@ export const FORM_SCALE: Record<Form, number> = {
   blob: 0.92,
 };
 
+/**
+ * Tessellation is capped at 2 because no body is ever drawn larger than about
+ * sixteen pixels.
+ *
+ * The camera frames a taxon at a distance derived from its own branch length,
+ * and that framing is the closest the rig will go — so a body's size on screen
+ * is fixed by construction rather than by where it sits in the tree. Measured
+ * across the range: the focus 10.9px, its fan 8.5px, a distant ancestor 7px.
+ *
+ * At that size an icosahedron at detail 2 is 320 faces over ~10px, already far
+ * below one triangle per pixel. Detail 4 was 5,120 faces — 15,360 vertices,
+ * each put through the wobble loop below — to render the same dot. What
+ * separates the forms is the wobble and its frequency, not the tessellation
+ * they are applied to, so capping costs nothing in silhouette.
+ */
+const MAX_DETAIL = 2;
+
 const FORM_SURFACE: Record<
   Form,
   { detail: number; wobble: number; frequency: number }
 > = {
-  bloom: { detail: 4, wobble: 0.2, frequency: 2.1 },
-  lobed: { detail: 3, wobble: 0.15, frequency: 2.8 },
-  compact: { detail: 2, wobble: 0.09, frequency: 3.6 },
-  blob: { detail: 3, wobble: 0.12, frequency: 2.4 },
+  bloom: { detail: MAX_DETAIL, wobble: 0.2, frequency: 2.1 },
+  lobed: { detail: MAX_DETAIL, wobble: 0.15, frequency: 2.8 },
+  compact: { detail: MAX_DETAIL, wobble: 0.09, frequency: 3.6 },
+  blob: { detail: MAX_DETAIL, wobble: 0.12, frequency: 2.4 },
 };
+
+/** Segments per side for the cube `blob` starts from, on the same reasoning. */
+const BLOB_SEGMENTS = 3;
 
 /**
  * Smooth pseudo-noise from summed sinusoids — cheap, seeded, and continuous
@@ -245,7 +265,14 @@ export function createBody(nodeId: string, form: Form): THREE.BufferGeometry {
 
   const geometry: THREE.BufferGeometry =
     form === 'blob'
-      ? new THREE.BoxGeometry(1.35, 1.35, 1.35, 6, 6, 6)
+      ? new THREE.BoxGeometry(
+          1.35,
+          1.35,
+          1.35,
+          BLOB_SEGMENTS,
+          BLOB_SEGMENTS,
+          BLOB_SEGMENTS
+        )
       : new THREE.IcosahedronGeometry(1, surface.detail);
 
   const position = geometry.getAttribute('position') as THREE.BufferAttribute;
