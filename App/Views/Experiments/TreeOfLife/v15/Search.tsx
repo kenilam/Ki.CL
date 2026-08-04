@@ -21,7 +21,6 @@ import {
   InputGroupButton,
   InputGroupInput,
   Layout,
-  Spinner,
   Text,
 } from '@/Components';
 
@@ -188,23 +187,8 @@ const Search: React.FunctionComponent = () => {
               else on the page.
             */}
             <InputGroup className={`${CLASS_NAME}__search`}>
-              {/*
-                The glass becomes a spinner while a search is in flight, so the
-                field says what it is doing in the place you are already
-                looking. `in` is what drives the Spinner's transition — without
-                it the element mounts and never becomes visible.
-              */}
               <InputGroupAddon align='inline-start'>
-                {loading ? (
-                  <Spinner
-                    in
-                    size='smaller'
-                    position='inline'
-                    hasBackdrop={false}
-                  />
-                ) : (
-                  <Ri.RiSearchLine aria-hidden />
-                )}
+                <Ri.RiSearchLine aria-hidden />
               </InputGroupAddon>
 
               <InputGroupInput

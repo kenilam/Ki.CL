@@ -79,6 +79,22 @@
    * would be deciding for pages that have not asked.
    */
   &__search {
+    /*
+     * Two steps up the gutter scale from the group's default. At `narrowest`
+     * the glass sat against the first letter and read as part of the word
+     * rather than as a control beside it, and `narrower` — four pixels — was
+     * still not enough daylight to separate them.
+     *
+     * Qualified with the component's own class deliberately. `InputGroup`
+     * declares this property on the very element this class lands on, so at
+     * equal specificity the winner is whichever stylesheet was loaded last —
+     * which was not this one. Naming both makes it a decision rather than a
+     * coin toss.
+     */
+    &.kicl--components--input-group {
+      --kicl--components--input-group--gap: var(--kicl-gutter-narrow);
+    }
+
     input::-webkit-search-cancel-button,
     input::-webkit-search-decoration,
     input::-webkit-calendar-picker-indicator {
