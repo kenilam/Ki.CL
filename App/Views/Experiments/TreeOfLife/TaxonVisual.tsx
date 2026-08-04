@@ -21,8 +21,21 @@ import {
 
 const DEBOUNCE_MS = 500;
 
-const EXHAUSTED_MESSAGE =
-  'Studio providers are temporarily out of quota or rate-limited — try again shortly.';
+/*
+ * Two ways to be out of quota, and only one of them ends on its own.
+ *
+ * The server distinguishes them because the difference decides whether telling
+ * someone to wait is true: an allowance that refills tomorrow is worth waiting
+ * for, an empty balance is not. Saying "try again shortly" for both invited a
+ * refresh that could never succeed — the same mistake as retrying a spent
+ * account every thirty minutes, made in the copy instead of the code.
+ */
+const EXHAUSTED_REFILLS =
+  'Illustration providers are out of quota — this usually clears within a day.';
+
+const EXHAUSTED_BILLING =
+  'Illustration providers are out of credit — this needs a top-up rather than ' +
+  'a retry.';
 
 const ERROR_MESSAGE = 'Could not generate an illustration right now.';
 
@@ -202,6 +215,12 @@ const TaxonVisualPanel: React.FC<Props> = ({
 
   const imageUrl = node.asset?.url ?? null;
   const status = node.visualStatus ?? visual?.status;
+  /*
+   * Only the generation result carries this — the node record stores the status
+   * but not the reason behind it, so a status read from the node leaves this
+   * null and the wait-and-see message is what shows.
+   */
+  const exhaustion = visual?.exhaustion ?? null;
   const failed = Boolean(error) || status === 'ERROR' || status === 'EXHAUSTED';
 
   const isGenerating =
@@ -227,7 +246,10 @@ const TaxonVisualPanel: React.FC<Props> = ({
         title='Oops!'
         message={
           status === 'EXHAUSTED'
-            ? EXHAUSTED_MESSAGE
+            ? // Absent on an older payload, where waiting was the safe reading.
+              exhaustion === 'BILLING'
+              ? EXHAUSTED_BILLING
+              : EXHAUSTED_REFILLS
             : error
               ? 'Could not load visual.'
               : ERROR_MESSAGE
