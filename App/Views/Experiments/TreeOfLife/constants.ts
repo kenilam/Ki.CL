@@ -26,4 +26,53 @@ const ROOT_NODE_ID = `ott${ROOT_OTT_ID}`;
 const toPath = (nodeId?: string | null): string =>
   nodeId ? `/${EXPERIMENTS}/${PATH}/${nodeId}` : `/${EXPERIMENTS}/${PATH}`;
 
-export { NODE_PATTERN, PARAM, PATH, ROOT_NODE_ID, toPath };
+/**
+ * The versions kept around, oldest first.
+ *
+ * Each was a whole attempt at drawing the tree rather than a revision of the
+ * last, so they are worth keeping side by side — the interesting part is how
+ * differently the same data can read.
+ */
+const ARCHIVE = [
+  'v1',
+  'v2',
+  'v3',
+  'v4',
+  'v5',
+  'v6',
+  'v7',
+  'v8',
+  'v9',
+  'v10',
+  'v11',
+  'v12',
+  'v13',
+  'v14',
+] as const;
+
+export type ArchivedVersion = (typeof ARCHIVE)[number];
+
+/**
+ * A node under one of the archived versions.
+ *
+ * The version is a literal segment, so `/tree-of-life/v3/ott123` cannot be
+ * mistaken for a node called `v3` — a static segment outranks `:nodeId` in
+ * the router's own ordering, and nothing about the current path changes.
+ */
+const toArchivePath = (
+  version: ArchivedVersion,
+  nodeId?: string | null
+): string =>
+  nodeId
+    ? `/${EXPERIMENTS}/${PATH}/${version}/${nodeId}`
+    : `/${EXPERIMENTS}/${PATH}/${version}`;
+
+export {
+  ARCHIVE,
+  NODE_PATTERN,
+  PARAM,
+  PATH,
+  ROOT_NODE_ID,
+  toArchivePath,
+  toPath,
+};
