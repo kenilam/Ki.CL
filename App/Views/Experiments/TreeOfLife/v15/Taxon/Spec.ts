@@ -37,6 +37,15 @@ export type Props = Pick<Taxon, 'nodeId'> & {
    * whole tree and release it a level at a time.
    */
   play?: 'enter' | 'exit';
+  /**
+   * Whether this taxon sits below the one in the route.
+   *
+   * Only that subtree plays out. Everywhere else — the lineage climbing back
+   * to the origin, and the context fanned around it — is scenery for the taxon
+   * being looked at, and watching it redraw itself says nothing about where
+   * you are.
+   */
+  withinFocus?: boolean;
   /** Fully grown: reports the tip it reached and the colour it settled on. */
   onEntered?: (settled: Settled) => void;
   /** Fully retracted: reports the start it collapsed into, and that colour. */
