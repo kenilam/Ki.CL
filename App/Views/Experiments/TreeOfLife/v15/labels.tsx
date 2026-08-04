@@ -426,10 +426,15 @@ export const Labels: React.FunctionComponent = () => {
 
         const bounds = host.getBoundingClientRect();
 
+        /*
+         * Every fixed region, not the first one found. There is more than one
+         * now — the search and detail panels on one side, the animation
+         * control on the other — and `querySelector` would have reserved space
+         * around whichever happened to come first in the document, leaving
+         * labels free to sit under the rest.
+         */
         CHROME.forEach((selector) => {
-          const element = document.querySelector(selector);
-
-          if (element) {
+          document.querySelectorAll(selector).forEach((element) => {
             const rect = element.getBoundingClientRect();
 
             mark(
@@ -439,7 +444,7 @@ export const Labels: React.FunctionComponent = () => {
               rect.right - bounds.left,
               rect.bottom - bounds.top
             );
-          }
+          });
         });
 
         // Most important first: a contested seat should go to the label that

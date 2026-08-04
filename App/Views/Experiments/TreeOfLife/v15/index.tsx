@@ -44,6 +44,8 @@ import {
 // Styles
 import './Styles.scss';
 
+const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
+
 const Canvas: React.FunctionComponent = () => {
   const { animate, chains, focus, loading, rooted, setAnimate } =
     useTreeOfLifeContext();
@@ -139,7 +141,7 @@ const Canvas: React.FunctionComponent = () => {
         projected into the scene and fighting the camera.
       */}
       <Layout
-        className='kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-start-narrow'
+        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-start-narrow`}
         autoFlow='row'
         gap='narrow'
       >
@@ -157,7 +159,7 @@ const Canvas: React.FunctionComponent = () => {
         `justifyContent='end'` lands the control a gutter in from the corner.
       */}
       <Layout
-        className='kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-end-narrow'
+        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-end-narrow`}
         alignItems='center'
         autoFlow='column'
         justifyContent='end'

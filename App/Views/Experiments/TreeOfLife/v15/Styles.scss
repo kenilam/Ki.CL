@@ -45,6 +45,21 @@
   }
 
   /*
+   * Fixed chrome — the panels and the animation control — above the label
+   * layer, which is 1.
+   *
+   * On the wrapper rather than on the `Card` inside it, because `z-index` only
+   * applies to a positioned element and the card is static. Labels are seated
+   * to avoid these regions so the two rarely meet, but the hovered label is
+   * placed unconditionally and can land anywhere; a name floating over the
+   * detail panel reads as a glitch. The chrome is the fixed thing on the page
+   * and the labels move around it.
+   */
+  &__chrome {
+    z-index: 2;
+  }
+
+  /*
    * Secondary text inside the panels.
    *
    * Expressed as a fraction of whatever colour the surface has already set,
