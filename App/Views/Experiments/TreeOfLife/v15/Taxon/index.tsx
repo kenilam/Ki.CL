@@ -392,6 +392,23 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
       return undefined;
     }
 
+    /*
+     * Playing out means waiting to be grown before growing anything else.
+     *
+     * The slicing below exists for frame rate: it spreads a clade's mounting
+     * over several frames so none of them is long. That runs whatever the
+     * toggle says, which is why turning animation on used to change nothing
+     * visible — descendants still arrived on the batching schedule, and the
+     * springs ran underneath at `grown: 0`, unseen.
+     *
+     * Holding a taxon's descendants until its own branch has arrived is what
+     * turns that into something to watch: growth leaves the focus and travels
+     * outward a level at a time, which is what the control claims it does.
+     */
+    if (animate && state !== 'enter') {
+      return undefined;
+    }
+
     const slice = Math.max(
       MOUNT_MINIMUM,
       Math.ceil(descendants.length * MOUNT_FRACTION)
@@ -401,7 +418,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     );
 
     return () => cancelAnimationFrame(frame);
-  }, [revealed, descendants.length]);
+  }, [revealed, descendants.length, animate, state]);
 
   const mounting = useMemo(
     () => descendants.slice(0, revealed),
