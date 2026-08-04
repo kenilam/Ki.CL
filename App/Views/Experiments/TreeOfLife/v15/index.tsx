@@ -50,8 +50,21 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
 
 const Canvas: React.FunctionComponent = () => {
-  const { animate, chains, focus, loading, rooted, setAnimate } =
+  const { animate, chains, find, focus, loading, rooted, setAnimate } =
     useTreeOfLifeContext();
+
+  /*
+   * What the camera stands back from, one level away from the focus.
+   *
+   * Normally the ancestor: a taxon reads against the thing it grew out of. The
+   * origin has no ancestor, so that fell through to a fraction of the whole
+   * tree's extent — and once the cache held a few thousand taxa, that fraction
+   * put the camera far enough out to render the origin as a dot. Its own first
+   * descendant is the same unit measured the other way, and frames it beside
+   * what grew out of *it*.
+   */
+  const framingReference =
+    chains[1] ?? (focus ? find(focus)?.descendants?.[0]?.nodeId : undefined);
 
   /*
    * How far right of centre the focused taxon sits — a twentieth of the
@@ -131,7 +144,7 @@ const Canvas: React.FunctionComponent = () => {
 
             <CameraRig
               nodeId={focus}
-              ancestorId={chains[1]}
+              ancestorId={framingReference}
               offsetPx={offsetPx}
             />
           </Fiber.Canvas>
