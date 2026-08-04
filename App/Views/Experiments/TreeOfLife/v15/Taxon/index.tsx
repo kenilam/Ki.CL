@@ -83,6 +83,22 @@ const BODY_AT = 0.55;
  */
 const CONTEXT_DESCENDANTS = 6;
 
+/**
+ * How much of a clade is allowed to mount in one frame, as a fraction of its
+ * size, and the smallest useful slice.
+ *
+ * A focused taxon shows its whole clade, and each of those children shows a
+ * sample of its own — so Bacteria does not mount 153 taxa but 1,800, measured
+ * at 1,009ms of blocked frames. Geometry is only about a third of that; the
+ * rest is React and the scene graph, which no amount of cheaper meshes helps.
+ *
+ * Slicing the mount across frames is the only thing that addresses both. The
+ * slice is proportional so the number of frames stays roughly constant however
+ * large the clade: a fan of ten arrives at once, Bacteria takes eight frames.
+ */
+const MOUNT_FRACTION = 0.04;
+const MOUNT_MINIMUM = 3;
+
 /** Each generation's branch is thinner, and its body smaller, than its parent. */
 const WIDTH_TAPER = 0.72;
 const SIZE_TAPER = 0.78;
@@ -346,6 +362,39 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     return [onward, ...sampled.slice(0, CONTEXT_DESCENDANTS - 1)];
   }, [taxon.descendants, previous, nodeId, focus, settled]);
 
+  /*
+   * How many descendants have been let through so far. Grows a slice per frame
+   * until the clade is whole, so the work lands as several short frames rather
+   * than one long one. Reset whenever the list itself changes, so arriving at a
+   * new taxon starts the reveal again rather than inheriting a stale count.
+   */
+  const [revealed, setRevealed] = useState(0);
+
+  useEffect(() => {
+    setRevealed(Math.min(descendants.length, MOUNT_MINIMUM));
+  }, [descendants]);
+
+  useEffect(() => {
+    if (revealed >= descendants.length) {
+      return undefined;
+    }
+
+    const slice = Math.max(
+      MOUNT_MINIMUM,
+      Math.ceil(descendants.length * MOUNT_FRACTION)
+    );
+    const frame = requestAnimationFrame(() =>
+      setRevealed((current) => Math.min(descendants.length, current + slice))
+    );
+
+    return () => cancelAnimationFrame(frame);
+  }, [revealed, descendants.length]);
+
+  const mounting = useMemo(
+    () => descendants.slice(0, revealed),
+    [descendants, revealed]
+  );
+
   const [{ grown }, spring] = Three.useSpring(() => ({
     grown: 0,
     config: SPRING,
@@ -505,7 +554,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         racing at once, and a level that has not been reached yet stays
         untouched rather than half-run.
       */}
-      {descendants.map((child) => (
+      {mounting.map((child) => (
         <Taxon
           key={child.nodeId}
           nodeId={child.nodeId}
