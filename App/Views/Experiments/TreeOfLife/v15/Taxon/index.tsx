@@ -120,17 +120,22 @@ const decay = (value: number, taper: number, floor: number): number =>
   floor + (value - floor) * taper;
 
 /**
- * Stiff and close to critically damped, so a link settles in roughly 120ms.
+ * Close to critically damped, so a link settles in roughly 190ms.
  *
  * The lineage advances one link per settle — a taxon finishing is what starts
  * the next — so this is the pacing of the whole unfurling, not just of one
- * branch. At the previous 150/26 a deep lineage took the better part of a
- * minute; `friction ≈ 2 * sqrt(tension)` keeps it fast without overshooting
- * into a wobble, which on a growing branch reads as a stumble.
+ * branch. Somewhere between two failures: at 150/26 a deep lineage took the
+ * better part of a minute, and at 1400/75 the growth was over before the eye
+ * could follow a branch out.
+ *
+ * `friction ≈ 2 * sqrt(tension)` throughout, which keeps it from overshooting
+ * into a wobble — on a growing branch that reads as a stumble. Settle time
+ * scales with `1 / sqrt(tension)`, so this is about half again as slow as the
+ * stiffest setting rather than the sixfold drop that made it tedious.
  */
 const SPRING = {
-  tension: 1400,
-  friction: 75,
+  tension: 600,
+  friction: 49,
   precision: 0.002,
 };
 
