@@ -124,6 +124,27 @@
   }
 
   /*
+   * The archive drawer: full width along the bottom edge.
+   *
+   * `Layout` gives its child `inline-size: 100%`, so pinning only the bottom
+   * and the inline start lets it span rather than hug a corner — the same
+   * reason the top-right controls inset one side only.
+   */
+  &__archive {
+    inline-size: 100%;
+    z-index: 2;
+  }
+
+  /*
+   * The versions run in a row and wrap when they must, rather than scrolling
+   * sideways: fourteen short chips fit on a phone in two lines, and a
+   * horizontal scroller would hide half of them behind a gesture.
+   */
+  &__archive-list {
+    flex-wrap: wrap;
+  }
+
+  /*
    * Secondary text inside the panels.
    *
    * Expressed as a fraction of whatever colour the surface has already set,

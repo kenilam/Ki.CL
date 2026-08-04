@@ -9,6 +9,9 @@ import { Spinner } from '@/Components';
 // Context
 import TreeOfLifeProvider from './Context';
 
+// Archive
+import archiveRoutes from './archive';
+
 // Constants
 import { NODE_PATTERN, PATH, ROOT_NODE_ID, toPath } from './constants';
 
@@ -40,6 +43,15 @@ export default (
       bouncing through the redirect.
     */}
     <Origin index element={<Navigate replace to={toPath(ROOT_NODE_ID)} />} />
+
+    {/*
+      Declared before the node route for readability only — the router ranks a
+      literal segment above a dynamic one whatever the order, so
+      `/tree-of-life/v3/ott123` reaches the archive while
+      `/tree-of-life/ott123` still reaches the current view.
+    */}
+    {archiveRoutes}
+
     <Origin path={NODE_PATTERN} element={<Lazy />} />
   </Origin>
 );

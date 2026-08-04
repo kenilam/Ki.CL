@@ -30,6 +30,9 @@ import { Labels, LabelProjector } from './labels';
 // Search
 import Search from './Search';
 
+// Archive
+import Archive from './Archive';
+
 // Taxon
 import Taxon from './Taxon';
 
@@ -224,6 +227,7 @@ const Canvas: React.FunctionComponent = () => {
           </Button>
         </div>
       </Layout>
+      <Archive />
     </>
   );
 };
