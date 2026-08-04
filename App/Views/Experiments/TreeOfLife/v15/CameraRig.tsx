@@ -473,11 +473,22 @@ const CameraRig: React.FunctionComponent<Props> = ({
     const lineage = centre.current.set(...anchor);
     const height = lineage.length();
 
-    if (height < 1e-3) {
-      return;
-    }
-
-    const axis = upright.current.copy(lineage).divideScalar(height);
+    /*
+     * The pull-back is composed around the origin→taxon axis, which the origin
+     * itself does not have: it *is* that point, so the vector has no length and
+     * no direction to make upright.
+     *
+     * Returning here left the camera unwritten for the one taxon at (0,0,0) —
+     * the wheel and the drag still moved their numbers, the frame loop still
+     * ran, and nothing downstream ever read them, so the view sat frozen at
+     * whatever pose it had arrived with. Falling back to the world's own up
+     * gives the composition an axis to use and costs nothing anywhere else,
+     * since every other taxon has a real one.
+     */
+    const axis =
+      height < 1e-3
+        ? upright.current.copy(WORLD_UP)
+        : upright.current.copy(lineage).divideScalar(height);
 
     // Halfway along the lineage, so both ends sit the same distance off centre.
     const farTarget = lineage.multiplyScalar(0.5);
@@ -612,8 +623,17 @@ const CameraRig: React.FunctionComponent<Props> = ({
       setSettled(false);
     }
 
-    if (framed.current !== nodeId && nodeId && anchor && ancestorId) {
-      const ancestor = getAnchor(ancestorId);
+    /*
+     * No `ancestorId` requirement. The origin of life has nothing above it, and
+     * demanding one meant this never ran for it: `framed` stayed on the taxon
+     * before, the zoom was never reset, and — because the wheel and the drag
+     * only reach the camera through a pose this block establishes — the view
+     * arrived stuck at whatever the previous taxon had left and refused every
+     * input. `settle` already knows what to do without an ancestor; it was
+     * simply never asked.
+     */
+    if (framed.current !== nodeId && nodeId && anchor) {
+      const ancestor = ancestorId ? getAnchor(ancestorId) : null;
 
       /*
        * Readiness is the lineage being whole, held for a couple of frames.
@@ -629,7 +649,10 @@ const CameraRig: React.FunctionComponent<Props> = ({
        * aimed, and it stops growing as soon as the walk reaches the root — so
        * it settles even while the fans around it are still arriving.
        */
-      const whole = Boolean(ancestor) && chains.every((id) => getAnchor(id));
+      // Nothing to wait for above the origin, so its lineage is whole at once.
+      const whole =
+        (ancestorId ? Boolean(ancestor) : true) &&
+        chains.every((id) => getAnchor(id));
 
       placed.current = whole ? placed.current + 1 : 0;
 
