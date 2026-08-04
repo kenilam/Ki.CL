@@ -662,8 +662,7 @@ export const Labels: React.FunctionComponent = () => {
         /*
          * The link is the seated element, not the chip inside it: the frame
          * loop transforms whatever it holds a reference to, and reads
-         * `data-seated` off the same node to fade it in. Custom properties set
-         * here inherit down to the `Badge`, so the accent still reaches it.
+         * `data-seated` off the same node to fade it in.
          */
         <HyperLink
           unstyled
@@ -671,14 +670,6 @@ export const Labels: React.FunctionComponent = () => {
           key={key}
           to={toPath(key)}
           className={PILL_CLASS}
-          style={
-            label.accent
-              ? ({
-                  '--kicl--components--badge--background-color': label.accent,
-                  '--kicl--components--badge--color': `contrast-color(var(--kicl--components--badge--background-color))`,
-                } as React.CSSProperties)
-              : undefined
-          }
           ref={(node: HTMLAnchorElement | null) => {
             if (node) {
               pillsRef.current.set(key, node);
@@ -690,6 +681,20 @@ export const Labels: React.FunctionComponent = () => {
           <Badge
             is='span'
             variant={label.accent ? 'secondary' : 'outline'}
+            /*
+             * Set on the badge, not on the link around it. `Badge` declares
+             * these properties on itself, and a self-declaration beats an
+             * inherited one however close the ancestor — put them on the link
+             * and the accent silently does nothing.
+             */
+            style={
+              label.accent
+                ? ({
+                    '--kicl--components--badge--background-color': label.accent,
+                    '--kicl--components--badge--color': `contrast-color(var(--kicl--components--badge--background-color))`,
+                  } as React.CSSProperties)
+                : undefined
+            }
             /*
              * The routed taxon's own chip is a step larger, on the same signal
              * that colours its border — so the label you are actually reading

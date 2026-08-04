@@ -25,6 +25,13 @@
   // Leaving is instant: this rule carries no transition, and a transition is
   // read from the state being moved *into*.
   &__label {
+    /*
+     * Matches the chip it wraps, so the focus ring traces the pill rather than
+     * boxing it in a rectangle — and `inline-flex` keeps the link's own box
+     * tight to the badge instead of stretching to a block.
+     */
+    border-radius: var(--kicl-size-half);
+    display: inline-flex;
     inset-block-start: 0;
     inset-inline-start: 0;
     opacity: 0;
