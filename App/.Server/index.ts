@@ -16,6 +16,8 @@ import config from '../app.config.json' with { type: 'json' };
 
 import Env from '../Env';
 
+import { applyProxy, attachUpgrade, warmIdToken } from './Proxy';
+
 import nodePath from 'path';
 
 dotenv.config({ path: `${appRoot.path}/.env` });
@@ -31,6 +33,14 @@ async function Server() {
     const baseurl = [appRoot.path, 'App', 'build'].filter(Boolean).join('/');
 
     const app = express();
+
+    /*
+     * Ahead of everything that serves files. The API's paths are not on disk,
+     * and the catch-all below answers anything it cannot find with index.html —
+     * so a proxied route mounted after it would return the SPA shell instead of
+     * the remote entry, and module federation would fail on a 200.
+     */
+    applyProxy(app);
 
     app.use(
       express.static(baseurl, {
@@ -161,9 +171,18 @@ async function Server() {
 
     const port = process.env.PORT;
 
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       console.info('Server running on port: ', colors.green(String(port)));
     });
+
+    /*
+     * Fetched once at boot so the first proxied request does not pay for it,
+     * and so a misconfigured identity is visible in the startup log rather than
+     * as a puzzling 403 later.
+     */
+    void warmIdToken();
+
+    attachUpgrade(server);
   } catch (error) {
     console.error(
       colors.red('An error occurred when attempting to start application'),

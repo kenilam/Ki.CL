@@ -5,9 +5,12 @@
     "colors": "1.4.0",
     "compression": "^1.8.0",
     "express": "5.1.0",
+    "google-auth-library": "^10.4.0",
     "hpp": "^0.2.3",
+    "http-proxy-middleware": "^3.0.5",
     "is-image": "^4.0.0",
-    "is-video": "^2.0.0"
+    "is-video": "^2.0.0",
+    "tsx": "^4.20.6"
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
@@ -15,7 +18,7 @@
     "@types/hpp": "^0.2.6"
   },
   "scripts": {
-    "start": "node --no-warnings=ExperimentalWarning --loader ts-node/esm index.ts"
+    "start": "tsx index.ts"
   },
   "type": "module"
 }
