@@ -203,6 +203,16 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
           color='#b9cbc2'
           wireframe
           transparent
+          /*
+           * Only the far surface. At framing distance the camera is inside the
+           * cage, so the near hemisphere hangs between the lens and the tree —
+           * and being closer than the focal plane it takes the full depth-of-
+           * field blur, smearing a deliberately faint wireframe into thick
+           * bright strokes across everything. Drawing the back only leaves the
+           * cage reading as the boundary behind the tree, which is what it is
+           * for.
+           */
+          side={THREE.BackSide}
           // Exempt from the aerial haze: the cage encloses the whole tree, so
           // most of it is "distant" by definition and would simply go flat. It
           // already recedes on its own as the view pulls back.
@@ -230,6 +240,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
             color='#b9cbc2'
             wireframe
             transparent
+            side={THREE.BackSide}
             fog={false}
             opacity={0}
             depthWrite={false}
