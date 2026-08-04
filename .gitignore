@@ -54,3 +54,6 @@ App/build
 # Env files #
 #############
 .env
+
+# Federated remote types — pulled from the remote on every dev start
+App/@mf-types/
