@@ -34,6 +34,11 @@ export type SocialSignInInput = {
   Provider: Provider;
   Token: string;
 };
+export type TaxonSearchSource =
+  /** Already known — matched against stored nodes. */
+  | 'DATABASE'
+  /** Matched against Open Tree's taxonomy because nothing was stored. */
+  | 'OPEN_TREE';
 export type TaxonVisualStatus = 'ERROR' | 'EXHAUSTED' | 'PENDING' | 'READY';
 export type Kicl_AssetQueryVariables = Exact<{
   id: string | number;
@@ -58,6 +63,19 @@ export type Kicl_MeQuery = {
     Active: boolean | null;
     aud: string | null;
   } | null;
+};
+export type Kicl_TaxonSearchQueryVariables = Exact<{
+  query: string;
+  limit?: number | null | undefined;
+}>;
+export type Kicl_TaxonSearchQuery = {
+  TaxonSearch: Array<{
+    nodeId: string | null;
+    ottId: number | null;
+    name: string;
+    rank: string | null;
+    source: TaxonSearchSource;
+  }>;
 };
 export type Kicl_TaxonVisualQueryVariables = Exact<{
   ottId: number;
@@ -834,6 +852,10 @@ export declare const Kicl_AssetDocument: DocumentNode<
 export declare const Kicl_MeDocument: DocumentNode<
   Kicl_MeQuery,
   Kicl_MeQueryVariables
+>;
+export declare const Kicl_TaxonSearchDocument: DocumentNode<
+  Kicl_TaxonSearchQuery,
+  Kicl_TaxonSearchQueryVariables
 >;
 export declare const Kicl_TaxonVisualDocument: DocumentNode<
   Kicl_TaxonVisualQuery,

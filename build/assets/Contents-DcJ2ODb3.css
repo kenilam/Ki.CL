@@ -1,0 +1,28 @@
+.kicl--views--experiments--tree-of-life--v15 {
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
+}
+.kicl--views--experiments--tree-of-life--v15__stage {
+  inset: 0;
+}
+.kicl--views--experiments--tree-of-life--v15__labels {
+  z-index: 1;
+  inset: 0;
+}
+.kicl--views--experiments--tree-of-life--v15__label {
+  opacity: 0;
+  white-space: nowrap;
+  will-change: transform;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+}
+.kicl--views--experiments--tree-of-life--v15__label[data-seated='true'] {
+  opacity: 1;
+  transition: opacity var(--kicl-transition-duration-fast)
+    var(--kicl-transition-duration);
+}
+.kicl--views--experiments--tree-of-life--v15 canvas {
+  touch-action: none;
+}

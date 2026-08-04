@@ -18,8 +18,14 @@ import CameraRig from './CameraRig';
 // Globe
 import Globe from './Globe';
 
+// Details
+import Details from './Details';
+
 // Labels
 import { Labels, LabelProjector } from './labels';
+
+// Search
+import Search from './Search';
 
 // Taxon
 import Taxon from './Taxon';
@@ -126,6 +132,22 @@ const Canvas: React.FunctionComponent = () => {
       </Layout>
 
       <Labels />
+
+      {/*
+        Both panels sit outside the Canvas, fixed to the left, so they are
+        ordinary DOM — readable text at a fixed size rather than something
+        projected into the scene and fighting the camera.
+      */}
+      <Layout
+        className='kicl-position-fixed kicl-inset-block-start-narrow kicl-inset-inline-start-narrow'
+        autoFlow='row'
+        gap='narrow'
+      >
+        <div>
+          <Search />
+          <Details />
+        </div>
+      </Layout>
 
       {/*
         Inset from the top-right corner rather than all four sides: `Layout`
