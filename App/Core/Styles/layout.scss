@@ -113,7 +113,7 @@
   --kicl-layout--gap: 0;
   --kicl-layout--grid-frames: repeat(1fr, 12);
   --kicl-layout--block-size: auto;
-  --kicl-layout--inline-size: 100%;
+  --kicl-layout--inline-size: auto;
   --kicl-layout--margin: initial;
 
   block-size: var(--kicl-layout--block-size);
@@ -178,7 +178,9 @@
 
   &.kicl-layout--full-screen {
     --kicl-layout--block-size: var(--kicl-layout--full-screen--max-block-size);
-    --kicl-layout--inline-size: var(--kicl-layout--full-screen--max-inline-size);
+    --kicl-layout--inline-size: var(
+      --kicl-layout--full-screen--max-inline-size
+    );
   }
 
   &:not(.kicl-layout--full-screen) {

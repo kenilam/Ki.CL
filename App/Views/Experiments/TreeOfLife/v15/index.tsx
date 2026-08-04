@@ -18,6 +18,9 @@ import CameraRig from './CameraRig';
 // Globe
 import Globe from './Globe';
 
+// Depth
+import Depth from './Depth';
+
 // Details
 import Details from './Details';
 
@@ -121,6 +124,8 @@ const Canvas: React.FunctionComponent = () => {
                 play='enter'
               />
             ) : null}
+
+            <Depth focus={focus} />
 
             <LabelProjector />
 

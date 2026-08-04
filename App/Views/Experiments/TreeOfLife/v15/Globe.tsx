@@ -203,6 +203,10 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
           color='#b9cbc2'
           wireframe
           transparent
+          // Exempt from the aerial haze: the cage encloses the whole tree, so
+          // most of it is "distant" by definition and would simply go flat. It
+          // already recedes on its own as the view pulls back.
+          fog={false}
           opacity={OPACITY}
           depthWrite={false}
         />
@@ -226,6 +230,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
             color='#b9cbc2'
             wireframe
             transparent
+            fog={false}
             opacity={0}
             depthWrite={false}
           />
