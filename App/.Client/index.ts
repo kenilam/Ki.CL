@@ -130,7 +130,30 @@ const getConfig = ({
           '@apollo/client': { singleton: true, requiredVersion: '^4.0.0' },
         },
         dts: {
-          consumeTypes: true,
+          consumeTypes: {
+            /*
+             * Pointed at the remote directly, and absolutely.
+             *
+             * The runtime entry above is deliberately relative so the browser
+             * loads it same-origin through the Vite proxy, avoiding mixed
+             * content and CORS. But type consumption runs in Node, where a
+             * path with no origin cannot be fetched at all — which is why this
+             * step failed silently on every start, logging only
+             * `dynamic-remote-type-hints-plugin err: [object Event]`, and left
+             * `App/@mf-types` frozen at whatever it last contained.
+             *
+             * The file names are the remote's, not the plugin defaults: its
+             * own config sets `typesFolder: 'types'`, so it emits `types.zip`
+             * and `types.d.ts` rather than `@mf-types.zip` and `apis.d.ts`.
+             */
+            remoteTypeUrls: {
+              api: {
+                alias: 'api',
+                api: `${BACKEND_URL}/client/types.d.ts`,
+                zip: `${BACKEND_URL}/client/types.zip`,
+              },
+            },
+          },
         },
       }),
       dynamicImport(),
