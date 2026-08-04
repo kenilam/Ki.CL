@@ -37,7 +37,7 @@ const DEFAULT: Spec.Context = {
   chains: [],
   focus: undefined,
   rooted: false,
-  animate: false,
+  animate: true,
   setAnimate: () => {},
 };
 
@@ -55,11 +55,14 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
   const params = useParams<Spec.Params>();
 
   /*
-   * Off by default. The tree lands as a whole and the camera moves to the
-   * taxon in the route; playing it out branch by branch is now something you
-   * turn on, not something you wait through.
+   * On by default. Growth leaving the focused taxon and travelling outward is
+   * the thing this view is about, and it was turned off back when the control
+   * did nothing visible — the tree arrived on its own schedule whatever the
+   * setting said. Now that it plays out a level at a time, arriving to it is
+   * the point rather than something to wait through, and the control is there
+   * to land the tree at once when that is what you want.
    */
-  const [animate, setAnimate] = useState(false);
+  const [animate, setAnimate] = useState(true);
 
   const { data, ...TreeOfLifeSubtree } = useQuery(
     Kicl_TreeOfLifeSubtreeDocument,
