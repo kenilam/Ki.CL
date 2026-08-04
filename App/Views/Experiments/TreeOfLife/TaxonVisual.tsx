@@ -209,7 +209,17 @@ const TaxonVisualPanel: React.FC<Props> = ({
     !failed &&
     (!debounced || loading || refreshing || awaitingGeneration || !visual);
 
-  if (error || status === 'ERROR' || status === 'EXHAUSTED') {
+  /*
+   * Never let a status hide a picture that exists.
+   *
+   * `status` is whichever of the node record and the generation query answered
+   * last, and those two disagree readily: a node can carry an asset from an
+   * earlier success while a later attempt reports ERROR, and the subscription
+   * can push a failure over a query that had already returned READY. Reporting
+   * "could not generate" while holding the generated image is the worst of the
+   * possible readings, so the image wins whenever there is one.
+   */
+  if (!imageUrl && (error || status === 'ERROR' || status === 'EXHAUSTED')) {
     return (
       <Status
         in

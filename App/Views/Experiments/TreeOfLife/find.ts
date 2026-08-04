@@ -15,13 +15,30 @@ import type { TaxonNode } from './Spec';
  * The selection is deliberately shallow — the edges are ids, not nested
  * nodes. Callers walk by asking again, which keeps every read O(1) instead of
  * dragging a subtree along with it.
+ *
+ * Shallow in depth, though, not in fields. It once read only what the tree
+ * needed to draw itself — id, name, rank — and the detail panel, which reads
+ * through the same function, silently failed its eligibility check on every
+ * taxon because `ottId` was never selected and so was always undefined.
+ *
+ * The same trap caught `asset` later: `assetId` was selected but the resolved
+ * `asset { url }` was not, and the panel renders the url. A taxon with a
+ * perfectly good generated image reported that it could not generate one,
+ * because the only field that would have shown it was never asked for.
  */
 const NODE = gql`
   fragment TreeOfLifeNodeShape on TreeOfLifeNode {
     nodeId
+    ottId
     name
     rank
     numTips
+    assetId
+    description
+    visualStatus
+    asset {
+      url
+    }
     ancestor {
       nodeId
     }
