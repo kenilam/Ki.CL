@@ -60,6 +60,26 @@
   }
 
   /*
+   * A search result: name on one line, its qualifier beneath.
+   *
+   * `HyperLink unstyled` gives a bare anchor with the app's focus ring intact,
+   * so this only has to lay the two lines out and give the row somewhere to
+   * show it is being pointed at.
+   */
+  &__result {
+    display: block;
+    padding-block: var(--kicl-gutter-narrowest);
+
+    > * {
+      display: block;
+    }
+
+    &:hover {
+      opacity: 0.72;
+    }
+  }
+
+  /*
    * Secondary text inside the panels.
    *
    * Expressed as a fraction of whatever colour the surface has already set,
