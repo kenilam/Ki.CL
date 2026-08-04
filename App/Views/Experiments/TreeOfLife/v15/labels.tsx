@@ -214,6 +214,23 @@ const EDGE_PAD = 12;
 /** At or above this, a label is placed even with no perfectly clear seat. */
 const FORCE_PLACE_PRIORITY = 3;
 
+/**
+ * The taxon under the pointer, if any.
+ *
+ * Read by the frame loop rather than announced to React: hovering changes
+ * where one pill sits, not which pills exist, and the loop is already running.
+ *
+ * A hovered label is placed unconditionally. Every other label can lose its
+ * seat to a more important one and vanish, which is right when the layer is
+ * choosing for you — but pointing at something is the one moment you have
+ * asked for a specific name, and answering "no room" is never the useful reply.
+ */
+let hovered: string | null = null;
+
+export function setHovered(nodeId: string | null): void {
+  hovered = nodeId;
+}
+
 const CLASS_ROOT = 'kicl--views--experiments--tree-of-life--v15';
 
 /**
@@ -288,9 +305,15 @@ export const Labels: React.FunctionComponent = () => {
         });
 
         // Most important first: a contested seat should go to the label that
-        // matters most, and the ones after it work around what is taken.
+        // matters most, and the ones after it work around what is taken. The
+        // hovered one is asked for directly, so it outranks the lot and is
+        // seated before anything else can take the space around it.
         [...store.projected]
-          .sort((a, b) => b.priority - a.priority)
+          .sort(
+            (a, b) =>
+              Number(b.key === hovered) - Number(a.key === hovered) ||
+              b.priority - a.priority
+          )
           .forEach((item) => {
             const pill = pills.get(item.key);
 
@@ -337,8 +360,8 @@ export const Labels: React.FunctionComponent = () => {
             const seat = best as { x: number; y: number; cost: number } | null;
 
             if (
-              !seat ||
-              (seat.cost > 0 && item.priority < FORCE_PLACE_PRIORITY)
+              item.key !== hovered &&
+              (!seat || (seat.cost > 0 && item.priority < FORCE_PLACE_PRIORITY))
             ) {
               // Nowhere clear, and not important enough to sit on something.
               pill.dataset.seated = 'false';
@@ -352,10 +375,21 @@ export const Labels: React.FunctionComponent = () => {
              * transition is read from the state being entered, and only the
              * seated rule carries one.
              */
-            pill.dataset.seated = 'true';
-            pill.style.transform = `translate3d(${Math.round(seat.x)}px, ${Math.round(seat.y)}px, 0)`;
+            /*
+             * A hovered label is placed even when every candidate seat was
+             * rejected — off-screen ones included — so it falls back to sitting
+             * just clear of the body it names.
+             */
+            const placed = seat ?? {
+              x: item.x + item.radiusPx + GAP_PX,
+              y: item.y - height / 2,
+              cost: 0,
+            };
 
-            mark(grid, seat.x, seat.y, seat.x + width, seat.y + height);
+            pill.dataset.seated = 'true';
+            pill.style.transform = `translate3d(${Math.round(placed.x)}px, ${Math.round(placed.y)}px, 0)`;
+
+            mark(grid, placed.x, placed.y, placed.x + width, placed.y + height);
           });
       }
 
@@ -383,7 +417,7 @@ export const Labels: React.FunctionComponent = () => {
            * distinguished by weight as well as by hue, and still reads as one
            * when the accent is hard to pick out against the tree behind it.
            */
-          size={label.accent ? 'large' : undefined}
+          size={label.accent ? 'large' : 'small'}
           className={PILL_CLASS}
           style={
             label.accent
