@@ -124,24 +124,114 @@
   }
 
   /*
-   * The archive drawer: full width along the bottom edge.
+   * The archive, as a popover the browser owns.
    *
-   * `Layout` gives its child `inline-size: 100%`, so pinning only the bottom
-   * and the inline start lets it span rather than hug a corner — the same
-   * reason the top-right controls inset one side only.
+   * Sized against `dvh` rather than `vh` so a phone's collapsing address bar
+   * cannot leave the last version under the fold, and held a gutter short of
+   * the viewport at each end so it reads as a panel rather than as a takeover.
    */
+  &__archive-toggle {
+    anchor-name: --kicl-archive-toggle;
+  }
+
   &__archive {
-    inline-size: 100%;
-    z-index: 2;
+    background-color: var(--kicl-color-grey-darker);
+    border: var(--kicl-size-1px) solid var(--kicl-color-grey-dark);
+    border-radius: var(--kicl-size-half);
+    margin: 0;
+    overflow-y: auto;
+    padding: var(--kicl-gutter-narrow);
+
+    /*
+     * Sits on the toggle that opens it, growing upward from just above it.
+     *
+     * Written twice on purpose. The inset pair is what an engine without
+     * anchor positioning uses, and lands the panel in the same corner by
+     * measuring from the viewport; the anchor pair supersedes it where it is
+     * understood, and needs no number to stay attached if the toggle moves.
+     */
+    inset-block-end: var(--kicl-gutter-wide);
+    inset-block-start: auto;
+    inset-inline-end: var(--kicl-gutter-narrow);
+    inset-inline-start: auto;
+    position-anchor: --kicl-archive-toggle;
+    position-area: block-start span-inline-start;
+    margin-block-end: var(--kicl-gutter-narrower);
+
+    /*
+     * Bounded by what is actually above the toggle rather than by the whole
+     * viewport, so a long list scrolls instead of running off the top. `dvh`
+     * because a phone's address bar collapses and `vh` would not notice.
+     */
+    max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
+
+    /*
+     * Both ends of the transition are declared, and `display` and `overlay`
+     * are allowed to animate discretely — without that a popover snaps in and
+     * out, since it is `display: none` until the moment it opens.
+     */
+    opacity: 0;
+    transition:
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast),
+      display var(--kicl-transition-duration-fast) allow-discrete,
+      overlay var(--kicl-transition-duration-fast) allow-discrete;
+    translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+
+    &:popover-open {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+      }
+    }
   }
 
   /*
-   * The versions run in a row and wrap when they must, rather than scrolling
-   * sideways: fourteen short chips fit on a phone in two lines, and a
-   * horizontal scroller would hide half of them behind a gesture.
+   * Top-down: one version per line, newest work at the bottom of the list as
+   * it is on disk, so the order reads as a history rather than a ranking.
    */
   &__archive-list {
-    flex-wrap: wrap;
+    display: grid;
+    gap: var(--kicl-gutter-narrower);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /*
+   * Staggered by position, with no JavaScript and no per-item class:
+   * `sibling-index()` is the element's own place among its siblings, so the
+   * list can grow or shrink and the cascade follows it.
+   */
+  &__archive-item {
+    opacity: 0;
+    transition:
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast);
+
+    // Offset on the block axis, so the list arrives downward in the direction
+    // it reads rather than sliding in from the side.
+    translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+  }
+
+  &__archive:popover-open &__archive-item {
+    opacity: 1;
+    transition-delay: calc(sibling-index() * 30ms);
+    translate: 0 0;
+
+    /*
+     * The items are `display: none` with the popover until it opens, and a
+     * transition has nothing to run from when an element is first rendered —
+     * so without this they simply painted at their final value and the
+     * stagger never played, delays computed and all.
+     */
+    @starting-style {
+      opacity: 0;
+      translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+    }
   }
 
   /*
