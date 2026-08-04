@@ -40,7 +40,6 @@ import { registerLabel } from '@/Views/Experiments/TreeOfLife/v15/labels';
 // Zoom
 import {
   getSettled,
-  isPulledBack,
   subscribeSettled,
 } from '@/Views/Experiments/TreeOfLife/v15/zoom';
 
@@ -508,21 +507,10 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         geometry={body}
         onClick={(event) => {
           event.stopPropagation();
-
-          /*
-           * Inert when the view is fully pulled back. Out there a taxon is a
-           * couple of pixels wide and the subject is the lineage rather than
-           * any one node in it, so a click is far likelier to be a misfire
-           * than a choice.
-           */
-          if (isPulledBack()) {
-            return;
-          }
-
           navigate(toPath(nodeId));
         }}
         onPointerOver={() => {
-          document.body.style.cursor = isPulledBack() ? '' : 'pointer';
+          document.body.style.cursor = 'pointer';
         }}
         onPointerOut={() => {
           document.body.style.cursor = '';
