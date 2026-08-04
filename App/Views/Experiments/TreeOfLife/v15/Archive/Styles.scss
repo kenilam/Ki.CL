@@ -1,46 +1,11 @@
-/*
- * The archive drawer.
- *
- * Everything the browser already does is left to it: a `dialog` with `popover`
- * supplies the top layer, Escape, dismissal on a click outside and focus
- * handling, and `Card` supplies the surface. What is left here is the part
- * neither of them can know — where the panel sits, how tall it may grow, and
- * the order its contents arrive in.
- */
-
 .kicl--views--experiments--tree-of-life--v15--archive {
-  /*
-   * Anchored to the control that opens it, so the panel stays on the toggle
-   * without a number to keep in step if either moves. The inset pair below is
-   * what an engine without anchor positioning falls back to, which lands it in
-   * the same corner by measuring from the viewport instead.
-   */
-  inset-block-end: var(--kicl-gutter-wide);
-  inset-block-start: auto;
-  inset-inline-end: var(--kicl-gutter-narrow);
-  inset-inline-start: auto;
   position-anchor: --kicl-archive-toggle;
   position-area: block-start span-inline-start;
-  border: 0;
-  margin: 0;
-  margin-block-end: var(--kicl-gutter-narrower);
-  padding: 0;
-
-  /*
-   * Bounded by what is above the toggle rather than by the whole viewport, so
-   * a long list scrolls rather than running off the top. `dvh` because a
-   * phone's address bar collapses and `vh` does not notice.
-   */
   max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
   overflow-y: auto;
-
-  /*
-   * Both ends of the panel's own transition, with `display` and `overlay`
-   * allowed to animate discretely — a popover is `display: none` until it
-   * opens, so without that it would snap in and out.
-   */
   opacity: 0;
   transition:
+    block-size var(--kicl-transition-duration-fast) allow-discrete,
     opacity var(--kicl-transition-duration-fast),
     translate var(--kicl-transition-duration-fast),
     display var(--kicl-transition-duration-fast) allow-discrete,
@@ -57,16 +22,7 @@
     }
   }
 
-  /* One version per line, in the order they were built. */
-  ul {
-    display: grid;
-    gap: var(--kicl-gutter-narrower);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
+  a {
     opacity: 0;
     transition:
       opacity var(--kicl-transition-duration-fast),
@@ -74,19 +30,9 @@
     translate: 0 calc(var(--kicl-gutter-narrow) * -1);
   }
 
-  /*
-   * Staggered by position, with no JavaScript and no per-item class:
-   * `sibling-index()` is the element's own place among its siblings, so the
-   * list can grow or shrink and the cascade follows it.
-   *
-   * `@starting-style` is needed here as well as on the panel. These are
-   * `display: none` with it until it opens, and a transition has nothing to
-   * run from at first render — without it the delays compute correctly and
-   * every item still paints at its final value.
-   */
-  &:popover-open li {
+  &:popover-open a {
     opacity: 1;
-    transition-delay: calc(sibling-index() * 30ms);
+    transition-delay: calc((sibling-count() - sibling-index()) * 30ms);
     translate: 0 0;
 
     @starting-style {

@@ -59,13 +59,13 @@ export type ArchivedVersion = (typeof ARCHIVE)[number];
  * mistaken for a node called `v3` — a static segment outranks `:nodeId` in
  * the router's own ordering, and nothing about the current path changes.
  */
-const toArchivePath = (
-  version: ArchivedVersion,
-  nodeId?: string | null
-): string =>
-  nodeId
-    ? `/${EXPERIMENTS}/${PATH}/${version}/${nodeId}`
-    : `/${EXPERIMENTS}/${PATH}/${version}`;
+type ToArchivePathProps = {
+  version?: ArchivedVersion;
+  nodeId?: string | null;
+};
+const toArchivePath = ({ version, nodeId }: ToArchivePathProps): string => {
+  return `/${[EXPERIMENTS, PATH, version, nodeId].filter(Boolean).join('/')}`;
+};
 
 export {
   ARCHIVE,

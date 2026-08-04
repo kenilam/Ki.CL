@@ -1,15 +1,7 @@
 import React from 'react';
 
 // Components
-import {
-  Badge,
-  Button,
-  Card,
-  Heading,
-  HyperLink,
-  Layout,
-  Text,
-} from '@/Components';
+import { Badge, Button, Card, HyperLink, Layout, Text } from '@/Components';
 
 // Icons
 import { Ri } from '@/Icons';
@@ -26,23 +18,10 @@ import {
 // Styles
 import './Styles.scss';
 
-/**
- * The earlier versions, reachable from the current one.
- *
- * Each was a whole attempt at drawing the same tree rather than a revision of
- * the one before, so the archive is worth opening: the interesting part is how
- * differently the same data reads. Every link keeps the taxon you are on —
- * landing on the origin each time would make them hard to compare.
- *
- * Opening and closing is the browser's, through the popover attributes. No
- * state, no handler, no effect, and the top layer, Escape, dismissal on a
- * click outside and focus handling all come with it.
- */
-
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15--archive';
 
 const Archive: React.FunctionComponent = () => {
-  const { focus } = useTreeOfLifeContext();
+  const { focus: nodeId } = useTreeOfLifeContext();
 
   return (
     <>
@@ -58,7 +37,7 @@ const Archive: React.FunctionComponent = () => {
           type='button'
           alignItems='center'
           gap='narrower'
-          className={`${CLASS_NAME}__toggle kicl-color-grey-dark`}
+          className={`${CLASS_NAME}__toggle`}
           popoverTarget={CLASS_NAME}
           aria-label='Earlier versions of this view'
           title='Show the earlier versions of this view'
@@ -70,23 +49,37 @@ const Archive: React.FunctionComponent = () => {
         </Button>
       </Layout>
 
-      <dialog className={CLASS_NAME} id={CLASS_NAME} popover='auto'>
+      <dialog
+        className={`${CLASS_NAME} kicl-inset-block-end-narrow`}
+        id={CLASS_NAME}
+        popover='auto'
+      >
         <Card>
-          <Heading dense is='h3' className='kicl-font-size-small'>
-            Earlier versions — the same tree, drawn differently.
-          </Heading>
-
-          <ul>
-            {ARCHIVE.map((version) => (
-              <li key={version}>
-                <HyperLink unstyled to={toArchivePath(version, focus)}>
+          <Layout
+            autoFlow='row'
+            justifyContent='stretch'
+            justifyItems='center'
+            gap='narrower'
+          >
+            <nav>
+              <HyperLink unstyled to={toArchivePath({ nodeId })}>
+                <Badge is='span' variant='ghost'>
+                  Final
+                </Badge>
+              </HyperLink>
+              {[...ARCHIVE].reverse().map((version) => (
+                <HyperLink
+                  unstyled
+                  key={version}
+                  to={toArchivePath({ version, nodeId })}
+                >
                   <Badge is='span' variant='ghost'>
                     {version}
                   </Badge>
                 </HyperLink>
-              </li>
-            ))}
-          </ul>
+              ))}
+            </nav>
+          </Layout>
         </Card>
       </dialog>
     </>

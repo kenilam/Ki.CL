@@ -68,7 +68,12 @@ const archiveRoutes = ARCHIVE.map((version) => (
   <Origin key={version} path={version}>
     <Origin
       index
-      element={<Navigate replace to={toArchivePath(version, ROOT_NODE_ID)} />}
+      element={
+        <Navigate
+          replace
+          to={toArchivePath({ version, nodeId: ROOT_NODE_ID })}
+        />
+      }
     />
     <Origin path={NODE_PATTERN} element={<Archived version={version} />} />
   </Origin>

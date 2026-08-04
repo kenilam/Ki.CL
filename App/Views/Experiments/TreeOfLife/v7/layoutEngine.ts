@@ -54,7 +54,7 @@ const MAX_CHILDREN = 14;
 /** Upward fan span (radians) passed to d3.cluster as the x-extent. */
 const FAN_SPAN = Math.PI * 1.12;
 const OUTER_RADIUS = 15;
-const HEIGHT_LIMIT_DEFAULT = 4;
+const HEIGHT_LIMIT_DEFAULT = 3;
 
 function prune(node: TreeNode): TreeNode {
   if (!node.children?.length) {

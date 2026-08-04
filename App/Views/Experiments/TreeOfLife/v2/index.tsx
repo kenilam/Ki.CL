@@ -14,6 +14,7 @@ import {
   ROOT_OTT_ID,
   DEFAULT_HEIGHT_LIMIT,
   mergeSubtree,
+  fromSubtreeNode,
   labelFor,
 } from '@/Views/Experiments/TreeOfLife/tree';
 import { layoutPhylogeneticFan, type LayoutLink } from './layout';
@@ -267,7 +268,7 @@ const Canvas: React.FunctionComponent = () => {
       return;
     }
 
-    setTree((current) => current ?? (root as TreeNode));
+    setTree((current) => current ?? fromSubtreeNode(root));
   }, [data]);
 
   const onExpand = async (node: TreeNode) => {
@@ -284,7 +285,8 @@ const Canvas: React.FunctionComponent = () => {
           : { nodeId: node.nodeId, heightLimit: DEFAULT_HEIGHT_LIMIT },
       });
 
-      const subtree = result.data?.TreeOfLifeSubtree as TreeNode | undefined;
+      const raw = result.data?.TreeOfLifeSubtree;
+      const subtree = raw ? fromSubtreeNode(raw) : undefined;
       if (subtree?.nodeId) {
         setTree((current) =>
           current ? mergeSubtree(current, subtree) : subtree

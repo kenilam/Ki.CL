@@ -55,7 +55,7 @@ export type ViewportSize = {
 };
 
 const MAX_CHILDREN = 16;
-const HEIGHT_LIMIT_DEFAULT = 4;
+const HEIGHT_LIMIT_DEFAULT = 3;
 const REPULSION_ITERS = 64;
 const PADDING = 48;
 
@@ -289,9 +289,9 @@ export function computeSpeciesMapLayout(
 
     const expandable = Boolean(
       node.data.ottId &&
-        (node.data.numTips ?? 0) > 1 &&
-        (!node.children?.length ||
-          node.children.length < (node.data.numTips ?? 0))
+      (node.data.numTips ?? 0) > 1 &&
+      (!node.children?.length ||
+        node.children.length < (node.data.numTips ?? 0))
     );
     const isOrigin = node.depth === 0 && isAbsoluteOrigin(node.data);
     const isTip = !node.children?.length;
