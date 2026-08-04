@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 import THREE, { Fiber } from '@/Three';
 
@@ -57,6 +57,37 @@ const OPACITY = 0.28;
 const FADE_FROM = 0.55;
 const FADE_TO = 0.95;
 
+/**
+ * How faint the cage is allowed to get. It thins as the view pulls back but
+ * never leaves — at the far end it is the only thing giving the lineage a
+ * sense of the volume it sits inside.
+ */
+const MIN_OPACITY = 0.05;
+
+/**
+ * Defocus, faked with concentric shells.
+ *
+ * A wireframe is GL lines a pixel wide, so there is nothing to blur: a real
+ * one needs a post-processing pass over the whole frame, which costs far more
+ * than this decoration is worth. Drawing the same sphere slightly inside and
+ * outside the crisp one smears the lines across a few pixels instead, and at
+ * this line density that reads as softening rather than as three spheres.
+ *
+ * The spread opens with the zoom, so the cage sharpens back up as you close in.
+ */
+const BLUR_SHELLS = [-1, 1];
+const BLUR_SPREAD = 0.016;
+
+/**
+ * Share of the cage's opacity each shell takes *from* the crisp one.
+ *
+ * Blur spreads light, it does not add any: the shells have to be paid for out
+ * of the same budget or the cage simply gets brighter, which is the opposite
+ * of receding. At full spread the three lines together carry exactly the floor
+ * opacity, so what changes is how far it is smeared, not how much there is.
+ */
+const BLUR_SHARE = 0.3;
+
 /*
  * Deliberately a local copy rather than shared with `Taxon/Aura`: that folder
  * is self-contained, and a two-line media query is a smaller cost than a
@@ -77,7 +108,15 @@ type Props = {
 const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
+  const shellRefs = useRef<(THREE.Mesh | null)[]>([]);
+  const shellMaterials = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
   const reduced = useMemo(prefersReducedMotion, []);
+
+  // One geometry for the crisp cage and both blur shells — they differ only in
+  // scale, so there is no reason to build or upload it three times.
+  const geometry = useMemo(() => new THREE.SphereGeometry(1, 32, 20), []);
+
+  useEffect(() => () => geometry.dispose(), [geometry]);
 
   Fiber.useFrame((_, delta) => {
     const mesh = meshRef.current;
@@ -120,19 +159,45 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
       1
     );
 
+    // The whole cage's ink, before it is split between crisp and blurred.
+    const ink = OPACITY + (MIN_OPACITY - OPACITY) * faded;
+    const share = BLUR_SHARE * faded;
+
     if (material) {
-      material.opacity = OPACITY * (1 - faded);
+      material.opacity = ink * (1 - share * BLUR_SHELLS.length);
     }
 
-    // Nothing to draw before the tree has any extent at all, or once the cage
-    // has faded out entirely — an invisible mesh should not cost a draw call.
-    mesh.visible = mesh.scale.x > 0.5 && faded < 1;
+    // Nothing to draw before the tree has any extent at all.
+    mesh.visible = mesh.scale.x > 0.5;
+
+    /*
+     * The shells ride the crisp cage — same rotation, scaled a little either
+     * side of it — and only appear as the view pulls back, so nothing is spent
+     * on them while closed in and sharp.
+     */
+    BLUR_SHELLS.forEach((side, index) => {
+      const shell = shellRefs.current[index];
+      const shellMaterial = shellMaterials.current[index];
+
+      if (!shell || !shellMaterial) {
+        return;
+      }
+
+      shell.visible = mesh.visible && faded > 0.01;
+
+      if (!shell.visible) {
+        return;
+      }
+
+      shell.rotation.y = mesh.rotation.y;
+      shell.scale.setScalar(mesh.scale.x * (1 + side * BLUR_SPREAD * faded));
+      shellMaterial.opacity = ink * share;
+    });
   });
 
   return (
     <group position={ORIGIN} rotation={[0, 0, AXIAL_TILT]}>
-      <mesh ref={meshRef} scale={0} raycast={() => null}>
-        <sphereGeometry args={[1, 32, 20]} />
+      <mesh ref={meshRef} scale={0} raycast={() => null} geometry={geometry}>
         <meshBasicMaterial
           ref={materialRef}
           color='#b9cbc2'
@@ -142,6 +207,30 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
           depthWrite={false}
         />
       </mesh>
+
+      {BLUR_SHELLS.map((side, index) => (
+        <mesh
+          key={side}
+          ref={(node) => {
+            shellRefs.current[index] = node;
+          }}
+          scale={0}
+          visible={false}
+          raycast={() => null}
+          geometry={geometry}
+        >
+          <meshBasicMaterial
+            ref={(node) => {
+              shellMaterials.current[index] = node;
+            }}
+            color='#b9cbc2'
+            wireframe
+            transparent
+            opacity={0}
+            depthWrite={false}
+          />
+        </mesh>
+      ))}
     </group>
   );
 };
