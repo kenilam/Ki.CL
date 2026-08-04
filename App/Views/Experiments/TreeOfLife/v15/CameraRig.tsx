@@ -80,6 +80,16 @@ const WORLD_UP = new THREE.Vector3(0, 1, 0);
 const WHEEL_SENSITIVITY = 0.00035;
 const ZOOM_EASE = 7;
 
+/**
+ * How fast the camera flies from one taxon to the next, per second.
+ *
+ * The route changes instantly but the view should not: dropping the orbit
+ * controller took `setLookAt(…, true)`'s animated move with it, so the flight
+ * is run here instead — on a single parameter, like the zoom, so the pan, the
+ * swing and the dolly stay one motion.
+ */
+const TRAVEL_EASE = 3.2;
+
 /** Radians of orbit per pixel dragged. */
 const DRAG_SENSITIVITY = 0.005;
 
@@ -209,6 +219,27 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
   /** The pose the framing chose — the near end of the pull-back. */
   const near = useRef<Pose>({
+    target: new THREE.Vector3(),
+    bearing: new THREE.Vector3(0, 0, 1),
+    distance: 1,
+  });
+
+  /**
+   * The pose being flown *from*, and how far along that flight we are.
+   *
+   * A route change replaces `near` outright, so without this the camera is
+   * simply written at the new taxon on the next frame. Keeping the pose it is
+   * leaving lets the two be blended, which is what makes the move read as
+   * travelling between two taxa rather than cutting between them.
+   */
+  const departed = useRef<Pose>({
+    target: new THREE.Vector3(),
+    bearing: new THREE.Vector3(0, 0, 1),
+    distance: 1,
+  });
+  const travel = useRef(1);
+  /** Scratch for the blended pose, so a flight allocates nothing per frame. */
+  const flying = useRef<Pose>({
     target: new THREE.Vector3(),
     bearing: new THREE.Vector3(0, 0, 1),
     distance: 1,
@@ -392,7 +423,30 @@ const CameraRig: React.FunctionComponent<Props> = ({
     // Smoothstep, so neither end of the range starts or stops abruptly.
     const t = zoom.current;
     const eased = t * t * (3 - 2 * t);
-    const pose = near.current;
+
+    /*
+     * The near end of the pull-back, part-way through the flight from the taxon
+     * being left. Resolved before the zoom blend rather than after, so a route
+     * change taken mid-zoom still ends up composed correctly instead of
+     * fighting between two anchors.
+     */
+    const flight = travel.current;
+    const arrived = flight >= 1 - 1e-4;
+    const flown = flight * flight * (3 - 2 * flight);
+    const pose = arrived ? near.current : flying.current;
+
+    if (!arrived) {
+      pose.target
+        .copy(departed.current.target)
+        .lerp(near.current.target, flown);
+      pose.bearing
+        .copy(departed.current.bearing)
+        .lerp(near.current.bearing, flown)
+        .normalize();
+      pose.distance =
+        departed.current.distance +
+        (near.current.distance - departed.current.distance) * flown;
+    }
 
     /*
      * The far pose is derived, not stored: the lineage stood upright, with the
@@ -546,7 +600,20 @@ const CameraRig: React.FunctionComponent<Props> = ({
       waiting.current ??= state.clock.elapsedTime;
 
       if (ready || state.clock.elapsedTime - waiting.current >= GRACE) {
+        /*
+         * Keep the pose being left before it is overwritten — but only when
+         * there is one. The first framing of the session has nothing to fly
+         * from, so it arrives composed rather than sweeping in from the
+         * opening standoff.
+         */
+        const first = framed.current === null;
+
+        departed.current.target.copy(near.current.target);
+        departed.current.bearing.copy(near.current.bearing);
+        departed.current.distance = near.current.distance;
+
         settle(perspective, anchor, ancestor);
+        travel.current = first ? 1 : 0;
         framed.current = nodeId;
         waiting.current = null;
         wanted.current = 0;
@@ -564,6 +631,19 @@ const CameraRig: React.FunctionComponent<Props> = ({
      * One number is damped and the pose is read straight off it. Framerate
      * independent, and it cannot overshoot, so the far end never bounces.
      */
+    /*
+     * Exponential approach never actually reaches 1, so it is snapped once the
+     * remainder is below a pixel's worth of movement. Without that the blend
+     * below runs on every frame for the rest of the session, converging on a
+     * pose it already occupies.
+     */
+    travel.current +=
+      (1 - travel.current) * (1 - Math.exp(-TRAVEL_EASE * delta));
+
+    if (travel.current > 0.999) {
+      travel.current = 1;
+    }
+
     zoom.current +=
       (wanted.current - zoom.current) * (1 - Math.exp(-ZOOM_EASE * delta));
 
