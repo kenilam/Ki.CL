@@ -2262,6 +2262,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-three/postprocessing@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@react-three/postprocessing@npm:3.0.4"
+  dependencies:
+    maath: "npm:^0.6.0"
+    n8ao: "npm:^1.9.4"
+    postprocessing: "npm:^6.36.6"
+  peerDependencies:
+    "@react-three/fiber": ^9.0.0
+    react: ^19.0
+    three: ">= 0.156.0"
+  checksum: 10c0/7a9f6af37da29af6844bd8ad781ceafa2c2cee29954ccf6c41633b2afd4cf7da41eb668a62b3a942a35e400ac8c7685800394a96eed95dde9ec582decfdade5b
+  languageName: node
+  linkType: hard
+
 "@rolldown/binding-android-arm64@npm:1.1.5":
   version: 1.1.5
   resolution: "@rolldown/binding-android-arm64@npm:1.1.5"
@@ -7303,6 +7318,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:21.2.1"
     "@commitlint/config-conventional": "npm:21.2.0"
+    "@react-three/postprocessing": "npm:^3.0.4"
     "@types/app-root-path": "npm:3.1.0"
     "@types/events": "npm:3.0.3"
     "@types/node": "npm:26"
@@ -7684,6 +7700,16 @@ __metadata:
     "@types/three": ">=0.134.0"
     three: ">=0.134.0"
   checksum: 10c0/fb61faac89567595f7e25f261f8a9750d0ced674fd16c77c6e486a0c4a00c572fa37969d613d017380f8ea4e8ff357d481dcd94240a104a7969bc7e95b9fe99e
+  languageName: node
+  linkType: hard
+
+"maath@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "maath@npm:0.6.0"
+  peerDependencies:
+    "@types/three": ">=0.144.0"
+    three: ">=0.144.0"
+  checksum: 10c0/a9b716841d225338339fbe776c94e99f98136f24360e34c06698e2f1658bffc9b09321d2463e730810940de9801b73154de9afa6647595ae1d7b7662f4da6ef6
   languageName: node
   linkType: hard
 
@@ -8091,6 +8117,16 @@ __metadata:
   version: 0.0.8
   resolution: "mute-stream@npm:0.0.8"
   checksum: 10c0/18d06d92e5d6d45e2b63c0e1b8f25376af71748ac36f53c059baa8b76ffac31c5ab225480494e7d35d30215ecdb18fed26ec23cafcd2f7733f2f14406bcd19e2
+  languageName: node
+  linkType: hard
+
+"n8ao@npm:^1.9.4":
+  version: 1.10.3
+  resolution: "n8ao@npm:1.10.3"
+  peerDependencies:
+    postprocessing: ">=6.30.0"
+    three: ">=0.137"
+  checksum: 10c0/2bc0c71540406953a237302729e81e9cd3d38db38231b395d38b1c34bb32be711212c67d3b0213cff414f9c12f21f4e8d71a5bee94b6cb9934c7b8f3ef58f397
   languageName: node
   linkType: hard
 
@@ -9262,6 +9298,15 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
   checksum: 10c0/ed714e635b330bb42666ecdd0c0b4f30224ded15b0b0052d6bc2b92832f2cf17d1c1141359453f96f0a84f8fbf4c405a74df187f559163b8f31131b2535455aa
+  languageName: node
+  linkType: hard
+
+"postprocessing@npm:^6.36.6":
+  version: 6.39.4
+  resolution: "postprocessing@npm:6.39.4"
+  peerDependencies:
+    three: ">= 0.168.0 < 0.186.0"
+  checksum: 10c0/5adec143dfda0d35784a7d23b7b64e53ffc60c44570ef84dcd0ad815f1091e655d8ee39fd5398cdff3fc492a486e15487b86192291099e9947ee731cca74a60c
   languageName: node
   linkType: hard
 
