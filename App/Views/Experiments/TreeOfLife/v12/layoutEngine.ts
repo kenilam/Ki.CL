@@ -202,7 +202,7 @@ function resolveColor(node: HierarchyNode<TreeNode>): string {
   return paletteColor(Math.max(0, index));
 }
 
-function shouldLabel(node: HierarchyNode<TreeNode>, isTip: boolean): boolean {
+function shouldLabel(node: HierarchyNode<TreeNode>): boolean {
   if (node.depth === 0) {
     return true;
   }
@@ -531,7 +531,7 @@ export function computePosterLayout(
       depth: node.depth,
       color,
       expandable,
-      showLabel: shouldLabel(node, isTip),
+      showLabel: shouldLabel(node),
       fontSize: isOrigin ? 16 : node.depth <= 2 ? 13 : 11,
       isOrigin,
       isTip,

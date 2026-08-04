@@ -1,8 +1,9 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 import {
-  useKicl_TreeOfLifeSubtree,
-  useKicl_TreeOfLifeSubtreeLazyQuery,
+  useQuery,
+  Kicl_TreeOfLifeSubtreeDocument,
+  useLazyQuery,
 } from 'api/provider';
 
 import THREE, { Fiber, Drei } from '@/Three';
@@ -261,14 +262,14 @@ const Canvas: React.FunctionComponent = () => {
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [expandingId, setExpandingId] = useState<string | null>(null);
 
-  const { data, loading, error } = useKicl_TreeOfLifeSubtree({
+  const { data, loading, error } = useQuery(Kicl_TreeOfLifeSubtreeDocument, {
     variables: {
       ottId: ROOT_OTT_ID,
       heightLimit: DEFAULT_HEIGHT_LIMIT,
     },
   });
 
-  const [fetchSubtree] = useKicl_TreeOfLifeSubtreeLazyQuery();
+  const [fetchSubtree] = useLazyQuery(Kicl_TreeOfLifeSubtreeDocument);
 
   useEffect(() => {
     const root = data?.TreeOfLifeSubtree;
