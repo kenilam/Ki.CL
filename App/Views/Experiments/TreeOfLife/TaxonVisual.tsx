@@ -24,7 +24,7 @@ const DEBOUNCE_MS = 500;
 const EXHAUSTED_MESSAGE =
   'Studio providers are temporarily out of quota or rate-limited — try again shortly.';
 
-const ERROR_MESSAGE = 'Could not generate a studio visual right now.';
+const ERROR_MESSAGE = 'Could not generate an illustration right now.';
 
 const DISCLAIMER_DEFAULT =
   'AI-generated plate — may not accurately represent this taxon.';
@@ -192,7 +192,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <Status
         in
         level='info'
-        title='Studio visual'
+        title='Illustration'
         message='Select a named taxon with an OTT ID to generate a visual.'
         align='start'
         animationStyle='fade'
@@ -247,7 +247,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
             className={`${CLASS_NAME}__taxon-plate-skeleton`}
           />
           <Text is='span' className='kicl-font-size-small kicl-color-grey-dark'>
-            Generating studio visual…
+            Generating illustration…
           </Text>
         </div>
       </Layout>
@@ -272,7 +272,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <div>
         <Image
           data={imageUrl}
-          alt={`Studio render of ${name || 'taxon'}`}
+          alt={`AI-generated illustration of ${name || 'this taxon'}`}
           className={`${CLASS_NAME}__taxon-plate`}
         />
         <Text
