@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 
 import THREE, { Fiber, Three } from '@/Three';
 
@@ -32,7 +38,11 @@ import {
 import { registerLabel } from '@/Views/Experiments/TreeOfLife/v15/labels';
 
 // Zoom
-import { isPulledBack } from '@/Views/Experiments/TreeOfLife/v15/zoom';
+import {
+  getSettled,
+  isPulledBack,
+  subscribeSettled,
+} from '@/Views/Experiments/TreeOfLife/v15/zoom';
 
 // Palette
 import { inherit } from './palette';
@@ -127,6 +137,18 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   onExited,
 }) => {
   const { animate, chains, focus } = useTreeOfLifeContext();
+
+  /*
+   * Whether the camera has arrived. Only the focused taxon acts on it, but the
+   * hook has to run for every taxon — it flips twice per navigation rather than
+   * per frame, so the notification is rare and most taxa re-render into
+   * identical memos.
+   */
+  const settled = useSyncExternalStore(
+    subscribeSettled,
+    getSettled,
+    getSettled
+  );
   const navigate = useNavigate();
 
   /*
@@ -296,7 +318,14 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
       Boolean(child?.nodeId)
     );
 
-    if (nodeId === focus || all.length <= CONTEXT_DESCENDANTS) {
+    /*
+     * The focused taxon shows its whole clade, but only once the camera has
+     * stopped. Bacteria has 153 direct descendants, and building that many
+     * branches and bodies in one commit costs a 383ms frame — landing it during
+     * the flight freezes the move it is supposed to accompany. Until then it
+     * shows the same even sample as any other taxon.
+     */
+    if ((nodeId === focus && settled) || all.length <= CONTEXT_DESCENDANTS) {
       return all;
     }
 
@@ -315,7 +344,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     }
 
     return [onward, ...sampled.slice(0, CONTEXT_DESCENDANTS - 1)];
-  }, [taxon.descendants, previous, nodeId, focus]);
+  }, [taxon.descendants, previous, nodeId, focus, settled]);
 
   const [{ grown }, spring] = Three.useSpring(() => ({
     grown: 0,

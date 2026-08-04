@@ -12,7 +12,7 @@ import { anchorCount, getAnchor, reach, spread } from './anchors';
 import { GLOBE_MARGIN, TRUNK_SIZE } from './constants';
 
 // Zoom
-import { setZoom } from './zoom';
+import { setSettled, setZoom } from './zoom';
 
 /**
  * Frames the taxon the route is on, and choreographs the pull-back from it.
@@ -643,6 +643,10 @@ const CameraRig: React.FunctionComponent<Props> = ({
     if (travel.current > 0.999) {
       travel.current = 1;
     }
+
+    // Held back until the camera stops, so the heaviest clades do not mount
+    // mid-flight and stall the move.
+    setSettled(travel.current === 1);
 
     zoom.current +=
       (wanted.current - zoom.current) * (1 - Math.exp(-ZOOM_EASE * delta));
