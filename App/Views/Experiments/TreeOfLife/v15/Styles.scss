@@ -44,6 +44,19 @@
     }
   }
 
+  /*
+   * Secondary text inside the panels.
+   *
+   * Expressed as a fraction of whatever colour the surface has already set,
+   * rather than as a grey token. The panels sit on a themed `Card`, so a fixed
+   * grey is only ever right for one theme — `kicl-color-grey-darker` was the
+   * exact background colour of the dark card, which is how the summary came to
+   * be invisible rather than merely low-contrast.
+   */
+  &__muted {
+    opacity: 0.72;
+  }
+
   canvas {
     touch-action: none;
   }

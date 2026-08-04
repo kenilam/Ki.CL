@@ -96,16 +96,12 @@ const Details: React.FunctionComponent = () => {
         <Layout gap='narrow'>
           <div>
             <DetailsDisclosure
-              className='kicl-color-grey-dark'
               open={open}
               onToggle={(event) => {
                 setOpen(event.currentTarget.open);
               }}
               summary={
-                <CardTitle
-                  is='h2'
-                  className='kicl-font-size kicl-color-grey-darker'
-                >
+                <CardTitle is='h2' className='kicl-font-size'>
                   {isOrigin
                     ? 'Origin of life'
                     : labelFor(node) || 'Unnamed node'}
@@ -128,7 +124,7 @@ const Details: React.FunctionComponent = () => {
               <Text
                 dense
                 is='p'
-                className='kicl-font-size-small kicl-color-grey-dark kicl-line-height-narrow'
+                className={`kicl-font-size-small kicl-line-height-narrow ${CLASS_NAME}__muted`}
               >
                 {node.description.trim()}
               </Text>

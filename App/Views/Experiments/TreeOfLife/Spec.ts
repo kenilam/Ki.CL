@@ -27,9 +27,16 @@ export type Params = {
  */
 export type TaxonNode = {
   nodeId: string;
+  ottId?: number | null;
   name?: string | null;
   rank?: string | null;
   numTips?: number | null;
+  /** Descriptive fields the detail panel reads; the tree itself ignores them. */
+  assetId?: string | null;
+  /** Resolved from `assetId`; the panel renders this, not the id. */
+  asset?: { url?: string | null } | null;
+  description?: string | null;
+  visualStatus?: string | null;
   ancestor?: TaxonNode | null;
   descendants?: readonly (TaxonNode | null)[] | null;
 };

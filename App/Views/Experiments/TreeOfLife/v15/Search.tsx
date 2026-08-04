@@ -110,7 +110,7 @@ const Search: React.FunctionComponent = () => {
                           is='span'
                           dense
                           unstyled
-                          className='kicl-font-size-smaller kicl-color-grey-dark'
+                          className={`kicl-font-size-smaller ${CLASS_NAME}__muted`}
                         >
                           {result.rank}
                         </Text>
@@ -135,7 +135,7 @@ const Search: React.FunctionComponent = () => {
               <Text
                 dense
                 is='p'
-                className='kicl-font-size-smaller kicl-color-grey-dark'
+                className={`kicl-font-size-smaller ${CLASS_NAME}__muted`}
               >
                 {loading
                   ? 'Searching…'
