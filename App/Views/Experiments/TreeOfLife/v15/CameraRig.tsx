@@ -6,7 +6,7 @@ import THREE, { Fiber } from '@/Three';
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 
 // Anchors
-import { anchorCount, getAnchor, reach, spread } from './anchors';
+import { getAnchor, reach, spread } from './anchors';
 
 // Constants
 import { GLOBE_MARGIN, TRUNK_SIZE } from './constants';
@@ -225,8 +225,8 @@ const CameraRig: React.FunctionComponent<Props> = ({
   const framed = useRef<string | null>(null);
   /** When the focus first appeared, so the grace below has something to run from. */
   const waiting = useRef<number | null>(null);
-  /** Last frame's anchor count, and how long it has been unchanged. */
-  const placed = useRef({ count: -1, held: 0 });
+  /** Consecutive frames the lineage has been fully anchored. */
+  const placed = useRef(0);
 
   /** The pose the framing chose — the near end of the pull-back. */
   const near = useRef<Pose>({
@@ -613,18 +613,27 @@ const CameraRig: React.FunctionComponent<Props> = ({
     }
 
     if (framed.current !== nodeId && nodeId && anchor && ancestorId) {
-      const count = anchorCount();
-
-      placed.current =
-        count === placed.current.count
-          ? { count, held: placed.current.held + 1 }
-          : { count, held: 0 };
-
       const ancestor = getAnchor(ancestorId);
-      const ready =
-        ancestor &&
-        chains.every((id) => getAnchor(id)) &&
-        placed.current.held >= STABLE_FRAMES;
+
+      /*
+       * Readiness is the lineage being whole, held for a couple of frames.
+       *
+       * It used to be the total anchor count holding steady, which stopped
+       * meaning anything once clades began mounting a slice per frame: the
+       * count now changes deliberately for as long as the fan is filling in,
+       * so it never settled and framing fell through to `GRACE` instead. On a
+       * cold load that read as the tree drawing itself for a second and a half
+       * before the camera moved at all.
+       *
+       * The chain is the part that has to exist before the camera can be
+       * aimed, and it stops growing as soon as the walk reaches the root — so
+       * it settles even while the fans around it are still arriving.
+       */
+      const whole = Boolean(ancestor) && chains.every((id) => getAnchor(id));
+
+      placed.current = whole ? placed.current + 1 : 0;
+
+      const ready = whole && placed.current >= STABLE_FRAMES;
 
       waiting.current ??= state.clock.elapsedTime;
 
