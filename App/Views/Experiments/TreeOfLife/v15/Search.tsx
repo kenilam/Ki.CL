@@ -8,10 +8,14 @@ import {
 } from 'api/provider';
 
 // Components
-import { Badge, Card, CardContent, Input, Layout, Text } from '@/Components';
-
-// Router
-import { useNavigate } from '@/Router';
+import {
+  Card,
+  CardContent,
+  HyperLink,
+  Input,
+  Layout,
+  Text,
+} from '@/Components';
 
 // Constants
 import { toPath } from '@/Views/Experiments/TreeOfLife/constants';
@@ -43,7 +47,6 @@ const MIN_LENGTH = 2;
 type Result = Kicl_TaxonSearchQuery['TaxonSearch'][number];
 
 const Search: React.FunctionComponent = () => {
-  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [find, { data, loading }] = useLazyQuery(Kicl_TaxonSearchDocument);
 
@@ -86,47 +89,41 @@ const Search: React.FunctionComponent = () => {
             {results.length > 0 ? (
               <Layout autoFlow='row' gap='narrowest'>
                 <div>
-                  {results.map((result) => (
-                    <Text
-                      key={result.nodeId ?? result.name}
-                      is='span'
-                      unstyled
-                      className={`${CLASS_NAME}__result`}
-                      role='button'
-                      tabIndex={0}
-                      onClick={() =>
-                        result.nodeId && navigate(toPath(result.nodeId))
-                      }
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' && result.nodeId) {
-                          navigate(toPath(result.nodeId));
-                        }
-                      }}
-                    >
-                      {result.name}
+                  {results.map((result) =>
+                    result.nodeId ? (
+                      /*
+                       * A real link, not a span pretending to be one.
+                       * `HyperLink` wraps the router's `NavLink`, so a result
+                       * is focusable, announces as a link, and can be opened
+                       * in a new tab — none of which a `role='button'` span
+                       * with a hand-written Enter handler gives you.
+                       */
+                      <HyperLink
+                        key={result.nodeId}
+                        to={toPath(result.nodeId)}
+                        unstyled
+                        className={`${CLASS_NAME}__result`}
+                      >
+                        {result.name}
 
-                      {result.rank ? (
+                        {/*
+                          Rank when it is known, and otherwise the fact that it
+                          is not — an Open Tree match has no rank until its
+                          subtree is fetched, so the two never both apply. Same
+                          muted treatment either way, rather than a chip: this
+                          is a qualifier on a compact list, not a status badge.
+                        */}
                         <Text
                           is='span'
                           dense
                           unstyled
                           className={`kicl-font-size-smaller ${CLASS_NAME}__muted`}
                         >
-                          {result.rank}
+                          {result.rank ?? 'not yet visited'}
                         </Text>
-                      ) : null}
-
-                      {/*
-                        Only flagged when it came from Open Tree — a stored
-                        result is the unremarkable case and needs no badge.
-                      */}
-                      {result.source === 'OPEN_TREE' ? (
-                        <Badge size='small' variant='outline'>
-                          new
-                        </Badge>
-                      ) : null}
-                    </Text>
-                  ))}
+                      </HyperLink>
+                    ) : null
+                  )}
                 </div>
               </Layout>
             ) : null}
