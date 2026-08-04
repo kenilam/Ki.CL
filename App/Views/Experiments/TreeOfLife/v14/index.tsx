@@ -16,9 +16,10 @@ import React, {
 } from 'react';
 
 import {
-  useKicl_TreeOfLifeSubtree,
-  useKicl_TreeOfLifeSubtreeLazyQuery,
-  useKicl_TreeOfLifeSubtreesLazyQuery,
+  useQuery,
+  Kicl_TreeOfLifeSubtreeDocument,
+  useLazyQuery,
+  Kicl_TreeOfLifeSubtreesDocument,
 } from 'api/provider';
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm } from 'react-hook-form';
@@ -621,14 +622,18 @@ const Canvas: React.FunctionComponent = () => {
   ref.autoMode.current = autoMode;
   ref.tree.current = tree;
 
-  const { data, loading, error } = useKicl_TreeOfLifeSubtree({
+  const { data, loading, error } = useQuery(Kicl_TreeOfLifeSubtreeDocument, {
     variables: {
       heightLimit: HEIGHT_LIMIT_DEFAULT,
     },
   });
 
-  const [fetchSubtree] = useKicl_TreeOfLifeSubtreeLazyQuery();
-  const [fetchSubtrees] = useKicl_TreeOfLifeSubtreesLazyQuery();
+  const [fetchSubtree] = useLazyQuery(Kicl_TreeOfLifeSubtreeDocument);
+  const [fetchSubtrees] = useLazyQuery(Kicl_TreeOfLifeSubtreesDocument, {
+    // Apollo 4 takes the policy when the query is created; the execute call
+    // carries variables only.
+    fetchPolicy: 'network-only',
+  });
 
   useEffect(() => {
     const root = data?.TreeOfLifeSubtree;
@@ -885,7 +890,6 @@ const Canvas: React.FunctionComponent = () => {
             ...(nodeIds.length ? { nodeIds } : {}),
             heightLimit: HEIGHT_LIMIT_DEFAULT,
           },
-          fetchPolicy: 'network-only',
         });
 
         const raws = result.data?.TreeOfLifeSubtrees ?? [];

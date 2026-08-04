@@ -11,8 +11,9 @@ import React, {
 } from 'react';
 
 import {
-  useKicl_TreeOfLifeSubtree,
-  useKicl_TreeOfLifeSubtreeLazyQuery,
+  useQuery,
+  Kicl_TreeOfLifeSubtreeDocument,
+  useLazyQuery,
 } from 'api/provider';
 
 import { Spinner, Text } from '@/Components';
@@ -270,14 +271,14 @@ const Canvas: React.FunctionComponent = () => {
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [expandingId, setExpandingId] = useState<string | null>(null);
 
-  const { data, loading, error } = useKicl_TreeOfLifeSubtree({
+  const { data, loading, error } = useQuery(Kicl_TreeOfLifeSubtreeDocument, {
     variables: {
       ottId: ROOT_OTT_ID,
       heightLimit: HEIGHT_LIMIT_DEFAULT,
     },
   });
 
-  const [fetchSubtree] = useKicl_TreeOfLifeSubtreeLazyQuery();
+  const [fetchSubtree] = useLazyQuery(Kicl_TreeOfLifeSubtreeDocument);
 
   useEffect(() => {
     const root = data?.TreeOfLifeSubtree;
