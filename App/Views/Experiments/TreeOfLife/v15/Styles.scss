@@ -75,8 +75,14 @@
     input::-webkit-search-cancel-button,
     input::-webkit-search-decoration,
     input::-webkit-calendar-picker-indicator {
+      /*
+       * `!important` because the browser puts `display: list-item` in an inline
+       * style attribute on the indicator's own shadow node, and an inline style
+       * outranks any author rule that is not important. The arrow itself is the
+       * `::marker` that `list-item` brings with it.
+       */
       appearance: none;
-      display: none;
+      display: none !important;
     }
 
     /*
@@ -90,7 +96,7 @@
      */
     input::-webkit-list-button {
       appearance: none;
-      display: none;
+      display: none !important;
     }
   }
 
