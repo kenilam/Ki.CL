@@ -35,7 +35,10 @@ import {
 } from '@/Views/Experiments/TreeOfLife/v15/constants';
 
 // Labels
-import { registerLabel } from '@/Views/Experiments/TreeOfLife/v15/labels';
+import {
+  registerLabel,
+  setHovered,
+} from '@/Views/Experiments/TreeOfLife/v15/labels';
 
 // Zoom
 import {
@@ -511,9 +514,11 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         }}
         onPointerOver={() => {
           document.body.style.cursor = 'pointer';
+          setHovered(nodeId);
         }}
         onPointerOut={() => {
           document.body.style.cursor = '';
+          setHovered(null);
         }}
       >
         <meshLambertMaterial color={color} />
