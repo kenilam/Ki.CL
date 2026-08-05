@@ -6,8 +6,7 @@
   display: grid;
   gap: var(--kicl-gutter-wide);
   margin-inline: auto;
-  max-inline-size: 42rem;
-  padding: var(--kicl-gutter-wide) var(--kicl-gutter);
+  padding-inline: var(--kicl-gutter-extreme);
 
   section {
     display: grid;
