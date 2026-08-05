@@ -3,6 +3,37 @@
 
   padding-inline: var(--kicl-gutter-extreme);
 
+  /*
+   * The only place the colour appears.
+   *
+   * Painted behind the glyphs and clipped to them, so the drift reads as light
+   * moving through the letters. The text is made transparent only where the
+   * clip is supported — without that guard an engine that cannot clip would
+   * show nothing at all rather than a plain heading.
+   */
+  &__title {
+    background-image: linear-gradient(
+      120deg,
+      color-mix(
+        in oklab,
+        var(--kicl--tree-of-life--green) 70%,
+        var(--kicl-color-white-pure)
+      ),
+      var(--kicl--tree-of-life--green)
+    );
+    background-size: 200% 200%;
+    animation: kicl--tree-of-life--drift 12s ease-in-out infinite alternate;
+
+    @supports (background-clip: text) {
+      background-clip: text;
+      color: transparent;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
   &__versions-toggle {
     anchor-name: --kic-versions;
   }
@@ -54,6 +85,16 @@
         translate: 0 calc(var(--kicl-gutter-narrow) * -1);
       }
     }
+  }
+}
+
+@keyframes kicl--tree-of-life--drift {
+  from {
+    background-position: 0% 0%;
+  }
+
+  to {
+    background-position: 100% 100%;
   }
 }
 
