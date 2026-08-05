@@ -1,0 +1,58 @@
+.kicl--views--experiments--tree-of-life--archive {
+  position-anchor: --kicl-archive-toggle;
+  position-area: block-start span-inline-start;
+  max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
+  overflow-y: auto;
+  opacity: 0;
+  transition:
+    block-size var(--kicl-transition-duration-fast) allow-discrete,
+    opacity var(--kicl-transition-duration-fast),
+    translate var(--kicl-transition-duration-fast),
+    display var(--kicl-transition-duration-fast) allow-discrete,
+    overlay var(--kicl-transition-duration-fast) allow-discrete;
+  translate: 0 var(--kicl-gutter-narrow);
+
+  &:popover-open {
+    opacity: 1;
+    translate: 0 0;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 var(--kicl-gutter-narrow);
+    }
+  }
+
+  a {
+    opacity: 0;
+    transition:
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast);
+    translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+  }
+
+  &:popover-open a {
+    opacity: 1;
+    transition-delay: calc((sibling-count() - sibling-index()) * 30ms);
+    translate: 0 0;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+    }
+  }
+
+  &__toggle {
+    anchor-name: --kicl-archive-toggle;
+
+    /*
+     * Above every version's own chrome.
+     *
+     * The archive is shared by all of them now and each stacks its own layers
+     * — the deepest of them reaches 3 — so without a value here the toggle
+     * paints underneath whichever view happens to be mounted and cannot be
+     * reached. The panel does not need this: a popover lives in the top layer,
+     * where z-index no longer applies.
+     */
+    z-index: 4;
+  }
+}
