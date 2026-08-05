@@ -2,6 +2,41 @@
   --kicl-layout--block-size: calc(100dvb - var(--kicl-gutter-widest));
 
   padding-inline: var(--kicl-gutter-extreme);
+  position: relative;
+
+  /*
+   * The tree itself, from the view this page introduces.
+   *
+   * Held at the top so the dense clade stays in frame as the banner grows or
+   * shrinks, rather than drifting off centre on a tall window.
+   */
+  background-image: url('/images/tree-of-life/banner.png');
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /*
+   * The blur and the darkening are a layer over the picture rather than a
+   * filter on it: `filter` would take the text down with it, since the heading
+   * and the links are children of the same element.
+   */
+  &::before {
+    backdrop-filter: blur(var(--kicl-size-1x)) brightness(0.2);
+    content: '';
+    inset: 0;
+    position: absolute;
+  }
+
+  /*
+   * The content has to be positioned too, or it goes under the blur.
+   *
+   * A positioned box paints above static in-flow content whatever the source
+   * order, so the overlay came out on top of the heading and read as a page
+   * that had failed to load. Positioned alike, the later elements win.
+   */
+  > * {
+    position: relative;
+  }
 
   /*
    * The only place the colour appears.
