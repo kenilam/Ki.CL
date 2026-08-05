@@ -13,7 +13,7 @@ import {
   ROOT_NODE_ID,
   toArchivePath,
   type ArchivedVersion,
-} from './constants';
+} from '../constants';
 
 /**
  * The earlier attempts, still reachable.
@@ -31,20 +31,20 @@ const LOADERS: Record<
   ArchivedVersion,
   React.LazyExoticComponent<React.ComponentType>
 > = {
-  v1: React.lazy(() => import('./v1')),
-  v2: React.lazy(() => import('./v2')),
-  v3: React.lazy(() => import('./v3')),
-  v4: React.lazy(() => import('./v4')),
-  v5: React.lazy(() => import('./v5')),
-  v6: React.lazy(() => import('./v6')),
-  v7: React.lazy(() => import('./v7')),
-  v8: React.lazy(() => import('./v8')),
-  v9: React.lazy(() => import('./v9')),
-  v10: React.lazy(() => import('./v10')),
-  v11: React.lazy(() => import('./v11')),
-  v12: React.lazy(() => import('./v12')),
-  v13: React.lazy(() => import('./v13')),
-  v14: React.lazy(() => import('./v14')),
+  v1: React.lazy(() => import('../v1')),
+  v2: React.lazy(() => import('../v2')),
+  v3: React.lazy(() => import('../v3')),
+  v4: React.lazy(() => import('../v4')),
+  v5: React.lazy(() => import('../v5')),
+  v6: React.lazy(() => import('../v6')),
+  v7: React.lazy(() => import('../v7')),
+  v8: React.lazy(() => import('../v8')),
+  v9: React.lazy(() => import('../v9')),
+  v10: React.lazy(() => import('../v10')),
+  v11: React.lazy(() => import('../v11')),
+  v12: React.lazy(() => import('../v12')),
+  v13: React.lazy(() => import('../v13')),
+  v14: React.lazy(() => import('../v14')),
 };
 
 const Archived: React.FunctionComponent<{ version: ArchivedVersion }> = ({
@@ -64,7 +64,7 @@ const Archived: React.FunctionComponent<{ version: ArchivedVersion }> = ({
  * node route, and a bare path that resolves onto the origin rather than
  * leaving the version without a subject.
  */
-const archiveRoutes = ARCHIVE.map((version) => (
+export const routes = ARCHIVE.map((version) => (
   <Origin key={version} path={version}>
     <Origin
       index
@@ -78,5 +78,3 @@ const archiveRoutes = ARCHIVE.map((version) => (
     <Origin path={NODE_PATTERN} element={<Archived version={version} />} />
   </Origin>
 ));
-
-export default archiveRoutes;

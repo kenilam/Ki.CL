@@ -318,7 +318,6 @@ const Canvas: React.FunctionComponent = () => {
       <Fiber.Canvas
         camera={{ position: [0, 5.5, 20], fov: 40, near: 0.1, far: 220 }}
       >
-        <color attach='background' args={[BACKGROUND]} />
         <fog attach='fog' args={[BACKGROUND, 50, 110]} />
         <Scene tree={tree} onExpand={onExpand} expandingId={expandingId} />
       </Fiber.Canvas>

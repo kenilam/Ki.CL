@@ -15,10 +15,13 @@ import {
   toArchivePath,
 } from '@/Views/Experiments/TreeOfLife/constants';
 
+// Routes
+export { routes } from './routes';
+
 // Styles
 import './Styles.scss';
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15--archive';
+const CLASS_NAME = 'kicl--views--experiments--tree-of-life--archive';
 
 const Archive: React.FunctionComponent = () => {
   const { focus: nodeId } = useTreeOfLifeContext();

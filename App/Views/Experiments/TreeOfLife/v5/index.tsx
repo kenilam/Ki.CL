@@ -331,7 +331,6 @@ const Canvas: React.FunctionComponent = () => {
   return (
     <div className={CLASS_NAME}>
       <Fiber.Canvas>
-        <color attach='background' args={[BACKGROUND]} />
         <fog attach='fog' args={[BACKGROUND, 40, 90]} />
         <Scene tree={tree} onExpand={onExpand} expandingId={expandingId} />
       </Fiber.Canvas>

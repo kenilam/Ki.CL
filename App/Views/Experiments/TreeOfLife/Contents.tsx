@@ -71,11 +71,7 @@ const TreeOfLife: React.FunctionComponent = () => {
   }, [sessionReady, exchangeToken]);
 
   if (bootstrapError) {
-    return (
-      <Text className='kicl-color-error kicl-font-size-small'>
-        {bootstrapError}
-      </Text>
-    );
+    return <Text variant='secondary'>{bootstrapError}</Text>;
   }
 
   if (!sessionReady) {

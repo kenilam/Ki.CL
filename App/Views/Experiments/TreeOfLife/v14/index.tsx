@@ -1034,9 +1034,7 @@ const Canvas: React.FunctionComponent = () => {
   if (error) {
     return (
       <Layout fullScreen>
-        <div
-          className={`${CLASS_NAME} kicl--theme--light kicl-position-relative`}
-        >
+        <div className={`${CLASS_NAME} kicl-position-relative`}>
           <Text className='kicl-color-error'>{error.message}</Text>
         </div>
       </Layout>
@@ -1046,9 +1044,7 @@ const Canvas: React.FunctionComponent = () => {
   if (loading && !tree) {
     return (
       <Layout fullScreen>
-        <div
-          className={`${CLASS_NAME} kicl--theme--light kicl-position-relative`}
-        >
+        <div className={`${CLASS_NAME} kicl-position-relative`}>
           <Spinner position='inline' />
         </div>
       </Layout>
@@ -1063,10 +1059,7 @@ const Canvas: React.FunctionComponent = () => {
 
   return (
     <Layout fullScreen>
-      <div
-        className={`${CLASS_NAME} kicl--theme--light kicl-position-relative`}
-        ref={ref.root}
-      >
+      <div className={`${CLASS_NAME} kicl-position-relative`} ref={ref.root}>
         <MapStage
           tree={tree}
           viewport={viewport}

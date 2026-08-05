@@ -226,7 +226,6 @@ const Canvas: React.FunctionComponent = () => {
   return (
     <div className={CLASS_NAME}>
       <Fiber.Canvas camera={{ position: [0, 0, 18], fov: 45 }}>
-        <color attach='background' args={['#e7eef2']} />
         <Scene tree={tree} onExpand={onExpand} expandingId={expandingId} />
       </Fiber.Canvas>
     </div>

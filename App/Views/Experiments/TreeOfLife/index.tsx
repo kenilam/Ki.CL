@@ -10,7 +10,7 @@ import { Spinner } from '@/Components';
 import TreeOfLifeProvider from './Context';
 
 // Archive
-import archiveRoutes from './archive';
+import Archive, { routes as archiveRoutes } from './Archive';
 
 // Constants
 import { NODE_PATTERN, PATH, ROOT_NODE_ID, toPath } from './constants';
@@ -29,6 +29,7 @@ const Provider: React.FunctionComponent = () => {
   return (
     <TreeOfLifeProvider>
       <Outlet />
+      <Archive />
     </TreeOfLifeProvider>
   );
 };
