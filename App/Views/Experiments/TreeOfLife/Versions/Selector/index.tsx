@@ -27,7 +27,7 @@ const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions--selector';
 /** What the current path is showing — the live view unless it names a version. */
 const LIVE = 'final';
 
-const Versions: React.FunctionComponent = () => {
+const Selector: React.FunctionComponent = () => {
   const { focus: nodeId } = useTreeOfLifeContext();
   const { pathname } = useLocation();
 
@@ -113,4 +113,4 @@ const Versions: React.FunctionComponent = () => {
   );
 };
 
-export default Versions;
+export default Selector;

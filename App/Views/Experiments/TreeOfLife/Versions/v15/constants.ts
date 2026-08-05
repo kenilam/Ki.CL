@@ -75,7 +75,7 @@ export const MIN_SIZE = TRUNK_SIZE * FLOOR;
  * It is one version among the others now rather than the thing at the bare
  * path, so every link it builds has to say which version it belongs to.
  */
-export const VERSION = 'v15';
+export const VERSION = '15';
 
 export const toNodePath = (nodeId?: string | null): string =>
   toVersionPath({ version: VERSION, nodeId });

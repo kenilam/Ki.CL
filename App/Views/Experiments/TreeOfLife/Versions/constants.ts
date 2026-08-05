@@ -1,6 +1,8 @@
 import { PATH as EXPERIMENTS } from '@/Views/Experiments/constants';
 
-import { PATH } from '@/Views/Experiments/TreeOfLife/constants';
+import { PATH as TREE_OF_LIFE } from '@/Views/Experiments/TreeOfLife/constants';
+
+export const PATH = 'versions';
 
 /**
  * The versions kept around, oldest first.
@@ -9,22 +11,22 @@ import { PATH } from '@/Views/Experiments/TreeOfLife/constants';
  * last, so they are worth keeping side by side — the interesting part is how
  * differently the same data can read.
  */
-const VERSIONS = [
-  'v1',
-  'v2',
-  'v3',
-  'v4',
-  'v5',
-  'v6',
-  'v7',
-  'v8',
-  'v9',
-  'v10',
-  'v11',
-  'v12',
-  'v13',
-  'v14',
-  'v15',
+export const VERSIONS = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
+  '13',
+  '14',
+  '15',
 ] as const;
 
 export type Version = (typeof VERSIONS)[number];
@@ -42,8 +44,9 @@ type ToVersionPathProps = {
  * mistaken for a node called `v3`: a static segment outranks `:nodeId` in the
  * router's own ordering, and nothing about the current path changes.
  */
-const toVersionPath = ({ version, nodeId }: ToVersionPathProps): string => {
-  return `/${[EXPERIMENTS, PATH, version, nodeId].filter(Boolean).join('/')}`;
+export const toVersionPath = ({
+  version,
+  nodeId,
+}: ToVersionPathProps): string => {
+  return `/${[EXPERIMENTS, TREE_OF_LIFE, PATH, version, nodeId].filter(Boolean).join('/')}`;
 };
-
-export { VERSIONS, toVersionPath };
