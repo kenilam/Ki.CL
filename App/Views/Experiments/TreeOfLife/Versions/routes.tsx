@@ -7,13 +7,8 @@ import { Navigate, Route as Origin } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Constants
-import {
-  VERSIONS,
-  NODE_PATTERN,
-  ROOT_NODE_ID,
-  toVersionPath,
-  type Version,
-} from '../constants';
+import { NODE_PATTERN, ROOT_NODE_ID } from '../constants';
+import { VERSIONS, toVersionPath, type Version } from './constants';
 
 /**
  * The earlier attempts, still reachable.

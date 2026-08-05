@@ -13,11 +13,7 @@ import { useLocation } from '@/Router';
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 
 // Constants
-import {
-  VERSIONS,
-  toVersionPath,
-  type Version,
-} from '@/Views/Experiments/TreeOfLife/constants';
+import { VERSIONS, toVersionPath, type Version } from './constants';
 
 // Routes
 export { routes } from './routes';
