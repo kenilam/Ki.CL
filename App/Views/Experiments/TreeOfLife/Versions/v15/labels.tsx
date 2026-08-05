@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useSyncExternalStore } from 'react';
 // Components
 import { Badge, HyperLink } from '@/Components';
 
-import { toPath } from '@/Views/Experiments/TreeOfLife/constants';
+import { toNodePath } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
 import THREE, { Fiber } from '@/Three';
 
@@ -668,7 +668,7 @@ export const Labels: React.FunctionComponent = () => {
           unstyled
           data-node={key}
           key={key}
-          to={toPath(key)}
+          to={toNodePath(key)}
           className={PILL_CLASS}
           ref={(node: HTMLAnchorElement | null) => {
             if (node) {

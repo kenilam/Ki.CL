@@ -34,7 +34,7 @@ import { useNavigate } from '@/Router';
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 
 // Constants
-import { toPath } from '@/Views/Experiments/TreeOfLife/constants';
+import { toNodePath } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
 // Labels
 import {
@@ -170,7 +170,7 @@ const Search: React.FunctionComponent = () => {
     const picked = options.find((option) => label(option) === value);
 
     if (picked) {
-      navigate(toPath(picked.nodeId));
+      navigate(toNodePath(picked.nodeId));
     }
   };
 

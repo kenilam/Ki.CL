@@ -13,15 +13,19 @@ import { useLocation } from '@/Router';
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 
 // Constants
-import { VERSIONS, toVersionPath, type Version } from './constants';
-
-// Routes
-export { routes } from './routes';
+import {
+  VERSIONS,
+  toVersionPath,
+  type Version,
+} from '@/Views/Experiments/TreeOfLife/Versions/constants';
 
 // Styles
 import './Styles.scss';
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions';
+const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions--selector';
+
+/** What the current path is showing — the live view unless it names a version. */
+const LIVE = 'final';
 
 const Versions: React.FunctionComponent = () => {
   const { focus: nodeId } = useTreeOfLifeContext();
@@ -32,20 +36,12 @@ const Versions: React.FunctionComponent = () => {
    * segment in its own route, not a `:version` placeholder, so there is no
    * parameter to ask for — the segment is the name.
    */
-  const version = pathname
-    .split('/')
-    .find((segment): segment is Version =>
-      (VERSIONS as readonly string[]).includes(segment)
-    );
-
-  /*
-   * Nothing to switch between on the introduction, which carries its own list
-   * beside the call to action — two of the same control on one page is one too
-   * many.
-   */
-  if (!version) {
-    return null;
-  }
+  const version =
+    pathname
+      .split('/')
+      .find((segment): segment is Version =>
+        (VERSIONS as readonly string[]).includes(segment)
+      ) ?? LIVE;
 
   return (
     <>

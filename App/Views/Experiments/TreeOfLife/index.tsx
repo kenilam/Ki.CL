@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Outlet, Route as Origin } from '@/Router';
+import { Route as Origin } from '@/Router';
 
 // Components
 import { Spinner } from '@/Components';
@@ -13,7 +13,7 @@ import TreeOfLifeProvider from './Context';
 import Versions, { routes as versionRoutes } from './Versions';
 
 // Constants
-import { NODE_PATTERN, PATH } from './constants';
+import { PATH } from './constants';
 
 const Contents = React.lazy(() => import('./Contents'));
 const Landing = React.lazy(() => import('./Landing'));
@@ -37,7 +37,12 @@ const Introduction: React.FunctionComponent = () => {
 const Provider: React.FunctionComponent = () => {
   return (
     <TreeOfLifeProvider>
-      <Outlet />
+      {/*
+        The session gate sits above every version, so opening an archived one
+        first establishes a session rather than relying on a previous visit
+        through the live view having left one behind.
+      */}
+      <Lazy />
       <Versions />
     </TreeOfLifeProvider>
   );
@@ -55,13 +60,9 @@ export default (
     <Origin index element={<Introduction />} />
 
     {/*
-      Declared before the node route for readability only — the router ranks a
-      literal segment above a dynamic one whatever the order, so
-      `/tree-of-life/v3/ott123` reaches an earlier version while
-      `/tree-of-life/ott123` still reaches the current view.
+      Every view of the tree is a version, including the current one — there is
+      no unversioned node route, so a link always says which attempt it means.
     */}
     {versionRoutes}
-
-    <Origin path={NODE_PATTERN} element={<Lazy />} />
   </Origin>
 );

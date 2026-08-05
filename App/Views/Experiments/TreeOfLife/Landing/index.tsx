@@ -6,6 +6,7 @@ import { Heading, HyperLink, Image, Layout, Text } from '@/Components';
 // Constants
 import { ROOT_NODE_ID } from '@/Views/Experiments/TreeOfLife/constants';
 import { toVersionPath } from '@/Views/Experiments/TreeOfLife/Versions/constants';
+import { VERSION } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
 // Partials
 import Banner from './Banner';
@@ -34,7 +35,9 @@ const Landing: React.FunctionComponent = () => {
 
         <article className={`${CLASS_NAME}__article`}>
           <section>
-            <Heading is='h2'>Where it started</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              Where it started
+            </Heading>
 
             <Text is='p'>
               The starting point was{' '}
@@ -60,7 +63,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>The picture we were chasing</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              The picture we were chasing
+            </Heading>
 
             <Text is='p'>
               This is the thing we wanted to build. Every branch of life on one
@@ -75,7 +80,7 @@ const Landing: React.FunctionComponent = () => {
                 alt='A printed tree of life poster: coloured branches radiating from “Origin of life” at the base, each tip ending in a painted organism.'
               />
               <figcaption>
-                <Text is='span' dense className={`${CLASS_NAME}__muted`}>
+                <Text is='span' dense>
                   The reference we started from. Roughly 250 tips, every one
                   illustrated by hand.
                 </Text>
@@ -93,7 +98,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>Fifteen attempts</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              Fifteen attempts
+            </Heading>
 
             <Text is='p'>
               Each version is a whole attempt rather than a revision of the one
@@ -119,7 +126,7 @@ const Landing: React.FunctionComponent = () => {
                 alt='The v14 view: a wide, pale map of the tree with labelled nodes spread across the frame.'
               />
               <figcaption>
-                <Text is='span' dense className={`${CLASS_NAME}__muted`}>
+                <Text is='span' dense>
                   v14 — the map. Everything visible, nothing emphasised.
                 </Text>
               </figcaption>
@@ -135,7 +142,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>What the backend actually does</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              What the backend actually does
+            </Heading>
 
             <Text is='p'>
               Open Tree answers questions about subtrees, not about
@@ -167,7 +176,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>Drawing organisms nobody photographed</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              Drawing organisms nobody photographed
+            </Heading>
 
             <Text is='p'>
               Most of those 2.3 million tips are bacteria, archaea and unnamed
@@ -183,7 +194,7 @@ const Landing: React.FunctionComponent = () => {
                 alt='A hand-coloured 1854 natural-history plate by Perrot: animals arranged across a pale staged ground with fine engraved linework.'
               />
               <figcaption>
-                <Text is='span' dense className={`${CLASS_NAME}__muted`}>
+                <Text is='span' dense>
                   Perrot, 1854. Fine engraved linework, muted washes, a plain
                   staged ground — what every generated plate is aiming at.
                 </Text>
@@ -201,7 +212,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>Tuning the reviewer</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              Tuning the reviewer
+            </Heading>
 
             <Text is='p'>
               The scoring turned out to matter more than the generating. For a
@@ -242,7 +255,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>Quota, failover and the long wait</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              Quota, failover and the long wait
+            </Heading>
 
             <Text is='p'>
               Generation runs across a chain of providers tried in order, each
@@ -274,7 +289,9 @@ const Landing: React.FunctionComponent = () => {
           </section>
 
           <section>
-            <Heading is='h2'>What we gave up</Heading>
+            <Heading is='h2' className='kicl-font-size-large'>
+              What we gave up
+            </Heading>
 
             <Text is='p'>
               The poster shows every tip at once, illustrated, on one sheet. v15
@@ -304,7 +321,7 @@ const Landing: React.FunctionComponent = () => {
           <nav className={`${CLASS_NAME}__outro`}>
             <HyperLink
               lookLikeButton
-              to={toVersionPath({ nodeId: ROOT_NODE_ID })}
+              to={toVersionPath({ version: VERSION, nodeId: ROOT_NODE_ID })}
             >
               Start at the origin of life
             </HyperLink>

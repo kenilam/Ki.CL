@@ -1,3 +1,5 @@
+import { toVersionPath } from '@/Views/Experiments/TreeOfLife/Versions/constants';
+
 import type { Vector3Tuple } from 'three';
 
 /** The origin of life sits at the centre of the globe, and everything radiates from it. */
@@ -66,3 +68,14 @@ const FLOOR = 0.25;
 
 export const MIN_WIDTH = TRUNK_WIDTH * FLOOR;
 export const MIN_SIZE = TRUNK_SIZE * FLOOR;
+
+/**
+ * v15's own segment, and the path to a node within it.
+ *
+ * It is one version among the others now rather than the thing at the bare
+ * path, so every link it builds has to say which version it belongs to.
+ */
+export const VERSION = 'v15';
+
+export const toNodePath = (nodeId?: string | null): string =>
+  toVersionPath({ version: VERSION, nodeId });

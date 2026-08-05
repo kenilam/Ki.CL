@@ -16,20 +16,6 @@ $air: #1b2733;
   --kicl--tree-of-life--air: #{$air};
 
   &__banner {
-    align-content: center;
-    display: grid;
-    min-block-size: 100dvh;
-    overflow: hidden;
-    padding: var(--kicl-gutter-wide);
-    position: relative;
-    margin-inline: calc(50% - 50vw);
-
-    /*
-     * Twice the viewport in each direction, so panning it never reaches an
-     * edge. Animating `background-position` on a fixed-size image is a
-     * compositor job — nothing here reflows, and the tab costs nothing when it
-     * is not on screen.
-     */
     background-image:
       radial-gradient(
         60% 50% at 20% 30%,
@@ -63,19 +49,12 @@ $air: #1b2733;
     }
   }
 
-  &__banner-content {
-    margin-inline: auto;
-    inline-size: 100%;
-  }
-
   /*
    * The heading is painted by the same gradient, clipped to the glyphs. The
    * colour is transparent only where the clip lands, so a browser that does not
    * support it keeps a legible heading rather than an invisible one.
    */
   &__title {
-    font-size: var(--kicl-font-size-extreme);
-    line-height: 1;
     background-image: linear-gradient(
       120deg,
       color-mix(in oklab, var(--kicl--tree-of-life--green) 70%, #fff),
@@ -92,17 +71,6 @@ $air: #1b2733;
     @media (prefers-reduced-motion: reduce) {
       animation: none;
     }
-  }
-
-  &__lede {
-    font-size: var(--kicl-font-size-large);
-    max-inline-size: 34rem;
-  }
-
-  &__actions {
-    align-items: center;
-    display: flex;
-    gap: var(--kicl-gutter-narrow);
   }
 
   &__versions-toggle {
@@ -183,14 +151,6 @@ $air: #1b2733;
     figcaption {
       padding-block-start: var(--kicl-gutter-narrower);
     }
-  }
-
-  &__outro {
-    padding-block: var(--kicl-gutter-wide);
-  }
-
-  &__muted {
-    opacity: 0.72;
   }
 }
 

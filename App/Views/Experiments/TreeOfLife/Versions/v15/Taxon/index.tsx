@@ -12,7 +12,8 @@ import THREE, { Fiber, Three } from '@/Three';
 import { useNavigate } from '@/Router';
 
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
-import { ROOT_NODE_ID, toPath } from '@/Views/Experiments/TreeOfLife/constants';
+import { ROOT_NODE_ID } from '@/Views/Experiments/TreeOfLife/constants';
+import { toNodePath } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 import type { TaxonNode } from '@/Views/Experiments/TreeOfLife/Spec';
 import {
   labelWithRank,
@@ -545,7 +546,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         geometry={body}
         onClick={(event) => {
           event.stopPropagation();
-          navigate(toPath(nodeId));
+          navigate(toNodePath(nodeId));
         }}
         onPointerOver={() => {
           document.body.style.cursor = 'pointer';
