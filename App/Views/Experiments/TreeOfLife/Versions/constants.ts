@@ -24,6 +24,7 @@ const VERSIONS = [
   'v12',
   'v13',
   'v14',
+  'v15',
 ] as const;
 
 export type Version = (typeof VERSIONS)[number];

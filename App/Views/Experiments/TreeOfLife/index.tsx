@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Outlet, Route as Origin } from '@/Router';
+import { Outlet, Route as Origin } from '@/Router';
 
 // Components
 import { Spinner } from '@/Components';
@@ -13,14 +13,23 @@ import TreeOfLifeProvider from './Context';
 import Versions, { routes as versionRoutes } from './Versions';
 
 // Constants
-import { NODE_PATTERN, PATH, ROOT_NODE_ID, toPath } from './constants';
+import { NODE_PATTERN, PATH } from './constants';
 
 const Contents = React.lazy(() => import('./Contents'));
+const Landing = React.lazy(() => import('./Landing'));
 
 const Lazy: React.FunctionComponent = () => {
   return (
     <Suspense fallback={<Spinner position='inline' />}>
       <Contents />
+    </Suspense>
+  );
+};
+
+const Introduction: React.FunctionComponent = () => {
+  return (
+    <Suspense fallback={<Spinner position='inline' />}>
+      <Landing />
     </Suspense>
   );
 };
@@ -38,12 +47,12 @@ export { PATH };
 export default (
   <Origin path={PATH} element={<Provider />}>
     {/*
-      The view is always focused on a node, so the bare path is not a place
-      the user stays — it resolves onto the origin of life. `replace` keeps it
-      out of history, so Back from the root leaves the experiment instead of
-      bouncing through the redirect.
+      The bare path introduces the experiment rather than redirecting into it.
+      Dropping somebody straight onto the origin of life left them inside a 3D
+      scene with no idea what they were looking at or why there were fifteen
+      versions of it.
     */}
-    <Origin index element={<Navigate replace to={toPath(ROOT_NODE_ID)} />} />
+    <Origin index element={<Introduction />} />
 
     {/*
       Declared before the node route for readability only — the router ranks a

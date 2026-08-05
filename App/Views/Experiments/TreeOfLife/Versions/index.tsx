@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Card, Heading, HyperLink, Layout, Text } from '@/Components';
+import { Button, Card, HyperLink, Layout, Text } from '@/Components';
 
 // Icons
 import { Ri } from '@/Icons';
@@ -68,13 +68,12 @@ const Versions: React.FunctionComponent = () => {
           >
             <Ri.RiStackLine aria-hidden />
             <Text is='span' dense unstyled className='kicl-font-size-small'>
-              versions
+              {version}
+            </Text>
+            <Text is='span' dense unstyled className='kicl-font-size-small'>
+              version
             </Text>
           </Button>
-
-          <Heading dense is='h2' className='kicl-font-size-small'>
-            {version}
-          </Heading>
         </div>
       </Layout>
 
