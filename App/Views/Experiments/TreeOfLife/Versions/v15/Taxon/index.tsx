@@ -26,26 +26,26 @@ import Aura, { type Variant } from './Aura';
 import { createBody, createBranch, formForRank, FORM_SCALE } from './geometry';
 
 // Anchors
-import { setAnchor } from '@/Views/Experiments/TreeOfLife/v15/anchors';
+import { setAnchor } from '@/Views/Experiments/TreeOfLife/Versions/v15/anchors';
 
 // Constants
 import {
   MIN_SIZE,
   MIN_WIDTH,
-} from '@/Views/Experiments/TreeOfLife/v15/constants';
+} from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
 // Labels
 import {
   removeLabel,
   setHovered,
   setLabel,
-} from '@/Views/Experiments/TreeOfLife/v15/labels';
+} from '@/Views/Experiments/TreeOfLife/Versions/v15/labels';
 
 // Zoom
 import {
   getSettled,
   subscribeSettled,
-} from '@/Views/Experiments/TreeOfLife/v15/zoom';
+} from '@/Views/Experiments/TreeOfLife/Versions/v15/zoom';
 
 // Palette
 import { inherit } from './palette';

@@ -41,7 +41,7 @@ import {
   drawnTaxa,
   drawnVersion,
   subscribeDrawn,
-} from '@/Views/Experiments/TreeOfLife/v15/labels';
+} from '@/Views/Experiments/TreeOfLife/Versions/v15/labels';
 
 /**
  * Find a taxon by name.

@@ -14,9 +14,9 @@ import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 
 // Constants
 import {
-  ARCHIVE,
-  toArchivePath,
-  type ArchivedVersion,
+  VERSIONS,
+  toVersionPath,
+  type Version,
 } from '@/Views/Experiments/TreeOfLife/constants';
 
 // Routes
@@ -25,12 +25,12 @@ export { routes } from './routes';
 // Styles
 import './Styles.scss';
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--archive';
+const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions';
 
 /** What the current path is showing — the live view unless it names a version. */
 const LIVE = 'final';
 
-const Archive: React.FunctionComponent = () => {
+const Versions: React.FunctionComponent = () => {
   const { focus: nodeId } = useTreeOfLifeContext();
   const { pathname } = useLocation();
 
@@ -42,8 +42,8 @@ const Archive: React.FunctionComponent = () => {
   const version =
     pathname
       .split('/')
-      .find((segment): segment is ArchivedVersion =>
-        (ARCHIVE as readonly string[]).includes(segment)
+      .find((segment): segment is Version =>
+        (VERSIONS as readonly string[]).includes(segment)
       ) ?? LIVE;
 
   return (
@@ -72,7 +72,7 @@ const Archive: React.FunctionComponent = () => {
           >
             <Ri.RiStackLine aria-hidden />
             <Text is='span' dense unstyled className='kicl-font-size-small'>
-              archive
+              versions
             </Text>
           </Button>
 
@@ -95,14 +95,14 @@ const Archive: React.FunctionComponent = () => {
             gap='narrower'
           >
             <nav>
-              <HyperLink unstyled to={toArchivePath({ nodeId })}>
+              <HyperLink unstyled to={toVersionPath({ nodeId })}>
                 Final
               </HyperLink>
-              {[...ARCHIVE].reverse().map((version) => (
+              {[...VERSIONS].reverse().map((version) => (
                 <HyperLink
                   unstyled
                   key={version}
-                  to={toArchivePath({ version, nodeId })}
+                  to={toVersionPath({ version, nodeId })}
                 >
                   {version}
                 </HyperLink>
@@ -115,4 +115,4 @@ const Archive: React.FunctionComponent = () => {
   );
 };
 
-export default Archive;
+export default Versions;
