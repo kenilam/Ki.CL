@@ -33,7 +33,7 @@ const toPath = (nodeId?: string | null): string =>
  * last, so they are worth keeping side by side — the interesting part is how
  * differently the same data can read.
  */
-const ARCHIVE = [
+const VERSIONS = [
   'v1',
   'v2',
   'v3',
@@ -50,7 +50,7 @@ const ARCHIVE = [
   'v14',
 ] as const;
 
-export type ArchivedVersion = (typeof ARCHIVE)[number];
+export type Version = (typeof VERSIONS)[number];
 
 /**
  * A node under one of the archived versions.
@@ -59,20 +59,20 @@ export type ArchivedVersion = (typeof ARCHIVE)[number];
  * mistaken for a node called `v3` — a static segment outranks `:nodeId` in
  * the router's own ordering, and nothing about the current path changes.
  */
-type ToArchivePathProps = {
-  version?: ArchivedVersion;
+type ToVersionPathProps = {
+  version?: Version;
   nodeId?: string | null;
 };
-const toArchivePath = ({ version, nodeId }: ToArchivePathProps): string => {
+const toVersionPath = ({ version, nodeId }: ToVersionPathProps): string => {
   return `/${[EXPERIMENTS, PATH, version, nodeId].filter(Boolean).join('/')}`;
 };
 
 export {
-  ARCHIVE,
+  VERSIONS,
   NODE_PATTERN,
   PARAM,
   PATH,
   ROOT_NODE_ID,
-  toArchivePath,
+  toVersionPath,
   toPath,
 };

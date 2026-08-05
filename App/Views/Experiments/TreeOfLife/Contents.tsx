@@ -9,7 +9,7 @@ import {
 
 import { Spinner, Text } from '@/Components';
 
-import Canvas from './v15';
+import Canvas from './Versions/v15';
 
 const INTROSPECTION_BODY = JSON.stringify({
   operationName: 'IntrospectionQuery',

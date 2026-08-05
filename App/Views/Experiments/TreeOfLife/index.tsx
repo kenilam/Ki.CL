@@ -9,8 +9,8 @@ import { Spinner } from '@/Components';
 // Context
 import TreeOfLifeProvider from './Context';
 
-// Archive
-import Archive, { routes as archiveRoutes } from './Archive';
+// Versions
+import Versions, { routes as versionRoutes } from './Versions';
 
 // Constants
 import { NODE_PATTERN, PATH, ROOT_NODE_ID, toPath } from './constants';
@@ -29,7 +29,7 @@ const Provider: React.FunctionComponent = () => {
   return (
     <TreeOfLifeProvider>
       <Outlet />
-      <Archive />
+      <Versions />
     </TreeOfLifeProvider>
   );
 };
@@ -48,10 +48,10 @@ export default (
     {/*
       Declared before the node route for readability only — the router ranks a
       literal segment above a dynamic one whatever the order, so
-      `/tree-of-life/v3/ott123` reaches the archive while
+      `/tree-of-life/v3/ott123` reaches an earlier version while
       `/tree-of-life/ott123` still reaches the current view.
     */}
-    {archiveRoutes}
+    {versionRoutes}
 
     <Origin path={NODE_PATTERN} element={<Lazy />} />
   </Origin>

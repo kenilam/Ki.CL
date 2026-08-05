@@ -1,5 +1,5 @@
-.kicl--views--experiments--tree-of-life--archive {
-  position-anchor: --kicl-archive-toggle;
+.kicl--views--experiments--tree-of-life--versions {
+  position-anchor: --kicl-versions-toggle;
   position-area: block-start span-inline-start;
   max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
   overflow-y: auto;
@@ -42,12 +42,12 @@
   }
 
   &__toggle {
-    anchor-name: --kicl-archive-toggle;
+    anchor-name: --kicl-versions-toggle;
 
     /*
      * Above every version's own chrome.
      *
-     * The archive is shared by all of them now and each stacks its own layers
+     * The switcher is shared by all of them now and each stacks its own layers
      * — the deepest of them reaches 3 — so without a value here the toggle
      * paints underneath whichever view happens to be mounted and cannot be
      * reached. The panel does not need this: a popover lives in the top layer,
