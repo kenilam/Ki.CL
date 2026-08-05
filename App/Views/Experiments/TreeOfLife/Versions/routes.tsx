@@ -40,6 +40,7 @@ const LOADERS: Record<
   v12: React.lazy(() => import('./v12')),
   v13: React.lazy(() => import('./v13')),
   v14: React.lazy(() => import('./v14')),
+  v15: React.lazy(() => import('./v15')),
 };
 
 const Archived: React.FunctionComponent<{ version: Version }> = ({
