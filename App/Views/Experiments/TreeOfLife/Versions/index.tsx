@@ -21,6 +21,7 @@ export { PATH };
 
 export default (
   <Route path={PATH} element={<Element />}>
+    <Route index element={<Navigate replace to='..' />} />
     {VERSIONS.map((version) => (
       <Route key={version} path={version}>
         <Route index element={<Navigate replace to={ROOT_NODE_ID} />} />

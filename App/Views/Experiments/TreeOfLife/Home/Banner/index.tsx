@@ -6,6 +6,9 @@ import { Button, Card, Heading, HyperLink, Layout, Text } from '@/Components';
 // Icons
 import { Ri } from '@/Icons';
 
+// Styles
+import './Styles.scss';
+
 // Constants
 import { ROOT_NODE_ID } from '@/Views/Experiments/TreeOfLife/constants';
 import {
@@ -27,7 +30,7 @@ import { VERSION } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
  * without touching layout.
  */
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--landing';
+const CLASS_NAME = 'kicl--views--experiments--tree-of-life__banner';
 const POPOVER_ID = `${CLASS_NAME}--versions`;
 
 const Banner: React.FunctionComponent = () => {
@@ -38,9 +41,8 @@ const Banner: React.FunctionComponent = () => {
       autoFlow='row'
       gap='narrow'
       justifyItems='start'
-      fullScreen
     >
-      <header className={`${CLASS_NAME}__banner`}>
+      <header className={CLASS_NAME}>
         <Heading
           is='h1'
           dense
@@ -58,7 +60,7 @@ const Banner: React.FunctionComponent = () => {
           <nav className={`${CLASS_NAME}__actions`}>
             <HyperLink
               lookLikeButton
-              to={toVersionPath({ version: VERSION, nodeId: ROOT_NODE_ID })}
+              to={toVersionPath({ version: VERSION })}
               size='small'
               variant='secondary'
             >

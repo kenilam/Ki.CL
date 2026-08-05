@@ -1,0 +1,30 @@
+/*
+ * The essay: one column, read top to bottom.
+ */
+
+.kicl--views--experiments--tree-of-life__article {
+  display: grid;
+  gap: var(--kicl-gutter-wide);
+  margin-inline: auto;
+  max-inline-size: 42rem;
+  padding: var(--kicl-gutter-wide) var(--kicl-gutter);
+
+  section {
+    display: grid;
+    gap: var(--kicl-gutter-narrow);
+  }
+
+  figure {
+    margin: 0;
+
+    img {
+      block-size: auto;
+      border-radius: var(--kicl-size-half);
+      inline-size: 100%;
+    }
+  }
+
+  figcaption {
+    padding-block-start: var(--kicl-gutter-narrower);
+  }
+}
