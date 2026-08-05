@@ -31,7 +31,6 @@ import { TipInstances, OriginMarker, InternalNodes, NodeLabels } from './Nodes';
 import './Styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v8';
-const BACKGROUND = '#f0ebe3';
 
 type SceneProps = {
   tree: TreeNode;
@@ -202,7 +201,6 @@ const Canvas: React.FunctionComponent = () => {
   return (
     <div className={CLASS_NAME}>
       <Fiber.Canvas>
-        <color attach='background' args={[BACKGROUND]} />
         <ViewportBridge
           tree={tree}
           onExpand={onExpand}
