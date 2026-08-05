@@ -23,9 +23,6 @@ import './Styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions';
 
-/** What the current path is showing — the live view unless it names a version. */
-const LIVE = 'final';
-
 const Versions: React.FunctionComponent = () => {
   const { focus: nodeId } = useTreeOfLifeContext();
   const { pathname } = useLocation();
@@ -35,12 +32,20 @@ const Versions: React.FunctionComponent = () => {
    * segment in its own route, not a `:version` placeholder, so there is no
    * parameter to ask for — the segment is the name.
    */
-  const version =
-    pathname
-      .split('/')
-      .find((segment): segment is Version =>
-        (VERSIONS as readonly string[]).includes(segment)
-      ) ?? LIVE;
+  const version = pathname
+    .split('/')
+    .find((segment): segment is Version =>
+      (VERSIONS as readonly string[]).includes(segment)
+    );
+
+  /*
+   * Nothing to switch between on the introduction, which carries its own list
+   * beside the call to action — two of the same control on one page is one too
+   * many.
+   */
+  if (!version) {
+    return null;
+  }
 
   return (
     <>
@@ -89,10 +94,12 @@ const Versions: React.FunctionComponent = () => {
             justifyItems='center'
             gap='narrower'
           >
+            {/*
+              Every entry names a version, the current one included. The
+              separate "Final" link pointed at an unversioned node path, which
+              no longer exists — and said nothing the list does not.
+            */}
             <nav>
-              <HyperLink unstyled to={toVersionPath({ nodeId })}>
-                Final
-              </HyperLink>
               {[...VERSIONS].reverse().map((version) => (
                 <HyperLink
                   unstyled

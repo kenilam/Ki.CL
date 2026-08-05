@@ -12,6 +12,7 @@ import {
   VERSIONS,
   toVersionPath,
 } from '@/Views/Experiments/TreeOfLife/Versions/constants';
+import { VERSION } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
 /**
  * The hero.
@@ -32,18 +33,22 @@ const POPOVER_ID = `${CLASS_NAME}--versions`;
 const Banner: React.FunctionComponent = () => {
   return (
     <Layout
+      alignItems='center'
+      alignContent='center'
       autoFlow='row'
       gap='narrow'
       justifyItems='start'
       fullScreen
-      frames='auto--max-content--auto'
     >
       <header className={`${CLASS_NAME}__banner`}>
-        <Heading is='h1' className={'kicl-font-size-huge'}>
+        <Heading
+          is='h1'
+          dense
+          className={`${CLASS_NAME}__title kicl-font-size-huge`}
+        >
           Tree of Life
         </Heading>
-
-        <Text is='p' lookLike='h3'>
+        <Text is='p' className={'kicl-font-size-medium'}>
           Two point three million species, one continuous walk. Start at the
           origin of life and travel to anything alive — with a plate drawn for
           every organism along the way.
@@ -53,18 +58,13 @@ const Banner: React.FunctionComponent = () => {
           <nav className={`${CLASS_NAME}__actions`}>
             <HyperLink
               lookLikeButton
-              to={toVersionPath({ nodeId: ROOT_NODE_ID })}
+              to={toVersionPath({ version: VERSION, nodeId: ROOT_NODE_ID })}
               size='small'
               variant='secondary'
             >
               See the final version
             </HyperLink>
 
-            {/*
-              The list opens through the popover attributes, so it needs no
-              state and comes with the top layer, Escape and click-outside
-              dismissal already handled.
-            */}
             <Button
               unstyled
               type='button'
@@ -79,25 +79,32 @@ const Banner: React.FunctionComponent = () => {
           </nav>
         </Layout>
 
-        <div
+        <dialog
           id={POPOVER_ID}
           popover='auto'
           className={`${CLASS_NAME}__versions`}
         >
           <Card>
-            <nav>
-              {[...VERSIONS].reverse().map((version) => (
-                <HyperLink
-                  unstyled
-                  key={version}
-                  to={toVersionPath({ version, nodeId: ROOT_NODE_ID })}
-                >
-                  {version}
-                </HyperLink>
-              ))}
-            </nav>
+            <Layout
+              autoFlow='column'
+              gap='narrow'
+              justifyItems='start'
+              frames='auto--max-content--auto'
+            >
+              <nav>
+                {[...VERSIONS].reverse().map((version) => (
+                  <HyperLink
+                    unstyled
+                    key={version}
+                    to={toVersionPath({ version, nodeId: ROOT_NODE_ID })}
+                  >
+                    {version}
+                  </HyperLink>
+                ))}
+              </nav>
+            </Layout>
           </Card>
-        </div>
+        </dialog>
       </header>
     </Layout>
   );
