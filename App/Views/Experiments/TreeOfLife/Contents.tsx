@@ -7,9 +7,9 @@ import {
   Kicl_ExchangeTokenDocument,
 } from 'api/provider';
 
-import { Spinner, Text } from '@/Components';
+import { Outlet } from '@/Router';
 
-import Canvas from './v15';
+import { Spinner, Text } from '@/Components';
 
 const INTROSPECTION_BODY = JSON.stringify({
   operationName: 'IntrospectionQuery',
@@ -29,6 +29,13 @@ async function ensureApiKeyCookie(): Promise<void> {
   });
 }
 
+/**
+ * An anonymous session, established once for every version beneath it.
+ *
+ * It used to sit inside the live view, so the archived versions reached the API
+ * with whatever session a previous visit happened to leave behind — which
+ * worked right up until somebody opened one first.
+ */
 const TreeOfLife: React.FunctionComponent = () => {
   const [sessionReady, setSessionReady] = useState(() => hasSession());
   const [bootstrapError, setBootstrapError] = useState<string | null>(null);
@@ -71,18 +78,14 @@ const TreeOfLife: React.FunctionComponent = () => {
   }, [sessionReady, exchangeToken]);
 
   if (bootstrapError) {
-    return (
-      <Text className='kicl-color-error kicl-font-size-small'>
-        {bootstrapError}
-      </Text>
-    );
+    return <Text variant='secondary'>{bootstrapError}</Text>;
   }
 
   if (!sessionReady) {
     return <Spinner position='inline' />;
   }
 
-  return <Canvas />;
+  return <Outlet />;
 };
 
 export default TreeOfLife;

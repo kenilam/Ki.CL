@@ -1,17 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { v4 as uuid } from 'uuid';
 
 // Components
-import {
-  Animation,
-  AnimationProps,
-  Button,
-  ButtonProps,
-  Layout,
-} from '@/Components';
+import { Button } from '@/Components';
 
 // Icons
 import * as Icons from '@/Icons';
@@ -24,269 +17,77 @@ import './Styles.scss';
 
 const CLASS_NAME = 'kicl--components--dialog';
 
+/**
+ * A `<dialog>`, and as little around it as the platform allows.
+ *
+ * What used to live here in JavaScript — a state mirroring `open`, four nested
+ * animation wrappers, `inert` toggled by hand during the enter, a `close()`
+ * deferred until the exit finished, Escape re-implemented on `keyup`, and a
+ * button standing in for a backdrop — is now the element's own behaviour and a
+ * transition in the stylesheet.
+ *
+ * The one thing the platform has no opinion about is that `open` is a prop
+ * rather than an attribute: React would set `open` directly, which shows the
+ * dialog without giving it the top layer, focus trapping or an inert
+ * background. So the prop is applied through `showModal()` instead, and the
+ * attribute is never rendered.
+ */
 const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
   (
     {
       children,
-      className: _className,
+      className,
+      closable = true,
       closeIcon: CloseIcon,
-      isClosable = true,
       dense = false,
-      isFullScreen = false,
-      isModal = true,
-      open = true,
-      onEnter: onEnterHandler,
-      onEntered: onEnteredHandler,
-      onEntering: onEnteringHandler,
-      onExit: onExitHandler,
-      onExited: onExitedHandler,
-      onExiting: onExitingHandler,
-
-      onKeyDown: keyDownHandler,
-      onKeyUp: keyUpHandler,
-
-      // Layout Props
-      alignContent = 'start',
-      alignItems = 'start',
-      autoFlow,
       footer,
-      frames,
-      fullScreen,
-      gap = 'wide',
-      justifyContent,
-      justifyItems = 'start',
-      wrap,
+      fullScreen = false,
       ...rest
     },
     ref
   ) => {
-    const node = useRef<HTMLDialogElement>(null);
+    const generated = useId();
+    const id = rest.id ?? generated;
 
-    const [transitionIn, setTransitionIn] = useState(open);
-
-    useEffect(() => {
-      if (transitionIn === open) {
-        return;
-      }
-
-      setTransitionIn(open);
-    }, [`${open}`]);
-
-    const id = uuid();
-
-    const uniqueClass = `${CLASS_NAME}--${id}`;
-
-    const className = classNames(
-      CLASS_NAME,
-      {
-        [`${CLASS_NAME}--is-closable`]: isClosable,
-        [`${CLASS_NAME}--is-dense`]: dense,
-        [`${CLASS_NAME}--is-full-screen`]: isFullScreen,
-        [`${CLASS_NAME}--is-modal`]: isModal,
-      },
-      _className,
-      uniqueClass
-    );
-
-    const onEnter: AnimationProps['onEnter'] = (isAppear) => {
-      if (!node.current) {
-        return;
-      }
-
-      if (!node.current.open) {
-        if (isModal) {
-          node.current.showModal();
-        } else {
-          node.current.show();
-        }
-
-        node.current.inert = true;
-
-        return;
-      }
-
-      onEnterHandler?.(isAppear);
-    };
-
-    const onEntered: AnimationProps['onEntered'] = (isAppear) => {
-      if (!node.current) {
-        return;
-      }
-
-      node.current.inert = false;
-
-      onEnteredHandler?.(isAppear);
-    };
-
-    const onExited: AnimationProps['onExited'] = () => {
-      node.current?.close();
-
-      onExitedHandler?.();
-    };
-
-    const onCancel: Spec.Props['onCancel'] = (event) => {
-      event.preventDefault();
-
-      if (!isClosable) {
-        return;
-      }
-
-      setTransitionIn(false);
-    };
-
-    const onClose: ButtonProps['onClick'] = (event) => {
-      event.preventDefault();
-
-      if (!isClosable) {
-        return;
-      }
-
-      setTransitionIn(false);
-    };
-
-    const onKeyDown: Spec.Props['onKeyDown'] = (event) => {
-      if (event.target !== event.currentTarget) {
-        keyUpHandler?.(event);
-
-        return;
-      }
-
-      event.preventDefault();
-
-      keyDownHandler?.(event);
-    };
-
-    const onKeyUp: Spec.Props['onKeyUp'] = (event) => {
-      if (event.target !== event.currentTarget) {
-        keyUpHandler?.(event);
-
-        return;
-      }
-
-      event.preventDefault();
-
-      if (isClosable && event.key === 'Escape') {
-        setTransitionIn(false);
-      }
-
-      keyUpHandler?.(event);
-    };
-
-    const animationDelay = isModal ? 300 : 0;
-
-    const Close = (
-      <Animation animationDelay={animationDelay} in={isClosable}>
-        <Button
-          className={classNames(
-            'kicl-font-size-medium',
-            `${CLASS_NAME}--close`
-          )}
-          onClick={onClose}
-          unstyled
-        >
-          {CloseIcon ? <CloseIcon /> : <Icons.Ri.RiCloseLine />}
-        </Button>
-      </Animation>
-    );
-
-    const Footer = (
-      <Animation animationDelay={animationDelay} in={!!footer}>
-        <Layout
-          alignContent='center'
-          alignItems='center'
-          justifyContent='center'
-          justifyItems='center'
-        >
-          <footer className={classNames(`${CLASS_NAME}--footer`)}>
-            {footer}
-          </footer>
-        </Layout>
-      </Animation>
-    );
-
-    const animationDuration: AnimationProps['animationDuration'] = transitionIn
-      ? 'fast'
-      : 'faster';
-    const animationEasing: AnimationProps['animationEasing'] =
-      'ease-quint-in-out';
-    const animationStyle: AnimationProps['animationStyle'] =
-      'slide-from-bottom';
-
-    const Section = (
-      <Animation
-        animationDelay={transitionIn ? animationDelay * 2 : 0}
-        animationDuration={animationDuration}
-        animationEasing={animationEasing}
-        animationStyle={animationStyle}
-        in={transitionIn}
+    return (
+      <dialog
+        {...rest}
+        id={id}
+        ref={ref}
+        className={classNames(
+          CLASS_NAME,
+          {
+            [`${CLASS_NAME}--is-closable`]: closable,
+            [`${CLASS_NAME}--is-dense`]: dense,
+            [`${CLASS_NAME}--is-full-screen`]: fullScreen,
+          },
+          className
+        )}
+        closedby={closable ? 'any' : 'none'}
       >
-        <Layout
-          alignContent={alignContent}
-          alignItems={alignItems}
-          autoFlow={autoFlow}
-          frames={frames}
-          fullScreen={fullScreen}
-          gap={gap}
-          justifyContent={justifyContent}
-          justifyItems={justifyItems}
-          wrap={wrap}
-        >
-          <section>
-            {children}
-            {Footer}
-          </section>
-        </Layout>
-      </Animation>
-    );
-
-    let Contents = (
-      <Animation
-        animationDelay={!transitionIn ? animationDelay * 2 : 0}
-        animationDuration={animationDuration}
-        animationEasing={animationEasing}
-        animationStyle={animationStyle}
-        in={transitionIn}
-        nodeRef={node}
-        onEnter={onEnter}
-        onEntered={onEntered}
-        onEntering={onEnteringHandler}
-        onExit={onExitHandler}
-        onExited={onExited}
-        onExiting={onExitingHandler}
-      >
-        <dialog
-          {...rest}
-          className={className}
-          onCancel={onCancel}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
-          ref={ref}
-          role='presentation'
-        >
-          {Close}
-          {Section}
-        </dialog>
-      </Animation>
-    );
-
-    if (!isModal) {
-      const onClick = () => {
-        setTransitionIn(false);
-      };
-
-      Contents = (
-        <Animation in={transitionIn}>
-          <div className={`${CLASS_NAME}--modal-wrapper`}>
-            <Button unstyled onClick={onClick}>
-              Close the dialog
+        <section>
+          {closable ? (
+            <Button
+              unstyled
+              className={classNames(
+                'kicl-font-size-medium',
+                `${CLASS_NAME}--close`
+              )}
+              aria-label='Close this dialog'
+              command='request-close'
+              commandFor={id}
+            >
+              {CloseIcon ? <CloseIcon /> : <Icons.Ri.RiCloseLine />}
             </Button>
-            {Contents}
-          </div>
-        </Animation>
-      );
-    }
+          ) : null}
+          {children}
+        </section>
 
-    return Contents;
+        {footer ? (
+          <footer className={`${CLASS_NAME}--footer`}>{footer}</footer>
+        ) : null}
+      </dialog>
+    );
   }
 );
 

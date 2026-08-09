@@ -181,9 +181,6 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
     fetch({ variables: { nodeIds: [tail] } });
   }, [lineage]);
 
-  // Validation aid — remove once the shape is confirmed.
-  console.info('TreeOfLifeSubtree', params.nodeId, data?.TreeOfLifeSubtree);
-
   const error = TreeOfLifeSubtree.error || TreeOfLifeSubtreeLazy.error;
 
   const loading = TreeOfLifeSubtree.loading || TreeOfLifeSubtreeLazy.loading;

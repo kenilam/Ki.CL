@@ -1,4 +1,25 @@
+/*
+ * A surface is a panel raised off the page: a card, a popover, a field.
+ *
+ * Defined as a short move away from the page's own colour rather than as a
+ * picked grey, so every surface keeps the same distance from whatever is
+ * behind it. The two themes move in opposite directions — dark lifts toward
+ * grey, light toward white — because on either one it is the step *away* from
+ * the background that reads as raised, not the absolute value.
+ *
+ * The edge is derived from the surface in turn. It is restated in each theme
+ * rather than written once: a custom property substitutes its `var()`
+ * references where it is declared, not where it is read, so a border defined
+ * only here would resolve against the default surface and stay that colour
+ * whatever the theme did afterwards.
+ */
 :root {
+  --kicl-surface-color: var(--kicl-color-white-pure);
+  --kicl-surface-border-color: color-mix(
+    in oklab,
+    var(--kicl-surface-color) 85%,
+    var(--kicl-color-grey)
+  );
   --kicl-body-background-color: var(--kicl-color-white);
   --kicl-body-color: var(--kicl-color-grey-darker);
   --kicl-body-transition-duration: var(--kicl-transition-duration-slow);
@@ -9,6 +30,16 @@
 .kicl--theme--dark {
   --kicl-body-background-color: var(--kicl-color-black);
   --kicl-body-color: var(--kicl-color-white);
+  --kicl-surface-color: color-mix(
+    in oklab,
+    var(--kicl-body-background-color) 90%,
+    var(--kicl-color-grey)
+  );
+  --kicl-surface-border-color: color-mix(
+    in oklab,
+    var(--kicl-surface-color) 85%,
+    var(--kicl-color-grey)
+  );
 
   color: var(--kicl-body-color);
 }
@@ -16,6 +47,12 @@
 .kicl--theme--light {
   --kicl-body-background-color: var(--kicl-color-white);
   --kicl-body-color: var(--kicl-color-grey-darker);
+  --kicl-surface-color: var(--kicl-color-white-pure);
+  --kicl-surface-border-color: color-mix(
+    in oklab,
+    var(--kicl-surface-color) 85%,
+    var(--kicl-color-grey)
+  );
 
   color: var(--kicl-body-color);
 }

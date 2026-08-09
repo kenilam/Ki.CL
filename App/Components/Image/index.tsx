@@ -19,6 +19,7 @@ const CLASS_NAME = 'kicl--components--image';
 
 const Image: React.FunctionComponent<Spec.Props> = ({
   alt,
+  borderRadius = 'sm',
   data,
   isFullscreen = false,
   loading = 'lazy',
@@ -62,42 +63,38 @@ const Image: React.FunctionComponent<Spec.Props> = ({
   };
 
   return (
-    <Layout
-      alignContent='center'
-      alignItems='center'
-      justifyContent='center'
-      justifyItems='center'
+    <object
+      {...props}
+      className={className}
+      title={title || alt || error?.message}
     >
-      <object
-        {...props}
-        className={className}
-        title={title || alt || error?.message}
+      <img
+        className={classNames({
+          [`kicl-border-radius-${borderRadius}`]: borderRadius,
+        })}
+        src={data}
+        alt={alt}
+        loading={loading}
+        onLoad={onLoad}
+        onError={onError}
+      />
+      <Animation
+        in={!loadingState && !!error}
+        animationDuration='faster'
+        animationStyle='blur'
       >
-        <img
-          src={data}
-          alt={alt}
-          loading={loading}
-          onLoad={onLoad}
-          onError={onError}
-        />
-        <Animation
-          in={!loadingState && !!error}
-          animationDuration='faster'
-          animationStyle='blur'
-        >
-          <Layout>
-            <span className={`${CLASS_NAME}--error`} data-src={data}>
-              {placeholder}
-            </span>
-          </Layout>
-        </Animation>
-        <Spinner
-          in={loadingState && !error}
-          animationDuration='faster'
-          size='smaller'
-        />
-      </object>
-    </Layout>
+        <Layout>
+          <span className={`${CLASS_NAME}--error`} data-src={data}>
+            {placeholder}
+          </span>
+        </Layout>
+      </Animation>
+      <Spinner
+        in={loadingState && !error}
+        animationDuration='faster'
+        size='smaller'
+      />
+    </object>
   );
 };
 

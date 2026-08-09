@@ -1,0 +1,248 @@
+.kicl--views--experiments--tree-of-life--v14 {
+  block-size: 100dvb;
+  inline-size: 100dvi;
+  max-block-size: 100dvb;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+
+  &__svg {
+    // Out of grid flow — grid was sizing the SVG from the viewBox aspect
+    // (e.g. stuck 960×640) instead of the poster cell.
+    block-size: 100%;
+    display: block;
+    inline-size: 100%;
+    inset: 0;
+    max-block-size: none;
+    max-inline-size: none;
+
+    // Explicit edges — % alone can fail before the parent has a definite size.
+    inset-block: 0;
+    inset-inline: 0;
+    touch-action: none;
+  }
+
+  &__pedicel {
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  &__marker-ring--outer {
+    opacity: 0.55;
+  }
+
+  // Selection / expanding — sonar-style ripple (not the rank stroke itself).
+  &__marker-pulse-ring {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-duration: var(--kicl-transition-duration-6s);
+    animation-iteration-count: infinite;
+    animation-name: kicl--views--experiments--tree-of-life--v14--pulse-ripple;
+    animation-timing-function: ease-out;
+  }
+
+  &__marker-pulse-ring--outer {
+    animation-delay: var(--kicl-transition-duration-slow);
+  }
+
+  // Diamond (class) — crystalline rock / twinkle
+  &__marker-diamond {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-direction: alternate;
+    animation-duration: var(--kicl-transition-duration-6s);
+    animation-iteration-count: infinite;
+    animation-name: kicl--views--experiments--tree-of-life--v14--diamond-rock;
+    animation-timing-function: ease-in-out;
+  }
+
+  // Square (order) — steady breath
+  &__marker-square {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-direction: alternate;
+    animation-duration: var(--kicl-transition-duration-6s);
+    animation-iteration-count: infinite;
+    animation-name: kicl--views--experiments--tree-of-life--v14--square-breathe;
+    animation-timing-function: ease-in-out;
+  }
+
+  // Tip / species dots — quieter breath (many on screen)
+  &__marker-tip {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-direction: alternate;
+    animation-duration: var(--kicl-transition-duration-6s);
+    animation-iteration-count: infinite;
+    animation-name: kicl--views--experiments--tree-of-life--v14--tip-breathe;
+    animation-timing-function: ease-in-out;
+  }
+
+  @keyframes kicl--views--experiments--tree-of-life--v14--pulse-ripple {
+    0% {
+      opacity: 0.65;
+      transform: scale(0.7);
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.45);
+    }
+  }
+
+  @keyframes kicl--views--experiments--tree-of-life--v14--diamond-rock {
+    0% {
+      transform: rotate(-12deg) scale(0.88);
+    }
+
+    100% {
+      transform: rotate(12deg) scale(1.12);
+    }
+  }
+
+  @keyframes kicl--views--experiments--tree-of-life--v14--square-breathe {
+    0% {
+      transform: scale(0.82);
+    }
+
+    100% {
+      transform: scale(1.14);
+    }
+  }
+
+  @keyframes kicl--views--experiments--tree-of-life--v14--tip-breathe {
+    0% {
+      transform: scale(0.85);
+    }
+
+    100% {
+      transform: scale(1.15);
+    }
+  }
+
+  // SVG <text> halo — no design-system utility for paint-order / stroke.
+  &__label {
+    paint-order: stroke;
+    pointer-events: none;
+    stroke: var(--kicl-color-white);
+    stroke-linejoin: round;
+    stroke-width: 0.12em;
+  }
+
+  // HTML label over WebGL — screen-space, fixed 1rem, white outline + soft glow.
+  &__webgl-label {
+    font-size: 1rem;
+    inset: auto;
+    left: 0;
+
+    // Hard outline (readable on any branch colour) + soft white glow.
+    -webkit-text-stroke: var(--kicl-size-1px) var(--kicl-color-white);
+    paint-order: stroke fill;
+    pointer-events: none;
+    text-shadow:
+      0 0 var(--kicl-size-half) var(--kicl-color-white),
+      0 0 var(--kicl-size) rgb(255 255 255 / 70%),
+      calc(var(--kicl-size-1px) * -1) calc(var(--kicl-size-1px) * -1) 0
+      var(--kicl-color-white),
+      var(--kicl-size-1px) calc(var(--kicl-size-1px) * -1) 0
+      var(--kicl-color-white),
+      calc(var(--kicl-size-1px) * -1) var(--kicl-size-1px) 0
+      var(--kicl-color-white),
+      var(--kicl-size-1px) var(--kicl-size-1px) 0 var(--kicl-color-white);
+    top: 0;
+    transform-origin: center;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  &__status {
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  // Fixed chrome — flex here so width stays hug-content (Layout defaults to 100%).
+  &__toolbar {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: var(--kicl-gutter-narrow);
+    inset-block-start: var(--kicl-gutter-wide);
+    inset-inline-end: var(--kicl-gutter-wide);
+    pointer-events: auto;
+    z-index: 3;
+
+    @include query('≤tablet') {
+      align-items: end;
+      flex-direction: column;
+
+      .kicl--views--experiments--tree-of-life--v14__status {
+        order: 1;
+      }
+    }
+  }
+
+  &__wind-blow {
+    cursor: pointer;
+    padding: var(--kicl-gutter-narrowest);
+    transition: color var(--kicl-transition-duration-fast);
+
+    svg {
+      block-size: var(--kicl-size);
+      inline-size: var(--kicl-size);
+    }
+  }
+
+  // Fixed inset host — pins detail/search to the top-left; leave room above the credit.
+  &__panel-slot {
+    // Layout sets inline-size: 100%; let inset define the containing block instead.
+    block-size: auto;
+    inline-size: auto;
+    inset: var(--kicl-gutter);
+    inset-block-end: var(--kicl-gutter-widest);
+    max-inline-size: none;
+    min-block-size: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &__panel-stack {
+    max-block-size: 100%;
+    overflow: auto;
+    overscroll-behavior: contain;
+    pointer-events: auto;
+  }
+
+  &__panel {
+    max-inline-size: 100%;
+    pointer-events: auto;
+    user-select: text;
+  }
+
+  &__detail-summary {
+    .kicl--components--card__title {
+      flex: 1;
+      margin: 0;
+      min-inline-size: 0;
+    }
+  }
+
+  &__credit {
+    inset-block-end: var(--kicl-gutter);
+    inset-inline-end: var(--kicl-gutter);
+    inset-inline-start: var(--kicl-gutter);
+    margin-inline: auto;
+    pointer-events: none;
+    width: fit-content;
+    z-index: 2;
+  }
+
+  &__taxon-plate {
+    --kicl--components--image--aspect-ratio: 1;
+    --kicl--components--image--border-radius: var(--kicl-size-half);
+  }
+
+  &__taxon-plate-skeleton {
+    --kicl--components--skeleton--aspect-ratio: 1;
+  }
+}

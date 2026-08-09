@@ -1,9 +1,17 @@
-$narrow: 16 * 22;
-$mobile: 16 * 30;
-$tablet: 16 * 46;
-$desktop: 16 * 61;
-$wide: 16 * 81;
-$wider: 16 * 90;
+/*
+ * Carried in pixels, not as bare numbers.
+ *
+ * Both consumers need the unit and neither complains without it: a media query
+ * built from a unitless value is invalid, so the browser drops the whole block,
+ * and `--kicl-breakpoint-*` is read as a length wherever it is used. Written as
+ * numbers these queries all parsed as `(max-width: 736)` and never matched.
+ */
+$narrow: 16px * 22;
+$mobile: 16px * 30;
+$tablet: 16px * 46;
+$desktop: 16px * 61;
+$wide: 16px * 81;
+$wider: 16px * 90;
 
 @use 'include-media' with (
   $breakpoints: (

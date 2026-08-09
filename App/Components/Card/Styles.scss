@@ -1,6 +1,6 @@
 .kicl--components--card {
-  --kicl--components--card--background-color: var(--kicl-color-white-pure);
-  --kicl--components--card--border-color: var(--kicl-color-grey-light);
+  --kicl--components--card--background-color: var(--kicl-surface-color);
+  --kicl--components--card--border-color: var(--kicl-surface-border-color);
   --kicl--components--card--border-radius: var(--kicl-size-half);
   --kicl--components--card--border-width: var(--kicl-size-1px);
   --kicl--components--card--color: var(--kicl-body-color);
@@ -24,16 +24,25 @@
     --kicl--components--card--spacing: var(--kicl-gutter-narrow);
   }
 
-  @at-root .kicl--theme--dark & {
-    --kicl--components--card--background-color: var(--kicl-color-grey-darker);
-    --kicl--components--card--border-color: var(--kicl-color-grey-dark);
-    --kicl--components--card--color: var(--kicl-body-color);
-  }
+  /*
+   * A pane you can see through.
+   *
+   * The fill is the same surface, thinned; the blur is what keeps text legible
+   * over whatever is behind it, which a plain transparency cannot do. Both are
+   * needed — thinning alone gives a smeared, unreadable panel over anything
+   * busy, and blurring alone leaves it opaque.
+   *
+   * The edge stays, because a translucent pane needs an outline more than a
+   * solid one does: without it there is nothing to say where the surface ends.
+   */
+  &--variant--ghost {
+    --kicl--components--card--background-color: color-mix(
+      in oklab,
+      var(--kicl-surface-color) 65%,
+      transparent
+    );
 
-  @at-root .kicl--theme--light & {
-    --kicl--components--card--background-color: var(--kicl-color-white-pure);
-    --kicl--components--card--border-color: var(--kicl-color-grey-light);
-    --kicl--components--card--color: var(--kicl-body-color);
+    backdrop-filter: blur(var(--kicl-size-2x));
   }
 }
 

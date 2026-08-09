@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
-import { v4 as uuid } from 'uuid';
 
 // Components
 import AnimationGroup from './AnimationGroup';
@@ -83,7 +82,7 @@ const Animation: FunctionComponent<Spec.Props> = ({
     (nodeRefProp as React.RefObject<HTMLElement | null> | undefined) ??
     fallbackRef;
 
-  const identifier = useMemo(() => uuid(), []);
+  const identifier = useMemo(() => crypto.randomUUID(), []);
   const uniqueID = `${CLASS_NAME}--${identifier}`;
 
   const duration = `${CLASS_NAME}--duration--${animationDuration}`;

@@ -1,0 +1,25 @@
+/*
+ * The measurements, between the hero and the essay.
+ */
+
+.kicl--views--experiments--tree-of-life__scale {
+  display: grid;
+  gap: var(--kicl-gutter-wide);
+  grid-template-columns: repeat(auto-fit, minmax(var(--kicl-size-14x), 1fr));
+  margin: 0;
+
+  dt,
+  dd {
+    margin: 0;
+  }
+
+  &__figure {
+    color: var(--kicl--tree-of-life--green);
+    line-height: var(--kicl-line-height-narrow);
+  }
+
+  &__label {
+    color: var(--kicl--tree-of-life--muted);
+    padding-block-start: var(--kicl-gutter-narrowest);
+  }
+}
