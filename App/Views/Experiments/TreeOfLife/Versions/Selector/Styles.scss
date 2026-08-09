@@ -1,0 +1,61 @@
+.kicl--views--experiments--tree-of-life--versions--selector {
+  position-anchor: --kicl-versions-toggle;
+  position-area: block-start span-inline-start;
+
+  /*
+   * Exactly as wide as the control that opens it, measured from the anchor
+   * rather than restated as a number. The numbers run three across inside it,
+   * so matching that width gives a block rather than the ribbon a single
+   * column made.
+   */
+  inline-size: anchor-size(width);
+  max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
+  overflow-y: auto;
+  opacity: 0;
+  transition:
+    block-size var(--kicl-transition-duration-fast) allow-discrete,
+    opacity var(--kicl-transition-duration-fast),
+    translate var(--kicl-transition-duration-fast),
+    display var(--kicl-transition-duration-fast) allow-discrete,
+    overlay var(--kicl-transition-duration-fast) allow-discrete;
+  translate: 0 var(--kicl-gutter-narrow);
+
+  &:popover-open {
+    opacity: 1;
+    translate: 0 0;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 var(--kicl-gutter-narrow);
+    }
+  }
+
+  a {
+    opacity: 0;
+    transition:
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast);
+    translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+  }
+
+  &:popover-open a {
+    opacity: 1;
+    transition-delay: calc((sibling-count() - sibling-index()) * 30ms);
+    translate: 0 0;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 calc(var(--kicl-gutter-narrow) * -1);
+    }
+  }
+
+  &__toggle {
+    /*
+     * A 16px-tall control is below the minimum anyone can reliably hit. The
+     * chrome in v15 was raised for the same reason.
+     */
+    min-block-size: var(--kicl-size-2x);
+    anchor-name: --kicl-versions-toggle;
+    z-index: 4;
+  }
+}

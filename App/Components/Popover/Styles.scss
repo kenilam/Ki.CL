@@ -1,29 +1,116 @@
 .kicl--components--popover {
   display: inline-flex;
 
+  /*
+   * The trigger is the thing the panel is placed against, so it is what
+   * carries the anchor name. The wrapper only passes the name down, which is
+   * how two instances on one page avoid anchoring to each other.
+   */
+  &__trigger {
+    @supports (anchor-name: --a) {
+      anchor-name: var(--kicl--components--popover--anchor);
+    }
+  }
+
   &__content {
-    --kicl--components--popover--background-color: var(--kicl-color-white-pure);
-    --kicl--components--popover--border-color: var(--kicl-color-grey-light);
+    --kicl--components--popover--background-color: var(--kicl-surface-color);
+    --kicl--components--popover--border-color: var(--kicl-surface-border-color);
     --kicl--components--popover--border-radius: var(--kicl-size-half);
     --kicl--components--popover--padding: var(--kicl-gutter-narrow);
+
+    /* Which side of the trigger the panel prefers. Modifiers move this. */
+    --kicl--components--popover--position-area: block-end span-inline-end;
 
     background-color: var(--kicl--components--popover--background-color);
     border: var(--kicl-size-1px) solid
       var(--kicl--components--popover--border-color);
     border-radius: var(--kicl--components--popover--border-radius);
-    inset-block-start: calc(100% + var(--kicl-gutter-narrowest));
-    inset-inline-start: 0;
     padding: var(--kicl--components--popover--padding);
-    z-index: 6;
 
-    @at-root .kicl--theme--dark & {
-      --kicl--components--popover--background-color: var(--kicl-color-grey-darker);
-      --kicl--components--popover--border-color: var(--kicl-color-grey-dark);
+    /*
+     * Held against the trigger rather than the window.
+     *
+     * A popover is placed by the browser in the centre of the viewport, with
+     * `inset: 0` and automatic margins — right for a modal, wrong for
+     * something that belongs to a control. Clearing those hands placement to
+     * the anchor instead, and the margin becomes the gap between the two,
+     * applied on every side so it survives a flip.
+     *
+     * Guarded, because a browser without anchor positioning has no way to
+     * relate the two boxes. There it keeps the centred placement, which is
+     * plain but never lands off-screen.
+     */
+    @supports (position-area: block-end) {
+      inset: auto;
+      margin: var(--kicl-gutter-narrowest);
+      position-anchor: var(--kicl--components--popover--anchor);
+      position-area: var(--kicl--components--popover--position-area);
+
+      /*
+       * The preferred side is a preference. When the panel would not fit
+       * there, the browser tries the opposite side, then the opposite
+       * inline side, then both — so a picker near the foot of the window
+       * opens upward instead of off the edge.
+       */
+      position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline;
     }
 
-    @at-root .kicl--theme--light & {
-      --kicl--components--popover--background-color: var(--kicl-color-white-pure);
-      --kicl--components--popover--border-color: var(--kicl-color-grey-light);
+    /*
+     * The panel stays mounted while closed, so it has a state to animate from
+     * and one to animate to. `allow-discrete` is what carries `display` and
+     * the top layer through the transition rather than switching them at the
+     * first frame.
+     */
+    opacity: 0;
+    transition:
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast),
+      display var(--kicl-transition-duration-fast) allow-discrete,
+      overlay var(--kicl-transition-duration-fast) allow-discrete;
+    translate: 0 calc(var(--kicl-gutter-narrowest) * -1);
+
+    &:popover-open {
+      opacity: 1;
+      translate: 0 0;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 calc(var(--kicl-gutter-narrowest) * -1);
+      }
+    }
+
+    &--block-end {
+      --kicl--components--popover--position-area: block-end span-inline-end;
+    }
+
+    &--block-start {
+      --kicl--components--popover--position-area: block-start span-inline-end;
+    }
+
+    &--inline-start {
+      --kicl--components--popover--position-area: inline-start span-block-end;
+    }
+
+    &--inline-end {
+      --kicl--components--popover--position-area: inline-end span-block-end;
+    }
+
+    /*
+     * A pane you can see through — the same treatment `Card` and `Badge` carry
+     * under this name. The blur is what keeps the contents legible over
+     * whatever the panel happens to open on top of.
+     */
+    &--variant--ghost {
+      --kicl--components--popover--background-color: color-mix(
+        in oklab,
+        var(--kicl-surface-color) 65%,
+        transparent
+      );
+
+      backdrop-filter: blur(var(--kicl-size-2x));
     }
   }
 }

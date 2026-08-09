@@ -1,5 +1,5 @@
 .kicl--components--select {
-  --kicl--components--select--background-color: var(--kicl-color-white-pure);
+  --kicl--components--select--background-color: var(--kicl-surface-color);
   --kicl--components--select--border-color: var(--kicl-color-grey-darker);
   --kicl--components--select--border-radius: var(--kicl-gutter-narrower);
   --kicl--components--select--border-width: var(--kicl-size-1px);
@@ -121,7 +121,6 @@
   }
 
   @at-root .kicl--theme--dark & {
-    --kicl--components--select--background-color: var(--kicl-color-grey-darker);
     --kicl--components--select--border-color: var(--kicl-color-grey);
 
     &__item {
@@ -134,7 +133,6 @@
   }
 
   @at-root .kicl--theme--light & {
-    --kicl--components--select--background-color: var(--kicl-color-white-pure);
     --kicl--components--select--border-color: var(--kicl-color-grey-darker);
   }
 }

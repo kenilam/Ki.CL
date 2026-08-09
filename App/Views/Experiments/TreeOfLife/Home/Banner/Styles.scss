@@ -1,0 +1,186 @@
+.kicl--views--experiments--tree-of-life__banner {
+  --kicl-layout--block-size: inherit;
+
+  min-block-size: calc(100dvb - var(--kicl-gutter-widest));
+  position: relative;
+
+  /*
+   * What this is, and what it took. The index is held at the far end so the two
+   * read as a spread rather than as a heading with a list under it, and pinned
+   * to the bottom so it settles on the same line the call to action sits on.
+   *
+   * One column until a desktop. The lede alone wants most of a tablet's width
+   * and the index another 200px beside it, so the pair was being squeezed long
+   * before the tablet breakpoint let go of them.
+   */
+  &__spread {
+    display: grid;
+    gap: var(--kicl-gutter-wide);
+
+    /*
+     * Positioned so it paints above the ground: an absolutely positioned
+     * pseudo-element outranks a static sibling whatever the source order.
+     */
+    position: relative;
+
+    /*
+     * The header packs its children to the start, so the spread would otherwise
+     * be only as wide as its contents and the index would sit mid-frame instead
+     * of at the far edge.
+     */
+    inline-size: 100%;
+
+    @include query('>desktop') {
+      align-items: end;
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  &__lede {
+    display: grid;
+    gap: var(--kicl-gutter-narrow);
+    justify-items: start;
+    max-inline-size: var(--kicl-breakpoint-tablet);
+  }
+
+  /*
+   * The tree itself, from the view this page introduces — shot once per theme,
+   * because the scene's own background is part of the picture and a single
+   * plate would fight whichever surface it was not made for.
+   *
+   * Light is the default, matching `:root`; dark is the departure.
+   */
+  --kicl--tree-of-life--plate: url('/images/tree-of-life/banner.light.png');
+
+  /*
+   * How the picture meets the green beneath it. The plate is a screenshot, so
+   * most of it is the scene's own empty field — near-white in one theme, near-
+   * black in the other. The blend is chosen so that field disappears into the
+   * green and only the tree itself marks the letters: `multiply` lets white
+   * pass, `screen` lets black pass.
+   */
+  --kicl--tree-of-life--plate-blend: multiply;
+
+  /*
+   * How far the ground is pushed toward the page behind it — down into the dark
+   * so pale type reads over it, up into the light so dark type does.
+   */
+  --kicl--tree-of-life--plate-exposure: 1.5;
+
+  @at-root .kicl--theme--dark & {
+    --kicl--tree-of-life--plate: url('/images/tree-of-life/banner.dark.png');
+    --kicl--tree-of-life--plate-blend: screen;
+    --kicl--tree-of-life--plate-exposure: 0.5;
+  }
+
+  background-image: var(--kicl--tree-of-life--plate);
+
+  /*
+   * Held to the left, which pushes the dense clade out past the index rather
+   * than under it. The plate is taller than it is wide once it covers this
+   * box, so only the horizontal placement does anything here.
+   */
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /*
+   * The ground, thrown out of focus, and the frame falling away at its edges.
+   *
+   * One layer does both: `backdrop-filter` works on what is behind the element,
+   * and its own background paints over the result. The blur is the point rather
+   * than an effect — the title carries a sharp copy of this same picture inside
+   * its letters, so the two together read as one scene with a single plane in
+   * focus. A filter on the header itself would have taken the type down with
+   * the ground.
+   *
+   * The falloff ends on the page's own colour instead of black, so the hero
+   * dissolves into the essay under it rather than stopping at an edge — and it
+   * follows the theme without being told to.
+   */
+  &::before {
+    backdrop-filter: blur(var(--kicl-size))
+      brightness(var(--kicl--tree-of-life--plate-exposure)) saturate(60%);
+    background-image: radial-gradient(
+      ellipse at 50% 45%,
+      color-mix(in oklab, var(--kicl-body-background-color) 0%, transparent) 30%,
+      color-mix(in oklab, var(--kicl-body-background-color) 55%, transparent)
+      74%,
+      var(--kicl-body-background-color) 100%
+    );
+    content: '';
+    inset: 0;
+    position: absolute;
+  }
+
+  /*
+   * The only place the picture appears.
+   *
+   * Painted behind the glyphs and clipped to them, so the letters read as a
+   * window onto the tree rather than as text over a photograph. The green sits
+   * underneath: where the plate is dark the mix keeps the glyph legible, and an
+   * engine that cannot clip falls back to the green alone rather than to
+   * nothing at all.
+   */
+  &__title {
+    background-blend-mode: var(--kicl--tree-of-life--plate-blend), normal;
+    background-image:
+      var(--kicl--tree-of-life--plate),
+      linear-gradient(
+        120deg,
+        color-mix(
+          in oklab,
+          var(--kicl--tree-of-life--green) 70%,
+          var(--kicl-color-white-pure)
+        ),
+        var(--kicl--tree-of-life--green)
+      );
+
+    /*
+     * Blown up and aimed at the dense clade, which sits low and right in the
+     * plate. At natural size a line of type spans the whole picture and most
+     * letters land on empty field; magnified, every glyph falls inside the
+     * tangle.
+     */
+    background-position:
+      66% 44%,
+      0% 0%;
+    background-repeat: no-repeat, repeat;
+    background-size:
+      400% auto,
+      200% 200%;
+    animation: kicl--tree-of-life--drift 12s ease-in-out infinite alternate;
+
+    @supports (background-clip: text) {
+      background-clip: text;
+      color: transparent;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  .kicl--components--button {
+    --kicl--components--button--background-color: var(--kicl-color-green);
+  }
+}
+
+/*
+ * Both layers move: the plate pans a short way across the clade, the gradient
+ * sweeps its full length. A keyframe has to restate every layer, so the two
+ * travel together.
+ */
+@keyframes kicl--tree-of-life--drift {
+  from {
+    background-position:
+      66% 44%,
+      0% 0%;
+  }
+
+  to {
+    background-position:
+      82% 58%,
+      100% 100%;
+  }
+}

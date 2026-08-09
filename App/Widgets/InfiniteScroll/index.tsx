@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 
 // Libraries
 import classNames from 'classnames';
-import { v4 as uuid } from 'uuid';
 
 // Hooks
 import { useResizeObserver } from '@/Hooks';
@@ -29,7 +28,7 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
   ) => {
     const { node, rect } = useResizeObserver<HTMLDivElement>();
 
-    const id = uuid();
+    const id = crypto.randomUUID();
 
     const uniqueClass = `${CLASS_NAME}--${id}`;
 
