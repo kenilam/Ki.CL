@@ -8,4 +8,33 @@
 .kicl--views--experiments--tree-of-life {
   --kicl--tree-of-life--green: var(--kicl-color-green);
   --kicl--tree-of-life--air: var(--kicl-body-background-color);
+
+  /*
+   * Two quieter voices than the body, mixed toward the page rather than picked
+   * as greys. A fixed grey can only be right for one theme — it reads as muted
+   * on the dark surface and vanishes on the light one. Mixed against the
+   * background, both hold the same distance from the text around them.
+   */
+  --kicl--tree-of-life--ink: color-mix(
+    in oklab,
+    var(--kicl-body-color) 80%,
+    var(--kicl-body-background-color)
+  );
+  --kicl--tree-of-life--muted: color-mix(
+    in oklab,
+    var(--kicl-body-color) 50%,
+    var(--kicl-body-background-color)
+  );
+
+  padding-block-end: var(--kicl-gutter-extreme);
+  padding-inline: calc(var(--kicl-gutter-extreme) * 2);
+
+  /*
+   * Margins that wide are a luxury of wide screens. Below a tablet they stop
+   * being air and start being the reason a line of prose breaks after four
+   * words, so the page falls back to the ordinary edge.
+   */
+  @include query('≤tablet') {
+    padding-inline: var(--kicl-gutter-wider);
+  }
 }

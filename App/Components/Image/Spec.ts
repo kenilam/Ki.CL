@@ -1,5 +1,7 @@
 import React from 'react';
 
+type BorderRadius = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'max';
+
 /**
  * `onResize` is deliberately absent: `resize` does not fire on an `<img>`, and
  * React 19.2 dropped it from `ImgHTMLAttributes` accordingly. It was only ever
@@ -15,4 +17,5 @@ export type Props = Omit<
   > & {
     isFullscreen?: boolean;
     placeholder?: React.ReactNode;
+    borderRadius?: BorderRadius;
   };

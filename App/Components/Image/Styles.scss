@@ -1,8 +1,8 @@
 :root {
   --kicl--components--image--aspect-ratio: auto;
-  --kicl--components--image--background-color: var(--kicl-color-white-darker);
+  --kicl--components--image--background-color: transparent;
   --kicl--components--image--block-size: auto;
-  --kicl--components--image--border-radius: 0;
+  --kicl--components--image--border-radius: var(--kicl-size-half);
   --kicl--components--image--inline-size: 100%;
   --kicl--components--image--object-fit: cover;
   --kicl--components--image--is-fullscreen--inset-block-start: 50%;
@@ -12,19 +12,10 @@
   --kicl--components--image--error--position: absolute;
 }
 
-.kicl--theme--dark {
-  --kicl--components--image--background-color: var(--kicl-color-black-pure);
-}
-
-.kicl--theme--light {
-  --kicl--components--image--background-color: var(--kicl-color-white-darker);
-}
-
 .kicl--components--image {
   aspect-ratio: var(--kicl--components--image--aspect-ratio);
   background-color: var(--kicl--components--image--background-color);
   block-size: var(--kicl--components--image--block-size);
-  border-radius: var(--kicl--components--image--border-radius);
   inline-size: var(--kicl--components--image--inline-size);
   overflow: hidden;
   position: relative;
@@ -34,14 +25,17 @@
   }
 
   img {
+    block-size: auto;
     display: block;
     inline-size: 100%;
     object-fit: var(--kicl--components--image--object-fit);
   }
 
   svg {
-    font-size: min(var(--kicl--components--image--block-size),
-    var(--kicl--components--image--inline-size));
+    font-size: min(
+      var(--kicl--components--image--block-size),
+      var(--kicl--components--image--inline-size)
+    );
   }
 
   &--background {
@@ -60,11 +54,17 @@
   }
 
   &--is-fullscreen {
-    inset-block-start: var(--kicl--components--image--is-fullscreen--inset-block-start);
-    inset-inline-start: var(--kicl--components--image--is-fullscreen--inset-inline-start);
+    inset-block-start: var(
+      --kicl--components--image--is-fullscreen--inset-block-start
+    );
+    inset-inline-start: var(
+      --kicl--components--image--is-fullscreen--inset-inline-start
+    );
     position: absolute;
-    transform: translate3d(var(--kicl--components--image--is-fullscreen--transform--translate-x),
-    var(--kicl--components--image--is-fullscreen--transform--translate-y),
-    0);
+    transform: translate3d(
+      var(--kicl--components--image--is-fullscreen--transform--translate-x),
+      var(--kicl--components--image--is-fullscreen--transform--translate-y),
+      0
+    );
   }
 }

@@ -25,6 +25,15 @@
   --kicl-size-19x: calc(var(--kicl-size) * 19);
   --kicl-size-20x: calc(var(--kicl-size) * 20);
 
+  // Semantic border-radius scale (aliases → size tokens)
+  --kicl-border-radius-xs: var(--kicl-size-2x);
+  --kicl-border-radius-sm: var(--kicl-size-half);
+  --kicl-border-radius-md: var(--kicl-size);
+  --kicl-border-radius-lg: var(--kicl-size-2x);
+  --kicl-border-radius-xl: var(--kicl-size-3x);
+  --kicl-border-radius-xxl: var(--kicl-size-4x);
+  --kicl-border-radius-max: var(--kicl-size-6x);
+
   // Semantic inline-size scale (aliases → size tokens)
   --kicl-inline-size-xs: var(--kicl-size-4x);
   --kicl-inline-size-sm: var(--kicl-size-6x);
@@ -35,6 +44,13 @@
   --kicl-inline-size-max: var(--kicl-size-18x);
 }
 
+@include make-variable-class('border-radius', 'xs');
+@include make-variable-class('border-radius', 'sm');
+@include make-variable-class('border-radius', 'md');
+@include make-variable-class('border-radius', 'lg');
+@include make-variable-class('border-radius', 'xl');
+@include make-variable-class('border-radius', 'xxl');
+@include make-variable-class('border-radius', 'max');
 @include make-variable-class('inline-size', 'xs');
 @include make-variable-class('inline-size', 'sm');
 @include make-variable-class('inline-size', 'md');

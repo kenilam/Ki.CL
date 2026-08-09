@@ -10,7 +10,17 @@ const CLASS_NAME = 'kicl--components--card';
  * https://ui.shadcn.com/docs/components/base/card
  */
 const Card = React.forwardRef<HTMLElement, CardProps>(
-  ({ children, className, is = 'div', size = 'default', ...rest }, ref) => {
+  (
+    {
+      children,
+      className,
+      is = 'div',
+      size = 'default',
+      variant = 'default',
+      ...rest
+    },
+    ref
+  ) => {
     const Component = is as CardIs;
 
     return (
@@ -19,11 +29,13 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
         className={classNames(
           CLASS_NAME,
           `${CLASS_NAME}--size--${size}`,
+          `${CLASS_NAME}--variant--${variant}`,
           size !== 'default' && `kicl-inline-size-${size}`,
           className
         )}
         data-is={is}
         data-size={size}
+        data-variant={variant}
         data-slot='card'
         ref={ref as never}
       >

@@ -3,6 +3,15 @@
   --kicl-font-family: 'mic-32-new-web', #{$base-font};
   --kicl-font-family-bold: 'mic-32-new-web', #{$base-font};
   --kicl-font-family-special: 'mic-32-new-rounded-web', #{$base-font};
+
+  /*
+   * The voice for data: version numbers, scores, identifiers, counts.
+   *
+   * Set in the brand face these read as prose, which is why nothing on the page
+   * currently looks like a measurement. A fixed advance width also stops a
+   * column of figures from shifting as the digits change.
+   */
+  --kicl-font-family-mono: ui-monospace, 'SF Mono', 'Menlo', monospace;
   --kicl-font-size: #{$base-font-size};
 
   // font-size
@@ -92,6 +101,10 @@
 @include make-variable-class('font-family');
 @include make-variable-class('font-family', 'bold');
 @include make-variable-class('font-family', 'special');
+
+@include make-variable-class('font-family', 'mono') {
+  font-variant-numeric: tabular-nums;
+}
 
 @include make-variable-class('font-size', 'extreme') {
   line-height: var(--kicl-line-height-narrow);

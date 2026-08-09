@@ -50,6 +50,7 @@ const Details: React.FunctionComponent = () => {
 
   return (
     <Card
+      variant='ghost'
       is='aside'
       aria-live='polite'
       className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}

@@ -175,7 +175,11 @@ const Search: React.FunctionComponent = () => {
   };
 
   return (
-    <Card is='aside' className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}>
+    <Card
+      is='aside'
+      variant='ghost'
+      className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
+    >
       <CardContent>
         <Layout autoFlow='row' gap='narrow'>
           <div>

@@ -1,20 +1,16 @@
 import React from 'react';
 
 // Components
-import { Button, Card, Heading, HyperLink, Layout, Text } from '@/Components';
+import { Heading, HyperLink, Layout, Text } from '@/Components';
 
-// Icons
-import { Ri } from '@/Icons';
+// Partials
+import Attempts from '../Attempts';
 
 // Styles
 import './Styles.scss';
 
 // Constants
-import { ROOT_NODE_ID } from '@/Views/Experiments/TreeOfLife/constants';
-import {
-  VERSIONS,
-  toVersionPath,
-} from '@/Views/Experiments/TreeOfLife/Versions/constants';
+import { toVersionPath } from '@/Views/Experiments/TreeOfLife/Versions/constants';
 import { VERSION } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
 /**
@@ -24,14 +20,13 @@ import { VERSION } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
  * element does the announcing rather than an attribute — and the heading inside
  * it is the page's `h1`, which is what a screen reader reaches for first.
  *
- * The gradient behind it is the same green the tree grows from, drifting slowly
- * enough to read as light rather than as motion. It is one element and one
- * keyframe: a large background panned across, which the compositor handles
- * without touching layout.
+ * Two columns: what this is on one side, what it took on the other. The screen
+ * was previously four fifths empty ground, which said nothing about a project
+ * whose whole claim is fifteen attempts at the same picture — so the index of
+ * those attempts is the thing that fills it.
  */
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life__banner';
-const POPOVER_ID = `${CLASS_NAME}--versions`;
 
 const Banner: React.FunctionComponent = () => {
   return (
@@ -39,74 +34,43 @@ const Banner: React.FunctionComponent = () => {
       alignItems='center'
       alignContent='center'
       autoFlow='row'
-      gap='narrow'
       justifyItems='start'
     >
       <header className={CLASS_NAME}>
-        <Heading
-          is='h1'
-          dense
-          className={`${CLASS_NAME}__title kicl-font-size-huge`}
-        >
-          Tree of Life
-        </Heading>
-        <Text is='p' className={'kicl-font-size-medium'}>
-          Two point three million species, one continuous walk. Start at the
-          origin of life and travel to anything alive — with a plate drawn for
-          every organism along the way.
-        </Text>
-
-        <Layout alignItems='center' autoFlow='column' gap='narrow'>
-          <nav className={`${CLASS_NAME}__actions`}>
-            <HyperLink
-              lookLikeButton
-              to={toVersionPath({ version: VERSION })}
-              size='small'
-              variant='secondary'
+        {/*
+          The spread is its own element rather than the header itself: `Layout`
+          clones its utility classes onto the child it wraps, and those are
+          written double so they outrank a single view class — a column
+          template set on the header is simply lost.
+        */}
+        <div className={`${CLASS_NAME}__spread`}>
+          <div className={`${CLASS_NAME}__lede`}>
+            <Heading
+              is='h1'
+              dense
+              className={`${CLASS_NAME}__title kicl-font-size-huge`}
             >
-              See the final version
-            </HyperLink>
+              Tree of Life
+            </Heading>
 
-            <Button
-              unstyled
-              type='button'
-              alignItems='center'
-              popoverTarget={POPOVER_ID}
-              className={`${CLASS_NAME}__versions-toggle`}
-              aria-label='Every version of this view'
-              title='Every version of this view'
-            >
-              <Ri.RiStackLine aria-hidden />
-            </Button>
-          </nav>
-        </Layout>
+            <Text is='p' className='kicl-font-size-medium'>
+              Two point three million species, one continuous walk. Start at the
+              origin of life and travel to anything alive — with a plate drawn
+              for every organism along the way.
+            </Text>
 
-        <dialog
-          id={POPOVER_ID}
-          popover='auto'
-          className={`${CLASS_NAME}__versions`}
-        >
-          <Card>
-            <Layout
-              autoFlow='column'
-              gap='narrow'
-              justifyItems='start'
-              frames='auto--max-content--auto'
-            >
-              <nav>
-                {[...VERSIONS].reverse().map((version) => (
-                  <HyperLink
-                    unstyled
-                    key={version}
-                    to={toVersionPath({ version, nodeId: ROOT_NODE_ID })}
-                  >
-                    {version}
-                  </HyperLink>
-                ))}
-              </nav>
-            </Layout>
-          </Card>
-        </dialog>
+            <nav className={`${CLASS_NAME}__actions`}>
+              <HyperLink
+                lookLikeButton
+                to={toVersionPath({ version: VERSION })}
+              >
+                See the experience
+              </HyperLink>
+            </nav>
+          </div>
+
+          <Attempts />
+        </div>
       </header>
     </Layout>
   );

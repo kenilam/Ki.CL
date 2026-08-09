@@ -3,24 +3,9 @@
  */
 
 .kicl--views--experiments--tree-of-life__article {
-  display: grid;
-  gap: var(--kicl-gutter-wide);
-  margin-inline: auto;
-  padding-inline: var(--kicl-gutter-extreme);
-
   section {
     display: grid;
     gap: var(--kicl-gutter-narrow);
-  }
-
-  figure {
-    margin: 0;
-
-    img {
-      block-size: auto;
-      border-radius: var(--kicl-size-half);
-      inline-size: 100%;
-    }
   }
 
   figcaption {
