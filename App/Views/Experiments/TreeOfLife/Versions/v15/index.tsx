@@ -148,7 +148,7 @@ const Canvas: React.FunctionComponent = () => {
       <Labels />
 
       <Layout
-        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start kicl-inset-inline-start`}
+        className={`${CLASS_NAME}__chrome ${CLASS_NAME}__chrome--panel kicl-position-fixed kicl-inset-block-start kicl-inset-inline-start`}
         autoFlow='row'
         gap='narrow'
       >
@@ -182,8 +182,8 @@ const Canvas: React.FunctionComponent = () => {
             aria-pressed={animate}
             title={
               animate
-                ? 'Playing out branch by branch — click to land it at once'
-                : 'Landing at once — click to play it out branch by branch'
+                ? 'Land the tree at once'
+                : 'Play the tree out branch by branch'
             }
             onClick={() => setAnimate((current) => !current)}
           >

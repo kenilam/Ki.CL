@@ -1,7 +1,5 @@
 .kicl--components--input-group {
-  --kicl--components--input-group--background-color: var(
-    --kicl-color-white-pure
-  );
+  --kicl--components--input-group--background-color: var(--kicl-surface-color);
   --kicl--components--input-group--border-color: var(--kicl-color-grey-darker);
   --kicl--components--input-group--border-radius: var(--kicl-gutter-narrower);
   --kicl--components--input-group--border-width: var(--kicl-size-1px);
@@ -92,16 +90,10 @@
   }
 
   @at-root .kicl--theme--dark & {
-    --kicl--components--input-group--background-color: var(
-      --kicl-color-grey-darker
-    );
     --kicl--components--input-group--border-color: var(--kicl-color-grey);
   }
 
   @at-root .kicl--theme--light & {
-    --kicl--components--input-group--background-color: var(
-      --kicl-color-white-pure
-    );
     --kicl--components--input-group--border-color: var(
       --kicl-color-grey-darker
     );

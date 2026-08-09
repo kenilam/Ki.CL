@@ -1,198 +1,157 @@
 :root {
   --kicl--components--dialog--background-color: var(--kicl-color-white);
-  --kicl--components--dialog--block-size: fit-content;
-  --kicl--components--dialog--border-radius: 0;
-  --kicl--components--dialog--inline-size: 100dvw;
-  --kicl--components--dialog--max-block-size: 100dvh;
-  --kicl--components--dialog--max-inline-size: 100dvw;
-  --kicl--components--dialog--min-block-size: 100dvh;
-  --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
-  --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
-  --kicl--components--dialog--close--backdrop-filter: blur(var(--kicl-size-2x));
-  --kicl--components--dialog--close--background-color: #{rgba($white, 0.6)};
-  --kicl--components--dialog--close--inset-block-start: 0;
-  --kicl--components--dialog--close--inset-inline-end: 0;
-  --kicl--components--dialog--section--padding-block-end: var(--kicl-gutter-wide);
-  --kicl--components--dialog--section--padding-block-start: var(--kicl-gutter-none);
-  --kicl--components--dialog--section--padding-inline-end: var(--kicl-gutter-wide);
-  --kicl--components--dialog--section--padding-inline-start: var(--kicl-gutter-wide);
-  --kicl--components--dialog--section--position: relative;
+  --kicl--components--dialog--border-radius: var(--kicl-border-radius-md);
+  --kicl--components--dialog--max-inline-size: 66ch;
+  --kicl--components--dialog--inline-size: auto;
+  --kicl--components--dialog--offset: var(--kicl-gutter-extreme);
+  --kicl--components--dialog--padding-block: var(--kicl-gutter);
+  --kicl--components--dialog--padding-inline: var(--kicl-gutter);
+  --kicl--components--dialog--backdrop--backdrop-filter--brightness: 45%;
+  --kicl--components--dialog--backdrop--backdrop-filter--blur: var(
+    --kicl-size-half
+  );
+  --kicl--components--dialog--backdrop--background-color: var(
+    --kicl-color-white-dark
+  );
+  --kicl--components--dialog--backdrop--opacity: 0.2;
 }
 
 .kicl--theme--dark {
   --kicl--components--dialog--background-color: var(--kicl-color-grey-darkest);
-  --kicl--components--dialog--close--background-color: #{rgba($black, 0.6)};
 }
 
 .kicl--theme--light {
   --kicl--components--dialog--background-color: var(--kicl-color-white);
-  --kicl--components--dialog--close--background-color: #{rgba($white, 0.6)};
 }
 
 .kicl--components--dialog {
-  background-color: var(--kicl--components--dialog--background-color);
-  block-size: var(--kicl--components--dialog--block-size);
-  border-radius: var(--kicl--components--dialog--border-radius);
-  border: none;
-  inline-size: var(--kicl--components--dialog--inline-size);
-  max-block-size: var(--kicl--components--dialog--max-block-size);
-  max-inline-size: var(--kicl--components--dialog--max-inline-size);
-  min-block-size: var(--kicl--components--dialog--min-block-size);
-  overflow: hidden;
-  overflow-y: auto;
-  padding-block: var(--kicl--components--dialog--padding-block);
-  padding-inline: var(--kicl--components--dialog--padding-inline);
-
-  > section {
-    block-size: stretch;
-    padding-block-end: var(--kicl--components--dialog--section--padding-block-end);
-    padding-block-start: var(--kicl--components--dialog--section--padding-block-start);
-    padding-inline-end: var(--kicl--components--dialog--section--padding-inline-end);
-    padding-inline-start: var(--kicl--components--dialog--section--padding-inline-start);
-    position: var(--kicl--components--dialog--section--position);
-  }
-
-  &::backdrop {
-    --kicl--components--dialog--backdrop--transition-delay: 0s;
-    --kicl--components--dialog--backdrop--transition-duration: var(--kicl-transition-duration-slower);
-    --kicl--components--dialog--backdrop--transition-property: background-color, backdrop-filter, opacity;
-    --kicl--components--dialog--backdrop--transition-timing-function: cubic-bezier(0.19,
-    1,
-    0.22,
-    1);
+  &:not([open]) {
     --kicl--components--dialog--backdrop--backdrop-filter--brightness: 100%;
     --kicl--components--dialog--backdrop--backdrop-filter--blur: 0;
     --kicl--components--dialog--backdrop--background-color: transparent;
     --kicl--components--dialog--backdrop--opacity: 0;
-
-    backdrop-filter: brightness(var(--kicl--components--dialog--backdrop--backdrop-filter--brightness))
-      blur(var(--kicl--components--dialog--backdrop--backdrop-filter--blur));
-    background-color: var(--kicl--components--dialog--backdrop--background-color);
-    opacity: var(--kicl--components--dialog--backdrop--opacity);
-    pointer-events: none;
-    transition-delay: var(--kicl--components--dialog--backdrop--transition-delay);
-    transition-duration: var(--kicl--components--dialog--backdrop--transition-duration);
-    transition-property: var(--kicl--components--dialog--backdrop--transition-property);
-    transition-timing-function: var(--kicl--components--dialog--backdrop--transition-timing-function);
-    will-change: var(--kicl--components--dialog--backdrop--transition-property);
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &--close {
-    --kicl-layout--inline-size: max-content;
-
-    inset-block-start: var(--kicl--components--dialog--close--inset-block-start);
-    inset-inline-end: var(--kicl--components--dialog--close--inset-inline-end);
-    position: sticky;
-    z-index: 999;
-  }
-
-  &--is-full-screen {
-    --kicl--components--dialog--min-block-size: 100dvh;
-  }
-
-  &--is-modal:not(&--is-full-screen) {
-    --kicl--components--dialog--min-block-size: 60dvh;
-  }
-
-  &--modal-wrapper {
-    inline-size: 100%;
-    position: relative;
-    z-index: 1000;
-
-    > button {
-      --kicl--components--animation--style--fade--opacity: 0;
-
-      block-size: 100dvh;
-      color: transparent;
-      cursor: default;
-      inline-size: 100dvw;
-      inset-block-start: 0;
-      inset-inline-start: 0;
-      position: fixed;
-      z-index: 0;
-    }
   }
 
   &--is-dense {
-    --kicl--components--dialog--close--inset-block-start: var(--kicl-gutter);
-    --kicl--components--dialog--close--inset-inline-end: var(--kicl-gutter);
+    --kicl--components--dialog--padding-block: var(--kicl-gutter-narrow);
+    --kicl--components--dialog--padding-inline: var(--kicl-gutter-narrow);
+  }
+
+  &--is-full-screen {
+    --kicl--components--dialog--border-radius: 0;
+    --kicl--components--dialog--inline-size: 100dvi;
+    --kicl--components--dialog--max-inline-size: 100dvi;
     --kicl--components--dialog--padding-block: 0;
     --kicl--components--dialog--padding-inline: 0;
-    --kicl--components--dialog--section--padding-block-end: 0;
-    --kicl--components--dialog--section--padding-block-start: 0;
-    --kicl--components--dialog--section--padding-inline-end: 0;
-    --kicl--components--dialog--section--padding-inline-start: 0;
+    --kicl--components--dialog--offset: 0px;
+  }
+
+  &--is-full-screen &--close {
+    --kicl--components--dialog--padding-block: var(--kicl-gutter);
+
+    position: fixed;
+    inset-inline-end: var(--kicl--components--dialog--padding-block);
+    margin-block-end: calc(-1 * var(--kicl--components--dialog--padding-block));
+  }
+
+  min-block-size: 100dvb;
+  inline-size: 100dvi;
+  margin: auto;
+  max-inline-size: 100dvi;
+  overscroll-behavior: contain;
+
+  /*
+   * Held in the top layer while it leaves.
+   *
+   * `display` and `overlay` are discrete properties — they would otherwise
+   * switch on the first frame of the exit and there would be nothing left to
+   * animate. `allow-discrete` defers both until the transition finishes, which
+   * is what lets the panel inside fade and slide out rather than vanish.
+   */
+  transition:
+    display var(--kicl-transition-duration-fast) allow-discrete,
+    overlay var(--kicl-transition-duration-fast) allow-discrete;
+
+  /*
+   * On a phone the panel is a sheet: measured against the *small* viewport, so
+   * the address bar retracting cannot resize it mid-scroll, and pinned to the
+   * foot with the offset left clear at the top.
+   */
+  @include query('≤mobile') {
+    min-block-size: 100svb;
 
     > section {
-      inset-block-start: calc(-1 * var(--kicl-font-size-medium));
+      border-end-end-radius: 0;
+      border-end-start-radius: 0;
+      margin-block: auto 0;
+      min-block-size: calc(100svb - var(--kicl--components--dialog--offset));
     }
   }
 
-  &--is-modal {
-    margin: auto;
+  > section {
+    background-color: var(--kicl--components--dialog--background-color);
+    border-radius: var(--kicl--components--dialog--border-radius);
+    inline-size: var(--kicl--components--dialog--inline-size);
+    margin-inline: auto;
+    margin-block: var(--kicl--components--dialog--offset);
+    max-inline-size: var(--kicl--components--dialog--max-inline-size);
+    padding-block: var(--kicl--components--dialog--padding-block);
+    padding-inline: var(--kicl--components--dialog--padding-inline);
+    position: relative;
+
+    /* The state it arrives from, and returns to. */
+    opacity: 0;
+    transition:
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast);
+    translate: 0 var(--kicl-gutter-wide);
   }
 
-  &:not(.kicl--components--animation--exit-active) {
-    &::backdrop {
-      --kicl--components--dialog--backdrop--backdrop-filter--brightness: 45%;
-      --kicl--components--dialog--backdrop--backdrop-filter--blur: var(--kicl-size-half);
+  /*
+   * `@starting-style` is needed as well as the base rule above: the dialog is
+   * `display: none` until it opens, and an element appearing has no previous
+   * state to transition from unless one is named here.
+   */
+  &[open] > section {
+    opacity: 1;
+    translate: 0 0;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 var(--kicl-gutter-wide);
+    }
+  }
+
+  &::backdrop {
+    @at-root .kicl--theme--dark & {
+      --kicl--components--dialog--backdrop--background-color: #{rgba(
+        $black-pure,
+        0.5
+      )};
+    }
+
+    @at-root .kicl--theme--light & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
         $white-pure,
         0.7
       )};
-      --kicl--components--dialog--backdrop--opacity: 1;
-
-      @at-root .kicl--theme--dark & {
-        --kicl--components--dialog--backdrop--background-color: #{rgba(
-          $black-pure,
-          0.5
-        )};
-      }
-
-      @at-root .kicl--theme--light & {
-        --kicl--components--dialog--backdrop--background-color: #{rgba(
-          $white-pure,
-          0.7
-        )};
-      }
     }
+
+    backdrop-filter: brightness(
+      var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
+    )
+      blur(var(--kicl--components--dialog--backdrop--backdrop-filter--blur));
+    background-color: rgb(
+      from var(--kicl--components--dialog--backdrop--background-color) r g b /
+      var(--kicl--components--dialog--backdrop--opacity)
+    );
+    pointer-events: none;
   }
 
-  &:not(&--is-modal, &--is-full-screen) {
-    --kicl--components--dialog--min-block-size: 0;
-  }
-
-  &:not(&--is-full-screen) {
-    --kicl--components--dialog--border-radius: var(--kicl-size-half);
-    --kicl--components--dialog--inline-size: 40rem;
-    --kicl--components--dialog--max-block-size: calc(100dvh - (var(--kicl-gutter-wide) * 2));
-    --kicl--components--dialog--max-inline-size: calc(100dvw - (var(--kicl-gutter-wide) * 2));
-
-    @include drop-shadow-center;
-
-    @include mobile {
-      --kicl--components--dialog--max-block-size: calc(100dvh - (var(--kicl-gutter-widest) * 2));
-      --kicl--components--dialog--max-inline-size: calc(100dvw - (var(--kicl-gutter-widest) * 2));
-    }
-  }
-
-  &:not(&--is-dense) {
-    inset-block-start: var(--kicl--components--dialog--section--padding-block-start);
-  }
-
-  &:not(&--is-modal) {
-    --kicl--components--dialog--inline-size: 100%;
-    --kicl--components--dialog--max-inline-size: unset;
-
-    position: absolute;
-    z-index: 1;
-  }
-
-  @at-root body:has(&--is-modal[open]) {
-    overflow: hidden;
+  &--close {
+    position: sticky;
+    inset-block-start: var(--kicl--components--dialog--padding-block);
+    margin-block-end: var(--kicl--components--dialog--padding-block);
+    margin-inline-start: auto;
   }
 }

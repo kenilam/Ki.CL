@@ -148,7 +148,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
           {WEEKDAYS.map((day) => (
             <div
               key={day}
-              className={`${CLASS_NAME}__weekday kicl-font-size-smallest`}
+              className={`${CLASS_NAME}__weekday kicl-font-size-small`}
             >
               {day}
             </div>

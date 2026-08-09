@@ -408,7 +408,7 @@ const PILL_CLASS = [
   `${CLASS_ROOT}__label`,
   'kicl-position-absolute',
   'kicl-pointer-events-auto',
-  'kicl-font-size-smaller',
+  'kicl-font-size-small',
 ].join(' ');
 
 /**

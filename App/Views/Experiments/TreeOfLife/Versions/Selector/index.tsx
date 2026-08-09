@@ -68,11 +68,15 @@ const Selector: React.FunctionComponent = () => {
             title='Show the earlier versions of this view'
           >
             <Ri.RiStackLine aria-hidden />
+            {/*
+              One string, not a number beside a word. Split across two spans it
+              read "14 version", which scans as a count of versions rather than
+              as the name of this one — and the two orders do not agree, since
+              the unversioned fallback reads "final version" and never
+              "version final".
+            */}
             <Text is='span' dense unstyled className='kicl-font-size-small'>
-              {version}
-            </Text>
-            <Text is='span' dense unstyled className='kicl-font-size-small'>
-              version
+              {version === LIVE ? 'Final version' : `Version ${version}`}
             </Text>
           </Button>
         </div>
@@ -83,7 +87,7 @@ const Selector: React.FunctionComponent = () => {
         id={CLASS_NAME}
         popover='auto'
       >
-        <Card>
+        <Card variant='ghost'>
           <Layout
             autoFlow='row'
             justifyContent='stretch'

@@ -42,7 +42,12 @@ const Mobile: React.FunctionComponent = () => {
 
   const hasNavigation = params.get('globalNavigation') === TICK;
 
-  const onExited = () => {
+  /*
+   * The dialog's own close event, rather than a wrapper's. It fires whether the
+   * dialog was dismissed by Escape, by the backdrop or by the close control, so
+   * one handler covers every way out.
+   */
+  const onClose = () => {
     const url = new URL(location.pathname, window.location.origin);
     params.delete('globalNavigation');
 
@@ -74,7 +79,7 @@ const Mobile: React.FunctionComponent = () => {
   return (
     <>
       {Toggle}
-      <Dialog onExited={onExited} open={hasNavigation}>
+      <Dialog onClose={onClose} open={hasNavigation}>
         <Layout justifyItems='start' gap='widest'>
           <section className={CLASS_NAME}>
             <Navigation

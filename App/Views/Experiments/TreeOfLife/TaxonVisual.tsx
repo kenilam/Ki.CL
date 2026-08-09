@@ -30,23 +30,20 @@ const DEBOUNCE_MS = 500;
  * refresh that could never succeed — the same mistake as retrying a spent
  * account every thirty minutes, made in the copy instead of the code.
  */
-const EXHAUSTED_REFILLS =
-  'Illustration providers are out of quota — this usually clears within a day.';
+const EXHAUSTED_REFILLS = 'Out of drawing quota until tomorrow.';
 
 const EXHAUSTED_BILLING =
-  'Illustration providers are out of credit — this needs a top-up rather than ' +
-  'a retry.';
+  'Out of drawing credit. This one needs paying for, not waiting out.';
 
-const ERROR_MESSAGE = 'Could not generate an illustration right now.';
+const ERROR_MESSAGE = 'The drawing step failed. Reload to try again.';
 
-const DISCLAIMER_DEFAULT =
-  'AI-generated plate — may not accurately represent this taxon.';
+const DISCLAIMER_DEFAULT = 'Drawn from a description, not photographed.';
 
-const DISCLAIMER_PASS =
-  'AI-generated plate — illustrative, not a specimen photo.';
+const DISCLAIMER_PASS = 'Drawn from a description, not photographed.';
 
 const DISCLAIMER_FAIL =
-  'AI-generated plate — weak match; may not represent this taxon.';
+  'Drawn from a description. The reviewer was not convinced this is the right ' +
+  'organism.';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v14';
 
@@ -205,8 +202,8 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <Status
         in
         level='info'
-        title='Illustration'
-        message='Select a named taxon with an OTT ID to generate a visual.'
+        title='Plate'
+        message='Pick a named taxon and one will be drawn for it.'
         align='start'
         animationStyle='fade'
       />
@@ -243,7 +240,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <Status
         in
         level='warning'
-        title='Oops!'
+        title='No plate'
         message={
           status === 'EXHAUSTED'
             ? // Absent on an older payload, where waiting was the safe reading.
@@ -251,7 +248,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
               ? EXHAUSTED_BILLING
               : EXHAUSTED_REFILLS
             : error
-              ? 'Could not load visual.'
+              ? 'The plate would not load.'
               : ERROR_MESSAGE
         }
         align='start'
@@ -269,7 +266,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
             className={`${CLASS_NAME}__taxon-plate-skeleton`}
           />
           <Text is='span' className='kicl-font-size-small kicl-color-grey-dark'>
-            Generating illustration…
+            Drawing this one — it takes about a minute.
           </Text>
         </div>
       </Layout>
@@ -281,7 +278,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <Status
         in
         level='warning'
-        title='Oops!'
+        title='No plate'
         message={ERROR_MESSAGE}
         align='start'
         animationStyle='fade'
@@ -294,7 +291,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <div>
         <Image
           data={imageUrl}
-          alt={`AI-generated illustration of ${name || 'this taxon'}`}
+          alt={`Plate of ${name || 'this taxon'}, drawn from a description`}
           className={`${CLASS_NAME}__taxon-plate`}
         />
         <Text
