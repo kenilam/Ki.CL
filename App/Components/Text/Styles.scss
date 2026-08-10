@@ -2,9 +2,13 @@
   --kicl--components--text--font-size: inherit;
   --kicl--components--text--padding-block-end: 0;
   --kicl--components--text--padding-block-start: 0;
-  --kicl--components--text--transition-duration: var(--kicl-transition-duration);
+  --kicl--components--text--transition-duration: var(
+    --kicl-transition-duration
+  );
   --kicl--components--text--transition-property: color, font-size;
-  --kicl--components--text--transition-timing-function: var(--kicl-ease-quint-in-out);
+  --kicl--components--text--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
 }
 
 .kicl--components--text {
@@ -14,10 +18,8 @@
   font-size: var(--kicl--components--text--font-size);
   padding-block-end: var(--kicl--components--text--padding-block-end);
   padding-block-start: var(--kicl--components--text--padding-block-start);
-  transition-duration: var(--kicl--components--text--transition-duration);
-  transition-property: var(--kicl--components--text--transition-property);
-  transition-timing-function: var(--kicl--components--text--transition-timing-function);
-  will-change: var(--kicl--components--text--transition-property);
+
+  @include transition('kicl--components--text');
 
   & + &:not(&--is-dense, span:not(&)) {
     --kicl--components--text--padding-block-start: var(--kicl-gutter);
@@ -45,11 +47,15 @@
   // Keep roman (not italic): italic is reserved for `q` / `cite`.
   &[data-is='blockquote'],
   &.kicl-look-like-blockquote {
-    --kicl--components--text--border-inline-start-color: var(--kicl-color-grey-light);
+    --kicl--components--text--border-inline-start-color: var(
+      --kicl-color-grey-light
+    );
     --kicl--components--text--border-inline-start-width: var(--kicl-size-1px);
     --kicl--components--text--padding-inline-start: var(--kicl-gutter);
 
-    border-inline-start: var(--kicl--components--text--border-inline-start-width)
+    border-inline-start: var(
+      --kicl--components--text--border-inline-start-width
+    )
       solid var(--kicl--components--text--border-inline-start-color);
     display: block;
     margin-block: 0;

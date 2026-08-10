@@ -36,7 +36,7 @@
     gap: var(--kicl-gutter-wide);
     grid-auto-flow: column;
     max-inline-size: unset;
-    will-change: transform;
+    will-change: translate;
 
     + #{&} {
       padding-block-start: 0;

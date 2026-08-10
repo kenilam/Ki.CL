@@ -26,12 +26,8 @@
   outline-style: var(--kicl-outline-style);
   outline-width: var(--kicl-outline-width);
   text-decoration: none;
-  transition-duration: var(--kicl--components--hyper-link--transition-duration);
-  transition-property: var(--kicl--components--hyper-link--transition-property);
-  transition-timing-function: var(
-    --kicl--components--hyper-link--transition-timing-function
-  );
-  will-change: var(--kicl--components--hyper-link--transition-property);
+
+  @include transition('kicl--components--hyper-link');
 
   &--look-like-button {
     display: inline-grid;

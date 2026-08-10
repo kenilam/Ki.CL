@@ -1,4 +1,8 @@
 .kicl--components--animation--property--blur {
+  --kicl--components--animation--property--blur--radius: var(
+    --kicl-gutter-narrow
+  );
+  --kicl--components--animation--property--blur--opacity: 0;
   --kicl--components--animation--transition-property: filter, opacity;
 
   filter: blur(0);
@@ -8,15 +12,18 @@
    * Where an entering element starts. The browser reads this only for the
    * first style change after the element renders — or after it comes back
    * from `display: none` — and transitions away from it.
+   *
+   * Both states use the same values, so overriding the variables above moves
+   * the entrance and the exit together.
    */
   @starting-style {
-    filter: blur(var(--kicl-gutter-narrow));
-    opacity: 0;
+    filter: blur(var(--kicl--components--animation--property--blur--radius));
+    opacity: var(--kicl--components--animation--property--blur--opacity);
   }
 
   /* Where a leaving element ends, held until the transition finishes. */
   &:not([data-animation-in]) {
-    filter: blur(var(--kicl-gutter-narrow));
-    opacity: 0;
+    filter: blur(var(--kicl--components--animation--property--blur--radius));
+    opacity: var(--kicl--components--animation--property--blur--opacity);
   }
 }

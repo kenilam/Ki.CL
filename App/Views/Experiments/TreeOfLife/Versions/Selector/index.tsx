@@ -55,8 +55,14 @@ const Selector: React.FunctionComponent = () => {
         {/*
           One element, because `Layout` clones its only child rather than
           wrapping it — handed two, it throws and takes the view down with it.
+
+          A plain box, not a `nav`: the only thing here is the button that
+          opens the dialog, and the links themselves live in that dialog, which
+          has its own `nav`. A landmark around a single button announces
+          "navigation, 1 item" and points at the trigger rather than at
+          anywhere to go.
         */}
-        <nav>
+        <div>
           <Button
             unstyled
             type='button'
@@ -79,7 +85,7 @@ const Selector: React.FunctionComponent = () => {
               {version === LIVE ? 'Final version' : `Version ${version}`}
             </Text>
           </Button>
-        </nav>
+        </div>
       </Layout>
 
       <dialog

@@ -1,16 +1,17 @@
-.kicl--components--list-item {
-  --kicl--components--list-item--transition-duration: var(
-    --kicl-transition-duration
-  );
-  --kicl--components--list-item--transition-property: color, font-size;
-  --kicl--components--list-item--transition-timing-function: var(
-    --kicl-ease-quint-in-out
-  );
-
-  transition-duration: var(--kicl--components--list-item--transition-duration);
-  transition-property: var(--kicl--components--list-item--transition-property);
-  transition-timing-function: var(
-    --kicl--components--list-item--transition-timing-function
-  );
-  will-change: var(--kicl--components--list-item--transition-property);
-}
+/*
+ * Deliberately empty.
+ *
+ * This used to transition `color` and `font-size`, neither of which anything
+ * changes on the list item — nothing else in the app so much as selects this
+ * class. The element that does change them is the link inside, and
+ * `HyperLink` already transitions both.
+ *
+ * It was not merely idle. A list item is often wrapped in `Animation`, which
+ * puts its classes on this same element, and `transition-property` cannot be
+ * shared: whichever rule won replaced the other's list outright. So a
+ * declaration that did nothing here was silently cancelling the fade or slide
+ * the animation was added for.
+ *
+ * Layout, spacing and colour all come from `Layout`, the utilities and the
+ * child link, so there is nothing left for this component to style.
+ */

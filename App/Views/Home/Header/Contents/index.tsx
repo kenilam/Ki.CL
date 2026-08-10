@@ -17,16 +17,17 @@ const Contents: React.FunctionComponent = () => {
       </Heading>
       <AnimatedText
         delay={1000}
-        duration='fastest'
+        duration='slower'
+        easing='ease-sine-in'
         property='slide-from-bottom'
         className='kicl-font-size-large'
-        stagger={0}
       >
         Glad you stopped by.
       </AnimatedText>
       <AnimatedText
         delay={1600}
-        duration='fastest'
+        duration='slower'
+        easing='ease-sine-in'
         property='slide-from-top'
         lookLike='h3'
         variant='secondary'
@@ -35,8 +36,8 @@ const Contents: React.FunctionComponent = () => {
       </AnimatedText>
       <AnimatedText
         delay={2000}
-        duration='fastest'
-        easing='ease-quint-in-out'
+        duration='slower'
+        easing='ease-sine-in'
         property='slide-from-bottom'
         dense
       >

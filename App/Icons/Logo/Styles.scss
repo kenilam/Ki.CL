@@ -4,7 +4,9 @@
   --kicl--icons--logo--font-size-aspect-ratio: 1;
   --kicl--icons--logo--padding: var(--kicl-gutter-narrower);
   --kicl--icons--logo--transition-duration: var(--kicl-transition-duration);
-  --kicl--icons--logo--transition-timing-function: var(--kicl-ease-quint-in-out);
+  --kicl--icons--logo--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
   --kicl--icons--logo--transition-property: color, background-color, block-size, fill;
 }
 
@@ -15,10 +17,8 @@
   background: var(--kicl--icons--logo--background);
   color: var(--kicl--icons--logo--color);
   fill: var(--kicl--icons--logo--fill);
-  transition-duration: var(--kicl--icons--logo--transition-duration);
-  transition-property: var(--kicl--icons--logo--transition-property);
-  transition-timing-function: var(--kicl--icons--logo--transition-timing-function);
-  will-change: var(--kicl--icons--logo--transition-property);
+
+  @include transition('kicl--icons--logo');
 
   &:not(.kicl-layout--inline) {
     padding: var(--kicl--icons--logo--padding);
