@@ -1,7 +1,17 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" href="Assets/favicon.png" />
+    <!--
+      The wordmark's first two glyphs, as geometry rather than a raster, so the
+      fill can follow the browser's colour scheme. Stays in the repository
+      because it is markup, not binary, and because the browser asks for it
+      before anything else has loaded.
+
+      The previous href pointed at `Assets/favicon.png`, which has never
+      existed in this repository — the site has been running without an icon.
+    -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="author" content="Keni, Lam" />
