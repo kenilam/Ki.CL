@@ -19,7 +19,7 @@ import { federation } from '@module-federation/vite';
 
 import * as dotenv from 'dotenv';
 
-import { getAlias } from './Helper';
+import { getAlias, getStyleLayer, LAYER_ORDER } from './Helper';
 
 import configJSON from '../app.config.json';
 import tsconfigJSON from '../tsconfig.json';
@@ -288,7 +288,25 @@ const getConfig = ({
                 return source;
               }
 
-              const content = `@use 'sass:color';@use 'sass:list';@use 'sass:math';${imports.scss.join(' ')}${source}`;
+              const prelude = `@use 'sass:color';@use 'sass:list';@use 'sass:math';${imports.scss.join(' ')}`;
+
+              /*
+               * Partials come back null — they define mixins and functions
+               * rather than rules, and a `@layer` block would scope those
+               * away from the files that `@use` them.
+               */
+              const layer = getStyleLayer(filename);
+
+              if (!layer) {
+                return `${prelude}${source}`;
+              }
+
+              /*
+               * The `@use` prelude has to stay first — Sass rejects it after
+               * any other rule — but it compiles to nothing, so the emitted
+               * CSS still opens with the layer order statement.
+               */
+              const content = `${prelude}${LAYER_ORDER}@layer ${layer} {${source}}`;
 
               return content;
             },

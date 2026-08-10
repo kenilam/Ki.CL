@@ -1,0 +1,19 @@
+/*
+ * Vendor resets, pulled in here rather than imported from `index.ts` directly
+ * so they can be placed in a cascade layer.
+ *
+ * Unlayered rules beat every layered one, so leaving these as bare JS imports
+ * would put `normalize.css` and `reset-css` *above* the whole design system
+ * the moment anything else moved into a layer.
+ *
+ * Plain CSS, not SCSS, because `@import ... layer()` is what carries the
+ * layer through `postcss-import` — Sass would pass the rule along untouched
+ * and the nested result would not be valid.
+ *
+ * The order below must match `LAYERS` in `App/.Client/Helper/getStyleLayer.ts`,
+ * which prepends the same statement to every SCSS file.
+ */
+@layer reset, base, layout, components, views, utilities;
+
+@import url('normalize.css') layer(reset);
+@import url('reset-css/reset.css') layer(reset);
