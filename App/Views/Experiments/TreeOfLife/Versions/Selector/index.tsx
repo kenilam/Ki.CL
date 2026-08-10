@@ -56,7 +56,7 @@ const Selector: React.FunctionComponent = () => {
           One element, because `Layout` clones its only child rather than
           wrapping it — handed two, it throws and takes the view down with it.
         */}
-        <div>
+        <nav>
           <Button
             unstyled
             type='button'
@@ -79,7 +79,7 @@ const Selector: React.FunctionComponent = () => {
               {version === LIVE ? 'Final version' : `Version ${version}`}
             </Text>
           </Button>
-        </div>
+        </nav>
       </Layout>
 
       <dialog

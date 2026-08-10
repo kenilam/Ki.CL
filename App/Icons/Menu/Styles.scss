@@ -6,8 +6,7 @@
   --kicl--icons--menu--transition-timing-function: var(
     --kicl-ease-quint-in-out
   );
-  --kicl--icons--menu--transition-property: block-size, fill, inline-size,
-    transform;
+  --kicl--icons--menu--transition-property: block-size, fill, inline-size, transform;
   --kicl--icons--menu--rect--inline-size--spaces: var(--kicl-size-2x);
   --kicl--icons--menu--cross--transform--rotate: 45deg;
   --kicl--icons--menu--lines--transform--translateY: var(--kicl-size-4x);
@@ -60,51 +59,36 @@
 
   [data-parts='cross'] {
     g {
-      transform: rotate(var(--kicl--icons--menu--cross--transform--rotate));
+      rotate: var(--kicl--icons--menu--cross--transform--rotate);
       transform-origin: center;
     }
 
     g + g {
-      transform: rotate(
-        calc(-1 * var(--kicl--icons--menu--cross--transform--rotate))
-      );
+      rotate: calc(-1 * var(--kicl--icons--menu--cross--transform--rotate));
     }
 
     rect {
       inline-size: calc(
         100% - var(--kicl--icons--menu--rect--inline-size--spaces) * 2
       );
-      transform: translate3d(
-        calc(var(--kicl--icons--menu--rect--inline-size--spaces) * 1),
-        calc(50% - var(--kicl--icons--menu--block-size) / 111),
-        0
-      );
+      translate: calc(var(--kicl--icons--menu--rect--inline-size--spaces) * 1)
+        calc(50% - var(--kicl--icons--menu--block-size) / 111);
     }
   }
 
   [data-parts='lines'] {
     rect {
-      transform: translate3d(
-        var(--kicl--icons--menu--rect--inline-size--spaces),
-        var(--kicl--icons--menu--lines--transform--translateY),
-        0
-      );
+      translate: var(--kicl--icons--menu--rect--inline-size--spaces)
+        var(--kicl--icons--menu--lines--transform--translateY);
     }
 
     rect + rect {
-      transform: translate3d(
-        var(--kicl--icons--menu--rect--inline-size--spaces),
-        50%,
-        0
-      );
+      translate: var(--kicl--icons--menu--rect--inline-size--spaces) 50%;
     }
 
     rect:last-child {
-      transform: translate3d(
-        var(--kicl--icons--menu--rect--inline-size--spaces),
-        calc(100% - var(--kicl--icons--menu--lines--transform--translateY)),
-        0
-      );
+      translate: var(--kicl--icons--menu--rect--inline-size--spaces)
+        calc(100% - var(--kicl--icons--menu--lines--transform--translateY));
     }
   }
 

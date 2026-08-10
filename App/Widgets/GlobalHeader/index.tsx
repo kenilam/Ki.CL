@@ -64,7 +64,7 @@ const GlobalHeader: React.FunctionComponent = () => {
         </style>,
         window.document.body
       )}
-      <Animation animationStyle='slide-from-top' in={show}>
+      <Animation property='slide-from-top' in={show}>
         <Contents />
       </Animation>
     </>

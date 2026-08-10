@@ -1,9 +1,13 @@
 :root {
   --kicl--components--spinner--animation-delay: 0s;
-  --kicl--components--spinner--animation-duration: var(--kicl-transition-duration-slowest);
+  --kicl--components--spinner--animation-duration: var(
+    --kicl-transition-duration-slowest
+  );
   --kicl--components--spinner--animation-iteration-count: infinite;
   --kicl--components--spinner--animation-name: kicl--components--spinner;
-  --kicl--components--spinner--animation-timing-function: var(--kicl-ease-expo-out);
+  --kicl--components--spinner--animation-timing-function: var(
+    --kicl-ease-expo-out
+  );
   --kicl--components--spinner--backdrop-filter: none;
   --kicl--components--spinner--background-color: transparent;
   --kicl--components--spinner--position: relative;
@@ -28,9 +32,13 @@
   &--icon {
     animation-delay: var(--kicl--components--spinner--animation-delay);
     animation-duration: var(--kicl--components--spinner--animation-duration);
-    animation-iteration-count: var(--kicl--components--spinner--animation-iteration-count);
+    animation-iteration-count: var(
+      --kicl--components--spinner--animation-iteration-count
+    );
     animation-name: var(--kicl--components--spinner--animation-name);
-    animation-timing-function: var(--kicl--components--spinner--animation-timing-function);
+    animation-timing-function: var(
+      --kicl--components--spinner--animation-timing-function
+    );
     block-size: var(--kicl--components--spinner--svg--block-size);
     inline-size: var(--kicl--components--spinner--svg--inline-size);
   }
@@ -90,6 +98,6 @@
 
 @keyframes kicl--components--spinner {
   to {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
 }

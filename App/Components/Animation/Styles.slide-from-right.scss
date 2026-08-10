@@ -1,41 +1,22 @@
-.kicl--components--animation--style--slide-from-right {
-  --kicl--components--animation--transition-property: opacity, transform;
-  --kicl--components--animation--style--slide-from-right--transform--opacity: 1;
-  --kicl--components--animation--style--slide-from-right--transform--translate-x: 0;
-  --kicl--components--animation--style--slide-from-right--transform--translate-y: 0;
+.kicl--components--animation--property--slide-from-right {
+  --kicl--components--animation--transition-property: opacity, translate;
 
-  opacity: var(
-    --kicl--components--animation--style--slide-from-right--transform--opacity
-  );
-  transform: translate3d(
-    var(
-      --kicl--components--animation--style--slide-from-right--transform--translate-x
-    ),
-    var(
-      --kicl--components--animation--style--slide-from-right--transform--translate-y
-    ),
-    0
-  );
+  opacity: 1;
+  translate: 0;
 
-  &.kicl--components--animation--appear:not(
-    .kicl--components--animation--appear-active
-  ),
-    &.kicl--components--animation--enter:not(
-    .kicl--components--animation--enter-active
-  ) {
-    --kicl--components--animation--style--slide-from-right--transform--opacity: 0;
-    --kicl--components--animation--style--slide-from-right--transform--translate-x: min(
-      var(--kicl-size-2x),
-      10%
-    );
+  /*
+   * Where an entering element starts. The browser reads this only for the
+   * first style change after the element renders — or after it comes back
+   * from `display: none` — and transitions away from it.
+   */
+  @starting-style {
+    opacity: 0;
+    translate: min(var(--kicl-size-2x), 10%);
   }
 
-  &.kicl--components--animation--exit-active,
-  &.kicl--components--animation--exit-done {
-    --kicl--components--animation--style--slide-from-right--transform--opacity: 0;
-    --kicl--components--animation--style--slide-from-right--transform--translate-x: min(
-      var(--kicl-size-2x),
-      10%
-    );
+  /* Where a leaving element ends, held until the transition finishes. */
+  &:not([data-animation-in]) {
+    opacity: 0;
+    translate: min(var(--kicl-size-2x), 10%);
   }
 }

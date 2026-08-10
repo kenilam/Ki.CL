@@ -10,7 +10,7 @@
   --kicl--widgets--global-header--inline-size: 100vw;
   --kicl--widgets--global-header--bleed: calc(
     var(--kicl--widgets--global-header--block-size) +
-    (var(--kicl--widgets--global-header--top) * 2)
+      (var(--kicl--widgets--global-header--top) * 2)
   );
 
   @include tablet {
@@ -22,7 +22,12 @@
 }
 
 .kicl--widgets--global-header {
-  --kicl--components--animation--style--slide-from-top--transform--translate-x: -50%;
+  /*
+   * Its own name now. This used to borrow a variable from the Animation
+   * component's slide style, which was never that component's to lend and no
+   * longer exists — the styles there set `translate` directly.
+   */
+  --kicl--widgets--global-header--translate-x: -50%;
   --kicl--components--hyper-link--text-color: var(--kicl-body-color);
 
   backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
@@ -37,13 +42,7 @@
   z-index: 100001;
 
   &:not(.kicl--components--animation) {
-    transform: translate3d(
-      var(
-        --kicl--components--animation--style--slide-from-top--transform--translate-x
-      ),
-      0,
-      0
-    );
+    translate: var(--kicl--widgets--global-header--translate-x);
     transition-duration: var(--kicl-transition-duration-fast);
     transition-property: background-color, padding;
     transition-timing-function: var(
@@ -55,7 +54,12 @@
     --kicl--widgets--global-header--transition-delay: 0s;
   }
 
-  &:has(~ menu.kicl--components--animation--enter) {
+  /*
+   * Was `.kicl--components--animation--enter`, a class react-transition-group
+   * added for the entering phase only. The platform has no selector for "mid
+   * transition", so this now matches the whole time the menu is shown.
+   */
+  &:has(~ menu[data-animation-in]) {
     --kicl--widgets--global-header--transition-duration: 0s;
   }
 }

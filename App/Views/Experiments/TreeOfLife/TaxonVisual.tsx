@@ -205,7 +205,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
         title='Plate'
         message='Pick a named taxon and one will be drawn for it.'
         align='start'
-        animationStyle='fade'
+        property='fade'
       />
     );
   }
@@ -252,7 +252,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
               : ERROR_MESSAGE
         }
         align='start'
-        animationStyle='fade'
+        property='fade'
       />
     );
   }
@@ -281,7 +281,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
         title='No plate'
         message={ERROR_MESSAGE}
         align='start'
-        animationStyle='fade'
+        property='fade'
       />
     );
   }

@@ -16,28 +16,28 @@ const Contents: React.FunctionComponent = () => {
         </HyperLink>
       </Heading>
       <AnimatedText
-        animationDelay={1000}
-        animationDuration='fastest'
-        animationStyle='slide-from-bottom'
+        delay={1000}
+        duration='fastest'
+        property='slide-from-bottom'
         className='kicl-font-size-large'
         stagger={0}
       >
         Glad you stopped by.
       </AnimatedText>
       <AnimatedText
-        animationDelay={1600}
-        animationDuration='fastest'
-        animationStyle='slide-from-top'
+        delay={1600}
+        duration='fastest'
+        property='slide-from-top'
         lookLike='h3'
         variant='secondary'
       >
         The journey's just beginning. Thanks for being here early.
       </AnimatedText>
       <AnimatedText
-        animationDelay={2000}
-        animationDuration='fastest'
-        animationEasing='ease-quint-in-out'
-        animationStyle='slide-from-bottom'
+        delay={2000}
+        duration='fastest'
+        easing='ease-quint-in-out'
+        property='slide-from-bottom'
         dense
       >
         Please check back for an update soon.

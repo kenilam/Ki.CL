@@ -10,7 +10,7 @@ const CLASS_NAME = 'kicl--views--experiments';
 
 const Experiments: React.FunctionComponent = () => {
   return (
-    <Animation animationDelay={1000}>
+    <Animation delay={1000}>
       <Layout
         autoFlow='row'
         fullScreen

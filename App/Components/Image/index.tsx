@@ -80,8 +80,8 @@ const Image: React.FunctionComponent<Spec.Props> = ({
       />
       <Animation
         in={!loadingState && !!error}
-        animationDuration='faster'
-        animationStyle='blur'
+        duration='faster'
+        property='blur'
       >
         <Layout>
           <span className={`${CLASS_NAME}--error`} data-src={data}>
@@ -89,11 +89,7 @@ const Image: React.FunctionComponent<Spec.Props> = ({
           </span>
         </Layout>
       </Animation>
-      <Spinner
-        in={loadingState && !error}
-        animationDuration='faster'
-        size='smaller'
-      />
+      <Spinner in={loadingState && !error} duration='faster' size='smaller' />
     </object>
   );
 };

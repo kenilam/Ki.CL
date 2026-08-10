@@ -13,7 +13,7 @@ const CLASS_NAME = 'kicl--views--home';
 
 const Home: React.FunctionComponent = () => {
   return (
-    <Animation animationDelay={300}>
+    <Animation delay={300}>
       <Layout
         autoFlow='row'
         gap='none'

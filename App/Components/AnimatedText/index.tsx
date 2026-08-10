@@ -10,10 +10,10 @@ import * as Spec from './Spec';
 const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
   (
     {
-      animationDelay = 0,
-      animationDuration = 'fastest',
-      animationEasing,
-      animationStyle = 'slide-from-top',
+      delay = 0,
+      duration = 'fastest',
+      easing,
+      property = 'slide-from-top',
       children,
       stagger = 10,
       ...props
@@ -38,10 +38,10 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
 
           return (
             <Animation
-              animationDelay={animationDelay + stagger * index}
-              animationDuration={animationDuration}
-              animationEasing={animationEasing}
-              animationStyle={animationStyle}
+              delay={delay + stagger * index}
+              duration={duration}
+              easing={easing}
+              property={property}
               key={key}
             >
               <Text is='span' unstyled>

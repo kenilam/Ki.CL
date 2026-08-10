@@ -82,42 +82,44 @@
   @keyframes kicl--views--experiments--tree-of-life--v14--pulse-ripple {
     0% {
       opacity: 0.65;
-      transform: scale(0.7);
+      scale: 0.7;
     }
 
     100% {
       opacity: 0;
-      transform: scale(1.45);
+      scale: 1.45;
     }
   }
 
   @keyframes kicl--views--experiments--tree-of-life--v14--diamond-rock {
     0% {
-      transform: rotate(-12deg) scale(0.88);
+      rotate: -12deg;
+      scale: 0.88;
     }
 
     100% {
-      transform: rotate(12deg) scale(1.12);
+      rotate: 12deg;
+      scale: 1.12;
     }
   }
 
   @keyframes kicl--views--experiments--tree-of-life--v14--square-breathe {
     0% {
-      transform: scale(0.82);
+      scale: 0.82;
     }
 
     100% {
-      transform: scale(1.14);
+      scale: 1.14;
     }
   }
 
   @keyframes kicl--views--experiments--tree-of-life--v14--tip-breathe {
     0% {
-      transform: scale(0.85);
+      scale: 0.85;
     }
 
     100% {
-      transform: scale(1.15);
+      scale: 1.15;
     }
   }
 
