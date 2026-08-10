@@ -37,8 +37,11 @@ const API_REMOTE_ENTRY =
 /*
  * Kept in step with `App/.Server/Proxy` — the two run the same site and have
  * to agree on which paths belong to the API.
+ *
+ * These are URL segments, not bucket names: the API maps each to a bucket, so
+ * `static` can be served from a bucket called something else entirely.
  */
-const ASSET_BUCKET = process.env.KICL_STORAGE_BUCKET_ID || 'taxon-visual';
+const ASSET_SEGMENTS = ['taxon-visual', 'static'];
 
 const imports = {
   scss: glob
@@ -106,20 +109,26 @@ const getConfig = ({
         secure: false,
       },
       /*
-       * Narrowed to the bucket segment rather than all of `/assets`, because
-       * a production build emits the site's own bundles there too. Forwarding
-       * the whole prefix sent the application's JavaScript to an API that has
-       * never heard of it, so `vite preview` served a blank page and 404'd its
-       * own bootstrap — the same trap `App/.Server/Proxy` already sprang.
+       * Narrowed to the individual segments rather than all of `/assets`,
+       * because a production build emits the site's own bundles there too.
+       * Forwarding the whole prefix sent the application's JavaScript to an
+       * API that has never heard of it, so `vite preview` served a blank page
+       * and 404'd its own bootstrap — the same trap `App/.Server/Proxy`
+       * already sprang.
        *
        * The prefix itself cannot move: image URLs are stored in the database
        * as `/assets/taxon-visual/*`.
        */
-      [`/assets/${ASSET_BUCKET}`]: {
-        target: BACKEND_URL,
-        changeOrigin: true,
-        secure: false,
-      },
+      ...Object.fromEntries(
+        ASSET_SEGMENTS.map((segment) => [
+          `/assets/${segment}`,
+          {
+            target: BACKEND_URL,
+            changeOrigin: true,
+            secure: false,
+          },
+        ])
+      ),
     };
 
     const plugins: UserConfig['plugins'] = [
