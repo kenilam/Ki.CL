@@ -34,6 +34,12 @@ const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 const API_REMOTE_ENTRY =
   process.env.KICL_API_REMOTE_ENTRY || '/client/remoteEntry.js';
 
+/*
+ * Kept in step with `App/.Server/Proxy` — the two run the same site and have
+ * to agree on which paths belong to the API.
+ */
+const ASSET_BUCKET = process.env.KICL_STORAGE_BUCKET_ID || 'taxon-visual';
+
 const imports = {
   scss: glob
     .sync(`${appRoot.path}/App/**/_*.scss`.replace(/\\/g, '/'), {
@@ -99,7 +105,17 @@ const getConfig = ({
         changeOrigin: true,
         secure: false,
       },
-      '/assets': {
+      /*
+       * Narrowed to the bucket segment rather than all of `/assets`, because
+       * a production build emits the site's own bundles there too. Forwarding
+       * the whole prefix sent the application's JavaScript to an API that has
+       * never heard of it, so `vite preview` served a blank page and 404'd its
+       * own bootstrap — the same trap `App/.Server/Proxy` already sprang.
+       *
+       * The prefix itself cannot move: image URLs are stored in the database
+       * as `/assets/taxon-visual/*`.
+       */
+      [`/assets/${ASSET_BUCKET}`]: {
         target: BACKEND_URL,
         changeOrigin: true,
         secure: false,
