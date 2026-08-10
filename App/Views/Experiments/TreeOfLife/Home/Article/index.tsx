@@ -16,7 +16,19 @@ import './Styles.scss';
  */
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life';
-const IMAGES = '/images/tree-of-life';
+/*
+ * Served from the `static` bucket through the API's asset proxy rather than
+ * committed to this repository. The hash in each name is of the file's own
+ * bytes, so the year-long immutable cache the proxy sets can never hand back
+ * a stale picture — different bytes are a different URL.
+ *
+ * That does mean re-encoding an image is a two-step change: upload, then
+ * update the name here.
+ */
+const IMAGES = '/assets/static';
+const ORIGINAL_VISION = `${IMAGES}/original-vision.de49d11d.webp`;
+const PERROT_1854 = `${IMAGES}/perrot-1854.c015e664.webp`;
+const V14 = `${IMAGES}/v14.deebdc49.webp`;
 
 const Article: React.FunctionComponent = () => {
   return (
@@ -80,7 +92,7 @@ const Article: React.FunctionComponent = () => {
 
             <figure>
               <Image
-                data={`${IMAGES}/original-vision.webp`}
+                data={ORIGINAL_VISION}
                 alt='A printed tree of life poster: coloured branches radiating from “Origin of life” at the base, each tip ending in a painted organism.'
               />
               <figcaption>
@@ -122,7 +134,7 @@ const Article: React.FunctionComponent = () => {
 
           <figure>
             <Image
-              data={`${IMAGES}/v14.png`}
+              data={V14}
               alt='The v14 view: a wide, pale map of the tree with labelled nodes spread across the frame.'
             />
             <figcaption>
@@ -194,7 +206,7 @@ const Article: React.FunctionComponent = () => {
 
           <figure>
             <Image
-              data={`${IMAGES}/perrot-1854.jpg`}
+              data={PERROT_1854}
               alt='A hand-coloured 1854 natural-history plate by Perrot: animals arranged across a pale staged ground with fine engraved linework.'
             />
             <figcaption>
