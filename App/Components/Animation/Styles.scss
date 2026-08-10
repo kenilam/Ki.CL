@@ -16,7 +16,22 @@
   );
 }
 
-.kicl--components--animation {
+/*
+ * Matched twice rather than once so the selector carries two classes' worth of
+ * specificity.
+ *
+ * An animated element is usually also some other component, and that component
+ * may declare its own `transition-*`. Both sit in the `components` layer at one
+ * class each, so the winner came down to which stylesheet imported first — and
+ * the animation lost, silently, since `transition-property` replaces rather
+ * than merges. This settles it on specificity, which does not move.
+ *
+ * An element that needs to transition something of its own as well adds it to
+ * `--kicl--components--animation--transition-property`, the way the home view
+ * adds `background`. That belongs to whoever composed the two, not to either
+ * component: a shared component should not have to know it might be animated.
+ */
+.kicl--components--animation.kicl--components--animation {
   /*
    * `display` is in the list, and discrete properties are allowed to
    * transition, so the element stays displayed for the whole leaving

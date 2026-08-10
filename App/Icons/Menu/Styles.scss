@@ -6,7 +6,13 @@
   --kicl--icons--menu--transition-timing-function: var(
     --kicl-ease-quint-in-out
   );
-  --kicl--icons--menu--transition-property: block-size, fill, inline-size, transform;
+
+  /*
+   * `rotate` and `translate`, not `transform`: the bars are positioned with
+   * the independent properties, and a transition still naming `transform`
+   * animates nothing while the real change lands in one frame.
+   */
+  --kicl--icons--menu--transition-property: block-size, fill, inline-size, rotate, translate;
   --kicl--icons--menu--rect--inline-size--spaces: var(--kicl-size-2x);
   --kicl--icons--menu--cross--transform--rotate: 45deg;
   --kicl--icons--menu--lines--transform--translateY: var(--kicl-size-4x);
@@ -15,22 +21,14 @@
 .kicl--icons--menu {
   block-size: var(--kicl--icons--menu--block-size);
   fill: var(--kicl--icons--menu--fill);
-  transition-duration: var(--kicl--icons--menu--transition-duration);
-  transition-property: var(--kicl--icons--menu--transition-property);
-  transition-timing-function: var(
-    --kicl--icons--menu--transition-timing-function
-  );
-  will-change: var(--kicl--icons--menu--transition-property);
+
+  @include transition('kicl--icons--menu');
 
   g,
   rect {
     transition-delay: var(--kicl--icons--menu--paths--transition-delay);
-    transition-duration: var(--kicl--icons--menu--transition-duration);
-    transition-property: var(--kicl--icons--menu--transition-property);
-    transition-timing-function: var(
-      --kicl--icons--menu--transition-timing-function
-    );
-    will-change: var(--kicl--icons--menu--transition-property);
+
+    @include transition('kicl--icons--menu');
   }
 
   rect {

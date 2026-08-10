@@ -1,0 +1,30 @@
+/*
+ * The four lines every component was writing out by hand.
+ *
+ * Each wires the same longhands to its own `--{name}--transition-*` trio —
+ * identical plumbing repeated once per component, with `will-change` easy to
+ * leave naming a property the element no longer sets.
+ *
+ * Only the wiring is here. The variables themselves stay on `:root` in the
+ * component's own stylesheet, because that is what lets an ancestor or a
+ * modifier override one: declared on the element instead, the element's own
+ * value would beat anything inherited.
+ *
+ * This is not the `Animation` component's job. That one is for entering and
+ * leaving — it owns `transition-property` outright and hides the element when
+ * it is out. These are state transitions, hover and focus and open, that
+ * belong to the element for its whole life. Same CSS feature, opposite
+ * lifetimes.
+ */
+@mixin transition($name) {
+  transition-duration: var(--#{$name}--transition-duration);
+  transition-property: var(--#{$name}--transition-property);
+  transition-timing-function: var(--#{$name}--transition-timing-function);
+
+  /*
+   * Kept in step with the property list by construction. Naming something here
+   * the element does not animate costs a compositor layer for nothing, and the
+   * two drifted apart the moment `transform` became `translate`.
+   */
+  will-change: var(--#{$name}--transition-property);
+}

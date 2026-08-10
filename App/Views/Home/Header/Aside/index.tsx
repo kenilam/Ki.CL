@@ -23,7 +23,7 @@ const Aside: React.FunctionComponent = () => {
           alignContent='center'
           alignItems='center'
           animation={{
-            delay: 800,
+            delay: 1600,
             property: 'slide-from-bottom',
           }}
           autoFlow='column'
