@@ -50,7 +50,7 @@
    *
    * Light is the default, matching `:root`; dark is the departure.
    */
-  --kicl--tree-of-life--plate: url('/assets/static/banner.light.6f160cf7.webp');
+  --kicl--tree-of-life--plate: url('/assets/static/banner.light.webp');
 
   /*
    * How the picture meets the green beneath it. The plate is a screenshot, so
@@ -68,7 +68,7 @@
   --kicl--tree-of-life--plate-exposure: 1.5;
 
   @at-root .kicl--theme--dark & {
-    --kicl--tree-of-life--plate: url('/assets/static/banner.dark.a1286a7b.webp');
+    --kicl--tree-of-life--plate: url('/assets/static/banner.dark.webp');
     --kicl--tree-of-life--plate-blend: screen;
     --kicl--tree-of-life--plate-exposure: 0.5;
   }

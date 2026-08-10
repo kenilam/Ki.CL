@@ -18,17 +18,16 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life';
 /*
  * Served from the `static` bucket through the API's asset proxy rather than
- * committed to this repository. The hash in each name is of the file's own
- * bytes, so the year-long immutable cache the proxy sets can never hand back
- * a stale picture — different bytes are a different URL.
+ * committed to this repository.
  *
- * That does mean re-encoding an image is a two-step change: upload, then
- * update the name here.
+ * Named for what they are, not for their contents, so re-encoding one is an
+ * upload and nothing else — no name here has to change. The proxy sends these
+ * revalidating rather than immutable to make that safe.
  */
 const IMAGES = '/assets/static';
-const ORIGINAL_VISION = `${IMAGES}/original-vision.de49d11d.webp`;
-const PERROT_1854 = `${IMAGES}/perrot-1854.c015e664.webp`;
-const V14 = `${IMAGES}/v14.deebdc49.webp`;
+const ORIGINAL_VISION = `${IMAGES}/original-vision.webp`;
+const PERROT_1854 = `${IMAGES}/perrot-1854.webp`;
+const V14 = `${IMAGES}/v14.webp`;
 
 const Article: React.FunctionComponent = () => {
   return (
