@@ -1,9 +1,4 @@
-import Animation, {
-  type AnimationProps,
-  ANIMATION_STYLES,
-  AnimationGroup,
-  addEndListener,
-} from './Animation';
+import Animation, { type AnimationProps, PROPERTIES } from './Animation';
 import Badge, {
   BADGE_VARIANTS,
   BadgeLabel,
@@ -146,10 +141,9 @@ import Textarea, { type TextareaProps } from './Textarea';
 import Video, { VideoElement, VideoProps } from './Video';
 
 export {
-  ANIMATION_STYLES,
+  PROPERTIES,
   Animation,
   type AnimationProps,
-  AnimationGroup,
   AnimatedText,
   type AnimatedTextProps,
   Badge,
@@ -297,6 +291,5 @@ export {
   Video,
   type VideoElement,
   type VideoProps,
-  addEndListener,
 };
 export default {};

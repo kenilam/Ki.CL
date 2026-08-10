@@ -1,21 +1,59 @@
 :root {
   --kicl--components--animation--transition-delay: 0s;
-  --kicl--components--animation--transition-duration: var(--kicl-transition-duration-slowest);
-  --kicl--components--animation--transition-property: none;
-  --kicl--components--animation--transition-timing-function: var(--kicl-ease-expo-out);
+  --kicl--components--animation--transition-duration: var(
+    --kicl-transition-duration-slowest
+  );
+
+  /*
+   * `none` would be correct as "nothing to animate", but this value is
+   * concatenated with `display` below and `none` is not allowed inside a
+   * transition-property list — the whole declaration would be dropped. Every
+   * style overrides this anyway; `opacity` is the harmless stand-in.
+   */
+  --kicl--components--animation--transition-property: opacity;
+  --kicl--components--animation--transition-timing-function: var(
+    --kicl-ease-expo-out
+  );
 }
 
 .kicl--components--animation {
-  &.kicl--components--animation--appear-active,
-  &.kicl--components--animation--enter-active,
-  &.kicl--components--animation--exit-active,
-  &.kicl--components--animation--appeared,
-  &.kicl--components--animation--entered,
-  &.kicl--components--animation--exit-done {
-    transition-delay: var(--kicl--components--animation--transition-delay);
-    transition-duration: var(--kicl--components--animation--transition-duration);
-    transition-property: var(--kicl--components--animation--transition-property);
-    transition-timing-function: var(--kicl--components--animation--transition-timing-function);
-    will-change: var(--kicl--components--animation--transition-property);
+  /*
+   * `display` is in the list, and discrete properties are allowed to
+   * transition, so the element stays displayed for the whole leaving
+   * transition and is removed from layout only once it has finished. That is
+   * the job the JS timers used to do.
+   */
+  transition-behavior: allow-discrete;
+  transition-delay: var(--kicl--components--animation--transition-delay);
+  transition-duration: var(--kicl--components--animation--transition-duration);
+  transition-property: var(--kicl--components--animation--transition-property), display;
+  transition-timing-function: var(
+    --kicl--components--animation--transition-timing-function
+  );
+  will-change: var(--kicl--components--animation--transition-property);
+
+  &:not([data-animation-in]) {
+    /*
+     * `!important` because of the layer order, not in spite of it.
+     *
+     * `utilities` sits above `components`, so `kicl-layout--display--grid` on
+     * the same element beats a plain `display: none` here no matter how
+     * specific this selector is — layer order settles it before specificity is
+     * consulted, and the element stayed visible. Important declarations
+     * reverse that order, which is the one tool that lets a component hide
+     * itself while a display utility is applied to it.
+     */
+    display: none !important;
+  }
+
+  /*
+   * Motion is decoration here — every one of these transitions is a fade,
+   * slide or zoom on top of content that is already legible without it. Honour
+   * the preference by cutting the duration rather than the transition, so the
+   * end state and the transition events still arrive.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    --kicl--components--animation--transition-delay: 0s;
+    --kicl--components--animation--transition-duration: 1ms;
   }
 }

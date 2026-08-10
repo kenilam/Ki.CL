@@ -28,7 +28,7 @@ const LEVELS: Spec.Icons = {
 
 const Status: React.FunctionComponent<Spec.Props> = ({
   align = 'start',
-  animationStyle = 'slide-from-bottom',
+  property = 'slide-from-bottom',
   className: _className,
   in: transitionIn,
   level,
@@ -65,7 +65,7 @@ const Status: React.FunctionComponent<Spec.Props> = ({
   ) : null;
 
   return (
-    <Animation {...rest} animationStyle={animationStyle} in={transitionIn}>
+    <Animation {...rest} property={property} in={transitionIn}>
       <Layout
         alignContent={align}
         alignItems='center'

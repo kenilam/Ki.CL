@@ -1,7 +1,6 @@
-import { PropsWithChildren } from 'react';
-import { CSSTransitionProps } from 'react-transition-group/CSSTransition';
+import { PropsWithChildren, Ref } from 'react';
 
-export type AnimationDuration =
+export type Duration =
   | 'extreme'
   | 'fast'
   | 'faster'
@@ -11,7 +10,7 @@ export type AnimationDuration =
   | 'slower'
   | 'slowest';
 
-export type AnimationEasing =
+export type Easing =
   | 'ease-in'
   | 'ease-out'
   | 'ease-back-in'
@@ -39,7 +38,7 @@ export type AnimationEasing =
   | 'ease-sine-out'
   | 'ease-sine-in-out';
 
-export type AnimationStyle =
+export type Property =
   | 'blur'
   | 'fade'
   | 'slide-from-bottom'
@@ -49,16 +48,33 @@ export type AnimationStyle =
   | 'zoom-in'
   | 'zoom-out';
 
-export type AnimationStyles = {
-  [name in AnimationStyle]?: AnimationStyle;
+export type Properties = {
+  [name in Property]?: Property;
 };
 
+/**
+ * There is no lifecycle callback API here on purpose.
+ *
+ * This component clones its props onto the child element, so the platform's
+ * own transition events — `onTransitionRun`, `onTransitionStart`,
+ * `onTransitionEnd`, `onTransitionCancel` — arrive already working, with the
+ * semantics and the payload the DOM defines. A parallel set of
+ * `onEnter`/`onEntered` props would only be a second, less capable name for
+ * the same moments, and one the browser would not agree with when a
+ * transition is interrupted.
+ *
+ * Which direction is running is not something the events need to carry: it is
+ * `in`, which the caller already owns.
+ */
 export type Props = PropsWithChildren<
-  Omit<CSSTransitionProps, 'addEndListener' | 'key'> & {
-    animationEasing?: AnimationEasing;
-    animationKey?: string;
-    animationStyle?: AnimationStyle;
-    animationDelay?: number;
-    animationDuration?: AnimationDuration;
-  }
+  {
+    delay?: number;
+    duration?: Duration;
+    easing?: Easing;
+    property?: Property;
+    className?: string;
+    /** Whether the child should be shown. Drives both directions. */
+    in?: boolean;
+    nodeRef?: Ref<HTMLElement | null>;
+  } & Record<string, unknown>
 >;

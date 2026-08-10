@@ -71,15 +71,10 @@ const Navigation = React.forwardRef<
               const animationProps =
                 typeof animation === 'boolean' ? {} : animation;
 
-              const animationDelay =
-                (animationProps.animationDelay || 0) + 100 * (index + 1);
+              const delay = (animationProps.delay || 0) + 100 * (index + 1);
 
               return (
-                <Animation
-                  {...animationProps}
-                  animationDelay={animationDelay}
-                  key={key}
-                >
+                <Animation {...animationProps} delay={delay} key={key}>
                   {Item}
                 </Animation>
               );

@@ -1,36 +1,23 @@
-.kicl--components--animation--style--zoom-out {
-  --kicl--components--animation--transition-property: opacity, transform;
-  --kicl--components--animation--style--zoom-out--transform--translate-x: 0;
-  --kicl--components--animation--style--zoom-out--transform--translate-y: 0;
-  --kicl--components--animation--style--zoom-out--transform--scale: 1;
-  --kicl--components--animation--style--zoom-out--opacity: 1;
+.kicl--components--animation--property--zoom-out {
+  --kicl--components--animation--transition-property: opacity, scale;
 
-  opacity: var(--kicl--components--animation--style--zoom-out--opacity);
-  transform: translate3d(
-    var(
-      --kicl--components--animation--style--zoom-out--transform--translate-x
-    ),
-    var(
-      --kicl--components--animation--style--zoom-out--transform--translate-y
-    ),
-    0
-  )
-    scale(var(--kicl--components--animation--style--zoom-out--transform--scale));
+  opacity: 1;
+  scale: 1;
   transform-origin: center;
 
-  &.kicl--components--animation--appear:not(
-    .kicl--components--animation--appear-active
-  ),
-    &.kicl--components--animation--enter:not(
-    .kicl--components--animation--enter-active
-  ) {
-    --kicl--components--animation--style--zoom-out--opacity: 0;
-    --kicl--components--animation--style--zoom-out--transform--scale: 1.2;
+  /*
+   * Where an entering element starts. The browser reads this only for the
+   * first style change after the element renders — or after it comes back
+   * from `display: none` — and transitions away from it.
+   */
+  @starting-style {
+    opacity: 0;
+    scale: 1.2;
   }
 
-  &.kicl--components--animation--exit-active,
-  &.kicl--components--animation--exit-done {
-    --kicl--components--animation--style--zoom-out--opacity: 0;
-    --kicl--components--animation--style--zoom-out--transform--scale: 1.2;
+  /* Where a leaving element ends, held until the transition finishes. */
+  &:not([data-animation-in]) {
+    opacity: 0;
+    scale: 1.2;
   }
 }

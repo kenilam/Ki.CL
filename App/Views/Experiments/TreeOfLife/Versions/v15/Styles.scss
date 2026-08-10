@@ -58,9 +58,9 @@
       opacity: 1;
       transition:
         opacity var(--kicl-transition-duration-fast)
-          var(--kicl-transition-duration),
+        var(--kicl-transition-duration),
         visibility var(--kicl-transition-duration-fast)
-          var(--kicl-transition-duration) allow-discrete;
+        var(--kicl-transition-duration) allow-discrete;
       visibility: visible;
     }
   }

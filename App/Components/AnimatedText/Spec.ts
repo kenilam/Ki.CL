@@ -1,19 +1,12 @@
 import type { AnimationProps, TextProps } from '@/Components';
 
 type Children =
-  | Extract<TextProps['children'], string | number | null | undefined>
-  | false;
+  Extract<TextProps['children'], string | number | null | undefined> | false;
 
 export type Props = Omit<TextProps, 'children'> &
-  Pick<
-    AnimationProps,
-    | 'animationDelay'
-    | 'animationDuration'
-    | 'animationEasing'
-    | 'animationStyle'
-  > & {
+  Pick<AnimationProps, 'delay' | 'duration' | 'easing' | 'property'> & {
     /**
-     * Milliseconds added per character: `animationDelay + stagger * index`.
+     * Milliseconds added per character: `delay + stagger * index`.
      */
     stagger?: number;
     /**

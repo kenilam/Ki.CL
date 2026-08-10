@@ -20,7 +20,7 @@ const CLASS_NAME = 'kicl--views--home--header';
 
 const Header: React.FunctionComponent = () => {
   return (
-    <Animation animationDelay={300} animationStyle='zoom-out'>
+    <Animation delay={300} property='zoom-out'>
       <Layout
         alignContent='center'
         alignItems='center'

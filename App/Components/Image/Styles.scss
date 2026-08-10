@@ -50,7 +50,7 @@
     inset-block-start: 50%;
     inset-inline-start: 50%;
     position: var(--kicl--components--image--error--position);
-    transform: translate3d(-50%, -50%, 0);
+    translate: -50% -50%;
   }
 
   &--is-fullscreen {
@@ -61,10 +61,9 @@
       --kicl--components--image--is-fullscreen--inset-inline-start
     );
     position: absolute;
-    transform: translate3d(
-      var(--kicl--components--image--is-fullscreen--transform--translate-x),
-      var(--kicl--components--image--is-fullscreen--transform--translate-y),
-      0
-    );
+    translate: var(
+      --kicl--components--image--is-fullscreen--transform--translate-x
+    )
+      var(--kicl--components--image--is-fullscreen--transform--translate-y);
   }
 }

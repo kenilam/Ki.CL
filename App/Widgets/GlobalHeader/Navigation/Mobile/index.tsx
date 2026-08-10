@@ -84,9 +84,9 @@ const Mobile: React.FunctionComponent = () => {
           <section className={CLASS_NAME}>
             <Navigation
               animation={{
-                animationDelay: 1200,
-                animationDuration: 'slow',
-                animationStyle: 'slide-from-top',
+                delay: 1200,
+                duration: 'slow',
+                property: 'slide-from-top',
               }}
               autoFlow='column'
               gap='widest'
