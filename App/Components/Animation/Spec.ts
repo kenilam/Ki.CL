@@ -34,6 +34,7 @@ export type Easing =
   | 'ease-quint-in'
   | 'ease-quint-out'
   | 'ease-quint-in-out'
+  | 'ease-sharp-in-out'
   | 'ease-sine-in'
   | 'ease-sine-out'
   | 'ease-sine-in-out';

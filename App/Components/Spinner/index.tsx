@@ -30,7 +30,7 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
   hasBackdrop = true,
   in: transitionIn,
   position = 'overlay',
-  size,
+  size = 'small',
   ...rest
 }) => {
   const isOverlay = position === 'overlay';

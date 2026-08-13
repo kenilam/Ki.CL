@@ -68,6 +68,10 @@
   &__chrome {
     z-index: 2;
 
+    --kicl-inset-block-start: calc(
+      var(--kicl-gutter) + var(--kicl--widgets--global-header--block-size)
+    );
+
     /*
      * On a small screen the panel is docked to the foot instead of the head.
      *

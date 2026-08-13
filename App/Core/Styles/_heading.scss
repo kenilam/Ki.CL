@@ -1,0 +1,63 @@
+/*
+ * Loaded explicitly: the build prepends the shared `@use` block to the files
+ * it compiles, but a partial reached through `@use` is resolved by Sass and
+ * never sees it.
+ */
+@use './transition' as *;
+
+/*
+ * What a heading looks like, in one place.
+ *
+ * Two sets of selectors need it — the elements `h1`–`h6`, and the
+ * `kicl-look-like-h*` classes that give the look to something that is not a
+ * heading — and they live in different cascade layers, so they cannot share a
+ * selector list.
+ *
+ * Sizes are read from `--kicl-heading-font-size`, which each selector sets for
+ * its own level. Everything else is the same at every level.
+ */
+@mixin heading-appearance {
+  --kicl-heading-font-color: var(--kicl-body-color);
+  --kicl-heading-font-family: var(--kicl-font-family);
+  --kicl-heading-font-size: var(--kicl-font-size);
+  --kicl-heading-font-weight: var(--kicl-font-weight-bolder);
+
+  /*
+   * A separate multiplier so a variant can quieten any level without knowing
+   * which one it is. Folding it into `--kicl-heading-font-size` would make
+   * that property reference itself, which is a cycle: the whole declaration
+   * would be thrown away and the size would fall back to the body's.
+   */
+  --kicl-heading-font-size-scale: 1;
+
+  background: var(--kicl-heading-background);
+  color: var(--kicl-heading-font-color);
+  font-family: var(--kicl-heading-font-family);
+  font-size: calc(
+    var(--kicl-heading-font-size) * var(--kicl-heading-font-size-scale)
+  );
+  font-weight: var(--kicl-heading-font-weight);
+  line-height: var(--kicl-line-height);
+
+  @include transition('kicl-heading');
+}
+
+/*
+ * The scale, by level.
+ *
+ * Only the top two carry a size of their own. There is no token between the
+ * body size and `medium`, and inventing one as a multiple of the body size is
+ * the kind of made-up scale the design system rules out — so `h3` down to `h6`
+ * stay at body size and are told apart by weight, as they already were.
+ */
+@mixin heading-size($level) {
+  @if $level == 1 {
+    --kicl-heading-font-size: var(--kicl-font-size-large);
+  } @else if $level == 2 {
+    --kicl-heading-font-size: var(--kicl-font-size-medium);
+  }
+
+  @if $level == 5 {
+    --kicl-heading-font-weight: var(--kicl-font-weight-bold);
+  }
+}

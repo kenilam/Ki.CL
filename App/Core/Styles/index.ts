@@ -19,6 +19,7 @@ import './font.scss';
 import './grid.scss';
 import './inset.scss';
 import './layout.scss';
+import './look-like.scss';
 import './pointer-events.scss';
 import './position.scss';
 import './size.scss';

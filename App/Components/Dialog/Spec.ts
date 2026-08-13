@@ -22,6 +22,6 @@ export type Props = React.DialogHTMLAttributes<HTMLDialogElement> & {
       }
     | {
         closeIcon?: never;
-        closable?: false;
+        closable?: false | 'keyboard';
       }
   );

@@ -1,10 +1,10 @@
 :root {
   --kicl--components--hyper-link--box-shadow--block-size: var(--kicl-size-1px);
   --kicl--components--hyper-link--box-shadow--block-size-active: var(
-    --kicl-size-3px
+    --kicl-size-1px
   );
   --kicl--components--hyper-link--box-shadow--color: currentcolor;
-  --kicl--components--hyper-link--font-weight: var(--kicl-font-weight-bold);
+  --kicl--components--hyper-link--font-weight: var(--kicl-font-weight);
   --kicl--components--hyper-link--inline-size: fit-content;
   --kicl--components--hyper-link--transition-duration: var(
     --kicl-transition-duration-fast

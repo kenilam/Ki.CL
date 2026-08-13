@@ -42,4 +42,7 @@
   --kicl-ease-sine-in: cubic-bezier(0.47, 0, 0.745, 0.715);
   --kicl-ease-sine-out: cubic-bezier(0.39, 0.575, 0.565, 1);
   --kicl-ease-sine-in-out: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+
+  // ease-sharp
+  --kicl-ease-sharp-in-out: cubic-bezier(0.4, 0, 0.6, 1);
 }

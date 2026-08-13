@@ -1,9 +1,4 @@
-import React, {
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { PropsWithChildren, useContext, useState } from 'react';
 
 // Hooks
 import { useResizeObserver } from '@/Hooks';
@@ -30,10 +25,6 @@ const GlobalHeaderProvider: React.FunctionComponent<
   const { node, rect } = useResizeObserver();
 
   const [show, showHeader] = useState(_show);
-
-  useEffect(() => {
-    showHeader(_show);
-  }, [_show]);
 
   const value = {
     node,

@@ -11,22 +11,40 @@ import Router, {
 } from '@/Router';
 
 // Widgets
-import { GlobalHeader, GlobalHeaderProvider } from '@/Widgets';
+import {
+  GlobalHeader,
+  GlobalHeaderProvider,
+  useGlobalHeaderContext,
+} from '@/Widgets';
 
 // Components
 import { Layout } from '@/Components';
 
 // Hooks
-import { useResponsive } from '@/Hooks';
+import { SCROLL_DIRECTIONS, useResponsive, useScrollDirection } from '@/Hooks';
 
 // Views
 import Experiments from './Experiments';
-import Home from './Home';
+import Home, { PATH as HOME_PATH } from './Home';
 
 // Styles
 import './Styles.scss';
 
 const Contents: React.FunctionComponent = () => {
+  const { showHeader } = useGlobalHeaderContext();
+
+  const { pathname } = useLocation();
+
+  const { direction, isAtStart } = useScrollDirection();
+
+  const isHome = pathname.replace('/', '') === HOME_PATH;
+
+  const show = !isHome && (isAtStart || direction === SCROLL_DIRECTIONS.up);
+
+  useEffect(() => {
+    showHeader(show);
+  }, [show, showHeader]);
+
   return (
     <>
       <ScrollRestoration />
