@@ -1,11 +1,20 @@
-:root {
-  --kicl--widgets--global-header--navigation--mobile--padding-block: var(
-    --kicl-gutter-widest
-  );
-}
-
 .kicl--widgets--global-header--navigation--mobile {
-  padding-block: var(
-    --kicl--widgets--global-header--navigation--mobile--padding-block
-  );
+  --kicl--components--dialog--padding-block: var(--kicl-gutter-extreme);
+  --kicl--components--dialog--padding-inline: var(--kicl-gutter-widest);
+
+  .kicl--components--dialog--close {
+    --kicl--components--dialog--padding-block: var(--kicl-gutter-wider);
+  }
+
+  --kicl--components--dialog--block-size--starting-style: 0px;
+  --kicl--components--animation--property--slide-from-top--distance: 100%;
+
+  &--toggle--is-overlaid {
+    inset-block-start: calc(
+      var(--kicl--widgets--global-header--top) +
+      (var(--kicl--widgets--global-header--block-size) - 1em) / 2
+    );
+    inset-inline-end: var(--kicl--widgets--global-header--padding-inline);
+    z-index: 1;
+  }
 }

@@ -1,66 +1,33 @@
 :root {
   --kicl-heading-background: none;
-  --kicl-heading-transition-duration: var(--kicl-transition-duration);
-  --kicl-heading-transition-property: background, color, font-size;
-  --kicl-heading-transition-timing-function: var(--kicl-ease-quint-in-out);
+  --kicl-heading--transition-duration: var(--kicl-transition-duration);
+  --kicl-heading--transition-property: background, color, font-size;
+  --kicl-heading--transition-timing-function: var(--kicl-ease-quint-in-out);
 }
 
+/*
+ * The elements themselves.
+ *
+ * These used to share a selector list with the `kicl-look-like-h*` classes,
+ * which meant the per-level sizes — written for the classes alone — never
+ * reached `h1` or `h2`. Every heading on the page rendered at body size, told
+ * apart from a paragraph by weight only.
+ *
+ * The classes now live in `look-like.scss`, in the utilities layer where a
+ * visual override belongs. Both read the same mixins, so the two cannot drift
+ * apart again.
+ */
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-.kicl-look-like-h1.kicl-look-like-h1,
-.kicl-look-like-h2.kicl-look-like-h2,
-.kicl-look-like-h3.kicl-look-like-h3,
-.kicl-look-like-h4.kicl-look-like-h4,
-.kicl-look-like-h5.kicl-look-like-h5,
-.kicl-look-like-h6.kicl-look-like-h6 {
-  --kicl-heading-font-color: var(--kicl-body-color);
-  --kicl-heading-font-family: var(--kicl-font-family);
-  --kicl-heading-font-size: var(--kicl-font-size);
-  --kicl-heading-font-weight: var(--kicl-font-weight-bolder);
-
-  background: var(--kicl-heading-background);
-  color: var(--kicl-heading-font-color);
-  font-family: var(--kicl-heading-font-family);
-  font-size: var(--kicl-heading-font-size);
-  font-weight: var(--kicl-heading-font-weight);
-  line-height: var(--kicl-line-height);
-  transition-duration: var(--kicl-heading-transition-duration);
-  transition-property: var(--kicl-heading-transition-property);
-  transition-timing-function: var(--kicl-heading-transition-timing-function);
-  will-change: var(--kicl-heading-transition-property);
+h6 {
+  @include heading-appearance;
 }
 
-.kicl-look-like-h3.kicl-look-like-h3,
-.kicl-look-like-h4.kicl-look-like-h4,
-.kicl-look-like-h5.kicl-look-like-h5,
-.kicl-look-like-h6.kicl-look-like-h6 {
-  &--variant--secondary {
-    --kicl-heading-font-color: rgb(var(--kicl-body-color), 0.8);
-    --kicl-heading-font-size: calc(var(--kicl-font-size) * 0.8);
+@each $level in (1, 2, 3, 4, 5, 6) {
+  h#{$level} {
+    @include heading-size($level);
   }
-}
-
-.kicl-look-like-h1.kicl-look-like-h1 {
-  --kicl-heading-font-size: var(--kicl-font-size-large);
-
-  &--variant--secondary {
-    --kicl-heading-font-size: calc(var(--kicl-font-size-large) * 0.8);
-  }
-}
-
-.kicl-look-like-h2.kicl-look-like-h2 {
-  --kicl-heading-font-size: var(--kicl-font-size-medium);
-
-  &--variant--secondary {
-    --kicl-heading-font-size: calc(var(--kicl-font-size-medium) * 0.8);
-  }
-}
-
-h5,
-.kicl-look-like-h5.kicl-look-like-h5 {
-  --kicl-heading-font-weight: var(--kicl-font-weight-bold);
 }

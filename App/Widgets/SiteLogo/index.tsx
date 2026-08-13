@@ -19,7 +19,7 @@ const SiteLogo: React.FunctionComponent<Spec.Props> = ({ ...props }) => {
   const className = classNames(CLASS_NAME, props.className);
 
   return (
-    <Heading {...props} className={className} title={TITLE}>
+    <Heading {...props} className={className} dense title={TITLE}>
       <Layout
         autoFlow='column'
         gap='narrower'

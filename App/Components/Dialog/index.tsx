@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -42,6 +42,7 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
       dense = false,
       footer,
       fullScreen = false,
+      open = false,
       ...rest
     },
     ref
@@ -49,11 +50,43 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
     const generated = useId();
     const id = rest.id ?? generated;
 
+    const node = useRef<HTMLDialogElement>(null);
+
+    useEffect(() => {
+      const dialog = node.current;
+
+      if (!dialog) {
+        return;
+      }
+
+      if (open && !dialog.open) {
+        dialog.showModal();
+      }
+
+      if (!open && dialog.open) {
+        dialog.close();
+      }
+    }, [open]);
+
+    const setRef = (dialog: HTMLDialogElement | null) => {
+      node.current = dialog;
+
+      if (typeof ref === 'function') {
+        ref(dialog);
+        return;
+      }
+
+      if (ref) {
+        (ref as React.MutableRefObject<HTMLDialogElement | null>).current =
+          dialog;
+      }
+    };
+
     return (
       <dialog
         {...rest}
         id={id}
-        ref={ref}
+        ref={setRef}
         className={classNames(
           CLASS_NAME,
           {
@@ -63,10 +96,10 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
           },
           className
         )}
-        closedby={closable ? 'any' : 'none'}
+        closedby={closable === true || closable === 'keyboard' ? 'any' : 'none'}
       >
         <section>
-          {closable ? (
+          {closable === true ? (
             <Button
               unstyled
               className={classNames(

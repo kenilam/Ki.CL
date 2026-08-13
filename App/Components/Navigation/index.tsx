@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, Layout, ListItem } from '@/Components';
+import { Animation, type AnimationProps, Layout, ListItem } from '@/Components';
 
 // Styles
 import './Styles.scss';
@@ -13,9 +13,6 @@ import './Styles.scss';
 import * as Spec from './Spec';
 
 const CLASS_NAME = 'kicl--components--navigation';
-
-/** Milliseconds each item waits behind the one before it. */
-const STAGGER = 100;
 
 const Navigation = React.forwardRef<
   HTMLElement,
@@ -43,6 +40,11 @@ const Navigation = React.forwardRef<
   ) => {
     const className = classNames(CLASS_NAME, _className);
 
+    let animation: AnimationProps = {
+      duration: 'faster',
+      property: 'slide-from-top',
+    };
+
     return (
       <Layout
         alignContent={alignContent}
@@ -63,28 +65,8 @@ const Navigation = React.forwardRef<
               key = String(child.key);
             }
 
-            /*
-             * Derived, never mutated. `rest.animation` is the caller's own
-             * object and the same reference for every item, so writing the
-             * stagger back into it added to the previous item's delay and to
-             * the previous render's. A list configured for 800ms was measured
-             * waiting 3.7s and climbing — long enough to read as the animation
-             * never firing at all.
-             */
-            const source =
-              rest.animation === true
-                ? { property: 'fade' as const }
-                : rest.animation === false
-                  ? { duration: 'instant' as const }
-                  : (rest.animation ?? {});
-
-            const animation = {
-              ...source,
-              delay: (source.delay ?? 0) + STAGGER * (index + 1),
-            };
-
             return (
-              <Animation {...animation} key={key}>
+              <Animation {...animation} delay={300 + 60 * index} key={key}>
                 <ListItem className={`${CLASS_NAME}--list-item`} key={key}>
                   {child}
                 </ListItem>

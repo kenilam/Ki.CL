@@ -5,8 +5,8 @@
   --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-block-start: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-widest);
-  --kicl--widgets--global-header--left: 50%;
-  --kicl--widgets--global-header--top: 0;
+  --kicl--widgets--global-header--left: 0;
+  --kicl--widgets--global-header--top: 0px;
   --kicl--widgets--global-header--inline-size: 100vw;
   --kicl--widgets--global-header--bleed: calc(
     var(--kicl--widgets--global-header--block-size) +
@@ -22,13 +22,9 @@
 }
 
 .kicl--widgets--global-header {
-  /*
-   * Its own name now. This used to borrow a variable from the Animation
-   * component's slide style, which was never that component's to lend and no
-   * longer exists — the styles there set `translate` directly.
-   */
-  --kicl--widgets--global-header--translate-x: -50%;
+  --kicl--components--animation--property--slide-from-top--distance: 100%;
   --kicl--components--hyper-link--text-color: var(--kicl-body-color);
+  --kicl--components--animation--transition-property: opacity, translate, background-color, padding;
 
   backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
   background-color: var(--kicl--widgets--global-header--background-color);
@@ -40,15 +36,6 @@
   padding-inline: var(--kicl--widgets--global-header--padding-inline);
   text-transform: uppercase;
   z-index: 100001;
-
-  &:not(.kicl--components--animation) {
-    translate: var(--kicl--widgets--global-header--translate-x);
-    transition-duration: var(--kicl-transition-duration-fast);
-    transition-property: background-color, padding;
-    transition-timing-function: var(
-      --kicl--components--animation--transition-timing-function
-    );
-  }
 
   &:has(~ menu:not(.is-closed)) {
     --kicl--widgets--global-header--transition-delay: 0s;

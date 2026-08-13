@@ -16,6 +16,7 @@ import { Ri } from '@/Icons';
 import { TICK } from '@/constants';
 
 // Views
+import { PATH as EXPERIMENTS_PATH } from '@/Views/Experiments';
 import { PATH as HOME_PATH } from '@/Views/Home';
 
 // Styles
@@ -29,8 +30,21 @@ const ICONS = {
 };
 
 const Links = [
-  <HyperLink className='kicl-font-size' key={HOME_PATH} to={`/${HOME_PATH}`}>
+  <HyperLink
+    className='kicl-font-size-medium'
+    key={HOME_PATH}
+    to={`/${HOME_PATH}`}
+    unstyled
+  >
     Home
+  </HyperLink>,
+  <HyperLink
+    className='kicl-font-size-medium'
+    key={EXPERIMENTS_PATH}
+    to={`/${EXPERIMENTS_PATH}`}
+    unstyled
+  >
+    Experiments
   </HyperLink>,
 ];
 
@@ -48,6 +62,10 @@ const Mobile: React.FunctionComponent = () => {
    * one handler covers every way out.
    */
   const onClose = () => {
+    if (!hasNavigation) {
+      return;
+    }
+
     const url = new URL(location.pathname, window.location.origin);
     params.delete('globalNavigation');
 
@@ -60,15 +78,16 @@ const Mobile: React.FunctionComponent = () => {
 
   const Icon = ICONS[String(hasNavigation)];
 
-  const className = classNames('kicl-font-size', `${CLASS_NAME}--toggle`);
-
-  const Toggle = (
-    <Layout>
+  const toggle = (isOverlaid: boolean) => (
+    <Layout alignContent='center'>
       <HyperLink
-        className={className}
+        className={classNames('kicl-font-size', `${CLASS_NAME}--toggle`, {
+          'kicl-position-fixed': isOverlaid,
+          [`${CLASS_NAME}--toggle--is-overlaid`]: isOverlaid,
+        })}
         preventScrollReset
         relative='route'
-        to={`?globalNavigation=${TICK}`}
+        to={isOverlaid ? location.pathname : `?globalNavigation=${TICK}`}
         unstyled
       >
         {Icon}
@@ -78,23 +97,18 @@ const Mobile: React.FunctionComponent = () => {
 
   return (
     <>
-      {Toggle}
-      <Dialog onClose={onClose} open={hasNavigation}>
-        <Layout justifyItems='start' gap='widest'>
-          <section className={CLASS_NAME}>
-            <Navigation
-              animation={{
-                delay: 1200,
-                duration: 'slow',
-                property: 'slide-from-top',
-              }}
-              autoFlow='column'
-              gap='widest'
-            >
-              {Links}
-            </Navigation>
-          </section>
-        </Layout>
+      {toggle(false)}
+      <Dialog
+        className={CLASS_NAME}
+        closable='keyboard'
+        fullScreen
+        onClose={onClose}
+        open={hasNavigation}
+      >
+        {toggle(true)}
+        <Navigation autoFlow='row' gap='normal' justifyItems='start'>
+          {Links}
+        </Navigation>
       </Dialog>
     </>
   );

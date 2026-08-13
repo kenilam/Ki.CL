@@ -22,10 +22,6 @@ const Aside: React.FunctionComponent = () => {
         <Navigation
           alignContent='center'
           alignItems='center'
-          animation={{
-            delay: 1600,
-            property: 'slide-from-bottom',
-          }}
           autoFlow='column'
           className='kicl-font-size-medium'
           justifyContent='center'

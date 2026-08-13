@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Card, HyperLink, Layout, Text } from '@/Components';
+import { Button, Card, HyperLink, Layout } from '@/Components';
 
 // Icons
 import { Ri } from '@/Icons';
@@ -21,6 +21,7 @@ import {
 
 // Styles
 import './Styles.scss';
+import classNames from 'classnames';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions--selector';
 
@@ -50,40 +51,32 @@ const Selector: React.FunctionComponent = () => {
         alignItems='center'
         autoFlow='column'
         justifyContent='end'
-        gap='narrower'
+        gap='narrow'
       >
-        {/*
-          One element, because `Layout` clones its only child rather than
-          wrapping it — handed two, it throws and takes the view down with it.
-
-          A plain box, not a `nav`: the only thing here is the button that
-          opens the dialog, and the links themselves live in that dialog, which
-          has its own `nav`. A landmark around a single button announces
-          "navigation, 1 item" and points at the trigger rather than at
-          anywhere to go.
-        */}
         <div>
+          <HyperLink
+            before={<Ri.RiArrowLeftSLine aria-hidden />}
+            className='kicl-font-size-small'
+            to='..'
+            unstyled
+          >
+            Back
+          </HyperLink>
           <Button
             unstyled
             type='button'
             alignItems='center'
             gap='narrower'
-            className={`${CLASS_NAME}__toggle`}
+            className={classNames(
+              'kicl-font-size-small',
+              `${CLASS_NAME}__toggle`
+            )}
             popoverTarget={CLASS_NAME}
             aria-label='Earlier versions of this view'
             title='Show the earlier versions of this view'
           >
             <Ri.RiStackLine aria-hidden />
-            {/*
-              One string, not a number beside a word. Split across two spans it
-              read "14 version", which scans as a count of versions rather than
-              as the name of this one — and the two orders do not agree, since
-              the unversioned fallback reads "final version" and never
-              "version final".
-            */}
-            <Text is='span' dense unstyled className='kicl-font-size-small'>
-              {version === LIVE ? 'Final version' : `Version ${version}`}
-            </Text>
+            {version === LIVE ? 'Final version' : `Version ${version}`}
           </Button>
         </div>
       </Layout>

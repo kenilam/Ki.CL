@@ -1,7 +1,7 @@
 .kicl--views--experiments--tree-of-life--versions {
   position-anchor: --kicl-versions-toggle;
   position-area: block-start span-inline-start;
-  max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
+  max-block-size: calc(100dvh - var(--kicl-gutter-extreme));
   overflow-y: auto;
   opacity: 0;
   transition:

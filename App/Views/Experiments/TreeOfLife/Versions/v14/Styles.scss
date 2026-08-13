@@ -169,7 +169,9 @@
     display: flex;
     flex-direction: row;
     gap: var(--kicl-gutter-narrow);
-    inset-block-start: var(--kicl-gutter-wide);
+    inset-block-start: calc(
+      var(--kicl-gutter-wide) + var(--kicl--widgets--global-header--block-size)
+    );
     inset-inline-end: var(--kicl-gutter-wide);
     pointer-events: auto;
     z-index: 3;
@@ -201,6 +203,9 @@
     block-size: auto;
     inline-size: auto;
     inset: var(--kicl-gutter);
+    inset-block-start: calc(
+      var(--kicl-gutter) + var(--kicl--widgets--global-header--block-size)
+    );
     inset-block-end: var(--kicl-gutter-widest);
     max-inline-size: none;
     min-block-size: 0;

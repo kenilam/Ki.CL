@@ -25,7 +25,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--widgets--global-header';
 
 const Contents: React.FunctionComponent = () => {
-  const { node } = useGlobalHeaderContext();
+  const { node, show } = useGlobalHeaderContext();
 
   const { isTablet } = useResponsive();
 
@@ -36,23 +36,25 @@ const Contents: React.FunctionComponent = () => {
   );
 
   return (
-    <Layout
-      alignItems='center'
-      autoFlow='column'
-      gap={isTablet ? 'wider' : 'normal'}
-      justifyContent='space-between'
-      ref={node}
-    >
-      <header className={className} role='banner'>
-        <SiteLogo />
-        <Navigation />
-      </header>
-    </Layout>
+    <Animation property='slide-from-top' in={show}>
+      <Layout
+        alignItems='center'
+        autoFlow='column'
+        gap={isTablet ? 'wider' : 'normal'}
+        justifyContent='space-between'
+        ref={node}
+      >
+        <header className={className} role='banner'>
+          <SiteLogo />
+          <Navigation />
+        </header>
+      </Layout>
+    </Animation>
   );
 };
 
 const GlobalHeader: React.FunctionComponent = () => {
-  const { rect, show } = useGlobalHeaderContext();
+  const { rect } = useGlobalHeaderContext();
 
   return (
     <>
@@ -64,9 +66,7 @@ const GlobalHeader: React.FunctionComponent = () => {
         </style>,
         window.document.body
       )}
-      <Animation property='slide-from-top' in={show}>
-        <Contents />
-      </Animation>
+      <Contents />
     </>
   );
 };

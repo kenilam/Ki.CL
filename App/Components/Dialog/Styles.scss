@@ -4,6 +4,7 @@
   --kicl--components--dialog--max-inline-size: 66ch;
   --kicl--components--dialog--inline-size: auto;
   --kicl--components--dialog--offset: var(--kicl-gutter-extreme);
+  --kicl--components--dialog--section-offset: var(--kicl-gutter-wide);
   --kicl--components--dialog--padding-block: var(--kicl-gutter);
   --kicl--components--dialog--padding-inline: var(--kicl-gutter);
   --kicl--components--dialog--backdrop--backdrop-filter--brightness: 45%;
@@ -38,12 +39,15 @@
   }
 
   &--is-full-screen {
+    --kicl--components--dialog--block-size: 100dvb;
+    --kicl--components--dialog--block-size--starting-style: 0px;
     --kicl--components--dialog--border-radius: 0;
     --kicl--components--dialog--inline-size: 100dvi;
     --kicl--components--dialog--max-inline-size: 100dvi;
     --kicl--components--dialog--padding-block: 0;
     --kicl--components--dialog--padding-inline: 0;
     --kicl--components--dialog--offset: 0px;
+    --kicl--components--dialog--section-offset: 0px;
   }
 
   &--is-full-screen &--close {
@@ -90,6 +94,7 @@
 
   > section {
     background-color: var(--kicl--components--dialog--background-color);
+    block-size: var(--kicl--components--dialog--block-size, auto);
     border-radius: var(--kicl--components--dialog--border-radius);
     inline-size: var(--kicl--components--dialog--inline-size);
     margin-inline: auto;
@@ -102,9 +107,10 @@
     /* The state it arrives from, and returns to. */
     opacity: 0;
     transition:
+      block-size var(--kicl-transition-duration-fast),
       opacity var(--kicl-transition-duration-fast),
       translate var(--kicl-transition-duration-fast);
-    translate: 0 var(--kicl-gutter-wide);
+    translate: 0 0;
   }
 
   /*
@@ -117,9 +123,20 @@
     translate: 0 0;
 
     @starting-style {
+      block-size: var(
+        --kicl--components--dialog--block-size--starting-style,
+        auto
+      );
       opacity: 0;
-      translate: 0 var(--kicl-gutter-wide);
+      translate: 0 var(--kicl--components--dialog--section-offset);
     }
+  }
+
+  &:not([open]) > section {
+    block-size: var(
+      --kicl--components--dialog--block-size--starting-style,
+      auto
+    );
   }
 
   &::backdrop {

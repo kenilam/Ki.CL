@@ -44,9 +44,9 @@ const PROPERTIES: Spec.Properties = {
  * as custom properties rather than into a stylesheet.
  */
 const Animation: FunctionComponent<Spec.Props> = ({
-  delay = 0,
-  duration = 'slowest',
-  easing = 'ease-quint-in-out',
+  delay,
+  duration = 'fast',
+  easing = 'ease-sharp-in-out',
   property = PROPERTIES.fade,
   children,
   className,
@@ -106,7 +106,9 @@ const Animation: FunctionComponent<Spec.Props> = ({
       'data-animation-in': transitionIn ? '' : undefined,
       ref: setRef,
       style: {
-        [`--${CLASS_NAME}--transition-delay`]: `${delay}ms`,
+        ...(delay === undefined
+          ? {}
+          : { [`--${CLASS_NAME}--transition-delay`]: `${delay}ms` }),
         [`--${CLASS_NAME}--transition-duration`]: `var(--kicl-transition-duration-${duration})`,
         [`--${CLASS_NAME}--transition-timing-function`]: `var(--kicl-${easing})`,
         ...props.style,
