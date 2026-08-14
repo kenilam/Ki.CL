@@ -24,8 +24,17 @@
     border-radius: var(--kicl--components--image--border-radius);
   }
 
+  /*
+   * The picture fills the box the component was given, rather than setting it.
+   *
+   * `object-fit` is inert until the box has a definite height, so while this
+   * was `auto` a declared `aspect-ratio` only ever clipped the overflow off the
+   * bottom — a crop anchored to the top edge, never the centre. A percentage
+   * against an indefinite height still resolves to `auto`, so an image left to
+   * its natural ratio is unaffected; only one told what shape to be changes.
+   */
   img {
-    block-size: auto;
+    block-size: 100%;
     display: block;
     inline-size: 100%;
     object-fit: var(--kicl--components--image--object-fit);

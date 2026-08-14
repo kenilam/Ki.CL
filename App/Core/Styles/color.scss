@@ -67,7 +67,7 @@
 
   @if $identifier {
     .kicl-background-color-#{$identifier} {
-      fill: var(--kicl-color-#{$identifier});
+      background-color: var(--kicl-color-#{$identifier});
     }
 
     .kicl-color-#{$identifier} {
