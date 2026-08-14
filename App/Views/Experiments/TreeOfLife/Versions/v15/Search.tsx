@@ -72,6 +72,35 @@ const DEBOUNCE_MS = 250;
 /** Below this the server rejects the query, so there is no point sending it. */
 const MIN_LENGTH = 2;
 
+/** A search matching nothing falls back to what is on screen, so it says so. */
+const STATUS_MESSAGES = {
+  searching: () => 'Searching…',
+  matched: (count: number) => `${count} ${count === 1 ? 'match' : 'matches'}`,
+  unmatched: (count: number) =>
+    `No taxon by that name — showing ${count} on screen`,
+  onScreen: (count: number) => `${count} on screen`,
+};
+
+function statusKey({
+  loading,
+  searching,
+  matches,
+}: {
+  loading: boolean;
+  searching: boolean;
+  matches: number;
+}): keyof typeof STATUS_MESSAGES {
+  if (loading) {
+    return 'searching';
+  }
+
+  if (!searching) {
+    return 'onScreen';
+  }
+
+  return matches > 0 ? 'matched' : 'unmatched';
+}
+
 type Result = Kicl_TaxonSearchQuery['TaxonSearch'][number];
 
 /** What the dropdown offers: a name to show and the node it leads to. */
@@ -231,13 +260,12 @@ const Search: React.FunctionComponent = () => {
             <Text
               dense
               is='p'
+              aria-live='polite'
               className={`kicl-font-size-smaller ${CLASS_NAME}__muted`}
             >
-              {loading
-                ? 'Searching…'
-                : `${options.length} ${
-                    found.length > 0 ? 'matching' : 'on screen'
-                  }`}
+              {STATUS_MESSAGES[
+                statusKey({ loading, searching, matches: found.length })
+              ](options.length)}
             </Text>
           </div>
         </Layout>

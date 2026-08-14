@@ -1,0 +1,28 @@
+.kicl--views--experiments--tree-of-life__figure {
+  --kicl--tree-of-life--figure-ratio: 16 / 9;
+
+  &__preview {
+    --kicl-layout--block-size: var(--kicl-size-12x);
+    --kicl--components--image--block-size: fit-content;
+    --kicl--components--image--inline-size: fit-content;
+
+    cursor: zoom-in;
+  }
+
+  figcaption {
+    padding-block-start: var(--kicl-gutter-narrower);
+  }
+
+  &__full {
+    &#{&} {
+      --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
+      --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
+    }
+
+    --kicl--components--image--block-size: calc(
+      var(--kicl--components--dialog--block-size) -
+      (var(--kicl--components--dialog--padding-block) * 2)
+    );
+    --kicl--components--image--inline-size: fit-content;
+  }
+}

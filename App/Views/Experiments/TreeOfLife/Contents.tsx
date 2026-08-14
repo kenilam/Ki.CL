@@ -11,6 +11,12 @@ import { Outlet } from '@/Router';
 
 import { Spinner, Text } from '@/Components';
 
+/** One reader-facing wording; the underlying error goes to the console. */
+const ERROR_MESSAGES = {
+  session:
+    'Could not start a session for this experiment. Reload to try again.',
+};
+
 const INTROSPECTION_BODY = JSON.stringify({
   operationName: 'IntrospectionQuery',
   query: '{ __typename }',
@@ -60,14 +66,16 @@ const TreeOfLife: React.FunctionComponent = () => {
         if (!cancelled) {
           setSessionReady(hasSession());
           if (!hasSession()) {
-            setBootstrapError('Unable to establish an anonymous session');
+            console.error(
+              'Tree of Life: anonymous session was not established'
+            );
+            setBootstrapError(ERROR_MESSAGES.session);
           }
         }
       } catch (error) {
         if (!cancelled) {
-          setBootstrapError(
-            error instanceof Error ? error.message : 'Session bootstrap failed'
-          );
+          console.error('Tree of Life: session bootstrap failed', error);
+          setBootstrapError(ERROR_MESSAGES.session);
         }
       }
     })();

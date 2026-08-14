@@ -21,49 +21,37 @@ import {
 
 const DEBOUNCE_MS = 500;
 
-/*
- * Two ways to be out of quota, and only one of them ends on its own.
- *
- * The server distinguishes them because the difference decides whether telling
- * someone to wait is true: an allowance that refills tomorrow is worth waiting
- * for, an empty balance is not. Saying "try again shortly" for both invited a
- * refresh that could never succeed — the same mistake as retrying a spent
- * account every thirty minutes, made in the copy instead of the code.
- */
-const EXHAUSTED_REFILLS = 'Out of drawing quota until tomorrow.';
+const DISCLAIMER =
+  'Generated from a description — not a photograph, and not always right.';
 
-const EXHAUSTED_BILLING =
-  'Out of drawing credit. This one needs paying for, not waiting out.';
+/** Exhaustion is the one failure a reload cannot clear, so it says so. */
+const ERROR_MESSAGES = {
+  unreachable: 'Could not reach the plate. Check your connection and reload.',
+  exhausted: 'Out of drawing quota — reloading will not bring it back.',
+  unfinished:
+    'The drawing did not finish. Reload to send it back for another try.',
+};
 
-const ERROR_MESSAGE = 'The drawing step failed. Reload to try again.';
+function messageKey({
+  error,
+  status,
+}: {
+  error: boolean;
+  status?: string | null;
+}): keyof typeof ERROR_MESSAGES {
+  if (error) {
+    return 'unreachable';
+  }
 
-const DISCLAIMER_DEFAULT = 'Drawn from a description, not photographed.';
+  if (status === 'EXHAUSTED') {
+    return 'exhausted';
+  }
 
-const DISCLAIMER_PASS = 'Drawn from a description, not photographed.';
-
-const DISCLAIMER_FAIL =
-  'Drawn from a description. The reviewer was not convinced this is the right ' +
-  'organism.';
+  return 'unfinished';
+}
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v14';
 
-function disclaimerForScore(
-  score:
-    { overall: number; taxonMatch: number; pass: boolean } | null | undefined
-): string {
-  if (!score) {
-    return DISCLAIMER_DEFAULT;
-  }
-  if (!score.pass || score.taxonMatch < 6) {
-    return DISCLAIMER_FAIL;
-  }
-  if (score.overall < 8) {
-    return DISCLAIMER_DEFAULT;
-  }
-  return DISCLAIMER_PASS;
-}
-
-/** Named OTTs only — origin / unnamed nodes skip generation. */
 export function isTaxonVisualEligible(
   node: TreeNode,
   isOrigin = false
@@ -80,14 +68,9 @@ export function isTaxonVisualEligible(
 type Props = {
   node: TreeNode;
   isOrigin?: boolean;
-  /** Merge a fresh TreeOfLifeSubtree (studio fields) into the live tree. */
   onSubtree: (subtree: TreeNode) => void;
 };
 
-/**
- * Kick TaxonVisual generation; on settle, refetch that node's subtree so the
- * tree query remains the UI source of truth (asset / description / status).
- */
 const TaxonVisualPanel: React.FC<Props> = ({
   node,
   isOrigin = false,
@@ -147,11 +130,6 @@ const TaxonVisualPanel: React.FC<Props> = ({
   const { data: subscriptionData } = useSubscription(
     Kicl_TaxonVisualUpdatedDocument,
     {
-      /*
-       * `useSubscription` has no `skipToken` equivalent — that is a `useQuery`
-       * affordance — so it keeps the `skip` option, which means variables have
-       * to satisfy the type even on the skipped pass.
-       */
       variables: { ottId: debounced?.ottId ?? 0 },
       skip: !(awaitingGeneration && debounced),
     }
@@ -163,7 +141,6 @@ const TaxonVisualPanel: React.FC<Props> = ({
       ? `${visual.status}:${visual.ottId}:${visual.nodeId ?? ''}`
       : null;
 
-  // After generation settles, refresh the node from TreeOfLifeSubtree.
   useEffect(() => {
     if (!settled || !visual) {
       return;
@@ -212,12 +189,6 @@ const TaxonVisualPanel: React.FC<Props> = ({
 
   const imageUrl = node.asset?.url ?? null;
   const status = node.visualStatus ?? visual?.status;
-  /*
-   * Only the generation result carries this — the node record stores the status
-   * but not the reason behind it, so a status read from the node leaves this
-   * null and the wait-and-see message is what shows.
-   */
-  const exhaustion = visual?.exhaustion ?? null;
   const failed = Boolean(error) || status === 'ERROR' || status === 'EXHAUSTED';
 
   const isGenerating =
@@ -225,32 +196,13 @@ const TaxonVisualPanel: React.FC<Props> = ({
     !failed &&
     (!debounced || loading || refreshing || awaitingGeneration || !visual);
 
-  /*
-   * Never let a status hide a picture that exists.
-   *
-   * `status` is whichever of the node record and the generation query answered
-   * last, and those two disagree readily: a node can carry an asset from an
-   * earlier success while a later attempt reports ERROR, and the subscription
-   * can push a failure over a query that had already returned READY. Reporting
-   * "could not generate" while holding the generated image is the worst of the
-   * possible readings, so the image wins whenever there is one.
-   */
-  if (!imageUrl && (error || status === 'ERROR' || status === 'EXHAUSTED')) {
+  if (!imageUrl && failed) {
     return (
       <Status
         in
         level='warning'
         title='No plate'
-        message={
-          status === 'EXHAUSTED'
-            ? // Absent on an older payload, where waiting was the safe reading.
-              exhaustion === 'BILLING'
-              ? EXHAUSTED_BILLING
-              : EXHAUSTED_REFILLS
-            : error
-              ? 'The plate would not load.'
-              : ERROR_MESSAGE
-        }
+        message={ERROR_MESSAGES[messageKey({ error: Boolean(error), status })]}
         align='start'
         property='fade'
       />
@@ -279,7 +231,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
         in
         level='warning'
         title='No plate'
-        message={ERROR_MESSAGE}
+        message={ERROR_MESSAGES.unfinished}
         align='start'
         property='fade'
       />
@@ -300,7 +252,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
           lookLike='h6'
           className='kicl-font-size-smaller kicl-color-grey-dark kicl-line-height-narrow'
         >
-          {disclaimerForScore(node.visualScore)}
+          {DISCLAIMER}
         </Text>
       </div>
     </Layout>

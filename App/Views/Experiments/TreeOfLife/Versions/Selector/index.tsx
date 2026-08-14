@@ -72,8 +72,8 @@ const Selector: React.FunctionComponent = () => {
               `${CLASS_NAME}__toggle`
             )}
             popoverTarget={CLASS_NAME}
-            aria-label='Earlier versions of this view'
-            title='Show the earlier versions of this view'
+            aria-label='Every version of this view'
+            title='Every version of this view'
           >
             <Ri.RiStackLine aria-hidden />
             {version === LIVE ? 'Final version' : `Version ${version}`}
