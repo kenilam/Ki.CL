@@ -1,13 +1,12 @@
 .kicl--widgets--global-header--navigation--mobile {
   --kicl--components--dialog--padding-block: var(--kicl-gutter-extreme);
   --kicl--components--dialog--padding-inline: var(--kicl-gutter-widest);
+  --kicl--components--dialog--block-size--starting-style: 0px;
+  --kicl--components--animation--property--slide-from-top--distance: 100%;
 
   .kicl--components--dialog--close {
     --kicl--components--dialog--padding-block: var(--kicl-gutter-wider);
   }
-
-  --kicl--components--dialog--block-size--starting-style: 0px;
-  --kicl--components--animation--property--slide-from-top--distance: 100%;
 
   &--toggle--is-overlaid {
     inset-block-start: calc(

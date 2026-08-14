@@ -1,111 +1,78 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
 
 // Routers
-import { useLocation, useNavigate } from '@/Router';
+import { useLocation } from '@/Router';
 
 // Components
-import { Dialog, HyperLink, Layout, Navigation } from '@/Components';
+import { Button, Dialog, Navigation, Text } from '@/Components';
 
 // Icons
 import { Ri } from '@/Icons';
 
-// Constants
-import { TICK } from '@/constants';
-
-// Views
-import { PATH as EXPERIMENTS_PATH } from '@/Views/Experiments';
-import { PATH as HOME_PATH } from '@/Views/Home';
+// Widgets
+import { Links } from '@/Widgets/GlobalHeader/Links';
 
 // Styles
 import './Styles.scss';
 
 const CLASS_NAME = 'kicl--widgets--global-header--navigation--mobile';
 
-const ICONS = {
-  true: <Ri.RiCloseLine />,
-  false: <Ri.RiMenuLine />,
-};
-
-const Links = [
-  <HyperLink
-    className='kicl-font-size-medium'
-    key={HOME_PATH}
-    to={`/${HOME_PATH}`}
-    unstyled
-  >
-    Home
-  </HyperLink>,
-  <HyperLink
-    className='kicl-font-size-medium'
-    key={EXPERIMENTS_PATH}
-    to={`/${EXPERIMENTS_PATH}`}
-    unstyled
-  >
-    Experiments
-  </HyperLink>,
-];
-
 const Mobile: React.FunctionComponent = () => {
-  const { search, ...location } = useLocation();
-  const navigate = useNavigate();
+  const { key } = useLocation();
 
-  const params = new URLSearchParams(search);
-
-  const hasNavigation = params.get('globalNavigation') === TICK;
+  const node = useRef<HTMLDialogElement>(null);
 
   /*
-   * The dialog's own close event, rather than a wrapper's. It fires whether the
-   * dialog was dismissed by Escape, by the backdrop or by the close control, so
-   * one handler covers every way out.
+   * A command opens and closes the dialog from markup, but a link inside it
+   * only changes the route behind it. `key` rather than `pathname`, because it
+   * changes on every navigation — including a link to the route already open,
+   * and including the back button.
    */
-  const onClose = () => {
-    if (!hasNavigation) {
-      return;
-    }
-
-    const url = new URL(location.pathname, window.location.origin);
-    params.delete('globalNavigation');
-
-    params.forEach((value, name) => {
-      url.searchParams.append(name, value);
-    });
-
-    navigate(url);
-  };
-
-  const Icon = ICONS[String(hasNavigation)];
-
-  const toggle = (isOverlaid: boolean) => (
-    <Layout alignContent='center'>
-      <HyperLink
-        className={classNames('kicl-font-size', `${CLASS_NAME}--toggle`, {
-          'kicl-position-fixed': isOverlaid,
-          [`${CLASS_NAME}--toggle--is-overlaid`]: isOverlaid,
-        })}
-        preventScrollReset
-        relative='route'
-        to={isOverlaid ? location.pathname : `?globalNavigation=${TICK}`}
-        unstyled
-      >
-        {Icon}
-      </HyperLink>
-    </Layout>
-  );
+  useEffect(() => {
+    node.current?.close();
+  }, [key]);
 
   return (
     <>
-      {toggle(false)}
+      <Button
+        className={classNames('kicl-font-size-medium', `${CLASS_NAME}--toggle`)}
+        command='show-modal'
+        commandFor={CLASS_NAME}
+        unstyled
+      >
+        <Ri.RiMenuLine />
+        <Text className='kicl-hidden' is='span'>
+          Open the navigation
+        </Text>
+      </Button>
+
       <Dialog
         className={CLASS_NAME}
         closable='keyboard'
         fullScreen
-        onClose={onClose}
-        open={hasNavigation}
+        id={CLASS_NAME}
+        ref={node}
       >
-        {toggle(true)}
+        <Button
+          className={classNames(
+            'kicl-font-size-medium',
+            'kicl-position-fixed',
+            `${CLASS_NAME}--toggle`,
+            `${CLASS_NAME}--toggle--is-overlaid`
+          )}
+          command='request-close'
+          commandFor={CLASS_NAME}
+          unstyled
+        >
+          <Ri.RiCloseLine />
+          <Text className='kicl-hidden' is='span'>
+            Close the navigation
+          </Text>
+        </Button>
+
         <Navigation autoFlow='row' gap='normal' justifyItems='start'>
           {Links}
         </Navigation>
