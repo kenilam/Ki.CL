@@ -243,7 +243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.26.0, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.26.0":
   version: 7.27.1
   resolution: "@babel/runtime@npm:7.27.1"
   checksum: 10c0/530a7332f86ac5a7442250456823a930906911d895c0b743bf1852efc88a20a016ed4cd26d442d0ca40ae6d5448111e02a08dd638a4f1064b47d080e2875dc05
@@ -1276,6 +1276,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@devframes/hub@npm:^0.8.0":
+  version: 0.8.2
+  resolution: "@devframes/hub@npm:0.8.2"
+  dependencies:
+    "@standard-schema/spec": "npm:^1.1.0"
+    destr: "npm:^2.0.5"
+    nostics: "npm:^1.2.0"
+    pathe: "npm:^2.0.3"
+    perfect-debounce: "npm:^2.1.0"
+    tinyexec: "npm:^1.3.0"
+    zigpty: "npm:^0.2.1"
+  peerDependencies:
+    devframe: 0.8.2
+  checksum: 10c0/af203639a1fec62b993d94ad5b823c8ca41f50bc7cc88bfb7179c57543e1eff456cd5203bd862f389452121aacdd3cf3e3f84a1a08f39f987f146109f90b9b8e
+  languageName: node
+  linkType: hard
+
 "@devframes/json-render@npm:^0.7.14":
   version: 0.7.14
   resolution: "@devframes/json-render@npm:0.7.14"
@@ -1293,62 +1310,77 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@devframes/plugin-inspect@npm:^0.7.14":
-  version: 0.7.14
-  resolution: "@devframes/plugin-inspect@npm:0.7.14"
+"@devframes/json-render@npm:^0.8.0":
+  version: 0.8.2
+  resolution: "@devframes/json-render@npm:0.8.2"
+  dependencies:
+    "@json-render/core": "npm:^0.19.0"
+    nostics: "npm:^1.2.0"
+    zod: "npm:^4.4.3"
+  peerDependencies:
+    "@devframes/hub": 0.8.2
+    devframe: 0.8.2
+  peerDependenciesMeta:
+    "@devframes/hub":
+      optional: true
+  checksum: 10c0/a8d5fa6915bbee11402202042e30ccdda779a168309df1a6b8a0b2cd17850395e43a5d7e874dd4e2c5c13ad59dc1f580bfe1d9a54e2744d23a8ed35bdaaf4536
+  languageName: node
+  linkType: hard
+
+"@devframes/plugin-inspect@npm:^0.8.0":
+  version: 0.8.2
+  resolution: "@devframes/plugin-inspect@npm:0.8.2"
   dependencies:
     "@valibot/to-json-schema": "npm:^1.7.1"
     cac: "npm:^7.0.0"
     nostics: "npm:^1.2.0"
   peerDependencies:
-    devframe: 0.7.14
+    devframe: 0.8.2
     vite: ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     vite:
       optional: true
   bin:
     devframe-inspect: ./bin.mjs
-  checksum: 10c0/b637d82ce37fc500224117af667f2b5dc7018381130cdc91ab88b4d50757d2e8b1c467e3c1515fc9eb7f042bb60f51ff50bef06e851d1b797fa346f9e66ce5c5
+  checksum: 10c0/cc0b1874ee7e952bfc5b94008b77fc11a3842ecda06890e0314f4227d7c2b3ff31453b022b1ef8049577414206e2aff3cf6cc895d251346405d197cb54b8fb61
   languageName: node
   linkType: hard
 
-"@devframes/plugin-messages@npm:^0.7.14":
-  version: 0.7.14
-  resolution: "@devframes/plugin-messages@npm:0.7.14"
+"@devframes/plugin-messages@npm:^0.8.0":
+  version: 0.8.2
+  resolution: "@devframes/plugin-messages@npm:0.8.2"
   dependencies:
     cac: "npm:^7.0.0"
     nostics: "npm:^1.2.0"
   peerDependencies:
-    "@devframes/hub": 0.7.14
-    devframe: 0.7.14
+    "@devframes/hub": 0.8.2
+    devframe: 0.8.2
     vite: ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     vite:
       optional: true
   bin:
     devframe-messages: ./bin.mjs
-  checksum: 10c0/05121592a0c1b625d3d4656485dd2b5b96d86d73499bd3a8545907741bbbc4552b2501da6a898835d29db01b6d8cabee2a4fd5672f6afd053014bedef94175f1
+  checksum: 10c0/941494c10a716abf9098630d443d9ed530f943f308e8241670e842e5138f865e6f3323ddfd524e533a51187b554c8fe65e71ac222a86bb23beba96bfc3159a99
   languageName: node
   linkType: hard
 
-"@devframes/plugin-terminals@npm:^0.7.14":
-  version: 0.7.14
-  resolution: "@devframes/plugin-terminals@npm:0.7.14"
+"@devframes/plugin-terminals@npm:^0.8.0":
+  version: 0.8.2
+  resolution: "@devframes/plugin-terminals@npm:0.8.2"
   dependencies:
     cac: "npm:^7.0.0"
     nostics: "npm:^1.2.0"
-    pathe: "npm:^2.0.3"
-    valibot: "npm:^1.4.2"
     zigpty: "npm:^0.2.1"
   peerDependencies:
-    devframe: 0.7.14
+    devframe: 0.8.2
     vite: ^8.0.0
   peerDependenciesMeta:
     vite:
       optional: true
   bin:
     devframe-terminals: ./bin.mjs
-  checksum: 10c0/382dd6c130574ed92a20af704e86265eded4ab1474dfc416760cf190adc0d3a4bbb0c034d41ff138a060943be3bf42d5fea3df834793108896e0dc53d4df5734
+  checksum: 10c0/6f7c873016d1a1498bea3e694d89b01e12f1dbaf1bf5b9196e372ff964224c8c18f0e58140bac4f10be30d36c39258bb913fbcd78bbc51705083cf1ca734823e
   languageName: node
   linkType: hard
 
@@ -2643,6 +2675,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@standard-schema/spec@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@standard-schema/spec@npm:1.1.0"
+  checksum: 10c0/d90f55acde4b2deb983529c87e8025fa693de1a5e8b49ecc6eb84d1fd96328add0e03d7d551442156c7432fd78165b2c26ff561b970a9a881f046abb78d6a526
+  languageName: node
+  linkType: hard
+
 "@standard-schema/utils@npm:^0.3.0":
   version: 0.3.0
   resolution: "@standard-schema/utils@npm:0.3.0"
@@ -3050,15 +3089,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-transition-group@npm:4.4.12":
-  version: 4.4.12
-  resolution: "@types/react-transition-group@npm:4.4.12"
-  peerDependencies:
-    "@types/react": "*"
-  checksum: 10c0/0441b8b47c69312c89ec0760ba477ba1a0808a10ceef8dc1c64b1013ed78517332c30f18681b0ec0b53542731f1ed015169fed1d127cc91222638ed955478ec7
-  languageName: node
-  linkType: hard
-
 "@types/react@npm:*":
   version: 19.1.2
   resolution: "@types/react@npm:19.1.2"
@@ -3149,15 +3179,6 @@ __metadata:
     fflate: "npm:~0.8.2"
     meshoptimizer: "npm:~1.1.1"
   checksum: 10c0/e036368ba2c2358520330f21494693c3acc3888d5c44c05fa8b8a9058d434a668179e842f5bb6dc8462af8445c1ef9a1104e181b23f5f3366dd5565e274afd87
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:11.0.0":
-  version: 11.0.0
-  resolution: "@types/uuid@npm:11.0.0"
-  dependencies:
-    uuid: "npm:*"
-  checksum: 10c0/6ebf1448d8fdc78d348a8a84389b74083f2f58bed75a5a6cf3be8419d33dcf757735c8b2de746b066ff8ef07f4384d02549774dc84195ffa46b24745471e9d8e
   languageName: node
   linkType: hard
 
@@ -3349,7 +3370,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/devtools-kit@npm:0.4.9, @vitejs/devtools-kit@npm:^0.4.0":
+"@vitejs/devtools-kit@npm:0.4.12":
+  version: 0.4.12
+  resolution: "@vitejs/devtools-kit@npm:0.4.12"
+  dependencies:
+    "@devframes/hub": "npm:^0.8.0"
+    "@devframes/json-render": "npm:^0.8.0"
+    devframe: "npm:^0.8.0"
+    local-pkg: "npm:^1.2.1"
+    mlly: "npm:^1.8.2"
+    nostics: "npm:^1.2.0"
+    nypm: "npm:^0.6.9"
+  peerDependencies:
+    vite: "*"
+  checksum: 10c0/976f53b3377fcb424573b41b53a80d4866faec8a8438f73034f643028f9f56836eeabedae7f0390d92c953bb98ad68dd9b35a6d8e512a79e8df3237ba531a91b
+  languageName: node
+  linkType: hard
+
+"@vitejs/devtools-kit@npm:^0.4.0":
   version: 0.4.9
   resolution: "@vitejs/devtools-kit@npm:0.4.9"
   dependencies:
@@ -3367,17 +3405,17 @@ __metadata:
   linkType: hard
 
 "@vitejs/devtools@npm:^0.4.9":
-  version: 0.4.9
-  resolution: "@vitejs/devtools@npm:0.4.9"
+  version: 0.4.12
+  resolution: "@vitejs/devtools@npm:0.4.12"
   dependencies:
-    "@devframes/hub": "npm:^0.7.14"
-    "@devframes/plugin-inspect": "npm:^0.7.14"
-    "@devframes/plugin-messages": "npm:^0.7.14"
-    "@devframes/plugin-terminals": "npm:^0.7.14"
-    "@vitejs/devtools-kit": "npm:0.4.9"
+    "@devframes/hub": "npm:^0.8.0"
+    "@devframes/plugin-inspect": "npm:^0.8.0"
+    "@devframes/plugin-messages": "npm:^0.8.0"
+    "@devframes/plugin-terminals": "npm:^0.8.0"
+    "@vitejs/devtools-kit": "npm:0.4.12"
     birpc: "npm:^4.0.0"
     cac: "npm:^7.0.0"
-    devframe: "npm:^0.7.14"
+    devframe: "npm:^0.8.0"
     h3: "npm:2.0.1-rc.22"
     local-pkg: "npm:^1.2.1"
     mlly: "npm:^1.8.2"
@@ -3386,10 +3424,10 @@ __metadata:
     pathe: "npm:^2.0.3"
     vue: "npm:^3.5.40"
   peerDependencies:
-    "@vitejs/devtools-oxc": ^0.4.9
-    "@vitejs/devtools-rolldown": ^0.4.9
-    "@vitejs/devtools-vite": ^0.4.9
-    "@vitejs/devtools-vitest": ^0.4.9
+    "@vitejs/devtools-oxc": ^0.4.12
+    "@vitejs/devtools-rolldown": ^0.4.12
+    "@vitejs/devtools-vite": ^0.4.12
+    "@vitejs/devtools-vitest": ^0.4.12
     vite: "*"
   peerDependenciesMeta:
     "@vitejs/devtools-oxc":
@@ -3402,7 +3440,7 @@ __metadata:
       optional: true
   bin:
     vite-devtools: ./bin.js
-  checksum: 10c0/634cc8a5d87cbb708d59c62cf42e291058044fa0c27992e999c898681f36f246a05c922e322da0e638ead3f2828245a9430dffbf9fe06aa624be22002cd3afb1
+  checksum: 10c0/161ca38bcb97d6a377014a4640fbc2663fbe9748126efb7fcd8276bd8d0fe7b0a57a3bbdcf776ccff3b4423e06c41fbea7d246a01d78f50a7fcbc0f58461007d
   languageName: node
   linkType: hard
 
@@ -3816,9 +3854,7 @@ __metadata:
     "@types/react-dom": "npm:19.2.3"
     "@types/react-helmet": "npm:6.1.11"
     "@types/react-test-renderer": "npm:19.1.0"
-    "@types/react-transition-group": "npm:4.4.12"
     "@types/three": "npm:0.185.1"
-    "@types/uuid": "npm:11.0.0"
     abortcontroller-polyfill: "npm:1.7.8"
     classnames: "npm:2.5.1"
     color: "npm:5.0.3"
@@ -3830,7 +3866,6 @@ __metadata:
     graphql-ws: "npm:6.2.0"
     include-media: "npm:2.0.0"
     intersection-observer: "npm:0.12.2"
-    keen-slider: "npm:6.8.6"
     lodash: "npm:4.18.1"
     mock-local-storage: "npm:1.1.24"
     normalize.css: "npm:8.0.1"
@@ -3841,13 +3876,11 @@ __metadata:
     react-responsive: "npm:10.0.1"
     react-svg: "npm:17.2.5"
     react-test-renderer: "npm:19.2.8"
-    react-transition-group: "npm:4.4.5"
     react-use-gesture: "npm:9.1.3"
     reset-css: "npm:5.0.2"
     three: "npm:0.185.1"
     ts-node: "npm:10.9.2"
     units-css: "npm:0.4.0"
-    uuid: "npm:14.0.1"
     valibot: "npm:1.4.2"
     vite: "npm:8.1.5"
   languageName: unknown
@@ -5295,6 +5328,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"devframe@npm:^0.8.0":
+  version: 0.8.2
+  resolution: "devframe@npm:0.8.2"
+  dependencies:
+    "@standard-schema/spec": "npm:^1.1.0"
+    birpc: "npm:^4.0.0"
+    crossws: "npm:^0.4.10"
+    destr: "npm:^2.0.5"
+    h3: "npm:^2.0.1-rc.26"
+    mrmime: "npm:^2.0.1"
+    nostics: "npm:^1.2.0"
+    pathe: "npm:^2.0.3"
+    ufo: "npm:^1.6.4"
+  peerDependencies:
+    "@modelcontextprotocol/client": ^2.0.0
+    "@modelcontextprotocol/server": ^2.0.0
+    cac: ^7.0.0
+  peerDependenciesMeta:
+    "@modelcontextprotocol/client":
+      optional: true
+    "@modelcontextprotocol/server":
+      optional: true
+    cac:
+      optional: true
+  bin:
+    devframe: ./bin/devframe.mjs
+  checksum: 10c0/48aafac8e1d3913bbdb8b47d678614f26c4cf514c681967bc7ae65fb5105fb4782a88071a38709839de01d12fc9e4c018e2082d72725bcc07376e4b258ef71d2
+  languageName: node
+  linkType: hard
+
 "diff@npm:^4.0.1":
   version: 4.0.2
   resolution: "diff@npm:4.0.2"
@@ -5306,16 +5369,6 @@ __metadata:
   version: 1.0.0
   resolution: "discontinuous-range@npm:1.0.0"
   checksum: 10c0/487b105f83c1cc528e25e65d3c4b73958ec79769b7bd0e264414702a23a7e2b282c72982b4bef4af29fcab53f47816c3f0a5c40d85a99a490f4bc35b83dc00f8
-  languageName: node
-  linkType: hard
-
-"dom-helpers@npm:^5.0.1":
-  version: 5.2.1
-  resolution: "dom-helpers@npm:5.2.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.8.7"
-    csstype: "npm:^3.0.2"
-  checksum: 10c0/f735074d66dd759b36b158fa26e9d00c9388ee0e8c9b16af941c38f014a37fc80782de83afefd621681b19ac0501034b4f1c4a3bff5caa1b8667f0212b5e124c
   languageName: node
   linkType: hard
 
@@ -6687,7 +6740,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"h3@npm:^2.0.1-rc.22":
+"h3@npm:^2.0.1-rc.22, h3@npm:^2.0.1-rc.26":
   version: 2.0.1-rc.26
   resolution: "h3@npm:2.0.1-rc.26"
   dependencies:
@@ -7742,13 +7795,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keen-slider@npm:6.8.6":
-  version: 6.8.6
-  resolution: "keen-slider@npm:6.8.6"
-  checksum: 10c0/612553f15c5af61bf23f5defe414e7d314406a109e2d944c4253f7862e3666f2ab9bae0e43bf84f41678878ca1d90d38831845bb496dfd747ed84efc7d34efdd
-  languageName: node
-  linkType: hard
-
 "keyv@npm:^5.6.0":
   version: 5.6.0
   resolution: "keyv@npm:5.6.0"
@@ -8727,6 +8773,19 @@ __metadata:
   bin:
     nypm: ./dist/cli.mjs
   checksum: 10c0/2aed08d6a125c5559889ccdf67f4b4a6247aa751b6b554d2b2e92c992997127bc87bb535b7782ff328ab3275b6c5daad012e1e212de8f6d08a0e99bcb53646e6
+  languageName: node
+  linkType: hard
+
+"nypm@npm:^0.6.9":
+  version: 0.6.9
+  resolution: "nypm@npm:0.6.9"
+  dependencies:
+    citty: "npm:^0.2.2"
+    pathe: "npm:^2.0.3"
+    tinyexec: "npm:^1.2.4"
+  bin:
+    nypm: ./dist/cli.mjs
+  checksum: 10c0/8014c1842e554531a5092bae9f483d22413fe5f68fd2e15e74a2b7dc5b94e36cac836b9ebe9a70fd7ccba65a663c517c98663368f5b5e48d6bc65d74f0752d72
   languageName: node
   linkType: hard
 
@@ -9810,7 +9869,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.1, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -10051,21 +10110,6 @@ __metadata:
   peerDependencies:
     react: ^19.2.8
   checksum: 10c0/3ecb6b68f9658050bbe7f8e04fed58644c5693b1a5a716d78dd4ad9defac184e658f8a153265903e75b438f4aee5a7f2c6a9565ccce8e6321a93bb0237c04e66
-  languageName: node
-  linkType: hard
-
-"react-transition-group@npm:4.4.5":
-  version: 4.4.5
-  resolution: "react-transition-group@npm:4.4.5"
-  dependencies:
-    "@babel/runtime": "npm:^7.5.5"
-    dom-helpers: "npm:^5.0.1"
-    loose-envify: "npm:^1.4.0"
-    prop-types: "npm:^15.6.2"
-  peerDependencies:
-    react: ">=16.6.0"
-    react-dom: ">=16.6.0"
-  checksum: 10c0/2ba754ba748faefa15f87c96dfa700d5525054a0141de8c75763aae6734af0740e77e11261a1e8f4ffc08fd9ab78510122e05c21c2d79066c38bb6861a886c82
   languageName: node
   linkType: hard
 
@@ -11343,6 +11387,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tinyexec@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "tinyexec@npm:1.3.0"
+  checksum: 10c0/e9b89f97489d2aab2cef408da279e6b32547e738d1275032ccb8fd0028a006d93eb70fc51c6cffd9fc2f5aca6c2a273d8b6f73b52d46ee5116da6b94969ef958
+  languageName: node
+  linkType: hard
+
 "tinyglobby@npm:^0.2.12":
   version: 0.2.13
   resolution: "tinyglobby@npm:0.2.13"
@@ -11942,15 +11993,6 @@ __metadata:
   version: 3.11.0
   resolution: "utility-types@npm:3.11.0"
   checksum: 10c0/2f1580137b0c3e6cf5405f37aaa8f5249961a76d26f1ca8efc0ff49a2fc0e0b2db56de8e521a174d075758e0c7eb3e590edec0832eb44478b958f09914920f19
-  languageName: node
-  linkType: hard
-
-"uuid@npm:*, uuid@npm:14.0.1":
-  version: 14.0.1
-  resolution: "uuid@npm:14.0.1"
-  bin:
-    uuid: dist-node/bin/uuid
-  checksum: 10c0/2d961289097cb68c37d93d1da0b5c3aafc1eb9948a455cca8d0ae53a099b2fe583b8933254a84097f700e6bac2e23033364904df0467c22551d5d9611febcaf6
   languageName: node
   linkType: hard
 
