@@ -17,8 +17,8 @@ type Era = {
  * and not as a list of files.
  */
 export const ERAS: readonly Era[] = [
-  { label: 'Drawn at once, in WebGL', versions: VERSIONS.slice(0, 8) },
-  { label: 'Read as documents', versions: VERSIONS.slice(8, 13) },
-  { label: 'The map', versions: VERSIONS.slice(13, 14) },
-  { label: 'The frame', versions: VERSIONS.slice(14) },
+  { label: 'WebGL, the whole clade at once', versions: VERSIONS.slice(0, 8) },
+  { label: 'HTML, one clade at a time', versions: VERSIONS.slice(8, 13) },
+  { label: 'The widest view I tried', versions: VERSIONS.slice(13, 14) },
+  { label: 'One taxon, close up', versions: VERSIONS.slice(14) },
 ];

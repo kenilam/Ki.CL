@@ -3,7 +3,6 @@ import React from 'react';
 // Partials
 import Article from './Article';
 import Banner from './Banner';
-import Scale from './Scale';
 import { Layout } from '@/Components';
 
 // Styles
@@ -16,7 +15,6 @@ const Home: React.FunctionComponent = () => {
     <Layout gap='wide'>
       <article className={CLASS_NAME}>
         <Banner />
-        <Scale />
         <Article />
       </article>
     </Layout>
