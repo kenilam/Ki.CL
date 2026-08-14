@@ -28,31 +28,34 @@ const Aside: React.FunctionComponent = () => {
           justifyItems='center'
         >
           <HyperLink
+            aria-label='LinkedIn profile'
             lookLikeButton
             size='small'
-            title='link to my LinkedIn profile'
+            title='LinkedIn profile'
             to='https://www.linkedin.com/in/kenilam'
             variant='ghost'
           >
-            <Icons.Ri.RiLinkedinLine />
+            <Icons.Ri.RiLinkedinLine aria-hidden />
           </HyperLink>
           <HyperLink
+            aria-label='GitHub profile'
             lookLikeButton
             size='small'
-            title='link to my Github profile'
+            title='GitHub profile'
             to='https://github.com/kenilam'
             variant='ghost'
           >
-            <Icons.Ri.RiGithubLine />
+            <Icons.Ri.RiGithubLine aria-hidden />
           </HyperLink>
           <HyperLink
+            aria-label='Email me'
             lookLikeButton
             size='small'
-            title='Send me a email'
+            title='Email me'
             to='mailto:hello@ki-cl.com'
             variant='ghost'
           >
-            <Icons.Ri.RiMailLine />
+            <Icons.Ri.RiMailLine aria-hidden />
           </HyperLink>
         </Navigation>
       </aside>
