@@ -24,37 +24,33 @@
   --kicl-size-18x: calc(var(--kicl-size) * 18);
   --kicl-size-19x: calc(var(--kicl-size) * 19);
   --kicl-size-20x: calc(var(--kicl-size) * 20);
-
-  // Semantic border-radius scale (aliases → size tokens)
-  --kicl-border-radius-xs: var(--kicl-size-2x);
-  --kicl-border-radius-sm: var(--kicl-size-half);
-  --kicl-border-radius-md: var(--kicl-size);
-  --kicl-border-radius-lg: var(--kicl-size-2x);
-  --kicl-border-radius-xl: var(--kicl-size-3x);
-  --kicl-border-radius-xxl: var(--kicl-size-4x);
-  --kicl-border-radius-max: var(--kicl-size-6x);
-
-  // Semantic inline-size scale (aliases → size tokens)
-  --kicl-inline-size-xs: var(--kicl-size-4x);
-  --kicl-inline-size-sm: var(--kicl-size-6x);
-  --kicl-inline-size-md: var(--kicl-size-10x);
-  --kicl-inline-size-lg: var(--kicl-size-14x);
-  --kicl-inline-size-xl: var(--kicl-size-16x);
-  --kicl-inline-size-xxl: var(--kicl-size-18x);
-  --kicl-inline-size-max: var(--kicl-size-18x);
 }
 
-@include make-variable-class('border-radius', 'xs');
-@include make-variable-class('border-radius', 'sm');
-@include make-variable-class('border-radius', 'md');
-@include make-variable-class('border-radius', 'lg');
-@include make-variable-class('border-radius', 'xl');
-@include make-variable-class('border-radius', 'xxl');
-@include make-variable-class('border-radius', 'max');
-@include make-variable-class('inline-size', 'xs');
-@include make-variable-class('inline-size', 'sm');
-@include make-variable-class('inline-size', 'md');
-@include make-variable-class('inline-size', 'lg');
-@include make-variable-class('inline-size', 'xl');
-@include make-variable-class('inline-size', 'xxl');
-@include make-variable-class('inline-size', 'max');
+@mixin make-size-variable-class(
+  $property: null,
+  $identifier: null,
+  $size: null
+) {
+  @if $identifier and $property {
+    $suffix: if($size, '-#{$size}', '');
+
+    .kicl-#{$property}-#{$identifier} {
+      #{$property}: var(--kicl-size#{$suffix});
+    }
+  }
+}
+
+@include make-size-variable-class('border-radius', 'xs', '2px');
+@include make-size-variable-class('border-radius', 'sm', 'half');
+@include make-size-variable-class('border-radius', 'md');
+@include make-size-variable-class('border-radius', 'lg', '2x');
+@include make-size-variable-class('border-radius', 'xl', '3x');
+@include make-size-variable-class('border-radius', 'xxl', '4x');
+@include make-size-variable-class('border-radius', 'max', '6x');
+@include make-size-variable-class('inline-size', 'xs', '4x');
+@include make-size-variable-class('inline-size', 'sm', '6x');
+@include make-size-variable-class('inline-size', 'md', '10x');
+@include make-size-variable-class('inline-size', 'lg', '14x');
+@include make-size-variable-class('inline-size', 'xl', '16x');
+@include make-size-variable-class('inline-size', 'xxl', '18x');
+@include make-size-variable-class('inline-size', 'max', '20x');

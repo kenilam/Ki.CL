@@ -42,6 +42,7 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
       children,
       className: _className = '',
       disabled,
+      end = true,
       level,
       lookLikeButton,
       target: _target,
@@ -126,6 +127,7 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
       <NavLink
         {...rest}
         className={className}
+        end={end}
         onClick={onClick}
         ref={ref}
         tabIndex={disabled ? -1 : undefined}

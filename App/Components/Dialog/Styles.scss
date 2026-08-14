@@ -1,6 +1,6 @@
 :root {
   --kicl--components--dialog--background-color: var(--kicl-color-white);
-  --kicl--components--dialog--border-radius: var(--kicl-border-radius-md);
+  --kicl--components--dialog--border-radius: var(--kicl-size);
   --kicl--components--dialog--max-inline-size: 66ch;
   --kicl--components--dialog--inline-size: auto;
   --kicl--components--dialog--offset: var(--kicl-gutter-extreme);
@@ -40,7 +40,6 @@
 
   &--is-full-screen {
     --kicl--components--dialog--block-size: 100dvb;
-    --kicl--components--dialog--block-size--starting-style: 0px;
     --kicl--components--dialog--border-radius: 0;
     --kicl--components--dialog--inline-size: 100dvi;
     --kicl--components--dialog--max-inline-size: 100dvi;
@@ -63,24 +62,10 @@
   margin: auto;
   max-inline-size: 100dvi;
   overscroll-behavior: contain;
-
-  /*
-   * Held in the top layer while it leaves.
-   *
-   * `display` and `overlay` are discrete properties — they would otherwise
-   * switch on the first frame of the exit and there would be nothing left to
-   * animate. `allow-discrete` defers both until the transition finishes, which
-   * is what lets the panel inside fade and slide out rather than vanish.
-   */
   transition:
     display var(--kicl-transition-duration-fast) allow-discrete,
     overlay var(--kicl-transition-duration-fast) allow-discrete;
 
-  /*
-   * On a phone the panel is a sheet: measured against the *small* viewport, so
-   * the address bar retracting cannot resize it mid-scroll, and pinned to the
-   * foot with the offset left clear at the top.
-   */
   @include query('≤mobile') {
     min-block-size: 100svb;
 
@@ -111,13 +96,9 @@
       opacity var(--kicl-transition-duration-fast),
       translate var(--kicl-transition-duration-fast);
     translate: 0 0;
+    z-index: 1;
   }
 
-  /*
-   * `@starting-style` is needed as well as the base rule above: the dialog is
-   * `display: none` until it opens, and an element appearing has no previous
-   * state to transition from unless one is named here.
-   */
   &[open] > section {
     opacity: 1;
     translate: 0 0;
@@ -170,5 +151,6 @@
     inset-block-start: var(--kicl--components--dialog--padding-block);
     margin-block-end: var(--kicl--components--dialog--padding-block);
     margin-inline-start: auto;
+    z-index: 2;
   }
 }
