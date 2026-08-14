@@ -2,9 +2,11 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "frontend-dev",
-      "url": "https://localhost:3001",
-      "port": 3001
+      "name": "frontend",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["workspace", "app", "run", "development"],
+      "port": 3001,
+      "url": "https://localhost.kicl.com:3001"
     }
   ]
 }
