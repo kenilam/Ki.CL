@@ -177,6 +177,7 @@ export type DiagramState = {
 };
 
 type Props = {
+  ref?: React.Ref<HTMLElement>;
   spec: Spec;
   state?: DiagramState;
 };
@@ -186,12 +187,12 @@ type Props = {
  * tokens - surfaces, borders, brand accents, and the site typeface - so it
  * follows the theme instead of shipping as a static image.
  */
-const Diagram: React.FunctionComponent<Props> = ({ spec, state }) => {
+const Diagram: React.FunctionComponent<Props> = ({ ref, spec, state }) => {
   const id = useId().replace(/:/g, '');
   const { description, edges, groups, height, nodes, width } = spec;
 
   return (
-    <figure className={BASE}>
+    <figure className={BASE} ref={ref}>
       <svg
         aria-label={description}
         role='img'

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 // Components
 import { Heading, Layout, Text } from '@/Components';
@@ -105,11 +105,9 @@ const STEPS: PlayerStep[] = [
 ];
 
 const AgentSimulation: React.FunctionComponent = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section ref={sectionRef}>
+      <section>
         <Heading className='kicl-font-size-larger' is='h3'>
           Watch the agent work
         </Heading>
@@ -126,7 +124,6 @@ const AgentSimulation: React.FunctionComponent = () => {
           dotLabels={['draft 1', 'draft 2', 'draft 3', 'hero']}
           idleHint='Press run to start a session.'
           runLabel='Run a session'
-          sectionRef={sectionRef}
           spec={agentPlane}
           steps={STEPS}
         />
