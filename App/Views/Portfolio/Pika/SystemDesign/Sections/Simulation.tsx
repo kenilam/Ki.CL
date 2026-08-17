@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 // Components
 import { Heading, Layout, Text } from '@/Components';
@@ -91,9 +91,11 @@ const STEPS: PlayerStep[] = [
 ];
 
 const Simulation: React.FunctionComponent = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section>
+      <section ref={sectionRef}>
         <Heading className='kicl-font-size-larger' is='h3'>
           Watch it run
         </Heading>
@@ -110,6 +112,7 @@ const Simulation: React.FunctionComponent = () => {
           dotLabels={['shot 1', 'shot 2', 'shot 3', 'shot 4', 'shot 5']}
           idleHint='Press run to submit a job.'
           runLabel='Run a job'
+          sectionRef={sectionRef}
           spec={services}
           steps={STEPS}
         />
