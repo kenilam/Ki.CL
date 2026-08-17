@@ -3,9 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Hooks
-import useScrollIntoView from '@/Hooks/useScrollIntoView';
-
 // Components
 import { Button, Card, CardContent, Layout, Spinner, Text } from '@/Components';
 
@@ -35,8 +32,6 @@ type Props = {
   dotLabels: string[];
   idleHint: string;
   runLabel: string;
-  /** Centred in the viewport on run, so the diagram is watchable. */
-  sectionRef: React.RefObject<HTMLElement | null>;
   spec: Spec;
   steps: PlayerStep[];
 };
@@ -51,20 +46,21 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   dotLabels,
   idleHint,
   runLabel,
-  sectionRef,
   spec,
   steps,
 }) => {
   const [step, setStep] = useState(-1);
   const [playing, setPlaying] = useState(false);
-  const logRef = useRef<HTMLDivElement>(null);
-  const { scrollIntoView } = useScrollIntoView();
+  const ref = {
+    diagram: useRef<HTMLElement>(null),
+    log: useRef<HTMLDivElement>(null),
+  };
 
   const run = useCallback(() => {
-    scrollIntoView(sectionRef.current);
+    ref.diagram.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
     setStep(-1);
     setPlaying(true);
-  }, [scrollIntoView, sectionRef]);
+  }, []);
 
   useEffect(() => {
     if (!playing) {
@@ -86,7 +82,7 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   }, [playing, steps.length]);
 
   useEffect(() => {
-    logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
+    ref.log.current?.scrollTo({ top: ref.log.current.scrollHeight });
   }, [step]);
 
   const seen = steps.slice(0, step + 1);
@@ -119,14 +115,13 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
       >
         <section>
           <Button disabled={playing} onClick={run} size='small' type='button'>
-            <Text is='span'>
-              {finished ? 'Replay' : playing ? 'Running' : runLabel}
-            </Text>
+            {finished ? 'Replay' : playing ? 'Running' : runLabel}
           </Button>
           <Spinner in={playing} position='inline' size='small' />
         </section>
       </Layout>
       <Diagram
+        ref={ref.diagram}
         spec={spec}
         state={{ active: current?.active, failed: current?.failed }}
       />
@@ -155,7 +150,7 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
               </div>
               <div
                 className={`${CLASS_NAME}__simulation-log`}
-                ref={logRef}
+                ref={ref.log}
                 role='log'
               >
                 {seen.length === 0 ? (
