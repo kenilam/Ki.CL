@@ -83,8 +83,8 @@ const PartTwo: React.FunctionComponent = () => {
           executors pulling from a session queue, with everything durable -
           message history, working plan, media context, budget spent - in the
           session store. A turn is itself a durable workflow, which means a
-          crash mid-turn resumes mid-turn. It is the same Temporal machinery
-          from Part 1, running a different program.
+          crash mid-turn resumes mid-turn. It is the same <code>Temporal</code>{' '}
+          machinery from Part 1, running a different program.
         </Text>
         <Text>
           The agent plane adds three small tables that key into Part 1&apos;s
@@ -145,7 +145,8 @@ const PartTwo: React.FunctionComponent = () => {
               The tool registry mechanically projects the primitive schemas from
               Part 1 into tool definitions - one source of truth, so a new
               primitive is a new agent capability with zero agent-side code.
-              Published Apps become macro-tools too: calling character-creator
+              Published Apps become macro-tools too: calling{' '}
+              <code>character-creator</code>
               beats hand-orchestrating five primitives, because that path is
               battle-tested.
             </Text>
@@ -166,9 +167,10 @@ const PartTwo: React.FunctionComponent = () => {
                 Observe and iterate.
               </Text>{' '}
               Results come back as asset refs plus a vision critique on request.
-              Warm up the lighting on shot two becomes an image.edit cycle
-              against lineage the agent can see, and approved-draft checkpoints
-              keep iteration converging instead of wandering.
+              Warm up the lighting on shot two becomes an{' '}
+              <code>image.edit</code> cycle against lineage the agent can see,
+              and approved-draft checkpoints keep iteration converging instead
+              of wandering.
             </Text>
           </ListItem>
         </List>

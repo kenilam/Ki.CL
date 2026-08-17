@@ -3,6 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Hooks
+import useScrollIntoView from '@/Hooks/useScrollIntoView';
+
 // Components
 import { Button, Card, CardContent, Layout, Spinner, Text } from '@/Components';
 
@@ -32,6 +35,8 @@ type Props = {
   dotLabels: string[];
   idleHint: string;
   runLabel: string;
+  /** Centred in the viewport on run, so the diagram is watchable. */
+  sectionRef: React.RefObject<HTMLElement | null>;
   spec: Spec;
   steps: PlayerStep[];
 };
@@ -46,17 +51,20 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   dotLabels,
   idleHint,
   runLabel,
+  sectionRef,
   spec,
   steps,
 }) => {
   const [step, setStep] = useState(-1);
   const [playing, setPlaying] = useState(false);
   const logRef = useRef<HTMLDivElement>(null);
+  const { scrollIntoView } = useScrollIntoView();
 
   const run = useCallback(() => {
+    scrollIntoView(sectionRef.current);
     setStep(-1);
     setPlaying(true);
-  }, []);
+  }, [scrollIntoView, sectionRef]);
 
   useEffect(() => {
     if (!playing) {

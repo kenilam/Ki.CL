@@ -49,11 +49,11 @@ const Walkthrough: React.FunctionComponent = () => {
           turned out to be: less than I expected when I started sketching it.
           The agent is just another client of the orchestration engine, and its
           tools are the same primitives and Apps the buttons already call. A
-          turn is a durable workflow on the same Temporal machinery - assemble
-          context, pick tools, execute them as ordinary jobs, observe, iterate -
-          with a governor pricing every step before it runs. What is actually
-          new is the agent runtime itself (the loop, session state, context
-          management), a cost-governance layer (model routing,
+          turn is a durable workflow on the same <code>Temporal</code> machinery
+          - assemble context, pick tools, execute them as ordinary jobs,
+          observe, iterate - with a governor pricing every step before it runs.
+          What is actually new is the agent runtime itself (the loop, session
+          state, context management), a cost-governance layer (model routing,
           draft-before-final rendering, budgets), and an evaluation harness
           (judged golden briefs, replay-based regression). Jobs, assets,
           moderation - untouched. The credit ledger is unchanged too; the agent

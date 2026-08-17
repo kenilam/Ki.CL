@@ -101,11 +101,13 @@ const PartOne: React.FunctionComponent = () => {
         </Text>
         <Text>
           Primitives are the platform&apos;s vocabulary: thin, typed wrappers
-          around the backend creative APIs (video.generate, image.edit,
-          vision.analyze, media.ffmpeg, llm.complete, and so on). Each one
-          declares its argument schema, cost model, latency class, timeout
+          around the backend creative APIs (<code>video.generate</code>,{' '}
+          <code>image.edit</code>,<code>vision.analyze</code>,{' '}
+          <code>media.ffmpeg</code>, <code>llm.complete</code>, and so on). Each
+          one declares its argument schema, cost model, latency class, timeout
           profile, and which providers can serve it. When a new vendor model
-          appears, we register a provider, and every App with a model-select
+          appears, we register a provider, and every App with a{' '}
+          <code>model-select</code>
           input picks it up without touching a single manifest - though new
           providers earn default traffic through the same staged rollout as
           Apps, watched against the primitive&apos;s error budget.
@@ -188,21 +190,21 @@ const PartOne: React.FunctionComponent = () => {
           manifest&apos;s DAG into task rows, schedules whatever is ready onto
           per-primitive-class queues, records every state transition, and drives
           retries and timeouts from durable state. I would build this on
-          Temporal rather than hand-rolling it. Checkpointed workflow state,
-          timers, retries - that is precisely the problem Temporal exists to
-          solve, and hand-rolled DAG engines accumulate exactly the reliability
-          bugs it prevents. The manifest interpreter is a single generic
-          workflow, which means launching a new App deploys no orchestration
-          code at all.
+          <code>Temporal</code> rather than hand-rolling it. Checkpointed
+          workflow state, timers, retries - that is precisely the problem{' '}
+          <code>Temporal</code> exists to solve, and hand-rolled DAG engines
+          accumulate exactly the reliability bugs it prevents. The manifest
+          interpreter is a single generic workflow, which means launching a new
+          App deploys no orchestration code at all.
         </Text>
         <Text>
           Stateless workers pull typed tasks and reach providers through an
           adapter layer that smooths over the annoying differences: auth,
           request shape, webhook versus polling completion, error taxonomy,
           per-provider rate limits. Every task transition emits an event, and a
-          realtime gateway fans job progress out to clients over SSE - this is
-          what lets the UI say three of five shots rendered instead of showing a
-          spinner for four minutes.
+          realtime gateway fans job progress out to clients over{' '}
+          <code>SSE</code> - this is what lets the UI say three of five shots
+          rendered instead of showing a spinner for four minutes.
         </Text>
         <Text>
           Credits are held when a job starts and settled per task as work
@@ -214,14 +216,14 @@ const PartOne: React.FunctionComponent = () => {
           and cost, each sliced by app, primitive, and provider.
         </Text>
         <Text>
-          Postgres as a single box invites an obvious question, so some rough
-          numbers. At 100k jobs a day averaging six tasks each, task and attempt
-          rows land under a million a day - partitionable by month and years
-          from being the bottleneck. Assets dominate instead: video at that
-          volume is terabytes a day, which is exactly why bytes live in
-          content-addressed S3 behind a CDN and never near the database. The
-          real ceiling is provider rate limits, which is what the per-provider
-          admission control is for.
+          <code>Postgres</code> as a single box invites an obvious question, so
+          some rough numbers. At 100k jobs a day averaging six tasks each, task
+          and attempt rows land under a million a day - partitionable by month
+          and years from being the bottleneck. Assets dominate instead: video at
+          that volume is terabytes a day, which is exactly why bytes live in
+          content-addressed <code>S3</code> behind a CDN and never near the
+          database. The real ceiling is provider rate limits, which is what the
+          per-provider admission control is for.
         </Text>
         <Layout alignItems='center' justifyContent='stretch'>
           <Button
@@ -275,21 +277,23 @@ const PartOne: React.FunctionComponent = () => {
           deploy pipelines, N failure modes, no shared retry story, and an
           engineer in the loop for every new App. Manifests invert all of that.
           What you give up is expressiveness, so the plan is to hold the line on
-          declarative and keep one pressure valve: a custom.step primitive that
-          calls out to a team-owned sandboxed function. The 5% edge case gets
-          its escape hatch without contorting the format for everyone else.
+          declarative and keep one pressure valve: a <code>custom.step</code>{' '}
+          primitive that calls out to a team-owned sandboxed function. The 5%
+          edge case gets its escape hatch without contorting the format for
+          everyone else.
         </Text>
         <Text>
           <Text is='span' className='kicl-font-weight-bold'>
-            Temporal versus hand-rolling.
+            <code>Temporal</code> versus hand-rolling.
           </Text>{' '}
-          Hand-rolling a queue-plus-state-machine on Redis and Postgres is a fun
-          six weeks followed by a career of edge cases - workers dying
-          mid-callback, retry storms, clock skew on timeouts. Temporal buys
-          durable timers, exactly-once state transitions, and workflow
-          visibility off the shelf. For a company whose product is long-running
-          jobs, that trade is clearly right, and lock-in stays manageable
-          because workers only ever speak the task schema.
+          Hand-rolling a queue-plus-state-machine on Redis and{' '}
+          <code>Postgres</code> is a fun six weeks followed by a career of edge
+          cases - workers dying mid-callback, retry storms, clock skew on
+          timeouts. <code>Temporal</code> buys durable timers, exactly-once
+          state transitions, and workflow visibility off the shelf. For a
+          company whose product is long-running jobs, that trade is clearly
+          right, and lock-in stays manageable because workers only ever speak
+          the task schema.
         </Text>
         <Text>
           <Text is='span' className='kicl-font-weight-bold'>
@@ -319,10 +323,11 @@ const PartOne: React.FunctionComponent = () => {
               <Text is='span' className='kicl-font-weight-bold'>
                 Retries with a taxonomy.
               </Text>{' '}
-              Adapters classify every error: retryable gets exponential backoff
-              with jitter, permanent fails fast and tells the user why, and a
-              provider browning out trips a circuit breaker - failing work over
-              to an equivalent provider where the manifest allows it.
+              Adapters classify every error: <code>retryable</code> gets
+              exponential backoff with jitter, permanent fails fast and tells
+              the user why, and a provider browning out trips a circuit breaker
+              - failing work over to an equivalent provider where the manifest
+              allows it.
             </Text>
           </ListItem>
           <ListItem>
