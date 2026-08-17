@@ -1,13 +1,10 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Route as Origin } from '@/Router';
+import { Route } from '@/Router';
 
 // Components
 import { Spinner } from '@/Components';
-
-// Views
-import TreeOfLife from './TreeOfLife';
 
 // Constants
 import { PATH } from './constants';
@@ -23,9 +20,4 @@ const Lazy: React.FunctionComponent = () => {
 };
 
 export { PATH };
-export default (
-  <Origin path={PATH} element={<Lazy />}>
-    <Origin index element={<Navigate to='tree-of-life' replace />} />
-    {TreeOfLife}
-  </Origin>
-);
+export default <Route path={`${PATH}/*`} element={<Lazy />} />;

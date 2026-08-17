@@ -11,3 +11,17 @@
     }
   }
 }
+
+@mixin make-size-variable-class(
+  $property: null,
+  $identifier: null,
+  $size: null
+) {
+  @if $identifier and $property {
+    $suffix: if($size, '-#{$size}', '');
+
+    .kicl-#{$property}-#{$identifier} {
+      #{$property}: var(--kicl-size#{$suffix});
+    }
+  }
+}

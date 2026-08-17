@@ -34,7 +34,8 @@ Do not invent parallel wrappers. Exception: SVG-only nodes (`<text>`, `<circle>`
 | Position | `kicl-position-*` (absolute \| fixed \| relative \| …) | `position:` (including `var(--kicl-position-*)`) |
 | Inline size | `kicl-inline-size-*` (xs \| sm \| md \| lg \| xl \| xxl \| max) | `inline-size:` for those fixed widths |
 | Font size | `kicl-font-size` / `-smallest`…`-extreme` | `font-size: var(--kicl-font-size*)` |
-| Weight / family / line-height / align | matching `kicl-font-*` / `kicl-line-height-*` / `kicl-text-*` | same via `var(--kicl-*)` |
+| Weight / family / line-height / align | matching `kicl-font-*` / `kicl-line-height-*` / `kicl-text-align-*` | same via `var(--kicl-*)` |
+| Text transform | `kicl-text-transform-*` (capitalize \| lowercase \| uppercase \| none) | `text-transform:` |
 
 `kicl-color-*` also sets `--kicl-body-color`. Do not use `kicl-fill-*` on SVGs or icon wrappers.
 

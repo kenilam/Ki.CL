@@ -18,7 +18,7 @@
   --kicl-surface-border-color: color-mix(
     in oklab,
     var(--kicl-surface-color) 85%,
-    var(--kicl-color-grey)
+    var(--kicl-color-grey-darker)
   );
   --kicl-body-background-color: var(--kicl-color-white);
   --kicl-body-color: var(--kicl-color-grey-darker);

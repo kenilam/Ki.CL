@@ -1,0 +1,48 @@
+:root {
+  --kicl-gutter: #{$gutter};
+  --kicl-gutter-none: 0;
+  --kicl-gutter-narrow: calc(var(--kicl-gutter) * 0.5);
+  --kicl-gutter-narrower: calc(var(--kicl-gutter-narrow) * 0.5);
+  --kicl-gutter-narrowest: calc(var(--kicl-gutter-narrower) * 0.5);
+  --kicl-gutter-wide: calc(var(--kicl-gutter) * 2);
+  --kicl-gutter-wider: calc(var(--kicl-gutter-wide) * 1.5);
+  --kicl-gutter-widest: calc(var(--kicl-gutter-wider) * 1.2);
+  --kicl-gutter-extreme: calc(var(--kicl-gutter-widest) * 1.5);
+
+  @include tablet {
+    --kicl-gutter: #{calc($gutter / 2)};
+  }
+}
+
+@mixin make-gutter-variable-class($property: null, $identifier: null) {
+  @if $identifier and $property {
+    $suffix: if($identifier, '-#{$identifier}', '');
+
+    .kicl-#{$property}-#{$identifier} {
+      #{$property}: var(--kicl-gutter#{$suffix});
+    }
+  }
+}
+
+@mixin make-gutter-variable-classes($property) {
+  @include make-gutter-variable-class($property);
+  @include make-gutter-variable-class($property, 'narrow');
+  @include make-gutter-variable-class($property, 'narrower');
+  @include make-gutter-variable-class($property, 'narrowest');
+  @include make-gutter-variable-class($property, 'wide');
+  @include make-gutter-variable-class($property, 'wider');
+  @include make-gutter-variable-class($property, 'widest');
+}
+
+@include make-gutter-variable-classes('padding-block');
+@include make-gutter-variable-classes('padding-block-start');
+@include make-gutter-variable-classes('padding-block-end');
+@include make-gutter-variable-classes('padding-inline');
+@include make-gutter-variable-classes('padding-inline-start');
+@include make-gutter-variable-classes('padding-inline-end');
+@include make-gutter-variable-classes('margin-block');
+@include make-gutter-variable-classes('margin-block-start');
+@include make-gutter-variable-classes('margin-block-end');
+@include make-gutter-variable-classes('margin-inline');
+@include make-gutter-variable-classes('margin-inline-start');
+@include make-gutter-variable-classes('margin-inline-end');

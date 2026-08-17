@@ -1,4 +1,5 @@
 :root {
+  --kicl-transition-duration-5m: #{$speed * 500};
   --kicl-transition-duration-1m: #{$speed * 100};
   --kicl-transition-duration-30s: #{$speed * 50};
   --kicl-transition-duration-15s: #{$speed * 25};
