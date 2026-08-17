@@ -1,10 +1,10 @@
 /**
- * v7 — D3 hierarchy layout engine + R3F / Three.js Bezier render engine
+ * v7 - D3 hierarchy layout engine + R3F / Three.js Bezier render engine
  *
  * Architecture (from the reviewed Option 1 + Option 5 hybrid):
- * 1. layoutEngine  — d3.hierarchy + d3.cluster → positions + CubicBezier specs
- * 2. Branches      — THREE.CubicBezierCurve3 → tapered tubes
- * 3. Nodes         — InstancedMesh tips, origin marker, sprite stand-ins, labels
+ * 1. layoutEngine  - d3.hierarchy + d3.cluster → positions + CubicBezier specs
+ * 2. Branches      - THREE.CubicBezierCurve3 → tapered tubes
+ * 3. Nodes         - InstancedMesh tips, origin marker, sprite stand-ins, labels
  */
 import React, { useEffect, useMemo, useState } from 'react';
 

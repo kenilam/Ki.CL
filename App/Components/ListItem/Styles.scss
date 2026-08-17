@@ -2,7 +2,7 @@
  * Deliberately empty.
  *
  * This used to transition `color` and `font-size`, neither of which anything
- * changes on the list item — nothing else in the app so much as selects this
+ * changes on the list item - nothing else in the app so much as selects this
  * class. The element that does change them is the link inside, and
  * `HyperLink` already transitions both.
  *

@@ -43,8 +43,8 @@ const usePopover = () => {
  * `popovertarget`, so opening, closing, dismissing on an outside click and
  * dismissing on Escape are all the platform's work. What is left here is the
  * controlled-open contract, which the platform has no opinion about: a caller
- * that wants the panel shut when something inside it is chosen — `DatePicker`
- * picking a date — still has to say so.
+ * that wants the panel shut when something inside it is chosen - `DatePicker`
+ * picking a date - still has to say so.
  *
  * The gain is not only less code. A popover lives in the top layer, so no
  * ancestor's `overflow` or stacking context can clip it, and the panel stays
@@ -87,7 +87,7 @@ const Popover: React.FC<PopoverProps> = ({
         /*
          * Declared on the wrapper so both the trigger and the panel inherit
          * one name. An anchor name has to be a literal in the stylesheet, and
-         * a component may be on the page many times over — passing it through
+         * a component may be on the page many times over - passing it through
          * a custom property is what keeps each pair talking only to itself.
          */
         style={{ [`--${CLASS_NAME}--anchor`]: anchor } as React.CSSProperties}
@@ -114,7 +114,7 @@ const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
         className={classNames(`${CLASS_NAME}__trigger`, className)}
         /*
          * The browser toggles the panel from this attribute. The handler is
-         * passed through untouched and no longer sets state — whatever
+         * passed through untouched and no longer sets state - whatever
          * happens, the `toggle` event on the panel is what reports it back.
          */
         popoverTarget={popover.id}
@@ -166,7 +166,7 @@ const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>(
 
     /*
      * And this pushes a caller's decision back the other way, for the openings
-     * and closings no click caused — a date chosen inside the panel, or a
+     * and closings no click caused - a date chosen inside the panel, or a
      * `defaultOpen` panel that has to be shown once on mount.
      */
     useEffect(() => {

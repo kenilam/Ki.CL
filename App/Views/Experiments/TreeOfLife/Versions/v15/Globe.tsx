@@ -18,10 +18,10 @@ import { getZoom } from './zoom';
  * its final radius from the first frame makes the opening moments look like
  * a speck in an empty room, and gives no sense that anything is filling it.
  * Sizing it to how far the lineage has actually reached turns it into a
- * reading of progress — the tree pushes the boundary outward as it grows, and
+ * reading of progress - the tree pushes the boundary outward as it grows, and
  * it draws back in when a new route starts over.
  *
- * It is tilted off vertical and turns very slowly, the way a planet does —
+ * It is tilted off vertical and turns very slowly, the way a planet does -
  * enough to keep the wireframe from reading as a flat backdrop, slow enough
  * that it never competes with the tree for attention. Growth is anchored to
  * the centre rather than to the cage, so turning it moves only the cage.
@@ -29,7 +29,7 @@ import { getZoom } from './zoom';
  * The geometry is a unit sphere and only the scale and rotation move, so
  * following costs nothing per frame and never rebuilds a buffer.
  *
- * Decorative only — it never takes a pointer, so it can sit in front of the
+ * Decorative only - it never takes a pointer, so it can sit in front of the
  * tree without swallowing clicks meant for a taxon behind it.
  */
 
@@ -39,7 +39,7 @@ const EASE = 1.4;
 /** Earth's axial tilt, for no better reason than that it looks right. */
 const AXIAL_TILT = (23.44 * Math.PI) / 180;
 
-/** Radians per second — one turn takes a little over five minutes. */
+/** Radians per second - one turn takes a little over five minutes. */
 const SPIN = 0.005;
 
 /** How opaque the wireframe is when the view is close in. */
@@ -49,7 +49,7 @@ const OPACITY = 0.28;
  * Where in the pull-back the cage starts giving way, and where it is gone.
  *
  * Close in it is scenery, and useful: something for the tree to sit inside. All
- * the way out it is the loudest thing on screen — the camera ends up within it,
+ * the way out it is the loudest thing on screen - the camera ends up within it,
  * so a sphere sized to enclose the tree becomes a mesh laid over the whole
  * frame, competing with the lineage the pull-back exists to show. Fading it out
  * over the last stretch hands the frame back.
@@ -59,7 +59,7 @@ const FADE_TO = 0.95;
 
 /**
  * How faint the cage is allowed to get. It thins as the view pulls back but
- * never leaves — at the far end it is the only thing giving the lineage a
+ * never leaves - at the far end it is the only thing giving the lineage a
  * sense of the volume it sits inside.
  */
 const MIN_OPACITY = 0.05;
@@ -112,7 +112,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
   const shellMaterials = useRef<(THREE.MeshBasicMaterial | null)[]>([]);
   const reduced = useMemo(prefersReducedMotion, []);
 
-  // One geometry for the crisp cage and both blur shells — they differ only in
+  // One geometry for the crisp cage and both blur shells - they differ only in
   // scale, so there is no reason to build or upload it three times.
   const geometry = useMemo(() => new THREE.SphereGeometry(1, 32, 20), []);
 
@@ -126,7 +126,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
     }
 
     if (!reduced) {
-      // Local Y, inside the tilted group — so it turns about its own axis
+      // Local Y, inside the tilted group - so it turns about its own axis
       // rather than the world's, which is what makes the tilt read.
       mesh.rotation.y += delta * SPIN;
     }
@@ -135,7 +135,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
      * Read from the placed taxa each frame rather than taken as a prop: the
      * tree is drawn by a recursion that nothing above it measures, so the only
      * thing that knows how far it got is the set of tips it published. That
-     * also means the cage follows a route change for free — anchors leave as
+     * also means the cage follows a route change for free - anchors leave as
      * their taxa unmount, and the extent falls with them.
      */
     const target = reach() * margin;
@@ -150,7 +150,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
 
     /*
      * Fade out as the view pulls back. Read straight off the zoom rather than
-     * eased on its own clock, so it stays part of the one motion — the cage
+     * eased on its own clock, so it stays part of the one motion - the cage
      * thins as the lineage stands up, not a beat afterwards.
      */
     const material = materialRef.current;
@@ -171,8 +171,8 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
     mesh.visible = mesh.scale.x > 0.5;
 
     /*
-     * The shells ride the crisp cage — same rotation, scaled a little either
-     * side of it — and only appear as the view pulls back, so nothing is spent
+     * The shells ride the crisp cage - same rotation, scaled a little either
+     * side of it - and only appear as the view pulls back, so nothing is spent
      * on them while closed in and sharp.
      */
     BLUR_SHELLS.forEach((side, index) => {

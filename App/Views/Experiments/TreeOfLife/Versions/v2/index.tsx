@@ -29,7 +29,7 @@ type BranchProps = {
 };
 
 /**
- * Tapered tube along an organic curve — tip-weighted fan (v2 snapshot).
+ * Tapered tube along an organic curve - tip-weighted fan (v2 snapshot).
  */
 const Branch: React.FunctionComponent<BranchProps> = ({ link }) => {
   const geometry = useMemo(() => {

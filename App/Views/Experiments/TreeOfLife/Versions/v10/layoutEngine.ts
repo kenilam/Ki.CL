@@ -1,5 +1,5 @@
 /**
- * v10 layout — poster-style upward fan (2D)
+ * v10 layout - poster-style upward fan (2D)
  *
  * d3.cluster → polar fan with origin at the bottom and tips along an arc above.
  * Matches classic Tree of Life poster geometry (not a full sphere / disc).
@@ -54,7 +54,7 @@ export type ViewportSize = {
 
 const MAX_CHILDREN = 16;
 const HEIGHT_LIMIT_DEFAULT = 3;
-/** Upward fan span — classic poster mushroom / coral silhouette. */
+/** Upward fan span - classic poster mushroom / coral silhouette. */
 const FAN_SPAN = Math.PI * 1.05;
 
 function prune(node: TreeNode): TreeNode {

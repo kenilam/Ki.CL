@@ -10,8 +10,8 @@
 
   /*
    * Where an entering element starts. The browser reads this only for the
-   * first style change after the element renders — or after it comes back
-   * from `display: none` — and transitions away from it.
+   * first style change after the element renders - or after it comes back
+   * from `display: none` - and transitions away from it.
    *
    * Both states use the same values, so overriding the variables above moves
    * the entrance and the exit together.

@@ -25,7 +25,7 @@ import classNames from 'classnames';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--versions--selector';
 
-/** What the current path is showing — the live view unless it names a version. */
+/** What the current path is showing - the live view unless it names a version. */
 const LIVE = 'final';
 
 const Selector: React.FunctionComponent = () => {
@@ -35,7 +35,7 @@ const Selector: React.FunctionComponent = () => {
   /*
    * Read from the path rather than from `useParams`. Each version is a literal
    * segment in its own route, not a `:version` placeholder, so there is no
-   * parameter to ask for — the segment is the name.
+   * parameter to ask for - the segment is the name.
    */
   const version =
     pathname
@@ -96,7 +96,7 @@ const Selector: React.FunctionComponent = () => {
             {/*
               Every entry names a version, the current one included. The
               separate "Final" link pointed at an unversioned node path, which
-              no longer exists — and said nothing the list does not.
+              no longer exists - and said nothing the list does not.
             */}
             <nav>
               {[...VERSIONS].reverse().map((version) => (

@@ -6,8 +6,8 @@ import THREE, { Drei, Fiber } from '@/Three';
  * Emphasis for the two taxa that mean something beyond their place in the
  * tree: the one being looked at, and the origin of life.
  *
- * They are deliberately different in character. `active` is a sonar ripple —
- * two rings travelling out of phase, so one is always mid-flight — which
+ * They are deliberately different in character. `active` is a sonar ripple -
+ * two rings travelling out of phase, so one is always mid-flight - which
  * reads as *here, now*. `origin` is a slow breath that does not travel: the
  * root is permanent, not a thing demanding attention, and giving it the same
  * pulse would have the two compete.
@@ -26,7 +26,7 @@ const ORIGIN_PERIOD_MS = 5200;
  * Ripple travel, as a multiple of the body's own radius.
  *
  * Bodies here are barely two units across, so a ripple that only reaches
- * two-and-a-half radii never clears the node it is marking — it reads as a
+ * two-and-a-half radii never clears the node it is marking - it reads as a
  * slightly fat outline rather than as a signal. Travelling several times the
  * body's width is what makes it legible against a tree of this scale.
  */
@@ -37,14 +37,14 @@ const RIPPLE_PEAK_OPACITY = 0.95;
 /**
  * How far the ripple is lifted toward white, away from the taxon's own hue.
  *
- * Tinted with the body's colour it was a green ring on a green node — the
+ * Tinted with the body's colour it was a green ring on a green node - the
  * same value as everything around it, so it only registered as motion.
  * Lifting it reads as light coming off the taxon rather than as more of the
  * taxon, which is what makes it obvious near the body where it starts.
  */
 const RIPPLE_WHITEN = 0.72;
 
-/** The origin's breath is wider still — it marks a place, not an event. */
+/** The origin's breath is wider still - it marks a place, not an event. */
 const ORIGIN_RING_FROM = 2.1;
 const ORIGIN_RING_TO = 2.9;
 const ORIGIN_HALO_SCALE = 4.2;
@@ -53,7 +53,7 @@ const ORIGIN_HALO_SCALE = 4.2;
  * Soft falloff, painted once into a texture and shared by every aura.
  *
  * A ring built from geometry has a hard inner and outer edge, which reads as
- * a drawn outline however faint it is made — the thing that says "glow" is
+ * a drawn outline however faint it is made - the thing that says "glow" is
  * the gradient, not the shape. Painting the falloff means the blur survives
  * being scaled up as the ripple travels, where a geometric ring would just
  * become a bigger hard ring.
@@ -100,7 +100,7 @@ function paint(stops: readonly (readonly [number, number])[]): THREE.Texture {
 let ringTexture: THREE.Texture | null = null;
 let haloTexture: THREE.Texture | null = null;
 
-/** A band that fades out on both sides — a ripple, not an outline. */
+/** A band that fades out on both sides - a ripple, not an outline. */
 function ring(): THREE.Texture {
   ringTexture ??= paint([
     [0, 0],
@@ -113,7 +113,7 @@ function ring(): THREE.Texture {
   return ringTexture;
 }
 
-/** A disc brightest at its centre — the origin's steady glow. */
+/** A disc brightest at its centre - the origin's steady glow. */
 function halo(): THREE.Texture {
   haloTexture ??= paint([
     [0, 1],
@@ -149,8 +149,8 @@ const Aura: React.FunctionComponent<Props> = ({
 }) => {
   /*
    * The ripple burns toward white; the origin's breath keeps the taxon's own
-   * colour. They are marking different things — an event against a steady
-   * presence — and giving them the same treatment would flatten that.
+   * colour. They are marking different things - an event against a steady
+   * presence - and giving them the same treatment would flatten that.
    */
   const tint = useMemo(
     () =>
@@ -182,7 +182,7 @@ const Aura: React.FunctionComponent<Props> = ({
       return;
     }
 
-    // Frozen at phase zero when motion is unwelcome — still drawn, still
+    // Frozen at phase zero when motion is unwelcome - still drawn, still
     // marking the taxon, just not moving.
     const elapsed = reduced ? 0 : clock.getElapsedTime() * 1000;
 

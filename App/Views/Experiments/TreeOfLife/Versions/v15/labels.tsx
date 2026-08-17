@@ -10,7 +10,7 @@ import THREE, { Fiber } from '@/Three';
 /**
  * Labels live in screen space, not in the scene.
  *
- * Two reasons. They must not scale with the camera — a name is text, and text
+ * Two reasons. They must not scale with the camera - a name is text, and text
  * that shrinks as you pull back stops being readable long before the thing it
  * names does. And they have to be placed against each other, which is a
  * two-dimensional problem: only once everything is projected is it knowable
@@ -18,12 +18,12 @@ import THREE, { Fiber } from '@/Three';
  *
  * So a projector inside the Canvas publishes screen coordinates each frame,
  * and a DOM layer outside it seats the pills against an occupancy grid. Each
- * pill is a `Badge` — being DOM they are pixel-sized by definition and inherit
+ * pill is a `Badge` - being DOM they are pixel-sized by definition and inherit
  * the app's chip styling rather than reimplementing it in a texture.
  *
  * The split is between *what* and *where*. React owns the set of labels, which
  * changes only when the tree does; the frame loop owns their placement, which
- * changes every frame and never re-renders anything — it writes `transform`
+ * changes every frame and never re-renders anything - it writes `transform`
  * and a seated flag straight onto the elements React mounted.
  */
 
@@ -49,7 +49,7 @@ export type LabelInput = {
 /**
  * Every taxon publishes its own label here.
  *
- * The alternative — the canvas assembling the list — only ever worked for the
+ * The alternative - the canvas assembling the list - only ever worked for the
  * lineage, because that is the only part whose positions the canvas knows.
  * Descendants derive their own tips inside `Taxon` and never report them, so
  * they could not be labelled at all. Letting the thing that knows where it is
@@ -106,8 +106,8 @@ function getVersion(): number {
  * Add or update a label.
  *
  * Membership and content are separate on purpose. A taxon's label changes
- * whenever the route does — its priority and accent both depend on what is
- * focused — and if that were expressed as unregister-then-register, the entry
+ * whenever the route does - its priority and accent both depend on what is
+ * focused - and if that were expressed as unregister-then-register, the entry
  * would leave the map for an instant and React would tear the pill down and
  * build a new one. A taxon present in both the old and new lineage would blink
  * on every navigation despite never actually going anywhere.
@@ -119,7 +119,7 @@ function getVersion(): number {
 export function setLabel(key: string, input: LabelInput): void {
   const previous = registry.get(key);
 
-  // Back before the sweep ran — a re-parent, not a departure.
+  // Back before the sweep ran - a re-parent, not a departure.
   pending.delete(key);
 
   registry.set(key, input);
@@ -137,8 +137,8 @@ export function setLabel(key: string, input: LabelInput): void {
  * Keys whose taxon has unmounted but which may be about to come straight back.
  *
  * A taxon that appears in both the old and the new lineage still unmounts when
- * the recursion re-parents it — it was drawn under one ancestor and is now
- * drawn under another — and React tears the component down and builds a new one
+ * the recursion re-parents it - it was drawn under one ancestor and is now
+ * drawn under another - and React tears the component down and builds a new one
  * for the new position. Removing on that cleanup destroyed the pill and rebuilt
  * it, which is a blink for a label that never actually went anywhere: measured,
  * 11 of 18 labels present in both lineages were being rebuilt.
@@ -154,7 +154,7 @@ let sweeping = 0;
  *
  * Long enough to outlast the mount cascade: the replacement tree arrives a
  * slice per frame, so a taxon's counterpart can be a second or more behind the
- * unmount. A single frame of grace — which is what this was first written as —
+ * unmount. A single frame of grace - which is what this was first written as -
  * expired long before the taxon came back, and the label was rebuilt anyway.
  */
 const REMOVAL_GRACE = 2500;
@@ -162,8 +162,8 @@ const REMOVAL_GRACE = 2500;
 /**
  * Every taxon currently drawn, by node id.
  *
- * The registry already knows exactly this — it is populated by each taxon as
- * it mounts and emptied as it leaves — so anything wanting "what is on screen"
+ * The registry already knows exactly this - it is populated by each taxon as
+ * it mounts and emptied as it leaves - so anything wanting "what is on screen"
  * can read it here rather than assembling a second list that would drift.
  * Pending removals are excluded: their taxon has gone even if the pill is
  * being held a moment in case it returns.
@@ -175,7 +175,7 @@ export function drawnTaxa(): string[] {
 /*
  * The same store the layer subscribes to, exposed so anything listing the drawn
  * taxa re-reads when that set changes. `drawnTaxa` builds a fresh array on every
- * call, so it cannot be the snapshot itself — the version is, and callers derive
+ * call, so it cannot be the snapshot itself - the version is, and callers derive
  * the list from it.
  */
 export { subscribe as subscribeDrawn, getVersion as drawnVersion };
@@ -206,7 +206,7 @@ function sweep(): void {
  * Drop a label, unless its taxon comes back.
  *
  * The element is kept alive in the meantime but hidden, so a taxon that is
- * merely being re-parented reuses its pill instead of having a new one built —
+ * merely being re-parented reuses its pill instead of having a new one built -
  * which is what made a label blink on a route change despite never leaving the
  * tree. Nothing stale is drawn, because a pending label is not seated.
  */
@@ -323,7 +323,7 @@ function mark(grid: Grid, l: number, t: number, r: number, b: number): void {
   });
 }
 
-/** Occupied cells a rect overlaps — zero means a clear seat. */
+/** Occupied cells a rect overlaps - zero means a clear seat. */
 function cost(grid: Grid, l: number, t: number, r: number, b: number): number {
   let total = 0;
 
@@ -342,7 +342,7 @@ const SEAT_RINGS = [1, 1.8];
  * How much better a challenger has to be before a label gives up its bearing.
  *
  * Seats used to be re-elected from scratch every frame and handed to whoever
- * won by a single occupied cell — and a cell is 12px, so a sub-pixel drift
+ * won by a single occupied cell - and a cell is 12px, so a sub-pixel drift
  * during a zoom was enough to flip a label from above its node to below it.
  * Requiring a real margin means a bearing is kept until it is properly blocked,
  * which is what stops the jumping.
@@ -353,7 +353,7 @@ const INCUMBENT_MARGIN = 3;
  * How covered a label has to become before it gives up and hides.
  *
  * Appearing needs a properly clear seat; disappearing needs real obstruction.
- * The two thresholds differ on purpose — with a single one, a label sitting
+ * The two thresholds differ on purpose - with a single one, a label sitting
  * near the boundary flips every time the grid shifts under it, and the tree
  * mounts in slices, so the grid shifts constantly for the first second after a
  * route change. Measured before this: 14 of 18 labels blinking, the worst
@@ -365,7 +365,7 @@ const HIDE_ABOVE = 6;
  * How quickly a label slides to a new bearing, per second.
  *
  * Only the *offset* from the node is damped. The node's own projected position
- * is used live, so panning and zooming track exactly with no lag — what eases
+ * is used live, so panning and zooming track exactly with no lag - what eases
  * is the rare change of side, which would otherwise be a teleport.
  */
 const SETTLE_EASE = 12;
@@ -383,7 +383,7 @@ const FORCE_PLACE_PRIORITY = 3;
  *
  * A hovered label is placed unconditionally. Every other label can lose its
  * seat to a more important one and vanish, which is right when the layer is
- * choosing for you — but pointing at something is the one moment you have
+ * choosing for you - but pointing at something is the one moment you have
  * asked for a specific name, and answering "no room" is never the useful reply.
  */
 let hovered: string | null = null;
@@ -402,7 +402,7 @@ const CLASS_ROOT = 'kicl--views--experiments--tree-of-life--v15';
 /*
  * Each pill takes pointer events, so a name can be followed to its taxon. The
  * layer beneath stays transparent to them, so a drag begun anywhere else still
- * reaches the canvas and turns the view — only a drag begun on a name does not.
+ * reaches the canvas and turns the view - only a drag begun on a name does not.
  */
 const PILL_CLASS = [
   `${CLASS_ROOT}__label`,
@@ -415,7 +415,7 @@ const PILL_CLASS = [
  * Fixed chrome labels must also stay clear of.
  *
  * Scoped to this view: `kicl-position-fixed` is a utility anything may use, and
- * `querySelector` takes the first match — an unscoped selector would drift onto
+ * `querySelector` takes the first match - an unscoped selector would drift onto
  * whatever else on the page happens to be fixed, such as the global header.
  */
 const CHROME = [`.${CLASS_ROOT} .kicl-position-fixed`];
@@ -425,7 +425,7 @@ export const Labels: React.FunctionComponent = () => {
   const hostRef = useRef<HTMLDivElement>(null);
   const pillsRef = useRef<Map<string, HTMLElement>>(new Map());
 
-  // Re-render when labels are added or removed — never when they move.
+  // Re-render when labels are added or removed - never when they move.
   useSyncExternalStore(subscribe, getVersion, getVersion);
 
   useEffect(() => {
@@ -438,7 +438,7 @@ export const Labels: React.FunctionComponent = () => {
         const pills = pillsRef.current;
         const grid = createGrid(store.width, store.height);
 
-        // Bodies are obstacles in their own right — a name over the thing it
+        // Bodies are obstacles in their own right - a name over the thing it
         // names is worse than one slightly further away.
         store.projected.forEach((item) => {
           if (item.visible) {
@@ -456,8 +456,8 @@ export const Labels: React.FunctionComponent = () => {
 
         /*
          * Every fixed region, not the first one found. There is more than one
-         * now — the search and detail panels on one side, the animation
-         * control on the other — and `querySelector` would have reserved space
+         * now - the search and detail panels on one side, the animation
+         * control on the other - and `querySelector` would have reserved space
          * around whichever happened to come first in the document, leaving
          * labels free to sit under the rest.
          */
@@ -488,7 +488,7 @@ export const Labels: React.FunctionComponent = () => {
           .forEach((item) => {
             const pill = pills.get(item.key);
 
-            // Projected this frame but not mounted yet — it will be next frame.
+            // Projected this frame but not mounted yet - it will be next frame.
             if (!pill) {
               return;
             }
@@ -580,7 +580,7 @@ export const Labels: React.FunctionComponent = () => {
 
             /*
              * The transform is written either way, so a hidden pill keeps
-             * tracking its node — otherwise it freezes where it was and
+             * tracking its node - otherwise it freezes where it was and
              * teleports whenever it comes back.
              *
              * Seated state is an attribute rather than an inline opacity, so
@@ -591,8 +591,8 @@ export const Labels: React.FunctionComponent = () => {
             pill.dataset.seated = show ? 'true' : 'false';
 
             /*
-             * A hovered label with no usable bearing — every candidate off the
-             * edge, say — still has to go somewhere, so it sits just clear of
+             * A hovered label with no usable bearing - every candidate off the
+             * edge, say - still has to go somewhere, so it sits just clear of
              * the body it names.
              */
             const bearing = chosen ?? {
@@ -621,7 +621,7 @@ export const Labels: React.FunctionComponent = () => {
             /*
              * Ease the offset, never the position. The node's own projected
              * point is used live below, so panning and zooming track it exactly
-             * — what is damped is only the change of side, which would
+             * - what is damped is only the change of side, which would
              * otherwise read as a jump.
              */
             if (seat.started) {
@@ -684,7 +684,7 @@ export const Labels: React.FunctionComponent = () => {
             /*
              * Set on the badge, not on the link around it. `Badge` declares
              * these properties on itself, and a self-declaration beats an
-             * inherited one however close the ancestor — put them on the link
+             * inherited one however close the ancestor - put them on the link
              * and the accent silently does nothing.
              */
             style={
@@ -697,7 +697,7 @@ export const Labels: React.FunctionComponent = () => {
             }
             /*
              * The routed taxon's own chip is a step larger, on the same signal
-             * that colours its border — so the label you are actually reading
+             * that colours its border - so the label you are actually reading
              * is distinguished by weight as well as by hue, and still reads as
              * one when the accent is hard to pick out against the tree behind
              * it.

@@ -11,7 +11,7 @@
   /*
    * Clipped, because the layer is wider than the screen it covers.
    *
-   * Every pill is transformed to wherever its taxon projects, seated or not —
+   * Every pill is transformed to wherever its taxon projects, seated or not -
    * the loop keeps moving hidden ones so they do not teleport when they come
    * back. A transform still counts toward scrollable overflow, so the ones
    * sitting off-frame were stretching the page and letting it scroll away from
@@ -34,7 +34,7 @@
 
     /*
      * Hidden rather than merely transparent. A pill with no seat is not on
-     * offer, and a transparent link is still focusable — 52 of these mount at
+     * offer, and a transparent link is still focusable - 52 of these mount at
      * once while three are legible, so tabbing the view meant travelling
      * through fifty invisible names.
      */
@@ -58,9 +58,9 @@
       opacity: 1;
       transition:
         opacity var(--kicl-transition-duration-fast)
-        var(--kicl-transition-duration),
+          var(--kicl-transition-duration),
         visibility var(--kicl-transition-duration-fast)
-        var(--kicl-transition-duration) allow-discrete;
+          var(--kicl-transition-duration) allow-discrete;
       visibility: visible;
     }
   }
@@ -77,7 +77,7 @@
      *
      * Held at the top it covered a quarter of a phone's frame, and since the
      * label layer treats chrome as an obstacle, that quarter took most of the
-     * seats with it — 2 of 52 names were being placed. At the foot it covers
+     * seats with it - 2 of 52 names were being placed. At the foot it covers
      * the emptiest part of the composition instead of the densest.
      */
     &--panel {
@@ -92,7 +92,7 @@
          * Done by moving the token the panels are sized from, not by
          * constraining the wrapper: the search and detail cards each carry
          * `kicl-inline-size-xxl`, which is written double and so wins over any
-         * width set on their container — a narrower wrapper only clipped them.
+         * width set on their container - a narrower wrapper only clipped them.
          */
         --kicl-inline-size-xxl: var(--kicl-size-14x);
 
@@ -100,7 +100,7 @@
          * The docking utility is named here so this can outrank it. Utility
          * classes are emitted doubled precisely so the system beats view CSS,
          * which means a view cannot simply set `inset-block` and expect it to
-         * land — it has to say which utility it is making an exception to.
+         * land - it has to say which utility it is making an exception to.
          */
         &.kicl-inset-block-start {
           inset-block: auto var(--kicl-inset-block-end);
@@ -111,7 +111,7 @@
     /*
      * Anything clickable in the chrome clears the minimum target size. These
      * are single icons and short words sitting over a canvas, so left alone
-     * they size to their type — the animation control measured 16px tall.
+     * they size to their type - the animation control measured 16px tall.
      */
     .kicl--components--button {
       min-block-size: var(--kicl-size-2x);

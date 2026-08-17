@@ -8,7 +8,7 @@ import { GoogleAuth } from 'google-auth-library';
  * Reverse proxy to the API, which is not reachable from the internet.
  *
  * The API runs on Cloud Run with no public invoker, so every request to it has
- * to carry a Google-signed identity token or Google rejects it at the edge —
+ * to carry a Google-signed identity token or Google rejects it at the edge -
  * before it reaches the container. That token can only be minted by something
  * holding the right service-account credentials, which is this server and not
  * the browser. So the browser talks to this origin, and this server is the only
@@ -25,7 +25,7 @@ const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 
 /**
  * Identity tokens last an hour. Refreshed well inside that, and kept in memory
- * so the value can be read synchronously — a WebSocket upgrade is not an
+ * so the value can be read synchronously - a WebSocket upgrade is not an
  * ordinary request and gives no opportunity to await anything.
  */
 const TOKEN_TTL_MS = 45 * 60 * 1000;
@@ -50,14 +50,14 @@ async function mintIdToken(): Promise<string | null> {
     return token;
   } catch (error) {
     /*
-     * Expected off Google infrastructure — a developer running this server on
+     * Expected off Google infrastructure - a developer running this server on
      * their machine has no metadata server to ask. The local API accepts
      * unauthenticated calls, so the proxy still works; it is only in front of a
      * private service that a missing token matters, and there it surfaces as a
      * 403 from Google rather than as silence here.
      */
     console.warn(
-      'Proxy: no identity token for the API —',
+      'Proxy: no identity token for the API -',
       error instanceof Error ? error.message : String(error)
     );
 
@@ -93,12 +93,12 @@ function applyAuthorization(headers: {
  *
  * `/api/client` is listed first and rewritten: the API serves the federation
  * remote at `/client`, and exposing it here under `/api` keeps everything the
- * API owns beneath one prefix. Order matters — `/api` would otherwise swallow
+ * API owns beneath one prefix. Order matters - `/api` would otherwise swallow
  * it and forward `/api/client/remoteEntry.js` unchanged, which the API does not
  * serve.
  *
  * The image routes are narrowed to their own segments, not all of `/assets`.
- * The built client emits its own bundles there — `/assets/mf-entry-*.js` — so
+ * The built client emits its own bundles there - `/assets/mf-entry-*.js` - so
  * forwarding the whole prefix sent the application's own JavaScript to an API
  * that has never heard of it, and the site served a blank page with a 404 for
  * its bootstrap. The API only serves images beneath `/assets/{segment}/`,
@@ -106,7 +106,7 @@ function applyAuthorization(headers: {
  *
  * `taxon-visual` is the pipeline's output; `static` is the site's own imagery,
  * kept in a bucket rather than in git. Both are URL segments the API maps to a
- * bucket, not bucket names — see the API's `Storage/bucket.ts`.
+ * bucket, not bucket names - see the API's `Storage/bucket.ts`.
  *
  * The prefix keeps its name on purpose: image URLs are stored in the database
  * as `/assets/taxon-visual/*`, so moving it would orphan every record already
@@ -143,7 +143,7 @@ let subscriptions: UpgradeCapable | null = null;
 
 /**
  * A WebSocket upgrade never enters the Express router, so the proxy has to be
- * handed it directly. Without this, GraphQL subscriptions never connect —
+ * handed it directly. Without this, GraphQL subscriptions never connect -
  * ordinary requests would work and only live updates would be missing, which is
  * the sort of gap that gets noticed late.
  */

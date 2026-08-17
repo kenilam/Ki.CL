@@ -8,7 +8,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--separator';
 
 /**
- * Visual or semantic divider — API aligned with
+ * Visual or semantic divider - API aligned with
  * https://ui.shadcn.com/docs/components/separator
  */
 const Separator = React.forwardRef<HTMLDivElement, Props>(

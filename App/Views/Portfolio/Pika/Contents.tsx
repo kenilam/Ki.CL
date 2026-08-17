@@ -10,7 +10,7 @@ import SignIn from './SignIn';
 
 /**
  * Everything under /portfolio/pika is shared with a small audience on
- * purpose — the gate rides the platform's existing credential flow (SignIn
+ * purpose - the gate rides the platform's existing credential flow (SignIn
  * mutation + `aud` session cookie) rather than inventing a second one.
  */
 const Pika: React.FunctionComponent = () => {

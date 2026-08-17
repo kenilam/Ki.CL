@@ -34,7 +34,7 @@ type Polar = { angle: number; radius: number };
 type Wedge = { start: number; end: number };
 
 const MAX_CHILDREN = 16;
-/** Dense upward canopy — closer to the poster silhouette. */
+/** Dense upward canopy - closer to the poster silhouette. */
 const FAN_SPAN = Math.PI * 1.15;
 const CURVE_SAMPLES = 28;
 const TREE_HEIGHT = 16;
@@ -217,7 +217,7 @@ function shouldShowLabel(
   if (tips >= 20000 && node.depth <= 4) {
     return true;
   }
-  // Sparse tip labels — avoid the fuzzy perimeter.
+  // Sparse tip labels - avoid the fuzzy perimeter.
   if (expandable && node.depth <= 3) {
     return true;
   }

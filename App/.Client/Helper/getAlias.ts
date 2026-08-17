@@ -10,11 +10,11 @@ dotenv.config({ path: `${appRoot.path}/.env` });
 /**
  * Paths are resolved relative to App/tsconfig.json (TS 6+: no baseUrl).
  *
- * This helper must keep a relative import for tsconfig.json — it runs while
+ * This helper must keep a relative import for tsconfig.json - it runs while
  * Vite aliases are being built, so `@/` is not available yet.
  *
  * Module Federation remotes (e.g. `api/*` → `@mf-types/api/*`) stay in
- * tsconfig for typechecking only — they must not become Vite resolve
+ * tsconfig for typechecking only - they must not become Vite resolve
  * aliases or they would shadow the federated runtime remote.
  */
 import tsconfig from '../../tsconfig.json';

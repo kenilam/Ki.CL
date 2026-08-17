@@ -36,7 +36,7 @@ async function Server() {
 
     /*
      * Ahead of everything that serves files. The API's paths are not on disk,
-     * and the catch-all below answers anything it cannot find with index.html —
+     * and the catch-all below answers anything it cannot find with index.html -
      * so a proxied route mounted after it would return the SPA shell instead of
      * the remote entry, and module federation would fail on a 200.
      */

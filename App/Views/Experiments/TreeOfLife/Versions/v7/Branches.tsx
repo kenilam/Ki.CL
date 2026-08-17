@@ -1,5 +1,5 @@
 /**
- * Rendering engine — Bezier branches (layer 2)
+ * Rendering engine - Bezier branches (layer 2)
  * THREE.CubicBezierCurve3 → tapered TubeGeometry
  */
 import React, { useLayoutEffect, useMemo } from 'react';

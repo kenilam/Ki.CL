@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Ki.CL">
   <!--
     The logo's first two glyphs, lifted from App/Icons/Logo. The `k` and `i`
-    groups already span exactly 0–160 on both axes there, so this viewBox
+    groups already span exactly 0-160 on both axes there, so this viewBox
     crops them edge to edge with no margin and no refitting.
 
     Kept as geometry rather than an export so it stays in step with the logo:

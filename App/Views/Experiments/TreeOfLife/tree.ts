@@ -17,7 +17,7 @@ export type TreeNode = {
   rank?: string | null;
   /**
    * OTOL tip count tipward of this node. `0` = true leaf (never expand).
-   * Keep `null` when unknown — do not invent a loaded-subtree count of `1`.
+   * Keep `null` when unknown - do not invent a loaded-subtree count of `1`.
    */
   numTips?: number | null;
   assetId?: string | null;
@@ -25,13 +25,13 @@ export type TreeNode = {
   description?: string | null;
   visualStatus?: string | null;
   visualScore?: TreeVisualScore | null;
-  /** Immediate children — GraphQL field `descendants` (DataLoader-stitched). */
+  /** Immediate children - GraphQL field `descendants` (DataLoader-stitched). */
   descendants?: TreeNode[] | null;
   /** @deprecated Alias of `descendants` for older experiment layouts. */
   children?: TreeNode[] | null;
 };
 
-/** Cellular organisms — Open Tree of Life synthetic root. */
+/** Cellular organisms - Open Tree of Life synthetic root. */
 export const ROOT_OTT_ID = 93302;
 
 export const DEFAULT_HEIGHT_LIMIT = 3;
@@ -89,7 +89,7 @@ export function kidsOf(node: TreeNode): TreeNode[] | null {
   return node.descendants ?? node.children ?? null;
 }
 
-/** OTOL tip marker — e.g. rank string "no rank - terminal". */
+/** OTOL tip marker - e.g. rank string "no rank - terminal". */
 export function isTerminalRank(rank?: string | null): boolean {
   return /\bterminal\b/i.test(rank?.trim() ?? '');
 }
@@ -106,7 +106,7 @@ export function hasUnresolvedChildren(node: TreeNode): boolean {
   if (isTerminalRank(node.rank)) {
     return false;
   }
-  // OTOL leaves are 0. Do not coerce null→0 here — that stalled Grow when
+  // OTOL leaves are 0. Do not coerce null→0 here - that stalled Grow when
   // tip counts were missing. Empty probes write 0 via mergeSubtree.
   return node.numTips !== 0;
 }
@@ -141,7 +141,7 @@ export function collectExpandableTips(
   return out;
 }
 
-/** SILVA / environmental noise — not worth auto-growing into. */
+/** SILVA / environmental noise - not worth auto-growing into. */
 export function isNoiseTaxon(name: string | null | undefined): boolean {
   if (!name) {
     return true;
@@ -170,7 +170,7 @@ export function expandPriority(node: TreeNode): number {
     // log10(1)=0 … log10(1e6)≈6 → up to ~240
     score += Math.log10(tips + 1) * 40;
   } else {
-    // Unknown tip count — probe, but below any large named clade.
+    // Unknown tip count - probe, but below any large named clade.
     score += 8;
   }
 
@@ -292,7 +292,7 @@ export function fromSubtreeNode(node: SubtreeNodeInput): TreeNode {
     descendants,
     children: descendants,
   };
-  // Keep OTOL’s tip count. Never invent `1` via countTips for empty nodes —
+  // Keep OTOL’s tip count. Never invent `1` via countTips for empty nodes -
   // that mislabels species leaves as expandable.
   if (typeof node.numTips === 'number') {
     normalized.numTips = node.numTips;
@@ -304,7 +304,7 @@ export function fromSubtreeNode(node: SubtreeNodeInput): TreeNode {
   return normalized;
 }
 
-/** Merge kids by nodeId — keep existing, append new, recurse into matches. */
+/** Merge kids by nodeId - keep existing, append new, recurse into matches. */
 function mergeKids(
   existing: TreeNode[] | null | undefined,
   incoming: TreeNode[] | null | undefined
@@ -359,7 +359,7 @@ export function mergeSubtree(root: TreeNode, subtree: TreeNode): TreeNode {
     } else if (descendants?.length) {
       merged.numTips = countTips(merged);
     } else {
-      // Empty probe with no tip count — close the node so Grow won't re-fetch.
+      // Empty probe with no tip count - close the node so Grow won't re-fetch.
       merged.numTips = 0;
     }
     return merged;
@@ -409,12 +409,7 @@ export function labelWithRank(node: TreeNode, isOrigin = false): string {
 }
 
 export type RankShape =
-  | 'circle'
-  | 'ring'
-  | 'double-ring'
-  | 'diamond'
-  | 'square'
-  | 'outline';
+  'circle' | 'ring' | 'double-ring' | 'diamond' | 'square' | 'outline';
 
 export type RankVisual = {
   shape: RankShape;
@@ -469,10 +464,10 @@ export function paletteColor(index: number): string {
   return POSTER_PALETTE[Math.abs(index) % POSTER_PALETTE.length];
 }
 
-/** @deprecated Prefer `paletteColor` / `colorForName` — kept for v1. */
+/** @deprecated Prefer `paletteColor` / `colorForName` - kept for v1. */
 export const CLADE_COLORS = POSTER_PALETTE;
 
-/** @deprecated Prefer `colorForName` — kept for v1. */
+/** @deprecated Prefer `colorForName` - kept for v1. */
 export function colorForCladeName(
   name: string | null | undefined,
   fallbackIndex: number

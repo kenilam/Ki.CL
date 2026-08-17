@@ -101,7 +101,7 @@ function pruneForDisplay(node: TreeNode): TreeNode {
 }
 
 /**
- * Even leaf spacing — every leaf gets the same angular slot so
+ * Even leaf spacing - every leaf gets the same angular slot so
  * nearest neighbors sit at a uniform gap (no tip-mass clumping).
  */
 function assignEvenLeafAngles(
@@ -232,7 +232,7 @@ function radiusForDepth(
 
 /**
  * Grow the tree so outer-ring chord length between adjacent leaves
- * stays ≥ MIN_LEAF_SEPARATION — prevents the crowded green wedges.
+ * stays ≥ MIN_LEAF_SEPARATION - prevents the crowded green wedges.
  */
 function heightForLeafCount(leafCount: number): number {
   const gaps = Math.max(leafCount - 1, 1);

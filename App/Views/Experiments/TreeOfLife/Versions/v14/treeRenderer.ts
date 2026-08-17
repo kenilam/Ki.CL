@@ -1,5 +1,5 @@
 /**
- * 2D WebGL tree drawer — visual parity with the former SVG poster
+ * 2D WebGL tree drawer - visual parity with the former SVG poster
  * (tapered gradient ribbons, pedicels, rank markers, growth, focus dim).
  *
  * Wind: local hinge flutter only for branches with depth ≤ WIND_MAX_DEPTH.
@@ -274,7 +274,7 @@ function markerAnim(
   shape: RankShape,
   timeMs: number
 ): { scale: number; rotDeg: number } {
-  // ~6s alternate ease — matches Styles.scss keyframes.
+  // ~6s alternate ease - matches Styles.scss keyframes.
   const period = 6000;
   const u = (timeMs % period) / period;
   const wave = Math.sin(u * Math.PI * 2) * 0.5 + 0.5;
@@ -447,7 +447,7 @@ export class TreeRenderer {
   private focusIds: ReadonlySet<string> | null = null;
   private selectedId: string | null = null;
   private labelId: string | null = null;
-  /** Hard pin (click/search) — wind + growth stay paused until cleared. */
+  /** Hard pin (click/search) - wind + growth stay paused until cleared. */
   private pinnedId: string | null = null;
   private handlers: TreeRendererHandlers = {
     onHover: () => {},
@@ -677,7 +677,7 @@ export class TreeRenderer {
   resize(cssWidth: number, cssHeight: number): void {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     // Prefer the live CSS box (absolute inset:0 → full stage). Never bake
-    // width/height into inline styles — that locked the canvas to the initial
+    // width/height into inline styles - that locked the canvas to the initial
     // 960×640 viewport fallback and left empty space around the tree.
     const rect = this.canvas.getBoundingClientRect();
     const cssW = Math.max(1, rect.width || cssWidth);
@@ -758,7 +758,7 @@ export class TreeRenderer {
     }
     if (this.growthFrozenByInteraction) {
       this.growthFrozenByInteraction = false;
-      // Blow may still own the freeze — leave the clock paused until it ends.
+      // Blow may still own the freeze - leave the clock paused until it ends.
       if (this.gustKind !== 'blow') {
         this.setGrowthFrozen(false);
       }
@@ -1040,7 +1040,7 @@ export class TreeRenderer {
     const dt = Math.min(48, now - this.lastWind);
     this.lastWind = now;
 
-    // Hover or pin: ease to rest and hold — no new gusts until cleared.
+    // Hover or pin: ease to rest and hold - no new gusts until cleared.
     if (this.interactionPaused()) {
       this.targetStrength = 0;
       this.targetCanopyDeg = 0;
@@ -1048,7 +1048,7 @@ export class TreeRenderer {
       this.nextGustAt = now + 1200;
       if (this.gustKind === 'blow') {
         this.blowClickCount = 0;
-        // Growth stays frozen — hover/pin still owns the pause.
+        // Growth stays frozen - hover/pin still owns the pause.
         this.setBlowingUi(false);
       }
       this.gustKind = 'none';
@@ -1229,7 +1229,7 @@ export class TreeRenderer {
           0.22 * alpha,
           24
         );
-        // ellipse approx: stretch via two disks — use wider ring
+        // ellipse approx: stretch via two disks - use wider ring
         pushDisk(verts, jx, jy, n.markerRadius * 1.15, ORIGIN_GREEN, alpha, 24);
         hits.push({
           id: n.id,
@@ -1264,7 +1264,7 @@ export class TreeRenderer {
         const phase = windPhase(n.id);
         const respond = Math.sin(this.dir + phase * Math.PI * 2);
         const flutter = 0.85 + 0.15 * Math.sin(now * 0.00055 + phase * 9);
-        // Light stalk sway — amp capped like SVG (only meaningful near winded tips).
+        // Light stalk sway - amp capped like SVG (only meaningful near winded tips).
         const windLocal =
           (n.depth <= WIND_MAX_DEPTH ||
             (n.parentId != null &&
@@ -1331,7 +1331,7 @@ export class TreeRenderer {
         x: markerX,
         y: markerY,
         r: hitR,
-        // Growth / hang direction — label placement steers away from this.
+        // Growth / hang direction - label placement steers away from this.
         dirX: Math.sin(n.angle),
         dirY: -Math.cos(n.angle),
         hasPedicel,
@@ -1351,7 +1351,7 @@ export class TreeRenderer {
     gl.uniform1f(this.uCanopyDeg, this.canopyDeg);
     gl.drawArrays(gl.TRIANGLES, 0, verts.length / 6);
 
-    // Label overlay — marker pose + branch direction for collision-aware placement.
+    // Label overlay - marker pose + branch direction for collision-aware placement.
     if (this.labelId) {
       const labeled = hits.find((h) => h.id === this.labelId);
       const node = layout.nodes.find((n) => n.id === this.labelId);

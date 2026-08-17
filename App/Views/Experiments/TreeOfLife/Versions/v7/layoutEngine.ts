@@ -2,7 +2,7 @@
  * Tree layout engine (layer 1)
  *
  * Pure D3-hierarchy cluster → polar positions + cubic Bezier branch specs.
- * No Three.js here — the render layer consumes this output.
+ * No Three.js here - the render layer consumes this output.
  */
 import { hierarchy, cluster, type HierarchyPointNode } from 'd3-hierarchy';
 

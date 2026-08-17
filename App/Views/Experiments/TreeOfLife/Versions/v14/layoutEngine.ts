@@ -1,5 +1,5 @@
 /**
- * v14 layout — botanical growth algorithm (not a graph layout).
+ * v14 layout - botanical growth algorithm (not a graph layout).
  *
  * Instead of placing tips first and pulling parents toward the origin, the
  * tree *grows*: a vertical trunk rises from the Origin of Life, then every
@@ -7,14 +7,14 @@
  * each branch grows outward from its parent, inheriting direction.
  *
  * Stages (per design brief):
- *   1. grow trunk            — vertical stem out of the origin
- *   2. allocate sectors      — canopy split by descendant weight
- *   3. recursive growth      — children placed relative to parent along sector
- *   4. botanical curvature   — curved start, straight tip
- *   4b. tapered stroke       — end is 80% thinner than start; child inherits parent end
- *   5. illustration margin   — tips reserve canopy space beyond the endpoint
- *   6. adaptive sizing       — species markers scaled by importance
- *   7. sparse labels         — only shallow, high-scoring clades
+ *   1. grow trunk            - vertical stem out of the origin
+ *   2. allocate sectors      - canopy split by descendant weight
+ *   3. recursive growth      - children placed relative to parent along sector
+ *   4. botanical curvature   - curved start, straight tip
+ *   4b. tapered stroke       - end is 80% thinner than start; child inherits parent end
+ *   5. illustration margin   - tips reserve canopy space beyond the endpoint
+ *   6. adaptive sizing       - species markers scaled by importance
+ *   7. sparse labels         - only shallow, high-scoring clades
  */
 import { hierarchy, type HierarchyNode } from 'd3-hierarchy';
 
@@ -36,7 +36,7 @@ export type LayoutNode = {
   node: TreeNode;
   /** Branch joint / layout anchor (where the ribbon ends and children spawn). */
   position: Vec2;
-  /** Marker centre — hangs below an inset attachment on a curved pedicel. */
+  /** Marker centre - hangs below an inset attachment on a curved pedicel. */
   markerPosition: Vec2;
   /** Curved pedicel path from joint → marker (SVG); empty unless tip. */
   pedicelPath: string;
@@ -71,7 +71,7 @@ export type LayoutBranch = {
   id: string;
   parentId: string;
   childId: string;
-  /** Centerline cubic — kept for debugging / future stroke uses. */
+  /** Centerline cubic - kept for debugging / future stroke uses. */
   path: string;
   /** Bezier controls for live growth truncation. */
   curve: BranchCurve;
@@ -81,16 +81,16 @@ export type LayoutBranch = {
   startColor: string;
   /** Child-tip colour (gradient end). */
   endColor: string;
-  /** Alias of endColor — markers / legacy pin field. */
+  /** Alias of endColor - markers / legacy pin field. */
   color: string;
   /** Width at the parent joint. */
   startWidth: number;
   /** Width at the child tip (≤ startWidth). */
   endWidth: number;
-  /** Alias of startWidth — draw-order / legacy pin field. */
+  /** Alias of startWidth - draw-order / legacy pin field. */
   strokeWidth: number;
   growthDepth: number;
-  /** Hierarchy depth — used for wind flex (survives settle). */
+  /** Hierarchy depth - used for wind flex (survives settle). */
   depth: number;
   isNew: boolean;
 };
@@ -108,7 +108,7 @@ export type ViewportSize = {
 };
 
 const MAX_CHILDREN = 12;
-/** Soft cap on drawn tips — prefer large clades so animals/plants stay visible. */
+/** Soft cap on drawn tips - prefer large clades so animals/plants stay visible. */
 const MAX_TIPS = 120;
 const HEIGHT_LIMIT_DEFAULT = 3;
 
@@ -116,7 +116,7 @@ const HEIGHT_LIMIT_DEFAULT = 3;
 const CANOPY_SPAN_DEG = 200;
 /** Trunk length in layout units before the canopy fans out. */
 const TRUNK_HEIGHT = 200;
-/** Branch shortens by this factor per depth — keep close to 1 so tips don't stack. */
+/** Branch shortens by this factor per depth - keep close to 1 so tips don't stack. */
 const DEPTH_DECAY = 0.94;
 /** Tips reserve this much canopy beyond their branch endpoint (layout units). */
 const ILLUSTRATION_OFFSET = 36;
@@ -178,7 +178,7 @@ function tipScore(node: TreeNode): number {
 }
 
 // ---------------------------------------------------------------------------
-// Pruning — keep the drawn tree readable before we grow it.
+// Pruning - keep the drawn tree readable before we grow it.
 // ---------------------------------------------------------------------------
 
 function pruneForPoster(node: TreeNode, prefer?: Set<string>): TreeNode {
@@ -281,7 +281,7 @@ function filterToKeptTips(
 }
 
 // ---------------------------------------------------------------------------
-// Stage 0 — subtree weights (annotate tips)
+// Stage 0 - subtree weights (annotate tips)
 // ---------------------------------------------------------------------------
 
 function annotate(
@@ -308,7 +308,7 @@ function annotate(
 }
 
 // ---------------------------------------------------------------------------
-// Stage 2 — allocate angular sectors by descendant weight
+// Stage 2 - allocate angular sectors by descendant weight
 // ---------------------------------------------------------------------------
 
 function allocateSectors(
@@ -339,7 +339,7 @@ function allocateSectors(
 
   let cursor = start;
   if (reserved >= span * 0.92) {
-    // Too many siblings for padding — split the span evenly.
+    // Too many siblings for padding - split the span evenly.
     const each = span / children.length;
     children.forEach((child) => {
       allocateSectors(child, cursor, cursor + each, meta);
@@ -357,7 +357,7 @@ function allocateSectors(
 }
 
 // ---------------------------------------------------------------------------
-// Stage 3 — recursive growth: children placed relative to parent
+// Stage 3 - recursive growth: children placed relative to parent
 // ---------------------------------------------------------------------------
 
 /** Larger clades grow longer branches; deeper branches shorten gently. */
@@ -429,12 +429,12 @@ function separateTips(
 }
 
 // ---------------------------------------------------------------------------
-// Stage 4 — botanical branch curvature (curved start, straight tip) + taper
+// Stage 4 - botanical branch curvature (curved start, straight tip) + taper
 // ---------------------------------------------------------------------------
 
 /** Floor for the thinnest branch tip (layout / SVG units ≈ px at 1×). */
 const MIN_BRANCH_WIDTH = 1;
-/** End width as a fraction of start — 0.8 ⇒ end is 80% of start (20% thinner). */
+/** End width as a fraction of start - 0.8 ⇒ end is 80% of start (20% thinner). */
 const BRANCH_TAPER = 0.5;
 
 export type BranchCurve = {
@@ -571,7 +571,7 @@ function taperEndWidth(startWidth: number): number {
 }
 
 // ---------------------------------------------------------------------------
-// Stage 6 — adaptive marker sizing
+// Stage 6 - adaptive marker sizing
 // ---------------------------------------------------------------------------
 
 function markerRadiusFor(
@@ -834,7 +834,7 @@ export function pedicelAttachT(
 }
 
 // ---------------------------------------------------------------------------
-// Colour resolution — inherit named clade colour, else palette by lane.
+// Colour resolution - inherit named clade colour, else palette by lane.
 // New nodes shift within the parent's spectrum; pinned nodes keep exact colour.
 // ---------------------------------------------------------------------------
 
@@ -917,7 +917,7 @@ function hslToHex(h: number, s: number, l: number): string {
   return `#${to(rr)}${to(gg)}${to(bb)}`;
 }
 
-/** Nearby shade in the same hue family — distinct but related. */
+/** Nearby shade in the same hue family - distinct but related. */
 export function spectrumVariant(baseHex: string, seed: string): string {
   const [r, g, b] = hexToRgb(baseHex);
   const [h, s, l] = rgbToHsl(r, g, b);
@@ -955,7 +955,7 @@ function resolveColor(node: HierarchyNode<TreeNode>): string {
 }
 
 // ---------------------------------------------------------------------------
-// Stage 7 — sparse label strategy
+// Stage 7 - sparse label strategy
 // ---------------------------------------------------------------------------
 
 function pickLabels(root: HierarchyNode<TreeNode>): Set<string> {
@@ -1008,7 +1008,7 @@ function placeUnpinnedFromParents(
   const m = meta.get(node.data.nodeId)!;
   if (!pinned.has(node.data.nodeId) && node.parent) {
     const parentMeta = meta.get(node.parent.data.nodeId)!;
-    // Screen-space length — pinned coords are already fitted to the viewport.
+    // Screen-space length - pinned coords are already fitted to the viewport.
     const stagger = 1 + ((siblingIndex % 3) - 1) * 0.2;
     const len =
       Math.max(48, Math.min(110, 44 + Math.log2(m.tips + 1) * 14)) * stagger;
@@ -1045,7 +1045,7 @@ export function computePosterLayout(
     ? new Set(previous.nodes.map((n) => n.id))
     : undefined;
 
-  // Kid counts from the full tree — poster prune must not hide expandability.
+  // Kid counts from the full tree - poster prune must not hide expandability.
   const loadedKidCount = new Map<string, number>();
   const countLoadedKids = (node: TreeNode) => {
     const kids = kidsOf(node);
@@ -1068,11 +1068,11 @@ export function computePosterLayout(
 
   const root = hierarchy(filtered, (d) => d.children ?? undefined);
 
-  // Stage 0 — weights.
+  // Stage 0 - weights.
   const meta = new Map<string, Meta>();
   annotate(root, meta);
 
-  // Stage 2 — sectors across the canopy.
+  // Stage 2 - sectors across the canopy.
   const half = (CANOPY_SPAN_DEG * DEG) / 2;
   allocateSectors(root, -half, half, meta);
 
@@ -1168,7 +1168,7 @@ export function computePosterLayout(
 
     placeUnpinnedFromParents(root, meta, new Set(pinned.keys()));
   } else {
-    // Fresh layout — grow trunk then canopy, then fit to viewport.
+    // Fresh layout - grow trunk then canopy, then fit to viewport.
     const rootMeta = meta.get(root.data.nodeId)!;
     rootMeta.pos = { x: 0, y: 0 };
     const trunkTop: Vec = { x: 0, y: TRUNK_HEIGHT };
@@ -1233,12 +1233,12 @@ export function computePosterLayout(
     const isTip = !node.children?.length;
     const isOrigin = node.depth === 0 && isAbsoluteOrigin(node.data);
     const loadedKids = loadedKidCount.get(node.data.nodeId) ?? 0;
-    // Poster prune may hide kids — use full-tree counts, then OTOL tip signal.
+    // Poster prune may hide kids - use full-tree counts, then OTOL tip signal.
     const expandable =
       !isOrigin && loadedKids === 0 && hasUnresolvedChildren(node.data);
 
     const pin = pinned.get(node.data.nodeId);
-    // Animate newly placed nodes — including the first paint from root.
+    // Animate newly placed nodes - including the first paint from root.
     const isNew = !pin;
     let color: string;
     if (pin) {
@@ -1298,7 +1298,7 @@ export function computePosterLayout(
       : computedRadius;
 
     const d = dir(m.angle);
-    // Pedicels only on tips (no descendants) — fruit on a stalk, not at forks.
+    // Pedicels only on tips (no descendants) - fruit on a stalk, not at forks.
     const pedicelLen =
       isOrigin || !isTip || !node.parent
         ? 0

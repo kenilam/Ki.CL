@@ -1,8 +1,8 @@
 /**
  * Deterministic randomness, seeded by `nodeId`.
  *
- * Everything a taxon derives for itself — where its tip lands, which way its
- * branch bows, its colour drift, the wobble on its body — comes from here, so
+ * Everything a taxon derives for itself - where its tip lands, which way its
+ * branch bows, its colour drift, the wobble on its body - comes from here, so
  * the same taxon looks identical across reloads and across sessions without
  * anything being stored.
  */

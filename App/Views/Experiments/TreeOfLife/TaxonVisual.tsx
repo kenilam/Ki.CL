@@ -22,12 +22,12 @@ import {
 const DEBOUNCE_MS = 500;
 
 const DISCLAIMER =
-  'Generated from a description — not a photograph, and not always right.';
+  'Generated from a description - not a photograph, and not always right.';
 
 /** Exhaustion is the one failure a reload cannot clear, so it says so. */
 const ERROR_MESSAGES = {
   unreachable: 'Could not reach the plate. Check your connection and reload.',
-  exhausted: 'Out of drawing quota — reloading will not bring it back.',
+  exhausted: 'Out of drawing quota - reloading will not bring it back.',
   unfinished:
     'The drawing did not finish. Reload to send it back for another try.',
 };
@@ -218,7 +218,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
             className={`${CLASS_NAME}__taxon-plate-skeleton`}
           />
           <Text is='span' className='kicl-font-size-small kicl-color-grey-dark'>
-            Drawing this one — it takes about a minute.
+            Drawing this one - it takes about a minute.
           </Text>
         </div>
       </Layout>

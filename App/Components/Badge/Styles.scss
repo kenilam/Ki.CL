@@ -3,8 +3,8 @@
   --kicl--components--badge--border-color: transparent;
   --kicl--components--badge--border-width: var(--kicl-size-1px);
   --kicl--components--badge--color: var(--kicl-color-white-pure);
-  --kicl--components--badge--padding-block: var(--kicl-gutter-narrowest);
-  --kicl--components--badge--padding-inline: var(--kicl-gutter-narrow);
+  --kicl--components--badge--padding-block: var(--kicl-gutter-narrower);
+  --kicl--components--badge--padding-inline: var(--kicl-gutter);
 
   align-items: center;
   background-color: var(--kicl--components--badge--background-color);
@@ -29,7 +29,7 @@
     inline-size: 1em;
   }
 
-  // Prefix inside the chip — trailing “:” before the value.
+  // Prefix inside the chip - trailing “:” before the value.
   > .kicl--components--badge__label {
     opacity: 0.72;
 
@@ -41,16 +41,16 @@
   /*
    * One step along the gutter scale from the default, which is
    * `narrowest`/`narrow`. The scale runs none, narrowest, narrower, narrow,
-   * base — so the steps are exact rather than invented fractions.
+   * base - so the steps are exact rather than invented fractions.
    */
   &--size--small {
-    --kicl--components--badge--padding-block: var(--kicl-gutter-none);
-    --kicl--components--badge--padding-inline: var(--kicl-gutter-narrower);
+    --kicl--components--badge--padding-block: var(--kicl-gutter-narrower);
+    --kicl--components--badge--padding-inline: var(--kicl-gutter-narrow);
   }
 
   &--size--large {
-    --kicl--components--badge--padding-block: var(--kicl-gutter-narrower);
-    --kicl--components--badge--padding-inline: var(--kicl-gutter);
+    --kicl--components--badge--padding-block: var(--kicl-gutter-narrow);
+    --kicl--components--badge--padding-inline: var(--kicl-gutter-wide);
   }
 
   &--variant--secondary {
@@ -93,7 +93,7 @@
     }
 
     // The base above paints these dark-theme chips white, and these two are
-    // defined by *not* being painted — so each has to hand the background back.
+    // defined by *not* being painted - so each has to hand the background back.
     // Nesting puts them at `.kicl--theme--dark .…--variant--outline`, which
     // outranks the unthemed variant rule that made it transparent in the first
     // place; without this an outline badge is an opaque white block, and its
@@ -115,7 +115,7 @@
     }
   }
 
-  // Light theme island (e.g. TreeOfLife poster) — reset after dark so nested
+  // Light theme island (e.g. TreeOfLife poster) - reset after dark so nested
   // `.kicl--theme--light` wins when both ancestors match.
   @at-root .kicl--theme--light & {
     --kicl--components--badge--background-color: var(--kicl-color-grey-darker);

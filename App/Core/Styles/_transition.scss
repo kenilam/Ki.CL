@@ -1,7 +1,7 @@
 /*
  * The four lines every component was writing out by hand.
  *
- * Each wires the same longhands to its own `--{name}--transition-*` trio —
+ * Each wires the same longhands to its own `--{name}--transition-*` trio -
  * identical plumbing repeated once per component, with `will-change` easy to
  * leave naming a property the element no longer sets.
  *
@@ -11,7 +11,7 @@
  * value would beat anything inherited.
  *
  * This is not the `Animation` component's job. That one is for entering and
- * leaving — it owns `transition-property` outright and hides the element when
+ * leaving - it owns `transition-property` outright and hides the element when
  * it is out. These are state transitions, hover and focus and open, that
  * belong to the element for its whole life. Same CSS feature, opposite
  * lifetimes.

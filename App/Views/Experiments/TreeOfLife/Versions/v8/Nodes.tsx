@@ -116,7 +116,7 @@ export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
           opacity={0.7}
         />
       </mesh>
-      {/* Nucleus — “single cell” core */}
+      {/* Nucleus - “single cell” core */}
       <mesh position={[r * 0.12, r * 0.08, r * 0.1]}>
         <sphereGeometry args={[r * 0.42, 20, 16]} />
         <meshStandardMaterial

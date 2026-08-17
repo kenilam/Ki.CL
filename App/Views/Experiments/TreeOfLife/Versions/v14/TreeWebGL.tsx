@@ -19,7 +19,7 @@ type Props = {
   expandingIds: ReadonlySet<string>;
   focusIds: ReadonlySet<string> | null;
   selectedId: string | null;
-  /** Click/search pin — keeps wind + growth paused after the pointer leaves. */
+  /** Click/search pin - keeps wind + growth paused after the pointer leaves. */
   pinnedId: string | null;
   labelId: string | null;
   clampScale: (scale: number) => number;

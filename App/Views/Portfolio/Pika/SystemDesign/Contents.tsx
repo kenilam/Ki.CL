@@ -9,6 +9,9 @@ import Hero from './Sections/Hero';
 import Walkthrough from './Sections/Walkthrough';
 import PartOne from './Sections/PartOne';
 import PartTwo from './Sections/PartTwo';
+import Simulation from './Sections/Simulation';
+import AgentSimulation from './Sections/AgentSimulation';
+import AnchorNav from './Sections/AnchorNav';
 import BuildPlan from './Sections/BuildPlan';
 
 // Constants
@@ -25,6 +28,7 @@ const SystemDesign: React.FunctionComponent = () => {
           className={`${CLASS_NAME}__scroll-indicator kicl-position-fixed`}
         />
         <Hero />
+        <AnchorNav />
         <Layout
           autoFlow='row'
           gap='wide'
@@ -34,7 +38,9 @@ const SystemDesign: React.FunctionComponent = () => {
           <section className={`${CLASS_NAME}__body`}>
             <Walkthrough />
             <PartOne />
+            <Simulation />
             <PartTwo />
+            <AgentSimulation />
             <BuildPlan />
             <Footer />
           </section>

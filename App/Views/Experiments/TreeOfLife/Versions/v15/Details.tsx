@@ -28,7 +28,7 @@ const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
  * The detail panel, reading the focused taxon straight from context.
  *
  * No Close and no Reset: the panel is route-driven, so there is no pinned
- * selection to clear — it always reflects whatever the route is on. It is
+ * selection to clear - it always reflects whatever the route is on. It is
  * handed nothing either, because the context already knows which taxon that is
  * and `find` reads it from the same cache everything else does.
  */

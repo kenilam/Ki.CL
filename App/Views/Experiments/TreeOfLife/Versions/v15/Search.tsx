@@ -51,9 +51,9 @@ import {
  * way the platform does everywhere else. Nothing here reimplements a listbox.
  *
  * v14 searched a list the client already held, which could only ever offer what
- * was on screen. This asks the server once there is something to ask about —
+ * was on screen. This asks the server once there is something to ask about -
  * stored nodes answer first, and a name nobody has visited falls through to
- * Open Tree's own index — while an empty field falls back to what *is* on
+ * Open Tree's own index - while an empty field falls back to what *is* on
  * screen, so the dropdown is useful before you have typed anything.
  */
 
@@ -77,7 +77,7 @@ const STATUS_MESSAGES = {
   searching: () => 'Searching…',
   matched: (count: number) => `${count} ${count === 1 ? 'match' : 'matches'}`,
   unmatched: (count: number) =>
-    `No taxon by that name — showing ${count} on screen`,
+    `No taxon by that name - showing ${count} on screen`,
   onScreen: (count: number) => `${count} on screen`,
 };
 
@@ -120,7 +120,7 @@ const Search: React.FunctionComponent = () => {
     const trimmed = query.trim();
 
     /*
-     * Clearing the field clears the field and nothing else — it does not
+     * Clearing the field clears the field and nothing else - it does not
      * navigate, and it does not reset the view. That was the one behaviour v14
      * got wrong, where emptying the box threw away what you were looking at.
      */
@@ -137,7 +137,7 @@ const Search: React.FunctionComponent = () => {
 
   /*
    * The set of drawn taxa changes as the tree does, so it is subscribed to
-   * rather than read once. The version is the snapshot — `drawnTaxa` builds a
+   * rather than read once. The version is the snapshot - `drawnTaxa` builds a
    * fresh array each call and would never compare equal.
    */
   const version = useSyncExternalStore(
@@ -163,7 +163,7 @@ const Search: React.FunctionComponent = () => {
   );
 
   /*
-   * The last response outlives the query that asked for it — clearing the field
+   * The last response outlives the query that asked for it - clearing the field
    * does not unsend a request. Without this the dropdown keeps offering matches
    * for a word that is no longer there, instead of falling back to what is on
    * screen.
@@ -190,7 +190,7 @@ const Search: React.FunctionComponent = () => {
   /*
    * A `datalist` fills the input with the chosen value; it does not tell you
    * something was chosen. Matching the value back to an option is what turns
-   * that into navigation — and it is why the option values have to be unique,
+   * that into navigation - and it is why the option values have to be unique,
    * which the rank suffix takes care of for taxa that share a name.
    */
   const choose = (value: string) => {
@@ -213,8 +213,8 @@ const Search: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrow'>
           <div>
             {/*
-              The browser draws its own controls on this input — a cancel cross
-              for `type='search'` and a picker triangle for `list` — and neither
+              The browser draws its own controls on this input - a cancel cross
+              for `type='search'` and a picker triangle for `list` - and neither
               is one of ours. They are suppressed in the stylesheet and replaced
               here with the app's own icons, so the field matches everything
               else on the page.

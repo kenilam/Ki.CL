@@ -6,7 +6,7 @@ import { getKiclClient, gql } from 'api/provider';
  *
  * A single `TreeOfLifeSubtree` nests `ancestor` only as deep as codegen fixed
  * it (twelve levels), so reading the chain off `data` stops wherever the query
- * stopped — which for a deep lineage is nowhere near the root. The normalised
+ * stopped - which for a deep lineage is nowhere near the root. The normalised
  * cache has no such limit: it accumulates `ancestor` links from every response
  * ever written, so walking it can pass straight through the seam where one
  * response ended and another began.
@@ -62,7 +62,7 @@ export default function chain(nodeId: string | null | undefined): Chain {
     });
 
     if (!node || node.ancestor === undefined) {
-      // Nothing cached about what sits above this node — not the root, just
+      // Nothing cached about what sits above this node - not the root, just
       // the end of what has been loaded.
       return { ids, complete: false };
     }

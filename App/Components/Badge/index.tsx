@@ -9,7 +9,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--badge';
 
 /**
- * Compact label chip — API aligned with
+ * Compact label chip - API aligned with
  * https://ui.shadcn.com/docs/components/base/badge
  */
 const Badge = React.forwardRef<HTMLElement, Props>(

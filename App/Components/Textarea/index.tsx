@@ -8,7 +8,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--textarea';
 
 /**
- * Multiline text control — API aligned with
+ * Multiline text control - API aligned with
  * https://ui.shadcn.com/docs/components/base/textarea
  */
 const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(

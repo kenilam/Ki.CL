@@ -57,7 +57,7 @@ const seedMonth = (props: CalendarProps) => {
 };
 
 /**
- * Month grid — used by DatePicker (shadcn composition).
+ * Month grid - used by DatePicker (shadcn composition).
  * https://ui.shadcn.com/docs/components/base/date-picker
  */
 const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(

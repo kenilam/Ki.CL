@@ -8,7 +8,7 @@ type BranchProps = {
   branch: LayoutBranch;
 };
 
-/** Thin Bezier strokes — matches the reference vein-like line weight. */
+/** Thin Bezier strokes - matches the reference vein-like line weight. */
 const Branch: React.FunctionComponent<BranchProps> = ({ branch }) => {
   const points = useMemo(() => {
     const curve = new THREE.CubicBezierCurve3(

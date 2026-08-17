@@ -1,6 +1,6 @@
 import type { Spec } from './Spec';
 
-/** Services and components — control plane, execution plane, data & delivery. */
+/** Services and components - control plane, execution plane, data & delivery. */
 const services: Spec = {
   description:
     'Service diagram: clients reach an API gateway; a control plane holds the App Registry, Job Service, Credits and Moderation; an execution plane holds the Orchestrator, task queues, worker fleet and provider adapters; data and delivery cover Postgres, the asset store and CDN, the event bus, the realtime gateway and observability.',
@@ -13,9 +13,10 @@ const services: Spec = {
     { label: 'Data & delivery', x: 740, y: 20, w: 240, h: 590 },
   ],
   nodes: [
-    { title: 'Web app', x: 35, y: 70, w: 120, h: 44 },
-    { title: 'Mobile', x: 35, y: 140, w: 120, h: 44 },
+    { id: 'web', title: 'Web app', x: 35, y: 70, w: 120, h: 44 },
+    { id: 'mobile', title: 'Mobile', x: 35, y: 140, w: 120, h: 44 },
     {
+      id: 'gw',
       title: 'API Gateway',
       lines: ['auth · rate limit'],
       x: 220,
@@ -24,6 +25,7 @@ const services: Spec = {
       h: 60,
     },
     {
+      id: 'reg',
       title: 'App Registry',
       lines: ['manifests · versions'],
       x: 450,
@@ -32,6 +34,7 @@ const services: Spec = {
       h: 54,
     },
     {
+      id: 'jobs',
       title: 'Job Service',
       lines: ['create · query · cancel'],
       x: 450,
@@ -39,9 +42,10 @@ const services: Spec = {
       w: 210,
       h: 54,
     },
-    { title: 'Credits & Billing', x: 450, y: 178, w: 210, h: 44 },
-    { title: 'Moderation', x: 450, y: 232, w: 210, h: 44 },
+    { id: 'cred', title: 'Credits & Billing', x: 450, y: 178, w: 210, h: 44 },
+    { id: 'mod', title: 'Moderation', x: 450, y: 232, w: 210, h: 44 },
     {
+      id: 'orch',
       title: 'Orchestrator',
       lines: ['durable DAG engine'],
       x: 450,
@@ -50,6 +54,7 @@ const services: Spec = {
       h: 54,
     },
     {
+      id: 'q',
       title: 'Task queues',
       lines: ['per primitive class'],
       shape: 'queue',
@@ -58,8 +63,9 @@ const services: Spec = {
       w: 210,
       h: 54,
     },
-    { title: 'Worker fleet', x: 450, y: 468, w: 210, h: 40 },
+    { id: 'wk', title: 'Worker fleet', x: 450, y: 468, w: 210, h: 40 },
     {
+      id: 'pad',
       title: 'Provider adapters',
       lines: ['video · image · vision · llm'],
       x: 450,
@@ -68,6 +74,7 @@ const services: Spec = {
       h: 60,
     },
     {
+      id: 'pg',
       title: 'Postgres',
       lines: ['jobs · tasks · ledger'],
       shape: 'cylinder',
@@ -77,6 +84,7 @@ const services: Spec = {
       h: 70,
     },
     {
+      id: 's3',
       title: 'Asset store + CDN',
       shape: 'cylinder',
       x: 760,
@@ -84,8 +92,17 @@ const services: Spec = {
       w: 200,
       h: 60,
     },
-    { title: 'Event bus', shape: 'queue', x: 760, y: 230, w: 200, h: 44 },
     {
+      id: 'ev',
+      title: 'Event bus',
+      shape: 'queue',
+      x: 760,
+      y: 230,
+      w: 200,
+      h: 44,
+    },
+    {
+      id: 'rt',
       title: 'Realtime gateway',
       lines: ['SSE / WebSocket'],
       x: 760,
@@ -94,6 +111,7 @@ const services: Spec = {
       h: 54,
     },
     {
+      id: 'obs',
       title: 'Observability',
       lines: ['task metrics · cost'],
       x: 760,

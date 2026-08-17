@@ -1,5 +1,5 @@
 /**
- * v8 layout — spherical packing driven by canvas size
+ * v8 layout - spherical packing driven by canvas size
  *
  * radius = min(canvasWidth, canvasHeight) * scale
  * 1. Root at sphere center (0,0,0)
@@ -111,7 +111,7 @@ function toVec3(v: Vec): Vec3 {
   return [v.x, v.y, v.z];
 }
 
-/** Fibonacci-ish direction from two hashes — even-ish sphere coverage + jitter. */
+/** Fibonacci-ish direction from two hashes - even-ish sphere coverage + jitter. */
 function hashedDirection(id: string): Vec {
   const u = hash01(id, 1);
   const v = hash01(id, 2);
@@ -277,7 +277,7 @@ function placeParents(
       const r = Math.max(minR, targetR);
 
       if (len3(pos) < 1e-6) {
-        // Degenerate centroid — offset along a hashed direction.
+        // Degenerate centroid - offset along a hashed direction.
         pos = scale(hashedDirection(node.data.nodeId), r);
       } else {
         pos = scale(normalize(pos), r);

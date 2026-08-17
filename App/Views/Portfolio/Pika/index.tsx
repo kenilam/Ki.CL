@@ -16,7 +16,7 @@ const Contents = React.lazy(() => import('./Contents'));
 
 /**
  * Credential gate for every child route. The index redirect stays outside the
- * gate on purpose — /portfolio/pika itself has nothing to protect, it only
+ * gate on purpose - /portfolio/pika itself has nothing to protect, it only
  * bounces to its parent.
  */
 const Gate: React.FunctionComponent = () => {

@@ -1,5 +1,5 @@
 /**
- * Rendering engine — tip / origin nodes
+ * Rendering engine - tip / origin nodes
  * InstancedMesh for expandable tips (scales to thousands);
  * origin + labels as discrete meshes.
  */
@@ -135,7 +135,7 @@ export const OriginMarker: React.FunctionComponent<OriginProps> = ({
 };
 
 /**
- * Stand-in "illustration" sprites at tips — colored billboard discs.
+ * Stand-in "illustration" sprites at tips - colored billboard discs.
  * Swap texture maps later for real organism art.
  */
 export const TipSprites: React.FunctionComponent<{ tips: LayoutNode[] }> = ({

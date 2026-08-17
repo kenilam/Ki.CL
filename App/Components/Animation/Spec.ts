@@ -57,8 +57,8 @@ export type Properties = {
  * There is no lifecycle callback API here on purpose.
  *
  * This component clones its props onto the child element, so the platform's
- * own transition events — `onTransitionRun`, `onTransitionStart`,
- * `onTransitionEnd`, `onTransitionCancel` — arrive already working, with the
+ * own transition events - `onTransitionRun`, `onTransitionStart`,
+ * `onTransitionEnd`, `onTransitionCancel` - arrive already working, with the
  * semantics and the payload the DOM defines. A parallel set of
  * `onEnter`/`onEntered` props would only be a second, less capable name for
  * the same moments, and one the browser would not agree with when a

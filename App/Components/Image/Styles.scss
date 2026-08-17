@@ -29,7 +29,7 @@
    *
    * `object-fit` is inert until the box has a definite height, so while this
    * was `auto` a declared `aspect-ratio` only ever clipped the overflow off the
-   * bottom — a crop anchored to the top edge, never the centre. A percentage
+   * bottom - a crop anchored to the top edge, never the centre. A percentage
    * against an indefinite height still resolves to `auto`, so an image left to
    * its natural ratio is unaffected; only one told what shape to be changes.
    */

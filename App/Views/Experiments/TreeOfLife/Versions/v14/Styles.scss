@@ -8,7 +8,7 @@
   user-select: none;
 
   &__svg {
-    // Out of grid flow — grid was sizing the SVG from the viewBox aspect
+    // Out of grid flow - grid was sizing the SVG from the viewBox aspect
     // (e.g. stuck 960×640) instead of the poster cell.
     block-size: 100%;
     display: block;
@@ -17,7 +17,7 @@
     max-block-size: none;
     max-inline-size: none;
 
-    // Explicit edges — % alone can fail before the parent has a definite size.
+    // Explicit edges - % alone can fail before the parent has a definite size.
     inset-block: 0;
     inset-inline: 0;
     touch-action: none;
@@ -32,7 +32,7 @@
     opacity: 0.55;
   }
 
-  // Selection / expanding — sonar-style ripple (not the rank stroke itself).
+  // Selection / expanding - sonar-style ripple (not the rank stroke itself).
   &__marker-pulse-ring {
     transform-box: fill-box;
     transform-origin: center;
@@ -46,7 +46,7 @@
     animation-delay: var(--kicl-transition-duration-slow);
   }
 
-  // Diamond (class) — crystalline rock / twinkle
+  // Diamond (class) - crystalline rock / twinkle
   &__marker-diamond {
     transform-box: fill-box;
     transform-origin: center;
@@ -57,7 +57,7 @@
     animation-timing-function: ease-in-out;
   }
 
-  // Square (order) — steady breath
+  // Square (order) - steady breath
   &__marker-square {
     transform-box: fill-box;
     transform-origin: center;
@@ -68,7 +68,7 @@
     animation-timing-function: ease-in-out;
   }
 
-  // Tip / species dots — quieter breath (many on screen)
+  // Tip / species dots - quieter breath (many on screen)
   &__marker-tip {
     transform-box: fill-box;
     transform-origin: center;
@@ -123,7 +123,7 @@
     }
   }
 
-  // SVG <text> halo — no design-system utility for paint-order / stroke.
+  // SVG <text> halo - no design-system utility for paint-order / stroke.
   &__label {
     paint-order: stroke;
     pointer-events: none;
@@ -132,7 +132,7 @@
     stroke-width: 0.12em;
   }
 
-  // HTML label over WebGL — screen-space, fixed 1rem, white outline + soft glow.
+  // HTML label over WebGL - screen-space, fixed 1rem, white outline + soft glow.
   &__webgl-label {
     font-size: 1rem;
     inset: auto;
@@ -146,11 +146,11 @@
       0 0 var(--kicl-size-half) var(--kicl-color-white),
       0 0 var(--kicl-size) rgb(255 255 255 / 70%),
       calc(var(--kicl-size-1px) * -1) calc(var(--kicl-size-1px) * -1) 0
-      var(--kicl-color-white),
+        var(--kicl-color-white),
       var(--kicl-size-1px) calc(var(--kicl-size-1px) * -1) 0
-      var(--kicl-color-white),
+        var(--kicl-color-white),
       calc(var(--kicl-size-1px) * -1) var(--kicl-size-1px) 0
-      var(--kicl-color-white),
+        var(--kicl-color-white),
       var(--kicl-size-1px) var(--kicl-size-1px) 0 var(--kicl-color-white);
     top: 0;
     transform-origin: center;
@@ -163,7 +163,7 @@
     z-index: 2;
   }
 
-  // Fixed chrome — flex here so width stays hug-content (Layout defaults to 100%).
+  // Fixed chrome - flex here so width stays hug-content (Layout defaults to 100%).
   &__toolbar {
     align-items: center;
     display: flex;
@@ -197,7 +197,7 @@
     }
   }
 
-  // Fixed inset host — pins detail/search to the top-left; leave room above the credit.
+  // Fixed inset host - pins detail/search to the top-left; leave room above the credit.
   &__panel-slot {
     // Layout sets inline-size: 100%; let inset define the containing block instead.
     block-size: auto;

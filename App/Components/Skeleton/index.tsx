@@ -8,7 +8,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--skeleton';
 
 /**
- * Pulsing placeholder — API aligned with
+ * Pulsing placeholder - API aligned with
  * https://ui.shadcn.com/docs/components/skeleton
  */
 const Skeleton = React.forwardRef<HTMLDivElement, Props>(

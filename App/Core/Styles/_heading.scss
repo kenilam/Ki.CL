@@ -8,9 +8,9 @@
 /*
  * What a heading looks like, in one place.
  *
- * Two sets of selectors need it — the elements `h1`–`h6`, and the
+ * Two sets of selectors need it - the elements `h1`-`h6`, and the
  * `kicl-look-like-h*` classes that give the look to something that is not a
- * heading — and they live in different cascade layers, so they cannot share a
+ * heading - and they live in different cascade layers, so they cannot share a
  * selector list.
  *
  * Sizes are read from `--kicl-heading-font-size`, which each selector sets for
@@ -47,7 +47,7 @@
  *
  * Only the top two carry a size of their own. There is no token between the
  * body size and `medium`, and inventing one as a multiple of the body size is
- * the kind of made-up scale the design system rules out — so `h3` down to `h6`
+ * the kind of made-up scale the design system rules out - so `h3` down to `h6`
  * stay at body size and are told apart by weight, as they already were.
  */
 @mixin heading-size($level) {

@@ -12,7 +12,7 @@ import { random } from './seed';
  * the connection itself carries the inheritance from one colour to the next.
  */
 
-/** Rings along the path — enough for a smooth taper without heavy geometry. */
+/** Rings along the path - enough for a smooth taper without heavy geometry. */
 const PATH_STEPS = 26;
 /** Sides per ring. Branches are thin; 7 reads as round at a fraction of the cost. */
 const RADIAL_SEGMENTS = 7;
@@ -197,7 +197,7 @@ export function formForRank(rank?: string | null): Form {
   return 'compact';
 }
 
-/** Relative body size by form — higher ranks read larger. */
+/** Relative body size by form - higher ranks read larger. */
 export const FORM_SCALE: Record<Form, number> = {
   bloom: 1.15,
   lobed: 1,
@@ -210,13 +210,13 @@ export const FORM_SCALE: Record<Form, number> = {
  * sixteen pixels.
  *
  * The camera frames a taxon at a distance derived from its own branch length,
- * and that framing is the closest the rig will go — so a body's size on screen
+ * and that framing is the closest the rig will go - so a body's size on screen
  * is fixed by construction rather than by where it sits in the tree. Measured
  * across the range: the focus 10.9px, its fan 8.5px, a distant ancestor 7px.
  *
  * At that size an icosahedron at detail 2 is 320 faces over ~10px, already far
- * below one triangle per pixel. Detail 4 was 5,120 faces — 15,360 vertices,
- * each put through the wobble loop below — to render the same dot. What
+ * below one triangle per pixel. Detail 4 was 5,120 faces - 15,360 vertices,
+ * each put through the wobble loop below - to render the same dot. What
  * separates the forms is the wobble and its frequency, not the tessellation
  * they are applied to, so capping costs nothing in silhouette.
  */
@@ -236,7 +236,7 @@ const FORM_SURFACE: Record<
 const BLOB_SEGMENTS = 3;
 
 /**
- * Smooth pseudo-noise from summed sinusoids — cheap, seeded, and continuous
+ * Smooth pseudo-noise from summed sinusoids - cheap, seeded, and continuous
  * over the surface, which is all the wobble needs to avoid looking machined.
  */
 function wobbleAt(

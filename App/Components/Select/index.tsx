@@ -76,7 +76,7 @@ const readMaxBlockSize = (node: HTMLElement) => {
 };
 
 /**
- * Option list control — API aligned with
+ * Option list control - API aligned with
  * https://ui.shadcn.com/docs/components/base/select
  */
 const Select: React.FC<SelectProps> = ({
