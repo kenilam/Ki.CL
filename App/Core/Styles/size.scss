@@ -24,20 +24,7 @@
   --kicl-size-18x: calc(var(--kicl-size) * 18);
   --kicl-size-19x: calc(var(--kicl-size) * 19);
   --kicl-size-20x: calc(var(--kicl-size) * 20);
-}
-
-@mixin make-size-variable-class(
-  $property: null,
-  $identifier: null,
-  $size: null
-) {
-  @if $identifier and $property {
-    $suffix: if($size, '-#{$size}', '');
-
-    .kicl-#{$property}-#{$identifier} {
-      #{$property}: var(--kicl-size#{$suffix});
-    }
-  }
+  --kicl-size-full: 100%;
 }
 
 @include make-size-variable-class('border-radius', 'xs', '2px');
@@ -54,3 +41,4 @@
 @include make-size-variable-class('inline-size', 'xl', '16x');
 @include make-size-variable-class('inline-size', 'xxl', '18x');
 @include make-size-variable-class('inline-size', 'max', '20x');
+@include make-size-variable-class('inline-size', 'full', 'full');

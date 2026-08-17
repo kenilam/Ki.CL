@@ -1,0 +1,400 @@
+:root {
+  --kicl--views--portfolio--pika--system-design--background: linear-gradient(
+    232deg,
+    #{color.adjust($orange, $lightness: 30%)},
+    #{color.adjust($green, $lightness: 30%)},
+    #{color.adjust($red, $lightness: 30%)},
+    #{color.adjust($blue, $lightness: 30%)},
+    #{color.adjust($yellow, $lightness: 30%)}
+  );
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--portfolio--pika--system-design--background: linear-gradient(
+      232deg,
+      #{color.adjust($orange, $blackness: 3%)},
+      #{color.adjust($green, $blackness: 3%)},
+      #{color.adjust($red, $blackness: 3%)},
+      #{color.adjust($blue, $blackness: 3%)},
+      #{color.adjust($yellow, $blackness: 3%)}
+    );
+  }
+}
+
+.kicl--views--portfolio--pika--system-design {
+  /* Full-bleed hero — the article re-pads its own reading column below. */
+  @at-root .kicl--view:has(&) {
+    padding: var(--kicl-gutter-none);
+  }
+
+  &__scroll-indicator {
+    background: var(--kicl--views--portfolio--pika--system-design--background);
+    background-size: 1200% 1200%;
+    block-size: var(--kicl-size-3px);
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    scale: var(--kicl--views--portfolio--pika--system-design--scroll, 0) 1;
+    transform-origin: inline-start;
+    z-index: 1;
+    animation:
+      kicl--views--portfolio--pika--system-design--background
+      var(--kicl-transition-duration-5m) ease infinite,
+      kicl--views--portfolio--pika--system-design--scroll linear both;
+    animation-timeline: auto, scroll();
+  }
+
+  &__hero {
+    animation: kicl--views--portfolio--pika--system-design--background
+      var(--kicl-transition-duration-5m) ease infinite;
+    background: var(--kicl--views--portfolio--pika--system-design--background);
+    background-size: 1200% 1200%;
+    inline-size: 100dvw;
+
+    header {
+      animation: kicl--views--portfolio--pika--system-design--parallax-hero
+        linear both;
+      animation-timeline: scroll();
+      animation-range: 0% 20%;
+      padding-inline: var(--kicl-gutter-extreme);
+      text-wrap: balance;
+    }
+  }
+
+  &__body {
+    margin-inline: auto;
+    max-inline-size: min(100%, 92ch);
+    padding-block: var(--kicl-gutter-widest);
+    padding-inline: var(--kicl-gutter-wide);
+
+    > section > * {
+      animation: kicl--views--portfolio--pika--system-design--parallax-reveal
+        linear both;
+      animation-timeline: view();
+      animation-range: entry 40% entry 60%;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+    }
+
+    h3 {
+      padding-block-start: var(--kicl-gutter-narrow);
+      position: relative;
+
+      &::before {
+        animation: kicl--views--portfolio--pika--system-design--background 300s
+          ease infinite;
+        background: var(
+          --kicl--views--portfolio--pika--system-design--background
+        );
+        background-size: 1200% 1200%;
+        block-size: var(--kicl-size-3px);
+        content: '';
+        inline-size: var(--kicl-size-4x);
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        position: absolute;
+      }
+    }
+
+    /* Prism syntax tokens — coloured with the design system palette. */
+    /* stylelint-disable selector-class-pattern */
+    .token {
+      &.key,
+      &.atrule {
+        color: var(--kicl-color-blue);
+      }
+
+      &.string {
+        color: var(--kicl-color-green);
+      }
+
+      &.boolean,
+      &.number {
+        color: var(--kicl-color-orange);
+      }
+
+      &.comment {
+        color: var(--kicl-color-grey);
+      }
+
+      &.punctuation {
+        opacity: 0.6;
+      }
+    }
+    /* stylelint-enable selector-class-pattern */
+
+    /* Inline code chips — same surface tokens the Card uses. */
+    :not(pre) > code {
+      background-color: var(--kicl-surface-color);
+      border: var(--kicl-size-1px) solid var(--kicl-surface-border-color);
+      border-radius: calc(var(--kicl-size-half) / 2);
+      font-family: var(--kicl-font-family-mono);
+      font-size: var(--kicl-font-size-small);
+      letter-spacing: normal;
+      padding-block: 0;
+      padding-inline: 0.4em;
+    }
+  }
+
+  /* Inside the fullscreen dialog the figure needs an explicit measure. */
+  &__full &__diagram {
+    inline-size: min(1200px, 92dvw);
+  }
+
+  &__diagram {
+    inline-size: 100%;
+    margin: 0;
+
+    svg {
+      block-size: auto;
+      display: block;
+      inline-size: 100%;
+    }
+
+    text {
+      fill: currentcolor;
+      font-family: var(--kicl-font-family);
+      font-size: var(--kicl-font-size-small);
+      letter-spacing: 0.02em;
+    }
+
+    &-arrow {
+      fill: currentcolor;
+      opacity: 0.55;
+
+      &--blue {
+        fill: var(--kicl-color-blue);
+        opacity: 0.9;
+      }
+
+      &--green {
+        fill: var(--kicl-color-green);
+        opacity: 0.9;
+      }
+
+      &--orange {
+        fill: var(--kicl-color-orange);
+        opacity: 0.9;
+      }
+
+      &--red {
+        fill: var(--kicl-color-red);
+        opacity: 0.9;
+      }
+
+      &--yellow {
+        fill: var(--kicl-color-yellow);
+        opacity: 0.9;
+      }
+    }
+
+    &-box {
+      fill: var(--kicl-surface-color);
+      stroke: var(--kicl-surface-border-color);
+    }
+
+    &-group {
+      fill: color-mix(in oklab, var(--kicl-surface-color) 45%, transparent);
+      stroke: var(--kicl-surface-border-color);
+    }
+
+    &-group-label {
+      font-size: var(--kicl-font-size-small);
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+
+    &-title {
+      font-size: var(--kicl-font-size);
+      font-weight: var(--kicl-font-weight-bolder);
+    }
+
+    &-line {
+      font-size: var(--kicl-font-size-small);
+      opacity: 0.65;
+    }
+
+    &-type {
+      font-family: var(--kicl-font-family-mono);
+      font-size: var(--kicl-font-size-small);
+      letter-spacing: normal;
+      opacity: 0.6;
+    }
+
+    &-name {
+      font-size: var(--kicl-font-size-small);
+    }
+
+    &-key {
+      font-size: var(--kicl-font-size-small);
+      opacity: 0.75;
+    }
+
+    &-rule {
+      stroke: var(--kicl-surface-border-color);
+
+      &--faint {
+        opacity: 0.5;
+      }
+    }
+
+    &-edge {
+      fill: none;
+      opacity: 0.55;
+      stroke: currentcolor;
+      stroke-width: 1.4;
+
+      &--dashed {
+        stroke-dasharray: 5 4;
+      }
+
+      &--blue {
+        opacity: 0.9;
+        stroke: var(--kicl-color-blue);
+      }
+
+      &--green {
+        opacity: 0.9;
+        stroke: var(--kicl-color-green);
+      }
+
+      &--orange {
+        opacity: 0.9;
+        stroke: var(--kicl-color-orange);
+      }
+
+      &--red {
+        opacity: 0.9;
+        stroke: var(--kicl-color-red);
+      }
+
+      &--yellow {
+        opacity: 0.9;
+        stroke: var(--kicl-color-yellow);
+      }
+    }
+
+    &-edge-label {
+      font-size: var(--kicl-font-size-small);
+      paint-order: stroke;
+      stroke: var(--kicl-body-background-color);
+      stroke-linejoin: round;
+      stroke-width: 6px;
+    }
+  }
+
+  /* Coding-agent prompt blocks — brand gradient as the leading edge. */
+  &__prompt {
+    background-color: var(--kicl-surface-color);
+    margin: 0;
+    padding-block: var(--kicl-gutter-narrow);
+    padding-inline: var(--kicl-gutter);
+
+    &::before {
+      animation: kicl--views--portfolio--pika--system-design--background 300s
+        ease infinite;
+      background: var(
+        --kicl--views--portfolio--pika--system-design--background
+      );
+      background-size: 1200% 1200%;
+      block-size: 100%;
+      content: '';
+      inline-size: var(--kicl-size-3px);
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      position: absolute;
+    }
+  }
+
+  &__preview {
+    cursor: zoom-in;
+  }
+
+  &__full {
+    &#{&} {
+      --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
+      --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
+    }
+
+    --kicl--components--image--block-size: calc(
+      var(--kicl--components--dialog--block-size) -
+      (var(--kicl--components--dialog--padding-block) * 2)
+    );
+    --kicl--components--image--inline-size: fit-content;
+  }
+
+  /* Build-plan phase table — surface borders, uppercase header set in markup. */
+  &__phases {
+    border-collapse: collapse;
+    inline-size: 100%;
+
+    th {
+      border-block-end: var(--kicl-size-2px) solid
+        var(--kicl-surface-border-color);
+      opacity: 0.6;
+    }
+
+    td {
+      border-block-end: var(--kicl-size-1px) solid
+        var(--kicl-surface-border-color);
+      vertical-align: top;
+    }
+
+    td,
+    th {
+      padding-block: var(--kicl-gutter-narrow);
+      padding-inline: var(--kicl-gutter-narrower);
+    }
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--parallax-hero {
+  from {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  to {
+    opacity: 0;
+    translate: 0 var(--kicl-size-full);
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--parallax-reveal {
+  from {
+    opacity: 0;
+    translate: 0 var(--kicl-size-10x);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--scroll {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--background {
+  0% {
+    background-position: 0% 88%;
+  }
+
+  50% {
+    background-position: 100% 13%;
+  }
+
+  100% {
+    background-position: 0% 88%;
+  }
+}

@@ -20,8 +20,10 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
           CLASS_NAME,
           'kicl-font-size-small',
           'kicl-font-weight-bold',
-          error ? 'kicl-color-error' : 'kicl-color-grey-darker',
-          { [`${CLASS_NAME}--error`]: Boolean(error) },
+          {
+            [`${CLASS_NAME}--error`]: Boolean(error),
+            'kicl-color-error': error,
+          },
           className
         )}
         htmlFor={formItemId}

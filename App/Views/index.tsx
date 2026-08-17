@@ -26,6 +26,7 @@ import { SCROLL_DIRECTIONS, useResponsive, useScrollDirection } from '@/Hooks';
 // Views
 import Experiments from './Experiments';
 import Home, { PATH as HOME_PATH } from './Home';
+import Portfolio from './Portfolio';
 
 // Styles
 import './Styles.scss';
@@ -97,6 +98,7 @@ const Views: React.FunctionComponent = () => {
         <Route path='*' element={<HttpStatus.Status404 />} />
         {Experiments}
         {Home}
+        {Portfolio}
       </Route>
     </Router>
   );

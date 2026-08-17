@@ -14,9 +14,11 @@ make build               # vite build --debug (client bundle only)
 make server              # build:server → runs the Express static/SSR-ish server (App/.Server)
 make test                # npx jest
 make deploy              # build:client, then FTP deploy (temporary, being replaced by GitHub auto-deploy)
+make codegen             # run codegen (type generation)
+make start               # yarn install + development (one-step bootstrap)
 ```
 
-Other scripts not wrapped by `make`: `yarn lint:eslint` (`App/**/*.{js,jsx,ts,tsx} --fix`), `yarn lint:stylelint` (`App/**/*.{css,scss} --fix`), `yarn lint:staged` (husky pre-commit, prettier+eslint+stylelint via `lint-staged`). Single test file: `npx jest App/path/to/File.test.tsx`.
+Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn lint:stylelint` (`App/**/*.{css,scss} --fix`), `yarn lint:staged` (husky pre-commit, prettier+oxlint+stylelint via `lint-staged`). Single test file: `npx jest App/path/to/File.test.tsx`.
 
 ## Architecture
 
@@ -35,7 +37,7 @@ This app does not talk to GraphQL directly — it consumes the **Backend** repo'
 
 ### Design system discipline (enforced by Cursor rules, apply the same bar here)
 - **Components over raw DOM**: use the shared `@/Components` (`Text`, `Heading`, `Button`, `Badge`, `Card`+subparts, `List`/`ListItem`, `Layout` for grid/flex, `Image`, `Skeleton`, `Status`, `Spinner`, `Form*`, `Input*`, `Textarea`, `Checkbox`, `RadioGroup*`, `Select*`, `DatePicker`, `Switch`, `Details`+`Summary`) instead of hand-rolled markup. `Layout` owns stacking/gaps/alignment — view SCSS should not hand-roll `display: grid|flex` + `gap`/align/justify.
-- **Utility classes over SCSS** for color/fill/type/position: `kicl-color-*`, `kicl-position-*` (never `position:` in SCSS), `kicl-inline-size-*`, `kicl-font-size*`, `kicl-font-*`/`kicl-line-height-*`/`kicl-text-*`.
+- **Utility classes over SCSS** for color/fill/type/position: `kicl-color-*`, `kicl-position-*` (never `position:` in SCSS), `kicl-inline-size-*`, `kicl-font-size*`, `kicl-font-*`/`kicl-line-height-*`/`kicl-text-align-*`/`kicl-text-transform-*` (capitalize | lowercase | uppercase | none).
 - **Design tokens over magic numbers**: `var(--kicl-gutter-*)`, `var(--kicl-size-*)` for padding/margin/inset/border-radius/border-width — never invented `calc(var(--kicl-*) * n)` scales. Component SCSS defines its own `--kicl--components--{name}--*` vars on `:root`, overridden per modifier.
 - **Single quotes** in TS/JS/JSX/JSDoc (Prettier `singleQuote`/`jsxSingleQuote`); use template literals for strings needing nested quotes rather than escaping.
 - When touching UI that violates these, migrate it in the same change rather than leaving it inconsistent with neighboring code.

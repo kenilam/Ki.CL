@@ -16,7 +16,7 @@ import './display.scss';
 import './duration.scss';
 import './ease.scss';
 import './font.scss';
-import './grid.scss';
+import './gutter.scss';
 import './inset.scss';
 import './layout.scss';
 import './look-like.scss';

@@ -15,7 +15,7 @@ const CardDescription = React.forwardRef<HTMLElement, CardDescriptionProps>(
         className={classNames(
           CLASS_NAME,
           'kicl-font-size-small',
-          'kicl-color-grey-dark',
+          'kicl-color-grey-light',
           className
         )}
         data-is={is}

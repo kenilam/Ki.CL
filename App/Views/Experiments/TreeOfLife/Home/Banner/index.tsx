@@ -29,7 +29,7 @@ const Banner: React.FunctionComponent = () => {
       alignItems={isTablet ? 'start' : 'center'}
       alignContent={isTablet ? 'start' : 'center'}
       autoFlow={isTablet ? 'row' : 'column'}
-      gap='wider'
+      gap='extreme'
       justifyItems='start'
       justifyContent='start'
     >
