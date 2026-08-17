@@ -1,5 +1,5 @@
 /**
- * v9 layout — flat 2D species map
+ * v9 layout - flat 2D species map
  *
  * 1. Origin (life) at map center
  * 2. Tip / species nodes seeded across a disc, then separated with 2D repulsion

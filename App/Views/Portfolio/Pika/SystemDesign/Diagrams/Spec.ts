@@ -18,9 +18,11 @@ export type Row = {
 
 export type Node = {
   h: number;
+  /** Stable handle so a simulation can address this node. */
+  id?: string;
   /** Secondary description lines under the title. */
   lines?: string[];
-  /** Entity attribute rows — renders the node as a table. */
+  /** Entity attribute rows - renders the node as a table. */
   rows?: Row[];
   shape?: 'cylinder' | 'queue' | 'rect';
   title: string;

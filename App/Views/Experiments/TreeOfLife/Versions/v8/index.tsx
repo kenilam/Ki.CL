@@ -1,6 +1,6 @@
 /**
- * v8 — Sphere layout from min(canvasW, canvasH); rotatable 3D view.
- * (PhyloPic removed — silhouettes no longer used.)
+ * v8 - Sphere layout from min(canvasW, canvasH); rotatable 3D view.
+ * (PhyloPic removed - silhouettes no longer used.)
  */
 import React, { useEffect, useMemo, useState } from 'react';
 

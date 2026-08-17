@@ -18,15 +18,15 @@ import { setSettled, setZoom } from './zoom';
  * Frames the taxon the route is on, and choreographs the pull-back from it.
  *
  * There is one control here: how far out you are, from 0 at the taxon to 1 at
- * the whole lineage. Everything — where the camera looks, how far back it
- * stands, which way is up — is a pure function of that number, interpolated
+ * the whole lineage. Everything - where the camera looks, how far back it
+ * stands, which way is up - is a pure function of that number, interpolated
  * between two fully specified poses. Nothing eases toward anything else, and
  * there is no second piece of state that can disagree with it.
  *
  * That is why the camera is driven directly rather than through an orbit
  * controller. A controller owns position and target and damps them on its own
  * schedule, so a composition layered over the top can only run once it has
- * settled — which reads as a dolly followed by a separate lurch, however it is
+ * settled - which reads as a dolly followed by a separate lurch, however it is
  * tuned. Deriving the whole pose from a single parameter makes the move
  * continuous by construction: every intermediate value is a valid picture.
  */
@@ -85,7 +85,7 @@ const ZOOM_EASE = 7;
  *
  * The route changes instantly but the view should not: dropping the orbit
  * controller took `setLookAt(…, true)`'s animated move with it, so the flight
- * is run here instead — on a single parameter, like the zoom, so the pan, the
+ * is run here instead - on a single parameter, like the zoom, so the pan, the
  * swing and the dolly stay one motion.
  */
 const TRAVEL_EASE = 3.2;
@@ -97,7 +97,7 @@ const TRAVEL_EASE = 3.2;
  * A flight takes long enough that this changes nothing for a route change. It
  * exists for the cold load, which has no flight at all: without a beat the gate
  * opens on the same frame the tree first mounts, and the clade lands in that
- * commit — which is the one case the deferral was written for.
+ * commit - which is the one case the deferral was written for.
  */
 const SETTLE_FRAMES = 6;
 
@@ -112,7 +112,7 @@ const DRAG_SENSITIVITY = 0.005;
  *
  * Looking straight along `up` leaves `lookAt` with no way to decide which way
  * round the horizon goes, so the view rolls over. Stopping short of it also
- * keeps the lineage readable — end-on, a chain of taxa collapses into a dot.
+ * keeps the lineage readable - end-on, a chain of taxa collapses into a dot.
  */
 const TILT_LIMIT = 0.25;
 
@@ -120,8 +120,8 @@ const TILT_LIMIT = 0.25;
  * How far the composition is rolled at full pull-back, in radians.
  *
  * Upright, the lineage runs straight down the middle and leaves the corners
- * doing nothing. On the diagonal it uses the frame it is given — the taxon
- * top-left, the origin of life bottom-right — and a viewport is wider than it
+ * doing nothing. On the diagonal it uses the frame it is given - the taxon
+ * top-left, the origin of life bottom-right - and a viewport is wider than it
  * is tall, so the axis gets more room across the diagonal than it ever had
  * vertically.
  */
@@ -132,8 +132,8 @@ const ROLL = -Math.PI / 4;
  *
  * Square-on to the axis, the camera is equidistant from both ends and the
  * origin of life sits buried at the centre of its own tree, with every clade
- * that grew out of it in the way. Leaning brings it forward — nearest the lens,
- * read first — at the cost of a little foreshortening along the axis, which
+ * that grew out of it in the way. Leaning brings it forward - nearest the lens,
+ * read first - at the cost of a little foreshortening along the axis, which
  * `cos` keeps small at this angle.
  */
 const LEAN = Math.PI / 7;
@@ -171,15 +171,15 @@ function distanceToFit(
     Math.tan(horizontalFov / 2) * (usableWidth / halfWidth)
   );
 
-  // Whichever axis is tighter decides — the sphere has to clear both.
+  // Whichever axis is tighter decides - the sphere has to clear both.
   return Math.max(radius / Math.tan(angleV), radius / Math.tan(angleH));
 }
 
 /**
  * Keep the view frustum around the scene.
  *
- * The tree's extent is emergent — a deep lineage runs several times further out
- * than a shallow one — so no fixed `far` can be right for all of them. The
+ * The tree's extent is emergent - a deep lineage runs several times further out
+ * than a shallow one - so no fixed `far` can be right for all of them. The
  * default 1000 was comfortable when the tree reached 115 units; past that,
  * pulling back pushes the far plane through the globe, which reads as the
  * sphere cropping to a cap with a black disc where its far half was clipped,
@@ -231,7 +231,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
   /** Consecutive frames the lineage has been fully anchored. */
   const placed = useRef(0);
 
-  /** The pose the framing chose — the near end of the pull-back. */
+  /** The pose the framing chose - the near end of the pull-back. */
   const near = useRef<Pose>({
     target: new THREE.Vector3(),
     bearing: new THREE.Vector3(0, 0, 1),
@@ -268,7 +268,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
    * Orbit the drag has added: `spin` about the pose's own up-vector, `tilt`
    * about the axis across the view. Held as offsets rather than as a camera
    * position, so they ride on top of the zoom's choreography instead of
-   * competing with it — the pose stays a pure function of the zoom, and these
+   * competing with it - the pose stays a pure function of the zoom, and these
    * are applied to whatever it produces.
    */
   const spin = useRef(0);
@@ -310,7 +310,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
      *
      * The labels are a sibling layer rather than children of the canvas, and
      * each is a link, so a wheel turned with the pointer over a name went to
-     * the name and bubbled up past the canvas without ever reaching it —
+     * the name and bubbled up past the canvas without ever reaching it -
      * zooming died wherever the tree was densest, which is exactly where the
      * names are. Catching it higher up means the pointer can be anywhere.
      *
@@ -385,7 +385,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
     pose.target.set(...anchor);
 
     /*
-     * The ancestor sets how far back to stand — one level up is the unit that
+     * The ancestor sets how far back to stand - one level up is the unit that
      * makes a taxon legible next to what it grew from. If it never anchored,
      * fall back to a slice of the tree's own extent rather than giving up.
      */
@@ -408,7 +408,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
     /*
      * Stand inward of the taxon. Growth radiates outward from the origin, so a
-     * taxon's descendants are always further out than it is — coming from the
+     * taxon's descendants are always further out than it is - coming from the
      * inside leaves the clade behind it rather than between it and the lens.
      */
     const outward = upright.current.copy(pose.target);
@@ -435,7 +435,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
     /*
      * Slide the target left, which puts the taxon right of centre. Only the
-     * target moves — the bearing, and with it which side the descendants fall
+     * target moves - the bearing, and with it which side the descendants fall
      * on, is preserved.
      */
     const worldPerPx =
@@ -486,7 +486,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
      * The far pose is derived, not stored: the lineage stood upright, with the
      * taxon above and the origin every branch grows from below it.
      *
-     * That composition is unreachable by turning alone — a rig orbiting a fixed
+     * That composition is unreachable by turning alone - a rig orbiting a fixed
      * up-vector can put the origin anywhere on a circle around the taxon but
      * never guarantee it lands beneath. The origin→focus axis has to become the
      * screen's up.
@@ -499,7 +499,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
      * itself does not have: it *is* that point, so the vector has no length and
      * no direction to make upright.
      *
-     * Returning here left the camera unwritten for the one taxon at (0,0,0) —
+     * Returning here left the camera unwritten for the one taxon at (0,0,0) -
      * the wheel and the drag still moved their numbers, the frame loop still
      * ran, and nothing downstream ever read them, so the view sat frozen at
      * whatever pose it had arrived with. Falling back to the world's own up
@@ -517,8 +517,8 @@ const CameraRig: React.FunctionComponent<Props> = ({
     /*
      * Sized to the taxa, deliberately not to the cage around them. The globe
      * sits `GLOBE_MARGIN` outside the furthest taxon, so enclosing it too means
-     * standing about three and a half times further back — measured, 672 units
-     * of enclosing radius where the taxa need 190 — which shrinks the lineage to
+     * standing about three and a half times further back - measured, 672 units
+     * of enclosing radius where the taxa need 190 - which shrinks the lineage to
      * a fifth of the screen and buries the composition the pull-back exists to
      * produce.
      *
@@ -534,7 +534,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
     /*
      * Take the near bearing round into the axis's own plane. Projecting rather
-     * than picking a fixed side keeps the swing short — the camera ends up on
+     * than picking a fixed side keeps the swing short - the camera ends up on
      * whichever side of the lineage it already was.
      */
     const farBearing = facing.current.copy(pose.bearing).projectOnPlane(axis);
@@ -581,7 +581,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
     if (tilt.current !== 0) {
       /*
        * Elevation is applied about the axis across the view, and clamped by how
-       * far the bearing already leans rather than by the raw drag — the pose's
+       * far the bearing already leans rather than by the raw drag - the pose's
        * own tilt varies with the zoom, so a fixed limit on the input would bite
        * at a different place at each end of the range.
        */
@@ -603,7 +603,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
     /*
      * Roll last, about the view axis, so it turns the picture rather than
-     * moving the camera. Scaled by the zoom like everything else — the diagonal
+     * moving the camera. Scaled by the zoom like everything else - the diagonal
      * arrives with the composition instead of snapping on at the end.
      */
     if (eased > 1e-4) {
@@ -634,7 +634,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
      * around to framing.
      *
      * The framing below cannot run until the new focus has an anchor, which is
-     * several fetches away — and the announcement used to sit after that, so a
+     * several fetches away - and the announcement used to sit after that, so a
      * stale `true` survived the whole climb. The new tree therefore mounted its
      * clade in full on its very first frame, and the camera only reset it
      * afterwards: every descendant drawn, thrown away, then drawn again once
@@ -647,8 +647,8 @@ const CameraRig: React.FunctionComponent<Props> = ({
     /*
      * No `ancestorId` requirement. The origin of life has nothing above it, and
      * demanding one meant this never ran for it: `framed` stayed on the taxon
-     * before, the zoom was never reset, and — because the wheel and the drag
-     * only reach the camera through a pose this block establishes — the view
+     * before, the zoom was never reset, and - because the wheel and the drag
+     * only reach the camera through a pose this block establishes - the view
      * arrived stuck at whatever the previous taxon had left and refused every
      * input. `settle` already knows what to do without an ancestor; it was
      * simply never asked.
@@ -667,7 +667,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
        * before the camera moved at all.
        *
        * The chain is the part that has to exist before the camera can be
-       * aimed, and it stops growing as soon as the walk reaches the root — so
+       * aimed, and it stops growing as soon as the walk reaches the root - so
        * it settles even while the fans around it are still arriving.
        */
       // Nothing to wait for above the origin, so its lineage is whole at once.
@@ -683,7 +683,7 @@ const CameraRig: React.FunctionComponent<Props> = ({
 
       if (ready || state.clock.elapsedTime - waiting.current >= GRACE) {
         /*
-         * Keep the pose being left before it is overwritten — but only when
+         * Keep the pose being left before it is overwritten - but only when
          * there is one. The first framing of the session has nothing to fly
          * from, so it arrives composed rather than sweeping in from the
          * opening standoff.

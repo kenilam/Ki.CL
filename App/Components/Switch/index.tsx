@@ -18,7 +18,7 @@ const isSwitchLabel = (
       (child.type as { displayName?: string }).displayName === 'SwitchLabel'));
 
 /**
- * Toggle switch — API aligned with
+ * Toggle switch - API aligned with
  * https://ui.shadcn.com/docs/components/base/switch
  *
  * Pair with {@link SwitchLabel} as a child, or pass `label`.

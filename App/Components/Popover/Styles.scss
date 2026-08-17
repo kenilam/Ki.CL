@@ -31,7 +31,7 @@
      * Held against the trigger rather than the window.
      *
      * A popover is placed by the browser in the centre of the viewport, with
-     * `inset: 0` and automatic margins — right for a modal, wrong for
+     * `inset: 0` and automatic margins - right for a modal, wrong for
      * something that belongs to a control. Clearing those hands placement to
      * the anchor instead, and the margin becomes the gap between the two,
      * applied on every side so it survives a flip.
@@ -49,7 +49,7 @@
       /*
        * The preferred side is a preference. When the panel would not fit
        * there, the browser tries the opposite side, then the opposite
-       * inline side, then both — so a picker near the foot of the window
+       * inline side, then both - so a picker near the foot of the window
        * opens upward instead of off the edge.
        */
       position-try-fallbacks:
@@ -99,7 +99,7 @@
     }
 
     /*
-     * A pane you can see through — the same treatment `Card` and `Badge` carry
+     * A pane you can see through - the same treatment `Card` and `Badge` carry
      * under this name. The blur is what keeps the contents legible over
      * whatever the panel happens to open on top of.
      */

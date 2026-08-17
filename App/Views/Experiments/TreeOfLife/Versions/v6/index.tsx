@@ -57,7 +57,7 @@ const Branch: React.FunctionComponent<BranchProps> = ({ link }) => {
 
     for (let ring = 0; ring < rings; ring += 1) {
       const t = ring / Math.max(rings - 1, 1);
-      // Keep trunks thick longer, then taper — illustration-like.
+      // Keep trunks thick longer, then taper - illustration-like.
       const radius = start + (end - start) * t ** 1.6;
       curve.getPoint(t, center);
 

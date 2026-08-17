@@ -7,7 +7,7 @@
  * the moment anything else moved into a layer.
  *
  * Plain CSS, not SCSS, because `@import ... layer()` is what carries the
- * layer through `postcss-import` — Sass would pass the rule along untouched
+ * layer through `postcss-import` - Sass would pass the rule along untouched
  * and the nested result would not be valid.
  *
  * The order below must match `LAYERS` in `App/.Client/Helper/getStyleLayer.ts`,

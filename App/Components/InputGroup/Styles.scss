@@ -67,7 +67,7 @@
     border: 0;
 
     // Basis `0`, not `auto`. `Input` and `Textarea` are `inline-size: 100%`,
-    // which an `auto` basis resolves to — the control would claim a whole row
+    // which an `auto` basis resolves to - the control would claim a whole row
     // on its own and every addon would wrap beneath it. From zero it takes only
     // what the addons leave, which is what puts them on the same line.
     flex: 1 1 0;

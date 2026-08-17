@@ -20,10 +20,10 @@ const CLASS_NAME = 'kicl--components--dialog';
 /**
  * A `<dialog>`, and as little around it as the platform allows.
  *
- * What used to live here in JavaScript — a state mirroring `open`, four nested
+ * What used to live here in JavaScript - a state mirroring `open`, four nested
  * animation wrappers, `inert` toggled by hand during the enter, a `close()`
  * deferred until the exit finished, Escape re-implemented on `keyup`, and a
- * button standing in for a backdrop — is now the element's own behaviour and a
+ * button standing in for a backdrop - is now the element's own behaviour and a
  * transition in the stylesheet.
  *
  * The one thing the platform has no opinion about is that `open` is a prop

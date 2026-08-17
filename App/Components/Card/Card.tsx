@@ -6,7 +6,7 @@ import type { CardIs, CardProps } from './Spec';
 const CLASS_NAME = 'kicl--components--card';
 
 /**
- * Surface container — API aligned with
+ * Surface container - API aligned with
  * https://ui.shadcn.com/docs/components/base/card
  */
 const Card = React.forwardRef<HTMLElement, CardProps>(

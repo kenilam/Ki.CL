@@ -8,7 +8,7 @@ export const PATH = 'versions';
  * The versions kept around, oldest first.
  *
  * Each was a whole attempt at drawing the tree rather than a revision of the
- * last, so they are worth keeping side by side — the interesting part is how
+ * last, so they are worth keeping side by side - the interesting part is how
  * differently the same data can read.
  */
 export const VERSIONS = [
@@ -38,7 +38,7 @@ type ToVersionPathProps = {
 
 /**
  * A node under one of the earlier versions, or under the live view when no
- * version is given — so one call can offer both.
+ * version is given - so one call can offer both.
  *
  * The version is a literal segment, so `/tree-of-life/v3/ott123` cannot be
  * mistaken for a node called `v3`: a static segment outranks `:nodeId` in the

@@ -1,5 +1,5 @@
 /**
- * v13 layout — tip-first poster with fine hairline branches (no PhyloPic)
+ * v13 layout - tip-first poster with fine hairline branches (no PhyloPic)
  *
  * Deep tips placed first in clade territories; parents toward origin;
  * thin colored strokes (not fat ribbons).
@@ -194,7 +194,7 @@ function shouldLabel(node: HierarchyNode<TreeNode>): boolean {
   if (!text || isSilvaNoise(text)) {
     return false;
   }
-  // Only major clade names — keep text sparse and small like the poster.
+  // Only major clade names - keep text sparse and small like the poster.
   return node.depth <= 2;
 }
 
@@ -435,7 +435,7 @@ export function computePosterLayout(
       fontSize: node.depth <= 1 ? 9 : 7.5,
       isOrigin,
       isTip,
-      // Subtle origin — small oval, not a drilled cell target.
+      // Subtle origin - small oval, not a drilled cell target.
       markerRadius: isOrigin ? 5 : isTip ? 2.2 : expandable ? 2.8 : 1.4,
     });
 

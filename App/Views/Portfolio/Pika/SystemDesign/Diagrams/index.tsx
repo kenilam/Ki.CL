@@ -121,8 +121,12 @@ const NodeContents: React.FunctionComponent<{ node: Node }> = ({ node }) => {
   );
 };
 
-const NodeShape: React.FunctionComponent<{ node: Node }> = ({ node }) => {
+const NodeShape: React.FunctionComponent<{ modifier?: string; node: Node }> = ({
+  modifier,
+  node,
+}) => {
   const { h, shape = 'rect', w, x, y } = node;
+  const boxClassName = `${BASE}-box${modifier ? ` ${BASE}-box--${modifier}` : ''}`;
 
   if (shape === 'cylinder') {
     const e = CYLINDER_EDGE;
@@ -130,7 +134,7 @@ const NodeShape: React.FunctionComponent<{ node: Node }> = ({ node }) => {
     return (
       <>
         <path
-          className={`${BASE}-box`}
+          className={boxClassName}
           d={`M ${x} ${y + e} A ${w / 2} ${e} 0 0 1 ${x + w} ${y + e} V ${y + h - e} A ${w / 2} ${e} 0 0 1 ${x} ${y + h - e} Z`}
         />
         <path
@@ -144,7 +148,7 @@ const NodeShape: React.FunctionComponent<{ node: Node }> = ({ node }) => {
 
   return (
     <>
-      <rect className={`${BASE}-box`} height={h} rx={8} width={w} x={x} y={y} />
+      <rect className={boxClassName} height={h} rx={8} width={w} x={x} y={y} />
       {shape === 'queue' && (
         <>
           <line
@@ -167,16 +171,22 @@ const NodeShape: React.FunctionComponent<{ node: Node }> = ({ node }) => {
   );
 };
 
+export type DiagramState = {
+  active?: string[];
+  failed?: string[];
+};
+
 type Props = {
   spec: Spec;
+  state?: DiagramState;
 };
 
 /**
  * Declarative SVG architecture diagram, drawn with the design system's own
- * tokens — surfaces, borders, brand accents, and the site typeface — so it
+ * tokens - surfaces, borders, brand accents, and the site typeface - so it
  * follows the theme instead of shipping as a static image.
  */
-const Diagram: React.FunctionComponent<Props> = ({ spec }) => {
+const Diagram: React.FunctionComponent<Props> = ({ spec, state }) => {
   const id = useId().replace(/:/g, '');
   const { description, edges, groups, height, nodes, width } = spec;
 
@@ -265,12 +275,21 @@ const Diagram: React.FunctionComponent<Props> = ({ spec }) => {
             </React.Fragment>
           );
         })}
-        {nodes.map((node) => (
-          <React.Fragment key={`${node.title}-${node.x}-${node.y}`}>
-            <NodeShape node={node} />
-            <NodeContents node={node} />
-          </React.Fragment>
-        ))}
+        {nodes.map((node) => {
+          const modifier =
+            node.id && state?.failed?.includes(node.id)
+              ? 'failed'
+              : node.id && state?.active?.includes(node.id)
+                ? 'active'
+                : undefined;
+
+          return (
+            <React.Fragment key={`${node.title}-${node.x}-${node.y}`}>
+              <NodeShape modifier={modifier} node={node} />
+              <NodeContents node={node} />
+            </React.Fragment>
+          );
+        })}
       </svg>
     </figure>
   );

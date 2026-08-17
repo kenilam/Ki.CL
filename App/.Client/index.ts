@@ -29,13 +29,13 @@ dotenv.config({ path: `${appRoot.path}/.env` });
 const OPEN = `https://${configJSON.host}.${configJSON.domain}:${process.env.PORT}`;
 
 const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
-// Same-origin via Vite proxy — avoids mixed-content (HTTPS host → HTTP remote)
+// Same-origin via Vite proxy - avoids mixed-content (HTTPS host → HTTP remote)
 // and CORS on ES module loads. Override with absolute URL in production if needed.
 const API_REMOTE_ENTRY =
   process.env.KICL_API_REMOTE_ENTRY || '/client/remoteEntry.js';
 
 /*
- * Kept in step with `App/.Server/Proxy` — the two run the same site and have
+ * Kept in step with `App/.Server/Proxy` - the two run the same site and have
  * to agree on which paths belong to the API.
  *
  * These are URL segments, not bucket names: the API maps each to a bucket, so
@@ -113,7 +113,7 @@ const getConfig = ({
        * because a production build emits the site's own bundles there too.
        * Forwarding the whole prefix sent the application's JavaScript to an
        * API that has never heard of it, so `vite preview` served a blank page
-       * and 404'd its own bootstrap — the same trap `App/.Server/Proxy`
+       * and 404'd its own bootstrap - the same trap `App/.Server/Proxy`
        * already sprang.
        *
        * The prefix itself cannot move: image URLs are stored in the database
@@ -135,7 +135,7 @@ const getConfig = ({
       // Federation must run early so shared virtual modules exist before dep optimize
       federation({
         name: 'kicl',
-        // Client SPA host — avoid pulling Node SSR entry loaders into the browser graph.
+        // Client SPA host - avoid pulling Node SSR entry loaders into the browser graph.
         target: 'web',
         moduleParseIdleTimeout: 60,
         remotes: {
@@ -162,7 +162,7 @@ const getConfig = ({
              * The runtime entry above is deliberately relative so the browser
              * loads it same-origin through the Vite proxy, avoiding mixed
              * content and CORS. But type consumption runs in Node, where a
-             * path with no origin cannot be fetched at all — which is why this
+             * path with no origin cannot be fetched at all - which is why this
              * step failed silently on every start, logging only
              * `dynamic-remote-type-hints-plugin err: [object Event]`, and left
              * `App/@mf-types` frozen at whatever it last contained.
@@ -185,7 +185,7 @@ const getConfig = ({
       inspect(),
       react(),
       tsconfigPaths({
-        // Runtime Vite aliases only — `api/*` stays a TS path to `@mf-types`
+        // Runtime Vite aliases only - `api/*` stays a TS path to `@mf-types`
         // and must not shadow the Module Federation remote.
         projects: [`${appRoot.path}/App/tsconfig.vite.json`],
       }),
@@ -196,7 +196,7 @@ const getConfig = ({
         checker({
           root: `${appRoot.path}/App`,
           /*
-           * Both run through the one checker rather than a second plugin — it
+           * Both run through the one checker rather than a second plugin - it
            * has native oxlint support and reports them together.
            *
            * This version takes a `lintCommand`, not the `fix`/`quiet`/
@@ -208,7 +208,7 @@ const getConfig = ({
             lintCommand: 'oxlint --fix',
             /*
              * Errors only in the overlay. `exhaustive-deps` is deliberately a
-             * warning — several of its findings are intentional — and the
+             * warning - several of its findings are intentional - and the
              * default logLevel includes warnings, which put a blocking panel
              * over the app for something we have already decided about. They
              * still print to the terminal.
@@ -258,7 +258,7 @@ const getConfig = ({
           },
           preserveEntrySignatures: 'allow-extension',
           plugins: [
-            // App-local variable dynamic imports only — MF's ssrEntryLoader uses
+            // App-local variable dynamic imports only - MF's ssrEntryLoader uses
             // `import(/* @vite-ignore */ id)` which this plugin cannot analyze.
             dynamicImportVars({
               exclude: [/node_modules/],
@@ -316,7 +316,7 @@ const getConfig = ({
               const prelude = `@use 'sass:color';@use 'sass:list';@use 'sass:math';${imports.scss.join(' ')}`;
 
               /*
-               * Partials come back null — they define mixins and functions
+               * Partials come back null - they define mixins and functions
                * rather than rules, and a `@layer` block would scope those
                * away from the files that `@use` them.
                */
@@ -327,8 +327,8 @@ const getConfig = ({
               }
 
               /*
-               * The `@use` prelude has to stay first — Sass rejects it after
-               * any other rule — but it compiles to nothing, so the emitted
+               * The `@use` prelude has to stay first - Sass rejects it after
+               * any other rule - but it compiles to nothing, so the emitted
                * CSS still opens with the layer order statement.
                */
               const content = `${prelude}${LAYER_ORDER}@layer ${layer} {${source}}`;
@@ -343,7 +343,7 @@ const getConfig = ({
         'process.env': process.env,
       },
       logLevel: 'error',
-      // Shared MF packages must not be prebundled — esbuild would bake in
+      // Shared MF packages must not be prebundled - esbuild would bake in
       // virtual:mf loadShare imports that then fail at runtime from .vite/deps.
       optimizeDeps: {
         exclude: [

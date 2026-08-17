@@ -1,5 +1,5 @@
 /**
- * v13 — tip-first poster with fine hairlines; no PhyloPic.
+ * v13 - tip-first poster with fine hairlines; no PhyloPic.
  * Subtle origin at bottom; small labels; thin organic curves.
  */
 import React, {

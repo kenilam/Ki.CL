@@ -18,7 +18,7 @@ When a shared component exists, use it instead of the raw element:
 | Labels / chips | `Badge` (`is`: span \| div \| a \| button \| li \| time \| mark \| abbr; `variant`: default \| secondary \| destructive \| outline \| ghost); nest `BadgeLabel` before the value for a keyed chip |
 | Surfaces / panels | `Card` (`is`: div \| aside \| article \| section \| form \| li; `size`: default \| xs \| sm \| md \| lg \| xl \| xxl \| max → `kicl-inline-size-*`) with `CardHeader` / `CardTitle` / `CardDescription` / `CardAction` / `CardContent` / `CardFooter` |
 | Lists | `List` / `ListItem` |
-| Layout / grid / flex | `Layout` (clones **one** child only) — never hand-roll `display: grid|flex` + `gap` / align / justify in view SCSS |
+| Layout / grid / flex | `Layout` (clones **one** child only) - never hand-roll `display: grid|flex` + `gap` / align / justify in view SCSS |
 | Images / status / forms | `Image`, `Skeleton`, `Status`, `Spinner`, `Form*`, `Input`, `InputGroup*`, `Textarea`, `Checkbox`, `RadioGroup` / `RadioGroupItem`, `Select*` , `DatePicker` (`Popover` + `Calendar`), `Switch`, `Details` + `Summary` (disclosure; `Summary` lives under Details) |
 
 Do not invent parallel wrappers. Exception: SVG-only nodes (`<text>`, `<circle>`, …) stay SVG; still attach `kicl-*` classes where they apply (`kicl-color-*`, `kicl-font-size*`).
@@ -41,7 +41,7 @@ Do not invent parallel wrappers. Exception: SVG-only nodes (`<text>`, `<circle>`
 
 ## Spacing / size tokens (no invented calcs)
 
-For `padding`, `margin`, `inset*`, `border-radius`, `border-width`, prefer existing tokens — do **not** invent `calc(var(--kicl-*) * n)` scales:
+For `padding`, `margin`, `inset*`, `border-radius`, `border-width`, prefer existing tokens - do **not** invent `calc(var(--kicl-*) * n)` scales:
 
 | Scale | Tokens |
 |-------|--------|

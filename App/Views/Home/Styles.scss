@@ -26,7 +26,7 @@
    * This section is itself an Animation target, so it must not declare its own
    * `transition-*`: the two rules land on one element and the view, sitting in
    * a later cascade layer, simply replaced the property the animation was
-   * there to move — `background` instead of `opacity`, so the fade never ran.
+   * there to move - `background` instead of `opacity`, so the fade never ran.
    *
    * Adding to the component's list is the supported way in. It stays one
    * transition, and the animation keeps control of duration and easing.

@@ -21,7 +21,7 @@
 }
 
 .kicl--views--portfolio--pika--system-design {
-  /* Full-bleed hero — the article re-pads its own reading column below. */
+  /* Full-bleed hero - the article re-pads its own reading column below. */
   @at-root .kicl--view:has(&) {
     padding: var(--kicl-gutter-none);
   }
@@ -38,7 +38,7 @@
     z-index: 1;
     animation:
       kicl--views--portfolio--pika--system-design--background
-      var(--kicl-transition-duration-5m) ease infinite,
+        var(--kicl-transition-duration-5m) ease infinite,
       kicl--views--portfolio--pika--system-design--scroll linear both;
     animation-timeline: auto, scroll();
   }
@@ -98,7 +98,7 @@
       }
     }
 
-    /* Prism syntax tokens — coloured with the design system palette. */
+    /* Prism syntax tokens - coloured with the design system palette. */
     /* stylelint-disable selector-class-pattern */
     .token {
       &.key,
@@ -125,7 +125,7 @@
     }
     /* stylelint-enable selector-class-pattern */
 
-    /* Inline code chips — same surface tokens the Card uses. */
+    /* Inline code chips - same surface tokens the Card uses. */
     :not(pre) > code {
       background-color: var(--kicl-surface-color);
       border: var(--kicl-size-1px) solid var(--kicl-surface-border-color);
@@ -286,7 +286,89 @@
     }
   }
 
-  /* Coding-agent prompt blocks — brand gradient as the leading edge. */
+  &__diagram-box {
+    transition: stroke 200ms ease;
+
+    &--active {
+      stroke: var(--kicl-color-green);
+      stroke-width: 1.5;
+    }
+
+    &--failed {
+      stroke: var(--kicl-color-red);
+      stroke-width: 1.5;
+    }
+  }
+
+  &__simulation-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--kicl-gutter-narrow);
+  }
+
+  &__simulation-chip {
+    align-items: center;
+    display: inline-flex;
+    font-size: var(--kicl-font-size-small);
+    gap: 0.4em;
+  }
+
+  &__simulation-dot {
+    aspect-ratio: 1;
+    background-color: var(--kicl-color-grey-dark);
+    border-radius: 50%;
+    display: inline-block;
+    inline-size: 0.6em;
+    transition: background-color 200ms ease;
+
+    &--queued {
+      background-color: var(--kicl-color-grey-light);
+    }
+
+    &--running {
+      background-color: var(--kicl-color-yellow);
+    }
+
+    &--retry {
+      background-color: var(--kicl-color-orange);
+    }
+
+    &--done {
+      background-color: var(--kicl-color-green);
+    }
+  }
+
+  &__simulation-log {
+    font-family: var(--kicl-font-family-mono);
+    font-size: var(--kicl-font-size-small);
+    letter-spacing: normal;
+    margin-block-start: var(--kicl-gutter-narrow);
+    max-block-size: 11rem;
+    overflow-y: auto;
+  }
+
+  /* Anchored headings land below the global header, not under it. */
+  h3[id] {
+    scroll-margin-block-start: calc(
+      var(--kicl--widgets--global-header--block-size, 0px) + var(--kicl-gutter)
+    );
+  }
+
+  &__anchor-nav {
+    z-index: 1000;
+
+    @include tablet {
+      display: none;
+    }
+
+    li:not(:has(:hover)) {
+      .kicl--components--badge {
+        opacity: 0;
+      }
+    }
+  }
+
+  /* Coding-agent prompt blocks - brand gradient as the leading edge. */
   &__prompt {
     background-color: var(--kicl-surface-color);
     margin: 0;
@@ -321,12 +403,12 @@
 
     --kicl--components--image--block-size: calc(
       var(--kicl--components--dialog--block-size) -
-      (var(--kicl--components--dialog--padding-block) * 2)
+        (var(--kicl--components--dialog--padding-block) * 2)
     );
     --kicl--components--image--inline-size: fit-content;
   }
 
-  /* Build-plan phase table — surface borders, uppercase header set in markup. */
+  /* Build-plan phase table - surface borders, uppercase header set in markup. */
   &__phases {
     border-collapse: collapse;
     inline-size: 100%;

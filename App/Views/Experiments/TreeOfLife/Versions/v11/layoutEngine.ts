@@ -1,5 +1,5 @@
 /**
- * v11 layout — tip-first poster map (NOT cluster / fan)
+ * v11 layout - tip-first poster map (NOT cluster / fan)
  *
  * 1. Place deepest tips (species / terminal groups) first across a rectangle,
  *    grouped into horizontal territories by top-level clade
@@ -145,7 +145,7 @@ function shouldLabel(
 }
 
 /**
- * STEP 1 — place tips first in clade territories across the upper canvas.
+ * STEP 1 - place tips first in clade territories across the upper canvas.
  * Layout space: origin (0,0) at bottom center, +Y upward.
  */
 function placeTipsFirst(
@@ -234,7 +234,7 @@ function placeTipsFirst(
 }
 
 /**
- * STEP 2 — parents from deep groups: centroid of descendant tips,
+ * STEP 2 - parents from deep groups: centroid of descendant tips,
  * then pull toward the origin (bottom) by relative depth.
  */
 function placeParentsTowardOrigin(

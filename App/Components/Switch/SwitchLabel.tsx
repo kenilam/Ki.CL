@@ -6,7 +6,7 @@ import type { SwitchLabelProps } from './Spec';
 const CLASS_NAME = 'kicl--components--switch__label';
 
 /**
- * Visible name for {@link Switch} — nest inside Switch or use the `label` prop.
+ * Visible name for {@link Switch} - nest inside Switch or use the `label` prop.
  */
 const SwitchLabel: React.FunctionComponent<SwitchLabelProps> = ({
   children,

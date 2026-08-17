@@ -12,7 +12,7 @@ type ForeignKeys<
 > = Is extends unknown ? Exclude<KeysOf<Is>, KeysOf<E>> : never;
 
 /**
- * Attrs that belong only to other hosts — set to `never` so e.g. `href` is
+ * Attrs that belong only to other hosts - set to `never` so e.g. `href` is
  * rejected when `is` is not `'a'` (plain unions otherwise allow extras).
  */
 type ForbidForeignAttrs<
@@ -28,7 +28,7 @@ type ForbidForeignAttrs<
  * - Default element: `is` is optional (`is?: Default`)
  * - Other elements: `is` is required (`is: E`)
  *
- * Intrinsic attributes follow the chosen host — e.g. `href` only when `is='a'`.
+ * Intrinsic attributes follow the chosen host - e.g. `href` only when `is='a'`.
  */
 export type PolymorphicIsProps<
   Is extends keyof JSX.IntrinsicElements,

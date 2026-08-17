@@ -12,7 +12,7 @@ type Era = {
  * The fifteen, grouped the way they actually divide.
  *
  * Each band is a different answer to the same question, not a refinement of the
- * one before — which is why the numbers are worth showing as a run rather than
+ * one before - which is why the numbers are worth showing as a run rather than
  * a menu. The labels say what the band *was*, so the index reads as a history
  * and not as a list of files.
  */

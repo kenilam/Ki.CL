@@ -1,4 +1,4 @@
-// Inset is a distance, so it has no keyword scale of its own — it borrows the
+// Inset is a distance, so it has no keyword scale of its own - it borrows the
 // gutter scale, which is what every other spacing decision in the system is
 // measured in. Aliasing rather than restating keeps one source of truth: change
 // a gutter and the insets follow.
@@ -13,6 +13,7 @@ $inset-sizes: none, narrowest, narrower, narrow, wide, wider, widest, extreme;
 :root {
   @each $property in $inset-properties {
     --kicl-#{$property}: var(--kicl-gutter);
+    --kicl-#{$property}-0: 0;
     --kicl-#{$property}-auto: auto;
 
     @each $size in $inset-sizes {
@@ -23,6 +24,7 @@ $inset-sizes: none, narrowest, narrower, narrow, wide, wider, widest, extreme;
 
 @each $property in $inset-properties {
   @include make-variable-class($property);
+  @include make-variable-class($property, '0');
   @include make-variable-class($property, 'auto');
 
   @each $size in $inset-sizes {

@@ -25,7 +25,7 @@
     --kicl--components--text--padding-block-start: var(--kicl-gutter);
   }
 
-  // Blockquotes draw a start-edge rule — keep separation in margin so the
+  // Blockquotes draw a start-edge rule - keep separation in margin so the
   // border hugs the copy instead of framing empty padding above the text.
   & + &[data-is='blockquote']:not(&--is-dense),
   & + &.kicl-look-like-blockquote:not(&--is-dense) {
@@ -43,7 +43,7 @@
     white-space-collapse: preserve;
   }
 
-  // Block quote — semantic host or visual `lookLike="blockquote"`.
+  // Block quote - semantic host or visual `lookLike="blockquote"`.
   // Keep roman (not italic): italic is reserved for `q` / `cite`.
   &[data-is='blockquote'],
   &.kicl-look-like-blockquote {
@@ -63,7 +63,7 @@
     padding-inline-start: var(--kicl--components--text--padding-inline-start);
   }
 
-  // Inline quote — UA quotation marks; keep phrasing-level display
+  // Inline quote - UA quotation marks; keep phrasing-level display
   &[data-is='q'] {
     --kicl--components--text--font-style: italic;
 

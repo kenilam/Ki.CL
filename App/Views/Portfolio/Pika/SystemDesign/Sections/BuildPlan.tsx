@@ -20,32 +20,32 @@ const PHASES = [
   {
     phase: 1,
     scope:
-      'Skeleton — manifest schema and registry, Job Service, the generic workflow interpreter, two primitives, one real App end-to-end.',
+      'Skeleton - manifest schema and registry, Job Service, the generic workflow interpreter, two primitives, one real App end-to-end.',
     time: '2 weeks',
   },
   {
     phase: 2,
     scope:
-      'Hardening — provider adapters with webhooks and idempotency, credits hold and settle, SSE progress, task metrics dashboard.',
+      'Hardening - provider adapters with webhooks and idempotency, credits hold and settle, SSE progress, task metrics dashboard.',
     time: '2 weeks',
   },
   {
     phase: 3,
     scope:
       'Video primitives and the ffmpeg pool, three flagship Apps, App Studio v0 with sandboxed runs and versioned publish.',
-    time: '2–3 weeks',
+    time: '2-3 weeks',
   },
   {
     phase: 4,
     scope:
-      'Agent MVP — runtime loop on Temporal, tool registry projection, session store, draft-final policy, budgets and model routing.',
-    time: '2–3 weeks',
+      'Agent MVP - runtime loop on Temporal, tool registry projection, session store, draft-final policy, budgets and model routing.',
+    time: '2-3 weeks',
   },
   {
     phase: 5,
     scope:
-      'Eval harness — golden briefs, process checks, judge rubric, replay — plus canary machinery.',
-    time: '1–2 weeks',
+      'Eval harness - golden briefs, process checks, judge rubric, replay - plus canary machinery.',
+    time: '1-2 weeks',
   },
 ];
 
@@ -56,7 +56,7 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
       <>
         Implement the App manifest system for a creative platform. Deliverables:
         (a) JSON Schema for the manifest format in{' '}
-        <code>schema/app-manifest.json</code> — typed inputs (text, image, enum,
+        <code>schema/app-manifest.json</code> - typed inputs (text, image, enum,
         model-select), workflow as a DAG of primitive calls with{' '}
         <code>needs</code> edges and per-node retry config, outputs; (b) a
         validator that rejects cycles, unknown primitives, and arg-type
@@ -79,7 +79,7 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
         each as an activity with the manifest&apos;s retry policy, persist task
         state transitions and output refs to Postgres, emit progress events to
         the bus. Every provider call takes an idempotency key derived from{' '}
-        <code>(job_id, node_id)</code> — stable across retry attempts, so a
+        <code>(job_id, node_id)</code> - stable across retry attempts, so a
         re-run cannot double-submit the same generation. Prove resumability:
         kill the worker mid-DAG in a test and assert the job completes without
         re-running finished nodes and without duplicate provider calls (use the
@@ -99,7 +99,7 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
         <code>providers/</code> plus a deterministic fake for tests. Add a
         reconciler that polls for jobs whose webhooks never arrived (&gt;2×
         expected latency). Integration test: webhook delivered twice, webhook
-        lost, provider 429 storm — assert exactly-once task completion and
+        lost, provider 429 storm - assert exactly-once task completion and
         correct backoff.
       </>
     ),
@@ -146,8 +146,8 @@ const BuildPlan: React.FunctionComponent = () => {
         <Text>
           These numbers assume me leading with coding agents doing the heavy
           lifting, Temporal Cloud so orchestration is bought rather than built,
-          and one product engineer joining from week three. Calendar time, not
-          ideal-hours:
+          and one product engineer joining from week three, counted in calendar
+          weeks rather than ideal engineering hours:
         </Text>
         <table className={`${CLASS_NAME}__phases`}>
           <thead>
@@ -192,14 +192,14 @@ const BuildPlan: React.FunctionComponent = () => {
           </tbody>
         </table>
         <Text>
-          Roughly 9–12 weeks to a credible v1, with Part 1 alone at six to seven
-          — and that number only holds because v1 is deliberately narrow: one
+          Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to seven
+          - and that number only holds because v1 is deliberately narrow: one
           region, two providers, an internal-only Studio, and generation kept
-          behind vendor APIs. Worth saying plainly: the long pole is not the
-          happy path, it is provider-adapter edge cases. Coding agents compress
-          the skeleton and the agent loop dramatically, but they help much less
-          with debugging a flaky third-party webhook — which is why the middle
-          phases carry most of the schedule risk.
+          behind vendor APIs. The long pole is not the happy path - it is
+          provider-adapter edge cases. Coding agents compress the skeleton and
+          the agent loop dramatically, but they help much less with debugging a
+          flaky third-party webhook - which is why the middle phases carry most
+          of the schedule risk.
         </Text>
 
         <Heading className={classNames('kicl-font-size-large')} is='h4'>
@@ -207,15 +207,13 @@ const BuildPlan: React.FunctionComponent = () => {
         </Heading>
         <Text>
           I&apos;d feed these to Claude Code in stages, each one ending at
-          something verifiable. Every prompt carries its own acceptance tests —
+          something verifiable. Every prompt carries its own acceptance tests -
           agent-written code is only as trustworthy as the harness checking it.
         </Text>
         {PROMPTS.map(({ body, title }, index) => (
           <React.Fragment key={title}>
-            <Text dense>
-              <strong>
-                {index + 1} — {title}.
-              </strong>
+            <Text is='span' className='kicl-font-weight-bold'>
+              {index + 1}. {title}.
             </Text>
             <Text
               className={classNames(

@@ -13,7 +13,7 @@ import type { useQuery } from '@apollo/client/react';
  */
 type SubtreeResult = useQuery.Result<Kicl_TreeOfLifeSubtreeQuery>;
 
-/** Route params for the node route — mirrors `PARAM` in `./constants`. */
+/** Route params for the node route - mirrors `PARAM` in `./constants`. */
 export type Params = {
   nodeId: string;
 };
@@ -50,7 +50,7 @@ export type TaxonNode = {
  * through here instead of drifting.
  */
 export type Context = {
-  /** `useParams` makes every key optional — a param exists once it matches. */
+  /** `useParams` makes every key optional - a param exists once it matches. */
   params: Readonly<Partial<Params>>;
   data: SubtreeResult['data'];
   loading: SubtreeResult['loading'];
@@ -67,13 +67,13 @@ export type Context = {
    *
    * Held at the last lineage that actually reached the root. Navigating to a
    * taxon outside the cached clade takes several round trips to climb, and the
-   * walk reports only what the cache can currently reach — so following it live
+   * walk reports only what the cache can currently reach - so following it live
    * would empty the canvas for the whole climb. Staying on the previous lineage
    * keeps the tree on screen until the new one can replace it whole.
    */
   chains: string[];
   /**
-   * The taxon the rendered lineage belongs to — `chains[0]`.
+   * The taxon the rendered lineage belongs to - `chains[0]`.
    *
    * Not the same as `params.nodeId` while a new lineage is being climbed: the
    * route has already moved, but what is on screen has not. Anything that marks
@@ -85,7 +85,7 @@ export type Context = {
    * Whether `chains` actually reaches the origin of life.
    *
    * The lineage is climbed over several fetches, so until this is true the
-   * last entry is only as far as the cache got — not the root. Anything that
+   * last entry is only as far as the cache got - not the root. Anything that
    * anchors on the root has to wait for it, or it will anchor on whichever
    * ancestor happened to be the end of the chain at the time and have to
    * start over when the next hop lands.
@@ -95,7 +95,7 @@ export type Context = {
    * Whether transitions play out or land immediately.
    *
    * Held centrally rather than passed down: the lineage unfurls through
-   * dozens of independently-sprung taxa, and they have to agree — a tree half
+   * dozens of independently-sprung taxa, and they have to agree - a tree half
    * of which is animating and half of which has jumped is worse than either.
    */
   animate: boolean;

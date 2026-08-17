@@ -29,7 +29,7 @@
    *
    * The fill is the same surface, thinned; the blur is what keeps text legible
    * over whatever is behind it, which a plain transparency cannot do. Both are
-   * needed — thinning alone gives a smeared, unreadable panel over anything
+   * needed - thinning alone gives a smeared, unreadable panel over anything
    * busy, and blurring alone leaves it opaque.
    *
    * The edge stays, because a translucent pane needs an outline more than a

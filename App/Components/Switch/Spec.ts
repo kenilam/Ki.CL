@@ -11,7 +11,7 @@ export type Props = Omit<
   checked?: boolean;
   children?: ReactNode;
   defaultChecked?: boolean;
-  /** Visible label — same as nesting {@link SwitchLabel}. */
+  /** Visible label - same as nesting {@link SwitchLabel}. */
   label?: ReactNode;
   onCheckedChange?: (checked: boolean) => void;
   size?: SwitchSize;

@@ -29,7 +29,7 @@ type BranchProps = {
 };
 
 /**
- * Tapered tube along an organic curve — reads as a living branch,
+ * Tapered tube along an organic curve - reads as a living branch,
  * not a geometric spoke.
  */
 const Branch: React.FunctionComponent<BranchProps> = ({ link }) => {

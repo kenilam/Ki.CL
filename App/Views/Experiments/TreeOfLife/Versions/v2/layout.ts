@@ -74,7 +74,7 @@ function sampleCubic(
   return points;
 }
 
-/** Stable pseudo-noise from a string — slight hand-drawn irregularity. */
+/** Stable pseudo-noise from a string - slight hand-drawn irregularity. */
 function hashNoise(id: string, salt = 0): number {
   let h = salt * 374761393;
   for (let i = 0; i < id.length; i += 1) {
@@ -99,7 +99,7 @@ function pruneForDisplay(node: TreeNode): TreeNode {
 
 /**
  * Weight leaves by tip mass so major clades claim more angular space
- * (poster proportions — preserved as v2).
+ * (poster proportions - preserved as v2).
  */
 function leafWeight(node: HierarchyNode<TreeNode>): number {
   const tips = node.data.numTips ?? 1;

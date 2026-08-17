@@ -55,7 +55,7 @@ App/build
 #############
 .env
 
-# Federated remote types — pulled from the remote on every dev start
+# Federated remote types - pulled from the remote on every dev start
 App/@mf-types/
 
 # Build output (root; the app builds into App/build)

@@ -10,7 +10,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--checkbox';
 
 /**
- * Toggle checkbox — API aligned with
+ * Toggle checkbox - API aligned with
  * https://ui.shadcn.com/docs/components/base/checkbox
  */
 const Checkbox = React.forwardRef<HTMLButtonElement, Props>(

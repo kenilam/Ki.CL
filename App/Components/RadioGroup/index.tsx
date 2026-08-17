@@ -25,7 +25,7 @@ const useRadioGroup = () => {
 };
 
 /**
- * Mutually exclusive options — API aligned with
+ * Mutually exclusive options - API aligned with
  * https://ui.shadcn.com/docs/components/base/radio-group
  */
 const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(

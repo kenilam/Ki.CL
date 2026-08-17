@@ -10,5 +10,5 @@ type OwnProps = PropsWithChildren<{
 
 export type Props = PolymorphicIsProps<HeadingIs, OwnProps, 'h1'>;
 
-/** @deprecated Prefer element-specific props via `is` — kept for existing imports. */
+/** @deprecated Prefer element-specific props via `is` - kept for existing imports. */
 export type HTMLAttributes = JSX.IntrinsicElements[HeadingIs];

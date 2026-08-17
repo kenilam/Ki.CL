@@ -6,7 +6,7 @@ import type { BadgeLabelProps } from './Spec';
 const CLASS_NAME = 'kicl--components--badge__label';
 
 /**
- * Field-name slot for {@link Badge} — place inside the chip before the value.
+ * Field-name slot for {@link Badge} - place inside the chip before the value.
  */
 const BadgeLabel: React.FunctionComponent<BadgeLabelProps> = ({
   children,

@@ -60,7 +60,7 @@ import * as Spec from './Spec';
 /**
  * One taxon: the branch that reaches it, and the body at that branch's tip.
  *
- * Identified by `nodeId` alone — the taxon itself is looked up from the
+ * Identified by `nodeId` alone - the taxon itself is looked up from the
  * context, so a caller never carries node data around and a taxon can never
  * be drawn from a stale copy of it. Everything else it needs is derived from
  * that id: where its tip lands, the colour it settles on, the silhouette of
@@ -82,7 +82,7 @@ const BODY_AT = 0.55;
  *
  * Only the focused taxon shows its clade in full. Everything else along the
  * lineage is context, and a context node with a hundred children buries the
- * spine in a thicket — so it shows a handful spread evenly across the list
+ * spine in a thicket - so it shows a handful spread evenly across the list
  * rather than the first few, which would all come from one corner of it.
  */
 const CONTEXT_DESCENDANTS = 6;
@@ -92,7 +92,7 @@ const CONTEXT_DESCENDANTS = 6;
  * size, and the smallest useful slice.
  *
  * A focused taxon shows its whole clade, and each of those children shows a
- * sample of its own — so Bacteria does not mount 153 taxa but 1,800, measured
+ * sample of its own - so Bacteria does not mount 153 taxa but 1,800, measured
  * at 1,009ms of blocked frames. Geometry is only about a third of that; the
  * rest is React and the scene graph, which no amount of cheaper meshes helps.
  *
@@ -111,7 +111,7 @@ const SIZE_TAPER = 0.78;
  * Taper one step, toward a floor rather than through it.
  *
  * A bare multiply compounds: over a real lineage of seventy generations it
- * takes a body from 3.6 units to 5e-8 — a hundred-millionth of a pixel, and
+ * takes a body from 3.6 units to 5e-8 - a hundred-millionth of a pixel, and
  * because branch length derives from size, it collapses the deep end onto a
  * single point as well. Decaying toward a floor is identical to the multiply
  * while the value is far above it, so the taper still reads at the top, and
@@ -123,14 +123,14 @@ const decay = (value: number, taper: number, floor: number): number =>
 /**
  * Close to critically damped, so a link settles in roughly 190ms.
  *
- * The lineage advances one link per settle — a taxon finishing is what starts
- * the next — so this is the pacing of the whole unfurling, not just of one
+ * The lineage advances one link per settle - a taxon finishing is what starts
+ * the next - so this is the pacing of the whole unfurling, not just of one
  * branch. Somewhere between two failures: at 150/26 a deep lineage took the
  * better part of a minute, and at 1400/75 the growth was over before the eye
  * could follow a branch out.
  *
  * `friction ≈ 2 * sqrt(tension)` throughout, which keeps it from overshooting
- * into a wobble — on a growing branch that reads as a stumble. Settle time
+ * into a wobble - on a growing branch that reads as a stumble. Settle time
  * scales with `1 / sqrt(tension)`, so this is about half again as slow as the
  * stiffest setting rather than the sixfold drop that made it tedious.
  */
@@ -145,7 +145,7 @@ type GrowingProps = Spec.Props & {
 };
 
 /**
- * Split from the lookup so every hook below runs unconditionally — the "not
+ * Split from the lookup so every hook below runs unconditionally - the "not
  * in the tree" case returns before this is ever mounted, rather than dropping
  * hooks out of a half-rendered component.
  */
@@ -166,7 +166,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
 
   /*
    * Whether the camera has arrived. Only the focused taxon acts on it, but the
-   * hook has to run for every taxon — it flips twice per navigation rather than
+   * hook has to run for every taxon - it flips twice per navigation rather than
    * per frame, so the notification is rare and most taxa re-render into
    * identical memos.
    */
@@ -178,7 +178,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   const navigate = useNavigate();
 
   /*
-   * This taxon's own child on the lineage — the node one step *closer to the
+   * This taxon's own child on the lineage - the node one step *closer to the
    * focus*.
    *
    * `chains` runs focus → root, so the entry before this one is the way
@@ -201,8 +201,8 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   /*
    * Held in a ref so the spring effect does not depend on them.
    *
-   * A caller almost always passes a fresh closure — `onEntered={(s) =>
-   * extend(index, s)}` — so keeping these in the dependency array restarted
+   * A caller almost always passes a fresh closure - `onEntered={(s) =>
+   * extend(index, s)}` - so keeping these in the dependency array restarted
    * every taxon's spring every time any one of them finished. On a long
    * lineage that is quadratic, and it stretched a walk that should take two
    * seconds into half a minute.
@@ -213,7 +213,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   /*
    * Which direction this taxon has *finished* running, as opposed to `play`,
    * which is the direction it was asked to run. Undefined until it has
-   * settled either way — so it reads as "not arrived yet", not "retracted".
+   * settled either way - so it reads as "not arrived yet", not "retracted".
    */
   const [state, setState] = useState<Spec.Props['play']>(undefined);
 
@@ -259,7 +259,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
    *
    * Descendants take this as their `start`, and `start` is a dependency of
    * both `tip` and the swept branch geometry. Handing them a fresh array each
-   * render — which `tip.toArray()` inline does — invalidated those memos every
+   * render - which `tip.toArray()` inline does - invalidated those memos every
    * time anything re-rendered, so every branch in the tree was rebuilt on
    * every render: 7710 sweeps for 300 taxa, and half a second of work on a
    * skip that should be free.
@@ -272,8 +272,8 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   /*
    * Its own name, published for the screen-space layer to place.
    *
-   * A taxon is the only thing that knows where its tip ended up — the caller
-   * supplies a start and nothing more — so it has to be the one to say. That
+   * A taxon is the only thing that knows where its tip ended up - the caller
+   * supplies a start and nothing more - so it has to be the one to say. That
    * is also why descendants had no labels before: nothing outside them could
    * name a position for them.
    *
@@ -315,7 +315,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
    * Removal is keyed to the taxon alone, not to everything its label depends
    * on. Priority and accent both move with the route, so a combined effect
    * would drop the label out of the registry and put it straight back on every
-   * navigation — and React would rebuild the pill rather than keep it.
+   * navigation - and React would rebuild the pill rather than keep it.
    */
   useEffect(() => () => removeLabel(nodeId), [nodeId]);
 
@@ -328,7 +328,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
 
   /*
    * Only two taxa are marked: the one the route is on, and the origin of
-   * life. If they are the same taxon the ripple wins — being *here* is the
+   * life. If they are the same taxon the ripple wins - being *here* is the
    * more immediate fact, and running both would have them fight.
    */
   const aura: Variant | null = (() => {
@@ -342,7 +342,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   /*
    * The focused taxon shows every descendant; the rest show an even spread of
    * at most `CONTEXT_DESCENDANTS`. Sampling by stride rather than slicing
-   * keeps the sample representative of the whole clade — the head of the list
+   * keeps the sample representative of the whole clade - the head of the list
    * is whatever order the server returned, not a meaningful selection.
    *
    * The lineage child is never sampled away. The spine is drawn by this same
@@ -357,7 +357,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     /*
      * The focused taxon shows its whole clade, but only once the camera has
      * stopped. Bacteria has 153 direct descendants, and building that many
-     * branches and bodies in one commit costs a 383ms frame — landing it during
+     * branches and bodies in one commit costs a 383ms frame - landing it during
      * the flight freezes the move it is supposed to accompany. Until then it
      * shows the same even sample as any other taxon.
      */
@@ -405,7 +405,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
      * The slicing below exists for frame rate: it spreads a clade's mounting
      * over several frames so none of them is long. That runs whatever the
      * toggle says, which is why turning animation on used to change nothing
-     * visible — descendants still arrived on the batching schedule, and the
+     * visible - descendants still arrived on the batching schedule, and the
      * springs ran underneath at `grown: 0`, unseen.
      *
      * Holding a taxon's descendants until its own branch has arrived is what
@@ -440,8 +440,8 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   /*
    * Driven imperatively rather than declaratively.
    *
-   * As a props object the spring re-applies on every render — and a taxon
-   * re-renders whenever its own state changes or a descendant mounts — so a
+   * As a props object the spring re-applies on every render - and a taxon
+   * re-renders whenever its own state changes or a descendant mounts - so a
    * declared `from` kept resetting it to 0 and it never advanced past the
    * first frame. Starting it from an effect runs it exactly once per change
    * of direction, and from wherever it currently sits.
@@ -481,7 +481,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
    * The spring owns the timeline; this only applies its current value to the
    * scene graph.
    *
-   * Reveal the sweep a ring at a time — the geometry is built once and only
+   * Reveal the sweep a ring at a time - the geometry is built once and only
    * its draw range moves, so a growing branch never rebuilds buffers and never
    * re-renders React. The body rides the *drawn* tip rather than waiting at
    * the destination, so it is carried outward by the branch instead of hanging
@@ -538,7 +538,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         moment where it hangs in mid-air as a translucent ghost.
       */}
       {/*
-        The body is the only thing that takes a pointer — branches are too
+        The body is the only thing that takes a pointer - branches are too
         thin to hit reliably, and the aura is deliberately transparent to it.
       */}
       <mesh
@@ -572,9 +572,9 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
       ) : null}
 
       {/*
-        Each descendant starts where this one ends — at the tip it reached, in
+        Each descendant starts where this one ends - at the tip it reached, in
         the colour it settled on, at the width its own branch tapered down to
-        — so a generation is described entirely by its parent and no level has
+        - so a generation is described entirely by its parent and no level has
         to know how deep it sits.
 
         A descendant is released only once this taxon has *arrived*: it is
@@ -594,7 +594,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
           size={decay(size, SIZE_TAPER, MIN_SIZE)}
           play={state}
           /*
-           * True from the routed taxon's children downward — this taxon being
+           * True from the routed taxon's children downward - this taxon being
            * the focus is what opens the subtree, so its descendants inherit it
            * and everything above stays snapped.
            */
@@ -610,7 +610,7 @@ const Taxon: React.FunctionComponent<Spec.Props> = (props) => {
 
   const taxon = useMemo(() => find(props.nodeId), [find, props.nodeId]);
 
-  // The subtree in hand does not reach this node — nothing to draw yet.
+  // The subtree in hand does not reach this node - nothing to draw yet.
   if (!taxon) {
     return null;
   }

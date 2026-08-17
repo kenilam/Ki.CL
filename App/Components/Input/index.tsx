@@ -8,7 +8,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--input';
 
 /**
- * Text field control — API aligned with
+ * Text field control - API aligned with
  * https://ui.shadcn.com/docs/components/base/input
  */
 const Input = React.forwardRef<HTMLInputElement, Props>(

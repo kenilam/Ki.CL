@@ -8,7 +8,7 @@ type DatePickerBaseProps = {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
-  /** Optional format override — default uses locale date string. */
+  /** Optional format override - default uses locale date string. */
   formatDate?: (date: Date) => string;
   children?: ReactNode;
 };

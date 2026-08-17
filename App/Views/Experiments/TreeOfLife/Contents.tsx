@@ -39,7 +39,7 @@ async function ensureApiKeyCookie(): Promise<void> {
  * An anonymous session, established once for every version beneath it.
  *
  * It used to sit inside the live view, so the archived versions reached the API
- * with whatever session a previous visit happened to leave behind — which
+ * with whatever session a previous visit happened to leave behind - which
  * worked right up until somebody opened one first.
  */
 const TreeOfLife: React.FunctionComponent = () => {

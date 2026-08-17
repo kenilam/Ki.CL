@@ -6,7 +6,7 @@ import { lerp, random } from './seed';
  * Where a taxon's branch ends up.
  *
  * The tip is derived rather than passed in, so a caller only has to say where
- * a branch leaves — the taxon works out where it arrives. It is seeded on
+ * a branch leaves - the taxon works out where it arrives. It is seeded on
  * `nodeId`, so the same taxon lands in the same place on every reload without
  * any layout being stored.
  *
@@ -20,13 +20,13 @@ import { lerp, random } from './seed';
  * Branch length as a multiple of the body it terminates in.
  *
  * Siblings all leave the same point inside the same cone, so how far apart
- * their tips land is a product of length, not of angle — at a short length a
+ * their tips land is a product of length, not of angle - at a short length a
  * whole clade arrives inside a couple of body widths and reads as one lump.
  * Reaching further separates them without widening the fan into a disc.
  */
 const LENGTH_PER_SIZE = 11.5;
 /**
- * Length varies by ±this fraction, so a fan never looks combed — and, more
+ * Length varies by ±this fraction, so a fan never looks combed - and, more
  * usefully, so siblings do not all come to rest on the same shell, which is
  * what makes a dense fan read as a ring rather than a spray.
  */
@@ -35,7 +35,7 @@ const LENGTH_VARIANCE = 0.52;
  * Half-angle of the cone around the outward bearing.
  *
  * Length separates tips along the bearing; this separates them *across* it.
- * Both are needed — reaching further with a narrow cone gives a longer, no
+ * Both are needed - reaching further with a narrow cone gives a longer, no
  * less crowded spike, and widening alone flattens a clade into a disc.
  */
 const SPREAD = Math.PI / 2.3;

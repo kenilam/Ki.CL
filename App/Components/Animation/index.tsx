@@ -99,7 +99,7 @@ const Animation: FunctionComponent<Spec.Props> = ({
         className
       ),
       /*
-       * An attribute rather than a class because it is state, not identity —
+       * An attribute rather than a class because it is state, not identity -
        * and it gives the stylesheet a `:not()` to hang the leaving values on
        * without inventing a second class name for the negative case.
        */

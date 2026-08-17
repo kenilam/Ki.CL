@@ -1,17 +1,18 @@
 import type { Spec } from './Spec';
 
-/** Part 2 — the new agent plane beside the unchanged Part 1 services. */
+/** Part 2 - the new agent plane beside the unchanged Part 1 services. */
 const agentPlane: Spec = {
   description:
-    'Diagram of the agent plane — chat gateway, agent runtime, tool registry, session store, cost governor and eval harness — beside the unchanged Part 1 services: Job Service, Orchestrator, provider adapters, asset store, credits, moderation and observability.',
+    'Diagram of the agent plane - chat gateway, agent runtime, tool registry, session store, cost governor and eval harness - beside the unchanged Part 1 services: Job Service, Orchestrator, provider adapters, asset store, credits, moderation and observability.',
   width: 1000,
   height: 560,
   groups: [
-    { label: 'New — agent plane', x: 20, y: 20, w: 560, h: 520 },
+    { label: 'New - agent plane', x: 20, y: 20, w: 560, h: 520 },
     { label: 'Unchanged from Part 1', x: 640, y: 20, w: 340, h: 520 },
   ],
   nodes: [
     {
+      id: 'chat',
       title: 'Chat gateway',
       lines: ['streaming UI'],
       x: 40,
@@ -20,6 +21,7 @@ const agentPlane: Spec = {
       h: 54,
     },
     {
+      id: 'art',
       title: 'Agent Runtime',
       lines: ['the loop'],
       x: 230,
@@ -28,6 +30,7 @@ const agentPlane: Spec = {
       h: 60,
     },
     {
+      id: 'sess',
       title: 'Session store',
       lines: ['messages · plan'],
       shape: 'cylinder',
@@ -37,6 +40,7 @@ const agentPlane: Spec = {
       h: 70,
     },
     {
+      id: 'tools',
       title: 'Tool Registry',
       lines: ['primitives + Apps'],
       x: 410,
@@ -45,6 +49,7 @@ const agentPlane: Spec = {
       h: 64,
     },
     {
+      id: 'gov',
       title: 'Cost governor',
       lines: ['budgets · router'],
       x: 410,
@@ -53,6 +58,7 @@ const agentPlane: Spec = {
       h: 64,
     },
     {
+      id: 'eval',
       title: 'Eval harness',
       lines: ['rubrics · replay'],
       x: 40,
@@ -60,8 +66,9 @@ const agentPlane: Spec = {
       w: 170,
       h: 60,
     },
-    { title: 'Job Service', x: 670, y: 60, w: 140, h: 44 },
+    { id: 'jobs', title: 'Job Service', x: 670, y: 60, w: 140, h: 44 },
     {
+      id: 'orch',
       title: 'Orchestrator',
       lines: ['durable DAG'],
       x: 670,
@@ -70,6 +77,7 @@ const agentPlane: Spec = {
       h: 54,
     },
     {
+      id: 'pad',
       title: 'Provider adapters',
       x: 670,
       y: 210,
@@ -77,6 +85,7 @@ const agentPlane: Spec = {
       h: 44,
     },
     {
+      id: 's3',
       title: 'Asset store',
       shape: 'cylinder',
       x: 840,
@@ -84,9 +93,9 @@ const agentPlane: Spec = {
       w: 120,
       h: 60,
     },
-    { title: 'Credits', x: 670, y: 300, w: 140, h: 40 },
-    { title: 'Moderation', x: 670, y: 360, w: 140, h: 40 },
-    { title: 'Observability', x: 670, y: 420, w: 140, h: 40 },
+    { id: 'cred', title: 'Credits', x: 670, y: 300, w: 140, h: 40 },
+    { id: 'mod', title: 'Moderation', x: 670, y: 360, w: 140, h: 40 },
+    { id: 'obs', title: 'Observability', x: 670, y: 420, w: 140, h: 40 },
   ],
   edges: [
     {

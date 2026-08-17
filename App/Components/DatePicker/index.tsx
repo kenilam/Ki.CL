@@ -30,11 +30,11 @@ const formatRange = (
   if (!range.to || range.from.getTime() === range.to.getTime()) {
     return formatDate(range.from);
   }
-  return `${formatDate(range.from)} – ${formatDate(range.to)}`;
+  return `${formatDate(range.from)} - ${formatDate(range.to)}`;
 };
 
 /**
- * Date picker composed from Popover + Calendar — aligned with
+ * Date picker composed from Popover + Calendar - aligned with
  * https://ui.shadcn.com/docs/components/base/date-picker
  */
 const DatePicker: React.FC<DatePickerProps> = (props) => {

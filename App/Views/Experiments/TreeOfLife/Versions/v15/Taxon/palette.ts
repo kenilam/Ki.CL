@@ -6,14 +6,14 @@ import { clamp, lerp, random } from './seed';
  * as a colour family rather than a set of unrelated hues, and the drift is
  * clamped to a green→teal band so the whole tree stays one ecosystem.
  *
- * Only the start colour is needed — no depth, no lineage — because each taxon
+ * Only the start colour is needed - no depth, no lineage - because each taxon
  * is handed the colour of whatever it grows from.
  */
 
 /**
  * The band drift is fenced into: yellow-green, through green and teal, to
  * blue. Widened from the original green→teal, which held the whole tree
- * inside about forty degrees of hue — enough to tell siblings apart on
+ * inside about forty degrees of hue - enough to tell siblings apart on
  * inspection, not enough to read as colour at a glance.
  *
  * It is still a fence, and deliberately so: hue carries ancestry here, and a
@@ -30,7 +30,7 @@ const LIGHTNESS_MAX = 78;
  * Per-generation drift.
  *
  * This is what makes a branch legible as a change of colour rather than a
- * length of the same one — it is the gap between the colour a branch leaves
+ * length of the same one - it is the gap between the colour a branch leaves
  * on and the one it arrives at, swept into its vertices. It has to be a
  * *step*, not a pull: a pull toward a fixed target decays geometrically, so
  * raising it only makes the whole tree reach the end of the band sooner and
@@ -50,10 +50,10 @@ const LIGHTNESS_DRIFT = 15;
  * arrives at, which is the gradient swept into its vertices. Too gentle and
  * every generation is its parent's colour, so the tree reads as one flat
  * green and the connection carries no information. The softening stays where
- * it was — the tone should stay washed as it travels, not turn enamel.
+ * it was - the tone should stay washed as it travels, not turn enamel.
  */
 /*
- * Gentle, because these converge. Unlike hue — which wanders symmetrically —
+ * Gentle, because these converge. Unlike hue - which wanders symmetrically -
  * lightness and saturation are *meant* to trend as the tree travels outward:
  * brighter and more washed the further from the core. Kept small so the trend
  * takes the whole lineage to play out rather than the first few generations.

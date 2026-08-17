@@ -19,7 +19,7 @@ import './Styles.scss';
 const CLASS_NAME = 'kicl--components--input-group';
 
 /**
- * Input with addons — API aligned with
+ * Input with addons - API aligned with
  * https://ui.shadcn.com/docs/components/base/input-group
  */
 const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(

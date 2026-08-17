@@ -48,7 +48,7 @@
      * Above every version's own chrome.
      *
      * The switcher is shared by all of them now and each stacks its own layers
-     * — the deepest of them reaches 3 — so without a value here the toggle
+     * - the deepest of them reaches 3 - so without a value here the toggle
      * paints underneath whichever view happens to be mounted and cannot be
      * reached. The panel does not need this: a popover lives in the top layer,
      * where z-index no longer applies.

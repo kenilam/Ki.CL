@@ -58,7 +58,7 @@ const Canvas: React.FunctionComponent = () => {
    *
    * Normally the ancestor: a taxon reads against the thing it grew out of. The
    * origin has no ancestor, so that fell through to a fraction of the whole
-   * tree's extent — and once the cache held a few thousand taxa, that fraction
+   * tree's extent - and once the cache held a few thousand taxa, that fraction
    * put the camera far enough out to render the origin as a dot. Its own first
    * descendant is the same unit measured the other way, and frames it beside
    * what grew out of *it*.
@@ -67,7 +67,7 @@ const Canvas: React.FunctionComponent = () => {
     chains[1] ?? (focus ? find(focus)?.descendants?.[0]?.nodeId : undefined);
 
   /*
-   * How far right of centre the focused taxon sits — a twentieth of the
+   * How far right of centre the focused taxon sits - a twentieth of the
    * viewport's shorter side.
    *
    * Proportional rather than a spacing token: this is a composition offset in a
@@ -95,7 +95,7 @@ const Canvas: React.FunctionComponent = () => {
    * `chains` runs focus → root, so the last entry is where the tree starts.
    * Nothing is drawn until it actually reaches the origin: the climb takes
    * several fetches, and the outermost node known before it lands is not the
-   * root — planting on it would grow the tree from the wrong centre.
+   * root - planting on it would grow the tree from the wrong centre.
    */
   const root = rooted ? chains[chains.length - 1] : undefined;
 

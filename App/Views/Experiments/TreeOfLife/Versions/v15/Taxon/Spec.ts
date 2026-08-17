@@ -2,8 +2,8 @@ import type { Vector3Tuple } from 'three';
 import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/provider';
 
 /**
- * One taxon as the query returns it. `TreeOfLifeSubtree` is nullable — the
- * query resolves to nothing on a hard miss — but a rendered taxon always has
+ * One taxon as the query returns it. `TreeOfLifeSubtree` is nullable - the
+ * query resolves to nothing on a hard miss - but a rendered taxon always has
  * a node, so the null is stripped here rather than guarded at every use.
  */
 export type Taxon = NonNullable<
@@ -21,7 +21,7 @@ export type Props = Pick<Taxon, 'nodeId'> & {
   start: Vector3Tuple;
   /** Colour at `start`; the taxon's own colour is derived from it. */
   startColor: string;
-  /** Branch width at `start` — the thicker, inward end. */
+  /** Branch width at `start` - the thicker, inward end. */
   startWidth: number;
   /** Branch width at the tip, so a branch tapers as it runs outward. */
   endWidth: number;
@@ -32,16 +32,16 @@ export type Props = Pick<Taxon, 'nodeId'> & {
    * retracts it back into `start`, and switching between them reverses from
    * wherever the taxon currently is rather than restarting.
    *
-   * Undefined runs nothing: the taxon holds where it is — ungrown, and
-   * invisible, until it is first given a direction — so a caller can mount a
+   * Undefined runs nothing: the taxon holds where it is - ungrown, and
+   * invisible, until it is first given a direction - so a caller can mount a
    * whole tree and release it a level at a time.
    */
   play?: 'enter' | 'exit';
   /**
    * Whether this taxon sits below the one in the route.
    *
-   * Only that subtree plays out. Everywhere else — the lineage climbing back
-   * to the origin, and the context fanned around it — is scenery for the taxon
+   * Only that subtree plays out. Everywhere else - the lineage climbing back
+   * to the origin, and the context fanned around it - is scenery for the taxon
    * being looked at, and watching it redraw itself says nothing about where
    * you are.
    */

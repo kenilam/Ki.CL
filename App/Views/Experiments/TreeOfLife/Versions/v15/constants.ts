@@ -11,7 +11,7 @@ export const ORIGIN: Vector3Tuple = [0, 0, 0];
  * Only ever seen on an empty scene: nothing is drawn until the lineage reaches
  * the root, and `CameraRig` reframes the moment the first taxon publishes an
  * anchor. It just has to be a plausible standoff for a tree whose real extent
- * is not knowable in advance — that depends on how deep the lineage runs.
+ * is not knowable in advance - that depends on how deep the lineage runs.
  */
 export const OPENING_DISTANCE = 600;
 
@@ -33,7 +33,7 @@ export const ROOT_COLOR = '#1e8f57';
  * Proportion is what makes this read as tissue rather than plumbing: a branch
  * is a vein, not a pipe, so it stays a small fraction of the body it feeds.
  * Stated as that fraction rather than as an absolute, because the relationship
- * is the part that matters — the tree's overall scale is emergent, set by how
+ * is the part that matters - the tree's overall scale is emergent, set by how
  * deep the lineage runs, and a width pinned to a fixed reference drifts out of
  * proportion the moment that changes.
  */
@@ -52,14 +52,14 @@ export const SIZE_TAPER = 0.78;
  * Floors for the lineage.
  *
  * A taper compounds, and a real lineage runs seventy levels: unfloored, the
- * focused node came out at 5e-8 units — a millionth of a pixel — and because
+ * focused node came out at 5e-8 units - a millionth of a pixel - and because
  * branch length derives from size, the deep end collapsed onto a single point
  * as well. The taper decays *towards* these rather than through them, so the
  * tree still reads as thinning outward without the far end vanishing.
  *
  * Both share one fraction, which is what makes this dial safe to turn. Framing
  * distance is set by the branch length the floor implies, so lowering it pulls
- * the camera in by the same factor it shrinks the tree — a taxon occupies the
+ * the camera in by the same factor it shrinks the tree - a taxon occupies the
  * same ~11px on screen at any value. What the fraction actually decides is how
  * many generations of taper survive before the far end goes uniform (about 13
  * at a half, 17 at a quarter), and how large the tree is in world units.

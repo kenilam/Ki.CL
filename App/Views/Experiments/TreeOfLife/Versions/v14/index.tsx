@@ -1,10 +1,10 @@
 /**
- * v14 — botanical growth poster (archived).
+ * v14 - botanical growth poster (archived).
  * Connections grow, then their node appears; children only start after the
  * parent node has finished. Existing geometry/colour stays pinned on expand;
  * new nodes take a related shade from the parent's spectrum.
  *
- * Active experiment is v15 — this folder is kept as a frozen reference.
+ * Active experiment is v15 - this folder is kept as a frozen reference.
  */
 import React, {
   useCallback,
@@ -284,7 +284,7 @@ const MapStage: React.FunctionComponent<{
   expandingIds: ReadonlySet<string>;
   centerOnId: string | null;
   pinnedId: string | null;
-  /** Search selection locks highlight — ignore hover/click focus until reset. */
+  /** Search selection locks highlight - ignore hover/click focus until reset. */
   focusLocked: boolean;
   onPinnedIdChange: (id: string | null) => void;
   onCentered: () => void;
@@ -356,18 +356,18 @@ const MapStage: React.FunctionComponent<{
     onLayoutChange(layout);
   }, [layout, onLayoutChange]);
 
-  // Bottom-anchored origin — must match layoutEngine's bottomPad (5%).
+  // Bottom-anchored origin - must match layoutEngine's bottomPad (5%).
   const rootOffsetY = viewport.height * 0.45;
   const windButtonRef = useRef<HTMLButtonElement>(null);
   const blowGustRef = useRef<() => void>(() => {});
   const [camera, setCamera] = useState<Camera>({ x: 0, y: 0, scale: 1 });
   const cameraRef = useRef(camera);
   cameraRef.current = camera;
-  /** Lowest zoom allowed — drops as the tree grows so the full canopy can fit. */
+  /** Lowest zoom allowed - drops as the tree grows so the full canopy can fit. */
   const minScaleRef = useRef(1);
   const viewportSizeRef = useRef(viewport);
 
-  // Viewport resize remaps layout into the new aspect — reset the camera so the
+  // Viewport resize remaps layout into the new aspect - reset the camera so the
   // tree fills the frame instead of keeping a stale pan/zoom from the old size.
   useLayoutEffect(() => {
     const prev = viewportSizeRef.current;
@@ -422,7 +422,7 @@ const MapStage: React.FunctionComponent<{
     onFocusChange(focusId);
   }, [focusId, onFocusChange]);
 
-  // Keep the zoom-out floor at “full tree + 4rem pad” — raise or lower with the
+  // Keep the zoom-out floor at “full tree + 4rem pad” - raise or lower with the
   // canopy so we never get stuck over-zoomed when the layout shrinks.
   useEffect(() => {
     const fit = fitCameraForNodes(layout.nodes, viewport, rootOffsetY);
@@ -449,7 +449,7 @@ const MapStage: React.FunctionComponent<{
   const handleHover = useCallback(
     (id: string | null) => {
       setHoveredId(id);
-      // Sync pause immediately — don't wait for focusId → useEffect.
+      // Sync pause immediately - don't wait for focusId → useEffect.
       onHoverChange(id);
     },
     [onHoverChange]
@@ -458,7 +458,7 @@ const MapStage: React.FunctionComponent<{
   const handleNodeClick = useCallback(
     (node: LayoutNode) => {
       if (focusLocked) {
-        // Re-select within the active search chain — updates dropdown + pin,
+        // Re-select within the active search chain - updates dropdown + pin,
         // and still expands/fetches when the node is expandable.
         if (pinnedId) {
           const chain = focusGroupIds(layout, pinnedId);
@@ -960,7 +960,7 @@ const Canvas: React.FunctionComponent = () => {
           break;
         }
 
-        // Walk the full loaded tree — poster pruning hides many expandable
+        // Walk the full loaded tree - poster pruning hides many expandable
         // tips from layout.nodes, which used to stall Grow early.
         const expandable = ref.tree.current
           ? collectExpandableTips(ref.tree.current).filter(

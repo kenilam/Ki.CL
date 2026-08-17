@@ -21,7 +21,7 @@ const CLASS_NAME = 'kicl--views--experiments--tree-of-life';
  * committed to this repository.
  *
  * Named for what they are, not for their contents, so re-encoding one is an
- * upload and nothing else — no name here has to change. The proxy sends these
+ * upload and nothing else - no name here has to change. The proxy sends these
  * revalidating rather than immutable to make that safe.
  */
 const IMAGES = '/assets/static';
@@ -198,8 +198,8 @@ const Article: React.FunctionComponent = () => {
 
         <Text is='p'>
           Scoring turned out to matter more than generating. For a long stretch
-          every plate in the library carried an identical score —
-          <code> overall 7, taxonMatch 7, pass true</code> — across more than a
+          every plate in the library carried an identical score -
+          <code> overall 7, taxonMatch 7, pass true</code> - across more than a
           hundred images. No model produces that. It was a hardcoded fallback:
           the vision provider had run out of credit, the call threw, and rather
           than admit it hadn’t looked, the pipeline filled in a pass. The entire

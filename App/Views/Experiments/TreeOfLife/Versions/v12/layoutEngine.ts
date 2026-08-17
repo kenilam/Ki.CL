@@ -1,7 +1,7 @@
 /**
- * v12 layout — curated poster canopy (tip-first)
+ * v12 layout - curated poster canopy (tip-first)
  *
- * 1. Curate ~40–60 named tips (prefer ottId + numTips; drop SILVA soup)
+ * 1. Curate ~40-60 named tips (prefer ottId + numTips; drop SILVA soup)
  * 2. Place tips first in uneven clade territories (full upper rectangle)
  * 3. Parents = tip centroids pulled toward origin at bottom
  * 4. Branches as tapered ribbons (startWidth → endWidth)

@@ -22,6 +22,6 @@ import { Ri } from '@/Icons';
 querySelector(`[data-slot='select-trigger']`);
 ```
 
-When a string needs nested quotes (selectors, documented attrs), prefer a **template literal** with single quotes inside — not a single-quoted string wrapping double quotes. Same in JSDoc: `` `is='a'` ``, `` `role='none'` ``.
+When a string needs nested quotes (selectors, documented attrs), prefer a **template literal** with single quotes inside - not a single-quoted string wrapping double quotes. Same in JSDoc: `` `is='a'` ``, `` `role='none'` ``.
 
 Exceptions: JSON, strings that contain apostrophes where escaping would hurt readability, and generated/vendor files.

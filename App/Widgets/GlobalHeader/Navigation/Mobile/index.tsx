@@ -28,7 +28,7 @@ const Mobile: React.FunctionComponent = () => {
   /*
    * A command opens and closes the dialog from markup, but a link inside it
    * only changes the route behind it. `key` rather than `pathname`, because it
-   * changes on every navigation — including a link to the route already open,
+   * changes on every navigation - including a link to the route already open,
    * and including the back button.
    */
   useEffect(() => {

@@ -57,7 +57,7 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
   /*
    * On by default. Growth leaving the focused taxon and travelling outward is
    * the thing this view is about, and it was turned off back when the control
-   * did nothing visible — the tree arrived on its own schedule whatever the
+   * did nothing visible - the tree arrived on its own schedule whatever the
    * setting said. Now that it plays out a level at a time, arriving to it is
    * the point rather than something to wait through, and the control is there
    * to land the tree at once when that is what you want.
@@ -81,7 +81,7 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
 
   /*
    * Apollo's normalised cache already merges each response into the tree it is
-   * accumulating — `TreeOfLifeNode` is keyed on `nodeId`, so a node fetched
+   * accumulating - `TreeOfLifeNode` is keyed on `nodeId`, so a node fetched
    * twice is one entity and new `ancestor`/`descendants` links land on it
    * automatically. A hand-rolled stitch on top of that was measured to change
    * nothing, so the fetch is the lazy query itself.
@@ -99,7 +99,7 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
   /*
    * Look a node up by id, straight out of the cache.
    *
-   * `data` is not read here — it and the lazy result are dependencies only
+   * `data` is not read here - it and the lazy result are dependencies only
    * because a change in either means the cache moved underneath and anything
    * memoised on this needs recomputing.
    */
@@ -118,7 +118,7 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
    */
   const lineage = useMemo(
     () => walkChain(params.nodeId),
-    // `data` and the lazy result are not read here — they are what tells us
+    // `data` and the lazy result are not read here - they are what tells us
     // the cache has changed underneath and the walk is worth redoing.
     [params.nodeId, data, TreeOfLifeSubtreeLazy.data]
   );
@@ -129,7 +129,7 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
    *
    * Navigating to a taxon outside the cached clade leaves the walk with just
    * the new id and `complete: false`, which unmounts the entire tree for as
-   * long as the climb takes — measured at ~5s and 260 blank frames. Holding
+   * long as the climb takes - measured at ~5s and 260 blank frames. Holding
    * the previous lineage keeps the old tree up and swaps it for the new one in
    * one move, once that one is whole.
    *
@@ -157,13 +157,13 @@ const TreeOfLifeProvider: React.FunctionComponent<PropsWithChildren> = ({
    * When the walk runs out of cache before reaching the root, fetch whatever
    * sits above the node it stopped at. That response carries its own dozen
    * ancestors, so each pass climbs another stretch and the next walk gets
-   * further — repeating until the chain lands on the root.
+   * further - repeating until the chain lands on the root.
    *
    * `climbed` stops a tail being asked for twice: if a fetch fails to extend
    * the chain, the effect would otherwise re-run on the same tail forever.
    *
    * Driven by the live walk, never by `chains`. `chains` holds the previous
-   * lineage while a new one is being climbed — climbing from its tail would
+   * lineage while a new one is being climbed - climbing from its tail would
    * re-fetch the old, already-complete chain and never advance the new one,
    * turning a few seconds of blank canvas into a permanent stall.
    */
