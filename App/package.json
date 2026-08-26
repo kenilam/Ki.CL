@@ -18,7 +18,7 @@
     "production": "yarn run build:client && yarn run preview"
   },
   "dependencies": {
-    "@apollo/client": "4.2.8",
+    "@apollo/client": "4.2.12",
     "@hookform/resolvers": "5.5.7",
     "@react-spring/three": "10.1.2",
     "@react-three/drei": "10.7.7",

@@ -15,9 +15,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:4.2.8":
-  version: 4.2.8
-  resolution: "@apollo/client@npm:4.2.8"
+"@apollo/client@npm:4.2.12":
+  version: 4.2.12
+  resolution: "@apollo/client@npm:4.2.12"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.1.1"
     "@wry/caches": "npm:^1.0.0"
@@ -42,7 +42,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 10c0/ec98549965edc40eba5bd869f2633e6b1097ba5a87d92eb2d0325d8079663ca16cf856e1b1e7767bce47c0d9f617bcf82442fc6dcb3a00b28806be781b827c0a
+  checksum: 10c0/97852e2a88231ea15b3cc6f1cef307f0df655d96d8f96531717f764cb8440b0a8931ca13b8a73623b6fffe156cccdfaf75f940e0d72f928fbc68edad6345e301
   languageName: node
   linkType: hard
 
@@ -3793,7 +3793,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:App"
   dependencies:
-    "@apollo/client": "npm:4.2.8"
+    "@apollo/client": "npm:4.2.12"
     "@hookform/resolvers": "npm:5.5.7"
     "@react-spring/three": "npm:10.1.2"
     "@react-three/drei": "npm:10.7.7"
