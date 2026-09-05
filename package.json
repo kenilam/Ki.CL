@@ -83,7 +83,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "21.2.1",
-    "@commitlint/config-conventional": "21.2.0",
+    "@commitlint/config-conventional": "21.2.2",
     "@types/app-root-path": "3.1.0",
     "@types/node": "26",
     "@types/node-sass": "4.11.8",
