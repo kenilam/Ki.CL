@@ -23,8 +23,8 @@ const COPY = {
 };
 
 /**
- * The experiments, in the order they are shown, each with where it lives
- * and which plate sits behind it - a modifier the stylesheet paints.
+ * The experiments, numbered in the order they were made. `plate` picks the
+ * background in Styles.scss.
  */
 const EXPERIMENTS_LIST = [
   {
@@ -36,29 +36,32 @@ const EXPERIMENTS_LIST = [
   },
   {
     description:
-      'A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at random one after another, and a picture that answers the sound and changes as the music moves.',
+      'Slow music, drawn as it plays. Chill, lo-fi and piano picked at random, with visuals that react to the sound.',
     plate: 'music-visualiser',
     title: 'Music Visualiser',
     to: toMusicVisualiserPath(),
   },
 ];
 
-/** The screens that share the stage: one an experiment. */
-const SCREENS = EXPERIMENTS_LIST.length;
+/** Newest first on the page; the numbers keep their order. */
+const SCREENS_LIST = EXPERIMENTS_LIST.map((experiment, index) => ({
+  ...experiment,
+  number: index + 1,
+})).reverse();
+
+/** How many screens the pinned stage holds. */
+const SCREENS = SCREENS_LIST.length;
 
 /**
- * The index of the experiments: one full screen a piece, the title set
- * huge across it over its plate. The screens sit stacked in one stage
- * that stays put while the page scrolls a screen's height for each. The
- * words move at the scroll's own pace, so each heading rides in from
- * below as the last rides out above, as any page would read; only the
- * plates behind them change, the next fading in over the last, in place,
- * and drifting as it does. Each screen carries its own link in, under
- * the words. The scroll drives it all from the stylesheet,
- * so there is no scroll handler; where the browser has no scroll
- * timelines, or the reader wants less motion, the screens simply follow
- * one another down the page. After the stage, in the page's own flow, a
- * last word says more will come, with a link to keep.
+ * One full-screen panel per experiment, stacked in a stage that stays
+ * pinned while the page scrolls one screen height per panel. Each panel's
+ * text block rides up from below at the scroll rate and stops in place;
+ * it only moves on when the next block reaches it and pushes it up. The
+ * backgrounds crossfade underneath. All of it is CSS
+ * scroll-driven animation (see Styles.scss), so there is no scroll
+ * handler. Browsers without scroll timelines, and readers with reduced
+ * motion, get the panels stacked vertically instead. The "more to come"
+ * section sits after the stage in normal flow.
  */
 const Home: React.FunctionComponent = () => (
   <Layout gap='none' justifyItems='stretch'>
@@ -73,7 +76,7 @@ const Home: React.FunctionComponent = () => (
           className={classNames(`${CLASS_NAME}__stage`, 'kicl-position-sticky')}
         >
           <List is='ol' className={`${CLASS_NAME}__list`} gap='none'>
-            {EXPERIMENTS_LIST.map((experiment, index) => (
+            {SCREENS_LIST.map((experiment, index) => (
               <ListItem
                 className={classNames(
                   `${CLASS_NAME}__item`,
@@ -98,47 +101,51 @@ const Home: React.FunctionComponent = () => (
                     'kicl-position-relative'
                   )}
                 >
-                  <Layout alignContent='end' autoFlow='row' gap='narrow'>
+                  <Layout alignContent='end' autoFlow='row' gap='none'>
                     <span className={`${CLASS_NAME}__body`}>
-                      <Text
-                        is='span'
-                        dense
-                        variant='secondary'
-                        className={classNames(
-                          `${CLASS_NAME}__index`,
-                          'kicl-font-size-small',
-                          'kicl-text-transform-uppercase'
-                        )}
-                      >
-                        {`No. ${index + 1}`}
-                      </Text>
-                      <Heading
-                        is={index === 0 ? 'h1' : 'h2'}
-                        dense
-                        className={classNames(
-                          `${CLASS_NAME}__title`,
-                          'kicl-text-transform-uppercase'
-                        )}
-                      >
-                        {experiment.title}
-                      </Heading>
-                      <Text
-                        is='p'
-                        dense
-                        className={classNames(
-                          `${CLASS_NAME}__description`,
-                          'kicl-font-size-small'
-                        )}
-                      >
-                        {experiment.description}
-                      </Text>
-                      <HyperLink
-                        className={`${CLASS_NAME}__open`}
-                        lookLikeButton
-                        to={experiment.to}
-                      >
-                        {COPY.open}
-                      </HyperLink>
+                      <Layout alignContent='end' autoFlow='row' gap='narrow'>
+                        <span className={`${CLASS_NAME}__words`}>
+                          <Text
+                            is='span'
+                            dense
+                            variant='secondary'
+                            className={classNames(
+                              `${CLASS_NAME}__index`,
+                              'kicl-font-size-small',
+                              'kicl-text-transform-uppercase'
+                            )}
+                          >
+                            {`No. ${experiment.number}`}
+                          </Text>
+                          <Heading
+                            is={index === 0 ? 'h1' : 'h2'}
+                            dense
+                            className={classNames(
+                              `${CLASS_NAME}__title`,
+                              'kicl-text-transform-uppercase'
+                            )}
+                          >
+                            {experiment.title}
+                          </Heading>
+                          <Text
+                            is='p'
+                            dense
+                            className={classNames(
+                              `${CLASS_NAME}__description`,
+                              'kicl-font-size-small'
+                            )}
+                          >
+                            {experiment.description}
+                          </Text>
+                          <HyperLink
+                            className={`${CLASS_NAME}__open`}
+                            lookLikeButton
+                            to={experiment.to}
+                          >
+                            {COPY.open}
+                          </HyperLink>
+                        </span>
+                      </Layout>
                     </span>
                   </Layout>
                 </div>
