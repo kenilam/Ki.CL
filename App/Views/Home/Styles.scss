@@ -1,61 +1,15 @@
 :root {
   --kicl--views--home--block-size: 100dvh;
-  --kicl--views--home--background: linear-gradient(
-    232deg,
-    #{color.adjust($orange, $lightness: 30%)},
-    #{color.adjust($green, $lightness: 30%)},
-    #{color.adjust($red, $lightness: 30%)},
-    #{color.adjust($blue, $lightness: 30%)},
-    #{color.adjust($yellow, $lightness: 30%)}
-  );
-
-  @at-root .kicl--theme--dark {
-    --kicl--views--home--background: linear-gradient(
-      232deg,
-      #{color.adjust($orange, $blackness: 3%)},
-      #{color.adjust($green, $blackness: 3%)},
-      #{color.adjust($red, $blackness: 3%)},
-      #{color.adjust($blue, $blackness: 3%)},
-      #{color.adjust($yellow, $blackness: 3%)}
-    );
-  }
 }
 
 .kicl--views--home {
-  /*
-   * This section is itself an Animation target, so it must not declare its own
-   * `transition-*`: the two rules land on one element and the view, sitting in
-   * a later cascade layer, simply replaced the property the animation was
-   * there to move - `background` instead of `opacity`, so the fade never ran.
-   *
-   * Adding to the component's list is the supported way in. It stays one
-   * transition, and the animation keeps control of duration and easing.
-   */
-  --kicl--components--animation--transition-property: opacity, background;
-
-  animation: kicl--views--background 300s ease infinite;
-  background: var(--kicl--views--home--background);
-  background-size: 1200% 1200%;
   block-size: var(--kicl--views--home--block-size);
+  overflow: hidden;
 
   @at-root .kicl--view:has(&) {
     padding-block-end: 0;
     padding-block-start: 0;
     padding-inline-end: 0;
     padding-inline-start: 0;
-  }
-}
-
-@keyframes kicl--views--background {
-  0% {
-    background-position: 0% 88%;
-  }
-
-  50% {
-    background-position: 100% 13%;
-  }
-
-  100% {
-    background-position: 0% 88%;
   }
 }
