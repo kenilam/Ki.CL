@@ -122,9 +122,4 @@ export type Smoothed = {
   slow: Features;
 };
 
-/**
- * `blocked` is a track asked for without a gesture - a deep link to its
- * play route - which the browser will not sound until one comes.
- */
-export type PlaybackState =
-  'blocked' | 'idle' | 'loading' | 'paused' | 'playing';
+export type PlaybackState = 'idle' | 'loading' | 'paused' | 'playing';

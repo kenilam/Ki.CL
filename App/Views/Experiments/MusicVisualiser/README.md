@@ -9,21 +9,22 @@ in `App/Views/Experiments/index.tsx`. A group is a station (a provider), a
 type one of its families, a track one piece. Each level is its own route in
 its own folder, like TreeOfLife's versions:
 
-- the view's index shows a gate - the title and a play control - and the
-  control is a link to the first group;
+- the view's index shows the title and a play control, a link to the first
+  group;
 - a group's index redirects to its first type, and a type's index to the
   track the station would play next, so any prefix lands on a track;
-- a track's route shows its gate: the title, `station · type`, and a play
-  control that links to the track's `/play` route;
-- `/play` is what sounds. Arriving there starts the track; leaving it stops
-  it.
+- a track's index shows the title, `station · type`, and a play control
+  that links to the track's `/play` route;
+- `/play` is what sounds, and the route is the only thing that says so.
+  Arriving there starts the track, or resumes it if it is the one held;
+  leaving holds it, silent. Pausing is leaving for the gate.
 
 The URL is the source of truth for what is playing, as it is for the focused
 node in TreeOfLife. Skipping, and a track ending, navigate to the next
 track's `/play`, so the address bar is always a link to the piece and back
 or forward through the history move between tracks. A `/play` link opened
-cold, with no gesture yet, shows the track's gate as a button until the
-browser is given one. A track id the station cannot resolve goes back to
+cold, with no gesture yet, is sent back to the track's gate, whose play
+link is the gesture. A track id the station cannot resolve goes back to
 its type, which picks another. The built-in station's ids
 (`self-composed/piano/1234`) name the seed, so a link plays the same piece
 every time. A copy-link control sits beside skip.
@@ -34,19 +35,24 @@ every time. A copy-link control sits beside skip.
 MusicVisualiser/
   Spec.ts            the shared vocabulary: Track, Source, Vibe, Features, Provider
   constants.ts       route segments and params, toPath, class root, storage key
-  index.tsx          the route; its index is the Landing gate
-  Landing.tsx        the view's gate: title, lede, a link to the first group
-  Gate.tsx           a title and a play control, centred on the stage
+  index.tsx          the route; its index is Home
+  Home/              the view's index: title, lede, a link to the first group
   Context.ts         the radio and the resolved track, shared down the routes
   Groups/
     index.tsx        /:group - a station; index redirects to its first type
+    Contents.tsx     checks the group, renders the outlet
     Types/
       index.tsx      /:type - a family; index redirects to a track of it
+      Contents.tsx   checks the type, renders the outlet
+      resolve.ts     group, provider and type from the params
       Tracks/
-        index.tsx    /:trackId - resolves the piece; index is its gate
+        index.tsx    /:trackId - a piece; index is its Home, then Play
+        Contents.tsx resolves the piece, hands it down through context
+        Home/        the track's index: title, station · type, a link to play
         Play/
-          index.tsx  /play - starts the piece; the now-playing card and
-                     controls, which fade when idle
+          index.tsx  /play - the route
+          Contents.tsx starts the piece; the now-playing card and controls,
+                     which fade when idle
   Contents.tsx       the shell: the canvas (palette off CSS, the frame loop)
                      over one useRadio(), plus the outlet
   useRadio.ts        playback state: engine, start/stop, pause, skip, volume
@@ -186,9 +192,9 @@ repo; the method is in the session notes.
 
 In a cloud session with Playwright and SwiftShader: the index gate links to
 the first group, which lands on a track's gate; its play link starts the
-piece on `/play`; skip and back move between `/play` routes; pause pauses;
-a cold `/play` link shows the gate as a button and plays on the press; an
-unknown id falls back to the type's pick. All twelve scenes compile and
+piece on `/play`; skip and back move between `/play` routes; pause leaves
+for the gate and play there resumes; a cold `/play` link lands on the gate
+and plays on the press; an unknown id falls back to the type's pick. All twelve scenes compile and
 draw in both themes. The composer was audited over three hundred seeds
 (no throws, 71 kick patterns, 141 bass rhythms) and recordings of the
 station were measured against the references. Console is clean apart from

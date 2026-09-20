@@ -114,13 +114,6 @@ $dark-cool-3: color.mix(
     inline-size: 100%;
   }
 
-  &__gate {
-    max-inline-size: 40rem;
-    margin-inline: auto;
-    padding: var(--kicl--views--experiments--music-visualiser--inset);
-    padding-block-start: var(--kicl--widgets--global-header--block-size);
-  }
-
   &__chrome {
     inline-size: 100%;
     padding: var(--kicl--views--experiments--music-visualiser--inset);

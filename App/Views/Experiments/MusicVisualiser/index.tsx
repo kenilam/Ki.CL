@@ -13,7 +13,7 @@ import Groups from './Groups';
 import { PATH } from './constants';
 
 const Contents = React.lazy(() => import('./Contents'));
-const Landing = React.lazy(() => import('./Landing'));
+const Home = React.lazy(() => import('./Home'));
 
 const Lazy: React.FunctionComponent = () => {
   return (
@@ -28,9 +28,9 @@ const Lazy: React.FunctionComponent = () => {
  * beneath it, each level in its own folder. The shell - stage and radio -
  * is this route's element and renders an outlet, so the URL can descend
  * and change beneath it without the player ever remounting. The index is
- * a gate whose play control goes to the first group; the group's and the
- * type's index redirect to their first child; a track's route is a gate
- * to its play route, which plays.
+ * Home, whose play control goes to the first group; the group's and the
+ * type's index redirect to their first child; a track's index is its own
+ * Home, linking to its play route, which plays.
  */
 export { PATH };
 export default (
@@ -39,7 +39,7 @@ export default (
       index
       element={
         <Suspense fallback={<Spinner position='inline' />}>
-          <Landing />
+          <Home />
         </Suspense>
       }
     />

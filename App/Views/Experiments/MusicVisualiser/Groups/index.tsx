@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Outlet, Route, useParams } from '@/Router';
+import { Navigate, Route, useParams } from '@/Router';
+
+// Components
+import { Spinner } from '@/Components';
 
 // Providers
 import radio from '@/Views/Experiments/MusicVisualiser/Providers';
@@ -18,19 +21,14 @@ import {
 
 type Params = { [PARAMS.group]?: string };
 
-/**
- * `/:group` - a station. An unknown group goes to the first one; a known
- * one renders whatever is beneath it.
- */
-const Group: React.FunctionComponent = () => {
-  const params = useParams<Params>();
-  const group = params[PARAMS.group];
+const Contents = React.lazy(() => import('./Contents'));
 
-  if (!group || !radio.group(group)) {
-    return <Navigate to={toPath({ group: radio.groups[0].group })} replace />;
-  }
-
-  return <Outlet />;
+const Lazy: React.FunctionComponent = () => {
+  return (
+    <Suspense fallback={<Spinner position='inline' />}>
+      <Contents />
+    </Suspense>
+  );
 };
 
 /** The group's index: its first type. */
@@ -46,8 +44,9 @@ const FirstType: React.FunctionComponent = () => {
   return <Navigate to={toPath({ group, type: provider.types[0] })} replace />;
 };
 
+/** `/:group` - a station; its index redirects to its first type. */
 export default (
-  <Route path={GROUP_PATTERN} element={<Group />}>
+  <Route path={GROUP_PATTERN} element={<Lazy />}>
     <Route index element={<FirstType />} />
     {Types}
   </Route>

@@ -1,58 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 // Routes
-import { Navigate, Outlet, Route, useParams } from '@/Router';
+import { Navigate, Route, useParams } from '@/Router';
 
 // Components
 import { Spinner } from '@/Components';
 
-// Spec
-import type { VibeFamily } from '@/Views/Experiments/MusicVisualiser/Spec';
-
 // Providers
 import radio from '@/Views/Experiments/MusicVisualiser/Providers';
+
+// Resolve
+import resolve, { type Params } from './resolve';
 
 // Tracks
 import Tracks from './Tracks';
 
 // Constants
 import {
-  PARAMS,
   TYPE_PATTERN,
   toPath,
   toTrackPath,
 } from '@/Views/Experiments/MusicVisualiser/constants';
 
-type Params = { [PARAMS.group]?: string; [PARAMS.type]?: string };
+const Contents = React.lazy(() => import('./Contents'));
 
-function resolve(params: Params) {
-  const group = params[PARAMS.group];
-  const type = params[PARAMS.type];
-  const provider = group ? radio.group(group) : undefined;
-  const known =
-    provider && type && (provider.types as string[]).includes(type)
-      ? (type as VibeFamily)
-      : null;
-
-  return { group, provider, type: known };
-}
-
-/**
- * `/:group/:type` - a family within a station. An unknown type goes to the
- * group's first; a known one renders whatever is beneath it.
- */
-const Type: React.FunctionComponent = () => {
-  const { group, provider, type } = resolve(useParams<Params>());
-
-  if (!provider) {
-    return <Navigate to={toPath()} replace />;
-  }
-
-  if (!type) {
-    return <Navigate to={toPath({ group })} replace />;
-  }
-
-  return <Outlet />;
+const Lazy: React.FunctionComponent = () => {
+  return (
+    <Suspense fallback={<Spinner position='inline' />}>
+      <Contents />
+    </Suspense>
+  );
 };
 
 /**
@@ -100,8 +77,9 @@ const FirstTrack: React.FunctionComponent = () => {
   return <Navigate to={path} replace />;
 };
 
+/** `/:group/:type` - a family; its index redirects to a track of it. */
 export default (
-  <Route path={TYPE_PATTERN} element={<Type />}>
+  <Route path={TYPE_PATTERN} element={<Lazy />}>
     <Route index element={<FirstTrack />} />
     {Tracks}
   </Route>

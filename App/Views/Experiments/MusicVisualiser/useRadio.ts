@@ -28,12 +28,13 @@ import { VOLUME_STORAGE_KEY, toPlayPath, trackKey } from './constants';
  * and the engine behind it. It lives in the shell, above the routes, so
  * the engine and the picture survive every change of URL.
  *
- * The URL is in charge. A track's play route starts that track, by calling
- * `start` when it mounts, and stops it when it unmounts; skipping and a
- * track ending navigate to the next track's play route, and that route
- * does the starting. So the address bar is always a link to what is
- * playing, and back and forward through the history move between tracks
- * like any other navigation.
+ * The URL is in charge: on a track's play route the track plays, and off
+ * it nothing does. That route calls `start` when it mounts and `stop` when
+ * it unmounts; skipping and a track ending navigate to the next track's
+ * play route, and that route does the starting; pausing is leaving the
+ * route, and the engine holds the track so coming back resumes it. So the
+ * address bar is always a link to what is playing, and back and forward
+ * through the history move between tracks like any other navigation.
  */
 
 const DEFAULT_VOLUME = 0.8;
@@ -52,13 +53,14 @@ export type Radio = {
   /** Go to another track, within the station that is playing. */
   next(): void;
   setVolume(volume: number): void;
-  /** Play this track now. */
-  start(track: Track): void;
+  /**
+   * Play this track now, or resume it if it is the one held paused.
+   * Resolves `false` when the browser will not sound it without a gesture.
+   */
+  start(track: Track): Promise<boolean>;
   state: PlaybackState;
-  /** Silence and forget the track; the play route left. */
+  /** Hold the track, silent; the play route left. */
   stop(): void;
-  /** Play if paused or blocked; pause if playing. */
-  toggle(): void;
   track: Track | null;
   volume: number;
 };
@@ -81,6 +83,7 @@ export default function useRadio(): Radio {
   const history = useRef<string[]>([]);
   const generation = useRef(0);
   const trackRef = useRef<Track | null>(null);
+  const stateRef = useRef<PlaybackState>('idle');
   const volumeRef = useRef(DEFAULT_VOLUME);
 
   const [state, setState] = useState<PlaybackState>('idle');
@@ -91,6 +94,7 @@ export default function useRadio(): Radio {
   );
 
   trackRef.current = track;
+  stateRef.current = state;
   volumeRef.current = volume;
 
   /* The station's next pick, as a navigation to its play route. */
@@ -109,43 +113,59 @@ export default function useRadio(): Radio {
   }, [navigate]);
 
   const start = useCallback(
-    async (upcoming: Track) => {
+    async (upcoming: Track): Promise<boolean> => {
       const current = (engine.current ??= createEngine(volumeRef.current, {
         samplesUrl,
       }));
       const mine = ++generation.current;
+      const held = trackRef.current;
+      const resuming =
+        held !== null &&
+        trackKey(held) === trackKey(upcoming) &&
+        stateRef.current === 'paused';
 
-      history.current = [...history.current, trackKey(upcoming)].slice(
-        -HISTORY_LENGTH
-      );
-      setTrack(upcoming);
       setState('loading');
       setError(null);
 
+      if (!resuming) {
+        history.current = [...history.current, trackKey(upcoming)].slice(
+          -HISTORY_LENGTH
+        );
+        setTrack(upcoming);
+      }
+
       try {
-        await current.play(upcoming.source, () => {
-          if (mine === generation.current) {
-            void next();
-          }
-        });
+        if (resuming) {
+          await current.resume();
+        } else {
+          await current.play(upcoming.source, () => {
+            if (mine === generation.current) {
+              void next();
+            }
+          });
+        }
 
         if (mine === generation.current) {
           setState('playing');
         }
+
+        return true;
       } catch (caught) {
         if (mine !== generation.current) {
-          return;
+          return true;
         }
 
         if (caught instanceof PlaybackBlockedError) {
-          setState('blocked');
+          setState('idle');
 
-          return;
+          return false;
         }
 
         console.error('Music Visualiser: could not start a track', caught);
         setError(ERROR_MESSAGES.play);
         setState('paused');
+
+        return true;
       }
     },
     [next, samplesUrl]
@@ -153,23 +173,9 @@ export default function useRadio(): Radio {
 
   const stop = useCallback(() => {
     generation.current += 1;
-    engine.current?.clear();
-    setState('idle');
+    engine.current?.pause();
+    setState(trackRef.current ? 'paused' : 'idle');
   }, []);
-
-  const toggle = useCallback(() => {
-    const current = engine.current;
-    const playing = trackRef.current;
-
-    if (state === 'playing' && current) {
-      current.pause();
-      setState('paused');
-    } else if (state === 'paused' && current) {
-      void current.resume().then(() => setState('playing'));
-    } else if (state === 'blocked' && playing) {
-      void start(playing);
-    }
-  }, [start, state]);
 
   const setVolume = useCallback(
     (value: number) => {
@@ -197,10 +203,9 @@ export default function useRadio(): Radio {
     error,
     next: () => void next(),
     setVolume,
-    start: (upcoming) => void start(upcoming),
+    start,
     state,
     stop,
-    toggle,
     track,
     volume,
   };
