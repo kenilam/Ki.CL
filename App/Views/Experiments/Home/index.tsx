@@ -19,7 +19,6 @@ const CLASS_NAME = 'kicl--views--experiments__home';
 const COPY = {
   bookmark: 'Bookmark this page',
   more: 'More to come',
-  next: 'Next',
   open: 'See the experience',
 };
 
@@ -155,18 +154,6 @@ const Home: React.FunctionComponent = () => (
         <div className={`${CLASS_NAME}__screen`}>
           <Layout alignContent='end' autoFlow='row' gap='narrow'>
             <span className={`${CLASS_NAME}__body`}>
-              <Text
-                is='span'
-                dense
-                variant='secondary'
-                className={classNames(
-                  `${CLASS_NAME}__index`,
-                  'kicl-font-size-small',
-                  'kicl-text-transform-uppercase'
-                )}
-              >
-                {COPY.next}
-              </Text>
               <Heading
                 is='h2'
                 dense
