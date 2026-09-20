@@ -10,15 +10,7 @@ import { Ri } from '@/Icons';
 import { useResponsive } from '@/Hooks';
 
 // Components
-import {
-  Heading,
-  HyperLink,
-  Layout,
-  List,
-  ListItem,
-  Separator,
-  Text,
-} from '@/Components';
+import { Heading, HyperLink, Layout, List, ListItem, Text } from '@/Components';
 
 // Styles
 import './Styles.scss';
@@ -36,32 +28,40 @@ const COPY = {
   title: 'Experiments',
 };
 
-/** The experiments, in the order they are shown, each with where it lives. */
+/**
+ * The experiments, in the order they are shown, each with where it lives
+ * and which plate sits behind it - a modifier the stylesheet paints.
+ */
 const EXPERIMENTS_LIST = [
   {
     description:
       'Every living thing on one globe, drawn from the Open Tree of Life. Start at the origin of life and walk to any species alive now; every organism you pass has a portrait drawn for it.',
+    plate: 'tree-of-life',
     title: 'Tree of Life',
     to: `/${EXPERIMENTS}/${TREE_OF_LIFE}`,
   },
   {
     description:
       'A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at random one after another, and a picture that answers the sound and changes as the music moves.',
+    plate: 'music-visualiser',
     title: 'Music Visualiser',
     to: toMusicVisualiserPath(),
   },
 ];
 
 /**
- * The index of the experiments: a title, a line, and one row a piece, the
- * whole row a link. Numbered, so the list reads as a list and not a grid
- * of cards; the row lights its title and moves its arrow when pointed at.
+ * The index of the experiments: a title, a line, and one full-width band
+ * a piece, the whole band a link. Behind each band its plate drifts more
+ * slowly than the page as it scrolls, on a scroll-driven animation the
+ * stylesheet declares, so there is no scroll handler and nothing moves for
+ * a reader who has asked for less motion. The band lights its title and
+ * moves its arrow when pointed at.
  */
 const Home: React.FunctionComponent = () => {
   const { isTablet } = useResponsive();
 
   return (
-    <Layout gap='none' justifyItems='center'>
+    <Layout gap='none' justifyItems='stretch'>
       <div className={CLASS_NAME}>
         <Layout autoFlow='row' gap='narrow' justifyItems='start'>
           <header className={`${CLASS_NAME}__header`}>
@@ -98,10 +98,26 @@ const Home: React.FunctionComponent = () => {
 
         <List is='ol' className={`${CLASS_NAME}__list`} gap='none'>
           {EXPERIMENTS_LIST.map((experiment, index) => (
-            <ListItem className={`${CLASS_NAME}__item`} key={experiment.to}>
-              <Separator />
+            <ListItem
+              className={classNames(
+                `${CLASS_NAME}__item`,
+                `${CLASS_NAME}__item--${experiment.plate}`,
+                'kicl-position-relative'
+              )}
+              key={experiment.to}
+            >
+              <div
+                aria-hidden
+                className={classNames(
+                  `${CLASS_NAME}__plate`,
+                  'kicl-position-absolute'
+                )}
+              />
               <HyperLink
-                className={`${CLASS_NAME}__link`}
+                className={classNames(
+                  `${CLASS_NAME}__link`,
+                  'kicl-position-relative'
+                )}
                 to={experiment.to}
                 unstyled
               >
@@ -129,7 +145,9 @@ const Home: React.FunctionComponent = () => {
                         dense
                         className={classNames(
                           `${CLASS_NAME}__title`,
-                          'kicl-font-size-larger'
+                          isTablet
+                            ? 'kicl-font-size-large'
+                            : 'kicl-font-size-larger'
                         )}
                       >
                         {experiment.title}
@@ -153,7 +171,6 @@ const Home: React.FunctionComponent = () => {
                   </span>
                 </Layout>
               </HyperLink>
-              {index === EXPERIMENTS_LIST.length - 1 ? <Separator /> : null}
             </ListItem>
           ))}
         </List>

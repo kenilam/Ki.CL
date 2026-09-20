@@ -1,20 +1,68 @@
 /*
- * The index of the experiments. Sized on its own: the Experiments shell
- * centres its child in a grid track, which would otherwise shrink to the
- * words. Everything the rows do on hover is declared here, on the view's
- * own custom properties.
+ * The index of the experiments: a header in the measure, then one
+ * full-width band a piece with a plate behind it.
+ *
+ * Sized on its own, since the Experiments shell centres its child in a
+ * grid track that would otherwise shrink to the words. The bands bleed to
+ * the viewport's edges from inside that width, and their text lines up
+ * with the header by taking the same inset back.
+ *
+ * The parallax is a scroll-driven animation: the plate is taller than its
+ * band and slides through it as the band crosses the viewport. Where the
+ * browser has no scroll timelines the plate simply sits; under reduced
+ * motion it does too.
  */
 .kicl--views--experiments__home {
+  $home: '--kicl--views--experiments__home';
+
   --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
   --kicl--views--experiments__home--measure: 38rem;
+  --kicl--views--experiments__home--width: 64rem;
+  --kicl--views--experiments__home--inset: var(--kicl-gutter-wider);
+  --kicl--views--experiments__home--band: 28rem;
+
+  /* How much taller than its band a plate is, and so how far it can slide. */
+  --kicl--views--experiments__home--overscan: 12%;
+  --kicl--views--experiments__home--scrim: color-mix(
+    in oklab,
+    var(--kicl-body-background-color) 72%,
+    transparent
+  );
+  --kicl--views--experiments__home--scrim-end: color-mix(
+    in oklab,
+    var(--kicl-body-background-color) 30%,
+    transparent
+  );
+
+  /* The band's words sit where the header's do: the centred width's own inset. */
+  --kicl--views--experiments__home--bleed: max(
+    0px,
+    calc((100dvi - var(--kicl--views--experiments__home--width)) / 2)
+  );
+  --kicl--views--experiments__home--margin: calc(
+    var(#{$home}--bleed) + var(#{$home}--inset)
+  );
+
+  @include query('≤tablet') {
+    --kicl--views--experiments__home--band: 22rem;
+  }
 
   box-sizing: border-box;
-  inline-size: min(100dvi, 64rem);
+  inline-size: min(100dvi, var(--kicl--views--experiments__home--width));
   padding-block-start: calc(
     var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
   );
-  padding-block-end: var(--kicl-gutter-extreme);
-  padding-inline: var(--kicl-gutter-wider);
+  padding-inline: var(--kicl--views--experiments__home--inset);
+
+  /*
+   * Both may shrink below their words: as grid items their minimum would
+   * otherwise be the title's width, which on a phone is wider than the
+   * box, and the list would grow with it and push the bands off centre.
+   */
+  &__header,
+  &__list {
+    min-inline-size: 0;
+  }
 
   &__header {
     padding-block-end: var(--kicl-gutter-widest);
@@ -31,10 +79,85 @@
     padding: 0;
   }
 
+  /*
+   * Full bleed: exactly the viewport's width, from inside the centred one.
+   * Clipped, not hidden: `overflow: hidden` would make the band a scroll
+   * container, and the plate's view timeline would then measure against
+   * the band instead of the page and never move.
+   */
+  &__item {
+    inline-size: 100dvi;
+    margin-inline: calc(50% - 50dvi);
+    overflow: clip;
+  }
+
+  &__plate {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    inset-block: calc(var(--kicl--views--experiments__home--overscan) * -1);
+    inset-inline: 0;
+
+    /* A scrim so the words stay readable whatever the plate shows. */
+    &::after {
+      backdrop-filter: saturate(70%);
+      background-image: linear-gradient(
+        90deg,
+        var(--kicl-body-background-color) 0%,
+        var(--kicl--views--experiments__home--scrim) 45%,
+        var(--kicl--views--experiments__home--scrim-end) 100%
+      );
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
+
+    @supports (animation-timeline: view()) {
+      animation: kicl--views--experiments__home--parallax linear both;
+      animation-timeline: view();
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__item--tree-of-life &__plate {
+    background-image: url('/assets/static/banner.light.webp');
+
+    @at-root .kicl--theme--dark & {
+      background-image: url('/assets/static/banner.dark.webp');
+    }
+  }
+
+  /* The visualiser has no photograph; its plate is its own pools, in CSS. */
+  &__item--music-visualiser &__plate {
+    background-image:
+      radial-gradient(
+        ellipse 40% 55% at 70% 30%,
+        color-mix(in oklab, var(--kicl-color-info) 55%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 45% 60% at 30% 70%,
+        color-mix(in oklab, var(--kicl-color-warning) 45%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 35% 50% at 85% 80%,
+        color-mix(in oklab, var(--kicl-color-green) 50%, transparent),
+        transparent 70%
+      );
+  }
+
+  /* The band's words, back in line with the header. */
   &__link {
+    box-sizing: border-box;
     color: inherit;
     display: block;
-    padding-block: var(--kicl-gutter-wide);
+    min-block-size: var(--kicl--views--experiments__home--band);
+    padding-block: var(--kicl-gutter-extreme);
+    padding-inline: var(--kicl--views--experiments__home--margin);
     text-decoration: none;
   }
 
@@ -64,5 +187,15 @@
   &__link:hover &__arrow,
   &__link:focus-visible &__arrow {
     translate: var(--kicl-size) calc(var(--kicl-size) * -1);
+  }
+}
+
+@keyframes kicl--views--experiments__home--parallax {
+  from {
+    translate: 0 calc(var(--kicl--views--experiments__home--overscan) * -1);
+  }
+
+  to {
+    translate: 0 var(--kicl--views--experiments__home--overscan);
   }
 }
