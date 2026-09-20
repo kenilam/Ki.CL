@@ -48,8 +48,29 @@ only, terms).
   (Express) fold them in. That takes CORS off the table.
 - Put the provider behind an adapter so Jamendo can be added after Audius.
 - First step in the next session: live-check CORS headers on
-  `api.audius.co` and `*.storage.jamendo.com` streams. The cloud egress
-  allowlist now includes them; the policy is read at container start.
+  `api.audius.co` and `*.storage.jamendo.com` streams. See the blocked
+  attempt below before trying again.
+
+## Blocked: egress to Audius and Jamendo
+
+Attempted in a cloud session, 20 September 2026. No headers were read.
+
+- Every request to `api.audius.co`, `discoveryprovider.audius.co`,
+  `api.jamendo.com` and `prod-1.storage.jamendo.com` failed at the egress
+  proxy with a 403 on the CONNECT tunnel. The providers never answered.
+- The proxy itself was healthy: `registry.npmjs.org` returned 200 through
+  it, and WebFetch reported `EGRESS_BLOCKED` for `api.audius.co`.
+- The previous session believed the allowlist already included these hosts.
+  This container did not see that. Either the change did not save, it was
+  made to a different environment, or the container predates it.
+
+Before retrying: add the hosts to the environment's network policy and
+start a fresh session, since the policy is read at container start. Audius
+discovery nodes have many hostnames, so allow `*.audius.co` rather than
+naming nodes. Jamendo streams come from `*.storage.jamendo.com`. Then the
+check is a few curls, sending an `Origin` header and reading
+`Access-Control-Allow-Origin` from the response, one on the API and one on
+a stream URL after following its redirect.
 
 ## Running the app in a cloud session
 
