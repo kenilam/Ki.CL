@@ -1,0 +1,42 @@
+/*
+ * The renderer reads every one of these off the canvas, so the theme decides
+ * the colours and this file never needs a script change to try another set.
+ *
+ * `paper` has to be the body background: the canvas covers the section edge
+ * to edge, and any difference would show as a hairline at its border. It is
+ * restated per theme rather than aliased to `--kicl-body-background-color`,
+ * because a custom property substitutes its `var()` references where it is
+ * declared - here, on `:root` - not where it is read, and the dark value only
+ * exists further down, on `body`.
+ *
+ * The inks are the brand palette, three at a time - a dither gradient is
+ * solid colours side by side, and more than three side by side stops reading
+ * as light and starts reading as confetti.
+ *
+ * `cell` is the size of one dither block in CSS pixels. It is deliberately
+ * not scaled by device pixel ratio: the blocks are the texture, and they
+ * should be the same size to the eye on every screen. It is a raster
+ * parameter rather than a spacing, so it is not drawn from the size scale -
+ * and it has to be a literal length, because a script reading a custom
+ * property gets `calc()` back unevaluated.
+ */
+:root {
+  --kicl--views--home--background--cell: 4px;
+  --kicl--views--home--background--paper: var(--kicl-color-white);
+  --kicl--views--home--background--ink-1: var(--kicl-color-yellow);
+  --kicl--views--home--background--ink-2: var(--kicl-color-orange);
+  --kicl--views--home--background--ink-3: var(--kicl-color-blue);
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--home--background--paper: var(--kicl-color-black);
+    --kicl--views--home--background--ink-1: var(--kicl-color-blue);
+    --kicl--views--home--background--ink-2: var(--kicl-color-red);
+    --kicl--views--home--background--ink-3: var(--kicl-color-yellow);
+  }
+}
+
+.kicl--views--home--background {
+  block-size: 100%;
+  image-rendering: pixelated;
+  inline-size: 100%;
+}
