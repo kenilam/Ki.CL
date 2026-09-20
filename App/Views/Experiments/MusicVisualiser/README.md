@@ -139,10 +139,15 @@ MusicVisualiser/
   (six mirrored wedges of warped noise), `stars` (three drifting layers of
   points, each listening to one band), `terrain` (ridges one behind another,
   raised by the spectrum), `hive` (a hexagonal tiling of nested hexagons,
-  the inks spiralling out in arms) and `orb` (a crumpled wireframe sphere
-  that breathes with the bass and glows with the energy). The spectrum
-  reaches them as a 128-band texture, each band eased and shown against its
-  own recent peak. Colour is inks over paper in Oklab with a light ordered
+  the inks spiralling out in arms) and `orb` (a sphere in three
+  dimensions, ray-marched, its surface crumpled by 3D noise and drawn as a
+  mesh that rides the bumps, the camera orbiting it in perspective with
+  the far side showing through; it breathes with the bass and glows with
+  the energy). Every scene but pools and rings sits under a slow camera - a
+  spin, a sway, a breathing zoom and a drift, each scene taking as much of
+  each as it can bear - phased by a seed from the track, so no two tracks
+  move alike. The spectrum reaches them as a 128-band texture, each band
+  eased and shown against its own recent peak. Colour is inks over paper in Oklab with a light ordered
   dither, matching the home background. The palette comes from custom
   properties in `Styles.scss`, per theme.
 - **Gates and controls.** The gates are the one gesture the browser needs

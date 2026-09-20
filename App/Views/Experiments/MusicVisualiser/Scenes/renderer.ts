@@ -29,6 +29,8 @@ export type Frame = {
   sceneA: SceneName;
   sceneB: SceneName;
   seconds: number;
+  /** In `[0, 1]`, per track: phases the camera so no two tracks move alike. */
+  seed: number;
   slowEnergy: number;
   /** `SPECTRUM_BANDS` bytes, low to high, or `null` before anything plays. */
   spectrum: Uint8Array | null;
@@ -151,6 +153,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
     ringTime: uniform('u_ring_time[0]'),
     sceneA: uniform('u_scene_a'),
     sceneB: uniform('u_scene_b'),
+    seed: uniform('u_seed'),
     slowEnergy: uniform('u_slow_energy'),
     time: uniform('u_time'),
     warmth: uniform('u_warmth'),
@@ -205,6 +208,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
       gl.uniform1f(uniforms.mid, features.mid);
       gl.uniform1f(uniforms.high, features.high);
       gl.uniform1f(uniforms.centroid, features.centroid);
+      gl.uniform1f(uniforms.seed, frame.seed);
       gl.uniform1f(uniforms.slowEnergy, frame.slowEnergy);
       gl.uniform1f(uniforms.warmth, frame.warmth);
       gl.uniform1fv(uniforms.ringTime, frame.ringTimes.subarray(0, MAX_RINGS));

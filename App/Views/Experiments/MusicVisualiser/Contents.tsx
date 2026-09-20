@@ -28,7 +28,7 @@ import useRadio from './useRadio';
 import './Styles.scss';
 
 // Constants
-import { CLASS_NAME } from './constants';
+import { CLASS_NAME, trackKey } from './constants';
 
 const STAGE_CLASS_NAME = `${CLASS_NAME}__stage`;
 
@@ -92,6 +92,17 @@ function readPalette(canvas: HTMLCanvasElement): Palette {
   return { inks, paper };
 }
 
+/** A track's key folded to a number in `[0, 1]`, for the camera's phases. */
+function seedOf(key: string): number {
+  let hash = 2166136261;
+
+  for (let index = 0; index < key.length; index++) {
+    hash = Math.imul(hash ^ key.charCodeAt(index), 16777619);
+  }
+
+  return ((hash >>> 0) % 10007) / 10007;
+}
+
 function readNumber(
   canvas: HTMLCanvasElement,
   name: string,
@@ -120,6 +131,7 @@ const MusicVisualiser: React.FunctionComponent = () => {
   const [generation, setGeneration] = useState(0);
   const director = useRef(createDirector());
   const playingRef = useRef(playing);
+  const seedRef = useRef(0);
 
   const width = rect?.width ?? 0;
   const height = rect?.height ?? 0;
@@ -129,6 +141,7 @@ const MusicVisualiser: React.FunctionComponent = () => {
   useEffect(() => {
     if (track) {
       director.current.setVibe(track.vibe);
+      seedRef.current = seedOf(trackKey(track));
     }
   }, [track]);
 
@@ -210,6 +223,7 @@ const MusicVisualiser: React.FunctionComponent = () => {
         sceneA: scenes.sceneA,
         sceneB: scenes.sceneB,
         seconds,
+        seed: seedRef.current,
         slowEnergy: features?.slow.energy ?? 0,
         spectrum: engine?.spectrum ?? null,
         warmth: track?.vibe.warmth ?? 0.5,

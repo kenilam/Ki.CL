@@ -78,6 +78,9 @@ uniform float u_warmth;
 /* The spectrum, low to high, one texel a band, each against its recent peak. */
 uniform sampler2D u_audio;
 
+/* A number in [0, 1] per track, so the camera never moves the same way twice. */
+uniform float u_seed;
+
 /* Onsets the rings scene draws from: when each began, and how hard. */
 uniform float u_ring_time[MAX_RINGS];
 uniform float u_ring_strength[MAX_RINGS];
@@ -109,6 +112,25 @@ float bell(float x, float c, float width) {
 /* A thin line wherever \`v\` passes a whole number. */
 float thread(float v) {
   return smoothstep(0.86, 1.0, abs(fract(v) - 0.5) * 2.0);
+}
+
+/*
+ * A slow camera over a scene: a steady spin (its direction from the seed),
+ * a sway back and forth, a breathing zoom and a drift, all on their own
+ * clocks with phases from the seed. Each scene passes how much of each it
+ * can take; the picture never sits still, and never lurches.
+ */
+vec2 camera(vec2 uv, float aspect, float spin, float sway, float zoom, float drift) {
+  float t = u_time;
+  float s = u_seed * TAU;
+  vec2 d = (uv - 0.5) * vec2(aspect, 1.0);
+  float angle = t * spin * sign(sin(s + 0.5)) + sin(t * 0.021 + s) * sway;
+  float scale = 1.0 + sin(t * 0.017 + s * 1.7) * zoom;
+  vec2 pan = vec2(sin(t * 0.013 + s * 2.3), cos(t * 0.011 + s * 3.1)) * drift;
+  float c = cos(angle);
+  float n = sin(angle);
+  d = vec2(c * d.x - n * d.y, n * d.x + c * d.y) / scale + pan;
+  return d / vec2(aspect, 1.0) + 0.5;
 }
 
 vec3 toLinear(vec3 c) { return pow(c, vec3(2.2)); }
@@ -509,61 +531,149 @@ void hive(vec2 uv, float aspect, inout float w[MAX_INKS]) {
   }
 }
 
+float hash3(vec3 p) {
+  return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453123);
+}
+
+float noise3(vec3 p) {
+  vec3 i = floor(p);
+  vec3 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(
+      mix(hash3(i), hash3(i + vec3(1.0, 0.0, 0.0)), f.x),
+      mix(hash3(i + vec3(0.0, 1.0, 0.0)), hash3(i + vec3(1.0, 1.0, 0.0)), f.x),
+      f.y
+    ),
+    mix(
+      mix(hash3(i + vec3(0.0, 0.0, 1.0)), hash3(i + vec3(1.0, 0.0, 1.0)), f.x),
+      mix(hash3(i + vec3(0.0, 1.0, 1.0)), hash3(i + vec3(1.0, 1.0, 1.0)), f.x),
+      f.y
+    ),
+    f.z
+  );
+}
+
+float fbm3(vec3 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 3; i++) {
+    v += a * noise3(p);
+    p = p * 2.03 + vec3(1.7, 9.2, 3.1);
+    a *= 0.5;
+  }
+  return v;
+}
+
+/* Signed distance to the orb: a sphere pushed in and out by slow 3D noise. */
+float orbSurface(vec3 p, float radius, float amp) {
+  return length(p) - radius - (fbm3(p * 2.6 + u_time * 0.04) - 0.5) * amp;
+}
+
+/* How many steps each ray may take toward the surface, front and back. */
+const int ORB_STEPS = 28;
+
 /*
- * Orb: a sphere drawn as a mesh of latitude and longitude, its surface
- * crumpled by noise and its silhouette wobbling, turning slowly, with the
- * far side showing faintly through. It breathes with the bass and glows
- * with the energy; the lines brighten where their band sounds.
+ * Orb: a sphere in three dimensions, its surface crumpled by noise, drawn
+ * as a mesh of latitude and longitude that rides the bumps. The camera
+ * orbits it in perspective, tilting as it goes, so the crumple turns and
+ * the silhouette is the surface's own. The far side shows faintly through
+ * the near one. It breathes with the bass; the crumple deepens with the
+ * energy; the lines brighten where their latitude's band sounds.
  */
 void orb(vec2 uv, float aspect, inout float w[MAX_INKS]) {
   vec2 d = (uv - 0.5) * vec2(aspect, 1.0);
-  float r = length(d);
-  float angle = atan(d.y, d.x);
   float t = u_time;
-  float radius = 0.3 + ease(u_low) * 0.03 + u_slow_energy * 0.03;
-  float wobble = (fbm(vec2(cos(angle), sin(angle)) * 3.5 + t * 0.12) - 0.5) * 0.2;
-  float edge = radius * (1.0 + wobble);
-  float inside = 1.0 - smoothstep(edge - 0.004, edge + 0.004, r);
+  float s = u_seed * TAU;
+  float radius = 1.0 + ease(u_low) * 0.06 + u_slow_energy * 0.06;
+  float amp = 0.22 + ease(u_energy) * 0.12;
 
-  float nr = min(r / edge, 1.0);
-  float z = sqrt(max(0.0, 1.0 - nr * nr));
-  vec3 n = vec3(d / edge, z);
-  n.xy += (vec2(fbm(n.xy * 3.5 + t * 0.1), fbm(n.yx * 3.5 - t * 0.08)) - 0.5) * 0.16;
+  /* The camera, turned about the orb rather than the orb about the camera. */
+  float yaw = t * 0.08 * sign(sin(s + 1.0)) + s;
+  float pitch = sin(t * 0.04 + s) * 0.5;
+  float cy = cos(yaw); float sy = sin(yaw);
+  float cp = cos(pitch); float sp = sin(pitch);
+  mat3 turn = mat3(cy, 0.0, -sy, 0.0, 1.0, 0.0, sy, 0.0, cy)
+    * mat3(1.0, 0.0, 0.0, 0.0, cp, sp, 0.0, -sp, cp);
+  vec3 ro = turn * vec3(0.0, 0.0, 3.4);
+  vec3 rd = turn * normalize(vec3(d * 0.95, -1.0));
 
-  /* Latitude, longitude and a diagonal between them: a mesh of triangles, not a globe. */
-  const float LINES = 18.0;
-  float lat = asin(clamp(n.y, -1.0, 1.0));
-  float lon = atan(n.x, n.z) + t * 0.12;
-  float backLon = atan(n.x, -n.z) - t * 0.12;
-  float front = max(
-    max(thread(lat / PI * LINES), thread(lon / PI * LINES)),
-    thread((lat + lon * 0.5) / PI * LINES)
-  );
-  float back = max(thread(lat / PI * LINES + 0.5), thread(backLon / PI * LINES));
-  float level = band(nr);
-  float mesh = (front * 0.9 + back * 0.45 * (1.0 - z * 0.6)) * inside;
-  float glow = exp(-max(r - edge, 0.0) * 6.0) * (0.5 + ease(u_energy) * 0.3);
-  float body = inside * (0.2 + z * 0.15);
+  /* A soft glow around where the orb sits on screen. */
+  float edge = 0.323 * radius;
+  float glow = exp(-max(length(d) - edge, 0.0) * 6.0) * (0.45 + ease(u_energy) * 0.3);
+  w[3] += glow * smoothstep(edge * 0.9, edge * 1.1, length(d));
 
-  w[1] += inside * (1.0 - z) * 0.2;
-  w[3] += glow * (1.0 - inside) + body;
-  w[4] += mesh * (0.8 + level * 0.3) + inside * (1.0 - nr) * 0.15;
-  w[5] += mesh * level * 0.4;
+  /* Only rays through the orb's bounding sphere are marched. */
+  float bound = radius + amp * 0.6;
+  float b = dot(ro, rd);
+  float h = b * b - (dot(ro, ro) - bound * bound);
+  if (h < 0.0) return;
+  float near = -b - sqrt(h);
+  float far = -b + sqrt(h);
+
+  float front = -1.0;
+  float march = near;
+  for (int i = 0; i < ORB_STEPS; i++) {
+    float dist = orbSurface(ro + rd * march, radius, amp);
+    if (dist < 0.004) { front = march; break; }
+    march += dist * 0.8;
+    if (march > far) break;
+  }
+
+  float back = -1.0;
+  march = far;
+  for (int i = 0; i < ORB_STEPS; i++) {
+    float dist = orbSurface(ro + rd * march, radius, amp);
+    if (dist < 0.004) { back = march; break; }
+    march -= dist * 0.8;
+    if (march < near) break;
+  }
+
+  const float LINES = 20.0;
+
+  if (back > 0.0) {
+    vec3 q = normalize(ro + rd * back);
+    float lat = asin(clamp(q.y, -1.0, 1.0));
+    float lon = atan(q.x, q.z);
+    float mesh = max(thread(lat / PI * LINES + 0.5), thread(lon / PI * LINES));
+    w[4] += mesh * 0.3;
+    w[3] += 0.12;
+  }
+
+  if (front > 0.0) {
+    vec3 p = ro + rd * front;
+    vec3 q = normalize(p);
+    float facing = max(0.0, dot(-rd, q));
+    float lat = asin(clamp(q.y, -1.0, 1.0));
+    float lon = atan(q.x, q.z);
+    float mesh = max(
+      max(thread(lat / PI * LINES), thread(lon / PI * LINES)),
+      thread((lat + lon * 0.5) / PI * LINES)
+    );
+    float level = band(0.5 + q.y * 0.5);
+    /* The near surface hides the far one; the body is dim and darkest at the rim. */
+    w[4] *= 0.4;
+    w[3] += 0.12 + facing * 0.12;
+    w[1] += (1.0 - facing) * 0.25;
+    w[4] += mesh * (0.75 + level * 0.35) * (0.5 + facing * 0.5);
+    w[5] += mesh * level * 0.4;
+  }
 }
 
+/* Each scene under its own camera: spin in radians a second, sway in radians, zoom and drift as fractions. */
 void scene(int index, vec2 uv, float aspect, inout float w[MAX_INKS]) {
   for (int i = 0; i < MAX_INKS; i++) w[i] = 0.0;
-  if (index == 1) { clouds(uv, aspect, w); return; }
+  if (index == 1) { clouds(camera(uv, aspect, 0.0, 0.05, 0.12, 0.04), aspect, w); return; }
   if (index == 2) { rings(uv, aspect, w); return; }
-  if (index == 3) { bars(uv, aspect, w); return; }
-  if (index == 4) { halo(uv, aspect, w); return; }
-  if (index == 5) { wave(uv, aspect, w); return; }
-  if (index == 6) { tunnel(uv, aspect, w); return; }
-  if (index == 7) { kaleidoscope(uv, aspect, w); return; }
-  if (index == 8) { stars(uv, aspect, w); return; }
-  if (index == 9) { terrain(uv, aspect, w); return; }
-  if (index == 10) { hive(uv, aspect, w); return; }
-  if (index == 11) { orb(uv, aspect, w); return; }
+  if (index == 3) { bars(camera(uv, aspect, 0.0, 0.05, 0.08, 0.03), aspect, w); return; }
+  if (index == 4) { halo(camera(uv, aspect, 0.01, 0.15, 0.1, 0.04), aspect, w); return; }
+  if (index == 5) { wave(camera(uv, aspect, 0.0, 0.06, 0.1, 0.03), aspect, w); return; }
+  if (index == 6) { tunnel(camera(uv, aspect, 0.02, 0.2, 0.15, 0.03), aspect, w); return; }
+  if (index == 7) { kaleidoscope(camera(uv, aspect, 0.012, 0.25, 0.15, 0.05), aspect, w); return; }
+  if (index == 8) { stars(camera(uv, aspect, 0.004, 0.1, 0.12, 0.06), aspect, w); return; }
+  if (index == 9) { terrain(camera(uv, aspect, 0.0, 0.04, 0.1, 0.03), aspect, w); return; }
+  if (index == 10) { hive(camera(uv, aspect, 0.008, 0.2, 0.18, 0.08), aspect, w); return; }
+  if (index == 11) { orb(camera(uv, aspect, 0.0, 0.0, 0.1, 0.05), aspect, w); return; }
   pools(uv, aspect, w);
 }
 
