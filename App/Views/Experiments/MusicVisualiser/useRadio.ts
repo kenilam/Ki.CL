@@ -37,7 +37,7 @@ import { VOLUME_STORAGE_KEY, toPlayPath, trackKey } from './constants';
  * through the history move between tracks like any other navigation.
  */
 
-const DEFAULT_VOLUME = 0.8;
+const DEFAULT_VOLUME = 0.5;
 
 /** Tracks remembered for the provider's no-repeat list. */
 const HISTORY_LENGTH = 24;

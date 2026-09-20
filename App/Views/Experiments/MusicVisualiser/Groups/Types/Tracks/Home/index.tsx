@@ -28,9 +28,10 @@ const COPY = {
 };
 
 /**
- * A track's index: its title, its station and type, and a play control
- * that links to its play route. The press on that link is the gesture the
- * browser needs before the play route may sound.
+ * A track's index: its title, its station and type, and the play control,
+ * a link to the play route. The press on it is the gesture the browser
+ * needs before that route may sound. On the play route the same control
+ * shows pause and links back here.
  */
 const Home: React.FunctionComponent = () => {
   const track = useTrackContext();

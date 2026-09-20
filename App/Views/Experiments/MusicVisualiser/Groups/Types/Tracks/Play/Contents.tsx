@@ -219,18 +219,20 @@ const Play: React.FunctionComponent = () => {
           justifyContent='end'
         >
           <div className={`${CLASS_NAME}__controls`}>
-            <Button
+            {/* The same control as the track's play: here it shows pause and links back. */}
+            <HyperLink
               aria-label={COPY.pause}
-              onClick={pause}
-              variant='secondary'
+              lookLikeButton
               size='small'
+              to={toTrackPath(track)}
+              variant='secondary'
             >
               {state === 'loading' ? (
                 <Spinner position='inline' size='smaller' />
               ) : (
                 <Fa.FaPause aria-hidden />
               )}
-            </Button>
+            </HyperLink>
             <Button
               aria-label={COPY.next}
               onClick={next}
