@@ -65,6 +65,8 @@ export type Track = {
  * it may still repeat once the pool is exhausted.
  */
 export type Provider = {
+  /** The track with this id, for a deep link; `null` if it is not this provider's. */
+  get(id: string): Promise<Track | null>;
   name: string;
   next(played: string[]): Promise<Track>;
 };

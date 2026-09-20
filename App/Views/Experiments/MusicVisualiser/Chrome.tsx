@@ -30,6 +30,8 @@ const CLASS_NAME = `${VIEW}__chrome`;
 const IDLE_SECONDS = 4;
 
 const COPY = {
+  copied: 'Link copied',
+  copy: 'Copy link to this track',
   lede: 'A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at random, one after another. Press play once and it keeps going.',
   next: 'Next track',
   pause: 'Pause',
@@ -37,6 +39,9 @@ const COPY = {
   title: 'Music Visualiser',
   volume: 'Volume',
 };
+
+/** How long "copied" stays on the button. */
+const COPIED_MS = 1800;
 
 type Props = Radio;
 
@@ -48,6 +53,7 @@ type Props = Radio;
 const Chrome: React.FunctionComponent<Props> = ({
   error,
   next,
+  requested,
   setVolume,
   state,
   toggle,
@@ -55,7 +61,15 @@ const Chrome: React.FunctionComponent<Props> = ({
   volume,
 }) => {
   const [idle, setIdle] = useState(false);
+  const [copied, setCopied] = useState(false);
   const playing = state === 'playing';
+
+  const copyLink = () => {
+    void navigator.clipboard?.writeText(window.location.href).then(() => {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), COPIED_MS);
+    });
+  };
 
   useEffect(() => {
     if (!playing) {
@@ -133,6 +147,16 @@ const Chrome: React.FunctionComponent<Props> = ({
             <Ri.RiPlayFill aria-hidden />
             <span>{COPY.play}</span>
           </Button>
+          {requested ? (
+            <Text
+              is='p'
+              dense
+              variant='secondary'
+              className='kicl-font-size-small'
+            >
+              {requested.title} · {requested.artist}
+            </Text>
+          ) : null}
         </section>
       </Layout>
     );
@@ -217,6 +241,18 @@ const Chrome: React.FunctionComponent<Props> = ({
             </Button>
             <Button aria-label={COPY.next} onClick={next} variant='ghost'>
               <Ri.RiSkipForwardFill aria-hidden />
+            </Button>
+            <Button
+              aria-label={copied ? COPY.copied : COPY.copy}
+              onClick={copyLink}
+              title={copied ? COPY.copied : COPY.copy}
+              variant='ghost'
+            >
+              {copied ? (
+                <Ri.RiCheckLine aria-hidden />
+              ) : (
+                <Ri.RiLinkM aria-hidden />
+              )}
             </Button>
             <Input
               aria-label={COPY.volume}

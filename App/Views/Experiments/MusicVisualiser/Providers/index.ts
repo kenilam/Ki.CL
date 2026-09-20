@@ -18,6 +18,24 @@ const PROVIDERS: Provider[] = [builtIn];
  * end cannot fail, so there is always something to play.
  */
 const radio: Provider = {
+  async get(id) {
+    for (const provider of PROVIDERS) {
+      try {
+        const track = await provider.get(id);
+
+        if (track) {
+          return track;
+        }
+      } catch (error) {
+        console.warn(
+          `Music Visualiser: ${provider.name} could not resolve ${id}`,
+          error
+        );
+      }
+    }
+
+    return null;
+  },
   name: 'radio',
   async next(played) {
     let lastError: unknown = null;

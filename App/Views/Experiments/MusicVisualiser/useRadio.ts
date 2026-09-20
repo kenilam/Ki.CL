@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+// Routes
+import { useNavigate, useParams } from '@/Router';
+
 // Context
 import { useLocalStorageContext } from '@/LocalStorage';
 
@@ -13,13 +16,18 @@ import { createEngine, type Engine } from './Audio/engine';
 import radio from './Providers';
 
 // Constants
-import { VOLUME_STORAGE_KEY } from './constants';
+import { PARAM, VOLUME_STORAGE_KEY, toPath } from './constants';
 
 /*
  * Playback state for the whole view: what is playing, whether it is, how
  * loud, and the engine behind it. The engine is made on the first press of
  * play - never on mount - because that press is the gesture the browser
  * needs before it will make a sound.
+ *
+ * The URL carries the track. Every track that starts is written to it, so
+ * the address bar is always a link to what is playing; and a track named in
+ * the URL on arrival is the one the gate offers to play. Back and forward
+ * through the history move between tracks like any other navigation.
  */
 
 const DEFAULT_VOLUME = 0.8;
@@ -29,15 +37,21 @@ const HISTORY_LENGTH = 24;
 
 const ERROR_MESSAGES = {
   next: 'Could not find the next track. Try again.',
+  missing: 'That track could not be found. Playing something else.',
 };
+
+type Params = { [PARAM]?: string };
 
 export type Radio = {
   engine: Engine | null;
   error: string | null;
-  /** Play if paused or idle; pause if playing. */
+  /** Skip to another track. */
   next(): void;
+  /** The track the URL asks for, resolved, before anything has played. */
+  requested: Track | null;
   setVolume(volume: number): void;
   state: PlaybackState;
+  /** Play if paused or idle; pause if playing. */
   toggle(): void;
   track: Track | null;
   volume: number;
@@ -53,60 +67,86 @@ function clampVolume(value: unknown): number {
 
 export default function useRadio(): Radio {
   const storage = useLocalStorageContext();
+  const navigate = useNavigate();
+  const params = useParams<Params>();
+  const requestedId = params[PARAM] ?? null;
+
   const engine = useRef<Engine | null>(null);
   const history = useRef<string[]>([]);
   const generation = useRef(0);
+  const trackRef = useRef<Track | null>(null);
+  const stateRef = useRef<PlaybackState>('idle');
 
   const [state, setState] = useState<PlaybackState>('idle');
   const [track, setTrack] = useState<Track | null>(null);
+  const [requested, setRequested] = useState<Track | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [volume, setVolumeState] = useState(() =>
     clampVolume(storage.getItem(VOLUME_STORAGE_KEY) ?? DEFAULT_VOLUME)
   );
 
-  const next = useCallback(async () => {
-    const current = (engine.current ??= createEngine(volume));
-    const mine = ++generation.current;
+  trackRef.current = track;
+  stateRef.current = state;
 
-    setState('loading');
-    setError(null);
+  /**
+   * Start a track: the one with `id`, or the provider's next choice. Falls
+   * back to the next choice when an id cannot be resolved, and says so.
+   */
+  const start = useCallback(
+    async (id: string | null) => {
+      const current = (engine.current ??= createEngine(volume));
+      const mine = ++generation.current;
 
-    try {
-      const upcoming = await radio.next(history.current);
+      setState('loading');
+      setError(null);
 
-      if (mine !== generation.current) {
-        return;
-      }
+      try {
+        let upcoming = id ? await radio.get(id) : null;
 
-      history.current = [...history.current, upcoming.id].slice(
-        -HISTORY_LENGTH
-      );
-      setTrack(upcoming);
-
-      await current.play(upcoming.source, () => {
-        if (mine === generation.current) {
-          void next();
+        if (id && !upcoming) {
+          setError(ERROR_MESSAGES.missing);
         }
-      });
 
-      if (mine === generation.current) {
-        setState('playing');
-      }
-    } catch (caught) {
-      console.error('Music Visualiser: next track failed', caught);
+        upcoming ??= await radio.next(history.current);
 
-      if (mine === generation.current) {
-        setError(ERROR_MESSAGES.next);
-        setState('paused');
+        if (mine !== generation.current) {
+          return;
+        }
+
+        history.current = [...history.current, upcoming.id].slice(
+          -HISTORY_LENGTH
+        );
+        setTrack(upcoming);
+        navigate(toPath(upcoming.id), { replace: true });
+
+        await current.play(upcoming.source, () => {
+          if (mine === generation.current) {
+            void start(null);
+          }
+        });
+
+        if (mine === generation.current) {
+          setState('playing');
+        }
+      } catch (caught) {
+        console.error('Music Visualiser: could not start a track', caught);
+
+        if (mine === generation.current) {
+          setError(ERROR_MESSAGES.next);
+          setState('paused');
+        }
       }
-    }
-  }, [volume]);
+    },
+    [navigate, volume]
+  );
+
+  const next = useCallback(() => void start(null), [start]);
 
   const toggle = useCallback(() => {
     const current = engine.current;
 
     if (!current || state === 'idle') {
-      void next();
+      void start(requestedId);
 
       return;
     }
@@ -122,10 +162,10 @@ export default function useRadio(): Radio {
       if (track) {
         void current.resume().then(() => setState('playing'));
       } else {
-        void next();
+        void start(null);
       }
     }
-  }, [next, state, track]);
+  }, [requestedId, start, state, track]);
 
   const setVolume = useCallback(
     (value: number) => {
@@ -137,6 +177,39 @@ export default function useRadio(): Radio {
     },
     [storage]
   );
+
+  /*
+   * The URL changed under us. Before anything plays, resolve the track it
+   * names so the gate can say what it will play. Once playing, a different
+   * id means the listener went back or forward, or followed a link: play it.
+   * Our own `replace` after a track starts arrives here too, with the id of
+   * the track already playing, and is ignored.
+   */
+  useEffect(() => {
+    if (stateRef.current === 'idle') {
+      if (!requestedId) {
+        setRequested(null);
+
+        return;
+      }
+
+      let cancelled = false;
+
+      void radio.get(requestedId).then((found) => {
+        if (!cancelled) {
+          setRequested(found);
+        }
+      });
+
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    if (requestedId && requestedId !== trackRef.current?.id) {
+      void start(requestedId);
+    }
+  }, [requestedId, start]);
 
   // Silence the graph when the view unmounts; the context is not reusable.
   useEffect(() => {
@@ -151,7 +224,8 @@ export default function useRadio(): Radio {
   return {
     engine: engine.current,
     error,
-    next: () => void next(),
+    next,
+    requested,
     setVolume,
     state,
     toggle,

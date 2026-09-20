@@ -105,7 +105,18 @@ function trackFor(seed: number, family: VibeFamily): Track {
  * Random, but not too random: the family rotates so three piano pieces do
  * not land in a row, and the seed avoids anything already played.
  */
+const ID = /^built-in:(ambient|lofi|piano):(\d{1,5})$/;
+
 const builtIn: Provider = {
+  async get(id) {
+    const match = ID.exec(id);
+
+    if (!match) {
+      return null;
+    }
+
+    return trackFor(Number(match[2]), match[1] as VibeFamily);
+  },
   name: NAME,
   async next(played) {
     const families = FAMILIES.filter(

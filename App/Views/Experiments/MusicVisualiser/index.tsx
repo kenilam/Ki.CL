@@ -7,7 +7,7 @@ import { Route } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Constants
-import { PATH } from './constants';
+import { PATH, TRACK_PATTERN } from './constants';
 
 const Contents = React.lazy(() => import('./Contents'));
 
@@ -20,4 +20,4 @@ const Lazy: React.FunctionComponent = () => {
 };
 
 export { PATH };
-export default <Route path={PATH} element={<Lazy />} />;
+export default <Route path={`${PATH}/${TRACK_PATTERN}`} element={<Lazy />} />;
