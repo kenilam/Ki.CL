@@ -121,16 +121,25 @@ $dark-cool-3: color.mix(
       var(--kicl--views--experiments--music-visualiser--inset),
       env(safe-area-inset-bottom)
     );
-    transition: opacity var(--kicl-transition-duration-slow)
-      var(--kicl-ease-sine-out);
 
-    &--idle {
-      opacity: 0;
-      pointer-events: none;
+    &__now-playing,
+    &__controls {
+      transition: opacity var(--kicl-transition-duration-slow)
+        var(--kicl-ease-sine-out);
     }
 
     &__now-playing {
       max-inline-size: 28rem;
+    }
+
+    // Idle: the controls go, the title and subtitle only step back.
+    &--idle &__now-playing {
+      opacity: 0.5;
+    }
+
+    &--idle &__controls {
+      opacity: 0;
+      pointer-events: none;
     }
 
     // A slider, not a text field: the component's box is for typed input.
