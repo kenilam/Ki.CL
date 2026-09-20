@@ -23,23 +23,44 @@
  * the same reason as the inks.
  */
 
-// Light: a print on cream - sky, peach, coral and the brand yellow.
-$light-field: color.mix($blue, $white, 62%, $method: oklab);
-$light-glow: color.mix($orange, $white, 48%, $method: oklab);
-$light-rim: $red;
-$light-band: $yellow;
+// Every ink is mixed most of the way into its theme's paper. The light is
+// meant to sit inside the page, not on top of it: a tint the eye registers
+// as atmosphere rather than as colour.
+$muted: 58%;
 
-// Dark: after the reference - a deep field, an electric glow, a warm rim and
-// a cream band, each pulled from the brand blue, orange and white.
-$dark-field: color.adjust(
-  $blue,
-  $hue: 12deg,
-  $saturation: 26%,
-  $lightness: -18%
+// Light: a print on cream - sky, peach, coral and the brand yellow, faded.
+$light-field: color.mix($white, $blue, $muted, $method: oklab);
+$light-glow: color.mix($white, $orange, $muted + 12%, $method: oklab);
+$light-rim: color.mix($white, $red, $muted, $method: oklab);
+$light-band: color.mix($white, $yellow, $muted, $method: oklab);
+
+// Dark: after the reference - a deep field, a glow, a warm rim and a cream
+// band, each pulled from the brand blue, orange and white, then sunk into
+// the black.
+$dark-field: color.mix(
+  $black,
+  color.adjust($blue, $hue: 12deg, $saturation: 26%, $lightness: -18%),
+  $muted - 10%,
+  $method: oklab
 );
-$dark-glow: color.adjust($blue, $saturation: 20%, $lightness: 18%);
-$dark-rim: color.adjust($orange, $hue: -8deg);
-$dark-band: color.mix($white, $orange, 86%, $method: oklab);
+$dark-glow: color.mix(
+  $black,
+  color.adjust($blue, $saturation: 20%, $lightness: 18%),
+  $muted,
+  $method: oklab
+);
+$dark-rim: color.mix(
+  $black,
+  color.adjust($orange, $hue: -8deg),
+  $muted,
+  $method: oklab
+);
+$dark-band: color.mix(
+  $black,
+  color.mix($white, $orange, 86%, $method: oklab),
+  $muted,
+  $method: oklab
+);
 
 :root {
   --kicl--views--home--background--cell: 2px;

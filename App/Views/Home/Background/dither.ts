@@ -66,11 +66,11 @@ const float WARP_SMALL = 0.03;
 const float GRAIN = 0.03;
 
 /**
- * Mixing in Oklab keeps transitions clean but pulls the meeting points toward
- * neutral. A small push on chroma after the mix gives the inks back the
- * saturation the reference has where they meet.
+ * Chroma after the mix. Below one it settles the light further into the
+ * page; the inks are already muted in the stylesheet, so this only trims
+ * what the overlaps add.
  */
-const float CHROMA = 1.18;
+const float CHROMA = 0.92;
 
 const float SPEED = 0.1;
 
