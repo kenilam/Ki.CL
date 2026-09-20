@@ -5,12 +5,12 @@ import type {
 
 import { createExtractor, type Extractor } from './features';
 import { loadInstruments, type Instruments } from './instruments';
-import { playSynth, type Synth } from './synth';
+import { playSynth } from './synth';
 
 /*
  * One audio graph for the whole view.
  *
- *   source ─▶ input ─▶ analyser ─▶ master ─▶ speakers
+ *   source ─▶ slot ─▶ input ─▶ analyser ─▶ master ─▶ speakers
  *
  * A source is either a media element, for a track streamed from a provider,
  * or the built-in synth. Both connect to `input`, so the analyser hears them
@@ -30,6 +30,12 @@ const ANALYSER_SMOOTHING = 0.5;
 
 /** Seconds a volume change takes, so a slider drag does not click. */
 const VOLUME_RAMP_SECONDS = 0.05;
+
+/**
+ * Seconds one track takes to give way to the next: the old one fades out
+ * as the new one fades in, and only then is the old one stopped.
+ */
+const CROSSFADE_SECONDS = 3;
 
 /**
  * How long to wait for the context to run before deciding the browser is
@@ -106,34 +112,82 @@ export function createEngine(
 
   const extractor: Extractor = createExtractor(analyser);
 
-  let element: HTMLAudioElement | null = null;
-  let elementSource: MediaElementAudioSourceNode | null = null;
-  let synth: Synth | null = null;
+  /*
+   * A slot is one track's place in the graph: its own gain, so two can
+   * sound at once while one gives way to the other, and whatever it takes
+   * to silence that track for good.
+   */
+  type Slot = {
+    element: HTMLAudioElement | null;
+    gain: GainNode;
+    stop(): void;
+  };
+
+  let current: Slot | null = null;
+  let fading: Slot[] = [];
   let playing = false;
+
+  const createSlot = (): Slot => {
+    const gain = context.createGain();
+
+    gain.connect(input);
+
+    return {
+      element: null,
+      gain,
+      stop() {
+        gain.disconnect();
+      },
+    };
+  };
+
+  /* Silence a slot now and forget it. */
+  const drop = (slot: Slot) => {
+    slot.stop();
+    fading = fading.filter((other) => other !== slot);
+  };
+
+  /* Let the slot fade over the crossfade, then silence it. */
+  const release = (slot: Slot) => {
+    const now = context.currentTime;
+
+    slot.gain.gain.cancelScheduledValues(now);
+    slot.gain.gain.setValueAtTime(slot.gain.gain.value, now);
+    slot.gain.gain.linearRampToValueAtTime(0, now + CROSSFADE_SECONDS);
+    fading.push(slot);
+    window.setTimeout(
+      () => {
+        if (fading.includes(slot)) {
+          drop(slot);
+        }
+      },
+      CROSSFADE_SECONDS * 1000 + 100
+    );
+  };
 
   const clear = () => {
     playing = false;
 
-    if (synth) {
-      synth.stop();
-      synth = null;
+    if (current) {
+      drop(current);
+      current = null;
     }
 
-    if (element) {
-      element.pause();
-      element.removeAttribute('src');
-      element.load();
-      elementSource?.disconnect();
-      element = null;
-      elementSource = null;
-    }
+    fading.forEach((slot) => slot.stop());
+    fading = [];
   };
 
   /* Read through a call: the state after an await is not what it was before. */
   const running = () => context.state === 'running';
 
   const play: Engine['play'] = async (source, onEnded) => {
-    clear();
+    /* The track playing gives way rather than stopping dead. */
+    if (current) {
+      release(current);
+      current = null;
+    }
+
+    playing = false;
 
     if (!running()) {
       const wait = hasBeenActive() ? RESUME_AFTER_GESTURE_MS : RESUME_COLD_MS;
@@ -152,17 +206,31 @@ export function createEngine(
       }
     }
 
+    const slot = createSlot();
+    const now = context.currentTime;
+
+    slot.gain.gain.setValueAtTime(0, now);
+    slot.gain.gain.linearRampToValueAtTime(1, now + CROSSFADE_SECONDS);
+    current = slot;
+
     if (source.kind === 'synth') {
-      synth = playSynth(
+      const synth = playSynth(
         context,
-        input,
+        slot.gain,
         source,
         () => {
-          playing = false;
-          onEnded();
+          if (current === slot) {
+            playing = false;
+            onEnded();
+          }
         },
         instruments
       );
+
+      slot.stop = () => {
+        synth.stop();
+        slot.gain.disconnect();
+      };
       playing = true;
 
       return;
@@ -173,20 +241,36 @@ export function createEngine(
      * only honoured when the server agrees, which is why provider audio goes
      * through the same-origin proxy rather than straight to its host.
      */
-    element = new Audio();
+    const element = new Audio();
+
     element.crossOrigin = 'anonymous';
     element.preload = 'auto';
     element.src = source.url;
-    elementSource = context.createMediaElementSource(element);
-    elementSource.connect(input);
+
+    const elementSource = context.createMediaElementSource(element);
+
+    elementSource.connect(slot.gain);
+    slot.element = element;
+    slot.stop = () => {
+      element.pause();
+      element.removeAttribute('src');
+      element.load();
+      elementSource.disconnect();
+      slot.gain.disconnect();
+    };
 
     element.addEventListener('ended', () => {
-      playing = false;
-      onEnded();
+      if (current === slot) {
+        playing = false;
+        onEnded();
+      }
     });
 
     await element.play();
-    playing = true;
+
+    if (current === slot) {
+      playing = true;
+    }
   };
 
   return {
@@ -203,18 +287,18 @@ export function createEngine(
     },
     pause() {
       playing = false;
-      element?.pause();
+      current?.element?.pause();
       void context.suspend();
     },
     play,
     async resume() {
       await context.resume();
 
-      if (element) {
-        await element.play();
+      if (current?.element) {
+        await current.element.play();
       }
 
-      playing = Boolean(element || synth);
+      playing = current !== null;
     },
     setVolume(volume) {
       const now = context.currentTime;

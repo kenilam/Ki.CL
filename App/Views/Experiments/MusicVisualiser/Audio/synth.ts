@@ -634,6 +634,13 @@ export function playSynth(
   let endsAt = start;
   let stopped = false;
   let sentinel: ConstantSourceNode | null = null;
+  /*
+   * What smplr hands back for every sampled note: the only way to cancel
+   * a note booked for the future. Its own `stop()` silences the voices it
+   * has made, but the scheduler keeps a queue twenty seconds deep here,
+   * and without these the next piece would hear this one's tail.
+   */
+  const bookings: Array<(time?: number) => void> = [];
 
   /*
    * The end is announced by a silent source stopped at the last sound's
@@ -671,14 +678,16 @@ export function playSynth(
         const piano = instruments?.loaded ? instruments.piano : null;
 
         if (piano) {
-          piano.start({
-            duration,
-            note: event.midi,
-            time: when,
-            velocity: Math.round(
-              SAMPLE_VELOCITY_FLOOR + event.velocity * SAMPLE_VELOCITY_SPAN
-            ),
-          });
+          bookings.push(
+            piano.start({
+              duration,
+              note: event.midi,
+              time: when,
+              velocity: Math.round(
+                SAMPLE_VELOCITY_FLOOR + event.velocity * SAMPLE_VELOCITY_SPAN
+              ),
+            })
+          );
         } else {
           keys.note(event.midi, when, duration, level);
         }
@@ -766,6 +775,8 @@ export function playSynth(
     master.gain.setValueAtTime(master.gain.value, now);
     master.gain.linearRampToValueAtTime(0, now + 0.4);
     crackle?.stop(now + 0.5);
+    bookings.forEach((cancel) => cancel(now));
+    bookings.length = 0;
     instruments?.piano?.stop();
 
     if (sentinel) {

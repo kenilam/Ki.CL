@@ -9,8 +9,8 @@ in `App/Views/Experiments/index.tsx`. A group is a station (a provider), a
 type one of its families, a track one piece. Each level is its own route in
 its own folder, like TreeOfLife's versions:
 
-- the view's index shows the title and a play control, a link to the first
-  group;
+- the view's index shows the title and a play control, a link to a track
+  drawn at random: a station at random, then one of its tracks;
 - a group's index redirects to its first type, and a type's index to the
   track the station would play next, so any prefix lands on a track;
 - a track's index shows the title, `station · type`, and a play control
@@ -21,7 +21,8 @@ its own folder, like TreeOfLife's versions:
 
 The URL is the source of truth for what is playing, as it is for the focused
 node in TreeOfLife. Skipping, and a track ending, navigate to the next
-track's `/play`, so the address bar is always a link to the piece and back
+track's `/play`, and the engine crossfades the two over three seconds, so
+the address bar is always a link to the piece and back
 or forward through the history move between tracks. A `/play` link opened
 cold, with no gesture yet, is sent back to the track's gate, whose play
 link is the gesture. A track id the station cannot resolve goes back to
