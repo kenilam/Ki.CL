@@ -35,7 +35,7 @@ const Words: React.FunctionComponent<Props> = ({
   titleIs,
 }) => (
   <Layout alignContent={align} autoFlow='row' gap='narrow'>
-    <span className={CLASS_NAME}>
+    <span className={classNames(CLASS_NAME, 'kicl-pointer-events-auto')}>
       {label ? (
         <Text
           is='span'

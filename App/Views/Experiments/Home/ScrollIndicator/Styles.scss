@@ -1,0 +1,71 @@
+/*
+ * Scroll progress, as in Portfolio/Pika: a fixed bar scaled along the
+ * inline axis by the page scroll, with the same moving gradient. It sits
+ * on the site header's bottom edge; at the very top it would be behind
+ * the header's blur.
+ */
+:root {
+  --kicl--views--experiments__home--indicator-shift: linear-gradient(
+    232deg,
+    #{color.adjust($orange, $lightness: 30%)},
+    #{color.adjust($green, $lightness: 30%)},
+    #{color.adjust($red, $lightness: 30%)},
+    #{color.adjust($blue, $lightness: 30%)},
+    #{color.adjust($yellow, $lightness: 30%)}
+  );
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--experiments__home--indicator-shift: linear-gradient(
+      232deg,
+      #{color.adjust($orange, $blackness: 3%)},
+      #{color.adjust($green, $blackness: 3%)},
+      #{color.adjust($red, $blackness: 3%)},
+      #{color.adjust($blue, $blackness: 3%)},
+      #{color.adjust($yellow, $blackness: 3%)}
+    );
+  }
+}
+
+.kicl--views--experiments__home__scroll-indicator {
+  animation-duration: var(--kicl-transition-duration-5m), auto;
+  animation-fill-mode: none, both;
+  animation-iteration-count: infinite, 1;
+  animation-name:
+    kicl--views--experiments__home--indicator-shift,
+    kicl--views--experiments__home--indicator-fill;
+  animation-timeline: auto, scroll();
+  animation-timing-function: ease, linear;
+  background: var(--kicl--views--experiments__home--indicator-shift);
+  background-size: 1200% 1200%;
+  block-size: var(--kicl-size-3px);
+  inline-size: 100%;
+  inset-block-start: var(--kicl--widgets--global-header--block-size);
+  inset-inline-start: 0;
+  scale: 0 1;
+  transform-origin: inline-start;
+  z-index: 1;
+}
+
+@keyframes kicl--views--experiments__home--indicator-shift {
+  0% {
+    background-position: 0% 88%;
+  }
+
+  50% {
+    background-position: 100% 13%;
+  }
+
+  100% {
+    background-position: 0% 88%;
+  }
+}
+
+@keyframes kicl--views--experiments__home--indicator-fill {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}

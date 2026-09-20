@@ -5,6 +5,7 @@ import { Layout } from '@/Components';
 
 // Partials
 import More from './More';
+import ScrollIndicator from './ScrollIndicator';
 import Stage from './Stage';
 
 // Styles
@@ -20,6 +21,7 @@ import { CLASS_NAME } from './constants';
 const Home: React.FunctionComponent = () => (
   <Layout gap='none' justifyItems='stretch'>
     <div className={CLASS_NAME}>
+      <ScrollIndicator />
       <Stage />
       <More />
     </div>

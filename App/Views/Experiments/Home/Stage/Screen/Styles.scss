@@ -3,8 +3,10 @@
  * scroll timeline. `at` is index × screen height, set here because a
  * custom property resolves where it is declared. The text block is
  * `block` tall and sits `pad` above the bottom of the screen.
- * - `push-in`: the block rides up from below the screen at the scroll
- *   rate and stops in place, over [at - pad - block, at].
+ * - `push-in`: the block rides up from a full screen below at the scroll
+ *   rate and stops in place, over [at - screen, at]. A full screen, not
+ *   the block's estimated height, so no part of it shows early when the
+ *   real text is taller than the estimate.
  * - `push-out`: the block holds until the next block's top reaches its
  *   bottom, then moves up at the scroll rate until it is off the top,
  *   over [at + screen - block, at + 2·screen - block - pad]. Fills
@@ -26,7 +28,7 @@
     var(#{$home}--index) * var(#{$home}--screen)
   );
   --kicl--views--experiments__home--in-start: calc(
-    var(#{$home}--at) - var(#{$home}--pad) - var(#{$home}--block)
+    var(#{$home}--at) - var(#{$home}--screen)
   );
   --kicl--views--experiments__home--out-start: calc(
     var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--block)
@@ -43,17 +45,18 @@
   --kicl--views--experiments__home--after: calc(
     var(#{$home}--at) + var(#{$home}--screen)
   );
-  --kicl--views--experiments__home--below: calc(
-    var(#{$home}--pad) + var(#{$home}--block)
-  );
+  --kicl--views--experiments__home--below: var(#{$home}--screen);
   --kicl--views--experiments__home--above: calc(
     var(#{$home}--pad) - var(#{$home}--screen)
   );
+  --kicl--views--experiments__home--entry: calc(
+    var(#{$home}--pad) + var(#{$home}--block)
+  );
   --kicl--views--experiments__home--fade-start: calc(
-    var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--below)
+    var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--entry)
   );
   --kicl--views--experiments__home--fade-end: calc(
-    var(#{$home}--fade-start) + var(#{$home}--below) * 0.6
+    var(#{$home}--fade-start) + var(#{$home}--entry) * 0.6
   );
   --kicl--views--experiments__home--drift: 12%;
   --kicl--views--experiments__home--scrim: color-mix(

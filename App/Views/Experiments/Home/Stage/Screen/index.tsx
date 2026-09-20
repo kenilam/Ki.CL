@@ -56,8 +56,13 @@ const Screen: React.FunctionComponent<Props> = ({
       className={classNames(`${CLASS_NAME}__plate`, 'kicl-position-absolute')}
     />
     <Layout alignContent='end' autoFlow='row' gap='none'>
+      {/* Ignores the pointer: stacked above the panel below, it would block that panel's link. */}
       <div
-        className={classNames(`${CLASS_NAME}__body`, 'kicl-position-relative')}
+        className={classNames(
+          `${CLASS_NAME}__body`,
+          'kicl-pointer-events-none',
+          'kicl-position-relative'
+        )}
       >
         <Words
           description={experiment.description}
