@@ -48,7 +48,11 @@ export type Radio = {
   error: string | null;
   /** Skip to another track. */
   next(): void;
-  /** The track the URL asks for, resolved, before anything has played. */
+  /**
+   * What the first press will play, before anything has: the track the URL
+   * names, or the radio's pick when it names none. The gate links to it, so
+   * the play control is an anchor with a real destination.
+   */
   requested: Track | null;
   setVolume(volume: number): void;
   state: PlaybackState;
@@ -149,7 +153,7 @@ export default function useRadio(): Radio {
     const current = engine.current;
 
     if (!current || state === 'idle') {
-      void start(requestedId);
+      void start(requested?.id ?? requestedId);
 
       return;
     }
@@ -168,7 +172,7 @@ export default function useRadio(): Radio {
         void start(null);
       }
     }
-  }, [requestedId, start, state, track]);
+  }, [requested, requestedId, start, state, track]);
 
   const setVolume = useCallback(
     (value: number) => {
@@ -182,27 +186,32 @@ export default function useRadio(): Radio {
   );
 
   /*
-   * The URL changed under us. Before anything plays, resolve the track it
-   * names so the gate can say what it will play. Once playing, a different
-   * id means the listener went back or forward, or followed a link: play it.
-   * Our own `replace` after a track starts arrives here too, with the id of
-   * the track already playing, and is ignored.
+   * The URL changed under us. Before anything plays, settle what the gate
+   * will play: the track the URL names, or, when it names none, the radio's
+   * own pick, so the play control can link to a real track either way. Once
+   * playing, a different id means the listener went back or forward, or
+   * followed a link: play it. Our own `replace` after a track starts arrives
+   * here too, with the id of the track already playing, and is ignored.
    */
   useEffect(() => {
     if (stateRef.current === 'idle') {
-      if (!requestedId) {
-        setRequested(null);
-
-        return;
-      }
-
       let cancelled = false;
 
-      void radio.get(requestedId).then((found) => {
-        if (!cancelled) {
-          setRequested(found);
-        }
-      });
+      const settle = requestedId
+        ? radio.get(requestedId).then((found) => found ?? radio.next([]))
+        : radio.next([]);
+
+      void settle
+        .then((found) => {
+          if (!cancelled) {
+            setRequested(found);
+          }
+        })
+        .catch(() => {
+          if (!cancelled) {
+            setRequested(null);
+          }
+        });
 
       return () => {
         cancelled = true;

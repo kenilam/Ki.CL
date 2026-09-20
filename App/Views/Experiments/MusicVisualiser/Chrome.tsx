@@ -21,7 +21,7 @@ import {
 import type { Radio } from './useRadio';
 
 // Constants
-import { CLASS_NAME as VIEW } from './constants';
+import { CLASS_NAME as VIEW, toPath } from './constants';
 
 const CLASS_NAME = `${VIEW}__chrome`;
 
@@ -142,9 +142,26 @@ const Chrome: React.FunctionComponent<Props> = ({
           <Text is='p' className='kicl-font-size-medium'>
             {COPY.lede}
           </Text>
-          <Button aria-label={COPY.play} onClick={toggle} variant='ghost'>
+          {/*
+           * An anchor to the track it will play, so the control has a real
+           * destination: hover shows it, and a new tab opens the track's own
+           * gate. Audio needs the gesture itself, so the click starts
+           * playback here and the URL follows from that, rather than the
+           * link reloading the page into a browser that then refuses to
+           * play.
+           */}
+          <HyperLink
+            aria-label={COPY.play}
+            lookLikeButton
+            onClick={(event) => {
+              event.preventDefault();
+              toggle();
+            }}
+            to={toPath(requested?.id)}
+            variant='ghost'
+          >
             <Fa.FaPlay aria-hidden />
-          </Button>
+          </HyperLink>
           {requested ? (
             <Text
               is='p'
