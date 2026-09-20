@@ -13,7 +13,7 @@ import type {
  * chrome and told apart from the last one. They mean nothing.
  */
 
-const NAME = 'Ki radio';
+const NAME = 'Self composed Radio';
 
 /** Seconds per piece. Long enough to settle into; short enough to vary. */
 const DURATION_SECONDS = 150;
@@ -68,9 +68,9 @@ const SECOND = [
 ];
 
 const ARTISTS: Record<VibeFamily, string> = {
-  ambient: 'Ki radio · field',
-  lofi: 'Ki radio · tape',
-  piano: 'Ki radio · keys',
+  ambient: `${NAME} · field`,
+  lofi: `${NAME} · tape`,
+  piano: `${NAME} · keys`,
 };
 
 /**

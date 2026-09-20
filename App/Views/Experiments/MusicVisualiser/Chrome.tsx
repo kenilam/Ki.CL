@@ -4,11 +4,10 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Ri } from '@/Icons';
+import { Ri, Fa } from '@/Icons';
 
 // Components
 import {
-  Badge,
   Button,
   Heading,
   HyperLink,
@@ -143,9 +142,8 @@ const Chrome: React.FunctionComponent<Props> = ({
           <Text is='p' className='kicl-font-size-medium'>
             {COPY.lede}
           </Text>
-          <Button onClick={toggle} size='large' variant='primary'>
-            <Ri.RiPlayFill aria-hidden />
-            <span>{COPY.play}</span>
+          <Button onClick={toggle} variant='ghost'>
+            <Fa.FaPlay aria-hidden />
           </Button>
           {requested ? (
             <Text
@@ -178,7 +176,6 @@ const Chrome: React.FunctionComponent<Props> = ({
       >
         <Layout autoFlow='row' gap='narrowest' justifyItems='start'>
           <div className={`${CLASS_NAME}__now-playing`} aria-live='polite'>
-            {track ? <Badge variant='outline'>{track.station}</Badge> : null}
             <Heading is='h2' dense className='kicl-font-size-large'>
               {track?.title ?? '…'}
             </Heading>
@@ -230,16 +227,17 @@ const Chrome: React.FunctionComponent<Props> = ({
               aria-label={playing ? COPY.pause : COPY.play}
               onClick={toggle}
               variant='secondary'
+              size='small'
             >
               {state === 'loading' ? (
                 <Spinner position='inline' size='smaller' />
               ) : playing ? (
-                <Ri.RiPauseFill aria-hidden />
+                <Fa.FaPause aria-hidden />
               ) : (
-                <Ri.RiPlayFill aria-hidden />
+                <Fa.FaPlay aria-hidden />
               )}
             </Button>
-            <Button aria-label={COPY.next} onClick={next} variant='ghost'>
+            <Button aria-label={COPY.next} onClick={next} variant='ghost' size='small'>
               <Ri.RiSkipForwardFill aria-hidden />
             </Button>
             <Button
@@ -247,12 +245,9 @@ const Chrome: React.FunctionComponent<Props> = ({
               onClick={copyLink}
               title={copied ? COPY.copied : COPY.copy}
               variant='ghost'
+              size='small'
             >
-              {copied ? (
-                <Ri.RiCheckLine aria-hidden />
-              ) : (
-                <Ri.RiLinkM aria-hidden />
-              )}
+              <Fa.FaLink aria-hidden />
             </Button>
             <Input
               aria-label={COPY.volume}

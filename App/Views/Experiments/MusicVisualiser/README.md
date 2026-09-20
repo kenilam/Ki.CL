@@ -35,7 +35,7 @@ MusicVisualiser/
     synth.ts         the built-in station, scheduled from a seeded generator
   Providers/
     index.ts         asks each provider in turn; the built-in one never fails
-    builtIn.ts       "Ki radio": recipes for the synth, with names and vibes
+    builtIn.ts       "Self composed Radio": recipes for the synth, with names and vibes
   Scenes/
     shader.ts        three scenes in one fragment shader, blended by u_mix
     renderer.ts      program, quad, uniforms
