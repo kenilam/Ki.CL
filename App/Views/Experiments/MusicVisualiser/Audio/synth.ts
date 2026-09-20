@@ -53,6 +53,20 @@ const TEMPO: Record<VibeFamily, number> = {
 /** Root note, as a MIDI number, chosen per seed from these. */
 const ROOTS = [57, 58, 60, 62, 63, 65];
 
+/** The keys' low-pass never opens past this, however high the note. */
+const KEYS_CEILING_HZ = 3600;
+
+/**
+ * Where each station's tone closes, in hertz. Everything the voices make
+ * passes through one gentle low-pass so nothing above it can be sharp;
+ * lo-fi sits lowest, as a record would.
+ */
+const TONE_HZ: Record<VibeFamily, number> = {
+  ambient: 4200,
+  lofi: 2800,
+  piano: 5200,
+};
+
 function midiToHz(midi: number): number {
   return 440 * Math.pow(2, (midi - 69) / 12);
 }
@@ -133,26 +147,40 @@ function createKeys(context: BaseAudioContext, output: AudioNode): Voice {
       const filter = context.createBiquadFilter();
       const envelope = context.createGain();
 
+      /*
+       * How far up the keyboard this note sits, 0 at the lowest root and 1
+       * around the top of the melody range. High notes get a darker filter,
+       * a softer touch and thinner upper partials, so the top of a phrase
+       * rings rather than pierces.
+       */
+      const height = Math.min(1, Math.max(0, (midi - 48) / 36));
+      const touch = gain * (1 - height * 0.45);
+
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(frequency * 6, when);
+      filter.Q.value = 0.5;
+      filter.frequency.setValueAtTime(
+        Math.min(KEYS_CEILING_HZ, frequency * (5 - height * 2.5)),
+        when
+      );
       filter.frequency.exponentialRampToValueAtTime(
-        frequency * 1.5,
+        Math.min(KEYS_CEILING_HZ, frequency * 1.3),
         when + duration
       );
 
       envelope.gain.setValueAtTime(0.0001, when);
-      envelope.gain.exponentialRampToValueAtTime(gain, when + 0.008);
-      envelope.gain.exponentialRampToValueAtTime(gain * 0.5, when + 0.25);
+      envelope.gain.exponentialRampToValueAtTime(touch, when + 0.014);
+      envelope.gain.exponentialRampToValueAtTime(touch * 0.5, when + 0.25);
       envelope.gain.exponentialRampToValueAtTime(0.0001, when + duration);
 
       [1, 2, 3].forEach((partial, index) => {
         const oscillator = context.createOscillator();
         const partialGain = context.createGain();
+        const thin = index === 0 ? 1 : 1 - height * 0.8;
 
         oscillator.type = index === 0 ? 'triangle' : 'sine';
         oscillator.frequency.value = frequency * partial;
         oscillator.detune.value = (index - 1) * 3;
-        partialGain.gain.value = [0.6, 0.25, 0.08][index];
+        partialGain.gain.value = [0.6, 0.18, 0.05][index] * thin;
 
         oscillator.connect(partialGain).connect(filter);
         oscillator.start(when);
@@ -242,10 +270,11 @@ function createDrums(
       const envelope = context.createGain();
 
       source.buffer = noise;
-      filter.type = 'highpass';
-      filter.frequency.value = 6000;
-      envelope.gain.setValueAtTime(gain, when);
-      envelope.gain.exponentialRampToValueAtTime(0.0001, when + 0.06);
+      filter.type = 'bandpass';
+      filter.frequency.value = 4200;
+      filter.Q.value = 0.9;
+      envelope.gain.setValueAtTime(gain * 0.5, when);
+      envelope.gain.exponentialRampToValueAtTime(0.0001, when + 0.05);
 
       source.connect(filter).connect(envelope).connect(output);
       source.start(when);
@@ -286,20 +315,21 @@ export function playSynth(
   master.connect(reverb).connect(wet).connect(destination);
 
   /*
-   * Lo-fi: everything through a gentle low-pass, with a bed of crackle
-   * underneath. The crackle is what makes a clean synth read as a record.
+   * Every voice goes through one tone low-pass before the reverb, set per
+   * station, so the top end is always rounded off. Lo-fi adds a bed of
+   * crackle underneath: it is what makes a clean synth read as a record.
    */
-  let voiceBus: AudioNode = master;
+  const tone = context.createBiquadFilter();
+
+  tone.type = 'lowpass';
+  tone.Q.value = 0.6;
+  tone.frequency.value = TONE_HZ[style];
+  tone.connect(master);
+
+  const voiceBus: AudioNode = tone;
   let crackle: AudioBufferSourceNode | null = null;
 
   if (style === 'lofi') {
-    const tone = context.createBiquadFilter();
-
-    tone.type = 'lowpass';
-    tone.frequency.value = 3200;
-    tone.connect(master);
-    voiceBus = tone;
-
     const noise = createNoise(context, 2);
     const crackleFilter = context.createBiquadFilter();
     const crackleGain = context.createGain();
@@ -344,13 +374,13 @@ export function playSynth(
 
       if (random() < 0.6) {
         const degree = PENTATONIC[Math.floor(random() * PENTATONIC.length)];
-        const octave = random() < 0.5 ? 12 : 24;
+        const octave = random() < 0.7 ? 12 : 24;
 
         keys.note(
           root + octave + degree,
           at + beat * Math.floor(random() * 4),
           bar * 1.5,
-          0.09
+          0.07
         );
       }
     } else {
@@ -374,14 +404,14 @@ export function playSynth(
 
         const swing = style === 'lofi' && step % 2 === 1 ? beat * 0.08 : 0;
         const degree = PENTATONIC[Math.floor(random() * PENTATONIC.length)];
-        const octave = random() < 0.25 ? 24 : 12;
+        const octave = random() < 0.12 ? 24 : 12;
         const length = beat * (random() < 0.3 ? 2 : 1) * 0.95;
 
         keys.note(
           root + octave + degree,
           at + step * beat * 0.5 + swing,
           length,
-          0.1 + random() * 0.06
+          0.09 + random() * 0.05
         );
       }
     }
