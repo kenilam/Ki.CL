@@ -20,11 +20,10 @@
   }
 
   /* In normal flow, so the words use their own view timeline: they rise as the section enters. */
-  &__body .kicl--views--experiments__home__words {
+  &__words {
     --kicl--views--experiments__home--rise: 10dvb;
 
     block-size: 100%;
-    min-block-size: 0;
 
     @supports (animation-timeline: view()) {
       animation: kicl--views--experiments__home--rise linear both;
@@ -35,6 +34,17 @@
     @media (prefers-reduced-motion: reduce) {
       animation: none;
     }
+  }
+
+  &__title {
+    font-size: var(--kicl--views--experiments__home--display);
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    margin-block: var(--kicl-gutter-narrow) var(--kicl-gutter);
+  }
+
+  &__link {
+    margin-block-start: var(--kicl-gutter-wide);
   }
 }
 

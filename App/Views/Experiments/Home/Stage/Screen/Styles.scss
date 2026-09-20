@@ -157,7 +157,9 @@
     z-index: 1;
   }
 
-  &__body .kicl--views--experiments__home__words {
+  &__words {
+    min-block-size: var(--kicl--views--experiments__home--block);
+
     @supports (animation-timeline: scroll()) {
       animation:
         kicl--views--experiments__home--push-in linear both,
@@ -173,6 +175,25 @@
     @media (prefers-reduced-motion: reduce) {
       animation: none;
     }
+  }
+
+  &__label {
+    letter-spacing: var(--kicl--views--experiments__home--tracking);
+  }
+
+  &__title {
+    font-size: var(--kicl--views--experiments__home--display);
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    margin-block: var(--kicl-gutter-narrow) var(--kicl-gutter);
+  }
+
+  &__description {
+    max-inline-size: var(--kicl--views--experiments__home--measure);
+  }
+
+  &__link {
+    margin-block-start: var(--kicl-gutter-wide);
   }
 }
 
