@@ -34,7 +34,7 @@ $light-band: $yellow;
 $dark-field: color.adjust(
   $blue,
   $hue: 12deg,
-  $saturation: 30%,
+  $saturation: 26%,
   $lightness: -18%
 );
 $dark-glow: color.adjust($blue, $saturation: 20%, $lightness: 18%);
