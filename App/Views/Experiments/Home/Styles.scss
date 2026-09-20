@@ -305,6 +305,33 @@
     }
   }
 
+  /*
+   * The closing section is in normal flow, so its words use their own
+   * view timelines: the heading rises as it enters the viewport, and the
+   * bookmark link, lower down, follows on its own entry.
+   */
+  @supports (animation-timeline: view()) {
+    &__more &__words {
+      animation: kicl--views--experiments__home--trail-description linear both;
+      animation-range: entry 0% entry 100%;
+      animation-timeline: view();
+      min-block-size: 0;
+    }
+
+    &__more &__bookmark {
+      animation: kicl--views--experiments__home--trail-open linear both;
+      animation-range: entry 0% entry 100%;
+      animation-timeline: view();
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__more &__words,
+    &__more &__bookmark {
+      animation: none;
+    }
+  }
+
   /* The link in each panel, and the bookmark link. */
   &__open,
   &__bookmark {

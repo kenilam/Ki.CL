@@ -159,26 +159,30 @@ const Home: React.FunctionComponent = () => (
         className={classNames(`${CLASS_NAME}__more`, 'kicl-position-relative')}
       >
         <div className={`${CLASS_NAME}__screen`}>
-          <Layout alignContent='end' autoFlow='row' gap='narrow'>
+          <Layout alignContent='end' autoFlow='row' gap='none'>
             <span className={`${CLASS_NAME}__body`}>
-              <Heading
-                is='h2'
-                dense
-                className={classNames(
-                  `${CLASS_NAME}__title`,
-                  'kicl-text-transform-uppercase'
-                )}
-              >
-                {COPY.more}
-              </Heading>
-              <HyperLink
-                className={`${CLASS_NAME}__bookmark`}
-                lookLikeButton
-                to={`/${EXPERIMENTS}`}
-                variant='ghost'
-              >
-                {COPY.bookmark}
-              </HyperLink>
+              <Layout alignContent='end' autoFlow='row' gap='narrow'>
+                <span className={`${CLASS_NAME}__words`}>
+                  <Heading
+                    is='h2'
+                    dense
+                    className={classNames(
+                      `${CLASS_NAME}__title`,
+                      'kicl-text-transform-uppercase'
+                    )}
+                  >
+                    {COPY.more}
+                  </Heading>
+                  <HyperLink
+                    className={`${CLASS_NAME}__bookmark`}
+                    lookLikeButton
+                    to={`/${EXPERIMENTS}`}
+                    variant='ghost'
+                  >
+                    {COPY.bookmark}
+                  </HyperLink>
+                </span>
+              </Layout>
             </span>
           </Layout>
         </div>
