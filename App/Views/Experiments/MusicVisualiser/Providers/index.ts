@@ -1,4 +1,4 @@
-import type { Provider } from '../Spec';
+import type { Provider } from '@/Views/Experiments/MusicVisualiser/Spec';
 
 import builtIn from './builtIn';
 

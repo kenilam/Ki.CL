@@ -131,7 +131,7 @@ const Chrome: React.FunctionComponent<Props> = ({
           </Text>
           <Button onClick={toggle} size='large' variant='primary'>
             <Ri.RiPlayFill aria-hidden />
-            {COPY.play}
+            <span>{COPY.play}</span>
           </Button>
         </section>
       </Layout>
@@ -148,7 +148,7 @@ const Chrome: React.FunctionComponent<Props> = ({
       justifyItems='start'
     >
       <footer
-        className={classNames(CLASS_NAME, {
+        className={classNames(CLASS_NAME, 'kicl-position-relative', {
           [`${CLASS_NAME}--idle`]: idle,
         })}
       >

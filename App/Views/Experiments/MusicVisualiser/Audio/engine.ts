@@ -1,4 +1,7 @@
-import type { Smoothed, Source } from '../Spec';
+import type {
+  Smoothed,
+  Source,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
 import { createExtractor, type Extractor } from './features';
 import { playSynth, type Synth } from './synth';

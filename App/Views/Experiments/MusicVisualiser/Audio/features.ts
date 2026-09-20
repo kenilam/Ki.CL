@@ -1,4 +1,7 @@
-import type { Features, Smoothed } from '../Spec';
+import type {
+  Features,
+  Smoothed,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
 /*
  * Turns what the analyser hears into a handful of numbers the stage can

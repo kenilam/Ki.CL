@@ -1,4 +1,4 @@
-import type { SceneName } from '../Spec';
+import type { SceneName } from '@/Views/Experiments/MusicVisualiser/Spec';
 
 /*
  * All three scenes live in one fragment shader, each as a function from

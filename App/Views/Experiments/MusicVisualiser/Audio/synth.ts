@@ -1,4 +1,7 @@
-import type { SynthSource, VibeFamily } from '../Spec';
+import type {
+  SynthSource,
+  VibeFamily,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
 /*
  * The built-in station: music the browser makes for itself.

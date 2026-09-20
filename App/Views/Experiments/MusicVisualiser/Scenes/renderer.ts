@@ -1,4 +1,7 @@
-import type { Features, SceneName } from '../Spec';
+import type {
+  Features,
+  SceneName,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
 import { FRAGMENT, MAX_INKS, MAX_RINGS, SCENE_INDEX, VERTEX } from './shader';
 

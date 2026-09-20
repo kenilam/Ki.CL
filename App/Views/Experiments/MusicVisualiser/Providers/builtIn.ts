@@ -1,4 +1,9 @@
-import type { Provider, Track, Vibe, VibeFamily } from '../Spec';
+import type {
+  Provider,
+  Track,
+  Vibe,
+  VibeFamily,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
 /*
  * The built-in station. Its tracks are recipes for the synth rather than

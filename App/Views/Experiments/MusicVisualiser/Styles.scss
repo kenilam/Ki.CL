@@ -13,25 +13,44 @@
  */
 
 $muted: 46%;
-$muted-dark: 78%;
+$muted-dark: 52%;
 $light-warm-1: color.mix($white, $yellow, $muted, $method: oklab);
 $light-warm-2: color.mix($white, $orange, $muted + 6%, $method: oklab);
 $light-cool-1: color.mix($white, $blue, $muted, $method: oklab);
 $light-cool-2: color.mix($white, $red, $muted + 4%, $method: oklab);
+
+// Dark: the inks have to carry more of their own colour. On black a tint
+// reads as mud, so each is kept saturated and mixed less far in.
 $dark-warm-1: color.mix(
   $black,
-  color.adjust($orange, $hue: -6deg),
+  color.adjust($orange, $hue: -6deg, $saturation: 10%),
   $muted-dark,
   $method: oklab
 );
-$dark-warm-2: color.mix($black, $yellow, $muted-dark + 4%, $method: oklab);
-$dark-cool-1: color.mix(
+
+// Yellow sunk into black turns olive, so the second warm is an amber mixed
+// from orange and red instead.
+$dark-warm-2: color.mix(
   $black,
-  color.adjust($blue, $saturation: 18%, $lightness: 14%),
-  $muted-dark - 8%,
+  color.mix($orange, $red, 60%, $method: oklab),
+  $muted-dark + 4%,
   $method: oklab
 );
-$dark-cool-2: color.mix($black, $red, $muted-dark, $method: oklab);
+$dark-cool-1: color.mix(
+  $black,
+  color.adjust($blue, $saturation: 22%, $lightness: 16%),
+  $muted-dark - 10%,
+  $method: oklab
+);
+
+// And the second cool is a violet between the blue and the red, so the two
+// cools stay on one side of the wheel and never grey out against the warms.
+$dark-cool-2: color.mix(
+  $black,
+  color.mix($blue, $red, 55%, $method: oklab),
+  $muted-dark - 4%,
+  $method: oklab
+);
 
 :root {
   --kicl--views--experiments--music-visualiser__stage--cell: 1px;
@@ -97,8 +116,13 @@ $dark-cool-2: color.mix($black, $red, $muted-dark, $method: oklab);
       max-inline-size: 28rem;
     }
 
+    // A slider, not a text field: the component's box is for typed input.
     &__volume {
+      --kicl--components--input--background-color: transparent;
+      --kicl--components--input--border-width: 0;
+
       inline-size: var(--kicl-size-10x);
+      padding: 0;
       accent-color: var(--kicl-body-color);
     }
   }

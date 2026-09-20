@@ -1,6 +1,10 @@
-import type { SceneName, Smoothed, Vibe } from '../Spec';
+import type {
+  SceneName,
+  Smoothed,
+  Vibe,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
-import { MAX_RINGS } from '../Scenes/shader';
+import { MAX_RINGS } from '@/Views/Experiments/MusicVisualiser/Scenes/shader';
 
 /*
  * Decides which scene is on and when to move to the next one.
