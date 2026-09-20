@@ -2,16 +2,22 @@
  * The index of the experiments: one full screen a piece, stacked in a
  * stage that stays put while the page scrolls a screen's height for each.
  *
- * The scroll does the work, from here. Every screen but the first starts
- * clear and fades in over the one before it as the page reaches its own
- * stretch of the scroll; its plate drifts through the same stretch, so the
- * picture settles as the words arrive. The ranges are screen heights, so
- * a screen's stretch is its index times the viewport.
+ * The scroll does the work, from here. The words of every screen move at
+ * the scroll's own pace across the pinned stage - a screen's height down
+ * when their stretch is a screen away, a screen's height up when it is a
+ * screen past - so they read as any page does, each heading in from below
+ * as the last goes out above. Only the plates change: every plate but the
+ * first starts clear and fades in over the one before it as the page
+ * reaches its own stretch, drifting as it does. The words stand above
+ * every plate, so the fade never covers them. The ranges are screen
+ * heights, so a screen's stretch is its index times the viewport. Each
+ * screen carries its own link in, a button-like anchor under the words.
  *
- * Without scroll timelines the stage is not pinned and the screens are not
- * stacked: they follow one another down the page, each a screen tall,
- * which is the same content read the plain way. Reduced motion keeps the
- * fades, which are not motion, and drops the drift.
+ * Without scroll timelines, or under reduced motion, the stage is not
+ * pinned and the screens are not stacked: they follow one another down
+ * the page, each a screen tall, the same content read the plain way. The
+ * last word, that more is to come, sits after the stage in the page's
+ * own flow either way.
  */
 .kicl--views--experiments__home {
   $home: '--kicl--views--experiments__home';
@@ -60,24 +66,21 @@
   inline-size: 100dvi;
   margin-inline: calc(50% - 50dvi);
 
-  @supports (animation-timeline: scroll()) {
-    block-size: calc(var(#{$home}--screens) * var(#{$home}--screen));
+  /* The scroll the stage rides: a screen's height an experiment. */
+  &__scroll {
+    @supports (animation-timeline: scroll()) {
+      block-size: calc(var(#{$home}--screens) * var(#{$home}--screen));
+
+      @media (prefers-reduced-motion: reduce) {
+        block-size: auto;
+      }
+    }
   }
 
   &__stage {
     block-size: var(--kicl--views--experiments__home--screen);
     inset-block-start: 0;
     overflow: clip;
-  }
-
-  /* The page's title, small, under the site's header. */
-  &__heading {
-    inset-block-start: calc(
-      var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-wide)
-    );
-    inset-inline-start: var(--kicl--views--experiments__home--margin);
-    letter-spacing: var(--kicl--views--experiments__home--tracking);
-    z-index: 1;
   }
 
   &__list {
@@ -98,17 +101,26 @@
       var(#{$home}--index) * var(#{$home}--screen)
     );
 
+    /* Its stretches of the scroll: where the arrival begins, and the pass through the stage. */
+    --kicl--views--experiments__home--arrival: calc(
+      var(#{$home}--at) - var(#{$home}--screen) * 0.6
+    );
+    --kicl--views--experiments__home--before: calc(
+      var(#{$home}--at) - var(#{$home}--screen)
+    );
+    --kicl--views--experiments__home--after: calc(
+      var(#{$home}--at) + var(#{$home}--screen)
+    );
+
     block-size: var(--kicl--views--experiments__home--screen);
     overflow: clip;
 
     @supports (animation-timeline: scroll()) {
       grid-area: 1 / 1;
 
-      /* From clear to whole over the half screen before its own stretch. */
-      animation: kicl--views--experiments__home--arrive linear both;
-      animation-range: calc(var(#{$home}--at) - var(#{$home}--screen) * 0.6)
-        var(#{$home}--at);
-      animation-timeline: scroll(root);
+      @media (prefers-reduced-motion: reduce) {
+        grid-area: auto;
+      }
     }
   }
 
@@ -134,12 +146,19 @@
       position: absolute;
     }
 
-    /* The drift: through its own stretch and the next screen's arrival. */
+    /*
+     * Two animations on the scroll: the arrival, from clear to whole over
+     * the half screen before its own stretch, and the drift, through its
+     * own stretch and the next screen's arrival.
+     */
     @supports (animation-timeline: scroll()) {
-      animation: kicl--views--experiments__home--drift linear both;
-      animation-range: calc(var(#{$home}--at) - var(#{$home}--screen))
-        calc(var(#{$home}--at) + var(#{$home}--screen));
-      animation-timeline: scroll(root);
+      animation:
+        kicl--views--experiments__home--arrive linear both,
+        kicl--views--experiments__home--drift linear both;
+      animation-range:
+        var(#{$home}--arrival) var(#{$home}--at),
+        var(#{$home}--before) var(#{$home}--after);
+      animation-timeline: scroll(root), scroll(root);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -175,25 +194,48 @@
       );
   }
 
-  /* The last screen: no picture, a breath of the accent on the site's ground. */
-  &__item--more &__plate {
+  /*
+   * The last word, after the stage in the page's own flow, so it scrolls
+   * up as any section would: no picture, a breath of the accent on the
+   * site's ground.
+   */
+  &__more {
     background-image: radial-gradient(
       ellipse 60% 50% at 80% 20%,
       color-mix(in oklab, var(#{$home}--accent) 22%, transparent),
       transparent 70%
     );
+    min-block-size: calc(var(--kicl--views--experiments__home--screen) * 0.7);
   }
 
-  /* A screen's words, low on the screen like a poster's, in from the edge. */
+  /*
+   * A screen's words, low on the screen like a poster's, in from the edge,
+   * and above every plate. They ride the scroll at its own pace across the
+   * pinned stage: a screen down a screen early, a screen up a screen late.
+   */
   &__screen {
     block-size: 100%;
     box-sizing: border-box;
-    color: inherit;
     display: block;
     padding-block-end: var(--kicl-gutter-widest);
     padding-block-start: var(--kicl--views--experiments__home--top);
     padding-inline: var(--kicl--views--experiments__home--margin);
-    text-decoration: none;
+    z-index: 1;
+
+    @supports (animation-timeline: scroll()) {
+      animation: kicl--views--experiments__home--pass linear both;
+      animation-range: var(#{$home}--before) var(#{$home}--after);
+      animation-timeline: scroll(root);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  /* The last word's words do not ride: it is in the page's flow. */
+  &__more &__screen {
+    animation: none;
   }
 
   &__body {
@@ -209,22 +251,16 @@
     letter-spacing: -0.03em;
     line-height: 0.9;
     margin-block: var(--kicl-gutter-narrow) var(--kicl-gutter);
-    transition: color var(--kicl-transition-duration-slow)
-      var(--kicl-ease-sine-out);
   }
 
   &__description {
     max-inline-size: var(--kicl--views--experiments__home--measure);
   }
 
-  /* The last screen's link, for the reader to keep. */
+  /* A screen's way in, and the last screen's link for the reader to keep. */
+  &__open,
   &__bookmark {
     margin-block-start: var(--kicl-gutter-wide);
-  }
-
-  &__screen:hover &__title,
-  &__screen:focus-visible &__title {
-    color: var(--kicl--views--experiments__home--accent);
   }
 }
 
@@ -235,6 +271,16 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes kicl--views--experiments__home--pass {
+  from {
+    translate: 0 var(--kicl--views--experiments__home--screen);
+  }
+
+  to {
+    translate: 0 calc(var(--kicl--views--experiments__home--screen) * -1);
   }
 }
 

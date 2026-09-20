@@ -19,9 +19,8 @@ const CLASS_NAME = 'kicl--views--experiments__home';
 const COPY = {
   bookmark: 'Bookmark this page',
   more: 'More to come',
-  moreLede: 'The next one lands here when it is ready.',
   next: 'Next',
-  title: 'Experiments',
+  open: 'See the experience',
 };
 
 /**
@@ -45,183 +44,151 @@ const EXPERIMENTS_LIST = [
   },
 ];
 
-/** The screens in order: one an experiment, then the one that says more will come. */
-const SCREENS = EXPERIMENTS_LIST.length + 1;
+/** The screens that share the stage: one an experiment. */
+const SCREENS = EXPERIMENTS_LIST.length;
 
 /**
  * The index of the experiments: one full screen a piece, the title set
- * huge across it over its plate, and after the last a screen that says
- * more will come. The screens sit stacked in one stage that stays put
- * while the page scrolls a screen's height for each; as the page passes
- * from one to the next, the next fades in over the last, in place, and
- * its plate drifts as it does. The scroll drives it all from the
- * stylesheet, so there is no scroll handler; where the browser has no
- * scroll timelines the screens simply follow one another down the page.
+ * huge across it over its plate. The screens sit stacked in one stage
+ * that stays put while the page scrolls a screen's height for each. The
+ * words move at the scroll's own pace, so each heading rides in from
+ * below as the last rides out above, as any page would read; only the
+ * plates behind them change, the next fading in over the last, in place,
+ * and drifting as it does. Each screen carries its own link in, under
+ * the words. The scroll drives it all from the stylesheet,
+ * so there is no scroll handler; where the browser has no scroll
+ * timelines, or the reader wants less motion, the screens simply follow
+ * one another down the page. After the stage, in the page's own flow, a
+ * last word says more will come, with a link to keep.
  */
 const Home: React.FunctionComponent = () => (
   <Layout gap='none' justifyItems='stretch'>
-    <div
-      className={CLASS_NAME}
-      style={{ '--kicl--views--experiments__home--screens': SCREENS } as never}
-    >
+    <div className={CLASS_NAME}>
       <div
-        className={classNames(`${CLASS_NAME}__stage`, 'kicl-position-sticky')}
+        className={`${CLASS_NAME}__scroll`}
+        style={
+          { '--kicl--views--experiments__home--screens': SCREENS } as never
+        }
       >
-        <Heading
-          is='h1'
-          dense
-          className={classNames(
-            `${CLASS_NAME}__heading`,
-            'kicl-font-size-small',
-            'kicl-position-absolute',
-            'kicl-text-transform-uppercase'
-          )}
+        <div
+          className={classNames(`${CLASS_NAME}__stage`, 'kicl-position-sticky')}
         >
-          {COPY.title}
-        </Heading>
-
-        <List is='ol' className={`${CLASS_NAME}__list`} gap='none'>
-          {EXPERIMENTS_LIST.map((experiment, index) => (
-            <ListItem
-              className={classNames(
-                `${CLASS_NAME}__item`,
-                `${CLASS_NAME}__item--${experiment.plate}`,
-                'kicl-position-relative'
-              )}
-              key={experiment.to}
-              style={
-                { '--kicl--views--experiments__home--index': index } as never
-              }
-            >
-              <div
-                aria-hidden
+          <List is='ol' className={`${CLASS_NAME}__list`} gap='none'>
+            {EXPERIMENTS_LIST.map((experiment, index) => (
+              <ListItem
                 className={classNames(
-                  `${CLASS_NAME}__plate`,
-                  'kicl-position-absolute'
-                )}
-              />
-              <HyperLink
-                className={classNames(
-                  `${CLASS_NAME}__screen`,
+                  `${CLASS_NAME}__item`,
+                  `${CLASS_NAME}__item--${experiment.plate}`,
                   'kicl-position-relative'
                 )}
-                to={experiment.to}
-                unstyled
+                key={experiment.to}
+                style={
+                  { '--kicl--views--experiments__home--index': index } as never
+                }
               >
-                <Layout alignContent='end' autoFlow='row' gap='narrow'>
-                  <span className={`${CLASS_NAME}__body`}>
-                    <Text
-                      is='span'
-                      dense
-                      variant='secondary'
-                      className={classNames(
-                        `${CLASS_NAME}__index`,
-                        'kicl-font-size-small',
-                        'kicl-text-transform-uppercase'
-                      )}
-                    >
-                      {`No. ${index + 1}`}
-                    </Text>
-                    <Heading
-                      is='h2'
-                      dense
-                      className={classNames(
-                        `${CLASS_NAME}__title`,
-                        'kicl-text-transform-uppercase'
-                      )}
-                    >
-                      {experiment.title}
-                    </Heading>
-                    <Text
-                      is='p'
-                      dense
-                      className={classNames(
-                        `${CLASS_NAME}__description`,
-                        'kicl-font-size-small'
-                      )}
-                    >
-                      {experiment.description}
-                    </Text>
-                  </span>
-                </Layout>
-              </HyperLink>
-            </ListItem>
-          ))}
-
-          <ListItem
-            className={classNames(
-              `${CLASS_NAME}__item`,
-              `${CLASS_NAME}__item--more`,
-              'kicl-position-relative'
-            )}
-            style={
-              {
-                '--kicl--views--experiments__home--index':
-                  EXPERIMENTS_LIST.length,
-              } as never
-            }
-          >
-            <div
-              aria-hidden
-              className={classNames(
-                `${CLASS_NAME}__plate`,
-                'kicl-position-absolute'
-              )}
-            />
-            <div
-              className={classNames(
-                `${CLASS_NAME}__screen`,
-                'kicl-position-relative'
-              )}
-            >
-              <Layout alignContent='end' autoFlow='row' gap='narrow'>
-                <span className={`${CLASS_NAME}__body`}>
-                  <Text
-                    is='span'
-                    dense
-                    variant='secondary'
-                    className={classNames(
-                      `${CLASS_NAME}__index`,
-                      'kicl-font-size-small',
-                      'kicl-text-transform-uppercase'
-                    )}
-                  >
-                    {COPY.next}
-                  </Text>
-                  <Heading
-                    is='h2'
-                    dense
-                    className={classNames(
-                      `${CLASS_NAME}__title`,
-                      'kicl-text-transform-uppercase'
-                    )}
-                  >
-                    {COPY.more}
-                  </Heading>
-                  <Text
-                    is='p'
-                    dense
-                    className={classNames(
-                      `${CLASS_NAME}__description`,
-                      'kicl-font-size-small'
-                    )}
-                  >
-                    {COPY.moreLede}
-                  </Text>
-                  <HyperLink
-                    className={`${CLASS_NAME}__bookmark`}
-                    lookLikeButton
-                    to={`/${EXPERIMENTS}`}
-                    variant='ghost'
-                  >
-                    {COPY.bookmark}
-                  </HyperLink>
-                </span>
-              </Layout>
-            </div>
-          </ListItem>
-        </List>
+                <div
+                  aria-hidden
+                  className={classNames(
+                    `${CLASS_NAME}__plate`,
+                    'kicl-position-absolute'
+                  )}
+                />
+                <div
+                  className={classNames(
+                    `${CLASS_NAME}__screen`,
+                    'kicl-position-relative'
+                  )}
+                >
+                  <Layout alignContent='end' autoFlow='row' gap='narrow'>
+                    <span className={`${CLASS_NAME}__body`}>
+                      <Text
+                        is='span'
+                        dense
+                        variant='secondary'
+                        className={classNames(
+                          `${CLASS_NAME}__index`,
+                          'kicl-font-size-small',
+                          'kicl-text-transform-uppercase'
+                        )}
+                      >
+                        {`No. ${index + 1}`}
+                      </Text>
+                      <Heading
+                        is={index === 0 ? 'h1' : 'h2'}
+                        dense
+                        className={classNames(
+                          `${CLASS_NAME}__title`,
+                          'kicl-text-transform-uppercase'
+                        )}
+                      >
+                        {experiment.title}
+                      </Heading>
+                      <Text
+                        is='p'
+                        dense
+                        className={classNames(
+                          `${CLASS_NAME}__description`,
+                          'kicl-font-size-small'
+                        )}
+                      >
+                        {experiment.description}
+                      </Text>
+                      <HyperLink
+                        className={`${CLASS_NAME}__open`}
+                        lookLikeButton
+                        to={experiment.to}
+                      >
+                        {COPY.open}
+                      </HyperLink>
+                    </span>
+                  </Layout>
+                </div>
+              </ListItem>
+            ))}
+          </List>
+        </div>
       </div>
+
+      <section
+        className={classNames(`${CLASS_NAME}__more`, 'kicl-position-relative')}
+      >
+        <div className={`${CLASS_NAME}__screen`}>
+          <Layout alignContent='end' autoFlow='row' gap='narrow'>
+            <span className={`${CLASS_NAME}__body`}>
+              <Text
+                is='span'
+                dense
+                variant='secondary'
+                className={classNames(
+                  `${CLASS_NAME}__index`,
+                  'kicl-font-size-small',
+                  'kicl-text-transform-uppercase'
+                )}
+              >
+                {COPY.next}
+              </Text>
+              <Heading
+                is='h2'
+                dense
+                className={classNames(
+                  `${CLASS_NAME}__title`,
+                  'kicl-text-transform-uppercase'
+                )}
+              >
+                {COPY.more}
+              </Heading>
+              <HyperLink
+                className={`${CLASS_NAME}__bookmark`}
+                lookLikeButton
+                to={`/${EXPERIMENTS}`}
+                variant='ghost'
+              >
+                {COPY.bookmark}
+              </HyperLink>
+            </span>
+          </Layout>
+        </div>
+      </section>
     </div>
   </Layout>
 );
