@@ -1,0 +1,105 @@
+/*
+ * The stage reads every colour off its canvas, so the theme decides them
+ * here and the shader only reads. `paper` is the body background: the
+ * canvas covers the view edge to edge and any difference would show at its
+ * border. The inks are laid down in order, first underneath, and the
+ * shader leans the first two warm and the last two cool as the track's
+ * warmth asks, so they are arranged that way here.
+ *
+ * `cell` and `levels` are the dither's raster parameters, as on the home
+ * page. All of it has to be literal at build time: the stage parses these,
+ * and a script reading a custom property gets `color-mix()` back
+ * unevaluated.
+ */
+
+$muted: 46%;
+$muted-dark: 78%;
+$light-warm-1: color.mix($white, $yellow, $muted, $method: oklab);
+$light-warm-2: color.mix($white, $orange, $muted + 6%, $method: oklab);
+$light-cool-1: color.mix($white, $blue, $muted, $method: oklab);
+$light-cool-2: color.mix($white, $red, $muted + 4%, $method: oklab);
+$dark-warm-1: color.mix(
+  $black,
+  color.adjust($orange, $hue: -6deg),
+  $muted-dark,
+  $method: oklab
+);
+$dark-warm-2: color.mix($black, $yellow, $muted-dark + 4%, $method: oklab);
+$dark-cool-1: color.mix(
+  $black,
+  color.adjust($blue, $saturation: 18%, $lightness: 14%),
+  $muted-dark - 8%,
+  $method: oklab
+);
+$dark-cool-2: color.mix($black, $red, $muted-dark, $method: oklab);
+
+:root {
+  --kicl--views--experiments--music-visualiser__stage--cell: 1px;
+  --kicl--views--experiments--music-visualiser__stage--levels: 64;
+  --kicl--views--experiments--music-visualiser__stage--paper: #{$white};
+  --kicl--views--experiments--music-visualiser__stage--ink-1: #{$light-warm-1};
+  --kicl--views--experiments--music-visualiser__stage--ink-2: #{$light-warm-2};
+  --kicl--views--experiments--music-visualiser__stage--ink-3: #{$light-cool-1};
+  --kicl--views--experiments--music-visualiser__stage--ink-4: #{$light-cool-2};
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--experiments--music-visualiser__stage--paper: #{$black};
+    --kicl--views--experiments--music-visualiser__stage--ink-1: #{$dark-warm-1};
+    --kicl--views--experiments--music-visualiser__stage--ink-2: #{$dark-warm-2};
+    --kicl--views--experiments--music-visualiser__stage--ink-3: #{$dark-cool-1};
+    --kicl--views--experiments--music-visualiser__stage--ink-4: #{$dark-cool-2};
+  }
+}
+
+.kicl--views--experiments--music-visualiser {
+  --kicl--views--experiments--music-visualiser--inset: var(--kicl-gutter-wider);
+
+  @include query('≤tablet') {
+    --kicl--views--experiments--music-visualiser--inset: var(--kicl-gutter);
+  }
+
+  /*
+   * Sized to the viewport, not the parent: the Experiments shell centres its
+   * child in a grid track, and everything in here is absolutely positioned,
+   * so a percentage would resolve against a track that has shrunk to nothing.
+   */
+  block-size: 100dvb;
+  inline-size: 100dvi;
+  overflow: hidden;
+
+  &__stage {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  &__chrome {
+    inline-size: 100%;
+    padding: var(--kicl--views--experiments--music-visualiser--inset);
+    padding-block-end: max(
+      var(--kicl--views--experiments--music-visualiser--inset),
+      env(safe-area-inset-bottom)
+    );
+    transition: opacity var(--kicl-transition-duration-slow)
+      var(--kicl-ease-sine-out);
+
+    &--gate {
+      max-inline-size: 40rem;
+      margin-inline: auto;
+      padding-block-start: var(--kicl--widgets--global-header--block-size);
+    }
+
+    &--idle {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &__now-playing {
+      max-inline-size: 28rem;
+    }
+
+    &__volume {
+      inline-size: var(--kicl-size-10x);
+      accent-color: var(--kicl-body-color);
+    }
+  }
+}

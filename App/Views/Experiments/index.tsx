@@ -7,6 +7,7 @@ import { Navigate, Route as Origin } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Views
+import MusicVisualiser from './MusicVisualiser';
 import TreeOfLife from './TreeOfLife';
 
 // Constants
@@ -27,5 +28,6 @@ export default (
   <Origin path={PATH} element={<Lazy />}>
     <Origin index element={<Navigate to='tree-of-life' replace />} />
     {TreeOfLife}
+    {MusicVisualiser}
   </Origin>
 );

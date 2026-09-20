@@ -1,23 +1,102 @@
 # Music Visualiser
 
-An experiment, built from scratch, step by step. Nothing here yet but this
-note, which carries the context from the session that scoped it so the next
-session can pick up without repeating the research.
+A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at
+random one after another; the whole viewport is a generative picture that
+answers the sound and reshapes itself as a track moves through its sections.
 
-## Where it goes
+Route: `/experiments/music-visualiser`, wired in `App/Views/Experiments/index.tsx`.
 
-- This folder, `App/Views/Experiments/MusicVisualiser`.
-- Wired as a route under Experiments the way `TreeOfLife` is, in
-  `App/Views/Experiments/index.tsx`.
-- Follows `CLAUDE.md`: `@/Components` over raw DOM, `kicl-*` utility classes,
-  design tokens over magic numbers, single quotes, `@/` path aliases.
+## What is built
+
+```
+MusicVisualiser/
+  Spec.ts            the shared vocabulary: Track, Source, Vibe, Features, Provider
+  constants.ts       route segment, class root, storage key
+  index.tsx          the route, lazy like TreeOfLife
+  Contents.tsx       Stage + Chrome around one useRadio()
+  useRadio.ts        playback state: engine, queue, play/pause/skip, volume
+  Chrome.tsx         the gate, now-playing card and controls; fades when idle
+  Stage.tsx          the canvas: reads the palette off CSS, runs the frame loop
+  Styles.scss        palette per theme as custom properties, layout, chrome
+  Audio/
+    engine.ts        one AudioContext: source → input → analyser → master
+    features.ts      energy, three bands, centroid, flux, onsets; smoothed at
+                     0.08 s, 2 s and 15 s
+    synth.ts         the built-in station, scheduled from a seeded generator
+  Providers/
+    index.ts         asks each provider in turn; the built-in one never fails
+    builtIn.ts       "Ki radio": recipes for the synth, with names and vibes
+  Scenes/
+    shader.ts        three scenes in one fragment shader, blended by u_mix
+    renderer.ts      program, quad, uniforms
+  Director/
+    index.ts         which scene, and when to move to the next
+```
+
+### How the pieces fit
+
+- **Provider seam.** `Providers/Spec` is `next(played) → Track`. A track's
+  `source` is either `{ kind: 'stream', url }`, which the engine plays through
+  a media element, or `{ kind: 'synth', seed, style }`, which it synthesises.
+  The rest of the view cannot tell them apart. The catalogue provider (Audius
+  through the backend, see below) goes in front of the built-in one in
+  `Providers/index.ts` once it exists.
+- **Built-in station.** Exists so the visualiser works with no network and so
+  the visuals can be checked against a known signal. Three styles: `piano`
+  (keys over a held chord, pentatonic melody), `lofi` (the same through a
+  low-pass with a soft kick, a brushed hat and crackle), `ambient` (detuned
+  pads and sparse keys, long reverb). Deterministic per seed.
+- **Vibe.** Decided before a note plays: family, energy, warmth and scene
+  weights. The built-in station sets it per style. For catalogue tracks it
+  will come from metadata and, later, the backend's text-model chain.
+- **Features.** Per frame from the analyser, then smoothed three ways. Fast
+  drives motion, medium sets the onset threshold, slow describes the section.
+- **Director.** Cuts to a new scene when a track starts, when the slow
+  features drift far enough from where the scene began (a new section), or
+  after a maximum dwell. Never before a minimum dwell, and it waits a couple
+  of seconds for an onset so the cut lands on a note. Crossfade is four
+  seconds.
+- **Scenes.** `pools` (drifting ellipses of ink, bass swells them), `ribbons`
+  (domain-warped bands, mids push the flow, brightness tightens them),
+  `rings` (each onset starts a ring from the centre). Colour is inks over
+  paper in Oklab with a light ordered dither, matching the home background.
+  The palette comes from custom properties in `Styles.scss`, per theme.
+- **Chrome.** The opening gate is the one gesture the browser needs before
+  audio may start. After that: station badge, title, artist, attribution,
+  play/pause, skip, volume. Space toggles, `n` or right arrow skips. The
+  chrome fades after four idle seconds and returns on any movement. Volume
+  persists through the local storage provider. Reduced motion holds the
+  field still and draws a couple of frames a second.
+
+### Verified
+
+In a cloud session with Playwright and SwiftShader: the gate renders, play
+starts a piano piece, rings fire on onsets, skip moves to a lo-fi piece and
+the director crossfades to ribbons, the chrome fades on idle. Console is
+clean apart from the blocked Typekit host. Typecheck, oxlint, stylelint and
+Prettier pass.
+
+## Next
+
+1. **Backend Music module** in `Ki.CL-back`: an Audius adapter, a
+   `MusicTracks` collection, a `MusicNext` query returning a track with its
+   vibe and a same-origin stream path, and an Express stream route with
+   range support. The host proxies `/music` the way it proxies
+   `/assets/taxon-visual`. Blocked until the network policy actually lets a
+   session reach `*.audius.co`; see below.
+2. **Catalogue provider** in `Providers/`, in front of the built-in station,
+   reading `MusicNext` through the federated `api` client.
+3. **Vibe from the text chain** on the backend, stored on the track record,
+   with a rule-based fallback.
+4. **Storage cache** for audio and artwork, with expiry and re-verify.
+5. **Jamendo** behind the same adapter.
 
 ## Where the music comes from
 
-Research done in the previous session, September 2026. The constraint that
-decides everything: an `<audio>` element plays almost anything, but the Web
-Audio analyser can only read a stream whose server sends
-`Access-Control-Allow-Origin`, or one proxied through our own origin.
+Research done in September 2026. The constraint that decides everything: an
+`<audio>` element plays almost anything, but the Web Audio analyser can only
+read a stream whose server sends `Access-Control-Allow-Origin`, or one
+proxied through our own origin.
 
 Recommended, in order:
 
@@ -40,52 +119,32 @@ Free Music Archive (API shut down, hotlinking prohibited), radio-browser.info
 streams (third-party Icecast, no CORS), Spotify, Deezer and Apple (previews
 only, terms).
 
-## Design decisions already taken
-
-- Route provider audio through a same-origin `/music/*` proxy using the
-  existing `App/Env` module pattern, where each module exports
-  `{ path, middleware, proxy }` and both `.Client` (Vite) and `.Server`
-  (Express) fold them in. That takes CORS off the table.
-- Put the provider behind an adapter so Jamendo can be added after Audius.
-- First step in the next session: live-check CORS headers on
-  `api.audius.co` and `*.storage.jamendo.com` streams. See the blocked
-  attempt below before trying again.
-
 ## Blocked: egress to Audius and Jamendo
 
-Attempted in a cloud session, 20 September 2026. No headers were read.
+Attempted in cloud sessions on 20 September 2026. No headers were read.
 
 - Every request to `api.audius.co`, `discoveryprovider.audius.co`,
   `api.jamendo.com` and `prod-1.storage.jamendo.com` failed at the egress
   proxy with a 403 on the CONNECT tunnel. The providers never answered.
 - The proxy itself was healthy: `registry.npmjs.org` returned 200 through
   it, and WebFetch reported `EGRESS_BLOCKED` for `api.audius.co`.
-- The previous session believed the allowlist already included these hosts.
-  This container did not see that. Either the change did not save, it was
-  made to a different environment, or the container predates it.
+- Later the same day the environment's "Additional allowed domains" list
+  showed `*.audius.co`, `*.jamendo.com`, `docs.audius.org` and
+  `devportal.jamendo.com`, yet a session spawned fresh into that environment
+  still got a 403 on CONNECT for all of them, the explicitly named hosts
+  included. So the list as displayed was not what the proxy enforced. Check
+  that the environment form was actually saved, and that the session is
+  created in that environment, before spending another session on it.
 
-Before retrying: add the hosts to the environment's network policy and
-start a fresh session, since the policy is read at container start. Audius
-discovery nodes have many hostnames, so allow `*.audius.co` rather than
-naming nodes. Jamendo streams come from `*.storage.jamendo.com`. Then the
-check is a few curls, sending an `Origin` header and reading
-`Access-Control-Allow-Origin` from the response, one on the API and one on
-a stream URL after following its redirect.
-
-Second attempt, later the same day: the environment's "Additional allowed
-domains" list showed `*.audius.co`, `*.jamendo.com`, `docs.audius.org` and
-`devportal.jamendo.com`, yet a session spawned fresh into that environment
-still got a 403 on CONNECT for all of them, the explicitly named hosts
-included. So the list as displayed was not what the proxy enforced. Check
-that the environment form was actually saved, and that the session is
-created in that environment, before spending another session on it.
+When it works, the check is a few curls, sending an `Origin` header and
+reading `Access-Control-Allow-Origin` from the response, one on the API and
+one on a stream URL after following its redirect.
 
 ## Running the app in a cloud session
 
-This now lives in the repo. A SessionStart hook
-(`.claude/hooks/session-start.sh`, in both repos) does the environment setup
-when a web session opens, and the `cloud-session` skill
-(`.claude/skills/cloud-session/`) has the run, stand-in-backend and
+A SessionStart hook (`.claude/hooks/session-start.sh`, in both repos) does
+the environment setup when a web session opens, and the `cloud-session`
+skill (`.claude/skills/cloud-session/`) has the run, stand-in-backend and
 screenshot recipes, including `serve-remote.mjs`, which serves the backend's
 built Client package so the site renders without Mongo.
 
