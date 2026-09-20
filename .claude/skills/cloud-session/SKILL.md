@@ -41,6 +41,8 @@ SessionStart hook has already run codegen and built `Client/dist`, so:
 
 ```bash
 node .claude/skills/cloud-session/serve-remote.mjs &   # serves ../Ki.CL-back/Client/dist
+# With KICL_STATIC_DIR=<dir> it also serves <dir> at /assets/static, with byte
+# ranges: lay files out as in the bucket (music/open-lofi/*.mp3) to try them.
 make run
 ```
 
@@ -78,7 +80,9 @@ const browser = await chromium.launch({
   },
 });
 const page = await browser.newPage({ ignoreHTTPSErrors: true });
-await page.goto('https://localhost.kicl.com:3001/', { waitUntil: 'networkidle' });
+await page.goto('https://localhost.kicl.com:3001/', {
+  waitUntil: 'networkidle',
+});
 await page.waitForTimeout(8000); // entrance animations; earlier is a blank page
 await page.screenshot({ path: 'home.png', fullPage: true });
 await browser.close();

@@ -21,7 +21,8 @@ const GROUP = 'self-composed';
 /** Seconds per piece. Long enough to settle into; short enough to vary. */
 const DURATION_SECONDS = 150;
 
-const FAMILIES: VibeFamily[] = ['piano', 'lofi', 'ambient'];
+/* Lo-fi comes from the Open Lo-Fi catalogue now; the station keeps its other two. */
+const FAMILIES: VibeFamily[] = ['piano', 'ambient'];
 
 const VIBES: Record<VibeFamily, Vibe> = {
   ambient: {
@@ -166,8 +167,8 @@ const builtIn: Provider = {
   name: NAME,
   async next(played, type) {
     /* Held to a family if asked; otherwise never the family just played. */
-    const families = type
-      ? [type]
+    const families = isFamily(type ?? '')
+      ? [type as VibeFamily]
       : FAMILIES.filter(
           (family) => !played.at(-1)?.startsWith(`${GROUP}/${family}/`)
         );

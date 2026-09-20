@@ -62,8 +62,10 @@ export type Attribution = {
 
 /**
  * A track lives at `/:group/:type/:id` beneath the view: the group is its
- * provider's slug, the type its family, the id the segment the provider
- * can resolve it from again. `station` is the group's display name.
+ * provider's slug, the type one of that provider's own types (a family for
+ * the built-in station, a category for a catalogue), the id the segment
+ * the provider can resolve it from again. `station` is the group's display
+ * name. The visuals read the family from `vibe`, never from `type`.
  */
 export type Track = {
   artist: string;
@@ -73,17 +75,17 @@ export type Track = {
   source: Source;
   station: string;
   title: string;
-  type: VibeFamily;
+  type: string;
   vibe: Vibe;
 };
 
 /**
  * Where the tracks come from. One provider is one group in the URL.
  *
- * `types` are its families, in order; the first is what its index route
- * redirects to. `next` gets the keys already played this session so it can
- * avoid repeats, and may be held to one type; it may still repeat once the
- * pool is exhausted.
+ * `types` are its own, in order, as URL segments; the first is what its
+ * index route redirects to. `next` gets the keys already played this
+ * session so it can avoid repeats, and may be held to one type; it may
+ * still repeat once the pool is exhausted.
  */
 export type Provider = {
   /** The track at `/:type/:id` within this group, or `null` if there is none. */
@@ -91,8 +93,8 @@ export type Provider = {
   /** URL segment. Lowercase, hyphenated. */
   group: string;
   name: string;
-  next(played: string[], type?: VibeFamily): Promise<Track>;
-  types: readonly VibeFamily[];
+  next(played: string[], type?: string): Promise<Track>;
+  types: readonly string[];
 };
 
 /**

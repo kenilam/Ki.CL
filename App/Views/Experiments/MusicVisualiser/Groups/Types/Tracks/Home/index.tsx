@@ -62,8 +62,25 @@ const Home: React.FunctionComponent = () => {
           variant='secondary'
           className='kicl-font-size-medium'
         >
-          {track.station} · {track.type}
+          {track.station} · {track.artist}
         </Text>
+        {track.attribution.url ? (
+          <HyperLink
+            className='kicl-font-size-small'
+            to={track.attribution.url}
+          >
+            {track.attribution.label}
+          </HyperLink>
+        ) : (
+          <Text
+            is='p'
+            dense
+            variant='secondary'
+            className='kicl-font-size-small'
+          >
+            {track.attribution.label}
+          </Text>
+        )}
         <HyperLink
           aria-label={COPY.play}
           lookLikeButton

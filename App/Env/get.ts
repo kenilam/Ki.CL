@@ -12,9 +12,16 @@ dotenv.config({ path: `${appRoot.path}/.env` });
  */
 
 const get = () => {
-  const { KICL_MUSIC_SAMPLES_URL, NODE_ENV } = process.env || {};
+  const { KICL_MUSIC_OPEN_LOFI_URL, KICL_MUSIC_SAMPLES_URL, NODE_ENV } =
+    process.env || {};
 
   return {
+    /**
+     * Where the Music Visualiser's Open Lo-Fi tracks are served from. Unset,
+     * the view uses the static bucket through the same-origin `/assets/static`
+     * route, at `music/open-lofi/`.
+     */
+    KICL_MUSIC_OPEN_LOFI_URL,
     /**
      * Where the Music Visualiser's sampled instruments are served from. Unset,
      * the view uses the static bucket through the same-origin `/assets/static`

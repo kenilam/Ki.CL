@@ -66,7 +66,11 @@ MusicVisualiser/
     synth.ts         the renderer: voices, bus, reverb, scheduling
     random.ts        the seeded generator
   Providers/
-    index.ts         asks each provider in turn; the built-in one never fails
+    index.ts         the stations in order; asks each in turn
+    OpenLofi/        "Open Lo-Fi": the CC0 catalogue, streamed from the bucket
+      index.ts       the provider: categories as types, a vibe per category
+      catalog.ts     the collection's catalog.json as data; regenerate with it
+      upload.sh      puts the release in the bucket at music/open-lofi/
     builtIn.ts       "Self composed Radio": recipes for the synth, with names and vibes
   Scenes/
     shader.ts        twelve scenes in one fragment shader, blended by u_mix
@@ -80,14 +84,24 @@ MusicVisualiser/
 - **Provider seam.** `Providers/Spec` is `next(played) → Track`. A track's
   `source` is either `{ kind: 'stream', url }`, which the engine plays through
   a media element, or `{ kind: 'synth', seed, style }`, which it synthesises.
-  The rest of the view cannot tell them apart. The catalogue provider (Audius
-  through the backend, see below) goes in front of the built-in one in
-  `Providers/index.ts` once it exists.
+  The rest of the view cannot tell them apart. A provider's types are its
+  own: categories for a catalogue, families for the synth. An Audius
+  provider through the backend (see below) would go in front of both once
+  that module exists.
+- **Open Lo-Fi.** The first station: 166 lo-fi tracks in ten categories,
+  released to the public domain (CC0) by Bilal Tahir at
+  <https://github.com/btahir/open-lofi>, generated with Suno. Each category
+  is a type in the URL (`open-lofi/late-night/last-train-home`), with its
+  own vibe for the picture. The files are streamed from the static bucket
+  through the same-origin `/assets/static/music/open-lofi/` route, so the
+  analyser may read them; `KICL_MUSIC_OPEN_LOFI_URL` points elsewhere for
+  a try-out. `upload.sh` puts the release in the bucket. The catalogue is
+  compiled in as `catalog.ts` from the collection's `catalog.json`.
 - **Built-in station.** Exists so the visualiser works with no network and so
-  the visuals can be checked against a known signal. Three styles: `piano`
-  (keys over held chords, pentatonic melody, bass, the lightest pulse),
-  `lofi` (the same through a low-pass with a kick, a rim, a brushed hat and
-  crackle), `ambient` (detuned pads, a drone and sparse keys, long reverb).
+  the visuals can be checked against a known signal. Two styles now that
+  lo-fi comes from the catalogue: `piano` (keys over held chords, pentatonic
+  melody, bass, the lightest pulse) and `ambient` (detuned pads, a drone and
+  sparse keys, long reverb); the `lofi` recipe stays in the composer.
   Deterministic per seed. Every piece is layered: comping on the keys, the
   melody on its own lead (an electric-piano tone off the piano station, the
   piano itself on it), a quiet pad every other bar, bass, and kick, rim and
@@ -192,7 +206,8 @@ repo; the method is in the session notes.
 
 In a cloud session with Playwright and SwiftShader: the index gate links to
 the first group, which lands on a track's gate; its play link starts the
-piece on `/play`; skip and back move between `/play` routes; pause leaves
+piece on `/play` (a catalogue track streams, its clock advancing; a
+synthesised one sounds); skip and back move between `/play` routes; pause leaves
 for the gate and play there resumes; a cold `/play` link lands on the gate
 and plays on the press; an unknown id falls back to the type's pick. All twelve scenes compile and
 draw in both themes. The composer was audited over three hundred seeds
@@ -208,8 +223,8 @@ the blocked Typekit host. Typecheck, oxlint, stylelint and Prettier pass.
    range support. The host proxies `/music` the way it proxies
    `/assets/taxon-visual`. Blocked until the network policy actually lets a
    session reach `*.audius.co`; see below.
-2. **Catalogue provider** in `Providers/`, in front of the built-in station,
-   reading `MusicNext` through the federated `api` client.
+2. **Audius provider** in `Providers/`, in front of Open Lo-Fi, reading
+   `MusicNext` through the federated `api` client.
 3. **Vibe from the text chain** on the backend, stored on the track record,
    with a rule-based fallback.
 4. **Storage cache** for audio and artwork, with expiry and re-verify.

@@ -79,6 +79,9 @@ export default function useRadio(): Radio {
   const samplesUrl = env?.KICL_MUSIC_SAMPLES_URL || undefined;
   const navigate = useNavigate();
 
+  /* Before any route beneath asks the providers for a track. */
+  radio.configure({ openLofiUrl: env?.KICL_MUSIC_OPEN_LOFI_URL || undefined });
+
   const engine = useRef<Engine | null>(null);
   const history = useRef<string[]>([]);
   const generation = useRef(0);
