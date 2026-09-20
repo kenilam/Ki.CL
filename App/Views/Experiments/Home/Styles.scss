@@ -19,10 +19,14 @@
   --kicl--views--experiments__home--measure: 38rem;
   --kicl--views--experiments__home--width: 64rem;
   --kicl--views--experiments__home--inset: var(--kicl-gutter-wider);
-  --kicl--views--experiments__home--band: 28rem;
+  --kicl--views--experiments__home--band: 70dvb;
 
-  /* How much taller than its band a plate is, and so how far it can slide. */
-  --kicl--views--experiments__home--overscan: 12%;
+  /*
+   * How much taller than its band a plate is, and so how far it can slide.
+   * A third of the band's height: enough to be seen, not enough to be a
+   * different picture at the top and the bottom.
+   */
+  --kicl--views--experiments__home--overscan: 34%;
   --kicl--views--experiments__home--scrim: color-mix(
     in oklab,
     var(--kicl-body-background-color) 72%,
@@ -44,7 +48,7 @@
   );
 
   @include query('≤tablet') {
-    --kicl--views--experiments__home--band: 22rem;
+    --kicl--views--experiments__home--band: 60dvb;
   }
 
   box-sizing: border-box;
@@ -68,7 +72,6 @@
     padding-block-end: var(--kicl-gutter-widest);
   }
 
-  &__lede,
   &__description {
     max-inline-size: var(--kicl--views--experiments__home--measure);
   }
@@ -166,27 +169,14 @@
     min-inline-size: var(--kicl-gutter-wide);
   }
 
-  &__title,
-  &__arrow {
-    transition:
-      color var(--kicl-transition-duration-slow) var(--kicl-ease-sine-out),
-      translate var(--kicl-transition-duration-slow) var(--kicl-ease-sine-out);
-  }
-
-  &__arrow {
-    font-size: var(--kicl-font-size-large);
+  &__title {
+    transition: color var(--kicl-transition-duration-slow)
+      var(--kicl-ease-sine-out);
   }
 
   &__link:hover &__title,
-  &__link:focus-visible &__title,
-  &__link:hover &__arrow,
-  &__link:focus-visible &__arrow {
+  &__link:focus-visible &__title {
     color: var(--kicl--views--experiments__home--accent);
-  }
-
-  &__link:hover &__arrow,
-  &__link:focus-visible &__arrow {
-    translate: var(--kicl-size) calc(var(--kicl-size) * -1);
   }
 }
 

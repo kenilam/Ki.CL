@@ -3,9 +3,6 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Icons
-import { Ri } from '@/Icons';
-
 // Hooks
 import { useResponsive } from '@/Hooks';
 
@@ -23,8 +20,6 @@ import { toPath as toMusicVisualiserPath } from '@/Views/Experiments/MusicVisual
 const CLASS_NAME = 'kicl--views--experiments__home';
 
 const COPY = {
-  eyebrow: 'Ki.CL',
-  lede: 'Things built to see what happens. Each one is a small world of its own; open one and stay a while.',
   title: 'Experiments',
 };
 
@@ -50,12 +45,12 @@ const EXPERIMENTS_LIST = [
 ];
 
 /**
- * The index of the experiments: a title, a line, and one full-width band
+ * The index of the experiments: a title, and one full-width band
  * a piece, the whole band a link. Behind each band its plate drifts more
  * slowly than the page as it scrolls, on a scroll-driven animation the
  * stylesheet declares, so there is no scroll handler and nothing moves for
- * a reader who has asked for less motion. The band lights its title and
- * moves its arrow when pointed at.
+ * a reader who has asked for less motion. The band lights its title when
+ * pointed at.
  */
 const Home: React.FunctionComponent = () => {
   const { isTablet } = useResponsive();
@@ -65,14 +60,6 @@ const Home: React.FunctionComponent = () => {
       <div className={CLASS_NAME}>
         <Layout autoFlow='row' gap='narrow' justifyItems='start'>
           <header className={`${CLASS_NAME}__header`}>
-            <Text
-              is='p'
-              dense
-              variant='secondary'
-              className='kicl-font-size-small kicl-text-transform-uppercase'
-            >
-              {COPY.eyebrow}
-            </Text>
             <Heading
               is='h1'
               dense
@@ -82,17 +69,6 @@ const Home: React.FunctionComponent = () => {
             >
               {COPY.title}
             </Heading>
-            <Text
-              is='p'
-              dense
-              variant='secondary'
-              className={classNames(
-                `${CLASS_NAME}__lede`,
-                'kicl-font-size-medium'
-              )}
-            >
-              {COPY.lede}
-            </Text>
           </header>
         </Layout>
 
@@ -164,10 +140,6 @@ const Home: React.FunctionComponent = () => {
                         {experiment.description}
                       </Text>
                     </span>
-                    <Ri.RiArrowRightUpLine
-                      aria-hidden
-                      className={`${CLASS_NAME}__arrow`}
-                    />
                   </span>
                 </Layout>
               </HyperLink>
