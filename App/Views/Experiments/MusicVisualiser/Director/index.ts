@@ -35,7 +35,23 @@ const CENTROID_DRIFT = 0.09;
 /** Seconds to wait for an onset before cutting on the beat of the clock. */
 const ONSET_PATIENCE_SECONDS = 2.5;
 
-const SCENES: SceneName[] = ['pools', 'ribbons', 'rings'];
+const SCENES: SceneName[] = [
+  'pools',
+  'clouds',
+  'rings',
+  'bars',
+  'halo',
+  'wave',
+  'tunnel',
+  'kaleidoscope',
+  'stars',
+  'terrain',
+  'hive',
+  'orb',
+];
+
+/** How many of the last scenes a draw avoids, so the same few do not cycle. */
+const RECENT_LENGTH = 4;
 
 export type DirectorState = {
   /** From `0` (all `sceneA`) to `1` (all `sceneB`). */
@@ -54,15 +70,26 @@ export type Director = {
   update(dt: number, now: number, features: Smoothed): void;
 };
 
-/** A weighted draw over the vibe's scenes, never landing on `except`. */
-function choose(vibe: Vibe, except: SceneName | null): SceneName {
-  const entries = SCENES.map((scene) => ({
-    scene,
-    weight: scene === except ? 0 : (vibe.scenes[scene] ?? 0),
-  })).filter((entry) => entry.weight > 0);
+/**
+ * A weighted draw over the vibe's scenes, never landing on one seen
+ * lately. When the vibe leaves too few to avoid them all, only the one on
+ * now is avoided.
+ */
+function choose(vibe: Vibe, recent: SceneName[]): SceneName {
+  const weigh = (avoid: SceneName[]) =>
+    SCENES.map((scene) => ({
+      scene,
+      weight: avoid.includes(scene) ? 0 : (vibe.scenes[scene] ?? 0),
+    })).filter((entry) => entry.weight > 0);
+  const current = recent.slice(-1);
+  let entries = weigh(recent);
 
   if (entries.length === 0) {
-    return SCENES.find((scene) => scene !== except) ?? 'pools';
+    entries = weigh(current);
+  }
+
+  if (entries.length === 0) {
+    return SCENES.find((scene) => !current.includes(scene)) ?? 'pools';
   }
 
   const total = entries.reduce((sum, entry) => sum + entry.weight, 0);
@@ -97,6 +124,7 @@ export function createDirector(): Director {
   let baselineCentroid = 0;
   let baselineSet = false;
   let ringCursor = 0;
+  let recent: SceneName[] = [];
 
   const begin = (next: SceneName) => {
     if (fading) {
@@ -104,6 +132,7 @@ export function createDirector(): Director {
       state.sceneA = state.sceneB;
     }
 
+    recent = [...recent, next].slice(-RECENT_LENGTH);
     state.sceneB = next;
     state.mix = 0;
     fading = true;
@@ -117,7 +146,7 @@ export function createDirector(): Director {
     state,
     setVibe(next) {
       vibe = next;
-      begin(choose(next, fading ? state.sceneB : state.sceneA));
+      begin(choose(next, recent));
     },
     update(dt, now, features) {
       dwell += dt;
@@ -174,7 +203,7 @@ export function createDirector(): Director {
         const onBeat = features.fast.onset > 0.2;
 
         if (onBeat || waitingForOnset >= ONSET_PATIENCE_SECONDS) {
-          begin(choose(vibe, state.sceneA));
+          begin(choose(vibe, recent));
         }
       }
     },

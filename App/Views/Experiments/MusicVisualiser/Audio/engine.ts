@@ -31,12 +31,29 @@ const ANALYSER_SMOOTHING = 0.5;
 /** Seconds a volume change takes, so a slider drag does not click. */
 const VOLUME_RAMP_SECONDS = 0.05;
 
+/**
+ * How long to wait for the context to run before deciding the browser is
+ * holding it for a gesture. A context allowed to run does so at once; one
+ * that is not leaves `resume()` pending until the listener acts.
+ */
+const RESUME_TIMEOUT_MS = 400;
+
+/** Thrown by `play` when the browser wants a gesture before it will sound. */
+export class PlaybackBlockedError extends Error {
+  constructor() {
+    super('Playback needs a gesture first');
+    this.name = 'PlaybackBlockedError';
+  }
+}
+
 export type Engine = {
   /** Silence and detach whatever is playing. */
   clear(): void;
   readonly context: AudioContext;
   /** Latest smoothed features; updated by `update`. */
   readonly features: Smoothed;
+  /** The eased spectrum, one byte a band, low to high; see `features.ts`. */
+  readonly spectrum: Uint8Array;
   /** Whether a source is attached and not paused. */
   readonly isPlaying: boolean;
   pause(): void;
@@ -99,11 +116,26 @@ export function createEngine(
     }
   };
 
+  /* Read through a call: the state after an await is not what it was before. */
+  const running = () => context.state === 'running';
+
   const play: Engine['play'] = async (source, onEnded) => {
     clear();
 
-    if (context.state !== 'running') {
-      await context.resume();
+    if (!running()) {
+      const resumed = await Promise.race([
+        context.resume().then(
+          () => true,
+          () => false
+        ),
+        new Promise<boolean>((resolve) =>
+          window.setTimeout(() => resolve(false), RESUME_TIMEOUT_MS)
+        ),
+      ]);
+
+      if (!resumed || !running()) {
+        throw new PlaybackBlockedError();
+      }
     }
 
     if (source.kind === 'synth') {
@@ -148,6 +180,9 @@ export function createEngine(
     context,
     get features() {
       return extractor.smoothed;
+    },
+    get spectrum() {
+      return extractor.spectrum;
     },
     get isPlaying() {
       return playing && context.state === 'running';

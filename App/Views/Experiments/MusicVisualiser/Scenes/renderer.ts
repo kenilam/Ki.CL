@@ -3,6 +3,8 @@ import type {
   SceneName,
 } from '@/Views/Experiments/MusicVisualiser/Spec';
 
+import { SPECTRUM_BANDS } from '@/Views/Experiments/MusicVisualiser/Audio/features';
+
 import { FRAGMENT, MAX_INKS, MAX_RINGS, SCENE_INDEX, VERTEX } from './shader';
 
 /*
@@ -28,6 +30,8 @@ export type Frame = {
   sceneB: SceneName;
   seconds: number;
   slowEnergy: number;
+  /** `SPECTRUM_BANDS` bytes, low to high, or `null` before anything plays. */
+  spectrum: Uint8Array | null;
   warmth: number;
 };
 
@@ -111,9 +115,27 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
   gl.enableVertexAttribArray(position);
   gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
 
+  /*
+   * The spectrum rides in a one-row texture, one texel a band, linear
+   * filtering so a scene may read between bands. Unpack alignment is set
+   * to one byte since the row is not a multiple of four.
+   */
+  const audio = gl.createTexture();
+
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, audio);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
+
+  const silence = new Uint8Array(SPECTRUM_BANDS);
+
   const uniform = (name: string) => gl.getUniformLocation(program, name);
 
   const uniforms = {
+    audio: uniform('u_audio'),
     cell: uniform('u_cell'),
     centroid: uniform('u_centroid'),
     energy: uniform('u_energy'),
@@ -137,8 +159,11 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
   const inks = new Float32Array(MAX_INKS * 3);
   const paper = new Float32Array(3);
 
+  gl.uniform1i(uniforms.audio, 0);
+
   return {
     dispose() {
+      gl.deleteTexture(audio);
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
       gl.deleteShader(vertex);
@@ -155,6 +180,18 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
 
         unpack(ink ?? palette.paper, inks, index * 3);
       }
+
+      gl.texImage2D(
+        gl.TEXTURE_2D,
+        0,
+        gl.LUMINANCE,
+        SPECTRUM_BANDS,
+        1,
+        0,
+        gl.LUMINANCE,
+        gl.UNSIGNED_BYTE,
+        frame.spectrum ?? silence
+      );
 
       gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
       gl.uniform1f(uniforms.time, frame.seconds);

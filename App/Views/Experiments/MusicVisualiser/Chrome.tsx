@@ -17,11 +17,14 @@ import {
   Text,
 } from '@/Components';
 
-// Hooks
-import type { Radio } from './useRadio';
+// Context
+import { useRadioContext } from './Context';
+
+// Partials
+import Gate from './Gate';
 
 // Constants
-import { CLASS_NAME as VIEW, toPath, toTrackPath } from './constants';
+import { CLASS_NAME as VIEW } from './constants';
 
 const CLASS_NAME = `${VIEW}__chrome`;
 
@@ -29,36 +32,28 @@ const CLASS_NAME = `${VIEW}__chrome`;
 const IDLE_SECONDS = 4;
 
 const COPY = {
+  blocked:
+    'Press play to hear it: the browser waits for a touch before it will sound.',
   copied: 'Link copied',
   copy: 'Copy link to this track',
-  lede: 'A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at random, one after another. Press play once and it keeps going.',
   next: 'Next track',
   pause: 'Pause',
   play: 'Play',
-  title: 'Music Visualiser',
   volume: 'Volume',
 };
 
 /** How long "copied" stays on the button. */
 const COPIED_MS = 1800;
 
-type Props = Radio;
-
 /**
- * Everything that is not the picture: the opening gate, the now-playing
- * card and the controls. It fades once the listener has been still for a
- * few seconds and comes back on any movement, so the stage is the page.
+ * The now-playing card and the controls, on the play route. They fade
+ * once the listener has been still for a few seconds and come back on any
+ * movement, so the stage is the page. A track reached by its link alone,
+ * with no gesture yet, shows its gate instead until one comes.
  */
-const Chrome: React.FunctionComponent<Props> = ({
-  error,
-  next,
-  requested,
-  setVolume,
-  state,
-  toggle,
-  track,
-  volume,
-}) => {
+const Chrome: React.FunctionComponent = () => {
+  const { error, next, setVolume, state, toggle, track, volume } =
+    useRadioContext();
   const [idle, setIdle] = useState(false);
   const [copied, setCopied] = useState(false);
   const playing = state === 'playing';
@@ -117,63 +112,13 @@ const Chrome: React.FunctionComponent<Props> = ({
     return () => window.removeEventListener('keydown', onKey);
   }, [next, toggle]);
 
-  if (state === 'idle') {
+  if (state === 'blocked' && track) {
     return (
-      <Layout
-        alignContent='center'
-        alignItems='center'
-        autoFlow='row'
-        gap='wide'
-        justifyContent='center'
-        justifyItems='center'
-      >
-        <section
-          className={classNames(
-            CLASS_NAME,
-            `${CLASS_NAME}--gate`,
-            'kicl-inset-0',
-            'kicl-position-absolute',
-            'kicl-text-align-center'
-          )}
-        >
-          <Heading is='h1' dense className='kicl-font-size-huge'>
-            {COPY.title}
-          </Heading>
-          <Text is='p' className='kicl-font-size-medium'>
-            {COPY.lede}
-          </Text>
-          {/*
-           * An anchor to the track it will play, so the control has a real
-           * destination: hover shows it, and a new tab opens the track's own
-           * gate. Audio needs the gesture itself, so the click starts
-           * playback here and the URL follows from that, rather than the
-           * link reloading the page into a browser that then refuses to
-           * play.
-           */}
-          <HyperLink
-            aria-label={COPY.play}
-            lookLikeButton
-            onClick={(event) => {
-              event.preventDefault();
-              toggle();
-            }}
-            to={requested ? toTrackPath(requested) : toPath()}
-            variant='ghost'
-          >
-            <Fa.FaPlay aria-hidden />
-          </HyperLink>
-          {requested ? (
-            <Text
-              is='p'
-              dense
-              variant='secondary'
-              className='kicl-font-size-small'
-            >
-              {requested.title} · {requested.artist}
-            </Text>
-          ) : null}
-        </section>
-      </Layout>
+      <Gate onPlay={toggle} title={track.title}>
+        <Text is='p' dense variant='secondary' className='kicl-font-size-small'>
+          {COPY.blocked}
+        </Text>
+      </Gate>
     );
   }
 

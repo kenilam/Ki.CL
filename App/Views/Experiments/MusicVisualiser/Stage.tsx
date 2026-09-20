@@ -202,6 +202,7 @@ const Stage: React.FunctionComponent<Props> = ({ engine, playing, track }) => {
         sceneB: state.sceneB,
         seconds,
         slowEnergy: features?.slow.energy ?? 0,
+        spectrum: engine?.spectrum ?? null,
         warmth: track?.vibe.warmth ?? 0.5,
       });
     };

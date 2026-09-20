@@ -24,7 +24,7 @@ import { createRandom, pick } from './random';
 
 export type Mode = 'major' | 'minor';
 
-export type Voice = 'bass' | 'hat' | 'keys' | 'kick' | 'pad' | 'rim';
+export type Voice = 'bass' | 'hat' | 'keys' | 'kick' | 'lead' | 'pad' | 'rim';
 
 /** One sound. `at` and `duration` are in beats from the bar's start. */
 export type Event = {
@@ -371,6 +371,19 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
         });
       }
     } else {
+      /* A pad under the keys every other bar: quiet, so it reads as air, not a chord. */
+      if (index % 2 === 0 && !breakdown) {
+        pad.forEach((midi, voice) => {
+          events.push({
+            at: 0,
+            duration: 8.1,
+            midi,
+            velocity: (0.3 + voice * 0.03) * arc,
+            voice: 'pad',
+          });
+        });
+      }
+
       hits(pick(roll, COMP[style][letter])).forEach((hit) => {
         chord.forEach((midi, voice) => {
           events.push({
@@ -414,7 +427,7 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
         duration: hit.duration * (style === 'ambient' ? 1.2 : 1.7),
         midi: midi + (section === 1 ? lift : 0),
         velocity: ((hit.at === 0 ? 0.85 : 0.7) + roll() * 0.12) * arc,
-        voice: 'keys',
+        voice: 'lead',
       });
     });
 

@@ -4,23 +4,27 @@ A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at
 random one after another; the whole viewport is a generative picture that
 answers the sound and reshapes itself as a track moves through its sections.
 
-Route: `/experiments/music-visualiser/:group/:type/:trackId`, wired in
-`App/Views/Experiments/index.tsx`. A group is a station (a provider), a
+Route: `/experiments/music-visualiser/:group/:type/:trackId/play`, wired
+in `App/Views/Experiments/index.tsx`. A group is a station (a provider), a
 type one of its families, a track one piece. Each level is its own route in
-its own folder, like TreeOfLife's versions, and every index redirects to its
-first child: the view to the first group, a group to its first type, a type
-to the track the station would play next. Unknown segments fall back the
-same way. The shell - stage, chrome, playback - is the top route's element
-and renders an outlet, so the URL can descend and change beneath it without
-the player remounting.
+its own folder, like TreeOfLife's versions:
+
+- the view's index shows a gate - the title and a play control - and the
+  control is a link to the first group;
+- a group's index redirects to its first type, and a type's index to the
+  track the station would play next, so any prefix lands on a track;
+- a track's route shows its gate: the title, `station · type`, and a play
+  control that links to the track's `/play` route;
+- `/play` is what sounds. Arriving there starts the track; leaving it stops
+  it.
 
 The URL is the source of truth for what is playing, as it is for the focused
-node in TreeOfLife. Every track that starts is written to it with `replace`,
-so the address bar is always a link to the piece; arriving on a track's URL
-shows its name on the gate, whose play control is an anchor to it, and plays
-it on the first press; a track id the station cannot resolve falls back to
-the next choice with a message; and back or forward through the history
-move between tracks. The built-in station's ids
+node in TreeOfLife. Skipping, and a track ending, navigate to the next
+track's `/play`, so the address bar is always a link to the piece and back
+or forward through the history move between tracks. A `/play` link opened
+cold, with no gesture yet, shows the track's gate as a button until the
+browser is given one. A track id the station cannot resolve goes back to
+its type, which picks another. The built-in station's ids
 (`self-composed/piano/1234`) name the seed, so a link plays the same piece
 every time. A copy-link control sits beside skip.
 
@@ -30,22 +34,26 @@ every time. A copy-link control sits beside skip.
 MusicVisualiser/
   Spec.ts            the shared vocabulary: Track, Source, Vibe, Features, Provider
   constants.ts       route segments and params, toPath, class root, storage key
-  index.tsx          the route; index redirects to the first group
+  index.tsx          the route; its index is the Landing gate
+  Landing.tsx        the view's gate: title, lede, a link to the first group
+  Gate.tsx           a title and a play control, centred on the stage
+  Context.ts         the radio and the resolved track, shared down the routes
   Groups/
     index.tsx        /:group - a station; index redirects to its first type
     Types/
       index.tsx      /:type - a family; index redirects to a track of it
       Tracks/
-        index.tsx    /:trackId - a piece; the leaf, drawn by the shell above
-  Contents.tsx       Stage + Chrome around one useRadio(), plus the outlet
-  useRadio.ts        playback state: engine, queue, play/pause/skip, volume
-  Chrome.tsx         the gate, now-playing card and controls; fades when idle
+        index.tsx    /:trackId - resolves the piece; index is its gate,
+                     /play is the Player, which starts it and shows Chrome
+  Contents.tsx       the shell: Stage over one useRadio(), plus the outlet
+  useRadio.ts        playback state: engine, start/stop, pause, skip, volume
+  Chrome.tsx         the now-playing card and controls; fades when idle
   Stage.tsx          the canvas: reads the palette off CSS, runs the frame loop
   Styles.scss        palette per theme as custom properties, layout, chrome
   Audio/
     engine.ts        one AudioContext: source → input → analyser → master
     features.ts      energy, three bands, centroid, flux, onsets; smoothed at
-                     0.08 s, 2 s and 15 s
+                     0.08 s, 2 s and 15 s; plus a 128-band spectrum texture
     compose.ts       the composer: tonal harmony, scribbletune rhythms, seeded
     instruments.ts   the sampled piano (smplr), loaded once per engine
     synth.ts         the renderer: voices, bus, reverb, scheduling
@@ -54,7 +62,7 @@ MusicVisualiser/
     index.ts         asks each provider in turn; the built-in one never fails
     builtIn.ts       "Self composed Radio": recipes for the synth, with names and vibes
   Scenes/
-    shader.ts        three scenes in one fragment shader, blended by u_mix
+    shader.ts        twelve scenes in one fragment shader, blended by u_mix
     renderer.ts      program, quad, uniforms
   Director/
     index.ts         which scene, and when to move to the next
@@ -73,7 +81,15 @@ MusicVisualiser/
   (keys over held chords, pentatonic melody, bass, the lightest pulse),
   `lofi` (the same through a low-pass with a kick, a rim, a brushed hat and
   crackle), `ambient` (detuned pads, a drone and sparse keys, long reverb).
-  Deterministic per seed.
+  Deterministic per seed. Every piece is layered: comping on the keys, the
+  melody on its own lead (an electric-piano tone off the piano station, the
+  piano itself on it), a quiet pad every other bar, bass, and kick, rim and
+  hat drawn as separate parts. The drums go round the station's tone
+  low-pass, which used to swallow the hats. Each piece draws a kit (kick
+  pitch and decay, hat colour, bass bite, tone, reverb) and a tempo within
+  seven percent of the style's; phrases end in fills, one phrase opens as a
+  breakdown with the drums out, and the second section may lift the melody
+  an octave and open the tone.
 - **Composer.** `compose.ts` is pure: seed and style in, a piece out, and the
   piece hands back any bar's events on request. Harmony comes from
   [tonal](https://github.com/tonaljs/tonal): the key's seventh chords, a
@@ -110,16 +126,28 @@ MusicVisualiser/
 - **Director.** Cuts to a new scene when a track starts, when the slow
   features drift far enough from where the scene began (a new section), or
   after a maximum dwell. Never before a minimum dwell, and it waits a couple
-  of seconds for an onset so the cut lands on a note. Crossfade is four
-  seconds.
-- **Scenes.** `pools` (drifting ellipses of ink, bass swells them), `ribbons`
-  (domain-warped bands, mids push the flow, brightness tightens them),
-  `rings` (each onset starts a ring from the centre). Colour is inks over
-  paper in Oklab with a light ordered dither, matching the home background.
-  The palette comes from custom properties in `Styles.scss`, per theme.
-- **Chrome.** The opening gate is the one gesture the browser needs before
-  audio may start. After that: station badge, title, artist, attribution,
-  play/pause, skip, volume. Space toggles, `n` or right arrow skips. The
+  of seconds for an onset so the cut lands on a note. Crossfade is nine
+  seconds, and the last four scenes shown are not drawn again.
+- **Scenes.** Twelve, all in one shader, each weighted per vibe in
+  `builtIn.ts`: `pools` (drifting ellipses of ink, bass swells them),
+  `clouds` (billowing masses on a slow wind, lit edges and shaded bellies),
+  `rings` (each onset starts a ring from the centre), `bars` (the spectrum
+  as mirrored columns), `halo` (the spectrum around a circle), `wave` (lines
+  summed from six bands, so they swell without jitter), `tunnel` (rings
+  receding to a wandering point, walls lit by the spectrum), `kaleidoscope`
+  (six mirrored wedges of warped noise), `stars` (three drifting layers of
+  points, each listening to one band), `terrain` (ridges one behind another,
+  raised by the spectrum), `hive` (a hexagonal tiling of nested hexagons,
+  the inks spiralling out in arms) and `orb` (a crumpled wireframe sphere
+  that breathes with the bass and glows with the energy). The spectrum
+  reaches them as a 128-band texture, each band eased and shown against its
+  own recent peak. Colour is inks over paper in Oklab with a light ordered
+  dither, matching the home background. The palette comes from custom
+  properties in `Styles.scss`, per theme.
+- **Chrome.** The gates are the one gesture the browser needs before audio
+  may start; the play link on a track's gate is it. On `/play`: title,
+  artist, attribution, play/pause, skip, copy link, volume. Space toggles,
+  `n` or right arrow skips. The
   chrome fades after four idle seconds and returns on any movement. Volume
   persists through the local storage provider. Reduced motion holds the
   field still and draws a couple of frames a second.
@@ -150,11 +178,15 @@ repo; the method is in the session notes.
 
 ### Verified
 
-In a cloud session with Playwright and SwiftShader: the gate renders, play
-starts a piano piece, rings fire on onsets, skip moves to a lo-fi piece and
-the director crossfades to ribbons, the chrome fades on idle. Console is
-clean apart from the blocked Typekit host. Typecheck, oxlint, stylelint and
-Prettier pass.
+In a cloud session with Playwright and SwiftShader: the index gate links to
+the first group, which lands on a track's gate; its play link starts the
+piece on `/play`; skip and back move between `/play` routes; pause pauses;
+a cold `/play` link shows the gate as a button and plays on the press; an
+unknown id falls back to the type's pick. All twelve scenes compile and
+draw in both themes. The composer was audited over three hundred seeds
+(no throws, 71 kick patterns, 141 bass rhythms) and recordings of the
+station were measured against the references. Console is clean apart from
+the blocked Typekit host. Typecheck, oxlint, stylelint and Prettier pass.
 
 ## Next
 

@@ -7,8 +7,20 @@
 /** The three families the visuals know how to dress. */
 export type VibeFamily = 'ambient' | 'lofi' | 'piano';
 
-/** Every scene the stage can draw. */
-export type SceneName = 'pools' | 'ribbons' | 'rings';
+/** Every scene the stage can draw; `shader.ts` says what each one is. */
+export type SceneName =
+  | 'bars'
+  | 'clouds'
+  | 'halo'
+  | 'hive'
+  | 'kaleidoscope'
+  | 'orb'
+  | 'pools'
+  | 'rings'
+  | 'stars'
+  | 'terrain'
+  | 'tunnel'
+  | 'wave';
 
 /**
  * What a track feels like, decided before a note plays.
@@ -110,4 +122,9 @@ export type Smoothed = {
   slow: Features;
 };
 
-export type PlaybackState = 'idle' | 'loading' | 'paused' | 'playing';
+/**
+ * `blocked` is a track asked for without a gesture - a deep link to its
+ * play route - which the browser will not sound until one comes.
+ */
+export type PlaybackState =
+  'blocked' | 'idle' | 'loading' | 'paused' | 'playing';

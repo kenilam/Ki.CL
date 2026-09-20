@@ -79,9 +79,33 @@ const BASS_CEILING_HZ = 180;
 
 /** How loud each voice plays at full velocity, per station. */
 const GAIN: Record<VibeFamily, Record<Event['voice'], number>> = {
-  ambient: { bass: 0.15, hat: 0, keys: 0.14, kick: 0, pad: 0.16, rim: 0 },
-  lofi: { bass: 0.12, hat: 0.22, keys: 0.28, kick: 0.4, pad: 0, rim: 0.32 },
-  piano: { bass: 0.14, hat: 0.06, keys: 0.24, kick: 0.2, pad: 0, rim: 0.1 },
+  ambient: {
+    bass: 0.15,
+    hat: 0,
+    keys: 0.14,
+    kick: 0,
+    lead: 0.12,
+    pad: 0.16,
+    rim: 0,
+  },
+  lofi: {
+    bass: 0.12,
+    hat: 0.6,
+    keys: 0.22,
+    kick: 0.4,
+    lead: 0.2,
+    pad: 0.05,
+    rim: 0.28,
+  },
+  piano: {
+    bass: 0.14,
+    hat: 0.12,
+    keys: 0.2,
+    kick: 0.2,
+    lead: 0.24,
+    pad: 0.05,
+    rim: 0.1,
+  },
 };
 
 /**
@@ -296,6 +320,66 @@ function createPad(context: BaseAudioContext, output: AudioNode): Voice {
       });
 
       filter.connect(envelope).connect(output);
+    },
+  };
+}
+
+/**
+ * The lead: an electric-piano tone for the melody, so it sits apart from
+ * the comping under it. A sine, its octave and a bell partial two octaves
+ * up that dies first, with a slow tremolo on it; on the ambient station
+ * the bell is left out and it is nearer a soft flute.
+ */
+function createLead(
+  context: BaseAudioContext,
+  output: AudioNode,
+  style: VibeFamily
+): Voice {
+  const bell = style === 'ambient' ? 0 : 0.12;
+  const tremoloHz = style === 'ambient' ? 2.5 : 4.5;
+
+  return {
+    note(midi, when, duration, gain) {
+      const frequency = midiToHz(midi);
+      const envelope = context.createGain();
+      const tremolo = context.createGain();
+      const lfo = context.createOscillator();
+      const depth = context.createGain();
+      const hold = Math.max(0.3, duration);
+
+      envelope.gain.setValueAtTime(0.0001, when);
+      envelope.gain.linearRampToValueAtTime(gain, when + 0.012);
+      envelope.gain.exponentialRampToValueAtTime(gain * 0.4, when + hold * 0.5);
+      envelope.gain.exponentialRampToValueAtTime(0.0001, when + hold + 0.4);
+
+      tremolo.gain.value = 1;
+      depth.gain.value = 0.12;
+      lfo.frequency.value = tremoloHz;
+      lfo.connect(depth).connect(tremolo.gain);
+
+      [
+        [1, 1, hold + 0.4],
+        [2, 0.25, hold * 0.6 + 0.2],
+        [4, bell, 0.35],
+      ].forEach(([ratio, level, decay]) => {
+        if (level <= 0) {
+          return;
+        }
+
+        const oscillator = context.createOscillator();
+        const partial = context.createGain();
+
+        oscillator.frequency.value = frequency * ratio;
+        partial.gain.setValueAtTime(level, when);
+        partial.gain.exponentialRampToValueAtTime(0.0001, when + decay);
+        oscillator.connect(partial).connect(tremolo);
+        oscillator.start(when);
+        oscillator.stop(when + decay + 0.05);
+      });
+
+      tremolo.connect(envelope).connect(output);
+      lfo.start(when);
+      lfo.stop(when + hold + 0.5);
     },
   };
 }
@@ -533,9 +617,11 @@ export function playSynth(
 
   const percussive = createNoise(context, 0.5);
   const keys = createKeys(context, voiceBus, percussive);
+  const lead = createLead(context, voiceBus, style);
   const pad = createPad(context, voiceBus);
   const bass = createBass(context, master, kit.bassBite);
-  const drums = createDrums(context, voiceBus, percussive, kit);
+  /* The drums go round the tone: under it the hats and rims were lost. */
+  const drums = createDrums(context, master, percussive, kit);
   const gain = GAIN[style];
 
   const beat = 60 / piece.tempo;
@@ -573,6 +659,14 @@ export function playSynth(
     }
 
     switch (event.voice) {
+      case 'lead':
+        /* On the piano station the melody is the piano's own; elsewhere its own voice. */
+        if (style !== 'piano') {
+          lead.note(event.midi, when, duration, level);
+
+          return;
+        }
+      // falls through
       case 'keys': {
         const piano = instruments?.loaded ? instruments.piano : null;
 

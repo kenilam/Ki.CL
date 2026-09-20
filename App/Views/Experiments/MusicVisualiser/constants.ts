@@ -6,10 +6,11 @@ import type { Track } from './Spec';
 const PATH = 'music-visualiser';
 
 /**
- * The dynamic segments beneath it: `/:group/:type/:trackId`. A group is a
- * station (a provider), a type one of its families, a track one piece.
- * Each level is its own route with an index that redirects to its first
- * child, so any prefix of the path lands somewhere that plays.
+ * The dynamic segments beneath it: `/:group/:type/:trackId`, then `/play`.
+ * A group is a station (a provider), a type one of its families, a track
+ * one piece. The view's index and a track's route each show a gate with a
+ * play control; a group's and a type's index redirect to their first
+ * child; the play route beneath a track is the one that sounds.
  */
 const PARAMS = {
   group: 'group',
@@ -20,9 +21,7 @@ const PARAMS = {
 const GROUP_PATTERN = `:${PARAMS.group}`;
 const TYPE_PATTERN = `:${PARAMS.type}`;
 const TRACK_PATTERN = `:${PARAMS.track}`;
-
-/** The full path, for matching from the shell wherever the URL has got to. */
-const FULL_PATTERN = `/${EXPERIMENTS}/${PATH}/${GROUP_PATTERN}/${TYPE_PATTERN}/${TRACK_PATTERN}`;
+const PLAY_PATTERN = 'play';
 
 /** Root of every class and custom property this view owns. */
 const CLASS_NAME = 'kicl--views--experiments--music-visualiser';
@@ -63,20 +62,25 @@ const toPath = ({ group, type, trackId }: Location = {}): string => {
 const toTrackPath = (track: Pick<Track, 'group' | 'id' | 'type'>): string =>
   toPath({ group: track.group, trackId: track.id, type: track.type });
 
+/** The path that plays a track. */
+const toPlayPath = (track: Pick<Track, 'group' | 'id' | 'type'>): string =>
+  `${toTrackPath(track)}/${PLAY_PATTERN}`;
+
 /** The key a track is remembered by in history: its path below the view. */
 const trackKey = (track: Pick<Track, 'group' | 'id' | 'type'>): string =>
   `${track.group}/${track.type}/${track.id}`;
 
 export {
   CLASS_NAME,
-  FULL_PATTERN,
   GROUP_PATTERN,
   PARAMS,
   PATH,
+  PLAY_PATTERN,
   TRACK_PATTERN,
   TYPE_PATTERN,
   VOLUME_STORAGE_KEY,
   toPath,
+  toPlayPath,
   toTrackPath,
   trackKey,
 };

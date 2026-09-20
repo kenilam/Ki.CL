@@ -34,6 +34,25 @@ const ONSET_FLOOR = 0.02;
 /** Frames between two onsets at the very least, so a hit reads as one. */
 const ONSET_REFRACTORY_SECONDS = 0.12;
 
+/**
+ * The spectrum the scenes draw with: this many bands, spaced by octave
+ * from the low edge to the high one, so bass and air each get their share
+ * of the picture rather than the top half of it going to hiss.
+ */
+export const SPECTRUM_BANDS = 128;
+const SPECTRUM_LOW_HZ = 30;
+const SPECTRUM_HIGH_HZ = 14000;
+
+/**
+ * Each band is shown against its own recent peak, so a mix with little air
+ * still lights its top bands, and the whole thing is eased over a quarter
+ * second so it sways rather than flickers. The peak forgets over eight
+ * seconds; below the floor a band is taken as empty rather than blown up.
+ */
+const SPECTRUM_SECONDS = 0.25;
+const PEAK_SECONDS = 8;
+const PEAK_FLOOR = 0.08;
+
 const EMPTY: Features = {
   centroid: 0,
   energy: 0,
@@ -60,6 +79,11 @@ export type Extractor = {
   /** The latest raw frame. */
   raw: Features;
   smoothed: Smoothed;
+  /**
+   * `SPECTRUM_BANDS` bytes, low to high, each a band's level against its
+   * recent peak, eased: what a texture for the scenes is made from.
+   */
+  spectrum: Uint8Array;
   /** Feed one frame. `dt` is the seconds since the last one. */
   update(dt: number): void;
 };
@@ -108,6 +132,22 @@ export function createExtractor(analyser: AnalyserNode): Extractor {
   const hzPerBin = analyser.context.sampleRate / analyser.fftSize;
   const lowEdge = Math.max(1, Math.round(LOW_HZ / hzPerBin));
   const midEdge = Math.max(lowEdge + 1, Math.round(MID_HZ / hzPerBin));
+
+  /* Band edges in analyser bins, spaced by octave; every band has at least one bin. */
+  const edges = new Int32Array(SPECTRUM_BANDS + 1);
+
+  for (let band = 0; band <= SPECTRUM_BANDS; band++) {
+    const hz =
+      SPECTRUM_LOW_HZ *
+      Math.pow(SPECTRUM_HIGH_HZ / SPECTRUM_LOW_HZ, band / SPECTRUM_BANDS);
+    const bin = Math.min(bins - 1, Math.round(hz / hzPerBin));
+
+    edges[band] = band === 0 ? bin : Math.max(edges[band - 1] + 1, bin);
+  }
+
+  const peaks = new Float32Array(SPECTRUM_BANDS);
+  const levels = new Float32Array(SPECTRUM_BANDS);
+  const bands = new Uint8Array(SPECTRUM_BANDS);
 
   const raw = emptyFeatures();
   const smoothed: Smoothed = {
@@ -189,9 +229,32 @@ export function createExtractor(analyser: AnalyserNode): Extractor {
     smoothFeatures(smoothed.fast, raw, dt, FAST_SECONDS);
     smoothFeatures(smoothed.medium, raw, dt, MEDIUM_SECONDS);
     smoothFeatures(smoothed.slow, raw, dt, SLOW_SECONDS);
+
+    const forget = Math.exp(-dt / PEAK_SECONDS);
+
+    for (let band = 0; band < SPECTRUM_BANDS; band++) {
+      const from = edges[band];
+      const to = Math.min(bins, Math.max(from + 1, edges[band + 1]));
+      let sum = 0;
+
+      for (let index = from; index < to; index++) {
+        sum += spectrum[index] / 255;
+      }
+
+      const level = sum / (to - from);
+
+      peaks[band] = Math.max(peaks[band] * forget, level);
+      levels[band] = smooth(
+        levels[band],
+        level / Math.max(peaks[band], PEAK_FLOOR),
+        dt,
+        SPECTRUM_SECONDS
+      );
+      bands[band] = Math.round(clamp01(levels[band]) * 255);
+    }
   };
 
-  return { raw, smoothed, update };
+  return { raw, smoothed, spectrum: bands, update };
 }
 
 export { emptyFeatures };
