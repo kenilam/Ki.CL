@@ -72,33 +72,22 @@ check is a few curls, sending an `Origin` header and reading
 `Access-Control-Allow-Origin` from the response, one on the API and one on
 a stream URL after following its redirect.
 
+Second attempt, later the same day: the environment's "Additional allowed
+domains" list showed `*.audius.co`, `*.jamendo.com`, `docs.audius.org` and
+`devportal.jamendo.com`, yet a session spawned fresh into that environment
+still got a 403 on CONNECT for all of them, the explicitly named hosts
+included. So the list as displayed was not what the proxy enforced. Check
+that the environment form was actually saved, and that the session is
+created in that environment, before spending another session on it.
+
 ## Running the app in a cloud session
 
-What it took last time; none of it is in the repo.
-
-- The container ships Node 22 and both repos need 24 or newer:
-  `source /opt/nvm/nvm.sh && nvm install 24`.
-- Yarn 4 through corepack fails on its default host:
-  `COREPACK_NPM_REGISTRY=https://registry.npmjs.org corepack enable`.
-- `vite-plugin-mkcert` cannot download its binary through the proxy. Fetch
-  it with curl to `~/.vite-plugin-mkcert/mkcert` and `chmod +x` it before
-  `make run`.
-- The frontend needs a local `.env`: `NODE_ENV=development` and
-  `PORT=3001`. The site is at `https://localhost.kicl.com:3001`; the
-  hostname is already in `/etc/hosts`. Curl it with `--noproxy '*'`.
-- The backend needs `MONGODB_ATLAS_URI` in `Ki.CL-back/.env`, which is
-  gitignored and not in the clone. Without it the backend will not boot.
-- Workaround that renders the site without Mongo: the host's Module
-  Federation runtime blocks all rendering if `/client/remoteEntry.js` 502s.
-  In `Ki.CL-back`, run `yarn codegen` then
-  `yarn workspace @ki-cl/client run build`, and serve `Client/dist` at
-  `/client` from a tiny Express static server on port 3100 (also map
-  `/client/@mf-types.zip` to `types.zip`, and answer `/api` with a 503).
-  Restart Vite once it is up so `App/@mf-types` gets generated, which
-  clears the TypeScript checker overlay.
-- Screenshots: Playwright with `executablePath: '/opt/pw-browsers/chromium'`,
-  a proxy bypass for `localhost.kicl.com`, and for WebGL the flags
-  `--use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader`.
+This now lives in the repo. A SessionStart hook
+(`.claude/hooks/session-start.sh`, in both repos) does the environment setup
+when a web session opens, and the `cloud-session` skill
+(`.claude/skills/cloud-session/`) has the run, stand-in-backend and
+screenshot recipes, including `serve-remote.mjs`, which serves the backend's
+built Client package so the site renders without Mongo.
 
 ## What shipped just before this
 
