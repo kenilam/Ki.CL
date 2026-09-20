@@ -73,7 +73,7 @@ const float GRAIN = 0.03;
 const float CHROMA = 0.92;
 
 /* The warp breathes on its own clock, a little slower than the pools. */
-const float SPEED = 0.2;
+const float SPEED = 0.3;
 
 vec3 toLinear(vec3 c) {
   return pow(c, vec3(2.2));
@@ -184,12 +184,12 @@ void main() {
 
 /**
  * How far each pool wanders from its home, as a fraction of the canvas, and
- * how quickly. A cycle is around fifteen to twenty seconds, and a pool
- * travels a tenth of the viewport across it: slow enough to be calm, quick
- * enough to be noticed within the time it takes to read the copy.
+ * how quickly. A cycle is around ten seconds, and a pool travels a tenth of
+ * the viewport across it: slow enough to be calm, quick enough to be noticed
+ * within the time it takes to read the copy.
  */
 const DRIFT = 0.1;
-const DRIFT_SPEED = 0.3;
+const DRIFT_SPEED = 0.5;
 
 /**
  * Four pools, laid down in this order, so the last sits on top where they

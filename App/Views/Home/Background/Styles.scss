@@ -28,7 +28,7 @@
 // as atmosphere rather than as colour. Dark goes further: on black a little
 // colour carries a long way, and the page should stay a dark page.
 $muted: 58%;
-$muted-dark: 76%;
+$muted-dark: 86%;
 
 // Light: a print on cream - sky, peach, coral and the brand yellow, faded.
 $light-field: color.mix($white, $blue, $muted, $method: oklab);
