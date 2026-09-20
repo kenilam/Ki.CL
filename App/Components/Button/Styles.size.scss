@@ -1,6 +1,11 @@
 .kicl--components--button {
-  --kicl--components--button--padding-block: var(--kicl-gutter);
+  --kicl--components--button--padding-block: var(--kicl-gutter-narrow);
   --kicl--components--button--padding-inline: var(--kicl-gutter);
+
+  @include tablet {
+    --kicl--components--button--padding-block: var(--kicl-gutter);
+    --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
+  }
 
   &:not(&--unstyled, &--look-like-hyperlink) {
     padding-block: var(--kicl--components--button--padding-block);
@@ -9,23 +14,23 @@
     &.kicl--components--button--size {
       &--large {
         --kicl--components--button--padding-block: var(--kicl-gutter);
-        --kicl--components--button--padding-inline: var(--kicl-gutter);
+        --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
 
         @include tablet {
           --kicl--components--button--padding-block: var(--kicl-gutter-wide);
-          --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
+          --kicl--components--button--padding-inline: var(--kicl-gutter-wider);
         }
       }
 
       &--small {
         --kicl--components--button--padding-block: var(--kicl-gutter-narrow);
-        --kicl--components--button--padding-inline: var(--kicl-gutter-narrow);
+        --kicl--components--button--padding-inline: var(--kicl-gutter);
 
         font-size: 0.7em;
 
         @include tablet {
           --kicl--components--button--padding-block: var(--kicl-gutter);
-          --kicl--components--button--padding-inline: var(--kicl-gutter);
+          --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
         }
       }
     }
