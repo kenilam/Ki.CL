@@ -126,8 +126,8 @@ const Background: React.FunctionComponent<Spec.Props> = ({
     }
 
     const ratio = Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
-    const cell = readNumber(canvas, 'cell', 2) * ratio;
-    const levels = readNumber(canvas, 'levels', 14);
+    const cell = readNumber(canvas, 'cell', 1) * ratio;
+    const levels = readNumber(canvas, 'levels', 48);
     const reducedMotion = window.matchMedia(REDUCED_MOTION);
 
     renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));

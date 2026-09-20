@@ -72,7 +72,8 @@ const float GRAIN = 0.03;
  */
 const float CHROMA = 0.92;
 
-const float SPEED = 0.1;
+/* The warp breathes on its own clock, a little slower than the pools. */
+const float SPEED = 0.2;
 
 vec3 toLinear(vec3 c) {
   return pow(c, vec3(2.2));
@@ -182,47 +183,56 @@ void main() {
 `;
 
 /**
+ * How far each pool wanders from its home, as a fraction of the canvas, and
+ * how quickly. A cycle is around fifteen to twenty seconds, and a pool
+ * travels a tenth of the viewport across it: slow enough to be calm, quick
+ * enough to be noticed within the time it takes to read the copy.
+ */
+const DRIFT = 0.1;
+const DRIFT_SPEED = 0.3;
+
+/**
  * Four pools, laid down in this order, so the last sits on top where they
  * overlap. The composition is a diagonal: a broad field across the right and
  * top, a glow low on the right, a warm rim low on the left, and a bright band
- * running in from the top left toward the centre. Each wanders a few percent
- * around its home on its own slow cycle.
+ * running in from the top left toward the centre. Each wanders around its
+ * home on its own cycle, so they never move as one.
  */
 function pools(seconds: number): Pool[] {
-  const s = seconds * 0.1;
+  const s = seconds * DRIFT_SPEED;
 
   return [
     {
-      angle: 0.35,
+      angle: 0.35 + 0.1 * Math.sin(s * 0.6),
       rx: 1.5,
       ry: 1,
       weight: 1,
-      x: 1.05 + 0.04 * Math.cos(s * 0.9),
-      y: 0.22 + 0.05 * Math.sin(s * 1.2),
+      x: 1.05 + DRIFT * Math.cos(s * 0.9),
+      y: 0.22 + DRIFT * Math.sin(s * 1.2),
     },
     {
-      angle: -0.55,
+      angle: -0.55 + 0.15 * Math.cos(s * 0.7),
       rx: 0.75,
       ry: 0.38,
       weight: 1,
-      x: 0.86 + 0.05 * Math.sin(s * 0.8),
-      y: 0.72 + 0.04 * Math.cos(s * 1),
+      x: 0.86 + DRIFT * Math.sin(s * 0.8),
+      y: 0.72 + DRIFT * 0.8 * Math.cos(s * 1),
     },
     {
-      angle: -0.6,
+      angle: -0.6 + 0.12 * Math.sin(s * 0.5),
       rx: 0.9,
       ry: 0.45,
       weight: 0.95,
-      x: 0.12 + 0.05 * Math.sin(s * 1.1),
-      y: 0.78 + 0.04 * Math.cos(s * 1.3),
+      x: 0.12 + DRIFT * Math.sin(s * 1.1),
+      y: 0.78 + DRIFT * 0.8 * Math.cos(s * 1.3),
     },
     {
-      angle: -0.62,
+      angle: -0.62 + 0.1 * Math.cos(s * 0.9),
       rx: 1.1,
       ry: 0.4,
       weight: 1,
-      x: 0.28 + 0.05 * Math.sin(s * 0.7),
-      y: 0.24 + 0.05 * Math.cos(s * 0.8),
+      x: 0.28 + DRIFT * 1.2 * Math.sin(s * 0.7),
+      y: 0.24 + DRIFT * Math.cos(s * 0.8),
     },
   ];
 }

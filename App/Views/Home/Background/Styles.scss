@@ -25,8 +25,10 @@
 
 // Every ink is mixed most of the way into its theme's paper. The light is
 // meant to sit inside the page, not on top of it: a tint the eye registers
-// as atmosphere rather than as colour.
+// as atmosphere rather than as colour. Dark goes further: on black a little
+// colour carries a long way, and the page should stay a dark page.
 $muted: 58%;
+$muted-dark: 76%;
 
 // Light: a print on cream - sky, peach, coral and the brand yellow, faded.
 $light-field: color.mix($white, $blue, $muted, $method: oklab);
@@ -40,31 +42,31 @@ $light-band: color.mix($white, $yellow, $muted, $method: oklab);
 $dark-field: color.mix(
   $black,
   color.adjust($blue, $hue: 12deg, $saturation: 26%, $lightness: -18%),
-  $muted - 10%,
+  $muted-dark - 8%,
   $method: oklab
 );
 $dark-glow: color.mix(
   $black,
   color.adjust($blue, $saturation: 20%, $lightness: 18%),
-  $muted,
+  $muted-dark,
   $method: oklab
 );
 $dark-rim: color.mix(
   $black,
   color.adjust($orange, $hue: -8deg),
-  $muted,
+  $muted-dark,
   $method: oklab
 );
 $dark-band: color.mix(
   $black,
   color.mix($white, $orange, 86%, $method: oklab),
-  $muted,
+  $muted-dark,
   $method: oklab
 );
 
 :root {
-  --kicl--views--home--background--cell: 2px;
-  --kicl--views--home--background--levels: 14;
+  --kicl--views--home--background--cell: 1px;
+  --kicl--views--home--background--levels: 48;
   --kicl--views--home--background--paper: #{$white};
   --kicl--views--home--background--ink-1: #{$light-field};
   --kicl--views--home--background--ink-2: #{$light-glow};
