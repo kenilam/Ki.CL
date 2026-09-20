@@ -19,35 +19,79 @@ import type {
 const LOOKAHEAD_SECONDS = 0.4;
 const TICK_MS = 100;
 
-/** A pentatonic major scale, in semitones from the root. */
-const PENTATONIC = [0, 2, 4, 7, 9];
+type Mode = 'major' | 'minor';
 
-/** Chord degrees, in semitones from the root, cycled slowly. */
-const PROGRESSIONS: Record<VibeFamily, number[][]> = {
-  ambient: [
-    [0, 7, 14],
-    [5, 12, 19],
-    [-3, 4, 11],
-    [2, 9, 16],
-  ],
-  lofi: [
-    [0, 4, 7, 11],
-    [9, 12, 16, 19],
-    [5, 9, 12, 16],
-    [7, 11, 14, 17],
-  ],
-  piano: [
-    [0, 4, 7, 11],
-    [-3, 0, 4, 7],
-    [5, 9, 12, 16],
-    [7, 11, 14, 17],
-  ],
+/** Pentatonic scales, in semitones from the root, one per mode. */
+const SCALES: Record<Mode, number[]> = {
+  major: [0, 2, 4, 7, 9],
+  minor: [0, 3, 5, 7, 10],
+};
+
+/**
+ * Chord degrees, in semitones from the root, cycled slowly. Each station
+ * has a progression per mode; the seed picks the mode, so half the pieces
+ * are minor - the references were, and a station that is only ever major
+ * grows sweet.
+ */
+const PROGRESSIONS: Record<VibeFamily, Record<Mode, number[][]>> = {
+  ambient: {
+    major: [
+      [0, 7, 14],
+      [5, 12, 19],
+      [-3, 4, 11],
+      [2, 9, 16],
+    ],
+    minor: [
+      [0, 7, 15],
+      [-4, 3, 12],
+      [5, 12, 20],
+      [-2, 5, 14],
+    ],
+  },
+  lofi: {
+    major: [
+      [0, 4, 7, 11],
+      [9, 12, 16, 19],
+      [5, 9, 12, 16],
+      [7, 11, 14, 17],
+    ],
+    minor: [
+      [0, 3, 7, 10],
+      [5, 8, 12, 15],
+      [-4, 0, 3, 7],
+      [7, 10, 14, 17],
+    ],
+  },
+  piano: {
+    major: [
+      [0, 4, 7, 11],
+      [-3, 0, 4, 7],
+      [5, 9, 12, 16],
+      [7, 11, 14, 17],
+    ],
+    minor: [
+      [0, 3, 7, 10],
+      [-4, 0, 3, 7],
+      [5, 8, 12, 15],
+      [-2, 2, 5, 9],
+    ],
+  },
 };
 
 const TEMPO: Record<VibeFamily, number> = {
   ambient: 56,
-  lofi: 76,
+  lofi: 84,
   piano: 68,
+};
+
+/**
+ * Loudness per station, before the compressor. The references sat around
+ * -12 dBFS; a quiet station reads as thin, and the analyser sees less.
+ */
+const LEVEL: Record<VibeFamily, number> = {
+  ambient: 0.9,
+  lofi: 1.0,
+  piano: 1.0,
 };
 
 /** Root note, as a MIDI number, chosen per seed from these. */
@@ -63,9 +107,15 @@ const KEYS_CEILING_HZ = 3600;
  */
 const TONE_HZ: Record<VibeFamily, number> = {
   ambient: 4200,
-  lofi: 2800,
+  lofi: 2300,
   piano: 5200,
 };
+
+/**
+ * The bass never opens past this. The references put more than half their
+ * energy under 200 Hz; a chill station is carried by what sits down there.
+ */
+const BASS_CEILING_HZ = 180;
 
 function midiToHz(midi: number): number {
   return 440 * Math.pow(2, (midi - 69) / 12);
@@ -312,9 +362,54 @@ function createPad(context: BaseAudioContext, output: AudioNode): Voice {
   };
 }
 
+/**
+ * The bass: a sine with a whisper of triangle for the attack, under a
+ * low-pass that keeps it a weight rather than a note. Slow to speak, slow
+ * to leave, so it reads as the floor of the piece.
+ */
+function createBass(context: BaseAudioContext, output: AudioNode): Voice {
+  return {
+    note(midi, when, duration, gain) {
+      const frequency = midiToHz(midi);
+      const filter = context.createBiquadFilter();
+      const envelope = context.createGain();
+      const attack = Math.min(0.08, duration * 0.2);
+      const release = Math.min(0.5, duration * 0.4);
+
+      filter.type = 'lowpass';
+      filter.Q.value = 0.7;
+      filter.frequency.value = Math.min(BASS_CEILING_HZ, frequency * 2.5);
+
+      envelope.gain.setValueAtTime(0.0001, when);
+      envelope.gain.linearRampToValueAtTime(gain, when + attack);
+      envelope.gain.setValueAtTime(gain, when + duration - release);
+      envelope.gain.linearRampToValueAtTime(0.0001, when + duration);
+
+      [
+        ['sine', 1],
+        ['triangle', 0.18],
+      ].forEach(([type, level]) => {
+        const oscillator = context.createOscillator();
+        const partial = context.createGain();
+
+        oscillator.type = type as OscillatorType;
+        oscillator.frequency.value = frequency;
+        partial.gain.value = level as number;
+        oscillator.connect(partial).connect(filter);
+        oscillator.start(when);
+        oscillator.stop(when + duration + 0.05);
+      });
+
+      filter.connect(envelope).connect(output);
+    },
+  };
+}
+
 type Drums = {
   hat(when: number, gain: number): void;
   kick(when: number, gain: number): void;
+  /** A brushed rim: the backbeat, felt more than heard. */
+  rim(when: number, gain: number): void;
 };
 
 /** A soft kick and a brushed hat, for the lo-fi station's slow swing. */
@@ -353,6 +448,32 @@ function createDrums(
       source.start(when);
       source.stop(when + 0.08);
     },
+    rim(when, gain) {
+      const source = context.createBufferSource();
+      const filter = context.createBiquadFilter();
+      const envelope = context.createGain();
+      const body = context.createOscillator();
+      const bodyGain = context.createGain();
+
+      source.buffer = noise;
+      filter.type = 'bandpass';
+      filter.frequency.value = 1100;
+      filter.Q.value = 1.6;
+      envelope.gain.setValueAtTime(gain, when);
+      envelope.gain.exponentialRampToValueAtTime(0.0001, when + 0.11);
+
+      body.frequency.setValueAtTime(320, when);
+      body.frequency.exponentialRampToValueAtTime(180, when + 0.06);
+      bodyGain.gain.setValueAtTime(gain * 0.6, when);
+      bodyGain.gain.exponentialRampToValueAtTime(0.0001, when + 0.08);
+
+      source.connect(filter).connect(envelope).connect(output);
+      body.connect(bodyGain).connect(output);
+      source.start(when);
+      source.stop(when + 0.12);
+      body.start(when);
+      body.stop(when + 0.1);
+    },
   };
 }
 
@@ -373,6 +494,7 @@ export function playSynth(
   const dry = context.createGain();
   const wet = context.createGain();
   const reverb = context.createConvolver();
+  const glue = context.createDynamicsCompressor();
 
   reverb.buffer = createImpulse(
     context,
@@ -380,12 +502,25 @@ export function playSynth(
     style === 'ambient' ? 2.5 : 3.5
   );
 
-  master.gain.value = style === 'lofi' ? 0.8 : 0.7;
+  master.gain.value = LEVEL[style];
   dry.gain.value = style === 'ambient' ? 0.5 : 0.8;
-  wet.gain.value = style === 'ambient' ? 0.7 : 0.35;
+  wet.gain.value = style === 'ambient' ? 0.7 : 0.3;
 
-  master.connect(dry).connect(destination);
-  master.connect(reverb).connect(wet).connect(destination);
+  /*
+   * A compressor after the reverb holds the piece together: the bass and
+   * the keys stop trading places in level, and the whole sits at a steady
+   * loudness the way a mixed record does, instead of swinging forty
+   * decibels between a chord and the silence after it.
+   */
+  glue.threshold.value = -18;
+  glue.knee.value = 12;
+  glue.ratio.value = 3;
+  glue.attack.value = 0.008;
+  glue.release.value = 0.3;
+
+  master.connect(dry).connect(glue);
+  master.connect(reverb).connect(wet).connect(glue);
+  glue.connect(destination);
 
   /*
    * Every voice goes through one tone low-pass before the reverb, set per
@@ -421,10 +556,13 @@ export function playSynth(
   const percussive = createNoise(context, 0.5);
   const keys = createKeys(context, voiceBus, percussive);
   const pad = createPad(context, voiceBus);
+  const bass = createBass(context, master);
   const drums = createDrums(context, voiceBus, percussive);
 
   const root = ROOTS[Math.floor(random() * ROOTS.length)];
-  const progression = PROGRESSIONS[style];
+  const mode: Mode = random() < 0.5 ? 'major' : 'minor';
+  const scale = SCALES[mode];
+  const progression = PROGRESSIONS[style][mode];
   const beat = 60 / TEMPO[style];
   const bar = beat * 4;
   const start = context.currentTime + 0.1;
@@ -439,22 +577,27 @@ export function playSynth(
     const chord = progression[barIndex % progression.length];
     const phraseBar = barIndex % 8;
 
+    /* The floor: the chord's root, two octaves down, never below the low E. */
+    const low = Math.max(28, root - 24 + chord[0]);
+
     if (style === 'ambient') {
       if (barIndex % 2 === 0) {
         chord.forEach((degree, index) => {
-          pad.note(root - 12 + degree, at, bar * 2.05, 0.05 + index * 0.01);
+          pad.note(root - 12 + degree, at, bar * 2.05, 0.08 + index * 0.01);
         });
+
+        bass.note(low, at, bar * 2.02, 0.08);
       }
 
-      if (random() < 0.6) {
-        const degree = PENTATONIC[Math.floor(random() * PENTATONIC.length)];
+      if (random() < 0.8) {
+        const degree = scale[Math.floor(random() * scale.length)];
         const octave = random() < 0.7 ? 12 : 24;
 
         keys.note(
           root + octave + degree,
           at + beat * Math.floor(random() * 4),
           bar * 1.5,
-          0.07
+          0.11
         );
       }
     } else {
@@ -464,12 +607,12 @@ export function playSynth(
           root - 12 + degree,
           at + (style === 'lofi' ? 0 : beat * 0.02 * index),
           bar * 0.98,
-          0.06
+          0.12
         );
       });
 
       // Melody on the pentatonic, more rests as the phrase settles.
-      const density = phraseBar < 4 ? 0.7 : 0.45;
+      const density = phraseBar < 4 ? 0.8 : 0.55;
 
       for (let step = 0; step < 8; step++) {
         if (random() > density) {
@@ -477,28 +620,50 @@ export function playSynth(
         }
 
         const swing = style === 'lofi' && step % 2 === 1 ? beat * 0.08 : 0;
-        const degree = PENTATONIC[Math.floor(random() * PENTATONIC.length)];
+        const degree = scale[Math.floor(random() * scale.length)];
         const octave = random() < 0.12 ? 24 : 12;
-        const length = beat * (random() < 0.3 ? 2 : 1) * 0.95;
+        /* Longer than the slot, so notes overlap and ring as a pedal would let them. */
+        const length = beat * (random() < 0.3 ? 2 : 1) * 1.7;
 
         keys.note(
           root + octave + degree,
           at + step * beat * 0.5 + swing,
           length,
-          0.09 + random() * 0.05
+          0.18 + random() * 0.07
         );
       }
     }
 
     if (style === 'lofi') {
+      bass.note(low, at, beat * 1.4, 0.11);
+      bass.note(low, at + beat * 2.5, beat * 1.2, 0.09);
+
       drums.kick(at, 0.5);
       drums.kick(at + beat * 2.5, 0.35);
+      drums.rim(at + beat, 0.22);
+      drums.rim(at + beat * 3, 0.26);
 
       for (let step = 0; step < 8; step++) {
         const swing = step % 2 === 1 ? beat * 0.09 : 0;
 
-        drums.hat(at + step * beat * 0.5 + swing, step % 2 ? 0.08 : 0.14);
+        drums.hat(at + step * beat * 0.5 + swing, step % 2 ? 0.06 : 0.1);
       }
+    }
+
+    if (style === 'piano') {
+      /* A bass on one and three, and the lightest pulse under it. */
+      bass.note(low, at, beat * 1.8, 0.09);
+      bass.note(
+        low + (random() < 0.3 ? 7 : 0),
+        at + beat * 2,
+        beat * 1.8,
+        0.08
+      );
+
+      drums.kick(at, 0.16);
+      drums.rim(at + beat, 0.07);
+      drums.kick(at + beat * 2, 0.12);
+      drums.rim(at + beat * 3, 0.09);
     }
 
     barIndex += 1;
@@ -545,6 +710,7 @@ export function playSynth(
 
     window.setTimeout(() => {
       master.disconnect();
+      glue.disconnect();
     }, 600);
   }
 

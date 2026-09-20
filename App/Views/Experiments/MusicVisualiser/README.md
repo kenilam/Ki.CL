@@ -68,6 +68,30 @@ MusicVisualiser/
   persists through the local storage provider. Reduced motion holds the
   field still and draws a couple of frames a second.
 
+### Tuned against references
+
+Two thirty-second previews of tracks the listener likes were decoded and
+measured (PyAV, numpy; tempo by onset-envelope autocorrelation, key by
+Krumhansl-Schmuckler on a chroma from the STFT). The station was recorded
+through the same analysis and brought into the same envelope:
+
+| measure               | references       | station, before | station, after |
+| --------------------- | ---------------- | --------------- | -------------- |
+| RMS                   | 0.17 – 0.25      | 0.02 – 0.04     | 0.15           |
+| energy below 200 Hz   | 55 – 87 %        | 26 – 73 %       | 67 – 80 %      |
+| energy 200 Hz – 2 kHz | 12 – 45 %        | 26 – 74 %       | 20 – 33 %      |
+| spectral centroid     | 180 – 310 Hz     | 360 – 1760 Hz   | 185 – 510 Hz   |
+| tempo                 | 68, 89 BPM       | 68, 76          | 68, 83         |
+| onsets per second     | 2.4 – 3.5        | 0.2 – 1.9       | 0.2 – 2.4      |
+| dynamic range         | 11 – 18 dB       | 15 – 39 dB      | 7 – 24 dB      |
+| key                   | D minor, D major | always major    | half minor     |
+
+What that took: a bass voice under every station, a minor mode chosen per
+seed, a soft backbeat under piano and a rim under lo-fi, melody notes that
+ring past their slot, a glue compressor after the reverb, and station levels
+set so the compressor works rather than idles. The scripts live outside the
+repo; the method is in the session notes.
+
 ### Verified
 
 In a cloud session with Playwright and SwiftShader: the gate renders, play
