@@ -1,5 +1,11 @@
-/* "More to come": a full screen in normal flow after the stage, content centred, faint accent gradient. */
+/*
+ * "More to come": one element, a full screen in normal flow after the
+ * stage, content centred, faint accent gradient. In normal flow it has its
+ * own view timeline: the words rise as the section enters.
+ */
 .kicl--views--experiments__home__more {
+  --kicl--views--experiments__home--rise: 10dvb;
+
   background-image: radial-gradient(
     ellipse 60% 50% at 80% 20%,
     color-mix(
@@ -9,31 +15,20 @@
     ),
     transparent 70%
   );
-  min-block-size: var(--kicl--views--experiments__home--screen);
+  block-size: var(--kicl--views--experiments__home--screen);
+  box-sizing: border-box;
+  padding-block-end: var(--kicl--views--experiments__home--pad);
+  padding-block-start: var(--kicl--views--experiments__home--top);
+  padding-inline: var(--kicl--views--experiments__home--margin);
 
-  &__body {
-    block-size: var(--kicl--views--experiments__home--screen);
-    box-sizing: border-box;
-    padding-block-end: var(--kicl--views--experiments__home--pad);
-    padding-block-start: var(--kicl--views--experiments__home--top);
-    padding-inline: var(--kicl--views--experiments__home--margin);
+  @supports (animation-timeline: view()) {
+    animation: kicl--views--experiments__home--rise linear both;
+    animation-range: entry 0% entry 100%;
+    animation-timeline: view();
   }
 
-  /* In normal flow, so the words use their own view timeline: they rise as the section enters. */
-  &__words {
-    --kicl--views--experiments__home--rise: 10dvb;
-
-    block-size: 100%;
-
-    @supports (animation-timeline: view()) {
-      animation: kicl--views--experiments__home--rise linear both;
-      animation-range: entry 0% entry 100%;
-      animation-timeline: view();
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
   }
 
   &__title {

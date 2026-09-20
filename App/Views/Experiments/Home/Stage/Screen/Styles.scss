@@ -19,7 +19,8 @@
  * - `arrive`: the background fades 0 → 1 over the last 60% of the
  *   approach to its panel.
  * - `drift`: the background slides 12% of its height during its stay.
- * The text has z-index 1 so a fading background never covers it.
+ * The item is the grid: padded, text aligned to its end. The text has
+ * z-index 1 so a fading background never covers it.
  */
 .kicl--views--experiments__home__screen {
   $home: '--kicl--views--experiments__home';
@@ -71,7 +72,11 @@
   );
 
   block-size: var(--kicl--views--experiments__home--screen);
+  box-sizing: border-box;
   overflow: clip;
+  padding-block-end: var(--kicl--views--experiments__home--pad);
+  padding-block-start: var(--kicl--views--experiments__home--top);
+  padding-inline: var(--kicl--views--experiments__home--margin);
 
   /* All panels in the same grid cell, stacked in DOM order. */
   @supports (animation-timeline: scroll()) {
@@ -147,18 +152,13 @@
       );
   }
 
-  /* Bottom-aligned text, above every background. */
-  &__body {
-    block-size: 100%;
-    box-sizing: border-box;
-    padding-block-end: var(--kicl--views--experiments__home--pad);
-    padding-block-start: var(--kicl--views--experiments__home--top);
-    padding-inline: var(--kicl--views--experiments__home--margin);
-    z-index: 1;
-  }
-
+  /*
+   * Above every background. The height comes from Stage, which measures
+   * the real blocks; the min keeps every block that tall.
+   */
   &__words {
     min-block-size: var(--kicl--views--experiments__home--block);
+    z-index: 1;
 
     @supports (animation-timeline: scroll()) {
       animation:

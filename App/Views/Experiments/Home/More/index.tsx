@@ -20,10 +20,10 @@ const COPY = {
   title: 'More to come',
 };
 
-/** The closing screen, in normal flow after the stage, content centred. */
+/** The closing screen, in normal flow after the stage, content centred. One element: the grid is the footer. */
 const More: React.FunctionComponent = () => (
   <Layout alignContent='center' autoFlow='row' gap='narrow'>
-    <footer className={classNames(CLASS_NAME, `${CLASS_NAME}__body`, `${CLASS_NAME}__words`)}>
+    <footer className={CLASS_NAME}>
       <Heading
         is='h2'
         dense
@@ -42,7 +42,7 @@ const More: React.FunctionComponent = () => (
         {COPY.bookmark}
       </HyperLink>
     </footer>
-    </Layout>
+  </Layout>
 );
 
 export { CLASS_NAME };

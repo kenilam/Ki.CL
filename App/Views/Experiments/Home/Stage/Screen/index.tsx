@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout, ListItem, Text } from '@/Components';
+import { Heading, HyperLink, ListItem, Text } from '@/Components';
 
 // Styles
 import './Styles.scss';
@@ -33,6 +33,9 @@ type Props = {
  * One full-screen panel: a background that fades in and drifts, and a
  * text block that rides in from below, holds, and is pushed off by the
  * next panel's block. All of it is scroll-driven CSS; see Styles.scss.
+ *
+ * The item is the grid and ignores the pointer: stacked above the panel
+ * below, it would block that panel's link. Only the text block takes it.
  */
 const Screen: React.FunctionComponent<Props> = ({
   experiment,
@@ -41,9 +44,13 @@ const Screen: React.FunctionComponent<Props> = ({
   titleIs,
 }) => (
   <ListItem
+    alignContent='end'
+    autoFlow='row'
+    gap='none'
     className={classNames(
       CLASS_NAME,
       `${CLASS_NAME}--${experiment.plate}`,
+      'kicl-pointer-events-none',
       'kicl-position-relative'
     )}
     style={{ '--kicl--views--experiments__home--index': index } as never}
@@ -52,65 +59,49 @@ const Screen: React.FunctionComponent<Props> = ({
       aria-hidden
       className={classNames(`${CLASS_NAME}__plate`, 'kicl-position-absolute')}
     />
-    <Layout alignContent='end' autoFlow='row' gap='none'>
-      {/* Ignores the pointer: stacked above the panel below, it would block that panel's link. */}
-      <div
+    <div
+      className={classNames(`${CLASS_NAME}__words`, 'kicl-pointer-events-auto')}
+    >
+      <Text
+        is='p'
+        dense
+        variant='secondary'
         className={classNames(
-          `${CLASS_NAME}__body`,
-          'kicl-pointer-events-none',
-          'kicl-position-relative'
+          `${CLASS_NAME}__label`,
+          'kicl-font-size-small',
+          'kicl-text-transform-uppercase'
         )}
       >
-        <Layout alignContent='end' autoFlow='row' gap='narrow'>
-          <div
-            className={classNames(
-              `${CLASS_NAME}__words`,
-              'kicl-pointer-events-auto'
-            )}
-          >
-            <Text
-              is='p'
-              dense
-              variant='secondary'
-              className={classNames(
-                `${CLASS_NAME}__label`,
-                'kicl-font-size-small',
-                'kicl-text-transform-uppercase'
-              )}
-            >
-              {`No. ${number}`}
-            </Text>
-            <Heading
-              is={titleIs}
-              dense
-              className={classNames(
-                `${CLASS_NAME}__title`,
-                'kicl-text-transform-uppercase'
-              )}
-            >
-              {experiment.title}
-            </Heading>
-            <Text
-              is='p'
-              dense
-              className={classNames(
-                `${CLASS_NAME}__description`,
-                'kicl-font-size-small'
-              )}
-            >
-              {experiment.description}
-            </Text>
-            <HyperLink
-              className={`${CLASS_NAME}__link`}
-              lookLikeButton
-              to={experiment.to}
-            >
-              {COPY.open}
-            </HyperLink>
-          </div>
-        </Layout>
-      </div>
-    </Layout>
+        {`No. ${number}`}
+      </Text>
+      <Heading
+        is={titleIs}
+        dense
+        className={classNames(
+          `${CLASS_NAME}__title`,
+          'kicl-text-transform-uppercase'
+        )}
+      >
+        {experiment.title}
+      </Heading>
+      <Text
+        is='p'
+        dense
+        className={classNames(
+          `${CLASS_NAME}__description`,
+          'kicl-font-size-small'
+        )}
+      >
+        {experiment.description}
+      </Text>
+      <HyperLink
+        className={`${CLASS_NAME}__link`}
+        lookLikeButton
+        to={experiment.to}
+      >
+        {COPY.open}
+      </HyperLink>
+    </div>
   </ListItem>
 );
 
