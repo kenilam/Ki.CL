@@ -136,58 +136,131 @@ type Voice = {
   note(midi: number, when: number, duration: number, gain: number): void;
 };
 
+/** Partials per note. Six is where a sine stack stops sounding like an organ. */
+const KEYS_PARTIALS = 6;
+
+/** No partial is placed above this; past it there is only edge. */
+const KEYS_PARTIAL_CEILING_HZ = 7000;
+
 /**
- * A piano-ish voice: three partials, a soft attack, an exponential decay,
- * and a low-pass that closes as the note dies so the tail is warm.
+ * A piano voice, built from what separates a piano from a keyboard.
+ *
+ * The partials are not exact multiples of the fundamental: a stiff string
+ * pushes each one a little sharp, and more so higher up, which is the
+ * shimmer a sampled piano has and a sine stack lacks. Each partial has its
+ * own decay, the high ones dying first, so the tone darkens as the note
+ * rings rather than holding one colour. Notes in the treble have two strings
+ * a few cents apart, as the instrument does, and beat gently against each
+ * other. And every note starts with the hammer: a short thump of filtered
+ * noise before the strings speak.
+ *
+ * The note still knows how high it sits: higher notes get a darker body
+ * filter, a softer touch, and thinner partials, so the top of a phrase
+ * rings rather than pierces.
  */
-function createKeys(context: BaseAudioContext, output: AudioNode): Voice {
+function createKeys(
+  context: BaseAudioContext,
+  output: AudioNode,
+  noise: AudioBuffer
+): Voice {
+  const nyquist = context.sampleRate / 2;
+
   return {
     note(midi, when, duration, gain) {
       const frequency = midiToHz(midi);
-      const filter = context.createBiquadFilter();
-      const envelope = context.createGain();
+      const height = Math.min(1, Math.max(0, (midi - 48) / 36));
+      const touch = gain * (1 - height * 0.35);
 
       /*
-       * How far up the keyboard this note sits, 0 at the lowest root and 1
-       * around the top of the melody range. High notes get a darker filter,
-       * a softer touch and thinner upper partials, so the top of a phrase
-       * rings rather than pierces.
+       * Inharmonicity: partial n sits at n·f·√(1 + B·n²). B is tiny in the
+       * bass and grows toward the treble, where the strings are shortest and
+       * stiffest.
        */
-      const height = Math.min(1, Math.max(0, (midi - 48) / 36));
-      const touch = gain * (1 - height * 0.45);
+      const stiffness = 0.00012 + height * 0.0009;
 
-      filter.type = 'lowpass';
-      filter.Q.value = 0.5;
-      filter.frequency.setValueAtTime(
-        Math.min(KEYS_CEILING_HZ, frequency * (5 - height * 2.5)),
+      /* Strings per note, in cents from centre. Trebles have two. */
+      const strings = midi >= 58 ? [-2.4, 2.4] : [0];
+
+      /* How long the fundamental rings, at most. Treble notes are shorter. */
+      const ring = Math.min(duration, 2.6 - height * 1.3);
+
+      const body = context.createBiquadFilter();
+      const envelope = context.createGain();
+
+      body.type = 'lowpass';
+      body.Q.value = 0.4;
+      body.frequency.setValueAtTime(
+        Math.min(KEYS_CEILING_HZ, frequency * (6 - height * 3)),
         when
       );
-      filter.frequency.exponentialRampToValueAtTime(
+      body.frequency.exponentialRampToValueAtTime(
         Math.min(KEYS_CEILING_HZ, frequency * 1.3),
-        when + duration
+        when + ring
       );
 
+      /*
+       * Two-stage decay, as a struck string has: a quick fall from the
+       * strike, then a long slow settle, then whatever the release leaves.
+       */
       envelope.gain.setValueAtTime(0.0001, when);
-      envelope.gain.exponentialRampToValueAtTime(touch, when + 0.014);
-      envelope.gain.exponentialRampToValueAtTime(touch * 0.5, when + 0.25);
+      envelope.gain.exponentialRampToValueAtTime(touch, when + 0.006);
+      envelope.gain.exponentialRampToValueAtTime(touch * 0.5, when + 0.16);
+      envelope.gain.exponentialRampToValueAtTime(
+        touch * 0.14,
+        when + Math.max(0.2, ring * 0.85)
+      );
       envelope.gain.exponentialRampToValueAtTime(0.0001, when + duration);
 
-      [1, 2, 3].forEach((partial, index) => {
-        const oscillator = context.createOscillator();
-        const partialGain = context.createGain();
-        const thin = index === 0 ? 1 : 1 - height * 0.8;
+      for (let n = 1; n <= KEYS_PARTIALS; n++) {
+        const partialHz = frequency * n * Math.sqrt(1 + stiffness * n * n);
 
-        oscillator.type = index === 0 ? 'triangle' : 'sine';
-        oscillator.frequency.value = frequency * partial;
-        oscillator.detune.value = (index - 1) * 3;
-        partialGain.gain.value = [0.6, 0.18, 0.05][index] * thin;
+        if (partialHz > KEYS_PARTIAL_CEILING_HZ || partialHz > nyquist * 0.9) {
+          break;
+        }
 
-        oscillator.connect(partialGain).connect(filter);
-        oscillator.start(when);
-        oscillator.stop(when + duration + 0.05);
-      });
+        /* Loudness falls with the partial, and the top thins in the treble. */
+        const level =
+          (Math.pow(n, -1.35) * (n === 1 ? 1 : 1 - height * 0.65)) /
+          strings.length;
 
-      filter.connect(envelope).connect(output);
+        /* The higher the partial, the sooner it is gone. */
+        const decay = Math.max(0.12, ring / (1 + 0.7 * (n - 1)));
+
+        const partial = context.createGain();
+
+        partial.gain.setValueAtTime(level, when);
+        partial.gain.exponentialRampToValueAtTime(level * 0.001, when + decay);
+
+        strings.forEach((cents) => {
+          const oscillator = context.createOscillator();
+
+          oscillator.type = 'sine';
+          oscillator.frequency.value = partialHz;
+          oscillator.detune.value = cents * (n === 1 ? 1 : 0.6);
+          oscillator.connect(partial);
+          oscillator.start(when);
+          oscillator.stop(when + Math.min(duration, decay) + 0.05);
+        });
+
+        partial.connect(body);
+      }
+
+      /* The hammer: a thump the length of a hammer's contact, then gone. */
+      const hammer = context.createBufferSource();
+      const hammerFilter = context.createBiquadFilter();
+      const hammerGain = context.createGain();
+
+      hammer.buffer = noise;
+      hammerFilter.type = 'bandpass';
+      hammerFilter.frequency.value = Math.min(3000, frequency * 2.5);
+      hammerFilter.Q.value = 1.1;
+      hammerGain.gain.setValueAtTime(touch * 0.35 * (1 - height * 0.4), when);
+      hammerGain.gain.exponentialRampToValueAtTime(0.0001, when + 0.02);
+      hammer.connect(hammerFilter).connect(hammerGain).connect(body);
+      hammer.start(when);
+      hammer.stop(when + 0.03);
+
+      body.connect(envelope).connect(output);
     },
   };
 }
@@ -345,9 +418,10 @@ export function playSynth(
     crackle.start();
   }
 
-  const keys = createKeys(context, voiceBus);
+  const percussive = createNoise(context, 0.5);
+  const keys = createKeys(context, voiceBus, percussive);
   const pad = createPad(context, voiceBus);
-  const drums = createDrums(context, voiceBus, createNoise(context, 0.5));
+  const drums = createDrums(context, voiceBus, percussive);
 
   const root = ROOTS[Math.floor(random() * ROOTS.length)];
   const progression = PROGRESSIONS[style];
