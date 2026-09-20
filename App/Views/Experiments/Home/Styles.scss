@@ -11,13 +11,13 @@
   --kicl--views--experiments__home--inset: var(--kicl-gutter-wider);
   --kicl--views--experiments__home--screen: 100dvb;
 
-  /* Text block height and its distance from the bottom of the screen. */
-  --kicl--views--experiments__home--block: 52dvb;
+  /*
+   * Text block height and its distance from the bottom of the screen. The
+   * height starts at zero: Stage measures the real blocks and sets it. A
+   * guess here would act as a floor the measurement could never go under.
+   */
+  --kicl--views--experiments__home--block: 0px;
   --kicl--views--experiments__home--pad: var(--kicl-gutter-widest);
-
-  /* Title size and label tracking. */
-  --kicl--views--experiments__home--display: clamp(3rem, 11.5dvi, 12rem);
-  --kicl--views--experiments__home--tracking: 0.18em;
 
   /* Top padding: clear the fixed site header. */
   --kicl--views--experiments__home--top: calc(
@@ -33,9 +33,9 @@
     var(#{$home}--bleed) + var(#{$home}--inset)
   );
 
+  /* Tighter on small screens: the largest title size has to fit the column. */
   @include query('≤tablet') {
-    --kicl--views--experiments__home--display: clamp(2.75rem, 13dvi, 5rem);
-    --kicl--views--experiments__home--block: 44dvb;
+    --kicl--views--experiments__home--inset: var(--kicl-gutter);
   }
 
   inline-size: 100dvi;

@@ -22,20 +22,18 @@ const COPY = {
 
 /** The closing screen, in normal flow after the stage, content centred. One element: the grid is the footer. */
 const More: React.FunctionComponent = () => (
-  <Layout alignContent='center' autoFlow='row' gap='narrow'>
+  <Layout
+    alignContent='center'
+    autoFlow='row'
+    gap='narrow'
+    justifyItems='start'
+  >
     <footer className={CLASS_NAME}>
-      <Heading
-        is='h2'
-        dense
-        className={classNames(
-          `${CLASS_NAME}__title`,
-          'kicl-text-transform-uppercase'
-        )}
-      >
+      <Heading is='h2' dense className={classNames('kicl-font-size-largest')}>
         {COPY.title}
       </Heading>
       <HyperLink
-        className={`${CLASS_NAME}__link`}
+        className='kicl-margin-block-start-narrow'
         lookLikeButton
         to={`/${EXPERIMENTS}`}
       >

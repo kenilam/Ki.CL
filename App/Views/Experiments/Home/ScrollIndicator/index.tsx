@@ -25,9 +25,15 @@ const ScrollIndicator: React.FunctionComponent = () => {
   return (
     <div
       aria-hidden
-      className={classNames(CLASS_NAME, 'kicl-position-fixed', {
-        [`${CLASS_NAME}--under-header`]: show,
-      })}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inline-size-full',
+        'kicl-inset-inline-start-0',
+        'kicl-position-fixed',
+        {
+          [`${CLASS_NAME}--under-header`]: show,
+        }
+      )}
     />
   );
 };

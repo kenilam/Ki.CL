@@ -8,7 +8,6 @@
   $home: '--kicl--views--experiments__home';
 
   block-size: var(--kicl--views--experiments__home--screen);
-  inset-block-start: 0;
   overflow: clip;
 
   &__scroll {
@@ -23,8 +22,5 @@
 
   &__list {
     block-size: 100%;
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
 }

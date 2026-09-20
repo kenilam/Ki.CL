@@ -177,23 +177,8 @@
     }
   }
 
-  &__label {
-    letter-spacing: var(--kicl--views--experiments__home--tracking);
-  }
-
-  &__title {
-    font-size: var(--kicl--views--experiments__home--display);
-    letter-spacing: -0.03em;
-    line-height: 0.9;
-    margin-block: var(--kicl-gutter-narrow) var(--kicl-gutter);
-  }
-
   &__description {
     max-inline-size: var(--kicl--views--experiments__home--measure);
-  }
-
-  &__link {
-    margin-block-start: var(--kicl-gutter-wide);
   }
 }
 

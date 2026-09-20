@@ -75,7 +75,13 @@ const Stage: React.FunctionComponent = () => {
         } as never
       }
     >
-      <div className={classNames(CLASS_NAME, 'kicl-position-sticky')}>
+      <div
+        className={classNames(
+          CLASS_NAME,
+          'kicl-inset-block-start-0',
+          'kicl-position-sticky'
+        )}
+      >
         <List
           is='ol'
           className={`${CLASS_NAME}__list`}
