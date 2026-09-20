@@ -5,7 +5,7 @@ import type {
   VibeFamily,
 } from '@/Views/Experiments/MusicVisualiser/Spec';
 
-import { composePiece, type Event } from './compose';
+import { composePiece, type Event, type Kit } from './compose';
 import type { Instruments } from './instruments';
 import { createRandom } from './random';
 
@@ -24,9 +24,28 @@ import { createRandom } from './random';
  * every time.
  */
 
-/** How far ahead notes are put on the clock, and how often that happens. */
-const LOOKAHEAD_SECONDS = 0.4;
-const TICK_MS = 100;
+/**
+ * How far ahead notes are put on the clock, and how often that happens.
+ *
+ * Far ahead on purpose: a background tab's timers run once a second, and
+ * once a minute after five minutes hidden. A scheduler that only looked a
+ * fraction of a second ahead starved there and the music fell silent. Web
+ * Audio plays what it has been given whatever the tab is doing, so bars
+ * are laid down well before they are due.
+ */
+const LOOKAHEAD_SECONDS = 20;
+const TICK_MS = 250;
+
+/** Seconds the last sound may ring past the last bar, per station. */
+const TAIL_SECONDS: Record<VibeFamily, number> = {
+  ambient: 4,
+  lofi: 2.5,
+  piano: 2.5,
+};
+
+/** How much the tone opens in the second section, and how fast it moves. */
+const SECTION_TONE_LIFT = 1.3;
+const SECTION_TONE_SECONDS = 1.5;
 
 /**
  * Loudness per station, before the compressor. The references sat around
@@ -34,7 +53,7 @@ const TICK_MS = 100;
  */
 const LEVEL: Record<VibeFamily, number> = {
   ambient: 0.9,
-  lofi: 1.0,
+  lofi: 1.15,
   piano: 1.0,
 };
 
@@ -61,7 +80,7 @@ const BASS_CEILING_HZ = 180;
 /** How loud each voice plays at full velocity, per station. */
 const GAIN: Record<VibeFamily, Record<Event['voice'], number>> = {
   ambient: { bass: 0.15, hat: 0, keys: 0.14, kick: 0, pad: 0.16, rim: 0 },
-  lofi: { bass: 0.17, hat: 0.18, keys: 0.22, kick: 0.6, pad: 0, rim: 0.32 },
+  lofi: { bass: 0.12, hat: 0.22, keys: 0.28, kick: 0.4, pad: 0, rim: 0.32 },
   piano: { bass: 0.14, hat: 0.06, keys: 0.24, kick: 0.2, pad: 0, rim: 0.1 },
 };
 
@@ -286,7 +305,11 @@ function createPad(context: BaseAudioContext, output: AudioNode): Voice {
  * low-pass that keeps it a weight rather than a note. Slow to speak, slow
  * to leave, so it reads as the floor of the piece.
  */
-function createBass(context: BaseAudioContext, output: AudioNode): Voice {
+function createBass(
+  context: BaseAudioContext,
+  output: AudioNode,
+  bite: number
+): Voice {
   return {
     note(midi, when, duration, gain) {
       const frequency = midiToHz(midi);
@@ -306,7 +329,7 @@ function createBass(context: BaseAudioContext, output: AudioNode): Voice {
 
       [
         ['sine', 1],
-        ['triangle', 0.18],
+        ['triangle', bite],
       ].forEach(([type, level]) => {
         const oscillator = context.createOscillator();
         const partial = context.createGain();
@@ -335,21 +358,25 @@ type Drums = {
 function createDrums(
   context: BaseAudioContext,
   output: AudioNode,
-  noise: AudioBuffer
+  noise: AudioBuffer,
+  kit: Kit
 ): Drums {
   return {
     kick(when, gain) {
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
 
-      oscillator.frequency.setValueAtTime(110, when);
-      oscillator.frequency.exponentialRampToValueAtTime(40, when + 0.18);
+      oscillator.frequency.setValueAtTime(kit.kickHz, when);
+      oscillator.frequency.exponentialRampToValueAtTime(
+        40,
+        when + kit.kickDecay * 0.55
+      );
       envelope.gain.setValueAtTime(gain, when);
-      envelope.gain.exponentialRampToValueAtTime(0.0001, when + 0.32);
+      envelope.gain.exponentialRampToValueAtTime(0.0001, when + kit.kickDecay);
 
       oscillator.connect(envelope).connect(output);
       oscillator.start(when);
-      oscillator.stop(when + 0.35);
+      oscillator.stop(when + kit.kickDecay + 0.05);
     },
     hat(when, gain) {
       const source = context.createBufferSource();
@@ -358,7 +385,7 @@ function createDrums(
 
       source.buffer = noise;
       filter.type = 'bandpass';
-      filter.frequency.value = 4200;
+      filter.frequency.value = kit.hatHz;
       filter.Q.value = 0.9;
       envelope.gain.setValueAtTime(gain * 0.5, when);
       envelope.gain.exponentialRampToValueAtTime(0.0001, when + 0.05);
@@ -411,6 +438,7 @@ export function playSynth(
 ): Synth {
   const { style } = source;
   const piece = composePiece(source.seed, style);
+  const { kit } = piece;
 
   const master = context.createGain();
   const dry = context.createGain();
@@ -419,7 +447,7 @@ export function playSynth(
 
   master.gain.value = LEVEL[style];
   dry.gain.value = style === 'ambient' ? 0.5 : 0.8;
-  wet.gain.value = style === 'ambient' ? 0.7 : 0.3;
+  wet.gain.value = kit.reverb;
 
   /*
    * A compressor after the reverb holds the piece together: the bass and
@@ -441,8 +469,6 @@ export function playSynth(
    * so it is asked for and the send is only connected once it answers;
    * where it cannot, the noise tail stands in.
    */
-  let plate: ReturnType<typeof Reverb> | null = null;
-
   const attachReverb = async () => {
     try {
       const candidate = Reverb(context);
@@ -453,7 +479,6 @@ export function playSynth(
         return;
       }
 
-      plate = candidate;
       master.connect(candidate.input);
       candidate.connect(wet);
       wet.connect(glue);
@@ -478,9 +503,11 @@ export function playSynth(
    */
   const tone = context.createBiquadFilter();
 
+  const toneHz = TONE_HZ[style] * kit.toneScale;
+
   tone.type = 'lowpass';
   tone.Q.value = 0.6;
-  tone.frequency.value = TONE_HZ[style];
+  tone.frequency.value = toneHz;
   tone.connect(master);
 
   instruments?.bus.connect(tone);
@@ -507,8 +534,8 @@ export function playSynth(
   const percussive = createNoise(context, 0.5);
   const keys = createKeys(context, voiceBus, percussive);
   const pad = createPad(context, voiceBus);
-  const bass = createBass(context, master);
-  const drums = createDrums(context, voiceBus, percussive);
+  const bass = createBass(context, master, kit.bassBite);
+  const drums = createDrums(context, voiceBus, percussive, kit);
   const gain = GAIN[style];
 
   const beat = 60 / piece.tempo;
@@ -520,6 +547,21 @@ export function playSynth(
   let scheduledTo = start;
   let endsAt = start;
   let stopped = false;
+  let sentinel: ConstantSourceNode | null = null;
+
+  /*
+   * The end is announced by a silent source stopped at the last sound's
+   * end: its `onended` fires on the audio clock, which a throttled tab does
+   * not slow, where the polling tick might arrive a minute late.
+   */
+  const finish = () => {
+    if (stopped) {
+      return;
+    }
+
+    stop();
+    onEnded();
+  };
 
   const play = (event: Event, at: number) => {
     const when = at + event.at * beat;
@@ -580,15 +622,36 @@ export function playSynth(
         break;
       }
 
-      piece.bar(barIndex).forEach((event) => play(event, scheduledTo));
+      /* The tone opens for the second section and settles for the first. */
+      tone.frequency.setTargetAtTime(
+        toneHz * (piece.section(barIndex) === 1 ? SECTION_TONE_LIFT : 1),
+        scheduledTo,
+        SECTION_TONE_SECONDS
+      );
+
+      try {
+        piece.bar(barIndex).forEach((event) => play(event, scheduledTo));
+      } catch (error) {
+        /* A bar that cannot be built is a bar of rest, never a stalled piece. */
+        console.error('Music Visualiser: bar could not be scheduled', error);
+      }
+
       barIndex += 1;
       scheduledTo += bar;
-      endsAt = scheduledTo + (style === 'ambient' ? 4 : 2.5);
+      endsAt = scheduledTo + TAIL_SECONDS[style];
+    }
+
+    if (scheduledTo >= end && !sentinel) {
+      sentinel = context.createConstantSource();
+      sentinel.offset.value = 0;
+      sentinel.connect(master);
+      sentinel.onended = finish;
+      sentinel.start();
+      sentinel.stop(endsAt);
     }
 
     if (scheduledTo >= end && context.currentTime >= endsAt) {
-      stop();
-      onEnded();
+      finish();
     }
   };
 
@@ -611,6 +674,10 @@ export function playSynth(
     crackle?.stop(now + 0.5);
     instruments?.piano?.stop();
 
+    if (sentinel) {
+      sentinel.onended = null;
+    }
+
     window.setTimeout(() => {
       try {
         instruments?.bus.disconnect(tone);
@@ -619,7 +686,6 @@ export function playSynth(
       }
 
       master.disconnect();
-      plate?.connect(glue);
       glue.disconnect();
     }, 600);
   }

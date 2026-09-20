@@ -35,11 +35,33 @@ export type Event = {
   voice: Voice;
 };
 
+/**
+ * How a piece is dressed: the drum tuning, the bass's bite, where its tone
+ * closes and how wet it is. Seeded per piece, so two lo-fi tracks in a row
+ * do not share a kick.
+ */
+export type Kit = {
+  /** Bass overtone level, 0 to 1: more is a plucked string, less a sub. */
+  bassBite: number;
+  /** Hat band centre in hertz. */
+  hatHz: number;
+  /** Kick decay in seconds, and where its pitch starts. */
+  kickDecay: number;
+  kickHz: number;
+  /** Reverb send, 0 to 1. */
+  reverb: number;
+  /** Multiplier on the station's tone low-pass. */
+  toneScale: number;
+};
+
 export type Piece = {
   /** Events of bar `index`, from zero. Deterministic for a given index. */
   bar(index: number): Event[];
   chords: string[];
+  kit: Kit;
   mode: Mode;
+  /** Section of bar `index`: 0 for A, 1 for B. */
+  section(index: number): number;
   tempo: number;
   tonic: string;
 };
@@ -64,6 +86,12 @@ const SWING: Record<VibeFamily, number> = {
   lofi: 0.09,
   piano: 0.03,
 };
+
+/** How far a piece's tempo may sit from its station's, either way. */
+const TEMPO_SPREAD = 0.07;
+
+/** Bars per phrase, for fills and breakdowns. */
+const PHRASE_BARS = 4;
 
 /**
  * Progressions as scale degrees, one to seven, over the key's seventh
@@ -130,29 +158,66 @@ const MELODY: Record<VibeFamily, Patterns> = {
 /** Bass rhythms. Ambient holds a drone across two bars, handled apart. */
 const BASS: Record<VibeFamily, Patterns> = {
   ambient: { A: [], B: [] },
-  lofi: { A: ['x__x__x_', 'x_____x_'], B: ['x__x__x_', 'x__x_x_x'] },
-  piano: { A: ['x___x___', 'x_______'], B: ['x___x___', 'x__x__x_'] },
+  lofi: {
+    A: ['x__x__x_', 'x_____x_', 'x___x_x_', 'x__x___x', 'x_x___x_'],
+    B: ['x__x__x_', 'x__x_x_x', 'x_x__x_x', 'x__x__xx', 'xx__x__x'],
+  },
+  piano: {
+    A: ['x___x___', 'x_______', 'x_____x_', 'x___x__x'],
+    B: ['x___x___', 'x__x__x_', 'x___x_x_', 'x__x____'],
+  },
 };
 
 type DrumPattern = { hat?: string; kick?: string; rim?: string };
 
-const DRUMS: Record<VibeFamily, { A: DrumPattern[]; B: DrumPattern[] }> = {
-  ambient: { A: [{}], B: [{}] },
+/**
+ * Drum parts are drawn a voice at a time - a kick from one list, a rim from
+ * another, a hat from a third - so the combinations run to dozens rather
+ * than the handful a fixed set of kits would give.
+ */
+const KICKS: Record<VibeFamily, Patterns> = {
+  ambient: { A: [], B: [] },
   lofi: {
-    A: [
-      { hat: 'xxxxxxxx', kick: 'x-----x-', rim: '--x---x-' },
-      { hat: 'xxxxxxxx', kick: 'x--x--x-', rim: '--x---x-' },
-    ],
-    B: [
-      { hat: 'xxxxxxxx', kick: 'x--x--x-', rim: '--x---x-' },
-      { hat: 'x[xx]x[xx]xxx[xx]', kick: 'x-----xx', rim: '--x---x-' },
-    ],
+    A: ['x-----x-', 'x--x--x-', 'x-----x-', 'x---x---', 'x--x----'],
+    B: ['x--x--x-', 'x-----xx', 'x--x-x--', 'x---x-x-', 'x-x---x-'],
   },
   piano: {
-    A: [{ kick: 'x-------', rim: '----x---' }, {}],
-    B: [{ kick: 'x---x---', rim: '--x---x-' }],
+    A: ['x-------', 'x---x---', ''],
+    B: ['x---x---', 'x-----x-', 'x--x----'],
   },
 };
+
+const RIMS: Record<VibeFamily, Patterns> = {
+  ambient: { A: [], B: [] },
+  lofi: {
+    A: ['--x---x-', '--x---x-', '----x---', '--x---x-'],
+    B: ['--x---x-', '--x---xx', '--x--x--', '--x---x-'],
+  },
+  piano: {
+    A: ['----x---', '', '--x---x-'],
+    B: ['--x---x-', '----x---', '--x-----'],
+  },
+};
+
+const HATS: Record<VibeFamily, Patterns> = {
+  ambient: { A: [], B: [] },
+  lofi: {
+    A: ['xxxxxxxx', 'x-x-x-x-', '-x-x-x-x', 'xxxxxxxx', 'x-xxx-xx'],
+    B: ['xxxxxxxx', 'x[xx]x[xx]xxx[xx]', 'xx-xxx-x', '[xx]xx[xx]xxx'],
+  },
+  piano: {
+    A: ['', '', '-x-x-x-x'],
+    B: ['', '-x-x-x-x', 'x-x-x-x-'],
+  },
+};
+
+/** The last bar of a phrase may turn over: a fill on the kick and rim. */
+const FILLS: DrumPattern[] = [
+  { kick: 'x--x--xx', rim: '--x---xx' },
+  { kick: 'x-----x-', rim: '--x-x-x-' },
+  { kick: 'x--x-x-x', rim: '--x---x-' },
+  { kick: 'x---x---', rim: '--x-xxxx' },
+];
 
 /** A pattern's hits, as beats from the bar start and lengths in beats. */
 type Hit = { at: number; duration: number; index: number };
@@ -191,8 +256,26 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
   const random = createRandom(seed);
   const tonic = pick(random, TONICS);
   const mode: Mode = random() < 0.5 ? 'major' : 'minor';
-  const tempo = TEMPO[style];
-  const swing = SWING[style];
+  const tempo = Math.round(
+    TEMPO[style] * (1 + (random() * 2 - 1) * TEMPO_SPREAD)
+  );
+  const swing = SWING[style] * (0.6 + random() * 0.8);
+
+  /* The kit: every knob a piece has, set once, from the seed. */
+  const kit: Kit = {
+    bassBite: 0.08 + random() * 0.3,
+    hatHz: 3200 + random() * 2400,
+    kickDecay: 0.22 + random() * 0.2,
+    kickHz: 85 + random() * 50,
+    reverb: (style === 'ambient' ? 0.55 : 0.22) + random() * 0.18,
+    toneScale: 0.8 + random() * 0.45,
+  };
+
+  /* Does the second section lift the melody an octave? Some pieces do. */
+  const lift = random() < 0.35 ? 12 : 0;
+
+  /* Which phrases drop the drums for a bar or two: a breath, not a stop. */
+  const breakdownAt = 16 + Math.floor(random() * 2) * 8;
 
   /* The key's seventh chords, one per degree. */
   const diatonic =
@@ -241,11 +324,14 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
    * index, so `bar(n)` is the same whenever it is asked for and bars can be
    * requested in any order.
    */
+  const sectionOf = (index: number) => Math.floor(index / SECTION_BARS) % 2;
+
   const bar = (index: number): Event[] => {
     const roll = createRandom(seed * 7919 + index * 104729);
-    const section = Math.floor(index / SECTION_BARS) % 2;
+    const section = sectionOf(index);
     const late = Math.floor(index / SECTION_BARS) >= 2;
     const letter: keyof Patterns = section === 0 ? 'A' : 'B';
+    const phrase = index % PHRASE_BARS;
     const chordIndex = index % 4;
     const chord = keysVoicings[section][chordIndex];
     const pad = padVoicings[section][chordIndex];
@@ -253,6 +339,20 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
       `${sections[section][chordIndex].replace(/[^A-G#b].*$/, '')}2`
     );
     const events: Event[] = [];
+
+    /*
+     * The arc: every phrase rises a little to its last bar, the B section
+     * sits above the A, and the second time round is a shade stronger.
+     */
+    const arc =
+      0.9 +
+      0.08 * (phrase / (PHRASE_BARS - 1)) +
+      section * 0.05 +
+      (late ? 0.04 : 0);
+
+    /* A fill closes most phrases; a breakdown opens one, drums out. */
+    const fill = phrase === PHRASE_BARS - 1 && roll() < 0.55;
+    const breakdown = index >= breakdownAt && index < breakdownAt + 2;
 
     const place = (at: number) =>
       at + (Math.abs((at % 1) - 0.5) < 0.01 ? swing : 0);
@@ -277,7 +377,7 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
             at: place(hit.at) + voice * 0.02,
             duration: Math.max(hit.duration, 1.2) * 1.1,
             midi,
-            velocity: (hit.at === 0 ? 0.5 : 0.4) + roll() * 0.08,
+            velocity: ((hit.at === 0 ? 0.5 : 0.4) + roll() * 0.08) * arc,
             voice: 'keys',
           });
         });
@@ -312,9 +412,8 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
       events.push({
         at: place(hit.at),
         duration: hit.duration * (style === 'ambient' ? 1.2 : 1.7),
-        midi,
-        velocity:
-          (hit.at === 0 ? 0.85 : 0.7) + roll() * 0.12 + (late ? 0.05 : 0),
+        midi: midi + (section === 1 ? lift : 0),
+        velocity: ((hit.at === 0 ? 0.85 : 0.7) + roll() * 0.12) * arc,
         voice: 'keys',
       });
     });
@@ -331,48 +430,75 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
         });
       }
     } else {
-      hits(pick(roll, BASS[style][letter])).forEach((hit) => {
-        const fifth = hit.index > 0 && roll() < 0.3;
+      const low = Math.max(28, root - 12);
+      const bassHits = hits(pick(roll, BASS[style][letter]));
+
+      bassHits.forEach((hit) => {
+        /* The root first; after it, sometimes the fifth or the octave. */
+        const colour =
+          hit.index === 0 ? 0 : roll() < 0.3 ? 7 : roll() < 0.15 ? 12 : 0;
 
         events.push({
           at: place(hit.at),
           duration: Math.max(hit.duration, 1.2),
-          midi: Math.max(28, root - 12 + (fifth ? 7 : 0)),
-          velocity: hit.index === 0 ? 0.65 : 0.55,
+          midi: low + colour,
+          velocity: (hit.index === 0 ? 0.65 : 0.55) * arc,
           voice: 'bass',
         });
       });
-    }
 
-    /* Drums. */
-    const drums = pick(roll, DRUMS[style][letter]);
-
-    (['kick', 'rim', 'hat'] as const).forEach((voice) => {
-      const drumPattern = drums[voice];
-
-      if (!drumPattern) {
-        return;
-      }
-
-      hits(drumPattern).forEach((hit) => {
-        const offbeat = hit.at % 1 !== 0;
+      /* Lo-fi walks into the next bar: a note below the coming root on the last eighth. */
+      if (style === 'lofi' && roll() < 0.4) {
+        const nextRoot = midiOf(
+          `${sections[section][(chordIndex + 1) % 4].replace(/[^A-G#b].*$/, '')}2`
+        );
 
         events.push({
-          at: place(hit.at),
-          duration: 0.1,
-          midi: 0,
-          velocity:
-            voice === 'hat'
-              ? offbeat
-                ? 0.35
-                : 0.55
-              : hit.at === 0
-                ? 0.8
-                : 0.6,
-          voice,
+          at: place(3.5),
+          duration: 0.45,
+          midi: Math.max(28, nextRoot - 12 + (roll() < 0.5 ? -1 : 2)),
+          velocity: 0.45 * arc,
+          voice: 'bass',
+        });
+      }
+    }
+
+    /* Drums: a kick, a rim and a hat each drawn on their own, or a fill. */
+    if (!breakdown) {
+      const filled = fill ? pick(roll, FILLS) : null;
+      const parts: DrumPattern = {
+        hat: pick(roll, HATS[style][letter]),
+        kick: filled?.kick ?? pick(roll, KICKS[style][letter]),
+        rim: filled?.rim ?? pick(roll, RIMS[style][letter]),
+      };
+
+      (['kick', 'rim', 'hat'] as const).forEach((voice) => {
+        const drumPattern = parts[voice];
+
+        if (!drumPattern) {
+          return;
+        }
+
+        hits(drumPattern).forEach((hit) => {
+          const offbeat = hit.at % 1 !== 0;
+
+          events.push({
+            at: place(hit.at),
+            duration: 0.1,
+            midi: 0,
+            velocity:
+              (voice === 'hat'
+                ? offbeat
+                  ? 0.3 + roll() * 0.1
+                  : 0.5 + roll() * 0.1
+                : hit.at === 0
+                  ? 0.8
+                  : 0.55 + roll() * 0.1) * arc,
+            voice,
+          });
         });
       });
-    });
+    }
 
     return events;
   };
@@ -380,7 +506,9 @@ export function composePiece(seed: number, style: VibeFamily): Piece {
   return {
     bar,
     chords: sections.flat(),
+    kit,
     mode,
+    section: sectionOf,
     tempo,
     tonic,
   };
