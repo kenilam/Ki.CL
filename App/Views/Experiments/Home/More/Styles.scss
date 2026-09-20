@@ -1,0 +1,49 @@
+/* "More to come": a full screen in normal flow after the stage, content centred, faint accent gradient. */
+.kicl--views--experiments__home__more {
+  background-image: radial-gradient(
+    ellipse 60% 50% at 80% 20%,
+    color-mix(
+      in oklab,
+      var(--kicl--views--experiments__home--accent) 22%,
+      transparent
+    ),
+    transparent 70%
+  );
+  min-block-size: var(--kicl--views--experiments__home--screen);
+
+  &__body {
+    block-size: var(--kicl--views--experiments__home--screen);
+    box-sizing: border-box;
+    padding-block-end: var(--kicl--views--experiments__home--pad);
+    padding-block-start: var(--kicl--views--experiments__home--top);
+    padding-inline: var(--kicl--views--experiments__home--margin);
+  }
+
+  /* In normal flow, so the words use their own view timeline: they rise as the section enters. */
+  &__body .kicl--views--experiments__home__words {
+    --kicl--views--experiments__home--rise: 10dvb;
+
+    block-size: 100%;
+    min-block-size: 0;
+
+    @supports (animation-timeline: view()) {
+      animation: kicl--views--experiments__home--rise linear both;
+      animation-range: entry 0% entry 100%;
+      animation-timeline: view();
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes kicl--views--experiments__home--rise {
+  from {
+    translate: 0 var(--kicl--views--experiments__home--rise);
+  }
+
+  to {
+    translate: 0 0;
+  }
+}

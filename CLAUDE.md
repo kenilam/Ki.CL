@@ -50,6 +50,16 @@ This app does not talk to GraphQL directly - it consumes the **Backend** repo's 
 
 `App/@mf-types/api` is generated (Module Federation `dts.consumeTypes`) - don't hand-edit it. If Backend's GraphQL schema changes, those types need regenerating from the Backend side (its `Codegen` workspace), not here.
 
+## Structure
+
+Views are folders of small parts, not one long file. Follow `App/Views/Experiments/TreeOfLife/Home` and `App/Views/Experiments/Home`:
+
+- A route folder has `index.tsx` (the `<Route>`), `Contents.tsx` (what it renders) and `constants.ts` (paths, class root, copy that is shared).
+- Every visual section is its own folder with `index.tsx` and `Styles.scss`: `Home/Stage`, `Home/Stage/Screen`, `Home/More`. Nest a folder inside the part that owns it.
+- A part that two sections share (`Home/Words`) is a sibling folder, imported by both. Do not pass it around as props or duplicate it.
+- Keep `index.tsx` short: composition at the top, one component per file, under about 80 lines. If a file grows past that, split it.
+- Each part styles only its own elements, under its own class root (`kicl--views--…__part`), reading shared tokens from the root folder's `Styles.scss`.
+
 ## Writing
 
 Everything written here is read by people: UI copy, comments, commit messages, README text. Write it the way a good colleague would, not the way a model tends to.
