@@ -85,6 +85,8 @@ export default function useRadio(): Radio {
   const trackRef = useRef<Track | null>(null);
   const stateRef = useRef<PlaybackState>('idle');
   const volumeRef = useRef(DEFAULT_VOLUME);
+  /* Whether the engine holds a track that can be resumed: only after one has started. */
+  const heldRef = useRef(false);
 
   const [state, setState] = useState<PlaybackState>('idle');
   const [track, setTrack] = useState<Track | null>(null);
@@ -120,6 +122,7 @@ export default function useRadio(): Radio {
       const mine = ++generation.current;
       const held = trackRef.current;
       const resuming =
+        heldRef.current &&
         held !== null &&
         trackKey(held) === trackKey(upcoming) &&
         stateRef.current === 'paused';
@@ -128,6 +131,7 @@ export default function useRadio(): Radio {
       setError(null);
 
       if (!resuming) {
+        heldRef.current = false;
         history.current = [...history.current, trackKey(upcoming)].slice(
           -HISTORY_LENGTH
         );
@@ -144,6 +148,8 @@ export default function useRadio(): Radio {
             }
           });
         }
+
+        heldRef.current = true;
 
         if (mine === generation.current) {
           setState('playing');
@@ -174,7 +180,7 @@ export default function useRadio(): Radio {
   const stop = useCallback(() => {
     generation.current += 1;
     engine.current?.pause();
-    setState(trackRef.current ? 'paused' : 'idle');
+    setState(heldRef.current ? 'paused' : 'idle');
   }, []);
 
   const setVolume = useCallback(

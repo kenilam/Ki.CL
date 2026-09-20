@@ -33,10 +33,23 @@ const VOLUME_RAMP_SECONDS = 0.05;
 
 /**
  * How long to wait for the context to run before deciding the browser is
- * holding it for a gesture. A context allowed to run does so at once; one
- * that is not leaves `resume()` pending until the listener acts.
+ * holding it for a gesture. A context the browser will not run leaves
+ * `resume()` pending until the listener acts, so the wait only ends by
+ * timing out. When the page has seen an interaction the browser has no
+ * reason to hold it, and the wait is long enough for a slow audio device
+ * to wake; when it has not, a shorter wait still gives a browser that
+ * allows the site to autoplay its chance.
  */
-const RESUME_TIMEOUT_MS = 400;
+const RESUME_AFTER_GESTURE_MS = 6000;
+const RESUME_COLD_MS = 1500;
+
+/**
+ * Whether the listener has interacted with this page at all. Browsers that
+ * do not report it are given the benefit of the doubt.
+ */
+function hasBeenActive(): boolean {
+  return navigator.userActivation?.hasBeenActive ?? true;
+}
 
 /** Thrown by `play` when the browser wants a gesture before it will sound. */
 export class PlaybackBlockedError extends Error {
@@ -123,13 +136,14 @@ export function createEngine(
     clear();
 
     if (!running()) {
+      const wait = hasBeenActive() ? RESUME_AFTER_GESTURE_MS : RESUME_COLD_MS;
       const resumed = await Promise.race([
         context.resume().then(
           () => true,
           () => false
         ),
         new Promise<boolean>((resolve) =>
-          window.setTimeout(() => resolve(false), RESUME_TIMEOUT_MS)
+          window.setTimeout(() => resolve(false), wait)
         ),
       ]);
 
