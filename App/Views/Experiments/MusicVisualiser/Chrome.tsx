@@ -142,7 +142,7 @@ const Chrome: React.FunctionComponent<Props> = ({
           <Text is='p' className='kicl-font-size-medium'>
             {COPY.lede}
           </Text>
-          <Button onClick={toggle} variant='ghost'>
+          <Button aria-label={COPY.play} onClick={toggle} variant='ghost'>
             <Fa.FaPlay aria-hidden />
           </Button>
           {requested ? (
@@ -237,7 +237,12 @@ const Chrome: React.FunctionComponent<Props> = ({
                 <Fa.FaPlay aria-hidden />
               )}
             </Button>
-            <Button aria-label={COPY.next} onClick={next} variant='ghost' size='small'>
+            <Button
+              aria-label={COPY.next}
+              onClick={next}
+              variant='ghost'
+              size='small'
+            >
               <Ri.RiSkipForwardFill aria-hidden />
             </Button>
             <Button

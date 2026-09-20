@@ -1,7 +1,13 @@
+import { Reverb } from 'smplr';
+
 import type {
   SynthSource,
   VibeFamily,
 } from '@/Views/Experiments/MusicVisualiser/Spec';
+
+import { composePiece, type Event } from './compose';
+import type { Instruments } from './instruments';
+import { createRandom } from './random';
 
 /*
  * The built-in station: music the browser makes for itself.
@@ -11,78 +17,16 @@ import type {
  * visuals can be checked against a signal whose shape is known. It is not a
  * stand-in for the catalogue; it is the last station on the dial.
  *
- * Everything is scheduled ahead on the audio clock from a seeded generator,
- * so a given seed is the same piece every time.
+ * `compose.ts` decides what is played; this file decides how it sounds. The
+ * keys are the sampled piano when it has loaded and the synthesised one
+ * until then; the bass, pad and drums are always synthesised. Everything is
+ * scheduled ahead on the audio clock, so a given seed is the same piece
+ * every time.
  */
 
 /** How far ahead notes are put on the clock, and how often that happens. */
 const LOOKAHEAD_SECONDS = 0.4;
 const TICK_MS = 100;
-
-type Mode = 'major' | 'minor';
-
-/** Pentatonic scales, in semitones from the root, one per mode. */
-const SCALES: Record<Mode, number[]> = {
-  major: [0, 2, 4, 7, 9],
-  minor: [0, 3, 5, 7, 10],
-};
-
-/**
- * Chord degrees, in semitones from the root, cycled slowly. Each station
- * has a progression per mode; the seed picks the mode, so half the pieces
- * are minor - the references were, and a station that is only ever major
- * grows sweet.
- */
-const PROGRESSIONS: Record<VibeFamily, Record<Mode, number[][]>> = {
-  ambient: {
-    major: [
-      [0, 7, 14],
-      [5, 12, 19],
-      [-3, 4, 11],
-      [2, 9, 16],
-    ],
-    minor: [
-      [0, 7, 15],
-      [-4, 3, 12],
-      [5, 12, 20],
-      [-2, 5, 14],
-    ],
-  },
-  lofi: {
-    major: [
-      [0, 4, 7, 11],
-      [9, 12, 16, 19],
-      [5, 9, 12, 16],
-      [7, 11, 14, 17],
-    ],
-    minor: [
-      [0, 3, 7, 10],
-      [5, 8, 12, 15],
-      [-4, 0, 3, 7],
-      [7, 10, 14, 17],
-    ],
-  },
-  piano: {
-    major: [
-      [0, 4, 7, 11],
-      [-3, 0, 4, 7],
-      [5, 9, 12, 16],
-      [7, 11, 14, 17],
-    ],
-    minor: [
-      [0, 3, 7, 10],
-      [-4, 0, 3, 7],
-      [5, 8, 12, 15],
-      [-2, 2, 5, 9],
-    ],
-  },
-};
-
-const TEMPO: Record<VibeFamily, number> = {
-  ambient: 56,
-  lofi: 84,
-  piano: 68,
-};
 
 /**
  * Loudness per station, before the compressor. The references sat around
@@ -94,16 +38,13 @@ const LEVEL: Record<VibeFamily, number> = {
   piano: 1.0,
 };
 
-/** Root note, as a MIDI number, chosen per seed from these. */
-const ROOTS = [57, 58, 60, 62, 63, 65];
-
-/** The keys' low-pass never opens past this, however high the note. */
+/** The synthesised keys' low-pass never opens past this. */
 const KEYS_CEILING_HZ = 3600;
 
 /**
- * Where each station's tone closes, in hertz. Everything the voices make
- * passes through one gentle low-pass so nothing above it can be sharp;
- * lo-fi sits lowest, as a record would.
+ * Where each station's tone closes, in hertz. Everything the voices make,
+ * the sampled piano included, passes through one gentle low-pass so nothing
+ * above it can be sharp; lo-fi sits lowest, as a record would.
  */
 const TONE_HZ: Record<VibeFamily, number> = {
   ambient: 4200,
@@ -117,30 +58,28 @@ const TONE_HZ: Record<VibeFamily, number> = {
  */
 const BASS_CEILING_HZ = 180;
 
+/** How loud each voice plays at full velocity, per station. */
+const GAIN: Record<VibeFamily, Record<Event['voice'], number>> = {
+  ambient: { bass: 0.15, hat: 0, keys: 0.14, kick: 0, pad: 0.16, rim: 0 },
+  lofi: { bass: 0.17, hat: 0.18, keys: 0.22, kick: 0.6, pad: 0, rim: 0.32 },
+  piano: { bass: 0.14, hat: 0.06, keys: 0.24, kick: 0.2, pad: 0, rim: 0.1 },
+};
+
+/**
+ * The sampled piano's MIDI velocity at zero and full event velocity: 44 to
+ * 100, the span of the layers `instruments.ts` fetches.
+ */
+const SAMPLE_VELOCITY_FLOOR = 44;
+const SAMPLE_VELOCITY_SPAN = 56;
+
 function midiToHz(midi: number): number {
   return 440 * Math.pow(2, (midi - 69) / 12);
 }
 
-/** mulberry32 - small, fast, and good enough for picking notes. */
-function createRandom(seed: number): () => number {
-  let state = seed >>> 0;
-
-  return () => {
-    state = (state + 0x6d2b79f5) >>> 0;
-
-    let t = state;
-
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
 /**
- * A reverb tail made from decaying noise. A real impulse response would be
- * an asset to fetch; this is a few kilobytes of arithmetic and sounds like a
- * quiet room, which is all a chill station needs.
+ * A reverb tail made from decaying noise: the fallback when the plate
+ * cannot start, which is rare but not impossible where worklets are
+ * refused.
  */
 function createImpulse(
   context: BaseAudioContext,
@@ -193,7 +132,7 @@ const KEYS_PARTIALS = 6;
 const KEYS_PARTIAL_CEILING_HZ = 7000;
 
 /**
- * A piano voice, built from what separates a piano from a keyboard.
+ * The synthesised piano, built from what separates a piano from a keyboard.
  *
  * The partials are not exact multiples of the fundamental: a stiff string
  * pushes each one a little sharp, and more so higher up, which is the
@@ -204,9 +143,8 @@ const KEYS_PARTIAL_CEILING_HZ = 7000;
  * other. And every note starts with the hammer: a short thump of filtered
  * noise before the strings speak.
  *
- * The note still knows how high it sits: higher notes get a darker body
- * filter, a softer touch, and thinner partials, so the top of a phrase
- * rings rather than pierces.
+ * It plays until the sampled piano has loaded, and instead of it wherever
+ * the samples cannot be reached.
  */
 function createKeys(
   context: BaseAudioContext,
@@ -220,18 +158,8 @@ function createKeys(
       const frequency = midiToHz(midi);
       const height = Math.min(1, Math.max(0, (midi - 48) / 36));
       const touch = gain * (1 - height * 0.35);
-
-      /*
-       * Inharmonicity: partial n sits at n·f·√(1 + B·n²). B is tiny in the
-       * bass and grows toward the treble, where the strings are shortest and
-       * stiffest.
-       */
       const stiffness = 0.00012 + height * 0.0009;
-
-      /* Strings per note, in cents from centre. Trebles have two. */
       const strings = midi >= 58 ? [-2.4, 2.4] : [0];
-
-      /* How long the fundamental rings, at most. Treble notes are shorter. */
       const ring = Math.min(duration, 2.6 - height * 1.3);
 
       const body = context.createBiquadFilter();
@@ -248,10 +176,6 @@ function createKeys(
         when + ring
       );
 
-      /*
-       * Two-stage decay, as a struck string has: a quick fall from the
-       * strike, then a long slow settle, then whatever the release leaves.
-       */
       envelope.gain.setValueAtTime(0.0001, when);
       envelope.gain.exponentialRampToValueAtTime(touch, when + 0.006);
       envelope.gain.exponentialRampToValueAtTime(touch * 0.5, when + 0.16);
@@ -268,14 +192,10 @@ function createKeys(
           break;
         }
 
-        /* Loudness falls with the partial, and the top thins in the treble. */
         const level =
           (Math.pow(n, -1.35) * (n === 1 ? 1 : 1 - height * 0.65)) /
           strings.length;
-
-        /* The higher the partial, the sooner it is gone. */
         const decay = Math.max(0.12, ring / (1 + 0.7 * (n - 1)));
-
         const partial = context.createGain();
 
         partial.gain.setValueAtTime(level, when);
@@ -295,7 +215,6 @@ function createKeys(
         partial.connect(body);
       }
 
-      /* The hammer: a thump the length of a hammer's contact, then gone. */
       const hammer = context.createBufferSource();
       const hammerFilter = context.createBiquadFilter();
       const hammerGain = context.createGain();
@@ -412,7 +331,7 @@ type Drums = {
   rim(when: number, gain: number): void;
 };
 
-/** A soft kick and a brushed hat, for the lo-fi station's slow swing. */
+/** A soft kick, a brushed hat and a rim, for the stations with a pulse. */
 function createDrums(
   context: BaseAudioContext,
   output: AudioNode,
@@ -478,29 +397,25 @@ function createDrums(
 }
 
 /**
- * Plays one synthesised piece into `destination`, returning a handle that
- * stops it. `onEnded` fires once the last scheduled sound has finished.
+ * Plays one piece into `destination`, returning a handle that stops it.
+ * `onEnded` fires once the last scheduled sound has finished. `instruments`
+ * are the sampled ones the engine shares; without them, or until they have
+ * loaded, the synthesised voices carry everything.
  */
 export function playSynth(
   context: AudioContext,
   destination: AudioNode,
   source: SynthSource,
-  onEnded: () => void
+  onEnded: () => void,
+  instruments?: Instruments
 ): Synth {
-  const random = createRandom(source.seed);
   const { style } = source;
+  const piece = composePiece(source.seed, style);
 
   const master = context.createGain();
   const dry = context.createGain();
   const wet = context.createGain();
-  const reverb = context.createConvolver();
   const glue = context.createDynamicsCompressor();
-
-  reverb.buffer = createImpulse(
-    context,
-    style === 'ambient' ? 4 : 2.2,
-    style === 'ambient' ? 2.5 : 3.5
-  );
 
   master.gain.value = LEVEL[style];
   dry.gain.value = style === 'ambient' ? 0.5 : 0.8;
@@ -509,8 +424,7 @@ export function playSynth(
   /*
    * A compressor after the reverb holds the piece together: the bass and
    * the keys stop trading places in level, and the whole sits at a steady
-   * loudness the way a mixed record does, instead of swinging forty
-   * decibels between a chord and the silence after it.
+   * loudness the way a mixed record does.
    */
   glue.threshold.value = -18;
   glue.knee.value = 12;
@@ -519,8 +433,43 @@ export function playSynth(
   glue.release.value = 0.3;
 
   master.connect(dry).connect(glue);
-  master.connect(reverb).connect(wet).connect(glue);
   glue.connect(destination);
+
+  /*
+   * The reverb is a plate - a packaged Dattorro network - which sounds like
+   * a room rather than the noise tail it replaces. It starts as a worklet,
+   * so it is asked for and the send is only connected once it answers;
+   * where it cannot, the noise tail stands in.
+   */
+  let plate: ReturnType<typeof Reverb> | null = null;
+
+  const attachReverb = async () => {
+    try {
+      const candidate = Reverb(context);
+
+      await candidate.ready();
+
+      if (stopped) {
+        return;
+      }
+
+      plate = candidate;
+      master.connect(candidate.input);
+      candidate.connect(wet);
+      wet.connect(glue);
+    } catch {
+      const reverb = context.createConvolver();
+
+      reverb.buffer = createImpulse(
+        context,
+        style === 'ambient' ? 4 : 2.2,
+        style === 'ambient' ? 2.5 : 3.5
+      );
+      master.connect(reverb).connect(wet).connect(glue);
+    }
+  };
+
+  void attachReverb();
 
   /*
    * Every voice goes through one tone low-pass before the reverb, set per
@@ -533,6 +482,8 @@ export function playSynth(
   tone.Q.value = 0.6;
   tone.frequency.value = TONE_HZ[style];
   tone.connect(master);
+
+  instruments?.bus.connect(tone);
 
   const voiceBus: AudioNode = tone;
   let crackle: AudioBufferSourceNode | null = null;
@@ -558,12 +509,9 @@ export function playSynth(
   const pad = createPad(context, voiceBus);
   const bass = createBass(context, master);
   const drums = createDrums(context, voiceBus, percussive);
+  const gain = GAIN[style];
 
-  const root = ROOTS[Math.floor(random() * ROOTS.length)];
-  const mode: Mode = random() < 0.5 ? 'major' : 'minor';
-  const scale = SCALES[mode];
-  const progression = PROGRESSIONS[style][mode];
-  const beat = 60 / TEMPO[style];
+  const beat = 60 / piece.tempo;
   const bar = beat * 4;
   const start = context.currentTime + 0.1;
   const end = start + source.durationSeconds;
@@ -573,100 +521,53 @@ export function playSynth(
   let endsAt = start;
   let stopped = false;
 
-  const scheduleBar = (at: number) => {
-    const chord = progression[barIndex % progression.length];
-    const phraseBar = barIndex % 8;
+  const play = (event: Event, at: number) => {
+    const when = at + event.at * beat;
+    const duration = event.duration * beat;
+    const level = event.velocity * gain[event.voice];
 
-    /* The floor: the chord's root, two octaves down, never below the low E. */
-    const low = Math.max(28, root - 24 + chord[0]);
+    if (level <= 0) {
+      return;
+    }
 
-    if (style === 'ambient') {
-      if (barIndex % 2 === 0) {
-        chord.forEach((degree, index) => {
-          pad.note(root - 12 + degree, at, bar * 2.05, 0.08 + index * 0.01);
-        });
+    switch (event.voice) {
+      case 'keys': {
+        const piano = instruments?.loaded ? instruments.piano : null;
 
-        bass.note(low, at, bar * 2.02, 0.08);
-      }
-
-      if (random() < 0.8) {
-        const degree = scale[Math.floor(random() * scale.length)];
-        const octave = random() < 0.7 ? 12 : 24;
-
-        keys.note(
-          root + octave + degree,
-          at + beat * Math.floor(random() * 4),
-          bar * 1.5,
-          0.11
-        );
-      }
-    } else {
-      // A held chord underneath, voiced low and quiet.
-      chord.forEach((degree, index) => {
-        keys.note(
-          root - 12 + degree,
-          at + (style === 'lofi' ? 0 : beat * 0.02 * index),
-          bar * 0.98,
-          0.12
-        );
-      });
-
-      // Melody on the pentatonic, more rests as the phrase settles.
-      const density = phraseBar < 4 ? 0.8 : 0.55;
-
-      for (let step = 0; step < 8; step++) {
-        if (random() > density) {
-          continue;
+        if (piano) {
+          piano.start({
+            duration,
+            note: event.midi,
+            time: when,
+            velocity: Math.round(
+              SAMPLE_VELOCITY_FLOOR + event.velocity * SAMPLE_VELOCITY_SPAN
+            ),
+          });
+        } else {
+          keys.note(event.midi, when, duration, level);
         }
 
-        const swing = style === 'lofi' && step % 2 === 1 ? beat * 0.08 : 0;
-        const degree = scale[Math.floor(random() * scale.length)];
-        const octave = random() < 0.12 ? 24 : 12;
-        /* Longer than the slot, so notes overlap and ring as a pedal would let them. */
-        const length = beat * (random() < 0.3 ? 2 : 1) * 1.7;
-
-        keys.note(
-          root + octave + degree,
-          at + step * beat * 0.5 + swing,
-          length,
-          0.18 + random() * 0.07
-        );
+        return;
       }
+      case 'pad':
+        pad.note(event.midi, when, duration, level);
+
+        return;
+      case 'bass':
+        bass.note(event.midi, when, duration, level);
+
+        return;
+      case 'kick':
+        drums.kick(when, level);
+
+        return;
+      case 'rim':
+        drums.rim(when, level);
+
+        return;
+      case 'hat':
+        drums.hat(when, level);
     }
-
-    if (style === 'lofi') {
-      bass.note(low, at, beat * 1.4, 0.11);
-      bass.note(low, at + beat * 2.5, beat * 1.2, 0.09);
-
-      drums.kick(at, 0.5);
-      drums.kick(at + beat * 2.5, 0.35);
-      drums.rim(at + beat, 0.22);
-      drums.rim(at + beat * 3, 0.26);
-
-      for (let step = 0; step < 8; step++) {
-        const swing = step % 2 === 1 ? beat * 0.09 : 0;
-
-        drums.hat(at + step * beat * 0.5 + swing, step % 2 ? 0.06 : 0.1);
-      }
-    }
-
-    if (style === 'piano') {
-      /* A bass on one and three, and the lightest pulse under it. */
-      bass.note(low, at, beat * 1.8, 0.09);
-      bass.note(
-        low + (random() < 0.3 ? 7 : 0),
-        at + beat * 2,
-        beat * 1.8,
-        0.08
-      );
-
-      drums.kick(at, 0.16);
-      drums.rim(at + beat, 0.07);
-      drums.kick(at + beat * 2, 0.12);
-      drums.rim(at + beat * 3, 0.09);
-    }
-
-    barIndex += 1;
   };
 
   const tick = () => {
@@ -679,7 +580,8 @@ export function playSynth(
         break;
       }
 
-      scheduleBar(scheduledTo);
+      piece.bar(barIndex).forEach((event) => play(event, scheduledTo));
+      barIndex += 1;
       scheduledTo += bar;
       endsAt = scheduledTo + (style === 'ambient' ? 4 : 2.5);
     }
@@ -707,9 +609,17 @@ export function playSynth(
     master.gain.setValueAtTime(master.gain.value, now);
     master.gain.linearRampToValueAtTime(0, now + 0.4);
     crackle?.stop(now + 0.5);
+    instruments?.piano?.stop();
 
     window.setTimeout(() => {
+      try {
+        instruments?.bus.disconnect(tone);
+      } catch {
+        // Already detached, which is fine.
+      }
+
       master.disconnect();
+      plate?.connect(glue);
       glue.disconnect();
     }, 600);
   }

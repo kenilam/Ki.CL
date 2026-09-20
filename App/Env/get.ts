@@ -12,9 +12,16 @@ dotenv.config({ path: `${appRoot.path}/.env` });
  */
 
 const get = () => {
-  const { NODE_ENV } = process.env || {};
+  const { KICL_MUSIC_SAMPLES_URL, NODE_ENV } = process.env || {};
 
   return {
+    /**
+     * Where the Music Visualiser's sampled instruments are served from. Unset,
+     * the view uses the static bucket through the same-origin `/assets/static`
+     * route; a developer may point it elsewhere to try a sample set before
+     * uploading it.
+     */
+    KICL_MUSIC_SAMPLES_URL,
     NODE_ENV,
   };
 };

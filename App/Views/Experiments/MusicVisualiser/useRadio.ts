@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from '@/Router';
 
 // Context
+import { useEnvContext } from '@/Env/Client';
 import { useLocalStorageContext } from '@/LocalStorage';
 
 // Spec
@@ -67,6 +68,8 @@ function clampVolume(value: unknown): number {
 
 export default function useRadio(): Radio {
   const storage = useLocalStorageContext();
+  const { env } = useEnvContext();
+  const samplesUrl = env?.KICL_MUSIC_SAMPLES_URL || undefined;
   const navigate = useNavigate();
   const params = useParams<Params>();
   const requestedId = params[PARAM] ?? null;
@@ -94,7 +97,7 @@ export default function useRadio(): Radio {
    */
   const start = useCallback(
     async (id: string | null) => {
-      const current = (engine.current ??= createEngine(volume));
+      const current = (engine.current ??= createEngine(volume, { samplesUrl }));
       const mine = ++generation.current;
 
       setState('loading');
@@ -137,7 +140,7 @@ export default function useRadio(): Radio {
         }
       }
     },
-    [navigate, volume]
+    [navigate, samplesUrl, volume]
   );
 
   const next = useCallback(() => void start(null), [start]);

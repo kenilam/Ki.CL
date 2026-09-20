@@ -4,6 +4,7 @@ import type {
 } from '@/Views/Experiments/MusicVisualiser/Spec';
 
 import { createExtractor, type Extractor } from './features';
+import { loadInstruments, type Instruments } from './instruments';
 import { playSynth, type Synth } from './synth';
 
 /*
@@ -47,11 +48,25 @@ export type Engine = {
   update(dt: number): void;
 };
 
-export function createEngine(initialVolume: number): Engine {
+export type EngineOptions = {
+  /** Where sample sets are served from; see `instruments.ts`. */
+  samplesUrl?: string;
+};
+
+export function createEngine(
+  initialVolume: number,
+  options: EngineOptions = {}
+): Engine {
   const context = new AudioContext();
   const input = context.createGain();
   const analyser = context.createAnalyser();
   const master = context.createGain();
+
+  /*
+   * Sampled instruments start loading now, on the gesture that made the
+   * context, and are shared by every piece this engine plays.
+   */
+  const instruments: Instruments = loadInstruments(context, options.samplesUrl);
 
   analyser.fftSize = FFT_SIZE;
   analyser.smoothingTimeConstant = ANALYSER_SMOOTHING;
@@ -92,10 +107,16 @@ export function createEngine(initialVolume: number): Engine {
     }
 
     if (source.kind === 'synth') {
-      synth = playSynth(context, input, source, () => {
-        playing = false;
-        onEnded();
-      });
+      synth = playSynth(
+        context,
+        input,
+        source,
+        () => {
+          playing = false;
+          onEnded();
+        },
+        instruments
+      );
       playing = true;
 
       return;

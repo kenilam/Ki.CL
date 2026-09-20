@@ -32,7 +32,10 @@ MusicVisualiser/
     engine.ts        one AudioContext: source → input → analyser → master
     features.ts      energy, three bands, centroid, flux, onsets; smoothed at
                      0.08 s, 2 s and 15 s
-    synth.ts         the built-in station, scheduled from a seeded generator
+    compose.ts       the composer: tonal harmony, scribbletune rhythms, seeded
+    instruments.ts   the sampled piano (smplr), loaded once per engine
+    synth.ts         the renderer: voices, bus, reverb, scheduling
+    random.ts        the seeded generator
   Providers/
     index.ts         asks each provider in turn; the built-in one never fails
     builtIn.ts       "Self composed Radio": recipes for the synth, with names and vibes
@@ -53,9 +56,38 @@ MusicVisualiser/
   `Providers/index.ts` once it exists.
 - **Built-in station.** Exists so the visualiser works with no network and so
   the visuals can be checked against a known signal. Three styles: `piano`
-  (keys over a held chord, pentatonic melody), `lofi` (the same through a
-  low-pass with a soft kick, a brushed hat and crackle), `ambient` (detuned
-  pads and sparse keys, long reverb). Deterministic per seed.
+  (keys over held chords, pentatonic melody, bass, the lightest pulse),
+  `lofi` (the same through a low-pass with a kick, a rim, a brushed hat and
+  crackle), `ambient` (detuned pads, a drone and sparse keys, long reverb).
+  Deterministic per seed.
+- **Composer.** `compose.ts` is pure: seed and style in, a piece out, and the
+  piece hands back any bar's events on request. Harmony comes from
+  [tonal](https://github.com/tonaljs/tonal): the key's seventh chords, a
+  progression chosen by degree, and voicings that lead from chord to chord
+  with the least movement. Rhythm comes from
+  [scribbletune](https://scribbletune.com) pattern strings, where `x` is a
+  hit, `-` a rest, `_` a tie and `[xx]` a subdivision, so a bar of comping is
+  a short readable string. Only scribbletune's `clip` is used, as a pattern
+  reader; its Tone.js playback is not. Half the pieces are minor. Form is
+  sixteen bars, eight on one progression and eight on another, busier, which
+  is what gives the director sections to notice.
+- **Sampled piano.** `instruments.ts` loads the Splendid Grand Piano, a
+  Steinway sampled by Akai and released as public domain, through
+  [smplr](https://github.com/danigb/smplr): about a hundred Opus samples for
+  the keys and layers the station uses, cached in the browser's Cache API.
+  Until it has loaded, and wherever it cannot, the synthesised keys carry
+  the station. The reverb on both is smplr's packaged Dattorro plate, an
+  audio worklet, with the old noise tail as the fallback.
+- **Hosting the samples.** They are fetched from
+  `KICL_MUSIC_SAMPLES_URL`, a template with `{repo}` standing for the
+  upstream repository name, defaulting to `/assets/static/music/{repo}`, the
+  static bucket through the same-origin route. To host them, mirror
+  `https://github.com/smpldsnds/sfzinstruments-splendid-grand-piano` into the
+  `ki-cl-static` bucket as `music/sfzinstruments-splendid-grand-piano/`, so
+  the files sit at `music/sfzinstruments-splendid-grand-piano/samples/*.ogg`
+  beside `samples/files.json`. A developer can point the variable at
+  `https://raw.githubusercontent.com/smpldsnds/{repo}/main` to try the set
+  before uploading it; that is how it was verified here.
 - **Vibe.** Decided before a note plays: family, energy, warmth and scene
   weights. The built-in station sets it per style. For catalogue tracks it
   will come from metadata and, later, the backend's text-model chain.
