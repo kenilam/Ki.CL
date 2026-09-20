@@ -1,44 +1,50 @@
 /*
- * The index of the experiments: a header in the measure, then one
- * full-width band a piece with a plate behind it.
+ * The index of the experiments: one full screen a piece, stacked in a
+ * stage that stays put while the page scrolls a screen's height for each.
  *
- * Sized on its own, since the Experiments shell centres its child in a
- * grid track that would otherwise shrink to the words. The bands bleed to
- * the viewport's edges from inside that width, and their text lines up
- * with the header by taking the same inset back.
+ * The scroll does the work, from here. Every screen but the first starts
+ * clear and fades in over the one before it as the page reaches its own
+ * stretch of the scroll; its plate drifts through the same stretch, so the
+ * picture settles as the words arrive. The ranges are screen heights, so
+ * a screen's stretch is its index times the viewport.
  *
- * The parallax is a scroll-driven animation: the plate is taller than its
- * band and slides through it as the band crosses the viewport. Where the
- * browser has no scroll timelines the plate simply sits; under reduced
- * motion it does too.
+ * Without scroll timelines the stage is not pinned and the screens are not
+ * stacked: they follow one another down the page, each a screen tall,
+ * which is the same content read the plain way. Reduced motion keeps the
+ * fades, which are not motion, and drops the drift.
  */
 .kicl--views--experiments__home {
   $home: '--kicl--views--experiments__home';
 
   --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
-  --kicl--views--experiments__home--measure: 38rem;
+  --kicl--views--experiments__home--measure: 34rem;
   --kicl--views--experiments__home--width: 64rem;
   --kicl--views--experiments__home--inset: var(--kicl-gutter-wider);
-  --kicl--views--experiments__home--band: 70dvb;
+  --kicl--views--experiments__home--screen: 100dvb;
 
-  /*
-   * How much taller than its band a plate is, and so how far it can slide.
-   * A third of the band's height: enough to be seen, not enough to be a
-   * different picture at the top and the bottom.
-   */
-  --kicl--views--experiments__home--overscan: 34%;
+  /* The type: the title set across the screen, the label small and spaced. */
+  --kicl--views--experiments__home--display: clamp(3rem, 11.5dvi, 12rem);
+  --kicl--views--experiments__home--tracking: 0.18em;
+
+  /* How far a plate drifts, as a share of its own height. */
+  --kicl--views--experiments__home--drift: 12%;
   --kicl--views--experiments__home--scrim: color-mix(
     in oklab,
-    var(--kicl-body-background-color) 72%,
+    var(--kicl-body-background-color) 70%,
     transparent
   );
   --kicl--views--experiments__home--scrim-end: color-mix(
     in oklab,
-    var(--kicl-body-background-color) 30%,
+    var(--kicl-body-background-color) 25%,
     transparent
   );
 
-  /* The band's words sit where the header's do: the centred width's own inset. */
+  /* Below the site's header, with room to breathe. */
+  --kicl--views--experiments__home--top: calc(
+    var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
+  );
+
+  /* Where the words start: the centred width's own inset, from the edge. */
   --kicl--views--experiments__home--bleed: max(
     0px,
     calc((100dvi - var(--kicl--views--experiments__home--width)) / 2)
@@ -48,76 +54,92 @@
   );
 
   @include query('≤tablet') {
-    --kicl--views--experiments__home--band: 60dvb;
+    --kicl--views--experiments__home--display: clamp(2.75rem, 13dvi, 5rem);
   }
 
-  box-sizing: border-box;
-  inline-size: min(100dvi, var(--kicl--views--experiments__home--width));
-  padding-block-start: calc(
-    var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
-  );
-  padding-inline: var(--kicl--views--experiments__home--inset);
+  inline-size: 100dvi;
+  margin-inline: calc(50% - 50dvi);
 
-  /*
-   * Both may shrink below their words: as grid items their minimum would
-   * otherwise be the title's width, which on a phone is wider than the
-   * box, and the list would grow with it and push the bands off centre.
-   */
-  &__header,
-  &__list {
-    min-inline-size: 0;
+  @supports (animation-timeline: scroll()) {
+    block-size: calc(var(#{$home}--screens) * var(#{$home}--screen));
   }
 
-  &__header {
-    padding-block-end: var(--kicl-gutter-widest);
+  &__stage {
+    block-size: var(--kicl--views--experiments__home--screen);
+    inset-block-start: 0;
+    overflow: clip;
   }
 
-  &__description {
-    max-inline-size: var(--kicl--views--experiments__home--measure);
+  /* The page's title, small, under the site's header. */
+  &__heading {
+    inset-block-start: calc(
+      var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-wide)
+    );
+    inset-inline-start: var(--kicl--views--experiments__home--margin);
+    letter-spacing: var(--kicl--views--experiments__home--tracking);
+    z-index: 1;
   }
 
   &__list {
+    block-size: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  /*
-   * Full bleed: exactly the viewport's width, from inside the centred one.
-   * Clipped, not hidden: `overflow: hidden` would make the band a scroll
-   * container, and the plate's view timeline would then measure against
-   * the band instead of the page and never move.
-   */
+  /* Every screen in the same cell of the list's grid: stacked, in order. */
   &__item {
-    inline-size: 100dvi;
-    margin-inline: calc(50% - 50dvi);
+    /*
+     * A screen's own stretch of the scroll: its index in screens. It is
+     * fully in by the start of it. Worked out here, where the index is
+     * set, since a custom property resolves where it is declared.
+     */
+    --kicl--views--experiments__home--at: calc(
+      var(#{$home}--index) * var(#{$home}--screen)
+    );
+
+    block-size: var(--kicl--views--experiments__home--screen);
     overflow: clip;
+
+    @supports (animation-timeline: scroll()) {
+      grid-area: 1 / 1;
+
+      /* From clear to whole over the half screen before its own stretch. */
+      animation: kicl--views--experiments__home--arrive linear both;
+      animation-range: calc(var(#{$home}--at) - var(#{$home}--screen) * 0.6)
+        var(#{$home}--at);
+      animation-timeline: scroll(root);
+    }
   }
 
+  /* Every plate stands on the site's ground, so the screen beneath is covered. */
   &__plate {
+    background-color: var(--kicl-body-background-color);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    inset-block: calc(var(--kicl--views--experiments__home--overscan) * -1);
+    inset-block: calc(var(--kicl--views--experiments__home--drift) * -1);
     inset-inline: 0;
 
     /* A scrim so the words stay readable whatever the plate shows. */
     &::after {
       backdrop-filter: saturate(70%);
       background-image: linear-gradient(
-        90deg,
-        var(--kicl-body-background-color) 0%,
-        var(--kicl--views--experiments__home--scrim) 45%,
-        var(--kicl--views--experiments__home--scrim-end) 100%
+        180deg,
+        var(--kicl--views--experiments__home--scrim-end) 0%,
+        var(--kicl--views--experiments__home--scrim) 100%
       );
       content: '';
       inset: 0;
       position: absolute;
     }
 
-    @supports (animation-timeline: view()) {
-      animation: kicl--views--experiments__home--parallax linear both;
-      animation-timeline: view();
+    /* The drift: through its own stretch and the next screen's arrival. */
+    @supports (animation-timeline: scroll()) {
+      animation: kicl--views--experiments__home--drift linear both;
+      animation-range: calc(var(#{$home}--at) - var(#{$home}--screen))
+        calc(var(#{$home}--at) + var(#{$home}--screen));
+      animation-timeline: scroll(root);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -153,39 +175,75 @@
       );
   }
 
-  /* The band's words, back in line with the header. */
-  &__link {
+  /* The last screen: no picture, a breath of the accent on the site's ground. */
+  &__item--more &__plate {
+    background-image: radial-gradient(
+      ellipse 60% 50% at 80% 20%,
+      color-mix(in oklab, var(#{$home}--accent) 22%, transparent),
+      transparent 70%
+    );
+  }
+
+  /* A screen's words, low on the screen like a poster's, in from the edge. */
+  &__screen {
+    block-size: 100%;
     box-sizing: border-box;
     color: inherit;
     display: block;
-    min-block-size: var(--kicl--views--experiments__home--band);
-    padding-block: var(--kicl-gutter-extreme);
+    padding-block-end: var(--kicl-gutter-widest);
+    padding-block-start: var(--kicl--views--experiments__home--top);
     padding-inline: var(--kicl--views--experiments__home--margin);
     text-decoration: none;
   }
 
-  &__number {
-    font-variant-numeric: tabular-nums;
-    min-inline-size: var(--kicl-gutter-wide);
+  &__body {
+    block-size: 100%;
+  }
+
+  &__index {
+    letter-spacing: var(--kicl--views--experiments__home--tracking);
   }
 
   &__title {
+    font-size: var(--kicl--views--experiments__home--display);
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    margin-block: var(--kicl-gutter-narrow) var(--kicl-gutter);
     transition: color var(--kicl-transition-duration-slow)
       var(--kicl-ease-sine-out);
   }
 
-  &__link:hover &__title,
-  &__link:focus-visible &__title {
+  &__description {
+    max-inline-size: var(--kicl--views--experiments__home--measure);
+  }
+
+  /* The last screen's link, for the reader to keep. */
+  &__bookmark {
+    margin-block-start: var(--kicl-gutter-wide);
+  }
+
+  &__screen:hover &__title,
+  &__screen:focus-visible &__title {
     color: var(--kicl--views--experiments__home--accent);
   }
 }
 
-@keyframes kicl--views--experiments__home--parallax {
+@keyframes kicl--views--experiments__home--arrive {
   from {
-    translate: 0 calc(var(--kicl--views--experiments__home--overscan) * -1);
+    opacity: 0;
   }
 
   to {
-    translate: 0 var(--kicl--views--experiments__home--overscan);
+    opacity: 1;
+  }
+}
+
+@keyframes kicl--views--experiments__home--drift {
+  from {
+    translate: 0 calc(var(--kicl--views--experiments__home--drift) * -1);
+  }
+
+  to {
+    translate: 0 var(--kicl--views--experiments__home--drift);
   }
 }

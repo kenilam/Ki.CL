@@ -3,9 +3,6 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Hooks
-import { useResponsive } from '@/Hooks';
-
 // Components
 import { Heading, HyperLink, Layout, List, ListItem, Text } from '@/Components';
 
@@ -20,6 +17,10 @@ import { toPath as toMusicVisualiserPath } from '@/Views/Experiments/MusicVisual
 const CLASS_NAME = 'kicl--views--experiments__home';
 
 const COPY = {
+  bookmark: 'Bookmark this page',
+  more: 'More to come',
+  moreLede: 'The next one lands here when it is ready.',
+  next: 'Next',
   title: 'Experiments',
 };
 
@@ -44,33 +45,40 @@ const EXPERIMENTS_LIST = [
   },
 ];
 
-/**
- * The index of the experiments: a title, and one full-width band
- * a piece, the whole band a link. Behind each band its plate drifts more
- * slowly than the page as it scrolls, on a scroll-driven animation the
- * stylesheet declares, so there is no scroll handler and nothing moves for
- * a reader who has asked for less motion. The band lights its title when
- * pointed at.
- */
-const Home: React.FunctionComponent = () => {
-  const { isTablet } = useResponsive();
+/** The screens in order: one an experiment, then the one that says more will come. */
+const SCREENS = EXPERIMENTS_LIST.length + 1;
 
-  return (
-    <Layout gap='none' justifyItems='stretch'>
-      <div className={CLASS_NAME}>
-        <Layout autoFlow='row' gap='narrow' justifyItems='start'>
-          <header className={`${CLASS_NAME}__header`}>
-            <Heading
-              is='h1'
-              dense
-              className={
-                isTablet ? 'kicl-font-size-larger' : 'kicl-font-size-huge'
-              }
-            >
-              {COPY.title}
-            </Heading>
-          </header>
-        </Layout>
+/**
+ * The index of the experiments: one full screen a piece, the title set
+ * huge across it over its plate, and after the last a screen that says
+ * more will come. The screens sit stacked in one stage that stays put
+ * while the page scrolls a screen's height for each; as the page passes
+ * from one to the next, the next fades in over the last, in place, and
+ * its plate drifts as it does. The scroll drives it all from the
+ * stylesheet, so there is no scroll handler; where the browser has no
+ * scroll timelines the screens simply follow one another down the page.
+ */
+const Home: React.FunctionComponent = () => (
+  <Layout gap='none' justifyItems='stretch'>
+    <div
+      className={CLASS_NAME}
+      style={{ '--kicl--views--experiments__home--screens': SCREENS } as never}
+    >
+      <div
+        className={classNames(`${CLASS_NAME}__stage`, 'kicl-position-sticky')}
+      >
+        <Heading
+          is='h1'
+          dense
+          className={classNames(
+            `${CLASS_NAME}__heading`,
+            'kicl-font-size-small',
+            'kicl-position-absolute',
+            'kicl-text-transform-uppercase'
+          )}
+        >
+          {COPY.title}
+        </Heading>
 
         <List is='ol' className={`${CLASS_NAME}__list`} gap='none'>
           {EXPERIMENTS_LIST.map((experiment, index) => (
@@ -81,6 +89,9 @@ const Home: React.FunctionComponent = () => {
                 'kicl-position-relative'
               )}
               key={experiment.to}
+              style={
+                { '--kicl--views--experiments__home--index': index } as never
+              }
             >
               <div
                 aria-hidden
@@ -91,64 +102,128 @@ const Home: React.FunctionComponent = () => {
               />
               <HyperLink
                 className={classNames(
-                  `${CLASS_NAME}__link`,
+                  `${CLASS_NAME}__screen`,
                   'kicl-position-relative'
                 )}
                 to={experiment.to}
                 unstyled
               >
-                <Layout
-                  alignItems='baseline'
-                  autoFlow='column'
-                  gap='wide'
-                  justifyContent='space-between'
-                >
-                  <span className={`${CLASS_NAME}__row`}>
+                <Layout alignContent='end' autoFlow='row' gap='narrow'>
+                  <span className={`${CLASS_NAME}__body`}>
                     <Text
                       is='span'
                       dense
                       variant='secondary'
                       className={classNames(
-                        `${CLASS_NAME}__number`,
+                        `${CLASS_NAME}__index`,
+                        'kicl-font-size-small',
+                        'kicl-text-transform-uppercase'
+                      )}
+                    >
+                      {`No. ${index + 1}`}
+                    </Text>
+                    <Heading
+                      is='h2'
+                      dense
+                      className={classNames(
+                        `${CLASS_NAME}__title`,
+                        'kicl-text-transform-uppercase'
+                      )}
+                    >
+                      {experiment.title}
+                    </Heading>
+                    <Text
+                      is='p'
+                      dense
+                      className={classNames(
+                        `${CLASS_NAME}__description`,
                         'kicl-font-size-small'
                       )}
                     >
-                      {String(index + 1).padStart(2, '0')}
+                      {experiment.description}
                     </Text>
-                    <span className={`${CLASS_NAME}__body`}>
-                      <Heading
-                        is='h2'
-                        dense
-                        className={classNames(
-                          `${CLASS_NAME}__title`,
-                          isTablet
-                            ? 'kicl-font-size-large'
-                            : 'kicl-font-size-larger'
-                        )}
-                      >
-                        {experiment.title}
-                      </Heading>
-                      <Text
-                        is='p'
-                        dense
-                        variant='secondary'
-                        className={classNames(
-                          `${CLASS_NAME}__description`,
-                          'kicl-font-size-small'
-                        )}
-                      >
-                        {experiment.description}
-                      </Text>
-                    </span>
                   </span>
                 </Layout>
               </HyperLink>
             </ListItem>
           ))}
+
+          <ListItem
+            className={classNames(
+              `${CLASS_NAME}__item`,
+              `${CLASS_NAME}__item--more`,
+              'kicl-position-relative'
+            )}
+            style={
+              {
+                '--kicl--views--experiments__home--index':
+                  EXPERIMENTS_LIST.length,
+              } as never
+            }
+          >
+            <div
+              aria-hidden
+              className={classNames(
+                `${CLASS_NAME}__plate`,
+                'kicl-position-absolute'
+              )}
+            />
+            <div
+              className={classNames(
+                `${CLASS_NAME}__screen`,
+                'kicl-position-relative'
+              )}
+            >
+              <Layout alignContent='end' autoFlow='row' gap='narrow'>
+                <span className={`${CLASS_NAME}__body`}>
+                  <Text
+                    is='span'
+                    dense
+                    variant='secondary'
+                    className={classNames(
+                      `${CLASS_NAME}__index`,
+                      'kicl-font-size-small',
+                      'kicl-text-transform-uppercase'
+                    )}
+                  >
+                    {COPY.next}
+                  </Text>
+                  <Heading
+                    is='h2'
+                    dense
+                    className={classNames(
+                      `${CLASS_NAME}__title`,
+                      'kicl-text-transform-uppercase'
+                    )}
+                  >
+                    {COPY.more}
+                  </Heading>
+                  <Text
+                    is='p'
+                    dense
+                    className={classNames(
+                      `${CLASS_NAME}__description`,
+                      'kicl-font-size-small'
+                    )}
+                  >
+                    {COPY.moreLede}
+                  </Text>
+                  <HyperLink
+                    className={`${CLASS_NAME}__bookmark`}
+                    lookLikeButton
+                    to={`/${EXPERIMENTS}`}
+                    variant='ghost'
+                  >
+                    {COPY.bookmark}
+                  </HyperLink>
+                </span>
+              </Layout>
+            </div>
+          </ListItem>
         </List>
       </div>
-    </Layout>
-  );
-};
+    </div>
+  </Layout>
+);
 
 export default Home;
