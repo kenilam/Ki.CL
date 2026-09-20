@@ -21,7 +21,7 @@ import {
 import type { Radio } from './useRadio';
 
 // Constants
-import { CLASS_NAME as VIEW, toPath } from './constants';
+import { CLASS_NAME as VIEW, toPath, toTrackPath } from './constants';
 
 const CLASS_NAME = `${VIEW}__chrome`;
 
@@ -157,7 +157,7 @@ const Chrome: React.FunctionComponent<Props> = ({
               event.preventDefault();
               toggle();
             }}
-            to={toPath(requested?.id)}
+            to={requested ? toTrackPath(requested) : toPath()}
             variant='ghost'
           >
             <Fa.FaPlay aria-hidden />

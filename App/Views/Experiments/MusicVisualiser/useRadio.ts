@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 // Routes
-import { useNavigate, useParams } from '@/Router';
+import { useMatch, useNavigate } from '@/Router';
 
 // Context
 import { useEnvContext } from '@/Env/Client';
@@ -17,7 +17,13 @@ import { createEngine, type Engine } from './Audio/engine';
 import radio from './Providers';
 
 // Constants
-import { PARAM, VOLUME_STORAGE_KEY, toPath } from './constants';
+import {
+  FULL_PATTERN,
+  PARAMS,
+  VOLUME_STORAGE_KEY,
+  toTrackPath,
+  trackKey,
+} from './constants';
 
 /*
  * Playback state for the whole view: what is playing, whether it is, how
@@ -25,10 +31,12 @@ import { PARAM, VOLUME_STORAGE_KEY, toPath } from './constants';
  * play - never on mount - because that press is the gesture the browser
  * needs before it will make a sound.
  *
- * The URL carries the track. Every track that starts is written to it, so
- * the address bar is always a link to what is playing; and a track named in
- * the URL on arrival is the one the gate offers to play. Back and forward
- * through the history move between tracks like any other navigation.
+ * The URL carries the track as `/:group/:type/:trackId`. Every track that
+ * starts is written to it, so the address bar is always a link to what is
+ * playing; a track named in the URL on arrival is the one the gate offers
+ * to play; and back and forward through the history move between tracks
+ * like any other navigation. The shell sits above the nested routes, so it
+ * reads the path by matching it rather than from its own params.
  */
 
 const DEFAULT_VOLUME = 0.8;
@@ -41,7 +49,12 @@ const ERROR_MESSAGES = {
   missing: 'That track could not be found. Playing something else.',
 };
 
-type Params = { [PARAM]?: string };
+/** Where the URL points: a group at least, a type and a track when there. */
+type Target = {
+  group?: string;
+  id?: string;
+  type?: string;
+};
 
 export type Radio = {
   engine: Engine | null;
@@ -75,14 +88,19 @@ export default function useRadio(): Radio {
   const { env } = useEnvContext();
   const samplesUrl = env?.KICL_MUSIC_SAMPLES_URL || undefined;
   const navigate = useNavigate();
-  const params = useParams<Params>();
-  const requestedId = params[PARAM] ?? null;
+  const match = useMatch(FULL_PATTERN);
+
+  const group = match?.params[PARAMS.group];
+  const type = match?.params[PARAMS.type];
+  const id = match?.params[PARAMS.track];
+  const targetKey = group && type && id ? `${group}/${type}/${id}` : null;
 
   const engine = useRef<Engine | null>(null);
   const history = useRef<string[]>([]);
   const generation = useRef(0);
   const trackRef = useRef<Track | null>(null);
   const stateRef = useRef<PlaybackState>('idle');
+  const targetRef = useRef<Target>({});
 
   const [state, setState] = useState<PlaybackState>('idle');
   const [track, setTrack] = useState<Track | null>(null);
@@ -94,13 +112,15 @@ export default function useRadio(): Radio {
 
   trackRef.current = track;
   stateRef.current = state;
+  targetRef.current = { group, id, type };
 
   /**
-   * Start a track: the one with `id`, or the provider's next choice. Falls
-   * back to the next choice when an id cannot be resolved, and says so.
+   * Start a track: the one at `at`, or the provider's next choice. Falls
+   * back to the next choice when a named track cannot be resolved, and says
+   * so.
    */
   const start = useCallback(
-    async (id: string | null) => {
+    async (at: Target | null) => {
       const current = (engine.current ??= createEngine(volume, { samplesUrl }));
       const mine = ++generation.current;
 
@@ -108,27 +128,30 @@ export default function useRadio(): Radio {
       setError(null);
 
       try {
-        let upcoming = id ? await radio.get(id) : null;
+        let upcoming =
+          at?.group && at.type && at.id
+            ? await radio.get(at.group, at.type, at.id)
+            : null;
 
-        if (id && !upcoming) {
+        if (at?.id && !upcoming) {
           setError(ERROR_MESSAGES.missing);
         }
 
-        upcoming ??= await radio.next(history.current);
+        upcoming ??= await radio.next(history.current, at?.group);
 
         if (mine !== generation.current) {
           return;
         }
 
-        history.current = [...history.current, upcoming.id].slice(
+        history.current = [...history.current, trackKey(upcoming)].slice(
           -HISTORY_LENGTH
         );
         setTrack(upcoming);
-        navigate(toPath(upcoming.id), { replace: true });
+        navigate(toTrackPath(upcoming), { replace: true });
 
         await current.play(upcoming.source, () => {
           if (mine === generation.current) {
-            void start(null);
+            void start({ group: upcoming.group });
           }
         });
 
@@ -147,13 +170,18 @@ export default function useRadio(): Radio {
     [navigate, samplesUrl, volume]
   );
 
-  const next = useCallback(() => void start(null), [start]);
+  /* Skipping stays within the station that is playing. */
+  const next = useCallback(
+    () =>
+      void start({ group: trackRef.current?.group ?? targetRef.current.group }),
+    [start]
+  );
 
   const toggle = useCallback(() => {
     const current = engine.current;
 
     if (!current || state === 'idle') {
-      void start(requested?.id ?? requestedId);
+      void start(requested ?? targetRef.current);
 
       return;
     }
@@ -169,10 +197,10 @@ export default function useRadio(): Radio {
       if (track) {
         void current.resume().then(() => setState('playing'));
       } else {
-        void start(null);
+        void start({ group: targetRef.current.group });
       }
     }
-  }, [requested, requestedId, start, state, track]);
+  }, [requested, start, state, track]);
 
   const setVolume = useCallback(
     (value: number) => {
@@ -188,18 +216,24 @@ export default function useRadio(): Radio {
   /*
    * The URL changed under us. Before anything plays, settle what the gate
    * will play: the track the URL names, or, when it names none, the radio's
-   * own pick, so the play control can link to a real track either way. Once
-   * playing, a different id means the listener went back or forward, or
-   * followed a link: play it. Our own `replace` after a track starts arrives
-   * here too, with the id of the track already playing, and is ignored.
+   * own pick within the group, so the play control can link to a real track
+   * either way. Once playing, a different track means the listener went
+   * back or forward, or followed a link: play it. Our own `replace` after a
+   * track starts arrives here too, with the track already playing, and is
+   * ignored.
    */
   useEffect(() => {
+    const at = targetRef.current;
+
     if (stateRef.current === 'idle') {
       let cancelled = false;
 
-      const settle = requestedId
-        ? radio.get(requestedId).then((found) => found ?? radio.next([]))
-        : radio.next([]);
+      const settle =
+        at.group && at.type && at.id
+          ? radio
+              .get(at.group, at.type, at.id)
+              .then((found) => found ?? radio.next([], at.group))
+          : radio.next([], at.group);
 
       void settle
         .then((found) => {
@@ -218,10 +252,14 @@ export default function useRadio(): Radio {
       };
     }
 
-    if (requestedId && requestedId !== trackRef.current?.id) {
-      void start(requestedId);
+    if (
+      targetKey &&
+      trackRef.current &&
+      targetKey !== trackKey(trackRef.current)
+    ) {
+      void start(at);
     }
-  }, [requestedId, start]);
+  }, [group, targetKey, start]);
 
   // Silence the graph when the view unmounts; the context is not reusable.
   useEffect(() => {

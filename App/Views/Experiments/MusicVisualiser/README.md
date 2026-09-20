@@ -4,26 +4,40 @@ A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at
 random one after another; the whole viewport is a generative picture that
 answers the sound and reshapes itself as a track moves through its sections.
 
-Route: `/experiments/music-visualiser/:trackId?`, wired in
-`App/Views/Experiments/index.tsx`.
+Route: `/experiments/music-visualiser/:group/:type/:trackId`, wired in
+`App/Views/Experiments/index.tsx`. A group is a station (a provider), a
+type one of its families, a track one piece. Each level is its own route in
+its own folder, like TreeOfLife's versions, and every index redirects to its
+first child: the view to the first group, a group to its first type, a type
+to the track the station would play next. Unknown segments fall back the
+same way. The shell - stage, chrome, playback - is the top route's element
+and renders an outlet, so the URL can descend and change beneath it without
+the player remounting.
 
 The URL is the source of truth for what is playing, as it is for the focused
 node in TreeOfLife. Every track that starts is written to it with `replace`,
 so the address bar is always a link to the piece; arriving on a track's URL
-shows its name on the gate and plays it on the first press; a track id that
-no provider recognises falls back to the next choice with a message; and
-back or forward through the history move between tracks. The built-in
-station's ids (`built-in:piano:1234`) name the seed, so a link plays the
-same piece every time. A copy-link control sits beside skip.
+shows its name on the gate, whose play control is an anchor to it, and plays
+it on the first press; a track id the station cannot resolve falls back to
+the next choice with a message; and back or forward through the history
+move between tracks. The built-in station's ids
+(`self-composed/piano/1234`) name the seed, so a link plays the same piece
+every time. A copy-link control sits beside skip.
 
 ## What is built
 
 ```
 MusicVisualiser/
   Spec.ts            the shared vocabulary: Track, Source, Vibe, Features, Provider
-  constants.ts       route segment and track param, toPath, class root, storage key
-  index.tsx          the route, lazy like TreeOfLife
-  Contents.tsx       Stage + Chrome around one useRadio()
+  constants.ts       route segments and params, toPath, class root, storage key
+  index.tsx          the route; index redirects to the first group
+  Groups/
+    index.tsx        /:group - a station; index redirects to its first type
+    Types/
+      index.tsx      /:type - a family; index redirects to a track of it
+      Tracks/
+        index.tsx    /:trackId - a piece; the leaf, drawn by the shell above
+  Contents.tsx       Stage + Chrome around one useRadio(), plus the outlet
   useRadio.ts        playback state: engine, queue, play/pause/skip, volume
   Chrome.tsx         the gate, now-playing card and controls; fades when idle
   Stage.tsx          the canvas: reads the palette off CSS, runs the frame loop

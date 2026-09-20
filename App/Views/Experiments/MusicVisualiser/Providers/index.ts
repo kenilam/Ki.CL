@@ -1,48 +1,68 @@
-import type { Provider } from '@/Views/Experiments/MusicVisualiser/Spec';
+import type {
+  Provider,
+  Track,
+  VibeFamily,
+} from '@/Views/Experiments/MusicVisualiser/Spec';
 
 import builtIn from './builtIn';
 
 /*
- * The providers, in the order they are asked. The first to answer wins.
+ * The providers, in the order they are asked. Each is a group in the URL,
+ * and the first is where the view's index sends a listener who arrives
+ * with no group in mind.
  *
  * Only the built-in station is here yet. The catalogue provider - Audius
  * through the backend's Music module, streamed same-origin so the analyser
  * can read it - goes in front of it once that module exists; see the README
  * for the plan and the egress note on why it is not here already.
  */
-const PROVIDERS: Provider[] = [builtIn];
+const PROVIDERS: readonly Provider[] = [builtIn];
 
-/**
- * Asks each provider in turn until one returns a track. A provider that
- * throws is skipped and logged, never fatal: the built-in station at the
- * end cannot fail, so there is always something to play.
- */
-const radio: Provider = {
-  async get(id) {
-    for (const provider of PROVIDERS) {
-      try {
-        const track = await provider.get(id);
+export type Radio = {
+  /** The track at `/:group/:type/:id`, or `null` if no provider has it. */
+  get(group: string, type: string, id: string): Promise<Track | null>;
+  /** The provider for a group segment, if any. */
+  group(slug: string): Provider | undefined;
+  groups: readonly Provider[];
+  /**
+   * The next track. Held to a group, and within it a type, when asked;
+   * otherwise the first provider that answers.
+   */
+  next(played: string[], group?: string, type?: VibeFamily): Promise<Track>;
+};
 
-        if (track) {
-          return track;
-        }
-      } catch (error) {
-        console.warn(
-          `Music Visualiser: ${provider.name} could not resolve ${id}`,
-          error
-        );
-      }
+const radio: Radio = {
+  async get(group, type, id) {
+    const provider = radio.group(group);
+
+    if (!provider) {
+      return null;
     }
 
-    return null;
+    try {
+      return await provider.get(type, id);
+    } catch (error) {
+      console.warn(
+        `Music Visualiser: ${provider.name} could not resolve ${type}/${id}`,
+        error
+      );
+
+      return null;
+    }
   },
-  name: 'radio',
-  async next(played) {
+  group(slug) {
+    return PROVIDERS.find((provider) => provider.group === slug);
+  },
+  groups: PROVIDERS,
+  async next(played, group, type) {
+    const candidates = group
+      ? PROVIDERS.filter((provider) => provider.group === group)
+      : PROVIDERS;
     let lastError: unknown = null;
 
-    for (const provider of PROVIDERS) {
+    for (const provider of candidates) {
       try {
-        return await provider.next(played);
+        return await provider.next(played, type);
       } catch (error) {
         lastError = error;
         console.warn(`Music Visualiser: ${provider.name} gave no track`, error);

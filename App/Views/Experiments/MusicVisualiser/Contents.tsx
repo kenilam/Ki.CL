@@ -3,6 +3,9 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Routes
+import { Outlet } from '@/Router';
+
 // Components
 import { Layout } from '@/Components';
 
@@ -31,6 +34,8 @@ const MusicVisualiser: React.FunctionComponent = () => {
           track={radio.track}
         />
         <Chrome {...radio} />
+        {/* The nested routes beneath: redirects and the track leaf, nothing drawn. */}
+        <Outlet />
       </section>
     </Layout>
   );

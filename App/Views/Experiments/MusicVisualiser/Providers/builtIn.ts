@@ -15,6 +15,9 @@ import type {
 
 const NAME = 'Self composed Radio';
 
+/** The group segment in the URL. */
+const GROUP = 'self-composed';
+
 /** Seconds per piece. Long enough to settle into; short enough to vary. */
 const DURATION_SECONDS = 150;
 
@@ -88,7 +91,8 @@ function trackFor(seed: number, family: VibeFamily): Track {
   return {
     artist: ARTISTS[family],
     attribution: { label: 'Synthesised in your browser' },
-    id: `built-in:${family}:${seed}`,
+    group: GROUP,
+    id: String(seed),
     source: {
       durationSeconds: DURATION_SECONDS,
       kind: 'synth',
@@ -97,42 +101,53 @@ function trackFor(seed: number, family: VibeFamily): Track {
     },
     station: NAME,
     title: title(seed),
+    type: family,
     vibe: VIBES[family],
   };
+}
+
+function isFamily(type: string): type is VibeFamily {
+  return (FAMILIES as string[]).includes(type);
 }
 
 /**
  * Random, but not too random: the family rotates so three piano pieces do
  * not land in a row, and the seed avoids anything already played.
  */
-const ID = /^built-in:(ambient|lofi|piano):(\d{1,5})$/;
+/** Seeds are a few digits; anything else is not one of ours. */
+const SEED = /^\d{1,5}$/;
+
+const key = (family: VibeFamily, seed: number) => `${GROUP}/${family}/${seed}`;
 
 const builtIn: Provider = {
-  async get(id) {
-    const match = ID.exec(id);
-
-    if (!match) {
+  async get(type, id) {
+    if (!isFamily(type) || !SEED.test(id)) {
       return null;
     }
 
-    return trackFor(Number(match[2]), match[1] as VibeFamily);
+    return trackFor(Number(id), type);
   },
+  group: GROUP,
   name: NAME,
-  async next(played) {
-    const families = FAMILIES.filter(
-      (family) => !played.at(-1)?.startsWith(`built-in:${family}:`)
-    );
+  async next(played, type) {
+    /* Held to a family if asked; otherwise never the family just played. */
+    const families = type
+      ? [type]
+      : FAMILIES.filter(
+          (family) => !played.at(-1)?.startsWith(`${GROUP}/${family}/`)
+        );
     const family = families[Math.floor(Math.random() * families.length)];
 
     let seed = Math.floor(Math.random() * 10000);
 
-    while (played.includes(`built-in:${family}:${seed}`)) {
+    while (played.includes(key(family, seed))) {
       seed = (seed + 1) % 10000;
     }
 
     return trackFor(seed, family);
   },
+  types: FAMILIES,
 };
 
-export { NAME, trackFor };
+export { GROUP, NAME, trackFor };
 export default builtIn;

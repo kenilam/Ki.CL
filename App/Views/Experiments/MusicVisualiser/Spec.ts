@@ -48,27 +48,39 @@ export type Attribution = {
   url?: string;
 };
 
+/**
+ * A track lives at `/:group/:type/:id` beneath the view: the group is its
+ * provider's slug, the type its family, the id the segment the provider
+ * can resolve it from again. `station` is the group's display name.
+ */
 export type Track = {
   artist: string;
   attribution: Attribution;
+  group: string;
   id: string;
   source: Source;
   station: string;
   title: string;
+  type: VibeFamily;
   vibe: Vibe;
 };
 
 /**
- * Where the tracks come from.
+ * Where the tracks come from. One provider is one group in the URL.
  *
- * `next` gets the ids already played this session so it can avoid repeats;
- * it may still repeat once the pool is exhausted.
+ * `types` are its families, in order; the first is what its index route
+ * redirects to. `next` gets the keys already played this session so it can
+ * avoid repeats, and may be held to one type; it may still repeat once the
+ * pool is exhausted.
  */
 export type Provider = {
-  /** The track with this id, for a deep link; `null` if it is not this provider's. */
-  get(id: string): Promise<Track | null>;
+  /** The track at `/:type/:id` within this group, or `null` if there is none. */
+  get(type: string, id: string): Promise<Track | null>;
+  /** URL segment. Lowercase, hyphenated. */
+  group: string;
   name: string;
-  next(played: string[]): Promise<Track>;
+  next(played: string[], type?: VibeFamily): Promise<Track>;
+  types: readonly VibeFamily[];
 };
 
 /**
