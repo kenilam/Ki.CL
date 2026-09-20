@@ -84,12 +84,14 @@ const Home: React.FunctionComponent = () => {
           {COPY.lede}
         </Text>
         <HyperLink
+          after={<Fa.FaPlay aria-hidden />}
           aria-label={COPY.play}
           lookLikeButton
+          size='small'
           to={path ?? toPath({ group: radio.groups[0].group })}
           variant='ghost'
         >
-          <Fa.FaPlay aria-hidden />
+          Play a random sound
         </HyperLink>
       </section>
     </Layout>

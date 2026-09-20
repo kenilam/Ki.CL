@@ -84,6 +84,7 @@ const Home: React.FunctionComponent = () => {
         <HyperLink
           aria-label={COPY.play}
           lookLikeButton
+          size='small'
           to={toPlayPath(track)}
           variant='ghost'
         >
