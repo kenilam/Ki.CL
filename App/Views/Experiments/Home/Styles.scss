@@ -1,0 +1,68 @@
+/*
+ * The index of the experiments. Sized on its own: the Experiments shell
+ * centres its child in a grid track, which would otherwise shrink to the
+ * words. Everything the rows do on hover is declared here, on the view's
+ * own custom properties.
+ */
+.kicl--views--experiments__home {
+  --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
+  --kicl--views--experiments__home--measure: 38rem;
+
+  box-sizing: border-box;
+  inline-size: min(100dvi, 64rem);
+  padding-block-start: calc(
+    var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
+  );
+  padding-block-end: var(--kicl-gutter-extreme);
+  padding-inline: var(--kicl-gutter-wider);
+
+  &__header {
+    padding-block-end: var(--kicl-gutter-widest);
+  }
+
+  &__lede,
+  &__description {
+    max-inline-size: var(--kicl--views--experiments__home--measure);
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__link {
+    color: inherit;
+    display: block;
+    padding-block: var(--kicl-gutter-wide);
+    text-decoration: none;
+  }
+
+  &__number {
+    font-variant-numeric: tabular-nums;
+    min-inline-size: var(--kicl-gutter-wide);
+  }
+
+  &__title,
+  &__arrow {
+    transition:
+      color var(--kicl-transition-duration-slow) var(--kicl-ease-sine-out),
+      translate var(--kicl-transition-duration-slow) var(--kicl-ease-sine-out);
+  }
+
+  &__arrow {
+    font-size: var(--kicl-font-size-large);
+  }
+
+  &__link:hover &__title,
+  &__link:focus-visible &__title,
+  &__link:hover &__arrow,
+  &__link:focus-visible &__arrow {
+    color: var(--kicl--views--experiments__home--accent);
+  }
+
+  &__link:hover &__arrow,
+  &__link:focus-visible &__arrow {
+    translate: var(--kicl-size) calc(var(--kicl-size) * -1);
+  }
+}

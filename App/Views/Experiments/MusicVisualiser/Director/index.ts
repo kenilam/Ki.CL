@@ -18,9 +18,9 @@ import { MAX_RINGS } from '@/Views/Experiments/MusicVisualiser/Scenes/shader';
  * never come faster than the minimum dwell, so the eye can settle.
  */
 
-/** Seconds a scene stays at least, and at most: about twenty, on average. */
-const MIN_DWELL_SECONDS = 15;
-const MAX_DWELL_SECONDS = 26;
+/** Seconds a scene stays at least, and at most: about thirty, on average. */
+const MIN_DWELL_SECONDS = 24;
+const MAX_DWELL_SECONDS = 38;
 
 /** Seconds a crossfade takes. */
 const FADE_SECONDS = 6;

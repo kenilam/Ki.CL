@@ -147,8 +147,8 @@ MusicVisualiser/
   drives motion, medium sets the onset threshold, slow describes the section.
 - **Director.** Cuts to a new scene when a track starts, when the slow
   features drift far enough from where the scene began (a new section), or
-  after a maximum dwell of 26 seconds. Never before 15 seconds, so a scene
-  lasts about twenty on average, and it waits a couple of seconds for an
+  after a maximum dwell of 38 seconds. Never before 24 seconds, so a scene
+  lasts about thirty on average, and it waits a couple of seconds for an
   onset so the cut lands on a note. Crossfade is six seconds, and the last
   four scenes shown are not drawn again.
 - **Scenes.** Twelve, all in one shader, each weighted per vibe in
