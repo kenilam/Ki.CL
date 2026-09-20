@@ -22,7 +22,7 @@ export const SCENE_INDEX: Record<SceneName, number> = {
 export const MAX_RINGS = 8;
 
 /** How many inks the palette may hold. */
-export const MAX_INKS = 4;
+export const MAX_INKS = 6;
 
 export const VERTEX = `
 attribute vec2 a_position;
@@ -67,6 +67,12 @@ uniform float u_levels;
 
 const float GRAIN = 0.025;
 const float CHROMA = 0.92;
+
+/* A gentle curve for anything the music drives: no hard corners at the ends. */
+float ease(float x) {
+  x = clamp(x, 0.0, 1.0);
+  return x * x * (3.0 - 2.0 * x);
+}
 
 vec3 toLinear(vec3 c) { return pow(c, vec3(2.2)); }
 vec3 toSrgb(vec3 c) { return pow(max(c, 0.0), vec3(1.0 / 2.2)); }
@@ -130,30 +136,28 @@ float fbm(vec2 p) {
  * their own clocks. Bass swells them; the section's energy sets how much
  * of the paper they cover at rest.
  */
-vec4 pools(vec2 uv, float aspect) {
-  vec4 w = vec4(0.0);
-  float t = u_time * 0.08;
-  float breathe = 1.0 + u_low * 0.35 + u_slow_energy * 0.2;
+void pools(vec2 uv, float aspect, inout float w[MAX_INKS]) {
+  float t = u_time * 0.035;
+  /* The bass swells the pools, gently, and the section's energy sets their rest size. */
+  float breathe = 1.0 + ease(u_low) * 0.18 + u_slow_energy * 0.15;
 
   vec2 warp = vec2(
-    sin(uv.y * 2.1 + t * 1.3) * 0.06,
-    cos(uv.x * 1.7 - t * 1.1) * 0.06
-  ) * (1.0 + u_mid);
+    sin(uv.y * 2.1 + t * 1.3) * 0.05,
+    cos(uv.x * 1.7 - t * 1.1) * 0.05
+  ) * (1.0 + ease(u_mid) * 0.6);
   vec2 p = uv + warp;
 
   for (int i = 0; i < MAX_INKS; i++) {
     float fi = float(i);
     vec2 centre = vec2(
-      0.5 + 0.34 * sin(t * (0.7 + fi * 0.13) + fi * 1.9),
-      0.5 + 0.30 * cos(t * (0.6 + fi * 0.11) + fi * 2.7)
+      0.5 + 0.36 * sin(t * (0.7 + fi * 0.13) + fi * 1.9),
+      0.5 + 0.32 * cos(t * (0.6 + fi * 0.11) + fi * 2.7)
     );
     vec2 d = (p - centre) * vec2(aspect, 1.0);
-    float r = (0.28 + 0.06 * sin(t * 2.0 + fi)) * breathe;
-    float v = 1.0 - smoothstep(r * 0.2, r * 1.6, length(d));
-    w[i] = v * (0.75 + 0.25 * u_energy);
+    float r = (0.26 + 0.05 * sin(t * 1.6 + fi)) * breathe;
+    float v = 1.0 - smoothstep(r * 0.2, r * 1.7, length(d));
+    w[i] = v * (0.7 + 0.3 * ease(u_energy));
   }
-
-  return w;
 }
 
 /*
@@ -161,8 +165,8 @@ vec4 pools(vec2 uv, float aspect) {
  * flow; brightness tightens the bands so a sparkle reads as fine lines and
  * a dark passage as broad washes.
  */
-vec4 ribbons(vec2 uv, float aspect) {
-  float t = u_time * (0.05 + u_mid * 0.08);
+void ribbons(vec2 uv, float aspect, inout float w[MAX_INKS]) {
+  float t = u_time * (0.022 + ease(u_mid) * 0.02);
   vec2 p = uv * vec2(aspect, 1.0);
 
   vec2 q = vec2(fbm(p * 1.5 + t), fbm(p * 1.5 - t * 0.7 + 4.0));
@@ -172,19 +176,22 @@ vec4 ribbons(vec2 uv, float aspect) {
   );
   float field = fbm(p * 1.2 + r * 2.2);
 
-  float frequency = 5.0 + u_centroid * 10.0;
-  float phase = field * frequency + p.x * 1.5 - t * 2.0;
-  float band = 0.5 + 0.5 * sin(phase * 3.14159);
-  float band2 = 0.5 + 0.5 * sin(phase * 3.14159 * 0.5 + 1.3);
+  /*
+   * One phase runs through the field; each ink takes a slice of it, so the
+   * bands come round in palette order and every colour has its turn.
+   */
+  float frequency = 4.0 + ease(u_centroid) * 6.0;
+  float phase = field * frequency + p.x * 1.2 - t * 1.6;
+  float lift = 0.2 + ease(u_energy) * 0.3;
 
-  float lift = 0.15 + u_energy * 0.35;
+  for (int i = 0; i < MAX_INKS; i++) {
+    float offset = float(i) / float(MAX_INKS);
+    float band = 0.5 + 0.5 * sin((phase - offset) * 6.28318);
+    w[i] = smoothstep(0.55, 0.95, band) * (0.55 + lift);
+  }
 
-  return vec4(
-    smoothstep(0.35, 0.9, band) * (0.6 + lift),
-    smoothstep(0.55, 1.0, band2) * (0.5 + lift),
-    field * 0.5 * (0.6 + u_high),
-    smoothstep(0.7, 1.0, r.x) * 0.5
-  );
+  /* A soft wash of the last ink under it all, lifted by the air in the sound. */
+  w[MAX_INKS - 1] += field * 0.3 * (0.5 + ease(u_high));
 }
 
 /*
@@ -192,42 +199,41 @@ vec4 ribbons(vec2 uv, float aspect) {
  * hits are bright and wide; soft ones a whisper. Under them a slow bloom
  * keeps the frame from being empty between notes.
  */
-vec4 rings(vec2 uv, float aspect) {
+void rings(vec2 uv, float aspect, inout float w[MAX_INKS]) {
   vec2 d = (uv - 0.5) * vec2(aspect, 1.0);
   float dist = length(d);
   float angle = atan(d.y, d.x);
   float t = u_time;
 
-  vec4 w = vec4(0.0);
-
   float bloom = 1.0 - smoothstep(0.0, 0.55 + u_slow_energy * 0.3, dist);
-  w[0] += bloom * (0.35 + u_low * 0.4);
+  w[0] += bloom * (0.3 + ease(u_low) * 0.25);
 
   for (int i = 0; i < MAX_RINGS; i++) {
     float age = t - u_ring_time[i];
     float strength = u_ring_strength[i];
     if (age < 0.0 || strength <= 0.0) continue;
 
-    float speed = 0.22 + strength * 0.18;
+    /* Slow to grow, wide, and long to fade: a ripple on still water. */
+    float speed = 0.09 + strength * 0.06;
     float radius = age * speed;
-    float width = 0.012 + strength * 0.03 + age * 0.01;
-    float wobble = 1.0 + 0.03 * sin(angle * 6.0 + age * 3.0);
+    float width = 0.03 + strength * 0.04 + age * 0.012;
+    float wobble = 1.0 + 0.02 * sin(angle * 5.0 + age * 1.5);
     float ring = exp(-pow((dist - radius * wobble) / width, 2.0));
-    float fade = exp(-age * (0.9 - strength * 0.3));
+    float rise = smoothstep(0.0, 0.6, age);
+    float fade = exp(-age * (0.45 - strength * 0.1));
 
     int ink = int(mod(float(i), float(MAX_INKS - 1))) + 1;
     for (int k = 1; k < MAX_INKS; k++) {
-      if (k == ink) w[k] += ring * fade * strength * 1.4;
+      if (k == ink) w[k] += ring * rise * fade * strength * 1.1;
     }
   }
-
-  return w;
 }
 
-vec4 scene(int index, vec2 uv, float aspect) {
-  if (index == 1) return ribbons(uv, aspect);
-  if (index == 2) return rings(uv, aspect);
-  return pools(uv, aspect);
+void scene(int index, vec2 uv, float aspect, inout float w[MAX_INKS]) {
+  for (int i = 0; i < MAX_INKS; i++) w[i] = 0.0;
+  if (index == 1) { ribbons(uv, aspect, w); return; }
+  if (index == 2) { rings(uv, aspect, w); return; }
+  pools(uv, aspect, w);
 }
 
 void main() {
@@ -235,17 +241,21 @@ void main() {
   uv.y = 1.0 - uv.y;
   float aspect = u_resolution.x / u_resolution.y;
 
-  vec4 a = scene(u_scene_a, uv, aspect);
-  vec4 b = scene(u_scene_b, uv, aspect);
-  vec4 w = mix(a, b, smoothstep(0.0, 1.0, u_mix));
+  float a[MAX_INKS];
+  float b[MAX_INKS];
+  scene(u_scene_a, uv, aspect, a);
+  scene(u_scene_b, uv, aspect, b);
+  float blend = smoothstep(0.0, 1.0, u_mix);
 
-  /* Warmth leans the mix toward the first two inks, which the theme keeps warm. */
-  w.xy *= 0.8 + u_warmth * 0.4;
-  w.zw *= 1.2 - u_warmth * 0.4;
-
+  /*
+   * Warmth leans the mix a little toward the warm half of the palette and
+   * away from the cool half. A lean, not a switch: every ink still shows.
+   */
   vec3 colour = toOklab(toLinear(u_paper));
   for (int i = 0; i < MAX_INKS; i++) {
-    float weight = clamp(w[i], 0.0, 1.0);
+    float warm = i < MAX_INKS / 2 ? 1.0 : -1.0;
+    float lean = 1.0 + warm * (u_warmth - 0.5) * 0.3;
+    float weight = clamp(mix(a[i], b[i], blend) * lean, 0.0, 1.0);
     colour = mix(colour, toOklab(toLinear(u_ink[i])), weight);
   }
   colour.yz *= CHROMA;

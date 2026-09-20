@@ -2,9 +2,9 @@
  * The stage reads every colour off its canvas, so the theme decides them
  * here and the shader only reads. `paper` is the body background: the
  * canvas covers the view edge to edge and any difference would show at its
- * border. The inks are laid down in order, first underneath, and the
- * shader leans the first two warm and the last two cool as the track's
- * warmth asks, so they are arranged that way here.
+ * border. The inks are laid down in order, first underneath. The shader
+ * leans the first half warm and the second half cool as the track's warmth
+ * asks, so they are arranged that way here: three warms, then three cools.
  *
  * `cell` and `levels` are the dither's raster parameters, as on the home
  * page. All of it has to be literal at build time: the stage parses these,
@@ -16,8 +16,15 @@ $muted: 46%;
 $muted-dark: 52%;
 $light-warm-1: color.mix($white, $yellow, $muted, $method: oklab);
 $light-warm-2: color.mix($white, $orange, $muted + 6%, $method: oklab);
+$light-warm-3: color.mix($white, $red, $muted + 4%, $method: oklab);
 $light-cool-1: color.mix($white, $blue, $muted, $method: oklab);
-$light-cool-2: color.mix($white, $red, $muted + 4%, $method: oklab);
+$light-cool-2: color.mix($white, $green, $muted + 6%, $method: oklab);
+$light-cool-3: color.mix(
+  $white,
+  color.mix($blue, $red, 55%, $method: oklab),
+  $muted + 2%,
+  $method: oklab
+);
 
 // Dark: the inks have to carry more of their own colour. On black a tint
 // reads as mud, so each is kept saturated and mixed less far in.
@@ -42,10 +49,22 @@ $dark-cool-1: color.mix(
   $muted-dark - 10%,
   $method: oklab
 );
-
-// And the second cool is a violet between the blue and the red, so the two
-// cools stay on one side of the wheel and never grey out against the warms.
+$dark-warm-3: color.mix(
+  $black,
+  color.adjust($red, $saturation: 10%, $lightness: 6%),
+  $muted-dark,
+  $method: oklab
+);
 $dark-cool-2: color.mix(
+  $black,
+  color.adjust($green, $saturation: 12%, $lightness: 8%),
+  $muted-dark - 2%,
+  $method: oklab
+);
+
+// A violet between the blue and the red closes the wheel, so the cools
+// run blue, green, violet and never grey out against the warms.
+$dark-cool-3: color.mix(
   $black,
   color.mix($blue, $red, 55%, $method: oklab),
   $muted-dark - 4%,
@@ -58,15 +77,19 @@ $dark-cool-2: color.mix(
   --kicl--views--experiments--music-visualiser__stage--paper: #{$white};
   --kicl--views--experiments--music-visualiser__stage--ink-1: #{$light-warm-1};
   --kicl--views--experiments--music-visualiser__stage--ink-2: #{$light-warm-2};
-  --kicl--views--experiments--music-visualiser__stage--ink-3: #{$light-cool-1};
-  --kicl--views--experiments--music-visualiser__stage--ink-4: #{$light-cool-2};
+  --kicl--views--experiments--music-visualiser__stage--ink-3: #{$light-warm-3};
+  --kicl--views--experiments--music-visualiser__stage--ink-4: #{$light-cool-1};
+  --kicl--views--experiments--music-visualiser__stage--ink-5: #{$light-cool-2};
+  --kicl--views--experiments--music-visualiser__stage--ink-6: #{$light-cool-3};
 
   @at-root .kicl--theme--dark {
     --kicl--views--experiments--music-visualiser__stage--paper: #{$black};
     --kicl--views--experiments--music-visualiser__stage--ink-1: #{$dark-warm-1};
     --kicl--views--experiments--music-visualiser__stage--ink-2: #{$dark-warm-2};
-    --kicl--views--experiments--music-visualiser__stage--ink-3: #{$dark-cool-1};
-    --kicl--views--experiments--music-visualiser__stage--ink-4: #{$dark-cool-2};
+    --kicl--views--experiments--music-visualiser__stage--ink-3: #{$dark-warm-3};
+    --kicl--views--experiments--music-visualiser__stage--ink-4: #{$dark-cool-1};
+    --kicl--views--experiments--music-visualiser__stage--ink-5: #{$dark-cool-2};
+    --kicl--views--experiments--music-visualiser__stage--ink-6: #{$dark-cool-3};
   }
 }
 

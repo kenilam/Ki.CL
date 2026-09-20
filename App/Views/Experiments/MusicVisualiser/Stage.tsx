@@ -29,7 +29,7 @@ const PROPERTY = `--${CLASS_NAME}`;
 const MAX_PIXEL_RATIO = 2;
 
 /** How many inks the stylesheet may declare; reading stops at the first gap. */
-const MAX_INKS = 4;
+const MAX_INKS = 6;
 
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
 
@@ -179,7 +179,12 @@ const Stage: React.FunctionComponent<Props> = ({ engine, playing, track }) => {
 
       renderer.draw({
         cell,
-        features: features?.fast ?? {
+        /*
+         * The picture moves on the two-second features, not the frame ones:
+         * a pool that swelled with every bass note twitched. Onsets still
+         * reach the rings through the director, which reads the fast set.
+         */
+        features: features?.medium ?? {
           centroid: 0,
           energy: 0,
           flux: 0,
