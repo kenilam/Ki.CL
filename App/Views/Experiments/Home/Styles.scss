@@ -13,8 +13,6 @@
  *   bottom, then moves up at the scroll rate and fades until it is off
  *   the top, over [at + screen - block, at + 2·screen - block - pad].
  *   Fills forwards only, so its resting value never overrides `push-in`.
- * - `trail-*`: the description and the link arrive a little after the
- *   heading, settling just past `at`.
  * - `arrive`: the background fades 0 → 1 over the last 60% of the
  *   approach to its panel.
  * - `drift`: the background slides 12% of its height during its stay.
@@ -37,9 +35,8 @@
   --kicl--views--experiments__home--block: 52dvb;
   --kicl--views--experiments__home--pad: var(--kicl-gutter-widest);
 
-  /* How far behind the heading the description and the link arrive. */
-  --kicl--views--experiments__home--trail-description: 10dvb;
-  --kicl--views--experiments__home--trail-open: 18dvb;
+  /* How far the closing heading rises as it enters. */
+  --kicl--views--experiments__home--rise: 10dvb;
 
   /* Where a block starts (below the screen) and ends up (above it). */
   --kicl--views--experiments__home--below: calc(
@@ -137,12 +134,6 @@
     );
     --kicl--views--experiments__home--out-end: calc(
       var(#{$home}--out-start) + var(#{$home}--screen) - var(#{$home}--pad)
-    );
-    --kicl--views--experiments__home--settle-description: calc(
-      var(#{$home}--at) + 8dvb
-    );
-    --kicl--views--experiments__home--settle-open: calc(
-      var(#{$home}--at) + 14dvb
     );
 
     block-size: var(--kicl--views--experiments__home--screen);
@@ -283,51 +274,21 @@
     max-inline-size: var(--kicl--views--experiments__home--measure);
   }
 
-  /* The description and the link ride in a little behind the heading. */
-  @supports (animation-timeline: scroll()) {
-    &__item &__description {
-      animation: kicl--views--experiments__home--trail-description linear both;
-      animation-range: var(#{$home}--in-start) var(#{$home}--settle-description);
-      animation-timeline: scroll(root);
-    }
-
-    &__item &__open {
-      animation: kicl--views--experiments__home--trail-open linear both;
-      animation-range: var(#{$home}--in-start) var(#{$home}--settle-open);
-      animation-timeline: scroll(root);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &__item &__description,
-    &__item &__open {
-      animation: none;
-    }
-  }
-
   /*
    * The closing section is in normal flow, so its words use their own
-   * view timelines: the heading rises as it enters the viewport, and the
-   * bookmark link, lower down, follows on its own entry.
+   * view timeline: they rise as the section enters the viewport.
    */
   @supports (animation-timeline: view()) {
     &__more &__words {
-      animation: kicl--views--experiments__home--trail-description linear both;
+      animation: kicl--views--experiments__home--rise linear both;
       animation-range: entry 0% entry 100%;
       animation-timeline: view();
       min-block-size: 0;
     }
-
-    &__more &__bookmark {
-      animation: kicl--views--experiments__home--trail-open linear both;
-      animation-range: entry 0% entry 100%;
-      animation-timeline: view();
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    &__more &__words,
-    &__more &__bookmark {
+    &__more &__words {
       animation: none;
     }
   }
@@ -372,19 +333,9 @@
   }
 }
 
-@keyframes kicl--views--experiments__home--trail-description {
+@keyframes kicl--views--experiments__home--rise {
   from {
-    translate: 0 var(--kicl--views--experiments__home--trail-description);
-  }
-
-  to {
-    translate: 0 0;
-  }
-}
-
-@keyframes kicl--views--experiments__home--trail-open {
-  from {
-    translate: 0 var(--kicl--views--experiments__home--trail-open);
+    translate: 0 var(--kicl--views--experiments__home--rise);
   }
 
   to {
