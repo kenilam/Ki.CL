@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Routes
+import { Route } from '@/Router';
+
 // Icons
 import { Ri, Fa } from '@/Icons';
 
@@ -18,13 +21,20 @@ import {
 } from '@/Components';
 
 // Context
-import { useRadioContext } from './Context';
+import {
+  useRadioContext,
+  useTrackContext,
+} from '@/Views/Experiments/MusicVisualiser/Context';
 
 // Partials
-import Gate from './Gate';
+import Gate from '@/Views/Experiments/MusicVisualiser/Gate';
 
 // Constants
-import { CLASS_NAME as VIEW } from './constants';
+import {
+  CLASS_NAME as VIEW,
+  PLAY_PATTERN,
+  trackKey,
+} from '@/Views/Experiments/MusicVisualiser/constants';
 
 const CLASS_NAME = `${VIEW}__chrome`;
 
@@ -46,17 +56,38 @@ const COPY = {
 const COPIED_MS = 1800;
 
 /**
- * The now-playing card and the controls, on the play route. They fade
- * once the listener has been still for a few seconds and come back on any
- * movement, so the stage is the page. A track reached by its link alone,
- * with no gesture yet, shows its gate instead until one comes.
+ * `/play` - the track sounds. Starts it on arrival, and again whenever the
+ * URL moves to another track's player; stops it on the way out. Draws the
+ * now-playing card and the controls, which fade once the listener has
+ * been still for a few seconds and come back on any movement, so the
+ * stage is the page. A track reached by its link alone, with no gesture
+ * yet, shows its gate instead until one comes.
  */
-const Chrome: React.FunctionComponent = () => {
-  const { error, next, setVolume, state, toggle, track, volume } =
-    useRadioContext();
+const Play: React.FunctionComponent = () => {
+  const track = useTrackContext();
+  const {
+    error,
+    next,
+    setVolume,
+    start,
+    state,
+    stop,
+    toggle,
+    track: current,
+    volume,
+  } = useRadioContext();
+  const key = trackKey(track);
   const [idle, setIdle] = useState(false);
   const [copied, setCopied] = useState(false);
   const playing = state === 'playing';
+
+  useEffect(() => {
+    start(track);
+    // The track is read by key: a new object for the same track is the same track.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+
+  useEffect(() => stop, [stop]);
 
   const copyLink = () => {
     void navigator.clipboard?.writeText(window.location.href).then(() => {
@@ -112,7 +143,7 @@ const Chrome: React.FunctionComponent = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, [next, toggle]);
 
-  if (state === 'blocked' && track) {
+  if (state === 'blocked') {
     return (
       <Gate onPlay={toggle} title={track.title}>
         <Text is='p' dense variant='secondary' className='kicl-font-size-small'>
@@ -121,6 +152,9 @@ const Chrome: React.FunctionComponent = () => {
       </Gate>
     );
   }
+
+  /* What the radio holds once it has started; until then, the route's track. */
+  const shown = current ?? track;
 
   return (
     <Layout
@@ -139,7 +173,7 @@ const Chrome: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrowest' justifyItems='start'>
           <div className={`${CLASS_NAME}__now-playing`} aria-live='polite'>
             <Heading is='h2' dense className='kicl-font-size-large'>
-              {track?.title ?? '…'}
+              {shown.title}
             </Heading>
             <Text
               is='p'
@@ -147,25 +181,25 @@ const Chrome: React.FunctionComponent = () => {
               variant='secondary'
               className='kicl-font-size-small'
             >
-              {track?.artist}
+              {shown.artist}
             </Text>
-            {track?.attribution.url ? (
+            {shown.attribution.url ? (
               <HyperLink
                 className='kicl-font-size-smaller'
-                to={track.attribution.url}
+                to={shown.attribution.url}
               >
-                {track.attribution.label}
+                {shown.attribution.label}
               </HyperLink>
-            ) : track ? (
+            ) : (
               <Text
                 is='p'
                 dense
                 variant='secondary'
                 className='kicl-font-size-smaller'
               >
-                {track.attribution.label}
+                {shown.attribution.label}
               </Text>
-            ) : null}
+            )}
             {error ? (
               <Text
                 is='p'
@@ -233,5 +267,4 @@ const Chrome: React.FunctionComponent = () => {
   );
 };
 
-export { CLASS_NAME };
-export default Chrome;
+export default <Route path={PLAY_PATTERN} element={<Play />} />;

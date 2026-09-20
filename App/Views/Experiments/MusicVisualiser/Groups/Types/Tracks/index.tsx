@@ -12,7 +12,6 @@ import type { Track as TrackSpec } from '@/Views/Experiments/MusicVisualiser/Spe
 // Context
 import {
   TrackContext,
-  useRadioContext,
   useTrackContext,
 } from '@/Views/Experiments/MusicVisualiser/Context';
 
@@ -20,17 +19,17 @@ import {
 import radio from '@/Views/Experiments/MusicVisualiser/Providers';
 
 // Partials
-import Chrome from '@/Views/Experiments/MusicVisualiser/Chrome';
 import Gate from '@/Views/Experiments/MusicVisualiser/Gate';
+
+// Play
+import Play from './Play';
 
 // Constants
 import {
   PARAMS,
-  PLAY_PATTERN,
   TRACK_PATTERN,
   toPath,
   toPlayPath,
-  trackKey,
 } from '@/Views/Experiments/MusicVisualiser/constants';
 
 type Params = {
@@ -115,29 +114,9 @@ const TrackGate: React.FunctionComponent = () => {
   );
 };
 
-/**
- * `/play` - the track sounds. Starts it on arrival, and again whenever the
- * URL moves to another track's player; stops it on the way out.
- */
-const Player: React.FunctionComponent = () => {
-  const track = useTrackContext();
-  const { start, stop } = useRadioContext();
-  const key = trackKey(track);
-
-  useEffect(() => {
-    start(track);
-    // The track is read by key: a new object for the same track is the same track.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
-
-  useEffect(() => stop, [stop]);
-
-  return <Chrome />;
-};
-
 export default (
   <Route path={TRACK_PATTERN} element={<Track />}>
     <Route index element={<TrackGate />} />
-    <Route path={PLAY_PATTERN} element={<Player />} />
+    {Play}
   </Route>
 );

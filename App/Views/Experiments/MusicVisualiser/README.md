@@ -43,12 +43,13 @@ MusicVisualiser/
     Types/
       index.tsx      /:type - a family; index redirects to a track of it
       Tracks/
-        index.tsx    /:trackId - resolves the piece; index is its gate,
-                     /play is the Player, which starts it and shows Chrome
-  Contents.tsx       the shell: Stage over one useRadio(), plus the outlet
+        index.tsx    /:trackId - resolves the piece; index is its gate
+        Play/
+          index.tsx  /play - starts the piece; the now-playing card and
+                     controls, which fade when idle
+  Contents.tsx       the shell: the canvas (palette off CSS, the frame loop)
+                     over one useRadio(), plus the outlet
   useRadio.ts        playback state: engine, start/stop, pause, skip, volume
-  Chrome.tsx         the now-playing card and controls; fades when idle
-  Stage.tsx          the canvas: reads the palette off CSS, runs the frame loop
   Styles.scss        palette per theme as custom properties, layout, chrome
   Audio/
     engine.ts        one AudioContext: source → input → analyser → master
@@ -144,10 +145,10 @@ MusicVisualiser/
   own recent peak. Colour is inks over paper in Oklab with a light ordered
   dither, matching the home background. The palette comes from custom
   properties in `Styles.scss`, per theme.
-- **Chrome.** The gates are the one gesture the browser needs before audio
-  may start; the play link on a track's gate is it. On `/play`: title,
-  artist, attribution, play/pause, skip, copy link, volume. Space toggles,
-  `n` or right arrow skips. The
+- **Gates and controls.** The gates are the one gesture the browser needs
+  before audio may start; the play link on a track's gate is it. On
+  `/play`: title, artist, attribution, play/pause, skip, copy link, volume.
+  Space toggles, `n` or right arrow skips. The
   chrome fades after four idle seconds and returns on any movement. Volume
   persists through the local storage provider. Reduced motion holds the
   field still and draws a couple of frames a second.
