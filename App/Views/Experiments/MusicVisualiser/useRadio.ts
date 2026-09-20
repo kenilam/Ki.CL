@@ -90,6 +90,12 @@ export default function useRadio(): Radio {
   const volumeRef = useRef(DEFAULT_VOLUME);
   /* Whether the engine holds a track that can be resumed: only after one has started. */
   const heldRef = useRef(false);
+  /*
+   * Counts sources started, not calls: a pause and a resume move
+   * `generation` on, but the source playing is the same one, and its end
+   * must still be heard.
+   */
+  const sourceRef = useRef(0);
 
   const [state, setState] = useState<PlaybackState>('idle');
   const [track, setTrack] = useState<Track | null>(null);
@@ -145,8 +151,14 @@ export default function useRadio(): Radio {
         if (resuming) {
           await current.resume();
         } else {
+          const source = ++sourceRef.current;
+
           await current.play(upcoming.source, () => {
-            if (mine === generation.current) {
+            /* Only the source still playing moves the radio on. */
+            if (
+              source === sourceRef.current &&
+              stateRef.current === 'playing'
+            ) {
               void next();
             }
           });
