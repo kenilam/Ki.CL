@@ -1,8 +1,9 @@
 /*
  * Scroll progress, as in Portfolio/Pika: a fixed bar scaled along the
- * inline axis by the page scroll, with the same moving gradient. It sits
- * on the site header's bottom edge; at the very top it would be behind
- * the header's blur.
+ * inline axis by the page scroll, with the same moving gradient. Under
+ * the header's bottom edge while the header shows (at the top it would
+ * be behind the header's blur), at the top while the header is hidden,
+ * moving between the two at the header's own pace.
  */
 :root {
   --kicl--views--experiments__home--indicator-shift: linear-gradient(
@@ -39,11 +40,17 @@
   background-size: 1200% 1200%;
   block-size: var(--kicl-size-3px);
   inline-size: 100%;
-  inset-block-start: var(--kicl--widgets--global-header--block-size);
+  inset-block-start: 0;
   inset-inline-start: 0;
   scale: 0 1;
   transform-origin: inline-start;
+  transition: inset-block-start var(--kicl-transition-duration)
+    var(--kicl-ease-sine-out);
   z-index: 1;
+
+  &--under-header {
+    inset-block-start: var(--kicl--widgets--global-header--block-size);
+  }
 }
 
 @keyframes kicl--views--experiments__home--indicator-shift {
