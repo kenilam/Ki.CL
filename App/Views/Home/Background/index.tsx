@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -10,7 +10,7 @@ import { useResizeObserver } from '@/Hooks';
 import type * as Spec from './Spec';
 
 // Renderer
-import { paint } from './dither';
+import { createRenderer } from './dither';
 
 // Styles
 import './Styles.scss';
@@ -21,20 +21,27 @@ const PROPERTY = `--${CLASS_NAME}`;
 
 /**
  * Frames per second the drift is redrawn at. The motion is slow enough that
- * more would only spend battery; fewer and the grain visibly steps.
+ * more would only spend battery; fewer and the screen visibly steps.
  */
-const FRAME_INTERVAL_MS = 100;
+const FRAME_INTERVAL_MS = 66;
+
+/**
+ * Retina and beyond are capped at two device pixels per CSS pixel. The screen
+ * is drawn per device pixel, so beyond that it costs fill rate for a texture
+ * nobody can resolve.
+ */
+const MAX_PIXEL_RATIO = 2;
 
 /** How many inks the stylesheet may declare; it stops at the first gap. */
-const MAX_INKS = 8;
+const MAX_INKS = 6;
 
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
 
 /**
- * Every colour and the cell size live in the stylesheet, as custom
- * properties on the canvas, so the theme owns them and the renderer only
- * reads. Colours come back in whatever form the token was written in; a 2D
- * context normalises any of them to `#rrggbb`.
+ * Every colour, the cell size and the tone count live in the stylesheet, as
+ * custom properties on the canvas, so the theme owns them and the renderer
+ * only reads. Colours come back in whatever form the token was written in; a
+ * 2D context normalises any of them to `#rrggbb`.
  */
 function readPalette(canvas: HTMLCanvasElement): Spec.Palette {
   const styles = window.getComputedStyle(canvas);
@@ -74,27 +81,33 @@ function readPalette(canvas: HTMLCanvasElement): Spec.Palette {
   return { inks, paper };
 }
 
-function readCell(canvas: HTMLCanvasElement): number {
+function readNumber(
+  canvas: HTMLCanvasElement,
+  name: string,
+  fallback: number
+): number {
   const value = parseFloat(
-    window.getComputedStyle(canvas).getPropertyValue(`${PROPERTY}--cell`)
+    window.getComputedStyle(canvas).getPropertyValue(`${PROPERTY}--${name}`)
   );
 
-  return Number.isFinite(value) && value >= 1 ? value : 1;
+  return Number.isFinite(value) && value > 0 ? value : fallback;
 }
 
 /**
  * The dithered light behind the home page.
  *
- * A canvas the size of the section, rendered at one pixel per dither cell
- * and scaled up by CSS. It redraws on a slow clock so the pools of ink drift,
- * stops at a single frame for anyone who asked for reduced motion, and
- * re-reads its colours whenever the theme class on `body` changes.
+ * A canvas the size of the section, drawn by a fragment shader at device
+ * resolution. It redraws on a slow clock so the pools of ink drift, stops at
+ * a single frame for anyone who asked for reduced motion, and re-reads its
+ * colours whenever the theme class on `body` changes. If the GPU takes the
+ * context away, it is set up again once it comes back.
  */
 const Background: React.FunctionComponent<Spec.Props> = ({
   className,
   ...rest
 }) => {
   const { node, rect } = useResizeObserver<HTMLCanvasElement>();
+  const [generation, setGeneration] = useState(0);
 
   const width = rect?.width ?? 0;
   const height = rect?.height ?? 0;
@@ -106,26 +119,25 @@ const Background: React.FunctionComponent<Spec.Props> = ({
       return;
     }
 
-    const context = canvas.getContext('2d');
+    const renderer = createRenderer(canvas);
 
-    if (!context) {
+    if (!renderer) {
       return;
     }
 
-    const cell = readCell(canvas);
-
-    canvas.width = Math.ceil(width / cell);
-    canvas.height = Math.ceil(height / cell);
-
-    const image = context.createImageData(canvas.width, canvas.height);
+    const ratio = Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
+    const cell = readNumber(canvas, 'cell', 2) * ratio;
+    const levels = readNumber(canvas, 'levels', 14);
     const reducedMotion = window.matchMedia(REDUCED_MOTION);
+
+    renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));
 
     let palette = readPalette(canvas);
     let frame = 0;
     let last = -Infinity;
 
     const draw = (now: number) => {
-      paint(context, image, now / 1000, palette);
+      renderer.draw(now / 1000, palette, cell, levels);
     };
 
     const loop = (now: number) => {
@@ -158,15 +170,29 @@ const Background: React.FunctionComponent<Spec.Props> = ({
       attributes: true,
     });
 
+    const onLost = (event: Event) => {
+      event.preventDefault();
+      window.cancelAnimationFrame(frame);
+    };
+
+    const onRestored = () => {
+      setGeneration((current) => current + 1);
+    };
+
+    canvas.addEventListener('webglcontextlost', onLost);
+    canvas.addEventListener('webglcontextrestored', onRestored);
     reducedMotion.addEventListener('change', start);
     start();
 
     return () => {
       window.cancelAnimationFrame(frame);
       theme.disconnect();
+      canvas.removeEventListener('webglcontextlost', onLost);
+      canvas.removeEventListener('webglcontextrestored', onRestored);
       reducedMotion.removeEventListener('change', start);
+      renderer.dispose();
     };
-  }, [node, width, height]);
+  }, [node, width, height, generation]);
 
   return (
     <canvas

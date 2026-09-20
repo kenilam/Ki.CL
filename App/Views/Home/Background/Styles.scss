@@ -9,34 +9,57 @@
  * declared - here, on `:root` - not where it is read, and the dark value only
  * exists further down, on `body`.
  *
- * The inks are the brand palette, three at a time - a dither gradient is
- * solid colours side by side, and more than three side by side stops reading
- * as light and starts reading as confetti.
+ * The inks are laid down in order, first underneath, and each is tied to a
+ * pool in `dither.ts`: a broad field on the right, a glow low on the right, a
+ * rim low on the left, a band from the top left. They are mixed here from
+ * the brand palette rather than picked freehand, and the values have to be
+ * literal at build time - the renderer parses them, and a script reading a
+ * custom property gets `color-mix()` back unevaluated.
  *
- * `cell` is the size of one dither block in CSS pixels. It is deliberately
- * not scaled by device pixel ratio: the blocks are the texture, and they
- * should be the same size to the eye on every screen. It is a raster
- * parameter rather than a spacing, so it is not drawn from the size scale -
- * and it has to be a literal length, because a script reading a custom
- * property gets `calc()` back unevaluated.
+ * `cell` is the size of one screen dot in CSS pixels and `levels` is how
+ * many tones each channel is allowed: fewer levels, coarser cells, and the
+ * weave shows more. Both are raster parameters rather than spacing, so they
+ * are not drawn from the size scale, and both must be literal numbers for
+ * the same reason as the inks.
  */
+
+// Light: a print on cream - sky, peach, coral and the brand yellow.
+$light-field: color.mix($blue, $white, 62%, $method: oklab);
+$light-glow: color.mix($orange, $white, 48%, $method: oklab);
+$light-rim: $red;
+$light-band: $yellow;
+
+// Dark: after the reference - a deep field, an electric glow, a warm rim and
+// a cream band, each pulled from the brand blue, orange and white.
+$dark-field: color.adjust(
+  $blue,
+  $hue: 12deg,
+  $saturation: 30%,
+  $lightness: -18%
+);
+$dark-glow: color.adjust($blue, $saturation: 20%, $lightness: 18%);
+$dark-rim: color.adjust($orange, $hue: -8deg);
+$dark-band: color.mix($white, $orange, 86%, $method: oklab);
+
 :root {
-  --kicl--views--home--background--cell: 4px;
-  --kicl--views--home--background--paper: var(--kicl-color-white);
-  --kicl--views--home--background--ink-1: var(--kicl-color-yellow);
-  --kicl--views--home--background--ink-2: var(--kicl-color-orange);
-  --kicl--views--home--background--ink-3: var(--kicl-color-blue);
+  --kicl--views--home--background--cell: 2px;
+  --kicl--views--home--background--levels: 14;
+  --kicl--views--home--background--paper: #{$white};
+  --kicl--views--home--background--ink-1: #{$light-field};
+  --kicl--views--home--background--ink-2: #{$light-glow};
+  --kicl--views--home--background--ink-3: #{$light-rim};
+  --kicl--views--home--background--ink-4: #{$light-band};
 
   @at-root .kicl--theme--dark {
-    --kicl--views--home--background--paper: var(--kicl-color-black);
-    --kicl--views--home--background--ink-1: var(--kicl-color-blue);
-    --kicl--views--home--background--ink-2: var(--kicl-color-red);
-    --kicl--views--home--background--ink-3: var(--kicl-color-yellow);
+    --kicl--views--home--background--paper: #{$black};
+    --kicl--views--home--background--ink-1: #{$dark-field};
+    --kicl--views--home--background--ink-2: #{$dark-glow};
+    --kicl--views--home--background--ink-3: #{$dark-rim};
+    --kicl--views--home--background--ink-4: #{$dark-band};
   }
 }
 
 .kicl--views--home--background {
   block-size: 100%;
-  image-rendering: pixelated;
   inline-size: 100%;
 }
