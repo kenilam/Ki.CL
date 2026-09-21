@@ -1,7 +1,64 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
   "commitBody": "renovate updates",
   "ignorePaths": [],
   "baseBranches": ["develop"],
-  "schedule": ["every weekend"]
+  "schedule": ["every weekend"],
+  "dependencyDashboard": true,
+  "platformAutomerge": true,
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "schedule": ["at any time"]
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "labels": ["major"],
+      "automerge": false
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": ">=1.0.0",
+      "labels": ["minor-patch"]
+    },
+    {
+      "description": "Tooling that never ships to the browser. Merged once CI passes.",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": ">=1.0.0",
+      "automerge": true
+    },
+    {
+      "description": "Shared with the Backend's federated Client as singletons, so both sides have to agree on the version. Always reviewed.",
+      "groupName": "federation shared singletons",
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom",
+        "@apollo/client",
+        "graphql",
+        "graphql-ws"
+      ],
+      "labels": ["federation"],
+      "automerge": false
+    },
+    {
+      "description": "@react-three/fiber 9 declares react and react-dom <19.3. Lift this once a fiber release allows 19.3.",
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "allowedVersions": "<19.3"
+    },
+    {
+      "description": "three and its React bindings break each other across minors.",
+      "groupName": "three",
+      "matchPackageNames": ["three", "@types/three", "@react-three/**"],
+      "automerge": false
+    }
+  ]
 }
