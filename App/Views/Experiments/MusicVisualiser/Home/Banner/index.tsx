@@ -28,7 +28,7 @@ import { toTrackPath } from '@/Views/Experiments/MusicVisualiser/constants';
 const CLASS_NAME = `${HOME}__banner`;
 
 const COPY = {
-  lede: '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of twelve scenes. Press play once and it keeps going.',
+  lede: '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of thirteen scenes. Press play once and it keeps going.',
   more: 'How it was made',
   play: 'Play a random song',
   title: 'Music Visualiser',

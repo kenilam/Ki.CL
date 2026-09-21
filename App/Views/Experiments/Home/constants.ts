@@ -24,7 +24,7 @@ const EXPERIMENTS: readonly Experiment[] = [
   },
   {
     description:
-      '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of twelve scenes.',
+      '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of thirteen scenes.',
     plate: 'music-visualiser',
     title: 'Music Visualiser',
     to: toMusicVisualiserPath(),

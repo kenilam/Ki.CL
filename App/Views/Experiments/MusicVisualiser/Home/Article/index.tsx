@@ -87,13 +87,13 @@ const Article: React.FunctionComponent = () => (
             The picture
           </Heading>
           <Text is='p'>
-            Everything on screen is one fragment shader. It holds twelve scenes
-            (pools, clouds, rings, bars, a tunnel, a hive, an orb and more) and
-            blends between two at a time. Each frame the page reads the analyser
-            for a handful of numbers: overall energy, how much sits in the low,
-            mid and high bands, how bright the sound is, and whether a note just
-            landed. Those, and a 128-band spectrum passed in as a texture, are
-            all the shader gets.
+            Everything on screen is one fragment shader. It holds thirteen
+            scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and
+            more) and blends between two at a time. Each frame the page reads
+            the analyser for a handful of numbers: overall energy, how much sits
+            in the low, mid and high bands, how bright the sound is, and whether
+            a note just landed. Those, and a 128-band spectrum passed in as a
+            texture, are all the shader gets.
           </Text>
           <Text is='p'>
             A scene stays for 24 to 38 seconds, less if the music moves into a
