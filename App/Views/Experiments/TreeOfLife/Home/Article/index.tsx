@@ -54,13 +54,12 @@ const Article: React.FunctionComponent = () => {
           . It’s a radial dendrogram: curved links, tips labelled around the
           circumference, branch lengths that carry real distance. As a diagram
           of structure it’s complete. You can see the shape of a phylogeny and
-          how far apart its members sit, and that’s a lot.
+          how far apart its members sit.
         </Text>
 
         <Text is='p'>
           What you can’t see is what any of them look like. Every tip is just a
-          name. I wanted the shape and the creatures on the same page, which
-          turned out to be a much bigger ask than it sounds.
+          name. I wanted the shape and the creatures on the same page.
         </Text>
 
         <Heading is='h2' className='kicl-font-size-large'>
@@ -68,19 +67,18 @@ const Article: React.FunctionComponent = () => {
         </Heading>
 
         <Text is='p'>
-          Here’s the thing I wanted to build. Every branch of life on one sheet,
-          and at the end of each branch something you’d actually recognise: a
-          horse, a nautilus, a fly agaric. The shape of the tree and the
-          creatures it made, in one picture.
+          I wanted every branch of life on one sheet, and at the end of each
+          branch something you’d actually recognise: a horse, a nautilus, a fly
+          agaric. The shape of the tree and the creatures it made, in one
+          picture.
         </Text>
 
         <Text is='p'>
           Then there’s the number. The Open Tree of Life holds about 2.3 million
           tips. Almost every decision below comes out of that one figure,
           because you can’t draw that many, you can’t illustrate them, and you
-          certainly can’t fetch them. So the question changed. It stopped being
-          how to draw the tree and became what to show someone standing inside
-          something that big.
+          certainly can’t fetch them. So I stopped trying to draw the whole tree
+          and started choosing what to show at any one point.
         </Text>
 
         <Figure
@@ -94,14 +92,14 @@ const Article: React.FunctionComponent = () => {
         </Heading>
 
         <Text is='p'>
-          Each version is a fresh attempt, not a revision of the one before it,
+          Each version started over rather than revising the one before it,
           which is why they’re all still online.{' '}
           <HyperLink to={toVersionPath({ version: '1' })}>v1</HyperLink> to{' '}
           <HyperLink to={toVersionPath({ version: '8' })}>v8</HyperLink> went
           into WebGL: the whole clade laid out at once, on a cream background
-          borrowed from the poster. They looked the part. Past a few hundred
-          taxa, though, the layout collapsed into a mat of dots, and every dot
-          was the same few pixels no matter where it sat.
+          borrowed from the poster. Past a few hundred taxa, though, the layout
+          collapsed into a mat of dots, and every dot was the same few pixels no
+          matter where it sat.
         </Text>
 
         <Text is='p'>
@@ -126,8 +124,7 @@ const Article: React.FunctionComponent = () => {
 
         <Text is='p'>
           <HyperLink to={toVersionPath({ version: '14' })}>v14</HyperLink> was
-          the widest of them, and it made the trade obvious: show everything and
-          you emphasise nothing. So{' '}
+          the widest of them. It showed everything, and nothing stood out. So{' '}
           <HyperLink to={toVersionPath({ version: VERSION })}>
             v{VERSION}
           </HyperLink>{' '}
@@ -148,10 +145,9 @@ const Article: React.FunctionComponent = () => {
         </Text>
 
         <Text is='p'>
-          Which is exactly what happened. <em>Panthera</em> turned up as the
-          centre of the universe with nothing above it, and it took me
-          embarrassingly long to work out why, because the symptom sits nowhere
-          near the cause. The fix was to stop recording “no parent” and “no
+          That happened: <em>Panthera</em> was stored as the root, with nothing
+          above it. It took a long time to find, because the symptom showed up
+          far from the cause. The fix was to stop recording “no parent” and “no
           parent yet” the same way. A cold fetch now pulls the node’s rootward
           lineage too: the whole spine back to the origin, unnamed internal
           nodes included. A stored null means the origin, and nothing else.
@@ -162,8 +158,7 @@ const Article: React.FunctionComponent = () => {
           its own ancestor and nothing more; children come from a reverse
           lookup. Writes are idempotent upserts, because lineages that share
           ancestors get written at the same time and two requests will race for
-          the same row. They did exactly that, loudly, the first time I emptied
-          the database.
+          the same row. That happened the first time I emptied the database.
         </Text>
 
         <Heading is='h2' className='kicl-font-size-large'>
@@ -185,11 +180,12 @@ const Article: React.FunctionComponent = () => {
         />
 
         <Text is='p'>
-          The pipeline is fixed, not agentic. It resolves the lineage, picks one
-          real living specimen to stand in for the taxon, writes a prompt from
-          that specimen’s morphology, generates an image, then hands the result
-          to a vision model for scoring. Fail the score and the prompt gets
-          tightened for one more try.
+          The pipeline is a fixed sequence of steps, with no agent deciding what
+          to do next. It resolves the lineage, picks one real living specimen to
+          stand in for the taxon, writes a prompt from that specimen’s
+          morphology, generates an image, then hands the result to a vision
+          model for scoring. Fail the score and the prompt gets tightened for
+          one more try.
         </Text>
 
         <Heading is='h2' className='kicl-font-size-large'>
@@ -200,10 +196,10 @@ const Article: React.FunctionComponent = () => {
           Scoring turned out to matter more than generating. For a long stretch
           every plate in the library carried an identical score -
           <code> overall 7, taxonMatch 7, pass true</code> - across more than a
-          hundred images. No model produces that. It was a hardcoded fallback:
-          the vision provider had run out of credit, the call threw, and rather
-          than admit it hadn’t looked, the pipeline filled in a pass. The entire
-          library was marked as reviewed when none of it had been.
+          hundred images. It was a hardcoded fallback: the vision provider had
+          run out of credit, the call threw, and rather than admit it hadn’t
+          looked, the pipeline filled in a pass. The entire library was marked
+          as reviewed when none of it had been.
         </Text>
 
         <Text is='p'>
@@ -219,17 +215,17 @@ const Article: React.FunctionComponent = () => {
           the right one and whether it matched a morphology lock, but nothing in
           it asked whether the anatomy was even <em>possible</em>. A human with
           its head at an impossible angle, malformed fingers and a garbled
-          caption sailed through on morphology. Anatomy is judged separately
-          from identity now, which is the only way the scorer can say “right
-          species, broken body”.
+          caption passed on morphology. Anatomy is judged separately from
+          identity now, which is the only way the scorer can say “right species,
+          broken body”.
         </Text>
 
         <Text is='p'>
           I also took the bans out of the prompts. Naming a thing to forbid it
           just puts it in the picture. A list reading “no insects, no mites”
           produced microbes drawn as mites, and a fallback morphology that ended
-          “not a macroscopic animal” had been quietly doing the same to every
-          microbe in the library.
+          “not a macroscopic animal” had been doing the same to every microbe in
+          the library.
         </Text>
 
         <Heading is='h2' className='kicl-font-size-large'>
@@ -245,14 +241,13 @@ const Article: React.FunctionComponent = () => {
         </Text>
 
         <Text is='p'>
-          Running out isn’t always the same thing, which took me a while to
-          accept. A daily allowance comes back tomorrow. An empty balance comes
-          back when someone pays. I’d been treating both as a thirty-minute
-          cooldown, which meant hammering a spent account twice an hour forever
-          and telling readers to “try again shortly” about a problem only a
-          billing page could solve. The two are separate now, all the way
-          through to the panel, so it tells you which kind of wait you’re in
-          for.
+          Running out comes in two kinds. A daily allowance comes back tomorrow.
+          An empty balance comes back when someone pays. I’d been treating both
+          as a thirty-minute cooldown, which meant hammering a spent account
+          twice an hour forever and telling readers to “try again shortly” about
+          a problem only a billing page could solve. The two are separate now,
+          all the way through to the panel, so it tells you which kind of wait
+          you’re in for.
         </Text>
 
         <Text is='p'>
@@ -274,27 +269,25 @@ const Article: React.FunctionComponent = () => {
             v{VERSION}
           </HyperLink>{' '}
           shows you one taxon, its lineage back to the origin, and a sampled fan
-          of its neighbours. The thing that makes the poster beautiful is
-          exactly the thing 2.3 million tips won’t let you have.
+          of its neighbours.
         </Text>
 
         <Text is='p'>
           Three smaller compromises came with that. Illustrations are made on
           demand instead of drawn in advance, so most taxa have no plate until
           someone visits them and a provider has quota going spare. Deep fans
-          are sampled rather than drawn whole, so what you get is
-          representative, not complete. And the tree is assembled lazily from a
-          cache sitting in front of a public API, which makes the first visit to
-          an unexplored clade slow in a way a printed sheet never is.
+          are sampled rather than drawn whole, so you see a representative
+          subset. And the tree is assembled lazily from a cache sitting in front
+          of a public API, which makes the first visit to an unexplored clade
+          slow in a way a printed sheet never is.
         </Text>
 
         <Text is='p'>
-          What survived is the part I cared about most. You can{' '}
+          You can still{' '}
           <HyperLink to={toVersionPath({ version: VERSION })}>
             start at the origin of life
           </HyperLink>{' '}
-          and walk to any organism alive, and the walk itself tells you how far
-          it is.
+          and walk to any living species, and see how far it is from the origin.
         </Text>
       </article>
     </Layout>

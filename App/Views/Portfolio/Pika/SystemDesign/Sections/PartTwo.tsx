@@ -66,13 +66,11 @@ const PartTwo: React.FunctionComponent = () => {
           </Layout>
         </Dialog>
         <Text>
-          I kept coming back to the same framing while working on this part: the
-          agent is a new client of the platform, not a new platform. Every piece
-          of Part 1&apos;s execution plane - jobs, orchestration, adapters,
-          assets, credits, moderation, task metrics - serves the agent without
-          modification. This is where the manifest-and-primitive bet from Part 1
-          pays out, the agent needs exactly the vocabulary the Apps already
-          speak.
+          The agent is another client of the platform. Every piece of Part
+          1&apos;s execution plane - jobs, orchestration, adapters, assets,
+          credits, moderation, task metrics - serves the agent without
+          modification. The agent needs the same vocabulary the Apps already
+          speak, which is what the manifests and primitives in Part 1 were for.
         </Text>
 
         <Heading className='kicl-font-size-large' is='h4'>
@@ -84,7 +82,7 @@ const PartTwo: React.FunctionComponent = () => {
           message history, working plan, media context, budget spent - in the
           session store. A turn is itself a durable workflow, which means a
           crash mid-turn resumes mid-turn. It is the same <code>Temporal</code>{' '}
-          machinery from Part 1, running a different program.
+          machinery from Part 1.
         </Text>
         <Text>
           The agent plane adds three small tables that key into Part 1&apos;s
@@ -118,11 +116,10 @@ const PartTwo: React.FunctionComponent = () => {
           </Layout>
         </Dialog>
         <Text>
-          <code>TOOL_CALL.job_id</code> makes the reuse concrete: the
-          agent&apos;s work lands in the same job, task, and asset tables a
-          button press writes to - which is what makes replay and the
-          governor&apos;s ledger bookkeeping possible without new
-          infrastructure.
+          Through <code>TOOL_CALL.job_id</code>, the agent&apos;s work lands in
+          the same job, task, and asset tables a button press writes to - which
+          is what makes replay and the governor&apos;s ledger bookkeeping
+          possible without new infrastructure.
         </Text>
         <List is='ol'>
           <ListItem>
@@ -133,8 +130,7 @@ const PartTwo: React.FunctionComponent = () => {
               The system prompt sets a creative-director persona; session assets
               arrive as structured summaries with thumbnails, captioned frames
               and lineage - never raw video. When the agent needs to look at
-              something, inspect extracts keyframes for a vision model. Seeing
-              is just another tool.
+              something, inspect extracts keyframes for a vision model.
             </Text>
           </ListItem>
           <ListItem>
@@ -146,9 +142,8 @@ const PartTwo: React.FunctionComponent = () => {
               Part 1 into tool definitions - one source of truth, so a new
               primitive is a new agent capability with zero agent-side code.
               Published Apps become macro-tools too: calling{' '}
-              <code>character-creator</code>
-              beats hand-orchestrating five primitives, because that path is
-              battle-tested.
+              <code>character-creator</code> beats hand-orchestrating five
+              primitives, because that path is already tested.
             </Text>
           </ListItem>
           <ListItem>
@@ -175,9 +170,9 @@ const PartTwo: React.FunctionComponent = () => {
           </ListItem>
         </List>
         <Text>
-          Interruption is first-class. New messages preempt at the next tool
-          boundary; queued-but-unstarted jobs cancel; renders already running
-          finish and simply join the revised context.
+          New messages preempt at the next tool boundary, queued-but-unstarted
+          jobs cancel, and renders already running finish and join the revised
+          context.
         </Text>
 
         <Heading className='kicl-font-size-large' is='h4'>
@@ -188,27 +183,25 @@ const PartTwo: React.FunctionComponent = () => {
           enormous bill, so the design assumes the loop will misbehave and
           constrains it before it runs. By default the agent explores at draft
           tier - low resolution, short clips, cheaper models - converges with
-          the user on drafts, and spends the expensive render exactly once, on
-          the approved direction. The hero pass - the full-resolution render on
-          the top-tier model, the asset the user actually ships - is the last
-          step of the session, never the body of the loop, and the governor
-          enforces it: a draft-phase turn requesting a hero-tier render needs
-          the user to confirm. The real risk here is fidelity - if drafts
-          don&apos;t predict finals, users iterate at hero tier, the exact loop
-          the ladder exists to prevent - so drafts prefer the same model at
-          reduced resolution over a cheaper model, and hero re-render rate is
-          the ladder&apos;s health metric.
+          the user on drafts, and spends the expensive render once, on the
+          approved direction. The hero pass is the full-resolution render on the
+          top-tier model, the asset the user ships. It runs at the end of the
+          session rather than inside the loop, and the governor enforces that: a
+          draft-phase turn requesting a hero-tier render needs the user to
+          confirm. The risk is fidelity. If drafts do not predict finals, users
+          iterate at hero tier, which is the loop the ladder exists to prevent,
+          so drafts use the same model at reduced resolution rather than a
+          cheaper model. Hero re-render rate is the ladder&apos;s health metric.
         </Text>
         <Text>
           Budgets are hard limits. Each session carries a credit budget, and the
           governor prices every turn from the primitives&apos; declared cost
           models - the number comes from the platform, not the model it
-          constrains - and blocks any call that would blow past the remainder. A
+          constrains - and blocks any call that would go past the remainder. A
           runaway detector halts the loop on repeated similar tool calls with no
           user message in between. LLM spend gets model routing, prompt caching
-          and compaction - but it is worth being plain about proportions: LLM
-          cost sits an order of magnitude below video cost. The draft ladder is
-          the lever that actually matters; the rest is tuning.
+          and compaction, but LLM cost sits an order of magnitude below video
+          cost. Most of the savings come from the draft ladder.
         </Text>
 
         <Heading className='kicl-font-size-large' is='h4'>
@@ -229,8 +222,9 @@ const PartTwo: React.FunctionComponent = () => {
           stubbed providers with zero GPU spend, which in practice catches most
           regressions. Output quality is scored by an LLM-and-vision judge
           working through a decomposed rubric, calibrated quarterly against
-          human panels. Judge scores gate on deltas, never on absolute taste,
-          because the judge does not have taste. It has consistency.
+          human panels. Judge scores gate on deltas rather than absolute scores,
+          because the judge is consistent, but its absolute scores are not
+          reliable.
         </Text>
         <Text>
           Every production session already logs its full trace, so a prompt or
@@ -238,7 +232,7 @@ const PartTwo: React.FunctionComponent = () => {
           divergence gets judge-scored, and changes ship through a 5% canary
           watched on process metrics, thumbs-down rate and cost per session.
           Live user signals - regeneration rate, abandonment, explicit feedback
-          - are the online eval that closes the loop.
+          - are the online eval.
         </Text>
       </section>
     </Layout>

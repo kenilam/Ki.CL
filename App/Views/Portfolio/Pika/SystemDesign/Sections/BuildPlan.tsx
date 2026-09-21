@@ -195,11 +195,10 @@ const BuildPlan: React.FunctionComponent = () => {
           Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to seven
           - and that number only holds because v1 is deliberately narrow: one
           region, two providers, an internal-only Studio, and generation kept
-          behind vendor APIs. The long pole is not the happy path - it is
-          provider-adapter edge cases. Coding agents compress the skeleton and
-          the agent loop dramatically, but they help much less with debugging a
-          flaky third-party webhook - which is why the middle phases carry most
-          of the schedule risk.
+          behind vendor APIs. Provider-adapter edge cases are the long pole, not
+          the happy path. Coding agents compress the skeleton and the agent
+          loop, but they help much less with debugging a flaky third-party
+          webhook, so the middle phases carry most of the schedule risk.
         </Text>
 
         <Heading className={classNames('kicl-font-size-large')} is='h4'>
@@ -207,8 +206,8 @@ const BuildPlan: React.FunctionComponent = () => {
         </Heading>
         <Text>
           I&apos;d feed these to Claude Code in stages, each one ending at
-          something verifiable. Every prompt carries its own acceptance tests -
-          agent-written code is only as trustworthy as the harness checking it.
+          something verifiable. Every prompt carries its own acceptance tests,
+          because agent-written code is only as good as the tests checking it.
         </Text>
         {PROMPTS.map(({ body, title }, index) => (
           <React.Fragment key={title}>
