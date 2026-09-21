@@ -1,18 +1,20 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Route as Origin } from '@/Router';
+import { Route as Origin } from '@/Router';
 
 // Components
 import { Spinner } from '@/Components';
 
 // Views
+import MusicVisualiser from './MusicVisualiser';
 import TreeOfLife from './TreeOfLife';
 
 // Constants
 import { PATH } from './constants';
 
 const Contents = React.lazy(() => import('./Contents'));
+const Home = React.lazy(() => import('./Home'));
 
 const Lazy: React.FunctionComponent = () => {
   return (
@@ -25,7 +27,15 @@ const Lazy: React.FunctionComponent = () => {
 export { PATH };
 export default (
   <Origin path={PATH} element={<Lazy />}>
-    <Origin index element={<Navigate to='tree-of-life' replace />} />
+    <Origin
+      index
+      element={
+        <Suspense fallback={<Spinner />}>
+          <Home />
+        </Suspense>
+      }
+    />
     {TreeOfLife}
+    {MusicVisualiser}
   </Origin>
 );

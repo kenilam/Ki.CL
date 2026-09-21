@@ -154,6 +154,20 @@ const getConfig = ({
           },
           '@apollo/client': { singleton: true, requiredVersion: '^4.0.0' },
         },
+        dev: {
+          /*
+           * The one remote is declared statically above, and its types are
+           * pulled at start by `consumeTypes` below. Dynamic remote type hints
+           * serve remotes registered at runtime instead: the plugin injects a
+           * browser-side runtime plugin that opens a WebSocket to the dev
+           * server on 127.0.0.1:16322, and whenever the browser is not on the
+           * same machine as Vite - a remote preview, a tunnelled port - that
+           * socket cannot connect and every page load logs
+           * `dynamic-remote-type-hints-plugin err: [object Event]`. Nothing is
+           * lost by turning it off; hot types reload stays on.
+           */
+          disableDynamicRemoteTypeHints: true,
+        },
         dts: {
           consumeTypes: {
             /*
@@ -163,9 +177,8 @@ const getConfig = ({
              * loads it same-origin through the Vite proxy, avoiding mixed
              * content and CORS. But type consumption runs in Node, where a
              * path with no origin cannot be fetched at all - which is why this
-             * step failed silently on every start, logging only
-             * `dynamic-remote-type-hints-plugin err: [object Event]`, and left
-             * `App/@mf-types` frozen at whatever it last contained.
+             * step failed silently on every start and left `App/@mf-types`
+             * frozen at whatever it last contained.
              *
              * The file names are the remote's, not the plugin defaults: its
              * own config sets `typesFolder: 'types'`, so it emits `types.zip`
