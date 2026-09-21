@@ -112,13 +112,13 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
           alignItems='center'
           gap='narrow'
         >
-          <Text className={`${CLASS_NAME}--wrapper`} is='span'>
+          <span className={`${CLASS_NAME}--wrapper`} is='span'>
             {before}
             <Text className={`${CLASS_NAME}--wrapper--content`} is='span'>
               {Content}
             </Text>
             {after}
-          </Text>
+          </span>
         </Layout>
       );
     }
