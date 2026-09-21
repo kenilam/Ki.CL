@@ -1,10 +1,9 @@
 name: CI
 
+# On push, for every branch. Pull requests opened by a workflow do not start
+# pull_request runs, so the check has to come from the commit itself.
 on:
-  pull_request:
-    branches: [develop]
   push:
-    branches: [develop]
 
 concurrency:
   group: ci-${{ github.ref }}
