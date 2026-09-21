@@ -54,6 +54,7 @@ const Banner: React.FunctionComponent = () => {
             className={classNames('kicl-background-color-confirm')}
             lookLikeButton
             to={toVersionPath({ version: VERSION })}
+            size='small'
           >
             See the experience
           </HyperLink>
