@@ -35,6 +35,7 @@ const More: React.FunctionComponent = () => (
       <HyperLink
         className='kicl-margin-block-start-narrow'
         lookLikeButton
+        size='small'
         to={`/${EXPERIMENTS}`}
       >
         {COPY.bookmark}

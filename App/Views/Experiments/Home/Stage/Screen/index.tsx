@@ -99,6 +99,7 @@ const Screen: React.FunctionComponent<Props> = ({
         <HyperLink
           className='kicl-margin-block-start-narrow'
           lookLikeButton
+          size='small'
           to={experiment.to}
         >
           {COPY.open}

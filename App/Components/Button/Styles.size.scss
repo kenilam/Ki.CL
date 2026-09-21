@@ -2,7 +2,7 @@
   --kicl--components--button--padding-block: var(--kicl-gutter-narrow);
   --kicl--components--button--padding-inline: var(--kicl-gutter);
 
-  &:has(> svg:only-child) {
+  &:has(> svg:only-child, .kicl--components--spinner:only-child) {
     --kicl--components--button--padding-inline: var(--kicl-gutter-narrow);
   }
 
@@ -10,7 +10,7 @@
     --kicl--components--button--padding-block: var(--kicl-gutter);
     --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
 
-    &:has(> svg:only-child) {
+    &:has(> svg:only-child, .kicl--components--spinner:only-child) {
       --kicl--components--button--padding-inline: var(--kicl-gutter);
     }
   }
@@ -24,7 +24,7 @@
         --kicl--components--button--padding-block: var(--kicl-gutter);
         --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
 
-        &:has(> svg:only-child) {
+        &:has(> svg:only-child, .kicl--components--spinner:only-child) {
           --kicl--components--button--padding-inline: var(--kicl-gutter);
         }
 
@@ -32,7 +32,7 @@
           --kicl--components--button--padding-block: var(--kicl-gutter-wide);
           --kicl--components--button--padding-inline: var(--kicl-gutter-wider);
 
-          &:has(> svg:only-child) {
+          &:has(> svg:only-child, .kicl--components--spinner:only-child) {
             --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
           }
         }
@@ -44,7 +44,7 @@
 
         font-size: 0.7em;
 
-        &:has(> svg:only-child) {
+        &:has(> svg:only-child, .kicl--components--spinner:only-child) {
           --kicl--components--button--padding-inline: var(--kicl-gutter-narrow);
         }
 
@@ -52,7 +52,7 @@
           --kicl--components--button--padding-block: var(--kicl-gutter);
           --kicl--components--button--padding-inline: var(--kicl-gutter-wide);
 
-          &:has(> svg:only-child) {
+          &:has(> svg:only-child, .kicl--components--spinner:only-child) {
             --kicl--components--button--padding-inline: var(--kicl-gutter);
           }
         }

@@ -40,7 +40,7 @@
     text-transform: uppercase;
   }
 
-  &:has(> svg:only-child) {
+  &:has(> svg:only-child, .kicl--components--spinner:only-child) {
     --kicl--components--button--border-radius: 50%;
 
     backdrop-filter: blur(var(--kicl-gutter));
