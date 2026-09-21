@@ -1,7 +1,13 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Routes
 import { Navigate, Outlet, useMatch, useParams } from '@/Router';
+
+// Components
+import { Layout } from '@/Components';
 
 // Catalog
 import { keyOf } from '@/Views/Experiments/MusicVisualiser/Catalog';
@@ -14,8 +20,12 @@ import Chrome from './Chrome';
 import Gate from './Gate';
 import Visualiser from './Visualiser';
 
+// Styles
+import './Styles.scss';
+
 // Constants
 import {
+  CLASS_NAME as VIEW,
   PARAMS,
   PLAY_ROUTE,
   toPath,
@@ -35,19 +45,21 @@ const Contents: React.FunctionComponent = () => {
   }
 
   return (
-    <>
-      <Visualiser
-        analyser={analyser}
-        playing={control.playing}
-        track={keyOf(track)}
-      />
-      {isPlay ? (
-        <Chrome control={control} next={next} track={track} />
-      ) : (
-        <Gate track={track} />
-      )}
-      <Outlet />
-    </>
+    <Layout autoFlow='row' gap='none'>
+      <div className={classNames(`${VIEW}__track`, 'kicl-position-relative')}>
+        <Visualiser
+          analyser={analyser}
+          playing={control.playing}
+          track={keyOf(track)}
+        />
+        {isPlay ? (
+          <Chrome control={control} next={next} track={track} />
+        ) : (
+          <Gate track={track} />
+        )}
+        <Outlet />
+      </div>
+    </Layout>
   );
 };
 
