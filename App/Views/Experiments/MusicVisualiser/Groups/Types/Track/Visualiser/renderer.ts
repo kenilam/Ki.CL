@@ -1,9 +1,6 @@
-import type {
-  Features,
-  SceneName,
-} from '@/Views/Experiments/MusicVisualiser/Spec';
+import type { Features, SceneName } from './Spec';
 
-import { SPECTRUM_BANDS } from '@/Views/Experiments/MusicVisualiser/Audio/features';
+import { SPECTRUM_BANDS } from './features';
 
 import { FRAGMENT, MAX_INKS, MAX_RINGS, SCENE_INDEX, VERTEX } from './shader';
 

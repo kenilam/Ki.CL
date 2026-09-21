@@ -1,13 +1,11 @@
-import type {
-  SceneName,
-  Smoothed,
-  Vibe,
-} from '@/Views/Experiments/MusicVisualiser/Spec';
+import type { SceneName, Smoothed } from './Spec';
 
-import { MAX_RINGS } from '@/Views/Experiments/MusicVisualiser/Scenes/shader';
+import { MAX_RINGS } from './shader';
 
 /*
- * Decides which scene is on and when to move to the next one.
+ * Decides which scene is on and when to move to the next one. The draw is
+ * its own business: any scene may follow any other, except the few shown
+ * last, so the track has no say in the picture.
  *
  * A scene changes for one of three reasons: a new track started, the music
  * moved into a different section, or it has simply been on long enough.
@@ -63,47 +61,18 @@ export type DirectorState = {
 };
 
 export type Director = {
+  /** A new track: cut to a scene drawn at random. */
+  cut(): void;
   readonly state: DirectorState;
-  /** Note a new track, and cut to a scene it suits. */
-  setVibe(vibe: Vibe): void;
   /** Advance by `dt` seconds with the current features. */
   update(dt: number, now: number, features: Smoothed): void;
 };
 
-/**
- * A weighted draw over the vibe's scenes, never landing on one seen
- * lately. When the vibe leaves too few to avoid them all, only the one on
- * now is avoided.
- */
-function choose(vibe: Vibe, recent: SceneName[]): SceneName {
-  const weigh = (avoid: SceneName[]) =>
-    SCENES.map((scene) => ({
-      scene,
-      weight: avoid.includes(scene) ? 0 : (vibe.scenes[scene] ?? 0),
-    })).filter((entry) => entry.weight > 0);
-  const current = recent.slice(-1);
-  let entries = weigh(recent);
+/** Any scene not seen lately, at random. */
+function choose(recent: SceneName[]): SceneName {
+  const fresh = SCENES.filter((scene) => !recent.includes(scene));
 
-  if (entries.length === 0) {
-    entries = weigh(current);
-  }
-
-  if (entries.length === 0) {
-    return SCENES.find((scene) => !current.includes(scene)) ?? 'pools';
-  }
-
-  const total = entries.reduce((sum, entry) => sum + entry.weight, 0);
-  let roll = Math.random() * total;
-
-  for (const entry of entries) {
-    roll -= entry.weight;
-
-    if (roll <= 0) {
-      return entry.scene;
-    }
-  }
-
-  return entries[entries.length - 1].scene;
+  return fresh[Math.floor(Math.random() * fresh.length)];
 }
 
 export function createDirector(): Director {
@@ -115,7 +84,7 @@ export function createDirector(): Director {
     sceneB: 'pools',
   };
 
-  let vibe: Vibe | null = null;
+  let started = false;
   let fading = false;
   let dwell = 0;
   let waitingForOnset = 0;
@@ -143,11 +112,11 @@ export function createDirector(): Director {
   };
 
   return {
-    state,
-    setVibe(next) {
-      vibe = next;
-      begin(choose(next, recent));
+    cut() {
+      started = true;
+      begin(choose(recent));
     },
+    state,
     update(dt, now, features) {
       dwell += dt;
 
@@ -175,7 +144,7 @@ export function createDirector(): Director {
         return;
       }
 
-      if (!vibe) {
+      if (!started) {
         return;
       }
 
@@ -203,7 +172,7 @@ export function createDirector(): Director {
         const onBeat = features.fast.onset > 0.2;
 
         if (onBeat || waitingForOnset >= ONSET_PATIENCE_SECONDS) {
-          begin(choose(vibe, recent));
+          begin(choose(recent));
         }
       }
     },

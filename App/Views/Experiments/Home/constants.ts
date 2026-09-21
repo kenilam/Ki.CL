@@ -24,7 +24,7 @@ const EXPERIMENTS: readonly Experiment[] = [
   },
   {
     description:
-      'Slow music, drawn as it plays. Chill, lo-fi and piano picked at random, with visuals that react to the sound.',
+      '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of twelve scenes.',
     plate: 'music-visualiser',
     title: 'Music Visualiser',
     to: toMusicVisualiserPath(),

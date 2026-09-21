@@ -3,25 +3,18 @@ import React from 'react';
 // Routes
 import { Navigate, Outlet, useParams } from '@/Router';
 
-// Resolve
-import resolve, { type Params } from './resolve';
+// Catalog
+import { GROUP, TYPES } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Constants
-import { toPath } from '@/Views/Experiments/MusicVisualiser/constants';
+import { PARAMS, toPath } from '@/Views/Experiments/MusicVisualiser/constants';
 
-/**
- * `/:group/:type` - a family within a station. An unknown type goes to the
- * group's first; a known one renders whatever is beneath it.
- */
+/** `/:type` - an unknown category goes back to the station. */
 const Contents: React.FunctionComponent = () => {
-  const { group, provider, type } = resolve(useParams<Params>());
+  const { [PARAMS.type]: type } = useParams();
 
-  if (!provider) {
-    return <Navigate to={toPath()} replace />;
-  }
-
-  if (!type) {
-    return <Navigate to={toPath({ group })} replace />;
+  if (!type || !TYPES.includes(type)) {
+    return <Navigate to={toPath({ group: GROUP })} replace />;
   }
 
   return <Outlet />;

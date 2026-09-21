@@ -24,13 +24,10 @@ const Lazy: React.FunctionComponent = () => {
 };
 
 /**
- * `/experiments/music-visualiser`, then `/:group/:type/:trackId/play`
- * beneath it, each level in its own folder. The shell - stage and radio -
- * is this route's element and renders an outlet, so the URL can descend
- * and change beneath it without the player ever remounting. The index is
- * Home, whose play control goes to the first group; the group's and the
- * type's index redirect to their first child; a track's index is its own
- * Home, linking to its play route, which plays.
+ * `/experiments/music-visualiser`, then `/:group/:type/:track/play` beneath
+ * it, each level in its own folder. The index is Home; a group's and a
+ * type's index redirect down to a track; the track owns the music and the
+ * picture, and `/play` beneath it is what makes them sound.
  */
 export { PATH };
 export default (

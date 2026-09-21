@@ -3,24 +3,18 @@ import React from 'react';
 // Routes
 import { Navigate, Outlet, useParams } from '@/Router';
 
-// Providers
-import radio from '@/Views/Experiments/MusicVisualiser/Providers';
+// Catalog
+import { GROUP } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Constants
 import { PARAMS, toPath } from '@/Views/Experiments/MusicVisualiser/constants';
 
-type Params = { [PARAMS.group]?: string };
-
-/**
- * `/:group` - a station. An unknown group goes to the first one; a known
- * one renders whatever is beneath it.
- */
+/** `/:group` - there is one station; any other group goes back to the view. */
 const Contents: React.FunctionComponent = () => {
-  const params = useParams<Params>();
-  const group = params[PARAMS.group];
+  const { [PARAMS.group]: group } = useParams();
 
-  if (!group || !radio.group(group)) {
-    return <Navigate to={toPath({ group: radio.groups[0].group })} replace />;
+  if (group !== GROUP) {
+    return <Navigate to={toPath()} replace />;
   }
 
   return <Outlet />;

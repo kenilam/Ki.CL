@@ -1,148 +1,85 @@
 # Music Visualiser
 
-A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at
-random one after another; the whole viewport is a generative picture that
-answers the sound and reshapes itself as a track moves through its sections.
+A radio for slow music, drawn as it plays. 166 public-domain lo-fi tracks,
+chosen at random one after another; the whole viewport is a generative
+picture that answers the sound and reshapes itself as a track moves through
+its sections.
 
-Route: `/experiments/music-visualiser/:group/:type/:trackId/play`, wired
-in `App/Views/Experiments/index.tsx`. A group is a station (a provider), a
-type one of its families, a track one piece. Each level is its own route in
-its own folder, like TreeOfLife's versions:
+Route: `/experiments/music-visualiser/:group/:type/:track/play`, wired in
+`App/Views/Experiments/index.tsx`. There is one group, `open-lofi`; a type
+is one of its ten categories; a track is one file.
 
-- the view's index shows the title and a play control, a link to a track
-  drawn at random: a station at random, then one of its tracks;
-- a group's index redirects to its first type, and a type's index to the
-  track the station would play next, so any prefix lands on a track;
-- a track's index shows the title, `station · type`, and a play control
-  that links to the track's `/play` route;
-- `/play` is what sounds, and the route is the only thing that says so.
-  Arriving there starts the track, or resumes it if it is the one held;
-  leaving holds it, silent. Pausing is leaving for the gate.
+- the view's index links to a track drawn at random;
+- a group's index goes to its first type, and a type's index to one of its
+  tracks, drawn at random;
+- a track's route is its gate: title, category, and a link to its `/play`;
+- `/play` renders nothing of its own. The track reads it with `useMatch`
+  and sounds while it matches.
 
-The URL is the source of truth for what is playing, as it is for the focused
-node in TreeOfLife. Skipping, and a track ending, navigate to the next
-track's `/play`, and the engine crossfades the two over three seconds, so
-the address bar is always a link to the piece and back
-or forward through the history move between tracks. A `/play` link opened
-cold, with no gesture yet, is sent back to the track's gate, whose play
-link is the gesture. A track id the station cannot resolve goes back to
-its type, which picks another. The built-in station's ids
-(`self-composed/piano/1234`) name the seed, so a link plays the same piece
-every time. A copy-link control sits beside skip.
+The URL is the source of truth for what is playing. Pause is a link to the
+gate, skip a link to the next track's `/play`, and the end of a track goes
+to the same place, so back and forward move between tracks and the address
+bar is always a link to the piece. A `/play` link opened cold, before any
+interaction, goes back to the gate, whose play link is the gesture the
+browser needs.
 
 ## What is built
 
 ```
 MusicVisualiser/
-  Spec.ts            the shared vocabulary: Track, Source, Vibe, Features, Provider
-  constants.ts       route segments and params, toPath, class root, storage key
-  index.tsx          the route; its index is Home
-  Home/              the view's index: title, lede, a link to the first group
-  Context.ts         the radio and the resolved track, shared down the routes
+  index.tsx            the view's route; index is Home
+  Contents.tsx         the view's root, sized to the viewport; an outlet
+  constants.ts         route params and patterns, paths, class root
+  Styles.scss          the root's size and inset
+  Catalog/
+    index.ts           the station: find a track, draw one at random
+    catalog.ts         the collection's catalog.json as data; regenerate with it
+    upload.sh          puts the release in the bucket at music/open-lofi/
+  Home/                title, lede, a link to a random track
   Groups/
-    index.tsx        /:group - a station; index redirects to its first type
-    Contents.tsx     checks the group, renders the outlet
+    index.tsx          /:group; index goes to the first type
+    Contents.tsx       any group but open-lofi goes back to the view
     Types/
-      index.tsx      /:type - a family; index redirects to a track of it
-      Contents.tsx   checks the type, renders the outlet
-      resolve.ts     group, provider and type from the params
-      Tracks/
-        index.tsx    /:trackId - a piece; index is its Home, then Play
-        Contents.tsx resolves the piece, hands it down through context
-        Home/        the track's index: title, station · type, a link to play
-        Play/
-          index.tsx  /play - the route
-          Contents.tsx starts the piece; the now-playing card and controls,
-                     which fade when idle
-  Contents.tsx       the shell: the canvas (palette off CSS, the frame loop)
-                     over one useRadio(), plus the outlet
-  useRadio.ts        playback state: engine, start/stop, pause, skip, volume
-  Styles.scss        palette per theme as custom properties, layout, chrome
-  Audio/
-    engine.ts        one AudioContext: source → input → analyser → master
-    features.ts      energy, three bands, centroid, flux, onsets; smoothed at
-                     0.08 s, 2 s and 15 s; plus a 128-band spectrum texture
-    compose.ts       the composer: tonal harmony, scribbletune rhythms, seeded
-    instruments.ts   the sampled piano (smplr), loaded once per engine
-    synth.ts         the renderer: voices, bus, reverb, scheduling
-    random.ts        the seeded generator
-  Providers/
-    index.ts         the stations in order; asks each in turn
-    OpenLofi/        "Open Lo-Fi": the CC0 catalogue, streamed from the bucket
-      index.ts       the provider: categories as types, a vibe per category
-      catalog.ts     the collection's catalog.json as data; regenerate with it
-      upload.sh      puts the release in the bucket at music/open-lofi/
-    builtIn.ts       "Self composed Radio": recipes for the synth, with names and vibes
-  Scenes/
-    shader.ts        twelve scenes in one fragment shader, blended by u_mix
-    renderer.ts      program, quad, uniforms
-  Director/
-    index.ts         which scene, and when to move to the next
+      index.tsx        /:type; index goes to a random track of it
+      Contents.tsx     an unknown type goes back to the group
+      Track/
+        index.tsx      /:track, with Play beneath
+        Contents.tsx   the picture, and the gate or the player over it
+        useAudio.ts    the audio, driven by the URL; returns the controls
+        Play/          /play: an outlet, matched by the track
+        Gate/          title, category, attribution, play link
+        Chrome/        the player: now playing, controls, idle fade
+        Visualiser/    the canvas and everything that draws it
+          useStage.ts  the frame loop; the per-track seed and warmth
+          director.ts  which scene, and when to move to the next
+          features.ts  energy, bands, centroid, flux, onsets, smoothed
+          shader.ts    twelve scenes in one fragment shader
+          renderer.ts  program, quad, uniforms
+          palette.ts   inks and paper read off the canvas's custom properties
 ```
 
 ### How the pieces fit
 
-- **Provider seam.** `Providers/Spec` is `next(played) → Track`. A track's
-  `source` is either `{ kind: 'stream', url }`, which the engine plays through
-  a media element, or `{ kind: 'synth', seed, style }`, which it synthesises.
-  The rest of the view cannot tell them apart. A provider's types are its
-  own: categories for a catalogue, families for the synth. An Audius
-  provider through the backend (see below) would go in front of both once
-  that module exists.
-- **Open Lo-Fi.** The first station: 166 lo-fi tracks in ten categories,
-  released to the public domain (CC0) by Bilal Tahir at
-  <https://github.com/btahir/open-lofi>, generated with Suno. Each category
-  is a type in the URL (`open-lofi/late-night/last-train-home`), with its
-  own vibe for the picture. The files are streamed from the static bucket
-  through the same-origin `/assets/static/music/open-lofi/` route, so the
-  analyser may read them; `KICL_MUSIC_OPEN_LOFI_URL` points elsewhere for
-  a try-out. `upload.sh` puts the release in the bucket. The catalogue is
-  compiled in as `catalog.ts` from the collection's `catalog.json`.
-- **Built-in station.** Exists so the visualiser works with no network and so
-  the visuals can be checked against a known signal. Two styles now that
-  lo-fi comes from the catalogue: `piano` (keys over held chords, pentatonic
-  melody, bass, the lightest pulse) and `ambient` (detuned pads, a drone and
-  sparse keys, long reverb); the `lofi` recipe stays in the composer.
-  Deterministic per seed. Every piece is layered: comping on the keys, the
-  melody on its own lead (an electric-piano tone off the piano station, the
-  piano itself on it), a quiet pad every other bar, bass, and kick, rim and
-  hat drawn as separate parts. The drums go round the station's tone
-  low-pass, which used to swallow the hats. Each piece draws a kit (kick
-  pitch and decay, hat colour, bass bite, tone, reverb) and a tempo within
-  seven percent of the style's; phrases end in fills, one phrase opens as a
-  breakdown with the drums out, and the second section may lift the melody
-  an octave and open the tone.
-- **Composer.** `compose.ts` is pure: seed and style in, a piece out, and the
-  piece hands back any bar's events on request. Harmony comes from
-  [tonal](https://github.com/tonaljs/tonal): the key's seventh chords, a
-  progression chosen by degree, and voicings that lead from chord to chord
-  with the least movement. Rhythm comes from
-  [scribbletune](https://scribbletune.com) pattern strings, where `x` is a
-  hit, `-` a rest, `_` a tie and `[xx]` a subdivision, so a bar of comping is
-  a short readable string. Only scribbletune's `clip` is used, as a pattern
-  reader; its Tone.js playback is not. Half the pieces are minor. Form is
-  sixteen bars, eight on one progression and eight on another, busier, which
-  is what gives the director sections to notice.
-- **Sampled piano.** `instruments.ts` loads the Splendid Grand Piano, a
-  Steinway sampled by Akai and released as public domain, through
-  [smplr](https://github.com/danigb/smplr): about a hundred Opus samples for
-  the keys and layers the station uses, cached in the browser's Cache API.
-  Until it has loaded, and wherever it cannot, the synthesised keys carry
-  the station. The reverb on both is smplr's packaged Dattorro plate, an
-  audio worklet, with the old noise tail as the fallback.
-- **Hosting the samples.** They are fetched from
-  `KICL_MUSIC_SAMPLES_URL`, a template with `{repo}` standing for the
-  upstream repository name, defaulting to `/assets/static/music/{repo}`, the
-  static bucket through the same-origin route. To host them, mirror
-  `https://github.com/smpldsnds/sfzinstruments-splendid-grand-piano` into the
-  `ki-cl-static` bucket as `music/sfzinstruments-splendid-grand-piano/`, so
-  the files sit at `music/sfzinstruments-splendid-grand-piano/samples/*.ogg`
-  beside `samples/files.json`. A developer can point the variable at
-  `https://raw.githubusercontent.com/smpldsnds/{repo}/main` to try the set
-  before uploading it; that is how it was verified here.
-- **Vibe.** Decided before a note plays: family, energy, warmth and scene
-  weights. The built-in station sets it per style. For catalogue tracks it
-  will come from metadata and, later, the backend's text-model chain.
+- **useAudio.** Two effects follow the URL. `:track` makes an `<audio>`
+  element for the file at `/assets/static/music/open-lofi/<id>.mp3`, so it
+  starts loading on the gate. `/play` builds the graph on first use
+  (element, then a gain per track, the analyser, the master volume), lets
+  the context run, and plays; leaving `/play` pauses. The controls it
+  returns - `play`, `stop`, `skip`, `loading`, `playing`, `value` for the
+  volume - only navigate or read state. The next track is drawn when this
+  one is named, so skip can be a plain link.
+- **Crossfade.** On a skip the old track plays on at full volume while the
+  new one buffers. When the new one fires `playing`, the two cross over
+  three seconds and the old one is dropped.
+- **Open Lo-Fi.** 166 lo-fi tracks in ten categories, released to the
+  public domain (CC0) by Bilal Tahir at <https://github.com/btahir/open-lofi>,
+  generated with Suno. The files are streamed from the static bucket through
+  the same-origin `/assets/static/music/open-lofi/` route, so the analyser
+  may read them. `upload.sh` puts the release in the bucket; `catalog.ts`
+  is compiled in from the collection's `catalog.json`.
+- **Visualiser.** Knows nothing about the track but when it changes. It
+  makes its own randomness: the director draws each scene from any not
+  shown lately, and each track gets a new camera seed and warmth.
 - **Features.** Per frame from the analyser, then smoothed three ways. Fast
   drives motion, medium sets the onset threshold, slow describes the section.
 - **Director.** Cuts to a new scene when a track starts, when the slow
@@ -151,8 +88,7 @@ MusicVisualiser/
   lasts about thirty on average, and it waits a couple of seconds for an
   onset so the cut lands on a note. Crossfade is six seconds, and the last
   four scenes shown are not drawn again.
-- **Scenes.** Twelve, all in one shader, each weighted per vibe in
-  `builtIn.ts`: `pools` (drifting ellipses of ink, bass swells them),
+- **Scenes.** Twelve, all in one shader: `pools` (drifting ellipses of ink, bass swells them),
   `clouds` (billowing masses on a slow wind, lit edges and shaded bellies),
   `rings` (each onset starts a ring from the centre), `bars` (the spectrum
   as mirrored columns), `halo` (the spectrum around a circle), `wave` (lines
@@ -167,70 +103,43 @@ MusicVisualiser/
   the far side showing through; it breathes with the bass and glows with
   the energy). Every scene but pools and rings sits under a slow camera - a
   spin, a sway, a breathing zoom and a drift, each scene taking as much of
-  each as it can bear - phased by a seed from the track, so no two tracks
+  each as it can bear - phased by a seed drawn per track, so no two tracks
   move alike. The spectrum reaches them as a 128-band texture, each band
   eased and shown against its own recent peak. Colour is inks over paper in Oklab with a light ordered
   dither, matching the home background. The palette comes from custom
-  properties in `Styles.scss`, per theme.
-- **Gates and controls.** The gates are the one gesture the browser needs
-  before audio may start; the play link on a track's gate is it. On
-  `/play`: title, artist, attribution, play/pause, skip, copy link, volume.
-  Space toggles, `n` or right arrow skips. The
-  chrome fades after four idle seconds and returns on any movement. Volume
+  properties in `Visualiser/Styles.scss`, per theme.
+- **Gate and controls.** The gate's play link is the one gesture the
+  browser needs before audio may start. On `/play`: title, category,
+  attribution, pause, skip, copy link, volume; the first three are links.
+  Space pauses, `n` or right arrow skips. The chrome fades after four idle
+  seconds once the track sounds, returns on any movement, and stays up
+  while a track loads; the controls stay hittable while faded. Volume
   persists through the local storage provider. Reduced motion holds the
   field still and draws a couple of frames a second.
 
-### Tuned against references
-
-Two thirty-second previews of tracks the listener likes were decoded and
-measured (PyAV, numpy; tempo by onset-envelope autocorrelation, key by
-Krumhansl-Schmuckler on a chroma from the STFT). The station was recorded
-through the same analysis and brought into the same envelope:
-
-| measure               | references       | station, before | station, after |
-| --------------------- | ---------------- | --------------- | -------------- |
-| RMS                   | 0.17 – 0.25      | 0.02 – 0.04     | 0.15           |
-| energy below 200 Hz   | 55 – 87 %        | 26 – 73 %       | 67 – 80 %      |
-| energy 200 Hz – 2 kHz | 12 – 45 %        | 26 – 74 %       | 20 – 33 %      |
-| spectral centroid     | 180 – 310 Hz     | 360 – 1760 Hz   | 185 – 510 Hz   |
-| tempo                 | 68, 89 BPM       | 68, 76          | 68, 83         |
-| onsets per second     | 2.4 – 3.5        | 0.2 – 1.9       | 0.2 – 2.4      |
-| dynamic range         | 11 – 18 dB       | 15 – 39 dB      | 7 – 24 dB      |
-| key                   | D minor, D major | always major    | half minor     |
-
-What that took: a bass voice under every station, a minor mode chosen per
-seed, a soft backbeat under piano and a rim under lo-fi, melody notes that
-ring past their slot, a glue compressor after the reverb, and station levels
-set so the compressor works rather than idles. The scripts live outside the
-repo; the method is in the session notes.
-
 ### Verified
 
-In a cloud session with Playwright and SwiftShader: the index gate links to
-the first group, which lands on a track's gate; its play link starts the
-piece on `/play` (a catalogue track streams, its clock advancing; a
-synthesised one sounds); skip and back move between `/play` routes; pause leaves
-for the gate and play there resumes; a cold `/play` link lands on the gate
-and plays on the press; an unknown id falls back to the type's pick. All twelve scenes compile and
-draw in both themes. The composer was audited over three hundred seeds
-(no throws, 71 kick patterns, 141 bass rhythms) and recordings of the
-station were measured against the references. Console is clean apart from
-the blocked Typekit host. Typecheck, oxlint, stylelint and Prettier pass.
+In Chrome against a local dev server, 20 September 2026: the index links to
+a random track's gate, whose play link starts it on `/play`; skip keeps the
+old track at full volume until the new one sounds, both play for about three
+seconds, and the old one is dropped; pause holds the track on its gate and
+play resumes the same element from where it stopped; a track's `ended` goes
+to the same `/play` the skip link shows; a refreshed `/play` plays. The
+static route answers range requests with a plain `200`, so a track cannot
+be seeked. Typecheck, oxlint, stylelint and Prettier pass.
 
 ## Next
 
 1. **Backend Music module** in `Ki.CL-back`: an Audius adapter, a
-   `MusicTracks` collection, a `MusicNext` query returning a track with its
-   vibe and a same-origin stream path, and an Express stream route with
+   `MusicTracks` collection, a `MusicNext` query returning a track and
+   a same-origin stream path, and an Express stream route with
    range support. The host proxies `/music` the way it proxies
    `/assets/taxon-visual`. Blocked until the network policy actually lets a
    session reach `*.audius.co`; see below.
-2. **Audius provider** in `Providers/`, in front of Open Lo-Fi, reading
-   `MusicNext` through the federated `api` client.
-3. **Vibe from the text chain** on the backend, stored on the track record,
-   with a rule-based fallback.
-4. **Storage cache** for audio and artwork, with expiry and re-verify.
-5. **Jamendo** behind the same adapter.
+2. **Audius tracks** beside `Catalog/`, reading `MusicNext` through the
+   federated `api` client.
+3. **Storage cache** for audio and artwork, with expiry and re-verify.
+4. **Jamendo** behind the same adapter.
 
 ## Where the music comes from
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -9,8 +9,8 @@ import { Fa } from '@/Icons';
 // Components
 import { Heading, HyperLink, Layout, Text } from '@/Components';
 
-// Providers
-import radio from '@/Views/Experiments/MusicVisualiser/Providers';
+// Catalog
+import { draw } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Styles
 import './Styles.scss';
@@ -18,47 +18,20 @@ import './Styles.scss';
 // Constants
 import {
   CLASS_NAME as VIEW,
-  toPath,
   toTrackPath,
 } from '@/Views/Experiments/MusicVisualiser/constants';
 
 const CLASS_NAME = `${VIEW}__home`;
 
 const COPY = {
-  lede: 'A radio for slow music, drawn as it plays. Chill, lo-fi and piano, chosen at random, one after another. Press play once and it keeps going.',
-  play: 'Play',
+  lede: '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of twelve scenes. Press play once and it keeps going.',
+  play: 'Play a random song',
   title: 'Music Visualiser',
 };
 
-/**
- * The view's index: the title, a line about it, and a play control that
- * links to a track drawn at random - a station at random, then one of its
- * tracks - so every visit starts somewhere else. Until the draw settles
- * the link goes to the first station, which redirects down to a track.
- */
+/** The view's index: the title, a line about it, and a link to a track drawn at random. */
 const Home: React.FunctionComponent = () => {
-  const [path, setPath] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const station =
-      radio.groups[Math.floor(Math.random() * radio.groups.length)];
-
-    void radio
-      .next([], station.group)
-      .then((track) => {
-        if (!cancelled) {
-          setPath(toTrackPath(track));
-        }
-      })
-      .catch(() => {
-        /* The link's fallback stands. */
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const [track] = useState(() => draw());
 
   return (
     <Layout
@@ -85,13 +58,12 @@ const Home: React.FunctionComponent = () => {
         </Text>
         <HyperLink
           after={<Fa.FaPlay aria-hidden />}
-          aria-label={COPY.play}
           lookLikeButton
           size='small'
-          to={path ?? toPath({ group: radio.groups[0].group })}
+          to={toTrackPath(track)}
           variant='ghost'
         >
-          Play a random song
+          {COPY.play}
         </HyperLink>
       </section>
     </Layout>
