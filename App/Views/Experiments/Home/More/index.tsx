@@ -25,11 +25,11 @@ const More: React.FunctionComponent = () => (
   <Layout
     alignContent='center'
     autoFlow='row'
-    gap='narrow'
+    gap='wider'
     justifyItems='start'
   >
     <footer className={CLASS_NAME}>
-      <Heading is='h2' dense className={classNames('kicl-font-size-largest')}>
+      <Heading is='h2' dense className={classNames('kicl-font-size-huge', 'kicl-line-height-narrower')}>
         {COPY.title}
       </Heading>
       <HyperLink

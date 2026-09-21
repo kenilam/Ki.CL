@@ -80,9 +80,9 @@ const Screen: React.FunctionComponent<Props> = ({
           {`No. ${number}`}
         </Text>
         <Heading
-          is={titleIs}
           dense
-          className={classNames('kicl-font-size-largest')}
+          className={classNames('kicl-font-size-huge', 'kicl-line-height-narrower')}
+          is={titleIs}
         >
           {experiment.title}
         </Heading>

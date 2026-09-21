@@ -1,27 +1,3 @@
-/*
- * One panel of the stage. Four scroll-driven animations on the root
- * scroll timeline. `at` is index × screen height, set here because a
- * custom property resolves where it is declared. The text block is
- * `block` tall and sits `pad` above the bottom of the screen.
- * - `push-in`: the block rides up from a full screen below at the scroll
- *   rate and stops in place, over [at - screen, at]. A full screen, not
- *   the block's estimated height, so no part of it shows early when the
- *   real text is taller than the estimate.
- * - `push-out`: the block holds until the next block's top reaches its
- *   bottom, then moves up at the scroll rate until it is off the top,
- *   over [at + screen - block, at + 2·screen - block - pad]. Fills
- *   forwards only, or its resting value would override `push-in`.
- * - `fade-out`: the block goes clear while the next block enters the
- *   viewport: from the moment the next block's top passes the bottom
- *   edge until it is 60% in, over [next in-start, next in-start + 0.6·below].
- *   Tied to the next block's arrival, not the push, so it holds whatever
- *   the real height of the text is.
- * - `arrive`: the background fades 0 → 1 over the last 60% of the
- *   approach to its panel.
- * - `drift`: the background slides 12% of its height during its stay.
- * The item is the grid: padded, text aligned to its end. The text has
- * z-index 1 so a fading background never covers it.
- */
 .kicl--views--experiments__home__screen {
   $home: '--kicl--views--experiments__home';
 
@@ -74,9 +50,8 @@
   block-size: var(--kicl--views--experiments__home--screen);
   box-sizing: border-box;
   overflow: clip;
-  padding-block-end: var(--kicl--views--experiments__home--pad);
-  padding-block-start: var(--kicl--views--experiments__home--top);
-  padding-inline: var(--kicl--views--experiments__home--margin);
+  padding-block: var(--kicl-gutter-extreme);
+  padding-inline: var(--kicl-gutter-widest);
 
   /* All panels in the same grid cell, stacked in DOM order. */
   @supports (animation-timeline: scroll()) {

@@ -17,9 +17,8 @@
   );
   block-size: var(--kicl--views--experiments__home--screen);
   box-sizing: border-box;
-  padding-block-end: var(--kicl--views--experiments__home--pad);
-  padding-block-start: var(--kicl--views--experiments__home--top);
-  padding-inline: var(--kicl--views--experiments__home--margin);
+  padding-block: var(--kicl-gutter-extreme);
+  padding-inline: var(--kicl-gutter-widest);
 
   @supports (animation-timeline: view()) {
     animation: kicl--views--experiments__home--rise linear both;

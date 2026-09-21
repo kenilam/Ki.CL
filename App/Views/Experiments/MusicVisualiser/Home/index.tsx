@@ -91,7 +91,7 @@ const Home: React.FunctionComponent = () => {
           to={path ?? toPath({ group: radio.groups[0].group })}
           variant='ghost'
         >
-          Play a random sound
+          Play a random song
         </HyperLink>
       </section>
     </Layout>
