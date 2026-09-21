@@ -53,7 +53,7 @@ MusicVisualiser/
           useStage.ts  the frame loop; the per-track seed and warmth
           director.ts  which scene, and when to move to the next
           features.ts  energy, bands, centroid, flux, onsets, smoothed
-          shader.ts    twelve scenes in one fragment shader
+          shader.ts    thirteen scenes in one fragment shader
           renderer.ts  program, quad, uniforms
           palette.ts   inks and paper read off the canvas's custom properties
 ```
@@ -88,7 +88,7 @@ MusicVisualiser/
   lasts about thirty on average, and it waits a couple of seconds for an
   onset so the cut lands on a note. Crossfade is six seconds, and the last
   four scenes shown are not drawn again.
-- **Scenes.** Twelve, all in one shader: `pools` (drifting ellipses of ink, bass swells them),
+- **Scenes.** Thirteen, all in one shader: `pools` (drifting ellipses of ink, bass swells them),
   `clouds` (billowing masses on a slow wind, lit edges and shaded bellies),
   `rings` (each onset starts a ring from the centre), `bars` (the spectrum
   as mirrored columns), `halo` (the spectrum around a circle), `wave` (lines
@@ -97,11 +97,14 @@ MusicVisualiser/
   (six mirrored wedges of warped noise), `stars` (three drifting layers of
   points, each listening to one band), `terrain` (ridges one behind another,
   raised by the spectrum), `hive` (a hexagonal tiling of nested hexagons,
-  the inks spiralling out in arms) and `orb` (a sphere in three
+  the inks spiralling out in arms), `orb` (a sphere in three
   dimensions, ray-marched, its surface crumpled by 3D noise and drawn as a
   mesh that rides the bumps, the camera orbiting it in perspective with
   the far side showing through; it breathes with the bass and glows with
-  the energy). Every scene but pools and rings sits under a slow camera - a
+  the energy) and `bloom` (a dark core with a bright rim, a translucent
+  petal of every ink pushed out by the spectrum, spokes as long as their
+  band, two wandering loops, dust in the core and fine-lined sheets at the
+  edges). Every scene but pools and rings sits under a slow camera - a
   spin, a sway, a breathing zoom and a drift, each scene taking as much of
   each as it can bear - phased by a seed drawn per track, so no two tracks
   move alike. The spectrum reaches them as a 128-band texture, each band

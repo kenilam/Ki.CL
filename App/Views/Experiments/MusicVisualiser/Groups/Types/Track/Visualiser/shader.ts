@@ -31,6 +31,7 @@ export const SCENE_INDEX: Record<SceneName, number> = {
   terrain: 9,
   hive: 10,
   orb: 11,
+  bloom: 12,
 };
 
 /** How many onsets the rings scene remembers. */
@@ -660,6 +661,80 @@ void orb(vec2 uv, float aspect, inout float w[MAX_INKS]) {
   }
 }
 
+/*
+ * Bloom: a dark core with a bright rim, and around it a petal of every ink,
+ * each a closed shape pushed out by the spectrum and a slow noise, the
+ * widest laid first so the narrower ones sit on top. Spokes run out from
+ * the rim as far as their band reaches, two thin loops wander round it off
+ * centre, dust drifts in the core, and fine-lined sheets curl in at the
+ * edges.
+ */
+void bloom(vec2 uv, float aspect, inout float w[MAX_INKS]) {
+  vec2 d = (uv - 0.5) * vec2(aspect, 1.0);
+  float r = length(d);
+  float angle = atan(d.y, d.x);
+  vec2 around = vec2(cos(angle), sin(angle));
+  float pos = abs(atan(d.x, -d.y)) / PI;
+  float level = pow(band(pos * 0.92 + 0.02), 1.2);
+  float t = u_time;
+  float core = 0.12 + u_slow_energy * 0.025 + ease(u_low) * 0.02;
+
+  for (int i = 0; i < MAX_INKS; i++) {
+    float fi = float(i);
+    float lobe = noise(around * 1.6 + vec2(t * 0.04 + fi * 3.7, fi * 1.9));
+    float reach = (0.26 - fi * 0.035)
+      * (0.35 + lobe * lobe * 1.3)
+      * (0.55 + level * 0.6 + ease(u_energy) * 0.35);
+    float edge = core + reach;
+    float fill = smoothstep(edge + 0.004, edge - 0.004, r) * step(core, r);
+    float along = clamp((r - core) / max(reach, 0.001), 0.0, 1.0);
+    w[i] += fill * (0.7 - along * 0.4);
+  }
+
+  /* Spokes keep the same width however far out they reach. */
+  const float SPOKES = 96.0;
+  float spokeAt = angle / TAU * SPOKES;
+  float gap = min(fract(spokeAt), 1.0 - fract(spokeAt)) * TAU * r / SPOKES;
+  float spokeEnd = core + 0.04 + level * 0.3 + ease(u_high) * 0.04;
+  float spoke = (1.0 - smoothstep(0.0, 0.0018, gap))
+    * smoothstep(core + 0.005, core + 0.02, r)
+    * (1.0 - smoothstep(spokeEnd - 0.03, spokeEnd, r));
+  w[3] += spoke * (0.85 - clamp((r - core) / max(spokeEnd - core, 0.001), 0.0, 1.0) * 0.45);
+
+  for (int k = 0; k < 2; k++) {
+    float fk = float(k);
+    vec2 centre = 0.05 * vec2(sin(t * 0.03 + fk * 2.0), cos(t * 0.025 + fk * 3.0));
+    vec2 q = d - centre;
+    float qa = atan(q.y, q.x);
+    float path = core * (1.9 + fk * 0.35)
+      + 0.18 * (noise(vec2(cos(qa), sin(qa)) * 1.3 + vec2(t * 0.05, fk * 5.0)) - 0.5)
+      + ease(u_mid) * 0.03;
+    float offPath = (length(q) - path) / 0.0025;
+    float line = exp(-offPath * offPath);
+    if (k == 0) w[0] += line * 0.9;
+    else w[4] += line * 0.9;
+  }
+
+  float offRim = (r - core) / 0.006;
+  w[0] += exp(-offRim * offRim) * 0.95;
+  w[3] += (1.0 - smoothstep(0.0, 0.05, core - r)) * step(r, core) * 0.45;
+
+  vec2 g = d * 70.0 + vec2(t * 0.3, -t * 0.2);
+  vec2 cell = floor(g);
+  float h = hash(cell);
+  vec2 f = fract(g) - vec2(hash(cell + 3.1), hash(cell + 5.7));
+  float speck = exp(-dot(f, f) * 400.0) * step(0.9, h) * (step(r, core) * 0.9 + 0.15);
+  int ink = int(mod(floor(h * 97.0), float(MAX_INKS)));
+  for (int k = 0; k < MAX_INKS; k++) {
+    if (k == ink) w[k] += speck;
+  }
+
+  float wobble = 0.06 * sin(angle * 2.0 + t * 0.07) + 0.05 * noise(around * 2.0 + t * 0.03);
+  float sheet = smoothstep(0.55, 0.8, r + wobble);
+  w[MAX_INKS - 1] += smoothstep(0.62, 0.95, r + wobble) * 0.55;
+  w[2] += thread((r + wobble) * 55.0) * sheet * 0.5;
+}
+
 /* Each scene under its own camera: spin in radians a second, sway in radians, zoom and drift as fractions. */
 void scene(int index, vec2 uv, float aspect, inout float w[MAX_INKS]) {
   for (int i = 0; i < MAX_INKS; i++) w[i] = 0.0;
@@ -674,6 +749,7 @@ void scene(int index, vec2 uv, float aspect, inout float w[MAX_INKS]) {
   if (index == 9) { terrain(camera(uv, aspect, 0.0, 0.04, 0.1, 0.03), aspect, w); return; }
   if (index == 10) { hive(camera(uv, aspect, 0.008, 0.2, 0.18, 0.08), aspect, w); return; }
   if (index == 11) { orb(camera(uv, aspect, 0.0, 0.0, 0.1, 0.05), aspect, w); return; }
+  if (index == 12) { bloom(camera(uv, aspect, 0.006, 0.1, 0.08, 0.03), aspect, w); return; }
   pools(uv, aspect, w);
 }
 

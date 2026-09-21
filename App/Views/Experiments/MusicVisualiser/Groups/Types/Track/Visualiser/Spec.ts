@@ -1,6 +1,7 @@
 /** Every scene the stage can draw; `shader.ts` says what each one is. */
 export type SceneName =
   | 'bars'
+  | 'bloom'
   | 'clouds'
   | 'halo'
   | 'hive'

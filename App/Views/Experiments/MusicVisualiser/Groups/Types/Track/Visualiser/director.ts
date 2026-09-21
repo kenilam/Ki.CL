@@ -46,6 +46,7 @@ const SCENES: SceneName[] = [
   'terrain',
   'hive',
   'orb',
+  'bloom',
 ];
 
 /** How many of the last scenes a draw avoids, so the same few do not cycle. */
