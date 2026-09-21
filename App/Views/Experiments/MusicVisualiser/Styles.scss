@@ -6,11 +6,9 @@
   }
 
   /*
-   * Sized to the viewport, not the parent: the Experiments shell centres its
-   * child in a grid track, and everything in here is absolutely positioned,
-   * so a percentage would resolve against a track that has shrunk to nothing.
+   * As wide as the viewport, not the parent: the Experiments shell centres
+   * its child in a grid track, which would otherwise shrink to the content.
+   * The track route locks the height; Home scrolls.
    */
-  block-size: 100dvb;
   inline-size: 100dvi;
-  overflow: hidden;
 }
