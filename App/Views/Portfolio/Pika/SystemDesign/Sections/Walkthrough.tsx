@@ -14,24 +14,20 @@ const Walkthrough: React.FunctionComponent = () => {
           <Heading is='h6'>Read this first</Heading>
         </header>
         <Text>
-          Most of this design falls out of one early decision:{' '}
-          <Text is='span' className='kicl-font-weight-bold'>
-            an App is data, not code.
-          </Text>{' '}
-          Every App is a versioned manifest - a document that declares what
-          inputs it takes, which creative primitives it calls and in what order,
-          and how to present the results. One orchestration engine runs all of
-          them. The platform team maintains a single execution path, and anyone
-          who can fill in a manifest can ship an App, whether or not they can
-          write software.
+          Most of the design follows from one decision: every App is a versioned
+          manifest - a document that declares what inputs it takes, which
+          creative primitives it calls and in what order, and how to present the
+          results. One orchestration engine runs all of them. The platform team
+          maintains a single execution path, and anyone who can fill in a
+          manifest can ship an App, whether or not they can write software.
         </Text>
         <Text>
-          Generation is async everywhere - that&apos;s the other early decision.
-          Video takes minutes and fails often, so the unit of work is a durable
-          job that checkpoints at every step. Retries, idempotency, and provider
+          The second decision is that generation is async everywhere. Video
+          takes minutes and fails often, so the unit of work is a durable job
+          that checkpoints at every step. Retries, idempotency, and provider
           fallbacks all live at the task level. When shot five of a five-shot
-          film dies, we retry one shot - not the pipeline, and nobody gets
-          billed twice for it.
+          film dies, we re-render that shot and nothing else, and nobody is
+          billed twice.
         </Text>
         <Text>
           It helps to walk one job through the system. A user fills in an
@@ -45,20 +41,19 @@ const Walkthrough: React.FunctionComponent = () => {
           renders from CDN URLs.
         </Text>
         <Text>
-          Part 2 asks how the design changes to support an agent, and the answer
-          turned out to be: less than I expected when I started sketching it.
-          The agent is just another client of the orchestration engine, and its
-          tools are the same primitives and Apps the buttons already call. A
-          turn is a durable workflow on the same <code>Temporal</code> machinery
-          - assemble context, pick tools, execute them as ordinary jobs,
-          observe, iterate - with a governor pricing every step before it runs.
-          What is actually new is the agent runtime itself (the loop, session
-          state, context management), a cost-governance layer (model routing,
+          Part 2 asks how the design changes to support an agent. Not much. The
+          agent is another client of the orchestration engine, and its tools are
+          the same primitives and Apps the buttons already call. A turn is a
+          durable workflow on the same <code>Temporal</code> machinery -
+          assemble context, pick tools, execute them as ordinary jobs, observe,
+          iterate - with a governor pricing every step before it runs. What is
+          actually new is the agent runtime itself (the loop, session state,
+          context management), a cost-governance layer (model routing,
           draft-before-final rendering, budgets), and an evaluation harness
-          (judged golden briefs, replay-based regression). Jobs, assets,
-          moderation - untouched. The credit ledger is unchanged too; the agent
-          adds a governor on top of it - estimates and confirmations before
-          spend - not a second billing system.
+          (judged golden briefs, replay-based regression). Jobs, assets and
+          moderation are untouched. So is the credit ledger: the agent adds a
+          governor over it that estimates and confirms before spend, rather than
+          a second billing system.
         </Text>
       </section>
     </Layout>

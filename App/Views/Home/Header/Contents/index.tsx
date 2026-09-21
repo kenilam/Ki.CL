@@ -22,17 +22,7 @@ const Contents: React.FunctionComponent = () => {
         property='slide-from-bottom'
         className='kicl-font-size-large'
       >
-        Glad you stopped by.
-      </AnimatedText>
-      <AnimatedText
-        delay={1600}
-        duration='slower'
-        easing='ease-sine-in'
-        property='slide-from-top'
-        lookLike='h3'
-        variant='secondary'
-      >
-        The journey's just beginning. Thanks for being here early.
+        Thanks for stopping by.
       </AnimatedText>
       <AnimatedText
         delay={2000}
@@ -41,7 +31,7 @@ const Contents: React.FunctionComponent = () => {
         property='slide-from-bottom'
         dense
       >
-        Please check back for an update soon.
+        More soon.
       </AnimatedText>
     </>
   );

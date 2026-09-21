@@ -100,17 +100,16 @@ const PartOne: React.FunctionComponent = () => {
           version they started on.
         </Text>
         <Text>
-          Primitives are the platform&apos;s vocabulary: thin, typed wrappers
-          around the backend creative APIs (<code>video.generate</code>,{' '}
-          <code>image.edit</code>,<code>vision.analyze</code>,{' '}
-          <code>media.ffmpeg</code>, <code>llm.complete</code>, and so on). Each
-          one declares its argument schema, cost model, latency class, timeout
-          profile, and which providers can serve it. When a new vendor model
-          appears, we register a provider, and every App with a{' '}
-          <code>model-select</code>
-          input picks it up without touching a single manifest - though new
-          providers earn default traffic through the same staged rollout as
-          Apps, watched against the primitive&apos;s error budget.
+          Primitives are thin, typed wrappers around the backend creative APIs (
+          <code>video.generate</code>, <code>image.edit</code>,
+          <code>vision.analyze</code>, <code>media.ffmpeg</code>,{' '}
+          <code>llm.complete</code>, and so on). Each one declares its argument
+          schema, cost model, latency class, timeout profile, and which
+          providers can serve it. When a new vendor model appears, we register a
+          provider, and every App with a <code>model-select</code> input picks
+          it up without touching a single manifest - though new providers earn
+          default traffic through the same staged rollout as Apps, watched
+          against the primitive&apos;s error budget.
         </Text>
 
         <Heading className='kicl-font-size-large' is='h4'>
@@ -186,44 +185,43 @@ const PartOne: React.FunctionComponent = () => {
           orchestrator.
         </Text>
         <Text>
-          The Orchestrator is the heart of the system. It expands the
-          manifest&apos;s DAG into task rows, schedules whatever is ready onto
-          per-primitive-class queues, records every state transition, and drives
-          retries and timeouts from durable state. I would build this on
-          <code>Temporal</code> rather than hand-rolling it. Checkpointed
-          workflow state, timers, retries - that is precisely the problem{' '}
-          <code>Temporal</code> exists to solve, and hand-rolled DAG engines
-          accumulate exactly the reliability bugs it prevents. The manifest
-          interpreter is a single generic workflow, which means launching a new
-          App deploys no orchestration code at all.
+          The Orchestrator expands the manifest&apos;s DAG into task rows,
+          schedules whatever is ready onto per-primitive-class queues, records
+          every state transition, and drives retries and timeouts from durable
+          state. I would build it on <code>Temporal</code> rather than
+          hand-rolling it. Checkpointed workflow state, timers and retries are
+          what <code>Temporal</code> is for, and hand-rolled DAG engines
+          accumulate the reliability bugs it prevents. The manifest interpreter
+          is a single generic workflow, which means launching a new App deploys
+          no orchestration code at all.
         </Text>
         <Text>
           Stateless workers pull typed tasks and reach providers through an
-          adapter layer that smooths over the annoying differences: auth,
-          request shape, webhook versus polling completion, error taxonomy,
-          per-provider rate limits. Every task transition emits an event, and a
-          realtime gateway fans job progress out to clients over{' '}
-          <code>SSE</code> - this is what lets the UI say three of five shots
-          rendered instead of showing a spinner for four minutes.
+          adapter layer that smooths over the differences: auth, request shape,
+          webhook versus polling completion, error taxonomy, per-provider rate
+          limits. Every task transition emits an event, and a realtime gateway
+          fans job progress out to clients over <code>SSE</code>, so the UI can
+          say three of five shots rendered instead of showing a spinner for four
+          minutes.
         </Text>
         <Text>
           Credits are held when a job starts and settled per task as work
-          completes - never per attempt, so failed retries are the
-          platform&apos;s cost, not the user&apos;s - and when a job fails
-          partway, the unconsumed hold flows back without special-case refund
-          logic. Moderation runs before generation and after. Observability is
-          task-labeled from day one - success rate, p95 latency, retry count,
-          and cost, each sliced by app, primitive, and provider.
+          completes, never per attempt, so failed retries cost the platform
+          rather than the user. When a job fails partway the unconsumed hold
+          flows back, with no special-case refund logic. Moderation runs before
+          generation and after. Every task attempt is labeled for observability:
+          success rate, p95 latency, retry count and cost, each sliced by app,
+          primitive and provider.
         </Text>
         <Text>
-          <code>Postgres</code> as a single box invites an obvious question, so
-          some rough numbers. At 100k jobs a day averaging six tasks each, task
-          and attempt rows land under a million a day - partitionable by month
-          and years from being the bottleneck. Assets dominate instead: video at
-          that volume is terabytes a day, which is exactly why bytes live in
-          content-addressed <code>S3</code> behind a CDN and never near the
-          database. The real ceiling is provider rate limits, which is what the
-          per-provider admission control is for.
+          Rough numbers for a single <code>Postgres</code> box: at 100k jobs a
+          day averaging six tasks each, task and attempt rows land under a
+          million a day, partitionable by month and years from being the
+          bottleneck. Assets are the larger problem: video at that volume is
+          terabytes a day, which is why bytes live in content-addressed{' '}
+          <code>S3</code> behind a CDN and never near the database. The real
+          ceiling is provider rate limits, which is what the per-provider
+          admission control is for.
         </Text>
         <Layout alignItems='center' justifyContent='stretch'>
           <Button
@@ -261,34 +259,32 @@ const PartOne: React.FunctionComponent = () => {
           I went back and forth on giving cheap image calls a synchronous
           endpoint and decided against it. Even fast models have p99s ugly
           enough to stall HTTP connections, and a second execution path is a
-          second set of failure modes to reason about forever. So everything
-          returns a job id and streams events, and the line between queued and
-          inline work is mechanical: primitives declare a latency class, and
-          only provider-class calls become checkpointed task rows. The UX
-          concession is perceived sync - the client keeps the composer open and
-          renders progress as it arrives.
+          second set of failure modes to maintain. So everything returns a job
+          id and streams events, and the line between queued and inline work is
+          mechanical: primitives declare a latency class, and only
+          provider-class calls become checkpointed task rows. In the UI it still
+          reads as synchronous: the composer stays open and renders progress as
+          it arrives.
         </Text>
         <Text>
           <Text is='span' className='kicl-font-weight-bold'>
             Declarative manifests versus Apps-as-code.
           </Text>{' '}
           The code-first version of this platform - every App its own service -
-          gives authors maximum power and the platform team maximum pain: N
-          deploy pipelines, N failure modes, no shared retry story, and an
-          engineer in the loop for every new App. Manifests invert all of that.
-          What you give up is expressiveness, so the plan is to hold the line on
-          declarative and keep one pressure valve: a <code>custom.step</code>{' '}
-          primitive that calls out to a team-owned sandboxed function. The 5%
-          edge case gets its escape hatch without contorting the format for
-          everyone else.
+          gives authors more power and the platform team N deploy pipelines, N
+          failure modes, no shared retry story, and an engineer in the loop for
+          every new App. Manifests avoid all of that. What you give up is
+          expressiveness, so the format stays declarative and keeps one escape
+          hatch: a <code>custom.step</code> primitive that calls out to a
+          team-owned sandboxed function.
         </Text>
         <Text>
           <Text is='span' className='kicl-font-weight-bold'>
             <code>Temporal</code> versus hand-rolling.
           </Text>{' '}
-          Hand-rolling a queue-plus-state-machine on Redis and{' '}
-          <code>Postgres</code> is a fun six weeks followed by a career of edge
-          cases - workers dying mid-callback, retry storms, clock skew on
+          Hand-rolling a queue and state machine on Redis and{' '}
+          <code>Postgres</code> takes about six weeks, then keeps producing edge
+          cases: workers dying mid-callback, retry storms, clock skew on
           timeouts. <code>Temporal</code> buys durable timers, exactly-once
           state transitions, and workflow visibility off the shelf. For a
           company whose product is long-running jobs, that trade is clearly
@@ -300,22 +296,21 @@ const PartOne: React.FunctionComponent = () => {
             Webhooks versus polling.
           </Text>{' '}
           Adapters prefer webhooks but keep a polling reconciler behind them,
-          because webhooks get lost in the real world. Every provider call
-          carries an idempotency key scoped to the logical task - stable across
-          retry attempts - so a redelivered webhook or a re-scheduled attempt
-          maps back to the same generation. And billing has its own guarantee:
-          the ledger settles each task at most once, so a duplicate generation
-          can never become a duplicate charge.
+          because webhooks get lost. Every provider call carries an idempotency
+          key scoped to the logical task - stable across retry attempts - so a
+          redelivered webhook or a re-scheduled attempt maps back to the same
+          generation. Billing has its own guarantee: the ledger settles each
+          task at most once, so a duplicate generation cannot become a duplicate
+          charge.
         </Text>
 
         <Heading className='kicl-font-size-large' is='h4'>
           Resiliency
         </Heading>
         <Text>
-          With video generation, failure is the steady state, not the exception.
-          Providers time out, hand back corrupt files, and rate-limit without
-          warning. So the design treats the individual task attempt, not the
-          job, as the unit of failure.
+          With video generation, failure is normal. Providers time out, hand
+          back corrupt files, and rate-limit without warning. So the unit of
+          failure is the task attempt rather than the job.
         </Text>
         <List is='ul'>
           <ListItem>
@@ -347,9 +342,9 @@ const PartOne: React.FunctionComponent = () => {
               </Text>{' '}
               Tasks that stop heartbeating are reaped and rescheduled; tasks
               that exhaust retries land in a dead-letter queue with full
-              context, and jobs fail partially where the manifest allows - four
-              of five shots plus a repair action, not an all-or-nothing error
-              screen.
+              context, and jobs fail partially where the manifest allows, so
+              four of five shots come back with a repair action instead of an
+              error screen.
             </Text>
           </ListItem>
           <ListItem>
@@ -369,8 +364,8 @@ const PartOne: React.FunctionComponent = () => {
                 Backpressure.
               </Text>{' '}
               Concurrency caps per user and per App, admission control keyed to
-              queue depth, and the credit hold at job start - a viral App
-              degrades to a queue position instead of toppling a provider.
+              queue depth, and the credit hold at job start, so a viral App
+              slows to a queue position instead of overwhelming a provider.
             </Text>
           </ListItem>
         </List>
@@ -379,22 +374,21 @@ const PartOne: React.FunctionComponent = () => {
           Growth ships an App without engineering
         </Heading>
         <Text>
-          The manifest architecture already is the no-code story - what Growth
-          actually needs is tooling and guardrails wrapped around it. App Studio
-          is an internal builder that edits manifests through forms: pick inputs
-          from the typed field library, compose steps from the primitive
-          catalog, preview the rendered App live, and test-run it in a sandbox
-          against capped credits. Under the hood it is just writing YAML, and a
-          template gallery covers the most common case of all - most new Apps
-          are 90% an existing one.
+          Manifests already make Apps no-code. What Growth needs is tooling and
+          guardrails around it. App Studio is an internal builder that edits
+          manifests through forms: pick inputs from the typed field library,
+          compose steps from the primitive catalog, preview the rendered App
+          live, and test-run it in a sandbox against capped credits. Under the
+          hood it writes YAML, and a template gallery covers the common case,
+          since most new Apps are 90% an existing one.
         </Text>
         <Text>
           Governance keeps self-serve safe: validation and a deliberately
           lightweight approval on publish, staged rollout with an automatic halt
           on error-rate or cost regression, one-click rollback via the version
           pointer, and per-App budgets to cap blast radius. Because Apps are
-          rows rather than deployments, the marginal cost of App #200 is a
-          review, not a sprint.
+          rows rather than deployments, App #200 costs a review instead of a
+          sprint.
         </Text>
       </section>
     </Layout>
