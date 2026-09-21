@@ -1,6 +1,6 @@
-import type { SceneName } from '@/Views/Experiments/MusicVisualiser/Spec';
+import type { SceneName } from './Spec';
 
-import { SPECTRUM_BANDS } from '@/Views/Experiments/MusicVisualiser/Audio/features';
+import { SPECTRUM_BANDS } from './features';
 
 /*
  * Every scene lives in one fragment shader, each as a function from screen

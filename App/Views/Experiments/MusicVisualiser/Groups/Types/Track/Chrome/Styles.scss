@@ -1,0 +1,41 @@
+.kicl--views--experiments--music-visualiser__chrome {
+  inline-size: 100%;
+  padding: var(--kicl--views--experiments--music-visualiser--inset);
+  padding-block-end: max(
+    var(--kicl--views--experiments--music-visualiser--inset),
+    env(safe-area-inset-bottom)
+  );
+
+  &__now-playing,
+  &__controls {
+    transition: opacity var(--kicl-transition-duration-slow)
+      var(--kicl-ease-sine-out);
+  }
+
+  &__now-playing {
+    max-inline-size: 28rem;
+  }
+
+  /*
+   * Idle: the controls go, the title and subtitle only step back. They
+   * stay hittable while faded - a press on one has to work the first
+   * time, not just wake the chrome up and ask for a second.
+   */
+  &--idle &__now-playing {
+    opacity: 0.5;
+  }
+
+  &--idle &__controls {
+    opacity: 0;
+  }
+
+  // A slider, not a text field: the component's box is for typed input.
+  &__volume {
+    --kicl--components--input--background-color: transparent;
+    --kicl--components--input--border-width: 0;
+
+    inline-size: var(--kicl-size-10x);
+    padding: 0;
+    accent-color: var(--kicl-body-color);
+  }
+}
