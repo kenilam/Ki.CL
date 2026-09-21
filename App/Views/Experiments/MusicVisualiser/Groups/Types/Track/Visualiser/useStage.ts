@@ -81,7 +81,13 @@ export default function useStage({
     const cell = readNumber(canvas, `${property}--cell`, 1) * ratio;
     const levels = readNumber(canvas, `${property}--levels`, 64);
     const reducedMotion = window.matchMedia(REDUCED_MOTION);
+    /*
+     * With nothing to listen to - the index, or a gate before any play - the
+     * director still runs on silence, so the scenes keep changing on their
+     * own clock instead of holding the first one.
+     */
     const silence = emptyFeatures();
+    const quiet = { fast: silence, medium: silence, slow: silence };
 
     renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));
 
@@ -100,16 +106,14 @@ export default function useStage({
         extractor.update(dt);
       }
 
-      const features = extractor?.smoothed;
+      const features = extractor?.smoothed ?? quiet;
       const still = reducedMotion.matches;
 
       if (!still) {
         seconds += dt;
       }
 
-      if (features) {
-        director.current.update(dt, seconds, features);
-      }
+      director.current.update(dt, seconds, features);
 
       if (still && now - lastDraw < REDUCED_MOTION_INTERVAL_MS) {
         return;
@@ -126,7 +130,7 @@ export default function useStage({
          * a pool that swelled with every bass note twitched. Onsets still
          * reach the rings through the director, which reads the fast set.
          */
-        features: features?.medium ?? silence,
+        features: features.medium,
         levels,
         mix: scenes.mix,
         palette,
@@ -136,7 +140,7 @@ export default function useStage({
         sceneB: scenes.sceneB,
         seconds,
         seed: look.current.seed,
-        slowEnergy: features?.slow.energy ?? 0,
+        slowEnergy: features.slow.energy,
         spectrum: extractor?.spectrum ?? null,
         warmth: look.current.warmth,
       });
