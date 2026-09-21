@@ -1,0 +1,44 @@
+name: Open pull request
+
+# On every push rather than on branch creation: a branch with nothing ahead of
+# develop cannot have a pull request yet, so the first commit opens it.
+on:
+  push:
+    branches-ignore:
+      - develop
+      - main
+      - 'renovate/**'
+      - 'dependabot/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          # A pull request that was closed without merging stays closed.
+          existing=$(gh pr list --head "$BRANCH" --base develop --state all \
+            --json state --jq '[.[] | select(.state != "MERGED")] | length')
+
+          if [ "$existing" -gt 0 ]; then
+            echo 'This branch already has a pull request.'
+            exit 0
+          fi
+
+          if [ "$(git rev-list --count origin/develop..HEAD)" -eq 0 ]; then
+            echo 'Nothing ahead of develop yet.'
+            exit 0
+          fi
+
+          gh pr create --base develop --head "$BRANCH" --fill-first

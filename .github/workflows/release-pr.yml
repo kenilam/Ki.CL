@@ -1,0 +1,55 @@
+name: Open release pull request
+
+# Cloud Build reports the develop deploy to Cloud Run as a check on the commit.
+# workflow_dispatch is here to run it by hand.
+on:
+  check_run:
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.check_run.app.slug == 'google-cloud-build' &&
+      github.event.check_run.conclusion == 'success' &&
+      startsWith(github.event.check_run.name, 'ki-cl-develop'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: develop
+          fetch-depth: 0
+
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          DEPLOYED: ${{ github.event.check_run.head_sha }}
+        run: |
+          # An older deploy finishing late says nothing about the current develop.
+          if [ -n "$DEPLOYED" ] && [ "$DEPLOYED" != "$(git rev-parse origin/develop)" ]; then
+            echo 'The deployed commit is no longer the head of develop.'
+            exit 0
+          fi
+
+          if [ "$(git rev-list --count origin/main..origin/develop)" -eq 0 ]; then
+            echo 'main already has everything on develop.'
+            exit 0
+          fi
+
+          if [ -n "$(gh pr list --head develop --base main --state open --json number --jq '.[].number')" ]; then
+            echo 'A release pull request is already open.'
+            exit 0
+          fi
+
+          {
+            echo 'Deployed to the develop service on Cloud Run.'
+            echo
+            git log --reverse --format='- %s' origin/main..origin/develop
+          } > body.md
+
+          gh pr create --base main --head develop --title 'Dev to Prod' --body-file body.md
