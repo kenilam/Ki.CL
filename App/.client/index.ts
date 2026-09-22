@@ -319,6 +319,9 @@ const getConfig = ({
         },
         preprocessorOptions: {
           scss: {
+            // include-media 2.0.0, the latest, still uses the deprecated
+            // Sass if() syntax. Warnings from our own files still show.
+            quietDeps: true,
             additionalData(source: string, filename: string) {
               const extname = nodePath.extname(filename);
 

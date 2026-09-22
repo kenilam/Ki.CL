@@ -16,7 +16,11 @@
 
 @mixin make-gutter-variable-class($property: null, $identifier: null) {
   @if $property {
-    $suffix: if($identifier, '-#{$identifier}', '');
+    $suffix: '';
+
+    @if $identifier {
+      $suffix: '-#{$identifier}';
+    }
 
     .kicl-#{$property}#{$suffix} {
       #{$property}: var(--kicl-gutter#{$suffix});

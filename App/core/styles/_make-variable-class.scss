@@ -18,7 +18,11 @@
   $size: null
 ) {
   @if $identifier and $property {
-    $suffix: if($size, '-#{$size}', '');
+    $suffix: '';
+
+    @if $size {
+      $suffix: '-#{$size}';
+    }
 
     .kicl-#{$property}-#{$identifier} {
       #{$property}: var(--kicl-size#{$suffix});
