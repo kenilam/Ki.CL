@@ -6,9 +6,6 @@ import { Route } from '@/router';
 // Components
 import { Spinner } from '@/components';
 
-// Context
-import { TreeOfLifeProvider } from './context';
-
 // Versions
 import { Versions } from './versions';
 
@@ -27,16 +24,8 @@ const Lazy: React.FunctionComponent = () => {
   );
 };
 
-const Provider: React.FunctionComponent = () => {
-  return (
-    <TreeOfLifeProvider>
-      <Lazy />
-    </TreeOfLifeProvider>
-  );
-};
-
 const TreeOfLife = (
-  <Route path={PATH} element={<Provider />}>
+  <Route path={PATH} element={<Lazy />}>
     <Route
       index
       lazy={async () => {
