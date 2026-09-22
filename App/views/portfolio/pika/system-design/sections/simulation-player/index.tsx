@@ -1,30 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
-import { Button, Card, CardContent, Layout, Spinner, Text } from '@/components';
+import { Button, Card, CardContent, Layout, Spinner } from '@/components';
 
 // Diagrams
-import { Diagram } from '../diagrams';
-import type { Spec } from '../diagrams/spec';
+import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
+import type { Spec } from '@/views/portfolio/pika/system-design/diagrams/spec';
 
-// Constants
-import { CLASS_NAME } from '../constants';
+// Context
+import { type DotState, type PlayerStep, SimulationContext } from './context';
+
+// Partials
+import { Log } from './log';
+import { Status } from './status';
 
 const STEP_MS = 900;
-
-export type DotState = 'done' | 'idle' | 'queued' | 'retry' | 'running';
-
-export type PlayerStep = {
-  active?: string[];
-  /** Replaces the free-form status chip (e.g. credits, budget). */
-  chip?: string;
-  dot?: [number, DotState];
-  failed?: string[];
-  log: string;
-};
 
 type Props = {
   chipLabel: string;
@@ -51,13 +41,10 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
 }) => {
   const [step, setStep] = useState(-1);
   const [playing, setPlaying] = useState(false);
-  const ref = {
-    diagram: useRef<HTMLElement>(null),
-    log: useRef<HTMLDivElement>(null),
-  };
+  const diagram = useRef<HTMLElement>(null);
 
   const run = useCallback(() => {
-    ref.diagram.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
+    diagram.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
     setStep(-1);
     setPlaying(true);
   }, []);
@@ -81,10 +68,6 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
     return () => window.clearInterval(timer);
   }, [playing, steps.length]);
 
-  useEffect(() => {
-    ref.log.current?.scrollTo({ top: ref.log.current.scrollHeight });
-  }, [step]);
-
   const seen = steps.slice(0, step + 1);
   const current = step >= 0 ? steps[step] : undefined;
 
@@ -104,7 +87,9 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   const finished = !playing && step >= steps.length - 1;
 
   return (
-    <>
+    <SimulationContext.Provider
+      value={{ chip, chipLabel, dotLabels, dots, idleHint, seen }}
+    >
       <Layout
         alignContent='center'
         alignItems='center'
@@ -121,7 +106,7 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
         </section>
       </Layout>
       <Diagram
-        ref={ref.diagram}
+        ref={diagram}
         spec={spec}
         state={{ active: current?.active, failed: current?.failed }}
       />
@@ -129,48 +114,15 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
         <CardContent>
           <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
             <div>
-              <div className={`${CLASS_NAME}__simulation-status`}>
-                {dotLabels.map((label, index) => (
-                  <span
-                    className={`${CLASS_NAME}__simulation-chip`}
-                    key={label}
-                  >
-                    <span
-                      className={classNames(
-                        `${CLASS_NAME}__simulation-dot`,
-                        `${CLASS_NAME}__simulation-dot--${dots[index]}`
-                      )}
-                    />
-                    {label}
-                  </span>
-                ))}
-                <span className={`${CLASS_NAME}__simulation-chip`}>
-                  {chipLabel} · {chip}
-                </span>
-              </div>
-              <div
-                className={`${CLASS_NAME}__simulation-log`}
-                ref={ref.log}
-                role='log'
-              >
-                {seen.length === 0 ? (
-                  <Text dense variant='secondary'>
-                    {idleHint}
-                  </Text>
-                ) : (
-                  seen.map((s, index) => (
-                    <div key={index}>
-                      {String(index + 1).padStart(2, '0')} · {s.log}
-                    </div>
-                  ))
-                )}
-              </div>
+              <Status />
+              <Log />
             </div>
           </Layout>
         </CardContent>
       </Card>
-    </>
+    </SimulationContext.Provider>
   );
 };
 
+export type { DotState, PlayerStep };
 export { SimulationPlayer };

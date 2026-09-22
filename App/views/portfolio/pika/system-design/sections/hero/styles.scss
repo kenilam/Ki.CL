@@ -1,0 +1,28 @@
+.kicl--views--portfolio--pika--system-design__hero {
+  animation: kicl--views--portfolio--pika--system-design--background
+    var(--kicl-transition-duration-5m) ease infinite;
+  background: var(--kicl--views--portfolio--pika--system-design--background);
+  background-size: 1200% 1200%;
+  inline-size: 100dvw;
+
+  header {
+    animation: kicl--views--portfolio--pika--system-design--parallax-hero linear
+      both;
+    animation-timeline: scroll();
+    animation-range: 0% 20%;
+    padding-inline: var(--kicl-gutter-extreme);
+    text-wrap: balance;
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--parallax-hero {
+  from {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  to {
+    opacity: 0;
+    translate: 0 var(--kicl-size-full);
+  }
+}

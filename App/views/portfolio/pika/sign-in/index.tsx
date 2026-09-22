@@ -15,25 +15,20 @@ import {
   Button,
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
   Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
   Layout,
   Spinner,
-  Text,
 } from '@/components';
+
+// Partials
+import { Email } from './email';
+import { RootError } from './error';
+import { Header } from './header';
+import { Password } from './password';
 
 // Schema
 import { SignInSchema, type SignInValues } from './schema';
-import classNames from 'classnames';
 
 type Props = {
   onSignedIn: () => void;
@@ -87,13 +82,7 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
       >
         <section>
           <Card className='kicl-inline-size-xl' is='section'>
-            <CardHeader>
-              <CardTitle>Private portfolio</CardTitle>
-              <CardDescription>
-                This piece is shared with a small audience. Sign in with the
-                credentials you were given.
-              </CardDescription>
-            </CardHeader>
+            <Header />
             <Layout
               alignContent='start'
               alignItems='start'
@@ -105,53 +94,9 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
                 <CardContent>
                   <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
                     <div>
-                      <FormField
-                        control={form.control}
-                        name='Email'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                autoComplete='username'
-                                placeholder='you@example.com'
-                                type='email'
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name='Password'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                autoComplete='current-password'
-                                type='password'
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      {form.formState.errors.root?.message ? (
-                        <Text
-                          className={classNames(
-                            'kicl-font-size-smaller',
-                            'kicl-color-error'
-                          )}
-                          is='p'
-                          role='alert'
-                        >
-                          {form.formState.errors.root.message}
-                        </Text>
-                      ) : null}
+                      <Email />
+                      <Password />
+                      <RootError />
                     </div>
                   </Layout>
                 </CardContent>

@@ -13,6 +13,7 @@ import { Simulation } from './sections/simulation';
 import { AgentSimulation } from './sections/agent-simulation';
 import { AnchorNav } from './sections/anchor-nav';
 import { BuildPlan } from './sections/build-plan';
+import { ScrollIndicator } from './scroll-indicator';
 
 // Constants
 import { CLASS_NAME } from './constants';
@@ -24,9 +25,7 @@ const SystemDesign: React.FunctionComponent = () => {
   return (
     <Animation delay={300}>
       <article className={`${CLASS_NAME} kicl-inline-size-full`}>
-        <div
-          className={`${CLASS_NAME}__scroll-indicator kicl-position-fixed`}
-        />
+        <ScrollIndicator />
         <Hero />
         <AnchorNav />
         <Layout

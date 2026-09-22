@@ -1,0 +1,39 @@
+.kicl--views--portfolio--pika--system-design {
+  &__simulation-status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--kicl-gutter-narrow);
+  }
+
+  &__simulation-chip {
+    align-items: center;
+    display: inline-flex;
+    font-size: var(--kicl-font-size-small);
+    gap: 0.4em;
+  }
+
+  &__simulation-dot {
+    aspect-ratio: 1;
+    background-color: var(--kicl-color-grey-dark);
+    border-radius: 50%;
+    display: inline-block;
+    inline-size: 0.6em;
+    transition: background-color 200ms ease;
+
+    &--queued {
+      background-color: var(--kicl-color-grey-light);
+    }
+
+    &--running {
+      background-color: var(--kicl-color-yellow);
+    }
+
+    &--retry {
+      background-color: var(--kicl-color-orange);
+    }
+
+    &--done {
+      background-color: var(--kicl-color-green);
+    }
+  }
+}

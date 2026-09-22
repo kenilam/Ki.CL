@@ -3,11 +3,17 @@ import React, { useCallback, useEffect, useState } from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Icons
-import { Ri } from '@/icons';
-
 // Components
-import { Badge, Button, Layout, Navigation } from '@/components';
+import { Layout, Navigation } from '@/components';
+
+// Styles
+import './styles.scss';
+
+// Context
+import { AnchorNavContext } from './context';
+
+// Partials
+import { Item } from './item';
 
 // Constants
 import { CLASS_NAME as DEFAULT_CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
@@ -78,57 +84,26 @@ const AnchorNav: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <Navigation
-      className={classNames(
-        CLASS_NAME,
-        'kicl-position-fixed',
-        'kicl-inset-block-end-0',
-        'kicl-inset-block-start-0',
-        'kicl-inset-inline-end-wide'
-      )}
-    >
-      <Layout gap='narrow' alignContent='center' justifyItems='end'>
-        <ul>
-          {SECTIONS.map(({ id, label }) => (
-            <Layout
-              alignContent='center'
-              alignItems='center'
-              autoFlow='column'
-              gap='narrow'
-              justifyContent='start'
-              key={id}
-            >
-              <li>
-                <Badge
-                  className={classNames('kicl-font-size-small')}
-                  size='small'
-                >
-                  {label}
-                </Badge>
-                <Button
-                  aria-current={active === id ? 'true' : undefined}
-                  aria-label={label}
-                  className={classNames(
-                    'kicl-font-size-smaller',
-                    'kicl-position-relative'
-                  )}
-                  onClick={() => go(id)}
-                  type='button'
-                  unstyled
-                >
-                  {active === id ? (
-                    <Ri.RiCheckboxBlankCircleFill aria-hidden />
-                  ) : (
-                    <Ri.RiCheckboxBlankCircleLine aria-hidden />
-                  )}
-                </Button>
-              </li>
-            </Layout>
-          ))}
-        </ul>
-      </Layout>
-    </Navigation>
+    <AnchorNavContext.Provider value={{ active, go }}>
+      <Navigation
+        className={classNames(
+          CLASS_NAME,
+          'kicl-position-fixed',
+          'kicl-inset-block-end-0',
+          'kicl-inset-block-start-0',
+          'kicl-inset-inline-end-wide'
+        )}
+      >
+        <Layout gap='narrow' alignContent='center' justifyItems='end'>
+          <ul>
+            {SECTIONS.map(({ id, label }) => (
+              <Item id={id} key={id} label={label} />
+            ))}
+          </ul>
+        </Layout>
+      </Navigation>
+    </AnchorNavContext.Provider>
   );
 };
 
-export { AnchorNav };
+export { AnchorNav, CLASS_NAME };

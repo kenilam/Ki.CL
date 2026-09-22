@@ -9,12 +9,17 @@ import { Ri } from '@/icons';
 import { AnimatedText, Animation, Heading, Layout } from '@/components';
 import { Link } from '@/router';
 
+// Styles
+import './styles.scss';
+
 // Constants
-import { CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
+import { CLASS_NAME as SYSTEM_DESIGN } from '@/views/portfolio/pika/system-design/constants';
+
+const CLASS_NAME = `${SYSTEM_DESIGN}__hero`;
 
 const Hero: React.FunctionComponent = () => {
   return (
-    <section className={`${CLASS_NAME}__hero`}>
+    <section className={CLASS_NAME}>
       <Animation delay={300} property='zoom-out'>
         <Layout
           alignContent='center'
@@ -67,4 +72,4 @@ const Hero: React.FunctionComponent = () => {
   );
 };
 
-export { Hero };
+export { CLASS_NAME, Hero };

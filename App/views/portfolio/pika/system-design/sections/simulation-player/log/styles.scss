@@ -1,0 +1,10 @@
+.kicl--views--portfolio--pika--system-design {
+  &__simulation-log {
+    font-family: var(--kicl-font-family-mono);
+    font-size: var(--kicl-font-size-small);
+    letter-spacing: normal;
+    margin-block-start: var(--kicl-gutter-narrow);
+    max-block-size: 11rem;
+    overflow-y: auto;
+  }
+}

@@ -1,0 +1,24 @@
+.kicl--views--portfolio--pika--system-design {
+  /* Coding-agent prompt blocks - brand gradient as the leading edge. */
+  &__prompt {
+    background-color: var(--kicl-surface-color);
+    margin: 0;
+    padding-block: var(--kicl-gutter-narrow);
+    padding-inline: var(--kicl-gutter);
+
+    &::before {
+      animation: kicl--views--portfolio--pika--system-design--background 300s
+        ease infinite;
+      background: var(
+        --kicl--views--portfolio--pika--system-design--background
+      );
+      background-size: 1200% 1200%;
+      block-size: 100%;
+      content: '';
+      inline-size: var(--kicl-size-3px);
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      position: absolute;
+    }
+  }
+}

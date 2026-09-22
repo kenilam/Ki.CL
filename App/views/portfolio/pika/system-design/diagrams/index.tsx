@@ -1,18 +1,19 @@
 import React, { useId } from 'react';
 
+// Styles
+import './styles.scss';
+
 // Constants
-import { CLASS_NAME } from '../constants';
+import { BASE } from './constants';
 
 // Spec
-import type { Accent, Edge, Node, Spec } from './spec';
+import type { Accent, Edge, Spec } from './spec';
 
-const BASE = `${CLASS_NAME}__diagram`;
+// Partials
+import { NodeContents } from './node-contents';
+import { NodeShape } from './node-shape';
 
 const ACCENTS: Accent[] = ['blue', 'green', 'orange', 'red', 'yellow'];
-
-const CYLINDER_EDGE = 8;
-const ROW_SIZE = 24;
-const TITLE_SIZE = 30;
 
 /** Polyline with rounded corners. */
 const roundedPath = (points: Edge['points'], radius = 10): string => {
@@ -41,134 +42,6 @@ const roundedPath = (points: Edge['points'], radius = 10): string => {
   const [x, y] = points[points.length - 1];
 
   return `${d} L ${x} ${y}`;
-};
-
-const NodeContents: React.FunctionComponent<{ node: Node }> = ({ node }) => {
-  const { h, lines, rows, title, w, x, y } = node;
-  const cx = x + w / 2;
-  const offset = node.shape === 'cylinder' ? CYLINDER_EDGE : 0;
-
-  if (rows) {
-    return (
-      <>
-        <text className={`${BASE}-title`} textAnchor='middle' x={cx} y={y + 20}>
-          {title}
-        </text>
-        <line
-          className={`${BASE}-rule`}
-          x1={x}
-          x2={x + w}
-          y1={y + TITLE_SIZE}
-          y2={y + TITLE_SIZE}
-        />
-        {rows.map((row, index) => {
-          const baseline = y + TITLE_SIZE + index * ROW_SIZE + 16;
-
-          return (
-            <React.Fragment key={row.name}>
-              {index > 0 && (
-                <line
-                  className={`${BASE}-rule ${BASE}-rule--faint`}
-                  x1={x}
-                  x2={x + w}
-                  y1={y + TITLE_SIZE + index * ROW_SIZE}
-                  y2={y + TITLE_SIZE + index * ROW_SIZE}
-                />
-              )}
-              <text className={`${BASE}-type`} x={x + 10} y={baseline}>
-                {row.type}
-              </text>
-              <text className={`${BASE}-name`} x={x + 62} y={baseline}>
-                {row.name}
-              </text>
-              {(row.key || row.note) && (
-                <text
-                  className={`${BASE}-key`}
-                  textAnchor='end'
-                  x={x + w - 10}
-                  y={baseline}
-                >
-                  {row.key || row.note}
-                </text>
-              )}
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
-  }
-
-  const middle = y + offset + (h - offset) / 2;
-  const titleY = lines?.length ? middle - (lines.length * 14) / 2 : middle + 5;
-
-  return (
-    <>
-      <text className={`${BASE}-title`} textAnchor='middle' x={cx} y={titleY}>
-        {title}
-      </text>
-      {lines?.map((line, index) => (
-        <text
-          className={`${BASE}-line`}
-          key={line}
-          textAnchor='middle'
-          x={cx}
-          y={titleY + 16 + index * 14}
-        >
-          {line}
-        </text>
-      ))}
-    </>
-  );
-};
-
-const NodeShape: React.FunctionComponent<{ modifier?: string; node: Node }> = ({
-  modifier,
-  node,
-}) => {
-  const { h, shape = 'rect', w, x, y } = node;
-  const boxClassName = `${BASE}-box${modifier ? ` ${BASE}-box--${modifier}` : ''}`;
-
-  if (shape === 'cylinder') {
-    const e = CYLINDER_EDGE;
-
-    return (
-      <>
-        <path
-          className={boxClassName}
-          d={`M ${x} ${y + e} A ${w / 2} ${e} 0 0 1 ${x + w} ${y + e} V ${y + h - e} A ${w / 2} ${e} 0 0 1 ${x} ${y + h - e} Z`}
-        />
-        <path
-          className={`${BASE}-rule`}
-          d={`M ${x} ${y + e} A ${w / 2} ${e} 0 0 0 ${x + w} ${y + e}`}
-          fill='none'
-        />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <rect className={boxClassName} height={h} rx={8} width={w} x={x} y={y} />
-      {shape === 'queue' && (
-        <>
-          <line
-            className={`${BASE}-rule`}
-            x1={x + 5}
-            x2={x + 5}
-            y1={y}
-            y2={y + h}
-          />
-          <line
-            className={`${BASE}-rule`}
-            x1={x + w - 5}
-            x2={x + w - 5}
-            y1={y}
-            y2={y + h}
-          />
-        </>
-      )}
-    </>
-  );
 };
 
 export type DiagramState = {
