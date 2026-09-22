@@ -1,0 +1,58 @@
+.kicl--views--experiments--tree-of-life--v15 {
+  /*
+   * Clipped, because the layer is wider than the screen it covers.
+   *
+   * Every pill is transformed to wherever its taxon projects, seated or not -
+   * the loop keeps moving hidden ones so they do not teleport when they come
+   * back. A transform still counts toward scrollable overflow, so the ones
+   * sitting off-frame were stretching the page and letting it scroll away from
+   * the canvas.
+   */
+  &__labels {
+    inset: 0;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  &__label {
+    border-radius: var(--kicl-size-half);
+    display: inline-flex;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+    white-space: nowrap;
+    will-change: transform;
+
+    /*
+     * Hidden rather than merely transparent. A pill with no seat is not on
+     * offer, and a transparent link is still focusable - 52 of these mount at
+     * once while three are legible, so tabbing the view meant travelling
+     * through fifty invisible names.
+     */
+    visibility: hidden;
+
+    /*
+     * The reachable area, grown past the chip it surrounds.
+     *
+     * It has to be a pseudo-element rather than padding: the seating loop
+     * reads `offsetHeight` off this link every frame to decide what fits
+     * where, so anything that changes the box changes the layout of the whole
+     * label layer. A pseudo-element is invisible to that measurement.
+     */
+    &::after {
+      content: '';
+      inset: calc(var(--kicl-gutter-narrower) * -1);
+      position: absolute;
+    }
+
+    &[data-seated='true'] {
+      opacity: 1;
+      transition:
+        opacity var(--kicl-transition-duration-fast)
+        var(--kicl-transition-duration),
+        visibility var(--kicl-transition-duration-fast)
+        var(--kicl-transition-duration) allow-discrete;
+      visibility: visible;
+    }
+  }
+}

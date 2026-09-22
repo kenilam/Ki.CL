@@ -14,6 +14,9 @@ import { GLOBE_MARGIN, TRUNK_SIZE } from './constants';
 // Zoom
 import { setSettled, setZoom } from './zoom';
 
+// Offset
+import { useOffset } from './use-offset';
+
 /**
  * Frames the taxon the route is on, and choreographs the pull-back from it.
  *
@@ -206,21 +209,28 @@ type Pose = {
   distance: number;
 };
 
-type Props = {
-  /** The taxon to centre on. */
-  nodeId?: string;
-  /** Its ancestor, which sets how far back to stand. */
-  ancestorId?: string;
-  /** How far right of centre the taxon should sit, in CSS pixels. */
-  offsetPx?: number;
-};
+const CameraRig: React.FunctionComponent = () => {
+  const { chains, find, focus } = useTreeOfLifeContext();
 
-const CameraRig: React.FunctionComponent<Props> = ({
-  nodeId,
-  ancestorId,
-  offsetPx = 0,
-}) => {
-  const { chains } = useTreeOfLifeContext();
+  /** The taxon to centre on. */
+  const nodeId = focus;
+
+  /*
+   * What the camera stands back from, one level away from the focus.
+   *
+   * Normally the ancestor: a taxon reads against the thing it grew out of. The
+   * origin has no ancestor, so that fell through to a fraction of the whole
+   * tree's extent - and once the cache held a few thousand taxa, that fraction
+   * put the camera far enough out to render the origin as a dot. Its own first
+   * descendant is the same unit measured the other way, and frames it beside
+   * what grew out of *it*.
+   */
+  const ancestorId =
+    chains[1] ?? (focus ? find(focus)?.descendants?.[0]?.nodeId : undefined);
+
+  /** How far right of centre the taxon should sit, in CSS pixels. */
+  const offsetPx = useOffset();
+
   const camera = Fiber.useThree((state) => state.camera);
   const size = Fiber.useThree((state) => state.size);
   const canvas = Fiber.useThree((state) => state.gl.domElement);

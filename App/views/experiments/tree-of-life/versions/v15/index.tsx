@@ -1,202 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // Components
-import { Button, Layout, Spinner, Text } from '@/components';
-
-// Icons
-import { Ri } from '@/icons';
-
-// Three
-import { Fiber } from '@/three';
-
-// Context
-import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
-
-// Camera
-import { CameraRig } from './camera-rig';
-
-// Globe
-import { Globe } from './globe';
-
-// Depth
-import { Depth } from './depth';
-
-// Details
-import { Details } from './details';
+import { Layout } from '@/components';
 
 // Labels
-import { Labels, LabelProjector } from './labels';
+import { Labels } from './labels';
 
-// Search
-import { Search } from './search';
-
-// Taxon
-import { Taxon } from './taxon';
-
-// Constants
-import {
-  OFFSET_OF_VIEWPORT,
-  ORIGIN,
-  ROOT_COLOR,
-  OPENING_DISTANCE,
-  TRUNK_SIZE,
-  TRUNK_WIDTH,
-  WIDTH_TAPER,
-} from './constants';
+// Partials
+import { Controls } from './controls';
+import { Panel } from './panel';
+import { Scene } from './scene';
 
 // Styles
 import './styles.scss';
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
+const Canvas: React.FunctionComponent = () => (
+  <>
+    <Layout fullScreen>
+      <div>
+        <Scene />
+      </div>
+    </Layout>
 
-const Canvas: React.FunctionComponent = () => {
-  const { animate, chains, find, focus, loading, rooted, setAnimate } =
-    useTreeOfLifeContext();
+    <Labels />
 
-  /*
-   * What the camera stands back from, one level away from the focus.
-   *
-   * Normally the ancestor: a taxon reads against the thing it grew out of. The
-   * origin has no ancestor, so that fell through to a fraction of the whole
-   * tree's extent - and once the cache held a few thousand taxa, that fraction
-   * put the camera far enough out to render the origin as a dot. Its own first
-   * descendant is the same unit measured the other way, and frames it beside
-   * what grew out of *it*.
-   */
-  const framingReference =
-    chains[1] ?? (focus ? find(focus)?.descendants?.[0]?.nodeId : undefined);
+    <Panel />
 
-  /*
-   * How far right of centre the focused taxon sits - a twentieth of the
-   * viewport's shorter side.
-   *
-   * Proportional rather than a spacing token: this is a composition offset in a
-   * 3D view, not padding between elements. A fixed 32px was a third of the
-   * frame on a phone and a rounding error on a wide monitor. Taking the shorter
-   * side means the nudge stays inside the frame whichever way the window is
-   * turned.
-   */
-  const [offsetPx, setOffsetPx] = useState(0);
-
-  useEffect(() => {
-    const measure = () =>
-      setOffsetPx(
-        Math.min(window.innerWidth, window.innerHeight) * OFFSET_OF_VIEWPORT
-      );
-
-    measure();
-
-    window.addEventListener('resize', measure);
-
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  /*
-   * `chains` runs focus → root, so the last entry is where the tree starts.
-   * Nothing is drawn until it actually reaches the origin: the climb takes
-   * several fetches, and the outermost node known before it lands is not the
-   * root - planting on it would grow the tree from the wrong centre.
-   */
-  const root = rooted ? chains[chains.length - 1] : undefined;
-
-  return (
-    <>
-      <Layout fullScreen>
-        <div>
-          <Fiber.Canvas
-            camera={{ position: [0, 0, OPENING_DISTANCE], fov: 50 }}
-            dpr={[1, 2]}
-            gl={{ antialias: true, alpha: true }}
-          >
-            <ambientLight intensity={0.88} />
-            <hemisphereLight args={['#ffffff', '#cfdcd5', 0.46]} />
-            <directionalLight position={[4, 8, 6]} intensity={0.19} />
-            <directionalLight
-              position={[-6, -3, -5]}
-              intensity={0.1}
-              color='#dcefe6'
-            />
-
-            <Globe />
-
-            {root ? (
-              <Taxon
-                key={root}
-                nodeId={root}
-                start={ORIGIN}
-                startColor={ROOT_COLOR}
-                startWidth={TRUNK_WIDTH}
-                endWidth={TRUNK_WIDTH * WIDTH_TAPER}
-                size={TRUNK_SIZE}
-                play='enter'
-              />
-            ) : null}
-
-            <Depth focus={focus} />
-
-            <LabelProjector />
-
-            <CameraRig
-              nodeId={focus}
-              ancestorId={framingReference}
-              offsetPx={offsetPx}
-            />
-          </Fiber.Canvas>
-        </div>
-      </Layout>
-
-      <Labels />
-
-      <Layout
-        alignContent='start'
-        autoFlow='row'
-        className={`${CLASS_NAME}__chrome ${CLASS_NAME}__chrome--panel kicl-position-fixed kicl-inset-block-start kicl-inset-inline-start`}
-        gap='narrow'
-      >
-        <div>
-          <Search />
-          <Details />
-        </div>
-      </Layout>
-
-      <Layout
-        className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start kicl-inset-inline-end`}
-        alignItems='center'
-        autoFlow='column'
-        justifyContent='end'
-        gap='narrower'
-      >
-        <div>
-          <Spinner
-            size='small'
-            in={loading}
-            position='inline'
-            hasBackdrop={false}
-          />
-          <Button
-            unstyled
-            type='button'
-            alignItems='center'
-            gap='narrower'
-            className={animate ? 'kicl-color-green' : 'kicl-color-grey-dark'}
-            aria-label='Play the tree out branch by branch'
-            aria-pressed={animate}
-            title={
-              animate
-                ? 'Land the tree at once'
-                : 'Play the tree out branch by branch'
-            }
-            onClick={() => setAnimate((current) => !current)}
-          >
-            <Ri.RiFlashlightFill aria-hidden />
-            <Text is='span' dense unstyled className='kicl-font-size-small'>
-              animation
-            </Text>
-          </Button>
-        </div>
-      </Layout>
-    </>
-  );
-};
+    <Controls />
+  </>
+);
 
 export { Canvas };

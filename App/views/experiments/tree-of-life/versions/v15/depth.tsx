@@ -2,6 +2,9 @@ import React, { useEffect, useMemo } from 'react';
 
 import { THREE, Fiber } from '@/three';
 
+// Context
+import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
+
 // Anchors
 import { getAnchor } from './anchors';
 
@@ -42,12 +45,9 @@ const FAR_AT = 2.1;
  */
 const AIR = '#1b2733';
 
-type Props = {
+const Depth: React.FunctionComponent = () => {
   /** The taxon in the route, which stays clear while everything else recedes. */
-  focus?: string;
-};
-
-const Depth: React.FunctionComponent<Props> = ({ focus }) => {
+  const { focus } = useTreeOfLifeContext();
   const scene = Fiber.useThree((state) => state.scene);
   const camera = Fiber.useThree((state) => state.camera);
 

@@ -79,3 +79,6 @@ export const VERSION = '15';
 
 export const toNodePath = (nodeId?: string | null): string =>
   toVersionPath({ version: VERSION, nodeId });
+
+/** Class root the v15 parts hang their own classes off. */
+export const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';

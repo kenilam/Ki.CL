@@ -34,14 +34,20 @@ import { useNavigate } from '@/router';
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
 
 // Constants
-import { toNodePath } from '@/views/experiments/tree-of-life/versions/v15/constants';
+import {
+  CLASS_NAME,
+  toNodePath,
+} from '@/views/experiments/tree-of-life/versions/v15/constants';
+
+// Styles
+import './styles.scss';
 
 // Labels
 import {
   drawnTaxa,
   drawnVersion,
   subscribeDrawn,
-} from '@/views/experiments/tree-of-life/versions/v15/labels';
+} from '@/views/experiments/tree-of-life/versions/v15/labels/store';
 
 /**
  * Find a taxon by name.
@@ -57,7 +63,6 @@ import {
  * screen, so the dropdown is useful before you have typed anything.
  */
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
 const LIST_ID = `${CLASS_NAME}--taxa`;
 
 /**
