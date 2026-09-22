@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // Routes
 import { useLocation } from '@/router';
@@ -12,10 +12,15 @@ import { useResponsive } from '@/hooks';
 // Partials
 import { Contents } from './contents';
 
+// Constants
+import { MAIN_ID } from './constants';
+
 const Element: React.FunctionComponent = () => {
   useResponsive();
 
   const location = useLocation();
+
+  const isFirstRoute = useRef(true);
 
   useEffect(() => {
     const root = document.querySelector('body');
@@ -30,6 +35,16 @@ const Element: React.FunctionComponent = () => {
 
     document.title = `Ki.CL | ${routes.join(' | ')}`;
   });
+
+  /** A route change replaces the page without a load, so focus moves to the new content, the way a page load would. */
+  useEffect(() => {
+    if (isFirstRoute.current) {
+      isFirstRoute.current = false;
+      return;
+    }
+
+    document.getElementById(MAIN_ID)?.focus({ preventScroll: true });
+  }, [location.pathname]);
 
   return (
     <GlobalHeaderProvider show={false}>

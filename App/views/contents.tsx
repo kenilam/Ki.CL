@@ -12,7 +12,11 @@ import { Layout } from '@/components';
 // Hooks
 import { SCROLL_DIRECTIONS, useScrollDirection } from '@/hooks';
 
+// Partials
+import { SkipLink } from './skip-link';
+
 // Constants
+import { MAIN_ID } from './constants';
 import { PATH as HOME_PATH } from './home';
 
 const Contents: React.FunctionComponent = () => {
@@ -33,6 +37,7 @@ const Contents: React.FunctionComponent = () => {
   return (
     <>
       <ScrollRestoration />
+      <SkipLink />
       <GlobalHeader />
       <Layout
         alignContent='start'
@@ -41,7 +46,11 @@ const Contents: React.FunctionComponent = () => {
         justifyContent='stretch'
         justifyItems='center'
       >
-        <main className='kicl--view'>
+        <main
+          className='kicl--view kicl-inline-size-full'
+          id={MAIN_ID}
+          tabIndex={-1}
+        >
           <Outlet />
         </main>
       </Layout>

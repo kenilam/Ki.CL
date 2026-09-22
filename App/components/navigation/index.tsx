@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, type AnimationProps, Layout, ListItem } from '@/components';
+import { Animation, type AnimationProps, List, ListItem } from '@/components';
 
 // Styles
 import './styles.scss';
@@ -46,18 +46,19 @@ const Navigation = React.forwardRef<
     };
 
     return (
-      <Layout
-        alignContent={alignContent}
-        alignItems={alignItems}
-        autoFlow={autoFlow}
-        frames={frames}
-        fullScreen={fullScreen}
-        gap={gap}
-        justifyContent={justifyContent}
-        justifyItems={justifyItems}
-        wrap={wrap}
-      >
-        <nav {...rest} className={className} ref={ref}>
+      <nav {...rest} className={className} ref={ref}>
+        <List
+          alignContent={alignContent}
+          alignItems={alignItems}
+          autoFlow={autoFlow}
+          frames={frames}
+          fullScreen={fullScreen}
+          gap={gap}
+          is={is}
+          justifyContent={justifyContent}
+          justifyItems={justifyItems}
+          wrap={wrap}
+        >
           {React.Children.toArray(children).map((child, index) => {
             let key = String(child);
 
@@ -73,8 +74,8 @@ const Navigation = React.forwardRef<
               </Animation>
             );
           })}
-        </nav>
-      </Layout>
+        </List>
+      </nav>
     );
   }
 );

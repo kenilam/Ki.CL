@@ -2,10 +2,19 @@ import type { JSX, PropsWithChildren } from 'react';
 
 import type { PolymorphicIsProps } from '@/components/polymorphic';
 
-/** Semantic hosts that read as body / quote copy. */
+/** Semantic hosts for body copy, quotes and inline meaning (code, emphasis, dates). */
 export type TextIs = Extract<
   keyof JSX.IntrinsicElements,
-  'blockquote' | 'cite' | 'p' | 'q' | 'span'
+  | 'blockquote'
+  | 'cite'
+  | 'code'
+  | 'em'
+  | 'p'
+  | 'pre'
+  | 'q'
+  | 'span'
+  | 'strong'
+  | 'time'
 >;
 
 type LookLike = Extract<

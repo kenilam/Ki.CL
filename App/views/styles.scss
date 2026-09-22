@@ -1,11 +1,3 @@
-:root {
-  --kicl--views--min-block-size: calc(
-    100dvh - var(--kicl--widgets--global-footer--block-size, 0px)
-  );
-}
-
 .kicl--view {
-  max-inline-size: 100dvw;
-  min-block-size: var(--kicl--views--min-block-size);
-  min-inline-size: 100dvw;
+  min-block-size: 100dvh;
 }

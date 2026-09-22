@@ -16,8 +16,6 @@ const CLASS_NAME = 'kicl--icons--logo';
 
 type LogoProps = Spec.Props;
 
-const TITLE = 'Ki.CL';
-
 const Logo: React.FunctionComponent<LogoProps> = ({
   className: _className = '',
   inline,
@@ -34,12 +32,12 @@ const Logo: React.FunctionComponent<LogoProps> = ({
   return (
     <Layout alignContent='center' justifyItems='center'>
       <svg
+        aria-hidden
         {...rest}
         className={className}
         xmlns='http://www.w3.org/2000/svg'
         viewBox='0 0 385 160'
       >
-        <text>{TITLE}</text>
         <g data-letter='k'>
           <rect x='60' width='40' height='60' />
           <polyline points='0 0 0 160 40 160 40 100 60 100 60 160 100 160 100 80 70 80 70 60 40 60 40 0 0 0' />

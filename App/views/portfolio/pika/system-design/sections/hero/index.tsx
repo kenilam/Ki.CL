@@ -35,7 +35,6 @@ const Hero: React.FunctionComponent = () => {
               'kicl-text-align-center',
               'kicl-position-relative'
             )}
-            role='banner'
           >
             <Heading className='kicl-font-size-largest' dense is='h2'>
               Pika Creative Platform

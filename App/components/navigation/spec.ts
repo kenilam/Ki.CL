@@ -1,5 +1,9 @@
-import React from 'react';
+import type React from 'react';
 
-import { LayoutProps } from '@/components';
+import type { LayoutProps } from '@/components';
+import type { ListProps } from '@/components/list';
 
-export type Props = React.HTMLAttributes<HTMLElement> & LayoutProps;
+/** Layout props apply to the list inside the `nav`, not the `nav` itself. */
+export type Props = React.ComponentPropsWithoutRef<'nav'> &
+  LayoutProps &
+  Pick<ListProps, 'is'>;

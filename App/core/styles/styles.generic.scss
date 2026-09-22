@@ -16,7 +16,7 @@
 :root {
   --kicl-outline-color: var(--kicl-color-grey-darker);
   --kicl-outline-style: none;
-  --kicl-outline-width: var(--kicl-size-1px);
+  --kicl-outline-width: var(--kicl-size-2px);
 }
 
 .kicl--theme--dark {
@@ -55,9 +55,10 @@ button,
 summary {
   outline-color: var(--kicl-outline-color);
   outline-style: var(--kicl-outline-style);
+  outline-offset: var(--kicl-size-2px);
   outline-width: var(--kicl-outline-width);
 
-  &:focus {
+  &:focus-visible {
     --kicl-outline-style: dashed;
   }
 

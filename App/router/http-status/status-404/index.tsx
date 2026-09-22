@@ -39,7 +39,10 @@ const Status404: React.FunctionComponent = () => {
             justifyItems='center'
           >
             <Heading is='h1'>
-              <Icons.Ri.RiLandscapeLine className='kicl-font-size-extreme' />
+              <Icons.Ri.RiLandscapeLine
+                aria-hidden
+                className='kicl-font-size-extreme'
+              />
               Oops, something not right!
             </Heading>
           </Layout>

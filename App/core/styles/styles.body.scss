@@ -61,21 +61,25 @@
   color: inherit;
 }
 
+html {
+  /* Anchors and focused elements stop below the fixed header. */
+  scroll-padding-block-start: var(--kicl--widgets--global-header--block-size);
+}
+
 body {
   background-color: var(--kicl-body-background-color);
   color: var(--kicl-body-color);
   font-size: var(--kicl-font-size);
-  inline-size: 100dvw;
-  max-inline-size: 100dvw;
   min-block-size: 100dvh;
   position: relative;
+  text-wrap: pretty;
+}
 
-  /**
-   As of for now, text-wrap only work on Chrome and Edge
-   https://caniuse.com/?search=text-wrap
-
-   It is already in CSS Text Module Lv 4 Draft:
-   https://drafts.csswg.org/css-text-4/#text-wrap
-  **/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }

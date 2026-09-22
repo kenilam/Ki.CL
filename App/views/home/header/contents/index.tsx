@@ -10,8 +10,8 @@ import { AnimatedText, Heading, HyperLink } from '@/components';
 const Contents: React.FunctionComponent = () => {
   return (
     <>
-      <Heading className={classNames('kicl-font-size-largest')} is='h2'>
-        <HyperLink lookLikeButton title='Ki.CL Home' to='/' unstyled>
+      <Heading className={classNames('kicl-font-size-largest')} is='h1'>
+        <HyperLink aria-label='Ki.CL home' lookLikeButton to='/' unstyled>
           <Icons.Logo />
         </HyperLink>
       </Heading>

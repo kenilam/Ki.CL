@@ -24,7 +24,7 @@ const Open: React.FunctionComponent = () => {
       commandFor={CLASS_NAME}
       unstyled
     >
-      <Ri.RiMenuLine />
+      <Ri.RiMenuLine aria-hidden />
       <Text className='kicl-hidden' is='span'>
         {COPY.open}
       </Text>

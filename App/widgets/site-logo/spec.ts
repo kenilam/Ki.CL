@@ -1,3 +1,3 @@
-import { HeadingProps } from '@/components';
+import type React from 'react';
 
-export type Props = Omit<HeadingProps, 'children'>;
+export type Props = Pick<React.ComponentProps<'p'>, 'className'>;

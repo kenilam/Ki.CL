@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout } from '@/components';
+import { HyperLink, Layout, Text } from '@/components';
 
 // Icons
 import { Logo } from '@/icons';
@@ -13,24 +13,33 @@ import { Logo } from '@/icons';
 import * as Spec from './spec';
 
 const CLASS_NAME = 'kicl--widgets--site-logo';
-const TITLE = 'Ki.CL';
+const COPY = {
+  home: 'Ki.CL home',
+};
 
-const SiteLogo: React.FunctionComponent<Spec.Props> = ({ ...props }) => {
-  const className = classNames(CLASS_NAME, props.className);
+const SiteLogo: React.FunctionComponent<Spec.Props> = ({
+  className: _className,
+}) => {
+  const className = classNames(CLASS_NAME, _className);
 
   return (
-    <Heading {...props} className={className} dense title={TITLE}>
+    <Text className={className} dense lookLike='h1'>
       <Layout
         autoFlow='column'
         gap='narrower'
         alignItems='center'
         justifyContent='center'
       >
-        <HyperLink className='kicl-line-height-narrower' to='/' unstyled>
+        <HyperLink
+          aria-label={COPY.home}
+          className='kicl-line-height-narrower'
+          to='/'
+          unstyled
+        >
           <Logo />
         </HyperLink>
       </Layout>
-    </Heading>
+    </Text>
   );
 };
 

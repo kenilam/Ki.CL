@@ -41,7 +41,7 @@ const Contents: React.FunctionComponent = () => {
         justifyContent='space-between'
         ref={node}
       >
-        <header className={className} role='banner'>
+        <header className={className}>
           <SiteLogo />
           <Navigation />
         </header>

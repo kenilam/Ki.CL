@@ -29,7 +29,7 @@ const Item: React.FunctionComponent<Props> = ({ id, label }) => {
       gap='narrow'
       justifyContent='start'
     >
-      <li>
+      <div>
         <Badge className={classNames('kicl-font-size-small')} size='small'>
           {label}
         </Badge>
@@ -50,7 +50,7 @@ const Item: React.FunctionComponent<Props> = ({ id, label }) => {
             <Ri.RiCheckboxBlankCircleLine aria-hidden />
           )}
         </Button>
-      </li>
+      </div>
     </Layout>
   );
 };

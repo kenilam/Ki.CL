@@ -16,6 +16,10 @@ import { Open } from './open';
 // Constants
 import { CLASS_NAME } from './constants';
 
+const COPY = {
+  label: 'Navigation',
+};
+
 // Styles
 import './styles.scss';
 
@@ -39,6 +43,7 @@ const Mobile: React.FunctionComponent = () => {
       <Open />
 
       <Dialog
+        aria-label={COPY.label}
         className={CLASS_NAME}
         closable='keyboard'
         fullScreen

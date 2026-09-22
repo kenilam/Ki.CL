@@ -32,7 +32,7 @@ const Close: React.FunctionComponent = () => {
       commandFor={CLASS_NAME}
       unstyled
     >
-      <Ri.RiCloseLine />
+      <Ri.RiCloseLine aria-hidden />
       <Text className='kicl-hidden' is='span'>
         {COPY.close}
       </Text>

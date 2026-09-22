@@ -20,6 +20,10 @@ import { CLASS_NAME as DEFAULT_CLASS_NAME } from '@/views/portfolio/pika/system-
 
 const CLASS_NAME = `${DEFAULT_CLASS_NAME}__anchor-nav`;
 
+const COPY = {
+  label: 'Sections',
+};
+
 /**
  * Section anchors, matched against the page's h3 headings by prefix. The
  * matched heading receives the id, so plain URL hashes work too.
@@ -85,23 +89,24 @@ const AnchorNav: React.FunctionComponent = () => {
 
   return (
     <AnchorNavContext.Provider value={{ active, go }}>
-      <Navigation
-        className={classNames(
-          CLASS_NAME,
-          'kicl-position-fixed',
-          'kicl-inset-block-end-0',
-          'kicl-inset-block-start-0',
-          'kicl-inset-inline-end-wide'
-        )}
-      >
-        <Layout gap='narrow' alignContent='center' justifyItems='end'>
-          <ul>
-            {SECTIONS.map(({ id, label }) => (
-              <Item id={id} key={id} label={label} />
-            ))}
-          </ul>
-        </Layout>
-      </Navigation>
+      <Layout alignContent='center'>
+        <Navigation
+          aria-label={COPY.label}
+          className={classNames(
+            CLASS_NAME,
+            'kicl-position-fixed',
+            'kicl-inset-block-end-0',
+            'kicl-inset-block-start-0',
+            'kicl-inset-inline-end-wide'
+          )}
+          gap='narrow'
+          justifyItems='end'
+        >
+          {SECTIONS.map(({ id, label }) => (
+            <Item id={id} key={id} label={label} />
+          ))}
+        </Navigation>
+      </Layout>
     </AnchorNavContext.Provider>
   );
 };

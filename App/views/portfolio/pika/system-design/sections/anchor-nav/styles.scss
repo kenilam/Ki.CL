@@ -6,7 +6,7 @@
       display: none;
     }
 
-    li:not(:has(:hover)) {
+    li:not(:hover, :focus-within) {
       .kicl--components--badge {
         opacity: 0;
       }

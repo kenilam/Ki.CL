@@ -26,11 +26,11 @@ const ErrorElement: React.FunctionComponent = () => {
     root.dataset.routes = 'errors';
 
     if (errors instanceof Error) {
-      document.title = `Loci | ${errors?.message.toUpperCase()}`;
+      document.title = `Ki.CL | ${errors?.message.toUpperCase()}`;
       return;
     }
 
-    document.title = `Loci | ${errors?.status}`;
+    document.title = `Ki.CL | ${errors?.status}`;
   });
 
   if (!errors) {
@@ -39,18 +39,20 @@ const ErrorElement: React.FunctionComponent = () => {
 
   if (errors instanceof Error) {
     return (
-      <>
+      <main>
         <Heading is='h1'>{`${errors?.message}`}</Heading>
-        <Text>{`${errors?.stack}`}</Text>
-      </>
+        <Text is='pre'>
+          <Text is='code'>{`${errors?.stack}`}</Text>
+        </Text>
+      </main>
     );
   }
 
   return (
-    <>
+    <main>
       <Heading is='h1'>{`${errors?.status}: ${errors?.statusText}`}</Heading>
       <Text>{`${errors?.error}`}</Text>
-    </>
+    </main>
   );
 };
 

@@ -37,7 +37,10 @@ const Status500: React.FunctionComponent<Props> = ({ message, title }) => {
             justifyItems='center'
           >
             <Heading is='h1'>
-              <Icons.Ri.RiBug2Line className='kicl-font-size-extreme' />
+              <Icons.Ri.RiBug2Line
+                aria-hidden
+                className='kicl-font-size-extreme'
+              />
               Oops, something not right!
             </Heading>
           </Layout>

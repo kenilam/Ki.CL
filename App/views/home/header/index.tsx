@@ -36,7 +36,6 @@ const Header: React.FunctionComponent = () => {
             CLASS_NAME
           )}
           id={ID}
-          role='banner'
         >
           <Contents />
           <Aside />
