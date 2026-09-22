@@ -59,6 +59,7 @@ const PHASES = [
 
 const Phases: React.FunctionComponent = () => (
   <table className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
+    <caption className='kicl-hidden'>Build phases, scope and time</caption>
     <thead>
       <tr>
         <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
@@ -75,7 +76,16 @@ const Phases: React.FunctionComponent = () => (
     <tbody>
       {PHASES.map(({ phase, scope, time }) => (
         <tr key={phase}>
-          <td className={CELL_CLASS_NAME}>{phase}</td>
+          <th
+            className={classNames(
+              CELL_CLASS_NAME,
+              'kicl-font-weight',
+              'kicl-text-align-start'
+            )}
+            scope='row'
+          >
+            {phase}
+          </th>
           <td className={CELL_CLASS_NAME}>{scope}</td>
           <td className={classNames(CELL_CLASS_NAME, 'kicl-text-nowrap')}>
             {time}

@@ -2,6 +2,7 @@ import type { Spec } from './spec';
 
 /** Part 2 — the agent plane's data model, keyed into Part 1's tables. */
 const sessionModel: Spec = {
+  title: 'Agent session data model diagram',
   description:
     'Entity relationship diagram: a Session advances by Turns, each Turn issues Tool Calls, and every Tool Call executes as a Part 1 Job — so cost, retries, and lineage reuse the existing tables.',
   width: 960,

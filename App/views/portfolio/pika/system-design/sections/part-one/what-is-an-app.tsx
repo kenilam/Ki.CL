@@ -1,7 +1,6 @@
 import React from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-yaml';
 
@@ -38,26 +37,20 @@ outputs:
 /** The manifest format and the primitives it calls. */
 const WhatIsAnApp: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       What is an App?
     </Heading>
     <Text>
       An App is a declarative manifest, stored and versioned like a document:
     </Text>
-    <Card is='aside'>
+    <Card>
       <CardContent>
-        <Text
-          className={classNames('kicl-font-family-mono')}
-          is='blockquote'
-          unstyled
-        >
-          <pre>
-            <code
-              dangerouslySetInnerHTML={{
-                __html: Prism.highlight(MANIFEST, Prism.languages.yaml, 'yaml'),
-              }}
-            />
-          </pre>
+        <Text className='kicl-font-family-mono' is='pre' unstyled>
+          <code
+            dangerouslySetInnerHTML={{
+              __html: Prism.highlight(MANIFEST, Prism.languages.yaml, 'yaml'),
+            }}
+          />
         </Text>
       </CardContent>
     </Card>

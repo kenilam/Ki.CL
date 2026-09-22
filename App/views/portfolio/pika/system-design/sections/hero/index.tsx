@@ -6,8 +6,10 @@ import classNames from 'classnames';
 import { Ri } from '@/icons';
 
 // Components
-import { AnimatedText, Animation, Heading, Layout } from '@/components';
-import { Link } from '@/router';
+import { Animation, Heading, HyperLink, Layout } from '@/components';
+
+// Partials
+import { Byline } from './byline';
 
 // Styles
 import './styles.scss';
@@ -17,9 +19,12 @@ import { CLASS_NAME as SYSTEM_DESIGN } from '@/views/portfolio/pika/system-desig
 
 const CLASS_NAME = `${SYSTEM_DESIGN}__hero`;
 
+const BRIEF =
+  'https://docs.google.com/document/d/1-UqIfuYGPwJj-x11e71wVqWr22EcjP81L-VGr-1HoGo/edit?tab=t.0#heading=h.b06blv3gdzee';
+
 const Hero: React.FunctionComponent = () => {
   return (
-    <section className={CLASS_NAME}>
+    <section className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
       <Animation delay={300} property='zoom-out'>
         <Layout
           alignContent='center'
@@ -32,11 +37,12 @@ const Hero: React.FunctionComponent = () => {
         >
           <header
             className={classNames(
-              'kicl-text-align-center',
-              'kicl-position-relative'
+              'kicl-padding-inline-extreme',
+              'kicl-position-relative',
+              'kicl-text-align-center'
             )}
           >
-            <Heading className='kicl-font-size-largest' dense is='h2'>
+            <Heading className='kicl-font-size-largest' dense is='h1'>
               Pika Creative Platform
             </Heading>
             <Layout
@@ -47,23 +53,11 @@ const Hero: React.FunctionComponent = () => {
               justifyContent='center'
               justifyItems='center'
             >
-              <Link
-                to='https://docs.google.com/document/d/1-UqIfuYGPwJj-x11e71wVqWr22EcjP81L-VGr-1HoGo/edit?tab=t.0#heading=h.b06blv3gdzee'
-                target='_blank'
-              >
-                <Ri.RiFile4Line />
+              <HyperLink before={<Ri.RiFile4Line aria-hidden />} to={BRIEF}>
                 Brief
-              </Link>
+              </HyperLink>
             </Layout>
-            <AnimatedText
-              delay={1000}
-              dense
-              duration='slower'
-              easing='ease-sine-in'
-              property='slide-from-bottom'
-            >
-              Keni · Ki.CL · August 2026
-            </AnimatedText>
+            <Byline />
           </header>
         </Layout>
       </Animation>

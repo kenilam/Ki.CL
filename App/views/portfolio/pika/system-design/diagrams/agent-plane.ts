@@ -2,6 +2,7 @@ import type { Spec } from './spec';
 
 /** Part 2 - the new agent plane beside the unchanged Part 1 services. */
 const agentPlane: Spec = {
+  title: 'Agent plane diagram',
   description:
     'Diagram of the agent plane - chat gateway, agent runtime, tool registry, session store, cost governor and eval harness - beside the unchanged Part 1 services: Job Service, Orchestrator, provider adapters, asset store, credits, moderation and observability.',
   width: 1000,

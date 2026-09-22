@@ -1,10 +1,7 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
-import { Button, Dialog, Heading, Layout, Text } from '@/components';
+import { Dialog, Heading, Layout, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
@@ -16,33 +13,20 @@ import { CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
 /** Jobs, tasks, attempts and assets. */
 const CoreDataModel: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Core data model
     </Heading>
-    <Layout alignItems='center' justifyContent='stretch'>
-      <Button
-        aria-label='Core data model diagram. Open the full image.'
-        className={classNames(
-          'kicl-inline-size-full',
-          `${CLASS_NAME}__preview`
-        )}
-        command='show-modal'
-        commandFor='diagram-data-model'
-        unstyled
-      >
-        <Diagram spec={dataModel} />
-      </Button>
-    </Layout>
+    <Diagram opens='diagram-data-model' spec={dataModel} />
     <Dialog
-      aria-label='Core data model diagram'
+      aria-label={dataModel.title}
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-data-model'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <section>
+        <div>
           <Diagram spec={dataModel} />
-        </section>
+        </div>
       </Layout>
     </Dialog>
     <Text>

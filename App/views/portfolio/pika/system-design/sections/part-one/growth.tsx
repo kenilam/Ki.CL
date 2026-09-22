@@ -6,7 +6,7 @@ import { Heading, Text } from '@/components';
 /** App Studio and the guardrails around self-serve publishing. */
 const Growth: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Growth ships an App without engineering
     </Heading>
     <Text>

@@ -1,10 +1,7 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
-import { Button, Dialog, Heading, Layout, Text } from '@/components';
+import { Dialog, Heading, Layout, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
@@ -16,34 +13,21 @@ import { CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
 /** What the agent reuses from Part 1. */
 const WhatChanges: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       What changes, what stays shared
     </Heading>
 
-    <Layout alignItems='center' justifyContent='stretch'>
-      <Button
-        aria-label='Agent plane diagram. Open the full image.'
-        className={classNames(
-          'kicl-inline-size-full',
-          `${CLASS_NAME}__preview`
-        )}
-        command='show-modal'
-        commandFor='diagram-agent-plane'
-        unstyled
-      >
-        <Diagram spec={agentPlane} />
-      </Button>
-    </Layout>
+    <Diagram opens='diagram-agent-plane' spec={agentPlane} />
     <Dialog
-      aria-label='Agent plane diagram'
+      aria-label={agentPlane.title}
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-agent-plane'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <section>
+        <div>
           <Diagram spec={agentPlane} />
-        </section>
+        </div>
       </Layout>
     </Dialog>
     <Text>

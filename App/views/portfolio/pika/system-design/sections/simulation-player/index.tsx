@@ -44,10 +44,14 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   const diagram = useRef<HTMLElement>(null);
 
   const run = useCallback(() => {
+    if (playing) {
+      return;
+    }
+
     diagram.current?.scrollIntoView({ block: 'center', behavior: 'auto' });
     setStep(-1);
     setPlaying(true);
-  }, []);
+  }, [playing]);
 
   useEffect(() => {
     if (!playing) {
@@ -98,19 +102,25 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
         justifyContent='start'
         justifyItems='start'
       >
-        <section>
-          <Button disabled={playing} onClick={run} size='small' type='button'>
+        <div>
+          {/* `aria-disabled` keeps focus on the button while the run plays. */}
+          <Button
+            aria-disabled={playing || undefined}
+            onClick={run}
+            size='small'
+            type='button'
+          >
             {finished ? 'Replay' : playing ? 'Running' : runLabel}
           </Button>
           <Spinner in={playing} position='inline' size='small' />
-        </section>
+        </div>
       </Layout>
       <Diagram
         ref={diagram}
         spec={spec}
         state={{ active: current?.active, failed: current?.failed }}
       />
-      <Card className='kicl-inline-size-full' is='aside' size='sm'>
+      <Card className='kicl-inline-size-full' size='sm'>
         <CardContent>
           <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
             <div>

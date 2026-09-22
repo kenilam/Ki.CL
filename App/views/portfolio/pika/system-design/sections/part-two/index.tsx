@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, Layout, Text } from '@/components';
 
@@ -9,11 +12,22 @@ import { Cost } from './cost';
 import { Testing } from './testing';
 import { WhatChanges } from './what-changes';
 
+// Constants
+import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
+
 const PartTwo: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
-      <section>
-        <Heading className='kicl-font-size-larger' is='h3'>
+      <section aria-labelledby={SECTION_ID.partTwo}>
+        <Heading
+          className={classNames(
+            'kicl-font-size-larger',
+            'kicl-padding-block-start-narrow',
+            'kicl-position-relative'
+          )}
+          id={SECTION_ID.partTwo}
+          is='h2'
+        >
           Part 2 - The agent experience
         </Heading>
         <Text variant='secondary'>

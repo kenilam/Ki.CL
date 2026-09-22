@@ -6,7 +6,7 @@ import { Heading, Text } from '@/components';
 /** Rubric-based evaluation and replay. */
 const Testing: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Testing &amp; evaluation
     </Heading>
     <Text>

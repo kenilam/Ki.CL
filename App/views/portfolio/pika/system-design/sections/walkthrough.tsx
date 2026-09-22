@@ -1,17 +1,32 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, Layout, Text } from '@/components';
+
+// Constants
+import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
 const Walkthrough: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section>
+      <section aria-labelledby={SECTION_ID.walkthrough}>
         <header>
-          <Heading className='kicl-font-size-larger' dense is='h3'>
+          <Heading
+            className={classNames(
+              'kicl-font-size-larger',
+              'kicl-padding-block-start-narrow',
+              'kicl-position-relative'
+            )}
+            dense
+            id={SECTION_ID.walkthrough}
+            is='h2'
+          >
             Walkthrough
           </Heading>
-          <Heading is='h6'>Read this first</Heading>
+          <Text lookLike='h6'>Read this first</Text>
         </header>
         <Text>
           Most of the design follows from one decision: every App is a versioned

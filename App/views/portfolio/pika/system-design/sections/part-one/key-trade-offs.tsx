@@ -6,11 +6,11 @@ import { Heading, Text } from '@/components';
 /** The decisions that shaped Part 1. */
 const KeyTradeOffs: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Key trade-offs
     </Heading>
     <Text>
-      <Text is='span' className='kicl-font-weight-bold'>
+      <Text is='strong' className='kicl-font-weight-bold'>
         Async everywhere versus a sync fast-path.
       </Text>{' '}
       I went back and forth on giving cheap image calls a synchronous endpoint
@@ -23,7 +23,7 @@ const KeyTradeOffs: React.FunctionComponent = () => (
       renders progress as it arrives.
     </Text>
     <Text>
-      <Text is='span' className='kicl-font-weight-bold'>
+      <Text is='strong' className='kicl-font-weight-bold'>
         Declarative manifests versus Apps-as-code.
       </Text>{' '}
       The code-first version of this platform - every App its own service -
@@ -35,7 +35,7 @@ const KeyTradeOffs: React.FunctionComponent = () => (
       sandboxed function.
     </Text>
     <Text>
-      <Text is='span' className='kicl-font-weight-bold'>
+      <Text is='strong' className='kicl-font-weight-bold'>
         <code>Temporal</code> versus hand-rolling.
       </Text>{' '}
       Hand-rolling a queue and state machine on Redis and <code>Postgres</code>{' '}
@@ -47,7 +47,7 @@ const KeyTradeOffs: React.FunctionComponent = () => (
       workers only ever speak the task schema.
     </Text>
     <Text>
-      <Text is='span' className='kicl-font-weight-bold'>
+      <Text is='strong' className='kicl-font-weight-bold'>
         Webhooks versus polling.
       </Text>{' '}
       Adapters prefer webhooks but keep a polling reconciler behind them,

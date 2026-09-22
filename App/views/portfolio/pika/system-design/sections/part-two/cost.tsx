@@ -6,7 +6,7 @@ import { Heading, Text } from '@/components';
 /** Draft tiers and hard budgets. */
 const Cost: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Cost
     </Heading>
     <Text>

@@ -6,7 +6,7 @@ import { Heading, List, ListItem, Text } from '@/components';
 /** How task attempts fail and recover. */
 const Resiliency: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Resiliency
     </Heading>
     <Text>
@@ -17,7 +17,7 @@ const Resiliency: React.FunctionComponent = () => (
     <List is='ul'>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Retries with a taxonomy.
           </Text>{' '}
           Adapters classify every error: <code>retryable</code> gets exponential
@@ -28,7 +28,7 @@ const Resiliency: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Checkpoint at every node.
           </Text>{' '}
           Task outputs persist before the next node schedules, so a crash
@@ -38,7 +38,7 @@ const Resiliency: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Watchdogs and dead letters.
           </Text>{' '}
           Tasks that stop heartbeating are reaped and rescheduled; tasks that
@@ -49,7 +49,7 @@ const Resiliency: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Task-level monitoring.
           </Text>{' '}
           Every attempt is a row carrying app, primitive, provider, latency,
@@ -60,7 +60,7 @@ const Resiliency: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Backpressure.
           </Text>{' '}
           Concurrency caps per user and per App, admission control keyed to

@@ -1,13 +1,19 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, Layout, Text } from '@/components';
 
 // Diagrams
-import { services } from '../diagrams/services';
+import { services } from '@/views/portfolio/pika/system-design/diagrams/services';
 
 // Partials
 import { type PlayerStep, SimulationPlayer } from './simulation-player';
+
+// Constants
+import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
 /**
  * One Character Creator job through the Part 1 architecture — including the
@@ -93,8 +99,16 @@ const STEPS: PlayerStep[] = [
 const Simulation: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section>
-        <Heading className='kicl-font-size-larger' is='h3'>
+      <section aria-labelledby={SECTION_ID.watchItRun}>
+        <Heading
+          className={classNames(
+            'kicl-font-size-larger',
+            'kicl-padding-block-start-narrow',
+            'kicl-position-relative'
+          )}
+          id={SECTION_ID.watchItRun}
+          is='h2'
+        >
           Watch it run
         </Heading>
         <Text>

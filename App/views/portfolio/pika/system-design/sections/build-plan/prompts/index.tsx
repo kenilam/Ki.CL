@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Text } from '@/components';
+import { Heading, List, ListItem, Text } from '@/components';
 
 // Styles
 import './styles.scss';
@@ -103,7 +103,7 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
 
 const Prompts: React.FunctionComponent = () => (
   <>
-    <Heading className={classNames('kicl-font-size-large')} is='h4'>
+    <Heading className={classNames('kicl-font-size-large')} is='h3'>
       Prompts I&apos;d use to steer a coding agent
     </Heading>
     <Text>
@@ -111,19 +111,27 @@ const Prompts: React.FunctionComponent = () => (
       verifiable. Every prompt carries its own acceptance tests, because
       agent-written code is only as good as the tests checking it.
     </Text>
-    {PROMPTS.map(({ body, title }, index) => (
-      <React.Fragment key={title}>
-        <Text is='span' className='kicl-font-weight-bold'>
-          {index + 1}. {title}.
-        </Text>
-        <Text
-          className={classNames('kicl-position-relative', CLASS_NAME)}
-          is='blockquote'
-        >
-          {body}
-        </Text>
-      </React.Fragment>
-    ))}
+    <List gap='wide' is='ol'>
+      {PROMPTS.map(({ body, title }, index) => (
+        <ListItem autoFlow='row' gap='wide' key={title}>
+          <Text is='strong' className='kicl-font-weight-bold'>
+            {/* The list already numbers the items for assistive tech. */}
+            <span aria-hidden>{index + 1}. </span>
+            {title}.
+          </Text>
+          <Text
+            className={classNames(
+              CLASS_NAME,
+              'kicl-padding-block-narrow',
+              'kicl-padding-inline',
+              'kicl-position-relative'
+            )}
+          >
+            {body}
+          </Text>
+        </ListItem>
+      ))}
+    </List>
   </>
 );
 

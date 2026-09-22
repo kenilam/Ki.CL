@@ -9,4 +9,14 @@ const PATH = 'system-design';
 
 const CLASS_NAME = 'kicl--views--portfolio--pika--system-design';
 
-export { CLASS_NAME, PATH };
+/** Ids on the top-level section headings, shared with the anchor nav. */
+const SECTION_ID = {
+  estimate: 'estimate',
+  partOne: 'part-1',
+  partTwo: 'part-2',
+  walkthrough: 'walkthrough',
+  watchItRun: 'watch-it-run',
+  watchTheAgentWork: 'watch-the-agent-work',
+} as const;
+
+export { CLASS_NAME, PATH, SECTION_ID };

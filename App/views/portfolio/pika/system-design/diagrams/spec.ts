@@ -51,5 +51,7 @@ export type Spec = {
   groups?: Group[];
   height: number;
   nodes: Node[];
+  /** Short name, used for the open button and the full-size dialog. */
+  title: string;
   width: number;
 };

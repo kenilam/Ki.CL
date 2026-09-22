@@ -3,14 +3,12 @@
     var(--kicl-transition-duration-5m) ease infinite;
   background: var(--kicl--views--portfolio--pika--system-design--background);
   background-size: 1200% 1200%;
-  inline-size: 100dvw;
 
   header {
     animation: kicl--views--portfolio--pika--system-design--parallax-hero linear
       both;
     animation-timeline: scroll();
     animation-range: 0% 20%;
-    padding-inline: var(--kicl-gutter-extreme);
     text-wrap: balance;
   }
 }

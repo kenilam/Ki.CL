@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Constants
 import { BASE, CYLINDER_EDGE } from './constants';
 
@@ -11,7 +14,9 @@ const NodeShape: React.FunctionComponent<{ modifier?: string; node: Node }> = ({
   node,
 }) => {
   const { h, shape = 'rect', w, x, y } = node;
-  const boxClassName = `${BASE}-box${modifier ? ` ${BASE}-box--${modifier}` : ''}`;
+  const boxClassName = classNames(`${BASE}-box`, {
+    [`${BASE}-box--${modifier}`]: modifier,
+  });
 
   if (shape === 'cylinder') {
     const e = CYLINDER_EDGE;

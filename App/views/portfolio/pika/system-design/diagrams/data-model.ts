@@ -2,6 +2,7 @@ import type { Spec } from './spec';
 
 /** Core data model - entities, attributes, and how records relate. */
 const dataModel: Spec = {
+  title: 'Core data model diagram',
   description:
     'Entity relationship diagram: an App publishes immutable App Versions; a Job pins a version, expands into Tasks and Task Attempts served by Providers, and produces Assets; Users own Jobs and are billed via a Credit Ledger.',
   width: 960,

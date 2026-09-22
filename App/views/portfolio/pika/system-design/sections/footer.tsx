@@ -27,7 +27,6 @@ const Footer: React.FunctionComponent = () => {
               'kicl-font-style-italic',
               'kicl-padding-block-wider'
             )}
-            is='cite'
           >
             Prepared for the Pika take-home.
           </Text>
@@ -43,7 +42,7 @@ const Footer: React.FunctionComponent = () => {
           dense
           variant='secondary'
         >
-          Keni · Ki.CL · August 2026
+          Keni · Ki.CL · <time dateTime='2026-08'>August 2026</time>
         </Text>
       </footer>
     </Layout>

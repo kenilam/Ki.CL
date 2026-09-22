@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -16,7 +16,10 @@ import { AnchorNavContext } from './context';
 import { Item } from './item';
 
 // Constants
-import { CLASS_NAME as DEFAULT_CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
+import {
+  CLASS_NAME as DEFAULT_CLASS_NAME,
+  SECTION_ID,
+} from '@/views/portfolio/pika/system-design/constants';
 
 const CLASS_NAME = `${DEFAULT_CLASS_NAME}__anchor-nav`;
 
@@ -24,46 +27,23 @@ const COPY = {
   label: 'Sections',
 };
 
-/**
- * Section anchors, matched against the page's h3 headings by prefix. The
- * matched heading receives the id, so plain URL hashes work too.
- */
 const SECTIONS = [
-  { id: 'walkthrough', label: 'Walkthrough', match: 'Walkthrough' },
-  { id: 'part-1', label: 'Part 1 — The App platform', match: 'Part 1' },
-  { id: 'watch-it-run', label: 'Watch it run', match: 'Watch it run' },
-  { id: 'part-2', label: 'Part 2 — The agent experience', match: 'Part 2' },
-  {
-    id: 'watch-the-agent-work',
-    label: 'Watch the agent work',
-    match: 'Watch the agent',
-  },
-  { id: 'estimate', label: 'Estimate & build plan', match: 'Estimate' },
+  { id: SECTION_ID.walkthrough, label: 'Walkthrough' },
+  { id: SECTION_ID.partOne, label: 'Part 1 — The App platform' },
+  { id: SECTION_ID.watchItRun, label: 'Watch it run' },
+  { id: SECTION_ID.partTwo, label: 'Part 2 — The agent experience' },
+  { id: SECTION_ID.watchTheAgentWork, label: 'Watch the agent work' },
+  { id: SECTION_ID.estimate, label: 'Estimate & build plan' },
 ];
 
 const AnchorNav: React.FunctionComponent = () => {
   const [active, setActive] = useState<string>(SECTIONS[0].id);
 
+  /* The links scroll natively; this only tracks which heading is in the top half. */
   useEffect(() => {
-    const headings = Array.from(document.querySelectorAll('h3'));
-
-    const targets = SECTIONS.map((section) => {
-      const heading = headings.find((h) =>
-        (h.textContent || '').trim().startsWith(section.match)
-      );
-
-      if (heading) {
-        heading.id = section.id;
-      }
-
-      return { heading, id: section.id };
-    }).filter((t): t is { heading: HTMLHeadingElement; id: string } =>
-      Boolean(t.heading)
-    );
-
-    if (targets.length === 0) {
-      return;
-    }
+    const headings = SECTIONS.map(({ id }) =>
+      document.getElementById(id)
+    ).filter((heading): heading is HTMLElement => Boolean(heading));
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -73,22 +53,16 @@ const AnchorNav: React.FunctionComponent = () => {
           }
         });
       },
-      { rootMargin: '-50% 0px -70% 0px' }
+      { rootMargin: '0px 0px -50% 0px' }
     );
 
-    targets.forEach(({ heading }) => observer.observe(heading));
+    headings.forEach((heading) => observer.observe(heading));
 
     return () => observer.disconnect();
   }, []);
 
-  const go = useCallback((id: string) => {
-    document
-      .getElementById(id)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, []);
-
   return (
-    <AnchorNavContext.Provider value={{ active, go }}>
+    <AnchorNavContext.Provider value={{ active }}>
       <Layout alignContent='center'>
         <Navigation
           aria-label={COPY.label}
@@ -97,7 +71,8 @@ const AnchorNav: React.FunctionComponent = () => {
             'kicl-position-fixed',
             'kicl-inset-block-end-0',
             'kicl-inset-block-start-0',
-            'kicl-inset-inline-end-wide'
+            'kicl-inset-inline-end-wide',
+            'kicl-z-index-overlay'
           )}
           gap='narrow'
           justifyItems='end'

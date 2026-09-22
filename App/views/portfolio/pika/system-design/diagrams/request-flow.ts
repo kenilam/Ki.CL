@@ -13,6 +13,7 @@ const BOTTOM = 580;
 
 /** Request flow - one job from submission to delivered assets. */
 const requestFlow: Spec = {
+  title: 'Request flow diagram',
   description:
     'Sequence diagram of a job: the client posts a job, the Job Service validates and reserves credits, the Orchestrator schedules tasks onto workers and providers, progress streams back over server-sent events, and credits settle on completion.',
   width: 960,

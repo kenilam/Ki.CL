@@ -1,10 +1,7 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
-import { Button, Dialog, Heading, Layout, Text } from '@/components';
+import { Dialog, Heading, Layout, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
@@ -17,33 +14,20 @@ import { CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
 /** The services behind a job, with the request flow. */
 const Services: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Services &amp; components
     </Heading>
-    <Layout alignItems='center' justifyContent='stretch'>
-      <Button
-        aria-label='Services and components diagram. Open the full image.'
-        className={classNames(
-          'kicl-inline-size-full',
-          `${CLASS_NAME}__preview`
-        )}
-        command='show-modal'
-        commandFor='diagram-services'
-        unstyled
-      >
-        <Diagram spec={services} />
-      </Button>
-    </Layout>
+    <Diagram opens='diagram-services' spec={services} />
     <Dialog
-      aria-label='Services and components diagram'
+      aria-label={services.title}
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-services'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <section>
+        <div>
           <Diagram spec={services} />
-        </section>
+        </div>
       </Layout>
     </Dialog>
     <Text>
@@ -88,30 +72,17 @@ const Services: React.FunctionComponent = () => (
       near the database. The real ceiling is provider rate limits, which is what
       the per-provider admission control is for.
     </Text>
-    <Layout alignItems='center' justifyContent='stretch'>
-      <Button
-        aria-label='Request flow diagram. Open the full image.'
-        className={classNames(
-          'kicl-inline-size-full',
-          `${CLASS_NAME}__preview`
-        )}
-        command='show-modal'
-        commandFor='diagram-request-flow'
-        unstyled
-      >
-        <Diagram spec={requestFlow} />
-      </Button>
-    </Layout>
+    <Diagram opens='diagram-request-flow' spec={requestFlow} />
     <Dialog
-      aria-label='Request flow diagram'
+      aria-label={requestFlow.title}
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-request-flow'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <section>
+        <div>
           <Diagram spec={requestFlow} />
-        </section>
+        </div>
       </Layout>
     </Dialog>
   </>

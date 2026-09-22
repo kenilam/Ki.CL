@@ -80,8 +80,8 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
         justifyContent='center'
         justifyItems='center'
       >
-        <section>
-          <Card className='kicl-inline-size-xl' is='section'>
+        <div>
+          <Card className='kicl-inline-size-xl'>
             <Header />
             <Layout
               alignContent='start'
@@ -109,7 +109,7 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
               </Form>
             </Layout>
           </Card>
-        </section>
+        </div>
       </Layout>
     </Animation>
   );

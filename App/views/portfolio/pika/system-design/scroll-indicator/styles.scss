@@ -2,12 +2,8 @@
   background: var(--kicl--views--portfolio--pika--system-design--background);
   background-size: 1200% 1200%;
   block-size: var(--kicl-size-3px);
-  inline-size: 100%;
-  inset-block-start: 0;
-  inset-inline-start: 0;
   scale: var(--kicl--views--portfolio--pika--system-design--scroll, 0) 1;
   transform-origin: inline-start;
-  z-index: var(--kicl-z-index-raised);
   animation:
     kicl--views--portfolio--pika--system-design--background
     var(--kicl-transition-duration-5m) ease infinite,

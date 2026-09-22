@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Animation, Layout } from '@/components';
 
@@ -34,7 +37,14 @@ const SystemDesign: React.FunctionComponent = () => {
           justifyContent='center'
           justifyItems='stretch'
         >
-          <section className={`${CLASS_NAME}__body`}>
+          <div
+            className={classNames(
+              `${CLASS_NAME}__body`,
+              'kicl-margin-inline-auto',
+              'kicl-padding-block-widest',
+              'kicl-padding-inline-wide'
+            )}
+          >
             <Walkthrough />
             <PartOne />
             <Simulation />
@@ -42,7 +52,7 @@ const SystemDesign: React.FunctionComponent = () => {
             <AgentSimulation />
             <BuildPlan />
             <Footer />
-          </section>
+          </div>
         </Layout>
       </article>
     </Animation>

@@ -1,18 +1,7 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
-import {
-  Button,
-  Dialog,
-  Heading,
-  Layout,
-  List,
-  ListItem,
-  Text,
-} from '@/components';
+import { Dialog, Heading, Layout, List, ListItem, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
@@ -24,7 +13,7 @@ import { CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
 /** The agent runtime, its tables and its turn loop. */
 const AgentHarness: React.FunctionComponent = () => (
   <>
-    <Heading className='kicl-font-size-large' is='h4'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Agent harness
     </Heading>
     <Text>
@@ -40,30 +29,17 @@ const AgentHarness: React.FunctionComponent = () => (
       <em> is</em> an ordinary job, so it inherits cost tracking, retries, and
       lineage from the tables that already exist:
     </Text>
-    <Layout alignItems='center' justifyContent='stretch'>
-      <Button
-        aria-label='Agent session data model diagram. Open the full image.'
-        className={classNames(
-          'kicl-inline-size-full',
-          `${CLASS_NAME}__preview`
-        )}
-        command='show-modal'
-        commandFor='diagram-session-model'
-        unstyled
-      >
-        <Diagram spec={sessionModel} />
-      </Button>
-    </Layout>
+    <Diagram opens='diagram-session-model' spec={sessionModel} />
     <Dialog
-      aria-label='Agent session data model diagram'
+      aria-label={sessionModel.title}
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-session-model'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <section>
+        <div>
           <Diagram spec={sessionModel} />
-        </section>
+        </div>
       </Layout>
     </Dialog>
     <Text>
@@ -75,7 +51,7 @@ const AgentHarness: React.FunctionComponent = () => (
     <List is='ol'>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Context assembly.
           </Text>{' '}
           The system prompt sets a creative-director persona; session assets
@@ -86,7 +62,7 @@ const AgentHarness: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Tool selection.
           </Text>{' '}
           The tool registry mechanically projects the primitive schemas from
@@ -99,7 +75,7 @@ const AgentHarness: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Execution.
           </Text>{' '}
           Tool calls become ordinary jobs with the same validation, credits and
@@ -109,7 +85,7 @@ const AgentHarness: React.FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <Text dense>
-          <Text is='span' className='kicl-font-weight-bold'>
+          <Text is='strong' className='kicl-font-weight-bold'>
             Observe and iterate.
           </Text>{' '}
           Results come back as asset refs plus a vision critique on request.

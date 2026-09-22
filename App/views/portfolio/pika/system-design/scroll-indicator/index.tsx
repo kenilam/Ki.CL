@@ -13,7 +13,16 @@ const CLASS_NAME = `${SYSTEM_DESIGN}__scroll-indicator`;
 
 /** Reading progress bar, driven by the page scroll timeline. */
 const ScrollIndicator: React.FunctionComponent = () => (
-  <div className={classNames(CLASS_NAME, 'kicl-position-fixed')} />
+  <div
+    className={classNames(
+      CLASS_NAME,
+      'kicl-inline-size-full',
+      'kicl-inset-block-start-0',
+      'kicl-inset-inline-start-0',
+      'kicl-position-fixed',
+      'kicl-z-index-raised'
+    )}
+  />
 );
 
 export { CLASS_NAME, ScrollIndicator };

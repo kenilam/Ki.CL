@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Ri } from '@/icons';
 
 // Components
-import { Badge, Button, Layout } from '@/components';
+import { Badge, HyperLink, Layout } from '@/components';
 
 // Context
 import { useAnchorNav } from './context';
@@ -17,8 +17,9 @@ type Props = {
   label: string;
 };
 
+/** The badge is the link's name; it shows on hover and focus. */
 const Item: React.FunctionComponent<Props> = ({ id, label }) => {
-  const { active, go } = useAnchorNav();
+  const { active } = useAnchorNav();
   const current = active === id;
 
   return (
@@ -29,28 +30,36 @@ const Item: React.FunctionComponent<Props> = ({ id, label }) => {
       gap='narrow'
       justifyContent='start'
     >
-      <div>
+      <HyperLink
+        aria-current={current ? 'location' : undefined}
+        to={`#${id}`}
+        unstyled
+      >
         <Badge className={classNames('kicl-font-size-small')} size='small'>
           {label}
         </Badge>
-        <Button
-          aria-current={current ? 'true' : undefined}
-          aria-label={label}
-          className={classNames(
-            'kicl-font-size-smaller',
-            'kicl-position-relative'
-          )}
-          onClick={() => go(id)}
-          type='button'
-          unstyled
+        <Layout
+          alignContent='center'
+          alignItems='center'
+          autoFlow='column'
+          gap='narrow'
+          justifyContent='start'
+          justifyItems='start'
         >
-          {current ? (
-            <Ri.RiCheckboxBlankCircleFill aria-hidden />
-          ) : (
-            <Ri.RiCheckboxBlankCircleLine aria-hidden />
-          )}
-        </Button>
-      </div>
+          <span
+            className={classNames(
+              'kicl-font-size-smaller',
+              'kicl-position-relative'
+            )}
+          >
+            {current ? (
+              <Ri.RiCheckboxBlankCircleFill aria-hidden />
+            ) : (
+              <Ri.RiCheckboxBlankCircleLine aria-hidden />
+            )}
+          </span>
+        </Layout>
+      </HyperLink>
     </Layout>
   );
 };

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, Layout, Text } from '@/components';
 
@@ -7,11 +10,22 @@ import { Heading, Layout, Text } from '@/components';
 import { Phases } from './phases';
 import { Prompts } from './prompts';
 
+// Constants
+import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
+
 const BuildPlan: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
-      <section>
-        <Heading className='kicl-font-size-larger' is='h3'>
+      <section aria-labelledby={SECTION_ID.estimate}>
+        <Heading
+          className={classNames(
+            'kicl-font-size-larger',
+            'kicl-padding-block-start-narrow',
+            'kicl-position-relative'
+          )}
+          id={SECTION_ID.estimate}
+          is='h2'
+        >
           Estimate &amp; build plan
         </Heading>
         <Text>

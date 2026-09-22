@@ -1,7 +1,5 @@
 .kicl--views--portfolio--pika--system-design {
   &__anchor-nav {
-    z-index: var(--kicl-z-index-overlay);
-
     @include tablet {
       display: none;
     }

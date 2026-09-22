@@ -27,10 +27,7 @@
   }
 
   &__body {
-    margin-inline: auto;
     max-inline-size: min(100%, 92ch);
-    padding-block: var(--kicl-gutter-widest);
-    padding-inline: var(--kicl-gutter-wide);
 
     > section > * {
       animation: kicl--views--portfolio--pika--system-design--parallax-reveal
@@ -44,10 +41,8 @@
       overflow-x: auto;
     }
 
-    h3 {
-      padding-block-start: var(--kicl-gutter-narrow);
-      position: relative;
-
+    /* Section headings - `kicl-position-relative` on the element anchors the rule. */
+    h2 {
       &::before {
         animation: kicl--views--portfolio--pika--system-design--background 300s
           ease infinite;
@@ -104,15 +99,9 @@
     }
   }
 
-  /* Anchored headings land below the global header, not under it. */
-  h3[id] {
-    scroll-margin-block-start: calc(
-      var(--kicl--widgets--global-header--block-size, 0px) + var(--kicl-gutter)
-    );
-  }
-
-  &__preview {
-    cursor: zoom-in;
+  /* `html` already clears the global header; this keeps a gutter above the heading. */
+  h2[id] {
+    scroll-margin-block-start: var(--kicl-gutter);
   }
 
   &__full {

@@ -3,13 +3,13 @@
   &__phases {
     border-collapse: collapse;
 
-    th {
+    thead th {
       border-block-end: var(--kicl-size-2px) solid
         var(--kicl-surface-border-color);
       opacity: 0.6;
     }
 
-    td {
+    tbody :is(th, td) {
       border-block-end: var(--kicl-size-1px) solid
         var(--kicl-surface-border-color);
       vertical-align: top;

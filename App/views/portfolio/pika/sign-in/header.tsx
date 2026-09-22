@@ -11,7 +11,10 @@ const COPY = {
 
 const Header: React.FunctionComponent = () => (
   <CardHeader>
-    <CardTitle>{COPY.title}</CardTitle>
+    {/* The page's only heading, kept at the card title's size. */}
+    <CardTitle className='kicl-font-size' is='h1'>
+      {COPY.title}
+    </CardTitle>
     <CardDescription>{COPY.description}</CardDescription>
   </CardHeader>
 );

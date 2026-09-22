@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Text } from '@/components';
+import { List, ListItem, Text } from '@/components';
 
 // Styles
 import './styles.scss';
@@ -24,17 +27,30 @@ const Log: React.FunctionComponent = () => {
   }, [seen.length]);
 
   return (
-    <div className={CLASS_NAME} ref={ref} role='log'>
+    <div
+      className={classNames(
+        CLASS_NAME,
+        'kicl-font-family-mono',
+        'kicl-font-size-small',
+        'kicl-margin-block-start-narrow'
+      )}
+      ref={ref}
+      role='log'
+    >
       {seen.length === 0 ? (
         <Text dense variant='secondary'>
           {idleHint}
         </Text>
       ) : (
-        seen.map((s, index) => (
-          <div key={index}>
-            {String(index + 1).padStart(2, '0')} · {s.log}
-          </div>
-        ))
+        <List gap='none' is='ol'>
+          {seen.map((s, index) => (
+            <ListItem key={index}>
+              {/* The list numbers the entries for assistive tech. */}
+              <span aria-hidden>{String(index + 1).padStart(2, '0')} · </span>
+              {s.log}
+            </ListItem>
+          ))}
+        </List>
       )}
     </div>
   );

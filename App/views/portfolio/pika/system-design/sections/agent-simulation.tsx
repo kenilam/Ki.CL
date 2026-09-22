@@ -1,13 +1,19 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, Layout, Text } from '@/components';
 
 // Diagrams
-import { agentPlane } from '../diagrams/agent-plane';
+import { agentPlane } from '@/views/portfolio/pika/system-design/diagrams/agent-plane';
 
 // Partials
 import { type PlayerStep, SimulationPlayer } from './simulation-player';
+
+// Constants
+import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
 /**
  * One agent session through the Part 2 plane — the draft ladder, a
@@ -107,8 +113,16 @@ const STEPS: PlayerStep[] = [
 const AgentSimulation: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section>
-        <Heading className='kicl-font-size-larger' is='h3'>
+      <section aria-labelledby={SECTION_ID.watchTheAgentWork}>
+        <Heading
+          className={classNames(
+            'kicl-font-size-larger',
+            'kicl-padding-block-start-narrow',
+            'kicl-position-relative'
+          )}
+          id={SECTION_ID.watchTheAgentWork}
+          is='h2'
+        >
           Watch the agent work
         </Heading>
         <Text>

@@ -2,6 +2,7 @@ import type { Spec } from './spec';
 
 /** Services and components - control plane, execution plane, data & delivery. */
 const services: Spec = {
+  title: 'Services and components diagram',
   description:
     'Service diagram: clients reach an API gateway; a control plane holds the App Registry, Job Service, Credits and Moderation; an execution plane holds the Orchestrator, task queues, worker fleet and provider adapters; data and delivery cover Postgres, the asset store and CDN, the event bus, the realtime gateway and observability.',
   width: 1000,
