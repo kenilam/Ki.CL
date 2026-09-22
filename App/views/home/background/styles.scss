@@ -1,0 +1,83 @@
+/*
+ * The renderer reads every one of these off the canvas, so the theme decides
+ * the colours and this file never needs a script change to try another set.
+ *
+ * `paper` has to be the body background: the canvas covers the section edge
+ * to edge, and any difference would show as a hairline at its border. It is
+ * restated per theme rather than aliased to `--kicl-body-background-color`,
+ * because a custom property substitutes its `var()` references where it is
+ * declared - here, on `:root` - not where it is read, and the dark value only
+ * exists further down, on `body`.
+ *
+ * The inks are laid down in order, first underneath, and each is tied to a
+ * pool in `dither.ts`: a broad field on the right, a glow low on the right, a
+ * rim low on the left, a band from the top left. They are mixed here from
+ * the brand palette rather than picked freehand, and the values have to be
+ * literal at build time - the renderer parses them, and a script reading a
+ * custom property gets `color-mix()` back unevaluated.
+ *
+ * `cell` is the size of one screen dot in CSS pixels and `levels` is how
+ * many tones each channel is allowed: fewer levels, coarser cells, and the
+ * weave shows more. Both are raster parameters rather than spacing, so they
+ * are not drawn from the size scale, and both must be literal numbers for
+ * the same reason as the inks.
+ */
+
+// Every ink is mixed most of the way into its theme's paper. The light is
+// meant to sit inside the page, not on top of it: a tint the eye registers
+// as atmosphere rather than as colour. Dark goes further: on black a little
+// colour carries a long way, and the page should stay a dark page.
+$muted: 58%;
+$muted-dark: 66%;
+
+// Light: a print on cream - sky, peach, coral and the brand yellow, faded.
+$light-field: color.mix($white, $blue, $muted, $method: oklab);
+$light-glow: color.mix($white, $orange, $muted + 12%, $method: oklab);
+$light-rim: color.mix($white, $red, $muted, $method: oklab);
+$light-band: color.mix($white, $yellow, $muted, $method: oklab);
+
+// Dark: after the reference - a deep field, a glow, a warm rim and a cream
+// band, each pulled from the brand blue, orange and white, then sunk into
+// the black.
+$dark-field: color.mix(
+  $black,
+  color.adjust($blue, $hue: 12deg, $saturation: 26%, $lightness: -18%),
+  $muted-dark - 8%,
+  $method: oklab
+);
+$dark-glow: color.mix(
+  $black,
+  color.adjust($blue, $saturation: 20%, $lightness: 18%),
+  $muted-dark,
+  $method: oklab
+);
+$dark-rim: color.mix(
+  $black,
+  color.adjust($orange, $hue: -8deg),
+  $muted-dark,
+  $method: oklab
+);
+$dark-band: color.mix(
+  $black,
+  color.mix($white, $orange, 86%, $method: oklab),
+  $muted-dark,
+  $method: oklab
+);
+
+:root {
+  --kicl--views--home--background--cell: 1px;
+  --kicl--views--home--background--levels: 48;
+  --kicl--views--home--background--paper: #{$white};
+  --kicl--views--home--background--ink-1: #{$light-field};
+  --kicl--views--home--background--ink-2: #{$light-glow};
+  --kicl--views--home--background--ink-3: #{$light-rim};
+  --kicl--views--home--background--ink-4: #{$light-band};
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--home--background--paper: #{$black};
+    --kicl--views--home--background--ink-1: #{$dark-field};
+    --kicl--views--home--background--ink-2: #{$dark-glow};
+    --kicl--views--home--background--ink-3: #{$dark-rim};
+    --kicl--views--home--background--ink-4: #{$dark-band};
+  }
+}

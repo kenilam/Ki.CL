@@ -1,0 +1,123 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Libraries
+import classNames from 'classnames';
+
+// Components
+import { Animation, AnimationProps, Layout, Text } from '@/components';
+
+// Icons
+import { Ri } from '@/icons';
+
+// Styles
+import './styles.scss';
+
+// Spec
+import * as Spec from './spec';
+
+const CLASS_NAME = 'kicl--components--spinner';
+
+const DELAY: AnimationProps['delay'] = 200;
+const DURATION: AnimationProps['duration'] = 'fast';
+
+const Spinner: React.FunctionComponent<Spec.Props> = ({
+  delay = 0,
+  duration = 'fast',
+  property = 'zoom-out',
+  atRoot,
+  className: _className,
+  hasBackdrop = true,
+  in: transitionIn,
+  label = 'Loading',
+  position = 'overlay',
+  size = 'small',
+  ...rest
+}) => {
+  const isOverlay = position === 'overlay';
+  // Overlay can stagger icon vs backdrop; inline indicators must appear
+  // immediately or short fetches never show a spinner.
+  const stagger = isOverlay ? DELAY : 0;
+
+  const className = classNames(
+    CLASS_NAME,
+    {
+      'kicl-font-size-large': isOverlay,
+      [`${CLASS_NAME}--no-backdrop`]: !hasBackdrop,
+      [`${CLASS_NAME}--position--${position}`]: position,
+      [`${CLASS_NAME}--size--${size}`]: size,
+    },
+    _className
+  );
+
+  const entering = Boolean(transitionIn);
+  const spinnerAnimationDelay = entering ? DURATION : duration;
+  const spinnerDelay = entering ? delay + stagger : delay;
+
+  const wrapperAnimationDelay = entering ? duration : DURATION;
+  const wrapperDelay = entering ? delay : delay + stagger;
+
+  const Contents = (
+    <Animation
+      {...rest}
+      delay={wrapperDelay}
+      duration={wrapperAnimationDelay}
+      in={transitionIn}
+    >
+      <Layout
+        display={isOverlay ? 'grid' : 'inline-grid'}
+        alignContent='center'
+        alignItems='center'
+        justifyContent='center'
+        justifyItems='center'
+      >
+        <Text
+          className={classNames('kicl-line-height-dense', className)}
+          is='span'
+          role='status'
+          unstyled
+        >
+          <span className='kicl-hidden'>{label}</span>
+          <Animation
+            {...rest}
+            delay={spinnerDelay}
+            duration={spinnerAnimationDelay}
+            property={property}
+            in={transitionIn}
+          >
+            <Layout
+              alignContent='center'
+              alignItems='center'
+              display={isOverlay ? 'grid' : 'inline-grid'}
+              justifyContent='center'
+              justifyItems='center'
+            >
+              <Text is='span' className='kicl-line-height-dense' unstyled>
+                <Ri.RiLoader3Line
+                  aria-hidden
+                  className={`${CLASS_NAME}--icon`}
+                />
+              </Text>
+            </Layout>
+          </Animation>
+        </Text>
+      </Layout>
+    </Animation>
+  );
+
+  if (!atRoot) {
+    return Contents;
+  }
+
+  const Root = document.querySelector('body');
+
+  if (!Root) {
+    return Contents;
+  }
+
+  return <>{ReactDOM.createPortal(Contents, Root)}</>;
+};
+
+type SpinnerProps = Spec.Props;
+
+export { Spinner, type SpinnerProps };

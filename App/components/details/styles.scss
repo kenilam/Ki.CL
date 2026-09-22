@@ -1,0 +1,77 @@
+:root {
+  --kicl--components--details--content--opacity: 0;
+  --kicl--components--details--content--transition-duration: var(
+    --kicl-transition-duration
+  );
+  --kicl--components--details--content--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
+  --kicl--components--details--summary--margin-block-end: 0;
+  --kicl--components--details--summary--marker--inline-size: 1em;
+  --kicl--components--details--summary--marker--block-size: 1em;
+  --kicl--components--details--summary--marker--closed--opacity: 1;
+  --kicl--components--details--summary--marker--open--opacity: 0;
+  --kicl--components--details--summary--marker--transition-duration: var(
+    --kicl-transition-duration-fast
+  );
+  --kicl--components--details--summary--marker--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
+}
+
+.kicl--components--details {
+  @supports (interpolate-size: allow-keywords) {
+    interpolate-size: allow-keywords;
+  }
+
+  // Native content slot - fade + height (height needs interpolate-size).
+  &::details-content {
+    block-size: 0;
+    opacity: var(--kicl--components--details--content--opacity);
+    overflow: clip;
+    transition-duration: var(
+      --kicl--components--details--content--transition-duration
+    );
+    transition-property: block-size, content-visibility, opacity;
+    transition-timing-function: var(
+      --kicl--components--details--content--transition-timing-function
+    );
+    transition-behavior: allow-discrete;
+  }
+
+  &[open]::details-content {
+    --kicl--components--details--content--opacity: 1;
+
+    block-size: auto;
+  }
+
+  &__summary {
+    list-style: none;
+    margin-block-end: var(
+      --kicl--components--details--summary--margin-block-end
+    );
+    transition-duration: var(
+      --kicl--components--details--content--transition-duration
+    );
+    transition-property: margin-block-end;
+    transition-timing-function: var(
+      --kicl--components--details--content--transition-timing-function
+    );
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::marker {
+      content: '';
+    }
+  }
+
+  &[open] > &__summary {
+    --kicl--components--details--summary--margin-block-end: var(
+      --kicl-gutter-narrow
+    );
+    --kicl--components--details--summary--marker--closed--opacity: 0;
+    --kicl--components--details--summary--marker--open--opacity: 1;
+  }
+}

@@ -1,3 +1,0 @@
-import './Styles';
-
-export default {};

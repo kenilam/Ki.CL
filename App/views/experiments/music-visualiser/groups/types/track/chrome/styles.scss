@@ -1,0 +1,7 @@
+.kicl--views--experiments--music-visualiser__chrome {
+  padding: var(--kicl--views--experiments--music-visualiser--inset);
+  padding-block-end: max(
+    var(--kicl--views--experiments--music-visualiser--inset),
+    env(safe-area-inset-bottom)
+  );
+}

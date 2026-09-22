@@ -1,0 +1,11 @@
+.kicl--views--experiments--tree-of-life--versions--selector {
+  &__toggle {
+    /*
+     * A 16px-tall control is below the minimum anyone can reliably hit. The
+     * chrome in v15 was raised for the same reason.
+     */
+    min-block-size: var(--kicl-size-2x);
+    anchor-name: --kicl-versions-toggle;
+    z-index: var(--kicl-z-index-popover);
+  }
+}

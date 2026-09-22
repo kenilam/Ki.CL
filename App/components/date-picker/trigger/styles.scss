@@ -1,0 +1,16 @@
+.kicl--components--date-picker {
+  &__trigger {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--kicl-gutter-narrower);
+    inline-size: 100%;
+    justify-content: flex-start;
+    text-align: start;
+  }
+
+  &__icon {
+    block-size: 1em;
+    flex-shrink: 0;
+    inline-size: 1em;
+  }
+}

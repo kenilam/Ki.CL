@@ -1,0 +1,9 @@
+.kicl--views--experiments--tree-of-life--taxon-visual {
+  &__taxon-plate {
+    --kicl--components--image--aspect-ratio: 1;
+  }
+
+  &__taxon-plate-skeleton {
+    --kicl--components--skeleton--aspect-ratio: 1;
+  }
+}

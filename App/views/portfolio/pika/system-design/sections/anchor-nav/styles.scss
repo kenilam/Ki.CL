@@ -1,0 +1,13 @@
+.kicl--views--portfolio--pika--system-design {
+  &__anchor-nav {
+    @include tablet {
+      display: none;
+    }
+
+    li:not(:hover, :focus-within) {
+      .kicl--components--badge {
+        opacity: 0;
+      }
+    }
+  }
+}

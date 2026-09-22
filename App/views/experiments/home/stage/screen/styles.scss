@@ -1,0 +1,50 @@
+.kicl--views--experiments__home__screen {
+  $home: '--kicl--views--experiments__home';
+
+  --kicl--views--experiments__home--at: calc(
+    var(#{$home}--index) * var(#{$home}--screen)
+  );
+  --kicl--views--experiments__home--in-start: calc(
+    var(#{$home}--at) - var(#{$home}--screen)
+  );
+  --kicl--views--experiments__home--out-start: calc(
+    var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--block)
+  );
+  --kicl--views--experiments__home--out-end: calc(
+    var(#{$home}--out-start) + var(#{$home}--screen) - var(#{$home}--pad)
+  );
+  --kicl--views--experiments__home--arrival: calc(
+    var(#{$home}--at) - var(#{$home}--screen) * 0.6
+  );
+  --kicl--views--experiments__home--before: calc(
+    var(#{$home}--at) - var(#{$home}--screen)
+  );
+  --kicl--views--experiments__home--after: calc(
+    var(#{$home}--at) + var(#{$home}--screen)
+  );
+  --kicl--views--experiments__home--below: var(#{$home}--screen);
+  --kicl--views--experiments__home--above: calc(
+    var(#{$home}--pad) - var(#{$home}--screen)
+  );
+  --kicl--views--experiments__home--entry: calc(
+    var(#{$home}--pad) + var(#{$home}--block)
+  );
+  --kicl--views--experiments__home--fade-start: calc(
+    var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--entry)
+  );
+  --kicl--views--experiments__home--fade-end: calc(
+    var(#{$home}--fade-start) + var(#{$home}--entry) * 0.6
+  );
+
+  block-size: var(--kicl--views--experiments__home--screen);
+  overflow: clip;
+
+  /* All panels in the same grid cell, stacked in DOM order. */
+  @supports (animation-timeline: scroll()) {
+    grid-area: 1 / 1;
+
+    @media (prefers-reduced-motion: reduce) {
+      grid-area: auto;
+    }
+  }
+}

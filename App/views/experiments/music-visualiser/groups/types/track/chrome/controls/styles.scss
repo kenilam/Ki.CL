@@ -1,0 +1,9 @@
+.kicl--views--experiments--music-visualiser__chrome__controls {
+  transition: opacity var(--kicl-transition-duration-slow)
+    var(--kicl-ease-sine-out);
+
+  // Idle: the controls go.
+  .kicl--views--experiments--music-visualiser__chrome--idle & {
+    opacity: 0;
+  }
+}

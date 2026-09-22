@@ -1,0 +1,22 @@
+.kicl--views--portfolio--pika--system-design__scroll-indicator {
+  background: var(--kicl--views--portfolio--pika--system-design--background);
+  background-size: 1200% 1200%;
+  block-size: var(--kicl-size-3px);
+  scale: var(--kicl--views--portfolio--pika--system-design--scroll, 0) 1;
+  transform-origin: inline-start;
+  animation:
+    kicl--views--portfolio--pika--system-design--background
+    var(--kicl-transition-duration-5m) ease infinite,
+    kicl--views--portfolio--pika--system-design--scroll linear both;
+  animation-timeline: auto, scroll();
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--scroll {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}

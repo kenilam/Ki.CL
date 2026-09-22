@@ -1,0 +1,14 @@
+.kicl--components--calendar {
+  &__nav {
+    align-items: center;
+    border-radius: var(--kicl-size-half);
+    color: inherit;
+    display: inline-flex;
+    padding: var(--kicl-gutter-narrowest);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--kicl-color-grey-light);
+    }
+  }
+}

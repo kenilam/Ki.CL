@@ -15,7 +15,7 @@
     "**/.Caches/**",
     "**/Types/**",
     "**/@mf-types/**",
-    "App/Views/Experiments/TreeOfLife/Versions/v[0-9]*/**"
+    "App/views/experiments/tree-of-life/versions/v[0-9]*/**"
   ],
   "env": {
     "es2024": true,

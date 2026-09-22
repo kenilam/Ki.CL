@@ -1,0 +1,56 @@
+import React from 'react';
+import classNames from 'classnames';
+
+import type { BadgeIs, Props } from './spec';
+import { BadgeLabel } from './badge-label';
+
+import './styles.scss';
+
+const CLASS_NAME = 'kicl--components--badge';
+
+/**
+ * Compact label chip - API aligned with
+ * https://ui.shadcn.com/docs/components/base/badge
+ */
+const Badge = React.forwardRef<HTMLElement, Props>(
+  (
+    { children, className, is = 'span', size, variant = 'default', ...rest },
+    ref
+  ) => {
+    const Component = is as BadgeIs;
+
+    return (
+      <Component
+        // Discriminated `Props` collapse to a host-specific attrs bag at call
+        // sites; the implementation spreads the residual host attrs.
+        {...(rest as React.HTMLAttributes<HTMLElement>)}
+        className={classNames(
+          CLASS_NAME,
+          `${CLASS_NAME}--variant--${variant}`,
+          size && `${CLASS_NAME}--size--${size}`,
+          'kicl-border-radius-sm',
+          'kicl-display-inline-flex',
+          'kicl-font-weight',
+          'kicl-line-height-narrow',
+          className
+        )}
+        data-is={is}
+        ref={ref as never}
+      >
+        {children}
+      </Component>
+    );
+  }
+);
+
+Badge.displayName = 'Badge';
+
+export type {
+  Props as BadgeProps,
+  BadgeIs,
+  BadgeSize,
+  BadgeLabelProps,
+  BadgeVariant,
+} from './spec';
+export { BADGE_VARIANTS, BADGE_SIZES } from './spec';
+export { BadgeLabel, Badge };

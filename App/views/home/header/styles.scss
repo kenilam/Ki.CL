@@ -1,0 +1,8 @@
+.kicl--views--home--header {
+  overflow: hidden;
+  text-wrap: balance;
+
+  > * {
+    z-index: var(--kicl-z-index-raised);
+  }
+}

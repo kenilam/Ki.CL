@@ -1,0 +1,22 @@
+.kicl--components--select__trigger {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  gap: var(--kicl-gutter-narrower);
+  inline-size: 100%;
+  justify-content: space-between;
+  min-inline-size: 0;
+  text-align: start;
+}
+
+.kicl--components--select__icon {
+  block-size: 1em;
+  flex-shrink: 0;
+  inline-size: 1em;
+  transition: rotate var(--kicl-transition-duration-fast)
+    var(--kicl-ease-quint-in-out);
+
+  .kicl--components--select:open & {
+    rotate: 180deg;
+  }
+}

@@ -1,0 +1,28 @@
+app-root {
+  display: contents;
+}
+
+.kicl-hidden {
+  border-width: 0;
+  clip-path: inset(50%);
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  inline-size: 1px;
+}
+
+/* Visually hidden until it takes keyboard focus, for skip links. */
+.kicl-hidden-focusable:not(:focus-visible) {
+  border-width: 0;
+  clip-path: inset(50%);
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  inline-size: 1px;
+}

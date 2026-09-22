@@ -1,0 +1,51 @@
+.kicl--components--button {
+  --kicl-body-color: var(--kicl-color-white);
+  --kicl-layout--inline-size: fit-content;
+  --kicl--components--button--background-color: var(--kicl-color-grey-darker);
+  --kicl--components--button--border-color: transparent;
+  --kicl--components--button--border-radius: var(--kicl-gutter-narrow);
+  --kicl--components--button--border-width: var(--kicl-size-hair);
+  --kicl--components--button--transition-duration: var(
+    --kicl-transition-duration-fast
+  );
+  --kicl--components--button--transition-property:
+    border-color, border-block, border-inline, border-radius, box-shadow, color,
+    filter, font-size, opacity, padding;
+  --kicl--components--button--transition-timing-function: var(
+    --kicl-ease-quint-in-out
+  );
+
+  border-radius: var(--kicl--components--button--border-radius);
+  overflow: hidden;
+
+  &#{&} {
+    @include transition('kicl--components--button');
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl-body-color: var(--kicl-color-grey-darker);
+    --kicl--components--button--background-color: var(--kicl-color-white);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl-body-color: var(--kicl-color-white);
+    --kicl--components--button--background-color: var(--kicl-color-grey-darker);
+  }
+
+  &:not(&--unstyled, &--look-like-hyperlink) {
+    background-color: var(--kicl--components--button--background-color);
+    border: var(--kicl--components--button--border-width) solid
+      var(--kicl--components--button--border-color);
+    color: var(--kicl-body-color);
+  }
+
+  &:is(:has(> svg), :has(> .kicl--components--spinner)):not(
+    .kicl--components--button--unstyled,
+    :has(> :not(svg, .kicl--components--spinner, .kicl-hidden))
+  ) {
+    --kicl--components--button--border-radius: 50%;
+
+    backdrop-filter: blur(var(--kicl-gutter));
+    display: grid;
+  }
+}

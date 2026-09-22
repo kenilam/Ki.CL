@@ -1,0 +1,51 @@
+.kicl--views--experiments--tree-of-life__banner__intro {
+  &__title {
+    background-blend-mode: var(--kicl--tree-of-life--plate-blend), normal;
+    background-image:
+      var(--kicl--tree-of-life--plate),
+      linear-gradient(
+        120deg,
+        color-mix(
+          in oklab,
+          var(--kicl--tree-of-life--green) 70%,
+          var(--kicl-color-white-pure)
+        ),
+        var(--kicl--tree-of-life--green)
+      );
+    background-position:
+      66% 44%,
+      0% 0%;
+    background-repeat: no-repeat, repeat;
+    background-size:
+      400% auto,
+      200% 200%;
+    animation-name: kicl--tree-of-life--drift;
+    animation-duration: var(--kicl-transition-duration-6s);
+    animation-timing-function: var(--kicl-ease-sharp-in-out);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+    @supports (background-clip: text) {
+      background-clip: text;
+      color: transparent;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes kicl--tree-of-life--drift {
+  from {
+    background-position:
+      66% 44%,
+      0% 0%;
+  }
+
+  to {
+    background-position:
+      82% 58%,
+      100% 100%;
+  }
+}

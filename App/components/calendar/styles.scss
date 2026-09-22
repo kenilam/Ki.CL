@@ -1,0 +1,29 @@
+.kicl--components--calendar {
+  --kicl--components--calendar--cell-size: var(--kicl-size-4x);
+  --kicl--components--calendar--range-middle: var(--kicl-color-grey-light);
+
+  /*
+   * Seven cells across is what sets this component's width, so the cell is the
+   * only thing worth making responsive. At the full size the grid comes to
+   * roughly 480px, which is wider than the phone it has to open on.
+   *
+   * The smaller step is still larger than the minimum a thumb can find, so the
+   * narrower screen loses width without losing the target.
+   */
+  @include query('≤mobile') {
+    --kicl--components--calendar--cell-size: var(--kicl-size-3x);
+  }
+
+  &__table {
+    border-collapse: separate;
+    border-spacing: var(--kicl-gutter-narrowest);
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--calendar--range-middle: var(--kicl-color-grey-dark);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--calendar--range-middle: var(--kicl-color-grey-light);
+  }
+}

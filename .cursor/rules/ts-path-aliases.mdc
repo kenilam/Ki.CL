@@ -10,21 +10,21 @@ Prefer configured path aliases over `../` climbs. Same-folder `./` is fine.
 
 | Alias | Maps to | Use for |
 |-------|---------|---------|
-| `@/*` | `App/*` | App modules (`@/Components`, `@/Views/...`, `@/Icons`, …) |
+| `@/*` | `App/*` | App modules (`@/components`, `@/views/...`, `@/icons`, …) |
 | `api` / `api/*` | federated remote types | GraphQL hooks/types from `api/provider` |
 | `^/*` | repo root | Rare cross-package paths outside App |
 
 ```ts
 // ❌
 import { labelFor } from '../tree';
-import { Button } from '../../../Components';
+import { Button } from '../../../components';
 
 // ✅
-import { labelFor } from '@/Views/Experiments/TreeOfLife/tree';
-import { Button } from '@/Components';
+import { labelFor } from '@/views/experiments/tree-of-life/tree';
+import { Button } from '@/components';
 import { TaxonVisualStatus, useKicl_TaxonVisual } from 'api/provider';
 ```
 
 When editing imports, rewrite reachable relatives to the matching alias in the same change.
 
-**Exception:** Vite/bootstrap config under `App/.Client` and `App/.Server` may keep relatives for JSON/config loaded before aliases exist (e.g. `getAlias.ts` → `../../tsconfig.json`).
+**Exception:** Vite/bootstrap config under `App/.client` and `App/.server` may keep relatives for JSON/config loaded before aliases exist (e.g. `get-alias.ts` → `../../tsconfig.json`).
