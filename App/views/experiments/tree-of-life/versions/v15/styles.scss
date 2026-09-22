@@ -4,10 +4,6 @@
   touch-action: none;
   user-select: none;
 
-  &__stage {
-    inset: 0;
-  }
-
   /*
    * Clipped, because the layer is wider than the screen it covers.
    *

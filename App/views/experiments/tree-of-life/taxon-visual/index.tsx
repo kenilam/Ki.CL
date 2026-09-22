@@ -19,6 +19,8 @@ import {
   type TreeNode,
 } from '@/views/experiments/tree-of-life/tree';
 
+import './styles.scss';
+
 const DEBOUNCE_MS = 500;
 
 const DISCLAIMER =
@@ -50,7 +52,7 @@ function messageKey({
   return 'unfinished';
 }
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v14';
+const CLASS_NAME = 'kicl--views--experiments--tree-of-life--taxon-visual';
 
 export function isTaxonVisualEligible(
   node: TreeNode,

@@ -8,12 +8,8 @@ const COPY = {
 
 export const Bookmark: React.FunctionComponent = () => {
   return (
-    <HyperLink
-      lookLikeButton
-      size='small'
-      to={`/${EXPERIMENTS}`}
-    >
+    <HyperLink lookLikeButton size='small' to={`/${EXPERIMENTS}`}>
       {COPY.bookmark}
     </HyperLink>
   );
-}
+};
