@@ -3707,9 +3707,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app.client@workspace:App/.Client":
+"app.client@workspace:App/.client":
   version: 0.0.0-use.local
-  resolution: "app.client@workspace:App/.Client"
+  resolution: "app.client@workspace:App/.client"
   dependencies:
     "@module-federation/vite": "npm:^1.20.0"
     "@rollup/plugin-dynamic-import-vars": "npm:2.1.5"
@@ -3737,18 +3737,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"app.router@workspace:App/Router":
+"app.router@workspace:App/router":
   version: 0.0.0-use.local
-  resolution: "app.router@workspace:App/Router"
+  resolution: "app.router@workspace:App/router"
   dependencies:
     react-router-dom: "npm:7.18.2"
     urlpattern-polyfill: "npm:10.1.0"
   languageName: unknown
   linkType: soft
 
-"app.server@workspace:App/.Server":
+"app.server@workspace:App/.server":
   version: 0.0.0-use.local
-  resolution: "app.server@workspace:App/.Server"
+  resolution: "app.server@workspace:App/.server"
   dependencies:
     "@types/compression": "npm:^1.7.5"
     "@types/express": "npm:5.0.1"
@@ -3765,33 +3765,33 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"app.views.experiments.music-visualiser@workspace:App/Views/Experiments/MusicVisualiser":
+"app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser":
   version: 0.0.0-use.local
-  resolution: "app.views.experiments.music-visualiser@workspace:App/Views/Experiments/MusicVisualiser"
+  resolution: "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser"
   languageName: unknown
   linkType: soft
 
-"app.views.experiments.tree-of-life@workspace:App/Views/Experiments/TreeOfLife":
+"app.views.experiments.tree-of-life@workspace:App/views/experiments/tree-of-life":
   version: 0.0.0-use.local
-  resolution: "app.views.experiments.tree-of-life@workspace:App/Views/Experiments/TreeOfLife"
+  resolution: "app.views.experiments.tree-of-life@workspace:App/views/experiments/tree-of-life"
   languageName: unknown
   linkType: soft
 
-"app.views.experiments@workspace:App/Views/Experiments":
+"app.views.experiments@workspace:App/views/experiments":
   version: 0.0.0-use.local
-  resolution: "app.views.experiments@workspace:App/Views/Experiments"
+  resolution: "app.views.experiments@workspace:App/views/experiments"
   languageName: unknown
   linkType: soft
 
-"app.views@workspace:App/Views":
+"app.views@workspace:App/views":
   version: 0.0.0-use.local
-  resolution: "app.views@workspace:App/Views"
+  resolution: "app.views@workspace:App/views"
   languageName: unknown
   linkType: soft
 
-"app.widgets@workspace:App/Widgets":
+"app.widgets@workspace:App/widgets":
   version: 0.0.0-use.local
-  resolution: "app.widgets@workspace:App/Widgets"
+  resolution: "app.widgets@workspace:App/widgets"
   languageName: unknown
   linkType: soft
 

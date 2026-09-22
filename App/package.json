@@ -2,11 +2,11 @@
   "name": "app",
   "version": "0.0.1",
   "workspaces": [
-    ".Client",
-    ".Server",
-    "Router",
-    "Views",
-    "Widgets"
+    ".client",
+    ".server",
+    "router",
+    "views",
+    "widgets"
   ],
   "type": "module",
   "main": "index.tsx",

@@ -1,0 +1,99 @@
+import React, { useState } from 'react';
+
+// Libraries
+import classNames from 'classnames';
+
+// Icons
+import { Ri } from '@/icons';
+
+// Components
+import { Animation, Layout, Spinner } from '@/components';
+
+// Styles
+import './styles.scss';
+
+// Spec
+import * as Spec from './spec';
+
+const CLASS_NAME = 'kicl--components--image';
+
+const Image: React.FunctionComponent<Spec.Props> = ({
+  alt,
+  borderRadius = 'sm',
+  data,
+  isFullscreen = false,
+  loading = 'lazy',
+  title,
+  placeholder = (
+    <Ri.RiFileUnknowLine
+      className={classNames('kicl-color-warning', 'kicl-font-size-large')}
+    />
+  ),
+  onError: errorHandler,
+  onLoad: loadHandler,
+  ...props
+}) => {
+  const [loadingState, isLoading] = useState(!!data);
+  const [error, setError] = useState<Error>();
+
+  const className = classNames(
+    CLASS_NAME,
+    {
+      [`${CLASS_NAME}--is-fullscreen`]: isFullscreen,
+      [`${CLASS_NAME}--is-loading`]: loadingState,
+      [`${CLASS_NAME}--has-error`]: !!error,
+    },
+    props.className
+  );
+
+  const onError: Spec.Props['onError'] = (event) => {
+    isLoading(false);
+    setError(new Error('Error while loading this image'));
+
+    event.currentTarget.remove();
+
+    errorHandler?.(event);
+  };
+
+  const onLoad: Spec.Props['onLoad'] = (event) => {
+    isLoading(false);
+    setError(undefined);
+
+    loadHandler?.(event);
+  };
+
+  return (
+    <object
+      {...props}
+      className={className}
+      title={title || alt || error?.message}
+    >
+      <img
+        className={classNames({
+          [`kicl-border-radius-${borderRadius}`]: borderRadius,
+        })}
+        src={data}
+        alt={alt}
+        loading={loading}
+        onLoad={onLoad}
+        onError={onError}
+      />
+      <Animation
+        in={!loadingState && !!error}
+        duration='faster'
+        property='blur'
+      >
+        <Layout>
+          <span className={`${CLASS_NAME}--error`} data-src={data}>
+            {placeholder}
+          </span>
+        </Layout>
+      </Animation>
+      <Spinner in={loadingState && !error} duration='faster' size='smaller' />
+    </object>
+  );
+};
+
+type ImageProps = Spec.Props;
+
+export { Image, type ImageProps };
