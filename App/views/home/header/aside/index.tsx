@@ -1,15 +1,19 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Icons
 import * as Icons from '@/icons';
 
 // Components
 import { HyperLink, Layout, Navigation } from '@/components';
 
-// Styles
-import './styles.scss';
-
 const CLASS_NAME = 'kicl--views--home--header--aside';
+
+const COPY = {
+  label: 'Contact',
+};
 
 const Aside: React.FunctionComponent = () => {
   return (
@@ -21,8 +25,9 @@ const Aside: React.FunctionComponent = () => {
       justifyContent='center'
       justifyItems='center'
     >
-      <aside className={CLASS_NAME}>
+      <div className={classNames('kicl-padding-block-start-wide', CLASS_NAME)}>
         <Navigation
+          aria-label={COPY.label}
           alignContent='center'
           alignItems='center'
           autoFlow='column'
@@ -61,7 +66,7 @@ const Aside: React.FunctionComponent = () => {
             <Icons.Ri.RiMailLine aria-hidden />
           </HyperLink>
         </Navigation>
-      </aside>
+      </div>
     </Layout>
   );
 };

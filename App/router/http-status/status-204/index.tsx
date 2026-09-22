@@ -36,16 +36,22 @@ const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
             justifyContent='center'
             justifyItems='center'
           >
-            <Heading is='h1'>
+            <Text lookLike='h1'>
               <Icons.Ri.RiFileUnknowLine
                 aria-hidden
                 className='kicl-font-size-extreme'
               />
               Oops, something not right!
-            </Heading>
+            </Text>
           </Layout>
-          <Text lookLike='h2'>204 - No Content</Text>
-          {title ? <Text lookLike='h4'>{String(title)}</Text> : null}
+          <Heading is='h1' lookLike='h2'>
+            204 - No Content
+          </Heading>
+          {title ? (
+            <Heading is='h2' lookLike='h4'>
+              {title}
+            </Heading>
+          ) : null}
           <Text>{message}</Text>
           <GoBack />
         </section>

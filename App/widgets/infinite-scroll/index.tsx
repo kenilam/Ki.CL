@@ -1,11 +1,10 @@
 import React, { PropsWithChildren } from 'react';
-import ReactDOM from 'react-dom';
 
 // Libraries
 import classNames from 'classnames';
 
-// Hooks
-import { useResizeObserver } from '@/hooks';
+// Components
+import { Layout } from '@/components';
 
 // Styles
 import './styles.scss';
@@ -26,20 +25,13 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
     { children, direction = 'normal', speed = DEFAULT_SPEED, ...props },
     ref
   ) => {
-    const { node, rect } = useResizeObserver<HTMLDivElement>();
+    const className = classNames(CLASS_NAME, {
+      [`${CLASS_NAME}--animation-direction--${direction}`]: direction,
+    });
 
-    const id = crypto.randomUUID();
-
-    const uniqueClass = `${CLASS_NAME}--${id}`;
-
-    const className = classNames(
-      CLASS_NAME,
-      uniqueClass,
-      'kicl-position-relative',
-      {
-        [`${CLASS_NAME}--animation-direction--${direction}`]: direction,
-      }
-    );
+    const style = {
+      [`--${CLASS_NAME}--speed`]: `${speed}ms`,
+    } as React.CSSProperties;
 
     const elementClassName = classNames(
       props.className,
@@ -75,34 +67,16 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
         : child
     );
 
-    const Style = ReactDOM.createPortal(
-      <style data-widget-infinite-scroll-uuid={`${uniqueClass}--css-variables`}>
-        {`
-            .${uniqueClass} {
-              --kicl--widgets--infinite-scroll--block-size: ${
-                rect?.height ? `${rect.height}px` : 'auto'
-              };
-              --kicl--widgets--infinite-scroll--speed: ${speed}ms;
-            }
-          `}
-      </style>,
-      window.document.body
-    );
-
     return (
-      <>
-        {Style}
-        <div className={className} ref={ref}>
-          <div
-            className={`${CLASS_NAME}--wrapper kicl-position-absolute`}
-            ref={node}
-          >
+      <div className={className} ref={ref} style={style}>
+        <Layout autoFlow='column' gap='wide'>
+          <div className={`${CLASS_NAME}--wrapper`}>
             {Shadow}
             {Child}
             {Shadow}
           </div>
-        </div>
-      </>
+        </Layout>
+      </div>
     );
   }
 );

@@ -6,9 +6,6 @@ import classNames from 'classnames';
 // Widgets
 import { SiteLogo } from '@/widgets';
 
-// Hooks
-import { useResponsive } from '@/hooks';
-
 // Components
 import { Animation, Layout } from '@/components';
 
@@ -24,11 +21,10 @@ import { CLASS_NAME } from './constants';
 const Contents: React.FunctionComponent = () => {
   const { node, show } = useGlobalHeaderContext();
 
-  const { isTablet } = useResponsive();
-
   const className = classNames(
     'kicl-font-size-small',
     'kicl-position-fixed',
+    'kicl-text-transform-uppercase',
     CLASS_NAME
   );
 
@@ -37,7 +33,6 @@ const Contents: React.FunctionComponent = () => {
       <Layout
         alignItems='center'
         autoFlow='column'
-        gap={isTablet ? 'wider' : 'normal'}
         justifyContent='space-between'
         ref={node}
       >

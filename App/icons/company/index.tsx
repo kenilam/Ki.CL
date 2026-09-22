@@ -12,10 +12,17 @@ import './styles.scss';
 
 type Size = 'large' | 'larger' | 'largest' | 'medium' | 'small';
 
-type Props = React.ObjectHTMLAttributes<HTMLObjectElement> & {
-  src?:
-    | (typeof monochrome.Names)[keyof typeof monochrome.Names]
-    | (typeof polychrome.Names)[keyof typeof polychrome.Names];
+type Name =
+  | (typeof monochrome.Names)[keyof typeof monochrome.Names]
+  | (typeof polychrome.Names)[keyof typeof polychrome.Names];
+
+// Only what both an `img` and the injected SVG's wrapper take.
+type Props = Pick<
+  React.HTMLAttributes<HTMLElement>,
+  'className' | 'id' | 'title'
+> & {
+  alt?: string;
+  src?: Name;
   size?: Size;
 };
 
@@ -31,7 +38,14 @@ const CompanyVectors = {
   polychrome: polychrome.Vectors,
 };
 
+// `epicGames` → `Epic Games`, for when no `alt` is given.
+const toLabel = (name: string) =>
+  name
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/^./, (letter) => letter.toUpperCase());
+
 const Company: React.FunctionComponent<Props> = ({
+  alt,
   className: _className,
   src: _src,
   size,
@@ -39,6 +53,8 @@ const Company: React.FunctionComponent<Props> = ({
 }) => {
   const className = classNames(
     CLASS_NAME,
+    'kicl-display-inline-block',
+    'kicl-line-height-narrower',
     {
       [`${CLASS_NAME}--font-size--${size}`]: size,
     },
@@ -56,18 +72,25 @@ const Company: React.FunctionComponent<Props> = ({
     return null;
   }
 
+  const label = alt ?? toLabel(_src);
+
   if (polychrome) {
     return (
-      <figure {...props} className={className}>
-        <img alt={polychrome} data-src={polychrome} src={polychrome} />
-      </figure>
+      <img {...props} alt={label} className={className} src={polychrome} />
     );
   }
 
   return (
-    <object {...props} className={className}>
-      <ReactSVG src={monochrome} />
-    </object>
+    <ReactSVG
+      {...props}
+      beforeInjection={(svg) => {
+        svg.setAttribute('aria-label', label);
+        svg.setAttribute('role', 'img');
+      }}
+      className={className}
+      src={monochrome}
+      wrapper='span'
+    />
   );
 };
 

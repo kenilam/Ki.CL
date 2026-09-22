@@ -6,47 +6,46 @@ import { useNavigate } from '@/router';
 // Components
 import { HyperLink, HyperLinkProps } from '@/components';
 
-// Views
-import { PATH } from '@/views/home';
-
 const COPY = {
   back: 'Go Back',
-  home: 'Go to Home Page',
 };
 
 const GoBack: React.FunctionComponent = () => {
   const navigate = useNavigate();
 
-  const to = (() => {
-    if (document.referrer) {
-      const url = new URL(document.referrer);
+  const referrer = document.referrer ? new URL(document.referrer) : undefined;
+  const isSameOrigin = referrer?.origin === window.location.origin;
 
-      return url.href.replace(url.origin, '');
+  // A router link cannot reach another origin, so step back in history instead.
+  const onClick: HyperLinkProps['onClick'] = (event) => {
+    if (!referrer || isSameOrigin) {
+      return;
     }
 
-    return PATH;
-  })();
+    event.preventDefault();
 
-  const action = document.referrer ? COPY.back : COPY.home;
+    navigate(-1);
+  };
 
-  const onClick: HyperLinkProps['onClick'] = document.referrer
-    ? (event) => {
-        event.preventDefault();
-
-        navigate(-1);
-      }
-    : undefined;
+  const to: HyperLinkProps['to'] =
+    referrer && isSameOrigin
+      ? {
+          pathname: referrer.pathname,
+          search: referrer.search,
+          hash: referrer.hash,
+        }
+      : '..';
 
   return (
     <HyperLink
-      onClick={onClick}
       level='confirm'
       lookLikeButton
+      onClick={onClick}
       to={to}
       size='large'
       variant='secondary'
     >
-      {action}
+      {COPY.back}
     </HyperLink>
   );
 };

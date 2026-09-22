@@ -9,7 +9,7 @@ import { Text } from '@/components';
 const COPY = {
   before: 'The page ',
   after:
-    ' you are looking for might have been removed, had its name changed, or it temporarily unavailable.',
+    ' you are looking for might have been removed, had its name changed, or is temporarily unavailable.',
 };
 
 const Message: React.FunctionComponent = () => {
@@ -18,9 +18,7 @@ const Message: React.FunctionComponent = () => {
   return (
     <Text>
       {COPY.before}
-      <Text is='span' lookLike='h3'>
-        {pathname}
-      </Text>
+      <Text is='code'>{pathname}</Text>
       {COPY.after}
     </Text>
   );

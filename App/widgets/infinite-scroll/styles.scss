@@ -1,13 +1,11 @@
 :root {
   --kicl--widgets--infinite-scroll--animation-direction: normal;
-  --kicl--widgets--infinite-scroll--block-size: auto;
   --kicl--widgets--infinite-scroll--inline-size: 100%;
   --kicl--widgets--infinite-scroll--speed: 5000ms;
   --kicl--widgets--infinite-scroll--mask-image-gap: var(--kicl-size-2x);
 }
 
 .kicl--widgets--infinite-scroll {
-  block-size: var(--kicl--widgets--infinite-scroll--block-size);
   inline-size: var(--kicl--widgets--infinite-scroll--inline-size);
   mask-image: linear-gradient(
     to right,
@@ -19,9 +17,8 @@
   overflow: hidden;
 
   &--wrapper {
-    display: grid;
-    gap: var(--kicl-gutter-wide);
-    grid-auto-flow: column;
+    // Sized like the absolutely placed box it replaced, so its tracks never stretch.
+    inline-size: fit-content;
   }
 
   &--element {

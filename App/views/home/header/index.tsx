@@ -31,8 +31,10 @@ const Header: React.FunctionComponent = () => {
       >
         <header
           className={classNames(
-            'kicl-text-align-center',
+            'kicl-inline-size-full',
+            'kicl-padding-inline-extreme',
             'kicl-position-relative',
+            'kicl-text-align-center',
             CLASS_NAME
           )}
           id={ID}

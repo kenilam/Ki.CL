@@ -24,7 +24,14 @@ const Home: React.FunctionComponent = () => {
         justifyContent='center'
         justifyItems='center'
       >
-        <section className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+        <section
+          className={classNames(
+            CLASS_NAME,
+            'kicl-block-size-screen',
+            'kicl-inline-size-full',
+            'kicl-position-relative'
+          )}
+        >
           <Background />
           <Header />
         </section>

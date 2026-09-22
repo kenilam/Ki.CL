@@ -1,9 +1,4 @@
-:root {
-  --kicl--views--home--block-size: 100dvh;
-}
-
 .kicl--views--home {
-  block-size: var(--kicl--views--home--block-size);
   overflow: hidden;
 
   @at-root .kicl--view:has(&) {
