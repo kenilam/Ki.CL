@@ -1,0 +1,27 @@
+.kicl--components--input-group {
+  &__addon {
+    align-items: center;
+    color: var(--kicl-body-color);
+    display: inline-flex;
+    flex-shrink: 0;
+    gap: var(--kicl-gutter-narrowest);
+
+    &--inline-start {
+      order: -1;
+    }
+
+    &--inline-end {
+      margin-inline-start: auto;
+    }
+
+    &--block-start {
+      flex-basis: 100%;
+      order: -2;
+    }
+
+    &--block-end {
+      flex-basis: 100%;
+      order: 2;
+    }
+  }
+}

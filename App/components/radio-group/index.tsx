@@ -1,28 +1,22 @@
-import React, { createContext, useContext, useId, useState } from 'react';
+import React, { useId, useState } from 'react';
+
+// Libraries
 import classNames from 'classnames';
 
-import type { RadioGroupItemProps, RadioGroupProps } from './spec';
+// Spec
+import type { RadioGroupProps } from './spec';
 
+// Styles
 import './styles.scss';
 
-const CLASS_NAME = 'kicl--components--radio-group';
+// Constants
+import { CLASS_NAME } from './constants';
 
-type ContextValue = {
-  disabled?: boolean;
-  name: string;
-  onValueChange: (value: string) => void;
-  value?: string;
-};
+// Context
+import { RadioGroupContext } from './context';
 
-const RadioGroupContext = createContext<ContextValue | null>(null);
-
-const useRadioGroup = () => {
-  const ctx = useContext(RadioGroupContext);
-  if (!ctx) {
-    throw new Error('RadioGroupItem must be used within RadioGroup');
-  }
-  return ctx;
-};
+// Partials
+import { RadioGroupItem } from './item';
 
 /**
  * Mutually exclusive options - API aligned with
@@ -81,37 +75,6 @@ const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
 );
 
 RadioGroup.displayName = 'RadioGroup';
-
-const RadioGroupItem = React.forwardRef<HTMLButtonElement, RadioGroupItemProps>(
-  ({ className, disabled, value, ...rest }, ref) => {
-    const group = useRadioGroup();
-    const isDisabled = disabled || group.disabled;
-    const checked = group.value === value;
-
-    return (
-      <button
-        ref={ref}
-        type='button'
-        role='radio'
-        aria-checked={checked}
-        data-slot='radio-group-item'
-        disabled={isDisabled}
-        className={classNames(
-          `${CLASS_NAME}__item`,
-          {
-            [`${CLASS_NAME}__item--checked`]: checked,
-            [`${CLASS_NAME}__item--disabled`]: isDisabled,
-          },
-          className
-        )}
-        onClick={() => group.onValueChange(value)}
-        {...rest}
-      />
-    );
-  }
-);
-
-RadioGroupItem.displayName = 'RadioGroupItem';
 
 export type { RadioGroupProps, RadioGroupItemProps } from './spec';
 export { RadioGroupItem, RadioGroup };

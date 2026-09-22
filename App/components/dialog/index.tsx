@@ -3,19 +3,20 @@ import React, { useEffect, useId, useRef } from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Components
-import { Button } from '@/components';
-
-// Icons
-import * as Icons from '@/icons';
-
 // Spec
 import * as Spec from './spec';
 
 // Styles
 import './styles.scss';
 
-const CLASS_NAME = 'kicl--components--dialog';
+// Constants
+import { CLASS_NAME } from './constants';
+
+// Context
+import { DialogContext } from './context';
+
+// Partials
+import { Close } from './close';
 
 /**
  * A `<dialog>`, and as little around it as the platform allows.
@@ -83,43 +84,36 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
     };
 
     return (
-      <dialog
-        {...rest}
-        id={id}
-        ref={setRef}
-        className={classNames(
-          CLASS_NAME,
-          {
-            [`${CLASS_NAME}--is-closable`]: closable,
-            [`${CLASS_NAME}--is-dense`]: dense,
-            [`${CLASS_NAME}--is-full-screen`]: fullScreen,
-          },
-          className
-        )}
-        closedby={closable === true || closable === 'keyboard' ? 'any' : 'none'}
+      <DialogContext.Provider
+        value={{ closable, closeIcon: CloseIcon, fullScreen, id }}
       >
-        <section>
-          {closable === true ? (
-            <Button
-              unstyled
-              className={classNames(
-                'kicl-font-size-medium',
-                `${CLASS_NAME}--close`
-              )}
-              aria-label='Close this dialog'
-              command='request-close'
-              commandFor={id}
-            >
-              {CloseIcon ? <CloseIcon /> : <Icons.Ri.RiCloseLine />}
-            </Button>
-          ) : null}
-          {children}
-        </section>
+        <dialog
+          {...rest}
+          id={id}
+          ref={setRef}
+          className={classNames(
+            CLASS_NAME,
+            {
+              [`${CLASS_NAME}--is-closable`]: closable,
+              [`${CLASS_NAME}--is-dense`]: dense,
+              [`${CLASS_NAME}--is-full-screen`]: fullScreen,
+            },
+            className
+          )}
+          closedby={
+            closable === true || closable === 'keyboard' ? 'any' : 'none'
+          }
+        >
+          <section>
+            <Close />
+            {children}
+          </section>
 
-        {footer ? (
-          <footer className={`${CLASS_NAME}--footer`}>{footer}</footer>
-        ) : null}
-      </dialog>
+          {footer ? (
+            <footer className={`${CLASS_NAME}--footer`}>{footer}</footer>
+          ) : null}
+        </dialog>
+      </DialogContext.Provider>
     );
   }
 );

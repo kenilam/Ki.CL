@@ -1,22 +1,23 @@
 import React from 'react';
+
+// Libraries
 import classNames from 'classnames';
 
-import { Button } from '@/components/button';
-import { Input } from '@/components/input';
-import { Textarea } from '@/components/textarea';
+// Spec
+import type { InputGroupProps } from './spec';
 
-import type {
-  InputGroupAddonProps,
-  InputGroupButtonProps,
-  InputGroupInputProps,
-  InputGroupProps,
-  InputGroupTextareaProps,
-  InputGroupTextProps,
-} from './spec';
-
+// Styles
 import './styles.scss';
 
-const CLASS_NAME = 'kicl--components--input-group';
+// Constants
+import { CLASS_NAME } from './constants';
+
+// Partials
+import { InputGroupAddon } from './addon';
+import { InputGroupButton } from './button';
+import { InputGroupInput } from './input';
+import { InputGroupText } from './text';
+import { InputGroupTextarea } from './textarea';
 
 /**
  * Input with addons - API aligned with
@@ -36,90 +37,6 @@ const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
 );
 
 InputGroup.displayName = 'InputGroup';
-
-const InputGroupAddon = React.forwardRef<HTMLDivElement, InputGroupAddonProps>(
-  ({ align = 'inline-start', className, ...rest }, ref) => (
-    <div
-      ref={ref}
-      data-slot='input-group-addon'
-      data-align={align}
-      className={classNames(
-        `${CLASS_NAME}__addon`,
-        `${CLASS_NAME}__addon--${align}`,
-        className
-      )}
-      {...rest}
-    />
-  )
-);
-
-InputGroupAddon.displayName = 'InputGroupAddon';
-
-const InputGroupButton = React.forwardRef<
-  HTMLButtonElement,
-  InputGroupButtonProps
->(({ className, size = 'sm', variant = 'ghost', ...rest }, ref) => (
-  <Button
-    ref={ref}
-    size={
-      size === 'xs' || size === 'icon-xs'
-        ? 'small'
-        : size === 'sm' || size === 'icon-sm'
-          ? 'small'
-          : undefined
-    }
-    unstyled={variant === 'ghost' || variant === 'link'}
-    className={classNames(`${CLASS_NAME}__button`, className)}
-    {...(rest as React.ComponentProps<typeof Button>)}
-  />
-));
-
-InputGroupButton.displayName = 'InputGroupButton';
-
-const InputGroupInput = React.forwardRef<
-  HTMLInputElement,
-  InputGroupInputProps
->(({ className, ...rest }, ref) => (
-  <Input
-    ref={ref}
-    data-slot='input-group-control'
-    className={classNames(`${CLASS_NAME}__control`, className)}
-    {...rest}
-  />
-));
-
-InputGroupInput.displayName = 'InputGroupInput';
-
-const InputGroupTextarea = React.forwardRef<
-  HTMLTextAreaElement,
-  InputGroupTextareaProps
->(({ className, ...rest }, ref) => (
-  <Textarea
-    ref={ref}
-    data-slot='input-group-control'
-    className={classNames(`${CLASS_NAME}__control`, className)}
-    {...rest}
-  />
-));
-
-InputGroupTextarea.displayName = 'InputGroupTextarea';
-
-const InputGroupText = React.forwardRef<HTMLSpanElement, InputGroupTextProps>(
-  ({ className, ...rest }, ref) => (
-    <span
-      ref={ref}
-      data-slot='input-group-text'
-      className={classNames(
-        `${CLASS_NAME}__text`,
-        'kicl-font-size-small',
-        className
-      )}
-      {...rest}
-    />
-  )
-);
-
-InputGroupText.displayName = 'InputGroupText';
 
 export type {
   InputGroupAddonProps,

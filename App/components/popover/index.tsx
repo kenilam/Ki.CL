@@ -1,40 +1,23 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+import React, { useId, useState } from 'react';
+
+// Libraries
 import classNames from 'classnames';
 
-import type {
-  PopoverContentProps,
-  PopoverProps,
-  PopoverTriggerProps,
-} from './spec';
+// Spec
+import type { PopoverProps } from './spec';
 
+// Styles
 import './styles.scss';
 
-const CLASS_NAME = 'kicl--components--popover';
+// Constants
+import { CLASS_NAME } from './constants';
 
-type ContextValue = {
-  /** Ties the trigger to the panel, and names the anchor they position by. */
-  id: string;
-  anchor: string;
-  open: boolean;
-  setOpen: (open: boolean) => void;
-};
+// Context
+import { PopoverContext } from './context';
 
-const PopoverContext = createContext<ContextValue | null>(null);
-
-const usePopover = () => {
-  const ctx = useContext(PopoverContext);
-  if (!ctx) {
-    throw new Error('Popover parts must be used within Popover');
-  }
-  return ctx;
-};
+// Partials
+import { PopoverContent } from './content';
+import { PopoverTrigger } from './trigger';
 
 /**
  * Anchored overlay, built on the browser's own popover.
@@ -100,123 +83,6 @@ const Popover: React.FC<PopoverProps> = ({
 };
 
 Popover.displayName = 'Popover';
-
-const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
-  ({ children, className, onClick, ...rest }, ref) => {
-    const popover = usePopover();
-
-    return (
-      <button
-        ref={ref}
-        type='button'
-        data-slot='popover-trigger'
-        aria-expanded={popover.open}
-        className={classNames(`${CLASS_NAME}__trigger`, className)}
-        /*
-         * The browser toggles the panel from this attribute. The handler is
-         * passed through untouched and no longer sets state - whatever
-         * happens, the `toggle` event on the panel is what reports it back.
-         */
-        popoverTarget={popover.id}
-        onClick={onClick}
-        {...rest}
-      >
-        {children}
-      </button>
-    );
-  }
-);
-
-PopoverTrigger.displayName = 'PopoverTrigger';
-
-const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>(
-  (
-    {
-      children,
-      className,
-      placement = 'block-end',
-      variant = 'default',
-      ...rest
-    },
-    ref
-  ) => {
-    const popover = usePopover();
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-
-    /* The browser is the source of truth; this reports what it decided. */
-    useEffect(() => {
-      const node = nodeRef.current;
-
-      if (!node) {
-        return undefined;
-      }
-
-      const onToggle = (event: Event) => {
-        const next = (event as ToggleEvent).newState === 'open';
-
-        if (next !== popover.open) {
-          popover.setOpen(next);
-        }
-      };
-
-      node.addEventListener('toggle', onToggle);
-
-      return () => node.removeEventListener('toggle', onToggle);
-    }, [popover]);
-
-    /*
-     * And this pushes a caller's decision back the other way, for the openings
-     * and closings no click caused - a date chosen inside the panel, or a
-     * `defaultOpen` panel that has to be shown once on mount.
-     */
-    useEffect(() => {
-      const node = nodeRef.current;
-
-      if (!node) {
-        return;
-      }
-
-      const shown = node.matches(':popover-open');
-
-      if (popover.open && !shown) {
-        node.showPopover();
-      }
-
-      if (!popover.open && shown) {
-        node.hidePopover();
-      }
-    }, [popover.open]);
-
-    return (
-      <div
-        ref={(node) => {
-          nodeRef.current = node;
-
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref) {
-            ref.current = node;
-          }
-        }}
-        id={popover.id}
-        popover='auto'
-        role='dialog'
-        data-slot='popover-content'
-        className={classNames(
-          `${CLASS_NAME}__content`,
-          `${CLASS_NAME}__content--${placement}`,
-          `${CLASS_NAME}__content--variant--${variant}`,
-          className
-        )}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  }
-);
-
-PopoverContent.displayName = 'PopoverContent';
 
 export type {
   PopoverContentProps,

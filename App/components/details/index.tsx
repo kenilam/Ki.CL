@@ -1,13 +1,19 @@
 import React from 'react';
+
+// Libraries
 import classNames from 'classnames';
 
-import { Ri } from '@/icons';
-
+// Spec
 import type { Props } from './spec';
 
+// Styles
 import './styles.scss';
 
-const CLASS_NAME = 'kicl--components--details';
+// Constants
+import { CLASS_NAME } from './constants';
+
+// Partials
+import { Marker } from './marker';
 
 /**
  * Native disclosure. Open/close is pure CSS via `::details-content`
@@ -23,14 +29,7 @@ const Details = React.forwardRef<HTMLDetailsElement, Props>(
     >
       <summary className={`${CLASS_NAME}__summary`} data-slot='summary'>
         {summary}
-        <span aria-hidden className={`${CLASS_NAME}__marker`}>
-          <Ri.RiSubtractLine
-            className={`${CLASS_NAME}__marker-icon ${CLASS_NAME}__marker-icon--closed`}
-          />
-          <Ri.RiArrowDownSLine
-            className={`${CLASS_NAME}__marker-icon ${CLASS_NAME}__marker-icon--open`}
-          />
-        </span>
+        <Marker />
       </summary>
       {children}
     </details>
