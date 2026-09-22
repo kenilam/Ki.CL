@@ -14,7 +14,7 @@ import colors from 'colors';
 
 import config from '../app.config.json' with { type: 'json' };
 
-import Env from '../env';
+import { Env } from '../env';
 
 import { applyProxy, attachUpgrade, warmIdToken } from './proxy';
 
