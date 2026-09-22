@@ -30,7 +30,7 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
         </Button>
       </Layout>
 
-      <figcaption>
+      <figcaption className='kicl-padding-block-start-narrower'>
         <Text is='span' dense>
           {caption}
         </Text>
@@ -43,9 +43,9 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
         id={data}
       >
         <Layout alignItems='center' justifyContent='center'>
-          <section>
+          <div>
             <Image data={data} alt={alt} />
-          </section>
+          </div>
         </Layout>
       </Dialog>
     </figure>

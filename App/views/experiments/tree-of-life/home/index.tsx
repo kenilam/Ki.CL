@@ -13,7 +13,9 @@ const CLASS_NAME = 'kicl--views--experiments--tree-of-life';
 const Home: React.FunctionComponent = () => {
   return (
     <Layout gap='wide'>
-      <article className={CLASS_NAME}>
+      <article
+        className={`${CLASS_NAME} kicl-padding-block-start-header kicl-padding-block-end-extreme`}
+      >
         <Banner />
         <Article />
       </article>

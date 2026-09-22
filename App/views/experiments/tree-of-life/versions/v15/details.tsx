@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId } from 'react';
 
 import {
   Badge,
@@ -21,8 +21,7 @@ import {
   labelFor,
   type TreeNode,
 } from '@/views/experiments/tree-of-life/tree';
-
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
+import { CLASS_NAME } from './constants';
 
 /**
  * The detail panel, reading the focused taxon straight from context.
@@ -35,7 +34,7 @@ const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v15';
 const Details: React.FunctionComponent = () => {
   const { find, focus } = useTreeOfLifeContext();
   const taxon = focus ? find(focus) : null;
-  const [open, setOpen] = useState(true);
+  const titleId = useId();
 
   // Nothing to describe until the lineage has resolved.
   if (!taxon) {
@@ -47,12 +46,13 @@ const Details: React.FunctionComponent = () => {
   const rank = displayRank(node.rank);
   const terminal = isTerminalRank(node.rank);
   const hasMeta = Boolean(rank) || terminal || node.ottId != null;
+  const title = isOrigin ? 'Origin of life' : labelFor(node) || 'Unnamed node';
 
   return (
     <Card
       variant='ghost'
-      is='aside'
-      aria-live='polite'
+      is='section'
+      aria-labelledby={titleId}
       className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
     >
       {hasMeta ? (
@@ -96,16 +96,21 @@ const Details: React.FunctionComponent = () => {
       <CardContent>
         <Layout gap='narrow'>
           <div>
+            {/*
+              Open on arrival and left to the browser after that. Only the
+              title is live, so a new taxon is announced by name and nothing
+              else in the card is read again.
+            */}
             <DetailsDisclosure
-              open={open}
-              onToggle={(event) => {
-                setOpen(event.currentTarget.open);
-              }}
+              open
               summary={
-                <CardTitle is='h2' className='kicl-font-size'>
-                  {isOrigin
-                    ? 'Origin of life'
-                    : labelFor(node) || 'Unnamed node'}
+                <CardTitle
+                  id={titleId}
+                  is='h2'
+                  aria-live='polite'
+                  className='kicl-font-size'
+                >
+                  {title}
                 </CardTitle>
               }
             >
@@ -125,7 +130,7 @@ const Details: React.FunctionComponent = () => {
               <Text
                 dense
                 is='p'
-                className={`kicl-font-size-small kicl-line-height-narrow ${CLASS_NAME}__muted`}
+                className='kicl-font-size-small kicl-line-height-narrow kicl-color-grey-dark'
               >
                 {node.description.trim()}
               </Text>

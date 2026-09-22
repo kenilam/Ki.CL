@@ -18,8 +18,14 @@
   min-block-size: calc(
     100dvb - var(--kicl--widgets--global-header--block-size)
   );
-  padding-block-start: var(--kicl-gutter-widest);
   padding-inline: var(--kicl--tree-of-life--inset);
+
+  // The view layer sits above `Layout`, so this overrides its column flow.
+  @include query('≤desktop') {
+    align-content: start;
+    align-items: start;
+    grid-auto-flow: row;
+  }
 
   &::before {
     backdrop-filter: blur(var(--kicl-size))

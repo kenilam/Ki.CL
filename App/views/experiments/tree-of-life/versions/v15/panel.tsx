@@ -19,10 +19,10 @@ const Panel: React.FunctionComponent = () => (
     className={`${CLASS_NAME}__chrome ${CLASS_NAME}__chrome--panel kicl-position-fixed kicl-inset-block-start kicl-inset-inline-start`}
     gap='narrow'
   >
-    <div>
+    <aside aria-label='Taxon'>
       <Search />
       <Details />
-    </div>
+    </aside>
   </Layout>
 );
 

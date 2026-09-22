@@ -53,6 +53,11 @@ import { LabelProjector } from './projector';
  */
 const PILL_CLASS = [
   `${CLASS_NAME}__label`,
+  'kicl-border-radius-sm',
+  'kicl-display-inline-flex',
+  'kicl-inset-block-start-0',
+  'kicl-inset-inline-start-0',
+  'kicl-text-nowrap',
   'kicl-position-absolute',
   'kicl-pointer-events-auto',
   'kicl-font-size-small',
@@ -60,7 +65,7 @@ const PILL_CLASS = [
 
 /** DOM layer. Sits outside the Canvas and seats the pills each frame. */
 const Labels: React.FunctionComponent = () => {
-  const hostRef = useRef<HTMLDivElement>(null);
+  const hostRef = useRef<HTMLElement>(null);
   const pillsRef = useRef<Map<string, HTMLElement>>(new Map());
 
   // Re-render when labels are added or removed - never when they move.
@@ -85,9 +90,10 @@ const Labels: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <div
+    <nav
+      aria-label='Taxa in view'
       ref={hostRef}
-      className={`${CLASS_NAME}__labels kicl-position-absolute kicl-pointer-events-none`}
+      className={`${CLASS_NAME}__labels kicl-inset-0 kicl-position-absolute kicl-pointer-events-none`}
     >
       {[...registry.entries()].map(([key, label]) => (
         /*
@@ -139,7 +145,7 @@ const Labels: React.FunctionComponent = () => {
           </Badge>
         </HyperLink>
       ))}
-    </div>
+    </nav>
   );
 };
 

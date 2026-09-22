@@ -9,10 +9,6 @@
     cursor: zoom-in;
   }
 
-  figcaption {
-    padding-block-start: var(--kicl-gutter-narrower);
-  }
-
   &__full {
     &#{&} {
       --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);

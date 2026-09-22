@@ -3,9 +3,6 @@ import React from 'react';
 // Library
 import classNames from 'classnames';
 
-// Hook
-import { useResponsive } from '@/hooks';
-
 // Components
 import { Layout } from '@/components';
 
@@ -19,24 +16,27 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME } from './constants';
 
-const Banner: React.FunctionComponent = () => {
-  const { isTablet } = useResponsive();
-
-  return (
-    <Layout
-      alignItems={isTablet ? 'start' : 'center'}
-      alignContent={isTablet ? 'start' : 'center'}
-      autoFlow={isTablet ? 'row' : 'column'}
-      gap='extreme'
-      justifyItems='start'
-      justifyContent='start'
+// Stacks below `desktop` through a media query in `styles.scss`.
+const Banner: React.FunctionComponent = () => (
+  <Layout
+    alignItems='center'
+    alignContent='center'
+    autoFlow='column'
+    gap='extreme'
+    justifyItems='start'
+    justifyContent='start'
+  >
+    <header
+      className={classNames(
+        CLASS_NAME,
+        'kicl-padding-block-start-widest',
+        'kicl-position-relative'
+      )}
     >
-      <header className={classNames(CLASS_NAME, 'kicl-position-relative')}>
-        <Intro />
-        <Attempts />
-      </header>
-    </Layout>
-  );
-};
+      <Intro />
+      <Attempts />
+    </header>
+  </Layout>
+);
 
 export { CLASS_NAME, Banner };

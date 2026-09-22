@@ -42,7 +42,6 @@ const Controls: React.FunctionComponent = () => {
           alignItems='center'
           gap='narrower'
           className={animate ? 'kicl-color-green' : 'kicl-color-grey-dark'}
-          aria-label={COPY.play}
           aria-pressed={animate}
           title={animate ? COPY.land : COPY.play}
           onClick={() => setAnimate((current) => !current)}

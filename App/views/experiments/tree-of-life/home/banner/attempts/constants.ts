@@ -3,7 +3,7 @@ import {
   type Version,
 } from '@/views/experiments/tree-of-life/versions/constants';
 
-type Era = {
+export type Era = {
   label: string;
   versions: readonly Version[];
 };

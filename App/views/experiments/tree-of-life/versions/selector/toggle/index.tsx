@@ -67,7 +67,6 @@ const Toggle: React.FunctionComponent = () => {
             `${CLASS_NAME}__toggle`
           )}
           popoverTarget={CLASS_NAME}
-          aria-label='Every version of this view'
           title='Every version of this view'
         >
           <Ri.RiStackLine aria-hidden />

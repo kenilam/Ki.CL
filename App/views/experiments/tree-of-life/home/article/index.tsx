@@ -18,8 +18,6 @@ import { WhereItStarted } from './where-it-started';
  * of the view traded away, and what the final one gave up to be usable.
  */
 
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life';
-
 const Article: React.FunctionComponent = () => {
   return (
     <Layout
@@ -28,7 +26,7 @@ const Article: React.FunctionComponent = () => {
       alignItems='start'
       alignContent='start'
     >
-      <article className={`${CLASS_NAME}__article`}>
+      <div>
         <WhereItStarted />
         <ThePicture />
         <FifteenAttempts />
@@ -37,7 +35,7 @@ const Article: React.FunctionComponent = () => {
         <TuningTheReviewer />
         <Quota />
         <WhatIGaveUp />
-      </article>
+      </div>
     </Layout>
   );
 };

@@ -209,72 +209,73 @@ const Search: React.FunctionComponent = () => {
   };
 
   return (
-    <Card
-      is='aside'
-      variant='ghost'
-      className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
-    >
-      <CardContent>
-        <Layout autoFlow='row' gap='narrow'>
-          <div>
-            {/*
-              The browser draws its own controls on this input - a cancel cross
-              for `type='search'` and a picker triangle for `list` - and neither
-              is one of ours. They are suppressed in the stylesheet and replaced
-              here with the app's own icons, so the field matches everything
-              else on the page.
-            */}
-            <InputGroup className={`${CLASS_NAME}__search`}>
-              <InputGroupAddon align='inline-start'>
-                <Ri.RiSearchLine aria-hidden />
-              </InputGroupAddon>
-
-              <InputGroupInput
-                type='search'
-                value={query}
-                list={LIST_ID}
-                placeholder='Find a taxon…'
-                autoComplete='off'
-                aria-label='Find a taxon by name'
-                aria-busy={loading}
-                onChange={(event) => choose(event.target.value)}
-              />
-
-              {query ? (
-                <InputGroupAddon align='inline-end'>
-                  <InputGroupButton
-                    size='icon-xs'
-                    variant='ghost'
-                    type='button'
-                    aria-label='Clear the search'
-                    onClick={() => setQuery('')}
-                  >
-                    <Ri.RiCloseLine aria-hidden />
-                  </InputGroupButton>
+    <search>
+      <Card
+        variant='ghost'
+        className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
+      >
+        <CardContent>
+          <Layout autoFlow='row' gap='narrow'>
+            <div>
+              {/*
+                The browser draws its own controls on this input - a cancel
+                cross for `type='search'` and a picker triangle for `list` -
+                and neither is one of ours. They are suppressed in the
+                stylesheet and replaced here with the app's own icons, so the
+                field matches everything else on the page.
+              */}
+              <InputGroup className={`${CLASS_NAME}__search`}>
+                <InputGroupAddon align='inline-start'>
+                  <Ri.RiSearchLine aria-hidden />
                 </InputGroupAddon>
-              ) : null}
-            </InputGroup>
 
-            <datalist id={LIST_ID}>
-              {options.map((option) => (
-                <option key={option.nodeId} value={label(option)} />
-              ))}
-            </datalist>
+                <InputGroupInput
+                  type='search'
+                  value={query}
+                  list={LIST_ID}
+                  placeholder='Find a taxon…'
+                  autoComplete='off'
+                  aria-label='Find a taxon by name'
+                  aria-busy={loading}
+                  onChange={(event) => choose(event.target.value)}
+                />
 
-            <Text
-              dense
-              is='p'
-              aria-live='polite'
-              className={`kicl-font-size-smaller ${CLASS_NAME}__muted`}
-            >
-              {STATUS_MESSAGES[
-                statusKey({ loading, searching, matches: found.length })
-              ](options.length)}
-            </Text>
-          </div>
-        </Layout>
-      </CardContent>
-    </Card>
+                {query ? (
+                  <InputGroupAddon align='inline-end'>
+                    <InputGroupButton
+                      size='icon-xs'
+                      variant='ghost'
+                      type='button'
+                      aria-label='Clear the search'
+                      onClick={() => setQuery('')}
+                    >
+                      <Ri.RiCloseLine aria-hidden />
+                    </InputGroupButton>
+                  </InputGroupAddon>
+                ) : null}
+              </InputGroup>
+
+              <datalist id={LIST_ID}>
+                {options.map((option) => (
+                  <option key={option.nodeId} value={label(option)} />
+                ))}
+              </datalist>
+
+              <Text
+                dense
+                is='p'
+                aria-live='polite'
+                className='kicl-font-size-smaller kicl-color-grey-dark'
+              >
+                {STATUS_MESSAGES[
+                  statusKey({ loading, searching, matches: found.length })
+                ](options.length)}
+              </Text>
+            </div>
+          </Layout>
+        </CardContent>
+      </Card>
+    </search>
   );
 };
 

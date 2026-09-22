@@ -30,7 +30,8 @@
     }
   }
 
-  a {
+  // Staggered per list item, since each link is the only child of its item.
+  li {
     opacity: 0;
     transition:
       opacity var(--kicl-transition-duration-fast),
@@ -38,7 +39,7 @@
     translate: 0 calc(var(--kicl-gutter-narrow) * -1);
   }
 
-  &:popover-open a {
+  &:popover-open li {
     opacity: 1;
     transition-delay: calc((sibling-count() - sibling-index()) * 30ms);
     translate: 0 0;

@@ -1,59 +1,39 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // Library
 import classNames from 'classnames';
 
 // Components
-import { HyperLink, Layout, Text } from '@/components';
+import { Heading, Layout, List } from '@/components';
+
+// Partials
+import { Era } from './era';
 
 // Constants
-import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';
-import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constants';
 import { ERAS } from './constants';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life__attempts';
 
 const Attempts: React.FunctionComponent = () => {
+  const id = useId();
+
   return (
     <Layout justifyContent='start' className='kicl-position-relative'>
-      <nav className={CLASS_NAME} aria-label='Every version of this view'>
-        <Text
-          is='span'
+      <nav className={CLASS_NAME} aria-labelledby={id}>
+        <Heading
+          id={id}
+          is='h2'
           lookLike='h3'
           dense
           className={classNames('kicl-font-family-mono')}
         >
           Fifteen attempts:
-        </Text>
-        <Layout autoFlow='row' justifyContent='start' gap='narrow'>
-          <ul>
-            {ERAS.map(({ label, versions }) => (
-              <li key={label}>
-                <Layout autoFlow='column' justifyContent='start' gap='narrow'>
-                  <ol>
-                    {versions.map((version) => (
-                      <li key={version}>
-                        <HyperLink
-                          className={classNames(
-                            'kicl-font-family-mono',
-                            'kicl-font-size-medium'
-                          )}
-                          to={toVersionPath({ version, nodeId: ROOT_NODE_ID })}
-                        >
-                          {version.padStart(2, '0')}
-                        </HyperLink>
-                      </li>
-                    ))}
-                  </ol>
-                </Layout>
-
-                <Text dense className='kicl-font-size-small'>
-                  {label}
-                </Text>
-              </li>
-            ))}
-          </ul>
-        </Layout>
+        </Heading>
+        <List justifyContent='start' gap='narrow'>
+          {ERAS.map((era) => (
+            <Era key={era.label} {...era} />
+          ))}
+        </List>
       </nav>
     </Layout>
   );

@@ -10,7 +10,7 @@ import {
   Kicl_TreeOfLifeSubtreeDocument,
 } from 'api/provider';
 
-import { Image, Layout, Skeleton, Status, Text } from '@/components';
+import { Status } from '@/components';
 
 import {
   labelFor,
@@ -19,40 +19,16 @@ import {
   type TreeNode,
 } from '@/views/experiments/tree-of-life/tree';
 
+// Partials
+import { Plate, announcementFor } from './plate';
+
+// Styles
 import './styles.scss';
 
+// Constants
+import { ERROR_MESSAGES, messageKey } from './constants';
+
 const DEBOUNCE_MS = 500;
-
-const DISCLAIMER =
-  'Generated from a description - not a photograph, and not always right.';
-
-/** Exhaustion is the one failure a reload cannot clear, so it says so. */
-const ERROR_MESSAGES = {
-  unreachable: 'Could not reach the plate. Check your connection and reload.',
-  exhausted: 'Out of drawing quota - reloading will not bring it back.',
-  unfinished:
-    'The drawing did not finish. Reload to send it back for another try.',
-};
-
-function messageKey({
-  error,
-  status,
-}: {
-  error: boolean;
-  status?: string | null;
-}): keyof typeof ERROR_MESSAGES {
-  if (error) {
-    return 'unreachable';
-  }
-
-  if (status === 'EXHAUSTED') {
-    return 'exhausted';
-  }
-
-  return 'unfinished';
-}
-
-const CLASS_NAME = 'kicl--views--experiments--tree-of-life--taxon-visual';
 
 export function isTaxonVisualEligible(
   node: TreeNode,
@@ -182,6 +158,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
         in
         level='info'
         title='Plate'
+        headingLevel='h3'
         message='Pick a named taxon and one will be drawn for it.'
         align='start'
         property='fade'
@@ -198,66 +175,23 @@ const TaxonVisualPanel: React.FC<Props> = ({
     !failed &&
     (!debounced || loading || refreshing || awaitingGeneration || !visual);
 
-  if (!imageUrl && failed) {
-    return (
-      <Status
-        in
-        level='warning'
-        title='No plate'
-        message={ERROR_MESSAGES[messageKey({ error: Boolean(error), status })]}
-        align='start'
-        property='fade'
-      />
-    );
-  }
-
-  if (isGenerating) {
-    return (
-      <Layout gap='narrowest' aria-busy='true' aria-live='polite'>
-        <div>
-          <Skeleton
-            aria-hidden
-            className={`${CLASS_NAME}__taxon-plate-skeleton`}
-          />
-          <Text is='span' className='kicl-font-size-small kicl-color-grey-dark'>
-            Drawing this one - it takes about a minute.
-          </Text>
-        </div>
-      </Layout>
-    );
-  }
-
-  if (!imageUrl) {
-    return (
-      <Status
-        in
-        level='warning'
-        title='No plate'
-        message={ERROR_MESSAGES.unfinished}
-        align='start'
-        property='fade'
-      />
-    );
-  }
-
   return (
-    <Layout gap='narrowest'>
-      <div>
-        <Image
-          data={imageUrl}
-          alt={`Plate of ${name || 'this taxon'}, drawn from a description`}
-          className={`${CLASS_NAME}__taxon-plate`}
-        />
-        <Text
-          dense
-          is='span'
-          lookLike='h6'
-          className='kicl-font-size-smaller kicl-color-grey-dark kicl-line-height-narrow'
-        >
-          {DISCLAIMER}
-        </Text>
-      </div>
-    </Layout>
+    <>
+      {/*
+        Mounted in every state, so the change from drawing to a plate or a
+        failure is announced. A region that mounts with its text is not.
+      */}
+      <p className='kicl-hidden' aria-live='polite'>
+        {announcementFor({ imageUrl, isGenerating, name })}
+      </p>
+      <Plate
+        failed={failed}
+        imageUrl={imageUrl}
+        isGenerating={isGenerating}
+        message={ERROR_MESSAGES[messageKey({ error: Boolean(error), status })]}
+        name={name}
+      />
+    </>
   );
 };
 
