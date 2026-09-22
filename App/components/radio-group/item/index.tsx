@@ -3,6 +3,9 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Components
+import { Layout } from '@/components/layout';
+
 // Spec
 import type { RadioGroupItemProps } from '@/components/radio-group/spec';
 
@@ -17,31 +20,44 @@ import { useRadioGroup } from '@/components/radio-group/context';
 
 const CLASS_NAME = `${RADIO_GROUP}__item`;
 
-const RadioGroupItem = React.forwardRef<HTMLButtonElement, RadioGroupItemProps>(
-  ({ className, disabled, value, ...rest }, ref) => {
+/**
+ * One native radio. Children are its visible label; the `<label>` wraps both
+ * so clicking the text selects the radio.
+ */
+const RadioGroupItem = React.forwardRef<HTMLInputElement, RadioGroupItemProps>(
+  ({ children, className, onChange, value, ...rest }, ref) => {
     const group = useRadioGroup();
-    const isDisabled = disabled || group.disabled;
-    const checked = group.value === value;
+    const isControlled = group.value !== undefined;
 
     return (
-      <button
-        ref={ref}
-        type='button'
-        role='radio'
-        aria-checked={checked}
-        data-slot='radio-group-item'
-        disabled={isDisabled}
-        className={classNames(
-          CLASS_NAME,
-          {
-            [`${CLASS_NAME}--checked`]: checked,
-            [`${CLASS_NAME}--disabled`]: isDisabled,
-          },
-          className
-        )}
-        onClick={() => group.onValueChange(value)}
-        {...rest}
-      />
+      <Layout
+        display='inline-grid'
+        autoFlow='column'
+        alignItems='center'
+        gap='narrower'
+      >
+        <label className={classNames(CLASS_NAME, className)}>
+          <input
+            ref={ref}
+            type='radio'
+            data-slot='radio-group-item'
+            className={`${CLASS_NAME}__control`}
+            name={group.name}
+            value={value}
+            required={group.required}
+            checked={isControlled ? group.value === value : undefined}
+            defaultChecked={
+              isControlled ? undefined : group.defaultValue === value
+            }
+            onChange={(event) => {
+              onChange?.(event);
+              group.onValueChange(value);
+            }}
+            {...rest}
+          />
+          {children}
+        </label>
+      </Layout>
     );
   }
 );

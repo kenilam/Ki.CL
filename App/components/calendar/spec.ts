@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type React from 'react';
 
 export type CalendarMode = 'single' | 'range';
 
@@ -7,7 +7,10 @@ export type DateRange = {
   to?: Date;
 };
 
-type CalendarBaseProps = Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'> & {
+type CalendarBaseProps = Omit<
+  React.ComponentPropsWithoutRef<'div'>,
+  'onSelect' | 'defaultValue'
+> & {
   defaultMonth?: Date;
   disabled?: (date: Date) => boolean;
 };

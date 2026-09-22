@@ -1,7 +1,10 @@
-import React, { useId, useState } from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+
+// Components
+import { Layout } from '@/components/layout';
 
 // Spec
 import type { RadioGroupProps } from './spec';
@@ -19,56 +22,51 @@ import { RadioGroupContext } from './context';
 import { RadioGroupItem } from './item';
 
 /**
- * Mutually exclusive options - API aligned with
- * https://ui.shadcn.com/docs/components/base/radio-group
+ * Mutually exclusive options as a native `<fieldset>` of radios - API aligned
+ * with https://ui.shadcn.com/docs/components/base/radio-group
+ *
+ * `disabled` on the fieldset disables every radio inside it.
  */
-const RadioGroup = React.forwardRef<HTMLDivElement, RadioGroupProps>(
+const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
   (
     {
       children,
       className,
       defaultValue,
-      disabled,
+      legend,
       name,
       onValueChange,
+      required,
       value,
       ...rest
     },
     ref
   ) => {
     const reactId = useId();
-    const isControlled = value !== undefined;
-    const [uncontrolled, setUncontrolled] = useState(defaultValue);
-    const current = isControlled ? value : uncontrolled;
-
-    const setValue = (next: string) => {
-      if (disabled) {
-        return;
-      }
-      if (!isControlled) {
-        setUncontrolled(next);
-      }
-      onValueChange?.(next);
-    };
 
     return (
       <RadioGroupContext.Provider
         value={{
-          disabled,
+          defaultValue,
           name: name ?? reactId,
-          onValueChange: setValue,
-          value: current,
+          onValueChange: (next) => onValueChange?.(next),
+          required,
+          value,
         }}
       >
-        <div
-          ref={ref}
-          role='radiogroup'
-          data-slot='radio-group'
-          className={classNames(CLASS_NAME, className)}
-          {...rest}
-        >
-          {children}
-        </div>
+        <Layout gap='narrower' justifyItems='start'>
+          <fieldset
+            ref={ref}
+            data-slot='radio-group'
+            className={classNames(CLASS_NAME, className)}
+            {...rest}
+          >
+            {legend ? (
+              <legend className={`${CLASS_NAME}__legend`}>{legend}</legend>
+            ) : null}
+            {children}
+          </fieldset>
+        </Layout>
       </RadioGroupContext.Provider>
     );
   }

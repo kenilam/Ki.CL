@@ -1,10 +1,13 @@
 import { createContext, useContext } from 'react';
 
-type ContextValue = {
-  disabled?: boolean;
+import type { RadioGroupProps } from './spec';
+
+type ContextValue = Pick<
+  RadioGroupProps,
+  'defaultValue' | 'required' | 'value'
+> & {
   name: string;
   onValueChange: (value: string) => void;
-  value?: string;
 };
 
 const RadioGroupContext = createContext<ContextValue | null>(null);

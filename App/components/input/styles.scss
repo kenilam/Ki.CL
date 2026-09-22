@@ -19,12 +19,9 @@
   padding-block: var(--kicl--components--input--padding-block);
   padding-inline: var(--kicl--components--input--padding-inline);
 
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  &[aria-invalid='true'] {
-    --kicl--components--input--border-color: var(--kicl-color-error);
+  &[aria-invalid='true'],
+  &:user-invalid {
+    border-color: var(--kicl-color-error);
   }
 
   &[type='file'] {

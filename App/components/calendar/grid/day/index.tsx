@@ -13,13 +13,16 @@ import { CLASS_NAME as CALENDAR } from '@/components/calendar/constants';
 import { useCalendar } from '@/components/calendar/context';
 
 // Helpers
-import { isInRange, sameDay } from '@/components/calendar/helpers';
+import { dayLabel, isInRange, sameDay } from '@/components/calendar/helpers';
 
 const CLASS_NAME = `${CALENDAR}__day`;
 
 type Props = { date: Date };
 
-/** One cell of the month grid. The date is the only prop, since the grid renders one per day. */
+/**
+ * One day of the month table. The label is the full date, since the cell's
+ * text alone ("15") says nothing out of context.
+ */
 const Day: React.FunctionComponent<Props> = ({ date }) => {
   const {
     disabled,
@@ -46,22 +49,17 @@ const Day: React.FunctionComponent<Props> = ({ date }) => {
   return (
     <button
       type='button'
-      role='gridcell'
-      aria-selected={isSelected || isRangeMiddle}
+      aria-label={dayLabel(date)}
+      aria-current={isToday ? 'date' : undefined}
+      aria-pressed={isSelected || isRangeMiddle}
       disabled={isDisabled}
-      className={classNames(
-        CLASS_NAME,
-        'kicl-font-size-small',
-        'kicl-position-relative',
-        {
-          [`${CLASS_NAME}--outside`]: outside,
-          [`${CLASS_NAME}--selected`]: isSelected,
-          [`${CLASS_NAME}--range-start`]: isRangeStart,
-          [`${CLASS_NAME}--range-end`]: isRangeEnd,
-          [`${CLASS_NAME}--range-middle`]: isRangeMiddle,
-          [`${CLASS_NAME}--today`]: isToday,
-        }
-      )}
+      className={classNames(CLASS_NAME, 'kicl-font-size-small', {
+        [`${CLASS_NAME}--outside`]: outside,
+        [`${CLASS_NAME}--selected`]: isSelected,
+        [`${CLASS_NAME}--range-start`]: isRangeStart,
+        [`${CLASS_NAME}--range-end`]: isRangeEnd,
+        [`${CLASS_NAME}--range-middle`]: isRangeMiddle,
+      })}
       onClick={() => onDayClick(date)}
     >
       {date.getDate()}

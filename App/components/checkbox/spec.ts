@@ -1,10 +1,10 @@
-import type { ButtonHTMLAttributes } from 'react';
+import type React from 'react';
 
 export type CheckedState = boolean | 'indeterminate';
 
 export type Props = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  'onChange' | 'role' | 'type'
+  React.ComponentPropsWithoutRef<'input'>,
+  'checked' | 'defaultChecked' | 'type'
 > & {
   checked?: CheckedState;
   defaultChecked?: boolean;

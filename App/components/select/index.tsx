@@ -1,4 +1,4 @@
-import React, { useCallback, useId, useMemo, useRef, useState } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -9,92 +9,56 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME } from './constants';
 
-// Context
-import { type ContextValue, type ItemMeta, SelectContext } from './context';
-
 import type { SelectProps } from './spec';
 
 /**
- * Option list control - API aligned with
+ * A native `<select>` - API aligned with
  * https://ui.shadcn.com/docs/components/base/select
+ *
+ * Where `appearance: base-select` is supported, SelectTrigger and the picker
+ * are styled. Elsewhere the browser draws its own select from the same
+ * options, so keyboard, typeahead and form value come from the platform.
+ * `id` and aria props (from FormControl) land on the `<select>`.
  */
-const Select: React.FC<SelectProps> = ({
-  children,
-  className,
-  defaultValue,
-  disabled,
-  onValueChange,
-  value,
-}) => {
-  const reactId = useId();
-  const isControlled = value !== undefined;
-  const [uncontrolled, setUncontrolled] = useState(defaultValue);
-  const [open, setOpen] = useState(false);
-  const [items, setItems] = useState<ItemMeta[]>([]);
-  const current = isControlled ? value : uncontrolled;
-  const onValueChangeRef = useRef(onValueChange);
-  onValueChangeRef.current = onValueChange;
-
-  const registerItem = useCallback((item: ItemMeta) => {
-    setItems((prev) => {
-      const existing = prev.find((entry) => entry.value === item.value);
-      if (existing?.label === item.label) {
-        return prev;
-      }
-      if (existing) {
-        return prev.map((entry) => (entry.value === item.value ? item : entry));
-      }
-      return [...prev, item];
-    });
-  }, []);
-
-  const valueLabel = useMemo(
-    () => items.find((item) => item.value === current)?.label,
-    [current, items]
-  );
-
-  const setValue = useCallback(
-    (next: string, label: string) => {
-      if (disabled) {
-        return;
-      }
-      if (!isControlled) {
-        setUncontrolled(next);
-      }
-      onValueChangeRef.current?.(next);
-      registerItem({ value: next, label });
-      setOpen(false);
+const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+  (
+    {
+      children,
+      className,
+      defaultValue,
+      onChange,
+      onValueChange,
+      placeholder,
+      value,
+      ...rest
     },
-    [disabled, isControlled, registerItem]
-  );
-
-  const context = useMemo<ContextValue>(
-    () => ({
-      disabled,
-      listId: `${CLASS_NAME}-list-${reactId}`,
-      onValueChange: setValue,
-      open,
-      registerItem,
-      setOpen,
-      triggerId: `${CLASS_NAME}-trigger-${reactId}`,
-      value: current,
-      valueLabel,
-    }),
-    [current, disabled, open, reactId, registerItem, setValue, valueLabel]
-  );
-
-  return (
-    <SelectContext.Provider value={context}>
-      <div
-        data-slot='select'
-        className={classNames(CLASS_NAME, 'kicl-position-relative', className)}
-        data-state={open ? 'open' : 'closed'}
-      >
-        {children}
-      </div>
-    </SelectContext.Provider>
-  );
-};
+    ref
+  ) => (
+    <select
+      ref={ref}
+      data-slot='select'
+      className={classNames(CLASS_NAME, 'kicl-font-size-small', className)}
+      value={value}
+      defaultValue={
+        value === undefined && placeholder !== undefined
+          ? (defaultValue ?? '')
+          : defaultValue
+      }
+      onChange={(event) => {
+        onChange?.(event);
+        onValueChange?.(event.currentTarget.value);
+      }}
+      {...rest}
+    >
+      {children}
+      {placeholder !== undefined ? (
+        <option value='' disabled hidden>
+          {placeholder}
+        </option>
+      ) : null}
+    </select>
+  )
+);
 
 Select.displayName = 'Select';
 

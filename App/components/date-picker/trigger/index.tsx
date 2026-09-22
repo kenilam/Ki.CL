@@ -7,6 +7,9 @@ import classNames from 'classnames';
 import { PopoverTrigger } from '@/components/popover';
 import { Ri } from '@/icons';
 
+// Spec
+import type { DatePickerTriggerProps } from '@/components/date-picker/spec';
+
 // Styles
 import '@/components/input/styles.scss';
 import './styles.scss';
@@ -17,11 +20,12 @@ import { CLASS_NAME as DATE_PICKER } from '@/components/date-picker/constants';
 // Context
 import { useDatePicker } from '@/components/date-picker/context';
 
-const Trigger: React.FunctionComponent = () => {
+const Trigger: React.FunctionComponent<DatePickerTriggerProps> = (props) => {
   const { disabled, label, placeholder } = useDatePicker();
 
   return (
     <PopoverTrigger
+      {...props}
       disabled={disabled}
       className={classNames(
         'kicl--components--input',

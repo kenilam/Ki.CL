@@ -9,7 +9,9 @@ function FormField<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >(props: FormFieldProps<TFieldValues, TName>) {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider
+      value={{ name: props.name, required: Boolean(props.rules?.required) }}
+    >
       <Controller {...props} />
     </FormFieldContext.Provider>
   );

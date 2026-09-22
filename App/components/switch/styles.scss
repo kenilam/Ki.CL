@@ -1,17 +1,10 @@
 .kicl--components--switch-field {
-  align-items: center;
-  cursor: pointer;
-  display: inline-flex;
-  gap: var(--kicl-gutter-narrow);
-  margin: 0;
-
-  &--disabled {
+  &:has(:disabled) {
     cursor: not-allowed;
   }
 }
 
 .kicl--components--switch__label {
-  cursor: inherit;
   user-select: none;
 }
 
@@ -26,27 +19,45 @@
   --kicl--components--switch--padding: var(--kicl-size-1px);
 
   align-items: center;
+  appearance: none;
   background: var(--kicl--components--switch--track);
-  border: 0;
-  border-radius: 999px;
   block-size: var(--kicl--components--switch--block-size);
-  cursor: pointer;
+  border-radius: 999px;
   display: inline-flex;
   flex-shrink: 0;
   inline-size: var(--kicl--components--switch--inline-size);
-  margin: 0;
   padding: var(--kicl--components--switch--padding);
-  position: relative;
   transition:
     background-color var(--kicl-transition-duration-fast)
     var(--kicl-ease-quint-in-out),
     box-shadow var(--kicl-transition-duration-fast)
     var(--kicl-ease-quint-in-out);
 
-  &--checked {
+  // The thumb.
+  &::before {
+    background: var(--kicl--components--switch--thumb);
+    block-size: calc(
+      var(--kicl--components--switch--block-size) -
+      (var(--kicl--components--switch--padding) * 2)
+    );
+    border-radius: 50%;
+    box-shadow: 0 var(--kicl-size-1px) var(--kicl-size-2px) rgb(0 0 0 / 18%);
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    inline-size: calc(
+      var(--kicl--components--switch--block-size) -
+      (var(--kicl--components--switch--padding) * 2)
+    );
+    transition: translate var(--kicl-transition-duration-fast)
+      var(--kicl-ease-quint-in-out);
+    translate: 0;
+  }
+
+  &:checked {
     background: var(--kicl--components--switch--checked);
 
-    .kicl--components--switch__thumb {
+    &::before {
       // Uniform padding → travel = track width − track height.
       translate: calc(
         var(--kicl--components--switch--inline-size) - var(
@@ -60,28 +71,6 @@
     --kicl--components--switch--block-size: var(--kicl-size);
     --kicl--components--switch--inline-size: var(--kicl-size-2x);
     --kicl--components--switch--padding: var(--kicl-size-hair);
-  }
-
-  &--disabled {
-    cursor: not-allowed;
-  }
-
-  &__thumb {
-    background: var(--kicl--components--switch--thumb);
-    border-radius: 50%;
-    block-size: calc(
-      var(--kicl--components--switch--block-size) -
-      (var(--kicl--components--switch--padding) * 2)
-    );
-    box-shadow: 0 var(--kicl-size-1px) var(--kicl-size-2px) rgb(0 0 0 / 18%);
-    display: block;
-    inline-size: calc(
-      var(--kicl--components--switch--block-size) -
-      (var(--kicl--components--switch--padding) * 2)
-    );
-    translate: 0;
-    transition: translate var(--kicl-transition-duration-fast)
-      var(--kicl-ease-quint-in-out);
   }
 
   @at-root .kicl--theme--dark & {

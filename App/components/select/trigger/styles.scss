@@ -1,35 +1,22 @@
 .kicl--components--select__trigger {
   align-items: center;
-  background-color: var(--kicl--components--select--background-color);
-  border: var(--kicl--components--select--border-width) solid
-    var(--kicl--components--select--border-color);
-  border-radius: var(--kicl--components--select--border-radius);
-  color: var(--kicl--components--select--color);
-  cursor: pointer;
-  display: inline-flex;
-  font: inherit;
+  color: inherit;
+  display: flex;
   gap: var(--kicl-gutter-narrower);
   inline-size: 100%;
   justify-content: space-between;
-  margin: 0;
-  max-inline-size: 100%;
   min-inline-size: 0;
-  overflow: hidden;
-  padding-block: var(--kicl--components--select--padding-block);
-  padding-inline: var(--kicl--components--select--padding-inline);
   text-align: start;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  &[aria-invalid='true'] {
-    --kicl--components--select--border-color: var(--kicl-color-error);
-  }
 }
 
 .kicl--components--select__icon {
   block-size: 1em;
   flex-shrink: 0;
   inline-size: 1em;
+  transition: rotate var(--kicl-transition-duration-fast)
+    var(--kicl-ease-quint-in-out);
+
+  .kicl--components--select:open & {
+    rotate: 180deg;
+  }
 }

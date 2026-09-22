@@ -1,50 +1,39 @@
 .kicl--components--radio-group {
-  &__item {
+  &__control {
     --kicl--components--radio-group--item--border-color: var(
       --kicl-color-grey-darker
     );
-    --kicl--components--radio-group--item--size: var(--kicl-size-2x);
     --kicl--components--radio-group--item--dot: var(--kicl-color-grey-darker);
+    --kicl--components--radio-group--item--size: var(--kicl-size-2x);
 
-    align-items: center;
-    background: transparent;
+    appearance: none;
+    block-size: var(--kicl--components--radio-group--item--size);
     border: var(--kicl-size-1px) solid
       var(--kicl--components--radio-group--item--border-color);
     border-radius: 50%;
-    block-size: var(--kicl--components--radio-group--item--size);
-    cursor: pointer;
-    display: inline-flex;
     flex-shrink: 0;
     inline-size: var(--kicl--components--radio-group--item--size);
-    justify-content: center;
-    margin: 0;
-    padding: 0;
 
-    &--checked::after {
-      background: var(--kicl--components--radio-group--item--dot);
-      block-size: 0.55em;
-      border-radius: 50%;
-      content: '';
-      inline-size: 0.55em;
-    }
-
-    &--disabled {
-      cursor: not-allowed;
-    }
-
-    &[aria-invalid='true'] {
-      --kicl--components--radio-group--item--border-color: var(
-        --kicl-color-error
+    &:checked {
+      background: radial-gradient(
+        circle,
+        var(--kicl--components--radio-group--item--dot) 0 27.5%,
+        transparent calc(27.5% + var(--kicl-size-1px))
       );
+    }
+
+    &[aria-invalid='true'],
+    &:user-invalid {
+      border-color: var(--kicl-color-error);
     }
   }
 
-  @at-root .kicl--theme--dark &__item {
+  @at-root .kicl--theme--dark &__control {
     --kicl--components--radio-group--item--border-color: var(--kicl-color-grey);
     --kicl--components--radio-group--item--dot: var(--kicl-color-white);
   }
 
-  @at-root .kicl--theme--light &__item {
+  @at-root .kicl--theme--light &__control {
     --kicl--components--radio-group--item--border-color: var(
       --kicl-color-grey-darker
     );

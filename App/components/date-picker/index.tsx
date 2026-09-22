@@ -29,6 +29,11 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
     formatDate = defaultFormatDate,
     mode = 'single',
     placeholder = mode === 'range' ? 'Pick a date range' : 'Pick a date',
+    id,
+    'aria-describedby': ariaDescribedBy,
+    'aria-invalid': ariaInvalid,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
   } = props;
 
   const isControlled = props.value !== undefined;
@@ -90,8 +95,15 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
   return (
     <DatePickerContext.Provider value={context}>
       <Popover open={open} onOpenChange={setOpen} className={className}>
-        <Trigger />
-        <PopoverContent>
+        <Trigger
+          id={id}
+          aria-describedby={ariaDescribedBy}
+          aria-invalid={ariaInvalid}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+        />
+        {/* A forwarded id replaces the trigger's default one, so name the panel from it. */}
+        <PopoverContent aria-labelledby={id}>
           <Calendar />
         </PopoverContent>
       </Popover>

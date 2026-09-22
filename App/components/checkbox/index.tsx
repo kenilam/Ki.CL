@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
-
-import { Ri } from '@/icons';
 
 import type { Props } from './spec';
 
@@ -10,64 +8,42 @@ import './styles.scss';
 const CLASS_NAME = 'kicl--components--checkbox';
 
 /**
- * Toggle checkbox - API aligned with
+ * Native checkbox - API aligned with
  * https://ui.shadcn.com/docs/components/base/checkbox
+ *
+ * `indeterminate` has no HTML attribute, so it is set on the element.
  */
-const Checkbox = React.forwardRef<HTMLButtonElement, Props>(
-  (
-    {
-      checked,
-      className,
-      defaultChecked = false,
-      disabled,
-      onCheckedChange,
-      ...rest
-    },
-    ref
-  ) => {
-    const isControlled = checked !== undefined;
-    const [uncontrolled, setUncontrolled] = useState(defaultChecked);
-    const value = isControlled ? checked : uncontrolled;
-    const isIndeterminate = value === 'indeterminate';
-    const isOn = value === true;
+const Checkbox = React.forwardRef<HTMLInputElement, Props>(
+  ({ checked, className, onChange, onCheckedChange, ...rest }, ref) => {
+    const isIndeterminate = checked === 'indeterminate';
 
-    const toggle = () => {
-      if (disabled) {
-        return;
-      }
-      const next = !isOn;
-      if (!isControlled) {
-        setUncontrolled(next);
-      }
-      onCheckedChange?.(next);
-    };
+    const setRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        if (node) {
+          node.indeterminate = isIndeterminate;
+        }
+        if (typeof ref === 'function') {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [isIndeterminate, ref]
+    );
 
     return (
-      <button
-        ref={ref}
-        type='button'
-        role='checkbox'
-        aria-checked={isIndeterminate ? 'mixed' : isOn}
-        disabled={disabled}
+      <input
+        ref={setRef}
+        type='checkbox'
         data-slot='checkbox'
-        className={classNames(
-          CLASS_NAME,
-          {
-            [`${CLASS_NAME}--checked`]: isOn,
-            [`${CLASS_NAME}--indeterminate`]: isIndeterminate,
-            [`${CLASS_NAME}--disabled`]: disabled,
-          },
-          className
-        )}
-        onClick={toggle}
+        className={classNames(CLASS_NAME, className)}
+        checked={checked === undefined ? undefined : checked === true}
+        onChange={(event) => {
+          onChange?.(event);
+          onCheckedChange?.(event.currentTarget.checked);
+        }}
         {...rest}
-      >
-        {isIndeterminate ? (
-          <Ri.RiSubtractLine className={`${CLASS_NAME}__icon`} aria-hidden />
-        ) : isOn ? (
-          <Ri.RiCheckLine className={`${CLASS_NAME}__icon`} aria-hidden />
-        ) : null}
-      </button>
+      />
     );
   }
 );

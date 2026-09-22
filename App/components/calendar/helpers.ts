@@ -44,3 +44,21 @@ export const seedMonth = (props: CalendarProps) => {
   }
   return props.selected ?? new Date();
 };
+
+export const dayLabel = (date: Date) =>
+  date.toLocaleDateString(undefined, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+/** Sunday first, matching the grid. 7 January 2024 was a Sunday. */
+export const weekdays = () =>
+  Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(2024, 0, 7 + index);
+    return {
+      long: date.toLocaleDateString(undefined, { weekday: 'long' }),
+      short: date.toLocaleDateString(undefined, { weekday: 'short' }),
+    };
+  });

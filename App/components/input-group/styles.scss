@@ -19,14 +19,13 @@
   padding-block: var(--kicl--components--input-group--padding-block);
   padding-inline: var(--kicl--components--input-group--padding-inline);
 
-  &:focus-within {
-    outline-color: var(--kicl-outline-color);
-    outline-style: dashed;
-    outline-width: var(--kicl-outline-width);
+  // The ring moves from the borderless control to the group.
+  &:has(&__control:focus-visible) {
+    outline: var(--kicl-outline-width) dashed var(--kicl-outline-color);
   }
 
-  &:has([aria-invalid='true']) {
-    --kicl--components--input-group--border-color: var(--kicl-color-error);
+  &:has([aria-invalid='true'], :user-invalid) {
+    border-color: var(--kicl-color-error);
   }
 
   &__control {
@@ -48,8 +47,7 @@
     min-inline-size: 0;
     padding: 0;
 
-    // Group owns the dashed focus ring.
-    &:focus {
+    &:focus-visible {
       --kicl-outline-style: none;
     }
   }

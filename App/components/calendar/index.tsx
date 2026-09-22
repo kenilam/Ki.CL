@@ -1,7 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useId, useMemo, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+
+// Components
+import { Layout } from '@/components/layout';
 
 // Styles
 import './styles.scss';
@@ -23,14 +26,22 @@ import { Weekdays } from './weekdays';
 import type { CalendarProps, DateRange } from './spec';
 
 /**
- * Month grid - used by DatePicker (shadcn composition).
+ * Month table - used by DatePicker (shadcn composition).
  * https://ui.shadcn.com/docs/components/base/date-picker
  */
 const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
   (props, ref) => {
-    const mode = props.mode ?? 'single';
-    const { className, disabled } = props;
+    const {
+      className,
+      defaultMonth: _defaultMonth,
+      disabled,
+      mode = 'single',
+      onSelect: _onSelect,
+      selected: _selected,
+      ...rest
+    } = props;
 
+    const titleId = useId();
     const today = useMemo(() => startOfDay(new Date()), []);
     const [month, setMonth] = useState(() => {
       const seed = seedMonth(props);
@@ -67,21 +78,27 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>(
       selectedRange: props.mode === 'range' ? props.selected : undefined,
       selectedSingle: props.mode === 'range' ? undefined : props.selected,
       setMonth,
+      titleId,
       today,
     };
 
     return (
       <CalendarContext.Provider value={context}>
-        <div
-          ref={ref}
-          data-slot='calendar'
-          data-mode={mode}
-          className={classNames(CLASS_NAME, className)}
-        >
-          <Header />
-          <Weekdays />
-          <Grid />
-        </div>
+        <Layout gap='narrower'>
+          <div
+            ref={ref}
+            data-slot='calendar'
+            data-mode={mode}
+            className={classNames(CLASS_NAME, className)}
+            {...rest}
+          >
+            <Header />
+            <table className={`${CLASS_NAME}__table`} aria-labelledby={titleId}>
+              <Weekdays />
+              <Grid />
+            </table>
+          </div>
+        </Layout>
       </CalendarContext.Provider>
     );
   }

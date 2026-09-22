@@ -4,37 +4,49 @@ import type {
   FieldValues,
   UseFormReturn,
 } from 'react-hook-form';
-import type {
-  HTMLAttributes,
-  LabelHTMLAttributes,
-  PropsWithChildren,
-} from 'react';
+import type React from 'react';
 
-export type FormProps<TFieldValues extends FieldValues> = PropsWithChildren<
-  UseFormReturn<TFieldValues>
-> & {
-  className?: string;
-  onSubmit?: HTMLAttributes<HTMLFormElement>['onSubmit'];
-};
+/** The native `<form>` attributes Form passes through. */
+type FormElementProps = Pick<
+  React.ComponentPropsWithoutRef<'form'>,
+  | 'action'
+  | 'aria-describedby'
+  | 'aria-label'
+  | 'aria-labelledby'
+  | 'autoComplete'
+  | 'className'
+  | 'id'
+  | 'method'
+  | 'name'
+  | 'noValidate'
+  | 'onSubmit'
+>;
+
+export type FormProps<TFieldValues extends FieldValues> =
+  React.PropsWithChildren<UseFormReturn<TFieldValues>> & FormElementProps;
 
 export type FormFieldProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = ControllerProps<TFieldValues, TName>;
 
-export type FormItemProps = HTMLAttributes<HTMLDivElement>;
-
-export type FormLabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
+export type FormItemProps = React.ComponentPropsWithoutRef<'div'> & {
+  /** Marks the control and label as required. */
   required?: boolean;
 };
 
-export type FormControlProps = PropsWithChildren<{
+export type FormLabelProps = React.ComponentPropsWithoutRef<'label'> & {
+  /** Defaults to the item's or field's `required`. */
+  required?: boolean;
+};
+
+export type FormControlProps = React.PropsWithChildren<{
   className?: string;
 }>;
 
 export type FormDescriptionProps = Omit<
-  HTMLAttributes<HTMLParagraphElement>,
+  React.ComponentPropsWithoutRef<'p'>,
   'is'
 >;
 
-export type FormMessageProps = Omit<HTMLAttributes<HTMLParagraphElement>, 'is'>;
+export type FormMessageProps = Omit<React.ComponentPropsWithoutRef<'p'>, 'is'>;

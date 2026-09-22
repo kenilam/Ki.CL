@@ -1,5 +1,7 @@
-import React, { useId, useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
+
+import { Layout } from '@/components/layout';
 
 import type { Props } from './spec';
 import { SwitchLabel } from './switch-label';
@@ -9,109 +11,77 @@ import './styles.scss';
 const CLASS_NAME = 'kicl--components--switch';
 const FIELD_CLASS_NAME = 'kicl--components--switch-field';
 
-const isSwitchLabel = (
-  child: React.ReactNode
-): child is React.ReactElement<React.ComponentProps<typeof SwitchLabel>> =>
-  React.isValidElement(child) &&
-  (child.type === SwitchLabel ||
-    (typeof child.type !== 'string' &&
-      (child.type as { displayName?: string }).displayName === 'SwitchLabel'));
+/**
+ * `switch` is not in React's attribute list yet; an empty string still
+ * renders it. Safari draws a native switch from it; `role` covers the rest.
+ */
+const SWITCH_ATTRIBUTE = {
+  switch: '',
+} as React.ComponentPropsWithoutRef<'input'>;
 
 /**
- * Toggle switch - API aligned with
+ * Toggle switch on a native checkbox - API aligned with
  * https://ui.shadcn.com/docs/components/base/switch
  *
- * Pair with {@link SwitchLabel} as a child, or pass `label`.
+ * Pair with {@link SwitchLabel} as a child, or pass `label`. Either way the
+ * `<label>` wraps the control, so the text is its accessible name.
  */
-const Switch = React.forwardRef<HTMLButtonElement, Props>(
+const Switch = React.forwardRef<HTMLInputElement, Props>(
   (
     {
-      checked,
       children,
       className,
-      defaultChecked = false,
-      disabled,
-      id,
       label,
+      onChange,
       onCheckedChange,
       size = 'default',
       ...rest
     },
     ref
   ) => {
-    const isControlled = checked !== undefined;
-    const [uncontrolled, setUncontrolled] = useState(defaultChecked);
-    const isOn = isControlled ? Boolean(checked) : uncontrolled;
-    const generatedId = useId();
-    const switchId = id ?? generatedId;
-
-    let labelChild: React.ReactElement | null = null;
-    const otherChildren: React.ReactNode[] = [];
-    React.Children.forEach(children, (child) => {
-      if (isSwitchLabel(child)) {
-        labelChild = child;
-        return;
-      }
-      if (child != null && child !== false) {
-        otherChildren.push(child);
-      }
-    });
-
     const labelNode =
-      labelChild ??
-      (label != null && label !== false ? (
+      label != null && label !== false ? (
         <SwitchLabel>{label}</SwitchLabel>
-      ) : null);
-
-    const toggle = () => {
-      if (disabled) {
-        return;
-      }
-      const next = !isOn;
-      if (!isControlled) {
-        setUncontrolled(next);
-      }
-      onCheckedChange?.(next);
-    };
+      ) : null;
 
     const control = (
-      <button
+      <input
         ref={ref}
-        id={switchId}
-        type='button'
+        type='checkbox'
+        // Native `checked` supplies the state; ARIA in HTML forbids aria-checked here.
+        // oxlint-disable-next-line jsx-a11y/role-has-required-aria-props
         role='switch'
-        aria-checked={isOn}
-        disabled={disabled}
+        {...SWITCH_ATTRIBUTE}
         className={classNames(
           CLASS_NAME,
           `${CLASS_NAME}--size--${size}`,
-          {
-            [`${CLASS_NAME}--checked`]: isOn,
-            [`${CLASS_NAME}--disabled`]: disabled,
-          },
           className
         )}
-        onClick={toggle}
+        onChange={(event) => {
+          onChange?.(event);
+          onCheckedChange?.(event.currentTarget.checked);
+        }}
         {...rest}
-      >
-        <span className={`${CLASS_NAME}__thumb`} aria-hidden />
-        {otherChildren}
-      </button>
+      />
     );
 
-    if (!labelNode) {
+    if (!labelNode && !children) {
       return control;
     }
 
     return (
-      <label
-        className={classNames(FIELD_CLASS_NAME, {
-          [`${FIELD_CLASS_NAME}--disabled`]: disabled,
-        })}
+      <Layout
+        display='inline-grid'
+        autoFlow='column'
+        alignItems='center'
+        gap='narrow'
       >
-        {control}
-        {labelNode}
-      </label>
+        <label className={FIELD_CLASS_NAME}>
+          {control}
+          {labelNode}
+          {children}
+        </label>
+      </Layout>
     );
   }
 );

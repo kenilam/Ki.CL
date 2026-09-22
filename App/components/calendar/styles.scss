@@ -14,18 +14,9 @@
     --kicl--components--calendar--cell-size: var(--kicl-size-3x);
   }
 
-  display: grid;
-  gap: var(--kicl-gutter-narrower);
-  min-inline-size: calc(var(--kicl--components--calendar--cell-size) * 7);
-
-  &__weekdays,
-  &__grid {
-    display: grid;
-    gap: var(--kicl-gutter-narrowest);
-    grid-template-columns: repeat(
-      7,
-      var(--kicl--components--calendar--cell-size)
-    );
+  &__table {
+    border-collapse: separate;
+    border-spacing: var(--kicl-gutter-narrowest);
   }
 
   @at-root .kicl--theme--dark & {

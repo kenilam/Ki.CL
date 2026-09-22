@@ -3,8 +3,6 @@
   gap: var(--kicl-gutter-narrow);
 
   &__item {
-    display: grid;
-    gap: var(--kicl-gutter-narrowest);
     min-inline-size: 0;
   }
 

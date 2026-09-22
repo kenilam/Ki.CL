@@ -1,33 +1,29 @@
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import type React from 'react';
 
-export type SelectProps = {
-  value?: string;
-  defaultValue?: string;
+export type SelectProps = Omit<
+  React.ComponentPropsWithoutRef<'select'>,
+  'multiple' | 'size'
+> & {
   onValueChange?: (value: string) => void;
-  disabled?: boolean;
-  name?: string;
-  children?: ReactNode;
-  className?: string;
-};
-
-export type SelectTriggerProps = ButtonHTMLAttributes<HTMLButtonElement>;
-
-export type SelectValueProps = HTMLAttributes<HTMLSpanElement> & {
+  /** Shown while nothing is chosen; also makes `required` meaningful. */
   placeholder?: string;
 };
 
-export type SelectContentProps = HTMLAttributes<HTMLDivElement>;
+export type SelectTriggerProps = React.ComponentPropsWithoutRef<'button'>;
+
+export type SelectValueProps = React.HTMLAttributes<HTMLElement>;
+
+export type SelectContentProps = { children?: React.ReactNode };
 
 export type SelectItemProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
+  React.ComponentPropsWithoutRef<'option'>,
   'value'
 > & {
   value: string;
-  children?: ReactNode;
 };
 
-export type SelectGroupProps = HTMLAttributes<HTMLDivElement>;
+export type SelectGroupProps = React.ComponentPropsWithoutRef<'optgroup'>;
 
-export type SelectLabelProps = HTMLAttributes<HTMLDivElement>;
+export type SelectLabelProps = { children: string };
 
-export type SelectSeparatorProps = HTMLAttributes<HTMLHRElement>;
+export type SelectSeparatorProps = React.ComponentPropsWithoutRef<'hr'>;

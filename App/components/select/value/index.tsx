@@ -9,34 +9,23 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME as SELECT } from '@/components/select/constants';
 
-// Context
-import { useSelect } from '@/components/select/context';
-
 import type { SelectValueProps } from '@/components/select/spec';
 
 const CLASS_NAME = `${SELECT}__value`;
 
-const SelectValue = React.forwardRef<HTMLSpanElement, SelectValueProps>(
-  ({ className, placeholder = 'Select…', ...rest }, ref) => {
-    const select = useSelect();
-    const empty = !select.valueLabel;
-
-    return (
-      <span
-        ref={ref}
-        data-slot='select-value'
-        className={classNames(
-          CLASS_NAME,
-          { [`${CLASS_NAME}--placeholder`]: empty },
-          className
-        )}
-        {...rest}
-      >
-        {empty ? placeholder : select.valueLabel}
-      </span>
-    );
-  }
-);
+/**
+ * `<selectedcontent>` copies the chosen option into the trigger. The
+ * placeholder is an option too, so it goes on Select.
+ */
+const SelectValue: React.FunctionComponent<SelectValueProps> = ({
+  className,
+  ...rest
+}) =>
+  React.createElement('selectedcontent', {
+    'data-slot': 'select-value',
+    className: classNames(CLASS_NAME, className),
+    ...rest,
+  });
 
 SelectValue.displayName = 'SelectValue';
 

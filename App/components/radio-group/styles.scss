@@ -1,4 +1,7 @@
 .kicl--components--radio-group {
-  display: grid;
-  gap: var(--kicl-gutter-narrower);
+  min-inline-size: 0;
+
+  &__legend {
+    margin-block-end: var(--kicl-gutter-narrower);
+  }
 }

@@ -1,8 +1,5 @@
 import React, { useMemo } from 'react';
 
-// Constants
-import { CLASS_NAME as CALENDAR } from '@/components/calendar/constants';
-
 // Context
 import { useCalendar } from '@/components/calendar/context';
 
@@ -12,28 +9,36 @@ import { startOfDay } from '@/components/calendar/helpers';
 // Partials
 import { Day } from './day';
 
+/** Six weeks of seven days, starting on the Sunday before the 1st. */
 const Grid: React.FunctionComponent = () => {
   const { month } = useCalendar();
 
-  const days = useMemo(() => {
+  const weeks = useMemo(() => {
     const first = new Date(month.getFullYear(), month.getMonth(), 1);
-    const startOffset = first.getDay();
     const gridStart = new Date(first);
-    gridStart.setDate(first.getDate() - startOffset);
+    gridStart.setDate(first.getDate() - first.getDay());
 
-    return Array.from({ length: 42 }, (_, index) => {
-      const date = new Date(gridStart);
-      date.setDate(gridStart.getDate() + index);
-      return startOfDay(date);
-    });
+    return Array.from({ length: 6 }, (_, week) =>
+      Array.from({ length: 7 }, (_, day) => {
+        const date = new Date(gridStart);
+        date.setDate(gridStart.getDate() + week * 7 + day);
+        return startOfDay(date);
+      })
+    );
   }, [month]);
 
   return (
-    <div className={`${CALENDAR}__grid`} role='grid'>
-      {days.map((date) => (
-        <Day key={date.toISOString()} date={date} />
+    <tbody>
+      {weeks.map((days) => (
+        <tr key={days[0].toISOString()}>
+          {days.map((date) => (
+            <td key={date.toISOString()}>
+              <Day date={date} />
+            </td>
+          ))}
+        </tr>
       ))}
-    </div>
+    </tbody>
   );
 };
 

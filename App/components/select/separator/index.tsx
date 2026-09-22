@@ -13,6 +13,7 @@ import type { SelectSeparatorProps } from '@/components/select/spec';
 
 const CLASS_NAME = `${SELECT}__separator`;
 
+/** An `<hr>` between options; browsers without base-select skip it. */
 const SelectSeparator = React.forwardRef<HTMLHRElement, SelectSeparatorProps>(
   ({ className, ...rest }, ref) => (
     <hr

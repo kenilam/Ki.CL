@@ -1,23 +1,8 @@
 .kicl--components--calendar {
-  &__header {
-    align-items: center;
-    display: flex;
-    gap: var(--kicl-gutter-narrower);
-    justify-content: space-between;
-  }
-
-  &__title {
-    flex: 1;
-    text-align: center;
-  }
-
   &__nav {
     align-items: center;
-    background: transparent;
-    border: 0;
     border-radius: var(--kicl-size-half);
     color: inherit;
-    cursor: pointer;
     display: inline-flex;
     padding: var(--kicl-gutter-narrowest);
 

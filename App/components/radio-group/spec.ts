@@ -1,20 +1,22 @@
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import type React from 'react';
 
 export type RadioGroupProps = Omit<
-  HTMLAttributes<HTMLDivElement>,
+  React.ComponentPropsWithoutRef<'fieldset'>,
   'onChange' | 'defaultValue'
 > & {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
-  disabled?: boolean;
+  /** Visible group name, rendered as the `<legend>`. */
+  legend?: React.ReactNode;
+  /** Shared by every radio, so the browser groups them. */
   name?: string;
-  children?: ReactNode;
+  required?: boolean;
 };
 
 export type RadioGroupItemProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  'onChange' | 'role' | 'type' | 'value'
+  React.ComponentPropsWithoutRef<'input'>,
+  'checked' | 'defaultChecked' | 'name' | 'type' | 'value'
 > & {
   value: string;
 };

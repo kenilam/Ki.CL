@@ -6,6 +6,8 @@ export type FormFieldContextValue<
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   name: TName;
+  /** From the field's `rules.required`. */
+  required: boolean;
 };
 
 export const FormFieldContext = createContext<FormFieldContextValue | null>(
@@ -14,6 +16,7 @@ export const FormFieldContext = createContext<FormFieldContextValue | null>(
 
 export type FormItemContextValue = {
   id: string;
+  required?: boolean;
 };
 
 export const FormItemContext = createContext<FormItemContextValue | null>(null);
@@ -33,6 +36,7 @@ export function useFormFieldContext() {
   return {
     name: field.name,
     id: item.id,
+    required: item.required ?? field.required,
     formItemId: item.id,
     formDescriptionId: `${item.id}-description`,
     formMessageId: `${item.id}-message`,

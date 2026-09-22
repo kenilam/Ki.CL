@@ -1,10 +1,10 @@
-.kicl--components--select__content {
+.kicl--components--select::picker(select) {
   background-color: var(--kicl--components--select--background-color);
   border: var(--kicl--components--select--border-width) solid
     var(--kicl--components--select--border-color);
   border-radius: var(--kicl--components--select--border-radius);
+  color: var(--kicl--components--select--color);
+  margin-block: var(--kicl-gutter-narrowest);
   max-block-size: var(--kicl--components--select--content-max-block-size);
-  overflow: auto;
   padding: var(--kicl-gutter-narrowest);
-  z-index: var(--kicl-z-index-popover);
 }

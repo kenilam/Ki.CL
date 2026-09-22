@@ -25,12 +25,12 @@
   white-space: pre-wrap;
 
   &:disabled {
-    cursor: not-allowed;
     resize: none;
   }
 
-  &[aria-invalid='true'] {
-    --kicl--components--textarea--border-color: var(--kicl-color-error);
+  &[aria-invalid='true'],
+  &:user-invalid {
+    border-color: var(--kicl-color-error);
   }
 
   @at-root .kicl--theme--dark & {

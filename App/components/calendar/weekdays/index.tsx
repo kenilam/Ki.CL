@@ -6,16 +6,25 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME as CALENDAR } from '@/components/calendar/constants';
 
-const WEEKDAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+// Helpers
+import { weekdays } from '@/components/calendar/helpers';
 
+/** Column headers; `abbr` gives each column its full day name. */
 const Weekdays: React.FunctionComponent = () => (
-  <div className={`${CALENDAR}__weekdays`} aria-hidden>
-    {WEEKDAYS.map((day) => (
-      <div key={day} className={`${CALENDAR}__weekday kicl-font-size-small`}>
-        {day}
-      </div>
-    ))}
-  </div>
+  <thead>
+    <tr>
+      {weekdays().map(({ long, short }) => (
+        <th
+          key={long}
+          scope='col'
+          abbr={long}
+          className={`${CALENDAR}__weekday kicl-font-size-small`}
+        >
+          {short}
+        </th>
+      ))}
+    </tr>
+  </thead>
 );
 
 export { Weekdays };

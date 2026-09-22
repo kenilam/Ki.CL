@@ -32,7 +32,7 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, FormMessageProps>(
           'kicl-color-error',
           className
         )}
-        role='alert'
+        role={error ? 'alert' : undefined}
       >
         {body}
       </Text>

@@ -5,7 +5,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  &--placeholder {
+  .kicl--components--select:has(option[value='']:checked) & {
     opacity: 0.5;
   }
 }
