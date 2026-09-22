@@ -12,12 +12,12 @@ Matches `.prettierrc`: `singleQuote: true`, `jsxSingleQuote: true`.
 
 ```tsx
 // ❌
-import { Ri } from "@/Icons";
+import { Ri } from "@/icons";
 <div data-slot="details" className="kicl-color-grey-dark" />
 querySelector('[data-slot="select-trigger"]');
 
 // ✅
-import { Ri } from '@/Icons';
+import { Ri } from '@/icons';
 <div data-slot='details' className='kicl-color-grey-dark' />
 querySelector(`[data-slot='select-trigger']`);
 ```

@@ -2,9 +2,9 @@ import appRoot from 'app-root-path';
 
 import { UserConfig } from 'vite';
 
-import Env from './Env';
+import { Env } from './env';
 
-import { getConfig } from './.Client';
+import { getConfig } from './.client';
 
 type Config = Exclude<UserConfig['preview'] | UserConfig['server'], undefined>;
 

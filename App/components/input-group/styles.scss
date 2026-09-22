@@ -1,0 +1,64 @@
+.kicl--components--input-group {
+  --kicl--components--input-group--background-color: var(--kicl-surface-color);
+  --kicl--components--input-group--border-color: var(--kicl-color-grey-darker);
+  --kicl--components--input-group--border-radius: var(--kicl-gutter-narrower);
+  --kicl--components--input-group--border-width: var(--kicl-size-1px);
+  --kicl--components--input-group--gap: var(--kicl-gutter-narrowest);
+  --kicl--components--input-group--padding-block: var(--kicl-gutter-narrowest);
+  --kicl--components--input-group--padding-inline: var(--kicl-gutter-narrow);
+
+  align-items: center;
+  background-color: var(--kicl--components--input-group--background-color);
+  border: var(--kicl--components--input-group--border-width) solid
+    var(--kicl--components--input-group--border-color);
+  border-radius: var(--kicl--components--input-group--border-radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kicl--components--input-group--gap);
+  inline-size: 100%;
+  padding-block: var(--kicl--components--input-group--padding-block);
+  padding-inline: var(--kicl--components--input-group--padding-inline);
+
+  // The ring moves from the borderless control to the group.
+  &:has(&__control:focus-visible) {
+    outline: var(--kicl-outline-width) dashed var(--kicl-outline-color);
+  }
+
+  &:has([aria-invalid='true'], :user-invalid) {
+    border-color: var(--kicl-color-error);
+  }
+
+  &__control {
+    --kicl--components--input--border-width: 0;
+    --kicl--components--input--padding-block: 0;
+    --kicl--components--input--padding-inline: 0;
+    --kicl--components--textarea--border-width: 0;
+    --kicl--components--textarea--padding-block: 0;
+    --kicl--components--textarea--padding-inline: 0;
+
+    background: transparent;
+    border: 0;
+
+    // Basis `0`, not `auto`. `Input` and `Textarea` are `inline-size: 100%`,
+    // which an `auto` basis resolves to - the control would claim a whole row
+    // on its own and every addon would wrap beneath it. From zero it takes only
+    // what the addons leave, which is what puts them on the same line.
+    flex: 1 1 0;
+    min-inline-size: 0;
+    padding: 0;
+
+    &:focus-visible {
+      --kicl-outline-style: none;
+    }
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--input-group--border-color: var(--kicl-color-grey);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--input-group--border-color: var(
+      --kicl-color-grey-darker
+    );
+  }
+}

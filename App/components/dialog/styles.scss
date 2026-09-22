@@ -1,0 +1,140 @@
+:root {
+  --kicl--components--dialog--background-color: var(--kicl-color-white);
+  --kicl--components--dialog--border-radius: var(--kicl-size);
+  --kicl--components--dialog--max-inline-size: 66ch;
+  --kicl--components--dialog--inline-size: auto;
+  --kicl--components--dialog--offset: var(--kicl-gutter-extreme);
+  --kicl--components--dialog--section-offset: var(--kicl-gutter-wide);
+  --kicl--components--dialog--padding-block: var(--kicl-gutter);
+  --kicl--components--dialog--padding-inline: var(--kicl-gutter);
+  --kicl--components--dialog--backdrop--backdrop-filter--brightness: 45%;
+  --kicl--components--dialog--backdrop--backdrop-filter--blur: var(
+    --kicl-size-half
+  );
+  --kicl--components--dialog--backdrop--background-color: var(
+    --kicl-color-white-dark
+  );
+  --kicl--components--dialog--backdrop--opacity: 0.2;
+}
+
+.kicl--theme--dark {
+  --kicl--components--dialog--background-color: var(--kicl-color-grey-darkest);
+}
+
+.kicl--theme--light {
+  --kicl--components--dialog--background-color: var(--kicl-color-white);
+}
+
+.kicl--components--dialog {
+  &:not([open]) {
+    --kicl--components--dialog--backdrop--backdrop-filter--brightness: 100%;
+    --kicl--components--dialog--backdrop--backdrop-filter--blur: 0;
+    --kicl--components--dialog--backdrop--background-color: transparent;
+    --kicl--components--dialog--backdrop--opacity: 0;
+  }
+
+  &--is-dense {
+    --kicl--components--dialog--padding-block: var(--kicl-gutter-narrow);
+    --kicl--components--dialog--padding-inline: var(--kicl-gutter-narrow);
+  }
+
+  &--is-full-screen {
+    --kicl--components--dialog--block-size: 100dvb;
+    --kicl--components--dialog--border-radius: 0;
+    --kicl--components--dialog--inline-size: 100dvi;
+    --kicl--components--dialog--max-inline-size: 100dvi;
+    --kicl--components--dialog--padding-block: 0;
+    --kicl--components--dialog--padding-inline: 0;
+    --kicl--components--dialog--offset: 0px;
+    --kicl--components--dialog--section-offset: 0px;
+  }
+
+  min-block-size: 100dvb;
+  inline-size: 100dvi;
+  margin: auto;
+  max-inline-size: 100dvi;
+  overscroll-behavior: contain;
+  transition:
+    display var(--kicl-transition-duration-fast) allow-discrete,
+    overlay var(--kicl-transition-duration-fast) allow-discrete;
+
+  @include query('≤mobile') {
+    min-block-size: 100svb;
+
+    > div {
+      border-end-end-radius: 0;
+      border-end-start-radius: 0;
+      margin-block: auto 0;
+      min-block-size: calc(100svb - var(--kicl--components--dialog--offset));
+    }
+  }
+
+  > div {
+    background-color: var(--kicl--components--dialog--background-color);
+    block-size: var(--kicl--components--dialog--block-size, auto);
+    border-radius: var(--kicl--components--dialog--border-radius);
+    inline-size: var(--kicl--components--dialog--inline-size);
+    margin-inline: auto;
+    margin-block: var(--kicl--components--dialog--offset);
+    max-inline-size: var(--kicl--components--dialog--max-inline-size);
+    padding-block: var(--kicl--components--dialog--padding-block);
+    padding-inline: var(--kicl--components--dialog--padding-inline);
+    position: relative;
+
+    /* The state it arrives from, and returns to. */
+    opacity: 0;
+    transition:
+      block-size var(--kicl-transition-duration-fast),
+      opacity var(--kicl-transition-duration-fast),
+      translate var(--kicl-transition-duration-fast);
+    translate: 0 0;
+    z-index: var(--kicl-z-index-raised);
+  }
+
+  &[open] > div {
+    opacity: 1;
+    translate: 0 0;
+
+    @starting-style {
+      block-size: var(
+        --kicl--components--dialog--block-size--starting-style,
+        auto
+      );
+      opacity: 0;
+      translate: 0 var(--kicl--components--dialog--section-offset);
+    }
+  }
+
+  &:not([open]) > div {
+    block-size: var(
+      --kicl--components--dialog--block-size--starting-style,
+      auto
+    );
+  }
+
+  &::backdrop {
+    @at-root .kicl--theme--dark & {
+      --kicl--components--dialog--backdrop--background-color: #{rgba(
+        $black-pure,
+        0.5
+      )};
+    }
+
+    @at-root .kicl--theme--light & {
+      --kicl--components--dialog--backdrop--background-color: #{rgba(
+        $white-pure,
+        0.7
+      )};
+    }
+
+    backdrop-filter: brightness(
+      var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
+    )
+      blur(var(--kicl--components--dialog--backdrop--backdrop-filter--blur));
+    background-color: rgb(
+      from var(--kicl--components--dialog--backdrop--background-color) r g b /
+      var(--kicl--components--dialog--backdrop--opacity)
+    );
+    pointer-events: none;
+  }
+}

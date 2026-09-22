@@ -1,0 +1,12 @@
+.kicl--components--popover {
+  /*
+   * The trigger is the thing the panel is placed against, so it is what
+   * carries the anchor name. The wrapper only passes the name down, which is
+   * how two instances on one page avoid anchoring to each other.
+   */
+  &__trigger {
+    @supports (anchor-name: --a) {
+      anchor-name: var(--kicl--components--popover--anchor);
+    }
+  }
+}

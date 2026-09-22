@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Design system: Components + utilities
 
-## Prefer `@/Components` over raw DOM
+## Prefer `@/components` over raw DOM
 
 When a shared component exists, use it instead of the raw element:
 

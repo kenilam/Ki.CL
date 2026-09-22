@@ -1,0 +1,10 @@
+.kicl--components--select::picker(select) {
+  background-color: var(--kicl--components--select--background-color);
+  border: var(--kicl--components--select--border-width) solid
+    var(--kicl--components--select--border-color);
+  border-radius: var(--kicl--components--select--border-radius);
+  color: var(--kicl--components--select--color);
+  margin-block: var(--kicl-gutter-narrowest);
+  max-block-size: var(--kicl--components--select--content-max-block-size);
+  padding: var(--kicl-gutter-narrowest);
+}

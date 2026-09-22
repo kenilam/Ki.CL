@@ -1,0 +1,145 @@
+:root {
+  --kicl--views--portfolio--pika--system-design--background: linear-gradient(
+    232deg,
+    #{color.adjust($orange, $lightness: 30%)},
+    #{color.adjust($green, $lightness: 30%)},
+    #{color.adjust($red, $lightness: 30%)},
+    #{color.adjust($blue, $lightness: 30%)},
+    #{color.adjust($yellow, $lightness: 30%)}
+  );
+
+  @at-root .kicl--theme--dark {
+    --kicl--views--portfolio--pika--system-design--background: linear-gradient(
+      232deg,
+      #{color.adjust($orange, $blackness: 3%)},
+      #{color.adjust($green, $blackness: 3%)},
+      #{color.adjust($red, $blackness: 3%)},
+      #{color.adjust($blue, $blackness: 3%)},
+      #{color.adjust($yellow, $blackness: 3%)}
+    );
+  }
+}
+
+.kicl--views--portfolio--pika--system-design {
+  /* Full-bleed hero - the article re-pads its own reading column below. */
+  @at-root .kicl--view:has(&) {
+    padding: var(--kicl-gutter-none);
+  }
+
+  &__body {
+    max-inline-size: min(100%, 92ch);
+
+    > section > * {
+      animation: kicl--views--portfolio--pika--system-design--parallax-reveal
+        linear both;
+      animation-timeline: view();
+      animation-range: entry 40% entry 60%;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+    }
+
+    /* Section headings - `kicl-position-relative` on the element anchors the rule. */
+    h2 {
+      &::before {
+        animation: kicl--views--portfolio--pika--system-design--background 300s
+          ease infinite;
+        background: var(
+          --kicl--views--portfolio--pika--system-design--background
+        );
+        background-size: 1200% 1200%;
+        block-size: var(--kicl-size-3px);
+        content: '';
+        inline-size: var(--kicl-size-4x);
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        position: absolute;
+      }
+    }
+
+    /* Prism syntax tokens - coloured with the design system palette. */
+    /* stylelint-disable selector-class-pattern */
+    .token {
+      &.key,
+      &.atrule {
+        color: var(--kicl-color-blue);
+      }
+
+      &.string {
+        color: var(--kicl-color-green);
+      }
+
+      &.boolean,
+      &.number {
+        color: var(--kicl-color-orange);
+      }
+
+      &.comment {
+        color: var(--kicl-color-grey);
+      }
+
+      &.punctuation {
+        opacity: 0.6;
+      }
+    }
+    /* stylelint-enable selector-class-pattern */
+
+    /* Inline code chips - same surface tokens the Card uses. */
+    :not(pre) > code {
+      background-color: var(--kicl-surface-color);
+      border: var(--kicl-size-1px) solid var(--kicl-surface-border-color);
+      border-radius: calc(var(--kicl-size-half) / 2);
+      font-family: var(--kicl-font-family-mono);
+      font-size: var(--kicl-font-size-small);
+      letter-spacing: normal;
+      padding-block: 0;
+      padding-inline: 0.4em;
+    }
+  }
+
+  /* `html` already clears the global header; this keeps a gutter above the heading. */
+  h2[id] {
+    scroll-margin-block-start: var(--kicl-gutter);
+  }
+
+  &__full {
+    &#{&} {
+      --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
+      --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
+    }
+
+    --kicl--components--image--block-size: calc(
+      var(--kicl--components--dialog--block-size) -
+      (var(--kicl--components--dialog--padding-block) * 2)
+    );
+    --kicl--components--image--inline-size: fit-content;
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--parallax-reveal {
+  from {
+    opacity: 0;
+    translate: 0 var(--kicl-size-10x);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes kicl--views--portfolio--pika--system-design--background {
+  0% {
+    background-position: 0% 88%;
+  }
+
+  50% {
+    background-position: 100% 13%;
+  }
+
+  100% {
+    background-position: 0% 88%;
+  }
+}

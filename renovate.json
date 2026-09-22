@@ -3,7 +3,7 @@
   "extends": ["config:recommended"],
   "commitBody": "renovate updates",
   "ignorePaths": [],
-  "baseBranches": ["develop"],
+  "baseBranchPatterns": ["develop"],
   "schedule": ["every weekend"],
   "dependencyDashboard": true,
   "platformAutomerge": true,

@@ -1,0 +1,31 @@
+@mixin make-variable-class($property, $identifier: null) {
+  @if $identifier {
+    .kicl-#{$property}-#{$identifier}.kicl-#{$property}-#{$identifier} {
+      #{$property}: var(--kicl-#{$property}-#{$identifier});
+      @content;
+    }
+  } @else {
+    .kicl-#{$property}.kicl-#{$property} {
+      #{$property}: var(--kicl-#{$property});
+      @content;
+    }
+  }
+}
+
+@mixin make-size-variable-class(
+  $property: null,
+  $identifier: null,
+  $size: null
+) {
+  @if $identifier and $property {
+    $suffix: '';
+
+    @if $size {
+      $suffix: '-#{$size}';
+    }
+
+    .kicl-#{$property}-#{$identifier} {
+      #{$property}: var(--kicl-size#{$suffix});
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.kicl--views--experiments--tree-of-life--v15 {
+  &__search {
+    &.kicl--components--input-group {
+      --kicl--components--input-group--gap: var(--kicl-gutter-narrow);
+    }
+
+    input::-webkit-search-cancel-button,
+    input::-webkit-search-decoration,
+    input::-webkit-calendar-picker-indicator {
+      appearance: none;
+      display: none !important;
+    }
+
+    input::-webkit-list-button {
+      appearance: none;
+      display: none !important;
+    }
+  }
+}

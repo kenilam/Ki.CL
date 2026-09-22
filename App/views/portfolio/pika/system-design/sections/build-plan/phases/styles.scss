@@ -1,0 +1,18 @@
+.kicl--views--portfolio--pika--system-design {
+  /* Build-plan phase table - surface borders, uppercase header set in markup. */
+  &__phases {
+    border-collapse: collapse;
+
+    thead th {
+      border-block-end: var(--kicl-size-2px) solid
+        var(--kicl-surface-border-color);
+      opacity: 0.6;
+    }
+
+    tbody :is(th, td) {
+      border-block-end: var(--kicl-size-1px) solid
+        var(--kicl-surface-border-color);
+      vertical-align: top;
+    }
+  }
+}

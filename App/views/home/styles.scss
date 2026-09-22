@@ -1,0 +1,10 @@
+.kicl--views--home {
+  overflow: hidden;
+
+  @at-root .kicl--view:has(&) {
+    padding-block-end: 0;
+    padding-block-start: 0;
+    padding-inline-end: 0;
+    padding-inline-start: 0;
+  }
+}

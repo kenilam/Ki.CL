@@ -1,0 +1,14 @@
+.kicl--views--experiments--music-visualiser__chrome__now-playing {
+  max-inline-size: 28rem;
+  transition: opacity var(--kicl-transition-duration-slow)
+    var(--kicl-ease-sine-out);
+
+  /*
+   * Idle: the title and subtitle only step back while the controls go. They
+   * stay hittable while faded - a press on one has to work the first
+   * time, not just wake the chrome up and ask for a second.
+   */
+  .kicl--views--experiments--music-visualiser__chrome--idle & {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,15 @@
+.kicl--components--dialog {
+  &--is-full-screen &--close {
+    --kicl--components--dialog--padding-block: var(--kicl-gutter);
+
+    inset-inline-end: var(--kicl--components--dialog--padding-block);
+    margin-block-end: calc(-1 * var(--kicl--components--dialog--padding-block));
+  }
+
+  &--close {
+    inset-block-start: var(--kicl--components--dialog--padding-block);
+    margin-block-end: var(--kicl--components--dialog--padding-block);
+    margin-inline-start: auto;
+    z-index: var(--kicl-z-index-floating);
+  }
+}

@@ -2,10 +2,10 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Core
-import '@/Core';
+import '@/core';
 
 // App
-import App from '@/App';
+import { App } from '@/app';
 
 (() => {
   const appRoot = document.querySelector('app-root');

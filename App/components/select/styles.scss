@@ -1,0 +1,42 @@
+.kicl--components--select {
+  --kicl--components--select--background-color: var(--kicl-surface-color);
+  --kicl--components--select--border-color: var(--kicl-color-grey-darker);
+  --kicl--components--select--border-radius: var(--kicl-size-half);
+  --kicl--components--select--border-width: var(--kicl-size-1px);
+  --kicl--components--select--color: var(--kicl-body-color);
+  --kicl--components--select--content-max-block-size: 16rem;
+  --kicl--components--select--padding-block: var(--kicl-gutter-narrowest);
+  --kicl--components--select--padding-inline: var(--kicl-gutter-narrow);
+
+  background-color: var(--kicl--components--select--background-color);
+  border: var(--kicl--components--select--border-width) solid
+    var(--kicl--components--select--border-color);
+  border-radius: var(--kicl--components--select--border-radius);
+  color: var(--kicl--components--select--color);
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  padding-block: var(--kicl--components--select--padding-block);
+  padding-inline: var(--kicl--components--select--padding-inline);
+
+  // Opt in to the styleable select; older browsers keep the native one.
+  @supports (appearance: base-select) {
+    &,
+    &::picker(select) {
+      appearance: base-select;
+    }
+  }
+
+  &[aria-invalid='true'],
+  &:user-invalid {
+    border-color: var(--kicl-color-error);
+  }
+
+  @at-root .kicl--theme--dark & {
+    --kicl--components--select--border-color: var(--kicl-color-grey);
+  }
+
+  @at-root .kicl--theme--light & {
+    --kicl--components--select--border-color: var(--kicl-color-grey-darker);
+  }
+}

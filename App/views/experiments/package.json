@@ -1,0 +1,9 @@
+{
+  "name": "app.views.experiments",
+  "version": "0.0.1",
+  "type": "module",
+  "workspaces": [
+    "tree-of-life",
+    "music-visualiser"
+  ]
+}

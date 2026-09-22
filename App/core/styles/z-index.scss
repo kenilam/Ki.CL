@@ -1,0 +1,22 @@
+// One stacking scale, so layers are chosen by role rather than by outbidding
+// the last number someone picked. The values keep the order the hand-set
+// numbers already had.
+$z-index-levels: (
+  'base': 0,
+  'raised': 1,
+  'floating': 2,
+  'popover': 5,
+  'overlay': 1000,
+  'header': 100001,
+  'top': 100002,
+);
+
+:root {
+  @each $name, $value in $z-index-levels {
+    --kicl-z-index-#{$name}: #{$value};
+  }
+}
+
+@each $name, $value in $z-index-levels {
+  @include make-variable-class('z-index', $name);
+}
