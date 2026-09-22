@@ -82,4 +82,3 @@ const useEnvContext = () => {
 };
 
 export { type Value, Names, PATH, EnvProvider, getEnv, useEnvContext };
-export default {};

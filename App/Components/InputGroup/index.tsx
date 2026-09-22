@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Button from '@/Components/Button';
-import Input from '@/Components/Input';
-import Textarea from '@/Components/Textarea';
+import { Button } from '@/Components/Button';
+import { Input } from '@/Components/Input';
+import { Textarea } from '@/Components/Textarea';
 
 import type {
   InputGroupAddonProps,
@@ -137,6 +137,5 @@ export {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
+  InputGroup,
 };
-
-export default InputGroup;

@@ -92,5 +92,4 @@ Menu.displayName = 'Menu';
 
 type MenuProps = Spec.Props;
 
-export { type MenuProps };
-export default Menu;
+export { Menu, type MenuProps };

@@ -10,12 +10,14 @@ import { Spinner } from '@/Components';
 import { GROUP, TYPES } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Types
-import Types from './Types';
+import { Types } from './Types';
 
 // Constants
 import { PARAMS, toPath } from '@/Views/Experiments/MusicVisualiser/constants';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ Contents }) => ({ default: Contents }))
+);
 
 const Lazy: React.FunctionComponent = () => (
   <Suspense fallback={<Spinner position='inline' />}>
@@ -24,7 +26,7 @@ const Lazy: React.FunctionComponent = () => (
 );
 
 /** `/:group` - the station; its index goes to its first type. */
-export default (
+const Groups = (
   <Route path={`:${PARAMS.group}`} element={<Lazy />}>
     <Route
       index
@@ -35,3 +37,5 @@ export default (
     {Types}
   </Route>
 );
+
+export { Groups };

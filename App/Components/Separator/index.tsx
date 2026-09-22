@@ -37,4 +37,4 @@ Separator.displayName = 'Separator';
 export type { Props as SeparatorProps } from './Spec';
 export { SEPARATOR_ORIENTATIONS } from './Spec';
 export type { SeparatorOrientation } from './Spec';
-export default Separator;
+export { Separator };

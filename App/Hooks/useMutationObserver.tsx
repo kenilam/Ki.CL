@@ -31,5 +31,4 @@ function useMutationObserver<Node extends HTMLElement>(
   return { node };
 }
 
-export { OPTIONS };
-export default useMutationObserver;
+export { OPTIONS, useMutationObserver };

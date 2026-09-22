@@ -23,4 +23,4 @@ const BadgeLabel: React.FunctionComponent<BadgeLabelProps> = ({
 
 BadgeLabel.displayName = 'BadgeLabel';
 
-export default BadgeLabel;
+export { BadgeLabel };

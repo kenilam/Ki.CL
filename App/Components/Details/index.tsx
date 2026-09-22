@@ -40,4 +40,4 @@ const Details = React.forwardRef<HTMLDetailsElement, Props>(
 Details.displayName = 'Details';
 
 export type { Props as DetailsProps, SummaryProps } from './Spec';
-export default Details;
+export { Details };

@@ -114,5 +114,4 @@ const RadioGroupItem = React.forwardRef<HTMLButtonElement, RadioGroupItemProps>(
 RadioGroupItem.displayName = 'RadioGroupItem';
 
 export type { RadioGroupProps, RadioGroupItemProps } from './Spec';
-export { RadioGroupItem };
-export default RadioGroup;
+export { RadioGroupItem, RadioGroup };

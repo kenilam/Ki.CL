@@ -46,4 +46,4 @@ const Menu: React.FunctionComponent<Spec.Props> = ({
   );
 };
 
-export default Menu;
+export { Menu };

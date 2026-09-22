@@ -1,9 +1,10 @@
-import GlobalHeader, {
+import {
+  GlobalHeader,
   GlobalHeaderProvider,
   useGlobalHeaderContext,
 } from './GlobalHeader';
-import InfiniteScroll from './InfiniteScroll';
-import SiteLogo, { SiteLogoProps } from './SiteLogo';
+import { InfiniteScroll } from './InfiniteScroll';
+import { SiteLogo, SiteLogoProps } from './SiteLogo';
 
 export {
   GlobalHeader,
@@ -13,5 +14,3 @@ export {
   type SiteLogoProps,
   useGlobalHeaderContext,
 };
-
-export default {};

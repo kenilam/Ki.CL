@@ -4,9 +4,9 @@ import React from 'react';
 import { Layout } from '@/Components';
 
 // Partials
-import More from './More';
-import ScrollIndicator from './ScrollIndicator';
-import Stage from './Stage';
+import { More } from './More';
+import { ScrollIndicator } from './ScrollIndicator';
+import { Stage } from './Stage';
 
 // Styles
 import './Styles.scss';
@@ -28,4 +28,4 @@ const Home: React.FunctionComponent = () => (
   </Layout>
 );
 
-export default Home;
+export { Home };

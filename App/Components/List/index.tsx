@@ -128,5 +128,4 @@ List.displayName = 'List';
 type ListProps = Spec.Props;
 type ListNode = Spec.Node;
 
-export { type ListNode, type ListProps };
-export default List;
+export { List, type ListNode, type ListProps };

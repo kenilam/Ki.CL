@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import { Animation, Layout } from '@/Components';
 
 // Partials
-import Aside from './Aside';
-import Contents from './Contents';
+import { Aside } from './Aside';
+import { Contents } from './Contents';
 
 // Constants
 import { ID } from './Constants';
@@ -46,5 +46,4 @@ const Header: React.FunctionComponent = () => {
   );
 };
 
-export { ID };
-export default Header;
+export { ID, Header };

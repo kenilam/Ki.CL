@@ -259,4 +259,4 @@ const TaxonVisualPanel: React.FC<Props> = ({
   );
 };
 
-export default TaxonVisualPanel;
+export { TaxonVisualPanel };

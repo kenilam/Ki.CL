@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import Text from '@/Components/Text';
+import { Text } from '@/Components/Text';
 
 import { useFormFieldContext } from './context';
 import type { FormDescriptionProps } from './Spec';
@@ -32,4 +32,4 @@ const FormDescription = React.forwardRef<
 
 FormDescription.displayName = 'FormDescription';
 
-export default FormDescription;
+export { FormDescription };

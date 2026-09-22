@@ -10,7 +10,7 @@ import { useResponsive } from '@/Hooks';
 import { Heading, HyperLink, Layout, Text } from '@/Components';
 
 // Partials
-import Attempts from './Attempts';
+import { Attempts } from './Attempts';
 
 // Styles
 import './Styles.scss';
@@ -65,4 +65,4 @@ const Banner: React.FunctionComponent = () => {
   );
 };
 
-export default Banner;
+export { Banner };

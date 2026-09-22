@@ -76,4 +76,4 @@ function useScrollEvent<Node extends HTMLElement>() {
   };
 }
 
-export default useScrollEvent;
+export { useScrollEvent };

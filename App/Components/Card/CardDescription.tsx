@@ -30,4 +30,4 @@ const CardDescription = React.forwardRef<HTMLElement, CardDescriptionProps>(
 
 CardDescription.displayName = 'CardDescription';
 
-export default CardDescription;
+export { CardDescription };

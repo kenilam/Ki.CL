@@ -1,4 +1,3 @@
-import useURLStatus from './useURLStatus';
+import { useURLStatus } from './useURLStatus';
 
 export { useURLStatus };
-export default {};

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
 // Routes
-import Router, {
+import {
+  Router,
   ErrorElement,
   HttpStatus,
   Outlet,
@@ -24,9 +25,9 @@ import { Layout } from '@/Components';
 import { SCROLL_DIRECTIONS, useResponsive, useScrollDirection } from '@/Hooks';
 
 // Views
-import Experiments from './Experiments';
-import Home, { PATH as HOME_PATH } from './Home';
-import Portfolio from './Portfolio';
+import { Experiments } from './Experiments';
+import { Home, PATH as HOME_PATH } from './Home';
+import { Portfolio } from './Portfolio';
 
 // Styles
 import './Styles.scss';
@@ -104,4 +105,4 @@ const Views: React.FunctionComponent = () => {
   );
 };
 
-export default Views;
+export { Views };

@@ -146,7 +146,7 @@ function drop(slot: Slot): void {
   slot.gain?.disconnect();
 }
 
-export default function useAudio(): Audio {
+export function useAudio(): Audio {
   const navigate = useNavigate();
   const storage = useLocalStorageContext();
   const trackMatch = useMatch({ end: false, path: TRACK_ROUTE });

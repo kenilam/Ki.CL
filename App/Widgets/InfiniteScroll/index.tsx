@@ -107,4 +107,4 @@ const InfiniteScroll = React.forwardRef<HTMLDivElement, Props>(
   }
 );
 
-export default InfiniteScroll;
+export { InfiniteScroll };

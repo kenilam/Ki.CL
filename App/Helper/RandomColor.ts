@@ -15,4 +15,4 @@ const RandomColor: Spec.RandomColor = (prop) => {
   return Color(`#${hex}`);
 };
 
-export default RandomColor;
+export { RandomColor };

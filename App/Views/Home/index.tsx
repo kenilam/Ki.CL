@@ -8,7 +8,9 @@ import { Spinner } from '@/Components';
 
 const PATH = '';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ Home }) => ({ default: Home }))
+);
 
 const Lazy: React.FunctionComponent = () => {
   return (
@@ -18,5 +20,6 @@ const Lazy: React.FunctionComponent = () => {
   );
 };
 
-export { PATH };
-export default <Origin path={PATH} element={<Lazy />} />;
+const Home = <Origin path={PATH} element={<Lazy />} />;
+
+export { PATH, Home };

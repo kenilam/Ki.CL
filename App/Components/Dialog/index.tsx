@@ -128,5 +128,4 @@ type DialogProps = Spec.Props;
 
 Dialog.displayName = 'Dialog';
 
-export { type DialogProps };
-export default Dialog;
+export { Dialog, type DialogProps };

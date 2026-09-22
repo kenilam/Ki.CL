@@ -22,4 +22,4 @@ const Default: React.FunctionComponent = () => {
   );
 };
 
-export default Default;
+export { Default };

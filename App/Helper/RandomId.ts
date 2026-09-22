@@ -10,4 +10,4 @@ const RandomId: Spec.RandomId = (prop) => {
   );
 };
 
-export default RandomId;
+export { RandomId };

@@ -460,6 +460,5 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
+  Select,
 };
-
-export default Select;

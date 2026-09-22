@@ -114,4 +114,4 @@ const Controls: React.FunctionComponent<Props> = ({ control, next, track }) => {
   );
 };
 
-export default Controls;
+export { Controls };

@@ -14,10 +14,10 @@ import { useResponsive } from '@/Hooks';
 import { Animation, Layout } from '@/Components';
 
 // Partials
-import Navigation from './Navigation';
+import { Navigation } from './Navigation';
 
 // Context
-import GlobalHeaderProvider, { useGlobalHeaderContext } from './Context';
+import { useGlobalHeaderContext, GlobalHeaderProvider } from './Context';
 
 // Styles
 import './Styles.scss';
@@ -71,5 +71,4 @@ const GlobalHeader: React.FunctionComponent = () => {
   );
 };
 
-export { GlobalHeaderProvider, useGlobalHeaderContext };
-export default GlobalHeader;
+export { GlobalHeaderProvider, useGlobalHeaderContext, GlobalHeader };

@@ -193,5 +193,4 @@ async function Server() {
 
 Server();
 
-export { middlewares };
-export default Server;
+export { middlewares, Server };

@@ -2,4 +2,6 @@ if (!globalThis.URLPattern) {
   await import('urlpattern-polyfill');
 }
 
-export default globalThis.URLPattern;
+const URLPattern = globalThis.URLPattern;
+
+export { URLPattern };

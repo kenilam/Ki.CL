@@ -94,4 +94,4 @@ const sessionModel: Spec = {
   ],
 };
 
-export default sessionModel;
+export { sessionModel };

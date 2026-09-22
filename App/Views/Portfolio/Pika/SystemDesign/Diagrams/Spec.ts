@@ -53,5 +53,3 @@ export type Spec = {
   nodes: Node[];
   width: number;
 };
-
-export default {};

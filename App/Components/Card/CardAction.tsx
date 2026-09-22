@@ -25,4 +25,4 @@ const CardAction = React.forwardRef<HTMLElement, CardActionProps>(
 
 CardAction.displayName = 'CardAction';
 
-export default CardAction;
+export { CardAction };

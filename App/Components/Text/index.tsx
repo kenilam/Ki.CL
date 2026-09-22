@@ -46,4 +46,4 @@ const Text = React.forwardRef<Spec.TextNode, Spec.Props>(
 Text.displayName = 'Text';
 
 export type { Props as TextProps, TextIs, TextNode } from './Spec';
-export default Text;
+export { Text };

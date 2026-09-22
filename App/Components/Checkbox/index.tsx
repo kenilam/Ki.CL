@@ -75,4 +75,4 @@ const Checkbox = React.forwardRef<HTMLButtonElement, Props>(
 Checkbox.displayName = 'Checkbox';
 
 export type { Props as CheckboxProps, CheckedState } from './Spec';
-export default Checkbox;
+export { Checkbox };

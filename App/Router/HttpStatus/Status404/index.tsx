@@ -97,4 +97,4 @@ const Status404: React.FunctionComponent = () => {
   );
 };
 
-export default Status404;
+export { Status404 };

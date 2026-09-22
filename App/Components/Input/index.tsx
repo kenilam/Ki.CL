@@ -26,4 +26,4 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 Input.displayName = 'Input';
 
 export type { Props as InputProps } from './Spec';
-export default Input;
+export { Input };

@@ -71,5 +71,4 @@ const Company: React.FunctionComponent<Props> = ({
   );
 };
 
-export { type Props, CompanyNames, CompanyVectors };
-export default Company;
+export { CompanyNames, CompanyVectors, Company, type Props };

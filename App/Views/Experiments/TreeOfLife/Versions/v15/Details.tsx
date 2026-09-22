@@ -12,7 +12,7 @@ import {
   Text,
 } from '@/Components';
 
-import TaxonVisualPanel from '@/Views/Experiments/TreeOfLife/TaxonVisual';
+import { TaxonVisualPanel } from '@/Views/Experiments/TreeOfLife/TaxonVisual';
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 import { ROOT_NODE_ID } from '@/Views/Experiments/TreeOfLife/constants';
 import {
@@ -137,4 +137,4 @@ const Details: React.FunctionComponent = () => {
   );
 };
 
-export default Details;
+export { Details };

@@ -154,8 +154,8 @@ type HyperLinkProps = Spec.Props;
 type GetHyperLinkClassNamesProps = Spec.GetHyperLinkClassNamesProps;
 
 export {
+  getHyperLinkClassNames,
+  HyperLink,
   type GetHyperLinkClassNamesProps,
   type HyperLinkProps,
-  getHyperLinkClassNames,
 };
-export default HyperLink;

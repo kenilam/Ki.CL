@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
-import THREE, { Fiber } from '@/Three';
+import { THREE, Fiber } from '@/Three';
 
 // Anchors
 import { reach } from './anchors';
@@ -240,4 +240,4 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
   );
 };
 
-export default Globe;
+export { Globe };

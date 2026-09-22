@@ -40,7 +40,7 @@ export type Chain = {
   complete: boolean;
 };
 
-export default function chain(nodeId: string | null | undefined): Chain {
+export function chain(nodeId: string | null | undefined): Chain {
   if (!nodeId) {
     return { ids: [], complete: false };
   }

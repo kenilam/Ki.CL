@@ -407,4 +407,3 @@ const getConfig = ({
   });
 
 export { getConfig };
-export default {};

@@ -5,7 +5,7 @@
  */
 import React, { useLayoutEffect, useMemo, useRef } from 'react';
 
-import THREE, { Drei } from '@/Three';
+import { THREE, Drei } from '@/Three';
 
 import { labelFor } from '@/Views/Experiments/TreeOfLife/tree';
 import type { LayoutNode } from './layoutEngine';

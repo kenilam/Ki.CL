@@ -7,8 +7,12 @@ import { useResponsive } from '@/Hooks';
 import { Spinner } from '@/Components';
 
 const VERSIONS = {
-  true: React.lazy(() => import('./Mobile')),
-  false: React.lazy(() => import('./Default')),
+  true: React.lazy(() =>
+    import('./Mobile').then(({ Mobile }) => ({ default: Mobile }))
+  ),
+  false: React.lazy(() =>
+    import('./Default').then(({ Default }) => ({ default: Default }))
+  ),
 };
 
 const Navigation: React.FunctionComponent = () => {
@@ -23,4 +27,4 @@ const Navigation: React.FunctionComponent = () => {
   );
 };
 
-export default Navigation;
+export { Navigation };

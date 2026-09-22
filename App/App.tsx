@@ -4,13 +4,13 @@ import React, { Suspense, lazy } from 'react';
 import { EnvProvider, useEnvContext } from '@/Env/Client';
 
 // LocalStorage
-import LocalStorageProvider from '@/LocalStorage';
+import { LocalStorageProvider } from '@/LocalStorage';
 
 // Components
 import { Spinner } from '@/Components';
 
 // View
-import View from '@/Views';
+import { Views as View } from '@/Views';
 
 const KiclProvider = lazy(() =>
   import('api/provider').then(({ KiclProvider }) => ({ default: KiclProvider }))
@@ -42,4 +42,4 @@ const App: React.FunctionComponent = () => {
   );
 };
 
-export default App;
+export { App };

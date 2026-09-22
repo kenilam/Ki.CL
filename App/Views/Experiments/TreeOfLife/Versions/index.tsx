@@ -6,7 +6,7 @@ import { Navigate, Route, Outlet } from '@/Router';
 // Constants
 import { ROOT_NODE_ID } from '@/Views/Experiments/TreeOfLife/constants';
 import { PATH, VERSIONS } from './constants';
-import Selector from './Selector';
+import { Selector } from './Selector';
 
 const Element: React.FunctionComponent = () => {
   return (
@@ -17,9 +17,7 @@ const Element: React.FunctionComponent = () => {
   );
 };
 
-export { PATH };
-
-export default (
+const Versions = (
   <Route path={PATH} element={<Element />}>
     <Route index element={<Navigate replace to='..' />} />
     {VERSIONS.map((version) => (
@@ -28,10 +26,12 @@ export default (
         <Route
           path=':nodeId'
           lazy={async () => ({
-            Component: (await import(`./v${version}`)).default,
+            Component: (await import(`./v${version}`)).Canvas,
           })}
         />
       </Route>
     ))}
   </Route>
 );
+
+export { PATH, Versions };

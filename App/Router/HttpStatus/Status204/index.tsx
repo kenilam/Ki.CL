@@ -92,4 +92,4 @@ const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
   );
 };
 
-export default Status204;
+export { Status204 };

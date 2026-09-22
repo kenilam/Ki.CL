@@ -119,5 +119,4 @@ const Animation: FunctionComponent<Spec.Props> = ({
 
 type AnimationProps = Spec.Props;
 
-export { type AnimationProps, PROPERTIES };
-export default Animation;
+export { PROPERTIES, Animation, type AnimationProps };

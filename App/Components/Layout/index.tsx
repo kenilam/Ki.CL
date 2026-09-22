@@ -91,5 +91,4 @@ Layout.displayName = 'Layout';
 
 type LayoutProps = Spec.Props;
 
-export { type LayoutProps };
-export default Layout;
+export { Layout, type LayoutProps };

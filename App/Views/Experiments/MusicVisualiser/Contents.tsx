@@ -24,4 +24,4 @@ const MusicVisualiser: React.FunctionComponent = () => (
   </Layout>
 );
 
-export default MusicVisualiser;
+export { MusicVisualiser };

@@ -8,5 +8,3 @@ export type Switch = PolymorphicIsProps<ListIs, object, 'ul'>;
 export type Node = Switch;
 
 export type Props = LayoutProps & Switch;
-
-export default {};

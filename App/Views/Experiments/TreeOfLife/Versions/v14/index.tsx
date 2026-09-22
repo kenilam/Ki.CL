@@ -62,8 +62,8 @@ import {
   pickExpandBatch,
 } from '@/Views/Experiments/TreeOfLife/tree';
 import { ControlsSchema, type ControlsValues } from './autoModeSchema';
-import TaxonVisualPanel from '@/Views/Experiments/TreeOfLife/TaxonVisual';
-import TreeWebGL from './TreeWebGL';
+import { TaxonVisualPanel } from '@/Views/Experiments/TreeOfLife/TaxonVisual';
+import { TreeWebGL } from './TreeWebGL';
 import {
   computePosterLayout,
   HEIGHT_LIMIT_DEFAULT,
@@ -1242,4 +1242,4 @@ const Canvas: React.FunctionComponent = () => {
   );
 };
 
-export default Canvas;
+export { Canvas };

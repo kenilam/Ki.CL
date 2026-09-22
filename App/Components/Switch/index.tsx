@@ -2,7 +2,7 @@ import React, { useId, useState } from 'react';
 import classNames from 'classnames';
 
 import type { Props } from './Spec';
-import SwitchLabel from './SwitchLabel';
+import { SwitchLabel } from './SwitchLabel';
 
 import './Styles.scss';
 
@@ -119,5 +119,5 @@ const Switch = React.forwardRef<HTMLButtonElement, Props>(
 Switch.displayName = 'Switch';
 
 export type { Props as SwitchProps, SwitchLabelProps } from './Spec';
-export { default as SwitchLabel } from './SwitchLabel';
-export default Switch;
+export { SwitchLabel } from './SwitchLabel';
+export { Switch };

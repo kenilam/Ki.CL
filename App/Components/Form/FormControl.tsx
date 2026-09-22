@@ -30,4 +30,4 @@ const FormControl = ({ children }: FormControlProps) => {
   );
 };
 
-export default FormControl;
+export { FormControl };

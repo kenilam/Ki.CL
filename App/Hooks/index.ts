@@ -1,18 +1,22 @@
-import useIntersectionObserver from './useIntersectionObserver';
-import useMutationObserver, {
+import { useIntersectionObserver } from './useIntersectionObserver';
+import {
   OPTIONS as MUTATION_OBSERVER_OPTIONS,
+  useMutationObserver,
 } from './useMutationObserver';
-import useResizeObserver from './useResizeObserver';
-import useResponsive, {
+import { useResizeObserver } from './useResizeObserver';
+import {
   DARK_THEME_CLASS_NAME,
   breakpoints,
+  useResponsive,
 } from './useResponsive';
-import useScrollDirection, {
+import {
   DIRECTIONS as SCROLL_DIRECTIONS,
+  useScrollDirection,
 } from './useScrollDirection';
-import useScrollEvent from './useScrollEvent';
-import useScrollIntoView, {
+import { useScrollEvent } from './useScrollEvent';
+import {
   OPTION as SCROLL_INTO_VIEW_OPTION,
+  useScrollIntoView,
 } from './useScrollIntoView';
 
 export {
@@ -29,4 +33,3 @@ export {
   useScrollEvent,
   useScrollIntoView,
 };
-export default {};

@@ -4,7 +4,7 @@
  */
 import React, { useLayoutEffect, useMemo } from 'react';
 
-import THREE from '@/Three';
+import { THREE } from '@/Three';
 
 import type { LayoutBranch } from './layoutEngine';
 
@@ -100,4 +100,4 @@ const Branches: React.FunctionComponent<BranchesProps> = ({ branches }) => (
   </group>
 );
 
-export default Branches;
+export { Branches };

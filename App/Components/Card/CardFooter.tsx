@@ -25,4 +25,4 @@ const CardFooter = React.forwardRef<HTMLElement, CardFooterProps>(
 
 CardFooter.displayName = 'CardFooter';
 
-export default CardFooter;
+export { CardFooter };

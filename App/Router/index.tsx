@@ -27,12 +27,12 @@ import {
 } from 'react-router-dom';
 
 // Hooks
-import useMatchPattern, { Props as MatchPatternProps } from './useMatchPattern';
+import { Props as MatchPatternProps, useMatchPattern } from './useMatchPattern';
 
 // Components
-import ErrorElement from './ErrorElement';
+import { ErrorElement } from './ErrorElement';
 import * as HttpStatus from './HttpStatus';
-import MatchedRoute from './MatchedRoute';
+import { MatchedRoute } from './MatchedRoute';
 
 const Router: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   const router = createBrowserRouter(createRoutesFromElements(children));
@@ -56,12 +56,6 @@ export {
   Routes,
   ScrollRestoration,
   redirect,
-  type LinkProps,
-  type NavLinkProps,
-  type MatchPatternProps,
-  type NavigateProps,
-  type PathMatch,
-  type ScrollRestorationProps,
   useLocation,
   useMatch,
   useMatchPattern,
@@ -69,6 +63,11 @@ export {
   useParams,
   useRoutes,
   useSearchParams,
+  Router,
+  type LinkProps,
+  type NavLinkProps,
+  type MatchPatternProps,
+  type NavigateProps,
+  type PathMatch,
+  type ScrollRestorationProps,
 };
-
-export default Router;

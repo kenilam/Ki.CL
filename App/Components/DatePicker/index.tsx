@@ -3,8 +3,8 @@ import classNames from 'classnames';
 
 import { Ri } from '@/Icons';
 
-import Calendar, { type DateRange } from '@/Components/Calendar';
-import Popover, { PopoverContent, PopoverTrigger } from '@/Components/Popover';
+import { Calendar, type DateRange } from '@/Components/Calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/Components/Popover';
 
 import type { DatePickerProps } from './Spec';
 
@@ -146,4 +146,4 @@ export type {
   DatePickerSingleProps,
 } from './Spec';
 export type { DateRange } from '@/Components/Calendar';
-export default DatePicker;
+export { DatePicker };

@@ -37,4 +37,4 @@ function useIntersectionObserver<Node extends HTMLElement>(
   return { node, intersectionRatio };
 }
 
-export default useIntersectionObserver;
+export { useIntersectionObserver };

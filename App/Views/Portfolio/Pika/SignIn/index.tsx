@@ -170,4 +170,4 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
   );
 };
 
-export default SignIn;
+export { SignIn };

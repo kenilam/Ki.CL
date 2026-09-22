@@ -47,4 +47,4 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
 
 Card.displayName = 'Card';
 
-export default Card;
+export { Card };

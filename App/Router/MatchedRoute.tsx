@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, Suspense } from 'react';
 
 // Router
-import useMatchPattern, { Props as MatchPatternProps } from './useMatchPattern';
+import { Props as MatchPatternProps, useMatchPattern } from './useMatchPattern';
 
 // HttpStatus
 import * as HttpStatus from './HttpStatus';
@@ -28,6 +28,4 @@ const MatchedRoute: React.FunctionComponent<PropsWithChildren<Props>> = ({
   return <Suspense fallback={<Spinner />}>{children}</Suspense>;
 };
 
-export { type Props };
-
-export default MatchedRoute;
+export { MatchedRoute, type Props };

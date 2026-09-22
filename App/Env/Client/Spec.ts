@@ -11,4 +11,3 @@ type Value = {
 };
 
 export { Names, type Env, type Value };
-export default {};

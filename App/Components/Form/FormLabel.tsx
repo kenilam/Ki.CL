@@ -45,4 +45,4 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
 
 FormLabel.displayName = 'FormLabel';
 
-export default FormLabel;
+export { FormLabel };

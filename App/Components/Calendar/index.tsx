@@ -210,4 +210,4 @@ export type {
   CalendarSingleProps,
   DateRange,
 } from './Spec';
-export default Calendar;
+export { Calendar };

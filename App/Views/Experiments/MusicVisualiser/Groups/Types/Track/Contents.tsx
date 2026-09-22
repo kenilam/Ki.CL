@@ -13,12 +13,12 @@ import { Layout } from '@/Components';
 import { keyOf } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Hooks
-import useAudio from './useAudio';
+import { useAudio } from './useAudio';
 
 // Partials
-import Chrome from './Chrome';
-import Gate from './Gate';
-import Visualiser from './Visualiser';
+import { Chrome } from './Chrome';
+import { Gate } from './Gate';
+import { Visualiser } from './Visualiser';
 
 // Styles
 import './Styles.scss';
@@ -63,4 +63,4 @@ const Contents: React.FunctionComponent = () => {
   );
 };
 
-export default Contents;
+export { Contents };

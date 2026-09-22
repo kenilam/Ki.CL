@@ -15,4 +15,4 @@ function FormField<
   );
 }
 
-export default FormField;
+export { FormField };

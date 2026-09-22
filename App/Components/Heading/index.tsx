@@ -40,5 +40,4 @@ Heading.displayName = 'Heading';
 
 type HeadingProps = Spec.Props;
 
-export { type HeadingProps };
-export default Heading;
+export { Heading, type HeadingProps };

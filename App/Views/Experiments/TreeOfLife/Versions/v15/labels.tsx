@@ -5,7 +5,7 @@ import { Badge, HyperLink } from '@/Components';
 
 import { toNodePath } from '@/Views/Experiments/TreeOfLife/Versions/v15/constants';
 
-import THREE, { Fiber } from '@/Three';
+import { THREE, Fiber } from '@/Three';
 
 /**
  * Labels live in screen space, not in the scene.

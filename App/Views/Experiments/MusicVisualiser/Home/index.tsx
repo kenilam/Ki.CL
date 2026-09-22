@@ -4,8 +4,8 @@ import React from 'react';
 import { Layout } from '@/Components';
 
 // Partials
-import Article from './Article';
-import Banner from './Banner';
+import { Article } from './Article';
+import { Banner } from './Banner';
 
 // Styles
 import './Styles.scss';
@@ -23,5 +23,4 @@ const Home: React.FunctionComponent = () => (
   </Layout>
 );
 
-export { CLASS_NAME };
-export default Home;
+export { CLASS_NAME, Home };

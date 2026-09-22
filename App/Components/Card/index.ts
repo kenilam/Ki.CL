@@ -1,12 +1,12 @@
 import './Styles.scss';
 
-export { default as Card } from './Card';
-export { default as CardAction } from './CardAction';
-export { default as CardContent } from './CardContent';
-export { default as CardDescription } from './CardDescription';
-export { default as CardFooter } from './CardFooter';
-export { default as CardHeader } from './CardHeader';
-export { default as CardTitle } from './CardTitle';
+export { Card } from './Card';
+export { CardAction } from './CardAction';
+export { CardContent } from './CardContent';
+export { CardDescription } from './CardDescription';
+export { CardFooter } from './CardFooter';
+export { CardHeader } from './CardHeader';
+export { CardTitle } from './CardTitle';
 export { CARD_SIZES } from './Spec';
 export type {
   CardActionProps,

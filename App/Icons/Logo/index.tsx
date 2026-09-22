@@ -59,5 +59,4 @@ const Logo: React.FunctionComponent<LogoProps> = ({
   );
 };
 
-export { type LogoProps };
-export default Logo;
+export { Logo, type LogoProps };

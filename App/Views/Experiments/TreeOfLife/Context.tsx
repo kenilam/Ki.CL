@@ -20,10 +20,10 @@ import {
 import { useParams } from '@/Router';
 
 // Chain
-import walkChain, { type Chain } from './chain';
+import { type Chain, chain as walkChain } from './chain';
 
 // Find
-import read from './find';
+import { find as read } from './find';
 
 // Spec
 import * as Spec from './Spec';
@@ -208,5 +208,4 @@ const useTreeOfLifeContext = () => {
   return Contexts;
 };
 
-export { useTreeOfLifeContext };
-export default TreeOfLifeProvider;
+export { useTreeOfLifeContext, TreeOfLifeProvider };

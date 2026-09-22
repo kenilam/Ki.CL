@@ -25,4 +25,4 @@ const CardHeader = React.forwardRef<HTMLElement, CardHeaderProps>(
 
 CardHeader.displayName = 'CardHeader';
 
-export default CardHeader;
+export { CardHeader };

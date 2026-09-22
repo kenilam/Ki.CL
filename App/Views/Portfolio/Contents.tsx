@@ -25,4 +25,4 @@ const Portfolio: React.FunctionComponent = () => {
   );
 };
 
-export default Portfolio;
+export { Portfolio };

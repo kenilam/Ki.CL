@@ -86,5 +86,4 @@ const getStyleLayer = (filename: string): Layer | null => {
   return 'components';
 };
 
-export { LAYER_ORDER, LAYERS, type Layer };
-export default getStyleLayer;
+export { LAYER_ORDER, LAYERS, getStyleLayer, type Layer };

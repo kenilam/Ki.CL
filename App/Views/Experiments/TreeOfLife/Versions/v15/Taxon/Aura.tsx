@@ -1,6 +1,6 @@
 import React, { useMemo, useRef } from 'react';
 
-import THREE, { Drei, Fiber } from '@/Three';
+import { THREE, Drei, Fiber } from '@/Three';
 
 /**
  * Emphasis for the two taxa that mean something beyond their place in the
@@ -275,4 +275,4 @@ const Aura: React.FunctionComponent<Props> = ({
   );
 };
 
-export default Aura;
+export { Aura };

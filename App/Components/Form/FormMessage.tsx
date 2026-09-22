@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
-import Text from '@/Components/Text';
+import { Text } from '@/Components/Text';
 
 import { useFormFieldContext } from './context';
 import type { FormMessageProps } from './Spec';
@@ -42,4 +42,4 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, FormMessageProps>(
 
 FormMessage.displayName = 'FormMessage';
 
-export default FormMessage;
+export { FormMessage };

@@ -25,4 +25,4 @@ const Skeleton = React.forwardRef<HTMLDivElement, Props>(
 Skeleton.displayName = 'Skeleton';
 
 export type { Props as SkeletonProps } from './Spec';
-export default Skeleton;
+export { Skeleton };

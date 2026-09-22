@@ -4,10 +4,10 @@ import React from 'react';
 import { Heading, Layout, Text } from '@/Components';
 
 // Diagrams
-import services from '../Diagrams/services';
+import { services } from '../Diagrams/services';
 
 // Partials
-import SimulationPlayer, { type PlayerStep } from './SimulationPlayer';
+import { type PlayerStep, SimulationPlayer } from './SimulationPlayer';
 
 /**
  * One Character Creator job through the Part 1 architecture — including the
@@ -117,4 +117,4 @@ const Simulation: React.FunctionComponent = () => {
   );
 };
 
-export default Simulation;
+export { Simulation };

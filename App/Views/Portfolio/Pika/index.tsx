@@ -7,12 +7,14 @@ import { Navigate, Outlet, Route } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Views
-import SystemDesign from './SystemDesign';
+import { SystemDesign } from './SystemDesign';
 
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ Pika }) => ({ default: Pika }))
+);
 
 /**
  * Credential gate for every child route. The index redirect stays outside the
@@ -27,10 +29,11 @@ const Gate: React.FunctionComponent = () => {
   );
 };
 
-export { PATH };
-export default (
+const Pika = (
   <Route path={PATH} element={<Outlet />}>
     <Route index element={<Navigate replace to='system-design' />} />
     <Route element={<Gate />}>{SystemDesign}</Route>
   </Route>
 );
+
+export { PATH, Pika };

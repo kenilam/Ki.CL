@@ -4,15 +4,15 @@ import React from 'react';
 import { Animation, Layout } from '@/Components';
 
 // Partials
-import Footer from './Sections/Footer';
-import Hero from './Sections/Hero';
-import Walkthrough from './Sections/Walkthrough';
-import PartOne from './Sections/PartOne';
-import PartTwo from './Sections/PartTwo';
-import Simulation from './Sections/Simulation';
-import AgentSimulation from './Sections/AgentSimulation';
-import AnchorNav from './Sections/AnchorNav';
-import BuildPlan from './Sections/BuildPlan';
+import { Footer } from './Sections/Footer';
+import { Hero } from './Sections/Hero';
+import { Walkthrough } from './Sections/Walkthrough';
+import { PartOne } from './Sections/PartOne';
+import { PartTwo } from './Sections/PartTwo';
+import { Simulation } from './Sections/Simulation';
+import { AgentSimulation } from './Sections/AgentSimulation';
+import { AnchorNav } from './Sections/AnchorNav';
+import { BuildPlan } from './Sections/BuildPlan';
 
 // Constants
 import { CLASS_NAME } from './constants';
@@ -50,4 +50,4 @@ const SystemDesign: React.FunctionComponent = () => {
   );
 };
 
-export default SystemDesign;
+export { SystemDesign };

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Button, Card, CardContent, Layout, Spinner, Text } from '@/Components';
 
 // Diagrams
-import Diagram from '../Diagrams';
+import { Diagram } from '../Diagrams';
 import type { Spec } from '../Diagrams/Spec';
 
 // Constants
@@ -173,4 +173,4 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   );
 };
 
-export default SimulationPlayer;
+export { SimulationPlayer };

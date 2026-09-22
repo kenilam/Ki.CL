@@ -74,5 +74,4 @@ const useResponsive = () => {
   };
 };
 
-export { DARK_THEME_CLASS_NAME, breakpoints };
-export default useResponsive;
+export { DARK_THEME_CLASS_NAME, breakpoints, useResponsive };

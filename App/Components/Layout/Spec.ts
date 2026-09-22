@@ -12,12 +12,7 @@ export type AlignContent =
   | 'space-evenly';
 
 export type AlignItems =
-  | 'baseline'
-  | 'center'
-  | 'end'
-  | 'revert'
-  | 'start'
-  | 'stretch';
+  'baseline' | 'center' | 'end' | 'revert' | 'start' | 'stretch';
 
 export type AutoFlow = 'column' | 'row';
 
@@ -35,12 +30,7 @@ export type JustifyContent =
   | 'space-evenly';
 
 export type JustifyItems =
-  | 'baseline'
-  | 'center'
-  | 'end'
-  | 'revert'
-  | 'start'
-  | 'stretch';
+  'baseline' | 'center' | 'end' | 'revert' | 'start' | 'stretch';
 
 export type Gap =
   | 'extreme'
@@ -237,5 +227,3 @@ export type Props = Pick<React.HTMLAttributes<HTMLElement>, 'className'> & {
   justifyItems?: JustifyItems;
   wrap?: boolean;
 };
-
-export default {};

@@ -7,12 +7,14 @@ import { Navigate, Route } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Views
-import Pika from './Pika';
+import { Pika } from './Pika';
 
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ Portfolio }) => ({ default: Portfolio }))
+);
 
 const Lazy: React.FunctionComponent = () => {
   return (
@@ -22,10 +24,11 @@ const Lazy: React.FunctionComponent = () => {
   );
 };
 
-export { PATH };
-export default (
+const Portfolio = (
   <Route path={PATH} element={<Lazy />}>
     <Route index element={<Navigate replace to='..' />} />
     {Pika}
   </Route>
 );
+
+export { PATH, Portfolio };

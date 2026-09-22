@@ -21,5 +21,4 @@ const get = () => {
 
 type Env = ReturnType<typeof get>;
 
-export { type Env, Names, PATH };
-export default get;
+export { Names, PATH, get, type Env };

@@ -32,12 +32,17 @@ const More: React.FunctionComponent = () => (
     justifyItems='start'
   >
     <footer className={CLASS_NAME}>
-      <Heading is='h2' dense className={classNames('kicl-font-size-huge', 'kicl-line-height-narrower')}>
+      <Heading
+        is='h2'
+        dense
+        className={classNames(
+          'kicl-font-size-huge',
+          'kicl-line-height-narrower'
+        )}
+      >
         {COPY.title}
       </Heading>
-      <Text>
-        {COPY.message}
-      </Text>
+      <Text>{COPY.message}</Text>
       <Layout
         alignContent='center'
         alignItems='center'
@@ -55,5 +60,4 @@ const More: React.FunctionComponent = () => (
   </Layout>
 );
 
-export { CLASS_NAME };
-export default More;
+export { CLASS_NAME, More };

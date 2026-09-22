@@ -81,4 +81,4 @@ const Mobile: React.FunctionComponent = () => {
   );
 };
 
-export default Mobile;
+export { Mobile };

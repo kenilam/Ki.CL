@@ -5,7 +5,7 @@ import type { UserConfig } from 'vite';
 
 import * as dotenv from 'dotenv';
 
-import get, { PATH } from './get';
+import { PATH, get } from './get';
 
 dotenv.config({ path: `${appRoot.path}/.env` });
 
@@ -68,4 +68,4 @@ Object.keys(modules).forEach((path) => {
   };
 });
 
-export default Env;
+export { Env };

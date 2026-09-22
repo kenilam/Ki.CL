@@ -14,5 +14,4 @@ const useScrollIntoView = (option?: typeof OPTION) => {
   return { scrollIntoView };
 };
 
-export { OPTION };
-export default useScrollIntoView;
+export { OPTION, useScrollIntoView };

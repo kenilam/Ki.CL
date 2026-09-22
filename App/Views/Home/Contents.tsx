@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import { Animation, Layout } from '@/Components';
 
 // Partials
-import Background from './Background';
-import Header from './Header';
+import { Background } from './Background';
+import { Header } from './Header';
 
 // Styles
 import './Styles.scss';
@@ -33,4 +33,4 @@ const Home: React.FunctionComponent = () => {
   );
 };
 
-export default Home;
+export { Home };

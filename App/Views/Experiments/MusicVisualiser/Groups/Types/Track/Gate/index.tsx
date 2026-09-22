@@ -78,4 +78,4 @@ const Gate: React.FunctionComponent<Props> = ({ track }) => (
   </Layout>
 );
 
-export default Gate;
+export { Gate };

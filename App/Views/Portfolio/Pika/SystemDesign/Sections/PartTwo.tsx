@@ -15,9 +15,9 @@ import {
 } from '@/Components';
 
 // Diagrams
-import Diagram from '../Diagrams';
-import agentPlane from '../Diagrams/agentPlane';
-import sessionModel from '../Diagrams/sessionModel';
+import { Diagram } from '../Diagrams';
+import { agentPlane } from '../Diagrams/agentPlane';
+import { sessionModel } from '../Diagrams/sessionModel';
 
 // Constants
 import { CLASS_NAME } from '../constants';
@@ -239,4 +239,4 @@ const PartTwo: React.FunctionComponent = () => {
   );
 };
 
-export default PartTwo;
+export { PartTwo };

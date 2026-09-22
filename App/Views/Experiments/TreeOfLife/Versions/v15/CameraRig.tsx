@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
-import THREE, { Fiber } from '@/Three';
+import { THREE, Fiber } from '@/Three';
 
 // Context
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
@@ -745,4 +745,4 @@ const CameraRig: React.FunctionComponent<Props> = ({
   return null;
 };
 
-export default CameraRig;
+export { CameraRig };

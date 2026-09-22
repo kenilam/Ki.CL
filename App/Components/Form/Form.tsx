@@ -27,4 +27,4 @@ function Form<TFieldValues extends FieldValues>({
   );
 }
 
-export default Form;
+export { Form };

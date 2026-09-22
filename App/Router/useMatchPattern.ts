@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import URLPattern from './URLPattern';
+import { URLPattern } from './URLPattern';
 
 type Props = {
   pattern?: string[] | string;
@@ -42,5 +42,4 @@ const useMatchPattern = (props?: Props) => {
   return match;
 };
 
-export { type Props };
-export default useMatchPattern;
+export { useMatchPattern, type Props };

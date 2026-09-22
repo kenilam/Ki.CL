@@ -19,10 +19,10 @@ import {
 } from '@/Components';
 
 // Diagrams
-import Diagram from '../Diagrams';
-import dataModel from '../Diagrams/dataModel';
-import requestFlow from '../Diagrams/requestFlow';
-import services from '../Diagrams/services';
+import { Diagram } from '../Diagrams';
+import { dataModel } from '../Diagrams/dataModel';
+import { requestFlow } from '../Diagrams/requestFlow';
+import { services } from '../Diagrams/services';
 
 // Constants
 import { CLASS_NAME } from '../constants';
@@ -395,4 +395,4 @@ const PartOne: React.FunctionComponent = () => {
   );
 };
 
-export default PartOne;
+export { PartOne };

@@ -6,7 +6,7 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 
-import THREE, { Fiber, Three } from '@/Three';
+import { THREE, Fiber, Three } from '@/Three';
 
 // Context
 import { useNavigate } from '@/Router';
@@ -21,7 +21,7 @@ import {
 } from '@/Views/Experiments/TreeOfLife/tree';
 
 // Aura
-import Aura, { type Variant } from './Aura';
+import { type Variant, Aura } from './Aura';
 
 // Geometry
 import { createBody, createBranch, formForRank, FORM_SCALE } from './geometry';
@@ -618,4 +618,4 @@ const Taxon: React.FunctionComponent<Spec.Props> = (props) => {
   return <Growing {...props} taxon={taxon} />;
 };
 
-export default Taxon;
+export { Taxon };

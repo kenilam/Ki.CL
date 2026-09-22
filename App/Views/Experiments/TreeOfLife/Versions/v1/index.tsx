@@ -232,4 +232,4 @@ const Canvas: React.FunctionComponent = () => {
   );
 };
 
-export default Canvas;
+export { Canvas };

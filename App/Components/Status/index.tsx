@@ -100,5 +100,4 @@ const Status: React.FunctionComponent<Spec.Props> = ({
 
 type StatusProps = Spec.Props;
 
-export { type StatusProps };
-export default Status;
+export { Status, type StatusProps };

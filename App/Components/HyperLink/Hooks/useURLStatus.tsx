@@ -47,4 +47,4 @@ const useURLStatus = (to: Spec.Props['to']) => {
   };
 };
 
-export default useURLStatus;
+export { useURLStatus };

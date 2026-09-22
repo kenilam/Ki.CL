@@ -4,10 +4,10 @@ import React from 'react';
 import { Heading, Layout, Text } from '@/Components';
 
 // Diagrams
-import agentPlane from '../Diagrams/agentPlane';
+import { agentPlane } from '../Diagrams/agentPlane';
 
 // Partials
-import SimulationPlayer, { type PlayerStep } from './SimulationPlayer';
+import { type PlayerStep, SimulationPlayer } from './SimulationPlayer';
 
 /**
  * One agent session through the Part 2 plane — the draft ladder, a
@@ -132,4 +132,4 @@ const AgentSimulation: React.FunctionComponent = () => {
   );
 };
 
-export default AgentSimulation;
+export { AgentSimulation };

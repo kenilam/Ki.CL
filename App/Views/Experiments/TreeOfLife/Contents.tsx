@@ -96,4 +96,4 @@ const TreeOfLife: React.FunctionComponent = () => {
   return <Outlet />;
 };
 
-export default TreeOfLife;
+export { TreeOfLife };

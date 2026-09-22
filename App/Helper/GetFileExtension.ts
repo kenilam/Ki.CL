@@ -11,4 +11,4 @@ const getFileExtension: GetFileExtension = (prop) => {
   return extension;
 };
 
-export default getFileExtension;
+export { getFileExtension };

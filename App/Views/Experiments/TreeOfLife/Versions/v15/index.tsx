@@ -13,25 +13,25 @@ import { Fiber } from '@/Three';
 import { useTreeOfLifeContext } from '@/Views/Experiments/TreeOfLife/Context';
 
 // Camera
-import CameraRig from './CameraRig';
+import { CameraRig } from './CameraRig';
 
 // Globe
-import Globe from './Globe';
+import { Globe } from './Globe';
 
 // Depth
-import Depth from './Depth';
+import { Depth } from './Depth';
 
 // Details
-import Details from './Details';
+import { Details } from './Details';
 
 // Labels
 import { Labels, LabelProjector } from './labels';
 
 // Search
-import Search from './Search';
+import { Search } from './Search';
 
 // Taxon
-import Taxon from './Taxon';
+import { Taxon } from './Taxon';
 
 // Constants
 import {
@@ -199,4 +199,4 @@ const Canvas: React.FunctionComponent = () => {
   );
 };
 
-export default Canvas;
+export { Canvas };

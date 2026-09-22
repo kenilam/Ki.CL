@@ -131,4 +131,4 @@ const AnchorNav: React.FunctionComponent = () => {
   );
 };
 
-export default AnchorNav;
+export { AnchorNav };

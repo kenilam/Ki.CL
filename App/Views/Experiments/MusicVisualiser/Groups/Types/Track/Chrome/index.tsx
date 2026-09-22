@@ -10,12 +10,12 @@ import { Layout } from '@/Components';
 import type { Track } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Hooks
-import useIdle from './useIdle';
+import { useIdle } from './useIdle';
 import type { Control } from '../useAudio';
 
 // Partials
-import Controls from './Controls';
-import NowPlaying from './NowPlaying';
+import { Controls } from './Controls';
+import { NowPlaying } from './NowPlaying';
 
 // Styles
 import './Styles.scss';
@@ -85,5 +85,4 @@ const Chrome: React.FunctionComponent<Props> = ({ control, next, track }) => {
   );
 };
 
-export { CLASS_NAME };
-export default Chrome;
+export { CLASS_NAME, Chrome };

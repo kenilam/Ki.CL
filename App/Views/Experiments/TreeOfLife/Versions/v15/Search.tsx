@@ -279,4 +279,4 @@ function label(option: Option): string {
   return option.detail ? `${option.name} · ${option.detail}` : option.name;
 }
 
-export default Search;
+export { Search };

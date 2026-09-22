@@ -171,4 +171,4 @@ const agentPlane: Spec = {
   ],
 };
 
-export default agentPlane;
+export { agentPlane };

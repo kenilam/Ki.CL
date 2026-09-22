@@ -151,4 +151,4 @@ const Article: React.FunctionComponent = () => (
   </Layout>
 );
 
-export default Article;
+export { Article };

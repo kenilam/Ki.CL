@@ -7,12 +7,14 @@ import { Route } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Play
-import Play from './Play';
+import { Play } from './Play';
 
 // Constants
 import { PARAMS } from '@/Views/Experiments/MusicVisualiser/constants';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ Contents }) => ({ default: Contents }))
+);
 
 const Lazy: React.FunctionComponent = () => (
   <Suspense fallback={<Spinner position='inline' />}>
@@ -21,8 +23,10 @@ const Lazy: React.FunctionComponent = () => (
 );
 
 /** `/:track` - one track: its gate, and `/play` beneath it. */
-export default (
+const Track = (
   <Route path={`:${PARAMS.track}`} element={<Lazy />}>
     {Play}
   </Route>
 );
+
+export { Track };

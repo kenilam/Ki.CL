@@ -25,4 +25,4 @@ const CardContent = React.forwardRef<HTMLElement, CardContentProps>(
 
 CardContent.displayName = 'CardContent';
 
-export default CardContent;
+export { CardContent };

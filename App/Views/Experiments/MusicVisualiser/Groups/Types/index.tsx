@@ -10,7 +10,7 @@ import { Spinner } from '@/Components';
 import { draw } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Track
-import Track from './Track';
+import { Track } from './Track';
 
 // Constants
 import {
@@ -18,7 +18,9 @@ import {
   toTrackPath,
 } from '@/Views/Experiments/MusicVisualiser/constants';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ Contents }) => ({ default: Contents }))
+);
 
 const Lazy: React.FunctionComponent = () => (
   <Suspense fallback={<Spinner position='inline' />}>
@@ -35,9 +37,11 @@ const AnyTrack: React.FunctionComponent = () => {
 };
 
 /** `/:type` - a category of the station; its index goes to one of its tracks. */
-export default (
+const Types = (
   <Route path={`:${PARAMS.type}`} element={<Lazy />}>
     <Route index element={<AnyTrack />} />
     {Track}
   </Route>
 );
+
+export { Types };

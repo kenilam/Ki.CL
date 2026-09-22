@@ -39,7 +39,7 @@ type Props = {
  * here: the director draws the scenes, and each track gets a fresh camera
  * phase and warmth.
  */
-export default function useStage({
+export function useStage({
   analyser,
   canvas,
   height,

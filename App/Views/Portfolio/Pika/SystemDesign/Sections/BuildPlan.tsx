@@ -230,4 +230,4 @@ const BuildPlan: React.FunctionComponent = () => {
   );
 };
 
-export default BuildPlan;
+export { BuildPlan };

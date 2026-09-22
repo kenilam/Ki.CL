@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import type { BadgeIs, Props } from './Spec';
-import BadgeLabel from './BadgeLabel';
+import { BadgeLabel } from './BadgeLabel';
 
 import './Styles.scss';
 
@@ -51,5 +51,4 @@ export type {
   BadgeVariant,
 } from './Spec';
 export { BADGE_VARIANTS, BADGE_SIZES } from './Spec';
-export { BadgeLabel };
-export default Badge;
+export { BadgeLabel, Badge };

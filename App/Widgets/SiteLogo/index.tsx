@@ -36,5 +36,4 @@ const SiteLogo: React.FunctionComponent<Spec.Props> = ({ ...props }) => {
 
 type SiteLogoProps = Spec.Props;
 
-export { type SiteLogoProps };
-export default SiteLogo;
+export { SiteLogo, type SiteLogoProps };

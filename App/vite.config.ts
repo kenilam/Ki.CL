@@ -2,7 +2,7 @@ import appRoot from 'app-root-path';
 
 import { UserConfig } from 'vite';
 
-import Env from './Env';
+import { Env } from './Env';
 
 import { getConfig } from './.Client';
 

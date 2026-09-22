@@ -226,5 +226,4 @@ export type {
   PopoverVariant,
 } from './Spec';
 
-export { PopoverContent, PopoverTrigger };
-export default Popover;
+export { PopoverContent, PopoverTrigger, Popover };

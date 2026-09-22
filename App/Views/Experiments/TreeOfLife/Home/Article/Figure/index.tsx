@@ -47,4 +47,4 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
   );
 };
 
-export default Figure;
+export { Figure };

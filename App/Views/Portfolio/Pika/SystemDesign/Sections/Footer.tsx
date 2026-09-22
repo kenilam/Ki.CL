@@ -50,4 +50,4 @@ const Footer: React.FunctionComponent = () => {
   );
 };
 
-export default Footer;
+export { Footer };

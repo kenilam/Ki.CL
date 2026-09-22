@@ -171,4 +171,4 @@ const dataModel: Spec = {
   ],
 };
 
-export default dataModel;
+export { dataModel };

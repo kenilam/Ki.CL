@@ -111,5 +111,9 @@ type ButtonProps = Spec.Props;
 
 type GetButtonClassNamesProps = Spec.GetButtonClassNamesProps;
 
-export { type ButtonProps, type GetButtonClassNamesProps, getButtonClassNames };
-export default Button;
+export {
+  getButtonClassNames,
+  Button,
+  type ButtonProps,
+  type GetButtonClassNamesProps,
+};

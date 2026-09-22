@@ -263,4 +263,4 @@ const TreeWebGL: React.FC<Props> = ({
   );
 };
 
-export default TreeWebGL;
+export { TreeWebGL };

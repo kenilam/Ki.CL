@@ -52,4 +52,4 @@ const getAlias = (config: typeof tsconfig) => {
   return alias;
 };
 
-export default getAlias;
+export { getAlias };

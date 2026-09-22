@@ -54,4 +54,4 @@ const ErrorElement: React.FunctionComponent = () => {
   );
 };
 
-export default ErrorElement;
+export { ErrorElement };

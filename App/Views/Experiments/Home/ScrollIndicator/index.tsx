@@ -38,5 +38,4 @@ const ScrollIndicator: React.FunctionComponent = () => {
   );
 };
 
-export { CLASS_NAME };
-export default ScrollIndicator;
+export { CLASS_NAME, ScrollIndicator };

@@ -1,8 +1,8 @@
 import React from 'react';
 
 // Partials
-import Article from './Article';
-import Banner from './Banner';
+import { Article } from './Article';
+import { Banner } from './Banner';
 import { Layout } from '@/Components';
 
 // Styles
@@ -21,4 +21,4 @@ const Home: React.FunctionComponent = () => {
   );
 };
 
-export default Home;
+export { Home };

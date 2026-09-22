@@ -9,4 +9,4 @@ const RandomNumber: Spec.RandomNumber = ({
   return Math.floor(Math.random() * end) + start;
 };
 
-export default RandomNumber;
+export { RandomNumber };

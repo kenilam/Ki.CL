@@ -7,13 +7,19 @@ import { Route } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Groups
-import Groups from './Groups';
+import { Groups } from './Groups';
 
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() => import('./Contents'));
-const Home = React.lazy(() => import('./Home'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ MusicVisualiser }) => ({
+    default: MusicVisualiser,
+  }))
+);
+const Home = React.lazy(() =>
+  import('./Home').then(({ Home }) => ({ default: Home }))
+);
 
 const Lazy: React.FunctionComponent = () => {
   return (
@@ -29,8 +35,7 @@ const Lazy: React.FunctionComponent = () => {
  * type's index redirect down to a track; the track owns the music and the
  * picture, and `/play` beneath it is what makes them sound.
  */
-export { PATH };
-export default (
+const MusicVisualiser = (
   <Route path={PATH} element={<Lazy />}>
     <Route
       index
@@ -43,3 +48,5 @@ export default (
     {Groups}
   </Route>
 );
+
+export { PATH, MusicVisualiser };

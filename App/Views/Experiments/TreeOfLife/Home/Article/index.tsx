@@ -4,7 +4,7 @@ import React from 'react';
 import { Heading, HyperLink, Layout, Text } from '@/Components';
 
 // Partials
-import Figure from './Figure';
+import { Figure } from './Figure';
 
 // Constants
 import { toVersionPath } from '@/Views/Experiments/TreeOfLife/Versions/constants';
@@ -294,4 +294,4 @@ const Article: React.FunctionComponent = () => {
   );
 };
 
-export default Article;
+export { Article };

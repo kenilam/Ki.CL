@@ -48,7 +48,7 @@ const NODE = gql`
   }
 `;
 
-export default function find(nodeId: string): TaxonNode | null {
+export function find(nodeId: string): TaxonNode | null {
   if (!nodeId) {
     return null;
   }

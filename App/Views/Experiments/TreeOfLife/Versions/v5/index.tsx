@@ -6,7 +6,7 @@ import {
   useLazyQuery,
 } from 'api/provider';
 
-import THREE, { Fiber, Drei } from '@/Three';
+import { THREE, Fiber, Drei } from '@/Three';
 import { Spinner, Text } from '@/Components';
 
 import {
@@ -343,4 +343,4 @@ const Canvas: React.FunctionComponent = () => {
   );
 };
 
-export default Canvas;
+export { Canvas };

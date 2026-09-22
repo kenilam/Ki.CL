@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import '@/Core';
 
 // App
-import App from '@/App';
+import { App } from '@/App';
 
 (() => {
   const appRoot = document.querySelector('app-root');

@@ -7,15 +7,17 @@ import { Route } from '@/Router';
 import { Spinner } from '@/Components';
 
 // Context
-import TreeOfLifeProvider from './Context';
+import { TreeOfLifeProvider } from './Context';
 
 // Versions
-import Versions from './Versions';
+import { Versions } from './Versions';
 
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() => import('./Contents'));
+const Contents = React.lazy(() =>
+  import('./Contents').then(({ TreeOfLife }) => ({ default: TreeOfLife }))
+);
 
 const Lazy: React.FunctionComponent = () => {
   return (
@@ -33,13 +35,12 @@ const Provider: React.FunctionComponent = () => {
   );
 };
 
-export { PATH };
-export default (
+const TreeOfLife = (
   <Route path={PATH} element={<Provider />}>
     <Route
       index
       lazy={async () => {
-        const { default: Component } = await import('./Home');
+        const { Home: Component } = await import('./Home');
 
         return { Component };
       }}
@@ -47,3 +48,5 @@ export default (
     {Versions}
   </Route>
 );
+
+export { PATH, TreeOfLife };

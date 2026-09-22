@@ -50,5 +50,4 @@ const useScrollDirection = (threshold = THRESHOLD) => {
   return { direction, isAtStart };
 };
 
-export { DIRECTIONS };
-export default useScrollDirection;
+export { DIRECTIONS, useScrollDirection };

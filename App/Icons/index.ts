@@ -4,13 +4,14 @@ import * as Gi from 'react-icons/gi';
 import * as Ri from 'react-icons/ri';
 import * as Tb from 'react-icons/tb';
 
-import Company, {
+import {
+  Company,
   Props as CompanyProps,
   CompanyNames,
   CompanyVectors,
 } from './Company';
-import Logo, { LogoProps } from './Logo';
-import Menu from './Menu';
+import { Logo, LogoProps } from './Logo';
+import { Menu } from './Menu';
 
 export {
   Company,
@@ -26,4 +27,3 @@ export {
   Tb,
   type IconType,
 };
-export default {};

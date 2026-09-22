@@ -63,4 +63,4 @@ const Aside: React.FunctionComponent = () => {
   );
 };
 
-export default Aside;
+export { Aside };

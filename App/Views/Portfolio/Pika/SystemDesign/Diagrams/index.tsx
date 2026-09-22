@@ -296,4 +296,4 @@ const Diagram: React.FunctionComponent<Props> = ({ ref, spec, state }) => {
   );
 };
 
-export default Diagram;
+export { Diagram };

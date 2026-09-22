@@ -59,4 +59,4 @@ const Attempts: React.FunctionComponent = () => {
   );
 };
 
-export default Attempts;
+export { Attempts };

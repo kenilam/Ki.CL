@@ -28,4 +28,4 @@ const SwitchLabel: React.FunctionComponent<SwitchLabelProps> = ({
 
 SwitchLabel.displayName = 'SwitchLabel';
 
-export default SwitchLabel;
+export { SwitchLabel };

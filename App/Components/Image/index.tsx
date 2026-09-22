@@ -96,5 +96,4 @@ const Image: React.FunctionComponent<Spec.Props> = ({
 
 type ImageProps = Spec.Props;
 
-export { type ImageProps };
-export default Image;
+export { Image, type ImageProps };

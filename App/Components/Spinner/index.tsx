@@ -70,7 +70,12 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
         justifyContent='center'
         justifyItems='center'
       >
-        <Text className={classNames('kicl-line-height-dense', className)} is='span' role='progressbar' unstyled>
+        <Text
+          className={classNames('kicl-line-height-dense', className)}
+          is='span'
+          role='progressbar'
+          unstyled
+        >
           <Animation
             {...rest}
             delay={spinnerDelay}
@@ -110,5 +115,4 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
 
 type SpinnerProps = Spec.Props;
 
-export { type SpinnerProps };
-export default Spinner;
+export { Spinner, type SpinnerProps };

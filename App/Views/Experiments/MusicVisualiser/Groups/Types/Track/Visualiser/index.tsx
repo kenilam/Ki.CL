@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 // Hooks
 import { useResizeObserver } from '@/Hooks';
-import useStage from './useStage';
+import { useStage } from './useStage';
 
 // Styles
 import './Styles.scss';
@@ -54,4 +54,4 @@ const Visualiser: React.FunctionComponent<Props> = ({
   );
 };
 
-export default Visualiser;
+export { Visualiser };

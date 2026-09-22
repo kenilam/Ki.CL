@@ -132,5 +132,11 @@ const useLocalStorageContext = () => {
 
 const { localStorage } = window;
 
-export { localStorage, getItem, removeItem, setItem, useLocalStorageContext };
-export default LocalStorageProvider;
+export {
+  localStorage,
+  getItem,
+  removeItem,
+  setItem,
+  useLocalStorageContext,
+  LocalStorageProvider,
+};

@@ -92,4 +92,4 @@ const Status500: React.FunctionComponent<Props> = ({ message, title }) => {
   );
 };
 
-export default Status500;
+export { Status500 };

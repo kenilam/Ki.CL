@@ -25,7 +25,7 @@ import {
   type LayoutNode,
   type ViewportSize,
 } from './layoutEngine';
-import Branches from './Branches';
+import { Branches } from './Branches';
 import { TipInstances, OriginMarker, InternalNodes, NodeLabels } from './Nodes';
 
 import './Styles.scss';
@@ -216,4 +216,4 @@ const Canvas: React.FunctionComponent = () => {
   );
 };
 
-export default Canvas;
+export { Canvas };

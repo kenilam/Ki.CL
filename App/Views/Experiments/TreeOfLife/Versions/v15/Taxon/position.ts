@@ -1,4 +1,4 @@
-import THREE from '@/Three';
+import { THREE } from '@/Three';
 
 import { lerp, random } from './seed';
 

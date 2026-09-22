@@ -9,7 +9,7 @@ const EVENTS = ['pointermove', 'pointerdown', 'keydown', 'touchstart'];
  * Whether the listener has been still for a few seconds. Only counts while
  * `active`: while a track loads, or has not started, the chrome stays up.
  */
-export default function useIdle(active: boolean): boolean {
+export function useIdle(active: boolean): boolean {
   const [idle, setIdle] = useState(false);
 
   useEffect(() => {

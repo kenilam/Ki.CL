@@ -24,4 +24,4 @@ const FormItem = React.forwardRef<HTMLDivElement, FormItemProps>(
 
 FormItem.displayName = 'FormItem';
 
-export default FormItem;
+export { FormItem };

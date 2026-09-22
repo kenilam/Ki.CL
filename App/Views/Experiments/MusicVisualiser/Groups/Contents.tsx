@@ -20,4 +20,4 @@ const Contents: React.FunctionComponent = () => {
   return <Outlet />;
 };
 
-export default Contents;
+export { Contents };

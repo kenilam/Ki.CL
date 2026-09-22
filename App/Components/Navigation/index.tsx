@@ -83,5 +83,4 @@ Navigation.displayName = 'Navigation';
 
 type NavigationProps = Spec.Props;
 
-export { type NavigationProps };
-export default Navigation;
+export { Navigation, type NavigationProps };

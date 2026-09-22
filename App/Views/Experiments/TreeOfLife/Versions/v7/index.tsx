@@ -28,7 +28,7 @@ import {
   HEIGHT_LIMIT_DEFAULT,
   type LayoutNode,
 } from './layoutEngine';
-import Branches from './Branches';
+import { Branches } from './Branches';
 import { TipInstances, OriginMarker, TipSprites, NodeLabels } from './Nodes';
 
 import './Styles.scss';
@@ -171,4 +171,4 @@ const Canvas: React.FunctionComponent = () => {
   );
 };
 
-export default Canvas;
+export { Canvas };

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { List } from '@/Components';
 
 // Partials
-import Screen, { CLASS_NAME as SCREEN } from './Screen';
+import { Screen, CLASS_NAME as SCREEN } from './Screen';
 
 // Styles
 import './Styles.scss';
@@ -103,5 +103,4 @@ const Stage: React.FunctionComponent = () => {
   );
 };
 
-export { CLASS_NAME };
-export default Stage;
+export { CLASS_NAME, Stage };

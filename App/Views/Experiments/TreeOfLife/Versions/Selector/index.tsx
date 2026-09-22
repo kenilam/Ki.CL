@@ -116,4 +116,4 @@ const Selector: React.FunctionComponent = () => {
   );
 };
 
-export default Selector;
+export { Selector };

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import THREE, { Drei } from '@/Three';
+import { THREE, Drei } from '@/Three';
 
 import type { LayoutBranch, Vec3 } from './layoutEngine';
 
@@ -41,4 +41,4 @@ const Branches: React.FunctionComponent<{ branches: LayoutBranch[] }> = ({
   </group>
 );
 
-export default Branches;
+export { Branches };

@@ -13,7 +13,7 @@ import { Heading, HyperLink, Layout, Text } from '@/Components';
 import { draw } from '@/Views/Experiments/MusicVisualiser/Catalog';
 
 // Partials
-import Visualiser from '@/Views/Experiments/MusicVisualiser/Groups/Types/Track/Visualiser';
+import { Visualiser } from '@/Views/Experiments/MusicVisualiser/Groups/Types/Track/Visualiser';
 
 // Styles
 import './Styles.scss';
@@ -100,4 +100,4 @@ const Banner: React.FunctionComponent = () => {
   );
 };
 
-export default Banner;
+export { Banner };

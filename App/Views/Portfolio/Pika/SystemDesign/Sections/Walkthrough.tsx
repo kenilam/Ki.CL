@@ -60,4 +60,4 @@ const Walkthrough: React.FunctionComponent = () => {
   );
 };
 
-export default Walkthrough;
+export { Walkthrough };

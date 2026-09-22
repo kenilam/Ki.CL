@@ -37,4 +37,4 @@ const Contents: React.FunctionComponent = () => {
   );
 };
 
-export default Contents;
+export { Contents };

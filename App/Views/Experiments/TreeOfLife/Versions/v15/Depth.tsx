@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
-import THREE, { Fiber } from '@/Three';
+import { THREE, Fiber } from '@/Three';
 
 // Anchors
 import { getAnchor } from './anchors';
@@ -83,4 +83,4 @@ const Depth: React.FunctionComponent<Props> = ({ focus }) => {
   return null;
 };
 
-export default Depth;
+export { Depth };

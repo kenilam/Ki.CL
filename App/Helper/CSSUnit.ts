@@ -47,5 +47,4 @@ const CSSUnitGroup = (style: Style) => {
   return props;
 };
 
-export { CSSUnitGroup };
-export default CSSUnit;
+export { CSSUnitGroup, CSSUnit };

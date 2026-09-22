@@ -5,4 +5,3 @@ enum Names {
 const PATH = '/env';
 
 export { Names, PATH };
-export default {};

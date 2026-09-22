@@ -6,7 +6,7 @@ import { isAuthenticated } from 'api/provider';
 import { Outlet } from '@/Router';
 
 // Partials
-import SignIn from './SignIn';
+import { SignIn } from './SignIn';
 
 /**
  * Everything under /portfolio/pika is shared with a small audience on
@@ -27,4 +27,4 @@ const Pika: React.FunctionComponent = () => {
   return <Outlet />;
 };
 
-export default Pika;
+export { Pika };

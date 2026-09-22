@@ -210,5 +210,4 @@ const Background: React.FunctionComponent<Spec.Props> = ({
   );
 };
 
-export { CLASS_NAME };
-export default Background;
+export { CLASS_NAME, Background };

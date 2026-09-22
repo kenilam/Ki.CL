@@ -161,4 +161,4 @@ const requestFlow: Spec = {
   ],
 };
 
-export default requestFlow;
+export { requestFlow };

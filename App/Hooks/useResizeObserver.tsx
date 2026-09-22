@@ -36,4 +36,4 @@ function useResizeObserver<Node extends HTMLElement>() {
   return { node, rect };
 }
 
-export default useResizeObserver;
+export { useResizeObserver };

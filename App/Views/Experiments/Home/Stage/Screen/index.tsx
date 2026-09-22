@@ -81,7 +81,10 @@ const Screen: React.FunctionComponent<Props> = ({
         </Text>
         <Heading
           dense
-          className={classNames('kicl-font-size-huge', 'kicl-line-height-narrower')}
+          className={classNames(
+            'kicl-font-size-huge',
+            'kicl-line-height-narrower'
+          )}
           is={titleIs}
         >
           {experiment.title}
@@ -109,5 +112,4 @@ const Screen: React.FunctionComponent<Props> = ({
   </ListItem>
 );
 
-export { CLASS_NAME };
-export default Screen;
+export { CLASS_NAME, Screen };

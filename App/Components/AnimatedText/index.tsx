@@ -59,5 +59,4 @@ AnimatedText.displayName = 'AnimatedText';
 
 type AnimatedTextProps = Spec.Props;
 
-export { type AnimatedTextProps };
-export default AnimatedText;
+export { AnimatedText, type AnimatedTextProps };

@@ -42,5 +42,4 @@ const useGlobalHeaderContext = () => {
   return Contexts;
 };
 
-export { useGlobalHeaderContext };
-export default GlobalHeaderProvider;
+export { useGlobalHeaderContext, GlobalHeaderProvider };

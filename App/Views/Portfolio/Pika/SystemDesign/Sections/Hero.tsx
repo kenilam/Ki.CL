@@ -67,4 +67,4 @@ const Hero: React.FunctionComponent = () => {
   );
 };
 
-export default Hero;
+export { Hero };

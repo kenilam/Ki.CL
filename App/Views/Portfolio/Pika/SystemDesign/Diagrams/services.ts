@@ -292,4 +292,4 @@ const services: Spec = {
   ],
 };
 
-export default services;
+export { services };

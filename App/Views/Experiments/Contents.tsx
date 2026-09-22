@@ -26,4 +26,4 @@ const Experiments: React.FunctionComponent = () => {
   );
 };
 
-export default Experiments;
+export { Experiments };

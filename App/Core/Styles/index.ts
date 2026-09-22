@@ -23,5 +23,3 @@ import './look-like.scss';
 import './pointer-events.scss';
 import './position.scss';
 import './size.scss';
-
-export default {};

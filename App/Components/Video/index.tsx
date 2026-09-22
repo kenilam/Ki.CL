@@ -96,5 +96,4 @@ Video.displayName = 'Video';
 
 type VideoProps = Spec.Props;
 
-export { type VideoElement, type VideoProps };
-export default Video;
+export { Video, type VideoElement, type VideoProps };

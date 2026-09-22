@@ -41,4 +41,4 @@ const NowPlaying: React.FunctionComponent<Props> = ({ error, track }) => (
   </Layout>
 );
 
-export default NowPlaying;
+export { NowPlaying };
