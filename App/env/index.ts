@@ -44,8 +44,10 @@ Object.keys(modules).forEach((path) => {
   };
 
   // Proxy only serve on development mode
+  // Anchored because Vite matches plain keys as prefixes, and `/env` would
+  // also catch source files under `App/env/*` and answer them with JSON.
   const proxy: Exclude<UserConfig['server'], undefined>['proxy'] = {
-    [path]: {
+    [`^${path}(\\?|$)`]: {
       target: `http://localhost:${process.env.PORT}${PATH}`,
       configure(proxy) {
         proxy.on('proxyReq', (proxyReq, proxyRep, responses) => {
