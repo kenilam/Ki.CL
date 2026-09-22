@@ -11,9 +11,6 @@ import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/tr
 import { More } from './more';
 import { Words } from './words';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { CLASS_NAME as HOME } from '@/views/experiments/music-visualiser/home/constants';
 
@@ -26,7 +23,14 @@ const CLASS_NAME = `${HOME}__banner`;
  */
 const Banner: React.FunctionComponent = () => (
   <Layout alignContent='center' justifyContent='stretch' justifyItems='center'>
-    <header className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+    <header
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inline-size-full',
+        'kicl-min-block-size-screen',
+        'kicl-position-relative'
+      )}
+    >
       <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
       <Words />
       <More />

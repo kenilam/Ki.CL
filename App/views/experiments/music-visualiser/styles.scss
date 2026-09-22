@@ -4,11 +4,4 @@
   @include query('≤tablet') {
     --kicl--views--experiments--music-visualiser--inset: var(--kicl-gutter);
   }
-
-  /*
-   * As wide as the viewport, not the parent: the Experiments shell centres
-   * its child in a grid track, which would otherwise shrink to the content.
-   * The track route locks the height; Home scrolls.
-   */
-  inline-size: 100dvi;
 }

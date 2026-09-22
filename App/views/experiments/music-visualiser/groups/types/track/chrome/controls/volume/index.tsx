@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Input } from '@/components';
 
@@ -25,7 +28,7 @@ const Volume: React.FunctionComponent = () => {
   return (
     <Input
       aria-label={COPY.volume}
-      className={CLASS_NAME}
+      className={classNames(CLASS_NAME, 'kicl-inline-size-md')}
       max={1}
       min={0}
       onChange={(event) => control.setValue(Number(event.target.value))}

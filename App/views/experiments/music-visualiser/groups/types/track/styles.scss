@@ -3,7 +3,5 @@
  * absolutely inside, over a picture that should never scroll.
  */
 .kicl--views--experiments--music-visualiser__track {
-  block-size: 100dvb;
-  inline-size: 100%;
   overflow: hidden;
 }

@@ -25,7 +25,6 @@ type Props = {
   /** Position in the stage, from the top. Sets the scroll ranges. */
   index: number;
   number: number;
-  titleIs: 'h1' | 'h2';
 };
 
 /**
@@ -40,9 +39,8 @@ const Screen: React.FunctionComponent<Props> = ({
   experiment,
   index,
   number,
-  titleIs,
 }) => (
-  <ScreenProvider experiment={experiment} number={number} titleIs={titleIs}>
+  <ScreenProvider experiment={experiment} number={number}>
     <ListItem
       alignContent='end'
       autoFlow='row'

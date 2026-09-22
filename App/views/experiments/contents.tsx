@@ -18,9 +18,9 @@ const Experiments: React.FunctionComponent = () => {
         justifyContent='center'
         justifyItems='center'
       >
-        <section className={CLASS_NAME}>
+        <div className={CLASS_NAME}>
           <Outlet />
-        </section>
+        </div>
       </Layout>
     </Animation>
   );

@@ -18,9 +18,15 @@ import { CLASS_NAME } from './constants';
 /** The view's root: sized to the viewport, the routes beneath draw into it. */
 const MusicVisualiser: React.FunctionComponent = () => (
   <Layout autoFlow='row' gap='none'>
-    <section className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+    <div
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inline-size-full',
+        'kicl-position-relative'
+      )}
+    >
       <Outlet />
-    </section>
+    </div>
   </Layout>
 );
 

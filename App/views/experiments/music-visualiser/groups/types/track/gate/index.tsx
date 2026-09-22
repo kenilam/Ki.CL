@@ -30,7 +30,7 @@ import {
 const CLASS_NAME = `${VIEW}__gate`;
 
 const COPY = {
-  play: 'Play',
+  play: (title: string) => `Play ${title}`,
 };
 
 /**
@@ -53,6 +53,8 @@ const Gate: React.FunctionComponent = () => {
         className={classNames(
           CLASS_NAME,
           'kicl-inset-0',
+          'kicl-margin-inline-auto',
+          'kicl-padding-block-start-header',
           'kicl-position-absolute',
           'kicl-text-align-center'
         )}
@@ -72,7 +74,7 @@ const Gate: React.FunctionComponent = () => {
           {ATTRIBUTION.label}
         </HyperLink>
         <HyperLink
-          aria-label={COPY.play}
+          aria-label={COPY.play(track.title)}
           lookLikeButton
           size='small'
           to={toPlayPath(track)}

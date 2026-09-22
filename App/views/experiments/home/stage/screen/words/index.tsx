@@ -23,12 +23,19 @@ const COPY = {
 
 /** The text block. The only part of the panel that takes the pointer. */
 const Words: React.FunctionComponent = () => {
-  const { experiment, number, titleIs } = useScreenContext();
+  const { experiment, number } = useScreenContext();
 
   return (
     // Rows packed at the end: every block is as tall as the tallest, so a shorter one would spread otherwise.
     <Layout alignContent='end' autoFlow='row' gap='narrow' justifyItems='start'>
-      <div className={classNames(CLASS_NAME, 'kicl-pointer-events-auto')}>
+      <div
+        className={classNames(
+          CLASS_NAME,
+          'kicl-padding-block-extreme',
+          'kicl-padding-inline-widest',
+          'kicl-pointer-events-auto'
+        )}
+      >
         <Text
           is='p'
           dense
@@ -47,7 +54,7 @@ const Words: React.FunctionComponent = () => {
             'kicl-font-size-huge',
             'kicl-line-height-narrower'
           )}
-          is={titleIs}
+          is='h2'
         >
           {experiment.title}
         </Heading>
@@ -68,6 +75,9 @@ const Words: React.FunctionComponent = () => {
           to={experiment.to}
         >
           {COPY.open}
+          <Text is='span' className='kicl-hidden'>
+            {`: ${experiment.title}`}
+          </Text>
         </HyperLink>
       </div>
     </Layout>

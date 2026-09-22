@@ -45,6 +45,8 @@ const Visualiser: React.FunctionComponent<Props> = ({
       aria-hidden
       className={classNames(
         CLASS_NAME,
+        'kicl-block-size-full',
+        'kicl-inline-size-full',
         'kicl-inset-0',
         'kicl-pointer-events-none',
         'kicl-position-absolute'

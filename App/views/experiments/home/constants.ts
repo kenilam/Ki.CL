@@ -5,6 +5,10 @@ import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visua
 /** Root of every class and custom property in this view. */
 const CLASS_NAME = 'kicl--views--experiments__home';
 
+const COPY = {
+  title: 'Experiments',
+};
+
 export type Experiment = {
   description: string;
   /** Which background Stage/Screen paints; a class modifier. */
@@ -31,4 +35,4 @@ const EXPERIMENTS: readonly Experiment[] = [
   },
 ];
 
-export { CLASS_NAME, EXPERIMENTS };
+export { CLASS_NAME, COPY, EXPERIMENTS };

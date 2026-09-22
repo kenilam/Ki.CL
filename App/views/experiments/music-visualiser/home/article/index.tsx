@@ -27,8 +27,13 @@ const CLASS_NAME = `${HOME}__article`;
 /** How it was made: the music, the picture, the data, and the address. */
 const Article: React.FunctionComponent = () => (
   <Layout autoFlow='row' gap='wider' justifyItems='stretch'>
-    <article
-      className={classNames(CLASS_NAME, 'kicl-position-relative')}
+    <div
+      className={classNames(
+        CLASS_NAME,
+        'kicl-margin-inline-auto',
+        'kicl-padding-block-start-extreme',
+        'kicl-position-relative'
+      )}
       id={ARTICLE_ID}
     >
       <WhatThisIs />
@@ -36,7 +41,7 @@ const Article: React.FunctionComponent = () => (
       <Picture />
       <Data />
       <Address />
-    </article>
+    </div>
   </Layout>
 );
 

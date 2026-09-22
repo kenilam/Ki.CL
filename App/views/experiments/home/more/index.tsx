@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -22,29 +22,41 @@ const COPY = {
   title: 'Come back soon.',
 };
 
-/** The closing screen, in normal flow after the stage, content centred. One element: the grid is the footer. */
-const More: React.FunctionComponent = () => (
-  <Layout
-    alignContent='center'
-    autoFlow='row'
-    gap='narrow'
-    justifyItems='start'
-  >
-    <footer className={CLASS_NAME}>
-      <Heading
-        is='h2'
-        dense
+/** The closing screen, in normal flow after the stage, content centred. One element: the grid is the section. */
+const More: React.FunctionComponent = () => {
+  const titleId = useId();
+
+  return (
+    <Layout
+      alignContent='center'
+      autoFlow='row'
+      gap='narrow'
+      justifyItems='start'
+    >
+      <section
+        aria-labelledby={titleId}
         className={classNames(
-          'kicl-font-size-huge',
-          'kicl-line-height-narrower'
+          CLASS_NAME,
+          'kicl-padding-block-extreme',
+          'kicl-padding-inline-widest'
         )}
       >
-        {COPY.title}
-      </Heading>
-      <Text>{COPY.message}</Text>
-      <Actions />
-    </footer>
-  </Layout>
-);
+        <Heading
+          is='h2'
+          dense
+          className={classNames(
+            'kicl-font-size-huge',
+            'kicl-line-height-narrower'
+          )}
+          id={titleId}
+        >
+          {COPY.title}
+        </Heading>
+        <Text>{COPY.message}</Text>
+        <Actions />
+      </section>
+    </Layout>
+  );
+};
 
 export { CLASS_NAME, More };

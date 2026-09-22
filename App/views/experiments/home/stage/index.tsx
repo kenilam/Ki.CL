@@ -83,7 +83,7 @@ const Stage: React.FunctionComponent = () => {
       >
         <List
           is='ol'
-          className={`${CLASS_NAME}__list`}
+          className='kicl-block-size-full'
           gap='none'
           ref={list as never}
         >
@@ -93,7 +93,6 @@ const Stage: React.FunctionComponent = () => {
               index={index}
               key={screen.to}
               number={screen.number}
-              titleIs={index === 0 ? 'h1' : 'h2'}
             />
           ))}
         </List>

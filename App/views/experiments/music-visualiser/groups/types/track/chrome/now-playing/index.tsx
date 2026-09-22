@@ -26,8 +26,13 @@ const NowPlaying: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrowest' justifyItems='start'>
-      <div className={CLASS_NAME} aria-live='polite'>
-        <Heading is='h2' dense className='kicl-font-size-large'>
+      <div className={CLASS_NAME}>
+        <Heading
+          aria-live='polite'
+          className='kicl-font-size-large'
+          dense
+          is='h1'
+        >
           {track.title}
         </Heading>
         <Text is='p' dense variant='secondary' className='kicl-font-size-small'>
@@ -37,7 +42,12 @@ const NowPlaying: React.FunctionComponent = () => {
           {ATTRIBUTION.label}
         </HyperLink>
         {error ? (
-          <Text is='p' dense className='kicl-color-error kicl-font-size-small'>
+          <Text
+            className='kicl-color-error kicl-font-size-small'
+            dense
+            is='p'
+            role='alert'
+          >
             {error}
           </Text>
         ) : null}

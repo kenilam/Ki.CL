@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Fa } from '@/icons';
 
 // Components
-import { HyperLink } from '@/components';
+import { Button } from '@/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -20,14 +20,12 @@ const COPY = {
 /** How long "copied" stays on the link. */
 const COPIED_MS = 1800;
 
-/** A link to this track's `/play`, which a press copies instead of following. */
+/** Copies the address of this track's `/play`. */
 const CopyLink: React.FunctionComponent = () => {
   const { track } = useTrackContext();
   const [copied, setCopied] = useState(false);
 
-  const copyLink = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-
+  const copyLink = () => {
     const url = new URL(toPlayPath(track), window.location.origin).href;
 
     void navigator.clipboard?.writeText(url).then(() => {
@@ -37,17 +35,15 @@ const CopyLink: React.FunctionComponent = () => {
   };
 
   return (
-    <HyperLink
+    <Button
       aria-label={copied ? COPY.copied : COPY.copy}
-      lookLikeButton
       onClick={copyLink}
       size='small'
       title={copied ? COPY.copied : COPY.copy}
-      to={toPlayPath(track)}
       variant='ghost'
     >
       <Fa.FaLink aria-hidden />
-    </HyperLink>
+    </Button>
   );
 };
 

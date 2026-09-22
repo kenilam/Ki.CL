@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Layout } from '@/components';
+import { Heading, Layout } from '@/components';
 
 // Partials
 import { More } from './more';
@@ -12,7 +15,7 @@ import { Stage } from './stage';
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME } from './constants';
+import { CLASS_NAME, COPY } from './constants';
 
 /**
  * The experiments index: a pinned stage of full-screen panels, then a
@@ -20,7 +23,8 @@ import { CLASS_NAME } from './constants';
  */
 const Home: React.FunctionComponent = () => (
   <Layout gap='none' justifyItems='stretch'>
-    <div className={CLASS_NAME}>
+    <div className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
+      <Heading className='kicl-hidden'>{COPY.title}</Heading>
       <ScrollIndicator />
       <Stage />
       <More />

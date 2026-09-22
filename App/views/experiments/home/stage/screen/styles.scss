@@ -37,7 +37,6 @@
   );
 
   block-size: var(--kicl--views--experiments__home--screen);
-  box-sizing: border-box;
   overflow: clip;
 
   /* All panels in the same grid cell, stacked in DOM order. */

@@ -16,10 +16,10 @@ const Actions: React.FunctionComponent = () => (
     justifyItems='center'
     justifyContent='center'
   >
-    <aside>
+    <div>
       <Bookmark />
       <Share />
-    </aside>
+    </div>
   </Layout>
 );
 

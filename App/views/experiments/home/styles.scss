@@ -37,7 +37,4 @@
   @include query('≤tablet') {
     --kicl--views--experiments__home--inset: var(--kicl-gutter);
   }
-
-  inline-size: 100dvi;
-  margin-inline: calc(50% - 50dvi);
 }

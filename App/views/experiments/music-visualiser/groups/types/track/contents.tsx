@@ -50,7 +50,14 @@ const Contents: React.FunctionComponent = () => {
   return (
     <TrackProvider control={control} next={next} track={track}>
       <Layout autoFlow='row' gap='none'>
-        <div className={classNames(`${VIEW}__track`, 'kicl-position-relative')}>
+        <div
+          className={classNames(
+            `${VIEW}__track`,
+            'kicl-block-size-screen',
+            'kicl-inline-size-full',
+            'kicl-position-relative'
+          )}
+        >
           <Visualiser
             analyser={analyser}
             playing={control.playing}

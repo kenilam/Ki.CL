@@ -19,7 +19,7 @@ const COPY = {
 /** A chevron at the foot of the banner, down to the article. */
 const More: React.FunctionComponent = () => (
   <Layout justifyItems='center'>
-    <aside
+    <div
       className={classNames(
         'kicl-inset-block-end-wide',
         'kicl-inset-inline-0',
@@ -36,7 +36,7 @@ const More: React.FunctionComponent = () => (
       >
         <Ri.RiArrowDownSLine aria-hidden />
       </HyperLink>
-    </aside>
+    </div>
   </Layout>
 );
 

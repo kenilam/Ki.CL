@@ -24,6 +24,10 @@ import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constan
 
 const CLASS_NAME = `${VIEW}__chrome`;
 
+const COPY = {
+  player: 'Player',
+};
+
 /**
  * The player over the picture: what is playing, and the controls. They fade
  * once the track sounds and the listener has been still, and come back on
@@ -67,14 +71,20 @@ const Chrome: React.FunctionComponent = () => {
       justifyContent='space-between'
       justifyItems='start'
     >
-      <footer
-        className={classNames(CLASS_NAME, 'kicl-position-relative', {
-          [`${CLASS_NAME}--idle`]: idle,
-        })}
+      <section
+        aria-label={COPY.player}
+        className={classNames(
+          CLASS_NAME,
+          'kicl-inline-size-full',
+          'kicl-position-relative',
+          {
+            [`${CLASS_NAME}--idle`]: idle,
+          }
+        )}
       >
         <NowPlaying />
         <Controls />
-      </footer>
+      </section>
     </Layout>
   );
 };
