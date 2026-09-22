@@ -1,0 +1,39 @@
+.kicl--components--select__item {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--kicl-gutter-narrowest);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  inline-size: 100%;
+  justify-content: space-between;
+  margin: 0;
+  padding-block: var(--kicl-gutter-narrowest);
+  padding-inline: var(--kicl-gutter-narrow);
+  text-align: start;
+
+  &:hover,
+  &:focus-visible,
+  &--highlighted {
+    background: var(--kicl-color-grey-light);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  @at-root .kicl--theme--dark & {
+    &:hover,
+    &:focus-visible,
+    &--highlighted {
+      background: var(--kicl-color-grey-dark);
+    }
+  }
+}
+
+.kicl--components--select__item-indicator {
+  block-size: 1em;
+  inline-size: 1em;
+}

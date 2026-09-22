@@ -1,0 +1,10 @@
+.kicl--components--select__content {
+  background-color: var(--kicl--components--select--background-color);
+  border: var(--kicl--components--select--border-width) solid
+    var(--kicl--components--select--border-color);
+  border-radius: var(--kicl--components--select--border-radius);
+  max-block-size: var(--kicl--components--select--content-max-block-size);
+  overflow: auto;
+  padding: var(--kicl-gutter-narrowest);
+  z-index: 5;
+}

@@ -1,37 +1,22 @@
 import React, { useState } from 'react';
-import classNames from 'classnames';
 
-import { Ri } from '@/icons';
+// Components
+import { Popover, PopoverContent } from '@/components/popover';
 
-import { Calendar, type DateRange } from '@/components/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover';
+// Context
+import { DatePickerContext, type DatePickerContextValue } from './context';
+
+// Helpers
+import { defaultFormatDate, formatRange } from './helpers';
+
+// Partials
+import { Calendar } from './calendar';
+import { Trigger } from './trigger';
 
 import type { DatePickerProps } from './spec';
 
-import '../input/styles.scss';
-import './styles.scss';
-
-const CLASS_NAME = 'kicl--components--date-picker';
-
-const defaultFormatDate = (date: Date) =>
-  date.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-
-const formatRange = (
-  range: DateRange | undefined,
-  formatDate: (date: Date) => string
-) => {
-  if (!range?.from) {
-    return null;
-  }
-  if (!range.to || range.from.getTime() === range.to.getTime()) {
-    return formatDate(range.from);
-  }
-  return `${formatDate(range.from)} - ${formatDate(range.to)}`;
-};
+type SingleProps = Extract<DatePickerProps, { mode?: 'single' }>;
+type RangeProps = Extract<DatePickerProps, { mode: 'range' }>;
 
 /**
  * Date picker composed from Popover + Calendar - aligned with
@@ -50,27 +35,23 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
   const [open, setOpen] = useState(false);
 
   const [uncontrolledSingle, setUncontrolledSingle] = useState(
-    mode === 'single'
-      ? (props as Extract<DatePickerProps, { mode?: 'single' }>).defaultValue
-      : undefined
+    mode === 'single' ? (props as SingleProps).defaultValue : undefined
   );
   const [uncontrolledRange, setUncontrolledRange] = useState(
-    mode === 'range'
-      ? (props as Extract<DatePickerProps, { mode: 'range' }>).defaultValue
-      : undefined
+    mode === 'range' ? (props as RangeProps).defaultValue : undefined
   );
 
   const selectedSingle =
     mode === 'single'
       ? isControlled
-        ? (props as Extract<DatePickerProps, { mode?: 'single' }>).value
+        ? (props as SingleProps).value
         : uncontrolledSingle
       : undefined;
 
   const selectedRange =
     mode === 'range'
       ? isControlled
-        ? (props as Extract<DatePickerProps, { mode: 'range' }>).value
+        ? (props as RangeProps).value
         : uncontrolledRange
       : undefined;
 
@@ -81,59 +62,40 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
         ? formatDate(selectedSingle)
         : null;
 
+  const context: DatePickerContextValue = {
+    disabled,
+    label,
+    mode,
+    onSelectRange: (range) => {
+      if (!isControlled) {
+        setUncontrolledRange(range);
+      }
+      (props as RangeProps).onValueChange?.(range);
+      if (range?.from && range.to) {
+        setOpen(false);
+      }
+    },
+    onSelectSingle: (date) => {
+      if (!isControlled) {
+        setUncontrolledSingle(date);
+      }
+      (props as SingleProps).onValueChange?.(date);
+      setOpen(false);
+    },
+    placeholder,
+    selectedRange,
+    selectedSingle,
+  };
+
   return (
-    <Popover open={open} onOpenChange={setOpen} className={className}>
-      <PopoverTrigger
-        disabled={disabled}
-        className={classNames(
-          'kicl--components--input',
-          `${CLASS_NAME}__trigger`,
-          'kicl-font-size-small'
-        )}
-      >
-        <Ri.RiCalendarLine className={`${CLASS_NAME}__icon`} aria-hidden />
-        <span className={label ? undefined : 'kicl-color-grey'}>
-          {label ?? placeholder}
-        </span>
-      </PopoverTrigger>
-      <PopoverContent>
-        {mode === 'range' ? (
-          <Calendar
-            mode='range'
-            selected={selectedRange}
-            onSelect={(range) => {
-              const rangeProps = props as Extract<
-                DatePickerProps,
-                { mode: 'range' }
-              >;
-              if (!isControlled) {
-                setUncontrolledRange(range);
-              }
-              rangeProps.onValueChange?.(range);
-              if (range?.from && range.to) {
-                setOpen(false);
-              }
-            }}
-          />
-        ) : (
-          <Calendar
-            mode='single'
-            selected={selectedSingle}
-            onSelect={(date) => {
-              const singleProps = props as Extract<
-                DatePickerProps,
-                { mode?: 'single' }
-              >;
-              if (!isControlled) {
-                setUncontrolledSingle(date);
-              }
-              singleProps.onValueChange?.(date);
-              setOpen(false);
-            }}
-          />
-        )}
-      </PopoverContent>
-    </Popover>
+    <DatePickerContext.Provider value={context}>
+      <Popover open={open} onOpenChange={setOpen} className={className}>
+        <Trigger />
+        <PopoverContent>
+          <Calendar />
+        </PopoverContent>
+      </Popover>
+    </DatePickerContext.Provider>
   );
 };
 
