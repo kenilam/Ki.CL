@@ -7,13 +7,4 @@
   .kicl--components--dialog--close {
     --kicl--components--dialog--padding-block: var(--kicl-gutter-wider);
   }
-
-  &--toggle--is-overlaid {
-    inset-block-start: calc(
-      var(--kicl--widgets--global-header--top) +
-      (var(--kicl--widgets--global-header--block-size) - 1em) / 2
-    );
-    inset-inline-end: var(--kicl--widgets--global-header--padding-inline);
-    z-index: 1;
-  }
 }

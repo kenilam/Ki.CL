@@ -3,24 +3,14 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Router
-import { useNavigate } from '@/router';
-
 // Icons
 import * as Icons from '@/icons';
 
 // Components
-import {
-  Animation,
-  Heading,
-  HyperLink,
-  HyperLinkProps,
-  Layout,
-  Text,
-} from '@/components';
+import { Animation, Heading, Layout, Text } from '@/components';
 
-// Views
-import { PATH } from '@/views/home';
+// Partials
+import { GoBack } from '@/router/http-status/go-back';
 
 const CLASS_NAME = 'kicl--router--http-status--204';
 
@@ -30,33 +20,11 @@ type Props = {
 };
 
 const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
-  const navigate = useNavigate();
-
   const className = classNames(
     'kicl-text-align-center',
     'kicl--router--http-status',
     CLASS_NAME
   );
-
-  const to = (() => {
-    if (document.referrer) {
-      const url = new URL(document.referrer);
-
-      return url.href.replace(url.origin, '');
-    }
-
-    return PATH;
-  })();
-
-  const action = document.referrer ? 'Go Back' : 'Go to Home Page';
-
-  const onClick: HyperLinkProps['onClick'] = document.referrer
-    ? (event) => {
-        event.preventDefault();
-
-        navigate(-1);
-      }
-    : undefined;
 
   return (
     <Animation>
@@ -76,16 +44,7 @@ const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
           <Text lookLike='h2'>204 - No Content</Text>
           {title ? <Text lookLike='h4'>{String(title)}</Text> : null}
           <Text>{message}</Text>
-          <HyperLink
-            onClick={onClick}
-            level='confirm'
-            lookLikeButton
-            to={to}
-            size='large'
-            variant='secondary'
-          >
-            {action}
-          </HyperLink>
+          <GoBack />
         </section>
       </Layout>
     </Animation>

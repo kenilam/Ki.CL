@@ -1,24 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Routers
 import { useLocation } from '@/router';
 
 // Components
-import { Button, Dialog, Navigation, Text } from '@/components';
-
-// Icons
-import { Ri } from '@/icons';
+import { Dialog, Navigation } from '@/components';
 
 // Widgets
 import { Links } from '@/widgets/global-header/links';
 
+// Partials
+import { Close } from './close';
+import { Open } from './open';
+
+// Constants
+import { CLASS_NAME } from './constants';
+
 // Styles
 import './styles.scss';
-
-const CLASS_NAME = 'kicl--widgets--global-header--navigation--mobile';
 
 const Mobile: React.FunctionComponent = () => {
   const { key } = useLocation();
@@ -37,17 +36,7 @@ const Mobile: React.FunctionComponent = () => {
 
   return (
     <>
-      <Button
-        className={classNames('kicl-font-size-medium', `${CLASS_NAME}--toggle`)}
-        command='show-modal'
-        commandFor={CLASS_NAME}
-        unstyled
-      >
-        <Ri.RiMenuLine />
-        <Text className='kicl-hidden' is='span'>
-          Open the navigation
-        </Text>
-      </Button>
+      <Open />
 
       <Dialog
         className={CLASS_NAME}
@@ -56,22 +45,7 @@ const Mobile: React.FunctionComponent = () => {
         id={CLASS_NAME}
         ref={node}
       >
-        <Button
-          className={classNames(
-            'kicl-font-size-medium',
-            'kicl-position-fixed',
-            `${CLASS_NAME}--toggle`,
-            `${CLASS_NAME}--toggle--is-overlaid`
-          )}
-          command='request-close'
-          commandFor={CLASS_NAME}
-          unstyled
-        >
-          <Ri.RiCloseLine />
-          <Text className='kicl-hidden' is='span'>
-            Close the navigation
-          </Text>
-        </Button>
+        <Close />
 
         <Navigation autoFlow='row' gap='normal' justifyItems='start'>
           {Links}
