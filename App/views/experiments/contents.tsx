@@ -15,7 +15,7 @@ const Experiments: React.FunctionComponent = () => {
         autoFlow='row'
         fullScreen
         gap='none'
-        justifyContent='center'
+        justifyContent='stretch'
         justifyItems='center'
       >
         <div className={CLASS_NAME}>

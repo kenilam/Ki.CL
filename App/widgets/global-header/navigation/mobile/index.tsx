@@ -15,6 +15,7 @@ import { Open } from './open';
 
 // Constants
 import { CLASS_NAME } from './constants';
+import { LABEL } from '@/widgets/global-header/navigation/constants';
 
 const COPY = {
   label: 'Navigation',
@@ -52,7 +53,12 @@ const Mobile: React.FunctionComponent = () => {
       >
         <Close />
 
-        <Navigation autoFlow='row' gap='normal' justifyItems='start'>
+        <Navigation
+          aria-label={LABEL}
+          autoFlow='row'
+          gap='normal'
+          justifyItems='start'
+        >
           {Links}
         </Navigation>
       </Dialog>

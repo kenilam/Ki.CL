@@ -39,7 +39,10 @@
     color: var(--kicl-body-color);
   }
 
-  &:has(> svg:only-child, .kicl--components--spinner:only-child) {
+  &:is(:has(> svg), :has(> .kicl--components--spinner)):not(
+    .kicl--components--button--unstyled,
+    :has(> :not(svg, .kicl--components--spinner, .kicl-hidden))
+  ) {
     --kicl--components--button--border-radius: 50%;
 
     backdrop-filter: blur(var(--kicl-gutter));

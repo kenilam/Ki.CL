@@ -117,11 +117,12 @@ const getConfig = ({
        * already sprang.
        *
        * The prefix itself cannot move: image URLs are stored in the database
-       * as `/assets/taxon-visual/*`.
+       * as `/assets/taxon-visual/*`. The trailing slash matters: Vite matches
+       * by prefix, and the site's own `taxon-visual-*.js` chunk starts the same.
        */
       ...Object.fromEntries(
         ASSET_SEGMENTS.map((segment) => [
-          `/assets/${segment}`,
+          `/assets/${segment}/`,
           {
             target: BACKEND_URL,
             changeOrigin: true,

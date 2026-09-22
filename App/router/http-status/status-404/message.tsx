@@ -18,7 +18,9 @@ const Message: React.FunctionComponent = () => {
   return (
     <Text>
       {COPY.before}
-      <Text is='code'>{pathname}</Text>
+      <Text className='kicl-font-weight-bold' is='code'>
+        {pathname}
+      </Text>
       {COPY.after}
     </Text>
   );

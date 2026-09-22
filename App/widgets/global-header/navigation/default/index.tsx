@@ -6,6 +6,9 @@ import { HyperLink, Navigation } from '@/components';
 // Views
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
 
+// Constants
+import { LABEL } from '@/widgets/global-header/navigation/constants';
+
 const CLASS_NAME = 'kicl--widgets--global-header--navigation--default';
 
 const Links = [
@@ -16,7 +19,7 @@ const Links = [
 
 const Default: React.FunctionComponent = () => {
   return (
-    <Navigation autoFlow='column' className={CLASS_NAME}>
+    <Navigation aria-label={LABEL} autoFlow='column' className={CLASS_NAME}>
       {Links}
     </Navigation>
   );

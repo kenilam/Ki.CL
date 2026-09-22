@@ -11,15 +11,12 @@ import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';
 import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constants';
 import { type Era as Props } from './constants';
 
-// The label comes first so a screen reader hears what the numbers are before them.
+// The label sits under its numbers, as a caption; the list is named by it, so a screen reader hears it first.
 const Era: React.FunctionComponent<Props> = ({ label, versions }) => {
   const id = useId();
 
   return (
     <ListItem gap='none'>
-      <Text id={id} dense className='kicl-font-size-small'>
-        {label}
-      </Text>
       <List
         is='ol'
         aria-labelledby={id}
@@ -41,6 +38,9 @@ const Era: React.FunctionComponent<Props> = ({ label, versions }) => {
           </ListItem>
         ))}
       </List>
+      <Text id={id} dense className='kicl-font-size-small'>
+        {label}
+      </Text>
     </ListItem>
   );
 };
