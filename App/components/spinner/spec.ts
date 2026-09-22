@@ -11,4 +11,6 @@ export type Props = Pick<React.HTMLAttributes<HTMLSpanElement>, 'className'> &
     size?: Size;
     atRoot?: boolean;
     hasBackdrop?: boolean;
+    /** Read out by assistive tech while the spinner shows. */
+    label?: string;
   });

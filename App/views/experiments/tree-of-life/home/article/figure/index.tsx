@@ -36,7 +36,12 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
         </Text>
       </figcaption>
 
-      <Dialog className={`${CLASS_NAME}__full`} fullScreen id={data}>
+      <Dialog
+        aria-label={alt}
+        className={`${CLASS_NAME}__full`}
+        fullScreen
+        id={data}
+      >
         <Layout alignItems='center' justifyContent='center'>
           <section>
             <Image data={data} alt={alt} />

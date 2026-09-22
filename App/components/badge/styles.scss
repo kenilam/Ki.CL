@@ -10,9 +10,7 @@
   background-color: var(--kicl--components--badge--background-color);
   border: var(--kicl--components--badge--border-width) solid
     var(--kicl--components--badge--border-color);
-  border-radius: var(--kicl-size-half);
   color: var(--kicl--components--badge--color);
-  display: inline-flex;
   gap: var(--kicl-gutter-narrowest);
   inline-size: fit-content;
   max-inline-size: 100%;

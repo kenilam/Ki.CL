@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 
 import { LayoutProps } from '@/components';
 
@@ -7,7 +7,7 @@ type Level = 'confirm' | 'error' | 'info' | 'warning';
 type Variant = 'primary' | 'secondary' | 'tertiary' | 'ghost';
 
 export type Props = Required<PropsWithChildren> &
-  ButtonHTMLAttributes<HTMLButtonElement> &
+  ComponentPropsWithoutRef<'button'> &
   Pick<
     LayoutProps,
     | 'autoFlow'

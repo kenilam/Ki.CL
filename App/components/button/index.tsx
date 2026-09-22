@@ -35,6 +35,7 @@ const getButtonClassNames = ({
       [`${CLASS_NAME}--level--${level}`]: !unstyled && level,
       [`${CLASS_NAME}--variant--${variant}`]: !unstyled && variant,
       [`${CLASS_NAME}--unstyled`]: unstyled,
+      'kicl-text-transform-uppercase': !unstyled,
     },
     className
   );
@@ -95,7 +96,6 @@ const Button = React.forwardRef<HTMLButtonElement, Spec.Props>(
           disabled={disabled}
           onClick={clickHandler}
           ref={ref}
-          tabIndex={disabled ? -1 : undefined}
           type={type}
         >
           {children}

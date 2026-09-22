@@ -17,13 +17,15 @@ import * as Spec from './spec';
 
 const CLASS_NAME = 'kicl--components--image';
 
+type Result = { src: string; failed: boolean };
+
 const Image: React.FunctionComponent<Spec.Props> = ({
   alt,
   borderRadius = 'sm',
+  className: _className,
   data,
   isFullscreen = false,
   loading = 'lazy',
-  title,
   placeholder = (
     <Ri.RiFileUnknowLine
       className={classNames('kicl-color-warning', 'kicl-font-size-large')}
@@ -33,64 +35,59 @@ const Image: React.FunctionComponent<Spec.Props> = ({
   onLoad: loadHandler,
   ...props
 }) => {
-  const [loadingState, isLoading] = useState(!!data);
-  const [error, setError] = useState<Error>();
+  // Keyed by `src`, so a new `data` starts loading again without an effect.
+  const [result, setResult] = useState<Result>();
+
+  const isSettled = !!data && result?.src === data;
+  const hasError = isSettled && result.failed;
+  const isLoading = !!data && !isSettled;
 
   const className = classNames(
     CLASS_NAME,
     {
       [`${CLASS_NAME}--is-fullscreen`]: isFullscreen,
-      [`${CLASS_NAME}--is-loading`]: loadingState,
-      [`${CLASS_NAME}--has-error`]: !!error,
+      [`${CLASS_NAME}--is-loading`]: isLoading,
+      [`${CLASS_NAME}--has-error`]: hasError,
     },
-    props.className
+    _className
   );
 
   const onError: Spec.Props['onError'] = (event) => {
-    isLoading(false);
-    setError(new Error('Error while loading this image'));
-
-    event.currentTarget.remove();
+    if (data) setResult({ src: data, failed: true });
 
     errorHandler?.(event);
   };
 
   const onLoad: Spec.Props['onLoad'] = (event) => {
-    isLoading(false);
-    setError(undefined);
+    if (data) setResult({ src: data, failed: false });
 
     loadHandler?.(event);
   };
 
   return (
-    <object
-      {...props}
-      className={className}
-      title={title || alt || error?.message}
-    >
-      <img
-        className={classNames({
-          [`kicl-border-radius-${borderRadius}`]: borderRadius,
-        })}
-        src={data}
-        alt={alt}
-        loading={loading}
-        onLoad={onLoad}
-        onError={onError}
-      />
-      <Animation
-        in={!loadingState && !!error}
-        duration='faster'
-        property='blur'
-      >
+    <span {...props} className={className}>
+      {!hasError && (
+        <img
+          className={classNames({
+            [`kicl-border-radius-${borderRadius}`]: borderRadius,
+          })}
+          src={data}
+          alt={alt}
+          loading={loading}
+          onLoad={onLoad}
+          onError={onError}
+        />
+      )}
+      {hasError && alt && <span className='kicl-hidden'>{alt}</span>}
+      <Animation in={hasError} duration='faster' property='blur'>
         <Layout>
-          <span className={`${CLASS_NAME}--error`} data-src={data}>
+          <span aria-hidden className={`${CLASS_NAME}--error`} data-src={data}>
             {placeholder}
           </span>
         </Layout>
       </Animation>
-      <Spinner in={loadingState && !error} duration='faster' size='smaller' />
-    </object>
+      <Spinner in={isLoading} duration='faster' size='smaller' />
+    </span>
   );
 };
 

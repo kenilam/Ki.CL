@@ -27,20 +27,10 @@ const CLASS_NAME = `${HOME}__article`;
 /** How it was made: the music, the picture, the data, and the address. */
 const Article: React.FunctionComponent = () => (
   <Layout autoFlow='row' gap='wider' justifyItems='stretch'>
-    <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
-      {/*
-       * The banner's chevron links here. HyperLink centres a hash target, so
-       * the target sits half a screen down: centring it brings the article's
-       * top to the top of the screen.
-       */}
-      <span
-        aria-hidden
-        className={classNames(
-          `${CLASS_NAME}__anchor`,
-          'kicl-position-absolute'
-        )}
-        id={ARTICLE_ID}
-      />
+    <article
+      className={classNames(CLASS_NAME, 'kicl-position-relative')}
+      id={ARTICLE_ID}
+    >
       <WhatThisIs />
       <Music />
       <Picture />

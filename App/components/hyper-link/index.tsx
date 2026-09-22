@@ -10,7 +10,6 @@ import { NavLink } from '@/router';
 import { getButtonClassNames, Layout, Text } from '@/components';
 
 // Hooks
-import { useScrollIntoView } from '@/hooks';
 import { useURLStatus } from './hooks';
 
 // Spec
@@ -20,6 +19,8 @@ import * as Spec from './spec';
 import './styles.scss';
 
 const CLASS_NAME = 'kicl--components--hyper-link';
+
+const NEW_TAB = '(opens in a new tab)';
 
 const getHyperLinkClassNames = ({
   className,
@@ -34,11 +35,29 @@ const getHyperLinkClassNames = ({
   );
 };
 
+/** Drops the router-only props a native anchor would render as attributes. */
+const getAnchorProps = ({
+  caseSensitive: _caseSensitive,
+  discover: _discover,
+  preventScrollReset: _preventScrollReset,
+  relative: _relative,
+  reloadDocument: _reloadDocument,
+  replace: _replace,
+  state: _state,
+  style,
+  viewTransition: _viewTransition,
+  ...rest
+}: Omit<Spec.Props, 'children' | 'to'>) => ({
+  ...rest,
+  style: typeof style === 'function' ? undefined : style,
+});
+
 const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
   (
     {
       after,
       before,
+      bold,
       children,
       className: _className = '',
       disabled,
@@ -47,7 +66,7 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
       lookLikeButton,
       target: _target,
       onClick: clickHandler,
-      style,
+      size,
       to,
       variant,
       unstyled = false,
@@ -55,8 +74,6 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
     },
     ref
   ) => {
-    const { scrollIntoView } = useScrollIntoView();
-
     const status = useURLStatus(to);
 
     const onClick: Spec.Props['onClick'] = (event) => {
@@ -65,31 +82,13 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
         return;
       }
 
-      if (status.isHash) {
-        event.preventDefault();
-
-        const isString = typeof to === 'string';
-
-        let node: HTMLElement | null = null;
-
-        if (isString) {
-          node = window.document.querySelector<HTMLElement>(to);
-        }
-
-        if (!isString && to.hash) {
-          node = window.document.querySelector<HTMLElement>(to.hash);
-        }
-
-        scrollIntoView(node);
-      }
-
       clickHandler?.(event);
     };
 
     const className = classNames(
       getHyperLinkClassNames({ className: _className, unstyled }),
       {
-        [getButtonClassNames({ ...rest, disabled, level, variant })]:
+        [getButtonClassNames({ bold, disabled, level, size, variant })]:
           lookLikeButton && !unstyled,
         [`${CLASS_NAME}--look-like-button`]: lookLikeButton && !unstyled,
       },
@@ -112,7 +111,12 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
           alignItems='center'
           gap='narrow'
         >
-          <span className={`${CLASS_NAME}--wrapper`} is='span'>
+          <span
+            className={classNames(
+              `${CLASS_NAME}--wrapper`,
+              'kicl-position-relative'
+            )}
+          >
             {before}
             <Text className={`${CLASS_NAME}--wrapper--content`} is='span'>
               {Content}
@@ -123,21 +127,38 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
       );
     }
 
-    const Link = (
-      <NavLink
-        {...rest}
-        className={className}
-        end={end}
-        onClick={onClick}
-        ref={ref}
-        tabIndex={disabled ? -1 : undefined}
-        target={target}
-        to={to}
-        aria-disabled={disabled}
-      >
-        {Content}
-      </NavLink>
-    );
+    if (target === '_blank') {
+      Content = (
+        <>
+          {Content}
+          <span className='kicl-hidden'> {NEW_TAB}</span>
+        </>
+      );
+    }
+
+    const shared = {
+      'aria-disabled': disabled,
+      className,
+      onClick,
+      tabIndex: disabled ? -1 : undefined,
+      target,
+    };
+
+    /*
+     * A same-page hash is a plain anchor, so the browser jumps and moves focus
+     * itself; the router would swallow the click. Smooth scrolling and the
+     * header offset are CSS (see `styles.scss` and `html { scroll-padding }`).
+     */
+    const Link =
+      status.isHash && typeof to === 'string' ? (
+        <a {...getAnchorProps(rest)} {...shared} href={to} ref={ref}>
+          {Content as React.ReactNode}
+        </a>
+      ) : (
+        <NavLink {...rest} {...shared} end={end} ref={ref} to={to}>
+          {Content}
+        </NavLink>
+      );
 
     if (lookLikeButton) {
       return <Layout alignItems='center'>{Link}</Layout>;

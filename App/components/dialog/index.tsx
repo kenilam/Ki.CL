@@ -3,6 +3,9 @@ import React, { useEffect, useId, useRef } from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Components
+import { Heading } from '@/components';
+
 // Spec
 import * as Spec from './spec';
 
@@ -44,12 +47,15 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
       footer,
       fullScreen = false,
       open = false,
+      title,
       ...rest
     },
     ref
   ) => {
     const generated = useId();
     const id = rest.id ?? generated;
+    const titleId = `${id}--title`;
+    const isLabelled = Boolean(rest['aria-label'] || rest['aria-labelledby']);
 
     const node = useRef<HTMLDialogElement>(null);
 
@@ -88,6 +94,7 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
         value={{ closable, closeIcon: CloseIcon, fullScreen, id }}
       >
         <dialog
+          aria-labelledby={title && !isLabelled ? titleId : undefined}
           {...rest}
           id={id}
           ref={setRef}
@@ -104,10 +111,15 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
             closable === true || closable === 'keyboard' ? 'any' : 'none'
           }
         >
-          <section>
+          <div>
             <Close />
+            {title ? (
+              <Heading id={titleId} is='h2' lookLike='h4'>
+                {title}
+              </Heading>
+            ) : null}
             {children}
-          </section>
+          </div>
 
           {footer ? (
             <footer className={`${CLASS_NAME}--footer`}>{footer}</footer>

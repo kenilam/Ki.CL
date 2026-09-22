@@ -14,16 +14,11 @@ import {
   useScrollDirection,
 } from './use-scroll-direction';
 import { useScrollEvent } from './use-scroll-event';
-import {
-  OPTION as SCROLL_INTO_VIEW_OPTION,
-  useScrollIntoView,
-} from './use-scroll-into-view';
 
 export {
   DARK_THEME_CLASS_NAME,
   MUTATION_OBSERVER_OPTIONS,
   SCROLL_DIRECTIONS,
-  SCROLL_INTO_VIEW_OPTION,
   breakpoints,
   useIntersectionObserver,
   useMutationObserver,
@@ -31,5 +26,4 @@ export {
   useResponsive,
   useScrollDirection,
   useScrollEvent,
-  useScrollIntoView,
 };

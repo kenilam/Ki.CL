@@ -1,13 +1,9 @@
-import type {
-  DetailsHTMLAttributes,
-  HTMLAttributes,
-  PropsWithChildren,
-} from 'react';
+import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 
-export type Props = PropsWithChildren<
-  DetailsHTMLAttributes<HTMLDetailsElement>
-> & {
-  summary: DetailsHTMLAttributes<HTMLDetailsElement>['children'];
+export type Props = ComponentPropsWithoutRef<'details'> & {
+  summary: ComponentPropsWithoutRef<'details'>['children'];
 };
 
-export type SummaryProps = PropsWithChildren<HTMLAttributes<HTMLElement>>;
+export type SummaryProps = PropsWithChildren<
+  ComponentPropsWithoutRef<'summary'>
+>;

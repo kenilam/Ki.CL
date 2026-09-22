@@ -20,6 +20,7 @@ const Video = React.forwardRef<VideoElement, Spec.Props>(
   (
     {
       autoPlay = true,
+      captions,
       className: _className,
       controls = false,
       controlsList = 'nofullscreen nodownload',
@@ -53,6 +54,7 @@ const Video = React.forwardRef<VideoElement, Spec.Props>(
 
     const className = classNames(
       CLASS_NAME,
+      'kicl-position-relative',
       {
         [`${CLASS_NAME}--object-fit--${objectFit}`]: !!objectFit,
       },
@@ -68,6 +70,8 @@ const Video = React.forwardRef<VideoElement, Spec.Props>(
         ref={ref}
       >
         <figure className={className}>
+          {/* Muted by default; a video with speech passes `captions`. */}
+          {/* oxlint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             {...rest}
             autoPlay={autoPlay}
@@ -75,7 +79,7 @@ const Video = React.forwardRef<VideoElement, Spec.Props>(
             controlsList={controlsList}
             height={height}
             loop={loop}
-            muted
+            muted={muted}
             onLoadStart={onLoadStart}
             onLoadedData={onLoadedData}
             playsInline={playsInline}
@@ -83,7 +87,9 @@ const Video = React.forwardRef<VideoElement, Spec.Props>(
             width={width}
           >
             <source src={src} type='video/mp4' />
-            <track default kind='captions' label='English' srcLang='en' />
+            {captions ? (
+              <track default kind='captions' src={captions} srcLang='en' />
+            ) : null}
           </video>
           <Spinner in={loading} />
         </figure>

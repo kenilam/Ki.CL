@@ -55,6 +55,7 @@ const AgentHarness: React.FunctionComponent = () => (
       </Button>
     </Layout>
     <Dialog
+      aria-label='Agent session data model diagram'
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-session-model'

@@ -21,15 +21,16 @@ const TITLES: Spec.Titles = {
 };
 
 const LEVELS: Spec.Icons = {
-  error: <Ri.RiErrorWarningLine className='kicl-font-size' />,
-  info: <Ri.RiInformationLine className='kicl-font-size' />,
-  warning: <Ri.RiAlarmWarningLine className='kicl-font-size' />,
+  error: <Ri.RiErrorWarningLine aria-hidden className='kicl-font-size' />,
+  info: <Ri.RiInformationLine aria-hidden className='kicl-font-size' />,
+  warning: <Ri.RiAlarmWarningLine aria-hidden className='kicl-font-size' />,
 };
 
 const Status: React.FunctionComponent<Spec.Props> = ({
   align = 'start',
   property = 'slide-from-bottom',
   className: _className,
+  headingLevel = 'h4',
   in: transitionIn,
   level,
   message,
@@ -74,7 +75,10 @@ const Status: React.FunctionComponent<Spec.Props> = ({
         justifyContent='center'
         justifyItems='start'
       >
-        <div className={className}>
+        <div
+          className={className}
+          role={level === 'error' ? 'alert' : 'status'}
+        >
           <Layout
             alignContent='center'
             alignItems='center'
@@ -85,7 +89,8 @@ const Status: React.FunctionComponent<Spec.Props> = ({
           >
             <Heading
               className={level ? `kicl-color-${level}` : undefined}
-              is='h4'
+              is={headingLevel}
+              lookLike='h4'
             >
               {Icon}
               {Title}

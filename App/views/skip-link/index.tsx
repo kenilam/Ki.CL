@@ -18,11 +18,6 @@ const COPY = {
   skip: 'Skip to content',
 };
 
-/** HyperLink handles the scroll for hash links, so focus is moved here. */
-const onClick = () => {
-  document.getElementById(MAIN_ID)?.focus({ preventScroll: true });
-};
-
 const SkipLink: React.FunctionComponent = () => (
   <HyperLink
     className={classNames(
@@ -33,7 +28,6 @@ const SkipLink: React.FunctionComponent = () => (
       'kicl-inset-inline-start-narrow'
     )}
     lookLikeButton
-    onClick={onClick}
     size='small'
     to={`#${MAIN_ID}`}
   >

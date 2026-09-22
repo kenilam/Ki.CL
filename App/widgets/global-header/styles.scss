@@ -10,7 +10,7 @@
   --kicl--widgets--global-header--inline-size: 100%;
   --kicl--widgets--global-header--bleed: calc(
     var(--kicl--widgets--global-header--block-size) +
-      (var(--kicl--widgets--global-header--top) * 2)
+    (var(--kicl--widgets--global-header--top) * 2)
   );
 
   @include tablet {
@@ -24,8 +24,7 @@
 .kicl--widgets--global-header {
   --kicl--components--animation--property--slide-from-top--distance: 100%;
   --kicl--components--hyper-link--text-color: var(--kicl-body-color);
-  --kicl--components--animation--transition-property:
-    opacity, translate, background-color, padding;
+  --kicl--components--animation--transition-property: opacity, translate, background-color, padding;
 
   backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
   background-color: var(--kicl--widgets--global-header--background-color);

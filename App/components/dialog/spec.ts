@@ -3,8 +3,13 @@ import React from 'react';
 // Icons
 import { IconType } from '@/icons';
 
-export type Props = React.DialogHTMLAttributes<HTMLDialogElement> & {
+/**
+ * Name the dialog with `title` (a visible heading it is labelled by), or with
+ * `aria-label` / `aria-labelledby` when there is no visible title.
+ */
+export type Props = Omit<React.ComponentPropsWithoutRef<'dialog'>, 'title'> & {
   footer?: React.ReactNode;
+  title?: React.ReactNode;
 } & (
     | {
         dense?: boolean;

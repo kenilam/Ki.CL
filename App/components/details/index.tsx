@@ -3,6 +3,9 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Components
+import { Layout } from '@/components';
+
 // Spec
 import type { Props } from './spec';
 
@@ -27,10 +30,12 @@ const Details = React.forwardRef<HTMLDetailsElement, Props>(
       data-slot='details'
       ref={ref}
     >
-      <summary className={`${CLASS_NAME}__summary`} data-slot='summary'>
-        {summary}
-        <Marker />
-      </summary>
+      <Layout alignItems='start' display='flex' gap='narrow'>
+        <summary className={`${CLASS_NAME}__summary`} data-slot='summary'>
+          {summary}
+          <Marker />
+        </summary>
+      </Layout>
       {children}
     </details>
   )

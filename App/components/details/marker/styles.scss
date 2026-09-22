@@ -3,10 +3,8 @@
   &__marker {
     align-self: center;
     block-size: var(--kicl--components--details--summary--marker--block-size);
-    color: inherit;
     display: grid;
     flex-shrink: 0;
-    font-size: inherit;
     inline-size: var(--kicl--components--details--summary--marker--inline-size);
     margin-inline-start: auto;
   }

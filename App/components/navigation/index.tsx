@@ -40,7 +40,7 @@ const Navigation = React.forwardRef<
   ) => {
     const className = classNames(CLASS_NAME, _className);
 
-    let animation: AnimationProps = {
+    const animation: AnimationProps = {
       duration: 'faster',
       property: 'slide-from-top',
     };

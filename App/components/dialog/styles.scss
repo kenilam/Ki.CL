@@ -61,7 +61,7 @@
   @include query('≤mobile') {
     min-block-size: 100svb;
 
-    > section {
+    > div {
       border-end-end-radius: 0;
       border-end-start-radius: 0;
       margin-block: auto 0;
@@ -69,7 +69,7 @@
     }
   }
 
-  > section {
+  > div {
     background-color: var(--kicl--components--dialog--background-color);
     block-size: var(--kicl--components--dialog--block-size, auto);
     border-radius: var(--kicl--components--dialog--border-radius);
@@ -91,7 +91,7 @@
     z-index: var(--kicl-z-index-raised);
   }
 
-  &[open] > section {
+  &[open] > div {
     opacity: 1;
     translate: 0 0;
 
@@ -105,7 +105,7 @@
     }
   }
 
-  &:not([open]) > section {
+  &:not([open]) > div {
     block-size: var(
       --kicl--components--dialog--block-size--starting-style,
       auto
@@ -115,25 +115,25 @@
   &::backdrop {
     @at-root .kicl--theme--dark & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
-          $black-pure,
-          0.5
-        )};
+        $black-pure,
+        0.5
+      )};
     }
 
     @at-root .kicl--theme--light & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
-          $white-pure,
-          0.7
-        )};
+        $white-pure,
+        0.7
+      )};
     }
 
     backdrop-filter: brightness(
-        var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
-      )
+      var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
+    )
       blur(var(--kicl--components--dialog--backdrop--backdrop-filter--blur));
     background-color: rgb(
       from var(--kicl--components--dialog--backdrop--background-color) r g b /
-        var(--kicl--components--dialog--backdrop--opacity)
+      var(--kicl--components--dialog--backdrop--opacity)
     );
     pointer-events: none;
   }

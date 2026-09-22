@@ -37,7 +37,6 @@
     border: var(--kicl--components--button--border-width) solid
       var(--kicl--components--button--border-color);
     color: var(--kicl-body-color);
-    text-transform: uppercase;
   }
 
   &:has(> svg:only-child, .kicl--components--spinner:only-child) {
@@ -45,9 +44,5 @@
 
     backdrop-filter: blur(var(--kicl-gutter));
     display: grid;
-  }
-
-  &:focus {
-    outline: 1px dashed var(--kicl-body-color);
   }
 }

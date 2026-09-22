@@ -35,6 +35,7 @@ const WhatChanges: React.FunctionComponent = () => (
       </Button>
     </Layout>
     <Dialog
+      aria-label='Agent plane diagram'
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-agent-plane'

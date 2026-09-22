@@ -34,6 +34,7 @@ const CoreDataModel: React.FunctionComponent = () => (
       </Button>
     </Layout>
     <Dialog
+      aria-label='Core data model diagram'
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-data-model'

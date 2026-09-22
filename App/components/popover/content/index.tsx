@@ -29,6 +29,7 @@ const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>(
     ref
   ) => {
     const popover = usePopover();
+    const isLabelled = Boolean(rest['aria-label'] || rest['aria-labelledby']);
     const nodeRef = useRef<HTMLDivElement | null>(null);
 
     /* The browser is the source of truth; this reports what it decided. */
@@ -89,6 +90,8 @@ const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>(
         id={popover.id}
         popover='auto'
         role='dialog'
+        /* Named by its trigger unless the caller gives it a name. */
+        aria-labelledby={isLabelled ? undefined : `${popover.id}__trigger`}
         data-slot='popover-content'
         className={classNames(
           CLASS_NAME,

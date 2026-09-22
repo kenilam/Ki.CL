@@ -27,6 +27,8 @@ const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
         type='button'
         data-slot='popover-trigger'
         aria-expanded={popover.open}
+        aria-haspopup='dialog'
+        id={`${popover.id}__trigger`}
         className={classNames(CLASS_NAME, className)}
         /*
          * The browser toggles the panel from this attribute. The handler is

@@ -33,6 +33,8 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
        * value is correct by construction; only the narrowing is lost.
        */
       <Text {...(props as React.ComponentProps<typeof Text>)} ref={ref}>
+        {/* Read once as a word; the letters below are only for the eye. */}
+        <span className='kicl-hidden'>{text}</span>
         {text.split('').map((letter, index) => {
           const key = `${index}`;
 
@@ -44,7 +46,7 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
               property={property}
               key={key}
             >
-              <Text is='span' unstyled>
+              <Text aria-hidden is='span' unstyled>
                 {letter}
               </Text>
             </Animation>

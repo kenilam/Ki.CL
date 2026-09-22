@@ -12,11 +12,15 @@ import './styles.scss';
 const CLASS_NAME = 'kicl--components--heading';
 
 const Heading = React.forwardRef<HTMLHeadingElement, Spec.Props>(
-  ({ children, className: origin = '', dense, is = 'h1', ...rest }, ref) => {
+  (
+    { children, className: origin = '', dense, is = 'h1', lookLike, ...rest },
+    ref
+  ) => {
     const className = classNames(
       CLASS_NAME,
       {
         [`${CLASS_NAME}--is-dense`]: dense,
+        [`kicl-look-like-${lookLike}`]: lookLike && lookLike !== is,
       },
       origin
     );

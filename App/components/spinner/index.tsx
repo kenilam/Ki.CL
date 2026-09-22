@@ -29,6 +29,7 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
   className: _className,
   hasBackdrop = true,
   in: transitionIn,
+  label = 'Loading',
   position = 'overlay',
   size = 'small',
   ...rest
@@ -73,9 +74,10 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
         <Text
           className={classNames('kicl-line-height-dense', className)}
           is='span'
-          role='progressbar'
+          role='status'
           unstyled
         >
+          <span className='kicl-hidden'>{label}</span>
           <Animation
             {...rest}
             delay={spinnerDelay}
@@ -91,7 +93,10 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
               justifyItems='center'
             >
               <Text is='span' className='kicl-line-height-dense' unstyled>
-                <Ri.RiLoader3Line className={`${CLASS_NAME}--icon`} />
+                <Ri.RiLoader3Line
+                  aria-hidden
+                  className={`${CLASS_NAME}--icon`}
+                />
               </Text>
             </Layout>
           </Animation>

@@ -1,13 +1,13 @@
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
-export type PopoverProps = HTMLAttributes<HTMLDivElement> & {
+export type PopoverProps = ComponentPropsWithoutRef<'div'> & {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   children?: ReactNode;
 };
 
-export type PopoverTriggerProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+export type PopoverTriggerProps = ComponentPropsWithoutRef<'button'> & {
   asChild?: boolean;
 };
 
@@ -24,7 +24,8 @@ export type PopoverPlacement =
 /** Matches `Card` and `Badge`: `ghost` is the translucent, blurred pane. */
 export type PopoverVariant = 'default' | 'ghost';
 
-export type PopoverContentProps = HTMLAttributes<HTMLDivElement> & {
+/** Named by the trigger's text by default; pass `aria-label` or `aria-labelledby` to override. */
+export type PopoverContentProps = ComponentPropsWithoutRef<'div'> & {
   placement?: PopoverPlacement;
   variant?: PopoverVariant;
 };

@@ -16,7 +16,6 @@
   block-size: var(--kicl--views--components--video--block-size);
   inline-size: var(--kicl--views--components--video--inline-size);
   overflow: hidden;
-  position: relative;
 
   &--object-fit--cover {
     --kicl--views--components--video--object-fit: cover;

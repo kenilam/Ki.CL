@@ -20,8 +20,6 @@
 }
 
 .kicl--components--details {
-  display: block;
-
   @supports (interpolate-size: allow-keywords) {
     interpolate-size: allow-keywords;
   }
@@ -48,17 +46,10 @@
   }
 
   &__summary {
-    align-items: start;
-    cursor: pointer;
-    display: flex;
-    gap: var(--kicl-gutter-narrow);
     list-style: none;
     margin-block-end: var(
       --kicl--components--details--summary--margin-block-end
     );
-    outline-color: var(--kicl-outline-color);
-    outline-style: var(--kicl-outline-style);
-    outline-width: var(--kicl-outline-width);
     transition-duration: var(
       --kicl--components--details--content--transition-duration
     );
@@ -73,15 +64,6 @@
 
     &::marker {
       content: '';
-    }
-
-    &:focus,
-    &:focus-visible {
-      --kicl-outline-style: dashed;
-    }
-
-    &:focus:not(:focus-visible) {
-      --kicl-outline-style: none;
     }
   }
 

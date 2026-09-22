@@ -22,9 +22,6 @@
   color: var(--kicl--components--hyper-link--text-color);
   fill: var(--kicl--components--hyper-link--text-color);
   inline-size: var(--kicl--components--hyper-link--inline-size);
-  outline-color: var(--kicl-outline-color);
-  outline-style: var(--kicl-outline-style);
-  outline-width: var(--kicl-outline-width);
   text-decoration: none;
 
   @include transition('kicl--components--hyper-link');
@@ -38,12 +35,6 @@
     grid-auto-columns: var(
       --kicl--components--hyper-link--wrapper--grid-auto-columns
     );
-    position: relative;
-
-    &--after,
-    &--before {
-      position: absolute;
-    }
 
     &:has(> :nth-child(3):last-child) {
       --kicl--components--hyper-link--wrapper--grid-auto-columns: max-content
@@ -96,8 +87,14 @@
       pointer-events: none;
     }
   }
+}
 
-  &:not(#{&}--unstyled):not(#{&}--look-like-button):has(&--wrapper):focus {
-    --kicl-outline-style: dashed;
+/*
+ * Same-page hash links jump natively. The scroll is smooth only while such a
+ * link is being used, so route changes (ScrollRestoration) still jump.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.kicl--components--hyper-link[href^='#']:is(:hover, :focus)) {
+    scroll-behavior: smooth;
   }
 }

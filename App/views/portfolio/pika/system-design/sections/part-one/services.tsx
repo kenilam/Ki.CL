@@ -34,7 +34,12 @@ const Services: React.FunctionComponent = () => (
         <Diagram spec={services} />
       </Button>
     </Layout>
-    <Dialog className={`${CLASS_NAME}__full`} fullScreen id='diagram-services'>
+    <Dialog
+      aria-label='Services and components diagram'
+      className={`${CLASS_NAME}__full`}
+      fullScreen
+      id='diagram-services'
+    >
       <Layout alignItems='center' justifyContent='center'>
         <section>
           <Diagram spec={services} />
@@ -98,6 +103,7 @@ const Services: React.FunctionComponent = () => (
       </Button>
     </Layout>
     <Dialog
+      aria-label='Request flow diagram'
       className={`${CLASS_NAME}__full`}
       fullScreen
       id='diagram-request-flow'

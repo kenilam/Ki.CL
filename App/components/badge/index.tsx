@@ -28,6 +28,8 @@ const Badge = React.forwardRef<HTMLElement, Props>(
           CLASS_NAME,
           `${CLASS_NAME}--variant--${variant}`,
           size && `${CLASS_NAME}--size--${size}`,
+          'kicl-border-radius-sm',
+          'kicl-display-inline-flex',
           'kicl-font-weight',
           'kicl-line-height-narrow',
           className
