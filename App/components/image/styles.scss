@@ -50,7 +50,7 @@
   &--background {
     filter: blur(30rem) invert(1);
     position: absolute;
-    z-index: 0;
+    z-index: var(--kicl-z-index-base);
   }
 
   &--error {
@@ -71,8 +71,8 @@
     );
     position: absolute;
     translate: var(
-      --kicl--components--image--is-fullscreen--transform--translate-x
-    )
+        --kicl--components--image--is-fullscreen--transform--translate-x
+      )
       var(--kicl--components--image--is-fullscreen--transform--translate-y);
   }
 }

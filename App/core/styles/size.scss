@@ -42,3 +42,12 @@
 @include make-size-variable-class('inline-size', 'xxl', '18x');
 @include make-size-variable-class('inline-size', 'max', '20x');
 @include make-size-variable-class('inline-size', 'full', 'full');
+@include make-size-variable-class('block-size', 'full', 'full');
+
+.kicl-block-size-screen {
+  block-size: 100dvb;
+}
+
+.kicl-min-block-size-screen {
+  min-block-size: 100dvb;
+}

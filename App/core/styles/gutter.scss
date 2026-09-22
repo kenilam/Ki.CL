@@ -15,10 +15,10 @@
 }
 
 @mixin make-gutter-variable-class($property: null, $identifier: null) {
-  @if $identifier and $property {
+  @if $property {
     $suffix: if($identifier, '-#{$identifier}', '');
 
-    .kicl-#{$property}-#{$identifier} {
+    .kicl-#{$property}#{$suffix} {
       #{$property}: var(--kicl-gutter#{$suffix});
     }
   }
@@ -32,6 +32,7 @@
   @include make-gutter-variable-class($property, 'wide');
   @include make-gutter-variable-class($property, 'wider');
   @include make-gutter-variable-class($property, 'widest');
+  @include make-gutter-variable-class($property, 'extreme');
 }
 
 @include make-gutter-variable-classes('padding-block');
@@ -46,3 +47,16 @@
 @include make-gutter-variable-classes('margin-inline');
 @include make-gutter-variable-classes('margin-inline-start');
 @include make-gutter-variable-classes('margin-inline-end');
+
+.kicl-margin-inline-auto {
+  margin-inline: auto;
+}
+
+// Clears the fixed global header, whose height is measured at runtime.
+.kicl-padding-block-start-header {
+  padding-block-start: var(--kicl--widgets--global-header--block-size);
+}
+
+.kicl-inset-block-start-header {
+  inset-block-start: var(--kicl--widgets--global-header--block-size);
+}

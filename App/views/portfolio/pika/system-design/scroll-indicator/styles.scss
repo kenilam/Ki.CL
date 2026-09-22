@@ -7,10 +7,10 @@
   inset-inline-start: 0;
   scale: var(--kicl--views--portfolio--pika--system-design--scroll, 0) 1;
   transform-origin: inline-start;
-  z-index: 1;
+  z-index: var(--kicl-z-index-raised);
   animation:
     kicl--views--portfolio--pika--system-design--background
-    var(--kicl-transition-duration-5m) ease infinite,
+      var(--kicl-transition-duration-5m) ease infinite,
     kicl--views--portfolio--pika--system-design--scroll linear both;
   animation-timeline: auto, scroll();
 }

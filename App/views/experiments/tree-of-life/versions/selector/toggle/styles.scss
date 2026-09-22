@@ -6,6 +6,6 @@
      */
     min-block-size: var(--kicl-size-2x);
     anchor-name: --kicl-versions-toggle;
-    z-index: 4;
+    z-index: var(--kicl-z-index-popover);
   }
 }

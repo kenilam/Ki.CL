@@ -6,5 +6,5 @@
   max-block-size: var(--kicl--components--select--content-max-block-size);
   overflow: auto;
   padding: var(--kicl-gutter-narrowest);
-  z-index: 5;
+  z-index: var(--kicl-z-index-popover);
 }

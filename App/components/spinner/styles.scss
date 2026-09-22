@@ -73,7 +73,7 @@
     --kicl--components--spinner--inline-size: 100%;
     --kicl--components--spinner--position: absolute;
 
-    z-index: 1000;
+    z-index: var(--kicl-z-index-overlay);
 
     @at-root *:has(> &) {
       position: relative;

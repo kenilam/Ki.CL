@@ -9,7 +9,7 @@
   min-block-size: var(--kicl--views--experiments__home--block);
   padding-block: var(--kicl-gutter-extreme);
   padding-inline: var(--kicl-gutter-widest);
-  z-index: 1;
+  z-index: var(--kicl-z-index-raised);
 
   @supports (animation-timeline: scroll()) {
     animation:

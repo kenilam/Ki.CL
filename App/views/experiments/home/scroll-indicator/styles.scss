@@ -44,7 +44,7 @@
   transform-origin: left;
   transition: inset-block-start var(--kicl-transition-duration)
     var(--kicl-ease-sine-out);
-  z-index: 1;
+  z-index: var(--kicl-z-index-raised);
 
   &--under-header {
     inset-block-start: var(--kicl--widgets--global-header--block-size);
