@@ -1,22 +1,19 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Route, useParams } from '@/router';
+import { Route } from '@/router';
 
 // Components
 import { Spinner } from '@/components';
 
-// Catalog
-import { draw } from '@/views/experiments/music-visualiser/catalog';
+// Partials
+import { AnyTrack } from './any-track';
 
 // Track
 import { Track } from './track';
 
 // Constants
-import {
-  PARAMS,
-  toTrackPath,
-} from '@/views/experiments/music-visualiser/constants';
+import { PARAMS } from '@/views/experiments/music-visualiser/constants';
 
 const Contents = React.lazy(() =>
   import('./contents').then(({ Contents }) => ({ default: Contents }))
@@ -27,14 +24,6 @@ const Lazy: React.FunctionComponent = () => (
     <Contents />
   </Suspense>
 );
-
-/** The type's index: a track of it, drawn at random. */
-const AnyTrack: React.FunctionComponent = () => {
-  const { [PARAMS.type]: type } = useParams();
-  const [track] = useState(() => draw({ type }));
-
-  return <Navigate to={toTrackPath(track)} replace />;
-};
 
 /** `/:type` - a category of the station; its index goes to one of its tracks. */
 const Types = (

@@ -15,6 +15,9 @@ import { keyOf } from '@/views/experiments/music-visualiser/catalog';
 // Hooks
 import { useAudio } from './use-audio';
 
+// Context
+import { TrackProvider } from './context';
+
 // Partials
 import { Chrome } from './chrome';
 import { Gate } from './gate';
@@ -45,21 +48,19 @@ const Contents: React.FunctionComponent = () => {
   }
 
   return (
-    <Layout autoFlow='row' gap='none'>
-      <div className={classNames(`${VIEW}__track`, 'kicl-position-relative')}>
-        <Visualiser
-          analyser={analyser}
-          playing={control.playing}
-          track={keyOf(track)}
-        />
-        {isPlay ? (
-          <Chrome control={control} next={next} track={track} />
-        ) : (
-          <Gate track={track} />
-        )}
-        <Outlet />
-      </div>
-    </Layout>
+    <TrackProvider control={control} next={next} track={track}>
+      <Layout autoFlow='row' gap='none'>
+        <div className={classNames(`${VIEW}__track`, 'kicl-position-relative')}>
+          <Visualiser
+            analyser={analyser}
+            playing={control.playing}
+            track={keyOf(track)}
+          />
+          {isPlay ? <Chrome /> : <Gate />}
+          <Outlet />
+        </div>
+      </Layout>
+    </TrackProvider>
   );
 };
 
