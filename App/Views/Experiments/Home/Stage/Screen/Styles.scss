@@ -50,8 +50,6 @@
   block-size: var(--kicl--views--experiments__home--screen);
   box-sizing: border-box;
   overflow: clip;
-  padding-block: var(--kicl-gutter-extreme);
-  padding-inline: var(--kicl-gutter-widest);
 
   /* All panels in the same grid cell, stacked in DOM order. */
   @supports (animation-timeline: scroll()) {
@@ -133,6 +131,8 @@
    */
   &__words {
     min-block-size: var(--kicl--views--experiments__home--block);
+    padding-block: var(--kicl-gutter-extreme);
+    padding-inline: var(--kicl-gutter-widest);
     z-index: 1;
 
     @supports (animation-timeline: scroll()) {

@@ -4,20 +4,23 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout } from '@/Components';
+import { Heading, Layout, Text } from '@/Components';
 
 // Styles
 import './Styles.scss';
 
 // Constants
-import { PATH as EXPERIMENTS } from '@/Views/Experiments/constants';
 import { CLASS_NAME as HOME } from '@/Views/Experiments/Home/constants';
+
+// Partials
+import { Bookmark } from './Bookmark';
+import { Share } from './Share';
 
 const CLASS_NAME = `${HOME}__more`;
 
 const COPY = {
-  bookmark: 'Bookmark this page',
-  title: 'More to come',
+  message: 'More on the making',
+  title: 'Come back soon.',
 };
 
 /** The closing screen, in normal flow after the stage, content centred. One element: the grid is the footer. */
@@ -25,21 +28,29 @@ const More: React.FunctionComponent = () => (
   <Layout
     alignContent='center'
     autoFlow='row'
-    gap='wider'
+    gap='narrow'
     justifyItems='start'
   >
     <footer className={CLASS_NAME}>
       <Heading is='h2' dense className={classNames('kicl-font-size-huge', 'kicl-line-height-narrower')}>
         {COPY.title}
       </Heading>
-      <HyperLink
-        className='kicl-margin-block-start-narrow'
-        lookLikeButton
-        size='small'
-        to={`/${EXPERIMENTS}`}
+      <Text>
+        {COPY.message}
+      </Text>
+      <Layout
+        alignContent='center'
+        alignItems='center'
+        autoFlow='column'
+        gap='narrow'
+        justifyItems='center'
+        justifyContent='center'
       >
-        {COPY.bookmark}
-      </HyperLink>
+        <aside>
+          <Bookmark />
+          <Share />
+        </aside>
+      </Layout>
     </footer>
   </Layout>
 );
