@@ -22,7 +22,8 @@
       }
     }
 
-    &.disabled,
+    &.kicl--components--button--disabled,
+    &:disabled,
     &[aria-disabled='true'] {
       --kicl--components--button--background-color: var(--kicl-color-grey-dark);
       --kicl-body-color: var(--kicl-color-grey-darker);

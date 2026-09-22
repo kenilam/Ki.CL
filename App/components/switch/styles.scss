@@ -80,7 +80,7 @@
       (var(--kicl--components--switch--padding) * 2)
     );
     translate: 0;
-    transition: transform var(--kicl-transition-duration-fast)
+    transition: translate var(--kicl-transition-duration-fast)
       var(--kicl-ease-quint-in-out);
   }
 

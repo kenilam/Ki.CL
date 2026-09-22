@@ -20,13 +20,11 @@ import {
 import { type Seat, getHovered, isPendingRemoval, seats, store } from './store';
 
 /**
- * Fixed chrome labels must also stay clear of.
- *
- * Scoped to this view: `kicl-position-fixed` is a utility anything may use, and
- * `querySelector` takes the first match - an unscoped selector would drift onto
- * whatever else on the page happens to be fixed, such as the global header.
+ * Fixed chrome labels must also stay clear of: the panel and the controls.
+ * Matched by this view's own class, since no element carries the bare root
+ * class for a descendant selector to start from.
  */
-const CHROME = [`.${CLASS_NAME} .kicl-position-fixed`];
+const CHROME = [`.${CLASS_NAME}__chrome`];
 
 /** Seats every mounted pill for one frame, against the bodies, the chrome and each other. */
 function place(host: HTMLElement, pills: Map<string, HTMLElement>): void {

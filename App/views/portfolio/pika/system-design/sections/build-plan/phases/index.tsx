@@ -11,6 +11,12 @@ import { CLASS_NAME as SYSTEM_DESIGN } from '@/views/portfolio/pika/system-desig
 
 const CLASS_NAME = `${SYSTEM_DESIGN}__phases`;
 
+/** Header and body cells share one padding so the columns line up. */
+const CELL_CLASS_NAME = classNames(
+  'kicl-padding-block-narrow',
+  'kicl-padding-inline-narrower'
+);
+
 const TH_CLASS_NAME = classNames(
   'kicl-font-size-small',
   'kicl-letter-spacing',
@@ -52,25 +58,16 @@ const PHASES = [
 ];
 
 const Phases: React.FunctionComponent = () => (
-  <table className={CLASS_NAME}>
+  <table className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
     <thead>
       <tr>
-        <th
-          className={classNames('kicl-padding-inline-narrow', TH_CLASS_NAME)}
-          scope='col'
-        >
+        <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
           Phase
         </th>
-        <th
-          className={classNames('kicl-padding-inline-narrow', TH_CLASS_NAME)}
-          scope='col'
-        >
+        <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
           Scope
         </th>
-        <th
-          className={classNames('kicl-padding-inline-narrow', TH_CLASS_NAME)}
-          scope='col'
-        >
+        <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
           Time
         </th>
       </tr>
@@ -78,9 +75,11 @@ const Phases: React.FunctionComponent = () => (
     <tbody>
       {PHASES.map(({ phase, scope, time }) => (
         <tr key={phase}>
-          <td>{phase}</td>
-          <td>{scope}</td>
-          <td className='kicl-text-nowrap'>{time}</td>
+          <td className={CELL_CLASS_NAME}>{phase}</td>
+          <td className={CELL_CLASS_NAME}>{scope}</td>
+          <td className={classNames(CELL_CLASS_NAME, 'kicl-text-nowrap')}>
+            {time}
+          </td>
         </tr>
       ))}
     </tbody>

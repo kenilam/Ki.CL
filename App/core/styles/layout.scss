@@ -177,7 +177,6 @@
   }
 
   &.kicl-layout--full-screen {
-    --kicl-layout--block-size: var(--kicl-layout--full-screen--max-block-size);
     --kicl-layout--inline-size: var(
       --kicl-layout--full-screen--max-inline-size
     );

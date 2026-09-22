@@ -236,7 +236,6 @@ const Search: React.FunctionComponent = () => {
                 placeholder='Find a taxon…'
                 autoComplete='off'
                 aria-label='Find a taxon by name'
-                disabled={loading}
                 aria-busy={loading}
                 onChange={(event) => choose(event.target.value)}
               />

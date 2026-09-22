@@ -47,10 +47,6 @@
     display: grid;
   }
 
-  &:disabled {
-    --kicl--components--button--cursor: not-allowed;
-  }
-
   &:focus {
     outline: 1px dashed var(--kicl-body-color);
   }

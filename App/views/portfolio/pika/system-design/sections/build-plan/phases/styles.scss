@@ -2,7 +2,6 @@
   /* Build-plan phase table - surface borders, uppercase header set in markup. */
   &__phases {
     border-collapse: collapse;
-    inline-size: 100%;
 
     th {
       border-block-end: var(--kicl-size-2px) solid
@@ -14,12 +13,6 @@
       border-block-end: var(--kicl-size-1px) solid
         var(--kicl-surface-border-color);
       vertical-align: top;
-    }
-
-    td,
-    th {
-      padding-block: var(--kicl-gutter-narrow);
-      padding-inline: var(--kicl-gutter-narrower);
     }
   }
 }
