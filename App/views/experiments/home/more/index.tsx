@@ -13,8 +13,7 @@ import './styles.scss';
 import { CLASS_NAME as HOME } from '@/views/experiments/home/constants';
 
 // Partials
-import { Bookmark } from './bookmark';
-import { Share } from './share';
+import { Actions } from './actions';
 
 const CLASS_NAME = `${HOME}__more`;
 
@@ -43,19 +42,7 @@ const More: React.FunctionComponent = () => (
         {COPY.title}
       </Heading>
       <Text>{COPY.message}</Text>
-      <Layout
-        alignContent='center'
-        alignItems='center'
-        autoFlow='column'
-        gap='narrow'
-        justifyItems='center'
-        justifyContent='center'
-      >
-        <aside>
-          <Bookmark />
-          <Share />
-        </aside>
-      </Layout>
+      <Actions />
     </footer>
   </Layout>
 );

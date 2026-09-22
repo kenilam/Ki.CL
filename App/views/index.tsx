@@ -1,96 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Routes
-import {
-  Router,
-  ErrorElement,
-  HttpStatus,
-  Outlet,
-  Route,
-  ScrollRestoration,
-  useLocation,
-} from '@/router';
-
-// Widgets
-import {
-  GlobalHeader,
-  GlobalHeaderProvider,
-  useGlobalHeaderContext,
-} from '@/widgets';
-
-// Components
-import { Layout } from '@/components';
-
-// Hooks
-import { SCROLL_DIRECTIONS, useResponsive, useScrollDirection } from '@/hooks';
+import { Router, ErrorElement, HttpStatus, Route } from '@/router';
 
 // Views
 import { Experiments } from './experiments';
-import { Home, PATH as HOME_PATH } from './home';
+import { Home } from './home';
 import { Portfolio } from './portfolio';
+
+// Partials
+import { Element } from './element';
 
 // Styles
 import './styles.scss';
-
-const Contents: React.FunctionComponent = () => {
-  const { showHeader } = useGlobalHeaderContext();
-
-  const { pathname } = useLocation();
-
-  const { direction, isAtStart } = useScrollDirection();
-
-  const isHome = pathname.replace('/', '') === HOME_PATH;
-
-  const show = !isHome && (isAtStart || direction === SCROLL_DIRECTIONS.up);
-
-  useEffect(() => {
-    showHeader(show);
-  }, [show, showHeader]);
-
-  return (
-    <>
-      <ScrollRestoration />
-      <GlobalHeader />
-      <Layout
-        alignContent='start'
-        alignItems='start'
-        gap='none'
-        justifyContent='stretch'
-        justifyItems='center'
-      >
-        <main className='kicl--view'>
-          <Outlet />
-        </main>
-      </Layout>
-    </>
-  );
-};
-
-const Element: React.FunctionComponent = () => {
-  useResponsive();
-
-  const location = useLocation();
-
-  useEffect(() => {
-    const root = document.querySelector('body');
-
-    if (!root) {
-      return;
-    }
-
-    const routes = (location.pathname.replace('/', '') || 'home').split('/');
-
-    root.dataset.routes = routes.join('.');
-
-    document.title = `Ki.CL | ${routes.join(' | ')}`;
-  });
-
-  return (
-    <GlobalHeaderProvider show={false}>
-      <Contents />
-    </GlobalHeaderProvider>
-  );
-};
 
 const Views: React.FunctionComponent = () => {
   return (

@@ -1,0 +1,63 @@
+/*
+ * Above every background. The height comes from Stage, which measures
+ * the real blocks; the min keeps every block that tall. The scroll ranges
+ * are set on Screen.
+ */
+.kicl--views--experiments__home__screen__words {
+  $home: '--kicl--views--experiments__home';
+
+  min-block-size: var(--kicl--views--experiments__home--block);
+  padding-block: var(--kicl-gutter-extreme);
+  padding-inline: var(--kicl-gutter-widest);
+  z-index: 1;
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      kicl--views--experiments__home--push-in linear both,
+      kicl--views--experiments__home--push-out linear forwards,
+      kicl--views--experiments__home--fade-out linear forwards;
+    animation-range:
+      var(#{$home}--in-start) var(#{$home}--at),
+      var(#{$home}--out-start) var(#{$home}--out-end),
+      var(#{$home}--fade-start) var(#{$home}--fade-end);
+    animation-timeline: scroll(root), scroll(root), scroll(root);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  &__description {
+    max-inline-size: var(--kicl--views--experiments__home--measure);
+  }
+}
+
+@keyframes kicl--views--experiments__home--push-in {
+  from {
+    translate: 0 var(--kicl--views--experiments__home--below);
+  }
+
+  to {
+    translate: 0 0;
+  }
+}
+
+@keyframes kicl--views--experiments__home--push-out {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: 0 var(--kicl--views--experiments__home--above);
+  }
+}
+
+@keyframes kicl--views--experiments__home--fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}

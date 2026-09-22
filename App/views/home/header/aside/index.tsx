@@ -6,6 +6,9 @@ import * as Icons from '@/icons';
 // Components
 import { HyperLink, Layout, Navigation } from '@/components';
 
+// Styles
+import './styles.scss';
+
 const CLASS_NAME = 'kicl--views--home--header--aside';
 
 const Aside: React.FunctionComponent = () => {

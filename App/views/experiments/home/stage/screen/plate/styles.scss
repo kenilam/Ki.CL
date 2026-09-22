@@ -1,0 +1,99 @@
+/* Solid background colour so the panel underneath is fully covered. */
+.kicl--views--experiments__home__screen__plate {
+  $home: '--kicl--views--experiments__home';
+  $screen: '.kicl--views--experiments__home__screen';
+
+  --kicl--views--experiments__home--drift: 12%;
+  --kicl--views--experiments__home--scrim: color-mix(
+    in oklab,
+    var(--kicl-body-background-color) 70%,
+    transparent
+  );
+  --kicl--views--experiments__home--scrim-end: color-mix(
+    in oklab,
+    var(--kicl-body-background-color) 25%,
+    transparent
+  );
+
+  background-color: var(--kicl-body-background-color);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  inset-block: calc(var(--kicl--views--experiments__home--drift) * -1);
+  inset-inline: 0;
+
+  /* Scrim for text contrast. */
+  &::after {
+    backdrop-filter: saturate(70%);
+    background-image: linear-gradient(
+      180deg,
+      var(--kicl--views--experiments__home--scrim-end) 0%,
+      var(--kicl--views--experiments__home--scrim) 100%
+    );
+    content: '';
+    inset: 0;
+    position: absolute;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    animation:
+      kicl--views--experiments__home--arrive linear both,
+      kicl--views--experiments__home--drift linear both;
+    animation-range:
+      var(#{$home}--arrival) var(#{$home}--at),
+      var(#{$home}--before) var(#{$home}--after);
+    animation-timeline: scroll(root), scroll(root);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  #{$screen}--tree-of-life & {
+    background-image: url('/assets/static/banner.light.webp');
+
+    .kicl--theme--dark & {
+      background-image: url('/assets/static/banner.dark.webp');
+    }
+  }
+
+  /* No image for the visualiser; a CSS gradient in its palette instead. */
+  #{$screen}--music-visualiser & {
+    background-image:
+      radial-gradient(
+        ellipse 40% 55% at 70% 30%,
+        color-mix(in oklab, var(--kicl-color-info) 55%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 45% 60% at 30% 70%,
+        color-mix(in oklab, var(--kicl-color-warning) 45%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 35% 50% at 85% 80%,
+        color-mix(in oklab, var(--kicl-color-green) 50%, transparent),
+        transparent 70%
+      );
+  }
+}
+
+@keyframes kicl--views--experiments__home--arrive {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes kicl--views--experiments__home--drift {
+  from {
+    translate: 0 calc(var(--kicl--views--experiments__home--drift) * -1);
+  }
+
+  to {
+    translate: 0 var(--kicl--views--experiments__home--drift);
+  }
+}

@@ -4,10 +4,6 @@
   padding-inline: var(--kicl-gutter-extreme);
   text-wrap: balance;
 
-  aside {
-    padding-block-start: var(--kicl-gutter-wide);
-  }
-
   > * {
     z-index: 1;
   }

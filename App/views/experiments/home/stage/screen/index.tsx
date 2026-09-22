@@ -4,22 +4,21 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout, ListItem, Text } from '@/components';
+import { ListItem } from '@/components';
+
+// Context
+import { ScreenProvider } from './context';
+
+// Partials
+import { Plate } from './plate';
+import { Words } from './words';
 
 // Styles
 import './styles.scss';
 
 // Constants
-import {
-  CLASS_NAME as HOME,
-  type Experiment,
-} from '@/views/experiments/home/constants';
-
-const CLASS_NAME = `${HOME}__screen`;
-
-const COPY = {
-  open: 'See the experience',
-};
+import type { Experiment } from '@/views/experiments/home/constants';
+import { CLASS_NAME } from './constants';
 
 type Props = {
   experiment: Experiment;
@@ -32,7 +31,7 @@ type Props = {
 /**
  * One full-screen panel: a background that fades in and drifts, and a
  * text block that rides in from below, holds, and is pushed off by the
- * next panel's block. All of it is scroll-driven CSS; see Styles.scss.
+ * next panel's block. All of it is scroll-driven CSS; see styles.scss.
  *
  * The item is the grid and ignores the pointer: stacked above the panel
  * below, it would block that panel's link. Only the text block takes it.
@@ -43,73 +42,23 @@ const Screen: React.FunctionComponent<Props> = ({
   number,
   titleIs,
 }) => (
-  <ListItem
-    alignContent='end'
-    autoFlow='row'
-    gap='none'
-    className={classNames(
-      CLASS_NAME,
-      `${CLASS_NAME}--${experiment.plate}`,
-      'kicl-pointer-events-none',
-      'kicl-position-relative'
-    )}
-    style={{ '--kicl--views--experiments__home--index': index } as never}
-  >
-    <div
-      aria-hidden
-      className={classNames(`${CLASS_NAME}__plate`, 'kicl-position-absolute')}
-    />
-    {/* Rows packed at the end: every block is as tall as the tallest, so a shorter one would spread otherwise. */}
-    <Layout alignContent='end' autoFlow='row' gap='narrow' justifyItems='start'>
-      <div
-        className={classNames(
-          `${CLASS_NAME}__words`,
-          'kicl-pointer-events-auto'
-        )}
-      >
-        <Text
-          is='p'
-          dense
-          variant='secondary'
-          className={classNames(
-            'kicl-font-size-small',
-            'kicl-letter-spacing',
-            'kicl-text-transform-uppercase'
-          )}
-        >
-          {`No. ${number}`}
-        </Text>
-        <Heading
-          dense
-          className={classNames(
-            'kicl-font-size-huge',
-            'kicl-line-height-narrower'
-          )}
-          is={titleIs}
-        >
-          {experiment.title}
-        </Heading>
-        <Text
-          is='p'
-          dense
-          className={classNames(
-            `${CLASS_NAME}__description`,
-            'kicl-font-size-small'
-          )}
-        >
-          {experiment.description}
-        </Text>
-        <HyperLink
-          className='kicl-margin-block-start-narrow'
-          lookLikeButton
-          size='small'
-          to={experiment.to}
-        >
-          {COPY.open}
-        </HyperLink>
-      </div>
-    </Layout>
-  </ListItem>
+  <ScreenProvider experiment={experiment} number={number} titleIs={titleIs}>
+    <ListItem
+      alignContent='end'
+      autoFlow='row'
+      gap='none'
+      className={classNames(
+        CLASS_NAME,
+        `${CLASS_NAME}--${experiment.plate}`,
+        'kicl-pointer-events-none',
+        'kicl-position-relative'
+      )}
+      style={{ '--kicl--views--experiments__home--index': index } as never}
+    >
+      <Plate />
+      <Words />
+    </ListItem>
+  </ScreenProvider>
 );
 
 export { CLASS_NAME, Screen };

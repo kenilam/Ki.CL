@@ -7,7 +7,8 @@ import classNames from 'classnames';
 import { List } from '@/components';
 
 // Partials
-import { Screen, CLASS_NAME as SCREEN } from './screen';
+import { Screen } from './screen';
+import { CLASS_NAME as WORDS } from './screen/words';
 
 // Styles
 import './styles.scss';
@@ -30,7 +31,7 @@ const SCREENS = EXPERIMENTS.map((experiment, index) => ({
  * A sticky stage, one screen tall, that stays pinned while the page
  * scrolls one screen height per panel. Screen does the per-panel motion.
  *
- * The push maths in Screen/Styles.scss need the text block's height. The
+ * The push maths in screen/styles.scss need the text block's height. The
  * stylesheet guesses it; here the real blocks are measured and the tallest
  * is written back as the variable, so the push starts exactly when one
  * block meets the next whatever the fonts and viewport.
@@ -40,9 +41,7 @@ const Stage: React.FunctionComponent = () => {
   const [block, setBlock] = useState<number | null>(null);
 
   useEffect(() => {
-    const words = list.current?.querySelectorAll<HTMLElement>(
-      `.${SCREEN}__words`
-    );
+    const words = list.current?.querySelectorAll<HTMLElement>(`.${WORDS}`);
 
     if (!words?.length) {
       return;
