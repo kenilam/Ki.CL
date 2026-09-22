@@ -17,7 +17,7 @@ Prefer configured path aliases over `../` climbs. Same-folder `./` is fine.
 ```ts
 // ❌
 import { labelFor } from '../tree';
-import { Button } from '../../../Components';
+import { Button } from '../../../components';
 
 // ✅
 import { labelFor } from '@/views/experiments/tree-of-life/tree';

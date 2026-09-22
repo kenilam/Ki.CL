@@ -5,10 +5,10 @@ import * as nodePath from 'path';
  *
  * Without these, priority between two equal-specificity rules is decided by
  * the order their stylesheets happen to load - and that order is not stable.
- * Dev injects a `<style>` per module in import order, so `Core/Styles` (imported
+ * Dev injects a `<style>` per module in import order, so `core/styles` (imported
  * first by `App/index.tsx`) lands at the bottom of the cascade. A production
  * build splits CSS per Rollup chunk and links each chunk's dependencies first,
- * which puts `Core/Styles` at the *top* instead. Same source, inverted result:
+ * which puts `core/styles` at the *top* instead. Same source, inverted result:
  * `.kicl-layout` beat `.kicl--icons--logo` only in the built site, sizing the
  * logo to `min-block-size: 100dvb` and pushing it out of its header.
  *
@@ -64,7 +64,7 @@ const getStyleLayer = (filename: string): Layer | null => {
 
   const [, path = ''] = normalized.split('/App/');
 
-  if (path.startsWith('Core/Styles/')) {
+  if (path.startsWith('core/styles/')) {
     if (BASE.includes(basename)) {
       return 'base';
     }
@@ -79,7 +79,7 @@ const getStyleLayer = (filename: string): Layer | null => {
     return 'utilities';
   }
 
-  if (path.startsWith('Views/') || path.startsWith('Router/')) {
+  if (path.startsWith('views/') || path.startsWith('router/')) {
     return 'views';
   }
 
