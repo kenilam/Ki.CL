@@ -15,9 +15,6 @@ import {
   toPath as toExperimentsPath,
 } from '@/views/experiments/constants';
 import { DESCRIPTION, PATH } from '@/views/experiments/image-agent/constants';
-import { CLASS_NAME as START } from '@/views/experiments/image-agent/start/constants';
-
-const CLASS_NAME = `${START}__header`;
 
 const COPY = {
   title: 'Image Agent',
@@ -25,8 +22,8 @@ const COPY = {
 
 /** The start page's title and a line about it. */
 const Header: React.FunctionComponent = () => (
-  <Layout autoFlow='row' gap='none' justifyItems='start'>
-    <header className={CLASS_NAME}>
+  <Layout autoFlow='row' gap='narrower' justifyItems='start'>
+    <header className='kicl-inline-size-columns-6'>
       <HyperLink
         before={<Ri.RiArrowLeftSFill aria-hidden />}
         to={toExperimentsPath(PATH)}
@@ -37,10 +34,10 @@ const Header: React.FunctionComponent = () => (
         {COPY.title}
       </Heading>
       <Text
+        dense
         is='p'
         className={classNames(
           'kicl-font-size-medium',
-          'kicl-margin-block-start-wide'
         )}
       >
         {DESCRIPTION}

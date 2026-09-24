@@ -12,6 +12,27 @@
 
   // How far content sits in from the frame's edge; every experiment reads it.
   --kicl--components--frame--inset: var(--kicl-gutter-widest);
+
+  /*
+   * Content inset that also keeps content within 12 columns, centred.
+   * `100%` resolves where it's used: `--columns-inset` on an element as
+   * wide as the frame, `--page-inset` on one as wide as the window.
+   */
+  --kicl--components--frame--columns-inset: calc(
+    var(#{$frame}--inset) +
+    max(0px, (100% - var(#{$frame}--inset) * 2 - var(--kicl-columns-12)) / 2)
+  );
+  --kicl--components--frame--page-inset: calc(
+    var(#{$frame}--gap) + var(#{$frame}--inset) +
+    max(
+      0px,
+      (
+        100% - var(#{$frame}--gap) * 2 - var(#{$frame}--inset) * 2 -
+        var(--kicl-columns-12)
+      ) /
+      2
+    )
+  );
   --kicl--components--frame--top: max(
     var(#{$frame}--gap),
     var(--kicl--widgets--global-header--offset, 0px)

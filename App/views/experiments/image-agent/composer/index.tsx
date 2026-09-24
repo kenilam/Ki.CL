@@ -6,7 +6,6 @@ import classNames from 'classnames';
 // Components
 import { Form, Layout } from '@/components';
 
-// Partials
 import { Allowance } from './allowance';
 import { Field } from './field';
 
@@ -19,11 +18,12 @@ import { useComposer } from './use-composer';
 
 // Constants
 import { CLASS_NAME } from './constants';
+import { useResponsive } from '@/hooks';
 
 type Props = Sender & {
-  dense?: boolean;
   /** The agent is replying, so sending is off. */
   busy?: boolean;
+  disallow?: boolean;
   /** Told what is in the field on every change. */
   onText?: (text: string) => void;
   /** No allowance left, so sending is off until it comes back. */
@@ -35,7 +35,7 @@ type Props = Sender & {
 /** The message field, pinned to the bottom of the window unless `sticky` is off. */
 const Composer: React.FunctionComponent<Props> = ({
   busy = false,
-  dense,
+  disallow,
   error,
   loading,
   onText,
@@ -43,12 +43,13 @@ const Composer: React.FunctionComponent<Props> = ({
   spent = false,
   sticky = true,
 }) => {
+  const { isTablet } = useResponsive()
   const { form, submit } = useComposer({ error, onText, send });
 
   return (
-    <Layout autoFlow='row' justifyItems='stretch'>
+    <Layout autoFlow='row' gap={isTablet ? 'normal' : 'narrow' } justifyItems='start'>
       <section
-        className={classNames(CLASS_NAME, 'kicl-margin-inline-auto', {
+        className={classNames(CLASS_NAME, 'kicl-inline-size-columns-8', {
           [`${CLASS_NAME}--sticky`]: sticky,
           'kicl-inset-block-end-0': sticky,
           'kicl-position-sticky': sticky,
@@ -56,19 +57,22 @@ const Composer: React.FunctionComponent<Props> = ({
           'kicl-padding-block-end-wide': sticky,
           'kicl-padding-block-start-wide-tablet-down': sticky,
           'kicl-padding-block-end-widest-tablet-down': sticky,
-          'kicl-padding-inline-frame': !dense,
-          'kicl-inline-size-columns-8': !dense,
-          'kicl-inline-size-columns-12': dense,
+          'kicl-padding-inline-frame': sticky,
+          'kicl-margin-inline-auto': sticky,
         })}
       >
         <Allowance busy={busy} />
-        <Form {...form} onSubmit={submit}>
-          <Field
-            disabled={busy || loading || spent}
-            onEnter={() => void submit()}
-            sending={loading}
-          />
-        </Form>
+        {
+          !disallow ? (
+            <Form {...form} onSubmit={submit}>
+              <Field
+                disabled={busy || loading || spent}
+                onEnter={() => void submit()}
+                sending={loading}
+              />
+            </Form>
+          ) : null
+        }
       </section>
     </Layout>
   );
