@@ -33,7 +33,8 @@ const Words: React.FunctionComponent = () => {
           CLASS_NAME,
           'kicl-animation-none-reduced-motion',
           'kicl-padding-block-extreme',
-          'kicl-pointer-events-auto'
+          'kicl-pointer-events-auto',
+          'kicl-position-relative'
         )}
       >
         <Text
