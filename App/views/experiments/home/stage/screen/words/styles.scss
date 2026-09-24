@@ -21,10 +21,6 @@
       var(#{$home}--fade-start) var(#{$home}--fade-end);
     animation-timeline: scroll(root), scroll(root), scroll(root);
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 @keyframes kicl--views--experiments__home--push-in {

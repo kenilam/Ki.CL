@@ -24,6 +24,7 @@ import './gutter.scss';
 import './inset.scss';
 import './layout.scss';
 import './look-like.scss';
+import './motion.scss';
 import './scroll-reveal.scss';
 import './pointer-events.scss';
 import './position.scss';

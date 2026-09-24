@@ -41,7 +41,11 @@ const Intro: React.FunctionComponent = () => (
     <Heading
       is='h1'
       dense
-      className={classNames(`${CLASS_NAME}__title`, 'kicl-font-size-huge')}
+      className={classNames(
+        `${CLASS_NAME}__title`,
+        'kicl-animation-none-reduced-motion',
+        'kicl-font-size-huge'
+      )}
     >
       {COPY.title}
     </Heading>
