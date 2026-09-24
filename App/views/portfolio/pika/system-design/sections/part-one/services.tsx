@@ -25,7 +25,7 @@ const Services: React.FunctionComponent = () => (
       id='diagram-services'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={services} />
         </div>
       </Layout>
@@ -95,7 +95,7 @@ const Services: React.FunctionComponent = () => (
       id='diagram-request-flow'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={requestFlow} />
         </div>
       </Layout>

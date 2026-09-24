@@ -40,7 +40,7 @@ const AgentHarness: React.FunctionComponent = () => (
       id='diagram-session-model'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={sessionModel} />
         </div>
       </Layout>

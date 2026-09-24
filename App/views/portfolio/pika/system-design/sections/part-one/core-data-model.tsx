@@ -24,7 +24,7 @@ const CoreDataModel: React.FunctionComponent = () => (
       id='diagram-data-model'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={dataModel} />
         </div>
       </Layout>

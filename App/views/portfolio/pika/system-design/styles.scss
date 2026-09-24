@@ -27,8 +27,6 @@
   }
 
   &__body {
-    max-inline-size: min(100%, var(--kicl-columns-12));
-
     > section > * {
       animation: kicl--views--portfolio--pika--system-design--parallax-reveal
         linear both;
@@ -90,11 +88,6 @@
   /* `html` already clears the global header; this keeps a gutter above the heading. */
   h2[id] {
     scroll-margin-block-start: var(--kicl-gutter);
-  }
-
-  /* Inside the fullscreen dialog the figure needs an explicit measure. */
-  &__full .kicl--components--diagram {
-    inline-size: min(1200px, 92dvw);
   }
 
   &__full {

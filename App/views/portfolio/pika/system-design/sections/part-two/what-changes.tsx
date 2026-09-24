@@ -25,7 +25,7 @@ const WhatChanges: React.FunctionComponent = () => (
       id='diagram-agent-plane'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={agentPlane} />
         </div>
       </Layout>
