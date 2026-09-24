@@ -36,6 +36,7 @@ const Words: React.FunctionComponent = () => {
       <div
         className={classNames(
           CLASS_NAME,
+          'kicl-max-inline-size-columns-12',
           'kicl-padding-block-start-header',
           'kicl-position-relative',
           'kicl-text-align-center'

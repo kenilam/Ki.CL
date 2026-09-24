@@ -4,7 +4,7 @@ import React from 'react';
 import { Dialog, Heading, Layout, Text } from '@/components';
 
 // Diagrams
-import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
+import { Diagram } from '@/components';
 import { dataModel } from '@/views/portfolio/pika/system-design/diagrams/data-model';
 
 // Constants
@@ -24,17 +24,17 @@ const CoreDataModel: React.FunctionComponent = () => (
       id='diagram-data-model'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={dataModel} />
         </div>
       </Layout>
     </Dialog>
     <Text>
-      Task output refs point into content-addressed asset storage rather than
+      Task output refs point into content-addressed asset storage instead of
       carrying blobs inline. The lineage field on assets records which job,
-      task, and seed produced each artifact. That is what makes regenerate work
-      and how provenance gets displayed - and in Part 2, the same lineage
-      records serve as the agent&apos;s memory of what exists in a session.
+      task, and seed produced each artifact. Regenerate and provenance both read
+      from it, and in Part 2 the same lineage records are the agent&apos;s
+      memory of what exists in a session.
     </Text>
   </>
 );

@@ -24,6 +24,7 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
       alignContent,
       alignItems,
       autoFlow,
+      display,
       frames,
       fullScreen,
       gap,
@@ -42,6 +43,7 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
         alignContent={alignContent}
         alignItems={alignItems}
         autoFlow={autoFlow}
+        display={display}
         frames={frames}
         fullScreen={fullScreen}
         gap={gap}

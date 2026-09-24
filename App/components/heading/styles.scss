@@ -1,11 +1,19 @@
 :root {
   --kicl--components--heading--padding-block-end: 0;
+  --kicl--components--heading--padding-block-start: 0;
 }
 
 .kicl--components--heading {
   padding-block-end: var(--kicl--components--heading--padding-block-end);
+  padding-block-start: var(--kicl--components--heading--padding-block-start);
 
   &:not(&--is-dense):has(+ *) {
-    --kicl--components--heading--padding-block-end: var(--kicl-gutter);
+    --kicl--components--heading--padding-block-start: var(--kicl-gutter-narrow);
+    --kicl--components--heading--padding-block-end: var(--kicl-gutter-narrowest);
+
+    @include tablet {
+      --kicl--components--heading--padding-block-start: var(--kicl-gutter);
+      --kicl--components--heading--padding-block-end: var(--kicl-gutter-narrower);
+    }
   }
 }

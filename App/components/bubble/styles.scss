@@ -1,0 +1,201 @@
+/*
+ * The variant class goes on the bubble and styles its content, like shadcn, so
+ * one `variant` prop works whatever element `BubbleContent` renders as. Colours
+ * come from the body tokens, which already switch with the theme.
+ */
+.kicl--components--bubble {
+  --kicl--components--bubble--background-color: var(--kicl-body-color);
+  --kicl--components--bubble--border-color: transparent;
+  --kicl--components--bubble--border-radius: var(--kicl-size-2x);
+  --kicl--components--bubble--border-width: var(--kicl-size-1px);
+  --kicl--components--bubble--color: var(--kicl-body-background-color);
+  --kicl--components--bubble--hover-background-color: color-mix(
+    in oklab,
+    var(--kicl--components--bubble--background-color) 80%,
+    transparent
+  );
+  --kicl--components--bubble--max-inline-size: 80%;
+  --kicl--components--bubble--padding-block: var(--kicl-gutter-narrow);
+  --kicl--components--bubble--padding-inline: var(--kicl-gutter);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--kicl-gutter-narrowest);
+  inline-size: fit-content;
+  max-inline-size: var(--kicl--components--bubble--max-inline-size);
+  min-inline-size: 0;
+
+  // An auto margin moves it to the end in block, flex and grid parents alike.
+  &--align--end {
+    margin-inline-start: auto;
+
+    > .kicl--components--bubble__content {
+      align-self: end;
+    }
+  }
+
+  &--variant--secondary {
+    --kicl--components--bubble--background-color: var(--kicl-surface-color);
+    --kicl--components--bubble--border-color: var(--kicl-surface-border-color);
+    --kicl--components--bubble--color: var(--kicl-body-color);
+    --kicl--components--bubble--hover-background-color: color-mix(
+      in oklab,
+      var(--kicl-surface-color),
+      var(--kicl-body-color) 5%
+    );
+  }
+
+  &--variant--muted {
+    --kicl--components--bubble--background-color: color-mix(
+      in oklab,
+      var(--kicl-body-color) 8%,
+      transparent
+    );
+    --kicl--components--bubble--color: var(--kicl-body-color);
+    --kicl--components--bubble--hover-background-color: color-mix(
+      in oklab,
+      var(--kicl-body-color) 13%,
+      transparent
+    );
+  }
+
+  &--variant--tinted {
+    --kicl--components--bubble--background-color: color-mix(
+      in oklab,
+      var(--kicl-color-info) 18%,
+      var(--kicl-body-background-color)
+    );
+    --kicl--components--bubble--color: var(--kicl-body-color);
+    --kicl--components--bubble--hover-background-color: color-mix(
+      in oklab,
+      var(--kicl-color-info) 26%,
+      var(--kicl-body-background-color)
+    );
+  }
+
+  &--variant--outline {
+    --kicl--components--bubble--background-color: var(
+      --kicl-body-background-color
+    );
+    --kicl--components--bubble--border-color: var(--kicl-surface-border-color);
+    --kicl--components--bubble--color: var(--kicl-body-color);
+    --kicl--components--bubble--hover-background-color: color-mix(
+      in oklab,
+      var(--kicl-body-color) 8%,
+      var(--kicl-body-background-color)
+    );
+  }
+
+  // No background: the text sits on the page and can use the full width.
+  &--variant--ghost {
+    --kicl--components--bubble--background-color: transparent;
+    --kicl--components--bubble--border-radius: 0;
+    --kicl--components--bubble--color: var(--kicl-body-color);
+    --kicl--components--bubble--hover-background-color: color-mix(
+      in oklab,
+      var(--kicl-body-color) 8%,
+      transparent
+    );
+    --kicl--components--bubble--max-inline-size: 100%;
+    --kicl--components--bubble--padding-block: 0;
+    --kicl--components--bubble--padding-inline: 0;
+  }
+
+  &--variant--destructive {
+    --kicl--components--bubble--background-color: color-mix(
+      in oklab,
+      var(--kicl-color-error) 12%,
+      transparent
+    );
+    --kicl--components--bubble--color: var(--kicl-color-error);
+    --kicl--components--bubble--hover-background-color: color-mix(
+      in oklab,
+      var(--kicl-color-error) 20%,
+      transparent
+    );
+  }
+}
+
+.kicl--components--bubble__content {
+  background-color: var(--kicl--components--bubble--background-color);
+  border: var(--kicl--components--bubble--border-width) solid
+    var(--kicl--components--bubble--border-color);
+  border-radius: var(--kicl--components--bubble--border-radius);
+  color: var(--kicl--components--bubble--color);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+
+  // A message keeps the line breaks it was written with.
+  white-space: pre-wrap;
+  padding-block: var(--kicl--components--bubble--padding-block);
+  padding-inline: var(--kicl--components--bubble--padding-inline);
+
+  :is(svg, .kicl--components--spinner) {
+    block-size: 1em;
+    inline-size: 1em;
+    vertical-align: middle;
+  }
+
+  &:is(a, button) {
+    cursor: pointer;
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: var(--kicl--components--bubble--hover-background-color);
+    }
+
+    &:focus-visible {
+      outline: var(--kicl-size-2px) solid var(--kicl-color-info);
+      outline-offset: var(--kicl-size-2px);
+    }
+  }
+}
+
+.kicl--components--bubble__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kicl-gutter-narrow);
+  min-inline-size: 0;
+}
+
+// Overlaps a corner of the bubble by three quarters of its own height.
+.kicl--components--bubble__reactions {
+  align-items: center;
+  background-color: var(--kicl-surface-color);
+  border-radius: var(--kicl-size-2x);
+  box-shadow: 0 0 0 var(--kicl-size-3px) var(--kicl-body-background-color);
+  display: flex;
+  gap: var(--kicl-gutter-narrowest);
+  inline-size: fit-content;
+  padding-block: var(--kicl-gutter-narrowest);
+  padding-inline: var(--kicl-gutter-narrower);
+  z-index: 1;
+
+  &:has(button) {
+    padding: 0;
+  }
+
+  &--side--top {
+    inset-block-start: 0;
+    translate: 0 -75%;
+  }
+
+  &--side--bottom {
+    inset-block-end: 0;
+    translate: 0 75%;
+  }
+
+  &--align--start {
+    inset-inline-start: var(--kicl-gutter-narrow);
+  }
+
+  &--align--end {
+    inset-inline-end: var(--kicl-gutter-narrow);
+  }
+}

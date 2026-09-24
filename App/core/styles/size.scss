@@ -27,6 +27,7 @@
   --kicl-size-full: 100%;
 }
 
+@include make-size-variable-class('border-radius', 'none', '0px');
 @include make-size-variable-class('border-radius', 'xs', '2px');
 @include make-size-variable-class('border-radius', 'sm', 'half');
 @include make-size-variable-class('border-radius', 'md');
@@ -34,6 +35,7 @@
 @include make-size-variable-class('border-radius', 'xl', '3x');
 @include make-size-variable-class('border-radius', 'xxl', '4x');
 @include make-size-variable-class('border-radius', 'max', '6x');
+@include make-size-variable-class('border-radius', 'full', 'full');
 @include make-size-variable-class('inline-size', 'xs', '4x');
 @include make-size-variable-class('inline-size', 'sm', '6x');
 @include make-size-variable-class('inline-size', 'md', '10x');

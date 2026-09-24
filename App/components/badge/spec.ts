@@ -8,6 +8,8 @@ export const BADGE_VARIANTS = [
   'destructive',
   'outline',
   'ghost',
+  'positive',
+  'warning',
 ] as const;
 
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
@@ -34,7 +36,9 @@ type OwnProps = {
   children?: ReactNode;
 };
 
-export type Props = PolymorphicIsProps<BadgeIs, OwnProps, 'span'>;
+export type Props = PolymorphicIsProps<BadgeIs, OwnProps, 'span'> & {
+  rounded?: boolean;
+};
 
 export type BadgeLabelProps = JSX.IntrinsicElements['span'] & {
   children?: ReactNode;

@@ -1,10 +1,8 @@
 /*
- * Served from the `static` bucket through the API's asset proxy rather than
- * committed to this repository.
- *
- * Named for what they are, not for their contents, so re-encoding one is an
- * upload and nothing else - no name here has to change. The proxy sends these
- * revalidating rather than immutable to make that safe.
+ * Served from the `static` bucket through the API's asset proxy, not committed
+ * here. The names don't describe the encoding, so re-encoding an image is just
+ * an upload. The proxy sends these as revalidating instead of immutable so the
+ * new file gets picked up.
  */
 const IMAGES = '/assets/static';
 

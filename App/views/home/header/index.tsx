@@ -11,6 +11,7 @@ import { Aside } from './aside';
 import { Contents } from './contents';
 
 // Constants
+import { CONTENT_DELAY } from '@/views/home/constants';
 import { ID } from './constants';
 
 // Styles
@@ -20,7 +21,7 @@ const CLASS_NAME = 'kicl--views--home--header';
 
 const Header: React.FunctionComponent = () => {
   return (
-    <Animation delay={300} property='zoom-out'>
+    <Animation delay={CONTENT_DELAY} property='zoom-out'>
       <Layout
         alignContent='center'
         alignItems='center'

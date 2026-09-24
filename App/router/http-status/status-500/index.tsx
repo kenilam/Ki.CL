@@ -23,6 +23,7 @@ const Status500: React.FunctionComponent<Props> = ({ message, title }) => {
   const className = classNames(
     'kicl-text-align-center',
     'kicl--router--http-status',
+    'kicl-max-inline-size-columns-12',
     CLASS_NAME
   );
 

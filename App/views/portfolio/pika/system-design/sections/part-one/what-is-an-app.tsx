@@ -55,22 +55,22 @@ const WhatIsAnApp: React.FunctionComponent = () => (
       </CardContent>
     </Card>
     <Text>
-      The typed input schema means the client renders any App&apos;s form
-      straight from the manifest - there is no per-App frontend code to write or
-      maintain. The DAG structure lets the orchestrator checkpoint, retry, and
-      parallelize steps without understanding what any particular App is for.
-      And immutable versions make rollback a pointer move: publishing writes a
-      new row, and running jobs stay pinned to whatever version they started on.
+      The typed input schema lets the client render any App&apos;s form straight
+      from the manifest, with no per-App frontend code. The DAG lets the
+      orchestrator checkpoint, retry, and parallelize steps without knowing what
+      the App is for. Versions are immutable, so rollback is a pointer move.
+      Publishing writes a new row, and running jobs stay pinned to the version
+      they started on.
     </Text>
     <Text>
       Primitives are thin, typed wrappers around the backend creative APIs (
-      <code>video.generate</code>, <code>image.edit</code>,
-      <code>vision.analyze</code>, <code>media.ffmpeg</code>,{' '}
-      <code>llm.complete</code>, and so on). Each one declares its argument
-      schema, cost model, latency class, timeout profile, and which providers
-      can serve it. When a new vendor model appears, we register a provider, and
-      every App with a <code>model-select</code> input picks it up without
-      touching a single manifest - though new providers earn default traffic
+      <Text is='code'>video.generate</Text>, <Text is='code'>image.edit</Text>,
+      <Text is='code'>vision.analyze</Text>, <Text is='code'>media.ffmpeg</Text>
+      , <Text is='code'>llm.complete</Text>, and so on). Each one declares its
+      argument schema, cost model, latency class, timeout profile, and which
+      providers can serve it. When a new vendor model appears, we register a
+      provider, and every App with a <Text is='code'>model-select</Text> input
+      picks it up without a manifest change. New providers get default traffic
       through the same staged rollout as Apps, watched against the
       primitive&apos;s error budget.
     </Text>

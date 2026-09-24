@@ -18,12 +18,14 @@ const Layout = React.forwardRef<HTMLElement, Props>(
       alignContent,
       alignItems,
       autoFlow = 'row',
+      columns,
       display = 'grid',
       frames,
       fullScreen,
       gap = 'normal',
       justifyContent,
       justifyItems,
+      span,
       wrap,
 
       ...rest
@@ -36,11 +38,13 @@ const Layout = React.forwardRef<HTMLElement, Props>(
         [`${CLASS_NAME}--align-content--${alignContent}`]: alignContent,
         [`${CLASS_NAME}--align-items--${alignItems}`]: alignItems,
         [`${CLASS_NAME}--${autoFlow}`]: autoFlow,
+        [`${CLASS_NAME}--columns`]: columns,
         [`${CLASS_NAME}--display--${display}`]: display,
         [`${CLASS_NAME}--full-screen`]: fullScreen,
         [`${CLASS_NAME}--gap--${gap}`]: gap,
         [`${CLASS_NAME}--justify-content--${justifyContent}`]: justifyContent,
         [`${CLASS_NAME}--justify-items--${justifyItems}`]: justifyItems,
+        [`${CLASS_NAME}--span--${span}`]: span,
         [`${CLASS_NAME}--wrap`]: wrap,
         [`${CLASS_NAME}--${frames}`]: frames,
       },
@@ -91,4 +95,5 @@ Layout.displayName = 'Layout';
 
 type LayoutProps = Spec.Props;
 
+export type { ColumnSpan } from './spec';
 export { Layout, type LayoutProps };

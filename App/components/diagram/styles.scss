@@ -1,0 +1,170 @@
+.kicl--components--diagram {
+  inline-size: 100%;
+  margin: 0;
+
+  & + & {
+    margin-block-start: var(--kicl-gutter-wide);
+  }
+
+  &-preview {
+    cursor: zoom-in;
+  }
+
+  // Row icons are nested SVGs sized in the drawing's own units.
+  svg:not(.kicl--components--diagram-icon) {
+    block-size: auto;
+    display: block;
+    inline-size: 100%;
+  }
+
+  text {
+    fill: currentcolor;
+    font-family: var(--kicl-font-family);
+    font-size: var(--kicl-font-size-small);
+    letter-spacing: 0.02em;
+  }
+
+  &-arrow {
+    fill: currentcolor;
+    opacity: 0.55;
+
+    &--blue {
+      fill: var(--kicl-color-blue);
+      opacity: 0.9;
+    }
+
+    &--green {
+      fill: var(--kicl-color-green);
+      opacity: 0.9;
+    }
+
+    &--orange {
+      fill: var(--kicl-color-orange);
+      opacity: 0.9;
+    }
+
+    &--red {
+      fill: var(--kicl-color-red);
+      opacity: 0.9;
+    }
+
+    &--yellow {
+      fill: var(--kicl-color-yellow);
+      opacity: 0.9;
+    }
+  }
+
+  &-box {
+    fill: var(--kicl-surface-color);
+    stroke: var(--kicl-surface-border-color);
+  }
+
+  &-group {
+    fill: color-mix(in oklab, var(--kicl-surface-color) 45%, transparent);
+    stroke: var(--kicl-surface-border-color);
+  }
+
+  &-group-label {
+    font-size: var(--kicl-font-size-small);
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  &-title {
+    font-size: var(--kicl-font-size);
+    font-weight: var(--kicl-font-weight-bolder);
+  }
+
+  &-line {
+    font-size: var(--kicl-font-size-small);
+    opacity: 0.65;
+  }
+
+  &-icon {
+    fill: currentcolor;
+    opacity: 0.6;
+  }
+
+  &-type {
+    font-family: var(--kicl-font-family-mono);
+    font-size: var(--kicl-font-size-small);
+    letter-spacing: normal;
+    opacity: 0.6;
+  }
+
+  &-name {
+    font-size: var(--kicl-font-size-small);
+  }
+
+  &-key {
+    font-size: var(--kicl-font-size-small);
+    opacity: 0.75;
+  }
+
+  &-rule {
+    stroke: var(--kicl-surface-border-color);
+
+    &--faint {
+      opacity: 0.5;
+    }
+  }
+
+  &-edge {
+    fill: none;
+    opacity: 0.55;
+    stroke: currentcolor;
+    stroke-width: 1.4;
+
+    &--dashed {
+      stroke-dasharray: 5 4;
+    }
+
+    &--blue {
+      opacity: 0.9;
+      stroke: var(--kicl-color-blue);
+    }
+
+    &--green {
+      opacity: 0.9;
+      stroke: var(--kicl-color-green);
+    }
+
+    &--orange {
+      opacity: 0.9;
+      stroke: var(--kicl-color-orange);
+    }
+
+    &--red {
+      opacity: 0.9;
+      stroke: var(--kicl-color-red);
+    }
+
+    &--yellow {
+      opacity: 0.9;
+      stroke: var(--kicl-color-yellow);
+    }
+  }
+
+  &-edge-label {
+    font-size: var(--kicl-font-size-small);
+    paint-order: stroke;
+    stroke: var(--kicl-body-background-color);
+    stroke-linejoin: round;
+    stroke-width: 6px;
+  }
+
+  &-box {
+    transition: stroke 200ms ease;
+
+    &--active {
+      stroke: var(--kicl-color-green);
+      stroke-width: 1.5;
+    }
+
+    &--failed {
+      stroke: var(--kicl-color-red);
+      stroke-width: 1.5;
+    }
+  }
+}

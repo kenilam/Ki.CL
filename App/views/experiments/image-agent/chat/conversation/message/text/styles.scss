@@ -1,0 +1,6 @@
+/* One text line tall, so the spinner centres on the first line. */
+.kicl--views--experiments--image-agent__chat__conversation__message__text {
+  &__spinner {
+    block-size: 1lh;
+  }
+}

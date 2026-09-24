@@ -93,7 +93,7 @@
     "cz-conventional-changelog": "3.3.0",
     "lint-staged": "17.2.0",
     "oxlint": "^1.76.0",
-    "prettier": "3.9.6",
+    "prettier": "3.9.8",
     "stylelint": "17.14.1",
     "stylelint-config-css-modules": "4.6.0",
     "stylelint-config-recommended": "18.0.0",

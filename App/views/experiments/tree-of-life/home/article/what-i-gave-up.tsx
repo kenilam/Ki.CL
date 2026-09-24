@@ -22,26 +22,24 @@ const WhatIGaveUp: React.FunctionComponent = () => {
           <HyperLink to={toVersionPath({ version: VERSION })}>
             v{VERSION}
           </HyperLink>{' '}
-          shows you one taxon, its lineage back to the origin, and a sampled fan
-          of its neighbours.
+          shows one taxon, its lineage back to the origin and a sampled fan of
+          its neighbours.
         </Text>
 
         <Text is='p'>
-          Three smaller compromises came with that. Illustrations are made on
-          demand instead of drawn in advance, so most taxa have no plate until
-          someone visits them and a provider has quota going spare. Deep fans
-          are sampled rather than drawn whole, so you see a representative
-          subset. And the tree is assembled lazily from a cache sitting in front
-          of a public API, which makes the first visit to an unexplored clade
-          slow in a way a printed sheet never is.
+          Illustrations are made on demand, so most taxa have no plate until
+          someone visits them and a provider has quota to spare. Deep fans show
+          a representative sample instead of every child. The tree is assembled
+          lazily from a cache in front of a public API, so the first visit to an
+          unexplored clade is slow.
         </Text>
 
         <Text is='p'>
-          You can still{' '}
+          A visitor can still{' '}
           <HyperLink to={toVersionPath({ version: VERSION })}>
             start at the origin of life
           </HyperLink>{' '}
-          and walk to any living species, and see how far it is from the origin.
+          and walk to any living species to see how far it sits from there.
         </Text>
       </section>
     </Layout>

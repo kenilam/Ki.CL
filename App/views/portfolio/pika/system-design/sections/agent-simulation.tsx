@@ -126,11 +126,10 @@ const AgentSimulation: React.FunctionComponent = () => {
           Watch the agent work
         </Heading>
         <Text>
-          One agent session through the plane above - three cheap drafts, a
-          mid-session steer, and the governor holding the expensive render
-          behind an explicit confirmation. The hero pass, the full-quality final
-          render, runs once on the approved direction, and the session ends at
-          222 of 430 credits.
+          One agent session through the plane above. The agent renders three
+          cheap drafts, the user steers mid-session, and the governor holds the
+          expensive render until the user confirms. The hero pass runs once on
+          the approved direction, and the session ends at 222 of 430 credits.
         </Text>
         <SimulationPlayer
           chipLabel='budget'

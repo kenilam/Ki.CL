@@ -13,14 +13,16 @@ const CLASS_NAME = 'kicl--components--text';
 
 const Text = React.forwardRef<Spec.TextNode, Spec.Props>(
   (
-    { children, dense, is = 'p', lookLike, unstyled, variant, ...rest },
+    { accent, children, dense, is = 'p', lookLike, unstyled, variant, ...rest },
     ref
   ) => {
     const className = classNames(
       {
         [CLASS_NAME]: !unstyled,
         [`kicl-look-like-${lookLike}`]: !unstyled && lookLike,
-        [`kicl-variant--${variant}`]: !unstyled && !lookLike && variant,
+        [`${CLASS_NAME}--variant--${variant}`]:
+          !unstyled && !lookLike && variant,
+        [`${CLASS_NAME}--accent--${accent}`]: !unstyled && accent,
         [`kicl-look-like-${lookLike}--variant--${variant}`]:
           !unstyled && lookLike && variant,
         [`${CLASS_NAME}--is-dense`]: !unstyled && dense,
@@ -45,5 +47,5 @@ const Text = React.forwardRef<Spec.TextNode, Spec.Props>(
 
 Text.displayName = 'Text';
 
-export type { Props as TextProps, TextIs, TextNode } from './spec';
+export type { Props as TextProps, TextAccent, TextIs, TextNode } from './spec';
 export { Text };

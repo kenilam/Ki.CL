@@ -1,7 +1,8 @@
 :root {
-  --kicl--widgets--global-header--background-color: rgb(207 212 228 / 20%);
-  --kicl--widgets--global-header--backdrop-filter: blur(var(--kicl-gutter));
+  // The shared frosted pane (`core/styles/backdrop.scss`).
+  --kicl--widgets--global-header--backdrop-filter: var(--kicl-backdrop-filter);
   --kicl--widgets--global-header--block-size: 0;
+  --kicl--widgets--global-header--offset: 0px;
   --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-block-start: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-widest);
@@ -10,7 +11,7 @@
   --kicl--widgets--global-header--inline-size: 100%;
   --kicl--widgets--global-header--bleed: calc(
     var(--kicl--widgets--global-header--block-size) +
-    (var(--kicl--widgets--global-header--top) * 2)
+      (var(--kicl--widgets--global-header--top) * 2)
   );
 
   @include tablet {
@@ -22,9 +23,19 @@
 }
 
 .kicl--widgets--global-header {
+  /*
+   * Set here, not on :root: the page colour has to be read where the header
+   * is, inside the theme on body, or it resolves to the root's light value.
+   */
+  --kicl--widgets--global-header--background-color: color-mix(
+    in srgb,
+    var(--kicl-body-background-color) var(--kicl-backdrop-tint),
+    transparent
+  );
   --kicl--components--animation--property--slide-from-top--distance: 100%;
   --kicl--components--hyper-link--text-color: var(--kicl-body-color);
-  --kicl--components--animation--transition-property: opacity, translate, background-color, padding;
+  --kicl--components--animation--transition-property:
+    opacity, translate, background-color, padding;
 
   backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
   background-color: var(--kicl--widgets--global-header--background-color);

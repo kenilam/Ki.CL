@@ -4,8 +4,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, Card, CardContent, Layout, Spinner } from '@/components';
 
 // Diagrams
-import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
-import type { Spec } from '@/views/portfolio/pika/system-design/diagrams/spec';
+import { Diagram } from '@/components';
+import type { DiagramSpec as Spec } from '@/components';
 
 // Context
 import { type DotState, type PlayerStep, SimulationContext } from './context';

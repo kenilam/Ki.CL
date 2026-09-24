@@ -1,3 +1,4 @@
+import { useDebouncedValue } from './use-debounced-value';
 import { useIntersectionObserver } from './use-intersection-observer';
 import {
   OPTIONS as MUTATION_OBSERVER_OPTIONS,
@@ -20,6 +21,7 @@ export {
   MUTATION_OBSERVER_OPTIONS,
   SCROLL_DIRECTIONS,
   breakpoints,
+  useDebouncedValue,
   useIntersectionObserver,
   useMutationObserver,
   useResizeObserver,

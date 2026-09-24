@@ -20,7 +20,7 @@ const Element: React.FunctionComponent = () => {
 
   const location = useLocation();
 
-  const isFirstRoute = useRef(true);
+  const lastPathname = useRef(location.pathname);
 
   useEffect(() => {
     const root = document.querySelector('body');
@@ -36,12 +36,17 @@ const Element: React.FunctionComponent = () => {
     document.title = `Ki.CL | ${routes.join(' | ')}`;
   });
 
-  /** A route change replaces the page without a load, so focus moves to the new content, the way a page load would. */
+  /**
+   * A route change replaces the page without a load, so focus moves to the new
+   * content, the way a page load would. Compared with the last path rather than
+   * a first-run flag: StrictMode runs this twice on mount, and a flag would be
+   * spent on the first run and focus the page on the second.
+   */
   useEffect(() => {
-    if (isFirstRoute.current) {
-      isFirstRoute.current = false;
+    if (lastPathname.current === location.pathname) {
       return;
     }
+    lastPathname.current = location.pathname;
 
     document.getElementById(MAIN_ID)?.focus({ preventScroll: true });
   }, [location.pathname]);

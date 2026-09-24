@@ -1,24 +1,35 @@
 import React from 'react';
 
 // Components
-import { Heading, Layout, Text } from '@/components';
+import { Details, Heading, Layout, Text } from '@/components';
 
 /** Where the data comes from: a catalogue compiled into the page. */
 const Data: React.FunctionComponent = () => (
-  <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-    <section>
+  <Details
+    summary={
       <Heading is='h2' className='kicl-font-size-large'>
         Where the data comes from
       </Heading>
-      <Text is='p'>
-        The rest of this site talks to its backend over GraphQL. This page
-        doesn’t. The catalogue is a list compiled into the page, and the audio
-        comes from the bucket through the site’s <code>/assets/static</code>{' '}
-        route. A GraphQL query for the next track was the plan while Audius was,
-        and it can come back with a bigger catalogue.
-      </Text>
-    </section>
-  </Layout>
+    }
+  >
+    <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
+      <div>
+        <Text is='p'>
+          This page doesn’t use GraphQL like the rest of the site. The catalogue
+          is compiled into the page, and the audio comes from the storage bucket
+          through the site’s{' '}
+          <Text is='code' variant='secondary'>
+            /assets/static
+          </Text>{' '}
+          route.
+        </Text>
+        <Text is='p'>
+          The original plan, while I was still using Audius, was to query
+          GraphQL for the next track. That can come back if the catalogue grows.
+        </Text>
+      </div>
+    </Layout>
+  </Details>
 );
 
 export { Data };

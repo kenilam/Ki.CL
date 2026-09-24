@@ -41,6 +41,7 @@ const SystemDesign: React.FunctionComponent = () => {
             className={classNames(
               `${CLASS_NAME}__body`,
               'kicl-margin-inline-auto',
+              'kicl-max-inline-size-columns-12',
               'kicl-padding-block-widest',
               'kicl-padding-inline-wide'
             )}

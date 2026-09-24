@@ -13,7 +13,6 @@
   --kicl--components--hyper-link--transition-timing-function: var(
     --kicl-ease-quint-in-out
   );
-  --kicl--components--hyper-link--wrapper--grid-auto-columns: auto max-content;
 }
 
 .kicl--components--hyper-link {
@@ -31,38 +30,26 @@
     line-height: 1.15;
   }
 
+  // Icons flow with the text, so a closing arrow follows the last word when
+  // the text wraps. Only the text is underlined.
   &--wrapper {
-    grid-auto-columns: var(
-      --kicl--components--hyper-link--wrapper--grid-auto-columns
-    );
-
-    &:has(> :nth-child(3):last-child) {
-      --kicl--components--hyper-link--wrapper--grid-auto-columns: max-content
-        auto max-content;
+    > :not(#{&}--line) {
+      vertical-align: middle;
     }
 
-    &:has(:first-child:is(input)) {
-      padding-inline-start: 0;
+    > :first-child:not(#{&}--line) {
+      margin-inline-end: var(--kicl-gutter-narrower);
     }
 
-    &:has(:last-child:is(input)) {
-      padding-inline-end: 0;
-    }
-
-    &:has(> :first-child:not(input)) {
-      --kicl--components--hyper-link--wrapper--grid-auto-columns: max-content
-        auto;
-    }
-
-    &:has(> :last-child:not(input)) {
-      --kicl--components--hyper-link--wrapper--grid-auto-columns: auto
-        max-content;
+    > :last-child:not(#{&}--line) {
+      margin-inline-start: var(--kicl-gutter-narrower);
     }
   }
 
   &:not(#{&}--unstyled):not(#{&}--look-like-button):not(:has(&--wrapper)),
   &:not(#{&}--unstyled):not(#{&}--look-like-button):has(&--wrapper)
-  &--wrapper--content {
+  &--wrapper--line {
+    box-decoration-break: clone;
     box-shadow: 0
       calc(var(--kicl--components--hyper-link--box-shadow--block-size) + 1px)
       0 -1px var(--kicl--components--hyper-link--box-shadow--color);
@@ -74,11 +61,11 @@
       :has(&--wrapper)
     )[aria-current],
     &:not(#{&}--unstyled):not(#{&}--look-like-button):has(&--wrapper):hover
-    &--wrapper--content,
+    &--wrapper--line,
     &:not(#{&}--unstyled):not(#{&}--look-like-button):has(
       &--wrapper
     )[aria-current]
-    &--wrapper--content {
+    &--wrapper--line {
     --kicl--components--hyper-link--box-shadow--block-size: var(
       --kicl--components--hyper-link--box-shadow--block-size-active
     );

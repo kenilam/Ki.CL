@@ -112,10 +112,10 @@ const Simulation: React.FunctionComponent = () => {
           Watch it run
         </Heading>
         <Text>
-          A simulated Character Creator job through the architecture above -
+          A simulated Character Creator job through the architecture above, with
           five shot tasks, one provider timeout, an idempotent retry, a
-          circuit-break failover, and per-task settlement. Shot three
-          re-renders, nothing else does, and nobody is charged twice.
+          circuit-break failover, and per-task settlement. Only shot three
+          re-renders, and nobody is charged twice.
         </Text>
         <SimulationPlayer
           chipLabel='credits'

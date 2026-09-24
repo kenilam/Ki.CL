@@ -63,7 +63,8 @@ const Words: React.FunctionComponent = () => {
           dense
           className={classNames(
             `${CLASS_NAME}__description`,
-            'kicl-font-size-small'
+            'kicl-font-size-small',
+            'kicl-max-inline-size-columns-5'
           )}
         >
           {experiment.description}

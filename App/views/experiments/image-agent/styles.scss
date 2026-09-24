@@ -1,0 +1,20 @@
+/*
+ * Shared tokens for the view. The parts read these; each styles its own
+ * elements in its own file.
+ */
+.kicl--views--experiments--image-agent {
+  --kicl--image-agent--inset: var(--kicl-gutter-wider);
+  --kicl--image-agent--muted: color-mix(
+    in oklab,
+    var(--kicl-body-color) 55%,
+    var(--kicl-body-background-color)
+  );
+
+  /* A preview is a square this wide; the dialog shows the whole picture. */
+  --kicl--image-agent--preview: 18rem;
+
+  @include query('≤tablet') {
+    --kicl--image-agent--inset: var(--kicl-gutter);
+    --kicl--image-agent--preview: 14rem;
+  }
+}

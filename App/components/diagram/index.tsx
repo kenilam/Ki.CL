@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Layout } from '@/components';
+import { Button, Layout, Text } from '@/components';
 
 // Styles
 import './styles.scss';
@@ -17,6 +17,7 @@ import type { Spec } from './spec';
 
 // Partials
 import { Drawing, type DiagramState } from './drawing';
+import { Legend } from './legend';
 
 type Props = {
   /** Id of the dialog that shows this diagram full size. */
@@ -27,8 +28,8 @@ type Props = {
 };
 
 /**
- * Declarative SVG architecture diagram, drawn with the design system's own
- * tokens - surfaces, borders, brand accents, and the site typeface - so it
+ * Declarative SVG diagram (boxes, stores, queues and the arrows between
+ * them), drawn with the design system's own tokens - surfaces, borders, brand accents, and the site typeface - so it
  * follows the theme instead of shipping as a static image.
  */
 const Diagram: React.FunctionComponent<Props> = ({
@@ -56,10 +57,31 @@ const Diagram: React.FunctionComponent<Props> = ({
       ) : (
         drawing
       )}
-      <figcaption className='kicl-hidden'>{spec.description}</figcaption>
+      {spec.caption || spec.legend ? (
+        <figcaption className='kicl-padding-block-start-narrow'>
+          {spec.legend ? <Legend items={spec.legend} /> : null}
+          {spec.caption ? (
+            <Text
+              className='kicl-font-size-small'
+              dense
+              is='span'
+              variant='secondary'
+            >
+              {spec.caption}
+            </Text>
+          ) : null}
+          <span className='kicl-hidden'> {spec.description}</span>
+        </figcaption>
+      ) : (
+        <figcaption className='kicl-hidden'>{spec.description}</figcaption>
+      )}
     </figure>
   );
 };
 
 export type { DiagramState };
-export { Diagram };
+export type {
+  LegendItem as DiagramLegendItem,
+  Spec as DiagramSpec,
+} from './spec';
+export { Diagram, Legend as DiagramLegend };

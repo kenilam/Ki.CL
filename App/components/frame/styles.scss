@@ -1,0 +1,146 @@
+/*
+ * The top clears the global header while it shows and moves up to the gap
+ * when it hides, at the header's pace. The header publishes how much of the
+ * window it covers as `--kicl--widgets--global-header--offset`.
+ */
+:root {
+  $frame: '--kicl--components--frame';
+
+  --kicl--components--frame--delay: 0ms;
+  --kicl--components--frame--gap: var(--kicl-gutter);
+  --kicl--components--frame--radius: var(--kicl-size);
+  --kicl--components--frame--top: max(
+    var(#{$frame}--gap),
+    var(--kicl--widgets--global-header--offset, 0px)
+  );
+  --kicl--components--frame--block-size: calc(
+    100dvb - var(#{$frame}--top) - var(#{$frame}--gap)
+  );
+
+  // How far a held frame moves: as much as it grows when the header hides.
+  --kicl--components--frame--hold-distance: var(
+    --kicl--widgets--global-header--block-size
+  );
+
+  // The gutter halves on small screens; the frame's gap shouldn't.
+  @include query('≤tablet') {
+    --kicl--components--frame--gap: var(--kicl-gutter-wide);
+  }
+}
+
+.kicl--components--frame.kicl--components--frame {
+  $frame: '--kicl--components--frame';
+
+  // Mixed here, not on :root, so it follows the theme the frame sits in. It
+  // shows the frame's shape before whatever fills it has loaded.
+  --kicl--components--frame--background-color: color-mix(
+    in oklab,
+    var(--kicl-body-color) 6%,
+    var(--kicl-body-background-color)
+  );
+
+  background-color: var(#{$frame}--background-color);
+  block-size: var(#{$frame}--block-size);
+  border-radius: var(#{$frame}--radius);
+
+  // Sized by the page, never by what's inside, such as a canvas still at the
+  // width of a larger window. `clip` doesn't lift a grid item's content minimum.
+  contain: inline-size;
+  inline-size: calc(100% - var(#{$frame}--gap) * 2);
+  margin-block: var(#{$frame}--top) var(#{$frame}--gap);
+  margin-inline: var(#{$frame}--gap);
+  min-inline-size: 0;
+  overflow: clip;
+
+  &.kicl--components--frame--unclipped {
+    overflow: visible;
+  }
+
+  /*
+   * Two animations, each switched on by its modifier naming it:
+   * - in: eases from full-bleed into the frame, after `--delay`.
+   * - hold: the frame grows by the header's height when the header hides on
+   *   the first scroll down. For that much scroll it moves down exactly as
+   *   fast as the page moves up, so it finishes growing in place, then
+   *   scrolls. They animate different properties, so both can run.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    animation-delay: var(#{$frame}--delay), 0s;
+    animation-duration: var(--kicl-transition-duration-slow), auto;
+    animation-fill-mode: backwards, both;
+    animation-name: var(#{$frame}--in, none), var(#{$frame}--hold, none);
+    animation-timing-function: var(--kicl-ease-sine-out), linear;
+    transition-duration: var(--kicl-transition-duration);
+    transition-property: block-size, margin-block-start, min-block-size;
+    transition-timing-function: var(--kicl-ease-sine-out);
+
+    &.kicl--components--frame--in {
+      #{$frame}--in: kicl--components--frame--in;
+    }
+
+    // Without scroll timelines the hold would run on time instead, so it's off.
+    @supports (animation-timeline: scroll()) {
+      animation-range:
+        normal,
+        0 var(#{$frame}--hold-distance);
+      animation-timeline: auto, scroll(root);
+
+      // It moves down by up to the header's height, so that much stays free
+      // below it and whatever follows never slides under it.
+      &.kicl--components--frame--hold {
+        #{$frame}--hold: kicl--components--frame--hold;
+        margin-block-end: calc(
+          var(#{$frame}--gap) + var(#{$frame}--hold-distance)
+        );
+      }
+    }
+  }
+
+  &.kicl--components--frame--grow {
+    block-size: auto;
+    min-block-size: var(#{$frame}--block-size);
+
+    // Growing content has no fixed height to ease from.
+    &.kicl--components--frame--in {
+      #{$frame}--in: kicl--components--frame--grow-in;
+    }
+  }
+}
+
+/*
+ * Fixed chrome is placed against the window. While a frame is on the page,
+ * the default insets clear the frame instead, so controls sit inside its edge.
+ */
+:root:has(.kicl--components--frame) .kicl-position-fixed {
+  $frame: '--kicl--components--frame';
+
+  --kicl-inset-block-start: calc(var(#{$frame}--top) + var(--kicl-gutter));
+  --kicl-inset-block-end: calc(var(#{$frame}--gap) + var(--kicl-gutter));
+  --kicl-inset-inline-start: calc(var(#{$frame}--gap) + var(--kicl-gutter));
+  --kicl-inset-inline-end: calc(var(#{$frame}--gap) + var(--kicl-gutter));
+}
+
+@keyframes kicl--components--frame--hold {
+  to {
+    translate: 0 var(--kicl--components--frame--hold-distance);
+  }
+}
+
+// Full-bleed, as if there were no frame.
+@keyframes kicl--components--frame--in {
+  from {
+    block-size: 100dvb;
+    border-radius: 0;
+    inline-size: 100%;
+    margin: 0;
+  }
+}
+
+@keyframes kicl--components--frame--grow-in {
+  from {
+    border-radius: 0;
+    inline-size: 100%;
+    margin: 0;
+    min-block-size: 100dvb;
+  }
+}

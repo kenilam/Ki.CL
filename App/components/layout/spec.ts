@@ -16,6 +16,9 @@ export type AlignItems =
 
 export type AutoFlow = 'column' | 'row';
 
+/** Columns out of 12. On a `columns` grid, spans that many of its tracks. */
+export type ColumnSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
 export type Display = 'flex' | 'inline-grid' | 'grid';
 
 export type JustifyContent =
@@ -219,11 +222,15 @@ export type Props = Pick<React.HTMLAttributes<HTMLElement>, 'className'> & {
   alignContent?: AlignContent;
   alignItems?: AlignItems;
   autoFlow?: AutoFlow;
+  /** A 12-column grid, the same columns as the `--kicl-columns-*` widths. */
+  columns?: boolean;
   display?: Display;
   frames?: Frames;
   fullScreen?: boolean;
   gap?: Gap;
   justifyContent?: JustifyContent;
   justifyItems?: JustifyItems;
+  /** How many columns of a parent `columns` grid this takes. Full width on phones. */
+  span?: ColumnSpan;
   wrap?: boolean;
 };

@@ -1,0 +1,60 @@
+/*
+ * Scroll reveal: an element fades and slides into place as it scrolls into
+ * view, and back out as it leaves at the other edge, so scrolling back up works
+ * the same way. The suffix sets the direction: from below by default, or from
+ * the inline start or end, as for the two sides of a chat.
+ *
+ * Two animations on one view timeline, one over the entry range and one over
+ * the exit range. Each only applies on its own side (the first before and
+ * during entry, the second during and after exit), so in between the element
+ * keeps its normal styles.
+ *
+ * Where view timelines aren't supported, or the person prefers reduced motion,
+ * the element isn't animated.
+ */
+:root {
+  --kicl-scroll-reveal-distance: var(--kicl-gutter-wide);
+}
+
+@keyframes kicl-scroll-reveal-in {
+  from {
+    opacity: 0;
+    translate: var(--kicl-scroll-reveal-from);
+  }
+}
+
+@keyframes kicl-scroll-reveal-out {
+  to {
+    opacity: 0;
+    translate: var(--kicl-scroll-reveal-from);
+  }
+}
+
+@mixin make-scroll-reveal-class($identifier, $from) {
+  $name: 'kicl-scroll-reveal';
+
+  @if $identifier {
+    $name: 'kicl-scroll-reveal-#{$identifier}';
+  }
+
+  .#{$name} {
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        --kicl-scroll-reveal-from: #{$from};
+
+        animation:
+          kicl-scroll-reveal-in linear backwards,
+          kicl-scroll-reveal-out linear forwards;
+        animation-range: entry, exit;
+        animation-timeline: view(), view();
+      }
+    }
+  }
+}
+
+@include make-scroll-reveal-class(null, 0 var(--kicl-scroll-reveal-distance));
+@include make-scroll-reveal-class(
+  'start',
+  calc(var(--kicl-scroll-reveal-distance) * -1) 0
+);
+@include make-scroll-reveal-class('end', var(--kicl-scroll-reveal-distance) 0);

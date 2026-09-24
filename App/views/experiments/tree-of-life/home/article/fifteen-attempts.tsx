@@ -22,23 +22,22 @@ const FifteenAttempts: React.FunctionComponent = () => {
         </Heading>
 
         <Text is='p'>
-          Each version started over rather than revising the one before it,
-          which is why they’re all still online.{' '}
+          Each version started over instead of revising the last, so they’re all
+          still online.{' '}
           <HyperLink to={toVersionPath({ version: '1' })}>v1</HyperLink> to{' '}
-          <HyperLink to={toVersionPath({ version: '8' })}>v8</HyperLink> went
-          into WebGL: the whole clade laid out at once, on a cream background
-          borrowed from the poster. Past a few hundred taxa, though, the layout
-          collapsed into a mat of dots, and every dot was the same few pixels no
-          matter where it sat.
+          <HyperLink to={toVersionPath({ version: '8' })}>v8</HyperLink> used
+          WebGL to lay out the whole clade at once, on a cream background
+          borrowed from the poster. Past a few hundred taxa the layout collapsed
+          into a mat of dots, each the same few pixels wherever it sat.
         </Text>
 
         <Text is='p'>
           <HyperLink to={toVersionPath({ version: '9' })}>v9</HyperLink> to{' '}
           <HyperLink to={toVersionPath({ version: '13' })}>v13</HyperLink> went
-          the other way and turned into documents: DOM and SVG, tip first, one
-          clade at a time, drag and zoom instead of a fixed composition. Now you
-          could read a name. What you’d lost was any sense of distance, of how
-          far you’d travelled from the origin, and the whole thing felt flat.
+          the other way, building DOM and SVG documents tip first, one clade at
+          a time, with drag and zoom instead of a fixed composition. Names
+          became readable, but the sense of distance from the origin was gone
+          and the whole thing felt flat.
         </Text>
 
         <Figure
@@ -47,20 +46,19 @@ const FifteenAttempts: React.FunctionComponent = () => {
           caption={
             <>
               <HyperLink to={toVersionPath({ version: '14' })}>v14</HyperLink>,
-              the map. You can see all of it
+              the map, with the whole tree in view
             </>
           }
         />
 
         <Text is='p'>
           <HyperLink to={toVersionPath({ version: '14' })}>v14</HyperLink> was
-          the widest of them. It showed everything, and nothing stood out. So{' '}
+          the widest of them. It showed everything and nothing stood out.{' '}
           <HyperLink to={toVersionPath({ version: VERSION })}>
             v{VERSION}
           </HyperLink>{' '}
-          gave it up. It frames one taxon and whatever sits near it, lets the
-          rest fade into the background, and puts the route in charge of what
-          you’re looking at.
+          dropped that. It frames one taxon and whatever sits near it, fades the
+          rest into the background and lets the route decide what’s on screen.
         </Text>
       </section>
     </Layout>

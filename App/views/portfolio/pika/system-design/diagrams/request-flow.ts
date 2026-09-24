@@ -1,4 +1,4 @@
-import type { Spec } from './spec';
+import type { DiagramSpec as Spec } from '@/components';
 
 const ACTORS = [
   { title: 'Client', x: 110 },
@@ -14,6 +14,10 @@ const BOTTOM = 580;
 /** Request flow - one job from submission to delivered assets. */
 const requestFlow: Spec = {
   title: 'Request flow diagram',
+  legend: [
+    { label: 'Solid', value: 'requests' },
+    { label: 'Dashed', value: 'responses and events that come back later' },
+  ],
   description:
     'Sequence diagram of a job: the client posts a job, the Job Service validates and reserves credits, the Orchestrator schedules tasks onto workers and providers, progress streams back over server-sent events, and credits settle on completion.',
   width: 960,

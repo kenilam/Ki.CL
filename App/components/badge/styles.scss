@@ -2,16 +2,16 @@
   --kicl--components--badge--background-color: var(--kicl-color-grey-darker);
   --kicl--components--badge--border-color: transparent;
   --kicl--components--badge--border-width: var(--kicl-size-1px);
-  --kicl--components--badge--color: var(--kicl-color-white-pure);
-  --kicl--components--badge--padding-block: var(--kicl-gutter-narrower);
+  --kicl--components--badge--font-size: var(--kicl-font-size-small);
+  --kicl--components--badge--padding-block: var(--kicl-gutter-narrow);
   --kicl--components--badge--padding-inline: var(--kicl-gutter);
 
   align-items: center;
   background-color: var(--kicl--components--badge--background-color);
   border: var(--kicl--components--badge--border-width) solid
     var(--kicl--components--badge--border-color);
-  color: var(--kicl--components--badge--color);
-  gap: var(--kicl-gutter-narrowest);
+  color: contrast-color(var(--kicl--components--badge--background-color));
+  font-size: var(--kicl--components--badge--font-size);
   inline-size: fit-content;
   max-inline-size: 100%;
   overflow-wrap: anywhere;
@@ -46,19 +46,26 @@
     --kicl--components--badge--padding-inline: var(--kicl-gutter-narrow);
   }
 
-  &--size--large {
-    --kicl--components--badge--padding-block: var(--kicl-gutter-narrow);
-    --kicl--components--badge--padding-inline: var(--kicl-gutter-wide);
-  }
-
   &--variant--secondary {
-    --kicl--components--badge--background-color: var(--kicl-color-grey-light);
+    --kicl--components--badge--background-color: var(--kicl-color-black-light);
     --kicl--components--badge--color: var(--kicl-color-grey-darker);
   }
 
   &--variant--destructive {
     --kicl--components--badge--background-color: var(--kicl-color-error);
     --kicl--components--badge--color: var(--kicl-color-white-pure);
+  }
+
+  &--variant--destructive {
+    --kicl--components--badge--background-color: var(--kicl-color-error);
+  }
+
+  &--variant--positive {
+    --kicl--components--badge--background-color: var(--kicl-color-confirm);
+  }
+
+  &--variant--warning {
+    --kicl--components--badge--background-color: var(--kicl-color-warning);
   }
 
   &--variant--outline,
@@ -86,7 +93,9 @@
     --kicl--components--badge--color: var(--kicl-color-grey-darker);
 
     &--variant--secondary {
-      --kicl--components--badge--background-color: var(--kicl-color-grey-dark);
+      --kicl--components--badge--background-color: var(
+        --kicl-color-black-light
+      );
       --kicl--components--badge--color: var(--kicl-color-white);
     }
 
@@ -111,6 +120,18 @@
       --kicl--components--badge--background-color: var(--kicl-color-error);
       --kicl--components--badge--color: var(--kicl-color-white-pure);
     }
+
+    &--variant--destructive {
+      --kicl--components--badge--background-color: var(--kicl-color-error);
+    }
+
+    &--variant--positive {
+      --kicl--components--badge--background-color: var(--kicl-color-confirm);
+    }
+
+    &--variant--warning {
+      --kicl--components--badge--background-color: var(--kicl-color-warning);
+    }
   }
 
   // Light theme island (e.g. TreeOfLife poster) - reset after dark so nested
@@ -127,13 +148,19 @@
 
     &--variant--destructive {
       --kicl--components--badge--background-color: var(--kicl-color-error);
-      --kicl--components--badge--color: var(--kicl-color-white-pure);
+    }
+
+    &--variant--positive {
+      --kicl--components--badge--background-color: var(--kicl-color-confirm);
+    }
+
+    &--variant--warning {
+      --kicl--components--badge--background-color: var(--kicl-color-warning);
     }
 
     &--variant--outline {
       --kicl--components--badge--background-color: transparent;
       --kicl--components--badge--border-color: var(--kicl-color-grey-dark);
-      --kicl--components--badge--color: var(--kicl-color-grey-darker);
     }
 
     &--variant--ghost {

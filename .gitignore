@@ -60,3 +60,6 @@ App/@mf-types/
 
 # Build output (root; the app builds into App/build)
 /build
+
+# AI generated
+.ua

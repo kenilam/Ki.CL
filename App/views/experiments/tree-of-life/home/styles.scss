@@ -24,5 +24,7 @@
     --kicl--tree-of-life--inset: var(--kicl-gutter-wider);
   }
 
-  padding-inline: var(--kicl--tree-of-life--inset);
+  &__column {
+    padding-inline: var(--kicl--tree-of-life--inset);
+  }
 }

@@ -15,6 +15,7 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
       easing,
       property = 'slide-from-top',
       children,
+      split = 'letter',
       stagger = 10,
       ...props
     },
@@ -26,6 +27,12 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
 
     const text = String(children);
 
+    /*
+     * Whitespace between words stays plain text, so the sentence wraps as it
+     * would without the animation.
+     */
+    const pieces = split === 'word' ? text.split(/(\s+)/) : text.split('');
+
     return (
       /*
        * `is` arrives as the whole union, so TypeScript cannot pick the
@@ -35,19 +42,23 @@ const AnimatedText = React.forwardRef<TextNode, Spec.Props>(
       <Text {...(props as React.ComponentProps<typeof Text>)} ref={ref}>
         {/* Read once as a word; the letters below are only for the eye. */}
         <span className='kicl-hidden'>{text}</span>
-        {text.split('').map((letter, index) => {
+        {pieces.map((piece, index) => {
           const key = `${index}`;
+
+          if (split === 'word' && /^\s*$/.test(piece)) {
+            return piece;
+          }
 
           return (
             <Animation
-              delay={delay + stagger * index}
+              delay={delay + stagger * (split === 'word' ? index / 2 : index)}
               duration={duration}
               easing={easing}
               property={property}
               key={key}
             >
               <Text aria-hidden is='span' unstyled>
-                {letter}
+                {piece}
               </Text>
             </Animation>
           );

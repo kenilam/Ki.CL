@@ -53,7 +53,11 @@ const Screen: React.FunctionComponent<Props> = ({
       )}
       style={{ '--kicl--views--experiments__home--index': index } as never}
     >
-      <Plate />
+      <div
+        className={classNames(`${CLASS_NAME}__crop`, 'kicl-position-absolute')}
+      >
+        <Plate />
+      </div>
       <Words />
     </ListItem>
   </ScreenProvider>

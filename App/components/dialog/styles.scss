@@ -1,7 +1,7 @@
 :root {
   --kicl--components--dialog--background-color: var(--kicl-color-white);
   --kicl--components--dialog--border-radius: var(--kicl-size);
-  --kicl--components--dialog--max-inline-size: 66ch;
+  --kicl--components--dialog--max-inline-size: var(--kicl-columns-6);
   --kicl--components--dialog--inline-size: auto;
   --kicl--components--dialog--offset: var(--kicl-gutter-extreme);
   --kicl--components--dialog--section-offset: var(--kicl-gutter-wide);

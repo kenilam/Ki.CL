@@ -6,7 +6,7 @@
   box-sizing: border-box;
   font-family: var(--kicl-font-family);
   font-size: inherit;
-  font-weight: var(--kicl-font-weight);
+  font-weight: var(--kicl-font-weight-light);
   letter-spacing: var(--kicl-letter-spacing);
   line-height: var(--kicl-line-height);
   margin: 0;
@@ -25,6 +25,18 @@
 
 .kicl--theme--light {
   --kicl-outline-color: var(--kicl-color-grey-darker);
+}
+
+// Only script focuses these (`#main` after a route change), so they don't need
+// a focus ring.
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+// The `*` rule above clears the browser's `mark` background, so set it again.
+mark {
+  background-color: var(--kicl-color-warning);
+  color: contrast-color(var(--kicl-color-warning));
 }
 
 a,

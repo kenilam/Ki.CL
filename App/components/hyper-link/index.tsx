@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { NavLink } from '@/router';
 
 // Components
-import { getButtonClassNames, Layout, Text } from '@/components';
+import { getButtonClassNames, Layout } from '@/components';
 
 // Hooks
 import { useURLStatus } from './hooks';
@@ -105,25 +105,11 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
 
     if (after || before) {
       Content = (
-        <Layout
-          autoFlow='column'
-          alignContent='center'
-          alignItems='center'
-          gap='narrow'
-        >
-          <span
-            className={classNames(
-              `${CLASS_NAME}--wrapper`,
-              'kicl-position-relative'
-            )}
-          >
-            {before}
-            <Text className={`${CLASS_NAME}--wrapper--content`} is='span'>
-              {Content}
-            </Text>
-            {after}
-          </span>
-        </Layout>
+        <span className={`${CLASS_NAME}--wrapper`}>
+          {before}
+          <span className={`${CLASS_NAME}--wrapper--line`}>{Content}</span>
+          {after}
+        </span>
       );
     }
 
@@ -161,7 +147,11 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
       );
 
     if (lookLikeButton) {
-      return <Layout alignItems='center'>{Link}</Layout>;
+      return (
+        <Layout alignItems='center' gap='narrowest'>
+          {Link}
+        </Layout>
+      );
     }
 
     return Link;

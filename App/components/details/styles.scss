@@ -1,5 +1,8 @@
 :root {
+  --kicl--components--details--border-color: var(--kicl-surface-border-color);
+  --kicl--components--details--border-width: var(--kicl-size-1px);
   --kicl--components--details--content--opacity: 0;
+  --kicl--components--details--padding-block-start: 0;
   --kicl--components--details--content--transition-duration: var(
     --kicl-transition-duration
   );
@@ -20,6 +23,16 @@
 }
 
 .kicl--components--details {
+  padding-block-start: var(--kicl--components--details--padding-block-start);
+
+  // A rule between stacked disclosures, so each summary reads as its own row.
+  & + & {
+    --kicl--components--details--padding-block-start: var(--kicl-gutter);
+
+    border-block-start: var(--kicl--components--details--border-width) solid
+      var(--kicl--components--details--border-color);
+  }
+
   @supports (interpolate-size: allow-keywords) {
     interpolate-size: allow-keywords;
   }

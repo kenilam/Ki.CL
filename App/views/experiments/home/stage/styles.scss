@@ -8,6 +8,9 @@
   $home: '--kicl--views--experiments__home';
 
   block-size: var(--kicl--views--experiments__home--screen);
+
+  /* Keeps the frame's top margin inside the stage. */
+  display: flow-root;
   overflow: clip;
 
   &__scroll {

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Navigate, Outlet, useMatch, useParams } from '@/router';
 
 // Components
-import { Layout } from '@/components';
+import { Frame, Layout } from '@/components';
 
 // Catalog
 import { keyOf } from '@/views/experiments/music-visualiser/catalog';
@@ -50,22 +50,19 @@ const Contents: React.FunctionComponent = () => {
   return (
     <TrackProvider control={control} next={next} track={track}>
       <Layout autoFlow='row' gap='none'>
-        <div
-          className={classNames(
-            `${VIEW}__track`,
-            'kicl-block-size-screen',
-            'kicl-inline-size-full',
-            'kicl-position-relative'
-          )}
-        >
-          <Visualiser
-            analyser={analyser}
-            playing={control.playing}
-            track={keyOf(track)}
-          />
-          {isPlay ? <Chrome /> : <Gate />}
-          <Outlet />
-        </div>
+        <Frame>
+          <div
+            className={classNames(`${VIEW}__track`, 'kicl-position-relative')}
+          >
+            <Visualiser
+              analyser={analyser}
+              playing={control.playing}
+              track={keyOf(track)}
+            />
+            {isPlay ? <Chrome /> : <Gate />}
+            <Outlet />
+          </div>
+        </Frame>
       </Layout>
     </TrackProvider>
   );
