@@ -4,7 +4,7 @@ import React, { useEffect, useId, useRef } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading } from '@/components';
+import { Heading, Layout } from '@/components';
 
 // Spec
 import * as Spec from './spec';
@@ -111,19 +111,26 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
             closable === true || closable === 'keyboard' ? 'any' : 'none'
           }
         >
-          <div>
-            <Close />
-            {title ? (
-              <Heading id={titleId} is='h2' lookLike='h4'>
-                {title}
-              </Heading>
-            ) : null}
-            {children}
-          </div>
+          <Layout>
+            <div>
+              <Layout autoFlow='column' alignItems='baseline'>
+                <header>
+                  {title ? (
+                    <Heading id={titleId} is='h2' lookLike='h4' dense>
+                      {title}
+                    </Heading>
+                  ) : null}
+                  <Close />
+                </header>
+              </Layout>
 
-          {footer ? (
-            <footer className={`${CLASS_NAME}--footer`}>{footer}</footer>
-          ) : null}
+              {children}
+
+              {footer ? (
+                <footer className={`${CLASS_NAME}--footer`}>{footer}</footer>
+              ) : null}
+            </div>
+          </Layout>
         </dialog>
       </DialogContext.Provider>
     );

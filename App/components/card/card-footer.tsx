@@ -12,7 +12,11 @@ const CardFooter = React.forwardRef<HTMLElement, CardFooterProps>(
     return (
       <Component
         {...(rest as React.HTMLAttributes<HTMLElement>)}
-        className={classNames(CLASS_NAME, className)}
+        className={classNames(
+          'kicl-padding-block-start',
+          CLASS_NAME,
+          className
+        )}
         data-is={is}
         data-slot='card-footer'
         ref={ref as never}

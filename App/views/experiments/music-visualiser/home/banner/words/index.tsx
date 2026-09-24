@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Fa } from '@/icons';
+import { Fa, Ri } from '@/icons';
 
 // Components
 import { Heading, HyperLink, Layout, Text } from '@/components';
@@ -16,8 +16,15 @@ import { draw } from '@/views/experiments/music-visualiser/catalog';
 import './styles.scss';
 
 // Constants
+import {
+  COPY as EXPERIMENTS_COPY,
+  toPath as toExperimentsPath,
+} from '@/views/experiments/constants';
 import { CLASS_NAME as HOME } from '@/views/experiments/music-visualiser/home/constants';
-import { toTrackPath } from '@/views/experiments/music-visualiser/constants';
+import {
+  PATH,
+  toTrackPath,
+} from '@/views/experiments/music-visualiser/constants';
 
 const CLASS_NAME = `${HOME}__banner__words`;
 
@@ -32,7 +39,7 @@ const Words: React.FunctionComponent = () => {
   const [track] = useState(() => draw());
 
   return (
-    <Layout autoFlow='row' gap='wide' justifyItems='center'>
+    <Layout autoFlow='row' gap='none' justifyItems='center'>
       <div
         className={classNames(
           CLASS_NAME,
@@ -42,18 +49,30 @@ const Words: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
+        <HyperLink
+          before={<Ri.RiArrowLeftSFill aria-hidden />}
+          to={toExperimentsPath(PATH)}
+        >
+          {EXPERIMENTS_COPY.back}
+        </HyperLink>
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {COPY.title}
         </Heading>
-        <Text is='p' className='kicl-font-size-medium'>
+        <Text
+          is='p'
+          className={classNames(
+            'kicl-font-size-medium',
+            'kicl-margin-block-start-wide'
+          )}
+        >
           {COPY.lede}
         </Text>
         <HyperLink
           after={<Fa.FaPlay aria-hidden />}
+          className='kicl-margin-block-start-wide'
           lookLikeButton
           size='small'
           to={toTrackPath(track)}
-          variant='ghost'
         >
           {COPY.play}
         </HyperLink>

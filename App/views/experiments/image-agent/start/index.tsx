@@ -53,7 +53,7 @@ const Start: React.FunctionComponent = () => {
                 // Dark in both themes, so the scrim darkens the pictures.
                 'kicl--theme--dark',
                 'kicl-padding-block-widest',
-                'kicl-padding-inline-widest',
+                'kicl-padding-inline-frame',
                 'kicl-position-relative'
               )}
             >

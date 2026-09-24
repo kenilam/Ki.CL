@@ -58,6 +58,11 @@
     display var(--kicl-transition-duration-fast) allow-discrete,
     overlay var(--kicl-transition-duration-fast) allow-discrete;
 
+  @include query('≤tablet') {
+    --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
+    --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
+  }
+
   @include query('≤mobile') {
     min-block-size: 100svb;
 
@@ -115,25 +120,25 @@
   &::backdrop {
     @at-root .kicl--theme--dark & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
-        $black-pure,
-        0.5
-      )};
+          $black-pure,
+          0.5
+        )};
     }
 
     @at-root .kicl--theme--light & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
-        $white-pure,
-        0.7
-      )};
+          $white-pure,
+          0.7
+        )};
     }
 
     backdrop-filter: brightness(
-      var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
-    )
+        var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
+      )
       blur(var(--kicl--components--dialog--backdrop--backdrop-filter--blur));
     background-color: rgb(
       from var(--kicl--components--dialog--backdrop--background-color) r g b /
-      var(--kicl--components--dialog--backdrop--opacity)
+        var(--kicl--components--dialog--backdrop--opacity)
     );
     pointer-events: none;
   }

@@ -1,0 +1,31 @@
+/*
+ * Panel `n` is in place when the page has scrolled `n` screens, so its
+ * anchor sits `n` screens down the scroll wrapper. Without scroll
+ * timelines, or with reduced motion, the panels flow and there is nothing
+ * to mark, so the anchors stay at the top and nothing snaps.
+ */
+.kicl--views--experiments__home__stage__anchor {
+  $home: '--kicl--views--experiments__home';
+
+  inset-block-start: 0;
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      inset-block-start: calc(var(#{$home}--index) * var(#{$home}--screen));
+      scroll-snap-align: start;
+    }
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /*
+     * The panel maths count from the top of the page, not from under the
+     * header, so the site-wide header padding would stop every jump short.
+     */
+    html:has(.kicl--views--experiments__home__stage__anchor) {
+      scroll-padding-block-start: 0;
+      scroll-snap-type: y proximity;
+    }
+  }
+}

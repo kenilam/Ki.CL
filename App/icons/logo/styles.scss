@@ -24,6 +24,11 @@
     padding: var(--kicl--icons--logo--padding);
   }
 
+  /*
+   * The svg has only a viewBox. WebKit sizes a `fit-content` svg like that to
+   * its container, so the width comes from the height and the ratio instead.
+   */
+  aspect-ratio: 385 / 160;
   block-size: 1em;
-  inline-size: fit-content;
+  inline-size: auto;
 }

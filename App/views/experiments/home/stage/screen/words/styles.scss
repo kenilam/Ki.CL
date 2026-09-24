@@ -7,6 +7,7 @@
   $home: '--kicl--views--experiments__home';
 
   min-block-size: var(--kicl--views--experiments__home--block);
+  padding-inline: var(--kicl--views--experiments__home--inset);
   z-index: var(--kicl-z-index-raised);
 
   @supports (animation-timeline: scroll()) {
@@ -19,10 +20,6 @@
       var(#{$home}--out-start) var(#{$home}--out-end),
       var(#{$home}--fade-start) var(#{$home}--fade-end);
     animation-timeline: scroll(root), scroll(root), scroll(root);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
   }
 }
 

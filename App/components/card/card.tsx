@@ -32,7 +32,9 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
           `${CLASS_NAME}--variant--${variant}`,
           typeof size === 'number'
             ? `kicl-inline-size-columns-${size}`
-            : size !== 'default' && `kicl-inline-size-${size}`,
+            : size !== 'default' &&
+                size !== 'fit' &&
+                `kicl-inline-size-${size}`,
           className
         )}
         data-is={is}

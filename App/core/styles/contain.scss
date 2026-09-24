@@ -1,0 +1,19 @@
+// `inline-size` keeps an element out of its parent's content width, so a
+// fit-content parent sizes to its other children and this one fills the rest.
+:root {
+  --kicl-contain-none: none;
+  --kicl-contain-content: content;
+  --kicl-contain-inline-size: inline-size;
+  --kicl-contain-layout: layout;
+  --kicl-contain-paint: paint;
+  --kicl-contain-size: size;
+  --kicl-contain-strict: strict;
+}
+
+@include make-variable-class('contain', 'none');
+@include make-variable-class('contain', 'content');
+@include make-variable-class('contain', 'inline-size');
+@include make-variable-class('contain', 'layout');
+@include make-variable-class('contain', 'paint');
+@include make-variable-class('contain', 'size');
+@include make-variable-class('contain', 'strict');

@@ -28,7 +28,7 @@ const Article: React.FunctionComponent = () => (
         'kicl-margin-inline-auto',
         'kicl-padding-block-end-extreme',
         'kicl-padding-block-start-extreme',
-        'kicl-padding-inline-widest'
+        'kicl-padding-inline-frame'
       )}
       id={ARTICLE_ID}
     >

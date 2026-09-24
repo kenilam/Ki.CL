@@ -25,10 +25,6 @@
     animation-timeline: scroll(root), scroll(root);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-
   #{$screen}--tree-of-life & {
     background-image: url('/assets/static/banner.light.webp');
 

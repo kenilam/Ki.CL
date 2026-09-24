@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Card, Details, List, ListItem, Text } from '@/components';
+import { Card, CardFooter, Details, List, ListItem, Text } from '@/components';
 
 // Constants
 import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/conversation/message/constants';
@@ -33,7 +33,7 @@ type Props = {
 
 /** The vision model's score: one summary line, the breakdown in a disclosure. */
 const Review: React.FunctionComponent<Props> = ({ score }) => (
-  <Card>
+  <Card className='kicl-contain-inline-size'>
     <Details className={CLASS_NAME} summary={COPY.summary(score)}>
       <List gap='narrower' className='kicl-inline-size-md'>
         {ROWS.map((row) => (
@@ -57,23 +57,25 @@ const Review: React.FunctionComponent<Props> = ({ score }) => (
         ))}
       </List>
       {score.suggestions.length ? (
-        <>
-          <Text is='p' dense className='kicl-font-size-small'>
-            {COPY.suggestions}
-          </Text>
-          <List gap='narrowest'>
-            {score.suggestions.map((suggestion) => (
-              <ListItem key={suggestion}>
-                <Text
-                  is='span'
-                  className='kicl-font-size-small kicl-color-grey-dark'
-                >
-                  {suggestion}
-                </Text>
-              </ListItem>
-            ))}
-          </List>
-        </>
+        <CardFooter>
+          <section>
+            <Text is='p' dense className='kicl-font-size-small'>
+              {COPY.suggestions}
+            </Text>
+            <List gap='narrowest'>
+              {score.suggestions.map((suggestion) => (
+                <ListItem key={suggestion}>
+                  <Text
+                    is='span'
+                    className='kicl-font-size-small kicl-color-grey-dark'
+                  >
+                    {suggestion}
+                  </Text>
+                </ListItem>
+              ))}
+            </List>
+          </section>
+        </CardFooter>
       ) : null}
     </Details>
   </Card>

@@ -22,7 +22,7 @@
   --kicl-font-size-large: 2rem;
   --kicl-font-size-larger: 3rem;
   --kicl-font-size-largest: 4rem;
-  --kicl-font-size-huge: min(20dvw, 5rem);
+  --kicl-font-size-huge: clamp(var(--kicl-font-size-large), 12dvi, 5rem);
   --kicl-font-size-extreme: min(25dvw, 10rem);
 
   // font-weight
