@@ -22,8 +22,8 @@
     --kicl--widgets--global-header--block-size
   );
 
-  // The gutter halves on small screens; the frame's gap shouldn't.
-  @include query('≤tablet') {
+  // The gutter halves on tablets; the frame's gap shouldn't.
+  @include tablet {
     --kicl--components--frame--gap: var(--kicl-gutter-wide);
   }
 }
