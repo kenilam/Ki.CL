@@ -70,6 +70,7 @@ const Words: React.FunctionComponent = () => {
         </Text>
         <HyperLink
           className='kicl-margin-block-start-narrow'
+          level={experiment.level}
           lookLikeButton
           size='small'
           to={experiment.to}

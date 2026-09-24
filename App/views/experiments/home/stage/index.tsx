@@ -6,7 +6,11 @@ import classNames from 'classnames';
 // Components
 import { Frame, List } from '@/components';
 
+// Hooks
+import { useHashScroll } from './use-hash-scroll';
+
 // Partials
+import { Anchor } from './anchor';
 import { Screen } from './screen';
 import { CLASS_NAME as WORDS } from './screen/words';
 
@@ -40,6 +44,8 @@ const Stage: React.FunctionComponent = () => {
   const list = useRef<HTMLOListElement>(null);
   const [block, setBlock] = useState<number | null>(null);
 
+  useHashScroll();
+
   useEffect(() => {
     const words = list.current?.querySelectorAll<HTMLElement>(`.${WORDS}`);
 
@@ -64,7 +70,7 @@ const Stage: React.FunctionComponent = () => {
 
   return (
     <div
-      className={`${CLASS_NAME}__scroll`}
+      className={classNames(`${CLASS_NAME}__scroll`, 'kicl-position-relative')}
       style={
         {
           '--kicl--views--experiments__home--screens': SCREENS.length,
@@ -94,6 +100,9 @@ const Stage: React.FunctionComponent = () => {
           </List>
         </Frame>
       </div>
+      {SCREENS.map((screen, index) => (
+        <Anchor id={screen.plate} index={index} key={screen.to} />
+      ))}
     </div>
   );
 };
