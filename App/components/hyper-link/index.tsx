@@ -118,7 +118,7 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
             )}
           >
             {before}
-            <Text className={`${CLASS_NAME}--wrapper--content`} is='span'>
+            <Text className={classNames('kicl-line-height-narrower', `${CLASS_NAME}--wrapper--content`)} is='span'>
               {Content}
             </Text>
             {after}
@@ -161,7 +161,11 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
       );
 
     if (lookLikeButton) {
-      return <Layout alignItems='center'>{Link}</Layout>;
+      return (
+        <Layout alignItems='center' gap='narrowest'>
+          {Link}
+        </Layout>
+      );
     }
 
     return Link;

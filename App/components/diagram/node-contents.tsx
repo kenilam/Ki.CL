@@ -6,6 +6,7 @@ import { BASE, CYLINDER_EDGE } from './constants';
 // Spec
 import type { Node } from './spec';
 
+const ICON_SIZE = 14;
 const ROW_SIZE = 24;
 const TITLE_SIZE = 30;
 
@@ -29,6 +30,7 @@ const NodeContents: React.FunctionComponent<{ node: Node }> = ({ node }) => {
         />
         {rows.map((row, index) => {
           const baseline = y + TITLE_SIZE + index * ROW_SIZE + 16;
+          const Icon = row.icon;
 
           return (
             <React.Fragment key={row.name}>
@@ -41,10 +43,23 @@ const NodeContents: React.FunctionComponent<{ node: Node }> = ({ node }) => {
                   y2={y + TITLE_SIZE + index * ROW_SIZE}
                 />
               )}
-              <text className={`${BASE}-type`} x={x + 10} y={baseline}>
-                {row.type}
-              </text>
-              <text className={`${BASE}-name`} x={x + 62} y={baseline}>
+              {Icon ? (
+                <Icon
+                  className={`${BASE}-icon`}
+                  size={ICON_SIZE}
+                  x={x + 10}
+                  y={baseline - ICON_SIZE + 3}
+                />
+              ) : row.type ? (
+                <text className={`${BASE}-type`} x={x + 10} y={baseline}>
+                  {row.type}
+                </text>
+              ) : null}
+              <text
+                className={`${BASE}-name`}
+                x={x + (Icon ? 10 + ICON_SIZE + 10 : row.type ? 62 : 10)}
+                y={baseline}
+              >
                 {row.name}
               </text>
               {(row.key || row.note) && (

@@ -9,6 +9,19 @@ import {
   type BadgeVariant,
 } from './badge';
 import {
+  Bubble,
+  BUBBLE_VARIANTS,
+  BubbleContent,
+  BubbleGroup,
+  BubbleReactions,
+  type BubbleAlign,
+  type BubbleContentProps,
+  type BubbleGroupProps,
+  type BubbleProps,
+  type BubbleReactionsProps,
+  type BubbleVariant,
+} from './bubble';
+import {
   Button,
   getButtonClassNames,
   GetButtonClassNamesProps,
@@ -46,13 +59,28 @@ import {
 } from './card';
 import { Checkbox, type CheckboxProps, type CheckedState } from './checkbox';
 import {
+  Combobox,
+  ComboboxAnchor,
+  ComboboxContent,
+  type ComboboxAnchorProps,
+  type ComboboxContentProps,
+  type ComboboxProps,
+} from './combobox';
+import {
   DatePicker,
   type DatePickerMode,
   type DatePickerProps,
   type DatePickerRangeProps,
   type DatePickerSingleProps,
 } from './date-picker';
-import { Details, DetailsProps } from './details';
+import { Details, DetailsMarker, DetailsProps } from './details';
+import {
+  Diagram,
+  DiagramLegend,
+  type DiagramLegendItem,
+  type DiagramSpec,
+  type DiagramState,
+} from './diagram';
 import { Dialog, DialogProps } from './dialog';
 import {
   Form,
@@ -94,7 +122,7 @@ import {
   type InputGroupTextareaProps,
   type InputGroupTextProps,
 } from './input-group';
-import { Layout, LayoutProps } from './layout';
+import { type ColumnSpan, Layout, LayoutProps } from './layout';
 import { List, ListProps, ListNode } from './list';
 import { ListItem, ListItemProps } from './list-item';
 import { Menu, MenuProps } from './menu';
@@ -147,7 +175,7 @@ import {
   type SwitchProps,
 } from './switch';
 import { AnimatedText, AnimatedTextProps } from './animated-text';
-import { Text, type TextIs, type TextProps } from './text';
+import { Text, type TextAccent, type TextIs, type TextProps } from './text';
 import { Textarea, type TextareaProps } from './textarea';
 import { Video, VideoElement, VideoProps } from './video';
 
@@ -164,6 +192,17 @@ export {
   type BadgeLabelProps,
   type BadgeProps,
   type BadgeVariant,
+  Bubble,
+  BUBBLE_VARIANTS,
+  BubbleContent,
+  type BubbleContentProps,
+  BubbleGroup,
+  type BubbleGroupProps,
+  type BubbleAlign,
+  type BubbleProps,
+  BubbleReactions,
+  type BubbleReactionsProps,
+  type BubbleVariant,
   Button,
   type ButtonProps,
   getButtonClassNames,
@@ -197,13 +236,25 @@ export {
   Checkbox,
   type CheckboxProps,
   type CheckedState,
+  Combobox,
+  ComboboxAnchor,
+  type ComboboxAnchorProps,
+  ComboboxContent,
+  type ComboboxContentProps,
+  type ComboboxProps,
   DatePicker,
   type DatePickerMode,
   type DatePickerProps,
   type DatePickerRangeProps,
   type DatePickerSingleProps,
   Details,
+  DetailsMarker,
   type DetailsProps,
+  Diagram,
+  DiagramLegend,
+  type DiagramLegendItem,
+  type DiagramSpec,
+  type DiagramState,
   Dialog,
   type DialogProps,
   Form,
@@ -244,6 +295,7 @@ export {
   InputGroupTextarea,
   type InputGroupTextareaProps,
   Layout,
+  type ColumnSpan,
   type LayoutProps,
   List,
   type ListProps,
@@ -295,6 +347,7 @@ export {
   type SwitchLabelProps,
   type SwitchProps,
   Text,
+  type TextAccent,
   type TextIs,
   type TextProps,
   Textarea,

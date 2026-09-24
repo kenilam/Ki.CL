@@ -1,11 +1,16 @@
 .kicl--components--input-group {
   --kicl--components--input-group--background-color: var(--kicl-surface-color);
   --kicl--components--input-group--border-color: var(--kicl-color-grey-darker);
-  --kicl--components--input-group--border-radius: var(--kicl-gutter-narrower);
+  --kicl--components--input-group--border-radius: var(--kicl-gutter-narrow);
   --kicl--components--input-group--border-width: var(--kicl-size-1px);
   --kicl--components--input-group--gap: var(--kicl-gutter-narrowest);
-  --kicl--components--input-group--padding-block: var(--kicl-gutter-narrowest);
-  --kicl--components--input-group--padding-inline: var(--kicl-gutter-narrow);
+  --kicl--components--input-group--padding-block: var(--kicl-gutter-narrow);
+  --kicl--components--input-group--padding-inline: var(--kicl-gutter);
+
+  @include tablet {
+    --kicl--components--input-group--padding-block: var(--kicl-gutter);
+    --kicl--components--input-group--padding-inline: var(--kicl-gutter-wide);
+  }
 
   align-items: center;
   background-color: var(--kicl--components--input-group--background-color);
@@ -28,7 +33,14 @@
     border-color: var(--kicl-color-error);
   }
 
-  &__control {
+  /*
+   * `& &__control`, not `&__control`: the control keeps its own component
+   * class, whose stylesheet loads after this one and sets the same custom
+   * properties at the same specificity - so a single-class rule here lost,
+   * and the control drew its own border inside the group's. Two classes win
+   * whatever the load order.
+   */
+  & &__control {
     --kicl--components--input--border-width: 0;
     --kicl--components--input--padding-block: 0;
     --kicl--components--input--padding-inline: 0;

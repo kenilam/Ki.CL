@@ -3039,6 +3039,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-highlight-words@npm:^0.20.1":
+  version: 0.20.1
+  resolution: "@types/react-highlight-words@npm:0.20.1"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/af05728a1bb0a9249e07b17741f1d69a0251d0a67120d2cf0cb407055d3eefe70822211b76da2e8cf27c8e2feaec59e602d0870c4e12f1ef5dcdc699ddd446be
+  languageName: node
+  linkType: hard
+
 "@types/react-reconciler@npm:^0.28.9":
   version: 0.28.9
   resolution: "@types/react-reconciler@npm:0.28.9"
@@ -3765,6 +3774,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app.views.experiments.image-agent@workspace:App/views/experiments/image-agent":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.image-agent@workspace:App/views/experiments/image-agent"
+  languageName: unknown
+  linkType: soft
+
 "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser"
@@ -3810,6 +3825,7 @@ __metadata:
     "@types/react": "npm:19.2.17"
     "@types/react-dom": "npm:19.2.3"
     "@types/react-helmet": "npm:6.1.11"
+    "@types/react-highlight-words": "npm:^0.20.1"
     "@types/react-test-renderer": "npm:19.1.0"
     "@types/three": "npm:0.185.1"
     abortcontroller-polyfill: "npm:1.7.8"
@@ -3828,6 +3844,7 @@ __metadata:
     normalize.css: "npm:8.0.1"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
+    react-highlight-words: "npm:^0.21.0"
     react-hook-form: "npm:7.83.0"
     react-icons: "npm:5.7.0"
     react-responsive: "npm:10.0.1"
@@ -6788,6 +6805,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight-words-core@npm:^1.2.0":
+  version: 1.2.3
+  resolution: "highlight-words-core@npm:1.2.3"
+  checksum: 10c0/473f4ea898c8c3aa20f97951cb6fe23c60ce016f55d280041ec727fdda6a80c2f46d8aa168b771638e2c7eccd97f6c496a1d8eb2be822d4b94bbd031b597130e
+  languageName: node
+  linkType: hard
+
 "hls.js@npm:^1.5.17":
   version: 1.6.2
   resolution: "hls.js@npm:1.6.2"
@@ -8217,6 +8241,13 @@ __metadata:
   version: 1.1.0
   resolution: "media-typer@npm:1.1.0"
   checksum: 10c0/7b4baa40b25964bb90e2121ee489ec38642127e48d0cc2b6baa442688d3fde6262bfdca86d6bbf6ba708784afcac168c06840c71facac70e390f5f759ac121b9
+  languageName: node
+  linkType: hard
+
+"memoize-one@npm:^4.0.0":
+  version: 4.0.3
+  resolution: "memoize-one@npm:4.0.3"
+  checksum: 10c0/0ca0a07a0eb58867563cb05abf74596b21df02ac1046c55e5639367df8be64fa5a4a82430520f88f1ffaddec2657355b9189471ca3cff700e2164b662569e060
   languageName: node
   linkType: hard
 
@@ -9925,6 +9956,18 @@ __metadata:
   peerDependencies:
     react: ^19.2.8
   checksum: 10c0/41ba2247b76f687fcfe5bbc99f514d6b851d8c8041c2f5ded36ed05bd7fdc5208cacbac9de51e3e6633e77f96f44cec9f0d4a5a55184dba4e00738f224439134
+  languageName: node
+  linkType: hard
+
+"react-highlight-words@npm:^0.21.0":
+  version: 0.21.0
+  resolution: "react-highlight-words@npm:0.21.0"
+  dependencies:
+    highlight-words-core: "npm:^1.2.0"
+    memoize-one: "npm:^4.0.0"
+  peerDependencies:
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0-0
+  checksum: 10c0/8704097b6ca2b08a943e55e66493fab21d523362c8ea754ef4c7a351b4625b684d7ed1e9155f97d033be78783dacdd88bb83e2766cfc3d462c311551552b8ad5
   languageName: node
   linkType: hard
 

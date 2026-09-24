@@ -23,7 +23,7 @@ import { Marker } from './marker';
  * (`content-visibility` + `allow-discrete`). Children own their own layout.
  */
 const Details = React.forwardRef<HTMLDetailsElement, Props>(
-  ({ children, className, summary, ...rest }, ref) => (
+  ({ children, className, marker = true, summary, ...rest }, ref) => (
     <details
       {...rest}
       className={classNames(CLASS_NAME, className)}
@@ -33,7 +33,7 @@ const Details = React.forwardRef<HTMLDetailsElement, Props>(
       <Layout alignItems='start' display='flex' gap='narrow'>
         <summary className={`${CLASS_NAME}__summary`} data-slot='summary'>
           {summary}
-          <Marker />
+          {marker ? <Marker /> : null}
         </summary>
       </Layout>
       {children}
@@ -44,4 +44,4 @@ const Details = React.forwardRef<HTMLDetailsElement, Props>(
 Details.displayName = 'Details';
 
 export type { Props as DetailsProps, SummaryProps } from './spec';
-export { Details };
+export { Details, Marker as DetailsMarker };

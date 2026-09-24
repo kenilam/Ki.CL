@@ -22,6 +22,7 @@ const List = React.forwardRef<HTMLOListElement | HTMLUListElement, Spec.Props>(
       alignContent,
       alignItems,
       autoFlow,
+      display,
       frames,
       fullScreen,
       gap = 'normal',
@@ -41,6 +42,7 @@ const List = React.forwardRef<HTMLOListElement | HTMLUListElement, Spec.Props>(
         alignContent={alignContent}
         alignItems={alignItems}
         autoFlow={autoFlow}
+        display={display}
         frames={frames}
         fullScreen={fullScreen}
         gap={gap}

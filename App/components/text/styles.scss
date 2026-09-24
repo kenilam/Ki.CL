@@ -14,14 +14,33 @@
 .kicl--components--text {
   --kicl--components--text--color: var(--kicl-body-color);
 
-  color: var(--kicl--components--text--color);
+  // Reset per element, or the sibling spacing below inherits into any Text
+  // nested inside, like the chips in a legend that follows a paragraph.
+  --kicl--components--text--padding-block-end: 0;
+  --kicl--components--text--padding-block-start: 0;
+  --kicl--components--text--strength: 100%;
+
+  // Strength is separate from the colour so `secondary` dims an accent too.
+  --kicl--components--text--ink: color-mix(
+    in srgb,
+    var(--kicl--components--text--color) var(--kicl--components--text--strength),
+    transparent
+  );
+
+  color: var(--kicl--components--text--ink);
   font-size: var(--kicl--components--text--font-size);
   padding-block-end: var(--kicl--components--text--padding-block-end);
   padding-block-start: var(--kicl--components--text--padding-block-start);
 
   @include transition('kicl--components--text');
 
-  & + &:not(&--is-dense, span:not(&)) {
+  // Passed down so inline code can draw its secondary outline in the colour
+  // of the copy around it.
+  &:not([data-is='code']) {
+    --kicl--components--text--context-color: var(--kicl--components--text--ink);
+  }
+
+  & + &:not(&--is-dense, span:not(&), [data-is='code']) {
     --kicl--components--text--padding-block-start: var(--kicl-gutter);
   }
 
@@ -34,7 +53,7 @@
     margin-block-start: var(--kicl-gutter);
   }
 
-  &:has(+ a):not(&--is-dense) {
+  &:has(+ a):not(&--is-dense, [data-is='code']) {
     --kicl--components--text--padding-block-end: var(--kicl-gutter);
   }
 
@@ -68,6 +87,54 @@
     --kicl--components--text--font-style: italic;
 
     font-style: var(--kicl--components--text--font-style);
+  }
+
+  &--variant--secondary {
+    --kicl--components--text--strength: 80%;
+  }
+
+  @each $accent in (confirm, error, info, warning) {
+    &--accent--#{$accent} {
+      --kicl--components--text--color: var(--kicl-color-#{$accent});
+    }
+  }
+
+  // Inline code, after shadcn's typography example. The fill mixes from the
+  // text colour so it follows the theme and any link it sits in. Block padding
+  // on an inline box doesn't move the lines. Inline padding does take space,
+  // but it has to, or the fill runs into a comma or full stop right after it.
+  &[data-is='code'] {
+    --kicl--components--text--background-color: color-mix(
+      in oklab,
+      currentcolor 10%,
+      transparent
+    );
+    --kicl--components--text--border-color: transparent;
+    --kicl--components--text--border-radius: var(--kicl-size-3px);
+    --kicl--components--text--border-width: var(--kicl-size-1px);
+    --kicl--components--text--font-size: var(--kicl-font-size-small);
+    --kicl--components--text--offset: var(--kicl-size-3px);
+
+    background-color: var(--kicl--components--text--background-color);
+    border-radius: var(--kicl--components--text--border-radius);
+    box-decoration-break: clone;
+
+    // An inset shadow, not a border, so both variants are the same size.
+    box-shadow: inset 0 0 0 var(--kicl--components--text--border-width)
+      var(--kicl--components--text--border-color);
+    font-family: var(--kicl-font-family-mono);
+    font-weight: var(--kicl-font-weight-bold);
+    padding: var(--kicl--components--text--offset);
+
+    // The outline takes the surrounding copy's colour; the text keeps its own.
+    &.kicl--components--text--variant--secondary {
+      --kicl--components--text--background-color: transparent;
+      --kicl--components--text--border-color: color-mix(
+        in oklab,
+        var(--kicl--components--text--context-color, var(--kicl-body-color)) 40%,
+        transparent
+      );
+    }
   }
 
   // Citation / source title
