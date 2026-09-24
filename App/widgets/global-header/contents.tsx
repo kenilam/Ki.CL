@@ -9,8 +9,12 @@ import { SiteLogo } from '@/widgets';
 // Components
 import { Animation, Layout } from '@/components';
 
+// Hooks
+import { useResponsive } from '@/hooks';
+
 // Partials
 import { Navigation } from './navigation';
+import { Theme } from './theme';
 
 // Context
 import { useGlobalHeaderContext } from './context';
@@ -20,6 +24,7 @@ import { CLASS_NAME } from './constants';
 
 const Contents: React.FunctionComponent = () => {
   const { node, show } = useGlobalHeaderContext();
+  const { isMobile } = useResponsive();
 
   const className = classNames(
     'kicl-font-size-small',
@@ -32,13 +37,17 @@ const Contents: React.FunctionComponent = () => {
     <Animation property='slide-from-top' in={show}>
       <Layout
         alignItems='center'
-        autoFlow='column'
-        justifyContent='space-between'
+        autoFlow='row'
+        display='flex'
+        gap={ isMobile ? 'wide' : 'normal' }
         ref={node}
       >
         <header className={className}>
-          <SiteLogo />
-          <Navigation />
+          <SiteLogo className='kicl-margin-inline-end-auto' />
+          {/* On mobile the menu button ends the row. */}
+          {isMobile ? null : <Navigation />}
+          <Theme />
+          {isMobile ? <Navigation /> : null}
         </header>
       </Layout>
     </Animation>
