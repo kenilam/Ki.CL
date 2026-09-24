@@ -3,13 +3,7 @@
  * these; each styles its own elements in its own file.
  */
 .kicl--views--experiments__home {
-  $home: '--kicl--views--experiments__home';
-
   --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
-  --kicl--views--experiments__home--width: var(--kicl-columns-12);
-  --kicl--views--experiments__home--inset: var(
-    --kicl--components--frame--inset
-  );
   --kicl--views--experiments__home--screen: 100dvb;
 
   /*
@@ -23,14 +17,5 @@
   /* Top padding: clear the fixed site header. */
   --kicl--views--experiments__home--top: calc(
     var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
-  );
-
-  /* Left edge of the text: same as a centred 12-column page with inset. */
-  --kicl--views--experiments__home--bleed: max(
-    0px,
-    calc((100dvi - var(--kicl--views--experiments__home--width)) / 2)
-  );
-  --kicl--views--experiments__home--margin: calc(
-    var(#{$home}--bleed) + var(#{$home}--inset)
   );
 }

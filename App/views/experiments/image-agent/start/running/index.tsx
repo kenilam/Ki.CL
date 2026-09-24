@@ -36,20 +36,19 @@ const Running: React.FunctionComponent<RunningState> = ({ busy, running }) => {
   }
 
   return (
-    <Layout autoFlow='row' gap='narrow'>
-      <section aria-labelledby={id} className='kicl-padding-block-end-wide'>
-        <Layout autoFlow='column' gap='narrow' justifyContent='start'>
+    <Layout autoFlow='row' gap='none' justifyItems='start'>
+      <section aria-labelledby={id}>
+        <Layout autoFlow='column' gap='narrow'>
           <Heading id={id} is='h2' dense>
             <Spinner position='inline' />
             {COPY.title}
           </Heading>
         </Layout>
-        <List gap='narrower'>
+        <List gap='narrow'>
           {running.map((thread) => (
             <ListItem key={thread.id}>
               <HyperLink
                 after={<Ri.RiArrowRightSLine aria-hidden />}
-                className='kicl-font-size-small'
                 to={toPath(thread.id)}
               >
                 {toLabel(thread)}
