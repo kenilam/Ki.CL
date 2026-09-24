@@ -14,7 +14,12 @@
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-inline: var(--kicl--tree-of-life--inset);
+
+  // On the frame itself, so `100%` is the window: less the frame's own gap.
+  padding-inline: calc(
+    var(--kicl--components--frame--page-inset) -
+    var(--kicl--components--frame--gap)
+  );
 
   // The view layer sits above `Layout`, so this overrides its column flow.
   @include query('≤desktop') {

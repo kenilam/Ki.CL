@@ -90,6 +90,11 @@ $gutter-properties: (
   padding-inline: var(--kicl--components--frame--inset);
 }
 
+// The same, and no wider than 12 columns, on an element as wide as the Frame.
+.kicl-padding-inline-frame-columns-12 {
+  padding-inline: var(--kicl--components--frame--columns-inset);
+}
+
 // Clears the fixed global header, whose height is measured at runtime.
 .kicl-padding-block-start-header {
   padding-block-start: var(--kicl--widgets--global-header--block-size);

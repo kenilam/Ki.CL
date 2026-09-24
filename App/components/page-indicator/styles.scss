@@ -16,9 +16,7 @@
   --kicl--components--page-indicator--dot: var(--kicl-size-half);
 
   /* Mirrors the text's left edge inside a Frame. */
-  inset-inline-end: calc(
-    var(--kicl--components--frame--gap) + var(--kicl--components--frame--inset)
-  );
+  inset-inline-end: var(--kicl--components--frame--page-inset);
   mix-blend-mode: difference;
   visibility: hidden;
   z-index: var(--kicl-z-index-floating);

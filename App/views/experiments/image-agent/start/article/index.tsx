@@ -12,6 +12,7 @@ import { Drawing } from './drawing';
 import { Failover } from './failover';
 import { Governing } from './governing';
 import { Limits } from './limits';
+import { HowItWorks } from './how-it-work';
 import { Retrieval } from './retrieval';
 import { SendingAMessage } from './sending-a-message';
 import { WhatThisIs } from './what-this-is';
@@ -34,6 +35,7 @@ const Article: React.FunctionComponent = () => (
     >
       <Heading className='kicl-font-size-larger'>How it was made</Heading>
       <WhatThisIs />
+      <HowItWorks />
       <SendingAMessage />
       <Governing />
       <Asking />

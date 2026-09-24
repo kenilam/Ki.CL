@@ -42,17 +42,16 @@ const Past: React.FunctionComponent<Props> = ({ query }) => {
   }
 
   return (
-    <Layout autoFlow='row' gap='narrow' justifyItems='start'>
+    <Layout autoFlow='row' gap='none' justifyItems='start'>
       <section aria-labelledby={id}>
         <Heading id={id} is='h2' dense>
           {COPY.title}
         </Heading>
-        <List gap='narrower'>
+        <List gap='narrow'>
           {threads.map((thread) => (
             <ListItem key={thread.id}>
               <HyperLink
                 after={<Ri.RiArrowRightSLine aria-hidden />}
-                className='kicl-font-size-small'
                 to={toPath(thread.id)}
               >
                 <Highlighter

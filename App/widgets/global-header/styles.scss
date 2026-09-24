@@ -5,21 +5,18 @@
   --kicl--widgets--global-header--offset: 0px;
   --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter);
   --kicl--widgets--global-header--padding-block-start: var(--kicl-gutter);
-  --kicl--widgets--global-header--padding-inline: var(--kicl-gutter-widest);
+
+  // In line with the content of a Frame, 12 columns at most.
+  --kicl--widgets--global-header--padding-inline: var(
+    --kicl--components--frame--page-inset
+  );
   --kicl--widgets--global-header--left: 0;
   --kicl--widgets--global-header--top: 0px;
   --kicl--widgets--global-header--inline-size: 100%;
   --kicl--widgets--global-header--bleed: calc(
     var(--kicl--widgets--global-header--block-size) +
-      (var(--kicl--widgets--global-header--top) * 2)
+    (var(--kicl--widgets--global-header--top) * 2)
   );
-
-  @include query('≤tablet') {
-    --kicl--widgets--global-header--padding-inline: calc(
-      var(--kicl--components--frame--gap) +
-        var(--kicl--components--frame--inset)
-    );
-  }
 
   @include tablet {
     --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter-wide);
@@ -41,8 +38,7 @@
   );
   --kicl--components--animation--property--slide-from-top--distance: 100%;
   --kicl--components--hyper-link--text-color: var(--kicl-body-color);
-  --kicl--components--animation--transition-property:
-    opacity, translate, background-color, padding;
+  --kicl--components--animation--transition-property: opacity, translate, background-color, padding;
 
   backdrop-filter: var(--kicl--widgets--global-header--backdrop-filter);
   background-color: var(--kicl--widgets--global-header--background-color);
