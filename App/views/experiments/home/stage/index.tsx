@@ -11,6 +11,7 @@ import { useHashScroll } from './use-hash-scroll';
 
 // Partials
 import { Anchor } from './anchor';
+import { Pages } from './pages';
 import { Screen } from './screen';
 import { CLASS_NAME as WORDS } from './screen/words';
 
@@ -100,6 +101,9 @@ const Stage: React.FunctionComponent = () => {
           </List>
         </Frame>
       </div>
+      <Pages
+        pages={SCREENS.map(({ plate, title }) => ({ id: plate, label: title }))}
+      />
       {SCREENS.map((screen, index) => (
         <Anchor id={screen.plate} index={index} key={screen.to} />
       ))}

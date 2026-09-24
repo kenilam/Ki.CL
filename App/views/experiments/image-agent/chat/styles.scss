@@ -1,8 +1,8 @@
 /*
- * The composer is stuck to the bottom of the window. Only the conversation
- * row grows.
+ * Header, then the conversation, which grows to fill the window so the
+ * composer after it starts at the bottom.
  */
 .kicl--views--experiments--image-agent__chat {
-  grid-template-rows: max-content 1fr max-content;
+  grid-template-rows: max-content 1fr;
   min-block-size: 100dvh;
 }

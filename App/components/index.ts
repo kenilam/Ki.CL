@@ -129,6 +129,11 @@ import { ListItem, ListItemProps } from './list-item';
 import { Menu, MenuProps } from './menu';
 import { Navigation, NavigationProps } from './navigation';
 import {
+  PageIndicator,
+  type PageIndicatorPage,
+  type PageIndicatorProps,
+} from './page-indicator';
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -309,6 +314,9 @@ export {
   type MenuProps,
   Navigation,
   type NavigationProps,
+  PageIndicator,
+  type PageIndicatorPage,
+  type PageIndicatorProps,
   Popover,
   PopoverContent,
   type PopoverContentProps,
