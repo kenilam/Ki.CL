@@ -1,7 +1,10 @@
 import type { ClientRequest, IncomingMessage, Server } from 'node:http';
 
 import type { Express, NextFunction, Request, Response } from 'express';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import {
+  createProxyMiddleware,
+  type RequestHandler,
+} from 'http-proxy-middleware';
 import { GoogleAuth } from 'google-auth-library';
 
 /**
@@ -163,15 +166,7 @@ export async function warmIdToken(): Promise<void> {
  * The one route that carries WebSockets, kept so its upgrade handler can be
  * attached to the server.
  */
-type UpgradeCapable = ReturnType<typeof createProxyMiddleware> & {
-  upgrade?: (
-    request: Parameters<Parameters<Server['on']>[1]>[0],
-    socket: never,
-    head: never
-  ) => void;
-};
-
-let subscriptions: UpgradeCapable | null = null;
+let subscriptions: RequestHandler | null = null;
 
 /**
  * A WebSocket upgrade never enters the Express router, so the proxy has to be
@@ -203,7 +198,7 @@ export function applyProxy(app: Express): void {
   });
 
   ROUTES.forEach(({ path, rewrite, ws }) => {
-    const middleware: UpgradeCapable = createProxyMiddleware({
+    const middleware = createProxyMiddleware({
       /*
        * Selected by `pathFilter` rather than by mounting on a path. Mounting
        * makes Express strip the prefix before the proxy sees the request, so
