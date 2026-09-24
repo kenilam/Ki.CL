@@ -1,0 +1,38 @@
+name: Open sync pull request
+
+# A release merges develop into main with a merge commit, which develop does
+# not have yet. This PR brings it back and is merged with rebase.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$(git rev-list --count origin/develop..origin/main)" -eq 0 ]; then
+            echo 'develop already has everything on main.'
+            exit 0
+          fi
+
+          if [ -n "$(gh pr list --head main --base develop --state open --json number --jq '.[].number')" ]; then
+            echo 'A sync pull request is already open.'
+            exit 0
+          fi
+
+          gh pr create --base develop --head main --title 'Prod to Dev' \
+            --body 'Brings the release on main back into develop. Merge with rebase.'
