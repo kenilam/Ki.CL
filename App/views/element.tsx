@@ -3,6 +3,9 @@ import React, { useEffect, useRef } from 'react';
 // Routes
 import { useLocation } from '@/router';
 
+// Analytics
+import { useAnalytics } from '@/analytics';
+
 // Widgets
 import { GlobalHeaderProvider } from '@/widgets';
 
@@ -19,6 +22,8 @@ const Element: React.FunctionComponent = () => {
   useResponsive();
 
   const location = useLocation();
+
+  useAnalytics(location.pathname);
 
   const lastPathname = useRef(location.pathname);
 

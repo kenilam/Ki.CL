@@ -21,6 +21,8 @@ import * as dotenv from 'dotenv';
 
 import { getAlias, getStyleLayer, LAYER_ORDER } from './helper';
 
+import { collectMiddleware } from '../.server/collect';
+
 import configJSON from '../app.config.json';
 import tsconfigJSON from '../tsconfig.json';
 
@@ -198,6 +200,16 @@ const getConfig = ({
       dynamicImport(),
       inspect(),
       react(),
+      // Analytics batches land here in development, as they do on the server.
+      {
+        name: 'kicl-collect',
+        configureServer(server) {
+          server.middlewares.use(collectMiddleware);
+        },
+        configurePreviewServer(server) {
+          server.middlewares.use(collectMiddleware);
+        },
+      },
       tsconfigPaths({
         // Runtime Vite aliases only - `api/*` stays a TS path to `@mf-types`
         // and must not shadow the Module Federation remote.
