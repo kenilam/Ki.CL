@@ -24,6 +24,12 @@
   resize: vertical;
   white-space: pre-wrap;
 
+  // `field-sizing: content` would widen the field to the one-line
+  // placeholder; this keeps it at its own width so the placeholder truncates.
+  &:placeholder-shown {
+    contain: inline-size;
+  }
+
   &:disabled {
     resize: none;
   }
