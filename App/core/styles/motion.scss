@@ -4,3 +4,12 @@
     animation: none;
   }
 }
+
+// Hides an element that only makes sense with motion, such as a control for
+// scroll-driven panels that flow as a plain list under reduced motion. Pair it
+// with `kicl-animation-none-reduced-motion` when an animation sets `visibility`.
+.kicl-visibility-hidden-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    visibility: hidden;
+  }
+}

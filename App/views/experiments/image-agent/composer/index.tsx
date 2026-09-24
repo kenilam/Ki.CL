@@ -48,7 +48,7 @@ const Composer: React.FunctionComponent<Props> = ({
   return (
     <Layout autoFlow='row' justifyItems='stretch'>
       <section
-        className={classNames(CLASS_NAME, {
+        className={classNames(CLASS_NAME, 'kicl-margin-inline-auto', {
           [`${CLASS_NAME}--sticky`]: sticky,
           'kicl-inset-block-end-0': sticky,
           'kicl-position-sticky': sticky,
@@ -57,25 +57,18 @@ const Composer: React.FunctionComponent<Props> = ({
           'kicl-padding-block-start-wide-tablet-down': sticky,
           'kicl-padding-block-end-widest-tablet-down': sticky,
           'kicl-padding-inline-frame': !dense,
+          'kicl-inline-size-columns-8': !dense,
+          'kicl-inline-size-columns-12': dense,
         })}
       >
-        <Layout autoFlow='row' justifyItems='stretch'>
-          <section
-            className={classNames('kicl-margin-inline-auto', {
-              'kicl-inline-size-columns-8': !dense,
-              'kicl-inline-size-columns-12': dense,
-            })}
-          >
-            <Allowance busy={busy} />
-            <Form {...form} onSubmit={submit}>
-              <Field
-                disabled={busy || loading || spent}
-                onEnter={() => void submit()}
-                sending={loading}
-              />
-            </Form>
-          </section>
-        </Layout>
+        <Allowance busy={busy} />
+        <Form {...form} onSubmit={submit}>
+          <Field
+            disabled={busy || loading || spent}
+            onEnter={() => void submit()}
+            sending={loading}
+          />
+        </Form>
       </section>
     </Layout>
   );
