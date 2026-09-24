@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Frame, Layout } from '@/components';
 
 // Partials
 import { Attempts } from './attempts';
@@ -26,16 +26,18 @@ const Banner: React.FunctionComponent = () => (
     justifyItems='start'
     justifyContent='start'
   >
-    <header
-      className={classNames(
-        CLASS_NAME,
-        'kicl-padding-block-start-widest',
-        'kicl-position-relative'
-      )}
-    >
-      <Intro />
-      <Attempts />
-    </header>
+    <Frame grow hold>
+      <header
+        className={classNames(
+          CLASS_NAME,
+          'kicl-padding-block-start-widest',
+          'kicl-position-relative'
+        )}
+      >
+        <Intro />
+        <Attempts />
+      </header>
+    </Frame>
   </Layout>
 );
 

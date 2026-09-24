@@ -1,7 +1,13 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Layout } from '@/components';
+
+// Constants
+import { CLASS_NAME as HOME } from '@/views/experiments/tree-of-life/home/constants';
 
 // Partials
 import { DrawingOrganisms } from './drawing-organisms';
@@ -15,9 +21,9 @@ import { WhereItStarted } from './where-it-started';
 
 /**
  * How the experiment got to its current version, from the D3 reference to
- * what the latest view gave up.
+ * what the latest view gave up. The banner is framed to the window; this
+ * keeps to the page column.
  */
-
 const Article: React.FunctionComponent = () => {
   return (
     <Layout
@@ -26,7 +32,14 @@ const Article: React.FunctionComponent = () => {
       alignItems='start'
       alignContent='start'
     >
-      <div>
+      <div
+        className={classNames(
+          `${HOME}__column`,
+          'kicl-margin-inline-auto',
+          'kicl-max-inline-size-columns-12',
+          'kicl-padding-block-start-extreme'
+        )}
+      >
         <WhereItStarted />
         <ThePicture />
         <FifteenAttempts />

@@ -31,6 +31,7 @@ const Article: React.FunctionComponent = () => (
       className={classNames(
         CLASS_NAME,
         'kicl-margin-inline-auto',
+        'kicl-max-inline-size-columns-12',
         'kicl-padding-block-start-extreme',
         'kicl-position-relative'
       )}

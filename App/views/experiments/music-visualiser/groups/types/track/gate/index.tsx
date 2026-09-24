@@ -54,6 +54,7 @@ const Gate: React.FunctionComponent = () => {
           CLASS_NAME,
           'kicl-inset-0',
           'kicl-margin-inline-auto',
+          'kicl-max-inline-size-columns-6',
           'kicl-padding-block-start-header',
           'kicl-position-absolute',
           'kicl-text-align-center'

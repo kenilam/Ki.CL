@@ -1,7 +1,10 @@
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments/constants';
 import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants';
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';
-import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
+import {
+  DESCRIPTION as IMAGE_AGENT_DESCRIPTION,
+  toPath as toImageAgentPath,
+} from '@/views/experiments/image-agent/constants';
 
 /** Root of every class and custom property in this view. */
 const CLASS_NAME = 'kicl--views--experiments__home';
@@ -11,7 +14,6 @@ const COPY = {
 };
 
 export type Experiment = {
-
   description: string;
   /** Which background Stage/Screen paints; a class modifier. */
   plate: string;
@@ -36,8 +38,7 @@ const EXPERIMENTS: readonly Experiment[] = [
     to: toMusicVisualiserPath(),
   },
   {
-    description:
-      'Describe a picture and the agent draws it. If there isn’t enough detail, it asks questions first.',
+    description: IMAGE_AGENT_DESCRIPTION,
     plate: 'image-agent',
     title: 'Image Agent',
     to: toImageAgentPath(),

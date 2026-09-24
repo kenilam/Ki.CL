@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, Layout } from '@/components';
+import { Animation, Frame, Layout } from '@/components';
 
 // Partials
 import { Background } from './background';
@@ -13,30 +13,28 @@ import { Header } from './header';
 // Styles
 import './styles.scss';
 
+// Constants
+import { CONTENT_DELAY, FRAME_DELAY } from './constants';
+
 const CLASS_NAME = 'kicl--views--home';
 
 const Home: React.FunctionComponent = () => {
   return (
-    <Animation delay={300}>
-      <Layout
-        autoFlow='row'
-        gap='none'
-        justifyContent='center'
-        justifyItems='center'
-      >
-        <section
-          className={classNames(
-            CLASS_NAME,
-            'kicl-block-size-screen',
-            'kicl-inline-size-full',
-            'kicl-position-relative'
-          )}
-        >
-          <Background />
+    <Layout
+      autoFlow='row'
+      gap='none'
+      justifyContent='center'
+      justifyItems='center'
+    >
+      <Frame delay={FRAME_DELAY}>
+        <section className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+          <Animation delay={CONTENT_DELAY}>
+            <Background />
+          </Animation>
           <Header />
         </section>
-      </Layout>
-    </Animation>
+      </Frame>
+    </Layout>
   );
 };
 

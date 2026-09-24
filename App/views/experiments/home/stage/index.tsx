@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { List } from '@/components';
+import { Frame, List } from '@/components';
 
 // Partials
 import { Screen } from './screen';
@@ -28,7 +28,7 @@ const SCREENS = EXPERIMENTS.map((experiment, index) => ({
 })).reverse();
 
 /**
- * A sticky stage, one screen tall, that stays pinned while the page
+ * A sticky stage, one screen tall, framed below the global header, that stays pinned while the page
  * scrolls one screen height per panel. Screen does the per-panel motion.
  *
  * The push maths in screen/styles.scss need the text block's height. The
@@ -81,21 +81,18 @@ const Stage: React.FunctionComponent = () => {
           'kicl-position-sticky'
         )}
       >
-        <List
-          is='ol'
-          className='kicl-block-size-full'
-          gap='none'
-          ref={list as never}
-        >
-          {SCREENS.map((screen, index) => (
-            <Screen
-              experiment={screen}
-              index={index}
-              key={screen.to}
-              number={screen.number}
-            />
-          ))}
-        </List>
+        <Frame clip={false}>
+          <List is='ol' gap='none' ref={list as never}>
+            {SCREENS.map((screen, index) => (
+              <Screen
+                experiment={screen}
+                index={index}
+                key={screen.to}
+                number={screen.number}
+              />
+            ))}
+          </List>
+        </Frame>
       </div>
     </div>
   );

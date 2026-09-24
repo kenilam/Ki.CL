@@ -4,16 +4,6 @@
   $screen: '.kicl--views--experiments__home__screen';
 
   --kicl--views--experiments__home--drift: 12%;
-  --kicl--views--experiments__home--scrim: color-mix(
-    in oklab,
-    var(--kicl-body-background-color) 70%,
-    transparent
-  );
-  --kicl--views--experiments__home--scrim-end: color-mix(
-    in oklab,
-    var(--kicl-body-background-color) 25%,
-    transparent
-  );
 
   background-color: var(--kicl-body-background-color);
   background-position: center;
@@ -23,17 +13,7 @@
   inset-inline: 0;
 
   /* Scrim for text contrast. */
-  &::after {
-    backdrop-filter: saturate(70%);
-    background-image: linear-gradient(
-      180deg,
-      var(--kicl--views--experiments__home--scrim-end) 0%,
-      var(--kicl--views--experiments__home--scrim) 100%
-    );
-    content: '';
-    inset: 0;
-    position: absolute;
-  }
+  @include scrim;
 
   @supports (animation-timeline: scroll()) {
     animation:
@@ -57,29 +37,12 @@
     }
   }
 
-  /* No image for the visualiser; a CSS gradient in its palette instead. */
-  #{$screen}--music-visualiser & {
-    background-image:
-      radial-gradient(
-        ellipse 40% 55% at 70% 30%,
-        color-mix(in oklab, var(--kicl-color-info) 55%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 45% 60% at 30% 70%,
-        color-mix(in oklab, var(--kicl-color-warning) 45%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 35% 50% at 85% 80%,
-        color-mix(in oklab, var(--kicl-color-green) 50%, transparent),
-        transparent 70%
-      );
-  }
-
-  /* Fallback picture, shown under the mosaic until it loads. See mosaic/. */
+  /* The backdrop's pictures drift over the same range as the plate. */
   #{$screen}--image-agent & {
-    background-image: url('./mosaic/fallback.webp');
+    --kicl--views--experiments--image-agent__backdrop--from: var(
+      #{$home}--before
+    );
+    --kicl--views--experiments--image-agent__backdrop--to: var(#{$home}--after);
   }
 }
 

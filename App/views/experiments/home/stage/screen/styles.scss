@@ -37,14 +37,46 @@
   );
 
   block-size: var(--kicl--views--experiments__home--screen);
-  overflow: clip;
 
-  /* All panels in the same grid cell, stacked in DOM order. */
+  /*
+   * Only the picture is cropped to the frame, so the words can pass its edge.
+   * The crop starts full-bleed and tucks into the frame as the panel arrives.
+   */
+  &__crop {
+    border-radius: var(--kicl--components--frame--radius);
+    inset: 0;
+    overflow: clip;
+
+    @supports (animation-timeline: scroll()) {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: kicl--views--experiments__home--frame-in linear both;
+        animation-range: var(#{$home}--arrival) var(#{$home}--at);
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+
+  /*
+   * All panels in the same grid cell, stacked in DOM order, and as tall as
+   * the frame rather than the window.
+   */
   @supports (animation-timeline: scroll()) {
+    block-size: 100%;
     grid-area: 1 / 1;
 
     @media (prefers-reduced-motion: reduce) {
+      block-size: var(--kicl--views--experiments__home--screen);
       grid-area: auto;
     }
+  }
+}
+
+// Out to the window's edges, as if there were no frame.
+@keyframes kicl--views--experiments__home--frame-in {
+  from {
+    border-radius: 0;
+    inset: calc(var(--kicl--components--frame--top) * -1)
+      calc(var(--kicl--components--frame--gap) * -1)
+      calc(var(--kicl--components--frame--gap) * -1);
   }
 }
