@@ -31,10 +31,9 @@ const PartTwo: React.FunctionComponent = () => {
           Part 2 - The agent experience
         </Heading>
         <Text variant='secondary'>
-          Part 2 of the brief adds a Claude Code-style agent for creative work:
-          the user describes what they want in natural language, and the agent
-          iteratively creates and edits media using the same primitives that
-          power the Apps.
+          Part 2 of the brief adds a Claude Code-style agent for creative work.
+          A user describes what they want in natural language, and the agent
+          creates and edits media with the same primitives the Apps use.
         </Text>
         <WhatChanges />
         <AgentHarness />

@@ -27,7 +27,7 @@
   }
 
   &__body {
-    max-inline-size: min(100%, 92ch);
+    max-inline-size: min(100%, var(--kicl-columns-12));
 
     > section > * {
       animation: kicl--views--portfolio--pika--system-design--parallax-reveal
@@ -85,23 +85,16 @@
       }
     }
     /* stylelint-enable selector-class-pattern */
-
-    /* Inline code chips - same surface tokens the Card uses. */
-    :not(pre) > code {
-      background-color: var(--kicl-surface-color);
-      border: var(--kicl-size-1px) solid var(--kicl-surface-border-color);
-      border-radius: calc(var(--kicl-size-half) / 2);
-      font-family: var(--kicl-font-family-mono);
-      font-size: var(--kicl-font-size-small);
-      letter-spacing: normal;
-      padding-block: 0;
-      padding-inline: 0.4em;
-    }
   }
 
   /* `html` already clears the global header; this keeps a gutter above the heading. */
   h2[id] {
     scroll-margin-block-start: var(--kicl-gutter);
+  }
+
+  /* Inside the fullscreen dialog the figure needs an explicit measure. */
+  &__full .kicl--components--diagram {
+    inline-size: min(1200px, 92dvw);
   }
 
   &__full {
@@ -112,7 +105,7 @@
 
     --kicl--components--image--block-size: calc(
       var(--kicl--components--dialog--block-size) -
-      (var(--kicl--components--dialog--padding-block) * 2)
+        (var(--kicl--components--dialog--padding-block) * 2)
     );
     --kicl--components--image--inline-size: fit-content;
   }

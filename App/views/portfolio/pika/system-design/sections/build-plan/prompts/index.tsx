@@ -21,17 +21,20 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
       <>
         Implement the App manifest system for a creative platform. Deliverables:
         (a) JSON Schema for the manifest format in{' '}
-        <code>schema/app-manifest.json</code> - typed inputs (text, image, enum,
-        model-select), workflow as a DAG of primitive calls with{' '}
-        <code>needs</code> edges and per-node retry config, outputs; (b) a
-        validator that rejects cycles, unknown primitives, and arg-type
-        mismatches, with error messages naming the offending node; (c) Postgres
-        migrations for <code>apps</code>, <code>app_versions</code> (immutable
-        manifests, jsonb), <code>jobs</code>, <code>tasks</code>,{' '}
-        <code>task_attempts</code>, <code>assets</code> per the ERD in DESIGN.md
-        §1.2. Write property-based tests for the DAG validator (random DAGs with
-        injected cycles must all be caught). Do not build any execution logic
-        yet.
+        <Text is='code' variant='secondary'>
+          schema/app-manifest.json
+        </Text>{' '}
+        - typed inputs (text, image, enum, model-select), workflow as a DAG of
+        primitive calls with <Text is='code'>needs</Text> edges and per-node
+        retry config, outputs; (b) a validator that rejects cycles, unknown
+        primitives, and arg-type mismatches, with error messages naming the
+        offending node; (c) Postgres migrations for <Text is='code'>apps</Text>,{' '}
+        <Text is='code'>app_versions</Text> (immutable manifests, jsonb),{' '}
+        <Text is='code'>jobs</Text>, <Text is='code'>tasks</Text>,{' '}
+        <Text is='code'>task_attempts</Text>, <Text is='code'>assets</Text> per
+        the ERD in DESIGN.md §1.2. Write property-based tests for the DAG
+        validator (random DAGs with injected cycles must all be caught). Do not
+        build any execution logic yet.
       </>
     ),
   },
@@ -39,16 +42,20 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
     title: 'Orchestration',
     body: (
       <>
-        Build <code>RunAppWorkflow</code> as a single generic Temporal workflow
-        that interprets a validated manifest: topologically schedule nodes, run
-        each as an activity with the manifest&apos;s retry policy, persist task
-        state transitions and output refs to Postgres, emit progress events to
-        the bus. Every provider call takes an idempotency key derived from{' '}
-        <code>(job_id, node_id)</code> - stable across retry attempts, so a
-        re-run cannot double-submit the same generation. Prove resumability:
-        kill the worker mid-DAG in a test and assert the job completes without
-        re-running finished nodes and without duplicate provider calls (use the
-        fake provider&apos;s call log).
+        Build{' '}
+        <Text is='code' accent='info'>
+          RunAppWorkflow
+        </Text>{' '}
+        as a single generic Temporal workflow that interprets a validated
+        manifest: topologically schedule nodes, run each as an activity with the
+        manifest&apos;s retry policy, persist task state transitions and output
+        refs to Postgres, emit progress events to the bus. Every provider call
+        takes an idempotency key derived from{' '}
+        <Text is='code'>(job_id, node_id)</Text> - stable across retry attempts,
+        so a re-run cannot double-submit the same generation. Prove
+        resumability: kill the worker mid-DAG in a test and assert the job
+        completes without re-running finished nodes and without duplicate
+        provider calls (use the fake provider&apos;s call log).
       </>
     ),
   },
@@ -57,15 +64,19 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
     body: (
       <>
         Create the provider adapter interface:{' '}
-        <code>submit(request) → provider_ref</code>, webhook + polling
+        <Text is='code'>submit(request) → provider_ref</Text>, webhook + polling
         completion, and error mapping into{' '}
-        <code>{'{retryable, permanent, content_policy, degraded}'}</code>.
-        Implement two adapters against the sandbox APIs in{' '}
-        <code>providers/</code> plus a deterministic fake for tests. Add a
-        reconciler that polls for jobs whose webhooks never arrived (&gt;2×
-        expected latency). Integration test: webhook delivered twice, webhook
-        lost, provider 429 storm - assert exactly-once task completion and
-        correct backoff.
+        <Text is='code'>
+          {'{retryable, permanent, content_policy, degraded}'}
+        </Text>
+        . Implement two adapters against the sandbox APIs in{' '}
+        <Text is='code' variant='secondary'>
+          providers/
+        </Text>{' '}
+        plus a deterministic fake for tests. Add a reconciler that polls for
+        jobs whose webhooks never arrived (&gt;2× expected latency). Integration
+        test: webhook delivered twice, webhook lost, provider 429 storm - assert
+        exactly-once task completion and correct backoff.
       </>
     ),
   },
@@ -88,14 +99,20 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
     title: 'Eval harness',
     body: (
       <>
-        Build the eval runner: load briefs from <code>evals/briefs/*.yaml</code>
+        Build the eval runner: load briefs from{' '}
+        <Text is='code' variant='secondary'>
+          evals/briefs/*.yaml
+        </Text>
         , execute each against the agent with stubbed providers and pinned
         seeds, score process metrics (tool plausibility, draft-before-final
         ordering, budget adherence, turn count) deterministically, and emit a
-        diffable JSON report. Add <code>--judge</code> mode that sends outputs
-        to a vision-capable model with the rubric in{' '}
-        <code>evals/rubric.md</code>. CI gate: process metrics may not regress
-        on the golden set; judge deltas &gt; 0.3 flag for human review.
+        diffable JSON report. Add <Text is='code'>--judge</Text> mode that sends
+        outputs to a vision-capable model with the rubric in{' '}
+        <Text is='code' variant='secondary'>
+          evals/rubric.md
+        </Text>
+        . CI gate: process metrics may not regress on the golden set; judge
+        deltas &gt; 0.3 flag for human review.
       </>
     ),
   },
@@ -107,9 +124,8 @@ const Prompts: React.FunctionComponent = () => (
       Prompts I&apos;d use to steer a coding agent
     </Heading>
     <Text>
-      I&apos;d feed these to Claude Code in stages, each one ending at something
-      verifiable. Every prompt carries its own acceptance tests, because
-      agent-written code is only as good as the tests checking it.
+      I&apos;d feed these to Claude Code in stages. Each one ends at something
+      verifiable and carries its own acceptance tests.
     </Text>
     <List gap='wide' is='ol'>
       {PROMPTS.map(({ body, title }, index) => (

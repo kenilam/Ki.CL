@@ -29,20 +29,20 @@ const BuildPlan: React.FunctionComponent = () => {
           Estimate &amp; build plan
         </Heading>
         <Text>
-          These numbers assume me leading with coding agents doing the heavy
-          lifting, Temporal Cloud so orchestration is bought rather than built,
-          and one product engineer joining from week three, counted in calendar
-          weeks rather than ideal engineering hours:
+          These are calendar weeks. They assume I lead with coding agents doing
+          most of the implementation, Temporal Cloud handles orchestration so it
+          isn&apos;t built in-house, and one product engineer joins from week
+          three:
         </Text>
         <Phases />
         <Text>
-          Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to seven
-          - and that number only holds because v1 is deliberately narrow: one
-          region, two providers, an internal-only Studio, and generation kept
-          behind vendor APIs. Provider-adapter edge cases are the long pole, not
-          the happy path. Coding agents compress the skeleton and the agent
-          loop, but they help much less with debugging a flaky third-party
-          webhook, so the middle phases carry most of the schedule risk.
+          Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to
+          seven. That only holds because v1 is narrow: one region, two
+          providers, an internal-only Studio, and generation kept behind vendor
+          APIs. Provider-adapter edge cases are the long pole. Coding agents
+          speed up the skeleton and the agent loop but help much less with
+          debugging a flaky third-party webhook, so the middle phases carry most
+          of the schedule risk.
         </Text>
 
         <Prompts />
