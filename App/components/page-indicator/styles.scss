@@ -1,0 +1,78 @@
+/*
+ * Page `n` is current from half a page before `n` page heights of scroll to
+ * half a page after. Outside that range the animation does not apply, so
+ * only one dot is lit. After the last page the column fades out, so it does
+ * not sit over whatever follows. The dots are white with a difference
+ * blend, which keeps them visible on light and dark pages alike.
+ *
+ * The current dot is only known from a scroll timeline, so without one the
+ * column is hidden. The fade sets `visibility`, so it shows the column
+ * where timelines work.
+ */
+.kicl--components--page-indicator {
+  $name: '--kicl--components--page-indicator';
+
+  --kicl--components--page-indicator--page: 100dvb;
+  --kicl--components--page-indicator--dot: var(--kicl-size-half);
+
+  /* Mirrors the text's left edge inside a Frame. */
+  inset-inline-end: calc(
+    var(--kicl--components--frame--gap) + var(--kicl--components--frame--inset)
+  );
+  mix-blend-mode: difference;
+  visibility: hidden;
+  z-index: var(--kicl-z-index-floating);
+
+  @supports (animation-timeline: scroll()) {
+    animation: kicl--components--page-indicator--leave linear both;
+    animation-range: calc((var(#{$name}--count) - 0.5) * var(#{$name}--page))
+      calc(var(#{$name}--count) * var(#{$name}--page));
+    animation-timeline: scroll(root);
+  }
+
+  &__dot {
+    background-clip: content-box;
+    background-color: var(--kicl-color-white);
+    block-size: var(#{$name}--dot);
+    border-radius: 50%;
+    box-sizing: content-box;
+    display: block;
+    inline-size: var(#{$name}--dot);
+    opacity: 0.4;
+    padding: var(--kicl-gutter-narrow);
+    transition: opacity var(--kicl-transition-duration)
+      var(--kicl-ease-sine-out);
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      animation: kicl--components--page-indicator--current linear;
+      animation-range: calc((var(#{$name}--index) - 0.5) * var(#{$name}--page))
+        calc((var(#{$name}--index) + 0.5) * var(#{$name}--page));
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes kicl--components--page-indicator--current {
+  from,
+  to {
+    opacity: 1;
+    scale: 1.5;
+  }
+}
+
+@keyframes kicl--components--page-indicator--leave {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
