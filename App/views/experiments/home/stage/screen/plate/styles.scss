@@ -12,9 +12,6 @@
   inset-block: calc(var(--kicl--views--experiments__home--drift) * -1);
   inset-inline: 0;
 
-  /* Scrim for text contrast. */
-  @include scrim;
-
   @supports (animation-timeline: scroll()) {
     animation:
       kicl--views--experiments__home--arrive linear both,
@@ -33,12 +30,15 @@
     }
   }
 
-  /* The backdrop's pictures drift over the same range as the plate. */
   #{$screen}--image-agent & {
+    /* The backdrop's pictures drift over the same range as the plate. */
     --kicl--views--experiments--image-agent__backdrop--from: var(
       #{$home}--before
     );
     --kicl--views--experiments--image-agent__backdrop--to: var(#{$home}--after);
+
+    /* Only the photos need a scrim; on the other plates it darkens too much. */
+    @include scrim;
   }
 }
 

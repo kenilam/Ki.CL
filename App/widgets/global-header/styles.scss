@@ -54,11 +54,6 @@
   padding-inline: var(--kicl--widgets--global-header--padding-inline);
   z-index: var(--kicl-z-index-header);
 
-  // Layout's own gap class sits in a lower layer, so this wins below desktop.
-  @include query('≤desktop') {
-    --kicl-layout--gap: var(--kicl-gutter-wider);
-  }
-
   &:has(~ menu:not(.is-closed)) {
     --kicl--widgets--global-header--transition-delay: 0s;
   }

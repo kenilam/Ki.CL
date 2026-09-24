@@ -57,7 +57,7 @@ const Mobile: React.FunctionComponent = () => {
           aria-label={LABEL}
           autoFlow='row'
           gap='normal'
-          justifyItems='start'
+          justifyItems='end'
         >
           {Links}
         </Navigation>

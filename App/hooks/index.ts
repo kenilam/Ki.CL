@@ -15,11 +15,13 @@ import {
   useScrollDirection,
 } from './use-scroll-direction';
 import { useScrollEvent } from './use-scroll-event';
+import { type Theme, useTheme } from './use-theme';
 
 export {
   DARK_THEME_CLASS_NAME,
   MUTATION_OBSERVER_OPTIONS,
   SCROLL_DIRECTIONS,
+  type Theme,
   breakpoints,
   useDebouncedValue,
   useIntersectionObserver,
@@ -28,4 +30,5 @@ export {
   useResponsive,
   useScrollDirection,
   useScrollEvent,
+  useTheme,
 };
