@@ -14,8 +14,8 @@ import { WhatIGaveUp } from './what-i-gave-up';
 import { WhereItStarted } from './where-it-started';
 
 /**
- * How the experiment got here: the reference it chased, what each generation
- * of the view traded away, and what the final one gave up to be usable.
+ * How the experiment got to its current version, from the D3 reference to
+ * what the latest view gave up.
  */
 
 const Article: React.FunctionComponent = () => {

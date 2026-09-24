@@ -26,7 +26,7 @@ const CLASS_NAME = `${HOME}__article`;
 
 /** How it was made: the music, the picture, the data, and the address. */
 const Article: React.FunctionComponent = () => (
-  <Layout autoFlow='row' gap='wider' justifyItems='stretch'>
+  <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
     <div
       className={classNames(
         CLASS_NAME,

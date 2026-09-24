@@ -22,15 +22,14 @@ const WhereItStarted: React.FunctionComponent = () => {
           >
             D3’s Tree of Life
           </HyperLink>
-          . It’s a radial dendrogram: curved links, tips labelled around the
-          circumference, branch lengths that carry real distance. As a diagram
-          of structure it’s complete. You can see the shape of a phylogeny and
-          how far apart its members sit.
+          . It’s a radial dendrogram with curved links, tips labelled around the
+          circumference and branch lengths that carry real distance. It shows
+          the shape of a phylogeny and how far apart its members sit.
         </Text>
 
         <Text is='p'>
-          What you can’t see is what any of them look like. Every tip is just a
-          name. I wanted the shape and the creatures on the same page.
+          It doesn’t show what any of them look like. Every tip is just a name.
+          I wanted the shape and the creatures on the same page.
         </Text>
       </section>
     </Layout>
