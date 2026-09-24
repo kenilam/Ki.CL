@@ -111,7 +111,12 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
             closable === true || closable === 'keyboard' ? 'any' : 'none'
           }
         >
-          <Layout>
+          {/*
+           * A full-screen dialog is taller than its content. The grid would
+           * share the spare height between the rows and push the content
+           * down, so it starts at the top.
+           */}
+          <Layout alignContent={fullScreen ? 'start' : undefined}>
             <div>
               <Layout autoFlow='column' alignItems='baseline'>
                 <header>

@@ -5,6 +5,9 @@ import { useMediaQuery } from 'react-responsive';
 
 import { CSSUnit } from '@/helper';
 
+// Hooks
+import { useTheme } from './use-theme';
+
 const DARK_THEME_CLASS_NAME = 'kicl--theme--dark';
 
 type Breakpoint = 'desktop' | 'mobile' | 'tablet' | 'wide';
@@ -29,18 +32,11 @@ const breakpoints: Breakpoints = {
 };
 
 const useResponsive = () => {
-  const isDarkColorSchemePrefers = useMediaQuery({
-    query: '(prefers-color-scheme: dark)',
-  });
+  const { isDarkColorSchemePrefers, theme } = useTheme();
 
   useEffect(() => {
-    if (isDarkColorSchemePrefers) {
-      document.body.classList.add(DARK_THEME_CLASS_NAME);
-      return;
-    }
-
-    document.body.classList.remove(DARK_THEME_CLASS_NAME);
-  }, [isDarkColorSchemePrefers]);
+    document.body.classList.toggle(DARK_THEME_CLASS_NAME, theme === 'dark');
+  }, [theme]);
 
   const isLandscape = useMediaQuery({ query: '(orientation: landscape)' });
   const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
