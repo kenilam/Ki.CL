@@ -39,7 +39,7 @@ const More: React.FunctionComponent = () => {
           CLASS_NAME,
           'kicl-animation-none-reduced-motion',
           'kicl-padding-block-extreme',
-          'kicl-padding-inline-frame'
+          'kicl-padding-inline-frame-columns-12'
         )}
       >
         <Heading

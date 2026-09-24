@@ -12,13 +12,10 @@ import { Frame, Layout } from '@/components';
 // Partials
 import { Backdrop } from '@/views/experiments/image-agent/backdrop';
 import { Composer } from '@/views/experiments/image-agent/composer';
-import { Allowance } from '@/views/experiments/image-agent/composer/allowance';
 import { Article } from './article';
 import { Header } from './header';
-import { More } from './header/more';
 import { Past } from './past';
 import { Running } from './running';
-import { Welcome } from './welcome';
 
 // Hooks
 import { useRunning } from './running/use-running';
@@ -26,6 +23,7 @@ import { useStart } from './use-start';
 
 // Constants
 import { CLASS_NAME } from './constants';
+import { useResponsive } from '@/hooks';
 
 /**
  * `/experiments/image-agent`: a framed hero with the title, how it works, the
@@ -43,6 +41,8 @@ const Start: React.FunctionComponent = () => {
   const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
   const spent = data?.ImageAgentAllowance.remaining === 0;
 
+  const { isTablet } = useResponsive();
+
   return (
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
       <article className={CLASS_NAME}>
@@ -58,32 +58,29 @@ const Start: React.FunctionComponent = () => {
               )}
             >
               <Backdrop scrim />
-              <div
-                className={classNames(
-                  'kicl-inline-size-columns-12',
-                  'kicl-margin-inline-auto',
-                  'kicl-position-relative'
-                )}
-              >
-                <div className='kicl-inline-size-columns-8'>
-                  <Header />
-                  <Welcome />
-                  <Running {...running} />
-                  {/* The badge is part of the field; without the field it stands alone. */}
-                  {running.busy || spent ? (
-                    <Allowance busy={running.busy} />
-                  ) : (
-                    <Composer
-                      {...sender}
-                      dense
-                      onText={setQuery}
-                      sticky={false}
-                    />
+              <Layout gap='wide'>
+                <div
+                  className={classNames(
+                    'kicl-inline-size-columns-12',
+                    'kicl-margin-inline-auto',
+                    'kicl-position-relative'
                   )}
-                  {running.busy ? null : <Past query={query} />}
+                >
+                  <Header />
+                  <Running {...running} />
+                  <Layout gap={ isTablet ? 'wider' : 'wide' }>
+                    <div>
+                      {running.busy ? null : <Past query={query} />}
+                      <Composer
+                        {...sender}
+                        disallow={running.busy || spent}
+                        onText={setQuery}
+                        sticky={false}
+                      />
+                    </div>
+                  </Layout>
                 </div>
-              </div>
-              <More />
+              </Layout>
             </section>
           </Layout>
         </Frame>
