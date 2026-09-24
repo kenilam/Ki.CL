@@ -12,6 +12,7 @@ import './styles.headings.scss';
 // Variables
 import './color.scss';
 import './columns.scss';
+import './contain.scss';
 import './backdrop.scss';
 import './breakpoint.scss';
 import './display.scss';

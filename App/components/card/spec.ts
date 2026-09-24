@@ -4,11 +4,13 @@ import type { ColumnSpan } from '@/components/layout/spec';
 import type { PolymorphicIsProps } from '@/components/polymorphic';
 
 /**
- * `default` = full width; named sizes map to `kicl-inline-size-*`, and
- * `1`…`12` to the column widths (`kicl-inline-size-columns-*`).
+ * `default` = full width; `fit` = as wide as the content; named sizes map to
+ * `kicl-inline-size-*`, and `1`…`12` to the column widths
+ * (`kicl-inline-size-columns-*`).
  */
 export const CARD_SIZES = [
   'default',
+  'fit',
   'xs',
   'sm',
   'md',
@@ -41,8 +43,8 @@ export type CardSectionIs = 'div' | 'footer' | 'header' | 'section';
 
 type CardOwnProps = {
   /**
-   * Width scale - `default` fills the parent; `xs`…`max` apply `kicl-inline-size-*`,
-   * and `1`…`12` a column width.
+   * Width scale - `default` fills the parent; `fit` shrinks to the content;
+   * `xs`…`max` apply `kicl-inline-size-*`, and `1`…`12` a column width.
    * `xs` / `sm` also tighten spacing (shadcn-style density).
    */
   size?: CardSize;

@@ -93,7 +93,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
 
         {message.kind === 'IMAGE' ? (
           <Layout gap='narrow'>
-            <Card variant='ghost'>
+            <Card size='fit' variant='ghost'>
               {message.asset?.url ? (
                 <Picture title={title} url={message.asset.url} />
               ) : null}
