@@ -7,7 +7,9 @@
 
   --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
   --kicl--views--experiments__home--width: var(--kicl-columns-12);
-  --kicl--views--experiments__home--inset: var(--kicl-gutter-widest);
+  --kicl--views--experiments__home--inset: var(
+    --kicl--components--frame--inset
+  );
   --kicl--views--experiments__home--screen: 100dvb;
 
   /*
@@ -31,9 +33,4 @@
   --kicl--views--experiments__home--margin: calc(
     var(#{$home}--bleed) + var(#{$home}--inset)
   );
-
-  /* Tighter on small screens: the largest title size has to fit the column. */
-  @include query('≤tablet') {
-    --kicl--views--experiments__home--inset: var(--kicl-gutter);
-  }
 }

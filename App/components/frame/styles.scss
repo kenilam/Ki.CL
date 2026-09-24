@@ -9,6 +9,9 @@
   --kicl--components--frame--delay: 0ms;
   --kicl--components--frame--gap: var(--kicl-gutter);
   --kicl--components--frame--radius: var(--kicl-size);
+
+  // How far content sits in from the frame's edge; every experiment reads it.
+  --kicl--components--frame--inset: var(--kicl-gutter-widest);
   --kicl--components--frame--top: max(
     var(#{$frame}--gap),
     var(--kicl--widgets--global-header--offset, 0px)
@@ -25,22 +28,25 @@
   // The gutter halves on tablets; the frame's gap shouldn't.
   @include tablet {
     --kicl--components--frame--gap: var(--kicl-gutter-wide);
+    --kicl--components--frame--inset: var(--kicl-gutter-wide);
+  }
+
+  @include query('≤mobile') {
+    --kicl--components--frame--inset: var(--kicl-gutter);
   }
 }
 
 .kicl--components--frame.kicl--components--frame {
   $frame: '--kicl--components--frame';
 
-  // Mixed here, not on :root, so it follows the theme the frame sits in. It
-  // shows the frame's shape before whatever fills it has loaded.
-  --kicl--components--frame--background-color: color-mix(
-    in oklab,
-    var(--kicl-body-color) 6%,
-    var(--kicl-body-background-color)
-  );
+  // Shows the frame's shape before whatever fills it has loaded. The light
+  // theme needs the border too, or the grey fades into the white page.
+  --kicl--components--frame--background-color: var(--kicl-color-grey-lighter);
+  --kicl--components--frame--border-color: var(--kicl-color-grey-light);
 
   background-color: var(#{$frame}--background-color);
   block-size: var(#{$frame}--block-size);
+  border: var(--kicl-size-1px) solid var(#{$frame}--border-color);
   border-radius: var(#{$frame}--radius);
 
   // Sized by the page, never by what's inside, such as a canvas still at the
@@ -51,6 +57,16 @@
   margin-inline: var(#{$frame}--gap);
   min-inline-size: 0;
   overflow: clip;
+
+  // `useResponsive` puts the dark theme's class on the body.
+  @at-root .kicl--theme--dark & {
+    --kicl--components--frame--background-color: color-mix(
+      in oklab,
+      var(--kicl-body-color) 6%,
+      var(--kicl-body-background-color)
+    );
+    --kicl--components--frame--border-color: transparent;
+  }
 
   &.kicl--components--frame--unclipped {
     overflow: visible;

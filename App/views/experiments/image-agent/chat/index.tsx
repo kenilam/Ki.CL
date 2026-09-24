@@ -52,7 +52,7 @@ const Chat: React.FunctionComponent = () => {
           className={classNames(
             CLASS_NAME,
             'kicl-padding-block-start-header',
-            'kicl-padding-inline-widest'
+            'kicl-padding-inline-frame'
           )}
         >
           <section

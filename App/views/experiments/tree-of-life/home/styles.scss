@@ -18,11 +18,7 @@
     var(--kicl-body-color) 50%,
     var(--kicl-body-background-color)
   );
-  --kicl--tree-of-life--inset: calc(var(--kicl-gutter-extreme) * 2);
-
-  @include query('≤tablet') {
-    --kicl--tree-of-life--inset: var(--kicl-gutter-wider);
-  }
+  --kicl--tree-of-life--inset: var(--kicl--components--frame--inset);
 
   &__column {
     padding-inline: var(--kicl--tree-of-life--inset);

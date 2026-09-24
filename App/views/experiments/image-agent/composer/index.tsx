@@ -19,7 +19,6 @@ import { useComposer } from './use-composer';
 
 // Constants
 import { CLASS_NAME } from './constants';
-import { useResponsive } from '@/hooks';
 
 type Props = Sender & {
   dense?: boolean;
@@ -46,8 +45,6 @@ const Composer: React.FunctionComponent<Props> = ({
 }) => {
   const { form, submit } = useComposer({ error, onText, send });
 
-  const { isMobile } = useResponsive();
-
   return (
     <Layout autoFlow='row' justifyItems='stretch'>
       <section
@@ -55,11 +52,11 @@ const Composer: React.FunctionComponent<Props> = ({
           [`${CLASS_NAME}--sticky`]: sticky,
           'kicl-inset-block-end-0': sticky,
           'kicl-position-sticky': sticky,
-          'kicl-padding-block-start': !isMobile && sticky,
-          'kicl-padding-block-end-wide': !isMobile && sticky,
-          'kicl-padding-block-start-wide': isMobile && sticky,
-          'kicl-padding-block-end-widest': isMobile && sticky,
-          'kicl-padding-inline-widest': !dense,
+          'kicl-padding-block-start': sticky,
+          'kicl-padding-block-end-wide': sticky,
+          'kicl-padding-block-start-wide-tablet-down': sticky,
+          'kicl-padding-block-end-widest-tablet-down': sticky,
+          'kicl-padding-inline-frame': !dense,
         })}
       >
         <Layout autoFlow='row' justifyItems='stretch'>
