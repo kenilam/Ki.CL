@@ -12,6 +12,7 @@ import './styles.headings.scss';
 // Variables
 import './color.scss';
 import './columns.scss';
+import './contain.scss';
 import './backdrop.scss';
 import './breakpoint.scss';
 import './display.scss';
@@ -23,6 +24,7 @@ import './gutter.scss';
 import './inset.scss';
 import './layout.scss';
 import './look-like.scss';
+import './motion.scss';
 import './scroll-reveal.scss';
 import './pointer-events.scss';
 import './position.scss';

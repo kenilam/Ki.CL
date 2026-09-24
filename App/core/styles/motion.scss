@@ -1,0 +1,6 @@
+// Stops an element's own animation when the person asks for less motion.
+.kicl-animation-none-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

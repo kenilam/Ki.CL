@@ -26,7 +26,11 @@ const Plate: React.FunctionComponent = () => {
   return (
     <div
       aria-hidden
-      className={classNames(CLASS_NAME, 'kicl-position-absolute')}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-animation-none-reduced-motion',
+        'kicl-position-absolute'
+      )}
     >
       {experiment.plate === 'image-agent' ? <Backdrop /> : null}
       {experiment.plate === 'music-visualiser' ? (

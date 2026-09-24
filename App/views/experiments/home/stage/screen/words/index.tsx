@@ -31,8 +31,8 @@ const Words: React.FunctionComponent = () => {
       <div
         className={classNames(
           CLASS_NAME,
+          'kicl-animation-none-reduced-motion',
           'kicl-padding-block-extreme',
-          'kicl-padding-inline-widest',
           'kicl-pointer-events-auto'
         )}
       >
@@ -71,6 +71,7 @@ const Words: React.FunctionComponent = () => {
         </Text>
         <HyperLink
           className='kicl-margin-block-start-narrow'
+          level={experiment.level}
           lookLikeButton
           size='small'
           to={experiment.to}

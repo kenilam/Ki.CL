@@ -37,8 +37,9 @@ const More: React.FunctionComponent = () => {
         aria-labelledby={titleId}
         className={classNames(
           CLASS_NAME,
+          'kicl-animation-none-reduced-motion',
           'kicl-padding-block-extreme',
-          'kicl-padding-inline-widest'
+          'kicl-padding-inline-frame'
         )}
       >
         <Heading

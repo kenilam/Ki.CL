@@ -14,6 +14,13 @@
       (var(--kicl--widgets--global-header--top) * 2)
   );
 
+  @include query('≤tablet') {
+    --kicl--widgets--global-header--padding-inline: calc(
+      var(--kicl--components--frame--gap) +
+        var(--kicl--components--frame--inset)
+    );
+  }
+
   @include tablet {
     --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter-wide);
     --kicl--widgets--global-header--padding-block-start: var(

@@ -9,7 +9,8 @@
   --kicl--components--hyper-link--transition-duration: var(
     --kicl-transition-duration-fast
   );
-  --kicl--components--hyper-link--transition-property: box-shadow, color, filter, font-size, opacity, padding;
+  --kicl--components--hyper-link--transition-property:
+    box-shadow, color, filter, font-size, opacity, padding;
   --kicl--components--hyper-link--transition-timing-function: var(
     --kicl-ease-quint-in-out
   );
@@ -27,7 +28,7 @@
 
   &--look-like-button {
     display: inline-grid;
-    line-height: 1.15;
+    line-height: var(--kicl-line-height-narrower);
   }
 
   // Icons flow with the text, so a closing arrow follows the last word when
@@ -48,7 +49,7 @@
 
   &:not(#{&}--unstyled):not(#{&}--look-like-button):not(:has(&--wrapper)),
   &:not(#{&}--unstyled):not(#{&}--look-like-button):has(&--wrapper)
-  &--wrapper--line {
+    &--wrapper--line {
     box-decoration-break: clone;
     box-shadow: 0
       calc(var(--kicl--components--hyper-link--box-shadow--block-size) + 1px)
@@ -57,12 +58,12 @@
   }
 
   &:not(#{&}--unstyled):not(#{&}--look-like-button):not(:has(&--wrapper)):hover,
-    &:not(#{&}--unstyled):not(#{&}--look-like-button):not(
+  &:not(#{&}--unstyled):not(#{&}--look-like-button):not(
       :has(&--wrapper)
     )[aria-current],
-    &:not(#{&}--unstyled):not(#{&}--look-like-button):has(&--wrapper):hover
+  &:not(#{&}--unstyled):not(#{&}--look-like-button):has(&--wrapper):hover
     &--wrapper--line,
-    &:not(#{&}--unstyled):not(#{&}--look-like-button):has(
+  &:not(#{&}--unstyled):not(#{&}--look-like-button):has(
       &--wrapper
     )[aria-current]
     &--wrapper--line {

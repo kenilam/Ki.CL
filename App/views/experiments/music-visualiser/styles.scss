@@ -1,7 +1,5 @@
 .kicl--views--experiments--music-visualiser {
-  --kicl--views--experiments--music-visualiser--inset: var(--kicl-gutter-wider);
-
-  @include query('≤tablet') {
-    --kicl--views--experiments--music-visualiser--inset: var(--kicl-gutter);
-  }
+  --kicl--views--experiments--music-visualiser--inset: var(
+    --kicl--components--frame--inset
+  );
 }

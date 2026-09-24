@@ -6,13 +6,9 @@
   --kicl--components--card--color: var(--kicl-body-color);
   --kicl--components--card--spacing: var(--kicl-gutter);
 
-  // The foot sits a step further from the content than the other sides.
-  --kicl--components--card--padding-block-end: var(--kicl-gutter-wide);
-
   // The gutter halves on small screens; a card's padding shouldn't.
   @include query('≤tablet') {
     --kicl--components--card--spacing: var(--kicl-gutter-wide);
-    --kicl--components--card--padding-block-end: var(--kicl-gutter-wider);
   }
 
   background-color: var(--kicl--components--card--background-color);
@@ -27,11 +23,13 @@
   max-inline-size: 100%;
   overflow: hidden;
   padding: var(--kicl--components--card--spacing);
-  padding-block-end: var(--kicl--components--card--padding-block-end);
+
+  &--size--fit {
+    inline-size: fit-content;
+  }
 
   &--size--xs,
   &--size--sm {
-    --kicl--components--card--padding-block-end: var(--kicl-gutter-narrow);
     --kicl--components--card--spacing: var(--kicl-gutter-narrow);
   }
 

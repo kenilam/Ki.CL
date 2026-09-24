@@ -22,10 +22,6 @@
     animation-range: entry 0% entry 100%;
     animation-timeline: view();
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 @keyframes kicl--views--experiments__home--rise {
