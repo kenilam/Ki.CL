@@ -8,7 +8,8 @@ const COPY = {
   title: 'How it works',
   points: [
     'Describe the picture you want and where it’s set.',
-    'If something important is missing, the agent asks a follow-up question. Pick a suggested answer or let it choose.',
+    'If something important is missing, the agent asks a follow-up question.',
+    'Pick a suggested answer or let it choose.',
     'Violent or explicit requests are refused.',
     'Only one conversation can run at a time.',
   ],
@@ -25,7 +26,7 @@ const Welcome: React.FunctionComponent = () => {
       gap='narrow'
       justifyItems='start'
     >
-      <section aria-labelledby={id}>
+      <section aria-labelledby={id} className='kicl-padding-block-wide'>
         <Heading id={id} is='h2' dense>
           {COPY.title}
         </Heading>

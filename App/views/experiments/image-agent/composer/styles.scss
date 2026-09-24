@@ -1,9 +1,4 @@
 .kicl--views--experiments--image-agent__composer {
-  > section {
-    inline-size: 100%;
-    max-inline-size: var(--kicl--image-agent--measure);
-  }
-
   /*
    * Stuck to the bottom of the window over the page background, so the
    * messages scroll behind it and the last one is never hidden under it.
@@ -49,6 +44,5 @@
 
   form {
     inline-size: 100%;
-    max-inline-size: var(--kicl--image-agent--measure);
   }
 }

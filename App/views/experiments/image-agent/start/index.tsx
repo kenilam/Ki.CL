@@ -3,13 +3,19 @@ import React, { useState } from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// API
+import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
+
 // Components
-import { Card, Layout } from '@/components';
+import { Frame, Layout } from '@/components';
 
 // Partials
+import { Backdrop } from '@/views/experiments/image-agent/backdrop';
 import { Composer } from '@/views/experiments/image-agent/composer';
+import { Allowance } from '@/views/experiments/image-agent/composer/allowance';
 import { Article } from './article';
 import { Header } from './header';
+import { More } from './header/more';
 import { Past } from './past';
 import { Running } from './running';
 import { Welcome } from './welcome';
@@ -18,54 +24,68 @@ import { Welcome } from './welcome';
 import { useRunning } from './running/use-running';
 import { useStart } from './use-start';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { CLASS_NAME } from './constants';
 
 /**
- * `/experiments/image-agent`: the title, what to expect, any conversation still
- * running, the field, then past conversations filtered by what's typed. While
- * one is running, only that one is offered, because the API refuses new
- * messages until it ends. The article sits outside the field's section so the
- * field stops sticking before the article starts.
+ * `/experiments/image-agent`: a framed hero with the title, how it works, the
+ * field and past conversations filtered by what's typed. While one is running, only that one
+ * is offered, because the API refuses new messages until it ends. With no
+ * allowance left there's no field, only past conversations. The article
+ * follows.
  */
 const Start: React.FunctionComponent = () => {
   const sender = useStart();
   const running = useRunning();
   const [query, setQuery] = useState('');
 
+  // Shares the allowance badge's cached query.
+  const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
+  const spent = data?.ImageAgentAllowance.remaining === 0;
+
   return (
-    <Layout autoFlow='row' gap='normal' justifyContent='stretch'>
-      <article
-        className={classNames(
-          CLASS_NAME,
-          'kicl-padding-block-start-header',
-          'kicl-padding-inline-widest'
-        )}
-      >
-        <section className='kicl-margin-inline-auto'>
-          <Header />
-          <Layout autoFlow='row' gap='wide' justifyContent='stretch'>
-            <section>
-              <Welcome />
-              <Running {...running} />
-              {running.busy ? null : (
-                <Card className='kicl-padding-block-end-wide' variant='ghost'>
-                  <Composer
-                    {...sender}
-                    dense
-                    onText={setQuery}
-                    sticky={false}
-                  />
-                  <Past query={query} />
-                </Card>
+    <Layout autoFlow='row' gap='none' justifyContent='stretch'>
+      <article className={CLASS_NAME}>
+        <Frame grow hold>
+          <Layout alignContent='center' autoFlow='row' justifyContent='stretch'>
+            <section
+              className={classNames(
+                'kicl-padding-block-widest',
+                'kicl-padding-inline-widest',
+                'kicl-position-relative'
               )}
+            >
+              <Backdrop scrim />
+              <div
+                className={classNames(
+                  'kicl-inline-size-columns-12',
+                  'kicl-margin-inline-auto',
+                  'kicl-position-relative'
+                )}
+              >
+                <div className='kicl-inline-size-columns-8'>
+                  <Header />
+                  <Welcome />
+                  <Running {...running} />
+                  {/* The badge is part of the field; without the field it stands alone. */}
+                  {running.busy || spent ? (
+                    <Allowance busy={running.busy} />
+                  ) : (
+                    <Composer
+                      {...sender}
+                      dense
+                      onText={setQuery}
+                      sticky={false}
+                    />
+                  )}
+                  {running.busy ? null : <Past query={query} />}
+                </div>
+              </div>
+              <More />
             </section>
           </Layout>
-          <Article />
-        </section>
+        </Frame>
+        <Article />
       </article>
     </Layout>
   );

@@ -9,7 +9,7 @@ import { Bubble, Card, Layout, Text } from '@/components';
 // Partials
 import { Choices } from './choices';
 import { isNotice, Notice } from './notice';
-import { Picture } from './picture';
+import { Picture, type PictureProps } from './picture';
 import { Retry } from './retry';
 import { Review } from './review';
 import { MessageText } from './text';
@@ -29,6 +29,8 @@ type Props = {
   /** Arrived after the page loaded, so the agent's text animates in. */
   fresh?: boolean;
   message: MessageType;
+  /** The conversation's title, for a picture's dialog. */
+  title: PictureProps['title'];
   /** Only set while the choices can be picked (last message, agent idle). */
   onChoose?: (text: string) => unknown;
   /**
@@ -43,7 +45,7 @@ type Props = {
  * agent's is plain text, and a refused or failed turn is a notice.
  */
 const Message = React.forwardRef<HTMLElement, Props>(
-  ({ fresh, message, onChoose, onRetry }, ref) => {
+  ({ fresh, message, onChoose, onRetry, title }, ref) => {
     const mine = message.role === 'USER';
     const busy = message.kind === 'PROGRESS';
     const notice = isNotice(message.kind);
@@ -92,7 +94,9 @@ const Message = React.forwardRef<HTMLElement, Props>(
         {message.kind === 'IMAGE' ? (
           <Layout gap='narrow'>
             <Card variant='ghost'>
-              {message.asset?.url ? <Picture url={message.asset.url} /> : null}
+              {message.asset?.url ? (
+                <Picture title={title} url={message.asset.url} />
+              ) : null}
               {message.score ? <Review score={message.score} /> : null}
             </Card>
           </Layout>

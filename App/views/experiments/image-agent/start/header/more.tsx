@@ -1,0 +1,43 @@
+import React from 'react';
+
+// Libraries
+import classNames from 'classnames';
+
+// Icons
+import { Ri } from '@/icons';
+
+// Components
+import { HyperLink, Layout } from '@/components';
+
+// Constants
+import { ARTICLE_ID } from '@/views/experiments/image-agent/start/constants';
+
+const COPY = {
+  more: 'How it was made',
+};
+
+/** A chevron at the foot of the hero, down to the article. */
+const More: React.FunctionComponent = () => (
+  <Layout justifyItems='center'>
+    <div
+      className={classNames(
+        'kicl-inset-block-end-wide',
+        'kicl-inset-inline-0',
+        'kicl-position-absolute'
+      )}
+    >
+      <HyperLink
+        aria-label={COPY.more}
+        lookLikeButton
+        size='large'
+        title={COPY.more}
+        to={`#${ARTICLE_ID}`}
+        variant='secondary'
+      >
+        <Ri.RiArrowDownSLine aria-hidden />
+      </HyperLink>
+    </div>
+  </Layout>
+);
+
+export { More };

@@ -19,7 +19,7 @@ import type { ThreadState } from './use-thread';
 import './styles.scss';
 
 // Constants
-import { toPath } from '@/views/experiments/image-agent/constants';
+import { toLabel, toPath } from '@/views/experiments/image-agent/constants';
 import { CLASS_NAME, COPY } from './constants';
 
 type Props = Omit<ThreadState, 'accept'> &
@@ -88,6 +88,7 @@ const Conversation: React.FunctionComponent<Props> = ({
           key={message.id}
           message={message}
           onChoose={index === count - 1 && choosing ? onChoose : undefined}
+          title={toLabel(thread)}
           onRetry={
             choosing && rewindable && message.role === 'USER'
               ? onRetry

@@ -3,9 +3,7 @@
  * elements in its own file.
  */
 .kicl--views--experiments--image-agent {
-  --kicl--image-agent--accent: var(--kicl-color-info);
   --kicl--image-agent--inset: var(--kicl-gutter-wider);
-  --kicl--image-agent--measure: var(--kicl-columns-12);
   --kicl--image-agent--muted: color-mix(
     in oklab,
     var(--kicl-body-color) 55%,

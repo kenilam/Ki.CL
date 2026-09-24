@@ -2,6 +2,11 @@
   inline-size: var(--kicl--image-agent--preview);
   max-inline-size: 100%;
 
+  &__open {
+    cursor: zoom-in;
+    display: block;
+  }
+
   &__preview {
     --kicl--components--image--aspect-ratio: 1;
 

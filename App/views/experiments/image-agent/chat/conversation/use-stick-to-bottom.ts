@@ -11,7 +11,16 @@ const distanceFromBottom = () => {
   return page.scrollHeight - (window.scrollY + window.innerHeight);
 };
 
-const toBottom = (behavior: ScrollBehavior) => {
+/**
+ * Only a conversation taller than the window needs following. A shorter one
+ * already shows in full, and the page is at least a window tall anyway, so
+ * scrolling it would only push the start of the conversation out of view.
+ */
+const toBottom = (node: HTMLElement | null, behavior: ScrollBehavior) => {
+  if (!node || node.getBoundingClientRect().height <= window.innerHeight) {
+    return;
+  }
+
   const page = document.scrollingElement ?? document.documentElement;
   window.scrollTo({ behavior, top: page.scrollHeight });
 };
@@ -74,7 +83,7 @@ function useStickToBottom<Node extends HTMLElement>(
 
     const observer = new ResizeObserver(() => {
       if (pinned.current) {
-        toBottom('smooth');
+        toBottom(node, 'smooth');
       }
     });
     observer.observe(node);
@@ -85,9 +94,9 @@ function useStickToBottom<Node extends HTMLElement>(
   useEffect(() => {
     if (sent) {
       pinned.current = true;
-      toBottom('smooth');
+      toBottom(node, 'smooth');
     }
-  }, [sent]);
+  }, [node, sent]);
 
   return setNode;
 }

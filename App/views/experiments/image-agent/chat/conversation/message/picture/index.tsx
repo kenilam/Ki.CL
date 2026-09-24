@@ -20,44 +20,52 @@ const CLASS_NAME = `${MESSAGE}__picture`;
 const COPY = {
   alt: 'The picture the agent drew',
   open: 'View full size',
-  title: 'The picture',
 };
 
 type Props = {
+  /** The conversation's title, as the dialog's heading. */
+  title: string;
   url: string;
 };
 
-/** A square preview; the magnifier opens the whole picture in a dialog. */
-const Picture: React.FunctionComponent<Props> = ({ url }) => {
+/** A square preview; pressing it opens the whole picture in a dialog. */
+const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <figure className={classNames(CLASS_NAME, 'kicl-position-relative')}>
-      <Image
-        alt={COPY.alt}
-        borderRadius='md'
-        className={`${CLASS_NAME}__preview`}
-        data={url}
-      />
+    <figure className={CLASS_NAME}>
       <Button
         aria-label={COPY.open}
         className={classNames(
-          'kicl-inset-block-end-narrow',
-          'kicl-inset-inline-end-narrow',
-          'kicl-position-absolute'
+          `${CLASS_NAME}__open`,
+          'kicl-inline-size-full',
+          'kicl-position-relative'
         )}
         onClick={() => setOpen(true)}
-        size='small'
         title={COPY.open}
-        variant='secondary'
+        unstyled
       >
-        <Ri.RiZoomInLine aria-hidden />
+        <Image
+          alt={COPY.alt}
+          borderRadius='sm'
+          className={`${CLASS_NAME}__preview`}
+          data={url}
+        />
+        <Ri.RiZoomInLine
+          aria-hidden
+          className={classNames(
+            'kicl-font-size-medium',
+            'kicl-inset-block-end',
+            'kicl-inset-inline-end',
+            'kicl-position-absolute'
+          )}
+        />
       </Button>
       <Dialog
         className={`${CLASS_NAME}__dialog`}
         onClose={() => setOpen(false)}
         open={open}
-        title={COPY.title}
+        title={title}
       >
         <Image
           alt={COPY.alt}
@@ -70,4 +78,4 @@ const Picture: React.FunctionComponent<Props> = ({ url }) => {
   );
 };
 
-export { Picture };
+export { Picture, type Props as PictureProps };

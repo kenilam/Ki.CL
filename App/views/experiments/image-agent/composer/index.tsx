@@ -27,6 +27,8 @@ type Props = Sender & {
   busy?: boolean;
   /** Told what is in the field on every change. */
   onText?: (text: string) => void;
+  /** No allowance left, so sending is off until it comes back. */
+  spent?: boolean;
   /** Pinned to the bottom of the window, over a backdrop, with a line on top. */
   sticky?: boolean;
 };
@@ -39,6 +41,7 @@ const Composer: React.FunctionComponent<Props> = ({
   loading,
   onText,
   send,
+  spent = false,
   sticky = true,
 }) => {
   const { form, submit } = useComposer({ error, onText, send });
@@ -60,11 +63,16 @@ const Composer: React.FunctionComponent<Props> = ({
         })}
       >
         <Layout autoFlow='row' justifyItems='stretch'>
-          <section className='kicl-margin-inline-auto'>
+          <section
+            className={classNames('kicl-margin-inline-auto', {
+              'kicl-inline-size-columns-8': !dense,
+              'kicl-inline-size-columns-12': dense,
+            })}
+          >
             <Allowance busy={busy} />
             <Form {...form} onSubmit={submit}>
               <Field
-                disabled={busy || loading}
+                disabled={busy || loading || spent}
                 onEnter={() => void submit()}
                 sending={loading}
               />

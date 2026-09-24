@@ -9,6 +9,10 @@ const PARAM = 'threadId';
 /** Child route pattern, relative to `PATH`. */
 const THREAD_PATTERN = `:${PARAM}`;
 
+/** What it is, in a line: on the experiments home and the start page's hero. */
+const DESCRIPTION =
+  'Describe a picture and the agent draws it. If there isn’t enough detail, it asks questions first.';
+
 /** Root of every class and custom property this view owns. */
 const CLASS_NAME = 'kicl--views--experiments--image-agent';
 
@@ -30,4 +34,12 @@ const toLabel = (thread: {
   thread.messages.find(({ role }) => role === 'USER')?.text ??
   thread.id;
 
-export { CLASS_NAME, PARAM, PATH, THREAD_PATTERN, toLabel, toPath };
+export {
+  CLASS_NAME,
+  DESCRIPTION,
+  PARAM,
+  PATH,
+  THREAD_PATTERN,
+  toLabel,
+  toPath,
+};

@@ -3,6 +3,9 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// API
+import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
+
 // Routes
 import { useLocation, useParams } from '@/router';
 
@@ -35,6 +38,11 @@ const Chat: React.FunctionComponent = () => {
   const sender = useChat({ onSent: accept, threadId });
   const busy = Boolean(thread.thread) && thread.thread?.status !== 'IDLE';
 
+  // Shares the allowance badge's cached query. With nothing left, neither a
+  // new message nor asking an earlier one again can start a turn.
+  const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
+  const spent = data?.ImageAgentAllowance.remaining === 0;
+
   return (
     <>
       <Layout autoFlow='row' gap='normal' justifyContent='stretch'>
@@ -45,18 +53,23 @@ const Chat: React.FunctionComponent = () => {
             'kicl-padding-inline-widest'
           )}
         >
-          <section className='kicl-margin-inline-auto'>
+          <section
+            className={classNames(
+              'kicl-inline-size-columns-8',
+              'kicl-margin-inline-auto'
+            )}
+          >
             <Header />
             <Conversation
               {...thread}
-              choosing={!busy && !sender.loading}
+              choosing={!busy && !spent && !sender.loading}
               onChoose={sender.send}
               onRetry={sender.retry}
             />
           </section>
         </article>
       </Layout>
-      <Composer {...sender} busy={busy} />
+      <Composer {...sender} busy={busy} spent={spent} />
     </>
   );
 };
