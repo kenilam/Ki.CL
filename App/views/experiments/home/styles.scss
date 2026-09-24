@@ -6,8 +6,8 @@
   $home: '--kicl--views--experiments__home';
 
   --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
-  --kicl--views--experiments__home--measure: 34rem;
-  --kicl--views--experiments__home--width: 64rem;
+  --kicl--views--experiments__home--measure: var(--kicl-columns-5);
+  --kicl--views--experiments__home--width: var(--kicl-columns-12);
   --kicl--views--experiments__home--inset: var(--kicl-gutter-wider);
   --kicl--views--experiments__home--screen: 100dvb;
 
@@ -24,7 +24,7 @@
     var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
   );
 
-  /* Left edge of the text: same as a centred 64rem column with inset. */
+  /* Left edge of the text: same as a centred 12-column page with inset. */
   --kicl--views--experiments__home--bleed: max(
     0px,
     calc((100dvi - var(--kicl--views--experiments__home--width)) / 2)

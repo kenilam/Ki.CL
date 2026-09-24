@@ -1,0 +1,10 @@
+/* A column one reading line wide: the title, the welcome, then the field. */
+.kicl--views--experiments--image-agent__start {
+  grid-template-rows: max-content max-content max-content;
+  min-block-size: 100dvh;
+
+  > section {
+    inline-size: 100%;
+    max-inline-size: var(--kicl--image-agent--measure);
+  }
+}

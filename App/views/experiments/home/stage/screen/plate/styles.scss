@@ -76,6 +76,11 @@
         transparent 70%
       );
   }
+
+  /* Fallback picture, shown under the mosaic until it loads. See mosaic/. */
+  #{$screen}--image-agent & {
+    background-image: url('./mosaic/fallback.webp');
+  }
 }
 
 @keyframes kicl--views--experiments__home--arrive {

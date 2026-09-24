@@ -1,0 +1,54 @@
+.kicl--views--experiments--image-agent__composer {
+  > section {
+    inline-size: 100%;
+    max-inline-size: var(--kicl--image-agent--measure);
+  }
+
+  /*
+   * Stuck to the bottom of the window over the page background, so the
+   * messages scroll behind it and the last one is never hidden under it.
+   * While it is stuck, a line of the moving gradient runs along the top.
+   */
+  &--sticky {
+    --kicl-backdrop-filter: blur(var(--kicl-gutter-extreme));
+    --kicl-backdrop-tint: 40%;
+
+    background-color: var(--kicl-body-background-color);
+    container-type: scroll-state;
+
+    &::before {
+      block-size: var(--kicl-size-1px);
+      content: '';
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        var(--kicl-color-black-pure) 30%,
+        var(--kicl-color-black-pure) 70%,
+        transparent
+      );
+      position: absolute;
+    }
+
+    @container scroll-state(stuck: bottom) {
+      &::before {
+        animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+          infinite;
+        background: var(--kicl-gradient-shift);
+        background-size: 1200% 1200%;
+        inline-size: 100%;
+      }
+    }
+  }
+
+  /* Starts at one line and grows with the text. */
+  &__field {
+    --kicl--components--textarea--min-block-size: 0;
+
+    resize: none;
+  }
+
+  form {
+    inline-size: 100%;
+    max-inline-size: var(--kicl--image-agent--measure);
+  }
+}

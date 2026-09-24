@@ -7,6 +7,7 @@ import { Route as Origin } from '@/router';
 import { Spinner } from '@/components';
 
 // Views
+import { ImageAgent } from './image-agent';
 import { MusicVisualiser } from './music-visualiser';
 import { TreeOfLife } from './tree-of-life';
 
@@ -40,6 +41,7 @@ const Experiments = (
     />
     {TreeOfLife}
     {MusicVisualiser}
+    {ImageAgent}
   </Origin>
 );
 
