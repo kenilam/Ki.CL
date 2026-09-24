@@ -32,7 +32,7 @@ const COPY = {
 
 /**
  * Pause, skip, copy and volume. Pause links to the track's gate and skip to
- * the next track's `/play`.
+ * the next track's `/play`. On phones and tablets the volume goes under the buttons.
  */
 const Controls: React.FunctionComponent = () => {
   const { control, next, track } = useTrackContext();
@@ -43,32 +43,37 @@ const Controls: React.FunctionComponent = () => {
       autoFlow='column'
       gap='narrow'
       justifyContent='end'
+      justifyItems='end'
     >
       <div className={CLASS_NAME}>
-        <HyperLink
-          aria-label={COPY.pause}
-          lookLikeButton
-          size='small'
-          to={toTrackPath(track)}
-          variant='secondary'
-        >
-          {control.loading ? (
-            <Spinner position='inline' size='small' />
-          ) : (
-            <Fa.FaPause aria-hidden />
-          )}
-        </HyperLink>
-        <HyperLink
-          aria-label={COPY.next}
-          disabled={!next}
-          lookLikeButton
-          size='small'
-          to={toPlayPath(next ?? track)}
-          variant='ghost'
-        >
-          <Ri.RiSkipForwardFill aria-hidden />
-        </HyperLink>
-        <CopyLink />
+        <Layout alignItems='center' autoFlow='column' gap='narrow'>
+          <div>
+            <HyperLink
+              aria-label={COPY.pause}
+              lookLikeButton
+              size='small'
+              to={toTrackPath(track)}
+              variant='secondary'
+            >
+              {control.loading ? (
+                <Spinner position='inline' size='small' />
+              ) : (
+                <Fa.FaPause aria-hidden />
+              )}
+            </HyperLink>
+            <HyperLink
+              aria-label={COPY.next}
+              disabled={!next}
+              lookLikeButton
+              size='small'
+              to={toPlayPath(next ?? track)}
+              variant='ghost'
+            >
+              <Ri.RiSkipForwardFill aria-hidden />
+            </HyperLink>
+            <CopyLink />
+          </div>
+        </Layout>
         <Volume />
       </div>
     </Layout>

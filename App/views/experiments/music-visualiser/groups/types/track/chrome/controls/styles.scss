@@ -2,6 +2,11 @@
   transition: opacity var(--kicl-transition-duration-slow)
     var(--kicl-ease-sine-out);
 
+  // Side by side, the buttons and the slider crowd a phone or tablet.
+  @include query('≤tablet') {
+    --kicl-layout--auto-flow: row;
+  }
+
   // Idle: the controls go.
   .kicl--views--experiments--music-visualiser__chrome--idle & {
     opacity: 0;
