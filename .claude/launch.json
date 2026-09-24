@@ -2,11 +2,33 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "frontend",
+      "name": "backend-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/kenilam/Development/Ki.CL-back && exec yarn run development"
+      ],
+      "port": 3100
+    },
+    {
+      "name": "frontend-dev",
       "runtimeExecutable": "yarn",
-      "runtimeArgs": ["workspace", "app", "run", "development"],
+      "runtimeArgs": [
+        "run",
+        "development"
+      ],
       "port": 3001,
-      "url": "https://localhost.kicl.com:3001"
+      "url": "https://localhost:3001"
+    },
+    {
+      "name": "frontend-preview",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": [
+        "run",
+        "production"
+      ],
+      "port": 3001,
+      "url": "http://localhost:3001"
     }
   ]
 }

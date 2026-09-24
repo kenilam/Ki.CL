@@ -24,10 +24,6 @@
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
-
-  &__description {
-    max-inline-size: var(--kicl--views--experiments__home--measure);
-  }
 }
 
 @keyframes kicl--views--experiments__home--push-in {

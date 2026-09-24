@@ -71,7 +71,7 @@ const Status: React.FunctionComponent<Spec.Props> = ({
         alignContent={align}
         alignItems='center'
         autoFlow='row'
-        gap='none'
+        gap='narrower'
         justifyContent='center'
         justifyItems='start'
       >
@@ -89,6 +89,7 @@ const Status: React.FunctionComponent<Spec.Props> = ({
           >
             <Heading
               className={level ? `kicl-color-${level}` : undefined}
+              dense
               is={headingLevel}
               lookLike='h4'
             >

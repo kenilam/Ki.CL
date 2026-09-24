@@ -28,13 +28,13 @@ const PHASES = [
   {
     phase: 1,
     scope:
-      'Skeleton - manifest schema and registry, Job Service, the generic workflow interpreter, two primitives, one real App end-to-end.',
+      'Skeleton: manifest schema and registry, Job Service, the generic workflow interpreter, two primitives, one real App end-to-end.',
     time: '2 weeks',
   },
   {
     phase: 2,
     scope:
-      'Hardening - provider adapters with webhooks and idempotency, credits hold and settle, SSE progress, task metrics dashboard.',
+      'Hardening: provider adapters with webhooks and idempotency, credits hold and settle, SSE progress, task metrics dashboard.',
     time: '2 weeks',
   },
   {
@@ -46,13 +46,13 @@ const PHASES = [
   {
     phase: 4,
     scope:
-      'Agent MVP - runtime loop on Temporal, tool registry projection, session store, draft-final policy, budgets and model routing.',
+      'Agent MVP: runtime loop on Temporal, tool registry projection, session store, draft-final policy, budgets and model routing.',
     time: '2-3 weeks',
   },
   {
     phase: 5,
     scope:
-      'Eval harness - golden briefs, process checks, judge rubric, replay - plus canary machinery.',
+      'Eval harness (golden briefs, process checks, judge rubric, replay) and canary machinery.',
     time: '1-2 weeks',
   },
 ];

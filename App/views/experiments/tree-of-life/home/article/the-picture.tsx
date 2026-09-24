@@ -20,18 +20,16 @@ const ThePicture: React.FunctionComponent = () => {
         </Heading>
 
         <Text is='p'>
-          I wanted every branch of life on one sheet, and at the end of each
-          branch something you’d actually recognise: a horse, a nautilus, a fly
-          agaric. The shape of the tree and the creatures it made, in one
-          picture.
+          I wanted every branch of life on one sheet, with something
+          recognisable at the end of each branch, like a horse, a nautilus or a
+          fly agaric.
         </Text>
 
         <Text is='p'>
-          Then there’s the number. The Open Tree of Life holds about 2.3 million
-          tips. Almost every decision below comes out of that one figure,
-          because you can’t draw that many, you can’t illustrate them, and you
-          certainly can’t fetch them. So I stopped trying to draw the whole tree
-          and started choosing what to show at any one point.
+          The Open Tree of Life holds about 2.3 million tips. That’s too many to
+          draw, illustrate or fetch, and almost every decision below comes from
+          that number. So I stopped trying to draw the whole tree and started
+          choosing what to show at any one point.
         </Text>
 
         <Figure

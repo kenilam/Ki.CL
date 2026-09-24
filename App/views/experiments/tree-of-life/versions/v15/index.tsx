@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Heading, Layout } from '@/components';
+import { Frame, Heading } from '@/components';
 
 // Labels
 import { Labels } from './labels';
@@ -25,13 +25,22 @@ const Canvas: React.FunctionComponent = () => (
       Tree of Life
     </Heading>
 
-    <Layout fullScreen>
-      <div role='img' aria-label='The tree of life around the taxon in view'>
-        <Scene />
+    {/*
+     * The labels are placed in the canvas's own coordinates, so they share the
+     * framed box with it. The panel and controls are fixed to the window.
+     */}
+    <Frame>
+      <div className='kicl-position-relative'>
+        <div
+          aria-label='The tree of life around the taxon in view'
+          className='kicl-block-size-full kicl-inline-size-full'
+          role='img'
+        >
+          <Scene />
+        </div>
+        <Labels />
       </div>
-    </Layout>
-
-    <Labels />
+    </Frame>
 
     <Panel />
 

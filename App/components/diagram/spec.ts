@@ -1,4 +1,15 @@
+import type { ReactNode } from 'react';
+import type { IconType } from '@/icons';
+import type { TextAccent } from '@/components/text/spec';
+
 export type Accent = 'blue' | 'green' | 'orange' | 'red' | 'yellow';
+
+/** One legend chip: `label` is the colour or line style, `value` what it means. */
+export type LegendItem = {
+  accent?: TextAccent;
+  label: string;
+  value: string;
+};
 
 export type Group = {
   h: number;
@@ -10,10 +21,12 @@ export type Group = {
 
 /** One attribute line of an entity table. */
 export type Row = {
+  /** Drawn in place of `type`, before the name. */
+  icon?: IconType;
   key?: string;
   name: string;
   note?: string;
-  type: string;
+  type?: string;
 };
 
 export type Node = {
@@ -45,6 +58,10 @@ export type Edge = {
 };
 
 export type Spec = {
+  /** Shown under the diagram, for how to read it. */
+  caption?: ReactNode;
+  /** Chips under the diagram for what its colours and line styles mean. */
+  legend?: LegendItem[];
   /** Accessible description of what the diagram shows. */
   description: string;
   edges: Edge[];

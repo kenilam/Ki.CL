@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, HyperLink, Layout, Text } from '@/components';
 
@@ -26,7 +29,7 @@ const NowPlaying: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrowest' justifyItems='start'>
-      <div className={CLASS_NAME}>
+      <div className={classNames(CLASS_NAME, 'kicl-max-inline-size-columns-4')}>
         <Heading
           aria-live='polite'
           className='kicl-font-size-large'

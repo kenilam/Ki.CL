@@ -1,8 +1,12 @@
 import type { ReactNode } from 'react';
 
+import type { ColumnSpan } from '@/components/layout/spec';
 import type { PolymorphicIsProps } from '@/components/polymorphic';
 
-/** `default` = full width; named sizes map to `kicl-inline-size-*`. */
+/**
+ * `default` = full width; named sizes map to `kicl-inline-size-*`, and
+ * `1`…`12` to the column widths (`kicl-inline-size-columns-*`).
+ */
 export const CARD_SIZES = [
   'default',
   'xs',
@@ -14,7 +18,7 @@ export const CARD_SIZES = [
   'max',
 ] as const;
 
-export type CardSize = (typeof CARD_SIZES)[number];
+export type CardSize = (typeof CARD_SIZES)[number] | ColumnSpan;
 
 /**
  * `default` paints the surface; `ghost` lets what is behind it through.
@@ -37,7 +41,8 @@ export type CardSectionIs = 'div' | 'footer' | 'header' | 'section';
 
 type CardOwnProps = {
   /**
-   * Width scale - `default` fills the parent; `xs`…`max` apply `kicl-inline-size-*`.
+   * Width scale - `default` fills the parent; `xs`…`max` apply `kicl-inline-size-*`,
+   * and `1`…`12` a column width.
    * `xs` / `sm` also tighten spacing (shadcn-style density).
    */
   size?: CardSize;

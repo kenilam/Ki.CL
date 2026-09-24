@@ -1,4 +1,4 @@
-import type { Spec } from './spec';
+import type { DiagramSpec as Spec } from '@/components';
 
 /** Services and components - control plane, execution plane, data & delivery. */
 const services: Spec = {

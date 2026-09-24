@@ -4,7 +4,7 @@ import React from 'react';
 import { Dialog, Heading, Layout, Text } from '@/components';
 
 // Diagrams
-import { Diagram } from '@/views/portfolio/pika/system-design/diagrams';
+import { Diagram } from '@/components';
 import { agentPlane } from '@/views/portfolio/pika/system-design/diagrams/agent-plane';
 
 // Constants
@@ -25,17 +25,16 @@ const WhatChanges: React.FunctionComponent = () => (
       id='diagram-agent-plane'
     >
       <Layout alignItems='center' justifyContent='center'>
-        <div>
+        <div className='kicl-inline-size-columns-12'>
           <Diagram spec={agentPlane} />
         </div>
       </Layout>
     </Dialog>
     <Text>
-      The agent is another client of the platform. Every piece of Part 1&apos;s
-      execution plane - jobs, orchestration, adapters, assets, credits,
-      moderation, task metrics - serves the agent without modification. The
-      agent needs the same vocabulary the Apps already speak, which is what the
-      manifests and primitives in Part 1 were for.
+      The agent is another client of the platform. Part 1&apos;s execution plane
+      (jobs, orchestration, adapters, assets, credits, moderation, task metrics)
+      serves it unchanged, because the agent calls the same primitives the Apps
+      already use.
     </Text>
   </>
 );

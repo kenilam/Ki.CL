@@ -10,9 +10,8 @@ const Resiliency: React.FunctionComponent = () => (
       Resiliency
     </Heading>
     <Text>
-      With video generation, failure is normal. Providers time out, hand back
-      corrupt files, and rate-limit without warning. So the unit of failure is
-      the task attempt rather than the job.
+      Video providers time out, hand back corrupt files, and rate-limit without
+      warning, so the unit of failure is the task attempt rather than the job.
     </Text>
     <List is='ul'>
       <ListItem>
@@ -20,10 +19,14 @@ const Resiliency: React.FunctionComponent = () => (
           <Text is='strong' className='kicl-font-weight-bold'>
             Retries with a taxonomy.
           </Text>{' '}
-          Adapters classify every error: <code>retryable</code> gets exponential
-          backoff with jitter, permanent fails fast and tells the user why, and
-          a provider browning out trips a circuit breaker - failing work over to
-          an equivalent provider where the manifest allows it.
+          Adapters classify every error:{' '}
+          <Text is='code' accent='warning'>
+            retryable
+          </Text>{' '}
+          gets exponential backoff with jitter, permanent fails fast and tells
+          the user why, and a provider browning out trips a circuit breaker that
+          fails work over to an equivalent provider where the manifest allows
+          it.
         </Text>
       </ListItem>
       <ListItem>
@@ -32,8 +35,8 @@ const Resiliency: React.FunctionComponent = () => (
             Checkpoint at every node.
           </Text>{' '}
           Task outputs persist before the next node schedules, so a crash
-          resumes from the last completed step: a five-shot film that dies on
-          shot five re-renders exactly one shot.
+          resumes from the last completed step. A five-shot film that dies on
+          shot five re-renders one shot.
         </Text>
       </ListItem>
       <ListItem>

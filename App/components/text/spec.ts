@@ -22,11 +22,16 @@ type LookLike = Extract<
   'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 >;
 
-type Variant = 'primary' | 'secondary';
+/** `secondary` dims the text, accent included. Leave it out for full strength. */
+type Variant = 'secondary';
+
+/** Functional colour from the palette. Inline code tints its fill to match. */
+export type TextAccent = 'confirm' | 'error' | 'info' | 'warning';
 
 export type TextNode = HTMLElement;
 
 type OwnProps = PropsWithChildren<{
+  accent?: TextAccent;
   dense?: boolean;
   lookLike?: LookLike;
   unstyled?: boolean;

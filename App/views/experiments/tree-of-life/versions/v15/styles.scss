@@ -7,8 +7,9 @@
   &__chrome {
     z-index: var(--kicl-z-index-floating);
 
+    // Inside the frame's top edge, which already clears the header.
     --kicl-inset-block-start: calc(
-      var(--kicl-gutter) + var(--kicl--widgets--global-header--block-size)
+      var(--kicl-gutter) + var(--kicl--components--frame--top)
     );
 
     /*

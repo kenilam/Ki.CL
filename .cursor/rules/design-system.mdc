@@ -16,9 +16,9 @@ When a shared component exists, use it instead of the raw element:
 | Headings | `Heading` (`is="h1"`…`"h6"`) or `Text lookLike="h*"` |
 | Buttons | `Button` (`unstyled` when chrome is view-local) |
 | Labels / chips | `Badge` (`is`: span \| div \| a \| button \| li \| time \| mark \| abbr; `variant`: default \| secondary \| destructive \| outline \| ghost); nest `BadgeLabel` before the value for a keyed chip |
-| Surfaces / panels | `Card` (`is`: div \| aside \| article \| section \| form \| li; `size`: default \| xs \| sm \| md \| lg \| xl \| xxl \| max → `kicl-inline-size-*`) with `CardHeader` / `CardTitle` / `CardDescription` / `CardAction` / `CardContent` / `CardFooter` |
+| Surfaces / panels | `Card` (`is`: div \| aside \| article \| section \| form \| li; `size`: default \| xs \| sm \| md \| lg \| xl \| xxl \| max → `kicl-inline-size-*`, or `1`…`12` → column widths) with `CardHeader` / `CardTitle` / `CardDescription` / `CardAction` / `CardContent` / `CardFooter` |
 | Lists | `List` / `ListItem` |
-| Layout / grid / flex | `Layout` (clones **one** child only) - never hand-roll `display: grid|flex` + `gap` / align / justify in view SCSS |
+| Layout / grid / flex | `Layout` (clones **one** child only; `columns` for a 12-column grid, `span={1…12}` on a child `Layout`) - never hand-roll `display: grid|flex` + `gap` / align / justify in view SCSS |
 | Images / status / forms | `Image`, `Skeleton`, `Status`, `Spinner`, `Form*`, `Input`, `InputGroup*`, `Textarea`, `Checkbox`, `RadioGroup` / `RadioGroupItem`, `Select*` , `DatePicker` (`Popover` + `Calendar`), `Switch`, `Details` + `Summary` (disclosure; `Summary` lives under Details) |
 
 Do not invent parallel wrappers. Exception: SVG-only nodes (`<text>`, `<circle>`, …) stay SVG; still attach `kicl-*` classes where they apply (`kicl-color-*`, `kicl-font-size*`).
@@ -33,6 +33,7 @@ Do not invent parallel wrappers. Exception: SVG-only nodes (`<text>`, `<circle>`
 | SVG / icons | `kicl-color-*` (global `svg { fill: currentcolor }`) | `fill:` / `kicl-fill-*` |
 | Position | `kicl-position-*` (absolute \| fixed \| relative \| …) | `position:` (including `var(--kicl-position-*)`) |
 | Inline size | `kicl-inline-size-*` (xs \| sm \| md \| lg \| xl \| xxl \| max) | `inline-size:` for those fixed widths |
+| Page and column widths | `kicl-inline-size-columns-{1…12}` / `kicl-max-inline-size-columns-{1…12}` (12 = 80rem page) | `max-inline-size:` in rem or ch |
 | Font size | `kicl-font-size` / `-smallest`…`-extreme` | `font-size: var(--kicl-font-size*)` |
 | Weight / family / line-height / align | matching `kicl-font-*` / `kicl-line-height-*` / `kicl-text-align-*` | same via `var(--kicl-*)` |
 | Text transform | `kicl-text-transform-*` (capitalize \| lowercase \| uppercase \| none) | `text-transform:` |
@@ -48,6 +49,7 @@ For `padding`, `margin`, `inset*`, `border-radius`, `border-width`, prefer exist
 | Gutter | `--kicl-gutter-none` … `-narrowest` `-narrower` `-narrow` `--kicl-gutter` `-wide` `-wider` `-widest` `-extreme` |
 | Size | `--kicl-size-hair` `-1px` `-2px` `-3px` `-half` `--kicl-size` `-2x`…`-20x` |
 | Inline size | `--kicl-inline-size-xs`…`-max` (aliases → size tokens; prefer `kicl-inline-size-*` in JSX) |
+| Columns | `--kicl-columns-1`…`-12`: `n` columns plus the gaps between them; `-12` is the 80rem page width |
 
 ```scss
 // ❌

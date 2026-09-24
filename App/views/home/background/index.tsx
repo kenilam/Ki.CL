@@ -206,8 +206,10 @@ const Background: React.FunctionComponent<Spec.Props> = ({
         'kicl-position-absolute',
         className
       )}
-      ref={node}
       {...rest}
+      // After the spread: a wrapper such as Animation passes its own ref, and
+      // the renderer needs this one on the canvas.
+      ref={node}
     />
   );
 };

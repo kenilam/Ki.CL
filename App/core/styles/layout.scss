@@ -138,6 +138,12 @@
       --kicl-layout--display: flex;
 
       flex-direction: var(--kicl-layout--auto-flow);
+
+      // Without this, `wrap` only affects grid frames. Flex rows need
+      // `flex-wrap` set.
+      &.kicl-layout--wrap {
+        flex-wrap: wrap;
+      }
     }
   }
 
@@ -165,6 +171,15 @@
       @include tablet {
         --kicl-layout--auto-flow: column;
       }
+    }
+
+    // Row flow over 12 equal tracks. Doubled so it beats both `--row` and
+    // `--column`, which set their own template.
+    &.kicl-layout--columns.kicl-layout--columns {
+      --kicl-layout--auto-flow: row;
+
+      grid-template-columns: repeat(var(--kicl-columns-count), minmax(0, 1fr));
+      grid-template-rows: unset;
     }
 
     &.kicl-layout--dense.kicl-layout--dense {
@@ -433,3 +448,14 @@
 @include make-layout(1fr, 1fr, 3fr, 7fr);
 @include make-layout(1fr, 1fr, 2fr, 8fr);
 @include make-layout(1fr, 1fr, 1fr, 9fr);
+
+// A child's share of a parent `columns` grid. Phones get one full-width column.
+@for $span from 1 through 12 {
+  .kicl-layout.kicl-layout--span--#{$span} {
+    grid-column: span #{$span};
+
+    @include query('≤mobile') {
+      grid-column: 1 / -1;
+    }
+  }
+}

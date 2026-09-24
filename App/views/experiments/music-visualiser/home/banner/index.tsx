@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Frame, Layout } from '@/components';
 
 // Partials
 import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/track/visualiser';
@@ -23,18 +23,13 @@ const CLASS_NAME = `${HOME}__banner`;
  */
 const Banner: React.FunctionComponent = () => (
   <Layout alignContent='center' justifyContent='stretch' justifyItems='center'>
-    <header
-      className={classNames(
-        CLASS_NAME,
-        'kicl-inline-size-full',
-        'kicl-min-block-size-screen',
-        'kicl-position-relative'
-      )}
-    >
-      <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
-      <Words />
-      <More />
-    </header>
+    <Frame grow hold>
+      <header className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+        <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
+        <Words />
+        <More />
+      </header>
+    </Frame>
   </Layout>
 );
 
