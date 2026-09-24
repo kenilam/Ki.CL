@@ -82,6 +82,7 @@ import {
   type DiagramState,
 } from './diagram';
 import { Dialog, DialogProps } from './dialog';
+import { Frame, type FrameProps } from './frame';
 import {
   Form,
   FormControl,
@@ -257,6 +258,8 @@ export {
   type DiagramState,
   Dialog,
   type DialogProps,
+  Frame,
+  type FrameProps,
   Form,
   FormControl,
   type FormControlProps,

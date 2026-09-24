@@ -19,6 +19,7 @@ const Status404: React.FunctionComponent = () => {
   const className = classNames(
     'kicl-text-align-center',
     'kicl--router--http-status',
+    'kicl-max-inline-size-columns-12',
     CLASS_NAME
   );
 
