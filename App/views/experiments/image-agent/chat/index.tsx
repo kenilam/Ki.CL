@@ -23,14 +23,12 @@ import { useThread } from './conversation/use-thread';
 import { useChat } from './use-chat';
 import { useCooldown } from './use-cooldown';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { PARAM } from '@/views/experiments/image-agent/constants';
 import { CLASS_NAME } from './constants';
 
-/** `/experiments/image-agent/:threadId`: one conversation and the field. */
+import './styles.scss';
+
 const Chat: React.FunctionComponent = () => {
   const { [PARAM]: threadId = '' } = useParams();
   const seed = (useLocation().state as { thread?: Thread } | null)?.thread;
@@ -39,15 +37,13 @@ const Chat: React.FunctionComponent = () => {
   const sender = useChat({ onSent: accept, threadId });
   const busy = Boolean(thread.thread) && thread.thread?.status !== 'IDLE';
 
-  // Shares the allowance badge's cached query. With nothing left, neither a
-  // new message nor asking an earlier one again can start a turn.
   const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
   const spent = data?.ImageAgentAllowance.remaining === 0;
   const cooling = useCooldown(data?.ImageAgentAllowance.nextAllowedAt);
 
   return (
     <>
-      <Layout autoFlow='row' gap='none' justifyContent='stretch'>
+      <Layout autoFlow='row' gap='none' justifyContent='stretch' frames='max-content--1fr'>
         <article
           className={classNames(
             CLASS_NAME,
