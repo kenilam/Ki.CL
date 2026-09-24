@@ -21,6 +21,7 @@ import type { Thread } from './conversation/spec';
 // Hooks
 import { useThread } from './conversation/use-thread';
 import { useChat } from './use-chat';
+import { useCooldown } from './use-cooldown';
 
 // Styles
 import './styles.scss';
@@ -42,6 +43,7 @@ const Chat: React.FunctionComponent = () => {
   // new message nor asking an earlier one again can start a turn.
   const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
   const spent = data?.ImageAgentAllowance.remaining === 0;
+  const cooling = useCooldown(data?.ImageAgentAllowance.nextAllowedAt);
 
   return (
     <>
@@ -62,14 +64,14 @@ const Chat: React.FunctionComponent = () => {
             <Header />
             <Conversation
               {...thread}
-              choosing={!busy && !spent && !sender.loading}
+              choosing={!busy && !cooling && !spent && !sender.loading}
               onChoose={sender.send}
               onRetry={sender.retry}
             />
           </section>
         </article>
       </Layout>
-      <Composer {...sender} busy={busy} spent={spent} />
+      <Composer {...sender} busy={busy || cooling} spent={spent} />
     </>
   );
 };
