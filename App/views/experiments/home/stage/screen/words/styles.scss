@@ -2,6 +2,9 @@
  * Above every background. The height comes from Stage, which measures
  * the real blocks; the min keeps every block that tall. The scroll ranges
  * are set on Screen.
+ *
+ * The push moves `inset-block-start`, not `translate`: iOS 27 runs a
+ * scroll-driven `translate` on the compositor and never paints it here.
  */
 .kicl--views--experiments__home__screen__words {
   $home: '--kicl--views--experiments__home';
@@ -25,21 +28,21 @@
 
 @keyframes kicl--views--experiments__home--push-in {
   from {
-    translate: 0 var(--kicl--views--experiments__home--below);
+    inset-block-start: var(--kicl--views--experiments__home--below);
   }
 
   to {
-    translate: 0 0;
+    inset-block-start: 0;
   }
 }
 
 @keyframes kicl--views--experiments__home--push-out {
   from {
-    translate: 0 0;
+    inset-block-start: 0;
   }
 
   to {
-    translate: 0 var(--kicl--views--experiments__home--above);
+    inset-block-start: var(--kicl--views--experiments__home--above);
   }
 }
 
