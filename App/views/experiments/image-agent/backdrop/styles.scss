@@ -6,9 +6,10 @@ $backdrop: '--kicl--views--experiments--image-agent__backdrop';
 $overflow: 0.1;
 $travel: math.percentage(math.div($overflow, 1 + 2 * $overflow));
 
-// The light all the pictures add up to, split evenly between them, so more
-// pictures don't wash the preview out.
-$light: 0.6;
+// How strongly all the pictures together colour the preview, split evenly
+// between them. They blend with `soft-light`, which deepens the colour instead
+// of adding light, so the preview keeps its saturation.
+$light: 1.5;
 
 /*
  * The scroll range the pictures drift over. A parent that moves on its own
@@ -33,7 +34,7 @@ $light: 0.6;
     background-size: cover;
     inset-block: math.percentage(-$overflow);
     inset-inline: 0;
-    mix-blend-mode: plus-lighter;
+    mix-blend-mode: soft-light;
     opacity: calc(#{$light} / var(#{$backdrop}--count));
 
     @supports (animation-timeline: scroll()) {

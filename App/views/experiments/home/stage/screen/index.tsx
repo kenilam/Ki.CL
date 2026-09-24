@@ -48,6 +48,8 @@ const Screen: React.FunctionComponent<Props> = ({
       className={classNames(
         CLASS_NAME,
         `${CLASS_NAME}--${experiment.plate}`,
+        // The image agent's scrim is dark in both themes, as on its own page.
+        { 'kicl--theme--dark': experiment.plate === 'image-agent' },
         'kicl-pointer-events-none',
         'kicl-position-relative'
       )}

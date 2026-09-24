@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { Heading, Layout, Text } from '@/components';
 
@@ -20,11 +17,7 @@ const COPY = {
 const Header: React.FunctionComponent = () => (
   <Layout autoFlow='row' gap='wide' justifyItems='start'>
     <header className={CLASS_NAME}>
-      <Heading
-        is='h1'
-        dense
-        className={classNames('kicl-color-white', 'kicl-font-size-huge')}
-      >
+      <Heading is='h1' dense className='kicl-font-size-huge'>
         {COPY.title}
       </Heading>
       <Text is='p' className='kicl-font-size-medium'>

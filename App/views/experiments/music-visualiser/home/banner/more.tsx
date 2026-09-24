@@ -16,14 +16,16 @@ const COPY = {
   more: 'How it was made',
 };
 
-/** A chevron at the foot of the banner, down to the article. */
+/**
+ * A chevron at the foot of the banner, down to the article. In the flow, so
+ * it never covers the words when the banner is full.
+ */
 const More: React.FunctionComponent = () => (
   <Layout justifyItems='center'>
     <div
       className={classNames(
-        'kicl-inset-block-end-wide',
-        'kicl-inset-inline-0',
-        'kicl-position-absolute'
+        'kicl-margin-block-start-wider',
+        'kicl-position-relative'
       )}
     >
       <HyperLink
