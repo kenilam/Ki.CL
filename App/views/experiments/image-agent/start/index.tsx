@@ -47,7 +47,7 @@ const Start: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
       <article className={CLASS_NAME}>
         <Frame grow hold>
-          <Layout alignContent='center' autoFlow='row' justifyContent='stretch'>
+          <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
             <section
               className={classNames(
                 // Dark in both themes, so the scrim darkens the pictures.
