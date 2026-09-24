@@ -23,7 +23,7 @@ const SiteLogo: React.FunctionComponent<Spec.Props> = ({
   const className = classNames(CLASS_NAME, _className);
 
   return (
-    <Text className={className} dense lookLike='h1'>
+    <Text className={className} dense lookLike='h2'>
       <Layout
         autoFlow='column'
         gap='narrower'

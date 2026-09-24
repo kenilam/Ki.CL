@@ -98,6 +98,17 @@ button {
   line-height: 1;
 }
 
+/*
+ * iOS Safari zooms the page into any field set below 16px when it takes focus.
+ * Only iOS supports `-webkit-touch-callout`, so other browsers keep the
+ * smaller size. `:root` lifts this over the `kicl-font-size-*` classes.
+ */
+@supports (-webkit-touch-callout: none) {
+  :root :is(input, select, textarea) {
+    font-size: max(var(--kicl-font-size), 1em);
+  }
+}
+
 a,
 button {
   &.disabled,

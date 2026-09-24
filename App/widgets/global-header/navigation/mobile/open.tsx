@@ -19,7 +19,7 @@ const COPY = {
 const Open: React.FunctionComponent = () => {
   return (
     <Button
-      className={classNames('kicl-font-size-medium', `${CLASS_NAME}--toggle`)}
+      className={classNames('kicl-font-size', `${CLASS_NAME}--toggle`)}
       command='show-modal'
       commandFor={CLASS_NAME}
       unstyled

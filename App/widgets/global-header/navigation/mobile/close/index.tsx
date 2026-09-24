@@ -23,7 +23,7 @@ const Close: React.FunctionComponent = () => {
   return (
     <Button
       className={classNames(
-        'kicl-font-size-medium',
+        'kicl-font-size',
         'kicl-position-fixed',
         `${CLASS_NAME}--toggle`,
         `${CLASS_NAME}--toggle--is-overlaid`

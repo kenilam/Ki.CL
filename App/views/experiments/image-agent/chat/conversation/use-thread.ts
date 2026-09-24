@@ -39,10 +39,13 @@ function newest(a: Thread | null | undefined, b: Thread | null | undefined) {
 function useThread(id: string, seed?: Thread): ThreadState {
   const [pushed, setPushed] = useState<Thread | null>(seed ?? null);
 
-  const { data, error, loading } = useQuery(Kicl_ImageAgentThreadDocument, {
-    variables: { id },
-    fetchPolicy: 'cache-and-network',
-  });
+  const { data, error, loading, refetch } = useQuery(
+    Kicl_ImageAgentThreadDocument,
+    {
+      variables: { id },
+      fetchPolicy: 'cache-and-network',
+    }
+  );
 
   const { data: live } = useSubscription(Kicl_ImageAgentThreadUpdatedDocument, {
     variables: { id },
@@ -54,6 +57,25 @@ function useThread(id: string, seed?: Thread): ThreadState {
       setPushed((current) => newest(current, next));
     }
   }, [id, live]);
+
+  /*
+   * A socket that drops while the phone sleeps or the network changes misses
+   * every update sent in the meantime, and reconnecting does not replay them.
+   * Fetch the thread again when the page is back in view or back online.
+   */
+  useEffect(() => {
+    const catchUp = () => {
+      if (document.visibilityState === 'visible') {
+        void refetch();
+      }
+    };
+    document.addEventListener('visibilitychange', catchUp);
+    window.addEventListener('online', catchUp);
+    return () => {
+      document.removeEventListener('visibilitychange', catchUp);
+      window.removeEventListener('online', catchUp);
+    };
+  }, [refetch]);
 
   const accept = useCallback((thread: Thread) => {
     setPushed((current) => newest(current, thread));
