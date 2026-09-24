@@ -32,7 +32,6 @@ const Words: React.FunctionComponent = () => {
         className={classNames(
           CLASS_NAME,
           'kicl-padding-block-extreme',
-          'kicl-padding-inline-widest',
           'kicl-pointer-events-auto'
         )}
       >
