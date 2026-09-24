@@ -47,28 +47,23 @@ const Chat: React.FunctionComponent = () => {
 
   return (
     <>
-      <Layout autoFlow='row' gap='normal' justifyContent='stretch'>
+      <Layout autoFlow='row' gap='none' justifyContent='stretch'>
         <article
           className={classNames(
             CLASS_NAME,
+            'kicl-inline-size-columns-8',
+            'kicl-margin-inline-auto',
             'kicl-padding-block-start-header',
             'kicl-padding-inline-frame'
           )}
         >
-          <section
-            className={classNames(
-              'kicl-inline-size-columns-8',
-              'kicl-margin-inline-auto'
-            )}
-          >
-            <Header />
-            <Conversation
-              {...thread}
-              choosing={!busy && !cooling && !spent && !sender.loading}
-              onChoose={sender.send}
-              onRetry={sender.retry}
-            />
-          </section>
+          <Header />
+          <Conversation
+            {...thread}
+            choosing={!busy && !cooling && !spent && !sender.loading}
+            onChoose={sender.send}
+            onRetry={sender.retry}
+          />
         </article>
       </Layout>
       <Composer {...sender} busy={busy || cooling} spent={spent} />
