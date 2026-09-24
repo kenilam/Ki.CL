@@ -90,7 +90,7 @@ const CLIENT_ADDRESS_HEADER = 'x-kicl-client-address';
  * so the last entry is the visitor. Earlier entries are whatever the browser
  * sent and cannot be trusted.
  */
-function visitorAddress(request: IncomingMessage): string | undefined {
+export function visitorAddress(request: IncomingMessage): string | undefined {
   const forwarded = request.headers['x-forwarded-for'];
   const last = (Array.isArray(forwarded) ? forwarded.join(',') : forwarded)
     ?.split(',')
