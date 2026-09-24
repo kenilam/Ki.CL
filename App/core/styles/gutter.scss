@@ -80,6 +80,11 @@ $gutter-properties: (
   margin-inline: auto;
 }
 
+// Pushes what follows to the end of a flex row.
+.kicl-margin-inline-end-auto {
+  margin-inline-end: auto;
+}
+
 // Content inset inside a Frame (`components/frame`).
 .kicl-padding-inline-frame {
   padding-inline: var(--kicl--components--frame--inset);

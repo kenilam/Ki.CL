@@ -59,7 +59,7 @@ const Navigation = React.forwardRef<
           justifyItems={justifyItems}
           wrap={wrap}
         >
-          {React.Children.toArray(children).map((child, index) => {
+          {React.Children.toArray(children).map((child) => {
             let key = String(child);
 
             if (React.isValidElement(child)) {
@@ -67,7 +67,7 @@ const Navigation = React.forwardRef<
             }
 
             return (
-              <Animation {...animation} delay={300 + 60 * index} key={key}>
+              <Animation {...animation} key={key}>
                 <ListItem className={`${CLASS_NAME}--list-item`} key={key}>
                   {child}
                 </ListItem>
