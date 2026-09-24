@@ -22,7 +22,7 @@ import { Button } from '../../../components';
 // ✅
 import { labelFor } from '@/views/experiments/tree-of-life/tree';
 import { Button } from '@/components';
-import { TaxonVisualStatus, useKicl_TaxonVisual } from 'api/provider';
+import { Kicl_TaxonVisualDocument, useQuery } from 'api/provider';
 ```
 
 When editing imports, rewrite reachable relatives to the matching alias in the same change.
