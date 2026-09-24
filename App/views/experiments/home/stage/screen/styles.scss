@@ -14,7 +14,7 @@
     var(#{$home}--out-start) + var(#{$home}--screen) - var(#{$home}--pad)
   );
   --kicl--views--experiments__home--arrival: calc(
-    var(#{$home}--at) - var(#{$home}--screen) * 0.6
+    var(#{$home}--at) - var(#{$home}--screen) * 0.3
   );
   --kicl--views--experiments__home--before: calc(
     var(#{$home}--at) - var(#{$home}--screen)
