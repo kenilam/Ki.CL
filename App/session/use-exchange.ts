@@ -11,7 +11,7 @@ import {
 
 import { TOKEN_HEADER } from './constants';
 
-type Outcome = 'ready' | 'rejected' | 'failed';
+type Outcome = 'ready' | 'rejected' | 'limited' | 'failed';
 
 const INTROSPECTION_BODY = JSON.stringify({
   operationName: 'IntrospectionQuery',
@@ -31,16 +31,26 @@ async function ensureApiKeyCookie(): Promise<void> {
   });
 }
 
-function isCaptchaRequired(error: unknown): boolean {
-  return (
-    CombinedGraphQLErrors.is(error) &&
-    error.errors.some(
-      ({ extensions }) => extensions?.code === 'CAPTCHA_REQUIRED'
-    )
-  );
+/** The outcomes the API names with an error code. */
+const CODES: Record<string, Outcome> = {
+  CAPTCHA_REQUIRED: 'rejected',
+  TOO_MANY_REQUESTS: 'limited',
+};
+
+function outcomeOf(error: unknown): Outcome | undefined {
+  if (!CombinedGraphQLErrors.is(error)) {
+    return undefined;
+  }
+
+  const codes = error.errors.map(({ extensions }) => String(extensions?.code));
+
+  return codes.map((code) => CODES[code]).find(Boolean);
 }
 
-/** Starts an anonymous session, sending the Turnstile token when there is one. */
+/**
+ * Starts an anonymous session, sending the Turnstile token when there is one.
+ * Without one, a visitor with a refresh token still gets their session back.
+ */
 function useExchange() {
   const [exchangeToken] = useMutation(Kicl_ExchangeTokenDocument);
 
@@ -66,8 +76,10 @@ function useExchange() {
         console.error('Session: anonymous session was not established');
         return 'failed';
       } catch (error) {
-        if (isCaptchaRequired(error)) {
-          return 'rejected';
+        const outcome = outcomeOf(error);
+
+        if (outcome) {
+          return outcome;
         }
 
         console.error('Session: bootstrap failed', error);
