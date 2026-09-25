@@ -12,14 +12,14 @@ import { Animation, Heading, Layout, Text } from '@/components';
 // Partials
 import { GoBack } from '@/router/http-status/go-back';
 
-const CLASS_NAME = 'kicl--router--http-status--204';
+const CLASS_NAME = 'kicl--router--http-status--429';
 
 type Props = {
   message: string;
   title?: string;
 };
 
-const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
+const Status429: React.FunctionComponent<Props> = ({ message, title }) => {
   const className = classNames(
     'kicl-text-align-center',
     'kicl--router--http-status',
@@ -43,7 +43,7 @@ const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
             justifyItems='center'
           >
             <Text lookLike='h1'>
-              <Icons.Ri.RiFileUnknowLine
+              <Icons.Ri.RiTimerLine
                 aria-hidden
                 className='kicl-font-size-extreme'
               />
@@ -51,7 +51,7 @@ const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
             </Text>
           </Layout>
           <Heading is='h1' lookLike='h2'>
-            204 - No Content
+            429 - Too Many Requests
           </Heading>
           {title ? (
             <Heading is='h2' lookLike='h4'>
@@ -66,4 +66,4 @@ const Status204: React.FunctionComponent<Props> = ({ message, title }) => {
   );
 };
 
-export { Status204 };
+export { Status429 };
