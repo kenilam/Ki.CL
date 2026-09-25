@@ -25,7 +25,8 @@ const Contents: React.FunctionComponent = () => {
 
   return (
     <Suspense fallback={<Spinner />}>
-      <KiclProvider>
+      {/* Sessions start in `@/session`, on the routes that need one. */}
+      <KiclProvider autoExchange={false}>
         <LocalStorageProvider>
           <View />
         </LocalStorageProvider>
