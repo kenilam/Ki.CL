@@ -29,7 +29,12 @@ const Status500: React.FunctionComponent<Props> = ({ message, title }) => {
 
   return (
     <Animation>
-      <Layout alignContent='center' autoFlow='row' justifyItems='center'>
+      <Layout
+        alignContent='center'
+        autoFlow='row'
+        justifyItems='center'
+        fullScreen
+      >
         <section className={className}>
           <Layout
             alignContent='center'

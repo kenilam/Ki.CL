@@ -10,6 +10,10 @@ const SCRIPT_SRC =
 /** A fresh token is tried once more after a rejection, then the gate gives up. */
 const MAX_REJECTIONS = 2;
 
-const ERROR_MESSAGE = 'Could not start a session. Reload to try again.';
+const COPY = {
+  rejected: 'Could not confirm you are human',
+  failed: 'Could not start a session',
+  retry: 'Reload to try again.',
+};
 
-export { ACTION, ERROR_MESSAGE, MAX_REJECTIONS, SCRIPT_SRC, TOKEN_HEADER };
+export { ACTION, COPY, MAX_REJECTIONS, SCRIPT_SRC, TOKEN_HEADER };
