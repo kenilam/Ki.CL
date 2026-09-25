@@ -14,6 +14,9 @@ const COPY = {
   rejected: 'Could not confirm you are human',
   failed: 'Could not start a session',
   retry: 'Reload to try again.',
+  // Vague like the API's own message: naming the limit says how to get round it.
+  limited: 'Could not start a session right now',
+  later: 'Try again later.',
 };
 
 export { ACTION, COPY, MAX_REJECTIONS, SCRIPT_SRC, TOKEN_HEADER };
