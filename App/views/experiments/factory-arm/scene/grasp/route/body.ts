@@ -1,0 +1,156 @@
+// Kinematics
+import {
+  bearing,
+  forward,
+  type Joints,
+  type Point,
+} from '@/views/experiments/factory-arm/scene/arm/kinematics';
+
+// Frames
+import {
+  frames,
+  place,
+} from '@/views/experiments/factory-arm/scene/arm/frames';
+
+// Spec
+import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+
+// Pad
+import { turn } from '@/views/experiments/factory-arm/scene/grasp/pad';
+
+// Rect
+import {
+  overlap,
+  type Rect,
+} from '@/views/experiments/factory-arm/scene/grasp/rect';
+
+// Constants
+import {
+  GRIPPER,
+  LINK,
+  SIDE,
+} from '@/views/experiments/factory-arm/scene/arm/constants';
+
+/** Space kept between the arm and anything it knows is there, in metres. */
+const MARGIN = 0.05;
+
+/** Spacing of the points tested along a capsule, in metres. */
+const SAMPLE = 0.05;
+
+/** The case on the pad, as collision needs it: size, and turn and offset from the pad. */
+type Carried = { size: [number, number, number]; yaw: number; offset: Point };
+
+/** A segment with a radius around it. */
+type Capsule = { from: Point; to: Point; radius: number };
+
+const distance = (point: Point, { min, max }: Solid) =>
+  Math.hypot(
+    Math.max(min.x - point.x, 0, point.x - max.x),
+    Math.max(min.y - point.y, 0, point.y - max.y),
+    Math.max(min.z - point.z, 0, point.z - max.z)
+  );
+
+const touches = (
+  { from, to, radius }: Capsule,
+  solid: Solid,
+  margin: number
+) => {
+  const length = Math.hypot(to.x - from.x, to.y - from.y, to.z - from.z);
+  const count = Math.max(1, Math.ceil(length / SAMPLE));
+
+  for (let index = 0; index <= count; index++) {
+    const share = index / count;
+    const point = {
+      x: from.x + (to.x - from.x) * share,
+      y: from.y + (to.y - from.y) * share,
+      z: from.z + (to.z - from.z) * share,
+    };
+
+    if (distance(point, solid) < radius + margin) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+/** An upright box, by its outline from above and its height range. */
+const meets = (
+  outline: Rect,
+  low: number,
+  high: number,
+  solid: Solid,
+  margin: number
+) =>
+  high > solid.min.y - margin &&
+  low < solid.max.y + margin &&
+  overlap(
+    outline,
+    {
+      x: (solid.min.x + solid.max.x) / 2,
+      z: (solid.min.z + solid.max.z) / 2,
+      half: [(solid.max.x - solid.min.x) / 2, (solid.max.z - solid.min.z) / 2],
+      yaw: 0,
+    },
+    -margin
+  );
+
+/**
+ * Whether the arm, posed at `joints` and carrying `carried`, would come
+ * within `margin` of any of `solids`. The upper arm, the elbow housing and
+ * the forearm are capsules; the gripper and the case under it are upright
+ * boxes turned with the pad, since the hand always points straight down.
+ */
+const collides = (
+  joints: Joints,
+  carried: Carried | undefined,
+  solids: Solid[],
+  margin = MARGIN
+) => {
+  if (!solids.length) {
+    return false;
+  }
+
+  const { fore, upper } = frames(joints);
+  const pad = forward(joints);
+  const facing = bearing(joints);
+
+  const capsules: Capsule[] = [
+    {
+      from: place(upper, [SIDE, 0, 0]),
+      to: place(upper, [SIDE, 0, LINK.upper]),
+      radius: 0.15,
+    },
+    { from: place(fore, [0, 0.04, -0.36]), to: fore.origin, radius: 0.19 },
+    { from: fore.origin, to: place(fore, [0, 0, LINK.fore]), radius: 0.14 },
+  ];
+
+  const gripper: Rect = {
+    x: pad.x,
+    z: pad.z,
+    half: [GRIPPER.width / 2 + 0.01, GRIPPER.depth / 2 + 0.01],
+    yaw: facing,
+  };
+  const top = pad.y + LINK.hand - 0.08;
+
+  const shift = carried && turn(carried.offset, facing);
+  const load: Rect | undefined = carried &&
+    shift && {
+      x: pad.x + shift.x,
+      z: pad.z + shift.z,
+      half: [carried.size[0] / 2, carried.size[2] / 2],
+      yaw: facing + carried.yaw,
+    };
+
+  return solids.some(
+    (solid) =>
+      capsules.some((capsule) => touches(capsule, solid, margin)) ||
+      meets(gripper, pad.y, top, solid, margin) ||
+      (!!load &&
+        !!carried &&
+        meets(load, pad.y - carried.size[1], pad.y, solid, margin))
+  );
+};
+
+export { collides };
+export type { Carried };

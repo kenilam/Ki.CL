@@ -1,0 +1,149 @@
+// Physics
+import type { RapierRigidBody } from '@react-three/rapier';
+
+// Spec
+import type { Box } from '@/views/experiments/factory-arm/scene/boxes/spec';
+
+// Pad
+import { heading, top } from './pad';
+
+// Plan
+import { DROP } from './plan';
+
+// Rect
+import { overlap, type Rect } from './rect';
+
+// Constants
+import { GRIPPER } from '@/views/experiments/factory-arm/scene/arm/constants';
+import {
+  BUFFER,
+  CONVEYOR,
+  PALLET,
+} from '@/views/experiments/factory-arm/scene/constants';
+
+type Bodies = Map<string, { body: RapierRigidBody; box: Box }>;
+
+/** Room kept clear along the belt either side of the drop point. */
+const SPACING = 0.55;
+
+/** Half the suction pad's width and depth; it is 1 cm wider than the housing. */
+const PAD: [number, number] = [
+  (GRIPPER.width + 0.02) / 2,
+  (GRIPPER.depth + 0.02) / 2,
+];
+
+/** How much taller a case must be to count as over another, past settling. */
+const TALLER = 0.02;
+
+/** Overlap smaller than this is cases touching side to side, not in the way. */
+const TOUCHING = 0.005;
+
+/** A case's outline on the floor plan. */
+const footprint = (body: RapierRigidBody, box: Box): Rect => {
+  const { x, z } = body.translation();
+
+  return {
+    x,
+    z,
+    half: [box.size[0] / 2, box.size[2] / 2],
+    yaw: heading(body.rotation()),
+  };
+};
+
+/** The pad's outline on a case: the wrist rolls it square to the case first. */
+const pad = ({ x, z, yaw }: Rect): Rect => ({ x, z, half: PAD, yaw });
+
+/** The top of the tallest case in the cell. */
+const highest = (bodies: Bodies) => {
+  let top = 0;
+
+  bodies.forEach(({ body, box }) => {
+    top = Math.max(top, body.translation().y + box.size[1] / 2);
+  });
+
+  return top;
+};
+
+/** Whether a case other than the held one still sits at the drop point. */
+const occupied = (bodies: Bodies, held?: string) => {
+  let found = false;
+
+  bodies.forEach(({ body, box }, id) => {
+    const { x, y, z } = body.translation();
+
+    found ||=
+      id !== held &&
+      Math.abs(x - DROP.x) < CONVEYOR.width &&
+      Math.abs(z - DROP.z) < SPACING &&
+      y - box.size[1] / 2 > CONVEYOR.height - 0.05;
+  });
+
+  return found;
+};
+
+/**
+ * The cases in the way of lifting one straight up: those rising above its top
+ * that overlap either the case or the pad on it, seen from above. The held
+ * case is in the air and never counts.
+ */
+const blockers = (id: string, bodies: Bodies, held?: string) => {
+  const entry = bodies.get(id);
+  const found: string[] = [];
+
+  if (!entry) {
+    return found;
+  }
+
+  const surface = top(entry.body, entry.box).y;
+  const own = footprint(entry.body, entry.box);
+  const reach = pad(own);
+
+  bodies.forEach(({ body, box }, other) => {
+    if (other === id || other === held) {
+      return;
+    }
+
+    const outline = footprint(body, box);
+
+    if (
+      top(body, box).y > surface + TALLER &&
+      (overlap(outline, own, TOUCHING) || overlap(outline, reach, TOUCHING))
+    ) {
+      found.push(other);
+    }
+  });
+
+  return found;
+};
+
+const blocked = (id: string, bodies: Bodies, held?: string) =>
+  !bodies.has(id) || blockers(id, bodies, held).length > 0;
+
+/** Whether a case's centre is over the pallet at `position`, resting on or above it. */
+const over = (
+  id: string,
+  bodies: Bodies,
+  [left, , back]: [number, number, number]
+) => {
+  const entry = bodies.get(id);
+
+  if (!entry) {
+    return false;
+  }
+
+  const { x, y, z } = entry.body.translation();
+  const [width, height, depth] = PALLET.size;
+
+  return (
+    Math.abs(x - left) < width / 2 &&
+    Math.abs(z - back) < depth / 2 &&
+    y - entry.box.size[1] / 2 > height - TALLER
+  );
+};
+
+/** Whether a case is on either pallet: the arm works both, never the belt or floor. */
+const onPallet = (id: string, bodies: Bodies) =>
+  over(id, bodies, PALLET.position) || over(id, bodies, BUFFER.position);
+
+export { PAD, blocked, blockers, footprint, highest, occupied, onPallet };
+export type { Bodies };
