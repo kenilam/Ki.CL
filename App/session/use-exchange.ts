@@ -1,13 +1,14 @@
 import { useCallback } from 'react';
 
-import { CombinedGraphQLErrors } from '@apollo/client';
-
 import {
   getApiKey,
   hasSession,
   Kicl_ExchangeTokenDocument,
   useMutation,
 } from 'api/provider';
+
+// Helper
+import { GetErrorCode } from '@/helper';
 
 import { TOKEN_HEADER } from './constants';
 
@@ -37,15 +38,8 @@ const CODES: Record<string, Outcome> = {
   TOO_MANY_REQUESTS: 'limited',
 };
 
-function outcomeOf(error: unknown): Outcome | undefined {
-  if (!CombinedGraphQLErrors.is(error)) {
-    return undefined;
-  }
-
-  const codes = error.errors.map(({ extensions }) => String(extensions?.code));
-
-  return codes.map((code) => CODES[code]).find(Boolean);
-}
+const outcomeOf = (error: unknown): Outcome | undefined =>
+  CODES[GetErrorCode(error) ?? ''];
 
 /**
  * Starts an anonymous session, sending the Turnstile token when there is one.
