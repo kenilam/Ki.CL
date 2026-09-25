@@ -6,6 +6,9 @@ import { List, Spinner, Status } from '@/components';
 // Routes
 import { Navigate } from '@/router';
 
+// Helper
+import { GetErrorCode } from '@/helper';
+
 // Partials
 import { Message, type MessageProps } from './message';
 import { Pending } from './pending';
@@ -54,13 +57,15 @@ const Conversation: React.FunctionComponent<Props> = ({
   const list = useStickToBottom<HTMLElement>(sent);
 
   if (error) {
+    const limited = GetErrorCode(error) === 'TOO_MANY_REQUESTS';
+
     return (
       <Status
         in
         headingLevel='h2'
-        level='error'
-        message={COPY.unreachable}
-        title={COPY.unreachableTitle}
+        level={limited ? 'warning' : 'error'}
+        message={limited ? COPY.limited : COPY.unreachable}
+        title={limited ? COPY.limitedTitle : COPY.unreachableTitle}
       />
     );
   }
