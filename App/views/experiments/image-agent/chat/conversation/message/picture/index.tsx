@@ -9,6 +9,9 @@ import { Ri } from '@/icons';
 // Components
 import { Button, Dialog, Image } from '@/components';
 
+// Hooks
+import { useResponsive } from '@/hooks';
+
 // Styles
 import './styles.scss';
 
@@ -31,9 +34,15 @@ type Props = {
 /** A square preview; pressing it opens the whole picture in a dialog. */
 const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
   const [open, setOpen] = useState(false);
+  const { isMobile } = useResponsive();
 
   return (
-    <figure className={CLASS_NAME}>
+    <figure
+      className={classNames(
+        CLASS_NAME,
+        isMobile ? 'kicl-inline-size-columns-2' : 'kicl-inline-size-columns-3'
+      )}
+    >
       <Button
         aria-label={COPY.open}
         className={classNames(

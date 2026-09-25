@@ -18,7 +18,6 @@ import { useComposer } from './use-composer';
 
 // Constants
 import { CLASS_NAME } from './constants';
-import { useResponsive } from '@/hooks';
 
 type Props = Sender & {
   /** The agent is replying, so sending is off. */
@@ -43,11 +42,10 @@ const Composer: React.FunctionComponent<Props> = ({
   spent = false,
   sticky = true,
 }) => {
-  const { isTablet } = useResponsive()
   const { form, submit } = useComposer({ error, onText, send });
 
   return (
-    <Layout autoFlow='row' gap={isTablet ? 'normal' : 'narrow' } justifyItems='start'>
+    <Layout autoFlow='row' gap='narrow' justifyItems='start'>
       <section
         className={classNames(CLASS_NAME, 'kicl-inline-size-columns-8', {
           [`${CLASS_NAME}--sticky`]: sticky,
@@ -55,24 +53,20 @@ const Composer: React.FunctionComponent<Props> = ({
           'kicl-position-sticky': sticky,
           'kicl-padding-block-start': sticky,
           'kicl-padding-block-end-wide': sticky,
-          'kicl-padding-block-start-wide-tablet-down': sticky,
-          'kicl-padding-block-end-widest-tablet-down': sticky,
           'kicl-padding-inline-frame': sticky,
           'kicl-margin-inline-auto': sticky,
         })}
       >
         <Allowance busy={busy} />
-        {
-          !disallow ? (
-            <Form {...form} onSubmit={submit}>
-              <Field
-                disabled={busy || loading || spent}
-                onEnter={() => void submit()}
-                sending={loading}
-              />
-            </Form>
-          ) : null
-        }
+        {!disallow ? (
+          <Form {...form} onSubmit={submit}>
+            <Field
+              disabled={busy || loading || spent}
+              onEnter={() => void submit()}
+              sending={loading}
+            />
+          </Form>
+        ) : null}
       </section>
     </Layout>
   );
