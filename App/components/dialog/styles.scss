@@ -58,11 +58,6 @@
     display var(--kicl-transition-duration-fast) allow-discrete,
     overlay var(--kicl-transition-duration-fast) allow-discrete;
 
-  @include query('≤tablet') {
-    --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
-    --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
-  }
-
   @include query('≤mobile') {
     min-block-size: 100svb;
 

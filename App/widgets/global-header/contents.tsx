@@ -39,7 +39,7 @@ const Contents: React.FunctionComponent = () => {
         alignItems='center'
         autoFlow='row'
         display='flex'
-        gap={ isMobile ? 'wide' : 'normal' }
+        gap='normal'
         ref={node}
       >
         <header className={className}>

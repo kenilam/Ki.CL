@@ -23,7 +23,6 @@ import { useStart } from './use-start';
 
 // Constants
 import { CLASS_NAME } from './constants';
-import { useResponsive } from '@/hooks';
 
 /**
  * `/experiments/image-agent`: a framed hero with the title, how it works, the
@@ -40,8 +39,6 @@ const Start: React.FunctionComponent = () => {
   // Shares the allowance badge's cached query.
   const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
   const spent = data?.ImageAgentAllowance.remaining === 0;
-
-  const { isTablet } = useResponsive();
 
   return (
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
@@ -68,7 +65,7 @@ const Start: React.FunctionComponent = () => {
                 >
                   <Header />
                   <Running {...running} />
-                  <Layout gap={ isTablet ? 'wider' : 'wide' }>
+                  <Layout gap='wide'>
                     <div>
                       {running.busy ? null : <Past query={query} />}
                       <Composer

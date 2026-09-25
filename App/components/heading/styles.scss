@@ -9,11 +9,8 @@
 
   &:not(&--is-dense):has(+ *) {
     --kicl--components--heading--padding-block-start: var(--kicl-gutter-narrow);
-    --kicl--components--heading--padding-block-end: var(--kicl-gutter-narrowest);
-
-    @include tablet {
-      --kicl--components--heading--padding-block-start: var(--kicl-gutter);
-      --kicl--components--heading--padding-block-end: var(--kicl-gutter-narrower);
-    }
+    --kicl--components--heading--padding-block-end: var(
+      --kicl-gutter-narrowest
+    );
   }
 }
