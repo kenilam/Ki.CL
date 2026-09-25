@@ -3,13 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { hasSession } from 'api/provider';
 
 // Components
-import { Spinner, Text } from '@/components';
+import { Layout, Spinner } from '@/components';
+
+// Router
+import { HttpStatus } from '@/router';
 
 // Env
 import { useEnvContext } from '@/env/client';
 
 // Constants
-import { ERROR_MESSAGE, MAX_REJECTIONS } from './constants';
+import { COPY, MAX_REJECTIONS } from './constants';
 
 // Hooks
 import { useExchange } from './use-exchange';
@@ -27,15 +30,15 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
   const siteKey = env?.TURNSTILE_SITE_KEY || undefined;
 
   const [ready, setReady] = useState(() => hasSession());
-  const [failed, setFailed] = useState(false);
+  const [failure, setFailure] = useState<'rejected' | 'failed' | null>(null);
   const [rejections, setRejections] = useState(0);
 
   const exchange = useExchange();
-  const turnstile = useTurnstile(ready || failed ? undefined : siteKey);
+  const turnstile = useTurnstile(ready || failure ? undefined : siteKey);
   const { token, reset } = turnstile;
 
   useEffect(() => {
-    if (ready || failed || (siteKey && !token)) {
+    if (ready || failure || (siteKey && !token)) {
       return;
     }
 
@@ -52,27 +55,38 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
         setRejections(rejections + 1);
         reset();
       } else {
-        setFailed(true);
+        setFailure(outcome);
       }
     });
 
     return () => {
       cancelled = true;
     };
-  }, [exchange, failed, ready, rejections, reset, siteKey, token]);
+  }, [exchange, failure, ready, rejections, reset, siteKey, token]);
 
   if (ready) {
     return children;
   }
 
-  if (failed || turnstile.failed) {
-    return <Text variant='secondary'>{ERROR_MESSAGE}</Text>;
+  if (failure === 'rejected') {
+    return <HttpStatus.Status403 message={COPY.retry} title={COPY.rejected} />;
+  }
+
+  if (failure || turnstile.failed) {
+    return <HttpStatus.Status500 message={COPY.retry} title={COPY.failed} />;
   }
 
   return (
     <>
-      {!turnstile.interactive && <Spinner position='inline' />}
-      <div ref={turnstile.container} />
+      {!turnstile.interactive && <Spinner in />}
+      <Layout
+        alignContent='center'
+        justifyContent='center'
+        justifyItems='center'
+        fullScreen
+      >
+        <div ref={turnstile.container} />
+      </Layout>
     </>
   );
 };
