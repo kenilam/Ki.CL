@@ -10,8 +10,15 @@
   --kicl--components--frame--gap: var(--kicl-gutter);
   --kicl--components--frame--radius: var(--kicl-size);
 
-  // How far content sits in from the frame's edge; every experiment reads it.
-  --kicl--components--frame--inset: var(--kicl-gutter-widest);
+  /*
+   * How far content sits in from the frame's edge; every experiment reads it.
+   * Scales with the window, so a phone keeps its width for content.
+   */
+  --kicl--components--frame--inset: clamp(
+    var(--kicl-gutter),
+    5vi,
+    var(--kicl-gutter-widest)
+  );
 
   /*
    * Content inset that also keeps content within 12 columns, centred.
@@ -45,16 +52,6 @@
   --kicl--components--frame--hold-distance: var(
     --kicl--widgets--global-header--block-size
   );
-
-  // The gutter halves on tablets; the frame's gap shouldn't.
-  @include tablet {
-    --kicl--components--frame--gap: var(--kicl-gutter-wide);
-    --kicl--components--frame--inset: var(--kicl-gutter-wide);
-  }
-
-  @include query('≤mobile') {
-    --kicl--components--frame--inset: var(--kicl-gutter);
-  }
 }
 
 .kicl--components--frame.kicl--components--frame {

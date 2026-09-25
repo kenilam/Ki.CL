@@ -7,11 +7,6 @@
   --kicl--components--input-group--padding-block: var(--kicl-gutter-narrow);
   --kicl--components--input-group--padding-inline: var(--kicl-gutter);
 
-  @include tablet {
-    --kicl--components--input-group--padding-block: var(--kicl-gutter);
-    --kicl--components--input-group--padding-inline: var(--kicl-gutter-wide);
-  }
-
   align-items: center;
   background-color: var(--kicl--components--input-group--background-color);
   border: var(--kicl--components--input-group--border-width) solid
