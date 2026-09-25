@@ -6,6 +6,9 @@ import { Fa, Ri } from '@/icons';
 // Components
 import { HyperLink, Layout, Spinner } from '@/components';
 
+// Hooks
+import { useResponsive } from '@/hooks';
+
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
 
@@ -36,11 +39,12 @@ const COPY = {
  */
 const Controls: React.FunctionComponent = () => {
   const { control, next, track } = useTrackContext();
+  const { isMobile } = useResponsive();
 
   return (
     <Layout
       alignItems='center'
-      autoFlow='column'
+      autoFlow={isMobile ? 'row' : 'column'}
       gap='narrow'
       justifyContent='end'
       justifyItems='end'

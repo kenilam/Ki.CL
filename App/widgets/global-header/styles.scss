@@ -17,13 +17,6 @@
     var(--kicl--widgets--global-header--block-size) +
     (var(--kicl--widgets--global-header--top) * 2)
   );
-
-  @include tablet {
-    --kicl--widgets--global-header--padding-block-end: var(--kicl-gutter-wide);
-    --kicl--widgets--global-header--padding-block-start: var(
-      --kicl-gutter-wide
-    );
-  }
 }
 
 .kicl--widgets--global-header {

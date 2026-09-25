@@ -8,11 +8,4 @@
     var(--kicl-body-color) 55%,
     var(--kicl-body-background-color)
   );
-
-  /* A preview is a square this wide; the dialog shows the whole picture. */
-  --kicl--image-agent--preview: 18rem;
-
-  @include query('≤tablet') {
-    --kicl--image-agent--preview: 14rem;
-  }
 }
