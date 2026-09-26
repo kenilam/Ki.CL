@@ -13,7 +13,7 @@
  * The order below must match `LAYERS` in `App/.client/helper/get-style-layer.ts`,
  * which prepends the same statement to every SCSS file.
  */
-@layer reset, base, layout, components, views, utilities;
+@layer reset, base, layout, components, wrappers, views, utilities;
 
 @import url('normalize.css') layer(reset);
 @import url('reset-css/reset.css') layer(reset);

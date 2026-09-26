@@ -151,7 +151,7 @@
     --kicl-layout--auto-flow: row;
   }
 
-  &.kicl-layout--column.kicl-layout--column {
+  &.kicl-layout--column {
     --kicl-layout--auto-flow: column;
   }
 
@@ -164,7 +164,7 @@
       grid-template-rows: var(--kicl-layout--grid-frames);
     }
 
-    &.kicl-layout--column.kicl-layout--column {
+    &.kicl-layout--column {
       grid-template-columns: var(--kicl-layout--grid-frames);
       grid-template-rows: unset;
 
@@ -173,20 +173,20 @@
       }
     }
 
-    // Row flow over 12 equal tracks. Doubled so it beats both `--row` and
-    // `--column`, which set their own template.
-    &.kicl-layout--columns.kicl-layout--columns {
+    // Row flow over 12 equal tracks. Kept after `--row` and `--column`, which
+    // set their own template: same specificity, so the later rule wins.
+    &.kicl-layout--columns {
       --kicl-layout--auto-flow: row;
 
       grid-template-columns: repeat(var(--kicl-columns-count), minmax(0, 1fr));
       grid-template-rows: unset;
     }
 
-    &.kicl-layout--dense.kicl-layout--dense {
+    &.kicl-layout--dense {
       --kicl-layout--auto-flow: dense;
     }
 
-    &.kicl-layout--revert.kicl-layout--revert {
+    &.kicl-layout--revert {
       --kicl-layout--auto-flow: revert;
     }
   }
