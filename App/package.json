@@ -62,6 +62,6 @@
     "enzyme": "3.11.0",
     "enzyme-to-json": "3.6.2",
     "mock-local-storage": "1.1.24",
-    "react-test-renderer": "19.2.8"
+    "react-test-renderer": "19.3.0"
   }
 }
