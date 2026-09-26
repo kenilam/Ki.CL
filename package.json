@@ -111,5 +111,8 @@
       "/node_modules/",
       "/spec\\.ts$"
     ]
+  },
+  "resolutions": {
+    "lodash@npm:4.17.21": "4.17.23"
   }
 }
