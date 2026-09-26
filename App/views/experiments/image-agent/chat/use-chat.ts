@@ -7,6 +7,9 @@ import {
   useMutation,
 } from 'api/provider';
 
+// Session
+import { isChallenge, useChallenged } from '@/session';
+
 // Spec
 import type { Thread } from './conversation/spec';
 
@@ -24,11 +27,14 @@ type Options = {
 function useChat({ onSent, threadId }: Options) {
   const [mutate, sent] = useMutation(Kicl_ImageAgentSendDocument);
   const [again, retried] = useMutation(Kicl_ImageAgentRetryDocument);
+  const challenged = useChallenged();
 
   const send = useCallback(
     async (text: string) => {
       try {
-        const { data } = await mutate({ variables: { text, threadId } });
+        const { data } = await challenged(() =>
+          mutate({ variables: { text, threadId } })
+        );
         if (!data?.ImageAgentSend) {
           return false;
         }
@@ -39,14 +45,16 @@ function useChat({ onSent, threadId }: Options) {
         return false;
       }
     },
-    [mutate, onSent, threadId]
+    [challenged, mutate, onSent, threadId]
   );
 
   /** Go back to one of the person's messages and ask it again. */
   const retry = useCallback(
     async (messageId: string) => {
       try {
-        const { data } = await again({ variables: { messageId, threadId } });
+        const { data } = await challenged(() =>
+          again({ variables: { messageId, threadId } })
+        );
         if (!data?.ImageAgentRetry) {
           return false;
         }
@@ -57,11 +65,14 @@ function useChat({ onSent, threadId }: Options) {
         return false;
       }
     },
-    [again, onSent, threadId]
+    [again, challenged, onSent, threadId]
   );
 
+  // A check the session gate is running is not an error to show.
+  const error = retried.error ?? sent.error;
+
   return {
-    error: retried.error ?? sent.error,
+    error: isChallenge(error) ? undefined : error,
     loading: sent.loading || retried.loading,
     retry,
     send,

@@ -29,18 +29,15 @@ const Limits: React.FunctionComponent = () => (
           Who counts as a person
         </Heading>
         <Text is='p'>
-          A person is identified by their session cookie or their network
-          address, and usage under either one counts, so clearing the cookie
-          doesn’t reset their limits. The downside is that people on the same
-          network share limits.
+          A person is their session. The first visit passes a Turnstile check
+          and gets a token, and every request after that is counted against it.
+          Clearing cookies or changing device starts a new session with a new
+          allowance. That is accepted: the check is what stops a script from
+          doing it on a loop.
         </Text>
         <Text is='p'>
-          The address is never stored as it is. It’s hashed with a secret key,
-          and IPv6 addresses are trimmed to their{' '}
-          <Text is='code' variant='secondary'>
-            /64
-          </Text>{' '}
-          first.
+          The network address is not read or stored, so people who share a
+          network do not share limits.
         </Text>
         <Text is='p'>
           Counts are read from MongoDB instead of kept in memory, so restarting

@@ -91,10 +91,10 @@
     "@vitejs/devtools": "^0.4.9",
     "commitizen": "4.3.2",
     "cz-conventional-changelog": "3.3.0",
-    "lint-staged": "17.2.0",
+    "lint-staged": "17.5.1",
     "oxlint": "^1.76.0",
     "prettier": "3.9.9",
-    "stylelint": "17.14.1",
+    "stylelint": "17.15.0",
     "stylelint-config-css-modules": "4.6.0",
     "stylelint-config-recommended": "18.0.0",
     "stylelint-config-recommended-scss": "17.0.1",
@@ -103,7 +103,7 @@
     "stylelint-config-standard-scss": "17.0.0",
     "stylelint-order": "8.1.1",
     "stylelint-prettier": "5.0.3",
-    "stylelint-scss": "7.2.0"
+    "stylelint-scss": "7.3.0"
   },
   "packageManager": "yarn@4.17.1",
   "jest": {

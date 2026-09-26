@@ -19,6 +19,7 @@ const LAYERS = [
   'base',
   'layout',
   'components',
+  'wrappers',
   'views',
   'utilities',
 ] as const;
@@ -48,6 +49,23 @@ const BASE = [
  * element as that component's own - and the component should win.
  */
 const LAYOUT = ['layout.scss'];
+
+/**
+ * Components that `cloneElement` their class onto a child instead of rendering
+ * an element of their own, so their rules and the child's land on one node at
+ * one class each. In the same layer that is a tie, settled by stylesheet
+ * order. `wrappers` sits above `components` so the wrapper wins, which is the
+ * point of wrapping something.
+ *
+ * Every component that clones a class belongs here except `Layout`, which
+ * `LAYOUT` places below for the opposite reason. `FormControl` clones too but
+ * only ids and ARIA, so it has nothing to place.
+ */
+const WRAPPERS = [
+  'components/animation/',
+  'components/frame/',
+  'widgets/infinite-scroll/',
+];
 
 /**
  * Which cascade layer a stylesheet belongs to, or `null` for Sass partials -
@@ -81,6 +99,10 @@ const getStyleLayer = (filename: string): Layer | null => {
 
   if (path.startsWith('views/') || path.startsWith('router/')) {
     return 'views';
+  }
+
+  if (WRAPPERS.some((folder) => path.startsWith(folder))) {
+    return 'wrappers';
   }
 
   return 'components';
