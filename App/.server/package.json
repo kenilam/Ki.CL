@@ -4,7 +4,7 @@
   "dependencies": {
     "colors": "1.4.0",
     "compression": "^1.8.0",
-    "express": "5.1.0",
+    "express": "5.2.1",
     "google-auth-library": "^10.4.0",
     "hpp": "^0.2.3",
     "http-proxy-middleware": "^3.0.5",
@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
-    "@types/express": "5.0.1",
+    "@types/express": "5.0.6",
     "@types/hpp": "^0.2.6"
   },
   "scripts": {

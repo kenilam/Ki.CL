@@ -35,6 +35,9 @@
       }
     ],
     "jsx-a11y/prefer-tag-over-role": "off",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "react/purity": "warn",
+    "react/refs": "warn",
+    "react/set-state-in-effect": "warn"
   }
 }

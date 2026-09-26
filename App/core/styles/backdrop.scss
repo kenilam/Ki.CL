@@ -12,7 +12,7 @@
   --kicl-backdrop-tint: 10%;
 }
 
-.kicl-backdrop.kicl-backdrop {
+.kicl-backdrop {
   backdrop-filter: var(--kicl-backdrop-filter);
   background-color: color-mix(
     in srgb,

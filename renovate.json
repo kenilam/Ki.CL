@@ -5,6 +5,7 @@
   "ignorePaths": [],
   "baseBranchPatterns": ["develop"],
   "schedule": ["every weekend"],
+  "minimumReleaseAge": "1 day",
   "dependencyDashboard": true,
   "platformAutomerge": true,
   "automergeStrategy": "squash",
