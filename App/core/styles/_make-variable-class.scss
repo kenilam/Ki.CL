@@ -1,11 +1,16 @@
+/*
+ * One class each. These sit in the `utilities` layer, which already beats every
+ * component and view rule, so the doubled class names they used to carry for
+ * specificity bought nothing.
+ */
 @mixin make-variable-class($property, $identifier: null) {
   @if $identifier {
-    .kicl-#{$property}-#{$identifier}.kicl-#{$property}-#{$identifier} {
+    .kicl-#{$property}-#{$identifier} {
       #{$property}: var(--kicl-#{$property}-#{$identifier});
       @content;
     }
   } @else {
-    .kicl-#{$property}.kicl-#{$property} {
+    .kicl-#{$property} {
       #{$property}: var(--kicl-#{$property});
       @content;
     }

@@ -54,7 +54,11 @@
   );
 }
 
-.kicl--components--frame.kicl--components--frame {
+/*
+ * In the `wrappers` layer, above `components`: the frame's sizing and clipping
+ * land on another component's element and should beat that component's own.
+ */
+.kicl--components--frame {
   $frame: '--kicl--components--frame';
 
   // Shows the frame's shape before whatever fills it has loaded. The light
