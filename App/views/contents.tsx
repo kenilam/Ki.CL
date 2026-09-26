@@ -6,6 +6,9 @@ import { Outlet, ScrollRestoration, useLocation } from '@/router';
 // Widgets
 import { GlobalHeader, useGlobalHeaderContext } from '@/widgets';
 
+// Session
+import { Session } from '@/session';
+
 // Components
 import { Layout } from '@/components';
 
@@ -51,7 +54,10 @@ const Contents: React.FunctionComponent = () => {
           id={MAIN_ID}
           tabIndex={-1}
         >
-          <Outlet />
+          {/* Every request to the API is counted per session, so every page has one. */}
+          <Session>
+            <Outlet />
+          </Session>
         </main>
       </Layout>
     </>

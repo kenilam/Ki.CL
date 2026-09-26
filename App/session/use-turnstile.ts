@@ -24,7 +24,7 @@ declare global {
 
 let script: Promise<void> | null = null;
 
-/** Loaded on first use, so pages without a session gate never fetch it. */
+/** Loaded on first use, so a visitor with a session never fetches it. */
 function loadScript(): Promise<void> {
   script ??= new Promise((resolve, reject) => {
     const element = document.createElement('script');

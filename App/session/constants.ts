@@ -11,6 +11,7 @@ const SCRIPT_SRC =
 const MAX_REJECTIONS = 2;
 
 const COPY = {
+  checking: 'Confirming you are human',
   rejected: 'Could not confirm you are human',
   failed: 'Could not start a session',
   retry: 'Reload to try again.',
