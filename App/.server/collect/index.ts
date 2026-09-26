@@ -7,9 +7,8 @@ import express, {
   type Response,
 } from 'express';
 
-import { visitorAddress } from '../proxy';
-
 import { BODY_LIMIT_BYTES, COLLECT_PATH, record } from './record';
+import { visitorAddress } from './visitor-address';
 
 /**
  * Receives the browser's analytics batches. Mounted ahead of the static files,

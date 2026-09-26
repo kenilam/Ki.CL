@@ -1,4 +1,4 @@
-import type { ClientRequest, IncomingMessage, Server } from 'node:http';
+import type { ClientRequest, Server } from 'node:http';
 
 import type { Express, NextFunction, Request, Response } from 'express';
 import {
@@ -82,44 +82,14 @@ function currentIdToken(): string | null {
 }
 
 /**
- * Tells the API who the visitor is. The API sits behind Google's front end and
- * this server's VPC egress, so the address it sees is ours, shared by every
- * visitor, and its per-person limits would count everyone as one.
+ * The API identifies visitors by their session cookie alone, so nothing about
+ * the visitor is added here: only this server's own identity.
  */
-const CLIENT_ADDRESS_HEADER = 'x-kicl-client-address';
-
-/**
- * Cloud Run's front end appends the address it received the connection from,
- * so the last entry is the visitor. Earlier entries are whatever the browser
- * sent and cannot be trusted.
- */
-export function visitorAddress(request: IncomingMessage): string | undefined {
-  const forwarded = request.headers['x-forwarded-for'];
-  const last = (Array.isArray(forwarded) ? forwarded.join(',') : forwarded)
-    ?.split(',')
-    .at(-1)
-    ?.trim();
-
-  return last || request.socket.remoteAddress;
-}
-
-function applyAuthorization(
-  proxyRequest: ClientRequest,
-  request: IncomingMessage
-): void {
+function applyAuthorization(proxyRequest: ClientRequest): void {
   const token = currentIdToken();
 
   if (token) {
     proxyRequest.setHeader('Authorization', `Bearer ${token}`);
-  }
-
-  const address = visitorAddress(request);
-
-  // Always overwritten, so a browser cannot choose its own address.
-  if (address) {
-    proxyRequest.setHeader(CLIENT_ADDRESS_HEADER, address);
-  } else {
-    proxyRequest.removeHeader(CLIENT_ADDRESS_HEADER);
   }
 }
 
