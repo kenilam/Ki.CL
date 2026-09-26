@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { hasSession } from 'api/provider';
 
@@ -19,6 +19,10 @@ type Stage =
  * Where the gate is. It tries without a token first, so a visitor whose
  * session lapsed at midnight gets it back from their refresh token without a
  * check. Only a `rejected` probe shows the widget.
+ *
+ * A session that exists but never passed the check gets the widget later,
+ * when a paid request answers CAPTCHA_REQUIRED and `challenge` is called.
+ * The page stays up while that runs.
  */
 function useSession() {
   const { env, loading } = useEnvContext();
@@ -28,10 +32,35 @@ function useSession() {
     hasSession() ? 'ready' : 'probe'
   );
   const [rejections, setRejections] = useState(0);
+  const [resuming, setResuming] = useState(false);
+  const waiting = useRef<((ready: boolean) => void)[]>([]);
 
   const exchange = useExchange();
   const turnstile = useTurnstile(stage === 'challenge' ? siteKey : undefined);
   const { token, reset } = turnstile;
+
+  const challenge = useCallback(
+    () =>
+      new Promise<boolean>((resolve) => {
+        waiting.current.push(resolve);
+        setResuming(true);
+        setRejections(0);
+        setStage((current) => (current === 'ready' ? 'challenge' : current));
+      }),
+    []
+  );
+
+  useEffect(() => {
+    if (stage === 'probe' || stage === 'challenge') {
+      return;
+    }
+
+    setResuming(false);
+
+    for (const resolve of waiting.current.splice(0)) {
+      resolve(stage === 'ready');
+    }
+  }, [stage]);
 
   useEffect(() => {
     if (stage !== 'probe') {
@@ -83,6 +112,8 @@ function useSession() {
   const unconfigured = stage === 'challenge' && !loading && !siteKey;
 
   return {
+    challenge,
+    resuming,
     stage: unconfigured || turnstile.failed ? 'failed' : stage,
     turnstile,
   };
