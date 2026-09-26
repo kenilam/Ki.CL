@@ -66,9 +66,12 @@
    * slide or zoom on top of content that is already legible without it. Honour
    * the preference by cutting the duration rather than the transition, so the
    * end state and the transition events still arrive.
+   *
+   * The properties are reset, not the variables. The `delay` prop sets its
+   * variable inline, and an inline declaration beats a variable reset here.
    */
   @media (prefers-reduced-motion: reduce) {
-    --kicl--components--animation--transition-delay: 0s;
-    --kicl--components--animation--transition-duration: 1ms;
+    transition-delay: 0s;
+    transition-duration: 1ms;
   }
 }
