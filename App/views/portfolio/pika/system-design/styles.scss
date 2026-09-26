@@ -91,11 +91,8 @@
   }
 
   &__full {
-    &#{&} {
-      --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
-      --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
-    }
-
+    --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
+    --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
     --kicl--components--image--block-size: calc(
       var(--kicl--components--dialog--block-size) -
         (var(--kicl--components--dialog--padding-block) * 2)
