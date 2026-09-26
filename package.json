@@ -88,7 +88,7 @@
     "@types/node": "26",
     "@types/node-sass": "4.11.8",
     "@types/prismjs": "^1.26.6",
-    "@vitejs/devtools": "^0.4.9",
+    "@vitejs/devtools": "^0.7.0",
     "commitizen": "4.3.2",
     "cz-conventional-changelog": "3.3.0",
     "lint-staged": "17.2.0",
