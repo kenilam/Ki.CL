@@ -51,8 +51,11 @@ const destinations = (
     .filter((later) => later.to === 'buffer')
     .flatMap((later) => bodies.get(later.id)?.box ?? []);
 
+  // Cases still to be picked up: better not to bury them.
+  const reserved = queue.slice(1).map(({ id }) => id);
+
   return [
-    ...spots(entry.box, bodies, upcoming)
+    ...spots(entry.box, bodies, upcoming, reserved)
       .slice(0, TRIES)
       .map((room) => ({ ...room, wait: false })),
     belt(entry.box.size),

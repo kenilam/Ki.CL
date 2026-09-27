@@ -82,32 +82,38 @@ const occupied = (bodies: Bodies, held?: string) => {
 };
 
 /**
+ * Whether something with `outline` from above and its top at `height` would
+ * be in the way of lifting case `id` straight up: it rises above the case's
+ * top and overlaps the case or the pad on it.
+ */
+const covers = (outline: Rect, height: number, id: string, bodies: Bodies) => {
+  const entry = bodies.get(id);
+
+  if (!entry) {
+    return false;
+  }
+
+  const own = footprint(entry.body, entry.box);
+
+  return (
+    height > top(entry.body, entry.box).y + TALLER &&
+    (overlap(outline, own, TOUCHING) || overlap(outline, pad(own), TOUCHING))
+  );
+};
+
+/**
  * The cases in the way of lifting one straight up: those rising above its top
  * that overlap either the case or the pad on it, seen from above. The held
  * case is in the air and never counts.
  */
 const blockers = (id: string, bodies: Bodies, held?: string) => {
-  const entry = bodies.get(id);
   const found: string[] = [];
 
-  if (!entry) {
-    return found;
-  }
-
-  const surface = top(entry.body, entry.box).y;
-  const own = footprint(entry.body, entry.box);
-  const reach = pad(own);
-
   bodies.forEach(({ body, box }, other) => {
-    if (other === id || other === held) {
-      return;
-    }
-
-    const outline = footprint(body, box);
-
     if (
-      top(body, box).y > surface + TALLER &&
-      (overlap(outline, own, TOUCHING) || overlap(outline, reach, TOUCHING))
+      other !== id &&
+      other !== held &&
+      covers(footprint(body, box), top(body, box).y, id, bodies)
     ) {
       found.push(other);
     }
@@ -145,5 +151,14 @@ const over = (
 const onPallet = (id: string, bodies: Bodies) =>
   over(id, bodies, PALLET.position) || over(id, bodies, BUFFER.position);
 
-export { PAD, blocked, blockers, footprint, highest, occupied, onPallet };
+export {
+  PAD,
+  blocked,
+  blockers,
+  covers,
+  footprint,
+  highest,
+  occupied,
+  onPallet,
+};
 export type { Bodies };
