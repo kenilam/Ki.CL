@@ -11,7 +11,6 @@ import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec
 import { heading, top } from './pad';
 
 // Plan
-import { DROP } from './plan';
 
 // Rect
 import { overlap, type Rect } from './rect';
@@ -97,18 +96,18 @@ const highest = (bodies: Bodies) => {
   return top;
 };
 
-/** Whether a case other than the held one still sits at the drop point. */
-const occupied = (bodies: Bodies, held?: string) => {
+/** Whether a case other than the held one still sits at the drop point `z` along the belt. */
+const occupied = (bodies: Bodies, z: number, held?: string) => {
   let found = false;
 
   bodies.forEach(({ body, box }, id) => {
-    const { x, y, z } = body.translation();
+    const at = body.translation();
 
     found ||=
       id !== held &&
-      Math.abs(x - DROP.x) < CONVEYOR.width &&
-      Math.abs(z - DROP.z) < SPACING &&
-      y - box.size[1] / 2 > CONVEYOR.height - 0.05;
+      Math.abs(at.x - CONVEYOR.x) < CONVEYOR.width &&
+      Math.abs(at.z - z) < SPACING &&
+      at.y - box.size[1] / 2 > CONVEYOR.height - 0.05;
   });
 
   return found;

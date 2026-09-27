@@ -13,9 +13,6 @@ import { Fiber, THREE } from '@/three';
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
-// Obstacles
-import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
-
 // Grasp
 import { jobs } from '@/views/experiments/factory-arm/scene/grasp/order';
 import { hopeless } from '@/views/experiments/factory-arm/scene/grasp/start';
@@ -23,10 +20,10 @@ import { hopeless } from '@/views/experiments/factory-arm/scene/grasp/start';
 // Spec
 import type { Box } from './spec';
 
-const TAPE = 0.06;
+// Constants
+import { DRAG } from '@/views/experiments/factory-arm/scene/constants';
 
-/** Pixels the pointer may move between press and release and still click. */
-const DRAG = 4;
+const TAPE = 0.06;
 
 const CARDBOARD = '#c69a64';
 const TAPE_MATERIAL = new THREE.MeshStandardMaterial({
@@ -36,12 +33,14 @@ const TAPE_MATERIAL = new THREE.MeshStandardMaterial({
 
 /**
  * Glows over the cardboard: green for a case picked for the belt, yellow for
- * one being moved out of its way until it's on the buffer.
+ * one being moved out of its way until it's on the buffer, and red for one
+ * picked with no clear path, until an obstacle moves and it's tried again.
  */
 const GLOW = {
   belt: new THREE.Color('#2fd065'),
   buffer: new THREE.Color('#ffc21a'),
   none: new THREE.Color('#000000'),
+  stuck: new THREE.Color('#e5322d'),
   struck: new THREE.Color('#f07d1a'),
 };
 
@@ -59,8 +58,17 @@ type Props = { box: Box };
  * whatever is in the way going to the buffer pallet first, where it stays.
  */
 const Case: React.FunctionComponent<Props> = ({ box }) => {
-  const { bodies, held, known, obstructing, queue, skip, write } =
-    useFactoryArmContext();
+  const {
+    bodies,
+    held,
+    known,
+    obstacles,
+    obstructing,
+    parked,
+    queue,
+    skip,
+    write,
+  } = useFactoryArmContext();
 
   const [width, height, depth] = box.size;
 
@@ -81,7 +89,13 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     const hit = performance.now() - (obstructing.current.get(box.id) ?? -LIT);
 
     cardboard.emissive.copy(
-      hit < LIT ? GLOW.struck : job ? GLOW[job.to] : GLOW.none
+      hit < LIT
+        ? GLOW.struck
+        : parked.current.has(box.id)
+          ? GLOW.stuck
+          : job
+            ? GLOW[job.to]
+            : GLOW.none
     );
   });
 
@@ -122,12 +136,13 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     const across = hopeless(
       asked,
       bodies.current,
-      OBSTACLES.filter(({ id }) => known.current.has(id))
+      obstacles.current.filter(({ id }) => known.current.has(id))
     );
 
     // A lift already known to be blocked: say so now rather than start.
     if (across.length) {
       write.obstruct(across);
+      write.park(box.id);
       skip(box.id);
 
       return;

@@ -48,7 +48,7 @@ function* destinations(
   }
 
   if (job.to === 'belt') {
-    yield belt(entry.box.size);
+    yield* belt(entry.box.size);
     return;
   }
 
@@ -128,13 +128,33 @@ const choose = (
   const across = new Set<string>();
 
   for (const destination of destinations(job, bodies, queue)) {
-    const steps = plan(
+    const whole = plan(
       top(entry.body, entry.box),
       heading(entry.body.rotation()),
       entry.box.size,
       highest(bodies),
       destination
-    ).slice(from);
+    );
+    const [, , , over, down, up] = whole;
+
+    /*
+     * Setting down and leaving are straight moves with no way round, so a
+     * place where either is blocked is passed over before the costly search
+     * for the way there. What blocks it is named, as the search would.
+     */
+    const settles = (among: Solid[]) =>
+      straight(over.target, down.target, down.facing, carried, among) &&
+      straight(down.target, up.target, up.facing, undefined, among);
+
+    if (!settles(solids)) {
+      solids
+        .filter((solid) => !settles([solid]))
+        .forEach(({ id }) => across.add(id));
+
+      continue;
+    }
+
+    const steps = whole.slice(from);
     const checked = ahead(steps, joints, carried, solids, from > 1, cases);
 
     if ('steps' in checked) {

@@ -19,6 +19,19 @@ const CEILING = 2.3;
 /** Nodes looked at before a search gives up and calls the way blocked. */
 const BUDGET = 30000;
 
+/**
+ * Milliseconds a search may run before it gives up the same way. A way that
+ * isn't there costs the whole budget, and planning runs in the frame.
+ */
+const DEADLINE = 200;
+
+/**
+ * How much more the distance still to go counts than the distance come. Over
+ * 1 the search heads for the goal and finds long ways round far sooner, for
+ * a way that may be a little longer; `shorten` straightens it afterwards.
+ */
+const GREED = 2;
+
 type Node = {
   key: string;
   point: Point;
@@ -32,7 +45,7 @@ const gap = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
 /** A binary heap of nodes, cheapest estimated total first. */
 const heap = () => {
   const items: Node[] = [];
-  const score = (node: Node) => node.cost + node.guess;
+  const score = (node: Node) => node.cost + node.guess * GREED;
   const swap = (a: number, b: number) =>
     ([items[a], items[b]] = [items[b], items[a]]);
 
@@ -176,7 +189,14 @@ const route = (
     }
   }
 
+  const until = performance.now() + DEADLINE;
+
   for (let looked = 0; open.size && looked < BUDGET; looked++) {
+    // The clock is read every so often: reading it costs too.
+    if (looked % 256 === 0 && performance.now() > until) {
+      break;
+    }
+
     const node = open.pop();
 
     if (closed.has(node.key)) continue;

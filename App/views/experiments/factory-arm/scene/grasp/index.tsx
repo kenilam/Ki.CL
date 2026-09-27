@@ -22,7 +22,6 @@ import {
 } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Obstacles
-import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
 
 // Partials
 import { covers, occupied, onPallet, solidsOf } from './cell';
@@ -31,6 +30,7 @@ import { touching } from './pad';
 import { CLEARANCE, along, speed, type Step } from './plan';
 import type { Carried } from './route/body';
 import { type Origin, retreat, verify } from './route/steer';
+import { jobs } from './order';
 import { firstInLine, hopeless, onward, resume, start } from './start';
 
 /*
@@ -50,6 +50,15 @@ const ROUNDS = 4;
 
 /** How far the arm lifts a case straight up after it strikes something, in metres. */
 const RECOIL = 0.1;
+
+/**
+ * Milliseconds after the operator last moved an obstacle before what was
+ * given up on is tried again: once, not at every step of a held key.
+ */
+const SETTLE = 300;
+
+/** How often, in milliseconds, the arm looks again at what it gave up on. */
+const RECHECK = 1500;
 
 const arrived = (joints: Joints, step: Step) => {
   const goal = solve(step.target, 0, step.facing);
@@ -79,10 +88,14 @@ const Grasp: React.FunctionComponent = () => {
   const {
     alarm,
     bodies,
+    calm,
     found,
     held,
     joints,
     known,
+    moving,
+    obstacles,
+    parked,
     queue,
     skip,
     struck,
@@ -111,8 +124,13 @@ const Grasp: React.FunctionComponent = () => {
   const seen = useRef('');
   const halted = useRef(false);
 
+  // The cell as the arm last tried again in it, and when it last looked.
+  const tried = useRef('');
+  const looked = useRef(0);
+
   /** The obstacles found so far. */
-  const solids = () => OBSTACLES.filter(({ id }) => known.current.has(id));
+  const solids = () =>
+    obstacles.current.filter(({ id }) => known.current.has(id));
 
   /** The other cases, as solids for the free moves. */
   const cases = () =>
@@ -144,6 +162,11 @@ const Grasp: React.FunctionComponent = () => {
 
     if (given) {
       skip(given.id);
+    }
+
+    // Tried again once an obstacle has been moved.
+    if (chain) {
+      write.park(chain);
     }
     // In place, from the back: the job running stays at the head.
     for (let index = queue.current.length - 1; index >= 0; index -= 1) {
@@ -236,7 +259,8 @@ const Grasp: React.FunctionComponent = () => {
     }
 
     return (
-      step.action !== 'clear' || !occupied(bodies.current, held.current?.id)
+      step.action !== 'clear' ||
+      !occupied(bodies.current, step.target.z, held.current?.id)
     );
   };
 
@@ -350,7 +374,93 @@ const Grasp: React.FunctionComponent = () => {
     }
   };
 
+  /**
+   * What the arm plans round, to the nearest 5 cm, so cases settling don't
+   * count as a change: the obstacles it
+   * knows and the cases on the pallets. Cases on the belt don't count; they
+   * keep moving and are never in the way.
+   */
+  const layout = () =>
+    [...solids(), ...solidsOf(bodies.current, [])]
+      .map(({ id, min, max }) =>
+        [id, min.x, min.y, min.z, max.x, max.y, max.z]
+          .map((value) =>
+            typeof value === 'number' ? Math.round(value * 20) : value
+          )
+          .join(',')
+      )
+      .join(';');
+
+  /**
+   * Something in the cell changed, so what was given up on may have a way
+   * now. A clicked case given up on goes back in the queue once its lifts are clear;
+   * the whole job is checked again when it comes up. A stopped arm plans the
+   * rest of its job from where it is, and carries on if it can.
+   */
+  const retry = () => {
+    parked.current.forEach((chain) => {
+      const asked = jobs(
+        chain,
+        bodies.current,
+        queue.current,
+        held.current?.id
+      );
+
+      if (!asked.length) {
+        // Gone, queued again already, or off the pallets: nothing to retry.
+        write.unpark(chain);
+      } else if (!hopeless(asked, bodies.current, solids()).length) {
+        write.unpark(chain);
+        queue.current.push(...asked);
+      }
+    });
+
+    const rest =
+      halted.current && job.current
+        ? resume(
+            job.current,
+            bodies.current,
+            queue.current,
+            solids(),
+            joints.current
+          )
+        : null;
+
+    if (rest && 'steps' in rest) {
+      halted.current = false;
+      backing.current = false;
+      steps.current = rest.steps;
+      leg.current = null;
+      checked.current = null;
+      rounds.current = 0;
+      calm();
+    }
+  };
+
   Fiber.useFrame((_, delta) => {
+    /*
+     * While stopped or with cases given up on, the arm looks again every so
+     * often, and tries again only if the cell has changed since it last did:
+     * an obstacle moved, or a case settled or went. It waits for the
+     * operator to stop moving an obstacle first.
+     */
+    const now = performance.now();
+
+    if (
+      (halted.current || parked.current.size) &&
+      now - looked.current > RECHECK &&
+      now - (moving.current?.at ?? 0) > SETTLE
+    ) {
+      looked.current = now;
+
+      const cell = layout();
+
+      if (cell !== tried.current) {
+        tried.current = cell;
+        retry();
+      }
+    }
+
     const pad = forward(joints.current);
     const holding = held.current && bodies.current.get(held.current.id);
 

@@ -38,8 +38,6 @@ type Step = {
  */
 const LINE = { fast: 1, near: 0.25, slow: 0.06, via: 0.9 };
 
-const DROP = { x: CONVEYOR.x, y: CONVEYOR.height, z: CONVEYOR.drop };
-
 /**
  * Where a case is set down: the surface point under its centre, the heading to
  * set it at, and whether to wait for the spot to clear first.
@@ -90,14 +88,18 @@ const plan = (
 };
 
 /**
- * The belt as a destination: its drop point, the case's long side along the
- * belt, and a wait until the last case has moved on.
+ * The belt as destinations, best first: each place along it the arm can set
+ * a case down, with the case's long side along the belt, and a wait until
+ * the last case has moved on from there. The arm's links lie in one upright
+ * plane through the pad, so something standing between the arm and one
+ * place can leave another clear.
  */
-const belt = (size: [number, number, number]): Destination => ({
-  point: DROP,
-  facing: size[0] >= size[2] ? Math.PI / 2 : 0,
-  wait: true,
-});
+const belt = (size: [number, number, number]): Destination[] =>
+  CONVEYOR.drops.map((z) => ({
+    point: { x: CONVEYOR.x, y: CONVEYOR.height, z },
+    facing: size[0] >= size[2] ? Math.PI / 2 : 0,
+    wait: true,
+  }));
 
 /** Room kept under the arm's reach ceiling, in metres. */
 const HEADROOM = 0.02;
@@ -143,5 +145,5 @@ const along = (from: Point, to: Point, distance: number): Point => {
   };
 };
 
-export { CLEARANCE, DROP, along, belt, lift, plan, speed };
+export { CLEARANCE, along, belt, lift, plan, speed };
 export type { Destination, Step };

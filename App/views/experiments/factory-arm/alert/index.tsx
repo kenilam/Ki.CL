@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { Status } from '@/components';
 
@@ -10,20 +7,12 @@ import { Status } from '@/components';
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
 // Constants
-import { COPY, PANE } from '@/views/experiments/factory-arm/constants';
-
-const CORNER = classNames(
-  PANE,
-  'kicl-inset-block-end',
-  'kicl-inset-inline-start',
-  'kicl-position-fixed',
-  'kicl-z-index-floating'
-);
+import { COPY } from '@/views/experiments/factory-arm/constants';
 
 /**
- * Says so on the page when the arm has stopped, as well as the red light.
- * The notice for a case with no clear path shows over that case in the
- * scene, which screen readers take as one picture, so it's announced here.
+ * Announces the scene's badges to screen readers. The scene is one picture
+ * to them, so the badges over the arm and over a case with no clear path
+ * aren't read out; these say the same, and aren't shown.
  */
 const Alert: React.FunctionComponent = () => {
   const { skipped, stopped } = useFactoryArmContext();
@@ -31,7 +20,7 @@ const Alert: React.FunctionComponent = () => {
   return (
     <>
       <Status
-        className={CORNER}
+        className='kicl-hidden'
         in={stopped}
         level='error'
         message={COPY.stopped.message}

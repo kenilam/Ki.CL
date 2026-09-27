@@ -6,9 +6,6 @@ import { Fiber } from '@/three';
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
-// Obstacles
-import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
-
 // Sense
 import { sense } from './sense';
 
@@ -18,10 +15,10 @@ import { sense } from './sense';
  * the arm checks its way again once however many were found together.
  */
 const Sensing: React.FunctionComponent = () => {
-  const { joints, write } = useFactoryArmContext();
+  const { joints, obstacles, write } = useFactoryArmContext();
 
   Fiber.useFrame(() => {
-    const seen = sense(joints.current, OBSTACLES);
+    const seen = sense(joints.current, obstacles.current);
 
     write.seeing(new Set(seen.keys()));
     write.learn([...seen.values()].flat());

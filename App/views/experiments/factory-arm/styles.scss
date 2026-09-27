@@ -4,9 +4,3 @@
   touch-action: none;
   user-select: none;
 }
-
-.kicl--views--experiments--factory-arm__pane {
-  // Over the light floor of the cell the usual 10% tint barely shows, so the
-  // notices take nearly the page's own colour to stay readable.
-  --kicl-backdrop-tint: 85%;
-}

@@ -50,7 +50,16 @@ const PLATE = {
   rows: 3,
 };
 
+/**
+ * The pedestal and turret as one upright box, as wide as the base plate and as
+ * high as the shoulder: what the turret sweeps as it turns.
+ */
+const BASE = {
+  min: { x: -0.45, y: 0, z: -0.45 },
+  max: { x: 0.45, y: LINK.base, z: 0.45 },
+};
+
 /** Where the pad waits between jobs. */
 const REST = { x: 0.2, y: 1.6, z: 1 };
 
-export { GRIPPER, LINK, PLATE, REACH, REST, SIDE, SPEED };
+export { BASE, GRIPPER, LINK, PLATE, REACH, REST, SIDE, SPEED };

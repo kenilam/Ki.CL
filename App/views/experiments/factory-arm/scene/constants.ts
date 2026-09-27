@@ -20,8 +20,12 @@ const BUFFER = {
 
 /** Runs along z, away from the back of the cell and toward the viewer. */
 const CONVEYOR = {
-  /** Where along the belt the arm sets cases down. */
-  drop: 0.2,
+  /**
+   * Where along the belt the arm sets cases down, best first: the usual
+   * place, then others either side of it, for when something stands in the
+   * arm's way to it.
+   */
+  drops: [0.2, -0.3, 0.7, -0.8, 1.2],
   end: 2.4,
   height: 0.55,
   speed: 0.35,
@@ -30,7 +34,10 @@ const CONVEYOR = {
   x: 1.35,
 };
 
+/** Pixels the pointer may move between press and release and still click. */
+const DRAG = 4;
+
 /** Seeds the stack, so a reload builds the same pallet. */
 const SEED = 7;
 
-export { BUFFER, CONVEYOR, PALLET, SEED };
+export { BUFFER, CONVEYOR, DRAG, PALLET, SEED };

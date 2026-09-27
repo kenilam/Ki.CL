@@ -2,9 +2,9 @@
 import type { Solid } from './spec';
 
 /*
- * Fixed obstacles the arm isn't told about. The overhead camera sees the
- * ones over or beside the pallets before the arm moves; its sensors find the
- * rest on the way. The pillar stands in the swing to the belt and the crate
+ * Obstacles the arm isn't told about, where they start; the operator can move
+ * them. The overhead camera sees the ones over or beside the pallets before
+ * the arm moves; its sensors find the rest on the way. The pillar stands in the swing to the belt and the crate
  * on the way from the pallet to the buffer. The beam hangs low behind the
  * pallet, out of the arm's swing, where it stops one case in the back row
  * being lifted out.
@@ -27,4 +27,10 @@ const OBSTACLES: Solid[] = [
   },
 ];
 
-export { OBSTACLES };
+/** How far one press of an arrow key moves an obstacle, in metres. */
+const STEP = 0.05;
+
+/** How high an obstacle's top may be raised, in metres. */
+const CEILING = 3;
+
+export { CEILING, OBSTACLES, STEP };
