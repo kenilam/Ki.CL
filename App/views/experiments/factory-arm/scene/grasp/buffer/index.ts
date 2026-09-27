@@ -49,6 +49,9 @@ const rollout = (first: Option, upcoming: Box[], loaded: Slab[]) => {
  * The best place on the buffer pallet for a case, and the heading to set it
  * at; or nothing when there is no safe place.
  *
+ * `allowed` rules out places the arm can't reach, such as one next to an
+ * obstacle it knows about.
+ *
  * `upcoming` are the cases the queue will send to the buffer after this one,
  * in order. The best few places for this case are each played forward with
  * them, and the one that lets the most of them fit - then packs tightest,
@@ -58,7 +61,8 @@ const rollout = (first: Option, upcoming: Box[], loaded: Slab[]) => {
 const spot = (
   box: Box,
   bodies: Bodies,
-  upcoming: Box[] = []
+  upcoming: Box[] = [],
+  allowed: (option: Option) => boolean = () => true
 ): { point: Point; facing: number } | null => {
   const loaded: Slab[] = [];
 
@@ -70,7 +74,7 @@ const spot = (
     }
   });
 
-  const choices = options(box, loaded);
+  const choices = options(box, loaded).filter(allowed);
   const floor = choices.filter((each) => each.rank[0] === choices[0]?.rank[0]);
   const stacked = choices.filter((each) => !floor.includes(each));
 
@@ -105,3 +109,4 @@ const spot = (
 };
 
 export { spot };
+export type { Option } from './options';

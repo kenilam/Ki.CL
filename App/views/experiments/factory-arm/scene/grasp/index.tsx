@@ -25,10 +25,10 @@ import {
 import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
 
 // Partials
-import { occupied } from './cell';
+import { highest, occupied } from './cell';
 import { carry, pick, place } from './hold';
 import { touching } from './pad';
-import { CLEARANCE, along, speed, type Step } from './plan';
+import { CLEARANCE, along, belt, plan, speed, type Step } from './plan';
 import type { Carried } from './route/body';
 import { type Origin, retreat, verify } from './route/steer';
 import { start } from './start';
@@ -66,8 +66,9 @@ const arrived = (joints: Joints, step: Step) => {
  *
  * Before each move, and again whenever the sensors find something new, the
  * move is checked against every obstacle found so far. A blocked move goes
- * round. With no way round and a case held, the arm takes it back to where it
- * was picked up; with no way back either, it stops and the light turns red.
+ * round. With no way round, a case bound for the buffer goes to the belt
+ * instead; failing that, a held case goes back to where it was picked up; with
+ * no way back either, the arm stops and the light turns red.
  * With nothing held, it gives the case up.
  */
 const Grasp: React.FunctionComponent = () => {
@@ -84,6 +85,9 @@ const Grasp: React.FunctionComponent = () => {
   // Where the held case came from, and whether the arm is taking it back.
   const origin = useRef<Origin | null>(null);
   const backing = useRef(false);
+
+  // Whether a case bound for the buffer has been sent to the belt instead.
+  const redirected = useRef(false);
 
   // The move last checked, against how many finds; and ways round in a row.
   const checked = useRef<{ step: Step; found: number } | null>(null);
@@ -161,6 +165,25 @@ const Grasp: React.FunctionComponent = () => {
       return;
     }
 
+    // A buffer place that turned out blocked: take the case to the belt instead.
+    const size = held.current && bodies.current.get(held.current.id)?.box.size;
+
+    if (size && job.current?.to === 'buffer' && !redirected.current) {
+      redirected.current = true;
+      rounds.current = 0;
+      steps.current = plan(
+        forward(joints.current),
+        0,
+        size,
+        highest(bodies.current),
+        belt(size)
+      ).slice(3);
+      leg.current = null;
+      checked.current = null;
+
+      return;
+    }
+
     const back =
       held.current && !backing.current && origin.current
         ? retreat(joints.current, origin.current, carried(), solids)
@@ -209,13 +232,21 @@ const Grasp: React.FunctionComponent = () => {
       }
 
       const [next] = queue.current;
-      const planned = next && start(next, bodies.current, queue.current);
+      const planned =
+        next &&
+        start(
+          next,
+          bodies.current,
+          queue.current,
+          OBSTACLES.filter(({ id }) => known.current.has(id))
+        );
 
       if (next && planned) {
         job.current = next;
         steps.current = planned;
         origin.current = null;
         backing.current = false;
+        redirected.current = false;
         rounds.current = 0;
       } else if (next) {
         queue.current.shift();
