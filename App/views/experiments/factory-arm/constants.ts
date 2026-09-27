@@ -6,10 +6,7 @@ const CLASS_NAME = 'kicl--views--experiments--factory-arm';
 
 const COPY = {
   scene: 'A robot arm working a pallet, a buffer pallet and a conveyor',
-  skipped: {
-    message: 'The case stays where it is.',
-    title: 'No clear path',
-  },
+  skipped: 'No clear path',
   stopped: {
     message: 'No clear way forward or back.',
     title: 'Stopped',
@@ -17,4 +14,16 @@ const COPY = {
   title: 'Factory Arm',
 };
 
-export { CLASS_NAME, COPY, PATH };
+/*
+ * The frosted pane the notices sit on, as the image agent's header uses,
+ * tinted further in `styles.scss` so it reads over the light floor.
+ */
+const PANE = [
+  `${CLASS_NAME}__pane`,
+  'kicl-backdrop',
+  'kicl-border-radius-md',
+  'kicl-padding-block-narrow',
+  'kicl-padding-inline-narrow',
+];
+
+export { CLASS_NAME, COPY, PANE, PATH };

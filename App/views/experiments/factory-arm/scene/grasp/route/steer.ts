@@ -41,14 +41,22 @@ const around = (points: Point[], step: Step): Step[] => [
 /**
  * Checks the move from where the arm is to `step`, and finds a way round when
  * it's blocked. Moves into and out of contact with a case can't go round:
- * they must be straight up and down, so a blocked one is stuck.
+ * they must be straight up and down, so a blocked one is stuck. `across`
+ * names only the obstacles in `solids`, not the `cases`.
  */
 const verify = (
   step: Step,
   joints: Joints,
   carried: Carried | undefined,
-  solids: Solid[]
+  solids: Solid[],
+  cases: Solid[] = []
 ): Verdict => {
+  // A free move keeps clear of the cases too; a move into or out of contact
+  // is straight up or down, where the lift check has already cleared them.
+  const among =
+    step.ease === 'arrive' || step.ease === 'leave'
+      ? solids
+      : [...solids, ...cases];
   const pad = forward(joints);
   const clear = (among: Solid[]) =>
     step.ease
@@ -60,7 +68,7 @@ const verify = (
           among
         );
 
-  if (clear(solids)) {
+  if (clear(among)) {
     return { kind: 'go' };
   }
 
@@ -79,7 +87,7 @@ const verify = (
     step.target,
     step.facing,
     carried,
-    solids,
+    among,
     Math.min(pad.y, step.target.y) - DIP
   );
 

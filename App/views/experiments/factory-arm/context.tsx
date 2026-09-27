@@ -30,7 +30,8 @@ import { SEED } from './scene/constants';
  * `known` holds the obstacles the sensors have found, and `found` counts each
  * time that grows, so the arm knows to check its way again. `seeing` holds
  * the sensors with something in view right now, and `obstructing` when each
- * obstacle last stood in the way of a move.
+ * obstacle, or case, last stood in the way of a move. `struck` is a case the
+ * carried case has just hit, for the arm to stop and plan again.
  *
  * These change every frame or every click, so they are refs read in the render
  * loop rather than state. `stopped` and `skipped` are state: the page shows them.
@@ -63,6 +64,8 @@ type Write = {
   learn: (ids: string[]) => void;
   /** Marks obstacles as in the way of a move, as of now. */
   obstruct: (ids: string[]) => void;
+  /** Records a case the carried case struck, or clears the record. */
+  strike: (id: string | null) => void;
   seeing: (next: Set<string>) => void;
   /** Registers a case's body, and returns what unregisters it. */
   track: (id: string, entry: Body) => () => void;
@@ -71,11 +74,14 @@ type Write = {
 type Value = {
   alarm: () => void;
   write: Write;
-  skip: () => void;
-  skipped: boolean;
+  /** Shows the notice that a case has no clear path, over that case. */
+  skip: (id: string) => void;
+  /** The case the notice is about while it shows. */
+  skipped: string | null;
   found: React.RefObject<number>;
   known: React.RefObject<Set<string>>;
   obstructing: React.RefObject<Map<string, number>>;
+  struck: React.RefObject<string | null>;
   seeing: React.RefObject<Set<string>>;
   stopped: boolean;
   bodies: React.RefObject<Map<string, Body>>;
@@ -103,18 +109,19 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
   const found = useRef(0);
   const known = useRef(new Set<string>());
   const obstructing = useRef(new Map<string, number>());
+  const struck = useRef<string | null>(null);
   const seeing = useRef(new Set<string>());
 
   const [stopped, setStopped] = useState(false);
   const alarm = useCallback(() => setStopped(true), []);
 
   // A case given up shows a notice for a few seconds, then it clears.
-  const [skipped, setSkipped] = useState(false);
+  const [skipped, setSkipped] = useState<string | null>(null);
   const clear = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const skip = useCallback(() => {
-    setSkipped(true);
+  const skip = useCallback((id: string) => {
+    setSkipped(id);
     clearTimeout(clear.current);
-    clear.current = setTimeout(() => setSkipped(false), NOTICE);
+    clear.current = setTimeout(() => setSkipped(null), NOTICE);
   }, []);
 
   const write = useMemo<Write>(
@@ -139,6 +146,13 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
       },
       obstruct: (ids) => {
         ids.forEach((id) => obstructing.current.set(id, performance.now()));
+      },
+      strike: (id) => {
+        struck.current = id;
+
+        if (id) {
+          obstructing.current.set(id, performance.now());
+        }
       },
       seeing: (next) => {
         seeing.current = next;
@@ -179,6 +193,7 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
       skip,
       skipped,
       stopped,
+      struck,
       write,
     }),
     [alarm, boxes, remove, skip, skipped, stopped, write]

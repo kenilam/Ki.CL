@@ -142,7 +142,41 @@ const collides = (
       yaw: facing + carried.yaw,
     };
 
-  return solids.some(
+  // A box round the whole arm and its load first: most solids, the cases
+  // on the pallets among them, are nowhere near and skip the finer tests.
+  const reach = (rect: Rect) => Math.hypot(rect.half[0], rect.half[1]);
+  const spans = [
+    ...capsules.flatMap(({ from, to, radius }) => [
+      { point: from, radius },
+      { point: to, radius },
+    ]),
+    { point: pad, radius: reach(gripper) },
+    { point: { ...pad, y: top }, radius: reach(gripper) },
+    ...(load && carried
+      ? [{ point: { ...pad, y: pad.y - carried.size[1] }, radius: reach(load) }]
+      : []),
+  ];
+  const low = (axis: 'x' | 'y' | 'z') =>
+    Math.min(...spans.map(({ point, radius }) => point[axis] - radius)) -
+    margin;
+  const high = (axis: 'x' | 'y' | 'z') =>
+    Math.max(...spans.map(({ point, radius }) => point[axis] + radius)) +
+    margin;
+  const bounds = {
+    min: { x: low('x'), y: low('y'), z: low('z') },
+    max: { x: high('x'), y: high('y'), z: high('z') },
+  };
+  const near = solids.filter(
+    ({ min, max }) =>
+      min.x < bounds.max.x &&
+      max.x > bounds.min.x &&
+      min.y < bounds.max.y &&
+      max.y > bounds.min.y &&
+      min.z < bounds.max.z &&
+      max.z > bounds.min.z
+  );
+
+  return near.some(
     (solid) =>
       capsules.some((capsule) => touches(capsule, solid, margin)) ||
       meets(gripper, pad.y, top, solid, margin) ||

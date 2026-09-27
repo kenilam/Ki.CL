@@ -4,6 +4,9 @@ import type { RapierRigidBody } from '@react-three/rapier';
 // Spec
 import type { Box } from '@/views/experiments/factory-arm/scene/boxes/spec';
 
+// Spec
+import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+
 // Pad
 import { heading, top } from './pad';
 
@@ -52,6 +55,36 @@ const footprint = (body: RapierRigidBody, box: Box): Rect => {
 
 /** The pad's outline on a case: the wrist rolls it square to the case first. */
 const pad = ({ x, z, yaw }: Rect): Rect => ({ x, z, half: PAD, yaw });
+
+/**
+ * The cases on the pallets as solids for planning a way through the cell,
+ * leaving out those in `except`: the case being moved, which travels with
+ * the pad. Cases on the belt are on their way out and left out too.
+ */
+const solidsOf = (bodies: Bodies, except: string[]): Solid[] => {
+  const found: Solid[] = [];
+
+  bodies.forEach(({ body, box }, id) => {
+    if (except.includes(id) || !onPallet(id, bodies)) {
+      return;
+    }
+
+    const { x, y, z } = body.translation();
+    const { half } = footprint(body, box);
+    const cos = Math.abs(Math.cos(heading(body.rotation())));
+    const sin = Math.abs(Math.sin(heading(body.rotation())));
+    const across = half[0] * cos + half[1] * sin;
+    const along = half[0] * sin + half[1] * cos;
+
+    found.push({
+      id,
+      min: { x: x - across, y: y - box.size[1] / 2, z: z - along },
+      max: { x: x + across, y: y + box.size[1] / 2, z: z + along },
+    });
+  });
+
+  return found;
+};
 
 /** The top of the tallest case in the cell. */
 const highest = (bodies: Bodies) => {
@@ -160,5 +193,6 @@ export {
   highest,
   occupied,
   onPallet,
+  solidsOf,
 };
 export type { Bodies };

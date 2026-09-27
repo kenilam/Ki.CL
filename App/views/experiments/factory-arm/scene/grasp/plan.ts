@@ -12,9 +12,10 @@ const CLEARANCE = 0.25;
 
 /**
  * `pick` and `place` happen on arrival. `clear` holds the arm where it is
- * until the drop point on the belt is free of the last case.
+ * until the drop point on the belt is free of the last case. `recover` plans
+ * the rest of the job again after the carried case struck something.
  */
-type Action = 'pick' | 'place' | 'clear';
+type Action = 'pick' | 'place' | 'clear' | 'recover';
 
 /**
  * A waypoint. With `ease`, the pad travels to it in a straight line; without,

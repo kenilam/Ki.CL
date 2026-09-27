@@ -12,6 +12,7 @@ import { Boxes } from './boxes';
 import { Conveyor } from './conveyor';
 import { Floor } from './floor';
 import { Grasp } from './grasp';
+import { Notice } from './notice';
 import { Obstacles } from './obstacles';
 import { Pallet } from './pallet';
 import { Sensing } from './sensors';
@@ -67,6 +68,7 @@ const Scene: React.FunctionComponent = () => (
       scale={8}
     />
     <Arm />
+    <Notice />
   </Fiber.Canvas>
 );
 

@@ -28,7 +28,8 @@ const ahead = (
   joints: Joints,
   carried: Carried,
   solids: Solid[],
-  holding = false
+  holding = false,
+  cases: Solid[] = []
 ): { steps: Step[] } | { across: string[] } => {
   const planned: Step[] = [];
   const across = new Set<string>();
@@ -36,7 +37,13 @@ const ahead = (
   let held = holding;
 
   for (const step of steps) {
-    const verdict = verify(step, pose, held ? carried : undefined, solids);
+    const verdict = verify(
+      step,
+      pose,
+      held ? carried : undefined,
+      solids,
+      cases
+    );
 
     if (verdict.kind === 'stuck') {
       return { across: [...new Set([...across, ...verdict.across])] };

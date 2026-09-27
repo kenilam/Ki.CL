@@ -25,13 +25,13 @@ import {
 import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
 
 // Partials
-import { highest, occupied, onPallet } from './cell';
+import { highest, occupied, onPallet, solidsOf } from './cell';
 import { carry, pick, place } from './hold';
 import { touching } from './pad';
 import { CLEARANCE, along, belt, plan, speed, type Step } from './plan';
 import type { Carried } from './route/body';
 import { type Origin, retreat, verify } from './route/steer';
-import { hopeless, onward, start } from './start';
+import { hopeless, onward, resume, start } from './start';
 
 /*
  * How close the pad must get to a waypoint to count as there, in metres,
@@ -47,6 +47,9 @@ const TURNED = 0.01;
  * counts as blocked. A way round that keeps changing isn't getting anywhere.
  */
 const ROUNDS = 4;
+
+/** How far the arm lifts a case straight up after it strikes something, in metres. */
+const RECOIL = 0.1;
 
 const arrived = (joints: Joints, step: Step) => {
   const goal = solve(step.target, 0, step.facing);
@@ -72,8 +75,18 @@ const arrived = (joints: Joints, step: Step) => {
  * With nothing held, it gives the case up.
  */
 const Grasp: React.FunctionComponent = () => {
-  const { alarm, bodies, found, held, joints, known, queue, skip, write } =
-    useFactoryArmContext();
+  const {
+    alarm,
+    bodies,
+    found,
+    held,
+    joints,
+    known,
+    queue,
+    skip,
+    struck,
+    write,
+  } = useFactoryArmContext();
   const { rapier } = useRapier();
 
   const job = useRef<Job | undefined>(undefined);
@@ -97,6 +110,13 @@ const Grasp: React.FunctionComponent = () => {
   /** The obstacles found so far. */
   const solids = () => OBSTACLES.filter(({ id }) => known.current.has(id));
 
+  /** The other cases, as solids for the free moves. */
+  const cases = () =>
+    solidsOf(
+      bodies.current,
+      [held.current?.id, job.current?.id].filter((id) => id !== undefined)
+    );
+
   const carried = (): Carried | undefined => {
     const entry = held.current && bodies.current.get(held.current.id);
 
@@ -113,9 +133,14 @@ const Grasp: React.FunctionComponent = () => {
    * Gives up on the job: marks what was in the way, tells the operator, and
    * calls off the rest of the moves its click asked for, which needed it.
    */
-  const giveUp = (chain: string | undefined, across: string[] = []) => {
+  const giveUp = (given: Job | undefined, across: string[] = []) => {
+    const chain = given?.chain;
+
     write.obstruct(across);
-    skip();
+
+    if (given) {
+      skip(given.id);
+    }
     // In place, from the back: the job running stays at the head.
     for (let index = queue.current.length - 1; index >= 0; index -= 1) {
       const other = queue.current[index];
@@ -154,7 +179,7 @@ const Grasp: React.FunctionComponent = () => {
 
       if (!next || !('steps' in next)) {
         steps.current = steps.current.slice(0, 2);
-        giveUp(job.current?.chain, next ? next.across : across);
+        giveUp(job.current, next ? next.across : across);
       } else if (id && entry && touching(pad, entry.body, entry.box)) {
         steps.current = [step, ...next.steps];
         write.held(pick(rapier, id, entry.body, pad, bearing(joints.current)));
@@ -166,6 +191,38 @@ const Grasp: React.FunctionComponent = () => {
       } else {
         // The case moved or went; lift clear and give up on it.
         steps.current = steps.current.slice(0, 2);
+      }
+    }
+
+    // Lifted clear after a hit: plan the rest again with the cases where they
+    // are now, or take the case back, or stop.
+    if (step.action === 'recover') {
+      const rest =
+        job.current &&
+        resume(
+          job.current,
+          bodies.current,
+          queue.current,
+          solids(),
+          joints.current
+        );
+      const back =
+        rest && 'steps' in rest
+          ? null
+          : origin.current &&
+            retreat(joints.current, origin.current, carried(), [
+              ...solids(),
+              ...cases(),
+            ]);
+
+      if (rest && 'steps' in rest) {
+        steps.current = [step, ...rest.steps];
+      } else if (back) {
+        backing.current = true;
+        steps.current = [step, ...back];
+      } else {
+        halted.current = true;
+        alarm();
       }
     }
 
@@ -191,7 +248,7 @@ const Grasp: React.FunctionComponent = () => {
       return;
     }
 
-    const verdict = verify(head, joints.current, carried(), solids());
+    const verdict = verify(head, joints.current, carried(), solids(), cases());
 
     if (verdict.kind !== 'go') {
       write.obstruct(verdict.across);
@@ -233,7 +290,10 @@ const Grasp: React.FunctionComponent = () => {
 
     const back =
       held.current && !backing.current && origin.current
-        ? retreat(joints.current, origin.current, carried(), solids())
+        ? retreat(joints.current, origin.current, carried(), [
+            ...solids(),
+            ...cases(),
+          ])
         : null;
 
     if (back) {
@@ -248,7 +308,7 @@ const Grasp: React.FunctionComponent = () => {
     } else {
       steps.current = [];
       leg.current = null;
-      giveUp(job.current?.chain);
+      giveUp(job.current);
     }
   };
 
@@ -258,6 +318,27 @@ const Grasp: React.FunctionComponent = () => {
 
     if (holding && held.current) {
       carry(holding.body, held.current, pad, bearing(joints.current));
+    }
+
+    /*
+     * The carried case struck another: stop the move, lift straight up clear
+     * of it, and plan again once there, by when the struck case has settled.
+     */
+    if (struck.current) {
+      write.strike(null);
+
+      if (held.current) {
+        const facing = bearing(joints.current);
+        const clear = { ...pad, y: pad.y + RECOIL };
+
+        steps.current = [
+          { target: clear, facing, ease: 'leave' },
+          { target: clear, facing, action: 'recover' },
+        ];
+        leg.current = null;
+        checked.current = null;
+        rounds.current = 0;
+      }
     }
 
     // Stopped: hold still where it is, case and all.
@@ -305,7 +386,7 @@ const Grasp: React.FunctionComponent = () => {
 
         // Gone already, as a case sent on to the belt is, needs no word.
         if (across.length || planned || onPallet(next.id, bodies.current)) {
-          giveUp(next.chain, [
+          giveUp(next, [
             ...across,
             ...(planned && 'across' in planned ? planned.across : []),
           ]);

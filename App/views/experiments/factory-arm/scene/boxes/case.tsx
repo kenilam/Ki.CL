@@ -1,7 +1,11 @@
 import React, { useMemo } from 'react';
 
 // Physics
-import { CuboidCollider, RigidBody } from '@react-three/rapier';
+import {
+  type CollisionEnterPayload,
+  CuboidCollider,
+  RigidBody,
+} from '@react-three/rapier';
 
 // Three
 import { Fiber, THREE } from '@/three';
@@ -38,7 +42,14 @@ const GLOW = {
   belt: new THREE.Color('#2fd065'),
   buffer: new THREE.Color('#ffc21a'),
   none: new THREE.Color('#000000'),
+  struck: new THREE.Color('#f07d1a'),
 };
+
+/** How long a struck case glows after the hit, in milliseconds. */
+const LIT = 2500;
+
+/** How far above a case's underside another's top may be and still hold it up. */
+const RESTING = 0.02;
 
 type Props = { box: Box };
 
@@ -48,7 +59,8 @@ type Props = { box: Box };
  * whatever is in the way going to the buffer pallet first, where it stays.
  */
 const Case: React.FunctionComponent<Props> = ({ box }) => {
-  const { bodies, held, known, queue, skip, write } = useFactoryArmContext();
+  const { bodies, held, known, obstructing, queue, skip, write } =
+    useFactoryArmContext();
 
   const [width, height, depth] = box.size;
 
@@ -66,9 +78,33 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
 
   Fiber.useFrame(() => {
     const job = queue.current.find(({ id }) => id === box.id);
+    const hit = performance.now() - (obstructing.current.get(box.id) ?? -LIT);
 
-    cardboard.emissive.copy(job ? GLOW[job.to] : GLOW.none);
+    cardboard.emissive.copy(
+      hit < LIT ? GLOW.struck : job ? GLOW[job.to] : GLOW.none
+    );
   });
+
+  /*
+   * The carried case touching another is a hit, unless the other is under
+   * it: that's the case or pallet it's being set down on.
+   */
+  const touch = ({ other }: CollisionEnterPayload) => {
+    const id: unknown = other.rigidBodyObject?.userData.box;
+    const below = typeof id === 'string' && bodies.current.get(id);
+    const self = bodies.current.get(box.id);
+
+    if (held.current?.id !== box.id || !below || !self) {
+      return;
+    }
+
+    const bottom = self.body.translation().y - height / 2;
+    const top = below.body.translation().y + below.box.size[1] / 2;
+
+    if (top > bottom + RESTING) {
+      write.strike(below.box.id);
+    }
+  };
 
   // Empty when it's queued already, or it or a case in its way is off the pallets.
   const moves = () =>
@@ -92,7 +128,7 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     // A lift already known to be blocked: say so now rather than start.
     if (across.length) {
       write.obstruct(across);
-      skip();
+      skip(box.id);
 
       return;
     }
@@ -109,8 +145,10 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     <RigidBody
       ref={(body) => (body ? write.track(box.id, { body, box }) : undefined)}
       colliders={false}
+      onCollisionEnter={touch}
       position={box.position}
       rotation={[0, box.yaw, 0]}
+      userData={{ box: box.id }}
     >
       <CuboidCollider
         args={[width / 2, height / 2, depth / 2]}

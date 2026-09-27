@@ -9,7 +9,7 @@ import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec
 
 // Partials
 import { spots } from './buffer';
-import { type Bodies, blocked, highest, onPallet } from './cell';
+import { type Bodies, blocked, highest, onPallet, solidsOf } from './cell';
 import { heading, top } from './pad';
 import { belt, type Destination, lift, plan, type Step } from './plan';
 import type { Carried } from './route/body';
@@ -54,8 +54,11 @@ const destinations = (
   // Cases still to be picked up: better not to bury them.
   const reserved = queue.slice(1).map(({ id }) => id);
 
+  // The case itself isn't part of the buffer's load, even in the air over it.
+  const others: Bodies = new Map([...bodies].filter(([id]) => id !== job.id));
+
   return [
-    ...spots(entry.box, bodies, upcoming, reserved)
+    ...spots(entry.box, others, upcoming, reserved)
       .slice(0, TRIES)
       .map((room) => ({ ...room, wait: false })),
     belt(entry.box.size),
@@ -76,9 +79,17 @@ const choose = (
   joints: Joints,
   from: number
 ): Outcome => {
+  // The other cases, as solids for the free moves; this one travels with the pad.
+  const cases = solidsOf(bodies, [job.id]);
+
   const entry = bodies.get(job.id);
 
-  if (!entry || !onPallet(job.id, bodies) || blocked(job.id, bodies)) {
+  // Before the pick it must still be on a pallet with nothing on it; after,
+  // it's on the pad.
+  if (
+    !entry ||
+    (from < 3 && (!onPallet(job.id, bodies) || blocked(job.id, bodies)))
+  ) {
     return null;
   }
 
@@ -98,7 +109,7 @@ const choose = (
       highest(bodies),
       destination
     ).slice(from);
-    const checked = ahead(steps, joints, carried, solids, from > 1);
+    const checked = ahead(steps, joints, carried, solids, from > 1, cases);
 
     if ('steps' in checked) {
       return checked;
@@ -175,5 +186,18 @@ const onward = (
   joints: Joints
 ) => choose(job, bodies, queue, solids, joints, 2);
 
-export { hopeless, onward, start };
+/**
+ * The job's moves from after the lift, for a held case: planned again from
+ * where the arm is after it struck something, with the cases where they are
+ * now.
+ */
+const resume = (
+  job: Job,
+  bodies: Bodies,
+  queue: Job[],
+  solids: Solid[],
+  joints: Joints
+) => choose(job, bodies, queue, solids, joints, 3);
+
+export { hopeless, onward, resume, start };
 export type { Outcome };
