@@ -1,6 +1,12 @@
 .kicl--views--experiments--factory-arm {
-  // Dragging on the table drives the arm, so the page must not scroll or zoom.
+  // Dragging turns the view and pinching zooms it, so the page must not.
   overscroll-behavior: none;
   touch-action: none;
   user-select: none;
+}
+
+.kicl--views--experiments--factory-arm__alert {
+  // Over the light floor of the cell the usual 10% tint barely shows, so the
+  // notices take nearly the page's own colour to stay readable.
+  --kicl-backdrop-tint: 85%;
 }

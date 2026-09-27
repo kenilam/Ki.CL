@@ -25,7 +25,7 @@ import {
 import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
 
 // Partials
-import { highest, occupied } from './cell';
+import { highest, occupied, onPallet } from './cell';
 import { carry, pick, place } from './hold';
 import { touching } from './pad';
 import { CLEARANCE, along, belt, plan, speed, type Step } from './plan';
@@ -250,6 +250,11 @@ const Grasp: React.FunctionComponent = () => {
         rounds.current = 0;
       } else if (next) {
         queue.current.shift();
+
+        // Still on a pallet but can't start: something it needs didn't move.
+        if (onPallet(next.id, bodies.current)) {
+          skip();
+        }
       }
     }
 

@@ -32,7 +32,7 @@ type Step = {
  * Straight-line speeds in metres per second, and the distance from contact
  * over which the pad eases between them. `via` is the speed round obstacles.
  */
-const LINE = { fast: 0.5, near: 0.12, slow: 0.06, via: 0.35 };
+const LINE = { fast: 0.5, near: 0.12, slow: 0.06, via: 0.6 };
 
 const DROP = { x: CONVEYOR.x, y: CONVEYOR.height, z: CONVEYOR.drop };
 

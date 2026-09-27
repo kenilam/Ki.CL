@@ -3,9 +3,9 @@ import type { Solid } from './spec';
 
 /*
  * Fixed obstacles the arm isn't told about: its sensors have to find them.
- * The pillar stands in the swing to the belt, the crate on the way from the
- * pallet to the buffer, and the beam hangs low over the pallet's front, so
- * some cases under it can't be lifted out at all.
+ * The pillar stands in the swing to the belt and the crate on the way from
+ * the pallet to the buffer. The beam hangs low behind the pallet, out of the
+ * arm's swing, where it stops one case in the back row being lifted out.
  */
 const OBSTACLES: Solid[] = [
   {
@@ -20,8 +20,8 @@ const OBSTACLES: Solid[] = [
   },
   {
     id: 'beam',
-    min: { x: -1.3, y: 1.95, z: 0.5 },
-    max: { x: -0.35, y: 2.1, z: 0.7 },
+    min: { x: -1.9, y: 1.3, z: -0.35 },
+    max: { x: -0.9, y: 1.45, z: -0.22 },
   },
 ];
 
