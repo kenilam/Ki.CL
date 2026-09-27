@@ -69,6 +69,19 @@ const solve = (target: Point, grip: number, facing?: number): Joints => {
   };
 };
 
+/**
+ * The highest the pad can reach, hand down, above a spot on the floor plan;
+ * minus infinity where it can't reach at all.
+ */
+const ceiling = ({ x, z }: Pick<Point, 'x' | 'z'>) => {
+  const radius = Math.max(Math.hypot(x, z), REACH.min);
+  const reach = LINK.upper + LINK.fore - REACH.slack;
+
+  return radius >= reach
+    ? -Infinity
+    : LINK.base - LINK.hand + Math.sqrt(reach ** 2 - radius ** 2);
+};
+
 /** Where the suction pad is for a set of joint angles. */
 const forward = ({ yaw, shoulder, elbow, wrist }: Joints): Point => {
   const fore = shoulder - elbow;
@@ -120,5 +133,5 @@ const step = (current: Joints, goal: Joints, delta: number): Joints => ({
  */
 const HOME = solve(REST, 0, 0);
 
-export { HOME, bearing, forward, solve, step };
+export { HOME, bearing, ceiling, forward, solve, step };
 export type { Joints, Point };

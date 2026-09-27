@@ -12,27 +12,40 @@ import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 // Constants
 import { OBSTACLES } from './constants';
 
-const UNSEEN = new THREE.Color('#e3b52b');
-const FOUND = new THREE.Color('#d9482b');
+const GREY = new THREE.Color('#8f9398');
+const GLOW = new THREE.Color('#f07d1a');
+const DARK = new THREE.Color('#000000');
+
+/** How long an obstacle stays lit after it last stood in the way, in milliseconds. */
+const LIT = 2500;
 
 /**
- * The obstacles, as fixed bodies a carried case can't pass through. Each one
- * turns from yellow to red once a sensor has found it.
+ * The obstacles, as fixed bodies a carried case can't pass through. They're
+ * grey, and light up orange while they stand in the way of a move.
  */
 const Obstacles: React.FunctionComponent = () => {
-  const { known } = useFactoryArmContext();
+  const { obstructing } = useFactoryArmContext();
 
   const materials = useMemo(
     () =>
       OBSTACLES.map(
-        () => new THREE.MeshStandardMaterial({ color: UNSEEN, roughness: 0.6 })
+        () =>
+          new THREE.MeshStandardMaterial({
+            color: GREY,
+            emissive: DARK,
+            roughness: 0.6,
+          })
       ),
     []
   );
 
   Fiber.useFrame(() => {
+    const now = performance.now();
+
     OBSTACLES.forEach(({ id }, index) => {
-      materials[index].color.copy(known.current.has(id) ? FOUND : UNSEEN);
+      const since = now - (obstructing.current.get(id) ?? -Infinity);
+
+      materials[index].emissive.copy(since < LIT ? GLOW : DARK);
     });
   });
 

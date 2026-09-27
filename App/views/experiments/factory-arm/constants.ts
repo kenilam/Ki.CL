@@ -7,8 +7,8 @@ const CLASS_NAME = 'kicl--views--experiments--factory-arm';
 const COPY = {
   scene: 'A robot arm working a pallet, a buffer pallet and a conveyor',
   skipped: {
-    message: 'No clear way to that case.',
-    title: 'Skipped',
+    message: 'The case stays where it is.',
+    title: 'No clear path',
   },
   stopped: {
     message: 'No clear way forward or back.',

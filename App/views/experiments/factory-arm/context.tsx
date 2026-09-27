@@ -29,7 +29,8 @@ import { SEED } from './scene/constants';
  *
  * `known` holds the obstacles the sensors have found, and `found` counts each
  * time that grows, so the arm knows to check its way again. `seeing` holds
- * the sensors with something in view right now.
+ * the sensors with something in view right now, and `obstructing` when each
+ * obstacle last stood in the way of a move.
  *
  * These change every frame or every click, so they are refs read in the render
  * loop rather than state. `stopped` and `skipped` are state: the page shows them.
@@ -42,8 +43,12 @@ import { SEED } from './scene/constants';
 /** `facing` is the heading to turn the pad to; without it the pad sits straight. */
 type Command = { target: Point; grip: number; facing?: number };
 
-/** A case to move, and where to: the belt, or the buffer pallet to wait. */
-type Job = { id: string; to: 'belt' | 'buffer' };
+/**
+ * A case to move, and where to: the belt, or the buffer pallet out of the
+ * way. `chain` is the case whose click asked for it, so the moves one click
+ * asked for can be called off together.
+ */
+type Job = { id: string; to: 'belt' | 'buffer'; chain: string };
 
 /** The case on the pad, and the offset and turn it was picked up with. */
 type Held = { id: string; offset: Point; yaw: number };
@@ -56,6 +61,8 @@ type Write = {
   joints: (next: Joints) => void;
   /** Adds obstacles to what's known; `found` goes up once if any are new. */
   learn: (ids: string[]) => void;
+  /** Marks obstacles as in the way of a move, as of now. */
+  obstruct: (ids: string[]) => void;
   seeing: (next: Set<string>) => void;
   /** Registers a case's body, and returns what unregisters it. */
   track: (id: string, entry: Body) => () => void;
@@ -68,6 +75,7 @@ type Value = {
   skipped: boolean;
   found: React.RefObject<number>;
   known: React.RefObject<Set<string>>;
+  obstructing: React.RefObject<Map<string, number>>;
   seeing: React.RefObject<Set<string>>;
   stopped: boolean;
   bodies: React.RefObject<Map<string, Body>>;
@@ -94,6 +102,7 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
   const queue = useRef<Job[]>([]);
   const found = useRef(0);
   const known = useRef(new Set<string>());
+  const obstructing = useRef(new Map<string, number>());
   const seeing = useRef(new Set<string>());
 
   const [stopped, setStopped] = useState(false);
@@ -128,6 +137,9 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
           found.current += 1;
         }
       },
+      obstruct: (ids) => {
+        ids.forEach((id) => obstructing.current.set(id, performance.now()));
+      },
       seeing: (next) => {
         seeing.current = next;
       },
@@ -160,6 +172,7 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
       held,
       joints,
       known,
+      obstructing,
       queue,
       remove,
       seeing,

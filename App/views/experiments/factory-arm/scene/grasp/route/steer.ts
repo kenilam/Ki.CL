@@ -23,10 +23,12 @@ const DIP = 0.02;
 /**
  * What to do about the next move, given what the arm knows is in the way:
  * `go` as planned, go round by the waypoints in `steps`, or `stuck` when there
- * is no way through.
+ * is no way through. `across` names the obstacles in the move's way.
  */
 type Verdict =
-  { kind: 'go' } | { kind: 'round'; steps: Step[] } | { kind: 'stuck' };
+  | { kind: 'go' }
+  | { kind: 'round'; steps: Step[]; across: string[] }
+  | { kind: 'stuck'; across: string[] };
 
 /** Waypoints on a way round, taken straight at steady speed, then the move itself. */
 const around = (points: Point[], step: Step): Step[] => [
@@ -48,21 +50,28 @@ const verify = (
   solids: Solid[]
 ): Verdict => {
   const pad = forward(joints);
-  const clear = step.ease
-    ? straight(pad, step.target, step.facing, carried, solids)
-    : swept(
-        joints,
-        solve(step.target, joints.grip, step.facing),
-        carried,
-        solids
-      );
+  const clear = (among: Solid[]) =>
+    step.ease
+      ? straight(pad, step.target, step.facing, carried, among)
+      : swept(
+          joints,
+          solve(step.target, joints.grip, step.facing),
+          carried,
+          among
+        );
 
-  if (clear) {
+  if (clear(solids)) {
     return { kind: 'go' };
   }
 
+  // Each obstacle on its own, to say which are in the way; none when the
+  // move is out of reach whatever stands there.
+  const across = clear([])
+    ? solids.filter((solid) => !clear([solid])).map(({ id }) => id)
+    : [];
+
   if (step.ease === 'arrive' || step.ease === 'leave') {
-    return { kind: 'stuck' };
+    return { kind: 'stuck', across };
   }
 
   const points = route(
@@ -75,8 +84,8 @@ const verify = (
   );
 
   return points
-    ? { kind: 'round', steps: around(points, step) }
-    : { kind: 'stuck' };
+    ? { kind: 'round', steps: around(points, step), across }
+    : { kind: 'stuck', across };
 };
 
 /** Where a held case was picked up, to take it back there if it can't go on. */

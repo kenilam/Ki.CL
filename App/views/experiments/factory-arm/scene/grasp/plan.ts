@@ -1,5 +1,8 @@
 // Kinematics
-import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import {
+  ceiling,
+  type Point,
+} from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Constants
 import { CONVEYOR } from '@/views/experiments/factory-arm/scene/constants';
@@ -64,7 +67,7 @@ const plan = (
 ): Step[] => {
   const height = size[1];
   const { point, facing, wait } = destination;
-  const travel = Math.max(highest, point.y) + height + CLEARANCE;
+  const travel = lift(Math.max(highest, point.y), height, [top, point]);
 
   return [
     { target: { ...top, y: travel }, facing: heading },
@@ -94,6 +97,20 @@ const belt = (size: [number, number, number]): Destination => ({
   facing: size[0] >= size[2] ? Math.PI / 2 : 0,
   wait: true,
 });
+
+/** Room kept under the arm's reach ceiling, in metres. */
+const HEADROOM = 0.02;
+
+/**
+ * The height the pad travels at with a case of `height` hanging under it:
+ * clear of `highest`, but no higher than the arm can reach above each of
+ * `over`, so a lift at the edge of its reach still goes straight up.
+ */
+const lift = (highest: number, height: number, over: Point[]) =>
+  Math.min(
+    highest + height + CLEARANCE,
+    ...over.map((spot) => ceiling(spot) - HEADROOM)
+  );
 
 /**
  * How fast to move along a straight line, given how far the pad has come and
@@ -125,5 +142,5 @@ const along = (from: Point, to: Point, distance: number): Point => {
   };
 };
 
-export { CLEARANCE, DROP, along, belt, plan, speed };
+export { CLEARANCE, DROP, along, belt, lift, plan, speed };
 export type { Destination, Step };

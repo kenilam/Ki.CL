@@ -46,24 +46,24 @@ const rollout = (first: Option, upcoming: Box[], loaded: Slab[]) => {
 };
 
 /**
- * The best place on the buffer pallet for a case, and the heading to set it
- * at; or nothing when there is no safe place.
+ * Safe places on the buffer pallet for a case, and the heading to set it at
+ * in each, best first; none when there is no safe place.
  *
- * `allowed` rules out places the arm can't reach, such as one next to an
- * obstacle it knows about.
+ * `allowed` rules out places for other reasons, such as one the arm can't
+ * reach past an obstacle.
  *
  * `upcoming` are the cases the queue will send to the buffer after this one,
  * in order. The best few places for this case are each played forward with
- * them, and the one that lets the most of them fit - then packs tightest,
- * then stays lowest - wins. Placing one case well on its own can leave no
- * room for the next; this looks at the whole load the click asked for.
+ * them, and ranked by how many of them fit, then how tightly, then how low.
+ * Placing one case well on its own can leave no room for the next; this
+ * looks at the whole load the click asked for.
  */
-const spot = (
+const spots = (
   box: Box,
   bodies: Bodies,
   upcoming: Box[] = [],
   allowed: (option: Option) => boolean = () => true
-): { point: Point; facing: number } | null => {
+): { point: Point; facing: number }[] => {
   const loaded: Slab[] = [];
 
   bodies.forEach(({ body, box: other }) => {
@@ -82,31 +82,25 @@ const spot = (
   // leaves more room for what follows.
   const tried = [...floor.slice(0, TRIED), ...stacked.slice(0, TRIED / 3)];
 
-  let best: { option: Option; score: number[] } | null = null;
+  const scored = tried.map((option) => ({
+    option,
+    score: upcoming.length ? rollout(option, upcoming, loaded) : [],
+  }));
 
-  for (const option of tried) {
-    const score = upcoming.length ? rollout(option, upcoming, loaded) : [];
+  // Stable: equal scores keep the order `options` ranked them in.
+  scored.sort((a, b) =>
+    before(a.score, b.score) ? -1 : before(b.score, a.score) ? 1 : 0
+  );
 
-    if (!best || before(score, best.score)) {
-      best = { option, score };
-    }
-  }
-
-  if (!best) {
-    return null;
-  }
-
-  const { slab: chosen, facing } = best.option;
-
-  return {
+  return scored.map(({ option: { slab: chosen, facing } }) => ({
     point: {
       x: (chosen.x[0] + chosen.x[1]) / 2,
       y: chosen.bottom,
       z: (chosen.z[0] + chosen.z[1]) / 2,
     },
     facing,
-  };
+  }));
 };
 
-export { spot };
+export { spots };
 export type { Option } from './options';

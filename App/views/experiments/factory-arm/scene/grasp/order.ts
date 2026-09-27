@@ -44,11 +44,16 @@ const order = (id: string, bodies: Bodies, held?: string): string[] => {
 };
 
 /**
- * The moves a click on `id` asks for. The cases in its way go to the buffer
- * pallet first, `id` goes to the belt, then the ones waiting on the buffer
- * follow it, last in first out. Cases already queued keep their place and their moves.
+ * The moves a click on `id` asks for: the cases in its way go to the buffer
+ * pallet, where they stay, then `id` goes to the belt. Cases already queued
+ * keep their place and their moves.
  */
-const jobs = (id: string, bodies: Bodies, queue: Job[], held?: string) => {
+const jobs = (
+  id: string,
+  bodies: Bodies,
+  queue: Job[],
+  held?: string
+): Job[] => {
   const queued = (other: string) => queue.some((job) => job.id === other);
 
   if (queued(id)) {
@@ -56,18 +61,17 @@ const jobs = (id: string, bodies: Bodies, queue: Job[], held?: string) => {
   }
 
   const chain = order(id, bodies, held);
-  const moved = chain.slice(0, -1).filter((other) => !queued(other));
 
   if (!chain.length) {
     return [];
   }
 
   return [
-    ...moved.map((other): Job => ({ id: other, to: 'buffer' })),
-    { id, to: 'belt' } as Job,
-    // Last on the buffer, first off: a later case can sit on an earlier one,
-    // never under it, so each is free when its turn comes.
-    ...moved.toReversed().map((other): Job => ({ id: other, to: 'belt' })),
+    ...chain
+      .slice(0, -1)
+      .filter((other) => !queued(other))
+      .map((other): Job => ({ id: other, to: 'buffer', chain: id })),
+    { id, to: 'belt', chain: id },
   ];
 };
 

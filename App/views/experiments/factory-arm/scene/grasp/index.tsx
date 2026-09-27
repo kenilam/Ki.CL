@@ -31,7 +31,7 @@ import { touching } from './pad';
 import { CLEARANCE, along, belt, plan, speed, type Step } from './plan';
 import type { Carried } from './route/body';
 import { type Origin, retreat, verify } from './route/steer';
-import { start } from './start';
+import { hopeless, onward, start } from './start';
 
 /*
  * How close the pad must get to a waypoint to count as there, in metres,
@@ -94,6 +94,9 @@ const Grasp: React.FunctionComponent = () => {
   const rounds = useRef(0);
   const halted = useRef(false);
 
+  /** The obstacles found so far. */
+  const solids = () => OBSTACLES.filter(({ id }) => known.current.has(id));
+
   const carried = (): Carried | undefined => {
     const entry = held.current && bodies.current.get(held.current.id);
 
@@ -106,13 +109,54 @@ const Grasp: React.FunctionComponent = () => {
       : undefined;
   };
 
+  /**
+   * Gives up on the job: marks what was in the way, tells the operator, and
+   * calls off the rest of the moves its click asked for, which needed it.
+   */
+  const giveUp = (chain: string | undefined, across: string[] = []) => {
+    write.obstruct(across);
+    skip();
+    // In place, from the back: the job running stays at the head.
+    for (let index = queue.current.length - 1; index >= 0; index -= 1) {
+      const other = queue.current[index];
+
+      if (other.chain === chain && other !== job.current) {
+        queue.current.splice(index, 1);
+      }
+    }
+  };
+
   const act = (step: Step, pad: Point) => {
     const id = job.current?.id;
     const entry = id ? bodies.current.get(id) : undefined;
     const holding = held.current && bodies.current.get(held.current.id);
 
     if (step.action === 'pick') {
-      if (id && entry && touching(pad, entry.body, entry.box)) {
+      /*
+       * Checked again now the pad is on the case, with whatever the sensors
+       * found on the way over: don't pick it up with no way on for it, or
+       * with a lift later in its chain now known to be blocked.
+       */
+      const chain = queue.current.filter(
+        ({ chain: other }) => other === job.current?.chain
+      );
+      const across = hopeless(chain, bodies.current, solids());
+      const next =
+        job.current && !across.length
+          ? onward(
+              job.current,
+              bodies.current,
+              queue.current,
+              solids(),
+              joints.current
+            )
+          : null;
+
+      if (!next || !('steps' in next)) {
+        steps.current = steps.current.slice(0, 2);
+        giveUp(job.current?.chain, next ? next.across : across);
+      } else if (id && entry && touching(pad, entry.body, entry.box)) {
+        steps.current = [step, ...next.steps];
         write.held(pick(rapier, id, entry.body, pad, bearing(joints.current)));
         origin.current = {
           top: step.target,
@@ -147,8 +191,11 @@ const Grasp: React.FunctionComponent = () => {
       return;
     }
 
-    const solids = OBSTACLES.filter(({ id }) => known.current.has(id));
-    const verdict = verify(head, joints.current, carried(), solids);
+    const verdict = verify(head, joints.current, carried(), solids());
+
+    if (verdict.kind !== 'go') {
+      write.obstruct(verdict.across);
+    }
 
     if (verdict.kind === 'go') {
       checked.current = { step: head, found: found.current };
@@ -186,7 +233,7 @@ const Grasp: React.FunctionComponent = () => {
 
     const back =
       held.current && !backing.current && origin.current
-        ? retreat(joints.current, origin.current, carried(), solids)
+        ? retreat(joints.current, origin.current, carried(), solids())
         : null;
 
     if (back) {
@@ -201,7 +248,7 @@ const Grasp: React.FunctionComponent = () => {
     } else {
       steps.current = [];
       leg.current = null;
-      skip();
+      giveUp(job.current?.chain);
     }
   };
 
@@ -232,18 +279,23 @@ const Grasp: React.FunctionComponent = () => {
       }
 
       const [next] = queue.current;
-      const planned =
-        next &&
-        start(
-          next,
-          bodies.current,
-          queue.current,
-          OBSTACLES.filter(({ id }) => known.current.has(id))
-        );
 
-      if (next && planned) {
+      // A chain with a lift that can't be made is called off before it starts.
+      const across = next
+        ? hopeless(
+            queue.current.filter(({ chain }) => chain === next.chain),
+            bodies.current,
+            solids()
+          )
+        : [];
+      const planned =
+        next && !across.length
+          ? start(next, bodies.current, queue.current, solids(), joints.current)
+          : null;
+
+      if (next && planned && 'steps' in planned) {
         job.current = next;
-        steps.current = planned;
+        steps.current = planned.steps;
         origin.current = null;
         backing.current = false;
         redirected.current = false;
@@ -251,9 +303,12 @@ const Grasp: React.FunctionComponent = () => {
       } else if (next) {
         queue.current.shift();
 
-        // Still on a pallet but can't start: something it needs didn't move.
-        if (onPallet(next.id, bodies.current)) {
-          skip();
+        // Gone already, as a case sent on to the belt is, needs no word.
+        if (across.length || planned || onPallet(next.id, bodies.current)) {
+          giveUp(next.chain, [
+            ...across,
+            ...(planned && 'across' in planned ? planned.across : []),
+          ]);
         }
       }
     }
