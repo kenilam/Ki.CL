@@ -12,8 +12,8 @@ import './styles.scss';
 const CLASS_NAME = 'kicl--components--badge';
 
 /**
- * Compact label chip - API aligned with
- * https://ui.shadcn.com/docs/components/base/badge
+ * A compact label chip. `variant` sets how it looks and `level` what it
+ * means, the same split as `Button`.
  */
 const Badge = React.forwardRef<HTMLElement, Props>(
   (
@@ -21,6 +21,7 @@ const Badge = React.forwardRef<HTMLElement, Props>(
       children,
       className,
       is = 'span',
+      level,
       rounded,
       size,
       variant = 'default',
@@ -48,6 +49,7 @@ const Badge = React.forwardRef<HTMLElement, Props>(
             CLASS_NAME,
             `${CLASS_NAME}--variant--${variant}`,
             {
+              [`${CLASS_NAME}--level--${level}`]: level,
               [`${CLASS_NAME}--size--${size}`]: size,
               [`kicl-border-radius-sm`]: !rounded,
               [`kicl-border-radius-${size === 'small' ? 'lg' : 'xl'}`]: rounded,
