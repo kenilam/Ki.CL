@@ -50,6 +50,8 @@ const Badge = React.forwardRef<HTMLElement, Props>(
             `${CLASS_NAME}--variant--${variant}`,
             {
               [`${CLASS_NAME}--level--${level}`]: level,
+              // Secondary's faint fill.
+              'kicl-backdrop': variant === 'secondary',
               [`${CLASS_NAME}--size--${size}`]: size,
               [`kicl-border-radius-sm`]: !rounded,
               [`kicl-border-radius-${size === 'small' ? 'lg' : 'xl'}`]: rounded,

@@ -46,16 +46,22 @@
     --kicl--components--badge--padding-inline: var(--kicl-gutter-narrow);
   }
 
+  /*
+   * As `Button`'s secondary: the badge's own colour - the default fill, or its
+   * level's - moves to the text. The faint fill behind it is `kicl-backdrop`,
+   * which `index.tsx` adds.
+   */
   &--variant--secondary {
-    --kicl--components--badge--background-color: var(--kicl-color-black-light);
-    --kicl--components--badge--color: var(--kicl-color-grey-darker);
+    color: var(--kicl--components--badge--background-color);
   }
 
+  // No fill to read a text colour from, so the text takes the page's.
   &--variant--outline,
   &--variant--ghost {
     --kicl--components--badge--backdrop-filter: blur(var(--kicl-size-2x));
 
     backdrop-filter: var(--kicl--components--badge--backdrop-filter);
+    color: var(--kicl-body-color);
   }
 
   &--variant--outline {
@@ -74,13 +80,6 @@
   @at-root .kicl--theme--dark & {
     --kicl--components--badge--background-color: var(--kicl-color-white);
     --kicl--components--badge--color: var(--kicl-color-grey-darker);
-
-    &--variant--secondary {
-      --kicl--components--badge--background-color: var(
-        --kicl-color-black-light
-      );
-      --kicl--components--badge--color: var(--kicl-color-white);
-    }
 
     // The base above paints these dark-theme chips white, and these two are
     // defined by *not* being painted - so each has to hand the background back.
@@ -107,11 +106,6 @@
     --kicl--components--badge--border-color: transparent;
     --kicl--components--badge--color: var(--kicl-color-white-pure);
 
-    &--variant--secondary {
-      --kicl--components--badge--background-color: var(--kicl-color-grey-light);
-      --kicl--components--badge--color: var(--kicl-color-grey-darker);
-    }
-
     &--variant--outline {
       --kicl--components--badge--background-color: transparent;
       --kicl--components--badge--border-color: var(--kicl-color-grey-dark);
@@ -126,24 +120,20 @@
 }
 
 /*
- * What the chip means, after the themes so it wins over their fills. A level
- * fills the chip; `outline` and `ghost` have no fill, so it edges them instead.
+ * What the chip means, after the themes so it wins over their colours. A level
+ * becomes the chip's colour: its fill, or its text when secondary. `outline`
+ * and `ghost` have no fill, so the level edges them instead.
  */
-.kicl--components--badge--level {
-  @each $level in confirm, error, info, warning {
-    &--#{$level}:not(
-      .kicl--components--badge--variant--outline,
-      .kicl--components--badge--variant--ghost
-    ) {
-      --kicl--components--badge--background-color: var(--kicl-color-#{$level});
-    }
+@each $level in confirm, error, info, warning {
+  // Two classes, to outrank the themes' `.kicl--theme--… .kicl--components--badge`.
+  .kicl--components--badge.kicl--components--badge--level--#{$level} {
+    --kicl--components--badge--background-color: var(--kicl-color-#{$level});
+  }
 
-    &--#{$level}:is(
-      .kicl--components--badge--variant--outline,
-      .kicl--components--badge--variant--ghost
-    ) {
-      --kicl--components--badge--border-color: var(--kicl-color-#{$level});
-    }
+  .kicl--components--badge--variant--outline.kicl--components--badge--level--#{$level},
+  .kicl--components--badge--variant--ghost.kicl--components--badge--level--#{$level} {
+    --kicl--components--badge--background-color: transparent;
+    --kicl--components--badge--border-color: var(--kicl-color-#{$level});
   }
 }
 
