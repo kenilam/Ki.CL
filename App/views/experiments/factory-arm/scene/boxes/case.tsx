@@ -1,11 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 // Physics
-import {
-  CuboidCollider,
-  RigidBody,
-  type RapierRigidBody,
-} from '@react-three/rapier';
+import { CuboidCollider, RigidBody } from '@react-three/rapier';
 
 // Three
 import { Fiber, THREE } from '@/three';
@@ -40,7 +36,7 @@ type Props = { box: Box };
  * in the way goes to the buffer pallet first and follows it after.
  */
 const Case: React.FunctionComponent<Props> = ({ box }) => {
-  const { bodies, held, queue } = useFactoryArmContext();
+  const { bodies, held, queue, write } = useFactoryArmContext();
 
   const [width, height, depth] = box.size;
 
@@ -63,24 +59,9 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     document.body.style.cursor = moves().length ? 'pointer' : 'not-allowed';
   };
 
-  const register = useCallback(
-    (body: RapierRigidBody | null) => {
-      if (!body) {
-        return;
-      }
-
-      bodies.current.set(box.id, { body, box });
-
-      return () => {
-        bodies.current.delete(box.id);
-      };
-    },
-    [bodies, box]
-  );
-
   return (
     <RigidBody
-      ref={register}
+      ref={(body) => (body ? write.track(box.id, { body, box }) : undefined)}
       colliders={false}
       position={box.position}
       rotation={[0, box.yaw, 0]}

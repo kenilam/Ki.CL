@@ -33,7 +33,12 @@ import { SEED } from './scene/constants';
  *
  * These change every frame or every click, so they are refs read in the render
  * loop rather than state. `stopped` and `skipped` are state: the page shows them.
+ *
+ * The refs are written only through `write`, whose functions are made here
+ * beside them. Components read the refs; the React Compiler can't tell a ref
+ * from context is a ref, so it rejects assigning to one there.
  */
+
 /** `facing` is the heading to turn the pad to; without it the pad sits straight. */
 type Command = { target: Point; grip: number; facing?: number };
 
@@ -43,15 +48,29 @@ type Job = { id: string; to: 'belt' | 'buffer' };
 /** The case on the pad, and the offset and turn it was picked up with. */
 type Held = { id: string; offset: Point; yaw: number };
 
+type Body = { body: RapierRigidBody; box: Box };
+
+type Write = {
+  command: (next: Command) => void;
+  held: (next: Held | null) => void;
+  joints: (next: Joints) => void;
+  /** Adds obstacles to what's known; `found` goes up once if any are new. */
+  learn: (ids: string[]) => void;
+  seeing: (next: Set<string>) => void;
+  /** Registers a case's body, and returns what unregisters it. */
+  track: (id: string, entry: Body) => () => void;
+};
+
 type Value = {
   alarm: () => void;
+  write: Write;
   skip: () => void;
   skipped: boolean;
   found: React.RefObject<number>;
   known: React.RefObject<Set<string>>;
   seeing: React.RefObject<Set<string>>;
   stopped: boolean;
-  bodies: React.RefObject<Map<string, { body: RapierRigidBody; box: Box }>>;
+  bodies: React.RefObject<Map<string, Body>>;
   boxes: Box[];
   command: React.RefObject<Command>;
   held: React.RefObject<Held | null>;
@@ -68,7 +87,7 @@ const Context = React.createContext<Value | null>(null);
 const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
   children,
 }) => {
-  const bodies = useRef(new Map());
+  const bodies = useRef(new Map<string, Body>());
   const command = useRef<Command>({ target: forward(HOME), grip: 0 });
   const held = useRef<Held | null>(null);
   const joints = useRef<Joints>(HOME);
@@ -88,6 +107,40 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
     clearTimeout(clear.current);
     clear.current = setTimeout(() => setSkipped(false), NOTICE);
   }, []);
+
+  const write = useMemo<Write>(
+    () => ({
+      command: (next) => {
+        command.current = next;
+      },
+      held: (next) => {
+        held.current = next;
+      },
+      joints: (next) => {
+        joints.current = next;
+      },
+      learn: (ids) => {
+        const fresh = ids.filter((id) => !known.current.has(id));
+
+        fresh.forEach((id) => known.current.add(id));
+
+        if (fresh.length) {
+          found.current += 1;
+        }
+      },
+      seeing: (next) => {
+        seeing.current = next;
+      },
+      track: (id, entry) => {
+        bodies.current.set(id, entry);
+
+        return () => {
+          bodies.current.delete(id);
+        };
+      },
+    }),
+    []
+  );
 
   const [boxes, setBoxes] = useState(() => stack(SEED));
 
@@ -113,8 +166,9 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
       skip,
       skipped,
       stopped,
+      write,
     }),
-    [alarm, boxes, remove, skip, skipped, stopped]
+    [alarm, boxes, remove, skip, skipped, stopped, write]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

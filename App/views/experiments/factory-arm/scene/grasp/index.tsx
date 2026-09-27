@@ -71,7 +71,7 @@ const arrived = (joints: Joints, step: Step) => {
  * With nothing held, it gives the case up.
  */
 const Grasp: React.FunctionComponent = () => {
-  const { alarm, bodies, command, found, held, joints, known, queue, skip } =
+  const { alarm, bodies, found, held, joints, known, queue, skip, write } =
     useFactoryArmContext();
   const { rapier } = useRapier();
 
@@ -109,13 +109,7 @@ const Grasp: React.FunctionComponent = () => {
 
     if (step.action === 'pick') {
       if (id && entry && touching(pad, entry.body, entry.box)) {
-        held.current = pick(
-          rapier,
-          id,
-          entry.body,
-          pad,
-          bearing(joints.current)
-        );
+        write.held(pick(rapier, id, entry.body, pad, bearing(joints.current)));
         origin.current = {
           top: step.target,
           facing: step.facing,
@@ -129,7 +123,7 @@ const Grasp: React.FunctionComponent = () => {
 
     if (step.action === 'place' && holding) {
       place(rapier, holding.body);
-      held.current = null;
+      write.held(null);
     }
 
     return (
@@ -198,11 +192,11 @@ const Grasp: React.FunctionComponent = () => {
 
     // Stopped: hold still where it is, case and all.
     if (halted.current) {
-      command.current = {
+      write.command({
         target: pad,
         grip: held.current ? 1 : 0,
         facing: bearing(joints.current),
-      };
+      });
 
       return;
     }
@@ -252,13 +246,13 @@ const Grasp: React.FunctionComponent = () => {
         speed(step.ease, travelled, length - travelled) * Math.min(delta, 0.1);
     }
 
-    command.current = {
+    write.command({
       target: leg.current
         ? along(leg.current.from, step.target, leg.current.travelled)
         : step.target,
       grip: held.current ? 1 : 0,
       facing: step.facing,
-    };
+    });
 
     if (arrived(joints.current, step) && act(step, pad)) {
       steps.current.shift();

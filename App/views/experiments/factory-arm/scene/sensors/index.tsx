@@ -18,26 +18,13 @@ import { sense } from './sense';
  * the arm checks its way again once however many were found together.
  */
 const Sensing: React.FunctionComponent = () => {
-  const { found, joints, known, seeing } = useFactoryArmContext();
+  const { joints, write } = useFactoryArmContext();
 
   Fiber.useFrame(() => {
     const seen = sense(joints.current, OBSTACLES);
-    let grew = false;
 
-    seeing.current = new Set(seen.keys());
-
-    seen.forEach((ids) =>
-      ids.forEach((id) => {
-        if (!known.current.has(id)) {
-          known.current.add(id);
-          grew = true;
-        }
-      })
-    );
-
-    if (grew) {
-      found.current += 1;
-    }
+    write.seeing(new Set(seen.keys()));
+    write.learn([...seen.values()].flat());
   });
 
   return null;

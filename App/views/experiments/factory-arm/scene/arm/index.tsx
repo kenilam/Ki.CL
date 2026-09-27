@@ -24,7 +24,7 @@ import { LINK } from './constants';
  * A positive `rotation.x` turns +z downward, so pitching up is negative.
  */
 const Arm: React.FunctionComponent = () => {
-  const { command, joints } = useFactoryArmContext();
+  const { command, joints, write } = useFactoryArmContext();
 
   const yaw = useRef<THREE.Group>(null);
   const shoulder = useRef<THREE.Group>(null);
@@ -37,7 +37,7 @@ const Arm: React.FunctionComponent = () => {
     const goal = solve(target, grip, facing);
     const next = step(joints.current, goal, Math.min(delta, 0.1));
 
-    joints.current = next;
+    write.joints(next);
 
     if (!yaw.current || !shoulder.current || !elbow.current || !wrist.current) {
       return;
