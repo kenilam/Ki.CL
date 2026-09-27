@@ -33,21 +33,21 @@ const REACH = {
  */
 const SPEED = {
   grip: 4,
-  joint: 1.4,
-  yaw: 0.8,
+  joint: 2,
+  yaw: 1.2,
 };
 /** The gripper housing: a box under the wrist flange, wider than it is deep. */
 const GRIPPER = {
-  depth: 0.24,
-  flange: 0.1,
+  depth: 0.18,
+  flange: 0.08,
   pad: 0.04,
-  width: 0.34,
+  width: 0.26,
 };
 
 /** Holes in the perforated plate on the housing's outward face. */
 const PLATE = {
-  columns: 7,
-  rows: 4,
+  columns: 5,
+  rows: 3,
 };
 
 /** Where the pad waits between jobs. */

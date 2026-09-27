@@ -12,7 +12,7 @@ const Floor: React.FunctionComponent = () => (
       args={[SIZE / 2, 0.05, SIZE / 2]}
       position={[0, -0.05, 0]}
     />
-    <mesh rotation-x={-Math.PI / 2}>
+    <mesh receiveShadow rotation-x={-Math.PI / 2}>
       <planeGeometry args={[SIZE, SIZE]} />
       <meshStandardMaterial color='#e9e6df' />
     </mesh>

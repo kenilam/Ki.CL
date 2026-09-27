@@ -63,8 +63,13 @@ const Gripper: React.FunctionComponent = () => {
 
   return (
     <group>
-      <mesh material={MATERIAL.body} rotation-z={QUARTER}>
-        <cylinderGeometry args={[0.11, 0.11, 0.26, 32]} />
+      <mesh
+        castShadow
+        receiveShadow
+        material={MATERIAL.body}
+        rotation-z={QUARTER}
+      >
+        <cylinderGeometry args={[0.085, 0.085, 0.2, 32]} />
       </mesh>
 
       <Mounts link='wrist' />
@@ -73,20 +78,29 @@ const Gripper: React.FunctionComponent = () => {
         <Mounts link='gripper' />
 
         <mesh
+          castShadow
+          receiveShadow
           material={MATERIAL.housing}
           position-z={0.08 + GRIPPER.flange / 2}
           rotation-x={QUARTER}
         >
-          <cylinderGeometry args={[0.09, 0.1, GRIPPER.flange, 32]} />
+          <cylinderGeometry args={[0.07, 0.075, GRIPPER.flange, 32]} />
         </mesh>
 
         <Drei.RoundedBox
+          castShadow
+          receiveShadow
           args={[GRIPPER.width, GRIPPER.depth, HEIGHT]}
           material={MATERIAL.housing}
           position-z={MIDDLE}
           radius={0.025}
         />
-        <mesh material={MATERIAL.plate} position={[0, FACE + 0.005, MIDDLE]}>
+        <mesh
+          castShadow
+          receiveShadow
+          material={MATERIAL.plate}
+          position={[0, FACE + 0.005, MIDDLE]}
+        >
           <boxGeometry args={[GRIPPER.width * 0.88, 0.01, HEIGHT * 0.86]} />
         </mesh>
         <Drei.Instances limit={HOLES.length} material={MATERIAL.housing}>
@@ -101,13 +115,20 @@ const Gripper: React.FunctionComponent = () => {
         </Drei.Instances>
 
         <mesh
+          castShadow
+          receiveShadow
           material={light}
-          position={[GRIPPER.width / 2 - 0.05, FACE + 0.02, TOP + 0.03]}
+          position={[GRIPPER.width / 2 - 0.04, FACE + 0.02, TOP + 0.03]}
         >
-          <sphereGeometry args={[0.028, 16, 16]} />
+          <sphereGeometry args={[0.022, 16, 16]} />
         </mesh>
 
-        <mesh material={MATERIAL.hose} position-z={LINK.hand - GRIPPER.pad / 2}>
+        <mesh
+          castShadow
+          receiveShadow
+          material={MATERIAL.hose}
+          position-z={LINK.hand - GRIPPER.pad / 2}
+        >
           <boxGeometry
             args={[GRIPPER.width + 0.02, GRIPPER.depth + 0.02, GRIPPER.pad]}
           />

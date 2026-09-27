@@ -19,6 +19,10 @@ import { stack } from './scene/pallet/stack';
 // Spec
 import type { Box } from './scene/boxes/spec';
 
+// Obstacles
+import { OBSTACLES } from './scene/obstacles/constants';
+import { vision } from './scene/sensors/vision';
+
 // Constants
 import { SEED } from './scene/constants';
 
@@ -27,8 +31,8 @@ import { SEED } from './scene/constants';
  * the arm actually is, which the twin will read. `queue` holds the moves the
  * operator's clicks asked for, in order; the one running stays at its head.
  *
- * `known` holds the obstacles the sensors have found, and `found` counts each
- * time that grows, so the arm knows to check its way again. `seeing` holds
+ * `known` holds the obstacles the overhead camera sees and the sensors have
+ * found, and `found` counts each time that grows, so the arm knows to check its way again. `seeing` holds
  * the sensors with something in view right now, and `obstructing` when each
  * obstacle, or case, last stood in the way of a move. `struck` is a case the
  * carried case has just hit, for the arm to stop and plan again.
@@ -107,7 +111,8 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
   const joints = useRef<Joints>(HOME);
   const queue = useRef<Job[]>([]);
   const found = useRef(0);
-  const known = useRef(new Set<string>());
+  // What the overhead camera sees is known before the arm moves.
+  const known = useRef(new Set(vision(OBSTACLES)));
   const obstructing = useRef(new Map<string, number>());
   const struck = useRef<string | null>(null);
   const seeing = useRef(new Set<string>());

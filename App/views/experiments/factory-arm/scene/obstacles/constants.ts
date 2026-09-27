@@ -2,10 +2,12 @@
 import type { Solid } from './spec';
 
 /*
- * Fixed obstacles the arm isn't told about: its sensors have to find them.
- * The pillar stands in the swing to the belt and the crate on the way from
- * the pallet to the buffer. The beam hangs low behind the pallet, out of the
- * arm's swing, where it stops one case in the back row being lifted out.
+ * Fixed obstacles the arm isn't told about. The overhead camera sees the
+ * ones over or beside the pallets before the arm moves; its sensors find the
+ * rest on the way. The pillar stands in the swing to the belt and the crate
+ * on the way from the pallet to the buffer. The beam hangs low behind the
+ * pallet, out of the arm's swing, where it stops one case in the back row
+ * being lifted out.
  */
 const OBSTACLES: Solid[] = [
   {

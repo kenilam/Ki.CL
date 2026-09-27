@@ -38,20 +38,42 @@ const Pallet: React.FunctionComponent<Props> = ({ position }) => (
     />
 
     {TOP.map((z) => (
-      <mesh key={z} material={WOOD} position={[0, HEIGHT - BOARD / 2, z]}>
+      <mesh
+        castShadow
+        receiveShadow
+        key={z}
+        material={WOOD}
+        position={[0, HEIGHT - BOARD / 2, z]}
+      >
         <boxGeometry args={[WIDTH, BOARD, 0.1]} />
       </mesh>
     ))}
     {ROWS.map((z) => (
       <group key={z}>
-        <mesh material={WOOD} position={[0, BOARD * 1.5 + BLOCK, z]}>
+        <mesh
+          castShadow
+          receiveShadow
+          material={WOOD}
+          position={[0, BOARD * 1.5 + BLOCK, z]}
+        >
           <boxGeometry args={[WIDTH, BOARD, 0.1]} />
         </mesh>
-        <mesh material={WOOD} position={[0, BOARD / 2, z]}>
+        <mesh
+          castShadow
+          receiveShadow
+          material={WOOD}
+          position={[0, BOARD / 2, z]}
+        >
           <boxGeometry args={[WIDTH, BOARD, 0.1]} />
         </mesh>
         {COLUMNS.map((x) => (
-          <mesh key={x} material={WOOD} position={[x, BOARD + BLOCK / 2, z]}>
+          <mesh
+            castShadow
+            receiveShadow
+            key={x}
+            material={WOOD}
+            position={[x, BOARD + BLOCK / 2, z]}
+          >
             <boxGeometry args={[0.1, BLOCK, 0.1]} />
           </mesh>
         ))}

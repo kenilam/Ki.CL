@@ -21,7 +21,7 @@ import { contact } from './contact';
 import { before, type Option, options } from './options';
 
 // Constants
-import { EDGES } from './constants';
+import { AREAS, type Edges } from './constants';
 
 /** How many of the best places for this case are played forward. */
 const TRIED = 12;
@@ -30,16 +30,21 @@ const TRIED = 12;
  * Plays the cases still to come onto the load, each at its own best place,
  * and scores how it went: how many fit, then how tightly, then how low.
  */
-const rollout = (first: Option, upcoming: Box[], loaded: Slab[]) => {
+const rollout = (
+  first: Option,
+  upcoming: Box[],
+  loaded: Slab[],
+  edges: Edges
+) => {
   const load = [...loaded, first.slab];
   let fitted = 1;
-  let touching = contact(first.slab, loaded);
+  let touching = contact(first.slab, loaded, edges);
 
   for (const box of upcoming) {
-    const [best] = options(box, load);
+    const [best] = options(box, load, edges);
 
     if (best) {
-      touching += contact(best.slab, load);
+      touching += contact(best.slab, load, edges);
       load.push(best.slab);
       fitted += 1;
     }
@@ -53,14 +58,19 @@ const rollout = (first: Option, upcoming: Box[], loaded: Slab[]) => {
  * lowest level and a few stacked ones, in case a column leaves more room for
  * what follows, each played forward with the cases still to come.
  */
-const rank = (choices: Option[], upcoming: Box[], loaded: Slab[]) => {
+const rank = (
+  choices: Option[],
+  upcoming: Box[],
+  loaded: Slab[],
+  edges: Edges
+) => {
   const floor = choices.filter((each) => each.rank[0] === choices[0]?.rank[0]);
   const stacked = choices.filter((each) => !floor.includes(each));
   const tried = [...floor.slice(0, TRIED), ...stacked.slice(0, TRIED / 3)];
 
   const scored = tried.map((option) => ({
     option,
-    score: upcoming.length ? rollout(option, upcoming, loaded) : [],
+    score: upcoming.length ? rollout(option, upcoming, loaded, edges) : [],
   }));
 
   // Stable: equal scores keep the order `options` ranked them in.
@@ -72,12 +82,13 @@ const rank = (choices: Option[], upcoming: Box[], loaded: Slab[]) => {
 };
 
 /**
- * Safe places on the buffer pallet for a case, and the heading to set it at
- * in each, best first; none when there is no safe place.
+ * Safe places on a pallet for a case, and the heading to set it at in each,
+ * best first; none when there is no safe place. `area` is which pallet: the
+ * buffer, or the incoming one once it has room.
  *
  * `reserved` are cases still queued to be picked up. A place that would put
- * this case in the way of one of them comes after every place that wouldn't,
- * and is only used when there is nothing else.
+ * this case in the way of any of them lists them in `buries`, and comes after
+ * every place that wouldn't.
  *
  * `upcoming` are the cases the queue will send to the buffer after this one,
  * in order. The best few places for this case are each played forward with
@@ -89,21 +100,23 @@ const spots = (
   box: Box,
   bodies: Bodies,
   upcoming: Box[] = [],
-  reserved: string[] = []
-): { point: Point; facing: number }[] => {
+  reserved: string[] = [],
+  area: keyof typeof AREAS = 'buffer'
+): { point: Point; facing: number; buries: string[] }[] => {
+  const edges = AREAS[area];
   const loaded: Slab[] = [];
 
   bodies.forEach(({ body, box: other }) => {
     const { x, z } = body.translation();
 
-    if (x > EDGES.x[0] && x < EDGES.x[1] && z > EDGES.z[0] && z < EDGES.z[1]) {
+    if (x > edges.x[0] && x < edges.x[1] && z > edges.z[0] && z < edges.z[1]) {
       loaded.push(slab(body, other));
     }
   });
 
-  // Would the case, set down there, be in the way of a case still queued?
-  const crowds = ({ slab: at }: Option) =>
-    reserved.some((id) =>
+  // The queued cases the case, set down there, would be in the way of.
+  const buried = ({ slab: at }: Option) =>
+    reserved.filter((id) =>
       covers(
         {
           x: (at.x[0] + at.x[1]) / 2,
@@ -117,24 +130,31 @@ const spots = (
       )
     );
 
-  const choices = options(box, loaded);
-  const scored = [
-    ...rank(
-      choices.filter((option) => !crowds(option)),
-      upcoming,
-      loaded
-    ),
-    ...rank(choices.filter(crowds), upcoming, loaded),
-  ];
-
-  return scored.map(({ slab: chosen, facing }) => ({
+  const choices = options(box, loaded, edges);
+  const place = (option: Option) => ({
     point: {
-      x: (chosen.x[0] + chosen.x[1]) / 2,
-      y: chosen.bottom,
-      z: (chosen.z[0] + chosen.z[1]) / 2,
+      x: (option.slab.x[0] + option.slab.x[1]) / 2,
+      y: option.slab.bottom,
+      z: (option.slab.z[0] + option.slab.z[1]) / 2,
     },
-    facing,
-  }));
+    facing: option.facing,
+    buries: buried(option),
+  });
+
+  return [
+    ...rank(
+      choices.filter((option) => !buried(option).length),
+      upcoming,
+      loaded,
+      edges
+    ),
+    ...rank(
+      choices.filter((option) => buried(option).length),
+      upcoming,
+      loaded,
+      edges
+    ),
+  ].map(place);
 };
 
 export { spots };

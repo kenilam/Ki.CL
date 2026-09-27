@@ -46,13 +46,20 @@ const Conveyor: React.FunctionComponent = () => {
         friction={0}
         position={[0, CONVEYOR.height - SOLID / 2, 0]}
       />
-      <mesh material={MATERIAL.housing} position-y={CONVEYOR.height - BELT / 2}>
+      <mesh
+        castShadow
+        receiveShadow
+        material={MATERIAL.housing}
+        position-y={CONVEYOR.height - BELT / 2}
+      >
         <boxGeometry args={[CONVEYOR.width, BELT, LENGTH]} />
       </mesh>
 
       {SIDES.map((x) => (
         <group key={x}>
           <mesh
+            castShadow
+            receiveShadow
             material={MATERIAL.metal}
             position={[x, CONVEYOR.height + RAIL.lip - RAIL.height / 2, 0]}
           >
@@ -60,6 +67,8 @@ const Conveyor: React.FunctionComponent = () => {
           </mesh>
           {LEGS.map((z) => (
             <mesh
+              castShadow
+              receiveShadow
               key={z}
               material={MATERIAL.metal}
               position={[x, (CONVEYOR.height - BELT) / 2, z - MIDDLE]}
@@ -72,6 +81,8 @@ const Conveyor: React.FunctionComponent = () => {
 
       {[-1, 1].map((end) => (
         <mesh
+          castShadow
+          receiveShadow
           key={end}
           material={MATERIAL.metal}
           position={[0, CONVEYOR.height - BELT / 2, (end * LENGTH) / 2]}

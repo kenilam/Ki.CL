@@ -15,7 +15,7 @@ import { contact } from './contact';
 import { fit } from './fit';
 
 // Constants
-import { EDGES, GAP } from './constants';
+import { type Edges, GAP } from './constants';
 
 /** A safe place for a case: its slab there, the heading, and how it ranks. */
 type Option = { slab: Slab; facing: number; rank: number[] };
@@ -61,7 +61,7 @@ const before = (a: number[], b: number[]) => {
  * round. The ranking: on the floor before stacked, then the most sides
  * touching a wall or neighbour, then the lowest top, then back and left.
  */
-const options = (box: Box, loaded: Slab[]): Option[] => {
+const options = (box: Box, loaded: Slab[], edges: Edges): Option[] => {
   const half: [number, number] = [box.size[0] / 2, box.size[2] / 2];
   const found: Option[] = [];
 
@@ -70,13 +70,13 @@ const options = (box: Box, loaded: Slab[]): Option[] => {
     const [across, along] = turned ? [half[1], half[0]] : half;
     const [padAcross, padAlong] = turned ? [PAD[1], PAD[0]] : PAD;
     const xs = positions(
-      EDGES.x,
+      edges.x,
       across,
       padAcross,
       loaded.map((o) => o.x)
     );
     const zs = positions(
-      EDGES.z,
+      edges.z,
       along,
       padAlong,
       loaded.map((o) => o.z)
@@ -110,7 +110,7 @@ const options = (box: Box, loaded: Slab[]): Option[] => {
           found.push({
             slab,
             facing,
-            rank: [place.base, -contact(slab, loaded), place.top, z, x],
+            rank: [place.base, -contact(slab, loaded, edges), place.top, z, x],
           });
         }
       }

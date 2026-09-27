@@ -4,23 +4,17 @@ import React, { useRef } from 'react';
 import { Drei, Fiber, THREE } from '@/three';
 
 // Components
-import { Badge } from '@/components';
+import { Animation, Badge } from '@/components';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
-// Pad
-import { top } from '@/views/experiments/factory-arm/scene/grasp/pad';
-
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/constants';
 
-/** How far above the case's top the notice floats, in metres. */
-const RISE = 0.35;
-
 /**
- * A badge saying a case has no clear path, floating over that case and
- * following it if it moves. It is the page's `Alert` that screen readers
+ * A badge saying a case has no clear path, on that case and following it if
+ * it moves. It is the page's `Alert` that screen readers
  * hear; this one is for the eye, and lets clicks through to the scene.
  */
 const Notice: React.FunctionComponent = () => {
@@ -28,13 +22,15 @@ const Notice: React.FunctionComponent = () => {
 
   const anchor = useRef<THREE.Group>(null);
 
+  // On the case itself: above it, a buried case's badge lands among the
+  // cases on top. It's drawn over the scene, so it shows through them.
   Fiber.useFrame(() => {
     const entry = skipped ? bodies.current.get(skipped) : undefined;
 
     if (anchor.current && entry) {
-      const { x, y, z } = top(entry.body, entry.box);
+      const { x, y, z } = entry.body.translation();
 
-      anchor.current.position.set(x, y + RISE, z);
+      anchor.current.position.set(x, y, z);
     }
   });
 
@@ -44,16 +40,17 @@ const Notice: React.FunctionComponent = () => {
 
   return (
     <group ref={anchor}>
-      <Drei.Html
-        aria-hidden
-        center
-        // Sized to the badge: the wrapper has no width of its own, and a badge
-        // fits its container, so it would otherwise break every letter.
-        style={{ inlineSize: 'max-content', pointerEvents: 'none' }}
-      >
-        <Badge className='kicl-text-nowrap' rounded variant='warning'>
-          {COPY.skipped}
-        </Badge>
+      <Drei.Html aria-hidden center>
+        <Animation property='slide-from-bottom'>
+          <Badge
+            className='kicl-text-nowrap'
+            level='warning'
+            size='small'
+            variant='secondary'
+          >
+            {COPY.skipped}
+          </Badge>
+        </Animation>
       </Drei.Html>
     </group>
   );

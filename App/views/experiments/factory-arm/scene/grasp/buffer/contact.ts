@@ -2,7 +2,7 @@
 import type { Slab } from '@/views/experiments/factory-arm/scene/grasp/slab';
 
 // Constants
-import { EDGES, GAP, LEVEL, TOUCH } from './constants';
+import { type Edges, GAP, LEVEL, TOUCH } from './constants';
 
 /** Length two ranges share. */
 const common = ([a0, a1]: [number, number], [b0, b1]: [number, number]) =>
@@ -13,7 +13,7 @@ const common = ([a0, a1]: [number, number], [b0, b1]: [number, number]) =>
  * it, from 0 to 1. Cases pressed into corners and against each other leave no
  * holes, so packing prefers the spots where this is highest.
  */
-const contact = (slab: Slab, loaded: Slab[]) => {
+const contact = (slab: Slab, loaded: Slab[], edges: Edges) => {
   const beside = loaded.filter(
     (other) =>
       other.top > slab.bottom + LEVEL && other.bottom < slab.top - LEVEL
@@ -36,10 +36,10 @@ const contact = (slab: Slab, loaded: Slab[]) => {
   };
 
   const touched =
-    side('x', 0, EDGES.x[0]) +
-    side('x', 1, EDGES.x[1]) +
-    side('z', 0, EDGES.z[0]) +
-    side('z', 1, EDGES.z[1]);
+    side('x', 0, edges.x[0]) +
+    side('x', 1, edges.x[1]) +
+    side('z', 0, edges.z[0]) +
+    side('z', 1, edges.z[1]);
   const perimeter = 2 * (slab.x[1] - slab.x[0] + (slab.z[1] - slab.z[0]));
 
   return touched / perimeter;

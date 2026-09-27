@@ -119,10 +119,10 @@ const collides = (
     {
       from: place(upper, [SIDE, 0, 0]),
       to: place(upper, [SIDE, 0, LINK.upper]),
-      radius: 0.15,
+      radius: 0.13,
     },
-    { from: place(fore, [0, 0.04, -0.36]), to: fore.origin, radius: 0.19 },
-    { from: fore.origin, to: place(fore, [0, 0, LINK.fore]), radius: 0.14 },
+    { from: place(fore, [0, 0.03, -0.3]), to: fore.origin, radius: 0.15 },
+    { from: fore.origin, to: place(fore, [0, 0, LINK.fore]), radius: 0.11 },
   ];
 
   const gripper: Rect = {

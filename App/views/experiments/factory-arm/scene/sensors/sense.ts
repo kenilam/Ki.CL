@@ -20,9 +20,9 @@ import { CONE, RANGE, SENSORS } from './constants';
  * sensors can see any number of obstacles at once.
  *
  * A sensor sees an obstacle when the obstacle's nearest point is within
- * `RANGE` and inside its cone, so a wall is seen as soon as any part of it is.
+ * `range` and inside its cone, so a wall is seen as soon as any part of it is.
  */
-const sense = (joints: Joints, solids: Solid[]) => {
+const sense = (joints: Joints, solids: Solid[], range = RANGE) => {
   const linked = frames(joints);
   const seen = new Map<string, string[]>();
 
@@ -48,7 +48,7 @@ const sense = (joints: Joints, solids: Solid[]) => {
           distance >=
           Math.cos(CONE);
 
-      if (distance <= RANGE && facing) {
+      if (distance <= range && facing) {
         seen.set(sensor.id, [...(seen.get(sensor.id) ?? []), id]);
       }
     }

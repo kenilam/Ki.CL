@@ -26,7 +26,14 @@ const Hose: React.FunctionComponent<Props> = ({ points }) => {
     [points]
   );
 
-  return <mesh geometry={geometry} material={MATERIAL.hose} />;
+  return (
+    <mesh
+      castShadow
+      receiveShadow
+      geometry={geometry}
+      material={MATERIAL.hose}
+    />
+  );
 };
 
 export { Hose };

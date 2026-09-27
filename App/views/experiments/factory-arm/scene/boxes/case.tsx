@@ -161,10 +161,15 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
         onPointerOver={hover}
         onPointerOut={() => (document.body.style.cursor = '')}
       >
-        <mesh material={cardboard}>
+        <mesh castShadow receiveShadow material={cardboard}>
           <boxGeometry args={box.size} />
         </mesh>
-        <mesh material={TAPE_MATERIAL} position-y={height / 2 + 0.001}>
+        <mesh
+          castShadow
+          receiveShadow
+          material={TAPE_MATERIAL}
+          position-y={height / 2 + 0.001}
+        >
           <boxGeometry args={[width + 0.002, 0.002, TAPE]} />
         </mesh>
       </group>

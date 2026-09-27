@@ -25,13 +25,13 @@ import {
 import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
 
 // Partials
-import { highest, occupied, onPallet, solidsOf } from './cell';
+import { covers, occupied, onPallet, solidsOf } from './cell';
 import { carry, pick, place } from './hold';
 import { touching } from './pad';
-import { CLEARANCE, along, belt, plan, speed, type Step } from './plan';
+import { CLEARANCE, along, speed, type Step } from './plan';
 import type { Carried } from './route/body';
 import { type Origin, retreat, verify } from './route/steer';
-import { hopeless, onward, resume, start } from './start';
+import { firstInLine, hopeless, onward, resume, start } from './start';
 
 /*
  * How close the pad must get to a waypoint to count as there, in metres,
@@ -69,11 +69,12 @@ const arrived = (joints: Joints, step: Step) => {
  *
  * Before each move, and again whenever the sensors find something new, the
  * move is checked against every obstacle found so far. A blocked move goes
- * round. With no way round, a case bound for the buffer goes to the belt
- * instead; failing that, a held case goes back to where it was picked up; with
+ * round. With no way round, a case bound for the buffer tries another place
+ * on it; failing that, a held case goes back to where it was picked up; with
  * no way back either, the arm stops and the light turns red.
  * With nothing held, it gives the case up.
  */
+
 const Grasp: React.FunctionComponent = () => {
   const {
     alarm,
@@ -99,12 +100,15 @@ const Grasp: React.FunctionComponent = () => {
   const origin = useRef<Origin | null>(null);
   const backing = useRef(false);
 
-  // Whether a case bound for the buffer has been sent to the belt instead.
-  const redirected = useRef(false);
+  // Whether a case bound for the buffer has had its place chosen again.
+  const rechosen = useRef(false);
 
   // The move last checked, against how many finds; and ways round in a row.
   const checked = useRef<{ step: Step; found: number } | null>(null);
   const rounds = useRef(0);
+
+  // The queue as last seen, to notice cases selected mid-move.
+  const seen = useRef('');
   const halted = useRef(false);
 
   /** The obstacles found so far. */
@@ -236,6 +240,33 @@ const Grasp: React.FunctionComponent = () => {
     );
   };
 
+  /**
+   * Whether the held case, set down where the current plan puts it, would
+   * be in the way of a case still queued: one may have been selected since
+   * the spot was chosen.
+   */
+  const buries = () => {
+    const holding = held.current && bodies.current.get(held.current.id);
+    const down = steps.current.find(({ action }) => action === 'place');
+
+    if (!holding || !held.current || !down) {
+      return false;
+    }
+
+    const [width, , depth] = holding.box.size;
+    const outline = {
+      x: down.target.x,
+      z: down.target.z,
+      half: [width / 2, depth / 2] as [number, number],
+      yaw: down.facing + held.current.yaw,
+    };
+
+    // The pad sits on the case's top when it lets go, so that's its height.
+    return queue.current
+      .slice(1)
+      .some(({ id }) => covers(outline, down.target.y, id, bodies.current));
+  };
+
   /** Checks the next move if it or what's known has changed, and acts on it. */
   const steer = () => {
     const [head] = steps.current;
@@ -269,19 +300,26 @@ const Grasp: React.FunctionComponent = () => {
       return;
     }
 
-    // A buffer place that turned out blocked: take the case to the belt instead.
-    const size = held.current && bodies.current.get(held.current.id)?.box.size;
+    /*
+     * A buffer place that turned out blocked: choose another place on the
+     * buffer from here. A case moved out of the way stays on the buffer; only
+     * a case queued for the belt goes there.
+     */
+    const rest =
+      held.current && job.current?.to === 'buffer' && !rechosen.current
+        ? resume(
+            job.current,
+            bodies.current,
+            queue.current,
+            solids(),
+            joints.current
+          )
+        : null;
 
-    if (size && job.current?.to === 'buffer' && !redirected.current) {
-      redirected.current = true;
+    if (rest && 'steps' in rest) {
+      rechosen.current = true;
       rounds.current = 0;
-      steps.current = plan(
-        forward(joints.current),
-        0,
-        size,
-        highest(bodies.current),
-        belt(size)
-      ).slice(3);
+      steps.current = rest.steps;
       leg.current = null;
       checked.current = null;
 
@@ -359,6 +397,21 @@ const Grasp: React.FunctionComponent = () => {
         job.current = undefined;
       }
 
+      /*
+       * A case in the way that could only bury queued cases on the buffer:
+       * deliver those first if they're free, so its place clears. They had
+       * to go anyway, and nothing gets buried.
+       */
+      const [first] = queue.current;
+      const early = first
+        ? firstInLine(first, bodies.current, queue.current)
+        : [];
+
+      early.forEach((ahead) =>
+        queue.current.splice(queue.current.indexOf(ahead), 1)
+      );
+      queue.current.unshift(...early);
+
       const [next] = queue.current;
 
       // A chain with a lift that can't be made is called off before it starts.
@@ -379,7 +432,7 @@ const Grasp: React.FunctionComponent = () => {
         steps.current = planned.steps;
         origin.current = null;
         backing.current = false;
-        redirected.current = false;
+        rechosen.current = false;
         rounds.current = 0;
       } else if (next) {
         queue.current.shift();
@@ -390,6 +443,33 @@ const Grasp: React.FunctionComponent = () => {
             ...across,
             ...(planned && 'across' in planned ? planned.across : []),
           ]);
+        }
+      }
+    }
+
+    /*
+     * A case selected while the held one is on its way to the buffer: if the
+     * planned spot would now bury it, choose again and plan from here.
+     */
+    const listed = queue.current.map(({ id }) => id).join();
+
+    if (listed !== seen.current) {
+      seen.current = listed;
+
+      if (job.current?.to === 'buffer' && !backing.current && buries()) {
+        const rest = resume(
+          job.current,
+          bodies.current,
+          queue.current,
+          solids(),
+          joints.current
+        );
+
+        if (rest && 'steps' in rest) {
+          steps.current = rest.steps;
+          leg.current = null;
+          checked.current = null;
+          rounds.current = 0;
         }
       }
     }

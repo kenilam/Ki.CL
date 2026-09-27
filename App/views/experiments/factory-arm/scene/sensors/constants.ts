@@ -17,8 +17,12 @@ type Sensor = {
   direction: Vector;
 };
 
-/** How far a sensor sees, in metres. */
-const RANGE = 0.8;
+/**
+ * How far a sensor sees, in metres. Short enough to keep its view compact,
+ * long enough that the arm finds an obstacle about 30 cm before it would come
+ * within its safety margin; at 0.3 m it met the crate before seeing it.
+ */
+const RANGE = 0.5;
 
 /**
  * Half the angle of a sensor's view, in radians: a half sphere, like the
@@ -36,40 +40,40 @@ const SENSORS: Sensor[] = [
   {
     id: 'upper-left',
     link: 'upper',
-    position: [SIDE + 0.11, 0, LINK.upper * 0.55],
+    position: [SIDE + 0.085, 0, LINK.upper * 0.55],
     direction: [1, 0, 0],
   },
   {
     id: 'upper-right',
     link: 'upper',
-    position: [SIDE - 0.11, 0, LINK.upper * 0.55],
+    position: [SIDE - 0.085, 0, LINK.upper * 0.55],
     direction: [-1, 0, 0],
   },
   {
     id: 'fore-left',
     link: 'fore',
-    position: [0.12, 0, LINK.fore * 0.5],
+    position: [0.095, 0, LINK.fore * 0.5],
     direction: [1, 0, 0],
   },
   {
     id: 'fore-right',
     link: 'fore',
-    position: [-0.12, 0, LINK.fore * 0.5],
+    position: [-0.095, 0, LINK.fore * 0.5],
     direction: [-1, 0, 0],
   },
   {
     id: 'fore-top',
     link: 'fore',
-    position: [0, 0.12, LINK.fore * 0.3],
+    position: [0, 0.095, LINK.fore * 0.3],
     direction: [0, 1, 0],
   },
   {
     id: 'fore-under',
     link: 'fore',
-    position: [0, -0.12, LINK.fore * 0.7],
+    position: [0, -0.085, LINK.fore * 0.7],
     direction: [0, -1, 0],
   },
-  { id: 'wrist', link: 'wrist', position: [0, 0.12, 0], direction: [0, 1, 0] },
+  { id: 'wrist', link: 'wrist', position: [0, 0.09, 0], direction: [0, 1, 0] },
   {
     id: 'gripper',
     link: 'gripper',

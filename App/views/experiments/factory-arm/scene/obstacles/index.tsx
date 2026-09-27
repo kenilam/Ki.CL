@@ -66,7 +66,7 @@ const Obstacles: React.FunctionComponent = () => {
         return (
           <RigidBody key={id} type='fixed' colliders={false} position={centre}>
             <CuboidCollider args={[size[0] / 2, size[1] / 2, size[2] / 2]} />
-            <mesh material={materials[index]}>
+            <mesh castShadow receiveShadow material={materials[index]}>
               <boxGeometry args={size} />
             </mesh>
           </RigidBody>

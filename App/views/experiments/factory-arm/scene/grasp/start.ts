@@ -16,7 +16,7 @@ import type { Carried } from './route/body';
 import { straight } from './route/check';
 import { ahead } from './route/plan-ahead';
 
-/** How many buffer places are tried before a case in the way goes to the belt. */
+/** How many buffer places are tried, of each kind, before a job counts as blocked. */
 const TRIES = 4;
 
 /**
@@ -28,22 +28,28 @@ type Outcome = { steps: Step[] } | { across: string[] } | null;
 
 /**
  * Where a job's case may go, best first. A case in the way tries the best few
- * places on the buffer, then the belt; the case that was clicked goes to the
- * belt.
+ * clear places on the buffer, then on the incoming pallet, then places that
+ * would bury a queued case; it never goes to the belt. The case that was
+ * clicked goes to the belt.
+ *
+ * Each pallet's places are only worked out once the ones before them have
+ * all failed: the incoming pallet holds most of the cases, so searching it
+ * is slow, and it's rarely needed.
  */
-const destinations = (
+function* destinations(
   job: Job,
   bodies: Bodies,
   queue: Job[]
-): Destination[] => {
+): Generator<Destination> {
   const entry = bodies.get(job.id);
 
   if (!entry) {
-    return [];
+    return;
   }
 
   if (job.to === 'belt') {
-    return [belt(entry.box.size)];
+    yield belt(entry.box.size);
+    return;
   }
 
   const upcoming = queue
@@ -57,13 +63,33 @@ const destinations = (
   // The case itself isn't part of the buffer's load, even in the air over it.
   const others: Bodies = new Map([...bodies].filter(([id]) => id !== job.id));
 
-  return [
-    ...spots(entry.box, others, upcoming, reserved)
+  /*
+   * The cases still to come are played forward on the buffer only. They go
+   * there first too, so looking ahead on the incoming pallet would cost a lot
+   * and change little.
+   */
+  const buffer = spots(entry.box, others, upcoming, reserved, 'buffer');
+  let pallet: typeof buffer | undefined;
+  const incoming = () =>
+    (pallet ??= spots(entry.box, others, [], reserved, 'pallet'));
+
+  const pick = (rooms: typeof buffer, burying: boolean): Destination[] =>
+    rooms
+      .filter(({ buries }) => buries.length > 0 === burying)
       .slice(0, TRIES)
-      .map((room) => ({ ...room, wait: false })),
-    belt(entry.box.size),
-  ];
-};
+      .map(({ facing, point }) => ({ facing, point, wait: false }));
+
+  /*
+   * A case moved out of the way never goes to the belt: only a case queued
+   * for the belt does. It goes to a clear place on the buffer, or on the
+   * incoming pallet once that has room; places that bury a queued case come
+   * last, for when there is no other room.
+   */
+  yield* pick(buffer, false);
+  yield* pick(incoming(), false);
+  yield* pick(buffer, true);
+  yield* pick(incoming(), true);
+}
 
 /**
  * Plans the job for each destination in turn from where the arm is, and keeps
@@ -119,6 +145,39 @@ const choose = (
   }
 
   return { across: [...across] };
+};
+
+/**
+ * Queued cases worth delivering before this job, to save burying them.
+ *
+ * When the buffer has no clear place for a case in the way, its best place
+ * would bury queued cases. If every one of those is headed for the belt and
+ * free to lift now, sending them first clears that place: nothing is buried,
+ * and they had to go anyway. Otherwise nothing is worth moving ahead.
+ */
+const firstInLine = (job: Job, bodies: Bodies, queue: Job[]): Job[] => {
+  const entry = bodies.get(job.id);
+
+  if (job.to !== 'buffer' || !entry) {
+    return [];
+  }
+
+  const reserved = queue.slice(1).map(({ id }) => id);
+  const others: Bodies = new Map([...bodies].filter(([id]) => id !== job.id));
+  const rooms = spots(entry.box, others, [], reserved, 'buffer');
+
+  if (!rooms.length || rooms.some(({ buries }) => !buries.length)) {
+    return [];
+  }
+
+  const [{ buries }] = rooms;
+  const ahead = queue.filter(({ id }) => buries.includes(id));
+  const ready = ahead.every(
+    ({ id, to }) =>
+      to === 'belt' && onPallet(id, bodies) && !blocked(id, bodies)
+  );
+
+  return ready && ahead.length === buries.length ? ahead : [];
 };
 
 /**
@@ -199,5 +258,5 @@ const resume = (
   joints: Joints
 ) => choose(job, bodies, queue, solids, joints, 3);
 
-export { hopeless, onward, resume, start };
+export { firstInLine, hopeless, onward, resume, start };
 export type { Outcome };
