@@ -47,6 +47,8 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         aria-label={COPY.open}
         className={classNames(
           `${CLASS_NAME}__open`,
+          'kicl-cursor-zoom-in',
+          'kicl-display-block',
           'kicl-inline-size-full',
           'kicl-position-relative'
         )}
@@ -57,7 +59,12 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         <Image
           alt={COPY.alt}
           borderRadius='sm'
-          className={`${CLASS_NAME}__preview`}
+          className={classNames(
+            `${CLASS_NAME}__preview`,
+            'kicl-aspect-ratio-square',
+            'kicl-display-block',
+            'kicl-inline-size-full'
+          )}
           data={url}
         />
         <Ri.RiZoomInLine
@@ -79,7 +86,7 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         <Image
           alt={COPY.alt}
           borderRadius='sm'
-          className={`${CLASS_NAME}__large`}
+          className={classNames('kicl-display-block', 'kicl-inline-size-full')}
           data={open ? url : undefined}
         />
       </Dialog>

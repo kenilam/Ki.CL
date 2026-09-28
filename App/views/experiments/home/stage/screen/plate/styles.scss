@@ -10,7 +10,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   inset-block: calc(var(--kicl--views--experiments__home--drift) * -1);
-  inset-inline: 0;
 
   @supports (animation-timeline: scroll()) {
     animation:

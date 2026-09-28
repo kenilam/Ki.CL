@@ -28,7 +28,11 @@ const Volume: React.FunctionComponent = () => {
   return (
     <Input
       aria-label={COPY.volume}
-      className={classNames(CLASS_NAME, 'kicl-inline-size-md')}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inline-size-md',
+        'kicl-padding-none'
+      )}
       max={1}
       min={0}
       onChange={(event) => control.setValue(Number(event.target.value))}

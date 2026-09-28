@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Heading, Layout } from '@/components';
 
 // Partials
 import { Address } from './address';
@@ -13,37 +13,47 @@ import { Music } from './music';
 import { Picture } from './picture';
 import { WhatThisIs } from './what-this-is';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import {
   ARTICLE_ID,
+  COPY,
   CLASS_NAME as HOME,
 } from '@/views/experiments/music-visualiser/home/constants';
 
 const CLASS_NAME = `${HOME}__article`;
 
-/** How it was made: the music, the picture, the data, and the address. */
-const Article: React.FunctionComponent = () => (
-  <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
-    <div
-      className={classNames(
-        CLASS_NAME,
-        'kicl-margin-inline-auto',
-        'kicl-max-inline-size-columns-12',
-        'kicl-padding-block-start-extreme',
-        'kicl-position-relative'
-      )}
-      id={ARTICLE_ID}
-    >
-      <WhatThisIs />
-      <Music />
-      <Picture />
-      <Data />
-      <Address />
-    </div>
-  </Layout>
-);
+/**
+ * How it was made: the music, the picture, the data, and the address. The
+ * heading is for screen readers; on screen the banner's chevron names it.
+ */
+const Article: React.FunctionComponent = () => {
+  const id = useId();
+
+  return (
+    <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
+      <section
+        aria-labelledby={id}
+        className={classNames(
+          CLASS_NAME,
+          'kicl-margin-inline-auto',
+          'kicl-max-inline-size-columns-12',
+          'kicl-padding-block-start-extreme',
+          'kicl-padding-inline-frame',
+          'kicl-position-relative'
+        )}
+        id={ARTICLE_ID}
+      >
+        <Heading className='kicl-hidden' id={id} is='h2'>
+          {COPY.article}
+        </Heading>
+        <WhatThisIs />
+        <Music />
+        <Picture />
+        <Data />
+        <Address />
+      </section>
+    </Layout>
+  );
+};
 
 export { Article };

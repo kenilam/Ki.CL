@@ -18,9 +18,6 @@ import {
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import {
   CLASS_NAME as VIEW,
@@ -55,7 +52,9 @@ const Gate: React.FunctionComponent = () => {
           'kicl-inset-0',
           'kicl-margin-inline-auto',
           'kicl-max-inline-size-columns-6',
+          'kicl-padding-block-end-frame',
           'kicl-padding-block-start-header',
+          'kicl-padding-inline-frame',
           'kicl-position-absolute',
           'kicl-text-align-center'
         )}

@@ -1,4 +1,5 @@
 .kicl--views--portfolio--pika--system-design {
+  /* Media query and hover state; a utility class would apply at every size and state. */
   &__anchor-nav {
     @include tablet {
       display: none;

@@ -76,6 +76,8 @@ const Chrome: React.FunctionComponent = () => {
         className={classNames(
           CLASS_NAME,
           'kicl-inline-size-full',
+          'kicl-padding-block-start-frame',
+          'kicl-padding-inline-frame',
           'kicl-position-relative',
           {
             [`${CLASS_NAME}--idle`]: idle,

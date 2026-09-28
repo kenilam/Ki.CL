@@ -44,6 +44,8 @@ const Scene: React.FunctionComponent = () => {
 
   return (
     <Fiber.Canvas
+      aria-label='The tree of life around the taxon in view'
+      role='img'
       camera={{ position: [0, 0, OPENING_DISTANCE], fov: 50 }}
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}

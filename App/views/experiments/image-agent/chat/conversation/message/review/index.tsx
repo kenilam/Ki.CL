@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Card, CardFooter, Details, List, ListItem, Text } from '@/components';
 
@@ -49,7 +52,11 @@ const Review: React.FunctionComponent<Props> = ({ score }) => (
             <Text
               dense
               is='span'
-              className='kicl-font-family-mono kicl-font-size-small kicl-color-grey-dark'
+              className={classNames(
+                'kicl-font-family-mono',
+                'kicl-font-size-small',
+                'kicl-color-grey-dark'
+              )}
             >
               {String(score[row.key])}
             </Text>
@@ -67,7 +74,10 @@ const Review: React.FunctionComponent<Props> = ({ score }) => (
                 <ListItem key={suggestion}>
                   <Text
                     is='span'
-                    className='kicl-font-size-small kicl-color-grey-dark'
+                    className={classNames(
+                      'kicl-font-size-small',
+                      'kicl-color-grey-dark'
+                    )}
                   >
                     {suggestion}
                   </Text>
