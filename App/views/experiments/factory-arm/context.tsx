@@ -90,6 +90,8 @@ type Write = {
   /** Records a case the carried case struck, or clears the record. */
   strike: (id: string | null) => void;
   seeing: (next: Set<string>) => void;
+  /** Tells whether the arm is working, for an engine that keeps its own jobs. */
+  busy: (check: (() => boolean) | null) => void;
   /** Registers a case's body, and returns what unregisters it. */
   track: (id: string, entry: Body) => () => void;
 };
@@ -148,8 +150,9 @@ const FactoryArmProvider: React.FunctionComponent<
   const found = useRef(0);
   const obstacles = useRef(setup.obstacles);
   const asked = useRef<Shape[]>([]);
+  const working = useRef<(() => boolean) | null>(null);
   // Moving, adding or taking away an obstacle changes the cell from its setup.
-  const { attach, note, setEdited } = useSetup();
+  const { attach, edit, note } = useSetup();
   const [standing, setStanding] = useState(() =>
     setup.obstacles.map(({ id }) => id)
   );
@@ -200,7 +203,6 @@ const FactoryArmProvider: React.FunctionComponent<
         }
       },
       move: (id, by) => {
-        setEdited(true);
         const shift = ({ x, y, z }: Point) => ({
           x: x + by.x,
           y: y + by.y,
@@ -213,25 +215,26 @@ const FactoryArmProvider: React.FunctionComponent<
             : solid
         );
 
+        edit(obstacles.current);
         // The operator placed it, so the arm knows where it now stands.
         known.current.add(id);
         found.current += 1;
         moving.current = { id, by, at: performance.now() };
       },
       place: (solid) => {
-        setEdited(true);
         note(`Added ${solid.id}`, 'info');
         obstacles.current = [...obstacles.current, solid];
+        edit(obstacles.current);
         known.current.add(solid.id);
         found.current += 1;
         setStanding((ids) => [...ids, solid.id]);
       },
       withdraw: (id) => {
-        setEdited(true);
         note(`Took ${id} away`, 'info');
         obstacles.current = obstacles.current.filter(
           (solid) => solid.id !== id
         );
+        edit(obstacles.current);
         known.current.delete(id);
         found.current += 1;
         setStanding((ids) => ids.filter((each) => each !== id));
@@ -258,6 +261,9 @@ const FactoryArmProvider: React.FunctionComponent<
       seeing: (next) => {
         seeing.current = next;
       },
+      busy: (check) => {
+        working.current = check;
+      },
       track: (id, entry) => {
         bodies.current.set(id, entry);
 
@@ -266,14 +272,16 @@ const FactoryArmProvider: React.FunctionComponent<
         };
       },
     }),
-    [note, setEdited]
+    [edit, note]
   );
 
   // The panel reaches this run's cell through the setup, which outlives it.
   useEffect(() => {
     attach({
       ask: write.ask,
-      busy: () => queue.current.length > 0 || held.current !== null,
+      busy: () =>
+        working.current?.() ??
+        (queue.current.length > 0 || held.current !== null),
       obstacles,
     });
 

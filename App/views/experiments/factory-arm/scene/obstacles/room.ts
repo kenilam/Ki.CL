@@ -21,9 +21,9 @@ const SLACK = 0.002;
 
 /**
  * Whether an obstacle would have room where `solid` says: above the floor,
- * under the ceiling, and clear of the cases, pallets, belt, other obstacles,
- * the arm's base and the arm itself. `near` says whether it would come
- * within the planner's margin of the arm.
+ * under the ceiling, and clear of the cases, pallets, belt, other obstacles
+ * and the arm's base. `near` says whether it would come within the
+ * planner's margin of the arm itself.
  */
 const useRoom = () => {
   const { joints } = useFactoryArmContext();
@@ -70,8 +70,8 @@ const useRoom = () => {
           ?.obstacle !== id
     );
 
-    // The arm isn't a physics body either, so it's checked as the planner sees it.
-    return !hit && !collides(joints.current, undefined, [{ id, min, max }], 0);
+    // The arm isn't a physics body; `near` checks it, as the planner sees it.
+    return !hit;
   };
 
   return { clear, near };

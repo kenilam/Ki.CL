@@ -16,7 +16,7 @@ const COPY = {
     clear: 'Clear',
     close: 'Close setup',
     empty: 'Nothing yet',
-    first: 'First run',
+    first: 'Opened the page',
     label: 'Setup',
     log: 'Log',
     manual: 'Manual',
@@ -35,6 +35,7 @@ const COPY = {
     remove: 'Remove',
     save: 'Save as preset',
     unsaved: 'Save changes as a preset',
+    step: 'step',
     steps: 'steps',
     shapes: {
       beam: 'Beam',

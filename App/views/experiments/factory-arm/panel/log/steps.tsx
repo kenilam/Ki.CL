@@ -11,7 +11,7 @@ import type { Entry } from '@/views/experiments/factory-arm/setup';
 
 /** A step's time of day, to the second. */
 const time = (at: number) =>
-  new Date(performance.timeOrigin + at).toLocaleTimeString([], {
+  new Date(at).toLocaleTimeString([], {
     hour12: false,
   });
 

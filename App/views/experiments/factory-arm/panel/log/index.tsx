@@ -49,9 +49,9 @@ const Log: React.FunctionComponent = () => {
               <Steps entries={latest} />
 
               {earlier.map((entries) => {
-                // Oldest last: the step that started that run. The page's first run wasn't started by a step.
+                // Oldest last: the step that started that run. A run the page opened with wasn't started by a step.
                 const first = entries[entries.length - 1];
-                const name = first.run ? first.text : COPY.panel.first;
+                const name = first.start ? first.text : COPY.panel.first;
 
                 return (
                   <Details
@@ -59,7 +59,9 @@ const Log: React.FunctionComponent = () => {
                     summary={
                       <Text className='kicl-font-size-small' is='span'>
                         {name} · {time(first.at)} · {entries.length}{' '}
-                        {COPY.panel.steps}
+                        {entries.length === 1
+                          ? COPY.panel.step
+                          : COPY.panel.steps}
                       </Text>
                     }
                   >
@@ -84,9 +86,10 @@ const Log: React.FunctionComponent = () => {
             className='kicl-inline-size-full'
             justifyContent='center'
             onClick={clearLog}
+            size='small'
             variant='secondary'
           >
-            <span>{COPY.panel.clear}</span>
+            {COPY.panel.clear}
           </Button>
         </CardFooter>
       )}

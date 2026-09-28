@@ -106,26 +106,47 @@ const approach = (from: number, to: number, limit: number) =>
   from + Math.min(limit, Math.max(-limit, to - from));
 
 /** Shortest signed turn from one heading to another, in `[-π, π]`. */
-const turn = (from: number, to: number) =>
+const shortest = (from: number, to: number) =>
   Math.atan2(Math.sin(to - from), Math.cos(to - from));
+
+/** Turns a point about the vertical axis the way `rotation.y` does. */
+const turn = ({ x, y, z }: Point, angle: number): Point => ({
+  x: x * Math.cos(angle) + z * Math.sin(angle),
+  y,
+  z: -x * Math.sin(angle) + z * Math.cos(angle),
+});
 
 /**
  * Moves each joint toward `goal` by no more than its speed allows in `delta`
  * seconds. The lag this gives is what a motor does, and it is what the twin
  * will have to predict.
+ *
+ * The shoulder, elbow and wrist move together, each the same share of the
+ * way, so the pad stays on its path. Moved apart, near full reach the elbow
+ * has far more to turn than the shoulder, and the pad sags until it catches up.
  */
-const step = (current: Joints, goal: Joints, delta: number): Joints => ({
-  yaw: approach(
-    current.yaw,
-    current.yaw + turn(current.yaw, goal.yaw),
-    SPEED.yaw * delta
-  ),
-  shoulder: approach(current.shoulder, goal.shoulder, SPEED.joint * delta),
-  elbow: approach(current.elbow, goal.elbow, SPEED.joint * delta),
-  wrist: approach(current.wrist, goal.wrist, SPEED.joint * delta),
-  roll: approach(current.roll, goal.roll, SPEED.joint * delta),
-  grip: approach(current.grip, goal.grip, SPEED.grip * delta),
-});
+const step = (current: Joints, goal: Joints, delta: number): Joints => {
+  const limb = (['shoulder', 'elbow', 'wrist'] as const).map(
+    (joint) => goal[joint] - current[joint]
+  );
+  const share = Math.min(
+    1,
+    (SPEED.joint * delta) / Math.max(...limb.map(Math.abs), 1e-9)
+  );
+
+  return {
+    yaw: approach(
+      current.yaw,
+      current.yaw + shortest(current.yaw, goal.yaw),
+      SPEED.yaw * delta
+    ),
+    shoulder: current.shoulder + limb[0] * share,
+    elbow: current.elbow + limb[1] * share,
+    wrist: current.wrist + limb[2] * share,
+    roll: approach(current.roll, goal.roll, SPEED.joint * delta),
+    grip: approach(current.grip, goal.grip, SPEED.grip * delta),
+  };
+};
 
 /**
  * Where the arm rests: the pad up and in front of the base, clear of the
@@ -133,5 +154,5 @@ const step = (current: Joints, goal: Joints, delta: number): Joints => ({
  */
 const HOME = solve(REST, 0, 0);
 
-export { HOME, bearing, ceiling, forward, solve, step };
+export { HOME, bearing, ceiling, forward, solve, step, turn };
 export type { Joints, Point };

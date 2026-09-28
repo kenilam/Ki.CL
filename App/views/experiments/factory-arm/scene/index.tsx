@@ -15,6 +15,7 @@ import { Camera } from './camera';
 import { Boxes } from './boxes';
 import { Conveyor } from './conveyor';
 import { Drop } from './drop';
+import { Engine } from './engine';
 import { Floor } from './floor';
 import { Grasp } from './grasp';
 import { Notice } from './notice';
@@ -24,6 +25,9 @@ import { Sensing } from './sensors';
 
 // Constants
 import { BUFFER, INCOMING } from './constants';
+
+/** `?classic` in the address runs the first engine, kept to compare against. */
+const CLASSIC = new URLSearchParams(window.location.search).has('classic');
 
 const Scene: React.FunctionComponent = () => {
   const { stacks } = useFactoryArmContext();
@@ -84,11 +88,11 @@ const Scene: React.FunctionComponent = () => {
           ))}
           <Pallet position={BUFFER.position} />
           <Conveyor />
-          <Boxes />
+          {CLASSIC ? <Boxes /> : <Engine />}
           <Obstacles />
           <Drop />
           <Sensing />
-          <Grasp />
+          {CLASSIC && <Grasp />}
         </Physics>
       </Suspense>
 

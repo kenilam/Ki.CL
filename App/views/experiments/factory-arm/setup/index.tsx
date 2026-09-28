@@ -2,6 +2,7 @@ import React, {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -13,28 +14,15 @@ import type { Shape } from '@/views/experiments/factory-arm/scene/obstacles/cons
 
 // Partials
 import { PRESETS } from './presets';
-import { useSaved } from './store';
+import { last, log as kept, useSaved } from './store';
 
 // Spec
-import type { Preset, Setup } from './spec';
+import type { Entry, Preset, Setup } from './spec';
 
 type Tab = 'preset' | 'manual' | 'log';
 
-/**
- * One step in the log: what happened, when (milliseconds since the page
- * loaded), and how it went, which colours its dot.
- */
-type Entry = {
-  id: number;
-  at: number;
-  /** Which run it happened in; the log groups by it. */
-  run: number;
-  level?: 'confirm' | 'error' | 'info' | 'warning';
-  text: string;
-};
-
-/** How many steps the log keeps; the oldest go first. */
-const LIMIT = 300;
+/** How many steps the log keeps, across runs and visits; the oldest go first. */
+const LIMIT = 1000;
 
 /** How the stacks are built, as the Manual tab edits them before a run. */
 type Draft = Pick<Setup, 'pile' | 'stacks'>;
@@ -54,13 +42,15 @@ type Cell = {
 type Value = {
   /** Every step the cell took, newest first. */
   log: Entry[];
-  note: (text: string, level?: Entry['level']) => void;
+  /** Logs a step; `start` marks the one that started its run. */
+  note: (text: string, level?: Entry['level'], start?: boolean) => void;
   clearLog: () => void;
   cell: React.RefObject<Cell | null>;
   attach: (cell: Cell | null) => void;
   /** Whether the running cell has changed since it was built or saved. */
   edited: boolean;
-  setEdited: (edited: boolean) => void;
+  /** Marks the cell edited, with its obstacles now standing at `obstacles`. */
+  edit: (obstacles: Solid[]) => void;
   /** What the running cell was built from. */
   applied: Setup;
   /** Counts runs; the cell is built again whenever it goes up. */
@@ -101,32 +91,45 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
 }) => {
   const { discard: drop, save: keep, saved } = useSaved();
 
-  const [applied, setApplied] = useState<Setup>(FIRST);
+  // The page opens on the last run, as it was left, or on the first preset.
+  const [previous] = useState(last.read);
+  const [applied, setApplied] = useState<Setup>(previous?.setup ?? FIRST);
   const [run, setRun] = useState(0);
   const [draft, setDraft] = useState<Draft>({
-    pile: FIRST.pile,
-    stacks: FIRST.stacks,
+    pile: applied.pile,
+    stacks: applied.stacks,
   });
-  const [active, setActive] = useState<string | null>(FIRST.id);
-  const [edited, setEdited] = useState(false);
-  const [log, setLog] = useState<Entry[]>([]);
-  const counted = useRef(0);
+  const [active, setActive] = useState<string | null>(
+    previous ? previous.active : FIRST.id
+  );
+  const [edited, setEdited] = useState(previous?.edited ?? false);
+  // Earlier visits' runs come back from this browser; this visit's carry on from them.
+  const [log, setLog] = useState<Entry[]>(kept.read);
+  const counted = useRef(Math.max(0, ...log.map(({ id }) => id)));
   // The run a step belongs to, read as it's logged rather than when `note` was made.
-  const current = useRef(0);
+  const current = useRef(
+    log.length ? Math.max(...log.map(({ run }) => run)) + 1 : 0
+  );
 
-  const note = useCallback((text: string, level?: Entry['level']) => {
-    counted.current += 1;
+  useEffect(() => kept.write(log), [log]);
 
-    const entry = {
-      at: performance.now(),
-      id: counted.current,
-      level,
-      run: current.current,
-      text,
-    };
+  const note = useCallback(
+    (text: string, level?: Entry['level'], start?: boolean) => {
+      counted.current += 1;
 
-    setLog((current) => [entry, ...current].slice(0, LIMIT));
-  }, []);
+      const entry = {
+        at: Date.now(),
+        id: counted.current,
+        level,
+        run: current.current,
+        start,
+        text,
+      };
+
+      setLog((current) => [entry, ...current].slice(0, LIMIT));
+    },
+    []
+  );
 
   const clearLog = useCallback(() => setLog([]), []);
   const cell = useRef<Cell | null>(null);
@@ -141,18 +144,31 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
   const proceed = useCallback(
     (setup: Setup) => {
       // A setup made by hand carries no id; a preset does.
-      setActive('id' in setup ? (setup as Preset).id : null);
+      const id = 'id' in setup ? (setup as Preset).id : null;
+
+      setActive(id);
       setEdited(false);
+      last.write({ setup, active: id, edited: false });
       setApplied(setup);
       setDraft({ pile: setup.pile, stacks: setup.stacks });
       setRun((count) => count + 1);
       current.current += 1;
       note(
         `Started ${'name' in setup ? (setup as Preset).name : 'a manual setup'}`,
-        'info'
+        'info',
+        true
       );
     },
     [note]
+  );
+
+  // The obstacles as the operator left them, kept so the page opens on them again.
+  const edit = useCallback(
+    (obstacles: Solid[]) => {
+      setEdited(true);
+      last.write({ setup: { ...applied, obstacles }, active, edited: true });
+    },
+    [active, applied]
   );
 
   // A removed preset can't stay the active one.
@@ -170,8 +186,11 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
   const save = useCallback(
     (setup: Setup, name?: string) => {
       const id = `saved-${Date.now()}`;
+      const preset = { ...setup, id, name: name?.trim() || next };
 
-      keep({ ...setup, id, name: name?.trim() || next });
+      keep(preset);
+      setApplied(preset);
+      last.write({ setup: preset, active: id, edited: false });
       note(`Saved the cell as ${name?.trim() || next}`, 'info');
       setActive(id);
       setEdited(false);
@@ -199,7 +218,7 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
       open,
       save,
       setDraft,
-      setEdited,
+      edit,
       setOpen,
       setTab,
       tab,
@@ -211,6 +230,7 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
       active,
       applied,
       attach,
+      edit,
       edited,
       discard,
       draft,
@@ -238,5 +258,4 @@ const useSetup = () => {
 };
 
 export { SetupProvider, useSetup, WIDE };
-export type { Preset, Setup } from './spec';
-export type { Entry };
+export type { Entry, Preset, Setup } from './spec';

@@ -31,23 +31,32 @@ const Arm: React.FunctionComponent = () => {
   const elbow = useRef<THREE.Group>(null);
   const wrist = useRef<THREE.Group>(null);
 
-  Fiber.useFrame((_, delta) => {
-    // Capped so a frame after a hidden tab does not jump the arm.
-    const { facing, grip, target } = command.current;
-    const goal = solve(target, grip, facing);
-    const next = step(joints.current, goal, Math.min(delta, 0.1));
+  Fiber.useFrame(
+    (_, delta) => {
+      // Capped so a frame after a hidden tab does not jump the arm.
+      const { facing, grip, target } = command.current;
+      const goal = solve(target, grip, facing);
+      const next = step(joints.current, goal, Math.min(delta, 0.1));
 
-    write.joints(next);
+      write.joints(next);
 
-    if (!yaw.current || !shoulder.current || !elbow.current || !wrist.current) {
-      return;
-    }
+      if (
+        !yaw.current ||
+        !shoulder.current ||
+        !elbow.current ||
+        !wrist.current
+      ) {
+        return;
+      }
 
-    yaw.current.rotation.y = next.yaw;
-    shoulder.current.rotation.x = -next.shoulder;
-    elbow.current.rotation.x = next.elbow;
-    wrist.current.rotation.x = -next.wrist;
-  });
+      yaw.current.rotation.y = next.yaw;
+      shoulder.current.rotation.x = -next.shoulder;
+      elbow.current.rotation.x = next.elbow;
+      wrist.current.rotation.x = -next.wrist;
+    },
+    // First each frame, so whatever hangs from the pad reads where it is now.
+    -1
+  );
 
   return (
     <group>

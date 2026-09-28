@@ -5,7 +5,10 @@ import type { RapierRigidBody } from '@react-three/rapier';
 import { THREE } from '@/three';
 
 // Kinematics
-import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import {
+  type Point,
+  turn,
+} from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Spec
 import type { Box } from '@/views/experiments/factory-arm/scene/boxes/spec';
@@ -15,13 +18,6 @@ const REACH = 0.04;
 
 const euler = new THREE.Euler();
 const quaternion = new THREE.Quaternion();
-
-/** Turns a point about the vertical axis the way `rotation.y` does. */
-const turn = ({ x, y, z }: Point, angle: number): Point => ({
-  x: x * Math.cos(angle) + z * Math.sin(angle),
-  y,
-  z: -x * Math.sin(angle) + z * Math.cos(angle),
-});
 
 /** The heading of a body's rotation. Cases only ever turn about the vertical. */
 const heading = (rotation: THREE.QuaternionLike) =>

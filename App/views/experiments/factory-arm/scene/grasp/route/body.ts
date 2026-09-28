@@ -4,6 +4,7 @@ import {
   forward,
   type Joints,
   type Point,
+  turn,
 } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Frames
@@ -16,7 +17,6 @@ import {
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
 
 // Pad
-import { turn } from '@/views/experiments/factory-arm/scene/grasp/pad';
 
 // Rect
 import {
@@ -43,30 +43,41 @@ type Carried = { size: [number, number, number]; yaw: number; offset: Point };
 /** A segment with a radius around it. */
 type Capsule = { from: Point; to: Point; radius: number };
 
-const distance = (point: Point, { min, max }: Solid) =>
-  Math.hypot(
-    Math.max(min.x - point.x, 0, point.x - max.x),
-    Math.max(min.y - point.y, 0, point.y - max.y),
-    Math.max(min.z - point.z, 0, point.z - max.z)
-  );
-
 const touches = (
   { from, to, radius }: Capsule,
-  solid: Solid,
+  { min, max }: Solid,
   margin: number
 ) => {
+  const reach = radius + margin;
+
+  // Nowhere near: the capsule's own box, grown by its reach, misses the solid.
+  if (
+    Math.min(from.x, to.x) - reach > max.x ||
+    Math.max(from.x, to.x) + reach < min.x ||
+    Math.min(from.y, to.y) - reach > max.y ||
+    Math.max(from.y, to.y) + reach < min.y ||
+    Math.min(from.z, to.z) - reach > max.z ||
+    Math.max(from.z, to.z) + reach < min.z
+  ) {
+    return false;
+  }
+
   const length = Math.hypot(to.x - from.x, to.y - from.y, to.z - from.z);
   const count = Math.max(1, Math.ceil(length / SAMPLE));
 
   for (let index = 0; index <= count; index++) {
     const share = index / count;
-    const point = {
-      x: from.x + (to.x - from.x) * share,
-      y: from.y + (to.y - from.y) * share,
-      z: from.z + (to.z - from.z) * share,
-    };
+    const x = from.x + (to.x - from.x) * share;
+    const y = from.y + (to.y - from.y) * share;
+    const z = from.z + (to.z - from.z) * share;
 
-    if (distance(point, solid) < radius + margin) {
+    if (
+      Math.hypot(
+        Math.max(min.x - x, 0, x - max.x),
+        Math.max(min.y - y, 0, y - max.y),
+        Math.max(min.z - z, 0, z - max.z)
+      ) < reach
+    ) {
       return true;
     }
   }
@@ -95,12 +106,6 @@ const meets = (
     -margin
   );
 
-/**
- * Whether the arm, posed at `joints` and carrying `carried`, would come
- * within `margin` of any of `solids`. The upper arm, the elbow housing and
- * the forearm are capsules; the gripper and the case under it are upright
- * boxes turned with the pad, since the hand always points straight down.
- */
 /** The upper arm, the elbow housing and the forearm, as capsules at `joints`. */
 const links = (joints: Joints): Capsule[] => {
   const { fore, upper } = frames(joints);
@@ -129,16 +134,13 @@ const grazes = (joints: Joints, solids: Solid[], margin = MARGIN) => {
   );
 };
 
-const collides = (
+/** The solids near the arm at `joints`, and a test of whether it meets one. */
+const posed = (
   joints: Joints,
   carried: Carried | undefined,
   solids: Solid[],
-  margin = MARGIN
+  margin: number
 ) => {
-  if (!solids.length) {
-    return false;
-  }
-
   const pad = forward(joints);
   const facing = bearing(joints);
   const capsules = links(joints);
@@ -194,15 +196,52 @@ const collides = (
       max.z > bounds.min.z
   );
 
-  return near.some(
-    (solid) =>
-      capsules.some((capsule) => touches(capsule, solid, margin)) ||
-      meets(gripper, pad.y, top, solid, margin) ||
-      (!!load &&
-        !!carried &&
-        meets(load, pad.y - carried.size[1], pad.y, solid, margin))
-  );
+  const meet = (solid: Solid) =>
+    capsules.some((capsule) => touches(capsule, solid, margin)) ||
+    meets(gripper, pad.y, top, solid, margin) ||
+    (!!load &&
+      !!carried &&
+      meets(load, pad.y - carried.size[1], pad.y, solid, margin));
+
+  return { meet, near };
 };
 
-export { collides, grazes };
+/**
+ * Whether the arm, posed at `joints` and carrying `carried`, would come
+ * within `margin` of any of `solids`. The upper arm, the elbow housing and
+ * the forearm are capsules; the gripper and the case under it are upright
+ * boxes turned with the pad, since the hand always points straight down.
+ */
+const collides = (
+  joints: Joints,
+  carried: Carried | undefined,
+  solids: Solid[],
+  margin = MARGIN
+) => {
+  if (!solids.length) {
+    return false;
+  }
+
+  const { meet, near } = posed(joints, carried, solids, margin);
+
+  return near.some(meet);
+};
+
+/** Which of `solids` the arm, posed at `joints` and carrying `carried`, comes within `margin` of. */
+const hitting = (
+  joints: Joints,
+  carried: Carried | undefined,
+  solids: Solid[],
+  margin = MARGIN
+) => {
+  if (!solids.length) {
+    return [];
+  }
+
+  const { meet, near } = posed(joints, carried, solids, margin);
+
+  return near.filter(meet);
+};
+
+export { collides, grazes, hitting };
 export type { Carried };
