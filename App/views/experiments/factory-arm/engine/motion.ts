@@ -7,12 +7,7 @@ import {
 } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Arm geometry
-import {
-  type Carried,
-  collides,
-  grazes,
-  hitting,
-} from '@/views/experiments/factory-arm/scene/grasp/route/body';
+import { type Carried, collides, grazes, hitting } from './body';
 
 // Spec
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
@@ -49,6 +44,46 @@ type Waypoint = {
   facing: number;
   ease: 'arrive' | 'leave' | 'swing';
   action?: 'pick' | 'place';
+};
+
+/**
+ * Straight-line speeds in metres per second, and the distance from contact
+ * over which the pad eases between them. `swing` is the speed between.
+ */
+const LINE = { fast: 1, near: 0.25, slow: 0.06, swing: 0.9 };
+
+/**
+ * How fast to move along a straight line, given how far the pad has come and
+ * how far there is to go. Contact is at the end when arriving and at the
+ * start when leaving; within `LINE.near` of it the speed eases down to
+ * `LINE.slow`, so the pad meets a case gently and lifts it out gently.
+ */
+const speed = (
+  ease: Waypoint['ease'],
+  travelled: number,
+  remaining: number
+) => {
+  if (ease === 'swing') {
+    return LINE.swing;
+  }
+
+  const gap = ease === 'arrive' ? remaining : travelled;
+  const share = Math.min(1, Math.max(0, gap / LINE.near));
+  const smooth = share * share * (3 - 2 * share);
+
+  return LINE.slow + (LINE.fast - LINE.slow) * smooth;
+};
+
+/** The point `distance` along the line from `from` to `to`, stopping at `to`. */
+const along = (from: Point, to: Point, distance: number): Point => {
+  const length = Math.hypot(to.x - from.x, to.y - from.y, to.z - from.z);
+  const share = length ? Math.min(1, distance / length) : 1;
+
+  return {
+    x: from.x + (to.x - from.x) * share,
+    y: from.y + (to.y - from.y) * share,
+    z: from.z + (to.z - from.z) * share,
+  };
 };
 
 /** What a move is checked against: obstacles, and the cases on the pallets. */
@@ -391,10 +426,12 @@ const transfer = (
 
 export {
   CLEARANCE,
+  along,
   arc,
   follows,
   line,
   reaches,
+  speed,
   transfer,
   type Surroundings,
   type Waypoint,

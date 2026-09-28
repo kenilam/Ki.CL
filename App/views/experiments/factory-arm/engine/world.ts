@@ -2,7 +2,7 @@
 import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Spec
-import type { Box } from '@/views/experiments/factory-arm/scene/boxes/spec';
+import type { Box } from '@/views/experiments/factory-arm/scene/pallet/spec';
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
 import type { Case, Extent, World } from './spec';
 

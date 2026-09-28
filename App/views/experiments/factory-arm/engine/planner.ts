@@ -5,11 +5,7 @@ import {
 } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Arm geometry
-import {
-  type Carried,
-  collides,
-  grazes,
-} from '@/views/experiments/factory-arm/scene/grasp/route/body';
+import { type Carried, collides, grazes } from './body';
 
 // Constants
 import { CONVEYOR } from '@/views/experiments/factory-arm/scene/constants';

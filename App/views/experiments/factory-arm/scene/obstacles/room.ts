@@ -8,7 +8,7 @@ import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 import { BASE } from '@/views/experiments/factory-arm/scene/arm/constants';
 
 // Route
-import { collides } from '@/views/experiments/factory-arm/scene/grasp/route/body';
+import { collides } from '@/views/experiments/factory-arm/engine/body';
 
 // Spec
 import type { Solid } from './spec';

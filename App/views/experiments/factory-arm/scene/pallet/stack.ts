@@ -2,10 +2,7 @@
 import { random } from '@/views/experiments/factory-arm/random';
 
 // Spec
-import type {
-  Box,
-  Vector,
-} from '@/views/experiments/factory-arm/scene/boxes/spec';
+import type { Box, Vector } from './spec';
 
 // Constants
 import {

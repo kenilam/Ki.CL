@@ -20,7 +20,7 @@ import { world } from '@/views/experiments/factory-arm/engine/world';
 const Context = React.createContext<{ conductor: Conductor } | null>(null);
 
 /**
- * The new engine for one run: the conductor, which keeps the cell as it
+ * The engine for one run: the conductor, which keeps the cell as it
  * plans with it and the job the arm works through. Its plans are made in
  * two workers, off the page's thread: one for the plans the arm waits on,
  * one for trying refused cases again, so a slow refusal holds up neither

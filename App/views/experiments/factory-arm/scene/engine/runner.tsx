@@ -14,7 +14,7 @@ import {
 } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Arm geometry
-import { collides } from '@/views/experiments/factory-arm/scene/grasp/route/body';
+import { collides } from '@/views/experiments/factory-arm/engine/body';
 
 // Spec
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';

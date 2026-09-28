@@ -9,7 +9,7 @@ import { Runner } from './runner';
 import { EngineProvider } from './store';
 
 /**
- * The new engine: the cases, placed where it says, and the runner that plans
+ * The engine: the cases, placed where it says, and the runner that plans
  * and plays each job. One case blinks as the cell loads, to show cases can be
  * picked: a case on top at the front, on the side the camera starts from.
  */

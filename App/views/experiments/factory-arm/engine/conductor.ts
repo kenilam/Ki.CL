@@ -1,9 +1,6 @@
 // Kinematics
 import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
-// Motion
-import { along, speed } from '@/views/experiments/factory-arm/scene/grasp/plan';
-
 // Spec
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
 
@@ -11,7 +8,7 @@ import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec
 import { CONVEYOR } from '@/views/experiments/factory-arm/scene/constants';
 
 // Partials
-import type { Waypoint } from './motion';
+import { along, speed, type Waypoint } from './motion';
 import { clears, type Move, order, type Plan, type Refusal } from './planner';
 import type { Case, World } from './spec';
 import { over, place, remove } from './world';
@@ -585,10 +582,9 @@ const conduct = ({
       waypoint.target.y - from.y,
       waypoint.target.z - from.z
     );
-    const ease = waypoint.ease === 'swing' ? 'via' : waypoint.ease;
-
     leg.travelled +=
-      speed(ease, travelled, length - travelled) * Math.min(input.delta, 0.1);
+      speed(waypoint.ease, travelled, length - travelled) *
+      Math.min(input.delta, 0.1);
 
     const command = {
       target: along(from, waypoint.target, leg.travelled),

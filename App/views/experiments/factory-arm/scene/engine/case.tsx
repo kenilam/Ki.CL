@@ -20,7 +20,7 @@ import {
 } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 // Spec
-import type { Box } from '@/views/experiments/factory-arm/scene/boxes/spec';
+import type { Box } from '@/views/experiments/factory-arm/scene/pallet/spec';
 
 // Partials
 import { useEngine } from './store';

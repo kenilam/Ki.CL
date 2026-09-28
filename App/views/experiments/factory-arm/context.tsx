@@ -18,7 +18,7 @@ import { HOME, forward, type Joints, type Point } from './scene/arm/kinematics';
 import { stack } from './scene/pallet/stack';
 
 // Spec
-import type { Box } from './scene/boxes/spec';
+import type { Box } from './scene/pallet/spec';
 import type { Solid } from './scene/obstacles/spec';
 import type { Setup } from './setup/spec';
 import { useSetup } from './setup';
@@ -29,8 +29,7 @@ import { vision } from './scene/sensors/vision';
 
 /**
  * `command` is where the pad should go and whether to hold; `joints` is where
- * the arm actually is, which the twin will read. `queue` holds the moves the
- * operator's clicks asked for, in order; the one running stays at its head.
+ * the arm actually is, which the twin will read.
  *
  * `obstacles` are where the obstacles stand now; the operator can move them.
  * `known` holds the ones the overhead camera sees and the sensors have
@@ -39,8 +38,7 @@ import { vision } from './scene/sensors/vision';
  * the obstacles that were in the way, for the arm to try again once the cell
  * changes. `seeing` holds
  * the sensors with something in view right now, and `obstructing` when each
- * obstacle, or case, last stood in the way of a move. `struck` is a case the
- * carried case has just hit, for the arm to stop and plan again.
+ * obstacle last stood in the way of a move.
  *
  * These change every frame or every click, so they are refs read in the render
  * loop rather than state. `stopped` and `skipped` are state: the page shows them.
@@ -53,21 +51,10 @@ import { vision } from './scene/sensors/vision';
 /** `facing` is the heading to turn the pad to; without it the pad sits straight. */
 type Command = { target: Point; grip: number; facing?: number };
 
-/**
- * A case to move, and where to: the belt, or the buffer pallet out of the
- * way. `chain` is the case whose click asked for it, so the moves one click
- * asked for can be called off together.
- */
-type Job = { id: string; to: 'belt' | 'buffer'; chain: string };
-
-/** The case on the pad, and the offset and turn it was picked up with. */
-type Held = { id: string; offset: Point; yaw: number };
-
 type Body = { body: RapierRigidBody; box: Box };
 
 type Write = {
   command: (next: Command) => void;
-  held: (next: Held | null) => void;
   joints: (next: Joints) => void;
   /** Adds obstacles to what's known; `found` goes up once if any are new. */
   learn: (ids: string[]) => void;
@@ -87,8 +74,6 @@ type Write = {
   unpark: (chain: string) => void;
   /** Marks obstacles as in the way of a move, as of now. */
   obstruct: (ids: string[]) => void;
-  /** Records a case the carried case struck, or clears the record. */
-  strike: (id: string | null) => void;
   seeing: (next: Set<string>) => void;
   /** Tells whether the arm is working, for an engine that keeps its own jobs. */
   busy: (check: (() => boolean) | null) => void;
@@ -121,15 +106,12 @@ type Value = {
   selected: string | null;
   select: (id: string | null) => void;
   obstructing: React.RefObject<Map<string, number>>;
-  struck: React.RefObject<string | null>;
   seeing: React.RefObject<Set<string>>;
   stopped: boolean;
   bodies: React.RefObject<Map<string, Body>>;
   boxes: Box[];
   command: React.RefObject<Command>;
-  held: React.RefObject<Held | null>;
   joints: React.RefObject<Joints>;
-  queue: React.RefObject<Job[]>;
   remove: (id: string) => void;
 };
 
@@ -144,9 +126,7 @@ const FactoryArmProvider: React.FunctionComponent<
 > = ({ children, setup }) => {
   const bodies = useRef(new Map<string, Body>());
   const command = useRef<Command>({ target: forward(HOME), grip: 0 });
-  const held = useRef<Held | null>(null);
   const joints = useRef<Joints>(HOME);
-  const queue = useRef<Job[]>([]);
   const found = useRef(0);
   const obstacles = useRef(setup.obstacles);
   const asked = useRef<Shape[]>([]);
@@ -161,7 +141,6 @@ const FactoryArmProvider: React.FunctionComponent<
   // What the overhead camera sees is known before the arm moves.
   const known = useRef(new Set(vision(setup.obstacles)));
   const obstructing = useRef(new Map<string, number>());
-  const struck = useRef<string | null>(null);
   const seeing = useRef(new Set<string>());
 
   // One obstacle starts selected, so its arrows show that obstacles can be picked and moved.
@@ -186,9 +165,6 @@ const FactoryArmProvider: React.FunctionComponent<
     () => ({
       command: (next) => {
         command.current = next;
-      },
-      held: (next) => {
-        held.current = next;
       },
       joints: (next) => {
         joints.current = next;
@@ -251,13 +227,6 @@ const FactoryArmProvider: React.FunctionComponent<
       obstruct: (ids) => {
         ids.forEach((id) => obstructing.current.set(id, performance.now()));
       },
-      strike: (id) => {
-        struck.current = id;
-
-        if (id) {
-          obstructing.current.set(id, performance.now());
-        }
-      },
       seeing: (next) => {
         seeing.current = next;
       },
@@ -279,9 +248,7 @@ const FactoryArmProvider: React.FunctionComponent<
   useEffect(() => {
     attach({
       ask: write.ask,
-      busy: () =>
-        working.current?.() ??
-        (queue.current.length > 0 || held.current !== null),
+      busy: () => working.current?.() ?? false,
       obstacles,
     });
 
@@ -305,14 +272,12 @@ const FactoryArmProvider: React.FunctionComponent<
       boxes,
       command,
       found,
-      held,
       joints,
       known,
       moving,
       obstacles,
       parked,
       obstructing,
-      queue,
       remove,
       seeing,
       select,
@@ -322,7 +287,6 @@ const FactoryArmProvider: React.FunctionComponent<
       stacks: setup.stacks,
       standing,
       stopped,
-      struck,
       write,
     }),
     [
@@ -354,4 +318,4 @@ const useFactoryArmContext = () => {
 };
 
 export { FactoryArmProvider, useFactoryArmContext };
-export type { Command, Held, Job };
+export type { Command };

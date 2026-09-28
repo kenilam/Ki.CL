@@ -16,13 +16,8 @@ import {
 // Spec
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
 
-// Pad
-
 // Rect
-import {
-  overlap,
-  type Rect,
-} from '@/views/experiments/factory-arm/scene/grasp/rect';
+import { overlap, type Rect } from './rect';
 
 // Constants
 import {
