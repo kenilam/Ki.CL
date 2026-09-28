@@ -120,7 +120,7 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
 
 const Prompts: React.FunctionComponent = () => (
   <>
-    <Heading className={classNames('kicl-font-size-large')} is='h3'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Prompts I&apos;d use to steer a coding agent
     </Heading>
     <Text>

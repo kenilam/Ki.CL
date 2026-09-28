@@ -10,6 +10,9 @@ import React, {
   useState,
 } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import {
   useQuery,
   Kicl_TreeOfLifeSubtreeDocument,
@@ -89,12 +92,9 @@ const PosterTree: React.FunctionComponent<{
           return (
             <g
               key={`tip-${n.id}`}
-              className={[
-                `${CLASS_NAME}__tip`,
-                n.expandable ? `${CLASS_NAME}__tip--expandable` : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
+              className={classNames(`${CLASS_NAME}__tip`, {
+                [`${CLASS_NAME}__tip--expandable`]: n.expandable,
+              })}
               transform={`translate(${x}, ${y})`}
               onClick={(event) => {
                 if (!n.expandable) {
@@ -117,17 +117,27 @@ const PosterTree: React.FunctionComponent<{
           transform={`translate(${origin.position[0]}, ${origin.position[1]})`}
         >
           <ellipse
-            className={`${CLASS_NAME}__origin-halo kicl-fill-green`}
+            className={classNames(
+              `${CLASS_NAME}__origin-halo`,
+              'kicl-fill-green'
+            )}
             rx={origin.markerRadius * 2.2}
             ry={origin.markerRadius * 1.5}
           />
           <ellipse
-            className={`${CLASS_NAME}__origin-core kicl-fill-green`}
+            className='kicl-fill-green'
             rx={origin.markerRadius * 1.15}
             ry={origin.markerRadius * 0.85}
           />
           <text
-            className={`${CLASS_NAME}__origin-label kicl-font-family kicl-font-weight kicl-font-size-smallest kicl-fill-green`}
+            className={classNames(
+              `${CLASS_NAME}__origin-label`,
+              'kicl-pointer-events-none',
+              'kicl-font-family',
+              'kicl-font-weight',
+              'kicl-font-size-smallest',
+              'kicl-fill-green'
+            )}
             textAnchor='middle'
             y={origin.markerRadius * 3.2}
           >
@@ -147,7 +157,13 @@ const PosterTree: React.FunctionComponent<{
           return (
             <text
               key={`label-${n.id}`}
-              className={`${CLASS_NAME}__label kicl-font-family kicl-font-weight kicl-fill-grey-darker`}
+              className={classNames(
+                `${CLASS_NAME}__label`,
+                'kicl-pointer-events-none',
+                'kicl-font-family',
+                'kicl-font-weight',
+                'kicl-fill-grey-darker'
+              )}
               x={x}
               y={y - 5}
               textAnchor='middle'
@@ -238,7 +254,12 @@ const MapStage: React.FunctionComponent<{
 
   return (
     <svg
-      className={`${CLASS_NAME}__svg`}
+      className={classNames(
+        `${CLASS_NAME}__svg`,
+        'kicl-display-block',
+        'kicl-block-size-full',
+        'kicl-inline-size-full'
+      )}
       viewBox={`${-halfW} ${-halfH} ${viewport.width} ${viewport.height}`}
       onWheel={onWheel}
       onPointerDown={onPointerDown}
@@ -264,7 +285,7 @@ const MapStage: React.FunctionComponent<{
 };
 
 const Canvas: React.FunctionComponent = () => {
-  const stageRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLElement>(null);
   const [viewport, setViewport] = useState<ViewportSize>({
     width: 960,
     height: 640,
@@ -289,6 +310,9 @@ const Canvas: React.FunctionComponent = () => {
     setTree((current) => current ?? fromSubtreeNode(root));
   }, [data]);
 
+  // The stage is only there once the tree is, so it's measured again when it appears.
+  const staged = tree !== null;
+
   useEffect(() => {
     const el = stageRef.current;
     if (!el) {
@@ -307,7 +331,7 @@ const Canvas: React.FunctionComponent = () => {
     const observer = new ResizeObserver(update);
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [staged]);
 
   const onExpand = async (layoutNode: LayoutNode) => {
     if (expandingId) {
@@ -338,7 +362,13 @@ const Canvas: React.FunctionComponent = () => {
 
   if (error) {
     return (
-      <Text className={`${CLASS_NAME}__error kicl-color-error`}>
+      <Text
+        className={classNames(
+          'kicl-color-error',
+          'kicl-margin-block-wide',
+          'kicl-margin-inline-wide'
+        )}
+      >
         {error.message}
       </Text>
     );
@@ -353,21 +383,37 @@ const Canvas: React.FunctionComponent = () => {
   }
 
   return (
-    <div className={CLASS_NAME}>
-      <div className={`${CLASS_NAME}__stage`} ref={stageRef}>
-        <MapStage
-          tree={tree}
-          viewport={viewport}
-          expandingId={expandingId}
-          onExpand={onExpand}
-        />
-      </div>
+    <figure
+      className={classNames(
+        CLASS_NAME,
+        'kicl-block-size-screen',
+        'kicl-overflow-hidden',
+        'kicl-position-relative',
+        'kicl-touch-action-none',
+        'kicl-user-select-none'
+      )}
+      ref={stageRef}
+    >
+      <MapStage
+        tree={tree}
+        viewport={viewport}
+        expandingId={expandingId}
+        onExpand={onExpand}
+      />
       <Text
-        className={`${CLASS_NAME}__hint kicl-font-size-smaller kicl-color-grey-dark kicl-text-align-center`}
+        className={classNames(
+          `${CLASS_NAME}__hint`,
+          'kicl-position-absolute',
+          'kicl-inset-block-end',
+          'kicl-pointer-events-none',
+          'kicl-font-size-smaller',
+          'kicl-color-grey-dark',
+          'kicl-text-align-center'
+        )}
       >
         v13 · tip-first · fine branches · drag / zoom / click tips to expand
       </Text>
-    </div>
+    </figure>
   );
 };
 

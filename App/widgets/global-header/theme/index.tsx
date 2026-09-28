@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Button, Text } from '@/components';
 
@@ -25,7 +28,7 @@ const Theme: React.FunctionComponent = () => {
   return (
     <Button
       aria-pressed={isDark}
-      className={`kicl-font-size ${CLASS_NAME}`}
+      className={classNames('kicl-font-size', CLASS_NAME)}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       unstyled
     >

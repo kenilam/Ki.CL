@@ -1,0 +1,6 @@
+// The settings button opens the panel; it steps aside while the panel is open.
+.kicl--views--experiments--factory-arm__open:has(
+  ~ .kicl--views--experiments--factory-arm__panel:popover-open
+) {
+  display: none;
+}

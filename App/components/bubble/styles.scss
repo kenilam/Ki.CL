@@ -168,34 +168,22 @@
 .kicl--components--bubble__reactions {
   align-items: center;
   background-color: var(--kicl-surface-color);
-  border-radius: var(--kicl-size-2x);
   box-shadow: 0 0 0 var(--kicl-size-3px) var(--kicl-body-background-color);
   display: flex;
   gap: var(--kicl-gutter-narrowest);
   inline-size: fit-content;
   padding-block: var(--kicl-gutter-narrowest);
   padding-inline: var(--kicl-gutter-narrower);
-  z-index: 1;
 
   &:has(button) {
     padding: 0;
   }
 
   &--side--top {
-    inset-block-start: 0;
     translate: 0 -75%;
   }
 
   &--side--bottom {
-    inset-block-end: 0;
     translate: 0 75%;
-  }
-
-  &--align--start {
-    inset-inline-start: var(--kicl-gutter-narrow);
-  }
-
-  &--align--end {
-    inset-inline-end: var(--kicl-gutter-narrow);
   }
 }

@@ -23,7 +23,7 @@ const SelectValue: React.FunctionComponent<SelectValueProps> = ({
 }) =>
   React.createElement('selectedcontent', {
     'data-slot': 'select-value',
-    className: classNames(CLASS_NAME, className),
+    className: classNames(CLASS_NAME, 'kicl-text-nowrap', className),
     ...rest,
   });
 

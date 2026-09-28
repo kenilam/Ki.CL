@@ -27,7 +27,7 @@ import './styles.scss';
 const SystemDesign: React.FunctionComponent = () => {
   return (
     <Animation delay={300}>
-      <article className={`${CLASS_NAME} kicl-inline-size-full`}>
+      <article className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
         <ScrollIndicator />
         <Hero />
         <AnchorNav />

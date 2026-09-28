@@ -60,46 +60,37 @@ const Status: React.FunctionComponent<Spec.Props> = ({
   const Title = <Text is='span'>{heading || TITLES.error}</Text>;
 
   const Messages = message ? (
-    <Text className='kicl-font-size-small kicl-color-grey-dark' is='p'>
+    <Text className={classNames('kicl-font-size-small', 'kicl-color-grey-dark')} is='p'>
       {message}
     </Text>
   ) : null;
 
   return (
     <Animation {...rest} property={property} in={transitionIn}>
-      <Layout
-        alignContent={align}
-        alignItems='center'
-        autoFlow='row'
-        gap='narrower'
-        justifyContent='center'
-        justifyItems='start'
+      <div
+        className={className}
+        role={level === 'error' ? 'alert' : 'status'}
       >
-        <div
-          className={className}
-          role={level === 'error' ? 'alert' : 'status'}
+        <Layout
+          alignContent='center'
+          alignItems='center'
+          autoFlow='column'
+          gap='narrow'
+          justifyContent={align}
+          justifyItems={align}
         >
-          <Layout
-            alignContent='center'
-            alignItems='center'
-            autoFlow='column'
-            gap='narrow'
-            justifyContent={align}
-            justifyItems={align}
+          <Heading
+            className={level ? `kicl-color-${level}` : undefined}
+            dense
+            is={headingLevel}
+            lookLike='h4'
           >
-            <Heading
-              className={level ? `kicl-color-${level}` : undefined}
-              dense
-              is={headingLevel}
-              lookLike='h4'
-            >
-              {Icon}
-              {Title}
-            </Heading>
-          </Layout>
-          {Messages}
-        </div>
-      </Layout>
+            {Icon}
+            {Title}
+          </Heading>
+        </Layout>
+        {Messages}
+      </div>
     </Animation>
   );
 };

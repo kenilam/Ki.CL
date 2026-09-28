@@ -30,7 +30,10 @@ const Trigger: React.FunctionComponent<DatePickerTriggerProps> = (props) => {
       className={classNames(
         'kicl--components--input',
         `${DATE_PICKER}__trigger`,
-        'kicl-font-size-small'
+        'kicl-display-inline-flex',
+        'kicl-font-size-small',
+        'kicl-inline-size-full',
+        'kicl-text-align-start'
       )}
     >
       <Ri.RiCalendarLine className={`${DATE_PICKER}__icon`} aria-hidden />

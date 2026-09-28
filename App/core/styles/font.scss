@@ -147,3 +147,12 @@
 @include make-variable-class('line-height');
 @include make-variable-class('line-height', 'wide');
 @include make-variable-class('line-height', 'dense');
+
+// How lines break: `balance` evens out short headings, `pretty` avoids a lone last word.
+:root {
+  --kicl-text-wrap-balance: balance;
+  --kicl-text-wrap-pretty: pretty;
+}
+
+@include make-variable-class('text-wrap', 'balance');
+@include make-variable-class('text-wrap', 'pretty');

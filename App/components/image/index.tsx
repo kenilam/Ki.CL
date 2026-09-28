@@ -66,11 +66,22 @@ const Image: React.FunctionComponent<Spec.Props> = ({
 
   return (
     <span {...props} className={className}>
+      {/*
+       * The picture fills the box the component was given, rather than
+       * setting it. `object-fit` is inert until the box has a definite height;
+       * a percentage against an indefinite height still resolves to `auto`,
+       * so an image left to its natural ratio is unaffected.
+       */}
       {!hasError && (
         <img
-          className={classNames({
-            [`kicl-border-radius-${borderRadius}`]: borderRadius,
-          })}
+          className={classNames(
+            'kicl-block-size-full',
+            'kicl-display-block',
+            'kicl-inline-size-full',
+            {
+              [`kicl-border-radius-${borderRadius}`]: borderRadius,
+            }
+          )}
           src={data}
           alt={alt}
           loading={loading}

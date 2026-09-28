@@ -15,6 +15,9 @@ import React, {
   useState,
 } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import {
   useQuery,
   Kicl_TreeOfLifeSubtreeDocument,
@@ -43,6 +46,7 @@ import {
   FormMessage,
   Input,
   Layout,
+  List,
   Spinner,
   Switch,
   SwitchLabel,
@@ -537,35 +541,58 @@ const MapStage: React.FunctionComponent<{
         blowGustRef={blowGustRef}
       />
 
-      <div className={`${CLASS_NAME}__toolbar kicl-position-fixed`}>
-        <Spinner
-          size='small'
-          in={networkBusy}
-          position='inline'
-          hasBackdrop={false}
-          className={`${CLASS_NAME}__status kicl-color-grey-darker`}
-        />
-        <Switch
-          size='sm'
-          checked={autoMode}
-          onCheckedChange={onAutoModeChange}
-          title='Keep growing expandable tips automatically'
-        >
-          <SwitchLabel>Grow</SwitchLabel>
-        </Switch>
-        <Button
-          ref={windButtonRef}
-          unstyled
-          type='button'
-          className={`${CLASS_NAME}__wind-blow kicl-color-grey-dark`}
-          aria-label='Force a strong gust of wind'
-          aria-pressed={false}
-          title='Force a gust'
-          onClick={blowGust}
-        >
-          <Ri.RiWindyLine aria-hidden />
-        </Button>
-      </div>
+      <Layout
+        alignItems='center'
+        display='flex'
+        gap='narrow'
+        className={classNames(
+          `${CLASS_NAME}__toolbar`,
+          'kicl-position-fixed',
+          'kicl-inset-inline-end-wide',
+          'kicl-pointer-events-auto'
+        )}
+      >
+        <section aria-label='Map controls'>
+          <Spinner
+            size='small'
+            in={networkBusy}
+            position='inline'
+            hasBackdrop={false}
+            className={classNames(
+              `${CLASS_NAME}__status`,
+              'kicl-pointer-events-none',
+              'kicl-z-index-floating',
+              'kicl-color-grey-darker'
+            )}
+          />
+          <Switch
+            size='sm'
+            checked={autoMode}
+            onCheckedChange={onAutoModeChange}
+            title='Keep growing expandable tips automatically'
+          >
+            <SwitchLabel>Grow</SwitchLabel>
+          </Switch>
+          <Button
+            ref={windButtonRef}
+            unstyled
+            type='button'
+            className={classNames(
+              `${CLASS_NAME}__wind-blow`,
+              'kicl-cursor-pointer',
+              'kicl-padding-block-narrowest',
+              'kicl-padding-inline-narrowest',
+              'kicl-color-grey-dark'
+            )}
+            aria-label='Force a strong gust of wind'
+            aria-pressed={false}
+            title='Force a gust'
+            onClick={blowGust}
+          >
+            <Ri.RiWindyLine aria-hidden />
+          </Button>
+        </section>
+      </Layout>
     </>
   );
 };
@@ -577,7 +604,7 @@ const sleep = (ms: number) =>
 
 const Canvas: React.FunctionComponent = () => {
   const ref = {
-    root: useRef<HTMLDivElement>(null),
+    root: useRef<HTMLElement>(null),
     expandingIds: useRef<Set<string>>(new Set()),
     layout: useRef<LayoutResult | null>(null),
     layoutWaiters: useRef<Array<() => void>>([]),
@@ -1034,9 +1061,20 @@ const Canvas: React.FunctionComponent = () => {
   if (error) {
     return (
       <Layout fullScreen>
-        <div className={`${CLASS_NAME} kicl-position-relative`}>
+        <section
+          aria-label='Tree of Life'
+          className={classNames(
+            CLASS_NAME,
+            'kicl-block-size-screen',
+            'kicl-overflow-hidden',
+            'kicl-overscroll-behavior-none',
+            'kicl-position-relative',
+            'kicl-touch-action-none',
+            'kicl-user-select-none'
+          )}
+        >
           <Text className='kicl-color-error'>{error.message}</Text>
-        </div>
+        </section>
       </Layout>
     );
   }
@@ -1044,9 +1082,20 @@ const Canvas: React.FunctionComponent = () => {
   if (loading && !tree) {
     return (
       <Layout fullScreen>
-        <div className={`${CLASS_NAME} kicl-position-relative`}>
+        <section
+          aria-label='Tree of Life'
+          className={classNames(
+            CLASS_NAME,
+            'kicl-block-size-screen',
+            'kicl-overflow-hidden',
+            'kicl-overscroll-behavior-none',
+            'kicl-position-relative',
+            'kicl-touch-action-none',
+            'kicl-user-select-none'
+          )}
+        >
           <Spinner position='inline' />
-        </div>
+        </section>
       </Layout>
     );
   }
@@ -1059,7 +1108,19 @@ const Canvas: React.FunctionComponent = () => {
 
   return (
     <Layout fullScreen>
-      <div className={`${CLASS_NAME} kicl-position-relative`} ref={ref.root}>
+      <section
+        aria-label='Tree of Life'
+        className={classNames(
+          CLASS_NAME,
+          'kicl-block-size-screen',
+          'kicl-overflow-hidden',
+          'kicl-overscroll-behavior-none',
+          'kicl-position-relative',
+          'kicl-touch-action-none',
+          'kicl-user-select-none'
+        )}
+        ref={ref.root}
+      >
         <MapStage
           tree={tree}
           viewport={viewport}
@@ -1080,164 +1141,212 @@ const Canvas: React.FunctionComponent = () => {
           networkBusy={networkBusy}
         />
 
-        <Form {...form}>
-          <Layout gap='none' justifyContent='start' alignItems='start'>
-            <div className={`${CLASS_NAME}__panel-slot kicl-position-fixed`}>
-              <Layout gap='narrow' justifyContent='start' alignItems='stretch'>
-                <div className={`${CLASS_NAME}__panel-stack`}>
-                  <Card
-                    is='aside'
-                    className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
-                  >
-                    <CardContent>
-                      <FormField
-                        control={form.control}
-                        name='query'
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Search</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                type='search'
-                                list={`${CLASS_NAME}-search-list`}
-                                placeholder='Find a named node…'
-                                autoComplete='off'
-                                onChange={(event) => {
-                                  field.onChange(event);
-                                  onSearchChange(event.target.value);
-                                }}
-                              />
-                            </FormControl>
-                            <datalist id={`${CLASS_NAME}-search-list`}>
-                              {namedNodes.map((item) => (
-                                <option key={item.id} value={item.label} />
-                              ))}
-                            </datalist>
-                            <FormDescription>
-                              {namedNodes.length} in total
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </CardContent>
-                  </Card>
-
-                  {selectedLayoutNode ? (
-                    <Card
-                      is='aside'
-                      aria-live='polite'
-                      className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
-                    >
-                      <CardHeader>
-                        {displayRank(selectedLayoutNode.node.rank) ||
-                        isTerminalRank(selectedLayoutNode.node.rank) ||
-                        selectedLayoutNode.node.ottId != null ? (
-                          <Layout
-                            display='inline-grid'
-                            gap='narrow'
-                            autoFlow='column'
-                            alignItems='center'
-                            justifyContent='start'
-                          >
-                            <div>
-                              {displayRank(selectedLayoutNode.node.rank) ? (
-                                <Badge
-                                  variant='outline'
-                                  className='kicl-font-size-smaller kicl-text-transform-lowercase'
-                                >
-                                  <BadgeLabel>Rank</BadgeLabel>
-                                  {displayRank(selectedLayoutNode.node.rank)}
-                                </Badge>
-                              ) : null}
-                              {isTerminalRank(selectedLayoutNode.node.rank) ? (
-                                <Badge
-                                  variant='secondary'
-                                  className='kicl-font-size-smaller kicl-text-transform-lowercase'
-                                >
-                                  terminal
-                                </Badge>
-                              ) : null}
-                              {selectedLayoutNode.node.ottId != null ? (
-                                <Badge
-                                  variant='outline'
-                                  className='kicl-font-size-smaller'
-                                >
-                                  <BadgeLabel>OTT ID</BadgeLabel>
-                                  {selectedLayoutNode.node.ottId}
-                                </Badge>
-                              ) : null}
-                            </div>
-                          </Layout>
-                        ) : null}
-                        <CardAction>
-                          <Button
-                            unstyled
-                            type='button'
-                            aria-label='Close panel'
-                            title='Close'
-                            className='kicl-color-grey-dark'
-                            onClick={onControlsReset}
-                          >
-                            <Ri.RiCloseLine aria-hidden />
-                          </Button>
-                        </CardAction>
-                      </CardHeader>
-                      <CardContent>
-                        <Layout gap='narrow'>
-                          <div>
-                            <Details
-                              className='kicl-color-grey-dark'
-                              open={detailOpen}
-                              onToggle={(event) => {
-                                setDetailOpen(event.currentTarget.open);
+        <Layout gap='none' justifyContent='start' alignItems='start'>
+          <aside
+            aria-label='Search and details'
+            className={classNames(
+              `${CLASS_NAME}__panel-slot`,
+              'kicl-position-fixed',
+              'kicl-inset-inline',
+              'kicl-inset-block-end-widest',
+              'kicl-pointer-events-none',
+              'kicl-z-index-floating'
+            )}
+          >
+            <Layout gap='narrow' justifyContent='start' alignItems='stretch'>
+              <Form
+                {...form}
+                className={classNames(
+                  `${CLASS_NAME}__panel-stack`,
+                  'kicl-overflow-auto',
+                  'kicl-overscroll-behavior-contain',
+                  'kicl-pointer-events-auto'
+                )}
+              >
+                <Card
+                  is='section'
+                  aria-label='Search'
+                  className={classNames(
+                    `${CLASS_NAME}__panel`,
+                    'kicl-pointer-events-auto',
+                    'kicl-inline-size-xxl',
+                    'kicl-user-select-text'
+                  )}
+                >
+                  <CardContent>
+                    <FormField
+                      control={form.control}
+                      name='query'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Search</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type='search'
+                              list={`${CLASS_NAME}-search-list`}
+                              placeholder='Find a named node…'
+                              autoComplete='off'
+                              onChange={(event) => {
+                                field.onChange(event);
+                                onSearchChange(event.target.value);
                               }}
-                              summary={
-                                <CardTitle
-                                  is='h2'
-                                  className='kicl-font-size kicl-color-grey-darker'
-                                >
-                                  {selectedLayoutNode.isOrigin
-                                    ? 'Origin of life'
-                                    : labelFor(selectedLayoutNode.node) ||
-                                      'Unnamed node'}
-                                </CardTitle>
-                              }
+                            />
+                          </FormControl>
+                          <datalist id={`${CLASS_NAME}-search-list`}>
+                            {namedNodes.map((item) => (
+                              <option key={item.id} value={item.label} />
+                            ))}
+                          </datalist>
+                          <FormDescription>
+                            {namedNodes.length} in total
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </CardContent>
+                </Card>
+
+                {selectedLayoutNode ? (
+                  <Card
+                    is='section'
+                    aria-live='polite'
+                    className={classNames(
+                      `${CLASS_NAME}__panel`,
+                      'kicl-pointer-events-auto',
+                      'kicl-inline-size-xxl',
+                      'kicl-user-select-text'
+                    )}
+                  >
+                    <CardHeader>
+                      {displayRank(selectedLayoutNode.node.rank) ||
+                      isTerminalRank(selectedLayoutNode.node.rank) ||
+                      selectedLayoutNode.node.ottId != null ? (
+                        <List
+                          display='inline-grid'
+                          gap='narrow'
+                          autoFlow='column'
+                          alignItems='center'
+                          justifyContent='start'
+                        >
+                          {displayRank(selectedLayoutNode.node.rank) ? (
+                            <Badge
+                              is='li'
+                              variant='outline'
+                              className={classNames(
+                                'kicl-font-size-smaller',
+                                'kicl-text-transform-lowercase'
+                              )}
                             >
-                              <TaxonVisualPanel
-                                node={selectedLayoutNode.node}
-                                isOrigin={selectedLayoutNode.isOrigin}
-                                onSubtree={onStudioSubtree}
-                              />
-                            </Details>
-                            {selectedLayoutNode.node.description?.trim() ? (
-                              <Text
-                                dense
-                                is='p'
-                                className='kicl-font-size-small kicl-color-grey-dark kicl-line-height-narrow'
-                              >
-                                {selectedLayoutNode.node.description.trim()}
-                              </Text>
-                            ) : null}
-                          </div>
-                        </Layout>
+                              <BadgeLabel>Rank</BadgeLabel>
+                              {displayRank(selectedLayoutNode.node.rank)}
+                            </Badge>
+                          ) : null}
+                          {isTerminalRank(selectedLayoutNode.node.rank) ? (
+                            <Badge
+                              is='li'
+                              variant='secondary'
+                              className={classNames(
+                                'kicl-font-size-smaller',
+                                'kicl-text-transform-lowercase'
+                              )}
+                            >
+                              terminal
+                            </Badge>
+                          ) : null}
+                          {selectedLayoutNode.node.ottId != null ? (
+                            <Badge
+                              is='li'
+                              variant='outline'
+                              className='kicl-font-size-smaller'
+                            >
+                              <BadgeLabel>OTT ID</BadgeLabel>
+                              {selectedLayoutNode.node.ottId}
+                            </Badge>
+                          ) : null}
+                        </List>
+                      ) : null}
+                      <CardAction>
+                        <Button
+                          unstyled
+                          type='button'
+                          aria-label='Close panel'
+                          title='Close'
+                          className='kicl-color-grey-dark'
+                          onClick={onControlsReset}
+                        >
+                          <Ri.RiCloseLine aria-hidden />
+                        </Button>
+                      </CardAction>
+                    </CardHeader>
+                    <Layout gap='narrow'>
+                      <CardContent>
+                        <Details
+                          className='kicl-color-grey-dark'
+                          open={detailOpen}
+                          onToggle={(event) => {
+                            setDetailOpen(event.currentTarget.open);
+                          }}
+                          summary={
+                            <CardTitle
+                              is='h2'
+                              className={classNames(
+                                'kicl-font-size',
+                                'kicl-color-grey-darker'
+                              )}
+                            >
+                              {selectedLayoutNode.isOrigin
+                                ? 'Origin of life'
+                                : labelFor(selectedLayoutNode.node) ||
+                                  'Unnamed node'}
+                            </CardTitle>
+                          }
+                        >
+                          <TaxonVisualPanel
+                            node={selectedLayoutNode.node}
+                            isOrigin={selectedLayoutNode.isOrigin}
+                            onSubtree={onStudioSubtree}
+                          />
+                        </Details>
+                        {selectedLayoutNode.node.description?.trim() ? (
+                          <Text
+                            dense
+                            is='p'
+                            className={classNames(
+                              'kicl-font-size-small',
+                              'kicl-color-grey-dark',
+                              'kicl-line-height-narrow'
+                            )}
+                          >
+                            {selectedLayoutNode.node.description.trim()}
+                          </Text>
+                        ) : null}
                       </CardContent>
-                    </Card>
-                  ) : null}
-                </div>
-              </Layout>
-            </div>
-          </Layout>
-        </Form>
+                    </Layout>
+                  </Card>
+                ) : null}
+              </Form>
+            </Layout>
+          </aside>
+        </Layout>
 
         <Badge
           variant='outline'
-          className={`${CLASS_NAME}__credit kicl-position-fixed kicl-font-size-smaller`}
+          className={classNames(
+            `${CLASS_NAME}__credit`,
+            'kicl-position-fixed',
+            'kicl-inset-block-end',
+            'kicl-inset-inline',
+            'kicl-margin-inline-auto',
+            'kicl-pointer-events-none',
+            'kicl-z-index-floating',
+            'kicl-font-size-smaller'
+          )}
         >
           v14 · botanical growth · hover/click to focus · click away to resume
         </Badge>
-      </div>
+      </section>
     </Layout>
   );
 };
