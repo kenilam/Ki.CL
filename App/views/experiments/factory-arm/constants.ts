@@ -33,6 +33,7 @@ const COPY = {
     preset: 'Preset',
     proceed: 'Proceed',
     remove: 'Remove',
+    restart: 'Restart',
     save: 'Save as preset',
     unsaved: 'Save changes as a preset',
     step: 'step',

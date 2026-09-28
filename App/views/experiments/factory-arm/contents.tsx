@@ -7,9 +7,6 @@ import { Heading } from '@/components';
 import { SetupProvider } from './setup';
 import { Workspace } from './workspace';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { COPY } from './constants';
 

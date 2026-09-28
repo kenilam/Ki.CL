@@ -1,12 +1,15 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import {
   Button,
   CardContent,
-  CardFooter,
   Details,
   Layout,
+  SheetFooter,
   Text,
 } from '@/components';
 
@@ -17,7 +20,7 @@ import { type Entry, useSetup } from '@/views/experiments/factory-arm/setup';
 import { Steps, time } from './steps';
 
 // Constants
-import { CLASS_NAME, COPY } from '@/views/experiments/factory-arm/constants';
+import { COPY } from '@/views/experiments/factory-arm/constants';
 
 /** The log split by run, newest run first. */
 const runs = (log: Entry[]) => {
@@ -42,10 +45,10 @@ const Log: React.FunctionComponent = () => {
 
   return (
     <>
-      <CardContent className={`${CLASS_NAME}__panel-body`}>
-        {latest ? (
-          <Layout gap='normal'>
-            <div>
+      <Layout alignContent='start' gap='normal'>
+        <CardContent>
+          {latest ? (
+            <>
               <Steps entries={latest} />
 
               {earlier.map((entries) => {
@@ -69,19 +72,20 @@ const Log: React.FunctionComponent = () => {
                   </Details>
                 );
               })}
-            </div>
-          </Layout>
-        ) : (
-          <Text className='kicl-color-grey kicl-font-size-small' is='p'>
-            {COPY.panel.empty}
-          </Text>
-        )}
-      </CardContent>
+            </>
+          ) : (
+            <Text
+              className={classNames('kicl-color-grey', 'kicl-font-size-small')}
+              is='p'
+            >
+              {COPY.panel.empty}
+            </Text>
+          )}
+        </CardContent>
+      </Layout>
 
       {log.length > 0 && (
-        <CardFooter
-          className={`${CLASS_NAME}__panel-foot kicl-position-sticky kicl-inset-block-end-0`}
-        >
+        <SheetFooter>
           <Button
             className='kicl-inline-size-full'
             justifyContent='center'
@@ -91,7 +95,7 @@ const Log: React.FunctionComponent = () => {
           >
             {COPY.panel.clear}
           </Button>
-        </CardFooter>
+        </SheetFooter>
       )}
     </>
   );

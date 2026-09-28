@@ -7,10 +7,11 @@ import classNames from 'classnames';
 import {
   Button,
   Card,
+  CardAction,
   CardContent,
   CardDescription,
+  CardHeader,
   CardTitle,
-  Layout,
   List,
 } from '@/components';
 
@@ -29,17 +30,15 @@ import { summary } from './summary';
 import { Confirm } from '@/views/experiments/factory-arm/panel/confirm';
 import { Unsaved } from './unsaved';
 
-// Styles
-import './styles.scss';
-
 // Constants
-import { CLASS_NAME, COPY } from '@/views/experiments/factory-arm/constants';
+import { COPY } from '@/views/experiments/factory-arm/constants';
 
 /**
  * The presets, the ones that ship with the page and the operator's own.
  * Each one's play button builds the cell from it; the one the running cell
- * came from is edged green. Playing while the arm is working asks first.
- * Once the cell is changed, a footer offers to save it as a new one.
+ * came from is edged green, and its button starts it over. Playing while the
+ * arm is working asks first. Once the cell is changed, a footer offers to
+ * save it as a new one.
  */
 const Presets: React.FunctionComponent = () => {
   const { active, cell, discard, presets, proceed, setOpen } = useSetup();
@@ -59,47 +58,45 @@ const Presets: React.FunctionComponent = () => {
 
   return (
     <>
-      <CardContent className={`${CLASS_NAME}__panel-body`}>
+      <CardContent>
         <List gap='narrow'>
           {presets.map((preset) => (
             <Card
-              className={classNames(`${CLASS_NAME}__preset`, {
-                [`${CLASS_NAME}__preset--active`]: preset.id === active,
-              })}
               is='li'
               key={preset.id}
+              tone={preset.id === active ? 'confirm' : undefined}
             >
-              <Layout
-                alignItems='center'
-                autoFlow='column'
-                frames='1fr--max-content'
-                gap='narrow'
-              >
-                <div>
-                  <Layout gap='narrowest'>
-                    <div>
-                      <CardTitle is='span'>{preset.name}</CardTitle>
-                      <CardDescription
-                        className='kicl-font-family-mono kicl-font-size-smaller'
-                        is='span'
-                      >
-                        {summary(preset)}
-                      </CardDescription>
-                    </div>
-                  </Layout>
-
+              <CardHeader>
+                <CardTitle is='span'>{preset.name}</CardTitle>
+                <CardDescription
+                  className={classNames(
+                    'kicl-font-family-mono',
+                    'kicl-font-size-smaller'
+                  )}
+                  is='span'
+                >
+                  {summary(preset)}
+                </CardDescription>
+                <CardAction>
                   <Button
                     onClick={() => play(preset)}
                     size='small'
                     variant='secondary'
                   >
-                    <Ri.RiPlayFill aria-hidden />
+                    {preset.id === active ? (
+                      <Ri.RiRestartLine aria-hidden />
+                    ) : (
+                      <Ri.RiPlayFill aria-hidden />
+                    )}
                     <span className='kicl-hidden'>
-                      {COPY.panel.play} {preset.name}
+                      {preset.id === active
+                        ? COPY.panel.restart
+                        : COPY.panel.play}{' '}
+                      {preset.name}
                     </span>
                   </Button>
-                </div>
-              </Layout>
+                </CardAction>
+              </CardHeader>
 
               {preset.saved && (
                 <Button
@@ -107,7 +104,7 @@ const Presets: React.FunctionComponent = () => {
                   size='small'
                   variant='ghost'
                 >
-                  <span>{COPY.panel.remove}</span>
+                  {COPY.panel.remove}
                 </Button>
               )}
             </Card>

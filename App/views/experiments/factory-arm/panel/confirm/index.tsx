@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Dialog, Layout, Text } from '@/components';
+import { Button, Dialog, List, ListItem, Text } from '@/components';
 
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/constants';
@@ -25,16 +25,18 @@ const Confirm: React.FunctionComponent<Props> = ({
   <Dialog
     dense
     footer={
-      <Layout autoFlow='column' gap='narrow' justifyContent='end'>
-        <div>
+      <List autoFlow='column' gap='narrow' justifyContent='end'>
+        <ListItem>
           <Button onClick={onCancel} size='small' variant='secondary'>
             {COPY.panel.busy.cancel}
           </Button>
+        </ListItem>
+        <ListItem>
           <Button onClick={onConfirm} size='small'>
             {COPY.panel.busy.confirm}
           </Button>
-        </div>
-      </Layout>
+        </ListItem>
+      </List>
     }
     onClose={onCancel}
     open={open}

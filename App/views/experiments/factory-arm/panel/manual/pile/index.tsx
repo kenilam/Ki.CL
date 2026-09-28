@@ -5,6 +5,8 @@ import {
   Button,
   Heading,
   Layout,
+  List,
+  ListItem,
   Select,
   SelectItem,
   Switch,
@@ -38,6 +40,7 @@ const Pile: React.FunctionComponent = () => {
   const { draft, setDraft } = useSetup();
   const { pile, stacks } = draft;
 
+  // Each setting a row of its list: what it is, then its control.
   const row = (label: React.ReactNode, control: React.ReactNode) => (
     <Layout
       alignItems='center'
@@ -45,21 +48,21 @@ const Pile: React.FunctionComponent = () => {
       frames='1fr--max-content'
       gap='narrow'
     >
-      <div>
+      <ListItem>
         {label}
         {control}
-      </div>
+      </ListItem>
     </Layout>
   );
 
   return (
-    <section aria-labelledby={ID.title}>
-      <Layout gap='narrow'>
-        <div>
-          <Heading dense id={ID.title} is='h2' lookLike='h5'>
-            {COPY.panel.pile.title}
-          </Heading>
+    <Layout gap='narrow'>
+      <section aria-labelledby={ID.title}>
+        <Heading dense id={ID.title} is='h2' lookLike='h5'>
+          {COPY.panel.pile.title}
+        </Heading>
 
+        <List gap='narrow'>
           {row(
             <label className='kicl-font-size-small' htmlFor={ID.layers}>
               {COPY.panel.pile.layers}
@@ -95,8 +98,7 @@ const Pile: React.FunctionComponent = () => {
               variant='ghost'
             >
               <Ri.RiShuffleLine aria-hidden />
-              {/* In an element: a button of only an icon and bare text reads as an icon button, and goes round. */}
-              <span>{COPY.panel.pile.random}</span>
+              {COPY.panel.pile.random}
             </Button>
           )}
 
@@ -112,9 +114,9 @@ const Pile: React.FunctionComponent = () => {
               }
             />
           )}
-        </div>
-      </Layout>
-    </section>
+        </List>
+      </section>
+    </Layout>
   );
 };
 

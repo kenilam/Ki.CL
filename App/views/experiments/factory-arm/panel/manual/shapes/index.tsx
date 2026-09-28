@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Button, Heading, Layout, List, ListItem, Text } from '@/components';
 
@@ -29,42 +32,49 @@ const Shapes: React.FunctionComponent = () => {
   const { cell } = useSetup();
 
   return (
-    <section aria-labelledby='factory-arm-shapes'>
-      <Layout gap='narrow'>
-        <div>
-          <Heading dense id='factory-arm-shapes' is='h2' lookLike='h5'>
-            {COPY.panel.shapes.title}
-          </Heading>
-          <Text className='kicl-color-grey-dark kicl-font-size-small' is='p'>
-            {COPY.panel.shapes.hint}
-          </Text>
+    <Layout gap='narrow'>
+      <section aria-labelledby='factory-arm-shapes'>
+        <Heading dense id='factory-arm-shapes' is='h2' lookLike='h5'>
+          {COPY.panel.shapes.title}
+        </Heading>
+        <Text
+          className={classNames('kicl-color-grey-dark', 'kicl-font-size-small')}
+          is='p'
+        >
+          {COPY.panel.shapes.hint}
+        </Text>
 
-          <List gap='narrower'>
-            {NAMES.map((shape) => (
-              <ListItem key={shape}>
-                <Button
-                  className='kicl-inline-size-full'
-                  draggable
-                  justifyContent='space-between'
-                  onClick={() => cell.current?.ask(shape)}
-                  onDragStart={(event) => {
-                    event.dataTransfer.setData(SHAPE_TYPE, shape);
-                    event.dataTransfer.effectAllowed = 'copy';
-                  }}
-                  size='small'
-                  variant='secondary'
+        <List gap='narrower'>
+          {NAMES.map((shape) => (
+            <ListItem key={shape}>
+              <Button
+                className='kicl-inline-size-full'
+                draggable
+                justifyContent='space-between'
+                onClick={() => cell.current?.ask(shape)}
+                onDragStart={(event) => {
+                  event.dataTransfer.setData(SHAPE_TYPE, shape);
+                  event.dataTransfer.effectAllowed = 'copy';
+                }}
+                size='small'
+                variant='secondary'
+              >
+                {COPY.panel.shapes[shape]}
+                <span
+                  className={classNames(
+                    'kicl-font-family-mono',
+                    'kicl-font-size-smaller',
+                    'kicl-color-grey'
+                  )}
                 >
-                  <span>{COPY.panel.shapes[shape]}</span>
-                  <span className='kicl-font-family-mono kicl-font-size-smaller kicl-color-grey'>
-                    {measure(shape)}
-                  </span>
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      </Layout>
-    </section>
+                  {measure(shape)}
+                </span>
+              </Button>
+            </ListItem>
+          ))}
+        </List>
+      </section>
+    </Layout>
   );
 };
 

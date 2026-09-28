@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 // Components
-import { Button, CardFooter, Input, Layout } from '@/components';
+import { Button, Input, Layout, SheetFooter } from '@/components';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Constants
-import { CLASS_NAME, COPY } from '@/views/experiments/factory-arm/constants';
+import { COPY } from '@/views/experiments/factory-arm/constants';
 
 /**
  * Shows once the cell differs from the preset it started from: an obstacle
@@ -35,35 +35,30 @@ const Unsaved: React.FunctionComponent = () => {
   };
 
   return (
-    <CardFooter
-      className={`${CLASS_NAME}__panel-foot kicl-position-sticky kicl-inset-block-end-0`}
-      is='footer'
-    >
-      <form
-        aria-label={COPY.panel.unsaved}
-        className='kicl-inline-size-full'
-        onSubmit={submit}
+    <SheetFooter is='footer'>
+      <Layout
+        alignItems='center'
+        autoFlow='column'
+        frames='1fr--max-content'
+        gap='narrow'
       >
-        <Layout
-          alignItems='center'
-          autoFlow='column'
-          frames='1fr--max-content'
-          gap='narrow'
+        <form
+          aria-label={COPY.panel.unsaved}
+          className='kicl-inline-size-full'
+          onSubmit={submit}
         >
-          <div>
-            <Input
-              aria-label={COPY.panel.name}
-              onChange={(event) => setName(event.currentTarget.value)}
-              placeholder={next}
-              value={name}
-            />
-            <Button type='submit' size='small'>
-              {COPY.panel.save}
-            </Button>
-          </div>
-        </Layout>
-      </form>
-    </CardFooter>
+          <Input
+            aria-label={COPY.panel.name}
+            onChange={(event) => setName(event.currentTarget.value)}
+            placeholder={next}
+            value={name}
+          />
+          <Button type='submit' size='small'>
+            {COPY.panel.save}
+          </Button>
+        </form>
+      </Layout>
+    </SheetFooter>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Components
-import { Button, CardContent, CardFooter, Layout } from '@/components';
+import { Button, CardContent, Layout, SheetFooter } from '@/components';
 
 // Context
 import {
@@ -16,7 +16,7 @@ import { Pile } from './pile';
 import { Shapes } from './shapes';
 
 // Constants
-import { CLASS_NAME, COPY } from '@/views/experiments/factory-arm/constants';
+import { COPY } from '@/views/experiments/factory-arm/constants';
 
 /**
  * Sets the cell up by hand: obstacles go straight onto the stage, and the
@@ -45,45 +45,33 @@ const Manual: React.FunctionComponent = () => {
 
   return (
     <>
-      <CardContent className={`${CLASS_NAME}__panel-body`}>
-        <Layout gap='wide'>
-          <div>
-            <Shapes />
-            <Pile />
-          </div>
-        </Layout>
-      </CardContent>
+      <Layout alignContent='start' gap='wide'>
+        <CardContent>
+          <Shapes />
+          <Pile />
+        </CardContent>
+      </Layout>
 
-      <CardFooter
-        className={`${CLASS_NAME}__panel-foot kicl-position-sticky kicl-inset-block-end-0`}
-      >
-        {/* Two equal halves, whatever their labels; stacked on phones. */}
-        <Layout columns gap='narrow'>
-          <div className='kicl-inline-size-full'>
-            <Layout span={6}>
-              <Button
-                className='kicl-inline-size-full'
-                justifyContent='center'
-                onClick={() => save(current())}
-                size='small'
-                variant='secondary'
-              >
-                {COPY.panel.save}
-              </Button>
-            </Layout>
-            <Layout span={6}>
-              <Button
-                className='kicl-inline-size-full'
-                justifyContent='center'
-                onClick={go}
-                size='small'
-              >
-                {COPY.panel.proceed}
-              </Button>
-            </Layout>
-          </div>
-        </Layout>
-      </CardFooter>
+      {/* Full width each, the footer's row shares them out in equal halves. */}
+      <SheetFooter>
+        <Button
+          className='kicl-inline-size-full'
+          justifyContent='center'
+          onClick={() => save(current())}
+          size='small'
+          variant='secondary'
+        >
+          {COPY.panel.save}
+        </Button>
+        <Button
+          className='kicl-inline-size-full'
+          justifyContent='center'
+          onClick={go}
+          size='small'
+        >
+          {COPY.panel.proceed}
+        </Button>
+      </SheetFooter>
 
       <Confirm
         onCancel={() => setAsking(false)}

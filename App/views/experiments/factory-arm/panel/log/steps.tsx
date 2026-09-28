@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Layout, List, ListItem, Text } from '@/components';
 
@@ -21,27 +24,32 @@ type Props = { entries: Entry[] };
 const Steps: React.FunctionComponent<Props> = ({ entries }) => (
   <List gap='narrower' is='ol'>
     {entries.map(({ at, id, level, text }) => (
-      <ListItem key={id}>
-        <Layout
-          alignItems='baseline'
-          autoFlow='column'
-          frames='max-content--1fr'
-          gap='narrow'
-        >
-          <div>
-            <time className='kicl-color-grey kicl-font-family-mono kicl-font-size-smaller'>
-              {time(at)}
-            </time>
-            <Text className='kicl-font-size-small' is='span'>
-              <Ri.RiCheckboxBlankCircleFill
-                aria-hidden
-                className={`kicl-color-${level ?? 'grey'}`}
-              />{' '}
-              {text}
-            </Text>
-          </div>
-        </Layout>
-      </ListItem>
+      <Layout
+        alignItems='baseline'
+        autoFlow='column'
+        frames='max-content--1fr'
+        gap='narrow'
+        key={id}
+      >
+        <ListItem>
+          <time
+            className={classNames(
+              'kicl-color-grey',
+              'kicl-font-family-mono',
+              'kicl-font-size-smaller'
+            )}
+          >
+            {time(at)}
+          </time>
+          <Text className='kicl-font-size-small' is='span'>
+            <Ri.RiCheckboxBlankCircleFill
+              aria-hidden
+              className={`kicl-color-${level ?? 'grey'}`}
+            />{' '}
+            {text}
+          </Text>
+        </ListItem>
+      </Layout>
     ))}
   </List>
 );

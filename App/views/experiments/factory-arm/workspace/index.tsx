@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Button, Frame } from '@/components';
 
@@ -38,7 +41,18 @@ const Workspace: React.FunctionComponent = () => {
     <>
       <FactoryArmProvider key={run} setup={applied}>
         <Frame>
-          <div aria-label={COPY.scene} className={CLASS_NAME} role='img'>
+          {/* The frame's own element; R3F's canvas sizes itself inline to fill it, which the frame's classes can't override. */}
+          <div
+            aria-label={COPY.scene}
+            className={classNames(
+              CLASS_NAME,
+              // Dragging turns the view and pinching zooms it, so the page must not.
+              'kicl-overscroll-behavior-none',
+              'kicl-touch-action-none',
+              'kicl-user-select-none'
+            )}
+            role='img'
+          >
             <Scene />
           </div>
         </Frame>
@@ -47,7 +61,13 @@ const Workspace: React.FunctionComponent = () => {
       </FactoryArmProvider>
 
       <Button
-        className={`${CLASS_NAME}__open kicl-position-fixed kicl-inset-block-start kicl-inset-inline-end kicl-z-index-floating`}
+        className={classNames(
+          `${CLASS_NAME}__open`,
+          'kicl-position-fixed',
+          'kicl-inset-block-start',
+          'kicl-inset-inline-end',
+          'kicl-z-index-floating'
+        )}
         popoverTarget={PANEL}
         variant='secondary'
       >
