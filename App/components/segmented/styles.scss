@@ -24,8 +24,6 @@
   grid-auto-flow: column;
   margin: 0;
   min-inline-size: 0;
-  padding: var(--kicl-gutter-narrowest);
-  position: relative;
 
   &::before {
     background-color: var(--kicl--components--segmented--thumb);
@@ -41,6 +39,11 @@
     }
   }
 
+  // Nothing chosen: no option to highlight.
+  &:not(:has(:checked))::before {
+    content: none;
+  }
+
   // Without anchor positioning there's nothing to slide; the option itself is filled.
   @supports not (anchor-name: --a) {
     &::before {
@@ -50,15 +53,10 @@
 }
 
 .kicl--components--segmented__item {
-  border-radius: var(--kicl-size-half);
   color: var(--kicl-color-grey);
   cursor: pointer;
   display: grid;
-  padding: var(--kicl-gutter-narrower) var(--kicl-gutter-narrow);
   place-items: center;
-
-  // Above the highlight, which the track draws first.
-  position: relative;
   transition: color var(--kicl-transition-duration-fast);
 
   &:hover {
@@ -83,8 +81,6 @@
 // The radio stays in the page for the keyboard and screen readers, unseen.
 .kicl--components--segmented__item__control {
   appearance: none;
-  inset: 0;
   margin: 0;
   opacity: 0;
-  position: absolute;
 }

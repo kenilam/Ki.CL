@@ -54,6 +54,7 @@ import {
   type CardProps,
   type CardSectionIs,
   type CardSize,
+  type CardTone,
   type CardTitleIs,
   type CardTitleProps,
 } from './card';
@@ -153,6 +154,7 @@ import {
   type SegmentedItemProps,
   type SegmentedProps,
 } from './segmented';
+import { Sheet, SheetFooter, SheetHeader, type SheetProps } from './sheet';
 import {
   Select,
   SelectContent,
@@ -242,6 +244,7 @@ export {
   type CardSectionIs,
   CARD_SIZES,
   type CardSize,
+  type CardTone,
   CardTitle,
   type CardTitleIs,
   type CardTitleProps,
@@ -337,6 +340,10 @@ export {
   SegmentedItem,
   type SegmentedItemProps,
   type SegmentedProps,
+  Sheet,
+  SheetFooter,
+  SheetHeader,
+  type SheetProps,
   Select,
   SelectContent,
   type SelectContentProps,

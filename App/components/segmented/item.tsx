@@ -24,14 +24,23 @@ const SegmentedItem = React.forwardRef<HTMLInputElement, SegmentedItemProps>(
       <label
         className={classNames(
           CLASS_NAME,
+          'kicl-border-radius-sm',
           'kicl-font-size-small',
+          'kicl-padding-block-narrower',
+          'kicl-padding-inline-narrow',
+          // Above the highlight, which the track draws first.
+          'kicl-position-relative',
           'kicl-text-transform-uppercase',
           className
         )}
       >
         <input
           checked={controlled ? group.value === value : undefined}
-          className={`${CLASS_NAME}__control`}
+          className={classNames(
+            `${CLASS_NAME}__control`,
+            'kicl-inset-0',
+            'kicl-position-absolute'
+          )}
           defaultChecked={controlled ? undefined : group.defaultValue === value}
           name={group.name}
           onChange={(event) => {

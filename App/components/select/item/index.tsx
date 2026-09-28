@@ -18,7 +18,13 @@ const SelectItem = React.forwardRef<HTMLOptionElement, SelectItemProps>(
     <option
       ref={ref}
       data-slot='select-item'
-      className={classNames(CLASS_NAME, className)}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-border-radius-sm',
+        'kicl-padding-block-narrowest',
+        'kicl-padding-inline-narrow',
+        className
+      )}
       {...rest}
     />
   )

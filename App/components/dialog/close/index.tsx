@@ -38,6 +38,7 @@ const Close: React.FunctionComponent = () => {
       className={classNames(
         'kicl-font-size-medium',
         fullScreen ? 'kicl-position-fixed' : 'kicl-position-sticky',
+        'kicl-z-index-floating',
         CLASS_NAME
       )}
       aria-label={COPY.label}

@@ -1,0 +1,67 @@
+/*
+ * The browser centres a popover at its content's height; a sheet undoes that
+ * and stands at the end of the page, within the insets its ancestors set, or
+ * fills the screen on small ones. It slides in from the end and fades.
+ */
+.kicl--components--sheet {
+  block-size: auto;
+  margin: 0;
+  opacity: 1;
+  overflow-y: auto;
+  padding-block: 0;
+  transition:
+    display var(--kicl-transition-duration-fast) allow-discrete,
+    opacity var(--kicl-transition-duration-fast),
+    overlay var(--kicl-transition-duration-fast) allow-discrete,
+    translate var(--kicl-transition-duration-fast);
+  translate: 0 0;
+
+  // Card's own `display` would otherwise keep it on screen while closed.
+  &:not(:popover-open) {
+    display: none;
+    opacity: 0;
+    translate: var(--kicl-gutter-wide) 0;
+  }
+
+  @starting-style {
+    opacity: 0;
+    translate: var(--kicl-gutter-wide) 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @include query('>tablet') {
+    inline-size: var(--kicl--components--sheet--inline-size);
+    inset-block: var(--kicl-inset-block-start) var(--kicl-inset-block-end);
+    inset-inline: auto var(--kicl-inset-inline-end);
+  }
+
+  @include query('≤tablet') {
+    border: 0;
+    border-radius: 0;
+    inline-size: auto;
+    inset: 0;
+  }
+
+  > [data-slot='card-content'] {
+    flex: 1 0 auto;
+  }
+
+  // Over the sheet's fill, so what scrolls under them is hidden.
+  &__header,
+  &__footer {
+    background-color: var(--kicl--components--card--background-color);
+  }
+
+  &__header {
+    @include stuck-line(end);
+  }
+
+  &__footer {
+    @include stuck-line(start);
+
+    margin-block-start: auto;
+  }
+}

@@ -20,13 +20,18 @@ import { Marker } from './marker';
 
 /**
  * Native disclosure. Open/close is pure CSS via `::details-content`
- * (`content-visibility` + `allow-discrete`). Children own their own layout.
+ * (`content-visibility` + `allow-discrete`). With `gap`, the content is laid out
+ * as a column with that gap; otherwise children own their own layout.
  */
 const Details = React.forwardRef<HTMLDetailsElement, Props>(
-  ({ children, className, marker = true, summary, ...rest }, ref) => (
+  ({ children, className, gap, marker = true, summary, ...rest }, ref) => (
     <details
       {...rest}
-      className={classNames(CLASS_NAME, className)}
+      className={classNames(
+        CLASS_NAME,
+        { [`${CLASS_NAME}--gap--${gap}`]: gap },
+        className
+      )}
       data-slot='details'
       ref={ref}
     >

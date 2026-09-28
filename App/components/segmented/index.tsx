@@ -40,7 +40,14 @@ const Segmented = React.forwardRef<HTMLFieldSetElement, SegmentedProps>(
         }}
       >
         <fieldset
-          className={classNames(CLASS_NAME, 'kicl-border-radius-md', className)}
+          className={classNames(
+            CLASS_NAME,
+            'kicl-border-radius-md',
+            'kicl-padding-block-narrowest',
+            'kicl-padding-inline-narrowest',
+            'kicl-position-relative',
+            className
+          )}
           ref={ref}
           {...rest}
         >

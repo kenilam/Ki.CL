@@ -1,0 +1,10 @@
+// A box's shape: square, 16:9 video, or whatever its content gives it.
+:root {
+  --kicl-aspect-ratio-auto: auto;
+  --kicl-aspect-ratio-square: 1;
+  --kicl-aspect-ratio-video: 16 / 9;
+}
+
+@include make-variable-class('aspect-ratio', 'auto');
+@include make-variable-class('aspect-ratio', 'square');
+@include make-variable-class('aspect-ratio', 'video');

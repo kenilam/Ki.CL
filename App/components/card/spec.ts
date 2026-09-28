@@ -30,6 +30,9 @@ export type CardSize = (typeof CARD_SIZES)[number] | ColumnSpan;
  */
 export type CardVariant = 'default' | 'ghost';
 
+/** The status colour of the card's edge: a card that's chosen, or needs attention. */
+export type CardTone = 'confirm' | 'error' | 'info' | 'warning';
+
 /** Semantic hosts that read as a card / panel surface. */
 export type CardIs = 'article' | 'aside' | 'div' | 'form' | 'li' | 'section';
 
@@ -49,6 +52,7 @@ type CardOwnProps = {
    */
   size?: CardSize;
   variant?: CardVariant;
+  tone?: CardTone;
   children?: ReactNode;
 };
 

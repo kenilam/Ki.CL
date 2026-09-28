@@ -53,13 +53,18 @@ const Day: React.FunctionComponent<Props> = ({ date }) => {
       aria-current={isToday ? 'date' : undefined}
       aria-pressed={isSelected || isRangeMiddle}
       disabled={isDisabled}
-      className={classNames(CLASS_NAME, 'kicl-font-size-small', {
-        [`${CLASS_NAME}--outside`]: outside,
-        [`${CLASS_NAME}--selected`]: isSelected,
-        [`${CLASS_NAME}--range-start`]: isRangeStart,
-        [`${CLASS_NAME}--range-end`]: isRangeEnd,
-        [`${CLASS_NAME}--range-middle`]: isRangeMiddle,
-      })}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-display-inline-flex',
+        'kicl-font-size-small',
+        {
+          [`${CLASS_NAME}--outside`]: outside,
+          [`${CLASS_NAME}--selected`]: isSelected,
+          [`${CLASS_NAME}--range-start`]: isRangeStart,
+          [`${CLASS_NAME}--range-end`]: isRangeEnd,
+          [`${CLASS_NAME}--range-middle`]: isRangeMiddle,
+        }
+      )}
       onClick={() => onDayClick(date)}
     >
       {date.getDate()}

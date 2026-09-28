@@ -3,16 +3,13 @@
   &__marker {
     align-self: center;
     block-size: var(--kicl--components--details--summary--marker--block-size);
-    display: grid;
     flex-shrink: 0;
     inline-size: var(--kicl--components--details--summary--marker--inline-size);
     margin-inline-start: auto;
   }
 
   &__marker-icon {
-    block-size: 100%;
     grid-area: 1 / 1;
-    inline-size: 100%;
     transition-duration: var(
       --kicl--components--details--summary--marker--transition-duration
     );
