@@ -12,9 +12,6 @@ import { Heading, HyperLink, Layout, Text } from '@/components';
 // Catalog
 import { draw } from '@/views/experiments/music-visualiser/catalog';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import {
   COPY as EXPERIMENTS_COPY,
@@ -34,17 +31,18 @@ const COPY = {
   title: 'Music Visualiser',
 };
 
-/** The title, a line about it, and a link to a random track. */
+/** The page's header: the title, a line about it, and a link to a random track. */
 const Words: React.FunctionComponent = () => {
   const [track] = useState(() => draw());
 
   return (
     <Layout autoFlow='row' gap='none' justifyItems='center'>
-      <div
+      <header
         className={classNames(
           CLASS_NAME,
           'kicl-max-inline-size-columns-12',
           'kicl-padding-block-start-header',
+          'kicl-padding-inline-frame',
           'kicl-position-relative',
           'kicl-text-align-center'
         )}
@@ -76,7 +74,7 @@ const Words: React.FunctionComponent = () => {
         >
           {COPY.play}
         </HyperLink>
-      </div>
+      </header>
     </Layout>
   );
 };

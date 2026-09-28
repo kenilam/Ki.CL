@@ -22,7 +22,6 @@ $light: 1.5;
   background-image: url('./preview.webp');
   background-position: center;
   background-size: cover;
-  overflow: clip;
 
   &--scrim {
     @include scrim;
@@ -33,7 +32,6 @@ $light: 1.5;
     background-position: center;
     background-size: cover;
     inset-block: math.percentage(-$overflow);
-    inset-inline: 0;
     mix-blend-mode: soft-light;
     opacity: calc(#{$light} / var(#{$backdrop}--count));
 

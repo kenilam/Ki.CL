@@ -1,14 +1,14 @@
 import React from 'react';
 
 // Components
-import { Layout } from '@/components';
+import { List, ListItem } from '@/components';
 
 // Partials
 import { Bookmark } from './bookmark';
 import { Share } from './share';
 
 const Actions: React.FunctionComponent = () => (
-  <Layout
+  <List
     alignContent='center'
     alignItems='center'
     autoFlow='column'
@@ -16,11 +16,13 @@ const Actions: React.FunctionComponent = () => (
     justifyItems='center'
     justifyContent='center'
   >
-    <div>
+    <ListItem>
       <Bookmark />
+    </ListItem>
+    <ListItem>
       <Share />
-    </div>
-  </Layout>
+    </ListItem>
+  </List>
 );
 
 export { Actions };

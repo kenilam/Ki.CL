@@ -26,6 +26,7 @@
 
 @mixin make-gutter-variable-classes($property) {
   @include make-gutter-variable-class($property, null);
+  @include make-gutter-variable-class($property, 'none');
   @include make-gutter-variable-class($property, 'narrow');
   @include make-gutter-variable-class($property, 'narrower');
   @include make-gutter-variable-class($property, 'narrowest');
@@ -36,6 +37,8 @@
 }
 
 $gutter-properties: (
+  'padding',
+  'margin',
   'padding-block',
   'padding-block-start',
   'padding-block-end',
@@ -66,6 +69,19 @@ $gutter-properties: (
 // Content inset inside a Frame (`components/frame`).
 .kicl-padding-inline-frame {
   padding-inline: var(--kicl--components--frame--inset);
+}
+
+// Content inset inside a Frame, on the block axis.
+.kicl-padding-block-frame {
+  padding-block: var(--kicl--components--frame--inset);
+}
+
+.kicl-padding-block-start-frame {
+  padding-block-start: var(--kicl--components--frame--inset);
+}
+
+.kicl-padding-block-end-frame {
+  padding-block-end: var(--kicl--components--frame--inset);
 }
 
 // The same, and no wider than 12 columns, on an element as wide as the Frame.

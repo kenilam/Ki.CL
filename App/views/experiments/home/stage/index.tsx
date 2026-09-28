@@ -84,7 +84,11 @@ const Stage: React.FunctionComponent = () => {
       <div
         className={classNames(
           CLASS_NAME,
+          'kicl-block-size-screen',
+          // Keeps the frame's top margin inside the stage.
+          'kicl-display-flow-root',
           'kicl-inset-block-start-0',
+          'kicl-overflow-clip',
           'kicl-position-sticky'
         )}
       >

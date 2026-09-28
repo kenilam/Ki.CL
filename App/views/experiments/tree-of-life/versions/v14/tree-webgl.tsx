@@ -1,5 +1,8 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import { labelWithRank } from '@/views/experiments/tree-of-life/tree';
 
 import type { LayoutNode, LayoutResult } from './layout-engine';
@@ -249,13 +252,32 @@ const TreeWebGL: React.FC<Props> = ({
     <>
       <canvas
         ref={canvasRef}
-        className={`${CLASS_NAME}__svg kicl-position-absolute`}
+        className={classNames(
+          `${CLASS_NAME}__svg`,
+          'kicl-display-block',
+          'kicl-position-absolute',
+          'kicl-inset-0',
+          'kicl-block-size-full',
+          'kicl-inline-size-full',
+          'kicl-touch-action-none'
+        )}
         aria-label='Tree of Life map'
+        role='img'
       />
       <span
         ref={labelRef}
         hidden
-        className={`${CLASS_NAME}__webgl-label kicl-position-absolute kicl-font-family kicl-font-weight`}
+        className={classNames(
+          `${CLASS_NAME}__webgl-label`,
+          'kicl-position-absolute',
+          'kicl-inset-block-start-0',
+          'kicl-inset-inline-start-0',
+          'kicl-z-index-raised',
+          'kicl-pointer-events-none',
+          'kicl-text-nowrap',
+          'kicl-font-family',
+          'kicl-font-weight'
+        )}
       >
         {labelText}
       </span>

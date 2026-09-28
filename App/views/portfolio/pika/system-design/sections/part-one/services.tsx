@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Dialog, Heading, Layout, Text } from '@/components';
+import { Dialog, Heading, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/components';
@@ -24,11 +27,13 @@ const Services: React.FunctionComponent = () => (
       fullScreen
       id='diagram-services'
     >
-      <Layout alignItems='center' justifyContent='center'>
-        <div className='kicl-inline-size-columns-12'>
-          <Diagram spec={services} />
-        </div>
-      </Layout>
+      <Diagram
+        className={classNames(
+          'kicl-inline-size-columns-12',
+          'kicl-margin-inline-auto'
+        )}
+        spec={services}
+      />
     </Dialog>
     <Text>
       The App Registry owns manifests: CRUD, versioning, validation, publish and
@@ -94,11 +99,13 @@ const Services: React.FunctionComponent = () => (
       fullScreen
       id='diagram-request-flow'
     >
-      <Layout alignItems='center' justifyContent='center'>
-        <div className='kicl-inline-size-columns-12'>
-          <Diagram spec={requestFlow} />
-        </div>
-      </Layout>
+      <Diagram
+        className={classNames(
+          'kicl-inline-size-columns-12',
+          'kicl-margin-inline-auto'
+        )}
+        spec={requestFlow}
+      />
     </Dialog>
   </>
 );

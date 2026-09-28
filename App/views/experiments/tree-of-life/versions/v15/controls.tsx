@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Button, Layout, Spinner, Text } from '@/components';
 
@@ -23,13 +26,19 @@ const Controls: React.FunctionComponent = () => {
 
   return (
     <Layout
-      className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start kicl-inset-inline-end`}
+      className={classNames(
+        `${CLASS_NAME}__chrome`,
+        'kicl-position-fixed',
+        'kicl-z-index-floating',
+        'kicl-inset-block-start',
+        'kicl-inset-inline-end'
+      )}
       alignItems='center'
       autoFlow='column'
       justifyContent='end'
       gap='narrower'
     >
-      <div>
+      <section aria-label='Animation'>
         <Spinner
           size='small'
           in={loading}
@@ -51,7 +60,7 @@ const Controls: React.FunctionComponent = () => {
             {COPY.label}
           </Text>
         </Button>
-      </div>
+      </section>
     </Layout>
   );
 };

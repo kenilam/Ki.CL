@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Card, HyperLink, List, ListItem } from '@/components';
 
@@ -17,8 +20,13 @@ const Panel: React.FunctionComponent = () => {
   const { focus: nodeId } = useTreeOfLifeContext();
 
   return (
-    <div
-      className={`${CLASS_NAME} kicl-inset-block-end-narrow`}
+    <nav
+      aria-label='Versions'
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inset-block-end-narrow',
+        'kicl-overflow-y-auto'
+      )}
       id={CLASS_NAME}
       popover='auto'
     >
@@ -28,19 +36,17 @@ const Panel: React.FunctionComponent = () => {
           "Final" link pointed at an unversioned node path, which no longer
           exists - and said nothing the list does not.
         */}
-        <nav aria-label='Versions'>
-          <List justifyContent='stretch' justifyItems='center' gap='narrower'>
-            {[...VERSIONS].reverse().map((version) => (
-              <ListItem key={version}>
-                <HyperLink unstyled to={toVersionPath({ version, nodeId })}>
-                  {version}
-                </HyperLink>
-              </ListItem>
-            ))}
-          </List>
-        </nav>
+        <List justifyContent='stretch' justifyItems='center' gap='narrower'>
+          {[...VERSIONS].reverse().map((version) => (
+            <ListItem key={version}>
+              <HyperLink unstyled to={toVersionPath({ version, nodeId })}>
+                {version}
+              </HyperLink>
+            </ListItem>
+          ))}
+        </List>
       </Card>
-    </div>
+    </nav>
   );
 };
 

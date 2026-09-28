@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Icons
 import { Ri } from '@/icons';
 
@@ -35,30 +32,20 @@ const Item: React.FunctionComponent<Props> = ({ id, label }) => {
         to={`#${id}`}
         unstyled
       >
-        <Badge className={classNames('kicl-font-size-small')} size='small'>
+        <Badge className='kicl-font-size-small' size='small'>
           {label}
         </Badge>
-        <Layout
-          alignContent='center'
-          alignItems='center'
-          autoFlow='column'
-          gap='narrow'
-          justifyContent='start'
-          justifyItems='start'
-        >
-          <span
-            className={classNames(
-              'kicl-font-size-smaller',
-              'kicl-position-relative'
-            )}
-          >
-            {current ? (
-              <Ri.RiCheckboxBlankCircleFill aria-hidden />
-            ) : (
-              <Ri.RiCheckboxBlankCircleLine aria-hidden />
-            )}
-          </span>
-        </Layout>
+        {current ? (
+          <Ri.RiCheckboxBlankCircleFill
+            aria-hidden
+            className='kicl-font-size-smaller'
+          />
+        ) : (
+          <Ri.RiCheckboxBlankCircleLine
+            aria-hidden
+            className='kicl-font-size-smaller'
+          />
+        )}
       </HyperLink>
     </Layout>
   );

@@ -25,6 +25,10 @@
     &::picker(select) {
       appearance: base-select;
     }
+
+    // The styleable select is a flex row; its picker icon is taller than a
+    // line of text, which otherwise sits at the top.
+    align-items: center;
   }
 
   &[aria-invalid='true'],

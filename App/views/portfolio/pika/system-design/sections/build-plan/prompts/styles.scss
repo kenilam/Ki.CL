@@ -4,11 +4,9 @@
     background-color: var(--kicl-surface-color);
 
     &::before {
-      animation: kicl--views--portfolio--pika--system-design--background 300s
-        ease infinite;
-      background: var(
-        --kicl--views--portfolio--pika--system-design--background
-      );
+      animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+        infinite;
+      background: var(--kicl-gradient-shift);
       background-size: 1200% 1200%;
       block-size: 100%;
       content: '';

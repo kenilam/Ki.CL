@@ -52,6 +52,21 @@
     transition-behavior: allow-discrete;
   }
 
+  // `gap`: the content slot itself is the column, so the content needs no wrapper.
+  @each $gap in extreme, none, narrow, narrower, narrowest, normal, wide, wider,
+    widest {
+    $token: --kicl-gutter-#{$gap};
+
+    @if $gap == normal {
+      $token: --kicl-gutter;
+    }
+
+    &--gap--#{$gap}::details-content {
+      display: grid;
+      gap: var(#{$token});
+    }
+  }
+
   &[open]::details-content {
     --kicl--components--details--content--opacity: 1;
 

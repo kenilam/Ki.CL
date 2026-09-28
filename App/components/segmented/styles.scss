@@ -1,0 +1,86 @@
+/*
+ * The options share one track, each an equal share of it. The highlight is
+ * the track's own `::before`, anchored to whichever option is checked: it
+ * takes that option's box, and slides when the choice changes, since its
+ * insets transition. `anchor-scope` keeps each control's anchor its own.
+ */
+.kicl--components--segmented {
+  --kicl--components--segmented--track: color-mix(
+    in oklab,
+    var(--kicl-body-color) 6%,
+    transparent
+  );
+  --kicl--components--segmented--thumb: color-mix(
+    in oklab,
+    var(--kicl-body-color) 14%,
+    transparent
+  );
+
+  anchor-scope: --kicl--components--segmented--checked;
+  background-color: var(--kicl--components--segmented--track);
+  border: 0;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  margin: 0;
+  min-inline-size: 0;
+
+  &::before {
+    background-color: var(--kicl--components--segmented--thumb);
+    border-radius: inherit;
+    content: '';
+    inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+    position: absolute;
+    position-anchor: --kicl--components--segmented--checked;
+    transition: inset var(--kicl-transition-duration-fast) ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // Nothing chosen: no option to highlight.
+  &:not(:has(:checked))::before {
+    content: none;
+  }
+
+  // Without anchor positioning there's nothing to slide; the option itself is filled.
+  @supports not (anchor-name: --a) {
+    &::before {
+      content: none;
+    }
+  }
+}
+
+.kicl--components--segmented__item {
+  color: var(--kicl-color-grey);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: color var(--kicl-transition-duration-fast);
+
+  &:hover {
+    color: var(--kicl-body-color);
+  }
+
+  &:has(:checked) {
+    anchor-name: --kicl--components--segmented--checked;
+    color: var(--kicl-body-color);
+
+    @supports not (anchor-name: --a) {
+      background-color: var(--kicl--components--segmented--thumb);
+    }
+  }
+
+  &:has(:focus-visible) {
+    outline: var(--kicl-size-2px) solid var(--kicl-body-color);
+    outline-offset: var(--kicl-size-2px);
+  }
+}
+
+// The radio stays in the page for the keyboard and screen readers, unseen.
+.kicl--components--segmented__item__control {
+  appearance: none;
+  margin: 0;
+  opacity: 0;
+}

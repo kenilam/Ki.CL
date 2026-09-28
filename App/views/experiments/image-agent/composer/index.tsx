@@ -59,7 +59,7 @@ const Composer: React.FunctionComponent<Props> = ({
       >
         <Allowance busy={busy} />
         {!disallow ? (
-          <Form {...form} onSubmit={submit}>
+          <Form {...form} className='kicl-inline-size-full' onSubmit={submit}>
             <Field
               disabled={busy || loading || spent}
               onEnter={() => void submit()}

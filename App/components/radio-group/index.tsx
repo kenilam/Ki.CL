@@ -62,7 +62,14 @@ const RadioGroup = React.forwardRef<HTMLFieldSetElement, RadioGroupProps>(
             {...rest}
           >
             {legend ? (
-              <legend className={`${CLASS_NAME}__legend`}>{legend}</legend>
+              <legend
+                className={classNames(
+                  `${CLASS_NAME}__legend`,
+                  'kicl-margin-block-end-narrower'
+                )}
+              >
+                {legend}
+              </legend>
             ) : null}
             {children}
           </fieldset>

@@ -117,7 +117,13 @@ const Dialog = React.forwardRef<HTMLDialogElement, Spec.Props>(
            * down, so it starts at the top.
            */}
           <Layout alignContent={fullScreen ? 'start' : undefined}>
-            <div>
+            <div
+              className={classNames(
+                'kicl-margin-inline-auto',
+                'kicl-position-relative',
+                'kicl-z-index-raised'
+              )}
+            >
               <Layout autoFlow='column' alignItems='baseline'>
                 <header>
                   {title ? (

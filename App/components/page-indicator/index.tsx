@@ -30,6 +30,7 @@ const PageIndicator = React.forwardRef<HTMLElement, Spec.Props>(
           'kicl-inset-block-0',
           'kicl-pointer-events-none',
           'kicl-position-fixed',
+          'kicl-z-index-floating',
           className
         )}
         ref={ref}
@@ -46,6 +47,10 @@ const PageIndicator = React.forwardRef<HTMLElement, Spec.Props>(
               <HyperLink
                 className={classNames(
                   `${CLASS_NAME}__dot`,
+                  'kicl-background-color-white',
+                  'kicl-display-block',
+                  'kicl-padding-block-narrow',
+                  'kicl-padding-inline-narrow',
                   'kicl-pointer-events-auto'
                 )}
                 style={

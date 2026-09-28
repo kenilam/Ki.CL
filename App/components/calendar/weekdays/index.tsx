@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Styles
 import './styles.scss';
 
@@ -18,7 +21,11 @@ const Weekdays: React.FunctionComponent = () => (
           key={long}
           scope='col'
           abbr={long}
-          className={`${CALENDAR}__weekday kicl-font-size-small`}
+          className={classNames(
+            `${CALENDAR}__weekday`,
+            'kicl-font-size-small',
+            'kicl-text-align-center'
+          )}
         >
           {short}
         </th>

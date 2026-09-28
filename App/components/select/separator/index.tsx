@@ -19,7 +19,11 @@ const SelectSeparator = React.forwardRef<HTMLHRElement, SelectSeparatorProps>(
     <hr
       ref={ref}
       data-slot='select-separator'
-      className={classNames(CLASS_NAME, className)}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-margin-block-narrowest',
+        className
+      )}
       {...rest}
     />
   )

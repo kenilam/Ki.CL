@@ -1,5 +1,8 @@
 import React, { useId } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import {
   Badge,
   BadgeLabel,
@@ -9,6 +12,7 @@ import {
   CardTitle,
   Details as DetailsDisclosure,
   Layout,
+  List,
   Text,
 } from '@/components';
 
@@ -21,7 +25,6 @@ import {
   labelFor,
   type TreeNode,
 } from '@/views/experiments/tree-of-life/tree';
-import { CLASS_NAME } from './constants';
 
 /**
  * The detail panel, reading the focused taxon straight from context.
@@ -53,91 +56,103 @@ const Details: React.FunctionComponent = () => {
       variant='ghost'
       is='section'
       aria-labelledby={titleId}
-      className={`${CLASS_NAME}__panel kicl-inline-size-xxl`}
+      className='kicl-inline-size-xxl'
     >
       {hasMeta ? (
         <CardHeader>
-          <Layout
+          <List
             display='inline-grid'
             gap='narrow'
             autoFlow='column'
             alignItems='center'
             justifyContent='start'
           >
-            <div>
-              {rank ? (
-                <Badge
-                  variant='outline'
-                  className='kicl-font-size-smaller kicl-text-transform-lowercase'
-                >
-                  <BadgeLabel>Rank</BadgeLabel>
-                  {rank}
-                </Badge>
-              ) : null}
-              {terminal ? (
-                <Badge
-                  variant='secondary'
-                  className='kicl-font-size-smaller kicl-text-transform-lowercase'
-                >
-                  terminal
-                </Badge>
-              ) : null}
-              {node.ottId != null ? (
-                <Badge variant='outline' className='kicl-font-size-smaller'>
-                  <BadgeLabel>OTT ID</BadgeLabel>
-                  {node.ottId}
-                </Badge>
-              ) : null}
-            </div>
-          </Layout>
+            {rank ? (
+              <Badge
+                is='li'
+                variant='outline'
+                className={classNames(
+                  'kicl-font-size-smaller',
+                  'kicl-text-transform-lowercase'
+                )}
+              >
+                <BadgeLabel>Rank</BadgeLabel>
+                {rank}
+              </Badge>
+            ) : null}
+            {terminal ? (
+              <Badge
+                is='li'
+                variant='secondary'
+                className={classNames(
+                  'kicl-font-size-smaller',
+                  'kicl-text-transform-lowercase'
+                )}
+              >
+                terminal
+              </Badge>
+            ) : null}
+            {node.ottId != null ? (
+              <Badge
+                is='li'
+                variant='outline'
+                className='kicl-font-size-smaller'
+              >
+                <BadgeLabel>OTT ID</BadgeLabel>
+                {node.ottId}
+              </Badge>
+            ) : null}
+          </List>
         </CardHeader>
       ) : null}
 
-      <CardContent>
-        <Layout gap='narrow'>
-          <div>
-            {/*
-              Open on arrival and left to the browser after that. Only the
-              title is live, so a new taxon is announced by name and nothing
-              else in the card is read again.
-            */}
-            <DetailsDisclosure
-              open
-              summary={
-                <CardTitle
-                  id={titleId}
-                  is='h2'
-                  aria-live='polite'
-                  className='kicl-font-size'
-                >
-                  {title}
-                </CardTitle>
-              }
-            >
-              {/*
-                No `onSubtree` fold-back: generated fields land in the Apollo
-                cache, which is what `find` reads, so the panel picks them up
-                without anything being threaded through it.
-              */}
-              <TaxonVisualPanel
-                node={node}
-                isOrigin={isOrigin}
-                onSubtree={() => {}}
-              />
-            </DetailsDisclosure>
-
-            {node.description?.trim() ? (
-              <Text
-                dense
-                is='p'
-                className='kicl-font-size-small kicl-line-height-narrow kicl-color-grey-dark'
+      <Layout gap='narrow'>
+        <CardContent>
+          {/*
+            Open on arrival and left to the browser after that. Only the
+            title is live, so a new taxon is announced by name and nothing
+            else in the card is read again.
+          */}
+          <DetailsDisclosure
+            open
+            summary={
+              <CardTitle
+                id={titleId}
+                is='h2'
+                aria-live='polite'
+                className='kicl-font-size'
               >
-                {node.description.trim()}
-              </Text>
-            ) : null}
-          </div>
-        </Layout>
-      </CardContent>
+                {title}
+              </CardTitle>
+            }
+          >
+            {/*
+              No `onSubtree` fold-back: generated fields land in the Apollo
+              cache, which is what `find` reads, so the panel picks them up
+              without anything being threaded through it.
+            */}
+            <TaxonVisualPanel
+              node={node}
+              isOrigin={isOrigin}
+              onSubtree={() => {}}
+            />
+          </DetailsDisclosure>
+
+          {node.description?.trim() ? (
+            <Text
+              dense
+              is='p'
+              className={classNames(
+                'kicl-font-size-small',
+                'kicl-line-height-narrow',
+                'kicl-color-grey-dark'
+              )}
+            >
+              {node.description.trim()}
+            </Text>
+          ) : null}
+        </CardContent>
+      </Layout>
     </Card>
   );
 };

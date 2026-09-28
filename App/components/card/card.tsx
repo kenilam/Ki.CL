@@ -16,6 +16,7 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
       className,
       is = 'div',
       size = 'default',
+      tone,
       variant = 'default',
       ...rest
     },
@@ -30,6 +31,7 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
           CLASS_NAME,
           `${CLASS_NAME}--size--${size}`,
           `${CLASS_NAME}--variant--${variant}`,
+          tone && `${CLASS_NAME}--tone--${tone}`,
           typeof size === 'number'
             ? `kicl-inline-size-columns-${size}`
             : size !== 'default' &&
@@ -39,6 +41,7 @@ const Card = React.forwardRef<HTMLElement, CardProps>(
         )}
         data-is={is}
         data-size={size}
+        data-tone={tone}
         data-variant={variant}
         data-slot='card'
         ref={ref as never}

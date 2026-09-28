@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Image, Layout, Skeleton, Status, Text } from '@/components';
 
@@ -53,16 +56,25 @@ const Plate: React.FC<Props> = ({
 
   if (isGenerating) {
     return (
-      <Layout gap='narrowest' aria-busy='true'>
-        <div>
+      <Layout gap='narrowest'>
+        <figure aria-busy='true'>
           <Skeleton
             aria-hidden
-            className={`${CLASS_NAME}__taxon-plate-skeleton`}
+            className={classNames(
+              `${CLASS_NAME}__taxon-plate-skeleton`,
+              'kicl-aspect-ratio-square'
+            )}
           />
-          <Text is='span' className='kicl-font-size-small kicl-color-grey-dark'>
+          <Text
+            is='span'
+            className={classNames(
+              'kicl-font-size-small',
+              'kicl-color-grey-dark'
+            )}
+          >
             Drawing this one - it takes about a minute.
           </Text>
-        </div>
+        </figure>
       </Layout>
     );
   }
@@ -88,13 +100,21 @@ const Plate: React.FC<Props> = ({
           data={imageUrl}
           alt={`Plate of ${name || 'this taxon'}, drawn from a description`}
           borderRadius='sm'
-          className={`${CLASS_NAME}__taxon-plate`}
+          className={classNames(
+            `${CLASS_NAME}__taxon-plate`,
+            'kicl-aspect-ratio-square'
+          )}
         />
         <figcaption>
           <Text
             dense
             is='p'
-            className='kicl-font-size-smaller kicl-font-weight-bolder kicl-color-grey-dark kicl-line-height-narrow'
+            className={classNames(
+              'kicl-font-size-smaller',
+              'kicl-font-weight-bolder',
+              'kicl-color-grey-dark',
+              'kicl-line-height-narrow'
+            )}
           >
             {DISCLAIMER}
           </Text>

@@ -4,6 +4,9 @@
  */
 import React, { useEffect, useMemo, useState } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import {
   useQuery,
   Kicl_TreeOfLifeSubtreeDocument,
@@ -184,7 +187,13 @@ const Canvas: React.FunctionComponent = () => {
 
   if (error) {
     return (
-      <Text className={`${CLASS_NAME}__error kicl-color-error`}>
+      <Text
+        className={classNames(
+          'kicl-color-error',
+          'kicl-margin-block-wide',
+          'kicl-margin-inline-wide'
+        )}
+      >
         {error.message}
       </Text>
     );
@@ -199,7 +208,13 @@ const Canvas: React.FunctionComponent = () => {
   }
 
   return (
-    <div className={CLASS_NAME}>
+    <figure
+      className={classNames(
+        CLASS_NAME,
+        'kicl-block-size-screen',
+        'kicl-position-relative'
+      )}
+    >
       <Fiber.Canvas>
         <ViewportBridge
           tree={tree}
@@ -208,11 +223,19 @@ const Canvas: React.FunctionComponent = () => {
         />
       </Fiber.Canvas>
       <Text
-        className={`${CLASS_NAME}__hint kicl-font-size-smaller kicl-color-grey-dark kicl-text-align-center`}
+        className={classNames(
+          `${CLASS_NAME}__hint`,
+          'kicl-position-absolute',
+          'kicl-inset-block-end',
+          'kicl-pointer-events-none',
+          'kicl-font-size-smaller',
+          'kicl-color-grey-dark',
+          'kicl-text-align-center'
+        )}
       >
         Sphere from min(canvas W, H) · drag to rotate · tips on the shell
       </Text>
-    </div>
+    </figure>
   );
 };
 

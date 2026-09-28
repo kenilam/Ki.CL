@@ -26,7 +26,8 @@ const Close: React.FunctionComponent = () => {
         'kicl-font-size',
         'kicl-position-fixed',
         `${CLASS_NAME}--toggle`,
-        `${CLASS_NAME}--toggle--is-overlaid`
+        `${CLASS_NAME}--toggle--is-overlaid`,
+        'kicl-z-index-raised'
       )}
       command='request-close'
       commandFor={CLASS_NAME}

@@ -23,6 +23,13 @@
     inline-size: fit-content;
   }
 
+  // The edge takes the status colour: a card that's chosen, or needs attention.
+  @each $tone in confirm, error, info, warning {
+    &--tone--#{$tone} {
+      --kicl--components--card--border-color: var(--kicl-color-#{$tone});
+    }
+  }
+
   &--size--xs,
   &--size--sm {
     --kicl--components--card--spacing: var(--kicl-gutter-narrow);

@@ -22,9 +22,6 @@ import {
 // Partials
 import { Plate, announcementFor } from './plate';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { ERROR_MESSAGES, messageKey } from './constants';
 

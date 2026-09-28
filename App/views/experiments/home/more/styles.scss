@@ -15,7 +15,6 @@
     ),
     transparent 70%
   );
-  block-size: var(--kicl--views--experiments__home--screen);
 
   @supports (animation-timeline: view()) {
     animation: kicl--views--experiments__home--rise linear both;

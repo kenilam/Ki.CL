@@ -3,10 +3,8 @@
   color: inherit;
   display: flex;
   gap: var(--kicl-gutter-narrower);
-  inline-size: 100%;
   justify-content: space-between;
   min-inline-size: 0;
-  text-align: start;
 }
 
 .kicl--components--select__icon {

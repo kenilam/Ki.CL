@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Routes
 import { Outlet, ScrollRestoration, useLocation } from '@/router';
 
@@ -50,7 +53,11 @@ const Contents: React.FunctionComponent = () => {
         justifyItems='center'
       >
         <main
-          className='kicl--view kicl-inline-size-full'
+          className={classNames(
+            'kicl--view',
+            'kicl-inline-size-full',
+            'kicl-min-block-size-screen'
+          )}
           id={MAIN_ID}
           tabIndex={-1}
         >

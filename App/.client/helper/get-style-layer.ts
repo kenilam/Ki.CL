@@ -64,7 +64,6 @@ const LAYOUT = ['layout.scss'];
 const WRAPPERS = [
   'components/animation/',
   'components/frame/',
-  'widgets/infinite-scroll/',
 ];
 
 /**

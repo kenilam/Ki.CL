@@ -80,7 +80,7 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
         justifyContent='center'
         justifyItems='center'
       >
-        <div>
+        <section>
           <Card className='kicl-inline-size-xl'>
             <Header />
             <Layout
@@ -91,15 +91,13 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
               justifyItems='stretch'
             >
               <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
-                <CardContent>
-                  <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-                    <div>
-                      <Email />
-                      <Password />
-                      <RootError />
-                    </div>
-                  </Layout>
-                </CardContent>
+                <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
+                  <CardContent>
+                    <Email />
+                    <Password />
+                    <RootError />
+                  </CardContent>
+                </Layout>
                 <CardFooter>
                   <Button disabled={loading} type='submit' size='small'>
                     Sign in
@@ -109,7 +107,7 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
               </Form>
             </Layout>
           </Card>
-        </div>
+        </section>
       </Layout>
     </Animation>
   );

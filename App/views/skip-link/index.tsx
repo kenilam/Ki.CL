@@ -6,9 +6,6 @@ import classNames from 'classnames';
 // Components
 import { HyperLink } from '@/components';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { MAIN_ID } from '@/views/constants';
 
@@ -25,7 +22,8 @@ const SkipLink: React.FunctionComponent = () => (
       'kicl-hidden-focusable',
       'kicl-position-fixed',
       'kicl-inset-block-start-narrow',
-      'kicl-inset-inline-start-narrow'
+      'kicl-inset-inline-start-narrow',
+      'kicl-z-index-top'
     )}
     lookLikeButton
     size='small'

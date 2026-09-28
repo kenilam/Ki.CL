@@ -10,7 +10,6 @@
    */
   inline-size: anchor-size(width);
   max-block-size: calc(100dvh - var(--kicl-gutter-wide) * 3);
-  overflow-y: auto;
   opacity: 0;
   transition:
     block-size var(--kicl-transition-duration-fast) allow-discrete,

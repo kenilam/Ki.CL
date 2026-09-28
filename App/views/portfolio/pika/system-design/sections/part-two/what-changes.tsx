@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Dialog, Heading, Layout, Text } from '@/components';
+import { Dialog, Heading, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/components';
@@ -24,11 +27,13 @@ const WhatChanges: React.FunctionComponent = () => (
       fullScreen
       id='diagram-agent-plane'
     >
-      <Layout alignItems='center' justifyContent='center'>
-        <div className='kicl-inline-size-columns-12'>
-          <Diagram spec={agentPlane} />
-        </div>
-      </Layout>
+      <Diagram
+        className={classNames(
+          'kicl-inline-size-columns-12',
+          'kicl-margin-inline-auto'
+        )}
+        spec={agentPlane}
+      />
     </Dialog>
     <Text>
       The agent is another client of the platform. Part 1&apos;s execution plane

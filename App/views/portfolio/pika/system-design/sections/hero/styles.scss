@@ -1,15 +1,15 @@
 .kicl--views--portfolio--pika--system-design__hero {
-  animation: kicl--views--portfolio--pika--system-design--background
-    var(--kicl-transition-duration-5m) ease infinite;
-  background: var(--kicl--views--portfolio--pika--system-design--background);
+  animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+    infinite;
+  background: var(--kicl-gradient-shift);
   background-size: 1200% 1200%;
 
+  /* Scroll-driven fade; no utility covers it. */
   header {
     animation: kicl--views--portfolio--pika--system-design--parallax-hero linear
       both;
     animation-timeline: scroll();
     animation-range: 0% 20%;
-    text-wrap: balance;
   }
 }
 

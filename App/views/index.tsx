@@ -11,9 +11,6 @@ import { Portfolio } from './portfolio';
 // Partials
 import { Element } from './element';
 
-// Styles
-import './styles.scss';
-
 const Views: React.FunctionComponent = () => {
   return (
     <Router>

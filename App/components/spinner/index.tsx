@@ -43,6 +43,7 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
     CLASS_NAME,
     {
       'kicl-font-size-large': isOverlay,
+      'kicl-z-index-overlay': isOverlay,
       [`${CLASS_NAME}--no-backdrop`]: !hasBackdrop,
       [`${CLASS_NAME}--position--${position}`]: position,
       [`${CLASS_NAME}--size--${size}`]: size,

@@ -1,7 +1,8 @@
+// The frame inset at the block end, but never less than a phone's home
+// indicator.
 .kicl--views--experiments--music-visualiser__chrome {
-  padding: var(--kicl--views--experiments--music-visualiser--inset);
   padding-block-end: max(
-    var(--kicl--views--experiments--music-visualiser--inset),
+    var(--kicl--components--frame--inset),
     env(safe-area-inset-bottom)
   );
 }

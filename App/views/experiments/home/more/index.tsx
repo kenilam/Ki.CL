@@ -38,6 +38,7 @@ const More: React.FunctionComponent = () => {
         className={classNames(
           CLASS_NAME,
           'kicl-animation-none-reduced-motion',
+          'kicl-block-size-screen',
           'kicl-padding-block-extreme',
           'kicl-padding-inline-frame-columns-12'
         )}

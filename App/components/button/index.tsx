@@ -17,6 +17,20 @@ import './styles.variant.scss';
 
 const CLASS_NAME = 'kicl--components--button';
 
+/*
+ * Bare text goes in a span. The icon-button look is chosen in CSS by what
+ * elements a button holds, and CSS can't see a text node, so without it a
+ * label beside an icon or a spinner reads as an icon button and goes round.
+ */
+const label = (children: React.ReactNode) =>
+  React.Children.map(children, (child) =>
+    (typeof child === 'string' && child.trim()) || typeof child === 'number' ? (
+      <span>{child}</span>
+    ) : (
+      child
+    )
+  );
+
 const getButtonClassNames = ({
   bold,
   className = '',
@@ -98,7 +112,7 @@ const Button = React.forwardRef<HTMLButtonElement, Spec.Props>(
           ref={ref}
           type={type}
         >
-          {children}
+          {label(children)}
         </button>
       </Layout>
     );

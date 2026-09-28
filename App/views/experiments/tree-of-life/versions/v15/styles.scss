@@ -1,12 +1,5 @@
 .kicl--views--experiments--tree-of-life--v15 {
-  overflow: hidden;
-  overscroll-behavior: none;
-  touch-action: none;
-  user-select: none;
-
   &__chrome {
-    z-index: var(--kicl-z-index-floating);
-
     // Inside the frame's top edge, which already clears the header.
     --kicl-inset-block-start: calc(
       var(--kicl-gutter) + var(--kicl--components--frame--top)
@@ -21,30 +14,20 @@
      * the emptiest part of the composition instead of the densest.
      */
     &--panel {
+      // Docked by a media query, so set here: a utility class would win at every size.
+      inset-block-start: var(--kicl-inset-block-start);
+
       @include query('≤desktop') {
+        inset-block: auto var(--kicl-inset-block-end);
         max-block-size: 45dvb;
         overflow-y: auto;
 
         /*
          * Narrowed so it stops short of the version toggle in the opposite
-         * corner. Both are docked to the foot, and at full width the two met.
-         *
-         * Done by moving the token the panels are sized from, not by
-         * constraining the wrapper: the search and detail cards each carry
-         * `kicl-inline-size-xxl`, which is written double and so wins over any
-         * width set on their container - a narrower wrapper only clipped them.
+         * corner; both are docked to the foot, and at full width the two met.
+         * The cards are sized by `kicl-inline-size-xxl`, which reads this token.
          */
-        --kicl-inline-size-xxl: var(--kicl-size-14x);
-
-        /*
-         * The docking utility is named here so this can outrank it. Utility
-         * classes are emitted doubled precisely so the system beats view CSS,
-         * which means a view cannot simply set `inset-block` and expect it to
-         * land - it has to say which utility it is making an exception to.
-         */
-        &.kicl-inset-block-start {
-          inset-block: auto var(--kicl-inset-block-end);
-        }
+        --kicl-size-18x: var(--kicl-size-14x);
       }
     }
 
@@ -56,9 +39,5 @@
     .kicl--components--button {
       min-block-size: var(--kicl-size-2x);
     }
-  }
-
-  canvas {
-    touch-action: none;
   }
 }

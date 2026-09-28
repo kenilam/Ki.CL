@@ -30,16 +30,10 @@ const Canvas: React.FunctionComponent = () => (
      * framed box with it. The panel and controls are fixed to the window.
      */}
     <Frame>
-      <div className='kicl-position-relative'>
-        <div
-          aria-label='The tree of life around the taxon in view'
-          className='kicl-block-size-full kicl-inline-size-full'
-          role='img'
-        >
-          <Scene />
-        </div>
+      <figure className='kicl-position-relative'>
+        <Scene />
         <Labels />
-      </div>
+      </figure>
     </Frame>
 
     <Panel />

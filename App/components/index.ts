@@ -54,6 +54,7 @@ import {
   type CardProps,
   type CardSectionIs,
   type CardSize,
+  type CardTone,
   type CardTitleIs,
   type CardTitleProps,
 } from './card';
@@ -148,6 +149,13 @@ import {
   type RadioGroupProps,
 } from './radio-group';
 import {
+  Segmented,
+  SegmentedItem,
+  type SegmentedItemProps,
+  type SegmentedProps,
+} from './segmented';
+import { Sheet, SheetFooter, SheetHeader, type SheetProps } from './sheet';
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -236,6 +244,7 @@ export {
   type CardSectionIs,
   CARD_SIZES,
   type CardSize,
+  type CardTone,
   CardTitle,
   type CardTitleIs,
   type CardTitleProps,
@@ -327,6 +336,14 @@ export {
   RadioGroupItem,
   type RadioGroupItemProps,
   type RadioGroupProps,
+  Segmented,
+  SegmentedItem,
+  type SegmentedItemProps,
+  type SegmentedProps,
+  Sheet,
+  SheetFooter,
+  SheetHeader,
+  type SheetProps,
   Select,
   SelectContent,
   type SelectContentProps,

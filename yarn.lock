@@ -1364,6 +1364,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dimforge/rapier3d-compat@npm:0.19.2":
+  version: 0.19.2
+  resolution: "@dimforge/rapier3d-compat@npm:0.19.2"
+  checksum: 10c0/395bacfc2a9a83fba92943b7fae9b0c3fddf99772dba1c187b11c4d7f5e55a384bb892d27704bf1453d2637c781ecd207fdf87c897c5f28ecffcc2520a306d96
+  languageName: node
+  linkType: hard
+
 "@dimforge/rapier3d-compat@npm:^0.12.0, @dimforge/rapier3d-compat@npm:~0.12.0":
   version: 0.12.0
   resolution: "@dimforge/rapier3d-compat@npm:0.12.0"
@@ -2460,6 +2467,21 @@ __metadata:
     react-native:
       optional: true
   checksum: 10c0/669d78d126ab61977356936d3a89ce0f15051ec4d49e130d009cdc1ee3f6e01763322d4ef0b2720852d0cb457595417aeffccc433b33abd1d07b23b891527ea2
+  languageName: node
+  linkType: hard
+
+"@react-three/rapier@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@react-three/rapier@npm:2.2.0"
+  dependencies:
+    "@dimforge/rapier3d-compat": "npm:0.19.2"
+    suspend-react: "npm:^0.1.3"
+    three-stdlib: "npm:^2.35.12"
+  peerDependencies:
+    "@react-three/fiber": ^9.0.4
+    react: ^19
+    three: ">=0.159.0"
+  checksum: 10c0/2dc2edebfa351ec512be8ab7429dc21e83d049d45ee61a5ad817f3612d888536fe6d1a00981d6dffbee7667b9f38635f627fc361c0fd1f5e9cda8acc737259c0
   languageName: node
   linkType: hard
 
@@ -3814,6 +3836,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm"
+  languageName: unknown
+  linkType: soft
+
 "app.views.experiments.image-agent@workspace:App/views/experiments/image-agent":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.image-agent@workspace:App/views/experiments/image-agent"
@@ -3859,6 +3887,7 @@ __metadata:
     "@react-spring/three": "npm:10.1.2"
     "@react-three/drei": "npm:10.7.7"
     "@react-three/fiber": "npm:9.6.1"
+    "@react-three/rapier": "npm:2.2.0"
     "@types/d3-hierarchy": "npm:3.1.7"
     "@types/enzyme": "npm:3.10.19"
     "@types/lodash": "npm:4.17.25"
@@ -11479,6 +11508,22 @@ __metadata:
   peerDependencies:
     three: ">= 0.159.0"
   checksum: 10c0/d1f052d4606498acf57e08e28d01c84157eb388d46be8e03bc839630dc4eb919d5bb5e2ed4e9113d39cbc3cda29f09212e3450e1bb21de6615ec330f2575fc28
+  languageName: node
+  linkType: hard
+
+"three-stdlib@npm:^2.35.12":
+  version: 2.36.1
+  resolution: "three-stdlib@npm:2.36.1"
+  dependencies:
+    "@types/draco3d": "npm:^1.4.0"
+    "@types/offscreencanvas": "npm:^2019.6.4"
+    "@types/webxr": "npm:^0.5.2"
+    draco3d: "npm:^1.4.1"
+    fflate: "npm:^0.6.9"
+    potpack: "npm:^1.0.1"
+  peerDependencies:
+    three: ">=0.128.0"
+  checksum: 10c0/6d04a3e6e1cf5a23e1d8807085609e5cfa999d342a8f4a3168432c4152e99ab555f7fd7ab22903d9639f33d8d19d2183c62931be34ad6c3ac8bd3ed879d973c2
   languageName: node
   linkType: hard
 

@@ -5,6 +5,7 @@
   "workspaces": [
     "tree-of-life",
     "music-visualiser",
-    "image-agent"
+    "image-agent",
+    "factory-arm"
   ]
 }

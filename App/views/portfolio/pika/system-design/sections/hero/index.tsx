@@ -39,7 +39,8 @@ const Hero: React.FunctionComponent = () => {
             className={classNames(
               'kicl-padding-inline-extreme',
               'kicl-position-relative',
-              'kicl-text-align-center'
+              'kicl-text-align-center',
+              'kicl-text-wrap-balance'
             )}
           >
             <Heading className='kicl-font-size-largest' dense is='h1'>

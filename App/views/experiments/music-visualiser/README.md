@@ -28,9 +28,8 @@ browser needs.
 ```
 MusicVisualiser/
   index.tsx            the view's route; index is Home
-  Contents.tsx         the view's root, sized to the viewport; an outlet
+  Contents.tsx         an outlet; each route sets its own width
   constants.ts         route params and patterns, paths, class root
-  Styles.scss          the root's size and inset
   Catalog/
     index.ts           the station: find a track, draw one at random
     catalog.ts         the collection's catalog.json as data; regenerate with it

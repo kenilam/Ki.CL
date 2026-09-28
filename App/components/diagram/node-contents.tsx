@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Constants
 import { BASE, CYLINDER_EDGE } from './constants';
 
@@ -36,7 +39,7 @@ const NodeContents: React.FunctionComponent<{ node: Node }> = ({ node }) => {
             <React.Fragment key={row.name}>
               {index > 0 && (
                 <line
-                  className={`${BASE}-rule ${BASE}-rule--faint`}
+                  className={classNames(`${BASE}-rule`, `${BASE}-rule--faint`)}
                   x1={x}
                   x2={x + w}
                   y1={y + TITLE_SIZE + index * ROW_SIZE}

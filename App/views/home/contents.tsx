@@ -10,9 +10,6 @@ import { Animation, Frame, Layout } from '@/components';
 import { Background } from './background';
 import { Header } from './header';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { CONTENT_DELAY, FRAME_DELAY } from './constants';
 

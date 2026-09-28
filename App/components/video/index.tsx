@@ -74,6 +74,10 @@ const Video = React.forwardRef<VideoElement, Spec.Props>(
           {/* oxlint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             {...rest}
+            className={classNames(
+              'kicl-block-size-full',
+              'kicl-inline-size-full'
+            )}
             autoPlay={autoPlay}
             controls={controls}
             controlsList={controlsList}

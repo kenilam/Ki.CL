@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Layout } from '@/components/layout';
 import { Ri } from '@/icons';
@@ -34,7 +37,13 @@ const Header: React.FunctionComponent = () => {
       <div className={`${CALENDAR}__header`}>
         <button
           type='button'
-          className={`${CALENDAR}__nav`}
+          className={classNames(
+            `${CALENDAR}__nav`,
+            'kicl-border-radius-sm',
+            'kicl-display-inline-flex',
+            'kicl-padding-block-narrowest',
+            'kicl-padding-inline-narrowest'
+          )}
           aria-label={COPY.previous}
           onClick={() =>
             setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))
@@ -45,13 +54,24 @@ const Header: React.FunctionComponent = () => {
         <div
           id={titleId}
           aria-live='polite'
-          className={`${CALENDAR}__title kicl-font-size-small kicl-font-weight-bold kicl-text-align-center`}
+          className={classNames(
+            `${CALENDAR}__title`,
+            'kicl-font-size-small',
+            'kicl-font-weight-bold',
+            'kicl-text-align-center'
+          )}
         >
           {monthLabel(month)}
         </div>
         <button
           type='button'
-          className={`${CALENDAR}__nav`}
+          className={classNames(
+            `${CALENDAR}__nav`,
+            'kicl-border-radius-sm',
+            'kicl-display-inline-flex',
+            'kicl-padding-block-narrowest',
+            'kicl-padding-inline-narrowest'
+          )}
           aria-label={COPY.next}
           onClick={() =>
             setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))

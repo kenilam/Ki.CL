@@ -31,7 +31,7 @@ const Header: React.FunctionComponent = () => (
         'kicl-position-sticky',
         'kicl-padding-block-narrow',
         'kicl-padding-inline-narrow',
-        'kicl-z-index-floating',
+        'kicl-z-index-floating'
       )}
     >
       <HyperLink

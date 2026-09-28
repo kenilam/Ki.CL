@@ -27,8 +27,16 @@ const BubbleReactions = React.forwardRef<HTMLElement, BubbleReactionsProps>(
           CLASS_NAME,
           `${CLASS_NAME}--align--${align}`,
           `${CLASS_NAME}--side--${side}`,
-          'kicl-position-absolute',
+          'kicl-border-radius-lg',
           'kicl-font-size-small',
+          'kicl-position-absolute',
+          'kicl-z-index-raised',
+          {
+            'kicl-inset-block-end-0': side === 'bottom',
+            'kicl-inset-block-start-0': side === 'top',
+            'kicl-inset-inline-end-narrow': align === 'end',
+            'kicl-inset-inline-start-narrow': align === 'start',
+          },
           className
         )}
         data-align={align}

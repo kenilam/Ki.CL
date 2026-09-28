@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Dialog, Heading, Layout, List, ListItem, Text } from '@/components';
+import { Dialog, Heading, List, ListItem, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/components';
@@ -39,11 +42,13 @@ const AgentHarness: React.FunctionComponent = () => (
       fullScreen
       id='diagram-session-model'
     >
-      <Layout alignItems='center' justifyContent='center'>
-        <div className='kicl-inline-size-columns-12'>
-          <Diagram spec={sessionModel} />
-        </div>
-      </Layout>
+      <Diagram
+        className={classNames(
+          'kicl-inline-size-columns-12',
+          'kicl-margin-inline-auto'
+        )}
+        spec={sessionModel}
+      />
     </Dialog>
     <Text>
       Through <Text is='code'>TOOL_CALL.job_id</Text>, the agent&apos;s work

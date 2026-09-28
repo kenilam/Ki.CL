@@ -91,8 +91,7 @@ const HyperLink = React.forwardRef<HTMLAnchorElement, Spec.Props>(
         [getButtonClassNames({ bold, disabled, level, size, variant })]:
           lookLikeButton && !unstyled,
         [`${CLASS_NAME}--look-like-button`]: lookLikeButton && !unstyled,
-      },
-      String(_className)
+      }
     );
 
     let target: Spec.Props['target'] = _target;

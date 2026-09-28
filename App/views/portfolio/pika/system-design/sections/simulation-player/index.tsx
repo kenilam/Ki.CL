@@ -121,14 +121,12 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
         state={{ active: current?.active, failed: current?.failed }}
       />
       <Card className='kicl-inline-size-full' size='sm'>
-        <CardContent>
-          <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-            <div>
-              <Status />
-              <Log />
-            </div>
-          </Layout>
-        </CardContent>
+        <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
+          <CardContent>
+            <Status />
+            <Log />
+          </CardContent>
+        </Layout>
       </Card>
     </SimulationContext.Provider>
   );

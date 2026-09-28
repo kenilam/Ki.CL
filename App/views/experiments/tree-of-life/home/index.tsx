@@ -10,9 +10,6 @@ import { Layout } from '@/components';
 import { Article } from './article';
 import { Banner } from './banner';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { CLASS_NAME } from './constants';
 

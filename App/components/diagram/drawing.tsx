@@ -84,7 +84,10 @@ const Drawing: React.FunctionComponent<Props> = ({ spec, state }) => {
             refY={4}
           >
             <path
-              className={`${BASE}-arrow ${BASE}-arrow--${accent}`}
+              className={classNames(
+                `${BASE}-arrow`,
+                `${BASE}-arrow--${accent}`
+              )}
               d='M 0 0 L 9 4 L 0 8 Z'
             />
           </marker>

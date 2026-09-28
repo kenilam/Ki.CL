@@ -27,8 +27,6 @@ import { useCooldown } from './use-cooldown';
 import { PARAM } from '@/views/experiments/image-agent/constants';
 import { CLASS_NAME } from './constants';
 
-import './styles.scss';
-
 const Chat: React.FunctionComponent = () => {
   const { [PARAM]: threadId = '' } = useParams();
   const seed = (useLocation().state as { thread?: Thread } | null)?.thread;
@@ -43,12 +41,22 @@ const Chat: React.FunctionComponent = () => {
 
   return (
     <>
-      <Layout autoFlow='row' gap='none' justifyContent='stretch' frames='max-content--1fr'>
+      {/*
+        Header, then the conversation, which grows to fill the window so the
+        composer after it starts at the bottom.
+      */}
+      <Layout
+        autoFlow='row'
+        gap='none'
+        justifyContent='stretch'
+        frames='max-content--1fr'
+      >
         <article
           className={classNames(
             CLASS_NAME,
             'kicl-inline-size-columns-8',
             'kicl-margin-inline-auto',
+            'kicl-min-block-size-screen',
             'kicl-padding-block-start-header',
             'kicl-padding-inline-frame'
           )}

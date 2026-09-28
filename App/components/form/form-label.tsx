@@ -32,7 +32,10 @@ const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
         {children}
         {(required ?? fieldRequired) ? (
           <span
-            className={`${CLASS_NAME}__required kicl-color-error`}
+            className={classNames(
+              `${CLASS_NAME}__required`,
+              'kicl-color-error'
+            )}
             aria-hidden
           >
             *

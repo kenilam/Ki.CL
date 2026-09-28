@@ -74,12 +74,10 @@
     block-size: var(--kicl--components--dialog--block-size, auto);
     border-radius: var(--kicl--components--dialog--border-radius);
     inline-size: var(--kicl--components--dialog--inline-size);
-    margin-inline: auto;
     margin-block: var(--kicl--components--dialog--offset);
     max-inline-size: var(--kicl--components--dialog--max-inline-size);
     padding-block: var(--kicl--components--dialog--padding-block);
     padding-inline: var(--kicl--components--dialog--padding-inline);
-    position: relative;
 
     /* The state it arrives from, and returns to. */
     opacity: 0;
@@ -88,7 +86,6 @@
       opacity var(--kicl-transition-duration-fast),
       translate var(--kicl-transition-duration-fast);
     translate: 0 0;
-    z-index: var(--kicl-z-index-raised);
   }
 
   &[open] > div {
@@ -115,25 +112,25 @@
   &::backdrop {
     @at-root .kicl--theme--dark & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
-          $black-pure,
-          0.5
-        )};
+        $black-pure,
+        0.5
+      )};
     }
 
     @at-root .kicl--theme--light & {
       --kicl--components--dialog--backdrop--background-color: #{rgba(
-          $white-pure,
-          0.7
-        )};
+        $white-pure,
+        0.7
+      )};
     }
 
     backdrop-filter: brightness(
-        var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
-      )
+      var(--kicl--components--dialog--backdrop--backdrop-filter--brightness)
+    )
       blur(var(--kicl--components--dialog--backdrop--backdrop-filter--blur));
     background-color: rgb(
       from var(--kicl--components--dialog--backdrop--background-color) r g b /
-        var(--kicl--components--dialog--backdrop--opacity)
+      var(--kicl--components--dialog--backdrop--opacity)
     );
     pointer-events: none;
   }
