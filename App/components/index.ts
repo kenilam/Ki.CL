@@ -148,6 +148,12 @@ import {
   type RadioGroupProps,
 } from './radio-group';
 import {
+  Segmented,
+  SegmentedItem,
+  type SegmentedItemProps,
+  type SegmentedProps,
+} from './segmented';
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -327,6 +333,10 @@ export {
   RadioGroupItem,
   type RadioGroupItemProps,
   type RadioGroupProps,
+  Segmented,
+  SegmentedItem,
+  type SegmentedItemProps,
+  type SegmentedProps,
   Select,
   SelectContent,
   type SelectContentProps,

@@ -6,14 +6,14 @@ import type { CardFooterProps, CardSectionIs } from './spec';
 const CLASS_NAME = 'kicl--components--card__footer';
 
 const CardFooter = React.forwardRef<HTMLElement, CardFooterProps>(
-  ({ children, className, is = 'div', ...rest }, ref) => {
+  ({ children, className, is = 'footer', ...rest }, ref) => {
     const Component = is as CardSectionIs;
 
     return (
       <Component
         {...(rest as React.HTMLAttributes<HTMLElement>)}
         className={classNames(
-          'kicl-padding-block-start',
+          'kicl-padding-block',
           CLASS_NAME,
           className
         )}
