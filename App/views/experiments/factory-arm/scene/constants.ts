@@ -11,6 +11,15 @@ const PALLET = {
 };
 
 /**
+ * Where incoming pallets stand: the first to the arm's left, and a second
+ * behind it when the setup asks for two stacks.
+ */
+const INCOMING: [number, number, number][] = [
+  PALLET.position,
+  [-0.3, 0, -1.35],
+];
+
+/**
  * A second, empty pallet of the same size. Cases in the way of the one the
  * operator picked wait here, side by side, until it has gone.
  */
@@ -37,7 +46,4 @@ const CONVEYOR = {
 /** Pixels the pointer may move between press and release and still click. */
 const DRAG = 4;
 
-/** Seeds the stack, so a reload builds the same pallet. */
-const SEED = 7;
-
-export { BUFFER, CONVEYOR, DRAG, PALLET, SEED };
+export { BUFFER, CONVEYOR, DRAG, INCOMING, PALLET };

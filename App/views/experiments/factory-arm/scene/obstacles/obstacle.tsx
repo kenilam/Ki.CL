@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 // Physics
 import {
@@ -15,10 +15,10 @@ import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
 // Partials
 import { Arrows } from './arrows';
+import { Remove } from './remove';
 
 // Constants
 import { DRAG } from '@/views/experiments/factory-arm/scene/constants';
-import { OBSTACLES } from './constants';
 
 const GREY = new THREE.Color('#8f9398');
 const GLOW = new THREE.Color('#f07d1a');
@@ -31,15 +31,19 @@ type Props = { id: string };
 
 /**
  * One obstacle, as a body a carried case can't pass through. It's grey, and
- * lights up orange while it stands in the way of a move. It follows where the
- * context says it stands; `useNudge` only moves it where there is room.
+ * lights up orange while it stands in the way of a move, and for as long
+ * as a case waits because of it. It follows where the context says it
+ * stands; `useNudge` only moves it where there is room.
  */
 const Obstacle: React.FunctionComponent<Props> = ({ id }) => {
-  const { obstacles, obstructing, select, selected } = useFactoryArmContext();
+  const { obstacles, obstructing, parked, select, selected } =
+    useFactoryArmContext();
   const body = useRef<RapierRigidBody>(null);
 
   // Its size never changes; only where it stands does.
-  const { min, max } = OBSTACLES.find((solid) => solid.id === id)!;
+  const [{ min, max }] = useState(() =>
+    obstacles.current.find((solid) => solid.id === id)!
+  );
   const size: [number, number, number] = [
     max.x - min.x,
     max.y - min.y,
@@ -64,9 +68,13 @@ const Obstacle: React.FunctionComponent<Props> = ({ id }) => {
 
   Fiber.useFrame(() => {
     const since = performance.now() - (obstructing.current.get(id) ?? -LIT);
+    // Lit while a case waits on it, so what's in the way stays plain.
+    const waited = [...parked.current.values()].some((across) =>
+      across.includes(id)
+    );
     const solid = obstacles.current.find((each) => each.id === id);
 
-    material.emissive.copy(since < LIT ? GLOW : DARK);
+    material.emissive.copy(since < LIT || waited ? GLOW : DARK);
 
     if (solid) {
       body.current?.setNextKinematicTranslation(centre(solid));
@@ -105,7 +113,12 @@ const Obstacle: React.FunctionComponent<Props> = ({ id }) => {
         <boxGeometry args={size} />
       </mesh>
 
-      {selected === id && <Arrows id={id} size={size} />}
+      {selected === id && (
+        <>
+          <Arrows id={id} size={size} />
+          <Remove id={id} size={size} />
+        </>
+      )}
     </RigidBody>
   );
 };

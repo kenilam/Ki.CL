@@ -25,6 +25,29 @@ const BUDGET = 30000;
  */
 const DEADLINE = 200;
 
+/** The latest any search may run to while a whole job is planned; see `budget`. */
+let cutoff = Infinity;
+
+/**
+ * Runs `planning` with every search in it done by `ms` from now, however
+ * many it makes: a job tries several places, and each can search. What
+ * runs out of time counts as no way, as a search that finds none does.
+ */
+const budget = <T>(ms: number, planning: () => T): T => {
+  const outer = cutoff;
+
+  cutoff = Math.min(outer, performance.now() + ms);
+
+  try {
+    return planning();
+  } finally {
+    cutoff = outer;
+  }
+};
+
+/** Whether the job being planned has run out of time. */
+const spent = () => performance.now() > cutoff;
+
 /**
  * How much more the distance still to go counts than the distance come. Over
  * 1 the search heads for the goal and finds long ways round far sooner, for
@@ -189,7 +212,7 @@ const route = (
     }
   }
 
-  const until = performance.now() + DEADLINE;
+  const until = Math.min(performance.now() + DEADLINE, cutoff);
 
   for (let looked = 0; open.size && looked < BUDGET; looked++) {
     // The clock is read every so often: reading it costs too.
@@ -244,4 +267,4 @@ const route = (
   return null;
 };
 
-export { route };
+export { budget, route, spent };

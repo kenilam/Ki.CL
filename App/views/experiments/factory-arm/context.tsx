@@ -2,6 +2,7 @@ import React, {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -19,13 +20,12 @@ import { stack } from './scene/pallet/stack';
 // Spec
 import type { Box } from './scene/boxes/spec';
 import type { Solid } from './scene/obstacles/spec';
+import type { Setup } from './setup/spec';
+import { useSetup } from './setup';
 
 // Obstacles
-import { OBSTACLES } from './scene/obstacles/constants';
+import type { Shape } from './scene/obstacles/constants';
 import { vision } from './scene/sensors/vision';
-
-// Constants
-import { SEED } from './scene/constants';
 
 /**
  * `command` is where the pad should go and whether to hold; `joints` is where
@@ -35,8 +35,9 @@ import { SEED } from './scene/constants';
  * `obstacles` are where the obstacles stand now; the operator can move them.
  * `known` holds the ones the overhead camera sees and the sensors have
  * found, and `found` counts each time that changes, so the arm knows to check its way again.
- * `parked` holds the clicked cases whose moves were given up on, for the arm
- * to try again once the cell changes. `seeing` holds
+ * `parked` holds the clicked cases whose moves were given up on, each with
+ * the obstacles that were in the way, for the arm to try again once the cell
+ * changes. `seeing` holds
  * the sensors with something in view right now, and `obstructing` when each
  * obstacle, or case, last stood in the way of a move. `struck` is a case the
  * carried case has just hit, for the arm to stop and plan again.
@@ -75,8 +76,14 @@ type Write = {
    * checks its way again, so it never moves into one the operator placed.
    */
   move: (id: string, by: Point) => void;
-  /** Holds a clicked case given up on, to try again once the cell changes. */
-  park: (chain: string) => void;
+  /** Adds an obstacle the operator dropped on the stage; the arm knows where it stands. */
+  place: (solid: Solid) => void;
+  /** Takes an obstacle out of the cell. */
+  withdraw: (id: string) => void;
+  /** Asks for a shape from the panel, for the stage to put where there is room. */
+  ask: (shape: Shape) => void;
+  /** Holds a clicked case given up on, and what was in its way, to try again once the cell changes. */
+  park: (chain: string, across: string[]) => void;
   unpark: (chain: string) => void;
   /** Marks obstacles as in the way of a move, as of now. */
   obstruct: (ids: string[]) => void;
@@ -100,8 +107,14 @@ type Value = {
   known: React.RefObject<Set<string>>;
   /** The operator's last move of an obstacle: which, which way, and when. */
   moving: React.RefObject<{ id: string; by: Point; at: number } | null>;
-  parked: React.RefObject<Set<string>>;
+  parked: React.RefObject<Map<string, string[]>>;
   obstacles: React.RefObject<Solid[]>;
+  /** The obstacles in the cell, by id, to draw one each. */
+  standing: string[];
+  /** Shapes asked for from the panel, not yet put on the stage. */
+  asked: React.RefObject<Shape[]>;
+  /** How many incoming stacks this run has. */
+  stacks: Setup['stacks'];
   /** The obstacle the arrow keys move, if any. */
   selected: string | null;
   select: (id: string | null) => void;
@@ -123,25 +136,35 @@ const NOTICE = 4000;
 
 const Context = React.createContext<Value | null>(null);
 
-const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
-  children,
-}) => {
+/** The cell for one run, built from `setup`; a new run mounts a new one. */
+const FactoryArmProvider: React.FunctionComponent<
+  PropsWithChildren<{ setup: Setup }>
+> = ({ children, setup }) => {
   const bodies = useRef(new Map<string, Body>());
   const command = useRef<Command>({ target: forward(HOME), grip: 0 });
   const held = useRef<Held | null>(null);
   const joints = useRef<Joints>(HOME);
   const queue = useRef<Job[]>([]);
   const found = useRef(0);
-  const obstacles = useRef(OBSTACLES);
+  const obstacles = useRef(setup.obstacles);
+  const asked = useRef<Shape[]>([]);
+  // Moving, adding or taking away an obstacle changes the cell from its setup.
+  const { attach, note, setEdited } = useSetup();
+  const [standing, setStanding] = useState(() =>
+    setup.obstacles.map(({ id }) => id)
+  );
   const moving = useRef<{ id: string; by: Point; at: number } | null>(null);
-  const parked = useRef(new Set<string>());
+  const parked = useRef(new Map<string, string[]>());
   // What the overhead camera sees is known before the arm moves.
-  const known = useRef(new Set(vision(OBSTACLES)));
+  const known = useRef(new Set(vision(setup.obstacles)));
   const obstructing = useRef(new Map<string, number>());
   const struck = useRef<string | null>(null);
   const seeing = useRef(new Set<string>());
 
-  const [selected, select] = useState<string | null>(null);
+  // One obstacle starts selected, so its arrows show that obstacles can be picked and moved.
+  const [selected, select] = useState<string | null>(
+    () => setup.obstacles[0]?.id ?? null
+  );
 
   const [stopped, setStopped] = useState(false);
   const alarm = useCallback(() => setStopped(true), []);
@@ -177,6 +200,7 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
         }
       },
       move: (id, by) => {
+        setEdited(true);
         const shift = ({ x, y, z }: Point) => ({
           x: x + by.x,
           y: y + by.y,
@@ -194,8 +218,29 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
         found.current += 1;
         moving.current = { id, by, at: performance.now() };
       },
-      park: (chain) => {
-        parked.current.add(chain);
+      place: (solid) => {
+        setEdited(true);
+        note(`Added ${solid.id}`, 'info');
+        obstacles.current = [...obstacles.current, solid];
+        known.current.add(solid.id);
+        found.current += 1;
+        setStanding((ids) => [...ids, solid.id]);
+      },
+      withdraw: (id) => {
+        setEdited(true);
+        note(`Took ${id} away`, 'info');
+        obstacles.current = obstacles.current.filter(
+          (solid) => solid.id !== id
+        );
+        known.current.delete(id);
+        found.current += 1;
+        setStanding((ids) => ids.filter((each) => each !== id));
+      },
+      ask: (shape) => {
+        asked.current.push(shape);
+      },
+      park: (chain, across) => {
+        parked.current.set(chain, across);
       },
       unpark: (chain) => {
         parked.current.delete(chain);
@@ -221,10 +266,21 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
         };
       },
     }),
-    []
+    [note, setEdited]
   );
 
-  const [boxes, setBoxes] = useState(() => stack(SEED));
+  // The panel reaches this run's cell through the setup, which outlives it.
+  useEffect(() => {
+    attach({
+      ask: write.ask,
+      busy: () => queue.current.length > 0 || held.current !== null,
+      obstacles,
+    });
+
+    return () => attach(null);
+  }, [attach, write]);
+
+  const [boxes, setBoxes] = useState(() => stack(setup.pile, setup.stacks));
 
   const remove = useCallback(
     (id: string) =>
@@ -235,6 +291,7 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
   const value = useMemo(
     () => ({
       alarm,
+      asked,
       bodies,
       calm,
       boxes,
@@ -254,11 +311,25 @@ const FactoryArmProvider: React.FunctionComponent<PropsWithChildren> = ({
       selected,
       skip,
       skipped,
+      stacks: setup.stacks,
+      standing,
       stopped,
       struck,
       write,
     }),
-    [alarm, boxes, calm, remove, selected, skip, skipped, stopped, write]
+    [
+      alarm,
+      boxes,
+      calm,
+      remove,
+      selected,
+      setup.stacks,
+      skip,
+      skipped,
+      standing,
+      stopped,
+      write,
+    ]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

@@ -6,6 +6,9 @@ import { useRapier } from '@react-three/rapier';
 // Three
 import { Fiber } from '@/three';
 
+// Setup
+import { useSetup } from '@/views/experiments/factory-arm/setup';
+
 // Context
 import {
   type Job,
@@ -24,7 +27,7 @@ import {
 // Obstacles
 
 // Partials
-import { covers, occupied, onPallet, solidsOf } from './cell';
+import { covers, occupied, onPallet, solidsOf, where } from './cell';
 import { carry, pick, place } from './hold';
 import { touching } from './pad';
 import { CLEARANCE, along, speed, type Step } from './plan';
@@ -55,7 +58,7 @@ const RECOIL = 0.1;
  * Milliseconds after the operator last moved an obstacle before what was
  * given up on is tried again: once, not at every step of a held key.
  */
-const SETTLE = 300;
+const SETTLE = 600;
 
 /** How often, in milliseconds, the arm looks again at what it gave up on. */
 const RECHECK = 1500;
@@ -84,7 +87,21 @@ const arrived = (joints: Joints, step: Step) => {
  * With nothing held, it gives the case up.
  */
 
+/** How a case reads in the log. */
+const label = (id: string) => `case ${id}`;
+
+/**
+ * A log colour for a case's move, as the case glows in the scene: green for
+ * the belt, yellow for out of the way.
+ */
+const tone = (to: Job['to'] | undefined) =>
+  to === 'belt' ? 'confirm' : 'warning';
+
+/** A list of obstacles, as the log names them. */
+const named = (ids: string[]) => ids.join(', ');
+
 const Grasp: React.FunctionComponent = () => {
+  const { note } = useSetup();
   const {
     alarm,
     bodies,
@@ -162,11 +179,19 @@ const Grasp: React.FunctionComponent = () => {
 
     if (given) {
       skip(given.id);
+      note(
+        (given.to === 'buffer'
+          ? `No room on the buffer the arm can reach for ${label(given.id)}`
+          : `No clear path for ${label(given.id)}`) +
+          (across.length ? `: ${named(across)} in the way` : '') +
+          (chain && chain !== given.id ? `; ${label(chain)} waits` : ''),
+        'error'
+      );
     }
 
-    // Tried again once an obstacle has been moved.
+    // Tried again once the cell changes; what was in the way stays lit till then.
     if (chain) {
-      write.park(chain);
+      write.park(chain, across);
     }
     // In place, from the back: the job running stays at the head.
     for (let index = queue.current.length - 1; index >= 0; index -= 1) {
@@ -210,6 +235,7 @@ const Grasp: React.FunctionComponent = () => {
       } else if (id && entry && touching(pad, entry.body, entry.box)) {
         steps.current = [step, ...next.steps];
         write.held(pick(rapier, id, entry.body, pad, bearing(joints.current)));
+        note(`Picked ${label(id)} from ${where(pad)}`, tone(job.current?.to));
         origin.current = {
           top: step.target,
           facing: step.facing,
@@ -218,6 +244,7 @@ const Grasp: React.FunctionComponent = () => {
       } else {
         // The case moved or went; lift clear and give up on it.
         steps.current = steps.current.slice(0, 2);
+        note(`${label(id ?? '')} moved before the pad reached it`, 'info');
       }
     }
 
@@ -244,17 +271,24 @@ const Grasp: React.FunctionComponent = () => {
 
       if (rest && 'steps' in rest) {
         steps.current = [step, ...rest.steps];
+        note('Found a new way on after the hit', 'confirm');
       } else if (back) {
         backing.current = true;
         steps.current = [step, ...back];
+        note(`No way on; taking ${label(held.current?.id ?? '')} back`, 'info');
       } else {
         halted.current = true;
         alarm();
+        note('Stopped: no clear way forward or back', 'error');
       }
     }
 
     if (step.action === 'place' && holding) {
       place(rapier, holding.body);
+      note(
+        `Set ${label(holding.box.id)} down on ${where(pad)}`,
+        tone(where(pad) === 'the belt' ? 'belt' : 'buffer')
+      );
       write.held(null);
     }
 
@@ -346,6 +380,7 @@ const Grasp: React.FunctionComponent = () => {
       steps.current = rest.steps;
       leg.current = null;
       checked.current = null;
+      note('Buffer place blocked; chose another', 'warning');
 
       return;
     }
@@ -364,9 +399,11 @@ const Grasp: React.FunctionComponent = () => {
       steps.current = back;
       leg.current = null;
       checked.current = { step: back[0], found: found.current };
+      note(`Way blocked; taking ${label(held.current?.id ?? '')} back`, 'info');
     } else if (held.current) {
       halted.current = true;
       alarm();
+      note('Stopped: no clear way forward or back', 'error');
     } else {
       steps.current = [];
       leg.current = null;
@@ -398,7 +435,7 @@ const Grasp: React.FunctionComponent = () => {
    * rest of its job from where it is, and carries on if it can.
    */
   const retry = () => {
-    parked.current.forEach((chain) => {
+    parked.current.forEach((_, chain) => {
       const asked = jobs(
         chain,
         bodies.current,
@@ -412,6 +449,7 @@ const Grasp: React.FunctionComponent = () => {
       } else if (!hopeless(asked, bodies.current, solids()).length) {
         write.unpark(chain);
         queue.current.push(...asked);
+        note(`Trying ${label(chain)} again`, 'info');
       }
     });
 
@@ -434,6 +472,7 @@ const Grasp: React.FunctionComponent = () => {
       checked.current = null;
       rounds.current = 0;
       calm();
+      note('Found a way; carrying on', 'confirm');
     }
   };
 
@@ -473,9 +512,15 @@ const Grasp: React.FunctionComponent = () => {
      * of it, and plan again once there, by when the struck case has settled.
      */
     if (struck.current) {
+      const hit = struck.current;
+
       write.strike(null);
 
       if (held.current) {
+        note(
+          `${label(held.current.id)} hit ${label(hit)}; lifting clear to replan`,
+          'error'
+        );
         const facing = bearing(joints.current);
         const clear = { ...pad, y: pad.y + RECOIL };
 
@@ -522,6 +567,13 @@ const Grasp: React.FunctionComponent = () => {
       );
       queue.current.unshift(...early);
 
+      if (early.length) {
+        note(
+          `Delivering ${named(early.map(({ id }) => label(id)))} first, so nothing is buried`,
+          'confirm'
+        );
+      }
+
       const [next] = queue.current;
 
       // A chain with a lift that can't be made is called off before it starts.
@@ -538,6 +590,14 @@ const Grasp: React.FunctionComponent = () => {
           : null;
 
       if (next && planned && 'steps' in planned) {
+        const from = bodies.current.get(next.id)?.body.translation();
+        const down = planned.steps.find(({ action }) => action === 'place');
+
+        note(
+          `Moving ${label(next.id)} from ${from ? where(from) : 'its place'} to ${down ? where(down.target) : next.to}` +
+            (next.to === 'buffer' ? ', out of the way' : ''),
+          tone(next.to)
+        );
         job.current = next;
         steps.current = planned.steps;
         origin.current = null;

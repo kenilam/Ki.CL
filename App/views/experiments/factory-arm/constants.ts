@@ -5,6 +5,46 @@ const PATH = 'factory-arm';
 const CLASS_NAME = 'kicl--views--experiments--factory-arm';
 
 const COPY = {
+  panel: {
+    busy: {
+      cancel: 'Keep going',
+      confirm: 'Start over',
+      message:
+        'The arm is still working. Starting over drops the cases it has queued.',
+      title: 'Start over?',
+    },
+    clear: 'Clear',
+    close: 'Close setup',
+    empty: 'Nothing yet',
+    first: 'First run',
+    label: 'Setup',
+    log: 'Log',
+    manual: 'Manual',
+    name: 'Preset name',
+    open: 'Open setup',
+    pile: {
+      layers: 'Layers',
+      random: 'Random',
+      second: 'Second stack',
+      seed: 'Seed',
+      title: 'Cases',
+    },
+    play: 'Run',
+    preset: 'Preset',
+    proceed: 'Proceed',
+    remove: 'Remove',
+    save: 'Save as preset',
+    unsaved: 'Save changes as a preset',
+    steps: 'steps',
+    shapes: {
+      beam: 'Beam',
+      crate: 'Crate',
+      hint: 'Drag to the stage',
+      pillar: 'Pillar',
+      remove: 'Remove obstacle',
+      title: 'Obstacles',
+    },
+  },
   scene: 'A robot arm working a pallet, a buffer pallet and a conveyor',
   skipped: 'No clear path',
   stopped: {
@@ -14,4 +54,7 @@ const COPY = {
   title: 'Factory Arm',
 };
 
-export { CLASS_NAME, COPY, PATH };
+/** The setup panel's id, for the buttons that open and close it on small screens. */
+const PANEL = `${CLASS_NAME}--panel`;
+
+export { CLASS_NAME, COPY, PANEL, PATH };

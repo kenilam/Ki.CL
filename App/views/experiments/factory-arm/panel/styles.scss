@@ -1,0 +1,97 @@
+/*
+ * The setup panel floats over the stage's right side, within the frame, and
+ * folds away. It's a popover the settings button opens and its close button
+ * shuts. The browser centres a popover at its content's height, which the
+ * panel undoes; on small screens it opens full screen instead.
+ *
+ * The insets are set here rather than with the `kicl-inset-*` utilities,
+ * which sit in a higher layer and would win over the full-screen rule below.
+ * They read the same variables, which the frame sets to clear its edge.
+ */
+.kicl--views--experiments--factory-arm__panel {
+  block-size: auto;
+  margin: 0;
+  opacity: 1;
+  transition:
+    display var(--kicl-transition-duration-fast) allow-discrete,
+    opacity var(--kicl-transition-duration-fast),
+    overlay var(--kicl-transition-duration-fast) allow-discrete,
+    translate var(--kicl-transition-duration-fast);
+  translate: 0 0;
+
+  // Card's own `display` would otherwise keep it on screen while closed.
+  &:not(:popover-open) {
+    display: none;
+    opacity: 0;
+    translate: var(--kicl-gutter-wide) 0;
+  }
+
+  @starting-style {
+    opacity: 0;
+    translate: var(--kicl-gutter-wide) 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @include query('>tablet') {
+    inline-size: var(--kicl-columns-4);
+    inset-block: var(--kicl-inset-block-start) var(--kicl-inset-block-end);
+    inset-inline: auto var(--kicl-inset-inline-end);
+  }
+
+  @include query('≤tablet') {
+    border: 0;
+    border-radius: 0;
+    inline-size: auto;
+    inset: 0;
+  }
+}
+
+// The panel scrolls as a whole; the footer stays stuck to its bottom.
+.kicl--views--experiments--factory-arm__panel {
+  overflow-y: auto;
+  padding-block-end: 0;
+}
+
+.kicl--views--experiments--factory-arm__panel-body {
+  flex: 1 0 auto;
+}
+
+/*
+ * As the image agent's composer: the footer sits over the panel's own fill,
+ * so what scrolls behind it is hidden, and while it's stuck over content a
+ * line of the moving gradient runs along its top.
+ */
+.kicl--views--experiments--factory-arm__panel-foot {
+  background-color: var(--kicl--components--card--background-color);
+  container-type: scroll-state;
+  margin-block-start: auto;
+  padding-block: var(--kicl-gutter-narrow);
+
+  &::before {
+    block-size: var(--kicl-size-1px);
+    content: '';
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--kicl-color-black-pure) 30%,
+      var(--kicl-color-black-pure) 70%,
+      transparent
+    );
+    position: absolute;
+  }
+
+  @container scroll-state(stuck: bottom) {
+    &::before {
+      animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+        infinite;
+      background: var(--kicl-gradient-shift);
+      background-size: 1200% 1200%;
+      inline-size: 100%;
+    }
+  }
+}

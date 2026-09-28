@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 // Physics
 import {
@@ -12,6 +12,9 @@ import { Fiber, THREE } from '@/three';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
+
+// Setup
+import { useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Grasp
 import { jobs } from '@/views/experiments/factory-arm/scene/grasp/order';
@@ -44,20 +47,28 @@ const GLOW = {
   struck: new THREE.Color('#f07d1a'),
 };
 
+/**
+ * The load blink: how long after the case appears it starts, once the frame
+ * has come in, then how many times, each taking `period` milliseconds.
+ */
+const BLINK = { count: 4, delay: 1500, period: 900 };
+
 /** How long a struck case glows after the hit, in milliseconds. */
 const LIT = 2500;
 
 /** How far above a case's underside another's top may be and still hold it up. */
 const RESTING = 0.02;
 
-type Props = { box: Box };
+/** `hint` makes it blink as the cell loads, to show cases can be picked. */
+type Props = { box: Box; hint?: boolean };
 
 /**
  * One case as a physics body. It registers itself so the gripper and the belt
  * can move it. Clicking it queues it for the arm to move to the belt, with
  * whatever is in the way going to the buffer pallet first, where it stays.
  */
-const Case: React.FunctionComponent<Props> = ({ box }) => {
+const Case: React.FunctionComponent<Props> = ({ box, hint }) => {
+  const { note } = useSetup();
   const {
     bodies,
     held,
@@ -84,8 +95,26 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     []
   );
 
+  const [born] = useState(() => performance.now());
+
   Fiber.useFrame(() => {
     const job = queue.current.find(({ id }) => id === box.id);
+    const age = performance.now() - born - BLINK.delay;
+
+    // Blinks a few times, and stops as soon as anything is queued.
+    if (
+      hint &&
+      age > 0 &&
+      age < BLINK.count * BLINK.period &&
+      !queue.current.length
+    ) {
+      const pulse = (1 - Math.cos((age / BLINK.period) * Math.PI * 2)) / 2;
+
+      cardboard.emissive.copy(GLOW.belt).multiplyScalar(pulse);
+
+      return;
+    }
+
     const hit = performance.now() - (obstructing.current.get(box.id) ?? -LIT);
 
     cardboard.emissive.copy(
@@ -142,13 +171,24 @@ const Case: React.FunctionComponent<Props> = ({ box }) => {
     // A lift already known to be blocked: say so now rather than start.
     if (across.length) {
       write.obstruct(across);
-      write.park(box.id);
+      write.park(box.id, across);
       skip(box.id);
+      note(
+        `Can't lift case ${box.id} out: ${across.join(', ')} in the way`,
+        'error'
+      );
 
       return;
     }
 
-    queue.current.push(...asked);
+    if (asked.length) {
+      queue.current.push(...asked);
+      note(
+        `Queued case ${box.id} for the belt` +
+          (asked.length > 1 ? `, ${asked.length - 1} in the way first` : ''),
+        'confirm'
+      );
+    }
   };
 
   const hover = (event: Fiber.ThreeEvent<PointerEvent>) => {

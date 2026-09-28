@@ -4,14 +4,15 @@ import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec
 // Constants
 import {
   BUFFER,
+  INCOMING,
   PALLET,
 } from '@/views/experiments/factory-arm/scene/constants';
 
 /** How far past each pallet's edge the camera sees, in metres. */
 const MARGIN = 0.15;
 
-/** What the overhead camera covers, from above: both pallets and a margin. */
-const VIEW = [PALLET.position, BUFFER.position].map(([x, , z]) => ({
+/** What the overhead camera covers, from above: every pallet and a margin. */
+const VIEW = [...INCOMING, BUFFER.position].map(([x, , z]) => ({
   x: [x - PALLET.size[0] / 2 - MARGIN, x + PALLET.size[0] / 2 + MARGIN],
   z: [z - PALLET.size[2] / 2 - MARGIN, z + PALLET.size[2] / 2 + MARGIN],
 }));

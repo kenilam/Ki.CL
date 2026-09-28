@@ -11,7 +11,7 @@ import {
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
 
 // Body
-import { type Carried, collides } from './body';
+import { type Carried, collides, grazes } from './body';
 
 /** Spacing of the poses tested along a straight move, in metres. */
 const SAMPLE = 0.05;
@@ -128,4 +128,32 @@ const swept = (
   return true;
 };
 
-export { checker, straight, swept };
+/**
+ * Whether the arm's links stay clear of `solids` all along a straight move
+ * of the pad, the gripper and what it carries aside.
+ */
+const overhead = (from: Point, to: Point, facing: number, solids: Solid[]) => {
+  const length = Math.hypot(to.x - from.x, to.y - from.y, to.z - from.z);
+  const count = Math.max(1, Math.ceil(length / SAMPLE));
+
+  for (let index = 0; index <= count; index++) {
+    const share = index / count;
+    const joints = solve(
+      {
+        x: from.x + (to.x - from.x) * share,
+        y: from.y + (to.y - from.y) * share,
+        z: from.z + (to.z - from.z) * share,
+      },
+      0,
+      facing
+    );
+
+    if (grazes(joints, solids).length) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export { checker, overhead, straight, swept };

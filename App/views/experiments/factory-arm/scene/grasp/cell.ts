@@ -10,8 +10,6 @@ import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec
 // Pad
 import { heading, top } from './pad';
 
-// Plan
-
 // Rect
 import { overlap, type Rect } from './rect';
 
@@ -20,6 +18,7 @@ import { GRIPPER } from '@/views/experiments/factory-arm/scene/arm/constants';
 import {
   BUFFER,
   CONVEYOR,
+  INCOMING,
   PALLET,
 } from '@/views/experiments/factory-arm/scene/constants';
 
@@ -179,9 +178,28 @@ const over = (
   );
 };
 
-/** Whether a case is on either pallet: the arm works both, never the belt or floor. */
+/** The place a point is over, in words, for the log. */
+const where = ({ x, z }: { x: number; z: number }) => {
+  const [width, , depth] = PALLET.size;
+  const on = ([left, , back]: [number, number, number]) =>
+    Math.abs(x - left) < width / 2 && Math.abs(z - back) < depth / 2;
+
+  if (Math.abs(x - CONVEYOR.x) < CONVEYOR.width / 2 + 0.1) {
+    return 'the belt';
+  }
+
+  if (on(BUFFER.position)) {
+    return 'the buffer';
+  }
+
+  const stack = INCOMING.findIndex(on);
+
+  return stack < 0 ? 'the floor' : stack ? 'the second stack' : 'the pallet';
+};
+
+/** Whether a case is on a pallet: the arm works every one, never the belt or floor. */
 const onPallet = (id: string, bodies: Bodies) =>
-  over(id, bodies, PALLET.position) || over(id, bodies, BUFFER.position);
+  [...INCOMING, BUFFER.position].some((position) => over(id, bodies, position));
 
 export {
   PAD,
@@ -193,5 +211,6 @@ export {
   occupied,
   onPallet,
   solidsOf,
+  where,
 };
 export type { Bodies };

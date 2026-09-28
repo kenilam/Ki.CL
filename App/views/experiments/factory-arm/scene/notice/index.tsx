@@ -6,6 +6,9 @@ import { Drei, Fiber, THREE } from '@/three';
 // Components
 import { Animation, Badge } from '@/components';
 
+// Icons
+import { Ri } from '@/icons';
+
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
@@ -41,16 +44,28 @@ const Notice: React.FunctionComponent = () => {
     return null;
   }
 
+  const level = stopped ? 'error' : 'warning';
+
   return (
     <group ref={anchor}>
-      <Drei.Html aria-hidden center>
+      <Drei.Html
+        aria-hidden
+        center
+        // Clicks go through to the scene: a badge over a case mustn't stop it being picked.
+        wrapperClass='kicl-pointer-events-none'
+      >
         <Animation property='slide-from-bottom'>
           <Badge
             className='kicl-text-nowrap'
-            level={stopped ? 'error' : 'warning'}
+            level={level}
             size='small'
             variant='outline'
           >
+            {/* A status dot in the level's colour; the outline's text is the page's. */}
+            <Ri.RiCheckboxBlankCircleFill
+              aria-hidden
+              className={`kicl-color-${level}`}
+            />
             {stopped ? COPY.stopped.message : COPY.skipped}
           </Badge>
         </Animation>

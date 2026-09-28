@@ -14,7 +14,7 @@ import type { Step } from '@/views/experiments/factory-arm/scene/grasp/plan';
 
 // Partials
 import type { Carried } from './body';
-import { straight, swept } from './check';
+import { overhead, straight, swept } from './check';
 import { route } from './search';
 
 /** How far below the lower end of a move a way round may dip, in metres. */
@@ -51,16 +51,18 @@ const verify = (
   solids: Solid[],
   cases: Solid[] = []
 ): Verdict => {
-  // A free move keeps clear of the cases too; a move into or out of contact
-  // is straight up or down, where the lift check has already cleared them.
-  const among =
-    step.ease === 'arrive' || step.ease === 'leave'
-      ? solids
-      : [...solids, ...cases];
+  /*
+   * A free move keeps clear of the cases too. A move into or out of contact
+   * is straight up or down: the lift check has cleared the gripper's column,
+   * and only the links, reaching over the stack, are checked against cases.
+   */
+  const contact = step.ease === 'arrive' || step.ease === 'leave';
+  const among = contact ? solids : [...solids, ...cases];
   const pad = forward(joints);
   const clear = (among: Solid[]) =>
     step.ease
-      ? straight(pad, step.target, step.facing, carried, among)
+      ? straight(pad, step.target, step.facing, carried, among) &&
+        (!contact || overhead(pad, step.target, step.facing, cases))
       : swept(
           joints,
           solve(step.target, joints.grip, step.facing),

@@ -101,6 +101,34 @@ const meets = (
  * the forearm are capsules; the gripper and the case under it are upright
  * boxes turned with the pad, since the hand always points straight down.
  */
+/** The upper arm, the elbow housing and the forearm, as capsules at `joints`. */
+const links = (joints: Joints): Capsule[] => {
+  const { fore, upper } = frames(joints);
+
+  return [
+    {
+      from: place(upper, [SIDE, 0, 0]),
+      to: place(upper, [SIDE, 0, LINK.upper]),
+      radius: 0.13,
+    },
+    { from: place(fore, [0, 0.03, -0.3]), to: fore.origin, radius: 0.15 },
+    { from: fore.origin, to: place(fore, [0, 0, LINK.fore]), radius: 0.11 },
+  ];
+};
+
+/**
+ * Which of `solids` the arm's links come within `margin` of at `joints`,
+ * leaving out the gripper: it's meant to touch the case it picks, and its
+ * neighbours, but the links reaching over a stack mustn't touch any case.
+ */
+const grazes = (joints: Joints, solids: Solid[], margin = MARGIN) => {
+  const capsules = links(joints);
+
+  return solids.filter((solid) =>
+    capsules.some((capsule) => touches(capsule, solid, margin))
+  );
+};
+
 const collides = (
   joints: Joints,
   carried: Carried | undefined,
@@ -111,19 +139,9 @@ const collides = (
     return false;
   }
 
-  const { fore, upper } = frames(joints);
   const pad = forward(joints);
   const facing = bearing(joints);
-
-  const capsules: Capsule[] = [
-    {
-      from: place(upper, [SIDE, 0, 0]),
-      to: place(upper, [SIDE, 0, LINK.upper]),
-      radius: 0.13,
-    },
-    { from: place(fore, [0, 0.03, -0.3]), to: fore.origin, radius: 0.15 },
-    { from: fore.origin, to: place(fore, [0, 0, LINK.fore]), radius: 0.11 },
-  ];
+  const capsules = links(joints);
 
   const gripper: Rect = {
     x: pad.x,
@@ -186,5 +204,5 @@ const collides = (
   );
 };
 
-export { collides };
+export { collides, grazes };
 export type { Carried };

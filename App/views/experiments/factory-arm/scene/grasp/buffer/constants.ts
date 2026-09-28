@@ -36,14 +36,8 @@ const edgesOf = ([x, , z]: [number, number, number]): Edges => ({
   z: [z - DEPTH / 2, z + DEPTH / 2],
 });
 
-/**
- * The pallets cases can be set down on out of the way: the buffer, and the
- * incoming pallet, which has room once cases have come off it.
- */
-const AREAS = {
-  buffer: edgesOf(BUFFER.position),
-  pallet: edgesOf(PALLET.position),
-};
+/** The buffer pallet's edges from above: where cases in the way are set down. */
+const EDGES = edgesOf(BUFFER.position);
 
-export { AREAS, BOARDS, GAP, LEVEL, LIMIT, SLENDER, SUPPORT, TOUCH };
+export { BOARDS, EDGES, GAP, LEVEL, LIMIT, SLENDER, SUPPORT, TOUCH };
 export type { Edges };

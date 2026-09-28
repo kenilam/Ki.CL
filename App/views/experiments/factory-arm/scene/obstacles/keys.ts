@@ -16,7 +16,7 @@ const KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
 
 /**
  * Moves the selected obstacle with the arrow keys, up and down with Shift
- * held, and Escape lets it go.
+ * held, Delete or Backspace takes it away, and Escape lets it go.
  *
  * Up moves it away from the viewer and right to their right, whichever way
  * they've turned the view: the camera's heading on the floor, squared to the
@@ -24,7 +24,7 @@ const KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
  * the arrows drawn round it.
  */
 const useKeys = () => {
-  const { select, selected } = useFactoryArmContext();
+  const { select, selected, write } = useFactoryArmContext();
   const camera = Fiber.useThree((state) => state.camera);
   const nudge = useNudge();
 
@@ -36,6 +36,14 @@ const useKeys = () => {
     const press = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         select(null);
+
+        return;
+      }
+
+      if (event.key === 'Delete' || event.key === 'Backspace') {
+        event.preventDefault();
+        select(null);
+        write.withdraw(selected);
 
         return;
       }
@@ -77,7 +85,7 @@ const useKeys = () => {
     window.addEventListener('keydown', press);
 
     return () => window.removeEventListener('keydown', press);
-  }, [camera, nudge, select, selected]);
+  }, [camera, nudge, select, selected, write]);
 };
 
 export { useKeys };

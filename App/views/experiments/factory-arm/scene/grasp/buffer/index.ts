@@ -21,7 +21,7 @@ import { contact } from './contact';
 import { before, type Option, options } from './options';
 
 // Constants
-import { AREAS, type Edges } from './constants';
+import { EDGES, type Edges } from './constants';
 
 /** How many of the best places for this case are played forward. */
 const TRIED = 12;
@@ -82,9 +82,8 @@ const rank = (
 };
 
 /**
- * Safe places on a pallet for a case, and the heading to set it at in each,
- * best first; none when there is no safe place. `area` is which pallet: the
- * buffer, or the incoming one once it has room.
+ * Safe places on the buffer for a case, and the heading to set it at in each,
+ * best first; none when there is no safe place.
  *
  * `reserved` are cases still queued to be picked up. A place that would put
  * this case in the way of any of them lists them in `buries`, and comes after
@@ -100,10 +99,9 @@ const spots = (
   box: Box,
   bodies: Bodies,
   upcoming: Box[] = [],
-  reserved: string[] = [],
-  area: keyof typeof AREAS = 'buffer'
+  reserved: string[] = []
 ): { point: Point; facing: number; buries: string[] }[] => {
-  const edges = AREAS[area];
+  const edges = EDGES;
   const loaded: Slab[] = [];
 
   bodies.forEach(({ body, box: other }) => {

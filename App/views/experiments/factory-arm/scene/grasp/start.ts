@@ -15,6 +15,10 @@ import { belt, type Destination, lift, plan, type Step } from './plan';
 import type { Carried } from './route/body';
 import { straight } from './route/check';
 import { ahead } from './route/plan-ahead';
+import { budget, spent } from './route/search';
+
+/** Milliseconds a job may take to plan, over every place it tries. */
+const PLANNING = 300;
 
 /** How many buffer places are tried, of each kind, before a job counts as blocked. */
 const TRIES = 4;
@@ -28,13 +32,11 @@ type Outcome = { steps: Step[] } | { across: string[] } | null;
 
 /**
  * Where a job's case may go, best first. A case in the way tries the best few
- * clear places on the buffer, then on the incoming pallet, then places that
- * would bury a queued case; it never goes to the belt. The case that was
- * clicked goes to the belt.
- *
- * Each pallet's places are only worked out once the ones before them have
- * all failed: the incoming pallet holds most of the cases, so searching it
- * is slow, and it's rarely needed.
+ * clear places on the buffer, then places that would bury a queued case; it
+ * never goes to the belt, and never back onto a pallet being unloaded, where
+ * it would be piled onto the stack being dug into. With no room on the buffer
+ * it can reach, the job is refused. The case that was clicked goes to the
+ * belt.
  */
 function* destinations(
   job: Job,
@@ -63,32 +65,16 @@ function* destinations(
   // The case itself isn't part of the buffer's load, even in the air over it.
   const others: Bodies = new Map([...bodies].filter(([id]) => id !== job.id));
 
-  /*
-   * The cases still to come are played forward on the buffer only. They go
-   * there first too, so looking ahead on the incoming pallet would cost a lot
-   * and change little.
-   */
-  const buffer = spots(entry.box, others, upcoming, reserved, 'buffer');
-  let pallet: typeof buffer | undefined;
-  const incoming = () =>
-    (pallet ??= spots(entry.box, others, [], reserved, 'pallet'));
+  const buffer = spots(entry.box, others, upcoming, reserved);
 
-  const pick = (rooms: typeof buffer, burying: boolean): Destination[] =>
-    rooms
+  const pick = (burying: boolean): Destination[] =>
+    buffer
       .filter(({ buries }) => buries.length > 0 === burying)
       .slice(0, TRIES)
       .map(({ facing, point }) => ({ facing, point, wait: false }));
 
-  /*
-   * A case moved out of the way never goes to the belt: only a case queued
-   * for the belt does. It goes to a clear place on the buffer, or on the
-   * incoming pallet once that has room; places that bury a queued case come
-   * last, for when there is no other room.
-   */
-  yield* pick(buffer, false);
-  yield* pick(incoming(), false);
-  yield* pick(buffer, true);
-  yield* pick(incoming(), true);
+  yield* pick(false);
+  yield* pick(true);
 }
 
 /**
@@ -125,46 +111,53 @@ const choose = (
     yaw: 0,
     offset: { x: 0, y: -height / 2, z: 0 },
   };
-  const across = new Set<string>();
+  // However many places it tries, a job is planned within `PLANNING`.
+  return budget(PLANNING, () => {
+    const across = new Set<string>();
 
-  for (const destination of destinations(job, bodies, queue)) {
-    const whole = plan(
-      top(entry.body, entry.box),
-      heading(entry.body.rotation()),
-      entry.box.size,
-      highest(bodies),
-      destination
-    );
-    const [, , , over, down, up] = whole;
+    for (const destination of destinations(job, bodies, queue)) {
+      if (spent()) {
+        break;
+      }
 
-    /*
-     * Setting down and leaving are straight moves with no way round, so a
-     * place where either is blocked is passed over before the costly search
-     * for the way there. What blocks it is named, as the search would.
-     */
-    const settles = (among: Solid[]) =>
-      straight(over.target, down.target, down.facing, carried, among) &&
-      straight(down.target, up.target, up.facing, undefined, among);
+      const whole = plan(
+        top(entry.body, entry.box),
+        heading(entry.body.rotation()),
+        entry.box.size,
+        highest(bodies),
+        destination
+      );
+      const [, , , over, down, up] = whole;
 
-    if (!settles(solids)) {
-      solids
-        .filter((solid) => !settles([solid]))
-        .forEach(({ id }) => across.add(id));
+      /*
+       * Setting down and leaving are straight moves with no way round, so a
+       * place where either is blocked is passed over before the costly search
+       * for the way there. What blocks it is named, as the search would.
+       */
+      const settles = (among: Solid[]) =>
+        straight(over.target, down.target, down.facing, carried, among) &&
+        straight(down.target, up.target, up.facing, undefined, among);
 
-      continue;
+      if (!settles(solids)) {
+        solids
+          .filter((solid) => !settles([solid]))
+          .forEach(({ id }) => across.add(id));
+
+        continue;
+      }
+
+      const steps = whole.slice(from);
+      const checked = ahead(steps, joints, carried, solids, from > 1, cases);
+
+      if ('steps' in checked) {
+        return checked;
+      }
+
+      checked.across.forEach((id) => across.add(id));
     }
 
-    const steps = whole.slice(from);
-    const checked = ahead(steps, joints, carried, solids, from > 1, cases);
-
-    if ('steps' in checked) {
-      return checked;
-    }
-
-    checked.across.forEach((id) => across.add(id));
-  }
-
-  return { across: [...across] };
+    return { across: [...across] };
+  });
 };
 
 /**
@@ -184,7 +177,7 @@ const firstInLine = (job: Job, bodies: Bodies, queue: Job[]): Job[] => {
 
   const reserved = queue.slice(1).map(({ id }) => id);
   const others: Bodies = new Map([...bodies].filter(([id]) => id !== job.id));
-  const rooms = spots(entry.box, others, [], reserved, 'buffer');
+  const rooms = spots(entry.box, others, [], reserved);
 
   if (!rooms.length || rooms.some(({ buries }) => !buries.length)) {
     return [];

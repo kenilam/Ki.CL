@@ -1,36 +1,27 @@
 import React from 'react';
 
 // Components
-import { Frame, Heading } from '@/components';
-
-// Context
-import { FactoryArmProvider } from './context';
+import { Heading } from '@/components';
 
 // Partials
-import { Alert } from './alert';
-import { Scene } from './scene';
+import { SetupProvider } from './setup';
+import { Workspace } from './workspace';
 
 // Styles
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME, COPY } from './constants';
+import { COPY } from './constants';
 
 /** Kept in the lazy chunk so three.js ships only with this route. */
 const FactoryArm: React.FunctionComponent = () => (
-  <FactoryArmProvider>
+  <SetupProvider>
     <Heading is='h1' className='kicl-hidden'>
       {COPY.title}
     </Heading>
 
-    <Frame>
-      <div aria-label={COPY.scene} className={CLASS_NAME} role='img'>
-        <Scene />
-      </div>
-    </Frame>
-
-    <Alert />
-  </FactoryArmProvider>
+    <Workspace />
+  </SetupProvider>
 );
 
 export { FactoryArm };
