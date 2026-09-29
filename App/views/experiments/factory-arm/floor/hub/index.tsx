@@ -34,6 +34,7 @@ import {
 } from '@/views/experiments/factory-arm/cell/grid/hex';
 import {
   apart,
+  covers,
   extended,
   free,
   type Layout,
@@ -100,6 +101,8 @@ type Value = {
   stopped: boolean;
   /** The obstacles standing in each arm as it is posed, by arm id, for those struck. */
   struck: Record<string, string[]>;
+  /** The obstacles standing on a belt, by id: each holds its line still. */
+  blocking: string[];
   /** Starts, or starts over, `simulation`. */
   play: (simulation: Simulation) => void;
   /** Each arm's capacity as last set, by arm id. */
@@ -576,6 +579,13 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     [idle, riding, stations, targets]
   );
   const stopped = useMemo(() => Object.values(alarms).some(Boolean), [alarms]);
+  const blocking = useMemo(
+    () =>
+      obstacles
+        .filter((box) => lines.some((line) => covers(line, box)))
+        .map(({ id }) => id),
+    [lines, obstacles]
+  );
 
   const nextIds = useMemo(
     () => ({
@@ -877,6 +887,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       active,
       add,
       blockable,
+      blocking,
       capacities,
       cells,
       clearLog,
@@ -921,6 +932,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       active,
       add,
       blockable,
+      blocking,
       capacities,
       clearLog,
       configure,
