@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  SheetFooter,
   CardHeader,
   Heading,
   Layout,
@@ -23,6 +24,9 @@ import {
 
 // Drag
 import { useDrag } from '@/views/experiments/factory-arm/floor/scene/drag';
+
+// Partials
+import { Keys } from './keys';
 
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/floor/constants';
@@ -117,47 +121,53 @@ const Shapes: React.FunctionComponent = () => {
   const { grab } = useDrag();
 
   return (
-    <CardContent>
-      <Layout gap='narrow'>
-        <div>
-          {(Object.keys(SHAPES) as Shape[]).map((shape) => (
-            <Card key={shape} variant='ghost'>
-              <Layout
-                alignItems='center'
-                autoFlow='column'
-                frames='max-content--auto--max-content'
-                gap='narrow'
-              >
-                <div>
-                  <Drawing shape={shape} />
-                  <CardHeader dense>
-                    <Heading is='h3' className='kicl-font-size-small'>
-                      {COPY.panel.shapes[shape]}
-                    </Heading>
-                    <Text
-                      className='kicl-color-grey kicl-font-size-small'
-                      is='p'
+    <>
+      <CardContent>
+        <Layout gap='narrow'>
+          <div>
+            {(Object.keys(SHAPES) as Shape[]).map((shape) => (
+              <Card key={shape} variant='ghost'>
+                <Layout
+                  alignItems='center'
+                  autoFlow='column'
+                  frames='max-content--auto--max-content'
+                  gap='narrow'
+                >
+                  <div>
+                    <Drawing shape={shape} />
+                    <CardHeader dense>
+                      <Heading is='h3' className='kicl-font-size-small'>
+                        {COPY.panel.shapes[shape]}
+                      </Heading>
+                      <Text
+                        className='kicl-color-grey kicl-font-size-small'
+                        is='p'
+                      >
+                        {COPY.panel.size(SHAPES[shape].size)}
+                      </Text>
+                    </CardHeader>
+                    <Button
+                      onClick={() =>
+                        grab('obstacle', coming.obstacle, true, shape)
+                      }
+                      size='small'
+                      variant='secondary'
                     >
-                      {COPY.panel.size(SHAPES[shape].size)}
-                    </Text>
-                  </CardHeader>
-                  <Button
-                    onClick={() =>
-                      grab('obstacle', coming.obstacle, true, shape)
-                    }
-                    size='small'
-                    variant='secondary'
-                  >
-                    <Ri.RiAddLine aria-hidden />
-                    <span className='kicl-hidden'>{COPY.panel.add}</span>
-                  </Button>
-                </div>
-              </Layout>
-            </Card>
-          ))}
-        </div>
-      </Layout>
-    </CardContent>
+                      <Ri.RiAddLine aria-hidden />
+                      <span className='kicl-hidden'>{COPY.panel.add}</span>
+                    </Button>
+                  </div>
+                </Layout>
+              </Card>
+            ))}
+          </div>
+        </Layout>
+      </CardContent>
+
+      <SheetFooter>
+        <Keys />
+      </SheetFooter>
+    </>
   );
 };
 

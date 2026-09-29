@@ -45,12 +45,14 @@ const COPY = {
     size: (size: readonly [number, number, number]) =>
       `${size.map((metres) => `${metres} m`).join(' × ')}`,
     tip: 'Double-click an empty hex for an arm, or a slot of an arm for a pallet.',
-    /** How to work an obstacle on the floor, one line each. */
+    /** How to work an obstacle: what to press, and what it does. `press` names a key, or a pointer gesture the panel draws. */
     keys: [
-      'Drag a shape onto the floor. Drop it on a belt and the belt stops.',
-      'Click an obstacle to choose it, then drag it or use the keys.',
-      'Arrow keys move it. Shift with Up or Down raises or lowers it.',
-      'R gives it a quarter turn. Delete takes it off.',
+      { press: ['drag'], does: 'Place, or move' },
+      { press: ['click'], does: 'Choose' },
+      { press: ['left', 'up', 'right', 'down'], does: 'Move' },
+      { press: ['Shift', 'up', 'down'], does: 'Raise, lower' },
+      { press: ['R'], does: 'Turn' },
+      { press: ['Del'], does: 'Remove' },
     ],
     slot: 'Slot',
     stopped: 'stopped',
