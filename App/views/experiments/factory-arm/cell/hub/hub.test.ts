@@ -5,7 +5,7 @@ import { describe, test } from 'node:test';
 import { local } from '../controller/local';
 
 // Grid
-import { type Hex, neighbour } from '../grid/hex';
+import { centre, type Hex, neighbour } from '../grid/hex';
 
 // Grid
 import { alongBelt, onBelt, onLine } from '../grid/layout';
@@ -26,6 +26,7 @@ const build = (cells: Cell[], lines: Line[]) => {
 
       return wire;
     },
+    feed: (arm, boxes) => wires.get(arm)?.feed(boxes),
   });
   const frame = 1 / 60;
 
@@ -109,6 +110,48 @@ describe('the hub', () => {
     );
     assert.deepEqual(hub.board.targets()[0].queue, []);
     assert.equal(hub.board.targets()[0].claimed, null);
+  });
+
+  test('an arm finds a wall its camera cannot see with its sensors, and plans again', () => {
+    const a = { q: 0, r: 0 };
+    const b = neighbour(a, 0);
+    const { hub, log, run } = build(
+      [
+        { hex: a, arm: 'arm-a' },
+        { hex: b, arm: 'arm-b' },
+      ],
+      [{ id: 'line', cells: [a, b] }]
+    );
+    const at = centre(a);
+    const lines: string[] = [];
+
+    // Across the arm's swing from its pallet to the belt, beside its stand: over no pallet, so unseen from above.
+    hub.block(
+      [
+        {
+          id: 'wall',
+          min: { x: at.x - 1, y: 0, z: at.z + 0.6 },
+          max: { x: at.x + 1, y: 2, z: at.z + 0.7 },
+        },
+      ],
+      false
+    );
+    hub.load(a);
+    hub.place(one(b, a));
+    run(40, () => {
+      lines.push(...log());
+
+      return lines.some((line) => line.includes('No clear path'));
+    });
+
+    assert.ok(
+      lines.some((line) => line.startsWith('arm-a: Arm found wall in its way')),
+      lines.join('\n')
+    );
+    assert.ok(
+      lines.some((line) => line.includes('No clear path for case c1')),
+      lines.join('\n')
+    );
   });
 
   test('an obstacle on a belt stops the line until it is taken off', () => {

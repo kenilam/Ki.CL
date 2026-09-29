@@ -55,10 +55,13 @@ const create = ({
   cells,
   lines,
   connect,
+  feed = () => {},
 }: {
   cells: Cell[];
   lines: Line[];
   connect: (arm: string) => Link;
+  /** Hands an arm's sensors the boxes round it, in its own frame: the simulation's side door. */
+  feed?: (arm: string, boxes: Box[]) => void;
 }) => {
   const stations = new Map<string, Station>();
   const targets = new Map<string, Target>();
@@ -280,8 +283,15 @@ const create = ({
     blocks.filter((box) => covers(found, box));
 
   const load = (hex: Hex) => {
-    alarms.delete(stations.get(index(hex))?.id ?? '');
-    stations.get(index(hex))?.load(shifted(hex));
+    const found = stations.get(index(hex));
+
+    if (!found) {
+      return;
+    }
+
+    alarms.delete(found.id);
+    feed(found.id, shifted(hex));
+    found.load(shifted(hex));
   };
 
   /**
@@ -295,7 +305,11 @@ const create = ({
     );
 
     blocks = boxes;
-    stations.forEach((one, key) => one.obstacles(shifted(parse(key)), moved));
+    stations.forEach((one, key) => {
+      // The sensors meet every box; the station is told of them and works out which it knows.
+      feed(one.id, shifted(parse(key)));
+      one.obstacles(shifted(parse(key)), moved);
+    });
 
     floor.forEach((found, order) => {
       const was = before.get(found.id) ?? [];

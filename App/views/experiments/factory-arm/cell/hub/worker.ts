@@ -125,6 +125,7 @@ scope.onmessage = ({ data }) => {
 
           return link;
         },
+        feed: (arm, boxes) => feeds.get(arm)?.(boxes),
       });
       last = performance.now();
       shown = '';
