@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Three
 import { Drei, Fiber } from '@/three';
@@ -7,7 +7,10 @@ import { Drei, Fiber } from '@/three';
 import { centre, index } from '@/views/experiments/factory-arm/cell/grid/hex';
 
 // Context
-import { useHub } from '@/views/experiments/factory-arm/floor/hub';
+import {
+  type Simulation,
+  useHub,
+} from '@/views/experiments/factory-arm/floor/hub';
 
 // Partials
 import { Camera } from './camera';
@@ -38,15 +41,49 @@ const Scene: React.FunctionComponent = () => (
 
 /** The floor: the lines, the stations in their cells, what rides the lines, the obstacles, and where a drag would land. */
 const Floor: React.FunctionComponent = () => {
-  const { lines, run, stations } = useHub();
+  const { active, lines, run, stations } = useHub();
+
+  return (
+    <>
+      {/* Framed once per simulation: an arm added or moved doesn't move the view. */}
+      <View cells={active.cells} key={active.id} />
+
+      <Ground />
+      <Ghost />
+      {/* A new run mounts its stations afresh, so nothing of the last floor lingers. */}
+      <group key={run}>
+        {lines.map((line) => (
+          <group key={line.id}>
+            <Line line={line} />
+            <Riders line={line} />
+          </group>
+        ))}
+        {stations.map((station) => (
+          <Station key={index(station.hex)} station={station} />
+        ))}
+        <Loose />
+        <Obstacles />
+      </group>
+    </>
+  );
+};
+
+/**
+ * The camera, what it turns about and the lights, framed on the middle of
+ * `cells` as they were when the simulation began. Drag to turn round the
+ * floor, right-drag to pan, scroll or pinch to zoom; not while something
+ * is held.
+ */
+const View: React.FunctionComponent<{ cells: Simulation['cells'] }> = ({
+  cells,
+}) => {
   const { dragging } = useDrag();
-  const at = middle(stations.map(({ hex }) => centre(hex)));
+  const [at] = useState(() => middle(cells.map(({ hex }) => centre(hex))));
 
   return (
     <>
       <Camera at={at} />
 
-      {/* Drag to turn round the floor, right-drag to pan, scroll or pinch to zoom; not while something is held. */}
       <Drei.OrbitControls
         dampingFactor={0.08}
         enableDamping
@@ -75,23 +112,6 @@ const Floor: React.FunctionComponent = () => {
         shadow-radius={8}
       />
       <directionalLight position={[-5, 3, -4]} intensity={0.4} />
-
-      <Ground />
-      <Ghost />
-      {/* A new run mounts its stations afresh, so nothing of the last floor lingers. */}
-      <group key={run}>
-        {lines.map((line) => (
-          <group key={line.id}>
-            <Line line={line} />
-            <Riders line={line} />
-          </group>
-        ))}
-        {stations.map((station) => (
-          <Station key={index(station.hex)} station={station} />
-        ))}
-        <Loose />
-        <Obstacles />
-      </group>
     </>
   );
 };

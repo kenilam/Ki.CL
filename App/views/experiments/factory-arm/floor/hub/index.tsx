@@ -243,14 +243,12 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       parked.current.clear();
       had.current.clear();
       riders.current.clear();
+      // The stations, lines and pallets stay drawn till the hub sends the new ones, so nothing blinks.
       setExtras({});
-      setStations([]);
-      setLines([]);
       setIdle({});
       setAlarms({});
       setStruck({});
       setRiding(false);
-      setTargets([]);
       setObstacles(simulation.obstacles ?? []);
       setCapacities(simulation.capacities ?? {});
       setActive(simulation);
