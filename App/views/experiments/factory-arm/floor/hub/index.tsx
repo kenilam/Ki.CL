@@ -18,8 +18,14 @@ import {
   type Target,
 } from '@/views/experiments/factory-arm/cell/hub';
 
+// Protocol
+import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+
 // Grid
-import type { Child } from '@/views/experiments/factory-arm/cell/grid/child';
+import {
+  type Child,
+  childCentre,
+} from '@/views/experiments/factory-arm/cell/grid/child';
 import {
   type Hex,
   index,
@@ -50,6 +56,7 @@ import type {
 import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
 
 // Partials
+import { clear, moved, room, solids, stand } from './obstacles';
 import { pile } from './pile';
 import { relocate as moveArm } from './relocate';
 import { type Simulation, SIMULATIONS } from './simulations';
@@ -103,14 +110,22 @@ type Value = {
   relocate: (arm: string, hex: Hex) => boolean;
   /** Moves a pallet to a free slot of an arm. Says whether it did. */
   move: (pallet: string, at: Child) => boolean;
-  /** Adds an arm on `arm`, or a pallet with a fresh pile on `pallet`, if it may stand there. Says whether it did. */
-  add: (what: { arm: Hex } | { pallet: Child }) => boolean;
-  /** The ids the next arm and the next pallet added would get. */
-  coming: { arm: string; pallet: string };
-  /** Whether an arm may stand in `hex`: on a line, and no other arm there. */
+  /** Adds an arm on `arm`, a pallet with a fresh pile on `pallet`, or an obstacle, if it may stand there. Says whether it did. */
+  add: (what: { arm: Hex } | { pallet: Child } | { obstacle: Box }) => boolean;
+  /** The ids the next arm, pallet and obstacle added would get. */
+  coming: { arm: string; pallet: string; obstacle: string };
+  /** Whether an arm may stand in `hex`: on a line, no other arm there, no obstacle on its stand. */
   standable: (arm: string, hex: Hex) => boolean;
-  /** Whether a pallet may stand on `at`: a free slot of an arm. */
+  /** Whether a pallet may stand on `at`: a free slot of an arm, with no obstacle over it. */
   placeable: (pallet: string, at: Child) => boolean;
+  /** The obstacles on the floor, in its frame. */
+  obstacles: Box[];
+  /** Whether an obstacle may stand as `box`: on nothing but the floor and the belts. */
+  blockable: (box: Box) => boolean;
+  /** Moves an obstacle's footprint to be centred on `to`, if it may stand there. Says whether it did. */
+  shift: (obstacle: string, to: { x: number; z: number }) => boolean;
+  /** Takes an obstacle off the floor. */
+  unblock: (obstacle: string) => void;
   targets: Target[];
   log: Entry[];
   /** Goes up whenever which cases a station has changes, so the scene draws the right ones. */
@@ -164,6 +179,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     new Map<string, { riders: Riding[]; running: boolean; at: number }>()
   );
   const [targets, setTargets] = useState<Target[]>([]);
+  const [obstacles, setObstacles] = useState<Box[]>([]);
   const [log, setLog] = useState<Entry[]>([]);
   const [extras, setExtras] = useState<Value['extras']>({});
   const telemetry = useRef(new Map<string, Telemetry>());
@@ -215,6 +231,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       setAlarms({});
       setRiding(false);
       setTargets([]);
+      setObstacles(simulation.obstacles ?? []);
       setCapacities(simulation.capacities ?? {});
       setActive(simulation);
       setEdited(false);
@@ -225,8 +242,14 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         cells: simulation.cells,
         lines: simulation.lines,
       });
+      // Before the stations load, so each starts knowing what stands in its cell.
+      console.send({
+        type: 'block',
+        boxes: simulation.obstacles ?? [],
+        moved: false,
+      });
       simulation.cells.forEach(({ hex }) =>
-        console.send({ type: 'load', hex, catalogue: [] })
+        console.send({ type: 'load', hex })
       );
       simulation.pallets.forEach((target) =>
         console.send({ type: 'place', target })
@@ -375,8 +398,8 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
 
   /** The floor as it stands, to play again after a change to where things are. */
   const floor = useCallback(
-    () =>
-      standing({
+    () => ({
+      ...standing({
         active,
         capacities,
         cases: (arm) => cells.current.get(arm)?.cases ?? [],
@@ -384,7 +407,9 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         stations,
         targets,
       }),
-    [active, capacities, extras, stations, targets]
+      obstacles,
+    }),
+    [active, capacities, extras, obstacles, stations, targets]
   );
 
   /** Puts what was riding the lines back on them, bound as before, or for `moved` cells. */
@@ -408,7 +433,11 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       );
       const lines = active.lines.map((each) => geometry(each.id, each.cells));
 
-      if (taken || !lines.some((each) => reaches(each, hex))) {
+      if (
+        taken ||
+        !lines.some((each) => reaches(each, hex)) ||
+        !clear(stand(arm, hex), obstacles)
+      ) {
         return false;
       }
 
@@ -425,7 +454,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         floor.slice(first + 1).every((b) => apart(a, b))
       );
     },
-    [active]
+    [active, obstacles]
   );
 
   const placeable = useCallback<Value['placeable']>(
@@ -434,7 +463,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         (one) => index(one.hex) === index(at.parent)
       );
 
-      if (!station) {
+      if (!station || !clear(room(pallet, childCentre(at)), obstacles)) {
         return false;
       }
 
@@ -468,7 +497,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         );
       });
     },
-    [stations, targets]
+    [obstacles, stations, targets]
   );
 
   const relocate = useCallback<Value['relocate']>(
@@ -486,6 +515,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         arm,
         floor: now,
         hex,
+        obstructed: (at) => !clear(room('', childCentre(at)), obstacles),
         stations,
       });
 
@@ -504,7 +534,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
 
       return true;
     },
-    [active, floor, note, play, reride, stations, standable]
+    [active, floor, note, obstacles, play, reride, stations, standable]
   );
 
   const finished = useMemo(
@@ -521,12 +551,79 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     () => ({
       arm: `arm-${String.fromCharCode(97 + active.cells.length)}`,
       pallet: `p${targets.length + 1}`,
+      // Past the highest number given, so a removed one's id isn't given again.
+      obstacle: `o${
+        Math.max(0, ...obstacles.map(({ id }) => Number(id.slice(1)) || 0)) + 1
+      }`,
     }),
-    [active.cells.length, targets.length]
+    [active.cells.length, obstacles, targets.length]
+  );
+
+  const blockable = useCallback<Value['blockable']>(
+    (box) =>
+      clear(
+        box,
+        solids({
+          cells: (arm) =>
+            cells.current.get(arm) ?? { cases: [], holding: null },
+          extras,
+          lines,
+          loose: active.loose ?? [],
+          obstacles,
+          riders: (line) => riders.current.get(line)?.riders ?? [],
+          stations,
+          targets,
+        })
+      ),
+    [active.loose, extras, lines, obstacles, stations, targets]
+  );
+
+  /** Puts `next` on the floor: the arms hear of it at once, and the floor is edited. */
+  const block = useCallback((next: Box[]) => {
+    setObstacles(next);
+    setEdited(true);
+    hub.current?.send({ type: 'block', boxes: next, moved: true });
+  }, []);
+
+  const shift = useCallback<Value['shift']>(
+    (obstacle, to) => {
+      const found = obstacles.find(({ id }) => id === obstacle);
+
+      if (!found) {
+        return false;
+      }
+
+      const next = moved(found, to);
+
+      if (!blockable(next)) {
+        return false;
+      }
+
+      block(obstacles.map((one) => (one.id === obstacle ? next : one)));
+
+      return true;
+    },
+    [block, blockable, obstacles]
+  );
+
+  const unblock = useCallback<Value['unblock']>(
+    (obstacle) => block(obstacles.filter(({ id }) => id !== obstacle)),
+    [block, obstacles]
   );
 
   const add = useCallback<Value['add']>(
     (what) => {
+      // An obstacle goes down without the floor starting over: the arms plan round it as it stands.
+      if ('obstacle' in what) {
+        if (!blockable(what.obstacle)) {
+          return false;
+        }
+
+        block([...obstacles, what.obstacle]);
+
+        return true;
+      }
+
       const now = floor();
       const riding = new Map(riders.current);
 
@@ -578,7 +675,18 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
 
       return true;
     },
-    [floor, nextIds, placeable, play, reride, standable, stations]
+    [
+      block,
+      blockable,
+      floor,
+      nextIds,
+      obstacles,
+      placeable,
+      play,
+      reride,
+      standable,
+      stations,
+    ]
   );
 
   const move = useCallback<Value['move']>(
@@ -621,6 +729,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
           to,
         })),
         capacities,
+        obstacles,
       };
 
       keep(simulation);
@@ -628,7 +737,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       setEdited(false);
       note('hub', `Saved the floor as ${simulation.name}`, 'info');
     },
-    [active, capacities, keep, next, note, targets]
+    [active, capacities, keep, next, note, obstacles, targets]
   );
 
   // A removed simulation can't stay the active one: the first shipped takes over as the name shown.
@@ -665,6 +774,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     () => ({
       active,
       add,
+      blockable,
       capacities,
       cells,
       clearLog,
@@ -679,6 +789,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       log,
       move,
       next,
+      obstacles,
       parked,
       place,
       placeable,
@@ -690,6 +801,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       riders,
       run,
       save,
+      shift,
       simulations: [...SIMULATIONS, ...saved],
       standable,
       stations,
@@ -697,10 +809,12 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       targets,
       telemetry,
       toggle,
+      unblock,
     }),
     [
       active,
       add,
+      blockable,
       capacities,
       clearLog,
       configure,
@@ -714,6 +828,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       move,
       next,
       nextIds,
+      obstacles,
       place,
       placeable,
       plan,
@@ -724,11 +839,13 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       run,
       save,
       saved,
+      shift,
       standable,
       stations,
       stopped,
       targets,
       toggle,
+      unblock,
     ]
   );
 

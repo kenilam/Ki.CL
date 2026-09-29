@@ -21,8 +21,17 @@ import {
   SIDES,
 } from '@/views/experiments/factory-arm/cell/grid/hex';
 
+// Protocol
+import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';
+import {
+  box as shaped,
+  middle,
+  moved,
+  type Shape,
+} from '@/views/experiments/factory-arm/floor/hub/obstacles';
 
 /** What is being dragged, whether it's new to the floor, and where on the floor it would land. */
 type Dragging =
@@ -33,12 +42,24 @@ type Dragging =
       fresh: boolean;
       at: Child;
       allowed: boolean;
+    }
+  | {
+      kind: 'obstacle';
+      id: string;
+      fresh: boolean;
+      box: Box;
+      allowed: boolean;
     };
 
 type Value = {
   dragging: Dragging | null;
-  /** Starts dragging an arm or a pallet; `fresh` for one not on the floor yet, to be set down. */
-  grab: (kind: Dragging['kind'], id: string, fresh?: boolean) => void;
+  /** Starts dragging an arm, a pallet or an obstacle; `fresh` for one not on the floor yet, to be set down, of `shape` for an obstacle. */
+  grab: (
+    kind: Dragging['kind'],
+    id: string,
+    fresh?: boolean,
+    shape?: Shape
+  ) => void;
   /** The pointer is over `point` on the floor: where the thing would land, if anywhere. */
   over: (point: { x: number; z: number }) => void;
   /** Lets go: moves the thing if it may land there. */
@@ -51,14 +72,25 @@ const SNAP = 1;
 const Context = React.createContext<Value | null>(null);
 
 /**
- * Dragging on the floor: an arm to another hex, a pallet to another slot.
- * The scene shows where it would land and whether it may, and the hub
- * moves it on release. Turning the view is off while something is held.
+ * Dragging on the floor: an arm to another hex, a pallet to another slot,
+ * an obstacle anywhere. The scene shows where it would land and whether it
+ * may, and the hub moves it on release. Turning the view is off while
+ * something is held.
  */
 const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   children,
 }) => {
-  const { add, move, placeable, relocate, standable, stations } = useHub();
+  const {
+    add,
+    blockable,
+    move,
+    obstacles,
+    placeable,
+    relocate,
+    shift,
+    standable,
+    stations,
+  } = useHub();
   const [dragging, setDragging] = useState<Dragging | null>(null);
   // What is held, as of now: read on drop, where the state may be a render behind.
   const held = useRef<Dragging | null>(null);
@@ -69,19 +101,27 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   }, []);
 
   const grab = useCallback<Value['grab']>(
-    (kind, id, fresh = false) =>
-      hold(
-        kind === 'arm'
-          ? { kind, id, fresh, hex: { q: 0, r: 0 }, allowed: false }
-          : {
-              kind,
-              id,
-              fresh,
-              at: { parent: { q: 0, r: 0 }, slot: 0 },
-              allowed: false,
-            }
-      ),
-    [hold]
+    (kind, id, fresh = false, shape = 'pillar') => {
+      if (kind === 'arm') {
+        hold({ kind, id, fresh, hex: { q: 0, r: 0 }, allowed: false });
+      } else if (kind === 'pallet') {
+        hold({
+          kind,
+          id,
+          fresh,
+          at: { parent: { q: 0, r: 0 }, slot: 0 },
+          allowed: false,
+        });
+      } else {
+        // A new one is made of its shape; one on the floor keeps its own box.
+        const box =
+          obstacles.find((one) => one.id === id) ??
+          shaped(id, shape, { x: 0, z: 0 });
+
+        hold({ kind, id, fresh, box, allowed: false });
+      }
+    },
+    [hold, obstacles]
   );
 
   const over = useCallback<Value['over']>(
@@ -97,6 +137,19 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
 
         if (index(hex) !== index(current.hex)) {
           hold({ ...current, hex, allowed: standable(current.id, hex) });
+        }
+
+        return;
+      }
+
+      // An obstacle goes wherever the pointer is; nothing to snap to.
+      if (current.kind === 'obstacle') {
+        const was = middle(current.box);
+
+        if (Math.hypot(was.x - point.x, was.z - point.z) > 1e-3) {
+          const box = moved(current.box, point);
+
+          hold({ ...current, box, allowed: blockable(box) });
         }
 
         return;
@@ -132,7 +185,7 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
         });
       }
     },
-    [hold, placeable, stations, standable]
+    [blockable, hold, placeable, stations, standable]
   );
 
   // Moves the thing if it may land where it is, then lets go. Outside any state update, so it runs once.
@@ -144,15 +197,21 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
     if (current?.allowed) {
       if (current.fresh) {
         add(
-          current.kind === 'arm' ? { arm: current.hex } : { pallet: current.at }
+          current.kind === 'arm'
+            ? { arm: current.hex }
+            : current.kind === 'pallet'
+              ? { pallet: current.at }
+              : { obstacle: current.box }
         );
       } else if (current.kind === 'arm') {
         relocate(current.id, current.hex);
-      } else {
+      } else if (current.kind === 'pallet') {
         move(current.id, current.at);
+      } else {
+        shift(current.id, middle(current.box));
       }
     }
-  }, [add, hold, move, relocate]);
+  }, [add, hold, move, relocate, shift]);
 
   // Escape puts down whatever is held, where it was.
   useEffect(() => {
@@ -194,7 +253,11 @@ const useDrag = () => {
 
 /** Where a drag would land, on the floor. */
 const landing = (dragging: Dragging) =>
-  dragging.kind === 'arm' ? centre(dragging.hex) : childCentre(dragging.at);
+  dragging.kind === 'arm'
+    ? centre(dragging.hex)
+    : dragging.kind === 'pallet'
+      ? childCentre(dragging.at)
+      : middle(dragging.box);
 
 export { DragProvider, landing, useDrag };
 export type { Dragging };

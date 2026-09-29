@@ -13,6 +13,9 @@ import {
   type Side,
 } from '@/views/experiments/factory-arm/cell/grid/hex';
 
+// Protocol
+import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+
 // Station
 import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
 
@@ -24,7 +27,8 @@ type Loose = { at: { x: number; z: number }; cases: Case[] };
 
 /**
  * A floor to play: its arms, the belt lines past them, the pallets to start
- * with, any arm's capacity, and cases left loose on the floor.
+ * with, any arm's capacity, cases left loose on the floor, and the
+ * obstacles standing on it, in the floor's frame.
  */
 type Simulation = {
   id: string;
@@ -34,6 +38,7 @@ type Simulation = {
   pallets: Omit<Target, 'claimed' | 'version'>[];
   capacities?: Record<string, Capacity>;
   loose?: Loose[];
+  obstacles?: Box[];
   /** Saved by the operator, so it can be removed again. */
   saved?: boolean;
 };

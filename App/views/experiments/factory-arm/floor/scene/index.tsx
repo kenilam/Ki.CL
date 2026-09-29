@@ -16,6 +16,7 @@ import { Ghost } from './ghost';
 import { Ground } from './ground';
 import { Line } from './line';
 import { Loose } from './loose';
+import { Obstacles } from './obstacles';
 import { Riders } from './riders';
 import { Station } from './station';
 
@@ -35,7 +36,7 @@ const Scene: React.FunctionComponent = () => (
   </Fiber.Canvas>
 );
 
-/** The floor: the lines, the stations in their cells, what rides the lines, and where a drag would land. */
+/** The floor: the lines, the stations in their cells, what rides the lines, the obstacles, and where a drag would land. */
 const Floor: React.FunctionComponent = () => {
   const { lines, run, stations } = useHub();
   const { dragging } = useDrag();
@@ -89,6 +90,7 @@ const Floor: React.FunctionComponent = () => {
           <Station key={index(station.hex)} station={station} />
         ))}
         <Loose />
+        <Obstacles />
       </group>
     </>
   );

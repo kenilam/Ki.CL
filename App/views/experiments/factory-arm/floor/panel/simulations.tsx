@@ -26,6 +26,7 @@ import {
 
 // Partials
 import { Arms } from './arms';
+import { Obstacles } from './obstacles';
 import { Pallets } from './pallets';
 
 // Drag
@@ -68,8 +69,9 @@ const Group: React.FunctionComponent<{
   simulation: Simulation;
   stopped: boolean;
 }> = ({ chosen, playing, simulation, stopped }) => {
-  const { coming, discard, play } = useHub();
+  const { coming, discard, obstacles, play } = useHub();
   const { grab } = useDrag();
+  const standing = chosen ? obstacles : (simulation.obstacles ?? []);
   const name = (hex: { q: number; r: number }) =>
     simulation.cells.find((cell) => index(cell.hex) === index(hex))?.arm ??
     index(hex);
@@ -90,13 +92,9 @@ const Group: React.FunctionComponent<{
             <div>
               <Button
                 aria-pressed={playing}
-                className={
-                  classNames(
-                    {
-                      'kicl-pointer-event-none': playing && !stopped,
-                    }
-                  )
-                }
+                className={classNames({
+                  'kicl-pointer-event-none': playing && !stopped,
+                })}
                 onClick={(event) => {
                   // In the summary: the click plays, and doesn't fold the group.
                   event.preventDefault();
@@ -111,13 +109,11 @@ const Group: React.FunctionComponent<{
                 variant={playing && !stopped ? 'secondary' : 'ghost'}
                 size='small'
               >
-                {
-                  playing && !stopped ? (
-                    <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-                  ) : (
-                    <Ri.RiPlayFill aria-hidden />
-                  )
-                }
+                {playing && !stopped ? (
+                  <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                ) : (
+                  <Ri.RiPlayFill aria-hidden />
+                )}
                 <span className='kicl-hidden'>
                   {playing ? COPY.panel.running : COPY.panel.play}
                 </span>
@@ -174,8 +170,29 @@ const Group: React.FunctionComponent<{
             )}
           </Details>
 
+          <Details
+            summary={
+              <Text className='kicl-font-size-small' is='span'>
+                {COPY.panel.obstacles} · {standing.length}
+              </Text>
+            }
+          >
+            {chosen ? (
+              <Obstacles />
+            ) : (
+              <Text className='kicl-font-size-small' is='p'>
+                {standing.map(({ id }) => id).join(', ') || COPY.panel.empty}
+              </Text>
+            )}
+          </Details>
+
           {chosen && (
-            <Layout autoFlow='column' gap='narrow' justifyContent='stretch' justifyItems='center'>
+            <Layout
+              autoFlow='column'
+              gap='narrow'
+              justifyContent='stretch'
+              justifyItems='center'
+            >
               <div>
                 <Button
                   onClick={() => grab('arm', coming.arm, true)}

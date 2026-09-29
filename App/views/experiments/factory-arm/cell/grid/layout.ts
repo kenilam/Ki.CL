@@ -1,5 +1,5 @@
 // Protocol
-import type { Point } from '../protocol';
+import type { Box, Point } from '../protocol';
 
 // Partials
 import {
@@ -277,6 +277,57 @@ const onLine = (found: Line, distance: number): Point => ({
   z: found.origin.z + distance * Math.sin(found.heading),
 });
 
+/** How far above a belt's surface a box still meets what rides it, in metres: the tallest case and some room. */
+const CLEARANCE = 0.5;
+
+/**
+ * Whether a box stands on a line's belt: over its run, within its width,
+ * and low enough to meet the cases riding it. The belt can't run with it
+ * there.
+ */
+const covers = (found: Line, box: Box) => {
+  if (box.min.y > found.height + CLEARANCE || box.max.y < found.height - 0.1) {
+    return false;
+  }
+
+  const across = found.heading - Math.PI / 2;
+  const corners = [
+    [box.min.x, box.min.z],
+    [box.max.x, box.min.z],
+    [box.max.x, box.max.z],
+    [box.min.x, box.max.z],
+  ];
+  const belt = [found.start, found.end].flatMap((distance) =>
+    [-found.width / 2, found.width / 2].map((lateral) => {
+      const point = onLine(found, distance);
+
+      return [
+        point.x + lateral * Math.cos(across),
+        point.z + lateral * Math.sin(across),
+      ];
+    })
+  );
+  // Two rectangles on the floor meet unless one of their four edge directions separates them.
+  const axes = [
+    [1, 0],
+    [0, 1],
+    [Math.cos(found.heading), Math.sin(found.heading)],
+    [Math.cos(across), Math.sin(across)],
+  ];
+  const span = (points: number[][], [ax, az]: number[]) => {
+    const values = points.map(([x, z]) => x * ax + z * az);
+
+    return [Math.min(...values), Math.max(...values)];
+  };
+
+  return axes.every((axis) => {
+    const [a0, a1] = span(corners, axis);
+    const [b0, b1] = span(belt, axis);
+
+    return a0 <= b1 && b0 <= a1;
+  });
+};
+
 /** How far along a belt a point in this arm's frame is. */
 const alongBelt = (found: Belt, { x, z }: Pick<Point, 'x' | 'z'>) =>
   x * Math.cos(found.heading) + z * Math.sin(found.heading);
@@ -352,6 +403,7 @@ export {
   alongBelt,
   apart,
   beside,
+  covers,
   extended,
   free,
   layout,

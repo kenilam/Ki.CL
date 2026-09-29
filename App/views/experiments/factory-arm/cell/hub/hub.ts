@@ -3,6 +3,7 @@ import type { Box, Link } from '../protocol';
 
 // Grid
 import {
+  centre,
   type Hex,
   index,
   neighbour,
@@ -13,6 +14,7 @@ import {
 import {
   apart,
   beside,
+  covers,
   extended,
   layout,
   line as geometry,
@@ -65,6 +67,8 @@ const create = ({
   const running = new Map<string, boolean>();
   /** The arms with their alarm on: while any is, every belt stands and every arm holds. */
   const alarms = new Set<string>();
+  /** The obstacles on the floor, in its frame. Every station gets them in its own. */
+  let blocks: Box[] = [];
   let events: Tagged[] = [];
 
   lines.forEach(({ cells: along, id }) => {
@@ -260,13 +264,69 @@ const create = ({
   const configure = (arm: string, capacity: Capacity) =>
     [...stations.values()].find((one) => one.id === arm)?.configure(capacity);
 
-  const load = (hex: Hex, catalogue: Box[]) => {
-    alarms.delete(stations.get(index(hex))?.id ?? '');
-    stations.get(index(hex))?.load(catalogue);
+  /** The obstacles as the arm in `hex` sees them: from its base, which only shifts them. */
+  const shifted = (hex: Hex) => {
+    const { x, z } = centre(hex);
+
+    return blocks.map(({ id, min, max }) => ({
+      id,
+      min: { x: min.x - x, y: min.y, z: min.z - z },
+      max: { x: max.x - x, y: max.y, z: max.z - z },
+    }));
   };
 
-  const obstacles = (hex: Hex, catalogue: Box[], moved: boolean) =>
-    stations.get(index(hex))?.obstacles(catalogue, moved);
+  /** The obstacles standing on a line's belt. */
+  const blocking = (found: Geometry) =>
+    blocks.filter((box) => covers(found, box));
+
+  const load = (hex: Hex) => {
+    alarms.delete(stations.get(index(hex))?.id ?? '');
+    stations.get(index(hex))?.load(shifted(hex));
+  };
+
+  /**
+   * The obstacles on the floor as they stand now; `moved` when the operator
+   * moved one. Every station hears of them, and a line with one on its belt
+   * is noted as stopped, or as running again once it's clear.
+   */
+  const block = (boxes: Box[], moved: boolean) => {
+    const before = new Map(
+      floor.map((found) => [found.id, blocking(found).map(({ id }) => id)])
+    );
+
+    blocks = boxes;
+    stations.forEach((one, key) => one.obstacles(shifted(parse(key)), moved));
+
+    floor.forEach((found, order) => {
+      const was = before.get(found.id) ?? [];
+      const now = blocking(found).map(({ id }) => id);
+      const hex = lines[order].cells[0];
+
+      if (now.length && !was.length) {
+        events.push({
+          hex,
+          arm: 'hub',
+          event: {
+            type: 'note',
+            level: 'warning',
+            text: `Line ${found.id} stopped`,
+            detail: `${now.join(', ')} on the belt`,
+          },
+        });
+      } else if (!now.length && was.length) {
+        events.push({
+          hex,
+          arm: 'hub',
+          event: {
+            type: 'note',
+            level: 'info',
+            text: `Line ${found.id} running again`,
+            detail: 'the belt is clear',
+          },
+        });
+      }
+    });
+  };
 
   /**
    * Carries a line's riders along for `dt` seconds, as one belt: they all
@@ -280,7 +340,8 @@ const create = ({
     const riding = riders.get(found.id)!.sort((a, b) => b.at - a.at);
     const zones = ending(found);
 
-    if (alarms.size) {
+    // Nothing moves while an arm's alarm is on, or while an obstacle stands on this belt.
+    if (alarms.size || blocking(found).length) {
       running.set(found.id, false);
 
       return;
@@ -440,11 +501,11 @@ const create = ({
     riders,
     running,
     taken,
+    block,
     close,
     configure,
     drain,
     load,
-    obstacles,
     place,
     plan,
     remove,

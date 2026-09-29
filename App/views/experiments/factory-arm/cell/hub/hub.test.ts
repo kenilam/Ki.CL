@@ -8,7 +8,7 @@ import { local } from '../controller/local';
 import { type Hex, neighbour } from '../grid/hex';
 
 // Grid
-import { alongBelt, onBelt } from '../grid/layout';
+import { alongBelt, onBelt, onLine } from '../grid/layout';
 
 // Partials
 import { type Cell, create, type Line } from './hub';
@@ -29,7 +29,7 @@ const build = (cells: Cell[], lines: Line[]) => {
   });
   const frame = 1 / 60;
 
-  cells.forEach(({ hex }) => hub.load(hex, []));
+  cells.forEach(({ hex }) => hub.load(hex));
 
   const run = (seconds: number, until: () => boolean) => {
     for (let at = 0; at < seconds && !until(); at += frame) {
@@ -109,6 +109,61 @@ describe('the hub', () => {
     );
     assert.deepEqual(hub.board.targets()[0].queue, []);
     assert.equal(hub.board.targets()[0].claimed, null);
+  });
+
+  test('an obstacle on a belt stops the line until it is taken off', () => {
+    const a = { q: 0, r: 0 };
+    const b = neighbour(a, 0);
+    const { hub, run } = build(
+      [
+        { hex: a, arm: 'arm-a' },
+        { hex: b, arm: 'arm-b' },
+      ],
+      [{ id: 'line', cells: [a, b] }]
+    );
+    const riding = () => hub.riders.get('line')!;
+
+    hub.place(one(b, a));
+    run(60, () => riding().length > 0);
+    assert.equal(riding().length, 1, 'the case is on the belt');
+
+    // A pillar on the belt a metre ahead of the case.
+    const rider = riding()[0];
+    const ahead = onLine(hub.floor[0], rider.at + 1);
+    const pillar = {
+      id: 'pillar',
+      min: { x: ahead.x - 0.1, y: 0, z: ahead.z - 0.1 },
+      max: { x: ahead.x + 0.1, y: 2, z: ahead.z + 0.1 },
+    };
+
+    hub.block([pillar], true);
+
+    const notes = hub
+      .drain()
+      .filter(({ arm, event }) => arm === 'hub' && event.type === 'note');
+
+    assert.ok(
+      notes.some(
+        ({ event }) =>
+          event.type === 'note' && event.text === 'Line line stopped'
+      ),
+      'the log says the line stopped'
+    );
+
+    const was = rider.at;
+
+    run(3, () => false);
+    assert.equal(riding()[0]?.at, was, 'the case has not moved');
+    assert.equal(hub.running.get('line'), false);
+
+    hub.block([], true);
+    run(60, () => riding().length === 0);
+    assert.equal(
+      riding().length,
+      0,
+      'the case rides on once the belt is clear'
+    );
+    assert.equal(hub.running.get('line'), false, 'nothing left to carry');
   });
 
   test('a pallet bound for the end of a line rides past the arm between, untouched', () => {

@@ -14,20 +14,43 @@ import { useHub } from '@/views/experiments/factory-arm/floor/hub';
 // Partials
 import { landing, useDrag } from './drag';
 import { corners } from './hex';
+import { footprint } from './obstacles';
 
 /** A slot's outline radius: its own small hexagon. */
 const SLOT = FINE / (Math.sqrt(3) / 2);
 
 /**
  * While something is dragged: a thin black outline round where it stands,
- * and where it would land, green when it may, red when it may not.
+ * and where it would land, green when it may, red when it may not. An arm
+ * or a pallet is outlined by its hexagon, an obstacle by its footprint.
  */
 const Ghost: React.FunctionComponent = () => {
   const { dragging } = useDrag();
-  const { stations, targets } = useHub();
+  const { obstacles, stations, targets } = useHub();
 
   if (!dragging) {
     return null;
+  }
+
+  if (dragging.kind === 'obstacle') {
+    const from = obstacles.find(({ id }) => id === dragging.id);
+
+    return (
+      <>
+        {from && (
+          <Drei.Line
+            color='#111111'
+            lineWidth={1}
+            points={footprint(from, 0.012)}
+          />
+        )}
+        <Drei.Line
+          color={dragging.allowed ? '#2fd065' : '#e5322d'}
+          lineWidth={3}
+          points={footprint(dragging.box, 0.01)}
+        />
+      </>
+    );
   }
 
   const radius = dragging.kind === 'arm' ? RADIUS : SLOT;

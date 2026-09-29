@@ -49,11 +49,7 @@ const Unsaved: React.FunctionComponent = () => {
         frames='1fr--max-content'
         gap='narrow'
       >
-        <Form
-          {...form}
-          aria-label={COPY.panel.unsaved}
-          onSubmit={submit}
-        >
+        <Form {...form} aria-label={COPY.panel.unsaved} onSubmit={submit}>
           <FormField
             control={form.control}
             name='name'

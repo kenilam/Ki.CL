@@ -1,5 +1,8 @@
 // Grid
-import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
+import {
+  type Child,
+  childCentre,
+} from '@/views/experiments/factory-arm/cell/grid/child';
 import {
   type Hex,
   index,
@@ -37,11 +40,14 @@ const relocate = ({
   arm,
   floor,
   hex,
+  obstructed = () => false,
   stations,
 }: {
   arm: string;
   floor: Simulation;
   hex: Hex;
+  /** Whether an obstacle stands where a pallet on `at` would. */
+  obstructed?: (at: Child) => boolean;
   stations: { arm: string; hex: Hex; layout: Layout }[];
 }): { simulation: Simulation; dropped: Pallet[] } => {
   const from = floor.cells.find((cell) => cell.arm === arm)?.hex;
@@ -92,7 +98,10 @@ const relocate = ({
     );
   };
 
-  const fits = (side: Side) => free(made, side) && !taken(side);
+  const fits = (side: Side) =>
+    free(made, side) &&
+    !taken(side) &&
+    !obstructed({ parent: hex, slot: side });
 
   floor.pallets
     .filter(({ at }) => index(at.parent) === index(from))

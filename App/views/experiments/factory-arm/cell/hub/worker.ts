@@ -25,8 +25,8 @@ const WAKE = 1000 / 30;
  */
 type Inbound =
   | { type: 'build'; cells: Cell[]; lines: Line[] }
-  | { type: 'load'; hex: Hex; catalogue: Box[] }
-  | { type: 'obstacles'; hex: Hex; catalogue: Box[]; moved: boolean }
+  | { type: 'load'; hex: Hex }
+  | { type: 'block'; boxes: Box[]; moved: boolean }
   | { type: 'place'; target: Omit<Target, 'claimed' | 'version'> }
   | { type: 'plan'; id: string; queue?: string[]; to?: Hex }
   | { type: 'remove'; id: string }
@@ -143,11 +143,11 @@ scope.onmessage = ({ data }) => {
       ]);
       return;
     case 'load':
-      hub?.load(data.hex, data.catalogue);
+      hub?.load(data.hex);
 
       return;
-    case 'obstacles':
-      hub?.obstacles(data.hex, data.catalogue, data.moved);
+    case 'block':
+      hub?.block(data.boxes, data.moved);
 
       return;
     case 'place':
