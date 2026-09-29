@@ -73,6 +73,7 @@ import { relocate as moveArm } from './relocate';
 import { type Simulation, SIMULATIONS } from './simulations';
 import { standing } from './standing';
 import { useSaved } from './store';
+import { withdraw } from './withdraw';
 
 /** One station as the page knows it. */
 type Station = { arm: string; hex: Hex; layout: Layout };
@@ -147,6 +148,16 @@ type Value = {
   turn: (obstacle: string) => boolean;
   /** Takes an obstacle off the floor. */
   unblock: (obstacle: string) => void;
+  /**
+   * Takes an arm, a pallet or an obstacle off the floor. An arm's pallets
+   * are left loose and what was bound for it goes to the next arm along; a
+   * pallet an arm is working, or the last arm on a line, stays. Says whether
+   * it went.
+   */
+  takeOff: (what: {
+    kind: 'arm' | 'pallet' | 'obstacle';
+    id: string;
+  }) => boolean;
   targets: Target[];
   log: Entry[];
   /** Goes up whenever which cases a station has changes, so the scene draws the right ones. */
@@ -880,6 +891,66 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     [plan, targets]
   );
 
+  const takeOff = useCallback<Value['takeOff']>(
+    ({ id, kind }) => {
+      if (kind === 'obstacle') {
+        unblock(id);
+
+        return true;
+      }
+
+      if (kind === 'pallet') {
+        const target = targets.find((one) => one.id === id);
+
+        if (target?.claimed) {
+          note(
+            'hub',
+            `Pallet ${id} stays`,
+            'warning',
+            `${target.claimed} is working it`
+          );
+
+          return false;
+        }
+
+        remove(id);
+
+        return true;
+      }
+
+      const found = withdraw({ arm: id, floor: floor() });
+
+      if (!found) {
+        note(
+          'hub',
+          `Arm ${id} stays`,
+          'warning',
+          'a line needs an arm in reach of it'
+        );
+
+        return false;
+      }
+
+      const riding = new Map(riders.current);
+
+      play(found.simulation);
+      riders.current = riding;
+      reride(found.heir);
+      found.dropped.forEach((pallet) =>
+        note(
+          'hub',
+          `Pallet ${pallet.id} removed`,
+          'warning',
+          `${id} is gone; its cases are left on the floor`
+        )
+      );
+      setEdited(true);
+
+      return true;
+    },
+    [floor, note, play, remove, reride, targets, unblock]
+  );
+
   const clearLog = useCallback(() => setLog([]), []);
 
   const value = useMemo(
@@ -922,6 +993,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       stations,
       stopped,
       struck,
+      takeOff,
       targets,
       telemetry,
       toggle,
@@ -964,6 +1036,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       stations,
       stopped,
       struck,
+      takeOff,
       targets,
       toggle,
       turn,

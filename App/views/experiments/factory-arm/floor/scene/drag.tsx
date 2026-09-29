@@ -66,9 +66,9 @@ type Value = {
   tap: () => void;
   hovered: Target | null;
   hover: (target: Target | null) => void;
-  /** The obstacle chosen by a click, which the arrow keys move and Delete takes off. */
-  selected: string | null;
-  select: (obstacle: string | null) => void;
+  /** What a click chose: Delete takes it off, and an obstacle also moves by the keys. */
+  selected: Target | null;
+  select: (target: Target | null) => void;
   /** Starts dragging an arm, a pallet or an obstacle; `fresh` for one not on the floor yet, to be set down, of `shape` for an obstacle. */
   grab: (
     kind: Dragging['kind'],
@@ -113,7 +113,7 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   const [dragging, setDragging] = useState<Dragging | null>(null);
   const [pointing, setPointing] = useState<Pointing | null>(null);
   const [hovered, setHovered] = useState<Target | null>(null);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Target | null>(null);
   // What is held, as of now: read on drop, where the state may be a render behind.
   const held = useRef<Dragging | null>(null);
   // What a click would add, as of now: read on the click, where the state may be a render behind.

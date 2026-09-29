@@ -54,6 +54,8 @@ const COPY = {
         { press: ['double-click'], does: 'Add an arm on an empty hex' },
         { press: ['double-click'], does: 'Add a pallet on a slot' },
         { press: ['drag'], does: 'Move an arm or a pallet' },
+        { press: ['click'], does: 'Choose an arm or a pallet' },
+        { press: ['del'], does: 'Remove' },
       ],
     },
     obstacle: {

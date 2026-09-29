@@ -27,7 +27,7 @@ const Station: React.FunctionComponent<Props> = ({ station }) => {
   return (
     <group position={[at.x, 0, at.z]}>
       <Hex hex={{ q: 0, r: 0 }} />
-      <Handle id={arm} kind='arm' radius={0.6}>
+      <Handle id={arm} kind='arm' radius={0.6} top={2.5}>
         <Arm arm={arm} />
       </Handle>
       {layout.buffer && <Pallet position={layout.buffer} />}

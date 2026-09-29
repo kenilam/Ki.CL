@@ -56,6 +56,7 @@ const Working: React.FunctionComponent<Props> = ({ station }) => {
           kind='pallet'
           position={slot(target.at.slot)}
           radius={0.7}
+          top={1.4}
         >
           <Pallet position={slot(target.at.slot)} />
         </Handle>

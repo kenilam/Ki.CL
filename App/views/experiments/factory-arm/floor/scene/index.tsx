@@ -17,6 +17,7 @@ import { Camera } from './camera';
 import { useDrag } from './drag';
 import { Ghost } from './ghost';
 import { Ground } from './ground';
+import { useKeys } from './keys';
 import { Line } from './line';
 import { Loose } from './loose';
 import { Obstacles } from './obstacles';
@@ -42,6 +43,8 @@ const Scene: React.FunctionComponent = () => (
 /** The floor: the lines, the stations in their cells, what rides the lines, the obstacles, and where a drag would land. */
 const Floor: React.FunctionComponent = () => {
   const { active, lines, run, stations } = useHub();
+
+  useKeys();
 
   return (
     <>
