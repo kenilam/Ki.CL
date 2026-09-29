@@ -150,9 +150,8 @@ type Value = {
   unblock: (obstacle: string) => void;
   /**
    * Takes an arm, a pallet or an obstacle off the floor. An arm's pallets
-   * are left loose and what was bound for it goes to the next arm along; a
-   * pallet an arm is working, or the last arm on a line, stays. Says whether
-   * it went.
+   * go with it and what was bound for it goes to the next arm along; the
+   * last arm on a line stays. Says whether it went.
    */
   takeOff: (what: {
     kind: 'arm' | 'pallet' | 'obstacle';
@@ -896,26 +895,27 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         return true;
       }
 
+      const now = floor();
+      const riding = new Map(riders.current);
+
+      // A pallet an arm is working can't be taken off the board under it: the floor is built again without it.
       if (kind === 'pallet') {
-        const target = targets.find((one) => one.id === id);
-
-        if (target?.claimed) {
-          note(
-            'hub',
-            `Pallet ${id} stays`,
-            'warning',
-            `${target.claimed} is working it`
-          );
-
+        if (!now.pallets.some((pallet) => pallet.id === id)) {
           return false;
         }
 
-        remove(id);
+        play({
+          ...now,
+          pallets: now.pallets.filter((pallet) => pallet.id !== id),
+        });
+        riders.current = riding;
+        reride((cell) => cell);
+        setEdited(true);
 
         return true;
       }
 
-      const found = withdraw({ arm: id, floor: floor() });
+      const found = withdraw({ arm: id, floor: now });
 
       if (!found) {
         note(
@@ -928,8 +928,6 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         return false;
       }
 
-      const riding = new Map(riders.current);
-
       play(found.simulation);
       riders.current = riding;
       reride(found.heir);
@@ -940,7 +938,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
 
       return true;
     },
-    [floor, note, play, remove, reride, targets, unblock]
+    [floor, note, play, reride, unblock]
   );
 
   const clearLog = useCallback(() => setLog([]), []);

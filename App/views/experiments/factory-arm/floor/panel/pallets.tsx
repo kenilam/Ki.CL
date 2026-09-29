@@ -63,7 +63,7 @@ const Pallets: React.FunctionComponent = () => {
 
 /** One pallet's card: its place, its state, and its queue. */
 const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
-  const { plan, remove, stations } = useHub();
+  const { plan, stations, takeOff } = useHub();
 
   const name = (hex: { q: number; r: number }) =>
     stations.find((station) => index(station.hex) === index(hex))?.arm ??
@@ -156,16 +156,14 @@ const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
           ))}
         </List>
 
-        {!target.claimed && (
-          <Button
-            onClick={() => remove(target.id)}
-            size='small'
-            variant='tertiary'
-            level='error'
-          >
-            {COPY.panel.remove}
-          </Button>
-        )}
+        <Button
+          onClick={() => takeOff({ kind: 'pallet', id: target.id })}
+          size='small'
+          variant='tertiary'
+          level='error'
+        >
+          {COPY.panel.remove}
+        </Button>
       </section>
     </Layout>
   );
