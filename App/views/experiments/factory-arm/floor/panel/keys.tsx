@@ -24,7 +24,14 @@ const ICONS = {
   drag: <Ri.RiDragMove2Line aria-label='drag' />,
   left: <Ri.RiArrowLeftLine aria-label='left' />,
   right: <Ri.RiArrowRightLine aria-label='right' />,
-  shift: <Text is='span'>⇧</Text>,
+  shift: (
+    <>
+      <Text is='span' className='kicl-line-height-narrower'>
+        ⇧
+      </Text>
+      <Ri.RiAddLine />
+    </>
+  ),
   up: <Ri.RiArrowUpLine aria-label='up' />,
 } as const;
 

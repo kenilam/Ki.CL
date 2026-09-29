@@ -48,7 +48,7 @@ const COPY = {
     obstacle: {
       help: 'How it works',
       keys: [
-        { press: ['drag'], does: 'Place, or move' },
+        { press: ['drag'], does: 'Move' },
         { press: ['left', 'up', 'right', 'down'], does: 'Move' },
         { press: ['shift', 'up', 'down'], does: 'Raise, lower' },
         { press: ['R'], does: 'Rotate' },

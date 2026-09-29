@@ -23,9 +23,6 @@ import {
   SHAPES,
 } from '@/views/experiments/factory-arm/floor/hub/obstacles';
 
-// Drag
-import { useDrag } from '@/views/experiments/factory-arm/floor/scene/drag';
-
 // Partials
 import { Keys } from './keys';
 
@@ -116,10 +113,9 @@ const Drawing: React.FunctionComponent<{ shape: Shape }> = ({ shape }) => {
   );
 };
 
-/** The shapes an obstacle can take, one card each: what it looks like, how big it is, and a button that picks one up to drag onto the floor. Under them, how to work one. */
+/** The shapes an obstacle can take, one row each: what it looks like, how big it is, and a button that sets one down beside a belt. Under them, how to work one. */
 const Shapes: React.FunctionComponent = () => {
-  const { coming } = useHub();
-  const { grab } = useDrag();
+  const { put } = useHub();
 
   return (
     <>
@@ -141,7 +137,7 @@ const Shapes: React.FunctionComponent = () => {
                 </Text>
               </Text>
               <Button
-                onClick={() => grab('obstacle', coming.obstacle, true, shape)}
+                onClick={() => put(shape)}
                 size='small'
                 variant='secondary'
               >

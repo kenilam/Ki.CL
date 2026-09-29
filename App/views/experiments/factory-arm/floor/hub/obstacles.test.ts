@@ -7,10 +7,23 @@ import {
   centre,
   neighbour,
 } from '@/views/experiments/factory-arm/cell/grid/hex';
-import { covers, line } from '@/views/experiments/factory-arm/cell/grid/layout';
+import {
+  covers,
+  line,
+  onLine,
+} from '@/views/experiments/factory-arm/cell/grid/layout';
 
 // Partials
-import { box, clear, moved, rest, shape, solids, turned } from './obstacles';
+import {
+  beside,
+  box,
+  clear,
+  moved,
+  rest,
+  shape,
+  solids,
+  turned,
+} from './obstacles';
 
 const a = { q: 0, r: 0 };
 const b = neighbour(a, 0);
@@ -126,6 +139,28 @@ describe('obstacles on the floor', () => {
       0,
       'over no belt, on the floor'
     );
+  });
+
+  test('a new obstacle is set down beside a belt, clear of it and of everything else', () => {
+    const found = line('line', [a, b]);
+    const made = beside('o1', 'partition', [found], floor());
+
+    assert.ok(made, 'there is room');
+    assert.equal(covers(found, made!), false, 'not on the belt');
+    assert.equal(clear(made!, floor()), true, 'on nothing solid');
+
+    // Right next to the belt: its nearest edge is within a hand of the belt's.
+    const across = found.heading - Math.PI / 2;
+    const mid = onLine(found, (found.start + found.end) / 2);
+    const at = {
+      x: (made!.min.x + made!.max.x) / 2,
+      z: (made!.min.z + made!.max.z) / 2,
+    };
+    const sideways = Math.abs(
+      (at.x - mid.x) * Math.cos(across) + (at.z - mid.z) * Math.sin(across)
+    );
+
+    assert.ok(sideways < found.width / 2 + 1.2, `${sideways} from the line`);
   });
 
   test('a box stands on a belt only when it reaches it', () => {

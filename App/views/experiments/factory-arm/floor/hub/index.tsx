@@ -56,7 +56,17 @@ import type {
 import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
 
 // Partials
-import { clear, moved, rest, room, solids, stand, turned } from './obstacles';
+import {
+  beside,
+  clear,
+  moved,
+  rest,
+  room,
+  type Shape,
+  solids,
+  stand,
+  turned,
+} from './obstacles';
 import { pile } from './pile';
 import { relocate as moveArm } from './relocate';
 import { type Simulation, SIMULATIONS } from './simulations';
@@ -124,6 +134,8 @@ type Value = {
   obstacles: Box[];
   /** Whether an obstacle may stand as `box`: on nothing but the floor and the belts. */
   blockable: (box: Box) => boolean;
+  /** Sets a new obstacle of `shape` down beside a belt, where there is room. Says whether it did. */
+  put: (shape: Shape) => boolean;
   /** Moves an obstacle's footprint to be centred on `to`, on top of any belt there, if it may stand there. Says whether it did. */
   shift: (obstacle: string, to: { x: number; z: number }) => boolean;
   /** Raises an obstacle `by` metres, or lowers it for a negative `by`, never below the floor or into a belt. Says whether it did. */
@@ -579,23 +591,25 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     [active.cells.length, obstacles, targets.length]
   );
 
-  const blockable = useCallback<Value['blockable']>(
-    (box) =>
-      clear(
-        box,
-        solids({
-          cells: (arm) =>
-            cells.current.get(arm) ?? { cases: [], holding: null },
-          extras,
-          lines,
-          loose: active.loose ?? [],
-          obstacles,
-          riders: (line) => riders.current.get(line)?.riders ?? [],
-          stations,
-          targets,
-        })
-      ),
+  /** Everything solid on the floor as it stands, for an obstacle to keep off. */
+  const solid = useCallback(
+    () =>
+      solids({
+        cells: (arm) => cells.current.get(arm) ?? { cases: [], holding: null },
+        extras,
+        lines,
+        loose: active.loose ?? [],
+        obstacles,
+        riders: (line) => riders.current.get(line)?.riders ?? [],
+        stations,
+        targets,
+      }),
     [active.loose, extras, lines, obstacles, stations, targets]
+  );
+
+  const blockable = useCallback<Value['blockable']>(
+    (box) => clear(box, solid()),
+    [solid]
   );
 
   /** Puts `next` on the floor: the arms hear of it at once, and the floor is edited. */
@@ -604,6 +618,23 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     setEdited(true);
     hub.current?.send({ type: 'block', boxes: next, moved: true });
   }, []);
+
+  const put = useCallback<Value['put']>(
+    (shape) => {
+      const made = beside(nextIds.obstacle, shape, lines, solid());
+
+      if (!made) {
+        note('hub', `No room beside a belt for a ${shape}`, 'warning');
+
+        return false;
+      }
+
+      block([...obstacles, made]);
+
+      return true;
+    },
+    [block, lines, nextIds.obstacle, note, obstacles, solid]
+  );
 
   const shift = useCallback<Value['shift']>(
     (obstacle, to) => {
@@ -868,6 +899,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       placeable,
       plan,
       play,
+      put,
       raise,
       relocate,
       remove,
@@ -909,6 +941,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       placeable,
       plan,
       play,
+      put,
       raise,
       relocate,
       remove,

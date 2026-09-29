@@ -108,6 +108,58 @@ const turned = (box: Box): Box => {
   };
 };
 
+/** How far from a belt's edge a new obstacle is set down, in metres. */
+const GAP = 0.1;
+
+/** How far apart the spots tried along a belt are, in metres. */
+const STRIDE = 0.5;
+
+/**
+ * A box of `shape` set down beside a belt: as near the middle of a line as
+ * there is room, on either side of it, clear of everything solid and off
+ * the belt itself. `null` when no line has room for it.
+ */
+const beside = (
+  id: string,
+  shape: Shape,
+  lines: Line[],
+  solids: Box[]
+): Box | null => {
+  const { size } = SHAPES[shape];
+
+  for (const line of lines) {
+    const across = line.heading - Math.PI / 2;
+    // How far the box reaches from its middle across the belt, square to the floor as it is.
+    const reach =
+      Math.abs((size[0] / 2) * Math.cos(across)) +
+      Math.abs((size[2] / 2) * Math.sin(across));
+    const offset = line.width / 2 + GAP + reach;
+    const middle = (line.start + line.end) / 2;
+    const half = (line.end - line.start) / 2;
+
+    for (let step = 0; step * STRIDE <= half; step++) {
+      for (const along of step ? [-step, step] : [0]) {
+        for (const side of [1, -1]) {
+          const point = onLine(line, middle + along * STRIDE);
+          const made = box(id, shape, {
+            x: point.x + side * offset * Math.cos(across),
+            z: point.z + side * offset * Math.sin(across),
+          });
+
+          if (
+            clear(made, solids) &&
+            !lines.some((other) => above(other, made))
+          ) {
+            return made;
+          }
+        }
+      }
+    }
+  }
+
+  return null;
+};
+
 /** The middle of a box's footprint. */
 const middle = ({ min, max }: Box): Point => ({
   x: (min.x + max.x) / 2,
@@ -289,6 +341,7 @@ const clear = (one: Box, others: Box[]) =>
 
 export {
   SHAPES,
+  beside,
   box,
   cased,
   clear,
