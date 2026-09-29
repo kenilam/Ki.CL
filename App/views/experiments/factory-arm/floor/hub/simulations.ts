@@ -7,11 +7,14 @@ import type {
 } from '@/views/experiments/factory-arm/cell/hub';
 
 // Grid
+import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
 import {
+  centre,
   type Hex,
   neighbour,
   type Side,
 } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { line, onLine } from '@/views/experiments/factory-arm/cell/grid/layout';
 
 // Protocol
 import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
@@ -20,6 +23,7 @@ import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
 import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
 
 // Partials
+import { box, rest } from './obstacles';
 import { pile } from './pile';
 
 /** Cases left on the floor where a pallet stood, relative to that spot. No arm touches them. */
@@ -141,6 +145,41 @@ const merge = (() => {
   };
 })();
 
+/** A point `x`, `z` from the base of the arm in `hex`, on the floor. */
+const from = (hex: Hex, x: number, z: number) => {
+  const at = centre(hex);
+
+  return { x: at.x + x, z: at.z + z };
+};
+
+/** The one-line row's belt, laid out as the hub will lay it. */
+const belt = line(three.lines[0].id, three.lines[0].cells);
+
+/**
+ * The obstacles: each set a case up against one of the rules. In arm-a's
+ * frame the belt runs past to its front right and its pallets stand
+ * behind it, so a swing from pallet to belt sweeps out through +x and -z.
+ */
+const OBSTACLES = {
+  // Beside the stand, across the swing to the belt: out of the camera's view, so the arm's sensors find it.
+  swing: [box('o1', 'pillar', from(three.cells[0].hex, 0.6, -0.7))],
+  // Hanging over the near edge of the pallet on slot 3: the camera sees it, and cases under it can't be lifted straight out.
+  beam: (() => {
+    const at = childCentre({ parent: three.cells[0].hex, slot: 3 });
+
+    return [box('o1', 'beam', { x: at.x + 0.45, z: at.z })];
+  })(),
+  // Standing between the arm and the belt, too tall to reach over: every case is refused till it is moved.
+  crate: [box('o1', 'crate', from(three.cells[0].hex, 0, -0.75))],
+  // Across the belt between the first two arms, resting on it: the belt stands still till it is moved off.
+  partition: [
+    rest(
+      box('o1', 'partition', onLine(belt, (belt.start + belt.span) / 2 - 1)),
+      [belt]
+    ),
+  ],
+};
+
 const SIMULATIONS: Simulation[] = [
   {
     id: 'one-line',
@@ -206,6 +245,37 @@ const SIMULATIONS: Simulation[] = [
       pallet('p3', merge.cells[1].hex, 1, merge.end, 43, 1),
     ],
     capacities: { 'arm-a': { targets: 2, period: 60 } },
+  },
+  {
+    id: 'pillar-in-the-swing',
+    name: 'Pillar in the swing',
+    ...three,
+    pallets: [pallet('p1', three.cells[0].hex, 3, end(three), 61, 2)],
+    obstacles: OBSTACLES.swing,
+  },
+  {
+    id: 'beam-over-the-pallet',
+    name: 'Beam over the pallet',
+    ...three,
+    pallets: [pallet('p1', three.cells[0].hex, 3, end(three), 67, 3)],
+    obstacles: OBSTACLES.beam,
+  },
+  {
+    id: 'crate-in-the-way',
+    name: 'Crate in the way',
+    ...three,
+    pallets: [
+      pallet('p1', three.cells[0].hex, 3, end(three), 71, 2),
+      pallet('p2', three.cells[0].hex, 4, end(three), 73, 2),
+    ],
+    obstacles: OBSTACLES.crate,
+  },
+  {
+    id: 'partition-on-the-belt',
+    name: 'Partition on the belt',
+    ...three,
+    pallets: [pallet('p1', three.cells[0].hex, 3, end(three), 79, 2)],
+    obstacles: OBSTACLES.partition,
   },
 ];
 
