@@ -42,23 +42,39 @@ const footprint = ({ min, max }: Box, lift = 0.003) =>
     [min.x, min.z],
   ].map(([x, z]) => [x, lift, z] as [number, number, number]);
 
-/** Which way each arrow key moves a chosen obstacle, on the floor. */
-const ARROWS: Record<string, { x: number; z: number }> = {
-  ArrowLeft: { x: -1, z: 0 },
-  ArrowRight: { x: 1, z: 0 },
-  ArrowUp: { x: 0, z: -1 },
-  ArrowDown: { x: 0, z: 1 },
+/** Which way each arrow key moves a chosen obstacle, as seen: `ahead` away from the viewer, `side` to their right. */
+const ARROWS: Record<string, { ahead: number; side: number }> = {
+  ArrowLeft: { ahead: 0, side: -1 },
+  ArrowRight: { ahead: 0, side: 1 },
+  ArrowUp: { ahead: 1, side: 0 },
+  ArrowDown: { ahead: -1, side: 0 },
+};
+
+/**
+ * Where the arrows point on the floor from where the camera looks: ahead
+ * is the way it faces, snapped to the nearest axis so a step stays square
+ * to the cells, and right is a quarter turn from that.
+ */
+const heading = (camera: THREE.Camera) => {
+  const look = camera.getWorldDirection(new THREE.Vector3());
+  const ahead =
+    Math.abs(look.x) > Math.abs(look.z)
+      ? { x: Math.sign(look.x), z: 0 }
+      : { x: 0, z: Math.sign(look.z) };
+
+  return { ahead, right: { x: -ahead.z, z: ahead.x } };
 };
 
 /**
  * The arrow keys move the chosen obstacle a step at a time over the floor,
- * and with Shift held Up and Down raise and lower it; R gives it a quarter
- * turn; Delete takes it off; Escape lets it go. Keys typed into a field
- * are left to the field.
+ * the way the view faces, and with Shift held Up and Down raise and lower
+ * it; R gives it a quarter turn; Delete takes it off; Escape lets it go.
+ * Keys typed into a field are left to the field.
  */
 const useKeys = () => {
   const { obstacles, raise, shift, turn, unblock } = useHub();
   const { select, selected } = useDrag();
+  const camera = Fiber.useThree((state) => state.camera);
 
   // Taken off the floor by other means: no longer chosen.
   useEffect(() => {
@@ -87,12 +103,14 @@ const useKeys = () => {
 
         event.preventDefault();
 
-        if (event.shiftKey && arrow.z) {
-          raise(selected, -arrow.z * STEP);
+        if (event.shiftKey && arrow.ahead) {
+          raise(selected, arrow.ahead * STEP);
         } else {
+          const { ahead, right } = heading(camera);
+
           shift(selected, {
-            x: at.x + arrow.x * STEP,
-            z: at.z + arrow.z * STEP,
+            x: at.x + (arrow.ahead * ahead.x + arrow.side * right.x) * STEP,
+            z: at.z + (arrow.ahead * ahead.z + arrow.side * right.z) * STEP,
           });
         }
       } else if (event.key === 'r' || event.key === 'R') {
@@ -109,7 +127,7 @@ const useKeys = () => {
     window.addEventListener('keydown', press);
 
     return () => window.removeEventListener('keydown', press);
-  }, [obstacles, raise, select, selected, shift, turn, unblock]);
+  }, [camera, obstacles, raise, select, selected, shift, turn, unblock]);
 };
 
 /** The obstacles on the floor, where the hub has them. Each can be dragged elsewhere, or chosen and moved by the keys. */
