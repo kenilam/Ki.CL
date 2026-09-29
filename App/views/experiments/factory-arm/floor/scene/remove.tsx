@@ -29,10 +29,9 @@ const Remove: React.FunctionComponent<Props> = ({ id, kind, position }) => {
       <Button
         level='error'
         onClick={() => takeOff({ kind, id })}
-        size='large'
-        variant='primary'
+        variant='ghost'
       >
-        <Ri.RiDeleteBinLine aria-hidden className='kicl-font-size-large' />
+        <Ri.RiDeleteBinLine />
         <span className='kicl-hidden'>{COPY.panel.remove}</span>
       </Button>
     </Drei.Html>
