@@ -1,0 +1,127 @@
+import React, { useMemo, useRef } from 'react';
+
+// Three
+import { Drei, Fiber, THREE } from '@/three';
+
+// Model
+import {
+  GRIPPER,
+  LINK,
+} from '@/views/experiments/factory-arm/cell/model/constants';
+
+// Protocol
+import type { Joints } from '@/views/experiments/factory-arm/cell/protocol';
+
+// Materials
+import { MATERIAL } from './materials';
+
+const QUARTER = Math.PI / 2;
+
+/** Holes in the perforated plate on the housing's outward face. */
+const PLATE = { columns: 5, rows: 3 };
+
+// The housing runs from under the flange to just above the pad.
+const TOP = 0.08 + GRIPPER.flange;
+const HEIGHT = LINK.hand - GRIPPER.pad - TOP;
+const MIDDLE = TOP + HEIGHT / 2;
+
+// Its +y face points away from the base while the hand points down.
+const FACE = GRIPPER.depth / 2;
+
+const HOLES = Array.from({ length: PLATE.rows * PLATE.columns }, (_, index) => [
+  ((index % PLATE.columns) / (PLATE.columns - 1) - 0.5) * GRIPPER.width * 0.78,
+  FACE + 0.012,
+  MIDDLE +
+    (Math.floor(index / PLATE.columns) / (PLATE.rows - 1) - 0.5) * HEIGHT * 0.7,
+]) as [number, number, number][];
+
+const IDLE = new THREE.Color('#3a3a3a');
+const HOLDING = new THREE.Color('#29d17a');
+
+type Props = { joints: React.RefObject<Joints> };
+
+/** Vacuum box gripper, in the wrist's frame; its pad face is the arm's tip. */
+const Gripper: React.FunctionComponent<Props> = ({ joints }) => {
+  const light = useMemo(
+    () => new THREE.MeshStandardMaterial({ color: IDLE, emissive: IDLE }),
+    []
+  );
+  const roll = useRef<THREE.Group>(null);
+
+  // The tool axis is the wrist's +z, pointing down; turning about it by `a` turns the pad's heading by `-a`.
+  Fiber.useFrame(() => {
+    light.emissive.lerpColors(IDLE, HOLDING, joints.current.grip);
+    roll.current?.rotation.set(0, 0, -joints.current.roll);
+  });
+
+  return (
+    <group>
+      <mesh
+        castShadow
+        receiveShadow
+        material={MATERIAL.body}
+        rotation-z={QUARTER}
+      >
+        <cylinderGeometry args={[0.085, 0.085, 0.2, 32]} />
+      </mesh>
+
+      <group ref={roll}>
+        <mesh
+          castShadow
+          receiveShadow
+          material={MATERIAL.housing}
+          position-z={0.08 + GRIPPER.flange / 2}
+          rotation-x={QUARTER}
+        >
+          <cylinderGeometry args={[0.07, 0.075, GRIPPER.flange, 32]} />
+        </mesh>
+        <Drei.RoundedBox
+          castShadow
+          receiveShadow
+          args={[GRIPPER.width, GRIPPER.depth, HEIGHT]}
+          material={MATERIAL.housing}
+          position-z={MIDDLE}
+          radius={0.025}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          material={MATERIAL.plate}
+          position={[0, FACE + 0.005, MIDDLE]}
+        >
+          <boxGeometry args={[GRIPPER.width * 0.88, 0.01, HEIGHT * 0.86]} />
+        </mesh>
+        <Drei.Instances limit={HOLES.length} material={MATERIAL.housing}>
+          <circleGeometry args={[0.011, 12]} />
+          {HOLES.map((position) => (
+            <Drei.Instance
+              key={position.join()}
+              position={position}
+              rotation-x={-QUARTER}
+            />
+          ))}
+        </Drei.Instances>
+        <mesh
+          castShadow
+          receiveShadow
+          material={light}
+          position={[GRIPPER.width / 2 - 0.04, FACE + 0.02, TOP + 0.03]}
+        >
+          <sphereGeometry args={[0.022, 16, 16]} />
+        </mesh>
+        <mesh
+          castShadow
+          receiveShadow
+          material={MATERIAL.hose}
+          position-z={LINK.hand - GRIPPER.pad / 2}
+        >
+          <boxGeometry
+            args={[GRIPPER.width + 0.02, GRIPPER.depth + 0.02, GRIPPER.pad]}
+          />
+        </mesh>
+      </group>
+    </group>
+  );
+};
+
+export { Gripper };

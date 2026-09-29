@@ -1,0 +1,208 @@
+// Hub
+import type {
+  Capacity,
+  Cell,
+  Line,
+  Target,
+} from '@/views/experiments/factory-arm/cell/hub';
+
+// Grid
+import {
+  type Hex,
+  neighbour,
+  type Side,
+} from '@/views/experiments/factory-arm/cell/grid/hex';
+
+// Station
+import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
+
+// Partials
+import { pile } from './pile';
+
+/** Cases left on the floor where a pallet stood, relative to that spot. No arm touches them. */
+type Loose = { at: { x: number; z: number }; cases: Case[] };
+
+/**
+ * A floor to play: its arms, the belt lines past them, the pallets to start
+ * with, any arm's capacity, and cases left loose on the floor.
+ */
+type Simulation = {
+  id: string;
+  name: string;
+  cells: Cell[];
+  lines: Line[];
+  pallets: Omit<Target, 'claimed' | 'version'>[];
+  capacities?: Record<string, Capacity>;
+  loose?: Loose[];
+  /** Saved by the operator, so it can be removed again. */
+  saved?: boolean;
+};
+
+/** `count` arms in a row along one belt line, named arm-a onward. */
+const row = (count: number) => {
+  const cells: Cell[] = [];
+  let hex: Hex = { q: 0, r: 0 };
+
+  for (let index = 0; index < count; index++) {
+    cells.push({ hex, arm: `arm-${String.fromCharCode(97 + index)}` });
+    hex = neighbour(hex, 0);
+  }
+
+  return {
+    cells,
+    lines: [{ id: 'line-1', cells: cells.map(({ hex: at }) => at) }],
+  };
+};
+
+/** A pallet on `slot` of `parent`, its cases queued top layer first, bound for `to`. */
+const pallet = (
+  id: string,
+  parent: Hex,
+  slot: Side,
+  to: Hex,
+  seed: number,
+  layers: number
+): Omit<Target, 'claimed' | 'version'> => {
+  const cases = pile(id, seed, layers);
+
+  return {
+    id,
+    at: { parent, slot },
+    to,
+    cases,
+    queue: [...cases].sort((a, b) => b.at.y - a.at.y).map((one) => one.id),
+  };
+};
+
+const three = row(3);
+const five = row(5);
+
+/** The last cell of a row: where every pallet on it is bound. */
+const end = ({ cells }: typeof three) => cells[cells.length - 1].hex;
+
+/** Two loading arms on either side of one line, the end arm at its end. */
+const sides = (() => {
+  const [a, b, c] = three.cells.map(({ hex }) => hex);
+
+  return {
+    cells: [
+      { hex: a, arm: 'arm-a' },
+      // Across the belt from where the second cell of the row would be.
+      { hex: neighbour(b, 1), arm: 'arm-b' },
+      { hex: c, arm: 'arm-c' },
+    ],
+    lines: three.lines,
+    end: c,
+  };
+})();
+
+/** A row of three, and a fourth arm across the belt from the last, so two arms take cases off. */
+const pair = (() => {
+  const [a, b, c] = three.cells.map(({ hex }) => hex);
+
+  return {
+    cells: [
+      { hex: a, arm: 'arm-a' },
+      { hex: b, arm: 'arm-b' },
+      { hex: c, arm: 'arm-c' },
+      { hex: neighbour(c, 1), arm: 'arm-d' },
+    ],
+    lines: three.lines,
+    end: c,
+  };
+})();
+
+/**
+ * Two lines from opposite directions, both ending beside one arm that
+ * unloads them both, one belt on each side of it. The cells next to it
+ * stay empty, so it has a slot of its own to stack on.
+ */
+const merge = (() => {
+  const [a, b, e] = three.cells.map(({ hex }) => hex);
+  const h = neighbour(e, 0);
+  const g = neighbour(h, 0);
+
+  return {
+    cells: [
+      { hex: a, arm: 'arm-a' },
+      { hex: g, arm: 'arm-b' },
+      { hex: e, arm: 'arm-c' },
+    ],
+    lines: [
+      { id: 'line-1', cells: [a, b, e] },
+      { id: 'line-2', cells: [g, h, e] },
+    ],
+    end: e,
+  };
+})();
+
+const SIMULATIONS: Simulation[] = [
+  {
+    id: 'one-line',
+    name: 'One line',
+    ...three,
+    pallets: [
+      pallet('p1', three.cells[0].hex, 3, end(three), 7, 3),
+      pallet('p2', three.cells[0].hex, 4, end(three), 11, 2),
+      pallet('p3', three.cells[1].hex, 3, end(three), 5, 2),
+    ],
+  },
+  {
+    id: 'three-at-once',
+    name: 'Three pallets at once',
+    ...three,
+    pallets: [
+      pallet('p1', three.cells[0].hex, 0, end(three), 3, 2),
+      pallet('p2', three.cells[0].hex, 3, end(three), 9, 2),
+      pallet('p3', three.cells[0].hex, 4, end(three), 13, 2),
+    ],
+    capacities: { 'arm-a': { targets: 3, period: 60 } },
+  },
+  {
+    id: 'long-line',
+    name: 'Long line',
+    ...five,
+    pallets: [
+      pallet('p1', five.cells[0].hex, 3, end(five), 17, 2),
+      pallet('p2', five.cells[1].hex, 3, end(five), 19, 2),
+      pallet('p3', five.cells[2].hex, 4, end(five), 23, 3),
+    ],
+  },
+  {
+    id: 'both-sides',
+    name: 'Both sides of the belt',
+    cells: sides.cells,
+    lines: sides.lines,
+    pallets: [
+      pallet('p1', sides.cells[0].hex, 3, sides.end, 29, 2),
+      pallet('p2', sides.cells[1].hex, 2, sides.end, 31, 2),
+    ],
+  },
+  {
+    id: 'two-unloading',
+    name: 'Two arms unloading',
+    cells: pair.cells,
+    lines: pair.lines,
+    pallets: [
+      pallet('p1', pair.cells[0].hex, 3, pair.end, 47, 3),
+      pallet('p2', pair.cells[0].hex, 4, pair.end, 53, 2),
+      pallet('p3', pair.cells[1].hex, 3, pair.end, 59, 2),
+    ],
+    capacities: { 'arm-a': { targets: 2, period: 60 } },
+  },
+  {
+    id: 'two-lines',
+    name: 'Two lines into one arm',
+    cells: merge.cells,
+    lines: merge.lines,
+    pallets: [
+      pallet('p1', merge.cells[0].hex, 3, merge.end, 37, 1),
+      pallet('p2', merge.cells[0].hex, 4, merge.end, 41, 1),
+      pallet('p3', merge.cells[1].hex, 1, merge.end, 43, 1),
+    ],
+    capacities: { 'arm-a': { targets: 2, period: 60 } },
+  },
+];
+
+export { SIMULATIONS };
+export type { Loose, Simulation };
