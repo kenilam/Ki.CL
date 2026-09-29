@@ -238,7 +238,7 @@ const cased = (
 
 /**
  * Everything solid on the floor but the belts, as boxes in its frame: the
- * arms' stands, the pallets' boards, the cases on unclaimed pallets, every
+ * arms' stands and buffers, the pallets' boards, the cases on unclaimed pallets, every
  * case a station has or holds, the cases riding the lines, cases left
  * loose, and the obstacles. An obstacle may stand nowhere these are.
  */
@@ -258,10 +258,23 @@ const solids = ({
   loose: Loose[];
   obstacles: Box[];
   riders: (line: string) => Riding[];
-  stations: { arm: string; hex: Hex }[];
+  /** Each arm, where it stands, and its buffer's place in its own frame, if it has one. */
+  stations: { arm: string; hex: Hex; layout?: { buffer: Vector | null } }[];
   targets: Target[];
 }): Box[] => [
   ...stations.map(({ arm, hex }) => stand(arm, hex)),
+  ...stations.flatMap(({ arm, hex, layout }) => {
+    const at = centre(hex);
+
+    return layout?.buffer
+      ? [
+          boards(`${arm}-buffer`, {
+            x: at.x + layout.buffer[0],
+            z: at.z + layout.buffer[2],
+          }),
+        ]
+      : [];
+  }),
   ...stations.flatMap(({ arm, hex }) => {
     const at = centre(hex);
     const { cases, holding } = cells(arm);

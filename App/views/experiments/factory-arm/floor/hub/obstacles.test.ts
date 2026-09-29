@@ -45,7 +45,7 @@ const floor = () =>
     obstacles: [],
     riders: () => [],
     stations: [
-      { arm: 'arm-a', hex: a },
+      { arm: 'arm-a', hex: a, layout: { buffer: [0, 0, -1.5] } },
       { arm: 'arm-b', hex: b },
     ],
     targets: [
@@ -102,6 +102,11 @@ describe('obstacles on the floor', () => {
       'on the pallet'
     );
     assert.equal(on({ x: 5, z: 5 }), false, 'on the loose case');
+    assert.equal(
+      on({ x: centre(a).x, z: centre(a).z - 1.5 }),
+      false,
+      'on the buffer'
+    );
     assert.equal(on({ x: 20, z: 20 }), true, 'on open floor');
   });
 
