@@ -81,6 +81,31 @@ describe('the hub', () => {
     );
   });
 
+  test('one arm with no belt restacks a pallet bound for its own cell onto a pallet of its own', () => {
+    const a = { q: 0, r: 0 };
+    const { hub, log, run } = build([{ hex: a, arm: 'arm-a' }], []);
+    const lines: string[] = [];
+
+    hub.place(one(a, a));
+    run(60, () => {
+      lines.push(...log());
+
+      return lines.some((line) => line.includes('down on its own pallet'));
+    });
+
+    assert.ok(
+      lines.some((line) => line.startsWith('arm-a: new pallet on slot')),
+      lines.join('\n')
+    );
+    assert.ok(
+      lines.some(
+        (line) => line === 'arm-a: Set case c1 down on its own pallet'
+      ),
+      lines.join('\n')
+    );
+    assert.deepEqual(hub.board.targets()[0].queue, []);
+  });
+
   test('a pallet bound for the next cell is sent over the belt and delivered there', () => {
     const a = { q: 0, r: 0 };
     const b = neighbour(a, 0);

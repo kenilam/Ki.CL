@@ -163,12 +163,19 @@ const create = ({
     });
   };
 
-  /** Queues the target's cases still to go, in its order, each onto the belt toward its cell. */
+  /** Whether a target's cases stay in this cell: bound for it, they go onto pallets of the arm's own. */
+  const here = (target: Target) => index(target.to) === index(hex);
+
+  /**
+   * Queues the target's cases still to go, in its order, each onto the belt
+   * toward its cell, or onto a pallet of this arm's own when they are bound
+   * for this cell.
+   */
   const requeue = (target: Target, claim: Claim) => {
-    const belt = route(target.to);
+    const belt = here(target) ? null : (route(target.to) ?? null);
     const kept = station.queue.filter((order) => order.of !== target.id);
 
-    if (!belt) {
+    if (!belt && !here(target)) {
       note(
         station,
         `No belt past ${id} toward cell ${target.to.q},${target.to.r}`,
@@ -286,7 +293,7 @@ const create = ({
       }
 
       // No belt that way: the pallet is left for an arm that has one, and said once.
-      if (!route(target.to)) {
+      if (!here(target) && !route(target.to)) {
         if (!stuck.has(target.id)) {
           stuck.add(target.id);
           note(

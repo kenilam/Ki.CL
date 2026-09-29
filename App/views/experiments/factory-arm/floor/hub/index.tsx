@@ -763,7 +763,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
           return false;
         }
 
-        // Bound for the end of the first line past that arm; on the end arm itself, it just stands there.
+        // Bound for the end of the first line past that arm; with none, for the arm itself, which restacks it.
         const station = stations.find(
           (one) => index(one.hex) === index(what.pallet.parent)
         );
@@ -780,12 +780,9 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
               at: what.pallet,
               to,
               cases,
-              queue:
-                index(to) === index(what.pallet.parent)
-                  ? []
-                  : [...cases]
-                      .sort((a, b) => b.at.y - a.at.y)
-                      .map((one) => one.id),
+              queue: [...cases]
+                .sort((a, b) => b.at.y - a.at.y)
+                .map((one) => one.id),
             },
           ],
         });
@@ -937,12 +934,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       riders.current = riding;
       reride(found.heir);
       found.dropped.forEach((pallet) =>
-        note(
-          'hub',
-          `Pallet ${pallet.id} removed`,
-          'warning',
-          `${id} is gone; its cases are left on the floor`
-        )
+        note('hub', `Pallet ${pallet.id} removed`, 'warning', `with ${id}`)
       );
       setEdited(true);
 

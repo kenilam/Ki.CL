@@ -180,7 +180,17 @@ const OBSTACLES = {
   ],
 };
 
+/** A single arm with no belt, and where it stands. */
+const alone = { cells: [{ hex: { q: 0, r: 0 }, arm: 'arm-a' }], lines: [] };
+
 const SIMULATIONS: Simulation[] = [
+  {
+    id: 'one-arm',
+    name: 'One arm, pallet to pallet',
+    ...alone,
+    // Bound for its own cell: the arm restacks it onto a pallet of its own.
+    pallets: [pallet('p1', alone.cells[0].hex, 3, alone.cells[0].hex, 83, 2)],
+  },
   {
     id: 'one-line',
     name: 'One line',
