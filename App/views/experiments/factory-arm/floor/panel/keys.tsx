@@ -54,23 +54,19 @@ const Keys: React.FunctionComponent<{ rows: readonly Row[] }> = ({ rows }) => (
   <List className='kicl-padding-block-narrow' gap='none'>
     {rows.map(({ does, press }) => (
       <ListItem
+        alignItems='center'
         autoFlow='column'
         className={getButtonClassNames({ variant: 'tertiary' })}
         key={does}
         gap='narrow'
       >
-        <Layout
-          alignItems='center'
-          autoFlow='column'
-          frames='max-content--auto'
-          gap='narrower'
-        >
+        <Layout alignItems='center' autoFlow='column' gap='narrower'>
           <span>
             {press.map((key) => {
               const Icon = ICONS[key as keyof typeof ICONS];
 
               return (
-                <Badge variant='outline' key={key} size='small'>
+                <Badge variant='outline' key={key}>
                   {Icon || key}
                 </Badge>
               );
