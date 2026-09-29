@@ -93,6 +93,21 @@ const rest = (box: Box, lines: Line[]): Box => {
   };
 };
 
+/** The same box given a quarter turn about the middle of its footprint: its width and depth swap. */
+const turned = (box: Box): Box => {
+  const at = middle(box);
+  const half = {
+    x: (box.max.z - box.min.z) / 2,
+    z: (box.max.x - box.min.x) / 2,
+  };
+
+  return {
+    id: box.id,
+    min: { x: at.x - half.x, y: box.min.y, z: at.z - half.z },
+    max: { x: at.x + half.x, y: box.max.y, z: at.z + half.z },
+  };
+};
+
 /** The middle of a box's footprint. */
 const middle = ({ min, max }: Box): Point => ({
   x: (min.x + max.x) / 2,
@@ -104,10 +119,13 @@ const shape = ({ min, max }: Box) =>
   (Object.keys(SHAPES) as Shape[]).find((each) => {
     const [width, height, depth] = SHAPES[each].size;
 
+    const near = (a: number, b: number) => Math.abs(a - b) < 1e-6;
+    const [w, d] = [max.x - min.x, max.z - min.z];
+
+    // Either way round: a quarter turn swaps width and depth.
     return (
-      Math.abs(max.x - min.x - width) < 1e-6 &&
-      Math.abs(max.y - min.y - height) < 1e-6 &&
-      Math.abs(max.z - min.z - depth) < 1e-6
+      near(max.y - min.y, height) &&
+      ((near(w, width) && near(d, depth)) || (near(w, depth) && near(d, width)))
     );
   });
 
@@ -282,5 +300,6 @@ export {
   shape,
   solids,
   stand,
+  turned,
 };
 export type { Shape };

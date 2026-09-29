@@ -41,7 +41,7 @@ const COPY = {
     /** Sizes as width × height × depth, in metres. */
     size: (size: readonly [number, number, number]) =>
       `${size.map((metres) => `${metres} m`).join(' × ')}`,
-    tip: 'Double-click an empty hex for an arm, or a slot of an arm for a pallet. Arrow keys move a chosen obstacle, Shift with Up or Down raises or lowers it; Delete takes it off.',
+    tip: 'Double-click an empty hex for an arm, or a slot of an arm for a pallet. Arrow keys move a chosen obstacle, Shift with Up or Down raises or lowers it, R turns it; Delete takes it off.',
     slot: 'Slot',
     stopped: 'stopped',
     unclaimed: 'Waiting for an arm',

@@ -56,7 +56,7 @@ import type {
 import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
 
 // Partials
-import { clear, moved, rest, room, solids, stand } from './obstacles';
+import { clear, moved, rest, room, solids, stand, turned } from './obstacles';
 import { pile } from './pile';
 import { relocate as moveArm } from './relocate';
 import { type Simulation, SIMULATIONS } from './simulations';
@@ -126,6 +126,8 @@ type Value = {
   shift: (obstacle: string, to: { x: number; z: number }) => boolean;
   /** Raises an obstacle `by` metres, or lowers it for a negative `by`, never below the floor or into a belt. Says whether it did. */
   raise: (obstacle: string, by: number) => boolean;
+  /** Gives an obstacle a quarter turn about its middle, if it may stand so. Says whether it did. */
+  turn: (obstacle: string) => boolean;
   /** Takes an obstacle off the floor. */
   unblock: (obstacle: string) => void;
   targets: Target[];
@@ -637,6 +639,27 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     [block, blockable, lines, obstacles]
   );
 
+  const turn = useCallback<Value['turn']>(
+    (obstacle) => {
+      const found = obstacles.find(({ id }) => id === obstacle);
+
+      if (!found) {
+        return false;
+      }
+
+      const next = rest(turned(found), lines);
+
+      if (!blockable(next)) {
+        return false;
+      }
+
+      block(obstacles.map((one) => (one.id === obstacle ? next : one)));
+
+      return true;
+    },
+    [block, blockable, lines, obstacles]
+  );
+
   const unblock = useCallback<Value['unblock']>(
     (obstacle) => block(obstacles.filter(({ id }) => id !== obstacle)),
     [block, obstacles]
@@ -844,6 +867,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       targets,
       telemetry,
       toggle,
+      turn,
       unblock,
     }),
     [
@@ -881,6 +905,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       stopped,
       targets,
       toggle,
+      turn,
       unblock,
     ]
   );

@@ -10,7 +10,7 @@ import {
 import { covers, line } from '@/views/experiments/factory-arm/cell/grid/layout';
 
 // Partials
-import { box, clear, moved, rest, shape, solids } from './obstacles';
+import { box, clear, moved, rest, shape, solids, turned } from './obstacles';
 
 const a = { q: 0, r: 0 };
 const b = neighbour(a, 0);
@@ -62,6 +62,20 @@ describe('obstacles on the floor', () => {
     near(pillar.max.z, 2.07);
     assert.equal(shape(pillar), 'pillar');
     assert.equal(shape(moved(pillar, { x: -3, z: 0 })), 'pillar');
+  });
+
+  test("a quarter turn swaps a box's width and depth about its middle, and it is still its shape", () => {
+    const beam = box('o1', 'beam', { x: 3, z: 4 });
+    const across = turned(beam);
+    const near = (got: number, want: number) =>
+      assert.ok(Math.abs(got - want) < 1e-9, `${got} is not ${want}`);
+
+    near(across.max.x - across.min.x, 0.13);
+    near(across.max.z - across.min.z, 1);
+    near((across.min.x + across.max.x) / 2, 3);
+    near((across.min.z + across.max.z) / 2, 4);
+    assert.equal(across.min.y, beam.min.y);
+    assert.equal(shape(across), 'beam');
   });
 
   test('an obstacle may not stand on an arm, a pallet, a case on it, or a loose case', () => {

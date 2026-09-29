@@ -51,11 +51,12 @@ const ARROWS: Record<string, { x: number; z: number }> = {
 
 /**
  * The arrow keys move the chosen obstacle a step at a time over the floor,
- * and with Shift held Up and Down raise and lower it; Delete takes it off;
- * Escape lets it go. Keys typed into a field are left to the field.
+ * and with Shift held Up and Down raise and lower it; R gives it a quarter
+ * turn; Delete takes it off; Escape lets it go. Keys typed into a field
+ * are left to the field.
  */
 const useKeys = () => {
-  const { obstacles, raise, shift, unblock } = useHub();
+  const { obstacles, raise, shift, turn, unblock } = useHub();
   const { select, selected } = useDrag();
 
   // Taken off the floor by other means: no longer chosen.
@@ -93,6 +94,9 @@ const useKeys = () => {
             z: at.z + arrow.z * STEP,
           });
         }
+      } else if (event.key === 'r' || event.key === 'R') {
+        event.preventDefault();
+        turn(selected);
       } else if (event.key === 'Delete' || event.key === 'Backspace') {
         event.preventDefault();
         unblock(selected);
@@ -104,7 +108,7 @@ const useKeys = () => {
     window.addEventListener('keydown', press);
 
     return () => window.removeEventListener('keydown', press);
-  }, [obstacles, raise, select, selected, shift, unblock]);
+  }, [obstacles, raise, select, selected, shift, turn, unblock]);
 };
 
 /** The obstacles on the floor, where the hub has them. Each can be dragged elsewhere, or chosen and moved by the keys. */
@@ -208,13 +212,8 @@ const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
           center
           position={[(min.x + max.x) / 2, max.y + 0.2, (min.z + max.z) / 2]}
         >
-          <Button
-            level='error'
-            onClick={() => unblock(box.id)}
-            size='large'
-            variant='primary'
-          >
-            <Ri.RiDeleteBinLine aria-hidden className='kicl-font-size-large' />
+          <Button level='error' onClick={() => unblock(box.id)} variant='ghost'>
+            <Ri.RiDeleteBinLine />
             <span className='kicl-hidden'>{COPY.panel.remove}</span>
           </Button>
         </Drei.Html>
