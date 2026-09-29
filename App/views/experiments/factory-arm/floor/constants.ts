@@ -4,6 +4,9 @@ const CLASS_NAME = 'kicl--views--experiments--factory-arm';
 /** Pixels the pointer may move between press and release and still click. */
 const DRAG = 4;
 
+/** The outline colours: round what the pointer is on or has chosen, and round an arm and the obstacle standing in it. */
+const OUTLINE = { chosen: '#111111', struck: '#e5322d' };
+
 /** How far one press of an arrow key moves a chosen obstacle, in metres. */
 const STEP = 0.05;
 
@@ -51,6 +54,12 @@ const COPY = {
     ],
     slot: 'Slot',
     stopped: 'stopped',
+    struck: {
+      title: 'Arm struck',
+      /** One line per arm with something standing in it. */
+      message: (arm: string, obstacles: string[]) =>
+        `${obstacles.join(', ')} is in ${arm}. Move it clear to carry on.`,
+    },
     unclaimed: 'Waiting for an arm',
   },
   scene:
@@ -61,4 +70,4 @@ const COPY = {
 /** The panel's id, for the buttons that open and close it on small screens. */
 const PANEL = `${CLASS_NAME}--panel`;
 
-export { CLASS_NAME, COPY, DRAG, PANEL, STEP };
+export { CLASS_NAME, COPY, DRAG, OUTLINE, PANEL, STEP };

@@ -2,6 +2,7 @@
 import type { Box, Link } from '../protocol';
 
 // Model
+import { hitting } from '../model/body';
 import { REST } from '../model/constants';
 import { ceiling, inside } from '../model/kinematics';
 
@@ -36,6 +37,7 @@ import {
   say,
   send,
   show,
+  type Station as State,
   title,
   world,
 } from './state';
@@ -58,6 +60,49 @@ const TALLEST = 0.45;
 
 /** A pallet this arm is working: its slot, and the plan version it last read. */
 type Claim = { side: Side; version: number };
+
+/**
+ * Whether an obstacle stands in the arm as it is posed now, with what it
+ * holds. Going from clear to struck sets the alarm off; going back clears
+ * it, unless the arm is halted for another reason.
+ */
+const strike = (station: State) => {
+  const { holding, telemetry } = station;
+
+  if (!telemetry) {
+    return;
+  }
+
+  const carried = holding
+    ? {
+        size: holding.size,
+        yaw: 0,
+        offset: { x: 0, y: -holding.size[1] / 2, z: 0 },
+      }
+    : undefined;
+  const now = hitting(telemetry.joints, carried, station.catalogue).map(
+    ({ id }) => id
+  );
+  const was = station.struck;
+
+  if (now.join() === was.join()) {
+    return;
+  }
+
+  station.struck = now;
+  say(station, { type: 'struck', obstacles: now });
+
+  if (now.length && !was.length) {
+    say(station, { type: 'alarm' });
+    note(station, `Struck by ${now.join(', ')}`, 'error', 'move it clear');
+  } else if (!now.length && was.length) {
+    note(station, 'Clear again', 'confirm', 'carrying on');
+
+    if (!station.halted) {
+      say(station, { type: 'calm' });
+    }
+  }
+};
 
 /**
  * The software fitted to one arm: its picture of the cell round it, the
@@ -345,7 +390,11 @@ const create = ({
     show(station);
   };
 
-  /** The obstacles as they stand now; `moved` when the operator moved one. */
+  /**
+   * The obstacles as they stand now; `moved` when the operator moved one.
+   * One put into the arm as it is posed sets the alarm off, till it's
+   * moved clear again.
+   */
   const obstacles = (catalogue: Box[], moved: boolean) => {
     station.catalogue = catalogue;
     station.sensed = new Set(
@@ -359,6 +408,8 @@ const create = ({
       station.moved = station.clock;
       station.unsettled = true;
     }
+
+    strike(station);
   };
 
   /** The belts with a case standing in their pick zone here, waiting for this arm: the whole line stops for it. */

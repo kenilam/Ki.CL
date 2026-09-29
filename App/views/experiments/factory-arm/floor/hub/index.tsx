@@ -88,6 +88,8 @@ type Value = {
   finished: boolean;
   /** Whether an arm has its alarm on, so the whole floor stands still. */
   stopped: boolean;
+  /** The obstacles standing in each arm as it is posed, by arm id, for those struck. */
+  struck: Record<string, string[]>;
   /** Starts, or starts over, `simulation`. */
   play: (simulation: Simulation) => void;
   /** Each arm's capacity as last set, by arm id. */
@@ -178,6 +180,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
   const [lines, setLines] = useState<Line[]>([]);
   const [idle, setIdle] = useState<Record<string, boolean>>({});
   const [alarms, setAlarms] = useState<Record<string, boolean>>({});
+  const [struck, setStruck] = useState<Record<string, string[]>>({});
   const [riding, setRiding] = useState(false);
   const riders = useRef(
     new Map<string, { riders: Riding[]; running: boolean; at: number }>()
@@ -233,6 +236,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       setLines([]);
       setIdle({});
       setAlarms({});
+      setStruck({});
       setRiding(false);
       setTargets([]);
       setObstacles(simulation.obstacles ?? []);
@@ -352,6 +356,18 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
           return;
         case 'idle':
           setIdle((current) => ({ ...current, [arm]: event.idle }));
+
+          return;
+        case 'struck':
+          setStruck((current) => {
+            const { [arm]: gone, ...rest } = current;
+
+            void gone;
+
+            return event.obstacles.length
+              ? { ...rest, [arm]: event.obstacles }
+              : rest;
+          });
 
           return;
         case 'alarm':
@@ -864,6 +880,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       standable,
       stations,
       stopped,
+      struck,
       targets,
       telemetry,
       toggle,
@@ -903,6 +920,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       standable,
       stations,
       stopped,
+      struck,
       targets,
       toggle,
       turn,

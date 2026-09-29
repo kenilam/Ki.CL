@@ -24,6 +24,7 @@ import { useOutline } from './outline';
 import {
   COPY,
   DRAG,
+  OUTLINE,
   STEP,
 } from '@/views/experiments/factory-arm/floor/constants';
 
@@ -122,12 +123,12 @@ const Obstacles: React.FunctionComponent = () => {
 
 /**
  * One obstacle: a grey block that lights up orange for as long as a case
- * waits because of it, outlined while pointed at or chosen, with a button
- * over it to take it off while chosen. Pressing on it starts a drag; a
- * click chooses it.
+ * waits because of it, outlined while pointed at or chosen, red while it
+ * stands in an arm, with a button over it to take it off while chosen.
+ * Pressing on it starts a drag; a click chooses it.
  */
 const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
-  const { parked, unblock } = useHub();
+  const { parked, struck, unblock } = useHub();
   const { grab, hover, hovered, select, selected } = useDrag();
   const group = useRef<THREE.Group>(null);
   const { min, max } = box;
@@ -137,10 +138,14 @@ const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
     max.z - min.z,
   ];
 
+  // Red while it stands in an arm; otherwise dark while chosen or pointed at.
   useOutline(
     group,
-    selected === box.id ||
-      (hovered?.kind === 'obstacle' && hovered.id === box.id),
+    Object.values(struck).some((ids) => ids.includes(box.id))
+      ? OUTLINE.struck
+      : (selected === box.id ||
+          (hovered?.kind === 'obstacle' && hovered.id === box.id)) &&
+          OUTLINE.chosen,
     box
   );
 

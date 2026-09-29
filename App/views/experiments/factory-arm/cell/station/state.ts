@@ -67,6 +67,8 @@ type Station = {
   halted: boolean;
   /** Held by the hub while an arm somewhere on the floor has its alarm on. */
   paused: boolean;
+  /** Obstacles standing in the arm as it is posed: the alarm is on till they are moved clear. */
+  struck: string[];
   /** Refused cases, each with the obstacles in its way and the belt it was bound for. */
   parked: Map<
     string,
@@ -105,6 +107,7 @@ const boot = (id: string, layout: Layout, link: Link): Station => ({
   holding: null,
   touching: false,
   halted: false,
+  struck: [],
   paused: false,
   parked: new Map(),
   waiting: new Set(),

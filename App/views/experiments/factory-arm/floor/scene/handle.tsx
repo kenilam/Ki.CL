@@ -3,9 +3,15 @@ import React, { PropsWithChildren, useRef } from 'react';
 // Three
 import { Fiber, THREE } from '@/three';
 
+// Context
+import { useHub } from '@/views/experiments/factory-arm/floor/hub';
+
 // Partials
 import { type Target, useDrag } from './drag';
 import { useOutline } from './outline';
+
+// Constants
+import { OUTLINE } from '@/views/experiments/factory-arm/floor/constants';
 
 type Props = PropsWithChildren<
   Target & {
@@ -18,7 +24,8 @@ type Props = PropsWithChildren<
 /**
  * An arm or a pallet as something to take hold of: the thing itself, and an
  * unseen disc on the floor under it. Pointing at either outlines the thing,
- * and pressing on either starts a drag.
+ * and pressing on either starts a drag. An arm with an obstacle standing in
+ * it is outlined red.
  */
 const Handle: React.FunctionComponent<Props> = ({
   children,
@@ -28,9 +35,16 @@ const Handle: React.FunctionComponent<Props> = ({
   radius,
 }) => {
   const { grab, hover, hovered } = useDrag();
+  const { struck } = useHub();
   const group = useRef<THREE.Group>(null);
 
-  useOutline(group, hovered?.kind === kind && hovered.id === id);
+  // Red while an obstacle stands in the arm; otherwise dark while pointed at.
+  useOutline(
+    group,
+    kind === 'arm' && struck[id]?.length
+      ? OUTLINE.struck
+      : hovered?.kind === kind && hovered.id === id && OUTLINE.chosen
+  );
 
   const take = (event: Fiber.ThreeEvent<PointerEvent>) => {
     if (event.button === 0) {

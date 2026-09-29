@@ -8,10 +8,14 @@ import {
   SegmentedItem,
   Sheet,
   SheetHeader,
+  Status,
 } from '@/components';
 
 // Icons
 import { Ri } from '@/icons';
+
+// Context
+import { useHub } from '@/views/experiments/factory-arm/floor/hub';
 
 // Partials
 import { Log } from './log';
@@ -43,6 +47,8 @@ const Panel: React.FunctionComponent = () => {
   const [tab, setTab] = useState<Tab>('simulations');
   const [logging, setLogging] = useState(false);
   const [open] = useState(() => matchMedia(WIDE).matches);
+  const { struck } = useHub();
+  const hits = Object.entries(struck);
 
   return (
     <Sheet
@@ -96,6 +102,17 @@ const Panel: React.FunctionComponent = () => {
           </Button>
         </SheetHeader>
       </Layout>
+
+      <Status
+        align='start'
+        headingLevel='h3'
+        in={hits.length > 0}
+        level='error'
+        message={hits
+          .map(([arm, obstacles]) => COPY.panel.struck.message(arm, obstacles))
+          .join(' ')}
+        title={COPY.panel.struck.title}
+      />
 
       {logging ? (
         <Log />

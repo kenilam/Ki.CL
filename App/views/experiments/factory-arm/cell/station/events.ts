@@ -27,7 +27,8 @@ type Rider = {
  * straight through from the arm. `placed` is a case set on a belt, for the
  * hub to carry along it; `pallet` is one of the cell's own set down on a
  * slot, for the cases that arrive here; `idle` says the arm has nothing
- * to do, or has again.
+ * to do, or has again. `struck` names the obstacles standing in the arm
+ * as it is posed, or none once they are moved clear.
  */
 type Event =
   | { type: 'note'; text: string; level: Level; detail?: string }
@@ -35,6 +36,7 @@ type Event =
   | { type: 'unpark'; target: string }
   | { type: 'alarm' }
   | { type: 'calm' }
+  | { type: 'struck'; obstacles: string[] }
   | { type: 'telemetry'; report: Telemetry }
   | { type: 'cell'; cases: Case[]; holding: Case | null; riders: Rider[] }
   | { type: 'placed'; rider: Rider }

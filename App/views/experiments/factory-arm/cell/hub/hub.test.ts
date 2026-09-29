@@ -154,6 +154,67 @@ describe('the hub', () => {
     );
   });
 
+  test('an obstacle put through an arm sets its alarm off, red, till it is moved clear', () => {
+    const a = { q: 0, r: 0 };
+    const b = neighbour(a, 0);
+    const { hub, run } = build(
+      [
+        { hex: a, arm: 'arm-a' },
+        { hex: b, arm: 'arm-b' },
+      ],
+      [{ id: 'line', cells: [a, b] }]
+    );
+    const at = centre(a);
+    const events = () =>
+      hub
+        .drain()
+        .filter(({ arm }) => arm === 'arm-a')
+        .map(({ event }) => event);
+
+    // The arm settles at rest, its pad about a metre out along z.
+    run(5, () => false);
+    events();
+
+    // A partition across the forearm.
+    hub.block(
+      [
+        {
+          id: 'wall',
+          min: { x: at.x - 1, y: 0, z: at.z + 0.75 },
+          max: { x: at.x + 1, y: 2, z: at.z + 0.85 },
+        },
+      ],
+      true
+    );
+    // The station's word reaches the hub on the next tick.
+    run(0.1, () => false);
+
+    const struck = events();
+
+    assert.ok(
+      struck.some(
+        (event) => event.type === 'struck' && event.obstacles.join() === 'wall'
+      ),
+      JSON.stringify(struck)
+    );
+    assert.ok(struck.some((event) => event.type === 'alarm'));
+
+    run(1, () => false);
+    assert.equal(hub.running.get('line'), false, 'the floor stands still');
+
+    hub.block([], true);
+    run(0.1, () => false);
+
+    const clear = events();
+
+    assert.ok(
+      clear.some(
+        (event) => event.type === 'struck' && event.obstacles.length === 0
+      )
+    );
+    assert.ok(clear.some((event) => event.type === 'calm'));
+  });
+
   test('an obstacle on a belt stops the line until it is taken off', () => {
     const a = { q: 0, r: 0 };
     const b = neighbour(a, 0);

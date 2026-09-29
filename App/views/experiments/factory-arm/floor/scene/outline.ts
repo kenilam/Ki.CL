@@ -6,26 +6,41 @@ import { THREE } from '@/three';
 /** How far an outline stands off the thing it outlines, in metres. */
 const EDGE = 0.02;
 
-const OUTLINE = new THREE.MeshBasicMaterial({
-  color: '#111111',
-  side: THREE.BackSide,
-});
+/** One material per colour, shared by every outline of that colour. */
+const MATERIALS = new Map<string, THREE.MeshBasicMaterial>();
+
+const material = (color: string) => {
+  const found = MATERIALS.get(color);
+
+  if (found) {
+    return found;
+  }
+
+  const made = new THREE.MeshBasicMaterial({ color, side: THREE.BackSide });
+
+  MATERIALS.set(color, made);
+
+  return made;
+};
 
 /**
  * Outlines everything under `group` while `on`: a back-faced copy of every
  * mesh, a little bigger, shows round its edges. Meshes marked `skip` in
  * their user data are left alone. The copies are made again whenever
- * `shape` changes, for meshes whose geometry is replaced.
+ * `shape` changes, for meshes whose geometry is replaced. `on` is the
+ * colour to draw in, or false for none.
  */
 const useOutline = (
   group: RefObject<THREE.Group | null>,
-  on: boolean,
+  on: string | false,
   shape?: unknown
 ) =>
   useEffect(() => {
     if (!on || !group.current) {
       return;
     }
+
+    const paint = material(on);
 
     const hulls: THREE.Mesh[] = [];
 
@@ -40,7 +55,7 @@ const useOutline = (
         geometry.computeBoundingBox();
 
         const size = geometry.boundingBox!.getSize(new THREE.Vector3());
-        const hull = new THREE.Mesh(geometry, OUTLINE);
+        const hull = new THREE.Mesh(geometry, paint);
 
         hull.userData.hull = true;
         hull.scale.set(
