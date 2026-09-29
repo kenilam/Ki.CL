@@ -49,13 +49,13 @@ const Pallets: React.FunctionComponent = () => {
           {COPY.panel.empty}
         </Text>
       ) : (
-        <Layout gap='normal'>
-          <div>
-            {targets.map((target) => (
-              <Pallet key={target.id} target={target} />
-            ))}
-          </div>
-        </Layout>
+        <List gap='normal'>
+          {targets.map((target) => (
+            <ListItem key={target.id}>
+              <Pallet target={target} />
+            </ListItem>
+          ))}
+        </List>
       )}
     </CardContent>
   );
@@ -88,7 +88,7 @@ const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
           frames='auto--max-content'
           gap='narrow'
         >
-          <div>
+          <header>
             <Heading is='h3' className='kicl-font-size-small'>
               {target.id} · {name(target.at.parent)} · {COPY.panel.slot}{' '}
               {target.at.slot}
@@ -107,7 +107,7 @@ const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
                 COPY.panel.unclaimed
               )}
             </Badge>
-          </div>
+          </header>
         </Layout>
 
         <Text className='kicl-font-size-small' is='p'>
@@ -117,44 +117,41 @@ const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
 
         <List>
           {target.queue.map((id, position) => (
-            <ListItem key={id}>
-              <Layout
-                alignItems='center'
-                autoFlow='column'
-                frames='auto--max-content--max-content'
-                gap='narrow'
+            <ListItem
+              key={id}
+              alignItems='center'
+              autoFlow='column'
+              frames='auto--max-content--max-content'
+              gap='narrow'
+            >
+              <Text className='kicl-font-size-small' is='span'>
+                {position + 1}. {id}
+              </Text>
+              <Button
+                disabled={position === 0}
+                onClick={() => swap(position)}
+                size='small'
+                variant='ghost'
               >
-                <div>
-                  <Text className='kicl-font-size-small' is='span'>
-                    {position + 1}. {id}
-                  </Text>
-                  <Button
-                    disabled={position === 0}
-                    onClick={() => swap(position)}
-                    size='small'
-                    variant='ghost'
-                  >
-                    <Ri.RiArrowUpLine aria-hidden />
-                    <Text is='span' className='kicl-hidden' unstyled>
-                      Move up
-                    </Text>
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      plan(target.id, {
-                        queue: target.queue.filter((one) => one !== id),
-                      })
-                    }
-                    size='small'
-                    variant='ghost'
-                  >
-                    <Ri.RiCloseLine aria-hidden />
-                    <Text is='span' className='kicl-hidden' unstyled>
-                      {COPY.panel.remove}
-                    </Text>
-                  </Button>
-                </div>
-              </Layout>
+                <Ri.RiArrowUpLine aria-hidden />
+                <Text is='span' className='kicl-hidden' unstyled>
+                  Move up
+                </Text>
+              </Button>
+              <Button
+                onClick={() =>
+                  plan(target.id, {
+                    queue: target.queue.filter((one) => one !== id),
+                  })
+                }
+                size='small'
+                variant='ghost'
+              >
+                <Ri.RiCloseLine aria-hidden />
+                <Text is='span' className='kicl-hidden' unstyled>
+                  {COPY.panel.remove}
+                </Text>
+              </Button>
             </ListItem>
           ))}
         </List>

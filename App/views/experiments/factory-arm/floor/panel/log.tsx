@@ -36,33 +36,30 @@ const Log: React.FunctionComponent = () => {
           {log.length ? (
             <List>
               {log.map((entry) => (
-                <ListItem key={entry.id}>
-                  <Layout
-                    alignItems='baseline'
-                    autoFlow='column'
-                    frames='max-content--auto'
-                    gap='narrow'
-                    justifyContent='start'
+                <ListItem
+                  alignItems='baseline'
+                  autoFlow='column'
+                  frames='max-content--auto'
+                  gap='narrow'
+                  justifyContent='start'
+                  key={entry.id}
+                >
+                  <time
+                    className={classNames(
+                      'kicl-color-grey',
+                      'kicl-font-family-mono',
+                      'kicl-font-size-smaller'
+                    )}
                   >
-                    <div>
-                      <time
-                        className={classNames(
-                          'kicl-color-grey',
-                          'kicl-font-family-mono',
-                          'kicl-font-size-smaller'
-                        )}
-                      >
-                        {time(entry.at)}
-                      </time>
-                      <Badge level={entry.level} size='small'>
-                        {entry.arm}
-                      </Badge>
-                      <Badge level={entry.level} size='small' variant='ghost'>
-                        <BadgeLabel>{entry.text}</BadgeLabel>
-                        {entry.detail || 'ack'}
-                      </Badge>
-                    </div>
-                  </Layout>
+                    {time(entry.at)}
+                  </time>
+                  <Badge level={entry.level} size='small'>
+                    {entry.arm}
+                  </Badge>
+                  <Badge level={entry.level} size='small' variant='ghost'>
+                    <BadgeLabel>{entry.text}</BadgeLabel>
+                    {entry.detail || 'ack'}
+                  </Badge>
                 </ListItem>
               ))}
             </List>
