@@ -63,4 +63,40 @@ describe('the floor as it stands', () => {
     );
     assert.deepEqual(floor.pallets[1].at, { parent: A, slot: 0 });
   });
+
+  test('a stacked pallet is numbered past those already on the board, and a queue keeps only what is still there', () => {
+    const [ox, , oz] = slot(0);
+    const floor = standing({
+      active: {
+        id: 's',
+        name: 's',
+        cells: [{ hex: A, arm: 'arm-a' }],
+        lines: [],
+        pallets: [],
+      },
+      capacities: {},
+      cases: () => [one('stacked', ox, oz)],
+      extras: { 'arm-a': [slot(0)] },
+      stations: [{ arm: 'arm-a', hex: A }],
+      targets: [
+        {
+          id: 'arm-a-stacked-2',
+          at: { parent: A, slot: 4 },
+          to: A,
+          queue: ['old', 'kept'],
+          cases: [one('kept', 0, 0)],
+          version: 0,
+          claimed: null,
+        },
+      ],
+    });
+
+    assert.deepEqual(
+      floor.pallets.map(({ id, queue }) => [id, queue]),
+      [
+        ['arm-a-stacked-2', ['kept']],
+        ['arm-a-stacked-3', []],
+      ]
+    );
+  });
 });

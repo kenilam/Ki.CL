@@ -52,15 +52,29 @@ const standing = ({
   return {
     ...active,
     pallets: [
-      ...targets.map(({ at, cases: kept, claimed, id, queue, to }) => ({
-        at,
-        cases: claimed ? on(claimed, slot(at.slot)) : kept,
-        id,
-        queue,
-        to,
-      })),
-      ...stations.flatMap(({ arm, hex }) =>
-        (extras[arm] ?? []).flatMap((position, count) => {
+      ...targets.map(({ at, cases: kept, claimed, id, queue, to }) => {
+        const cases = claimed ? on(claimed, slot(at.slot)) : kept;
+
+        // Only what is still on it can be queued: the rest has gone.
+        return {
+          at,
+          cases,
+          id,
+          queue: queue.filter((one) =>
+            cases.some(({ id: own }) => own === one)
+          ),
+          to,
+        };
+      }),
+      ...stations.flatMap(({ arm, hex }) => {
+        // Numbered past any stacked pallet of this arm's already on the board, so no two share an id.
+        const numbered = new RegExp(`^${arm}-stacked-(\\d+)$`);
+        const from = Math.max(
+          0,
+          ...targets.map(({ id }) => Number(id.match(numbered)?.[1] ?? 0))
+        );
+
+        return (extras[arm] ?? []).flatMap((position, count) => {
           const side = SIDES.find(
             (each) =>
               Math.hypot(
@@ -75,15 +89,15 @@ const standing = ({
             ? []
             : [
                 {
-                  id: `${arm}-stacked-${count + 1}`,
+                  id: `${arm}-stacked-${from + count + 1}`,
                   at: { parent: hex, slot: side },
                   to: hex,
                   queue: [],
                   cases,
                 },
               ];
-        })
-      ),
+        });
+      }),
     ],
     capacities,
   };
