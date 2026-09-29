@@ -1,10 +1,11 @@
-import React, { PropsWithChildren, useEffect, useRef } from 'react';
+import React, { PropsWithChildren, useRef } from 'react';
 
 // Three
 import { Fiber, THREE } from '@/three';
 
 // Partials
 import { type Target, useDrag } from './drag';
+import { useOutline } from './outline';
 
 type Props = PropsWithChildren<
   Target & {
@@ -13,14 +14,6 @@ type Props = PropsWithChildren<
     position?: [number, number, number];
   }
 >;
-
-/** How far an outline stands off the thing it outlines, in metres. */
-const EDGE = 0.02;
-
-const OUTLINE = new THREE.MeshBasicMaterial({
-  color: '#111111',
-  side: THREE.BackSide,
-});
 
 /**
  * An arm or a pallet as something to take hold of: the thing itself, and an
@@ -36,42 +29,8 @@ const Handle: React.FunctionComponent<Props> = ({
 }) => {
   const { grab, hover, hovered } = useDrag();
   const group = useRef<THREE.Group>(null);
-  const on = hovered?.kind === kind && hovered.id === id;
 
-  // While pointed at: a back-faced copy of every mesh, a little bigger, shows round its edges.
-  useEffect(() => {
-    if (!on || !group.current) {
-      return;
-    }
-
-    const hulls: THREE.Mesh[] = [];
-
-    group.current.traverse((child) => {
-      if (
-        child instanceof THREE.Mesh &&
-        !child.userData.handle &&
-        !child.userData.hull
-      ) {
-        const geometry = child.geometry as THREE.BufferGeometry;
-
-        geometry.computeBoundingBox();
-
-        const size = geometry.boundingBox!.getSize(new THREE.Vector3());
-        const hull = new THREE.Mesh(geometry, OUTLINE);
-
-        hull.userData.hull = true;
-        hull.scale.set(
-          (size.x + 2 * EDGE) / (size.x || 1),
-          (size.y + 2 * EDGE) / (size.y || 1),
-          (size.z + 2 * EDGE) / (size.z || 1)
-        );
-        child.add(hull);
-        hulls.push(hull);
-      }
-    });
-
-    return () => hulls.forEach((hull) => hull.removeFromParent());
-  }, [on]);
+  useOutline(group, hovered?.kind === kind && hovered.id === id);
 
   const take = (event: Fiber.ThreeEvent<PointerEvent>) => {
     if (event.button === 0) {
@@ -99,7 +58,7 @@ const Handle: React.FunctionComponent<Props> = ({
       <mesh
         position={[position[0], position[1] + 0.005, position[2]]}
         rotation-x={-Math.PI / 2}
-        userData={{ handle: true }}
+        userData={{ skip: true }}
       >
         <circleGeometry args={[radius, 24]} />
         <meshBasicMaterial transparent opacity={0} />

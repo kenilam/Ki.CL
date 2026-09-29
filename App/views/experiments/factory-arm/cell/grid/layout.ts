@@ -285,11 +285,13 @@ const CLEARANCE = 0.5;
  * and low enough to meet the cases riding it. The belt can't run with it
  * there.
  */
-const covers = (found: Line, box: Box) => {
-  if (box.min.y > found.height + CLEARANCE || box.max.y < found.height - 0.1) {
-    return false;
-  }
+const covers = (found: Line, box: Box) =>
+  box.min.y <= found.height + CLEARANCE &&
+  box.max.y >= found.height - 0.1 &&
+  above(found, box);
 
+/** Whether a box's footprint lies over a line's belt, at any height. */
+const above = (found: Line, box: Box) => {
   const across = found.heading - Math.PI / 2;
   const corners = [
     [box.min.x, box.min.z],
@@ -400,6 +402,7 @@ export {
   PALLET,
   REACHABLE,
   SLOT,
+  above,
   alongBelt,
   apart,
   beside,

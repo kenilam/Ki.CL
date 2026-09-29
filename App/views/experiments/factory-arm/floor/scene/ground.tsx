@@ -13,8 +13,8 @@ const SIZE = 40;
 
 /**
  * The floor under every cell. It says where the pointer is: where a drag
- * would land while something is held, or where a click would add an arm
- * or a pallet. It takes the drop, and the click.
+ * would land while something is held, or where a double click would add
+ * an arm or a pallet. It takes the drop, and the double click.
  */
 const Ground: React.FunctionComponent = () => {
   const { drop, over, tap } = useDrag();
@@ -32,7 +32,7 @@ const Ground: React.FunctionComponent = () => {
 
   return (
     <mesh
-      onClick={click}
+      onDoubleClick={click}
       onPointerMove={track}
       onPointerUp={drop}
       receiveShadow

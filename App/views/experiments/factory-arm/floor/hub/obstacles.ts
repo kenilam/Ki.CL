@@ -11,6 +11,7 @@ import {
   type Hex,
 } from '@/views/experiments/factory-arm/cell/grid/hex';
 import {
+  above,
   type Line,
   onLine,
   PALLET,
@@ -60,6 +61,35 @@ const moved = ({ id, min, max }: Box, at: Point): Box => {
     id,
     min: { x: at.x - half.x, y: min.y, z: at.z - half.z },
     max: { x: at.x + half.x, y: max.y, z: at.z + half.z },
+  };
+};
+
+/**
+ * The box set down on whatever belt it's over: lifted so its underside
+ * rests on the belt's surface, if it would otherwise cut through it. Over
+ * no belt, or already above one, it's left as it is.
+ */
+const rest = (box: Box, lines: Line[]): Box => {
+  const under = lines
+    .filter((line) => above(line, box))
+    .map(({ height }) => height);
+
+  if (!under.length) {
+    return box;
+  }
+
+  const top = Math.max(...under);
+
+  if (box.min.y >= top) {
+    return box;
+  }
+
+  const height = box.max.y - box.min.y;
+
+  return {
+    ...box,
+    min: { ...box.min, y: top },
+    max: { ...box.max, y: top + height },
   };
 };
 
@@ -247,6 +277,7 @@ export {
   middle,
   moved,
   overlaps,
+  rest,
   room,
   shape,
   solids,

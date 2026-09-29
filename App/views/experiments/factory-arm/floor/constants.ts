@@ -4,6 +4,9 @@ const CLASS_NAME = 'kicl--views--experiments--factory-arm';
 /** Pixels the pointer may move between press and release and still click. */
 const DRAG = 4;
 
+/** How far one press of an arrow key moves a chosen obstacle, in metres, and with Shift held. */
+const STEP = { small: 0.05, large: 0.5 };
+
 const COPY = {
   panel: {
     add: 'Add to the floor',
@@ -38,7 +41,7 @@ const COPY = {
     /** Sizes as width × height × depth, in metres. */
     size: (size: readonly [number, number, number]) =>
       `${size.map((metres) => `${metres} m`).join(' × ')}`,
-    tip: 'Click an empty hex for an arm, or a slot of an arm for a pallet.',
+    tip: 'Double-click an empty hex for an arm, or a slot of an arm for a pallet. Arrow keys move a chosen obstacle; Delete takes it off.',
     slot: 'Slot',
     stopped: 'stopped',
     unclaimed: 'Waiting for an arm',
@@ -51,4 +54,4 @@ const COPY = {
 /** The panel's id, for the buttons that open and close it on small screens. */
 const PANEL = `${CLASS_NAME}--panel`;
 
-export { CLASS_NAME, COPY, DRAG, PANEL };
+export { CLASS_NAME, COPY, DRAG, PANEL, STEP };

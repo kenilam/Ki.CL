@@ -30,6 +30,7 @@ import {
   box as shaped,
   middle,
   moved,
+  rest,
   type Shape,
 } from '@/views/experiments/factory-arm/floor/hub/obstacles';
 
@@ -54,8 +55,8 @@ type Dragging =
 /** Where a click on the floor would put something: an arm on an empty hex, a pallet on a slot of an arm's. */
 type Pointing = Extract<Dragging, { kind: 'arm' | 'pallet' }>;
 
-/** An arm or a pallet the pointer is over. */
-type Target = { kind: 'arm' | 'pallet'; id: string };
+/** An arm, a pallet or an obstacle the pointer is over. */
+type Target = { kind: Dragging['kind']; id: string };
 
 type Value = {
   dragging: Dragging | null;
@@ -65,6 +66,9 @@ type Value = {
   tap: () => void;
   hovered: Target | null;
   hover: (target: Target | null) => void;
+  /** The obstacle chosen by a click, which the arrow keys move and Delete takes off. */
+  selected: string | null;
+  select: (obstacle: string | null) => void;
   /** Starts dragging an arm, a pallet or an obstacle; `fresh` for one not on the floor yet, to be set down, of `shape` for an obstacle. */
   grab: (
     kind: Dragging['kind'],
@@ -97,6 +101,7 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
     add,
     blockable,
     coming,
+    lines,
     move,
     obstacles,
     placeable,
@@ -108,6 +113,7 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   const [dragging, setDragging] = useState<Dragging | null>(null);
   const [pointing, setPointing] = useState<Pointing | null>(null);
   const [hovered, setHovered] = useState<Target | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   // What is held, as of now: read on drop, where the state may be a render behind.
   const held = useRef<Dragging | null>(null);
   // What a click would add, as of now: read on the click, where the state may be a render behind.
@@ -229,7 +235,7 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
         const was = middle(current.box);
 
         if (Math.hypot(was.x - point.x, was.z - point.z) > 1e-3) {
-          const box = moved(current.box, point);
+          const box = rest(moved(current.box, point), lines);
 
           hold({ ...current, box, allowed: blockable(box) });
         }
@@ -251,7 +257,17 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
         });
       }
     },
-    [aim, blockable, coming, hold, placeable, slotNear, stations, standable]
+    [
+      aim,
+      blockable,
+      coming,
+      hold,
+      lines,
+      placeable,
+      slotNear,
+      stations,
+      standable,
+    ]
   );
 
   // Adds what the pointer is over. The floor is built again for it, so what was aimed at is gone.
@@ -321,9 +337,11 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
       hovered,
       over,
       pointing,
+      select: setSelected,
+      selected,
       tap,
     }),
-    [dragging, drop, grab, hovered, over, pointing, tap]
+    [dragging, drop, grab, hovered, over, pointing, selected, tap]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

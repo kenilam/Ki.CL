@@ -10,7 +10,7 @@ import {
 import { covers, line } from '@/views/experiments/factory-arm/cell/grid/layout';
 
 // Partials
-import { box, clear, moved, shape, solids } from './obstacles';
+import { box, clear, moved, rest, shape, solids } from './obstacles';
 
 const a = { q: 0, r: 0 };
 const b = neighbour(a, 0);
@@ -90,6 +90,27 @@ describe('obstacles on the floor', () => {
       clear(box('o1', 'crate', { x: at.x + 0.5, z: at.z + 0.6 }), floor()),
       false,
       'on the boards'
+    );
+  });
+
+  test('a box set down over a belt rests on top of it, and still stops it', () => {
+    const found = line('line', [a, b]);
+    const mid = found.span / 2;
+    const point = {
+      x: found.origin.x + mid * Math.cos(found.heading),
+      z: found.origin.z + mid * Math.sin(found.heading),
+    };
+    const pillar = rest(box('o1', 'pillar', point), [found]);
+    const beam = rest(box('o2', 'beam', point), [found]);
+
+    assert.equal(pillar.min.y, found.height, 'lifted onto the belt');
+    assert.ok(Math.abs(pillar.max.y - pillar.min.y - 2.3) < 1e-9, 'as tall');
+    assert.equal(covers(found, pillar), true, 'the belt stops for it');
+    assert.equal(beam.min.y, 1.3, 'already above it, left alone');
+    assert.equal(
+      rest(box('o3', 'pillar', { x: 20, z: 20 }), [found]).min.y,
+      0,
+      'over no belt, on the floor'
     );
   });
 

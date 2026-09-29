@@ -56,7 +56,7 @@ import type {
 import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
 
 // Partials
-import { clear, moved, room, solids, stand } from './obstacles';
+import { clear, moved, rest, room, solids, stand } from './obstacles';
 import { pile } from './pile';
 import { relocate as moveArm } from './relocate';
 import { type Simulation, SIMULATIONS } from './simulations';
@@ -122,7 +122,7 @@ type Value = {
   obstacles: Box[];
   /** Whether an obstacle may stand as `box`: on nothing but the floor and the belts. */
   blockable: (box: Box) => boolean;
-  /** Moves an obstacle's footprint to be centred on `to`, if it may stand there. Says whether it did. */
+  /** Moves an obstacle's footprint to be centred on `to`, on top of any belt there, if it may stand there. Says whether it did. */
   shift: (obstacle: string, to: { x: number; z: number }) => boolean;
   /** Takes an obstacle off the floor. */
   unblock: (obstacle: string) => void;
@@ -593,7 +593,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         return false;
       }
 
-      const next = moved(found, to);
+      const next = rest(moved(found, to), lines);
 
       if (!blockable(next)) {
         return false;
@@ -603,7 +603,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
 
       return true;
     },
-    [block, blockable, obstacles]
+    [block, blockable, lines, obstacles]
   );
 
   const unblock = useCallback<Value['unblock']>(
@@ -615,11 +615,13 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     (what) => {
       // An obstacle goes down without the floor starting over: the arms plan round it as it stands.
       if ('obstacle' in what) {
-        if (!blockable(what.obstacle)) {
+        const settled = rest(what.obstacle, lines);
+
+        if (!blockable(settled)) {
           return false;
         }
 
-        block([...obstacles, what.obstacle]);
+        block([...obstacles, settled]);
 
         return true;
       }
@@ -679,6 +681,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       block,
       blockable,
       floor,
+      lines,
       nextIds,
       obstacles,
       placeable,
