@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import {
   Badge,
@@ -29,12 +32,8 @@ import { Arms } from './arms';
 import { Obstacles } from './obstacles';
 import { Pallets } from './pallets';
 
-// Drag
-import { useDrag } from '@/views/experiments/factory-arm/floor/scene/drag';
-
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/floor/constants';
-import classNames from 'classnames';
 
 /**
  * Every floor there is to play, one group each: its name, a button that
@@ -69,8 +68,7 @@ const Group: React.FunctionComponent<{
   simulation: Simulation;
   stopped: boolean;
 }> = ({ chosen, playing, simulation, stopped }) => {
-  const { coming, discard, obstacles, play } = useHub();
-  const { grab } = useDrag();
+  const { discard, obstacles, play } = useHub();
   const standing = chosen ? obstacles : (simulation.obstacles ?? []);
   const name = (hex: { q: number; r: number }) =>
     simulation.cells.find((cell) => index(cell.hex) === index(hex))?.arm ??
@@ -186,42 +184,23 @@ const Group: React.FunctionComponent<{
             )}
           </Details>
 
-          {chosen && (
-            <Layout
-              autoFlow='column'
-              gap='narrow'
-              justifyContent='stretch'
-              justifyItems='center'
+          {chosen ? (
+            <Text
+              className={classNames('kicl-color-grey', 'kicl-font-size-small')}
+              is='p'
             >
-              <div>
-                <Button
-                  onClick={() => grab('arm', coming.arm, true)}
-                  size='small'
-                  variant='secondary'
-                >
-                  <Ri.RiAddLine aria-hidden />
-                  {COPY.panel.addArm}
-                </Button>
-                <Button
-                  onClick={() => grab('pallet', coming.pallet, true)}
-                  size='small'
-                  variant='secondary'
-                >
-                  <Ri.RiAddLine aria-hidden />
-                  {COPY.panel.addPallet}
-                </Button>
-
-                {simulation.saved && !chosen && (
-                  <Button
-                    onClick={() => discard(simulation.id)}
-                    size='small'
-                    variant='ghost'
-                  >
-                    {COPY.panel.remove}
-                  </Button>
-                )}
-              </div>
-            </Layout>
+              {COPY.panel.tip}
+            </Text>
+          ) : (
+            simulation.saved && (
+              <Button
+                onClick={() => discard(simulation.id)}
+                size='small'
+                variant='ghost'
+              >
+                {COPY.panel.remove}
+              </Button>
+            )
           )}
         </Card>
       </Details>

@@ -15,6 +15,7 @@ import { Ri } from '@/icons';
 
 // Partials
 import { Log } from './log';
+import { Shapes } from './shapes';
 import { Simulations } from './simulations';
 import { Unsaved } from './unsaved';
 
@@ -25,7 +26,7 @@ import {
   PANEL,
 } from '@/views/experiments/factory-arm/floor/constants';
 
-const TABS = ['simulations'] as const;
+const TABS = ['simulations', 'obstacles'] as const;
 
 type Tab = (typeof TABS)[number];
 
@@ -33,9 +34,9 @@ type Tab = (typeof TABS)[number];
 const WIDE = '(min-width: 737px)';
 
 /**
- * The simulations to play, beside the stage, and the log, which opens from
- * its button and goes back to the tab it came from when pressed again. On
- * small screens the panel folds away.
+ * The simulations to play and the obstacles to add, beside the stage, and
+ * the log, which opens from its button and goes back to the tab it came
+ * from when pressed again. On small screens the panel folds away.
  */
 const Panel: React.FunctionComponent = () => {
   // The tab stays chosen while the log is over it, so closing the log goes back to it.
@@ -98,13 +99,13 @@ const Panel: React.FunctionComponent = () => {
 
       {logging ? (
         <Log />
+      ) : tab === 'simulations' ? (
+        <>
+          <Simulations />
+          <Unsaved />
+        </>
       ) : (
-        tab === 'simulations' && (
-          <>
-            <Simulations />
-            <Unsaved />
-          </>
-        )
+        <Shapes />
       )}
     </Sheet>
   );

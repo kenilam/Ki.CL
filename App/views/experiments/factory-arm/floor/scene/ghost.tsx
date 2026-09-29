@@ -23,13 +23,27 @@ const SLOT = FINE / (Math.sqrt(3) / 2);
  * While something is dragged: a thin black outline round where it stands,
  * and where it would land, green when it may, red when it may not. An arm
  * or a pallet is outlined by its hexagon, an obstacle by its footprint.
+ * With nothing held, a thinner outline shows where a click would add an
+ * arm or a pallet.
  */
 const Ghost: React.FunctionComponent = () => {
-  const { dragging } = useDrag();
+  const { dragging, pointing } = useDrag();
   const { obstacles, stations, targets } = useHub();
 
   if (!dragging) {
-    return null;
+    return (
+      pointing && (
+        <Drei.Line
+          color={pointing.allowed ? '#2fd065' : '#e5322d'}
+          lineWidth={1.5}
+          points={corners(
+            pointing.kind === 'arm' ? RADIUS : SLOT,
+            landing(pointing),
+            0.01
+          )}
+        />
+      )
+    );
   }
 
   if (dragging.kind === 'obstacle') {

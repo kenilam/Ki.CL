@@ -50,15 +50,15 @@ const Working: React.FunctionComponent<Props> = ({ station }) => {
   return (
     <group>
       {here.map((target) => (
-        <group key={target.id}>
+        <Handle
+          id={target.id}
+          key={target.id}
+          kind='pallet'
+          position={slot(target.at.slot)}
+          radius={0.7}
+        >
           <Pallet position={slot(target.at.slot)} />
-          <Handle
-            id={target.id}
-            kind='pallet'
-            position={slot(target.at.slot)}
-            radius={0.7}
-          />
-        </group>
+        </Handle>
       ))}
       {extras[arm]?.map((position) => (
         <Pallet key={position.join()} position={position} />

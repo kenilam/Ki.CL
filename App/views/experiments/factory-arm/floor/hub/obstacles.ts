@@ -30,6 +30,7 @@ const SHAPES = {
   pillar: { base: 0, size: [0.14, 2.3, 0.14] as Vector },
   crate: { base: 0, size: [0.45, 1.6, 0.43] as Vector },
   beam: { base: 1.3, size: [1, 0.15, 0.13] as Vector },
+  partition: { base: 0, size: [2, 2, 0.1] as Vector },
 };
 
 type Shape = keyof typeof SHAPES;

@@ -6,8 +6,7 @@ const DRAG = 4;
 
 const COPY = {
   panel: {
-    addArm: 'Add an arm',
-    addPallet: 'Add a pallet',
+    add: 'Add to the floor',
     arms: 'Arms',
     capacity: 'Pallets per period',
     clear: 'Clear',
@@ -33,8 +32,13 @@ const COPY = {
     shapes: {
       beam: 'Beam',
       crate: 'Crate',
+      partition: 'Partition',
       pillar: 'Pillar',
     },
+    /** Sizes as width × height × depth, in metres. */
+    size: (size: readonly [number, number, number]) =>
+      `${size.map((metres) => `${metres} m`).join(' × ')}`,
+    tip: 'Click an empty hex for an arm, or a slot of an arm for a pallet.',
     slot: 'Slot',
     stopped: 'stopped',
     unclaimed: 'Waiting for an arm',

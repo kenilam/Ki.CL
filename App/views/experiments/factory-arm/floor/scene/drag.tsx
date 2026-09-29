@@ -51,8 +51,20 @@ type Dragging =
       allowed: boolean;
     };
 
+/** Where a click on the floor would put something: an arm on an empty hex, a pallet on a slot of an arm's. */
+type Pointing = Extract<Dragging, { kind: 'arm' | 'pallet' }>;
+
+/** An arm or a pallet the pointer is over. */
+type Target = { kind: 'arm' | 'pallet'; id: string };
+
 type Value = {
   dragging: Dragging | null;
+  /** What a click would add where the pointer is, while nothing is held. */
+  pointing: Pointing | null;
+  /** Adds what the pointer is over, if it may go there. */
+  tap: () => void;
+  hovered: Target | null;
+  hover: (target: Target | null) => void;
   /** Starts dragging an arm, a pallet or an obstacle; `fresh` for one not on the floor yet, to be set down, of `shape` for an obstacle. */
   grab: (
     kind: Dragging['kind'],
@@ -75,7 +87,8 @@ const Context = React.createContext<Value | null>(null);
  * Dragging on the floor: an arm to another hex, a pallet to another slot,
  * an obstacle anywhere. The scene shows where it would land and whether it
  * may, and the hub moves it on release. Turning the view is off while
- * something is held.
+ * something is held. With nothing held, the pointer aims at where a click
+ * would add an arm or a pallet, and the scene shows that too.
  */
 const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   children,
@@ -83,6 +96,7 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   const {
     add,
     blockable,
+    coming,
     move,
     obstacles,
     placeable,
@@ -92,8 +106,17 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
     stations,
   } = useHub();
   const [dragging, setDragging] = useState<Dragging | null>(null);
+  const [pointing, setPointing] = useState<Pointing | null>(null);
+  const [hovered, setHovered] = useState<Target | null>(null);
   // What is held, as of now: read on drop, where the state may be a render behind.
   const held = useRef<Dragging | null>(null);
+  // What a click would add, as of now: read on the click, where the state may be a render behind.
+  const aimed = useRef<Pointing | null>(null);
+
+  const aim = useCallback((next: Pointing | null) => {
+    aimed.current = next;
+    setPointing(next);
+  }, []);
 
   const hold = useCallback((next: Dragging | null) => {
     held.current = next;
@@ -102,6 +125,8 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
 
   const grab = useCallback<Value['grab']>(
     (kind, id, fresh = false, shape = 'pillar') => {
+      aim(null);
+
       if (kind === 'arm') {
         hold({ kind, id, fresh, hex: { q: 0, r: 0 }, allowed: false });
       } else if (kind === 'pallet') {
@@ -121,14 +146,71 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
         hold({ kind, id, fresh, box, allowed: false });
       }
     },
-    [hold, obstacles]
+    [aim, hold, obstacles]
+  );
+
+  /** The nearest slot of any arm to `point`, if one is near enough. */
+  const slotNear = useCallback(
+    (point: { x: number; z: number }) => {
+      let nearest: { at: Child; distance: number } | null = null;
+
+      stations.forEach(({ hex }) =>
+        SIDES.forEach((slot) => {
+          const at = { parent: hex, slot };
+          const where = childCentre(at);
+          const distance = Math.hypot(where.x - point.x, where.z - point.z);
+
+          if (distance < SNAP && (!nearest || distance < nearest.distance)) {
+            nearest = { at, distance };
+          }
+        })
+      );
+
+      return nearest ? (nearest as { at: Child }).at : null;
+    },
+    [stations]
   );
 
   const over = useCallback<Value['over']>(
     (point) => {
       const current = held.current;
 
+      // Nothing held: an empty hex would take an arm, a slot of an arm's hex a pallet.
       if (!current) {
+        const hex = cellAt(point);
+        const taken = stations.some((one) => index(one.hex) === index(hex));
+        const at = taken ? slotNear(point) : null;
+        const next: Pointing | null = !taken
+          ? {
+              kind: 'arm',
+              id: coming.arm,
+              fresh: true,
+              hex,
+              allowed: standable(coming.arm, hex),
+            }
+          : at
+            ? {
+                kind: 'pallet',
+                id: coming.pallet,
+                fresh: true,
+                at,
+                allowed: placeable(coming.pallet, at),
+              }
+            : null;
+        const was = aimed.current;
+        const same =
+          was?.kind === next?.kind &&
+          (was?.kind === 'arm' && next?.kind === 'arm'
+            ? index(was.hex) === index(next.hex)
+            : was?.kind === 'pallet' &&
+              next?.kind === 'pallet' &&
+              index(was.at.parent) === index(next.at.parent) &&
+              was.at.slot === next.at.slot);
+
+        if (!same) {
+          aim(next);
+        }
+
         return;
       }
 
@@ -155,24 +237,8 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
         return;
       }
 
-      // The nearest slot of any arm, if one is near enough.
-      let nearest: { at: Child; distance: number } | null = null;
-
-      stations.forEach(({ hex }) =>
-        SIDES.forEach((slot) => {
-          const at = { parent: hex, slot };
-          const where = childCentre(at);
-          const distance = Math.hypot(where.x - point.x, where.z - point.z);
-
-          if (distance < SNAP && (!nearest || distance < nearest.distance)) {
-            nearest = { at, distance };
-          }
-        })
-      );
-
-      const found: Child = nearest
-        ? (nearest as { at: Child }).at
-        : { parent: cellAt(point), slot: 0 };
+      const nearest = slotNear(point);
+      const found: Child = nearest ?? { parent: cellAt(point), slot: 0 };
 
       if (
         index(found.parent) !== index(current.at.parent) ||
@@ -185,8 +251,21 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
         });
       }
     },
-    [blockable, hold, placeable, stations, standable]
+    [aim, blockable, coming, hold, placeable, slotNear, stations, standable]
   );
+
+  // Adds what the pointer is over. The floor is built again for it, so what was aimed at is gone.
+  const tap = useCallback(() => {
+    const current = aimed.current;
+
+    aim(null);
+
+    if (current?.allowed) {
+      add(
+        current.kind === 'arm' ? { arm: current.hex } : { pallet: current.at }
+      );
+    }
+  }, [add, aim]);
 
   // Moves the thing if it may land where it is, then lets go. Outside any state update, so it runs once.
   const drop = useCallback(() => {
@@ -234,8 +313,17 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   }, [drop]);
 
   const value = useMemo(
-    () => ({ dragging, grab, over, drop }),
-    [dragging, grab, over, drop]
+    () => ({
+      dragging,
+      drop,
+      grab,
+      hover: setHovered,
+      hovered,
+      over,
+      pointing,
+      tap,
+    }),
+    [dragging, drop, grab, hovered, over, pointing, tap]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -260,4 +348,4 @@ const landing = (dragging: Dragging) =>
       : middle(dragging.box);
 
 export { DragProvider, landing, useDrag };
-export type { Dragging };
+export type { Dragging, Pointing, Target };
