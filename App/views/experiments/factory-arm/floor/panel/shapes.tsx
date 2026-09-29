@@ -5,9 +5,12 @@ import {
   Button,
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   Heading,
   Layout,
+  List,
+  ListItem,
   Text,
 } from '@/components';
 
@@ -111,53 +114,63 @@ const Drawing: React.FunctionComponent<{ shape: Shape }> = ({ shape }) => {
   );
 };
 
-/** The shapes an obstacle can take, one card each: what it looks like, how big it is, and a button that picks one up to drag onto the floor. */
+/** The shapes an obstacle can take, one card each: what it looks like, how big it is, and a button that picks one up to drag onto the floor. Under them, how to work one. */
 const Shapes: React.FunctionComponent = () => {
   const { coming } = useHub();
   const { grab } = useDrag();
 
   return (
-    <CardContent className='kicl-padding-block-end'>
-      <Layout gap='narrow'>
-        <div>
-          {(Object.keys(SHAPES) as Shape[]).map((shape) => (
-            <Card key={shape} variant='ghost'>
-              <Layout
-                alignItems='center'
-                autoFlow='column'
-                frames='max-content--auto--max-content'
-                gap='narrow'
-              >
-                <div>
-                  <Drawing shape={shape} />
-                  <CardHeader dense>
-                    <Heading is='h3' className='kicl-font-size-small'>
-                      {COPY.panel.shapes[shape]}
-                    </Heading>
-                    <Text
-                      className='kicl-color-grey kicl-font-size-small'
-                      is='p'
+    <>
+      <CardContent>
+        <Layout gap='narrow'>
+          <div>
+            {(Object.keys(SHAPES) as Shape[]).map((shape) => (
+              <Card key={shape} variant='ghost'>
+                <Layout
+                  alignItems='center'
+                  autoFlow='column'
+                  frames='max-content--auto--max-content'
+                  gap='narrow'
+                >
+                  <div>
+                    <Drawing shape={shape} />
+                    <CardHeader dense>
+                      <Heading is='h3' className='kicl-font-size-small'>
+                        {COPY.panel.shapes[shape]}
+                      </Heading>
+                      <Text
+                        className='kicl-color-grey kicl-font-size-small'
+                        is='p'
+                      >
+                        {COPY.panel.size(SHAPES[shape].size)}
+                      </Text>
+                    </CardHeader>
+                    <Button
+                      onClick={() =>
+                        grab('obstacle', coming.obstacle, true, shape)
+                      }
+                      size='small'
+                      variant='secondary'
                     >
-                      {COPY.panel.size(SHAPES[shape].size)}
-                    </Text>
-                  </CardHeader>
-                  <Button
-                    onClick={() =>
-                      grab('obstacle', coming.obstacle, true, shape)
-                    }
-                    size='small'
-                    variant='secondary'
-                  >
-                    <Ri.RiAddLine aria-hidden />
-                    <span className='kicl-hidden'>{COPY.panel.add}</span>
-                  </Button>
-                </div>
-              </Layout>
-            </Card>
+                      <Ri.RiAddLine aria-hidden />
+                      <span className='kicl-hidden'>{COPY.panel.add}</span>
+                    </Button>
+                  </div>
+                </Layout>
+              </Card>
+            ))}
+          </div>
+        </Layout>
+      </CardContent>
+
+      <CardFooter>
+        <List className='kicl-color-grey kicl-font-size-small'>
+          {COPY.panel.keys.map((line) => (
+            <ListItem key={line}>{line}</ListItem>
           ))}
-        </div>
-      </Layout>
-    </CardContent>
+        </List>
+      </CardFooter>
+    </>
   );
 };
 
