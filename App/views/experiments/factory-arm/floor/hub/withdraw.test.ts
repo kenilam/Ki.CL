@@ -11,7 +11,7 @@ import { withdraw } from './withdraw';
 const floor = SIMULATIONS.find(({ id }) => id === 'one-line')!;
 
 describe('taking an arm off the floor', () => {
-  test('the arm goes, its pallets are left loose, and what was bound for it is bound for the next arm along', () => {
+  test('the arm goes with its pallets, and what was bound for it is bound for the next arm along', () => {
     const [a, b, c] = floor.cells.map(({ hex }) => hex);
     const found = withdraw({ arm: 'arm-c', floor });
 
@@ -32,7 +32,7 @@ describe('taking an arm off the floor', () => {
 
     assert.ok(first);
     assert.equal(first.dropped.length, 2, 'the two pallets on arm-a');
-    assert.equal(first.simulation.loose?.length, 2);
+    assert.equal(first.simulation.loose, undefined, 'nothing left behind');
     assert.equal(first.simulation.pallets.length, 1);
   });
 

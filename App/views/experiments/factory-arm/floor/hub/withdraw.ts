@@ -1,5 +1,4 @@
 // Grid
-import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
 import { type Hex, index } from '@/views/experiments/factory-arm/cell/grid/hex';
 import {
   beside,
@@ -8,15 +7,15 @@ import {
 } from '@/views/experiments/factory-arm/cell/grid/layout';
 
 // Partials
-import type { Loose, Simulation } from './simulations';
+import type { Simulation } from './simulations';
 
 type Pallet = Simulation['pallets'][number];
 
 /**
- * The floor with `arm` taken off it. Its pallets come off with their cases
- * left where they stood, and whatever was bound for it is bound for its
- * heir: the arm furthest along the first line it worked. `null` when it
- * can't go: it is the last arm, or a line would have no arm in reach.
+ * The floor with `arm` taken off it. Its pallets go with it, cases and all,
+ * and whatever was bound for it is bound for its heir: the arm furthest
+ * along the first line it worked. `null` when it can't go: it is the last
+ * arm, or a line would have no arm in reach.
  */
 const withdraw = ({
   arm,
@@ -59,13 +58,6 @@ const withdraw = ({
   const dropped = floor.pallets.filter(
     ({ at }) => index(at.parent) === index(from)
   );
-  const loose: Loose[] = [
-    ...(floor.loose ?? []),
-    ...dropped.map((pallet) => ({
-      at: childCentre(pallet.at),
-      cases: pallet.cases,
-    })),
-  ];
   const { [arm]: gone, ...capacities } = floor.capacities ?? {};
 
   void gone;
@@ -77,7 +69,6 @@ const withdraw = ({
       pallets: floor.pallets
         .filter((pallet) => !dropped.includes(pallet))
         .map((pallet) => ({ ...pallet, to: heir(pallet.to) })),
-      loose,
       capacities,
     },
     dropped,
