@@ -5,10 +5,11 @@ import {
   Button,
   Card,
   CardContent,
-  SheetFooter,
   CardHeader,
+  Dialog,
   Heading,
   Layout,
+  SheetFooter,
   Text,
 } from '@/components';
 
@@ -30,6 +31,9 @@ import { Keys } from './keys';
 
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/floor/constants';
+
+/** The help dialog's id, for the button that opens it. */
+const HELP = 'kicl--views--experiments--factory-arm--help';
 
 /** The drawing's box, in its own units. */
 const VIEW = 96;
@@ -164,9 +168,22 @@ const Shapes: React.FunctionComponent = () => {
         </Layout>
       </CardContent>
 
+      {/* The keys are a dialog, so the shapes keep the room. */}
       <SheetFooter>
-        <Keys />
+        <Button
+          command='show-modal'
+          commandFor={HELP}
+          size='small'
+          variant='ghost'
+        >
+          <Ri.RiQuestionLine aria-hidden />
+          {COPY.panel.help}
+        </Button>
       </SheetFooter>
+
+      <Dialog dense id={HELP} title={COPY.panel.help}>
+        <Keys />
+      </Dialog>
     </>
   );
 };
