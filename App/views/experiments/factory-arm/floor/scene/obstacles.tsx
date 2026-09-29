@@ -1,7 +1,13 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
 // Three
-import { Fiber, THREE } from '@/three';
+import { Drei, Fiber, THREE } from '@/three';
+
+// Components
+import { Button } from '@/components';
+
+// Icons
+import { Ri } from '@/icons';
 
 // Protocol
 import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
@@ -15,7 +21,11 @@ import { useDrag } from './drag';
 import { useOutline } from './outline';
 
 // Constants
-import { DRAG, STEP } from '@/views/experiments/factory-arm/floor/constants';
+import {
+  COPY,
+  DRAG,
+  STEP,
+} from '@/views/experiments/factory-arm/floor/constants';
 
 const GREY = new THREE.Color('#8f9398');
 const GLOW = new THREE.Color('#f07d1a');
@@ -40,12 +50,12 @@ const ARROWS: Record<string, { x: number; z: number }> = {
 };
 
 /**
- * The arrow keys move the chosen obstacle a step at a time, further with
- * Shift held; Delete takes it off; Escape lets it go. Keys typed into a
- * field are left to the field.
+ * The arrow keys move the chosen obstacle a step at a time over the floor,
+ * and with Shift held Up and Down raise and lower it; Delete takes it off;
+ * Escape lets it go. Keys typed into a field are left to the field.
  */
 const useKeys = () => {
-  const { obstacles, shift, unblock } = useHub();
+  const { obstacles, raise, shift, unblock } = useHub();
   const { select, selected } = useDrag();
 
   // Taken off the floor by other means: no longer chosen.
@@ -71,11 +81,18 @@ const useKeys = () => {
       const arrow = ARROWS[event.key];
 
       if (found && arrow) {
-        const step = event.shiftKey ? STEP.large : STEP.small;
         const at = middle(found);
 
         event.preventDefault();
-        shift(selected, { x: at.x + arrow.x * step, z: at.z + arrow.z * step });
+
+        if (event.shiftKey && arrow.z) {
+          raise(selected, -arrow.z * STEP);
+        } else {
+          shift(selected, {
+            x: at.x + arrow.x * STEP,
+            z: at.z + arrow.z * STEP,
+          });
+        }
       } else if (event.key === 'Delete' || event.key === 'Backspace') {
         event.preventDefault();
         unblock(selected);
@@ -87,7 +104,7 @@ const useKeys = () => {
     window.addEventListener('keydown', press);
 
     return () => window.removeEventListener('keydown', press);
-  }, [obstacles, select, selected, shift, unblock]);
+  }, [obstacles, raise, select, selected, shift, unblock]);
 };
 
 /** The obstacles on the floor, where the hub has them. Each can be dragged elsewhere, or chosen and moved by the keys. */
@@ -101,11 +118,12 @@ const Obstacles: React.FunctionComponent = () => {
 
 /**
  * One obstacle: a grey block that lights up orange for as long as a case
- * waits because of it, outlined while pointed at or chosen. Pressing on it
- * starts a drag; a click chooses it.
+ * waits because of it, outlined while pointed at or chosen, with a button
+ * over it to take it off while chosen. Pressing on it starts a drag; a
+ * click chooses it.
  */
 const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
-  const { parked } = useHub();
+  const { parked, unblock } = useHub();
   const { grab, hover, hovered, select, selected } = useDrag();
   const group = useRef<THREE.Group>(null);
   const { min, max } = box;
@@ -184,6 +202,23 @@ const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
       >
         <boxGeometry args={size} />
       </mesh>
+
+      {selected === box.id && (
+        <Drei.Html
+          center
+          position={[(min.x + max.x) / 2, max.y + 0.2, (min.z + max.z) / 2]}
+        >
+          <Button
+            level='error'
+            onClick={() => unblock(box.id)}
+            size='small'
+            variant='secondary'
+          >
+            <Ri.RiDeleteBinLine aria-hidden />
+            <span className='kicl-hidden'>{COPY.panel.remove}</span>
+          </Button>
+        </Drei.Html>
+      )}
     </group>
   );
 };

@@ -124,6 +124,8 @@ type Value = {
   blockable: (box: Box) => boolean;
   /** Moves an obstacle's footprint to be centred on `to`, on top of any belt there, if it may stand there. Says whether it did. */
   shift: (obstacle: string, to: { x: number; z: number }) => boolean;
+  /** Raises an obstacle `by` metres, or lowers it for a negative `by`, never below the floor or into a belt. Says whether it did. */
+  raise: (obstacle: string, by: number) => boolean;
   /** Takes an obstacle off the floor. */
   unblock: (obstacle: string) => void;
   targets: Target[];
@@ -606,6 +608,35 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     [block, blockable, lines, obstacles]
   );
 
+  const raise = useCallback<Value['raise']>(
+    (obstacle, by) => {
+      const found = obstacles.find(({ id }) => id === obstacle);
+
+      if (!found) {
+        return false;
+      }
+
+      const bottom = Math.max(0, found.min.y + by);
+      const next = rest(
+        {
+          ...found,
+          min: { ...found.min, y: bottom },
+          max: { ...found.max, y: bottom + found.max.y - found.min.y },
+        },
+        lines
+      );
+
+      if (next.min.y === found.min.y || !blockable(next)) {
+        return false;
+      }
+
+      block(obstacles.map((one) => (one.id === obstacle ? next : one)));
+
+      return true;
+    },
+    [block, blockable, lines, obstacles]
+  );
+
   const unblock = useCallback<Value['unblock']>(
     (obstacle) => block(obstacles.filter(({ id }) => id !== obstacle)),
     [block, obstacles]
@@ -798,6 +829,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       placeable,
       plan,
       play,
+      raise,
       relocate,
       remove,
       revision,
@@ -836,6 +868,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       placeable,
       plan,
       play,
+      raise,
       relocate,
       remove,
       revision,
