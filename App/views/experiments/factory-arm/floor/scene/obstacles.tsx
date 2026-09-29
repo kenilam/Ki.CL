@@ -211,10 +211,10 @@ const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
           <Button
             level='error'
             onClick={() => unblock(box.id)}
-            size='small'
-            variant='secondary'
+            size='large'
+            variant='primary'
           >
-            <Ri.RiDeleteBinLine aria-hidden />
+            <Ri.RiDeleteBinLine aria-hidden className='kicl-font-size-large' />
             <span className='kicl-hidden'>{COPY.panel.remove}</span>
           </Button>
         </Drei.Html>
