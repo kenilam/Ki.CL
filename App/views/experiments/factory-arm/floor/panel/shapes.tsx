@@ -3,12 +3,12 @@ import React from 'react';
 // Components
 import {
   Button,
-  Card,
   CardContent,
-  CardHeader,
   Details,
   Heading,
   Layout,
+  List,
+  ListItem,
   SheetFooter,
   Text,
 } from '@/components';
@@ -124,54 +124,47 @@ const Shapes: React.FunctionComponent = () => {
   return (
     <>
       <CardContent>
-        <Layout gap='narrow'>
-          <div>
-            {(Object.keys(SHAPES) as Shape[]).map((shape) => (
-              <Card key={shape} variant='ghost'>
-                <Layout
-                  alignItems='center'
-                  autoFlow='column'
-                  frames='max-content--auto--max-content'
-                  gap='narrow'
-                >
-                  <div>
-                    <Drawing shape={shape} />
-                    <CardHeader dense>
-                      <Heading is='h3' className='kicl-font-size-small'>
-                        {COPY.panel.shapes[shape]}
-                      </Heading>
-                      <Text
-                        className='kicl-color-grey kicl-font-size-small'
-                        is='p'
-                      >
-                        {COPY.panel.size(SHAPES[shape].size)}
-                      </Text>
-                    </CardHeader>
-                    <Button
-                      onClick={() =>
-                        grab('obstacle', coming.obstacle, true, shape)
-                      }
-                      size='small'
-                      variant='secondary'
-                    >
-                      <Ri.RiAddLine aria-hidden />
-                      <span className='kicl-hidden'>{COPY.panel.add}</span>
-                    </Button>
-                  </div>
-                </Layout>
-              </Card>
-            ))}
-          </div>
-        </Layout>
+        <List gap='narrow'>
+          {(Object.keys(SHAPES) as Shape[]).map((shape) => (
+            <ListItem
+              alignItems='center'
+              autoFlow='column'
+              frames='max-content--auto--max-content'
+              gap='narrow'
+              key={shape}
+            >
+              <Drawing shape={shape} />
+              <Text className='kicl-font-size-small' is='span'>
+                {COPY.panel.shapes[shape]}{' '}
+                <Text is='span' variant='secondary'>
+                  {COPY.panel.size(SHAPES[shape].size)}
+                </Text>
+              </Text>
+              <Button
+                onClick={() => grab('obstacle', coming.obstacle, true, shape)}
+                size='small'
+                variant='secondary'
+              >
+                <Ri.RiAddLine aria-hidden />
+                <span className='kicl-hidden'>{COPY.panel.add}</span>
+              </Button>
+            </ListItem>
+          ))}
+        </List>
       </CardContent>
 
       {/* Folded by default, so the shapes keep the room. */}
       <SheetFooter>
         <Details
           summary={
-            <Text className='kicl-font-size-small' is='span'>
-              {COPY.panel.obstacle.help}
-            </Text>
+            <Layout alignItems='center' autoFlow='column' gap='narrow'>
+              <Heading is='h6' dense>
+                <Ri.RiInformation2Line />
+                <Text className='kicl-font-size-small' is='span'>
+                  {COPY.panel.obstacle.help}
+                </Text>
+              </Heading>
+            </Layout>
           }
         >
           <Keys />

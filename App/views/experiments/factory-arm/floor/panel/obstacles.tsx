@@ -4,14 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import {
-  Button,
-  CardContent,
-  Layout,
-  List,
-  ListItem,
-  Text,
-} from '@/components';
+import { Button, CardContent, List, ListItem, Text } from '@/components';
 
 // Icons
 import { Ri } from '@/icons';
@@ -39,27 +32,24 @@ const Obstacles: React.FunctionComponent = () => {
       ) : (
         <List>
           {obstacles.map((box) => (
-            <ListItem key={box.id}>
-              <Layout
-                alignItems='center'
-                autoFlow='column'
-                frames='auto--max-content'
-                gap='narrow'
+            <ListItem
+              alignItems='center'
+              autoFlow='column'
+              frames='auto--max-content'
+              gap='narrow'
+              key={box.id}
+            >
+              <Text className='kicl-font-size-small' is='span'>
+                {box.id} · {COPY.panel.shapes[shape(box) ?? 'crate']}
+              </Text>
+              <Button
+                onClick={() => unblock(box.id)}
+                size='small'
+                variant='ghost'
               >
-                <div>
-                  <Text className='kicl-font-size-small' is='span'>
-                    {box.id} · {COPY.panel.shapes[shape(box) ?? 'crate']}
-                  </Text>
-                  <Button
-                    onClick={() => unblock(box.id)}
-                    size='small'
-                    variant='ghost'
-                  >
-                    <Ri.RiCloseLine aria-hidden />
-                    <span className='kicl-hidden'>{COPY.panel.remove}</span>
-                  </Button>
-                </div>
-              </Layout>
+                <Ri.RiCloseLine aria-hidden />
+                <span className='kicl-hidden'>{COPY.panel.remove}</span>
+              </Button>
             </ListItem>
           ))}
         </List>

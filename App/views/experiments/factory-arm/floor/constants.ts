@@ -50,9 +50,9 @@ const COPY = {
       keys: [
         { press: ['drag'], does: 'Place, or move' },
         { press: ['left', 'up', 'right', 'down'], does: 'Move' },
-        { press: ['Shift', 'up', 'down'], does: 'Raise, lower' },
+        { press: ['shift', 'up', 'down'], does: 'Raise, lower' },
         { press: ['R'], does: 'Rotate' },
-        { press: ['Del'], does: 'Remove' },
+        { press: ['del'], does: 'Remove' },
       ],
     },
     slot: 'Slot',

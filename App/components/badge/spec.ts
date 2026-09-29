@@ -22,9 +22,9 @@ export const BADGE_SIZES = ['small', 'large'] as const;
  */
 export type BadgeSize = (typeof BADGE_SIZES)[number];
 
-/** Semantic hosts that read as a badge / chip / tag; `kbd` for a key to press. */
+/** Semantic hosts that read as a badge / chip / tag. */
 export type BadgeIs =
-  'a' | 'abbr' | 'button' | 'div' | 'kbd' | 'li' | 'mark' | 'span' | 'time';
+  'a' | 'abbr' | 'button' | 'div' | 'li' | 'mark' | 'span' | 'time';
 
 type OwnProps = {
   /** How it looks: filled, a quieter fill, an outline, or no chrome at all. */
