@@ -87,7 +87,7 @@ const Group: React.FunctionComponent<{
             gap='narrow'
             justifyContent='space-between'
           >
-            <span>
+            <div>
               <Button
                 aria-pressed={playing}
                 className={classNames({
@@ -126,7 +126,7 @@ const Group: React.FunctionComponent<{
                   ) : null}
                 </Heading>
               </Layout>
-            </span>
+            </div>
           </Layout>
         }
       >
