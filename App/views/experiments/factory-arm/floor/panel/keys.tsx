@@ -22,7 +22,7 @@ const ICONS: Record<string, IconType> = {
 /** How to work an obstacle: a row per action, its keys as key caps and what it does beside them. */
 const Keys: React.FunctionComponent = () => (
   <List>
-    {COPY.panel.keys.map(({ does, press }) => (
+    {COPY.panel.obstacle.keys.map(({ does, press }) => (
       <ListItem key={does}>
         <Layout
           alignItems='center'

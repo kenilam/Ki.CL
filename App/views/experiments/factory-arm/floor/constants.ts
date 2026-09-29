@@ -45,15 +45,16 @@ const COPY = {
     size: (size: readonly [number, number, number]) =>
       `${size.map((metres) => `${metres} m`).join(' × ')}`,
     tip: 'Double-click an empty hex for an arm, or a slot of an arm for a pallet.',
-    help: 'How to work an obstacle',
-    /** How to work an obstacle: what to press, and what it does. `press` names a key, or a pointer gesture the panel draws. */
-    keys: [
-      { press: ['drag'], does: 'Place, or move' },
-      { press: ['left', 'up', 'right', 'down'], does: 'Move' },
-      { press: ['Shift', 'up', 'down'], does: 'Raise, lower' },
-      { press: ['R'], does: 'Rotate' },
-      { press: ['Del'], does: 'Remove' },
-    ],
+    obstacle: {
+      help: 'How it works',
+      keys: [
+        { press: ['drag'], does: 'Place, or move' },
+        { press: ['left', 'up', 'right', 'down'], does: 'Move' },
+        { press: ['Shift', 'up', 'down'], does: 'Raise, lower' },
+        { press: ['R'], does: 'Rotate' },
+        { press: ['Del'], does: 'Remove' },
+      ],
+    },
     slot: 'Slot',
     stopped: 'stopped',
     struck: {
