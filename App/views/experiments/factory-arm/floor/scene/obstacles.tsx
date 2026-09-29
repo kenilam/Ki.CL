@@ -140,7 +140,8 @@ const Obstacle: React.FunctionComponent<{ box: Box }> = ({ box }) => {
   useOutline(
     group,
     selected === box.id ||
-      (hovered?.kind === 'obstacle' && hovered.id === box.id)
+      (hovered?.kind === 'obstacle' && hovered.id === box.id),
+    box
   );
 
   const material = useMemo(

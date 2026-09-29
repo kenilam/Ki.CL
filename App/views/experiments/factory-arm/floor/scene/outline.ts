@@ -14,9 +14,14 @@ const OUTLINE = new THREE.MeshBasicMaterial({
 /**
  * Outlines everything under `group` while `on`: a back-faced copy of every
  * mesh, a little bigger, shows round its edges. Meshes marked `skip` in
- * their user data are left alone.
+ * their user data are left alone. The copies are made again whenever
+ * `shape` changes, for meshes whose geometry is replaced.
  */
-const useOutline = (group: RefObject<THREE.Group | null>, on: boolean) =>
+const useOutline = (
+  group: RefObject<THREE.Group | null>,
+  on: boolean,
+  shape?: unknown
+) =>
   useEffect(() => {
     if (!on || !group.current) {
       return;
@@ -49,6 +54,6 @@ const useOutline = (group: RefObject<THREE.Group | null>, on: boolean) =>
     });
 
     return () => hulls.forEach((hull) => hull.removeFromParent());
-  }, [group, on]);
+  }, [group, on, shape]);
 
 export { useOutline };
