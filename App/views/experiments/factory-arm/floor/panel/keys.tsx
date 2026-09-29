@@ -13,15 +13,29 @@ import {
 // Icons
 import { Ri } from '@/icons';
 
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/floor/constants';
+type Row = { press: readonly string[]; does: string };
 
 /** The keys and gestures drawn as icons; any other is written as it is. */
 const ICONS = {
   click: <Ri.RiCursorLine aria-label='click' />,
   del: <Ri.RiDeleteBack2Line aria-label='del' />,
+  'double-click': (
+    <>
+      <Ri.RiCursorLine aria-label='double-click' />
+      <Text is='span' className='kicl-line-height-narrower'>
+        ×2
+      </Text>
+    </>
+  ),
   down: <Ri.RiArrowDownLine aria-label='down' />,
   drag: <Ri.RiDragMove2Line aria-label='drag' />,
+  'right-drag': (
+    <>
+      <Ri.RiMouseLine aria-label='right button' />
+      <Ri.RiDragMove2Line aria-label='drag' />
+    </>
+  ),
+  scroll: <Ri.RiZoomInLine aria-label='scroll' />,
   left: <Ri.RiArrowLeftLine aria-label='left' />,
   right: <Ri.RiArrowRightLine aria-label='right' />,
   shift: (
@@ -35,10 +49,10 @@ const ICONS = {
   up: <Ri.RiArrowUpLine aria-label='up' />,
 } as const;
 
-/** How to work an obstacle: a row per action, its keys as key caps and what it does beside them. */
-const Keys: React.FunctionComponent = () => (
+/** How to work something: a row per action, its keys as key caps and what it does beside them. */
+const Keys: React.FunctionComponent<{ rows: readonly Row[] }> = ({ rows }) => (
   <List className='kicl-padding-block-narrow' gap='none'>
-    {COPY.panel.obstacle.keys.map(({ does, press }) => (
+    {rows.map(({ does, press }) => (
       <ListItem
         autoFlow='column'
         className={getButtonClassNames({ variant: 'tertiary' })}
@@ -53,7 +67,7 @@ const Keys: React.FunctionComponent = () => (
         >
           <span>
             {press.map((key) => {
-              const Icon = ICONS[key];
+              const Icon = ICONS[key as keyof typeof ICONS];
 
               return (
                 <Badge variant='outline' key={key} size='small'>

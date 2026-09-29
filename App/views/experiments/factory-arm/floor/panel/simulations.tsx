@@ -184,23 +184,14 @@ const Group: React.FunctionComponent<{
             )}
           </Details>
 
-          {chosen ? (
-            <Text
-              className={classNames('kicl-color-grey', 'kicl-font-size-small')}
-              is='p'
+          {!chosen && simulation.saved && (
+            <Button
+              onClick={() => discard(simulation.id)}
+              size='small'
+              variant='ghost'
             >
-              {COPY.panel.tip}
-            </Text>
-          ) : (
-            simulation.saved && (
-              <Button
-                onClick={() => discard(simulation.id)}
-                size='small'
-                variant='ghost'
-              >
-                {COPY.panel.remove}
-              </Button>
-            )
+              {COPY.panel.remove}
+            </Button>
           )}
         </Card>
       </Details>

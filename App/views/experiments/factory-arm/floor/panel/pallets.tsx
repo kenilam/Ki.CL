@@ -135,7 +135,9 @@ const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
                     variant='ghost'
                   >
                     <Ri.RiArrowUpLine aria-hidden />
-                    <span className='kicl-hidden'>Move up</span>
+                    <Text is='span' className='kicl-hidden' unstyled>
+                      Move up
+                    </Text>
                   </Button>
                   <Button
                     onClick={() =>
@@ -147,7 +149,9 @@ const Pallet: React.FunctionComponent<{ target: Target }> = ({ target }) => {
                     variant='ghost'
                   >
                     <Ri.RiCloseLine aria-hidden />
-                    <span className='kicl-hidden'>{COPY.panel.remove}</span>
+                    <Text is='span' className='kicl-hidden' unstyled>
+                      {COPY.panel.remove}
+                    </Text>
                   </Button>
                 </div>
               </Layout>

@@ -44,7 +44,18 @@ const COPY = {
     /** Sizes as width × height × depth, in metres. */
     size: (size: readonly [number, number, number]) =>
       `${size.map((metres) => `${metres} m`).join(' × ')}`,
-    tip: 'Double-click an empty hex for an arm, or a slot of an arm for a pallet.',
+    /** How to work the floor: what to press, and what it does. */
+    floor: {
+      help: 'How it works',
+      keys: [
+        { press: ['drag'], does: 'Turn the view' },
+        { press: ['right-drag'], does: 'Pan' },
+        { press: ['scroll'], does: 'Zoom' },
+        { press: ['double-click'], does: 'Add an arm on an empty hex' },
+        { press: ['double-click'], does: 'Add a pallet on a slot' },
+        { press: ['drag'], does: 'Move an arm or a pallet' },
+      ],
+    },
     obstacle: {
       help: 'How it works',
       keys: [

@@ -18,6 +18,7 @@ import { Ri } from '@/icons';
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';
 
 // Partials
+import { Help } from './help';
 import { Log } from './log';
 import { Shapes } from './shapes';
 import { Simulations } from './simulations';
@@ -119,6 +120,7 @@ const Panel: React.FunctionComponent = () => {
       ) : tab === 'simulations' ? (
         <>
           <Simulations />
+          <Help rows={COPY.panel.floor.keys} title={COPY.panel.floor.help} />
           <Unsaved />
         </>
       ) : (

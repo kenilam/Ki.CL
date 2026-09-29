@@ -1,17 +1,7 @@
 import React from 'react';
 
 // Components
-import {
-  Button,
-  CardContent,
-  Details,
-  Heading,
-  Layout,
-  List,
-  ListItem,
-  SheetFooter,
-  Text,
-} from '@/components';
+import { Button, CardContent, List, ListItem, Text } from '@/components';
 
 // Icons
 import { Ri } from '@/icons';
@@ -24,7 +14,7 @@ import {
 } from '@/views/experiments/factory-arm/floor/hub/obstacles';
 
 // Partials
-import { Keys } from './keys';
+import { Help } from './help';
 
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/floor/constants';
@@ -142,30 +132,16 @@ const Shapes: React.FunctionComponent = () => {
                 variant='secondary'
               >
                 <Ri.RiAddLine aria-hidden />
-                <span className='kicl-hidden'>{COPY.panel.add}</span>
+                <Text is='span' className='kicl-hidden' unstyled>
+                  {COPY.panel.add}
+                </Text>
               </Button>
             </ListItem>
           ))}
         </List>
       </CardContent>
 
-      {/* Folded by default, so the shapes keep the room. */}
-      <SheetFooter>
-        <Details
-          summary={
-            <Layout alignItems='center' autoFlow='column' gap='narrow'>
-              <Heading is='h6' dense>
-                <Ri.RiInformation2Line />
-                <Text className='kicl-font-size-small' is='span'>
-                  {COPY.panel.obstacle.help}
-                </Text>
-              </Heading>
-            </Layout>
-          }
-        >
-          <Keys />
-        </Details>
-      </SheetFooter>
+      <Help rows={COPY.panel.obstacle.keys} title={COPY.panel.obstacle.help} />
     </>
   );
 };
