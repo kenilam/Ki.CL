@@ -2,6 +2,8 @@ import { timingSafeEqual } from 'node:crypto';
 
 import type { Express } from 'express';
 
+import { page } from './page';
+
 /**
  * Asks for a password on every request when `KICL_GATE_PASSWORD` is set, so a
  * dev deployment is not public. The browser shows its own prompt and resends
@@ -41,6 +43,8 @@ export function applyGate(app: Express): void {
     response
       .status(401)
       .set('WWW-Authenticate', 'Basic realm="dev", charset="UTF-8"')
-      .end();
+      .set('Cache-Control', 'no-store')
+      .type('html')
+      .send(page);
   });
 }
