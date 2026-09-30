@@ -8,81 +8,89 @@
 <script src="https://use.typekit.net/cpi1lno.js"></script>
 <script>try { Typekit.load({ async: true }); } catch (e) {}</script>
 <style>
+  /* Values copied from the site's tokens and components, because this page cannot load the site's CSS. */
   :root {
     --bg: #f4f5f2;
     --ink: #141414;
-    --soft: #5c5c5c;
-    --accent: #d97904;
+    --button-bg: #4b4b4b;
+    --button-ink: #f4f5f2;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #141414;
       --ink: #f4f5f2;
-      --soft: #a3a3a3;
+      --button-bg: #f4f5f2;
+      --button-ink: #4b4b4b;
     }
   }
 
-  * { margin: 0; box-sizing: border-box; }
+  * {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'mic-32-new-web', sans-serif;
+    font-size: inherit;
+    font-weight: 300;
+    letter-spacing: 0.08rem;
+    line-height: 1.5;
+  }
 
   body {
     min-block-size: 100dvh;
     display: grid;
     place-content: center;
     justify-items: center;
-    gap: 1.25rem;
+    gap: 1rem;
     padding: 2rem 1rem;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'mic-32-new-rounded-web', ui-rounded, system-ui, sans-serif;
     text-align: center;
   }
 
-  header { display: grid; gap: 0.25rem; }
+  header, footer { display: grid; gap: 0.5rem; justify-items: center; }
 
-  p { font-size: clamp(1.125rem, 4.5vw, 1.5rem); }
+  /* Text variant="secondary" */
+  .secondary { color: color-mix(in srgb, var(--ink) 80%, transparent); }
 
+  /* The eyebrow: kicl-font-size-small, kicl-letter-spacing, kicl-text-transform-uppercase */
+  .eyebrow { font-size: 0.8rem; text-transform: uppercase; }
+
+  /* Heading with kicl-font-size-extreme and kicl-line-height-narrowest */
   h1 {
-    font-size: clamp(5.5rem, 30vw, 10rem);
-    line-height: 0.85;
-    letter-spacing: -0.04em;
+    font-size: min(25dvw, 10rem);
+    font-weight: 700;
+    line-height: 0.8;
   }
 
-  strong { font-family: 'mic-32-new-web', system-ui, sans-serif; }
+  strong { font-weight: 600; }
+
+  footer p { font-size: 0.8rem; }
 
   img {
     inline-size: min(100vw - 2rem, 28rem);
     block-size: auto;
   }
 
-  footer { display: grid; gap: 1.25rem; justify-items: center; }
-
-  footer p { font-size: 1rem; color: var(--soft); }
-
+  /* Button, primary, size="small" */
   button {
-    font: inherit;
-    font-size: 1.125rem;
-    padding: 0.75rem 1.75rem;
-    border: 0;
-    border-radius: 999px;
-    background: var(--ink);
-    color: var(--bg);
+    font-size: 0.7rem;
+    line-height: 1;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    margin-block-start: 0.5rem;
+    border: 0.2px solid transparent;
+    border-radius: 0.5rem;
+    background: var(--button-bg);
+    color: var(--button-ink);
     cursor: pointer;
-    transition: transform 150ms ease;
   }
 
-  button:hover { transform: translateY(-2px); }
-  button:active { transform: translateY(1px); }
-  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-
-  @media (prefers-reduced-motion: reduce) {
-    button { transition: none; }
-  }
+  button:focus-visible { outline: 2px solid var(--button-bg); outline-offset: 2px; }
 </style>
 </head>
 <body>
   <header>
-    <p>Knock knock.</p>
+    <p class="eyebrow secondary">Knock knock.</p>
     <h1>401</h1>
     <p>Who's there? <strong>Nice try.</strong></p>
   </header>
@@ -90,7 +98,7 @@
   <img src="guard.webp" width="760" height="600" alt="A nervous orange security guard holding a key card sits beside a locked door with a barrier across it.">
 
   <footer>
-    <p>This page is for authorised guests only.<br>Please bring credentials next time.</p>
+    <p class="secondary">This page is for authorised guests only.<br>Please bring credentials next time.</p>
     <button type="button" onclick="location.reload()">Try again</button>
   </footer>
 </body>
