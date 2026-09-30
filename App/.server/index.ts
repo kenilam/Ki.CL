@@ -17,6 +17,7 @@ import config from '../app.config.json' with { type: 'json' };
 import { Env } from '../env';
 
 import { applyCollect } from './collect';
+import { applyGate } from './gate';
 import { applyProxy, attachUpgrade, warmIdToken } from './proxy';
 
 import nodePath from 'path';
@@ -34,6 +35,8 @@ async function Server() {
     const baseurl = [appRoot.path, 'App', 'build'].filter(Boolean).join('/');
 
     const app = express();
+
+    applyGate(app);
 
     /*
      * Ahead of everything that serves files. The API's paths are not on disk,
