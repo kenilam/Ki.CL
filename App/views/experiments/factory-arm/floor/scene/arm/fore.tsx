@@ -4,7 +4,7 @@ import React from 'react';
 import { Drei } from '@/three';
 
 // Model
-import { LINK } from '@/views/experiments/factory-arm/cell/model/constants';
+import { LINK } from 'arm/model/constants';
 
 // Partials
 import { Hose } from './hose';

@@ -9,20 +9,11 @@ import React, {
 } from 'react';
 
 // Grid
-import {
-  childCentre,
-  type Child,
-} from '@/views/experiments/factory-arm/cell/grid/child';
-import {
-  at as cellAt,
-  centre,
-  type Hex,
-  index,
-  SIDES,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
+import { childCentre, type Child } from 'arm/grid/child';
+import { at as cellAt, centre, type Hex, index, SIDES } from 'arm/grid/hex';
 
 // Protocol
-import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+import type { Box } from 'arm/protocol';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';
@@ -77,7 +68,8 @@ type Value = {
     shape?: Shape
   ) => void;
   /** The pointer is over `point` on the floor: where the thing would land, if anywhere. */
-  over: (point: { x: number; z: number }) => void;
+  /** Where the pointer is on the floor, or null once it has left it. */
+  over: (point: { x: number; z: number } | null) => void;
   /** Lets go: moves the thing if it may land there. */
   drop: () => void;
 };
@@ -180,6 +172,13 @@ const DragProvider: React.FunctionComponent<PropsWithChildren> = ({
   const over = useCallback<Value['over']>(
     (point) => {
       const current = held.current;
+
+      // Off the floor, over the panel or the sky: nothing to land on.
+      if (!point) {
+        aim(null);
+
+        return;
+      }
 
       // Nothing held: an empty hex would take an arm, a slot of an arm's hex a pallet.
       if (!current) {

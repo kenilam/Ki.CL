@@ -16,22 +16,17 @@ import {
   type Outbound,
   type Riding,
   type Target,
-} from '@/views/experiments/factory-arm/cell/hub';
+} from 'arm/hub';
+
+// Env
+import { useEnvContext } from '@/env/client';
 
 // Protocol
-import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+import type { Box } from 'arm/protocol';
 
 // Grid
-import {
-  type Child,
-  childCentre,
-} from '@/views/experiments/factory-arm/cell/grid/child';
-import {
-  type Hex,
-  index,
-  neighbour,
-  opposite,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
+import { type Child, childCentre } from 'arm/grid/child';
+import { type Hex, index, neighbour, opposite } from 'arm/grid/hex';
 import {
   apart,
   covers,
@@ -41,20 +36,14 @@ import {
   type Line,
   line as geometry,
   reaches,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+} from 'arm/grid/layout';
 
 // Protocol
-import type {
-  Joints,
-  Telemetry,
-} from '@/views/experiments/factory-arm/cell/protocol';
+import type { Joints, Telemetry } from 'arm/protocol';
 
 // Station
-import type {
-  Event,
-  Rider,
-} from '@/views/experiments/factory-arm/cell/station/events';
-import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
+import type { Event, Rider } from 'arm/station/events';
+import type { Case } from 'arm/station/spec';
 
 // Partials
 import {
@@ -89,6 +78,8 @@ type Entry = {
   level: Extract<Event, { type: 'note' }>['level'];
   text: string;
   detail?: string;
+  /** Whether the arm it came from was on the bridge when it said it. */
+  remote?: boolean;
 };
 
 type Value = {
@@ -106,6 +97,18 @@ type Value = {
   blocking: string[];
   /** Starts, or starts over, `simulation`. */
   play: (simulation: Simulation) => void;
+  /** Where the arms are when they are not in workers on the page, if anywhere. */
+  bridge?: string;
+  /** Whether the arms are on the bridge. */
+  remote: boolean;
+  /** Puts the arms on the bridge, or back in workers, while the floor runs on. */
+  toggleRemote: () => void;
+  /** What carries each arm, by arm id, as its station last said: `worker`, or the address of the bridge. */
+  linked: Record<string, string>;
+  /** Arms on the bridge whose last note was a warning or an error, until one goes right again. */
+  troubled: Record<string, boolean>;
+  /** Whether each arm's telemetry is a physical body's, by arm id: the bridge sends the controller's target beside it then. */
+  embodied: Record<string, boolean>;
   /** Each arm's capacity as last set, by arm id. */
   capacities: Record<string, Capacity>;
   /** Whether the floor has been changed since it was started or saved. */
@@ -197,6 +200,10 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
   // Opened in the effect, so a mount, unmount and mount again in development gets a live one each time.
   const hub = useRef<Console | null>(null);
   const { discard: drop, save: keep, saved } = useSaved();
+  const bridge = useEnvContext().env?.KICL_ARM_LINK;
+  const [remote, setRemote] = useState(false);
+  // Read by `play`, so a scene handler holding an old `play` still starts the floor the way the switch says.
+  const link = useRef<string | undefined>(undefined);
   const [active, setActive] = useState(SIMULATIONS[0]);
   const [edited, setEdited] = useState(false);
   const [run, setRun] = useState(0);
@@ -216,6 +223,13 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
   const [extras, setExtras] = useState<Value['extras']>({});
   const telemetry = useRef(new Map<string, Telemetry>());
   const drawn = useRef(new Map<string, Joints>());
+  const [linked, setLinked] = useState<Record<string, string>>({});
+  const [troubled, setTroubled] = useState<Record<string, boolean>>({});
+  // Read when a note arrives, so the note is stamped with where its arm was then, not where it is when drawn.
+  const carried = useRef<Record<string, string>>({});
+  const [embodied, setEmbodied] = useState<Record<string, boolean>>({});
+  // Telemetry comes every frame; state changes only when a body appears or goes.
+  const bodied = useRef(new Map<string, boolean>());
   const cells = useRef(new Map<string, Cell>());
   const parked = useRef(new Map<string, string[]>());
   const counted = useRef(0);
@@ -227,6 +241,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
     (arm: string, text: string, level: Entry['level'], detail?: string) => {
       counted.current += 1;
 
+      const where = carried.current[arm];
       const entry = {
         id: counted.current,
         at: Date.now(),
@@ -234,16 +249,25 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
         level,
         text,
         detail,
+        remote: where !== undefined && where !== 'worker',
       };
 
       setLog((current) => [entry, ...current].slice(0, LIMIT));
+
+      if (entry.remote && level !== 'info') {
+        setTroubled((current) =>
+          current[arm] === (level !== 'confirm')
+            ? current
+            : { ...current, [arm]: level !== 'confirm' }
+        );
+      }
     },
     []
   );
 
-  /** Builds the floor again from `simulation` and sets it going. */
-  const play = useCallback(
-    (simulation: Simulation) => {
+  /** Builds the floor again from `simulation` and sets it going, its arms on the bridge at `link` if one is given. */
+  const start = useCallback(
+    (simulation: Simulation, link?: string) => {
       const console = hub.current;
 
       if (!console) {
@@ -256,6 +280,10 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       parked.current.clear();
       had.current.clear();
       riders.current.clear();
+      carried.current = {};
+      bodied.current.clear();
+      setLinked({});
+      setEmbodied({});
       // The stations, lines and pallets stay drawn till the hub sends the new ones, so nothing blinks.
       setExtras({});
       setIdle({});
@@ -267,31 +295,35 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       setActive(simulation);
       setEdited(false);
       setRun((count) => count + 1);
-      note('hub', `Started ${simulation.name}`, 'info');
-      console.send({
-        type: 'build',
-        cells: simulation.cells,
-        lines: simulation.lines,
-      });
-      // Before the stations load, so each starts knowing what stands in its cell.
-      console.send({
-        type: 'block',
-        boxes: simulation.obstacles ?? [],
-        moved: false,
-      });
-      simulation.cells.forEach(({ hex }) =>
-        console.send({ type: 'load', hex })
+      note(
+        'hub',
+        'started',
+        'info',
+        link ? `${simulation.name} on ${link}` : undefined
       );
-      simulation.pallets.forEach((target) =>
-        console.send({ type: 'place', target })
-      );
-      Object.entries(simulation.capacities ?? {}).forEach(
-        ([arm, capacity]: [string, Capacity]) =>
-          console.send({ type: 'configure', arm, capacity })
-      );
+      console.send({ type: 'floor', floor: simulation, link });
     },
     [note]
   );
+
+  const play = useCallback(
+    (simulation: Simulation) => start(simulation, link.current),
+    [start]
+  );
+
+  // The floor keeps running: each arm swaps links at once and plans on from where the new one stands.
+  const toggleRemote = useCallback(() => {
+    const next = !remote;
+
+    link.current = next ? bridge : undefined;
+    setRemote(next);
+    hub.current?.send({ type: 'link', link: link.current });
+    note(
+      'hub',
+      link.current ? `arms on ${link.current}` : 'arms in workers on the page',
+      'info'
+    );
+  }, [bridge, note, remote]);
 
   useEffect(() => {
     const console = open();
@@ -340,8 +372,21 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       const { arm, event } = message;
 
       switch (event.type) {
-        case 'telemetry':
+        case 'telemetry': {
           telemetry.current.set(arm, event.report);
+
+          const has = event.report.target !== null;
+
+          if (bodied.current.get(arm) !== has) {
+            bodied.current.set(arm, has);
+            setEmbodied((current) => ({ ...current, [arm]: has }));
+          }
+
+          return;
+        }
+        case 'linked':
+          carried.current[arm] = event.where;
+          setLinked((current) => ({ ...current, [arm]: event.where }));
 
           return;
         case 'cell': {
@@ -410,14 +455,15 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       }
     });
 
-    play(SIMULATIONS[0]);
+    // Straight to `start`, not `play`: `play` changes with the Physical AI switch, and this must not open a second hub when it does.
+    start(SIMULATIONS[0]);
 
     return () => {
       unlisten();
       console.close();
       hub.current = null;
     };
-  }, [note, play]);
+  }, [note, start]);
 
   const place = useCallback<Value['place']>(
     (target) => hub.current?.send({ type: 'place', target }),
@@ -568,7 +614,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       dropped.forEach((pallet) =>
         note(
           'hub',
-          `Pallet ${pallet.id} removed`,
+          `pallet ${pallet.id} removed`,
           'warning',
           `no slot for it at ${arm}; its cases are left on the floor`
         )
@@ -642,7 +688,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       const made = beside(nextIds.obstacle, shape, lines, solid());
 
       if (!made) {
-        note('hub', `No room beside a belt for a ${shape}`, 'warning');
+        note('hub', `no room beside a belt for a ${shape}`, 'warning');
 
         return false;
       }
@@ -854,7 +900,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       keep(simulation);
       setActive(simulation);
       setEdited(false);
-      note('hub', `Saved the floor as ${simulation.name}`, 'info');
+      note('hub', `saved the floor as ${simulation.name}`, 'info');
     },
     [active, capacities, keep, next, note, obstacles, targets]
   );
@@ -920,7 +966,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       if (!found) {
         note(
           'hub',
-          `Arm ${id} stays`,
+          `arm ${id} stays`,
           'warning',
           'a line needs an arm in reach of it'
         );
@@ -932,7 +978,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       riders.current = riding;
       reride(found.heir);
       found.dropped.forEach((pallet) =>
-        note('hub', `Pallet ${pallet.id} removed`, 'warning', `with ${id}`)
+        note('hub', `pallet ${pallet.id} removed`, 'warning', `with ${id}`)
       );
       setEdited(true);
 
@@ -949,6 +995,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       add,
       blockable,
       blocking,
+      bridge,
       capacities,
       cells,
       clearLog,
@@ -956,9 +1003,12 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       discard,
       drawn,
       edited,
+      embodied,
       extras,
       finished,
       lines,
+      linked,
+      troubled,
       coming: nextIds,
       log,
       move,
@@ -972,6 +1022,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       put,
       raise,
       relocate,
+      remote,
       remove,
       revision,
       riders,
@@ -987,6 +1038,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       targets,
       telemetry,
       toggle,
+      toggleRemote,
       turn,
       unblock,
     }),
@@ -995,15 +1047,19 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       add,
       blockable,
       blocking,
+      bridge,
       capacities,
       clearLog,
       configure,
       discard,
       drawn,
       edited,
+      embodied,
       extras,
       finished,
       lines,
+      linked,
+      troubled,
       log,
       move,
       next,
@@ -1016,6 +1072,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       put,
       raise,
       relocate,
+      remote,
       remove,
       revision,
       run,
@@ -1029,6 +1086,7 @@ const HubProvider: React.FunctionComponent<PropsWithChildren> = ({
       takeOff,
       targets,
       toggle,
+      toggleRemote,
       turn,
       unblock,
     ]

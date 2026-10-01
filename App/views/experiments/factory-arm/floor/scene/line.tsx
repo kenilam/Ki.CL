@@ -1,10 +1,7 @@
 import React from 'react';
 
 // Grid
-import {
-  type Line as Spec,
-  onLine,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+import { type Line as Spec, onLine } from 'arm/grid/layout';
 
 // Materials
 import { MATERIAL } from './arm/materials';

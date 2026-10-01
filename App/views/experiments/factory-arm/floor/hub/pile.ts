@@ -1,8 +1,8 @@
 // Station
-import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
+import type { Case } from 'arm/station/spec';
 
 // Grid
-import { PALLET } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { PALLET } from 'arm/grid/layout';
 
 /** Case sizes (width, height, depth in metres) and their loaded weight in kg. */
 const CATALOG: { size: [number, number, number]; mass: number }[] = [

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
 // Grid
-import { neighbour } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { neighbour } from 'arm/grid/hex';
 
 // Partials
 import { SIMULATIONS } from './simulations';

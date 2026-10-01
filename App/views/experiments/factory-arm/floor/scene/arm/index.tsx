@@ -4,11 +4,11 @@ import React, { useRef } from 'react';
 import { Fiber, THREE } from '@/three';
 
 // Model
-import { LINK } from '@/views/experiments/factory-arm/cell/model/constants';
-import { HOME } from '@/views/experiments/factory-arm/cell/model/kinematics';
+import { LINK } from 'arm/model/constants';
+import { HOME } from 'arm/model/kinematics';
 
 // Protocol
-import type { Joints } from '@/views/experiments/factory-arm/cell/protocol';
+import type { Joints } from 'arm/protocol';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';
@@ -17,6 +17,7 @@ import { useHub } from '@/views/experiments/factory-arm/floor/hub';
 import { Fore } from './fore';
 import { Gripper } from './gripper';
 import { Pedestal } from './pedestal';
+import { Target } from './target';
 import { Turret } from './turret';
 import { Upper } from './upper';
 
@@ -75,6 +76,7 @@ const Arm: React.FunctionComponent<Props> = ({ arm }) => {
   return (
     <group>
       <Pedestal />
+      <Target arm={arm} />
 
       <group ref={yaw}>
         <Turret />

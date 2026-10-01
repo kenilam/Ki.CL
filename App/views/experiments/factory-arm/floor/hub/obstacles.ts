@@ -1,24 +1,16 @@
 // Protocol
-import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+import type { Box } from 'arm/protocol';
 
 // Hub
-import type { Riding, Target } from '@/views/experiments/factory-arm/cell/hub';
+import type { Riding, Target } from 'arm/hub';
 
 // Grid
-import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
-import {
-  centre,
-  type Hex,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
-import {
-  above,
-  type Line,
-  onLine,
-  PALLET,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+import { childCentre } from 'arm/grid/child';
+import { centre, type Hex } from 'arm/grid/hex';
+import { above, type Line, onLine, PALLET } from 'arm/grid/layout';
 
 // Station
-import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
+import type { Case } from 'arm/station/spec';
 
 // Partials
 import type { Loose } from './simulations';

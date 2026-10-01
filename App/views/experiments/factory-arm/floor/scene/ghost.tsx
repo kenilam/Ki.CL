@@ -4,9 +4,9 @@ import React from 'react';
 import { Drei } from '@/three';
 
 // Grid
-import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
-import { centre, RADIUS } from '@/views/experiments/factory-arm/cell/grid/hex';
-import { FINE } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { childCentre } from 'arm/grid/child';
+import { centre, RADIUS } from 'arm/grid/hex';
+import { FINE } from 'arm/grid/layout';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';

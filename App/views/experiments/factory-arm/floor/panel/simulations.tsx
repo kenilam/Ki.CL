@@ -19,7 +19,7 @@ import {
 import { Ri } from '@/icons';
 
 // Grid
-import { index } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { index } from 'arm/grid/hex';
 
 // Context
 import {
@@ -29,6 +29,7 @@ import {
 
 // Partials
 import { Arms } from './arms';
+import { fold } from './fold';
 import { Obstacles } from './obstacles';
 import { Pallets } from './pallets';
 
@@ -42,7 +43,8 @@ import { COPY } from '@/views/experiments/factory-arm/floor/constants';
  * when an arm's alarm has stopped the floor.
  */
 const Simulations: React.FunctionComponent = () => {
-  const { active, finished, simulations, stopped } = useHub();
+  const { active, finished, simulations, stopped, troubled } = useHub();
+  const trouble = Object.values(troubled).some(Boolean);
 
   return (
     <Layout alignContent='start' gap='normal'>
@@ -54,6 +56,7 @@ const Simulations: React.FunctionComponent = () => {
             playing={simulation.id === active.id && !finished}
             simulation={simulation}
             stopped={simulation.id === active.id && stopped}
+            troubled={simulation.id === active.id && trouble}
           />
         ))}
       </CardContent>
@@ -61,20 +64,27 @@ const Simulations: React.FunctionComponent = () => {
   );
 };
 
-/** One simulation: play or start over, and what's in it. `chosen` is the one on the floor; `playing` while it still has work; `stopped` when an alarm holds it. */
+/** One simulation: play or start over, and what's in it. `chosen` is the one on the floor; `playing` while it still has work; `stopped` when an alarm holds it; `troubled` while an arm on the bridge has a warning as its last word. */
 const Group: React.FunctionComponent<{
   chosen: boolean;
   playing: boolean;
   simulation: Simulation;
   stopped: boolean;
-}> = ({ chosen, playing, simulation, stopped }) => {
+  troubled: boolean;
+}> = ({ chosen, playing, simulation, stopped, troubled }) => {
   const { discard, obstacles, play } = useHub();
   const standing = chosen ? obstacles : (simulation.obstacles ?? []);
   const name = (hex: { q: number; r: number }) =>
     simulation.cells.find((cell) => index(cell.hex) === index(hex))?.arm ??
     index(hex);
 
-  const level = stopped ? 'error' : playing ? 'confirm' : undefined;
+  const level = stopped
+    ? 'error'
+    : playing
+      ? troubled
+        ? 'warning'
+        : 'confirm'
+      : undefined;
 
   return (
     <Card level={level} variant='ghost'>
@@ -103,12 +113,17 @@ const Group: React.FunctionComponent<{
                   }
 
                   play(simulation);
+                  fold();
                 }}
                 variant={playing && !stopped ? 'secondary' : 'ghost'}
                 size='small'
               >
                 {playing && !stopped ? (
-                  <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                  troubled ? (
+                    <Ri.RiAlertFill aria-hidden />
+                  ) : (
+                    <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                  )
                 ) : (
                   <Ri.RiPlayFill aria-hidden />
                 )}
@@ -121,7 +136,11 @@ const Group: React.FunctionComponent<{
                   {simulation.name}
                   {level ? (
                     <Badge level={level} size='small' variant='ghost'>
-                      {stopped ? COPY.panel.stopped : COPY.panel.running}
+                      {stopped
+                        ? COPY.panel.stopped
+                        : troubled
+                          ? COPY.panel.troubled
+                          : COPY.panel.running}
                     </Badge>
                   ) : null}
                 </Heading>

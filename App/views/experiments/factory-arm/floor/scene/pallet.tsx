@@ -4,7 +4,7 @@ import React from 'react';
 import { THREE } from '@/three';
 
 // Grid
-import { PALLET } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { PALLET } from 'arm/grid/layout';
 
 const WOOD = new THREE.MeshStandardMaterial({
   color: '#c7a16a',

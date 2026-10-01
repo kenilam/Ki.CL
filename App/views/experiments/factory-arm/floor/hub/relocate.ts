@@ -1,8 +1,5 @@
 // Grid
-import {
-  type Child,
-  childCentre,
-} from '@/views/experiments/factory-arm/cell/grid/child';
+import { type Child, childCentre } from 'arm/grid/child';
 import {
   type Hex,
   index,
@@ -10,7 +7,7 @@ import {
   opposite,
   SIDES,
   type Side,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
+} from 'arm/grid/hex';
 import {
   free,
   type Layout,
@@ -19,7 +16,7 @@ import {
   on,
   reaches,
   stretch,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+} from 'arm/grid/layout';
 
 // Partials
 import type { Loose, Simulation } from './simulations';

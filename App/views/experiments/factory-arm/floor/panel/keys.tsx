@@ -57,7 +57,8 @@ const Keys: React.FunctionComponent<{ rows: readonly Row[] }> = ({ rows }) => (
         alignItems='center'
         autoFlow='column'
         className={getButtonClassNames({ variant: 'tertiary' })}
-        key={does}
+        // Two rows may do the same thing by different keys.
+        key={`${press.join('+')}:${does}`}
         gap='narrow'
       >
         <Layout alignItems='center' autoFlow='column' gap='narrower'>

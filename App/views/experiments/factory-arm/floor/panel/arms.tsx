@@ -14,7 +14,7 @@ import {
 import { Ri } from '@/icons';
 
 // Hub
-import type { Capacity } from '@/views/experiments/factory-arm/cell/hub';
+import type { Capacity } from 'arm/hub';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';

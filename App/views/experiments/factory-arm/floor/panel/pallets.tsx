@@ -20,10 +20,10 @@ import {
 import { Ri } from '@/icons';
 
 // Grid
-import { index } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { index } from 'arm/grid/hex';
 
 // Hub
-import type { Target } from '@/views/experiments/factory-arm/cell/hub';
+import type { Target } from 'arm/hub';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';

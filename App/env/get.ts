@@ -12,9 +12,11 @@ dotenv.config({ path: `${appRoot.path}/.env` });
  */
 
 const get = () => {
-  const { NODE_ENV, TURNSTILE_SITE_KEY } = process.env || {};
+  const { KICL_ARM_LINK, NODE_ENV, TURNSTILE_SITE_KEY } = process.env || {};
 
   return {
+    // Where the factory-arm floor finds its arms when they are not in workers on the page.
+    KICL_ARM_LINK,
     NODE_ENV,
     // Public by design: the widget embeds it in the page.
     TURNSTILE_SITE_KEY,

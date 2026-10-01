@@ -33,6 +33,7 @@ const Ground: React.FunctionComponent = () => {
   return (
     <mesh
       onDoubleClick={click}
+      onPointerLeave={() => over(null)}
       onPointerMove={track}
       onPointerUp={drop}
       receiveShadow

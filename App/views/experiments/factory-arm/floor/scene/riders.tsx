@@ -1,10 +1,7 @@
 import React from 'react';
 
 // Grid
-import {
-  type Line,
-  onLine,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+import { type Line, onLine } from 'arm/grid/layout';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';

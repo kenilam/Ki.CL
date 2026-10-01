@@ -13,6 +13,12 @@
       ],
       "api/*": [
         "./@mf-types/api/*"
+      ],
+      "arm": [
+        "./@mf-types/arm"
+      ],
+      "arm/*": [
+        "./@mf-types/arm/*"
       ]
     },
     "types": [

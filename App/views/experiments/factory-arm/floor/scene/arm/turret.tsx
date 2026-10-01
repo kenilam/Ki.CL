@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Model
-import { LINK } from '@/views/experiments/factory-arm/cell/model/constants';
+import { LINK } from 'arm/model/constants';
 
 // Materials
 import { MATERIAL } from './materials';

@@ -29,14 +29,12 @@ import {
   CLASS_NAME,
   COPY,
   PANEL,
+  WIDE,
 } from '@/views/experiments/factory-arm/floor/constants';
 
 const TABS = ['simulations', 'obstacles'] as const;
 
 type Tab = (typeof TABS)[number];
-
-/** Wider than a tablet, where the panel stands beside the stage. */
-const WIDE = '(min-width: 737px)';
 
 /**
  * The simulations to play and the obstacles to add, beside the stage, and
@@ -48,8 +46,27 @@ const Panel: React.FunctionComponent = () => {
   const [tab, setTab] = useState<Tab>('simulations');
   const [logging, setLogging] = useState(false);
   const [open] = useState(() => matchMedia(WIDE).matches);
-  const { struck } = useHub();
+  const {
+    bridge,
+    embodied,
+    linked,
+    remote,
+    stations,
+    struck,
+    toggleRemote,
+    troubled,
+  } = useHub();
   const hits = Object.entries(struck);
+  const on = stations
+    .map(({ arm }) => arm)
+    .filter((arm) => linked[arm] !== undefined && linked[arm] !== 'worker');
+  const bodies = on.filter((arm) => embodied[arm]);
+  // Some arm is still on its way to where the switch sent it: a station says `worker` or the bridge's address.
+  const switching = stations.some(
+    ({ arm }) => ((linked[arm] ?? 'worker') === 'worker') === remote
+  );
+  // An arm on the bridge whose last word was a warning or an error.
+  const trouble = on.some((arm) => troubled[arm]);
 
   return (
     <Sheet
@@ -61,7 +78,7 @@ const Panel: React.FunctionComponent = () => {
       <Layout
         alignItems='center'
         autoFlow='column'
-        frames='auto--max-content--max-content'
+        frames='auto--max-content--max-content--max-content'
         gap='narrow'
       >
         <SheetHeader>
@@ -81,11 +98,30 @@ const Panel: React.FunctionComponent = () => {
             ))}
           </Segmented>
 
+          {/* Nothing to dial without an address, so the button stays but does nothing. */}
+          <Button
+            aria-pressed={remote}
+            disabled={!bridge}
+            level={
+              !switching && remote ? (trouble ? 'warning' : 'confirm') : undefined
+            }
+            onClick={toggleRemote}
+            variant={remote ? 'ghost' : 'secondary'}
+            title={COPY.panel.ai}
+          >
+            {switching ? (
+              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+            ) : trouble ? (
+              <Ri.RiAlertFill aria-hidden />
+            ) : (
+              <Ri.RiRobot2Fill aria-hidden />
+            )}
+            <span className='kicl-hidden'>{switching ? COPY.panel.switching : COPY.panel.ai}</span>
+          </Button>
+
           <Button
             aria-pressed={logging}
-            level='confirm'
             onClick={() => setLogging((current) => !current)}
-            size='small'
             variant={logging ? 'primary' : 'secondary'}
           >
             <Ri.RiFile4Line aria-hidden />
@@ -103,6 +139,15 @@ const Panel: React.FunctionComponent = () => {
           </Button>
         </SheetHeader>
       </Layout>
+
+      <Status
+        align='start'
+        headingLevel='h3'
+        in={!switching && remote}
+        level='info'
+        message={COPY.panel.physical.message(on, bodies)}
+        title={COPY.panel.physical.title}
+      />
 
       <Status
         align='start'

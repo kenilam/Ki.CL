@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
 // Grid
-import { neighbour } from '@/views/experiments/factory-arm/cell/grid/hex';
-import { layout } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { neighbour } from 'arm/grid/hex';
+import { layout } from 'arm/grid/layout';
 
 // Partials
 import { relocate } from './relocate';

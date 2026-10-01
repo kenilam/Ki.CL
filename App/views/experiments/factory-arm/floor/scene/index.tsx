@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Drei, Fiber } from '@/three';
 
 // Grid
-import { centre, index } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { centre, index } from 'arm/grid/hex';
 
 // Context
 import {

@@ -4,13 +4,10 @@ import React, { useMemo, useRef } from 'react';
 import { Drei, Fiber, THREE } from '@/three';
 
 // Model
-import {
-  GRIPPER,
-  LINK,
-} from '@/views/experiments/factory-arm/cell/model/constants';
+import { GRIPPER, LINK } from 'arm/model/constants';
 
 // Protocol
-import type { Joints } from '@/views/experiments/factory-arm/cell/protocol';
+import type { Joints } from 'arm/protocol';
 
 // Materials
 import { MATERIAL } from './materials';

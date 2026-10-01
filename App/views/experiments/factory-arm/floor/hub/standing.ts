@@ -1,15 +1,12 @@
 // Hub
-import type {
-  Capacity,
-  Target,
-} from '@/views/experiments/factory-arm/cell/hub';
+import type { Capacity, Target } from 'arm/hub';
 
 // Grid
-import { type Hex, SIDES } from '@/views/experiments/factory-arm/cell/grid/hex';
-import { slot } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { type Hex, SIDES } from 'arm/grid/hex';
+import { slot } from 'arm/grid/layout';
 
 // Station
-import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
+import type { Case } from 'arm/station/spec';
 
 // Partials
 import type { Simulation } from './simulations';

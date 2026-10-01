@@ -13,6 +13,8 @@ const STEP = 0.05;
 const COPY = {
   panel: {
     add: 'Add to the floor',
+    ai: 'Physical AI',
+    switching: 'Switching the arms',
     arms: 'Arms',
     capacity: 'Pallets per period',
     clear: 'Clear',
@@ -35,6 +37,7 @@ const COPY = {
     queue: 'Queue',
     remove: 'Remove',
     running: 'running',
+    troubled: 'in trouble',
     shapes: {
       beam: 'Beam',
       crate: 'Crate',
@@ -70,6 +73,18 @@ const COPY = {
     },
     slot: 'Slot',
     stopped: 'stopped',
+    /** The line under the header while the arms are on the bridge. */
+    physical: {
+      title: 'Physical AI',
+      message: (on: string[], bodied: string[]) =>
+        on.length === 0
+          ? 'Arms moving to the bridge.'
+          : `${on.length === 1 ? on[0] : `${on.length} arms`} on the bridge. ${
+              bodied.length === 0
+                ? 'None has a body in the simulator yet.'
+                : `${bodied.join(', ')} ${bodied.length === 1 ? 'has' : 'have'} a body in the simulator.`
+            }`,
+    },
     struck: {
       title: 'Arm struck',
       /** One line per arm with something standing in it. */
@@ -86,4 +101,7 @@ const COPY = {
 /** The panel's id, for the buttons that open and close it on small screens. */
 const PANEL = `${CLASS_NAME}--panel`;
 
-export { CLASS_NAME, COPY, DRAG, OUTLINE, PANEL, STEP };
+/** Wider than a tablet, where the panel stands beside the stage. */
+const WIDE = '(min-width: 737px)';
+
+export { CLASS_NAME, COPY, DRAG, OUTLINE, PANEL, STEP, WIDE };

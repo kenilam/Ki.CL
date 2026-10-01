@@ -36,6 +36,13 @@ const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 const API_REMOTE_ENTRY =
   process.env.KICL_API_REMOTE_ENTRY || '/client/remoteEntry.js';
 
+// The factory-arm package, served by the Ki.CL-arm repo's server at /arm/*, proxied same-origin for the same reasons - and so its workers may start at all.
+const ARM_URL = process.env.KICL_ARM_URL || 'http://localhost:3200';
+// The socket to the arms, /arm/link, can go elsewhere: to an IAP tunnel onto the GCP machine's bridge, with the remote still served from here.
+const ARM_BRIDGE_URL = process.env.KICL_ARM_BRIDGE_URL || ARM_URL;
+const ARM_REMOTE_ENTRY =
+  process.env.KICL_ARM_REMOTE_ENTRY || '/arm/remoteEntry.js';
+
 /*
  * Kept in step with `App/.server/proxy` - the two run the same site and have
  * to agree on which paths belong to the API.
@@ -110,6 +117,29 @@ const getConfig = ({
         changeOrigin: true,
         secure: false,
       },
+      // The socket to the arms, before the prefix below takes it.
+      '/arm/link': {
+        target: ARM_BRIDGE_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        // A bridge that goes away, as an IAP tunnel does when its machine end restarts, must not take the dev server with it.
+        configure: (proxy) => {
+          proxy.on('error', (error, _request, target) => {
+            console.warn(`[arm/link] ${error.message}`);
+
+            if ('destroy' in target) {
+              target.destroy();
+            }
+          });
+        },
+      },
+      // The remote's chunks and workers.
+      '/arm': {
+        target: ARM_URL,
+        changeOrigin: true,
+        secure: false,
+      },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
        * because a production build emits the site's own bundles there too.
@@ -146,6 +176,11 @@ const getConfig = ({
             type: 'module',
             name: 'api',
             entry: API_REMOTE_ENTRY,
+          },
+          arm: {
+            type: 'module',
+            name: 'arm',
+            entry: ARM_REMOTE_ENTRY,
           },
         },
         shared: {
@@ -192,6 +227,12 @@ const getConfig = ({
                 alias: 'api',
                 api: `${BACKEND_URL}/client/types.d.ts`,
                 zip: `${BACKEND_URL}/client/types.zip`,
+              },
+              // This one keeps the plugin's default names.
+              arm: {
+                alias: 'arm',
+                api: `${ARM_URL}/arm/@mf-types.d.ts`,
+                zip: `${ARM_URL}/arm/@mf-types.zip`,
               },
             },
           },

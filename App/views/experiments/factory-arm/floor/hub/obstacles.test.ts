@@ -2,16 +2,9 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
 // Grid
-import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
-import {
-  centre,
-  neighbour,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
-import {
-  covers,
-  line,
-  onLine,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+import { childCentre } from 'arm/grid/child';
+import { centre, neighbour } from 'arm/grid/hex';
+import { covers, line, onLine } from 'arm/grid/layout';
 
 // Partials
 import {

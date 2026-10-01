@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Grid
-import { centre } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { centre } from 'arm/grid/hex';
 
 // Context
 import type { Station as Spec } from '@/views/experiments/factory-arm/floor/hub';

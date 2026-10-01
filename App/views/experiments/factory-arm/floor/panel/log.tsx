@@ -16,6 +16,9 @@ import {
   Text,
 } from '@/components';
 
+// Icons
+import { Ri } from '@/icons';
+
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';
 
@@ -25,7 +28,7 @@ import { COPY } from '@/views/experiments/factory-arm/floor/constants';
 const time = (at: number) =>
   new Date(at).toLocaleTimeString([], { hour12: false });
 
-/** Every step the stations took, newest first, each with the arm it came from. */
+/** Every step the stations took, newest first, each with the arm it came from, marked when that arm was on the bridge. */
 const Log: React.FunctionComponent = () => {
   const { clearLog, log } = useHub();
 
@@ -37,13 +40,21 @@ const Log: React.FunctionComponent = () => {
             <List>
               {log.map((entry) => (
                 <ListItem
-                  alignItems='baseline'
+                  alignItems='center'
                   autoFlow='column'
-                  frames='max-content--auto'
+                  frames='max-content--max-content--auto'
                   gap='narrow'
-                  justifyContent='start'
+                  justifyItems='end'
                   key={entry.id}
                 >
+                  <Badge level={entry.level} size='small'>
+                    {entry.remote ? <Ri.RiRobot2Line aria-hidden /> : <Ri.RiCircleLine aria-hidden />}
+                    {entry.arm}
+                  </Badge>
+                  <Badge level={entry.level} size='small' variant='ghost'>
+                    <BadgeLabel>{entry.text}</BadgeLabel>
+                    {entry.detail || 'ack'}
+                  </Badge>
                   <time
                     className={classNames(
                       'kicl-color-grey',
@@ -53,13 +64,6 @@ const Log: React.FunctionComponent = () => {
                   >
                     {time(entry.at)}
                   </time>
-                  <Badge level={entry.level} size='small'>
-                    {entry.arm}
-                  </Badge>
-                  <Badge level={entry.level} size='small' variant='ghost'>
-                    <BadgeLabel>{entry.text}</BadgeLabel>
-                    {entry.detail || 'ack'}
-                  </Badge>
                 </ListItem>
               ))}
             </List>

@@ -4,13 +4,9 @@ import React, { useMemo } from 'react';
 import { Drei } from '@/three';
 
 // Grid
-import {
-  centre,
-  type Hex as Cell,
-  RADIUS,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
-import { FINE, slot } from '@/views/experiments/factory-arm/cell/grid/layout';
-import { SIDES } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { centre, type Hex as Cell, RADIUS } from 'arm/grid/hex';
+import { FINE, slot } from 'arm/grid/layout';
+import { SIDES } from 'arm/grid/hex';
 
 /** A flat-topped hexagon's corners, on the floor, `radius` from `at`. */
 const corners = (radius: number, at = { x: 0, z: 0 }, lift = 0.003) =>

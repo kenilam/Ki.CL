@@ -1,26 +1,13 @@
 // Hub
-import type {
-  Capacity,
-  Cell,
-  Line,
-  Target,
-} from '@/views/experiments/factory-arm/cell/hub';
+import type { Cell, Floor, Target } from 'arm/hub';
 
 // Grid
-import { childCentre } from '@/views/experiments/factory-arm/cell/grid/child';
-import {
-  centre,
-  type Hex,
-  neighbour,
-  type Side,
-} from '@/views/experiments/factory-arm/cell/grid/hex';
-import { line, onLine } from '@/views/experiments/factory-arm/cell/grid/layout';
-
-// Protocol
-import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+import { childCentre } from 'arm/grid/child';
+import { centre, type Hex, neighbour, type Side } from 'arm/grid/hex';
+import { line, onLine } from 'arm/grid/layout';
 
 // Station
-import type { Case } from '@/views/experiments/factory-arm/cell/station/spec';
+import type { Case } from 'arm/station/spec';
 
 // Partials
 import { box, rest } from './obstacles';
@@ -30,19 +17,13 @@ import { pile } from './pile';
 type Loose = { at: { x: number; z: number }; cases: Case[] };
 
 /**
- * A floor to play: its arms, the belt lines past them, the pallets to start
- * with, any arm's capacity, cases left loose on the floor, and the
- * obstacles standing on it, in the floor's frame.
+ * A floor to play: the hub's configuration, with a name for the panel and,
+ * for the scene alone, cases left loose where a pallet stood.
  */
-type Simulation = {
+type Simulation = Floor & {
   id: string;
   name: string;
-  cells: Cell[];
-  lines: Line[];
-  pallets: Omit<Target, 'claimed' | 'version'>[];
-  capacities?: Record<string, Capacity>;
   loose?: Loose[];
-  obstacles?: Box[];
   /** Saved by the operator, so it can be removed again. */
   saved?: boolean;
 };

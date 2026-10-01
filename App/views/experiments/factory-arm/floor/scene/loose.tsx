@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Grid
-import { PALLET } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { PALLET } from 'arm/grid/layout';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';

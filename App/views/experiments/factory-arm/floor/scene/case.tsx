@@ -4,7 +4,7 @@ import React, { useMemo, useRef } from 'react';
 import { Fiber, THREE } from '@/three';
 
 // Station
-import type { Case as Spec } from '@/views/experiments/factory-arm/cell/station/spec';
+import type { Case as Spec } from 'arm/station/spec';
 
 // Constants
 import { DRAG } from '@/views/experiments/factory-arm/floor/constants';

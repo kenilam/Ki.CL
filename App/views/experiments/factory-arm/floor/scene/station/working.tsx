@@ -1,14 +1,11 @@
 import React from 'react';
 
 // Grid
-import { index } from '@/views/experiments/factory-arm/cell/grid/hex';
+import { index } from 'arm/grid/hex';
 
 // Model
-import {
-  bearing,
-  forward,
-} from '@/views/experiments/factory-arm/cell/model/kinematics';
-import { slot } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { bearing, forward } from 'arm/model/kinematics';
+import { slot } from 'arm/grid/layout';
 
 // Context
 import {

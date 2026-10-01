@@ -14,6 +14,7 @@ import {
 } from '@/views/experiments/factory-arm/floor/hub/obstacles';
 
 // Partials
+import { fold } from './fold';
 import { Help } from './help';
 
 // Constants
@@ -127,7 +128,10 @@ const Shapes: React.FunctionComponent = () => {
                 </Text>
               </Text>
               <Button
-                onClick={() => put(shape)}
+                onClick={() => {
+                  put(shape);
+                  fold();
+                }}
                 size='small'
                 variant='secondary'
               >

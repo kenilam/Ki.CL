@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
 // Grid
-import { slot } from '@/views/experiments/factory-arm/cell/grid/layout';
+import { slot } from 'arm/grid/layout';
 
 // Partials
 import { standing } from './standing';

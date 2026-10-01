@@ -1,10 +1,6 @@
 // Grid
-import { type Hex, index } from '@/views/experiments/factory-arm/cell/grid/hex';
-import {
-  beside,
-  line as geometry,
-  reaches,
-} from '@/views/experiments/factory-arm/cell/grid/layout';
+import { type Hex, index } from 'arm/grid/hex';
+import { beside, line as geometry, reaches } from 'arm/grid/layout';
 
 // Partials
 import type { Simulation } from './simulations';

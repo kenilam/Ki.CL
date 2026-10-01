@@ -4,7 +4,7 @@ import React, { useMemo, useRef } from 'react';
 import { Fiber, THREE } from '@/three';
 
 // Protocol
-import type { Box } from '@/views/experiments/factory-arm/cell/protocol';
+import type { Box } from 'arm/protocol';
 
 // Context
 import { useHub } from '@/views/experiments/factory-arm/floor/hub';
