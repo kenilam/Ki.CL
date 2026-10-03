@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Routes
-import { Navigate, Outlet, useParams } from '@/router';
+import { Navigate, Outlet, useParams } from 'design/router';
 
 // Catalog
 import { GROUP } from '@/views/experiments/music-visualiser/catalog';

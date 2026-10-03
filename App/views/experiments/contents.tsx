@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Routes
-import { Outlet } from '@/router';
+import { Outlet } from 'design/router';
 
 // Components
 import { Animation, Layout } from 'design/components';

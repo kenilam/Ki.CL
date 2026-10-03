@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 
 // Routes
-import { Outlet, ScrollRestoration, useLocation } from '@/router';
+import { Outlet, ScrollRestoration, useLocation } from 'design/router';
 
 // Widgets
 import { GlobalHeader, useGlobalHeaderContext } from 'design/widgets';

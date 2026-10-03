@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Routes
-import { useLocation, useParams } from '@/router';
+import { useLocation, useParams } from 'design/router';
 
 // Components
 import { Layout } from 'design/components';
