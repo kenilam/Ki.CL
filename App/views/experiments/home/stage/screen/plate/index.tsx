@@ -30,7 +30,9 @@ const Plate: React.FunctionComponent = () => {
         CLASS_NAME,
         'kicl-animation-none-reduced-motion',
         'kicl-inset-inline-0',
-        'kicl-position-absolute'
+        'kicl-position-absolute',
+        // Only the photos need a scrim; on the other plates it darkens too much.
+        { 'kicl-scrim': experiment.plate === 'image-agent' }
       )}
     >
       {experiment.plate === 'image-agent' ? <Backdrop /> : null}

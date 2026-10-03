@@ -1,7 +1,7 @@
 .kicl--views--portfolio--pika--system-design {
-  /* Media query and hover state; a utility class would apply at every size and state. */
+  /* Style query and hover state; a utility class would apply at every size and state. */
   &__anchor-nav {
-    @include tablet {
+    @container style(--kicl-viewport-tablet: true) {
       display: none;
     }
 

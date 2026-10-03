@@ -1,0 +1,34 @@
+// A line of the site's moving gradient along one block edge of a sticky
+// element, drawn while it's stuck over content: `start` for a footer stuck to
+// the bottom, `end` for a header stuck to the top. It draws on `::before`, so
+// the element needs a position, which `position: sticky` gives it.
+@each $edge, $stuck in (start: bottom, end: top) {
+  .kicl-stuck-line-#{$edge} {
+    container-type: scroll-state;
+
+    &::before {
+      block-size: var(--kicl-size-1px);
+      content: '';
+      inset-block-#{$edge}: 0;
+      inset-inline-start: 0;
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        var(--kicl-color-black-pure) 30%,
+        var(--kicl-color-black-pure) 70%,
+        transparent
+      );
+      position: absolute;
+    }
+
+    @container scroll-state(stuck: #{$stuck}) {
+      &::before {
+        animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+          infinite;
+        background: var(--kicl-gradient-shift);
+        background-size: 1200% 1200%;
+        inline-size: 100%;
+      }
+    }
+  }
+}

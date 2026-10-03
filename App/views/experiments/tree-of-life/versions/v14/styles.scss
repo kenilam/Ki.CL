@@ -35,7 +35,7 @@
     );
     z-index: 3;
 
-    @include query('≤tablet') {
+    @container style(--kicl-viewport-up-to-tablet: true) {
       align-items: end;
       flex-direction: column;
 

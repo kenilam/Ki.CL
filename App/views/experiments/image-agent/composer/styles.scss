@@ -2,12 +2,9 @@
   /*
    * Stuck to the bottom of the window over the page background, so the
    * messages scroll behind it and the last one is never hidden under it.
-   * While it is stuck, a line of the moving gradient runs along the top.
    * No utility sets the page background colour.
    */
   &--sticky {
-    @include stuck-line(start);
-
     background-color: var(--kicl-body-background-color);
   }
 

@@ -1,0 +1,40 @@
+// A scrim over a picture, so text on it stays readable: the picture muted,
+// under the page colour from `--kicl-scrim-top` at the top to
+// `--kicl-scrim-foot` at the foot. Put it on a positioned element; it draws on
+// `::after`, above the element's children and under anything positioned after
+// it.
+.kicl-scrim {
+  --kicl-scrim-background-color: var(--kicl-body-background-color);
+  --kicl-scrim-opacity: 1;
+  --kicl-scrim-top: 65%;
+  --kicl-scrim-foot: 75%;
+
+  filter: saturate(0.6) brightness(0.8);
+
+  body.kicl--theme--dark & {
+    --kicl-scrim-foot: 85%;
+  }
+
+  &::after {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(
+        in oklab,
+        var(--kicl-scrim-background-color) var(--kicl-scrim-top),
+        transparent
+      )
+      0%,
+      color-mix(
+        in oklab,
+        var(--kicl-scrim-background-color) var(--kicl-scrim-foot),
+        transparent
+      )
+      100%
+    );
+    content: '';
+    inset: 0;
+    opacity: var(--kicl-scrim-opacity);
+    position: absolute;
+    z-index: var(--kicl-z-index-raised);
+  }
+}

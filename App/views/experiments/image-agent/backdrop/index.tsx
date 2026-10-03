@@ -38,7 +38,7 @@ const Backdrop: React.FunctionComponent<Props> = ({ scrim }) => {
       aria-hidden
       className={classNames(
         CLASS_NAME,
-        { [`${CLASS_NAME}--scrim`]: scrim },
+        { 'kicl-scrim': scrim },
         'kicl-inset-0',
         'kicl-overflow-clip',
         'kicl-pointer-events-none',
