@@ -10,11 +10,13 @@ import { useGlobalHeaderContext, GlobalHeaderProvider } from './context';
 // Styles
 import './styles.scss';
 
-const GlobalHeader: React.FunctionComponent = () => {
+const GlobalHeader: React.FunctionComponent<React.PropsWithChildren> = ({
+  children,
+}) => {
   return (
     <>
       <CssVariables />
-      <Contents />
+      <Contents>{children}</Contents>
     </>
   );
 };
