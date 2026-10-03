@@ -1,24 +1,16 @@
 .kicl--components--animation--property--fade {
-  /* How faint it gets. Raise it for a partial fade. */
-  --kicl--components--animation--property--fade--opacity: 0;
+  /* How faint it gets when out. Raise it for a partial fade. */
+  --kicl--components--animation--property--fade--opacity: 1;
   --kicl--components--animation--transition-property: opacity;
 
-  opacity: 1;
+  opacity: var(--kicl--components--animation--property--fade--opacity);
 
-  /*
-   * Where an entering element starts. The browser reads this only for the
-   * first style change after the element renders - or after it comes back
-   * from `display: none` - and transitions away from it.
-   *
-   * Both states use the same values, so overriding the variables above moves
-   * the entrance and the exit together.
-   */
+  /* Where it starts when entering, and ends when leaving: the variables move, the properties follow. */
   @starting-style {
-    opacity: var(--kicl--components--animation--property--fade--opacity);
+    --kicl--components--animation--property--fade--opacity: 0;
   }
 
-  /* Where a leaving element ends, held until the transition finishes. */
   &:not([data-animation-in]) {
-    opacity: var(--kicl--components--animation--property--fade--opacity);
+    --kicl--components--animation--property--fade--opacity: 0;
   }
 }

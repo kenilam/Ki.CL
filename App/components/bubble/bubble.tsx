@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { Layout } from '@/components/layout';
+
 import type { BubbleIs, BubbleProps } from './spec';
 
 const CLASS_NAME = 'kicl--components--bubble';
@@ -24,23 +26,24 @@ const Bubble = React.forwardRef<HTMLElement, BubbleProps>(
     const Component = is as BubbleIs;
 
     return (
-      <Component
-        {...(rest as React.HTMLAttributes<HTMLElement>)}
-        className={classNames(
-          CLASS_NAME,
-          `${CLASS_NAME}--variant--${variant}`,
-          `${CLASS_NAME}--align--${align}`,
-          'kicl-position-relative',
-          className
-        )}
-        data-align={align}
-        data-is={is}
-        data-slot='bubble'
-        data-variant={variant}
-        ref={ref as never}
-      >
-        {children}
-      </Component>
+      <Layout gap='narrowest' ref={ref}>
+        <Component
+          {...(rest as React.HTMLAttributes<HTMLElement>)}
+          className={classNames(
+            CLASS_NAME,
+            `${CLASS_NAME}--variant--${variant}`,
+            `${CLASS_NAME}--align--${align}`,
+            'kicl-position-relative',
+            className
+          )}
+          data-align={align}
+          data-is={is}
+          data-slot='bubble'
+          data-variant={variant}
+        >
+          {children}
+        </Component>
+      </Layout>
     );
   }
 );

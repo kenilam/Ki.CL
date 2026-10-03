@@ -27,7 +27,7 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
   property = 'zoom-out',
   atRoot,
   className: _className,
-  hasBackdrop = true,
+  backdrop = true,
   in: transitionIn,
   label = 'Loading',
   position = 'overlay',
@@ -44,7 +44,7 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
     {
       'kicl-font-size-large': isOverlay,
       'kicl-z-index-overlay': isOverlay,
-      [`${CLASS_NAME}--no-backdrop`]: !hasBackdrop,
+      'kicl-backdrop': backdrop,
       [`${CLASS_NAME}--position--${position}`]: position,
       [`${CLASS_NAME}--size--${size}`]: size,
     },
@@ -94,9 +94,9 @@ const Spinner: React.FunctionComponent<Spec.Props> = ({
               justifyItems='center'
             >
               <Text is='span' className='kicl-line-height-dense' unstyled>
-                <Ri.RiLoader3Line
+                <Ri.RiLoader4Line
                   aria-hidden
-                  className={`${CLASS_NAME}--icon`}
+                  className={`${CLASS_NAME}--icon is-revolving`}
                 />
               </Text>
             </Layout>

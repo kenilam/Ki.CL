@@ -3,7 +3,6 @@
   &__marker {
     align-self: center;
     block-size: var(--kicl--components--details--summary--marker--block-size);
-    flex-shrink: 0;
     inline-size: var(--kicl--components--details--summary--marker--inline-size);
     margin-inline-start: auto;
   }

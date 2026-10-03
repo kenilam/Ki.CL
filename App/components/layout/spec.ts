@@ -56,6 +56,7 @@ export type Frames =
   | 'min-content--auto'
   | 'min-content--1fr'
   | 'auto--max-content--max-content'
+  | 'auto--max-content--max-content--max-content'
   | 'max-content--auto--max-content'
   | 'max-content--max-content--auto'
   | 'auto--min-content--min-content'

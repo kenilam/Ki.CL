@@ -43,7 +43,7 @@ const Controls: React.FunctionComponent = () => {
           size='small'
           in={loading}
           position='inline'
-          hasBackdrop={false}
+          backdrop={false}
         />
         <Button
           unstyled
