@@ -6,4 +6,8 @@ const CLASS_NAME = `${VIEW}__home`;
 /** The article's anchor, for the banner's chevron. */
 const ARTICLE_ID = 'how-it-was-made';
 
-export { ARTICLE_ID, CLASS_NAME };
+const COPY = {
+  article: 'How it was made',
+};
+
+export { ARTICLE_ID, CLASS_NAME, COPY };

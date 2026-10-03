@@ -10,23 +10,16 @@
   animation-duration: var(--kicl-transition-duration-5m), auto;
   animation-fill-mode: none, both;
   animation-iteration-count: infinite, 1;
-  animation-name:
-    kicl-gradient-shift, kicl--views--experiments__home--indicator-fill;
+  animation-name: kicl-gradient-shift, kicl--views--experiments__home--indicator-fill;
   animation-timeline: auto, scroll();
   animation-timing-function: ease, linear;
   background: var(--kicl-gradient-shift);
   background-size: 1200% 1200%;
   block-size: var(--kicl-size-3px);
-  inset-block-start: 0;
   scale: 0 1;
   transform-origin: left;
   transition: inset-block-start var(--kicl-transition-duration)
     var(--kicl-ease-sine-out);
-  z-index: var(--kicl-z-index-raised);
-
-  &--under-header {
-    inset-block-start: var(--kicl--widgets--global-header--block-size);
-  }
 }
 
 @keyframes kicl--views--experiments__home--indicator-fill {

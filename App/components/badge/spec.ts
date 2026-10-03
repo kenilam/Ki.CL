@@ -1,15 +1,13 @@
 import type { JSX, ReactNode } from 'react';
 
+import type { Props as ButtonProps } from '@/components/button/spec';
 import type { PolymorphicIsProps } from '@/components/polymorphic';
 
 export const BADGE_VARIANTS = [
   'default',
   'secondary',
-  'destructive',
   'outline',
   'ghost',
-  'positive',
-  'warning',
 ] as const;
 
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
@@ -29,8 +27,13 @@ export type BadgeIs =
   'a' | 'abbr' | 'button' | 'div' | 'li' | 'mark' | 'span' | 'time';
 
 type OwnProps = {
-  /** Visual style - mirrors [shadcn Badge](https://ui.shadcn.com/docs/components/base/badge). */
+  /** How it looks: filled, a quieter fill, an outline, or no chrome at all. */
   variant?: BadgeVariant;
+  /**
+   * What it means, as on `Button`: fills the chip with that colour, or edges
+   * it for `outline` and `ghost`, which have no fill.
+   */
+  level?: ButtonProps['level'];
   /** One gutter step down (`small`) or up (`large`) from the default padding. */
   size?: BadgeSize;
   children?: ReactNode;

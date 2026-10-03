@@ -29,6 +29,7 @@ const Plate: React.FunctionComponent = () => {
       className={classNames(
         CLASS_NAME,
         'kicl-animation-none-reduced-motion',
+        'kicl-inset-inline-0',
         'kicl-position-absolute'
       )}
     >

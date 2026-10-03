@@ -40,6 +40,7 @@ const Backdrop: React.FunctionComponent<Props> = ({ scrim }) => {
         CLASS_NAME,
         { [`${CLASS_NAME}--scrim`]: scrim },
         'kicl-inset-0',
+        'kicl-overflow-clip',
         'kicl-pointer-events-none',
         'kicl-position-absolute'
       )}
@@ -49,6 +50,7 @@ const Backdrop: React.FunctionComponent<Props> = ({ scrim }) => {
         <span
           className={classNames(
             `${CLASS_NAME}__picture`,
+            'kicl-inset-inline-0',
             'kicl-position-absolute'
           )}
           key={url}

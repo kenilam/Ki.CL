@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useSyncExternalStore } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Badge, HyperLink } from '@/components';
 
@@ -51,7 +54,7 @@ import { LabelProjector } from './projector';
  * layer beneath stays transparent to them, so a drag begun anywhere else still
  * reaches the canvas and turns the view - only a drag begun on a name does not.
  */
-const PILL_CLASS = [
+const PILL_CLASS = classNames(
   `${CLASS_NAME}__label`,
   'kicl-border-radius-sm',
   'kicl-display-inline-flex',
@@ -60,8 +63,8 @@ const PILL_CLASS = [
   'kicl-text-nowrap',
   'kicl-position-absolute',
   'kicl-pointer-events-auto',
-  'kicl-font-size-small',
-].join(' ');
+  'kicl-font-size-small'
+);
 
 /** DOM layer. Sits outside the Canvas and seats the pills each frame. */
 const Labels: React.FunctionComponent = () => {
@@ -93,7 +96,20 @@ const Labels: React.FunctionComponent = () => {
     <nav
       aria-label='Taxa in view'
       ref={hostRef}
-      className={`${CLASS_NAME}__labels kicl-inset-0 kicl-position-absolute kicl-pointer-events-none`}
+      className={classNames(
+        `${CLASS_NAME}__labels`,
+        'kicl-z-index-raised',
+        'kicl-inset-0',
+        /*
+         * Clipped, because the layer is wider than the screen it covers.
+         * Every pill is transformed to wherever its taxon projects, seated or
+         * not, and a transform still counts toward scrollable overflow, so the
+         * ones off-frame were stretching the page away from the canvas.
+         */
+        'kicl-overflow-hidden',
+        'kicl-position-absolute',
+        'kicl-pointer-events-none'
+      )}
     >
       {[...registry.entries()].map(([key, label]) => (
         /*

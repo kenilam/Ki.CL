@@ -43,9 +43,9 @@
    * The crop starts full-bleed and tucks into the frame as the panel arrives.
    */
   &__crop {
+    // The Frame's own radius token, which no utility reads. The animation
+    // below beats `kicl-inset-0` while it runs.
     border-radius: var(--kicl--components--frame--radius);
-    inset: 0;
-    overflow: clip;
 
     @supports (animation-timeline: scroll()) {
       @media (prefers-reduced-motion: no-preference) {

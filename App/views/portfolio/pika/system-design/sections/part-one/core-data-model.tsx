@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Dialog, Heading, Layout, Text } from '@/components';
+import { Dialog, Heading, Text } from '@/components';
 
 // Diagrams
 import { Diagram } from '@/components';
@@ -23,11 +26,13 @@ const CoreDataModel: React.FunctionComponent = () => (
       fullScreen
       id='diagram-data-model'
     >
-      <Layout alignItems='center' justifyContent='center'>
-        <div className='kicl-inline-size-columns-12'>
-          <Diagram spec={dataModel} />
-        </div>
-      </Layout>
+      <Diagram
+        className={classNames(
+          'kicl-inline-size-columns-12',
+          'kicl-margin-inline-auto'
+        )}
+        spec={dataModel}
+      />
     </Dialog>
     <Text>
       Task output refs point into content-addressed asset storage instead of

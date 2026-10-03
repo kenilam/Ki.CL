@@ -19,7 +19,7 @@ import type { Spec } from './spec';
 import { Drawing, type DiagramState } from './drawing';
 import { Legend } from './legend';
 
-type Props = {
+type Props = Pick<React.ComponentProps<'figure'>, 'className'> & {
   /** Id of the dialog that shows this diagram full size. */
   opens?: string;
   ref?: React.Ref<HTMLElement>;
@@ -33,6 +33,7 @@ type Props = {
  * follows the theme instead of shipping as a static image.
  */
 const Diagram: React.FunctionComponent<Props> = ({
+  className,
   opens,
   ref,
   spec,
@@ -41,7 +42,10 @@ const Diagram: React.FunctionComponent<Props> = ({
   const drawing = <Drawing spec={spec} state={state} />;
 
   return (
-    <figure className={classNames(BASE, 'kicl-position-relative')} ref={ref}>
+    <figure
+      className={classNames(BASE, 'kicl-position-relative', className)}
+      ref={ref}
+    >
       {opens ? (
         <Layout alignItems='center' justifyContent='stretch'>
           <Button

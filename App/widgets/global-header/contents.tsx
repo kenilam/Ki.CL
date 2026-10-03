@@ -27,9 +27,15 @@ const Contents: React.FunctionComponent = () => {
   const { isMobile } = useResponsive();
 
   const className = classNames(
+    'kicl-backdrop',
     'kicl-font-size-small',
+    'kicl-inline-size-full',
+    'kicl-inset-block-start-0',
+    'kicl-inset-inline-start-0',
+    'kicl-padding-block',
     'kicl-position-fixed',
     'kicl-text-transform-uppercase',
+    'kicl-z-index-header',
     CLASS_NAME
   );
 

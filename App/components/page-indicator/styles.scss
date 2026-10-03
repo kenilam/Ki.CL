@@ -19,7 +19,6 @@
   inset-inline-end: var(--kicl--components--frame--page-inset);
   mix-blend-mode: difference;
   visibility: hidden;
-  z-index: var(--kicl-z-index-floating);
 
   @supports (animation-timeline: scroll()) {
     animation: kicl--components--page-indicator--leave linear both;
@@ -30,14 +29,11 @@
 
   &__dot {
     background-clip: content-box;
-    background-color: var(--kicl-color-white);
     block-size: var(#{$name}--dot);
     border-radius: 50%;
     box-sizing: content-box;
-    display: block;
     inline-size: var(#{$name}--dot);
     opacity: 0.4;
-    padding: var(--kicl-gutter-narrow);
     transition: opacity var(--kicl-transition-duration)
       var(--kicl-ease-sine-out);
 

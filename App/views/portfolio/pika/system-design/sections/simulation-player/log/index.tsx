@@ -32,7 +32,8 @@ const Log: React.FunctionComponent = () => {
         CLASS_NAME,
         'kicl-font-family-mono',
         'kicl-font-size-small',
-        'kicl-margin-block-start-narrow'
+        'kicl-margin-block-start-narrow',
+        'kicl-overflow-y-auto'
       )}
       ref={ref}
       role='log'
