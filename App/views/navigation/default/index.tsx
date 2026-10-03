@@ -7,9 +7,9 @@ import { HyperLink, Navigation } from '@/components';
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
 
 // Constants
-import { LABEL } from '@/widgets/global-header/navigation/constants';
+import { LABEL } from '@/views/navigation/constants';
 
-const CLASS_NAME = 'kicl--widgets--global-header--navigation--default';
+const CLASS_NAME = 'kicl--views--navigation--default';
 
 const Links = [
   <HyperLink key={EXPERIMENTS_PATH} to={`/${EXPERIMENTS_PATH}`}>

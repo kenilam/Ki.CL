@@ -7,7 +7,7 @@ import { useLocation } from '@/router';
 import { Dialog, Navigation } from '@/components';
 
 // Widgets
-import { Links } from '@/widgets/global-header/links';
+import { Links } from '@/views/navigation/links';
 
 // Partials
 import { Close } from './close';
@@ -15,7 +15,7 @@ import { Open } from './open';
 
 // Constants
 import { CLASS_NAME } from './constants';
-import { LABEL } from '@/widgets/global-header/navigation/constants';
+import { LABEL } from '@/views/navigation/constants';
 
 const COPY = {
   label: 'Navigation',

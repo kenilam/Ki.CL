@@ -13,7 +13,6 @@ import { Animation, Layout } from '@/components';
 import { useResponsive } from '@/hooks';
 
 // Partials
-import { Navigation } from './navigation';
 import { Theme } from './theme';
 
 // Context
@@ -22,7 +21,9 @@ import { useGlobalHeaderContext } from './context';
 // Constants
 import { CLASS_NAME } from './constants';
 
-const Contents: React.FunctionComponent = () => {
+const Contents: React.FunctionComponent<React.PropsWithChildren> = ({
+  children,
+}) => {
   const { node, show } = useGlobalHeaderContext();
   const { isMobile } = useResponsive();
 
@@ -51,9 +52,9 @@ const Contents: React.FunctionComponent = () => {
         <header className={className}>
           <SiteLogo className='kicl-margin-inline-end-auto' />
           {/* On mobile the menu button ends the row. */}
-          {isMobile ? null : <Navigation />}
+          {isMobile ? null : children}
           <Theme />
-          {isMobile ? <Navigation /> : null}
+          {isMobile ? children : null}
         </header>
       </Layout>
     </Animation>
