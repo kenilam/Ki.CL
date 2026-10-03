@@ -8,7 +8,7 @@ Yarn 4 (Berry) workspace repo. Top-level workspace is `App`, which itself is a n
 
 ```bash
 make install            # yarn install
-make run                # development: clean build dir, then vite --host --debug
+make run                # development: frees the dev port from .env, then vite --host --debug
 make run.production     # clean build dir, build client, then vite preview
 make build               # vite build --debug (client bundle only)
 make server              # build:server → runs the Express static/SSR-ish server (App/.server)

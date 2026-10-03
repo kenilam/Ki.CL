@@ -287,6 +287,7 @@
 @include make-layout(min-content, auto);
 @include make-layout(min-content, 1fr);
 @include make-layout(auto, max-content, max-content);
+@include make-layout(auto, max-content, max-content, max-content);
 @include make-layout(max-content, auto, max-content);
 @include make-layout(max-content, max-content, auto);
 @include make-layout(auto, min-content, min-content);

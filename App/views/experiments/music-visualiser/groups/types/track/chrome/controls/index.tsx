@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Fa, Ri } from '@/icons';
 
 // Components
-import { HyperLink, Layout, List, ListItem, Spinner } from '@/components';
+import { HyperLink, Layout, List, ListItem } from '@/components';
 
 // Hooks
 import { useResponsive } from '@/hooks';
@@ -64,7 +64,7 @@ const Controls: React.FunctionComponent = () => {
               variant='secondary'
             >
               {control.loading ? (
-                <Spinner position='inline' size='small' />
+                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
               ) : (
                 <Fa.FaPause aria-hidden />
               )}

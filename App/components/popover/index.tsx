@@ -3,11 +3,11 @@ import React, { useId, useState } from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Components
+import { Layout } from '@/components/layout';
+
 // Spec
 import type { PopoverProps } from './spec';
-
-// Styles
-import './styles.scss';
 
 // Constants
 import { CLASS_NAME } from './constants';
@@ -63,21 +63,23 @@ const Popover: React.FC<PopoverProps> = ({
 
   return (
     <PopoverContext.Provider value={{ id, anchor, open: isOpen, setOpen }}>
-      <div
-        data-slot='popover'
-        className={classNames(CLASS_NAME, className)}
-        data-state={isOpen ? 'open' : 'closed'}
-        /*
-         * Declared on the wrapper so both the trigger and the panel inherit
-         * one name. An anchor name has to be a literal in the stylesheet, and
-         * a component may be on the page many times over - passing it through
-         * a custom property is what keeps each pair talking only to itself.
-         */
-        style={{ [`--${CLASS_NAME}--anchor`]: anchor } as React.CSSProperties}
-        {...rest}
-      >
-        {children}
-      </div>
+      <Layout display='inline-grid' gap='none'>
+        <div
+          data-slot='popover'
+          className={classNames(CLASS_NAME, className)}
+          data-state={isOpen ? 'open' : 'closed'}
+          /*
+           * Declared on the wrapper so both the trigger and the panel inherit
+           * one name. An anchor name has to be a literal in the stylesheet, and
+           * a component may be on the page many times over - passing it through
+           * a custom property is what keeps each pair talking only to itself.
+           */
+          style={{ [`--${CLASS_NAME}--anchor`]: anchor } as React.CSSProperties}
+          {...rest}
+        >
+          {children}
+        </div>
+      </Layout>
     </PopoverContext.Provider>
   );
 };

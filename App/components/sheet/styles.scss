@@ -45,8 +45,36 @@
     inset: 0;
   }
 
-  > [data-slot='card-content'] {
-    flex: 1 0 auto;
+  // Notices shown between the header and the content (a `Status` that is in) take rows of their own.
+  --kicl--components--sheet--notices: ;
+
+  &:has(> [data-animation-in]:not([data-slot])) {
+    --kicl--components--sheet--notices: max-content;
+  }
+
+  &:has(
+    > [data-animation-in]:not([data-slot])
+    ~ [data-animation-in]:not([data-slot])
+  ) {
+    --kicl--components--sheet--notices: max-content max-content;
+  }
+
+  // The content takes the height left over, so a footer sits at the bottom.
+  --kicl-layout--grid-frames: var(--kicl--components--sheet--notices) 1fr;
+
+  &:has(> [data-slot='card-header']) {
+    --kicl-layout--grid-frames: max-content
+      var(--kicl--components--sheet--notices) 1fr;
+  }
+
+  &:has(> [data-slot='card-footer']) {
+    --kicl-layout--grid-frames: var(--kicl--components--sheet--notices) 1fr
+      max-content;
+  }
+
+  &:has(> [data-slot='card-header']):has(> [data-slot='card-footer']) {
+    --kicl-layout--grid-frames: max-content
+      var(--kicl--components--sheet--notices) 1fr max-content;
   }
 
   // Over the sheet's fill, so what scrolls under them is hidden.
@@ -61,7 +89,5 @@
 
   &__footer {
     @include stuck-line(start);
-
-    margin-block-start: auto;
   }
 }

@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 // Components
-import { Button, Card, CardContent, Layout, Spinner } from '@/components';
+import { Button, Card, CardContent, Layout } from '@/components';
+
+// Icons
+import { Ri } from '@/icons';
 
 // Diagrams
 import { Diagram } from '@/components';
@@ -110,9 +113,11 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
             size='small'
             type='button'
           >
+            {playing ? (
+              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+            ) : null}
             {finished ? 'Replay' : playing ? 'Running' : runLabel}
           </Button>
-          <Spinner in={playing} position='inline' size='small' />
         </div>
       </Layout>
       <Diagram

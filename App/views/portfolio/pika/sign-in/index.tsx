@@ -18,8 +18,10 @@ import {
   CardFooter,
   Form,
   Layout,
-  Spinner,
 } from '@/components';
+
+// Icons
+import { Ri } from '@/icons';
 
 // Partials
 import { Email } from './email';
@@ -101,7 +103,9 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
                 <CardFooter>
                   <Button disabled={loading} type='submit' size='small'>
                     Sign in
-                    <Spinner in={loading} />
+                    {loading ? (
+                      <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                    ) : null}
                   </Button>
                 </CardFooter>
               </Form>

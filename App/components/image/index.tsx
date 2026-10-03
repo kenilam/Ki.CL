@@ -97,7 +97,7 @@ const Image: React.FunctionComponent<Spec.Props> = ({
           </span>
         </Layout>
       </Animation>
-      <Spinner in={isLoading} duration='faster' size='smaller' />
+      <Spinner in={isLoading} duration='faster' size='inherit' />
     </span>
   );
 };

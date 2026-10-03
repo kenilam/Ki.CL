@@ -64,7 +64,7 @@ const Presets: React.FunctionComponent = () => {
             <Card
               is='li'
               key={preset.id}
-              tone={preset.id === active ? 'confirm' : undefined}
+              level={preset.id === active ? 'confirm' : undefined}
             >
               <CardHeader>
                 <CardTitle is='span'>{preset.name}</CardTitle>

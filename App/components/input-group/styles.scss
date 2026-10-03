@@ -3,21 +3,30 @@
   --kicl--components--input-group--border-color: var(--kicl-color-grey-darker);
   --kicl--components--input-group--border-radius: var(--kicl-gutter-narrow);
   --kicl--components--input-group--border-width: var(--kicl-size-1px);
-  --kicl--components--input-group--gap: var(--kicl-gutter-narrowest);
   --kicl--components--input-group--padding-block: var(--kicl-gutter-narrow);
   --kicl--components--input-group--padding-inline: var(--kicl-gutter);
 
-  align-items: center;
   background-color: var(--kicl--components--input-group--background-color);
   border: var(--kicl--components--input-group--border-width) solid
     var(--kicl--components--input-group--border-color);
   border-radius: var(--kicl--components--input-group--border-radius);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--kicl--components--input-group--gap);
+  grid-template-columns: 1fr;
   inline-size: 100%;
   padding-block: var(--kicl--components--input-group--padding-block);
   padding-inline: var(--kicl--components--input-group--padding-inline);
+
+  // The control's column takes the width the addons beside it leave; a column exists only for a side that has one, so an empty side adds no gap.
+  &:has(> &__addon--inline-start):not(:has(> &__addon--inline-end)) {
+    grid-template-columns: max-content 1fr;
+  }
+
+  &:not(:has(> &__addon--inline-start)):has(> &__addon--inline-end) {
+    grid-template-columns: 1fr max-content;
+  }
+
+  &:has(> &__addon--inline-start):has(> &__addon--inline-end) {
+    grid-template-columns: max-content 1fr max-content;
+  }
 
   // The ring moves from the borderless control to the group.
   &:has(&__control:focus-visible) {
@@ -45,12 +54,6 @@
 
     background: transparent;
     border: 0;
-
-    // Basis `0`, not `auto`. `Input` and `Textarea` are `inline-size: 100%`,
-    // which an `auto` basis resolves to - the control would claim a whole row
-    // on its own and every addon would wrap beneath it. From zero it takes only
-    // what the addons leave, which is what puts them on the same line.
-    flex: 1 1 0;
     min-inline-size: 0;
     padding: 0;
 
