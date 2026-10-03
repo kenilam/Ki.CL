@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 // Icons
-import { Fa } from '@/icons';
+import * as Fa from 'react-icons/fa6';
 
 // Components
-import { Button } from '@/components';
+import { Button } from 'design/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';

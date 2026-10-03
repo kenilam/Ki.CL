@@ -4,7 +4,7 @@ import React, { useId } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout } from '@/components';
+import { Heading, Layout } from 'design/components';
 
 // Partials
 import { Address } from './address';

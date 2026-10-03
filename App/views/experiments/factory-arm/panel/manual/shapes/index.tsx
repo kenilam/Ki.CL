@@ -4,7 +4,14 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Heading, Layout, List, ListItem, Text } from '@/components';
+import {
+  Button,
+  Heading,
+  Layout,
+  List,
+  ListItem,
+  Text,
+} from 'design/components';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Bubble, Card, Layout, Text } from '@/components';
+import { Bubble, Card, Layout, Text } from 'design/components';
 
 // Partials
 import { Choices } from './choices';

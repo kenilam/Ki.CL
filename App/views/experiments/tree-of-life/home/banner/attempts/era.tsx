@@ -4,7 +4,7 @@ import React, { useId } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { HyperLink, List, ListItem, Text } from '@/components';
+import { HyperLink, List, ListItem, Text } from 'design/components';
 
 // Constants
 import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';

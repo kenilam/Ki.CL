@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import * as Icons from '@/icons';
+import * as Icons from 'design/icons';
 
 // Components
-import { AnimatedText, Heading, HyperLink } from '@/components';
+import { AnimatedText, Heading, HyperLink } from 'design/components';
 
 const Contents: React.FunctionComponent = () => {
   return (

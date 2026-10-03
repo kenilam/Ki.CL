@@ -1,13 +1,16 @@
 import React, { PropsWithChildren, Suspense } from 'react';
 
 // Router
-import { Props as MatchPatternProps, useMatchPattern } from './use-match-pattern';
+import {
+  Props as MatchPatternProps,
+  useMatchPattern,
+} from './use-match-pattern';
 
 // HttpStatus
-import * as HttpStatus from './http-status';
+import { Status404 } from 'design/status';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Spec
 type Props = MatchPatternProps & {
@@ -22,7 +25,7 @@ const MatchedRoute: React.FunctionComponent<PropsWithChildren<Props>> = ({
   const match = useMatchPattern(rest);
 
   if (!match) {
-    return fallback || <HttpStatus.Status404 />;
+    return fallback || <Status404 />;
   }
 
   return <Suspense fallback={<Spinner />}>{children}</Suspense>;

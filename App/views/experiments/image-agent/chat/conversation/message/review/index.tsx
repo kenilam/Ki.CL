@@ -4,7 +4,14 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Card, CardFooter, Details, List, ListItem, Text } from '@/components';
+import {
+  Card,
+  CardFooter,
+  Details,
+  List,
+  ListItem,
+  Text,
+} from 'design/components';
 
 // Constants
 import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/conversation/message/constants';

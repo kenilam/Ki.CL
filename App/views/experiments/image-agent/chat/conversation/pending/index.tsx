@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Bubble, Text } from '@/components';
+import { Bubble, Text } from 'design/components';
 
 // Partials
 import { MessageText } from '@/views/experiments/image-agent/chat/conversation/message/text';

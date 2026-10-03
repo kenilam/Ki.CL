@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout, Text } from '@/components';
+import { Heading, Layout, Text } from 'design/components';
 
 // Partials
 import { AgentHarness } from './agent-harness';

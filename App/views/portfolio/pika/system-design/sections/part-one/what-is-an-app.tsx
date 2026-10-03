@@ -6,7 +6,7 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-yaml';
 
 // Components
-import { Card, CardContent, Heading, Text } from '@/components';
+import { Card, CardContent, Heading, Text } from 'design/components';
 
 const MANIFEST = `# app: character-creator @ v4
 id: character-creator

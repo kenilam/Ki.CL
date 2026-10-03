@@ -1,4 +1,4 @@
-import type { DiagramSpec } from '@/components';
+import type { DiagramSpec } from 'design/components';
 
 /** Top of the first group, so its label has room above the nodes. */
 const T = 50;

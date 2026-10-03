@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, List, ListItem, Text } from '@/components';
+import { Details, Heading, List, ListItem, Text } from 'design/components';
 
 const CHAINS = [
   {

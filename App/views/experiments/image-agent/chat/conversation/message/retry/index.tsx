@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Button } from '@/components';
+import { Button } from 'design/components';
 
 const COPY = {
   retry: 'Ask this again',

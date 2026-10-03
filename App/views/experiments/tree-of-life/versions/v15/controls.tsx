@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Layout, Spinner, Text } from '@/components';
+import { Button, Layout, Spinner, Text } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
@@ -39,12 +39,7 @@ const Controls: React.FunctionComponent = () => {
       gap='narrower'
     >
       <section aria-label='Animation'>
-        <Spinner
-          size='small'
-          in={loading}
-          position='inline'
-          backdrop={false}
-        />
+        <Spinner size='small' in={loading} position='inline' backdrop={false} />
         <Button
           unstyled
           type='button'

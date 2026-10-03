@@ -1,4 +1,4 @@
-import type { DiagramSpec } from '@/components';
+import type { DiagramSpec } from 'design/components';
 
 const ACTORS = [
   { title: 'Browser', x: 90 },

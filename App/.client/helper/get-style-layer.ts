@@ -31,80 +31,23 @@ type Layer = (typeof LAYERS)[number];
  * fixes the order; the rest are no-ops. Cheap insurance - it means no single
  * file has to be guaranteed to load first.
  *
- * `App/core/styles/reset.css` carries a copy of this list too, since it is
- * plain CSS and never passes through the SCSS hook that prepends this.
+ * The design system's stylesheet declares the same layers in the same order.
  */
 const LAYER_ORDER = `@layer ${LAYERS.join(', ')};`;
-
-/** Element-level defaults - `body`, headings, form controls, theme classes. */
-const BASE = [
-  'styles.body.scss',
-  'styles.generic.scss',
-  'styles.headings.scss',
-];
-
-/**
- * `.kicl-layout` sits below `components` on purpose: `Layout` clones its
- * classes onto whatever child it wraps, so its sizing lands on the same
- * element as that component's own - and the component should win.
- */
-const LAYOUT = ['layout.scss'];
-
-/**
- * Components that `cloneElement` their class onto a child instead of rendering
- * an element of their own, so their rules and the child's land on one node at
- * one class each. In the same layer that is a tie, settled by stylesheet
- * order. `wrappers` sits above `components` so the wrapper wins, which is the
- * point of wrapping something.
- *
- * Every component that clones a class belongs here except `Layout`, which
- * `LAYOUT` places below for the opposite reason. `FormControl` clones too but
- * only ids and ARIA, so it has nothing to place.
- */
-const WRAPPERS = [
-  'components/animation/',
-  'components/frame/',
-];
 
 /**
  * Which cascade layer a stylesheet belongs to, or `null` for Sass partials -
  * wrapping those would scope their `@mixin`/`@function` definitions to a block
  * and make them unreachable to the files that `@use` them.
+ *
+ * Everything the host still styles is a view. The reset, base, layout,
+ * components, wrappers and utilities layers are filled by the design system
+ * remote (Ki.CL-design-system), whose `Design/scripts/get-style-layer.ts` must
+ * keep `LAYERS` identical to the list above.
  */
-const getStyleLayer = (filename: string): Layer | null => {
-  const normalized = filename.replace(/\\/g, '/');
-  const basename = nodePath.basename(normalized);
-
-  if (basename.startsWith('_')) {
-    return null;
-  }
-
-  const [, path = ''] = normalized.split('/App/');
-
-  if (path.startsWith('core/styles/')) {
-    if (BASE.includes(basename)) {
-      return 'base';
-    }
-
-    if (LAYOUT.includes(basename)) {
-      return 'layout';
-    }
-
-    // Tokens and the single-purpose `kicl-*` classes. Highest layer so a
-    // utility applied in JSX overrides the component's own SCSS, which is what
-    // the design-system rule already tells us to expect.
-    return 'utilities';
-  }
-
-  if (path.startsWith('views/') || path.startsWith('router/')) {
-    return 'views';
-  }
-
-  if (WRAPPERS.some((folder) => path.startsWith(folder))) {
-    return 'wrappers';
-  }
-
-  return 'components';
-};
+const getStyleLayer = (filename: string): Layer | null =>
+  nodePath.basename(filename.replace(/\\/g, '/')).startsWith('_')
+    ? null
+    : 'views';
 
 export { LAYER_ORDER, LAYERS, getStyleLayer, type Layer };

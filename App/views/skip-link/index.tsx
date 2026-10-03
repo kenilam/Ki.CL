@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { HyperLink } from '@/components';
+import { HyperLink } from 'design/components';
 
 // Constants
 import { MAIN_ID } from '@/views/constants';

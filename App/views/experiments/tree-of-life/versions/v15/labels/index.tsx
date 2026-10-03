@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useSyncExternalStore } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Badge, HyperLink } from '@/components';
+import { Badge, HyperLink } from 'design/components';
 
 // Constants
 import {

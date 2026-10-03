@@ -1,7 +1,14 @@
 import React from 'react';
 
 // Components
-import { Details, Diagram, Heading, List, ListItem, Text } from '@/components';
+import {
+  Details,
+  Diagram,
+  Heading,
+  List,
+  ListItem,
+  Text,
+} from 'design/components';
 
 // Diagrams
 import { drawing } from './diagrams/drawing';

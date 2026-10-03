@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { Navigate, Outlet, Route } from '@/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Views
 import { SystemDesign } from './system-design';

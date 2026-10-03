@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from '@/components';
+import { Details, Heading, Text } from 'design/components';
 
 /** Asking before drawing: what a picture needs, and the cap on questions. */
 const Asking: React.FunctionComponent = () => (

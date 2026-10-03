@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Heading, Text } from '@/components';
+import { Heading, Text } from 'design/components';
 
 /** The decisions that shaped Part 1. */
 const KeyTradeOffs: React.FunctionComponent = () => (

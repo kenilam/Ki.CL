@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Text } from '@/components';
+import { Button, Text } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Constants
 import { CLASS_NAME } from '@/views/navigation/mobile/constants';

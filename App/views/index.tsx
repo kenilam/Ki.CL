@@ -1,7 +1,10 @@
 import React from 'react';
 
 // Routes
-import { Router, ErrorElement, HttpStatus, Route } from '@/router';
+import { Router, Route } from '@/router';
+
+// Status
+import { ErrorElement, Status404 } from 'design/status';
 
 // Views
 import { Experiments } from './experiments';
@@ -15,7 +18,7 @@ const Views: React.FunctionComponent = () => {
   return (
     <Router>
       <Route path='/' errorElement={<ErrorElement />} element={<Element />}>
-        <Route path='*' element={<HttpStatus.Status404 />} />
+        <Route path='*' element={<Status404 />} />
         {Experiments}
         {Home}
         {Portfolio}

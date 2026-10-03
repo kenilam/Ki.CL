@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { List, Spinner, Status } from '@/components';
+import { List, Spinner, Status } from 'design/components';
 
 // Routes
 import { Navigate } from '@/router';

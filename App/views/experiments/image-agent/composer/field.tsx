@@ -4,7 +4,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
 import {
@@ -16,7 +16,7 @@ import {
   InputGroupAddon,
   InputGroupButton,
   InputGroupTextarea,
-} from '@/components';
+} from 'design/components';
 
 // Schema
 import { MAX_LENGTH, type ComposerValues } from './schema';

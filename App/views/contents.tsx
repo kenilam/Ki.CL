@@ -7,13 +7,13 @@ import classNames from 'classnames';
 import { Outlet, ScrollRestoration, useLocation } from '@/router';
 
 // Widgets
-import { GlobalHeader, useGlobalHeaderContext } from '@/widgets';
+import { GlobalHeader, useGlobalHeaderContext } from 'design/widgets';
 
 // Session
 import { Session } from '@/session';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Hooks
 import { SCROLL_DIRECTIONS, useScrollDirection } from '@/hooks';

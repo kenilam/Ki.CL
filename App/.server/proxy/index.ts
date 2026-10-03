@@ -8,7 +8,8 @@ import {
 import { GoogleAuth } from 'google-auth-library';
 
 /**
- * Reverse proxy to the API, which is not reachable from the internet.
+ * Reverse proxy to the API and the design system, neither of which is reachable
+ * from the internet.
  *
  * The API runs on Cloud Run with no public invoker, so every request to it has
  * to carry a Google-signed identity token or Google rejects it at the edge -
@@ -26,6 +27,9 @@ import { GoogleAuth } from 'google-auth-library';
 /** Where the API actually lives. Absent locally, where the default is fine. */
 const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 
+/** Where the design system remote lives. Same arrangement as the API. */
+const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
+
 /**
  * Identity tokens last an hour. Refreshed well inside that, and kept in memory
  * so the value can be read synchronously - a WebSocket upgrade is not an
@@ -38,29 +42,33 @@ type CachedToken = {
   expiresAtMs: number;
 };
 
-let cached: CachedToken | null = null;
+/** One token per service: Google checks that the audience is the URL called. */
+const cached = new Map<string, CachedToken>();
 let auth: GoogleAuth | null = null;
 
-async function mintIdToken(): Promise<string | null> {
+async function mintIdToken(audience: string): Promise<string | null> {
   try {
     auth ??= new GoogleAuth();
 
-    const client = await auth.getIdTokenClient(BACKEND_URL);
-    const token = await client.idTokenProvider.fetchIdToken(BACKEND_URL);
+    const client = await auth.getIdTokenClient(audience);
+    const token = await client.idTokenProvider.fetchIdToken(audience);
 
-    cached = { value: token, expiresAtMs: Date.now() + TOKEN_TTL_MS };
+    cached.set(audience, {
+      value: token,
+      expiresAtMs: Date.now() + TOKEN_TTL_MS,
+    });
 
     return token;
   } catch (error) {
     /*
      * Expected off Google infrastructure - a developer running this server on
-     * their machine has no metadata server to ask. The local API accepts
+     * their machine has no metadata server to ask. The local services accept
      * unauthenticated calls, so the proxy still works; it is only in front of a
      * private service that a missing token matters, and there it surfaces as a
      * 403 from Google rather than as silence here.
      */
     console.warn(
-      'Proxy: no identity token for the API -',
+      `Proxy: no identity token for ${audience} -`,
       error instanceof Error ? error.message : String(error)
     );
 
@@ -69,29 +77,33 @@ async function mintIdToken(): Promise<string | null> {
 }
 
 /** The current token, refreshed in the background once it ages out. */
-function currentIdToken(): string | null {
-  if (!cached) {
+function currentIdToken(audience: string): string | null {
+  const token = cached.get(audience);
+
+  if (!token) {
     return null;
   }
 
-  if (Date.now() >= cached.expiresAtMs) {
-    void mintIdToken();
+  if (Date.now() >= token.expiresAtMs) {
+    void mintIdToken(audience);
   }
 
-  return cached.value;
+  return token.value;
 }
 
 /**
  * The API identifies visitors by their session cookie alone, so nothing about
  * the visitor is added here: only this server's own identity.
  */
-function applyAuthorization(proxyRequest: ClientRequest): void {
-  const token = currentIdToken();
+const authorize =
+  (audience: string) =>
+  (proxyRequest: ClientRequest): void => {
+    const token = currentIdToken(audience);
 
-  if (token) {
-    proxyRequest.setHeader('Authorization', `Bearer ${token}`);
-  }
-}
+    if (token) {
+      proxyRequest.setHeader('Authorization', `Bearer ${token}`);
+    }
+  };
 
 /**
  * Paths that belong to the API rather than to the built site.
@@ -121,15 +133,27 @@ const ASSET_SEGMENTS = ['taxon-visual', 'static'];
 const ROUTES: Array<{
   path: string;
   rewrite?: Record<string, string>;
+  target: string;
   ws?: boolean;
 }> = [
-  { path: '/api/client', rewrite: { '^/api/client': '/client' } },
-  { path: '/api', ws: true },
-  ...ASSET_SEGMENTS.map((segment) => ({ path: `/assets/${segment}` })),
+  {
+    path: '/api/client',
+    rewrite: { '^/api/client': '/client' },
+    target: BACKEND_URL,
+  },
+  { path: '/api', target: BACKEND_URL, ws: true },
+  ...ASSET_SEGMENTS.map((segment) => ({
+    path: `/assets/${segment}`,
+    target: BACKEND_URL,
+  })),
+  // The design system's remote, at the same path it is served from.
+  { path: '/design', target: DESIGN_URL },
 ];
 
+const AUDIENCES = [BACKEND_URL, DESIGN_URL];
+
 export async function warmIdToken(): Promise<void> {
-  await mintIdToken();
+  await Promise.all(AUDIENCES.map(mintIdToken));
 }
 
 /**
@@ -158,8 +182,10 @@ export function applyProxy(app: Express): void {
    * synchronous. By the time a request reaches the hook the value is in memory.
    */
   app.use((_request: Request, _response: Response, next: NextFunction) => {
-    if (!cached) {
-      void mintIdToken().finally(() => next());
+    const missing = AUDIENCES.filter((audience) => !cached.has(audience));
+
+    if (missing.length) {
+      void Promise.all(missing.map(mintIdToken)).finally(() => next());
 
       return;
     }
@@ -167,7 +193,7 @@ export function applyProxy(app: Express): void {
     next();
   });
 
-  ROUTES.forEach(({ path, rewrite, ws }) => {
+  ROUTES.forEach(({ path, rewrite, target, ws }) => {
     const middleware = createProxyMiddleware({
       /*
        * Selected by `pathFilter` rather than by mounting on a path. Mounting
@@ -178,13 +204,13 @@ export function applyProxy(app: Express): void {
        * 400 and a JSON error body.
        */
       pathFilter: `${path}/**`,
-      target: BACKEND_URL,
+      target,
       changeOrigin: true,
       ws: ws ?? false,
       ...(rewrite ? { pathRewrite: rewrite } : {}),
       on: {
-        proxyReq: applyAuthorization,
-        proxyReqWs: applyAuthorization,
+        proxyReq: authorize(target),
+        proxyReqWs: authorize(target),
       },
     });
 
@@ -196,4 +222,4 @@ export function applyProxy(app: Express): void {
   });
 }
 
-export { BACKEND_URL };
+export { BACKEND_URL, DESIGN_URL };

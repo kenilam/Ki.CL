@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Frame, List } from '@/components';
+import { Frame, List } from 'design/components';
 
 // Hooks
 import { useHashScroll } from './use-hash-scroll';

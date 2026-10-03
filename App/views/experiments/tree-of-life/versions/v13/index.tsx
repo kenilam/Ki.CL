@@ -19,7 +19,7 @@ import {
   useLazyQuery,
 } from 'api/provider';
 
-import { Spinner, Text } from '@/components';
+import { Spinner, Text } from 'design/components';
 
 import {
   type TreeNode,

@@ -1,4 +1,4 @@
-import type { DiagramSpec } from '@/components';
+import type { DiagramSpec } from 'design/components';
 
 const Y = 50;
 const W = 130;

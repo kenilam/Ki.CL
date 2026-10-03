@@ -4,10 +4,10 @@ import React, { useRef } from 'react';
 import { Drei, Fiber, THREE } from '@/three';
 
 // Components
-import { Animation, Badge } from '@/components';
+import { Animation, Badge } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';

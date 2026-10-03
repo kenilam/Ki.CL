@@ -10,7 +10,7 @@ import {
 } from 'api/provider';
 
 import { THREE, Fiber, Drei } from '@/three';
-import { Spinner, Text } from '@/components';
+import { Spinner, Text } from 'design/components';
 
 import {
   type TreeNode,

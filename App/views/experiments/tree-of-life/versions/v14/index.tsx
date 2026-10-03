@@ -51,8 +51,8 @@ import {
   Switch,
   SwitchLabel,
   Text,
-} from '@/components';
-import { Ri } from '@/icons';
+} from 'design/components';
+import * as Ri from 'react-icons/ri';
 
 import {
   type TreeNode,

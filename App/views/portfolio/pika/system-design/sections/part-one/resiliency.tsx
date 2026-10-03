@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Heading, List, ListItem, Text } from '@/components';
+import { Heading, List, ListItem, Text } from 'design/components';
 
 /** How task attempts fail and recover. */
 const Resiliency: React.FunctionComponent = () => (

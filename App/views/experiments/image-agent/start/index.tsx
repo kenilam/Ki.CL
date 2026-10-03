@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Components
-import { Frame, Layout } from '@/components';
+import { Frame, Layout } from 'design/components';
 
 // Partials
 import { Backdrop } from '@/views/experiments/image-agent/backdrop';

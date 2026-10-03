@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from '@/components';
+import { Details, Heading, Text } from 'design/components';
 
 /** What this is: the opening section, open on arrival. */
 const WhatThisIs: React.FunctionComponent = () => (

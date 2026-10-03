@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Frame } from '@/components';
+import { Button, Frame } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Context
 import { FactoryArmProvider } from '@/views/experiments/factory-arm/context';

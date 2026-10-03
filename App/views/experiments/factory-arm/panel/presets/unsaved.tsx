@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Components
-import { Button, Input, Layout, SheetFooter } from '@/components';
+import { Button, Input, Layout, SheetFooter } from 'design/components';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';

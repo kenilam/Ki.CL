@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, HyperLink, Text } from '@/components';
+import { Details, Heading, HyperLink, Text } from 'design/components';
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Frame, Layout } from '@/components';
+import { Frame, Layout } from 'design/components';
 
 // Partials
 import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/track/visualiser';

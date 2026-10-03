@@ -10,7 +10,7 @@ import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 import { useLocation, useParams } from '@/router';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Partials
 import { Composer } from '@/views/experiments/image-agent/composer';

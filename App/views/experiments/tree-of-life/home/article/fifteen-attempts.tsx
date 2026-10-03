@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Partials
 import { Figure } from './figure';

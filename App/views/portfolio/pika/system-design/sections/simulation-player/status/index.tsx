@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { List, ListItem } from '@/components';
+import { List, ListItem } from 'design/components';
 
 // Styles
 import './styles.scss';

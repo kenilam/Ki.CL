@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { Route } from '@/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Partials
 import { AnyTrack } from './any-track';

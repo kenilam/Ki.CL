@@ -1,11 +1,11 @@
 import React from 'react';
 
 // Components
-import { Button, List, ListItem, Text } from '@/components';
+import { Button, List, ListItem, Text } from 'design/components';
 
 // Constants
 import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/conversation/message/constants';
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 const CLASS_NAME = `${MESSAGE}__choices`;
 

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Dialog, Image, Layout, Text } from '@/components';
+import { Button, Dialog, Image, Layout, Text } from 'design/components';
 
 // Spec
 import * as Spec from './spec';

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Navigate, Outlet, useMatch, useParams } from '@/router';
 
 // Components
-import { Frame, Layout } from '@/components';
+import { Frame, Layout } from 'design/components';
 
 // Catalog
 import { keyOf } from '@/views/experiments/music-visualiser/catalog';

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Details
 import { Details } from './details';

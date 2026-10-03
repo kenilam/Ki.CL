@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { CardDescription, CardHeader, CardTitle } from '@/components';
+import { CardDescription, CardHeader, CardTitle } from 'design/components';
 
 const COPY = {
   description:

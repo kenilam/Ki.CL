@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Image, Layout, Skeleton, Status, Text } from '@/components';
+import { Image, Layout, Skeleton, Status, Text } from 'design/components';
 
 // Constants
 import { CLASS_NAME, DISCLAIMER, ERROR_MESSAGES } from './constants';

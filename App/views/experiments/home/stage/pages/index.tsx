@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { PageIndicator, type PageIndicatorPage } from '@/components';
+import { PageIndicator, type PageIndicatorPage } from 'design/components';
 
 type Props = {
   pages: readonly PageIndicatorPage[];

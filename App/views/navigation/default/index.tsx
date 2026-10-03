@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { HyperLink, Navigation } from '@/components';
+import { HyperLink, Navigation } from 'design/components';
 
 // Views
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';

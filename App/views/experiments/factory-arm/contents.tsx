@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Heading } from '@/components';
+import { Heading } from 'design/components';
 
 // Partials
 import { SetupProvider } from './setup';

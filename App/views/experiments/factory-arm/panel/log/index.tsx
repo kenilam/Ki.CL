@@ -11,7 +11,7 @@ import {
   Layout,
   SheetFooter,
   Text,
-} from '@/components';
+} from 'design/components';
 
 // Context
 import { type Entry, useSetup } from '@/views/experiments/factory-arm/setup';
