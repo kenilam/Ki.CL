@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { List, Spinner, Status } from 'design/components';
 
 // Routes
-import { Navigate } from '@/router';
+import { Navigate } from 'design/router';
 
 // Helper
 import { GetErrorCode } from '@/helper';

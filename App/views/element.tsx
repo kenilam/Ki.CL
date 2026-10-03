@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 // Routes
-import { useLocation } from '@/router';
+import { useLocation } from 'design/router';
 
 // Analytics
 import { useAnalytics } from '@/analytics';

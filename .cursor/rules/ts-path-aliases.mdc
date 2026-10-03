@@ -10,9 +10,9 @@ Prefer configured path aliases over `../` climbs. Same-folder `./` is fine.
 
 | Alias | Maps to | Use for |
 |-------|---------|---------|
-| `@/*` | `App/*` | App modules (`@/views/...`, `@/router`, `@/session`, …) |
+| `@/*` | `App/*` | App modules (`@/views/...`, `@/session`, `@/hooks`, …) |
 | `api` / `api/*` | federated remote types | GraphQL hooks/types from `api/provider` |
-| `design/*` | federated remote types | Components, styles, icons, widgets from the design system |
+| `design/*` | federated remote types | Components, styles, icons, router and widgets from the design system |
 | `^/*` | repo root | Rare cross-package paths outside App |
 
 ```ts

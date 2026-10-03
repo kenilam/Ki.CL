@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-Yarn 4 (Berry) workspace repo. Top-level workspace is `App`, which itself is a nested Yarn workspace of `.client`, `.server`, `router`, `views`. Node >=24 required. Prefer the `make` targets (thin wrappers over the `yarn run` scripts):
+Yarn 4 (Berry) workspace repo. Top-level workspace is `App`, which itself is a nested Yarn workspace of `.client`, `.server`, `views`. Node >=24 required. Prefer the `make` targets (thin wrappers over the `yarn run` scripts):
 
 ```bash
 make install            # yarn install
@@ -30,7 +30,7 @@ Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn 
 
 ### Module Federation: the design system remote
 
-Components, core styles, icons, widgets, the theme/responsive/resize hooks and the HTTP status pages live in the [Ki.CL-design-system](https://github.com/kenilam/Ki.CL-design-system) repo, served as the remote `design` (`design/components`, `design/core`, `design/hooks`, `design/icons`, `design/status`, `design/widgets`). It is proxied same-origin at `/design`: in development Vite proxies to `KICL_DESIGN_URL` (default `http://localhost:3200`, run the design system with `make run` there), and in production `App/.server/proxy` forwards it with an ID token, like the API. Types come from `App/@mf-types/design`, pulled from the running remote. Icon sets are not exposed: import them from `react-icons` directly (`import * as Ri from 'react-icons/ri'`). Changing a component, a token or a utility is a change in that repo, not here.
+Components, core styles, icons, widgets, the theme/responsive/resize hooks and the HTTP status pages live in the [Ki.CL-design-system](https://github.com/kenilam/Ki.CL-design-system) repo, served as the remote `design` (`design/components`, `design/core`, `design/hooks`, `design/icons`, `design/router`, `design/status`, `design/widgets`). It is proxied same-origin at `/design`: in development Vite proxies to `KICL_DESIGN_URL` (default `http://localhost:3200`, run the design system with `make run` there), and in production `App/.server/proxy` forwards it with an ID token, like the API. Types come from `App/@mf-types/design`, pulled from the running remote. Routing comes from `design/router` (`Router`, `Route`, `MatchedRoute`, `useLocation`, …), never from `react-router-dom` directly. Icon sets are not exposed: import them from `react-icons` directly (`import * as Ri from 'react-icons/ri'`). Changing a component, a token or a utility is a change in that repo, not here.
 
 ### Module Federation consumes the Backend's GraphQL client
 

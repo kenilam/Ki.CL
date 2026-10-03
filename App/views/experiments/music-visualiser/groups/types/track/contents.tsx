@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Routes
-import { Navigate, Outlet, useMatch, useParams } from '@/router';
+import { Navigate, Outlet, useMatch, useParams } from 'design/router';
 
 // Components
 import { Frame, Layout } from 'design/components';

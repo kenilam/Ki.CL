@@ -9,7 +9,7 @@ import React, {
 import { THREE, Fiber, Three } from '@/three';
 
 // Context
-import { useNavigate } from '@/router';
+import { useNavigate } from 'design/router';
 
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
 import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';

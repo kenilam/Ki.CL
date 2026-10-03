@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Routes
-import { Outlet, Route } from '@/router';
+import { Outlet, Route } from 'design/router';
 
 // Constants
 import { PLAY } from '@/views/experiments/music-visualiser/constants';

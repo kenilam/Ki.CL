@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Routes
-import { Router, Route } from '@/router';
+import { Router, Route } from 'design/router';
 
 // Status
 import { ErrorElement, Status404 } from 'design/status';
