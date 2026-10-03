@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Details
 import { Details } from './details';
@@ -16,7 +19,13 @@ const Panel: React.FunctionComponent = () => (
   <Layout
     alignContent='start'
     autoFlow='row'
-    className={`${CLASS_NAME}__chrome ${CLASS_NAME}__chrome--panel kicl-position-fixed kicl-inset-block-start kicl-inset-inline-start`}
+    className={classNames(
+      `${CLASS_NAME}__chrome`,
+      `${CLASS_NAME}__chrome--panel`,
+      'kicl-position-fixed',
+      'kicl-z-index-floating',
+      'kicl-inset-inline-start'
+    )}
     gap='narrow'
   >
     <aside aria-label='Taxon'>

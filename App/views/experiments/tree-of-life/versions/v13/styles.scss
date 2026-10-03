@@ -1,31 +1,17 @@
 .kicl--views--experiments--tree-of-life--v13 {
-  block-size: 100dvh;
+  // No utility for the dynamic viewport width.
   inline-size: 100dvw;
-  overflow: hidden;
-  position: relative;
-  touch-action: none;
-  user-select: none;
 
-  &__error {
-    margin: var(--kicl-gutter-wide);
-  }
-
-  &__stage {
-    block-size: 100%;
+  // The cursor changes while dragging, so it stays with its `:active` state.
+  &__svg {
     cursor: grab;
-    inline-size: 100%;
 
     &:active {
       cursor: grabbing;
     }
   }
 
-  &__svg {
-    block-size: 100%;
-    display: block;
-    inline-size: 100%;
-  }
-
+  // SVG paint has no utilities.
   &__branch {
     fill: none;
     opacity: 0.88;
@@ -41,7 +27,6 @@
   &__label {
     letter-spacing: 0.01em;
     paint-order: stroke;
-    pointer-events: none;
     stroke: var(--kicl-color-white);
     stroke-linejoin: round;
     stroke-width: var(--kicl-size-3px);
@@ -55,15 +40,12 @@
     }
   }
 
+  // No utilities for the 50% offset, the translate, this spacing or opacity.
   &__hint {
-    inset-block-end: var(--kicl-gutter);
     inset-inline-start: 50%;
     letter-spacing: 0.02em;
-    margin: 0;
     max-inline-size: min(92vw, 40rem);
     opacity: 0.7;
-    pointer-events: none;
-    position: absolute;
     translate: -50%;
   }
 }

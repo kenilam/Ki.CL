@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Partials
 import { Article } from './article';
@@ -17,7 +17,11 @@ import { CLASS_NAME } from './constants';
 const Home: React.FunctionComponent = () => (
   <Layout autoFlow='row' gap='none'>
     <article
-      className={classNames(CLASS_NAME, 'kicl-padding-block-end-extreme')}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inline-size-full',
+        'kicl-padding-block-end-extreme'
+      )}
     >
       <Banner />
       <Article />

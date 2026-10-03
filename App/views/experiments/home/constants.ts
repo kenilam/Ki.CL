@@ -1,4 +1,4 @@
-import type { ButtonProps } from '@/components';
+import type { ButtonProps } from 'design/components';
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments/constants';
 import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants';
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';

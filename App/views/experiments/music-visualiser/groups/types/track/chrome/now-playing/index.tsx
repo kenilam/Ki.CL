@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
@@ -29,7 +29,13 @@ const NowPlaying: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrowest' justifyItems='start'>
-      <div className={classNames(CLASS_NAME, 'kicl-max-inline-size-columns-4')}>
+      <header
+        className={classNames(
+          CLASS_NAME,
+          'kicl-max-inline-size-columns-4',
+          'kicl-transition-duration-slow'
+        )}
+      >
         <Heading
           aria-live='polite'
           className='kicl-font-size-large'
@@ -46,7 +52,7 @@ const NowPlaying: React.FunctionComponent = () => {
         </HyperLink>
         {error ? (
           <Text
-            className='kicl-color-error kicl-font-size-small'
+            className={classNames('kicl-color-error', 'kicl-font-size-small')}
             dense
             is='p'
             role='alert'
@@ -54,7 +60,7 @@ const NowPlaying: React.FunctionComponent = () => {
             {error}
           </Text>
         ) : null}
-      </div>
+      </header>
     </Layout>
   );
 };

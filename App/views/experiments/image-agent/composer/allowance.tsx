@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Components
-import { Badge, BadgeLabel, type BadgeProps } from '@/components';
+import { Badge, BadgeLabel, type BadgeProps } from 'design/components';
 
 const COPY = {
   left: (remaining: number) => {
@@ -38,18 +38,18 @@ const Allowance: React.FunctionComponent<Props> = ({ busy }) => {
 
   const { remaining, limit } = allowance;
 
-  let variant: BadgeProps['variant'] = 'positive';
+  let level: BadgeProps['level'] = 'confirm';
 
   if (remaining <= limit / 2) {
-    variant = 'warning';
+    level = 'warning';
   }
 
   if (remaining <= 1) {
-    variant = 'destructive';
+    level = 'error';
   }
 
   return (
-    <Badge size='small' variant={variant}>
+    <Badge level={level} size='small'>
       <BadgeLabel>Allowance</BadgeLabel>
       {COPY.left(allowance.remaining)}
     </Badge>

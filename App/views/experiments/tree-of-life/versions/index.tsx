@@ -1,5 +1,5 @@
 // Routes
-import { Navigate, Route } from '@/router';
+import { Navigate, Route } from 'design/router';
 
 // Constants
 import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';

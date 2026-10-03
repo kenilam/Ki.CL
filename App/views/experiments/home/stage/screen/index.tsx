@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { ListItem } from '@/components';
+import { ListItem } from 'design/components';
 
 // Context
 import { ScreenProvider } from './context';
@@ -56,7 +56,12 @@ const Screen: React.FunctionComponent<Props> = ({
       style={{ '--kicl--views--experiments__home--index': index } as never}
     >
       <div
-        className={classNames(`${CLASS_NAME}__crop`, 'kicl-position-absolute')}
+        className={classNames(
+          `${CLASS_NAME}__crop`,
+          'kicl-inset-0',
+          'kicl-overflow-clip',
+          'kicl-position-absolute'
+        )}
       >
         <Plate />
       </div>

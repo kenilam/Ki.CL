@@ -2,7 +2,7 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 
 // Core
-import '@/core';
+import 'design/core';
 
 // App
 import { App } from '@/app';

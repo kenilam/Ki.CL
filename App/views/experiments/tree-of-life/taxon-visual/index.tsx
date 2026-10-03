@@ -10,7 +10,7 @@ import {
   Kicl_TreeOfLifeSubtreeDocument,
 } from 'api/provider';
 
-import { Status } from '@/components';
+import { Status } from 'design/components';
 
 import {
   labelFor,
@@ -21,9 +21,6 @@ import {
 
 // Partials
 import { Plate, announcementFor } from './plate';
-
-// Styles
-import './styles.scss';
 
 // Constants
 import { ERROR_MESSAGES, messageKey } from './constants';

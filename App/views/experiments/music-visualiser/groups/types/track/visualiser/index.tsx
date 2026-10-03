@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Hooks
-import { useResizeObserver } from '@/hooks';
+import { useResizeObserver } from 'design/hooks';
 import { useStage } from './use-stage';
 
 // Styles

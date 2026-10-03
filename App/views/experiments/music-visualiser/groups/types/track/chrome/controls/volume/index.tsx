@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Input } from '@/components';
+import { Input } from 'design/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -28,7 +28,11 @@ const Volume: React.FunctionComponent = () => {
   return (
     <Input
       aria-label={COPY.volume}
-      className={classNames(CLASS_NAME, 'kicl-inline-size-md')}
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inline-size-md',
+        'kicl-padding-none'
+      )}
       max={1}
       min={0}
       onChange={(event) => control.setValue(Number(event.target.value))}

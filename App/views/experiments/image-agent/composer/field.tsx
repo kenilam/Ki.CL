@@ -4,7 +4,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
 import {
@@ -16,8 +16,7 @@ import {
   InputGroupAddon,
   InputGroupButton,
   InputGroupTextarea,
-  Spinner,
-} from '@/components';
+} from 'design/components';
 
 // Schema
 import { MAX_LENGTH, type ComposerValues } from './schema';
@@ -77,7 +76,7 @@ const Field: React.FunctionComponent<Props> = ({
                 variant='ghost'
               >
                 {sending ? (
-                  <Spinner in position='inline' size='smaller' />
+                  <Ri.RiLoader4Line aria-hidden className='is-revolving' />
                 ) : (
                   <Ri.RiCornerRightUpLine aria-hidden />
                 )}

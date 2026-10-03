@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout, Separator, Text } from '@/components';
+import { Layout, Separator, Text } from 'design/components';
 
 const Footer: React.FunctionComponent = () => {
   return (

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 // Routes
-import { useMatch, useNavigate } from '@/router';
+import { useMatch, useNavigate } from 'design/router';
 
 // Context
 import { useLocalStorageContext } from '@/local-storage';

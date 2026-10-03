@@ -43,7 +43,11 @@ deploy:
 	yarn run deploy
 	@echo ✅ deployed
 
+# The dev server's port, from .env; whatever already holds it is stopped first.
+DEV_PORT := $(or $(shell grep -E '^PORT=' .env 2>/dev/null | cut -d= -f2),3001)
+
 run:
+	@scripts/free-port.sh $(DEV_PORT)
 	@echo ⌛ running development...
 	yarn run development
 

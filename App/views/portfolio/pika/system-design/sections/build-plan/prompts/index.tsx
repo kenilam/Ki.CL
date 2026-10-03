@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, List, ListItem, Text } from '@/components';
+import { Heading, List, ListItem, Text } from 'design/components';
 
 // Styles
 import './styles.scss';
@@ -120,7 +120,7 @@ const PROMPTS: Array<{ body: React.ReactNode; title: string }> = [
 
 const Prompts: React.FunctionComponent = () => (
   <>
-    <Heading className={classNames('kicl-font-size-large')} is='h3'>
+    <Heading className='kicl-font-size-large' is='h3'>
       Prompts I&apos;d use to steer a coding agent
     </Heading>
     <Text>

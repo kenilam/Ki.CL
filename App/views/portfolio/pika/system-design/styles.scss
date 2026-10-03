@@ -1,32 +1,11 @@
-:root {
-  --kicl--views--portfolio--pika--system-design--background: linear-gradient(
-    232deg,
-    #{color.adjust($orange, $lightness: 30%)},
-    #{color.adjust($green, $lightness: 30%)},
-    #{color.adjust($red, $lightness: 30%)},
-    #{color.adjust($blue, $lightness: 30%)},
-    #{color.adjust($yellow, $lightness: 30%)}
-  );
-
-  @at-root .kicl--theme--dark {
-    --kicl--views--portfolio--pika--system-design--background: linear-gradient(
-      232deg,
-      #{color.adjust($orange, $blackness: 3%)},
-      #{color.adjust($green, $blackness: 3%)},
-      #{color.adjust($red, $blackness: 3%)},
-      #{color.adjust($blue, $blackness: 3%)},
-      #{color.adjust($yellow, $blackness: 3%)}
-    );
-  }
-}
-
 .kicl--views--portfolio--pika--system-design {
-  /* Full-bleed hero - the article re-pads its own reading column below. */
+  /* Full-bleed hero. `main` sits outside this view, so no class can reach it. */
   @at-root .kicl--view:has(&) {
     padding: var(--kicl-gutter-none);
   }
 
   &__body {
+    /* A reveal tuned to this page; `kicl-scroll-reveal` travels less and also animates the exit. */
     > section > * {
       animation: kicl--views--portfolio--pika--system-design--parallax-reveal
         linear both;
@@ -34,19 +13,12 @@
       animation-range: entry 40% entry 60%;
     }
 
-    pre {
-      margin: 0;
-      overflow-x: auto;
-    }
-
     /* Section headings - `kicl-position-relative` on the element anchors the rule. */
     h2 {
       &::before {
-        animation: kicl--views--portfolio--pika--system-design--background 300s
-          ease infinite;
-        background: var(
-          --kicl--views--portfolio--pika--system-design--background
-        );
+        animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+          infinite;
+        background: var(--kicl-gradient-shift);
         background-size: 1200% 1200%;
         block-size: var(--kicl-size-3px);
         content: '';
@@ -90,14 +62,10 @@
     scroll-margin-block-start: var(--kicl-gutter);
   }
 
+  /* Dialog has no prop for wide padding, so the full-size diagrams set its tokens. */
   &__full {
     --kicl--components--dialog--padding-block: var(--kicl-gutter-wide);
     --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
-    --kicl--components--image--block-size: calc(
-      var(--kicl--components--dialog--block-size) -
-        (var(--kicl--components--dialog--padding-block) * 2)
-    );
-    --kicl--components--image--inline-size: fit-content;
   }
 }
 
@@ -110,19 +78,5 @@
   to {
     opacity: 1;
     translate: 0 0;
-  }
-}
-
-@keyframes kicl--views--portfolio--pika--system-design--background {
-  0% {
-    background-position: 0% 88%;
-  }
-
-  50% {
-    background-position: 100% 13%;
-  }
-
-  100% {
-    background-position: 0% 88%;
   }
 }

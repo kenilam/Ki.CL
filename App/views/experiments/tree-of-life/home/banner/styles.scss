@@ -17,12 +17,13 @@
 
   // On the frame itself, so `100%` is the window: less the frame's own gap.
   padding-inline: calc(
-    var(--kicl--components--frame--page-inset) -
-    var(--kicl--components--frame--gap)
+    var(--kicl--components--frame--page-inset) - var(
+      --kicl--components--frame--gap
+    )
   );
 
   // The view layer sits above `Layout`, so this overrides its column flow.
-  @include query('≤desktop') {
+  @container style(--kicl-viewport-up-to-desktop: true) {
     align-content: start;
     align-items: start;
     grid-auto-flow: row;

@@ -1,10 +1,13 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Button, Layout, Spinner, Text } from '@/components';
+import { Button, Layout, Spinner, Text } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
@@ -23,19 +26,20 @@ const Controls: React.FunctionComponent = () => {
 
   return (
     <Layout
-      className={`${CLASS_NAME}__chrome kicl-position-fixed kicl-inset-block-start kicl-inset-inline-end`}
+      className={classNames(
+        `${CLASS_NAME}__chrome`,
+        'kicl-position-fixed',
+        'kicl-z-index-floating',
+        'kicl-inset-block-start',
+        'kicl-inset-inline-end'
+      )}
       alignItems='center'
       autoFlow='column'
       justifyContent='end'
       gap='narrower'
     >
-      <div>
-        <Spinner
-          size='small'
-          in={loading}
-          position='inline'
-          hasBackdrop={false}
-        />
+      <section aria-label='Animation'>
+        <Spinner size='small' in={loading} position='inline' backdrop={false} />
         <Button
           unstyled
           type='button'
@@ -51,7 +55,7 @@ const Controls: React.FunctionComponent = () => {
             {COPY.label}
           </Text>
         </Button>
-      </div>
+      </section>
     </Layout>
   );
 };

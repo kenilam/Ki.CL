@@ -1,4 +1,4 @@
-import type { DiagramSpec as Spec } from '@/components';
+import type { DiagramSpec as Spec } from 'design/components';
 
 /** Part 2 — the agent plane's data model, keyed into Part 1's tables. */
 const sessionModel: Spec = {

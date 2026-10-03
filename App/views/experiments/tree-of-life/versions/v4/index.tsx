@@ -1,5 +1,8 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import {
   useQuery,
   Kicl_TreeOfLifeSubtreeDocument,
@@ -7,7 +10,7 @@ import {
 } from 'api/provider';
 
 import { THREE, Fiber, Drei } from '@/three';
-import { Spinner, Text } from '@/components';
+import { Spinner, Text } from 'design/components';
 
 import {
   type TreeNode,
@@ -309,7 +312,13 @@ const Canvas: React.FunctionComponent = () => {
 
   if (error) {
     return (
-      <Text className={`${CLASS_NAME}__error kicl-color-error`}>
+      <Text
+        className={classNames(
+          'kicl-color-error',
+          'kicl-margin-block-wide',
+          'kicl-margin-inline-wide'
+        )}
+      >
         {error.message}
       </Text>
     );
@@ -324,17 +333,31 @@ const Canvas: React.FunctionComponent = () => {
   }
 
   return (
-    <div className={CLASS_NAME}>
+    <figure
+      className={classNames(
+        CLASS_NAME,
+        'kicl-block-size-screen',
+        'kicl-position-relative'
+      )}
+    >
       <Fiber.Canvas>
         <fog attach='fog' args={[BACKGROUND, 55, 140]} />
         <Scene tree={tree} onExpand={onExpand} expandingId={expandingId} />
       </Fiber.Canvas>
       <Text
-        className={`${CLASS_NAME}__hint kicl-font-size-smaller kicl-color-grey-dark kicl-text-align-center`}
+        className={classNames(
+          `${CLASS_NAME}__hint`,
+          'kicl-position-absolute',
+          'kicl-inset-block-end',
+          'kicl-pointer-events-none',
+          'kicl-font-size-smaller',
+          'kicl-color-grey-dark',
+          'kicl-text-align-center'
+        )}
       >
         Even neighbor spacing (v4) · click glowing tips to grow a clade
       </Text>
-    </div>
+    </figure>
   );
 };
 

@@ -4,7 +4,7 @@ import React, { useId } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout, Text } from '@/components';
+import { Heading, Layout, Text } from 'design/components';
 
 // Styles
 import './styles.scss';
@@ -38,6 +38,7 @@ const More: React.FunctionComponent = () => {
         className={classNames(
           CLASS_NAME,
           'kicl-animation-none-reduced-motion',
+          'kicl-block-size-screen',
           'kicl-padding-block-extreme',
           'kicl-padding-inline-frame-columns-12'
         )}

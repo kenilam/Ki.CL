@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Components
-import { Frame, Layout } from '@/components';
+import { Frame, Layout } from 'design/components';
 
 // Partials
 import { Backdrop } from '@/views/experiments/image-agent/backdrop';
@@ -42,7 +42,7 @@ const Start: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
-      <article className={CLASS_NAME}>
+      <article className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
         <Frame grow hold>
           <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
             <section
@@ -55,6 +55,11 @@ const Start: React.FunctionComponent = () => {
               )}
             >
               <Backdrop scrim />
+              {/*
+                Positioned so it paints over the backdrop. The frame's own
+                padding can't also cap the content at 12 columns, so this
+                element does.
+              */}
               <Layout gap='wide'>
                 <div
                   className={classNames(
@@ -65,17 +70,13 @@ const Start: React.FunctionComponent = () => {
                 >
                   <Header />
                   <Running {...running} />
-                  <Layout gap='wide'>
-                    <div>
-                      {running.busy ? null : <Past query={query} />}
-                      <Composer
-                        {...sender}
-                        disallow={running.busy || spent}
-                        onText={setQuery}
-                        sticky={false}
-                      />
-                    </div>
-                  </Layout>
+                  {running.busy ? null : <Past query={query} />}
+                  <Composer
+                    {...sender}
+                    disallow={running.busy || spent}
+                    onText={setQuery}
+                    sticky={false}
+                  />
                 </div>
               </Layout>
             </section>

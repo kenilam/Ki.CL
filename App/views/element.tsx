@@ -1,16 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 
 // Routes
-import { useLocation } from '@/router';
+import { useLocation } from 'design/router';
 
 // Analytics
 import { useAnalytics } from '@/analytics';
 
 // Widgets
-import { GlobalHeaderProvider } from '@/widgets';
+import { GlobalHeaderProvider } from 'design/widgets';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Partials
 import { Contents } from './contents';

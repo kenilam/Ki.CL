@@ -1,4 +1,4 @@
-import type { DiagramSpec as Spec } from '@/components';
+import type { DiagramSpec as Spec } from 'design/components';
 
 const ACTORS = [
   { title: 'Client', x: 110 },

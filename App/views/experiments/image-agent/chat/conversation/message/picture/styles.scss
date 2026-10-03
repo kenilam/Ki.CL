@@ -1,25 +1,9 @@
 .kicl--views--experiments--image-agent__chat__conversation__message__picture {
-  &__open {
-    cursor: zoom-in;
-    display: block;
-  }
-
-  &__preview {
-    --kicl--components--image--aspect-ratio: 1;
-
-    display: block;
-    inline-size: 100%;
-  }
-
+  // Dialog has no size prop; this keeps a square picture inside the window.
   &__dialog {
     --kicl--components--dialog--max-inline-size: min(
       90dvi,
       calc(100dvb - var(--kicl-gutter-extreme) * 2)
     );
-  }
-
-  &__large {
-    display: block;
-    inline-size: 100%;
   }
 }

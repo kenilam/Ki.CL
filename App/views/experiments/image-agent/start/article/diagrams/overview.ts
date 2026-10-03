@@ -1,4 +1,4 @@
-import type { DiagramSpec } from '@/components';
+import type { DiagramSpec } from 'design/components';
 
 /** The pieces and what connects them. */
 const overview: DiagramSpec = {

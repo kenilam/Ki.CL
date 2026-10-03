@@ -1,21 +1,25 @@
 import React, { useEffect } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Routes
-import { Outlet, ScrollRestoration, useLocation } from '@/router';
+import { Outlet, ScrollRestoration, useLocation } from 'design/router';
 
 // Widgets
-import { GlobalHeader, useGlobalHeaderContext } from '@/widgets';
+import { GlobalHeader, useGlobalHeaderContext } from 'design/widgets';
 
 // Session
 import { Session } from '@/session';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Hooks
 import { SCROLL_DIRECTIONS, useScrollDirection } from '@/hooks';
 
 // Partials
+import { Navigation } from './navigation';
 import { SkipLink } from './skip-link';
 
 // Constants
@@ -41,7 +45,9 @@ const Contents: React.FunctionComponent = () => {
     <>
       <ScrollRestoration />
       <SkipLink />
-      <GlobalHeader />
+      <GlobalHeader>
+        <Navigation />
+      </GlobalHeader>
       <Layout
         alignContent='start'
         alignItems='start'
@@ -50,7 +56,11 @@ const Contents: React.FunctionComponent = () => {
         justifyItems='center'
       >
         <main
-          className='kicl--view kicl-inline-size-full'
+          className={classNames(
+            'kicl--view',
+            'kicl-inline-size-full',
+            'kicl-min-block-size-screen'
+          )}
           id={MAIN_ID}
           tabIndex={-1}
         >

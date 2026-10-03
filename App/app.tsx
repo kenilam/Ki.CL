@@ -7,7 +7,7 @@ import { EnvProvider, useEnvContext } from '@/env/client';
 import { LocalStorageProvider } from '@/local-storage';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // View
 import { Views as View } from '@/views';

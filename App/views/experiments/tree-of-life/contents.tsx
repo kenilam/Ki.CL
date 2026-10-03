@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Routes
-import { Outlet } from '@/router';
+import { Outlet } from 'design/router';
 
 // Context
 import { TreeOfLifeProvider } from './context';

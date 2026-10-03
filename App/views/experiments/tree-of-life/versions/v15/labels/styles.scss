@@ -1,18 +1,4 @@
 .kicl--views--experiments--tree-of-life--v15 {
-  /*
-   * Clipped, because the layer is wider than the screen it covers.
-   *
-   * Every pill is transformed to wherever its taxon projects, seated or not -
-   * the loop keeps moving hidden ones so they do not teleport when they come
-   * back. A transform still counts toward scrollable overflow, so the ones
-   * sitting off-frame were stretching the page and letting it scroll away from
-   * the canvas.
-   */
-  &__labels {
-    overflow: hidden;
-    z-index: var(--kicl-z-index-raised);
-  }
-
   &__label {
     opacity: 0;
     will-change: transform;

@@ -1,4 +1,4 @@
-import type { DiagramSpec as Spec } from '@/components';
+import type { DiagramSpec as Spec } from 'design/components';
 
 /** Part 2 - the new agent plane beside the unchanged Part 1 services. */
 const agentPlane: Spec = {

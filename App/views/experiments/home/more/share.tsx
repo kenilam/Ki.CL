@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 // Components
-import { Button } from '@/components';
+import { Button } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 const COPY = {
   copied: 'Link copied',

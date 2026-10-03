@@ -4,10 +4,10 @@ import React, { useId } from 'react';
 import Highlighter from 'react-highlight-words';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, List, ListItem } from '@/components';
+import { Heading, HyperLink, Layout, List, ListItem } from 'design/components';
 
 // Hooks
 import { usePast } from './use-past';

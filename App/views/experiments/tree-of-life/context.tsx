@@ -17,7 +17,7 @@ import {
 } from 'api/provider';
 
 // Routes
-import { useParams } from '@/router';
+import { useParams } from 'design/router';
 
 // Chain
 import { type Chain, chain as walkChain } from './chain';

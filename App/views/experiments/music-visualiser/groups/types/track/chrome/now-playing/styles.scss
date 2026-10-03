@@ -1,6 +1,7 @@
 .kicl--views--experiments--music-visualiser__chrome__now-playing {
-  transition: opacity var(--kicl-transition-duration-slow)
-    var(--kicl-ease-sine-out);
+  // The duration is a utility class on the element.
+  transition-property: opacity;
+  transition-timing-function: var(--kicl-ease-sine-out);
 
   /*
    * Idle: the title and subtitle only step back while the controls go. They

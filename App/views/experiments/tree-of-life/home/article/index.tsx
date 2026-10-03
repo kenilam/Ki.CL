@@ -4,10 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
-
-// Constants
-import { CLASS_NAME as HOME } from '@/views/experiments/tree-of-life/home/constants';
+import { Layout } from 'design/components';
 
 // Partials
 import { DrawingOrganisms } from './drawing-organisms';
@@ -34,10 +31,10 @@ const Article: React.FunctionComponent = () => {
     >
       <div
         className={classNames(
-          `${HOME}__column`,
           'kicl-margin-inline-auto',
           'kicl-max-inline-size-columns-12',
-          'kicl-padding-block-start-extreme'
+          'kicl-padding-block-start-extreme',
+          'kicl-padding-inline-frame'
         )}
       >
         <WhereItStarted />

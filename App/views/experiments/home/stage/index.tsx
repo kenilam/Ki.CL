@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Frame, List } from '@/components';
+import { Frame, List } from 'design/components';
 
 // Hooks
 import { useHashScroll } from './use-hash-scroll';
@@ -84,7 +84,11 @@ const Stage: React.FunctionComponent = () => {
       <div
         className={classNames(
           CLASS_NAME,
+          'kicl-block-size-screen',
+          // Keeps the frame's top margin inside the stage.
+          'kicl-display-flow-root',
           'kicl-inset-block-start-0',
+          'kicl-overflow-clip',
           'kicl-position-sticky'
         )}
       >
