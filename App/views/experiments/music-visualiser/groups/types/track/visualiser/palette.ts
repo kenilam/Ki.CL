@@ -5,29 +5,34 @@ const MAX_INKS = 6;
 
 /**
  * Every colour comes from the stylesheet, as custom properties on the
- * canvas, so the theme decides them and this file only reads. A 2D context
- * normalises whatever form the token was written in to `#rrggbb`.
+ * canvas, so the theme decides them and this file only reads. They come back
+ * as computed colours, often `oklab()`, so a 2D context paints one pixel in
+ * each and reads it back as sRGB.
  */
 function readPalette(canvas: HTMLCanvasElement, property: string): Palette {
   const styles = window.getComputedStyle(canvas);
-  const scratch = document.createElement('canvas').getContext('2d');
+  const scratch = document
+    .createElement('canvas')
+    .getContext('2d', { willReadFrequently: true });
 
   const parse = (value: string): number | null => {
     const trimmed = value.trim();
 
-    if (!trimmed || !scratch) {
+    if (!trimmed || !scratch || !CSS.supports('color', trimmed)) {
       return null;
     }
 
+    scratch.clearRect(0, 0, 1, 1);
     scratch.fillStyle = trimmed;
+    scratch.fillRect(0, 0, 1, 1);
 
-    const normalised = String(scratch.fillStyle);
+    const [red, green, blue, alpha] = scratch.getImageData(0, 0, 1, 1).data;
 
-    if (!/^#[\da-f]{6}$/i.test(normalised)) {
+    if (!alpha) {
       return null;
     }
 
-    return parseInt(normalised.slice(1), 16);
+    return (red << 16) | (green << 8) | blue;
   };
 
   const paper = parse(styles.getPropertyValue(`${property}--paper`)) ?? 0;

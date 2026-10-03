@@ -40,29 +40,33 @@ const REDUCED_MOTION = '(prefers-reduced-motion: reduce)';
 /**
  * Every colour, the cell size and the tone count live in the stylesheet, as
  * custom properties on the canvas, so the theme owns them and the renderer
- * only reads. Colours come back in whatever form the token was written in; a
- * 2D context normalises any of them to `#rrggbb`.
+ * only reads. The inks come back as computed colours, often `oklab()`, so a
+ * 2D context paints one pixel in each and reads it back as sRGB.
  */
 function readPalette(canvas: HTMLCanvasElement): Spec.Palette {
   const styles = window.getComputedStyle(canvas);
-  const scratch = document.createElement('canvas').getContext('2d');
+  const scratch = document
+    .createElement('canvas')
+    .getContext('2d', { willReadFrequently: true });
 
   const parse = (value: string): number | null => {
     const trimmed = value.trim();
 
-    if (!trimmed || !scratch) {
+    if (!trimmed || !scratch || !CSS.supports('color', trimmed)) {
       return null;
     }
 
+    scratch.clearRect(0, 0, 1, 1);
     scratch.fillStyle = trimmed;
+    scratch.fillRect(0, 0, 1, 1);
 
-    const normalised = String(scratch.fillStyle);
+    const [red, green, blue, alpha] = scratch.getImageData(0, 0, 1, 1).data;
 
-    if (!/^#[\da-f]{6}$/i.test(normalised)) {
+    if (!alpha) {
       return null;
     }
 
-    return parseInt(normalised.slice(1), 16);
+    return (red << 16) | (green << 8) | blue;
   };
 
   const paper = parse(styles.getPropertyValue(`${PROPERTY}--paper`)) ?? 0;

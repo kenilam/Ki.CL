@@ -35,9 +35,6 @@
       #{$home}--before
     );
     --kicl--views--experiments--image-agent__backdrop--to: var(#{$home}--after);
-
-    /* Only the photos need a scrim; on the other plates it darkens too much. */
-    @include scrim;
   }
 }
 

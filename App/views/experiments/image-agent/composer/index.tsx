@@ -49,6 +49,8 @@ const Composer: React.FunctionComponent<Props> = ({
       <section
         className={classNames(CLASS_NAME, 'kicl-inline-size-columns-8', {
           [`${CLASS_NAME}--sticky`]: sticky,
+          // While it is stuck, a line of the moving gradient runs along the top.
+          'kicl-stuck-line-start': sticky,
           'kicl-inset-block-end-0': sticky,
           'kicl-position-sticky': sticky,
           'kicl-padding-block-start': sticky,

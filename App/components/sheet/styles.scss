@@ -82,12 +82,4 @@
   &__footer {
     background-color: var(--kicl--components--card--background-color);
   }
-
-  &__header {
-    @include stuck-line(end);
-  }
-
-  &__footer {
-    @include stuck-line(start);
-  }
 }

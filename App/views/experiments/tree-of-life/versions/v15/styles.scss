@@ -14,10 +14,10 @@
      * the emptiest part of the composition instead of the densest.
      */
     &--panel {
-      // Docked by a media query, so set here: a utility class would win at every size.
+      // Docked by a style query, so set here: a utility class would win at every size.
       inset-block-start: var(--kicl-inset-block-start);
 
-      @include query('≤desktop') {
+      @container style(--kicl-viewport-up-to-desktop: true) {
         inset-block: auto var(--kicl-inset-block-end);
         max-block-size: 45dvb;
         overflow-y: auto;
