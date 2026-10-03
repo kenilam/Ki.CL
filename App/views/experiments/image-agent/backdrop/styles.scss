@@ -23,10 +23,6 @@ $light: 1.5;
   background-position: center;
   background-size: cover;
 
-  &--scrim {
-    @include scrim;
-  }
-
   &__picture {
     background-image: var(#{$backdrop}--url);
     background-position: center;

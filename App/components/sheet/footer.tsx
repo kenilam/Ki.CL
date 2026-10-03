@@ -17,6 +17,7 @@ const SheetFooter = React.forwardRef<HTMLElement, CardFooterProps>(
         CLASS_NAME,
         'kicl-position-sticky',
         'kicl-inset-block-end-0',
+        'kicl-stuck-line-start',
         className
       )}
       ref={ref}
