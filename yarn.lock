@@ -3836,12 +3836,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm":
-  version: 0.0.0-use.local
-  resolution: "app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm"
-  languageName: unknown
-  linkType: soft
-
 "app.views.experiments.image-agent@workspace:App/views/experiments/image-agent":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.image-agent@workspace:App/views/experiments/image-agent"
@@ -3851,6 +3845,12 @@ __metadata:
 "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser"
+  languageName: unknown
+  linkType: soft
+
+"app.views.experiments.robotic-arm@workspace:App/views/experiments/robotic-arm":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.robotic-arm@workspace:App/views/experiments/robotic-arm"
   languageName: unknown
   linkType: soft
 

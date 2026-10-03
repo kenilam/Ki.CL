@@ -60,10 +60,9 @@ start:
 	yarn run start
 	@echo ✅ done
 
-# The floor's own rules, against the arm remote checked out beside this repo (../Ki.CL-arm).
-test.factory-arm:
-	@echo ⌛ running factory-arm tests...
-	yarn run test:factory-arm
+test.robotic-arm:
+	@echo ⌛ running robotic-arm tests...
+	yarn run test:robotic-arm
 
 test:
 	@echo ⌛ running testing...

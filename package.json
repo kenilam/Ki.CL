@@ -24,7 +24,7 @@
     "preview": "cross-env DEBUG=true VERBOSE=true yarn workspace app run preview",
     "production": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run production",
     "start": "yarn install && yarn run development",
-    "test:factory-arm": "tsx --tsconfig App/tsconfig.test.json --test 'App/views/experiments/factory-arm/**/*.test.ts'"
+    "test:robotic-arm": "yarn workspace app.views.experiments.robotic-arm run test"
   },
   "repository": {
     "type": "git",
