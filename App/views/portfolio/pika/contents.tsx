@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { isAuthenticated } from 'api/provider';
 
 // Routes
-import { Outlet } from '@/router';
+import { Outlet } from 'design/router';
 
 // Partials
 import { SignIn } from './sign-in';

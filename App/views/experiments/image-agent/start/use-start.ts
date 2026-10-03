@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { Kicl_ImageAgentSendDocument, useMutation } from 'api/provider';
 
 // Routes
-import { useNavigate } from '@/router';
+import { useNavigate } from 'design/router';
 
 // Session
 import { isChallenge, useChallenged } from '@/session';

@@ -31,7 +31,7 @@ import {
 import * as Ri from 'react-icons/ri';
 
 // Router
-import { useNavigate } from '@/router';
+import { useNavigate } from 'design/router';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';

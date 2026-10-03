@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 // Routers
-import { useLocation } from '@/router';
+import { useLocation } from 'design/router';
 
 // Components
 import { Dialog, Navigation } from 'design/components';

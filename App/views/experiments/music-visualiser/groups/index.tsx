@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Route } from '@/router';
+import { Navigate, Route } from 'design/router';
 
 // Components
 import { Spinner } from 'design/components';

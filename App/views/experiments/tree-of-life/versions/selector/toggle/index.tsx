@@ -10,7 +10,7 @@ import { Button, HyperLink, Layout } from 'design/components';
 import * as Ri from 'react-icons/ri';
 
 // Routes
-import { useLocation } from '@/router';
+import { useLocation } from 'design/router';
 
 // Styles
 import './styles.scss';
