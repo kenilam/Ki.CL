@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 // Components
-import { Heading, Layout, Text } from '@/components';
+import { Heading, Layout, Text } from 'design/components';
 
 const TuningTheReviewer: React.FunctionComponent = () => {
   const id = useId();

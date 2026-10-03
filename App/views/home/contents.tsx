@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, Frame, Layout } from '@/components';
+import { Animation, Frame, Layout } from 'design/components';
 
 // Partials
 import { Background } from './background';

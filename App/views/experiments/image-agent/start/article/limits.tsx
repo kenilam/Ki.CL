@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Diagram, Heading, Text } from '@/components';
+import { Details, Diagram, Heading, Text } from 'design/components';
 
 // Diagrams
 import { allowance } from './diagrams/allowance';

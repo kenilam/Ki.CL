@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';

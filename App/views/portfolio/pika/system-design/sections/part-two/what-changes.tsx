@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Dialog, Heading, Text } from '@/components';
+import { Dialog, Heading, Text } from 'design/components';
 
 // Diagrams
-import { Diagram } from '@/components';
+import { Diagram } from 'design/components';
 import { agentPlane } from '@/views/portfolio/pika/system-design/diagrams/agent-plane';
 
 // Constants

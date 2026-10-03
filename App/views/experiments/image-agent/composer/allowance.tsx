@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Components
-import { Badge, BadgeLabel, type BadgeProps } from '@/components';
+import { Badge, BadgeLabel, type BadgeProps } from 'design/components';
 
 const COPY = {
   left: (remaining: number) => {

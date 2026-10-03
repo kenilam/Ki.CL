@@ -25,10 +25,10 @@ import {
   InputGroupInput,
   Layout,
   Text,
-} from '@/components';
+} from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Router
 import { useNavigate } from '@/router';

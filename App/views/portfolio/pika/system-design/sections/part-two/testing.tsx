@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Heading, Text } from '@/components';
+import { Heading, Text } from 'design/components';
 
 /** Rubric-based evaluation and replay. */
 const Testing: React.FunctionComponent = () => (

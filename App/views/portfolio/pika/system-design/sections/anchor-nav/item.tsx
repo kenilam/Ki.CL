@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Badge, HyperLink, Layout } from '@/components';
+import { Badge, HyperLink, Layout } from 'design/components';
 
 // Context
 import { useAnchorNav } from './context';

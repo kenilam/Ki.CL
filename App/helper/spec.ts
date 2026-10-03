@@ -1,11 +1,5 @@
 import Color from 'color';
 
-export type CSSUnit = (prop?: { values?: number | string }) => number;
-
-export type CSSUnitGroup = (prop?: { style?: Style }) => {
-  [name in 'fontSize' | 'maxFontSize']?: Style[keyof Style];
-};
-
 export type Style = {
   [name: string]: number | string;
 };

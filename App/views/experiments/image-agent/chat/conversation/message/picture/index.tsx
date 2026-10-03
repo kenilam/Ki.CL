@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Button, Dialog, Image } from '@/components';
+import { Button, Dialog, Image } from 'design/components';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Styles
 import './styles.scss';

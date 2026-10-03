@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, Text } from '@/components';
+import { AnimatedText, Text } from 'design/components';
 
 /** Split so the date can be a `time`; its letters start where the byline's end. */
 const BYLINE = 'Keni · Ki.CL · ';

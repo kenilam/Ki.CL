@@ -7,10 +7,10 @@ import {
   Segmented,
   SegmentedItem,
   SheetHeader,
-} from '@/components';
+} from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';

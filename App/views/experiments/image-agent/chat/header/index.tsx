@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { HyperLink, Layout } from '@/components';
+import { HyperLink, Layout } from 'design/components';
 
 // Constants
 import { toPath } from '@/views/experiments/image-agent/constants';

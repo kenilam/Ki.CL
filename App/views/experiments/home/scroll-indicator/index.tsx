@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Context
-import { useGlobalHeaderContext } from '@/widgets/global-header/context';
+import { useGlobalHeaderContext } from 'design/widgets';
 
 // Styles
 import './styles.scss';

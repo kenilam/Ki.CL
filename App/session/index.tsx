@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Components
-import { Dialog, Layout, Spinner } from '@/components';
+import { Dialog, Layout, Spinner } from 'design/components';
 
-// Router
-import { HttpStatus } from '@/router';
+// Status
+import { Status403, Status429, Status500 } from 'design/status';
 
 // Constants
 import { COPY } from './constants';
@@ -29,15 +29,15 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
   const { challenge, resuming, stage, turnstile } = useSession();
 
   if (stage === 'rejected') {
-    return <HttpStatus.Status403 message={COPY.retry} title={COPY.rejected} />;
+    return <Status403 message={COPY.retry} title={COPY.rejected} />;
   }
 
   if (stage === 'limited') {
-    return <HttpStatus.Status429 message={COPY.later} title={COPY.limited} />;
+    return <Status429 message={COPY.later} title={COPY.limited} />;
   }
 
   if (stage === 'failed') {
-    return <HttpStatus.Status500 message={COPY.retry} title={COPY.failed} />;
+    return <Status500 message={COPY.retry} title={COPY.failed} />;
   }
 
   if (stage === 'ready') {

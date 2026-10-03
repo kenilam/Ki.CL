@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Components
-import { Button, CardContent, Layout, SheetFooter } from '@/components';
+import { Button, CardContent, Layout, SheetFooter } from 'design/components';
 
 // Context
 import {

@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 // Components
-import { Button, Card, CardContent, Layout } from '@/components';
+import { Button, Card, CardContent, Layout } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Diagrams
-import { Diagram } from '@/components';
-import type { DiagramSpec as Spec } from '@/components';
+import { Diagram } from 'design/components';
+import type { DiagramSpec as Spec } from 'design/components';
 
 // Context
 import { type DotState, type PlayerStep, SimulationContext } from './context';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Heading, Text } from '@/components';
+import { Heading, Text } from 'design/components';
 
 /** App Studio and the guardrails around self-serve publishing. */
 const Growth: React.FunctionComponent = () => (

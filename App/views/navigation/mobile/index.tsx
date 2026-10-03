@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { useLocation } from '@/router';
 
 // Components
-import { Dialog, Navigation } from '@/components';
+import { Dialog, Navigation } from 'design/components';
 
 // Widgets
 import { Links } from '@/views/navigation/links';

@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import * as Icons from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { HyperLink, Navigation } from '@/components';
+import { HyperLink, Navigation } from 'design/components';
 
 const COPY = {
   label: 'Contact',
@@ -36,7 +36,7 @@ const Aside: React.FunctionComponent = () => {
         to='https://www.linkedin.com/in/kenilam'
         variant='ghost'
       >
-        <Icons.Ri.RiLinkedinLine aria-hidden />
+        <Ri.RiLinkedinLine aria-hidden />
       </HyperLink>
       <HyperLink
         aria-label='GitHub profile'
@@ -46,7 +46,7 @@ const Aside: React.FunctionComponent = () => {
         to='https://github.com/kenilam'
         variant='ghost'
       >
-        <Icons.Ri.RiGithubLine aria-hidden />
+        <Ri.RiGithubLine aria-hidden />
       </HyperLink>
       <HyperLink
         aria-label='Email me'
@@ -56,7 +56,7 @@ const Aside: React.FunctionComponent = () => {
         to='mailto:hello@ki-cl.com'
         variant='ghost'
       >
-        <Icons.Ri.RiMailLine aria-hidden />
+        <Ri.RiMailLine aria-hidden />
       </HyperLink>
     </Navigation>
   );

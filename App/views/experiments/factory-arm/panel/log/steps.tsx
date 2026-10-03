@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout, List, ListItem, Text } from '@/components';
+import { Layout, List, ListItem, Text } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Context
 import type { Entry } from '@/views/experiments/factory-arm/setup';

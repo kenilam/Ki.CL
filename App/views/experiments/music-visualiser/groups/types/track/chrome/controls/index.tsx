@@ -4,13 +4,14 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Fa, Ri } from '@/icons';
+import * as Fa from 'react-icons/fa6';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { HyperLink, Layout, List, ListItem } from '@/components';
+import { HyperLink, Layout, List, ListItem } from 'design/components';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';

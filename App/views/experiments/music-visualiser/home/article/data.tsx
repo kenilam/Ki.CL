@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from '@/components';
+import { Details, Heading, Text } from 'design/components';
 
 /** Where the data comes from: a catalogue compiled into the page. */
 const Data: React.FunctionComponent = () => (

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { List, ListItem } from '@/components';
+import { List, ListItem } from 'design/components';
 
 // Partials
 import { Bookmark } from './bookmark';

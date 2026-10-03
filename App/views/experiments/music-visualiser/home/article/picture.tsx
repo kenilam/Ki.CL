@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from '@/components';
+import { Details, Heading, Text } from 'design/components';
 
 /** The picture: the shader, its scenes, and what it reads from the audio. */
 const Picture: React.FunctionComponent = () => (

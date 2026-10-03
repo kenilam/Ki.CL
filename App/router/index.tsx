@@ -27,11 +27,12 @@ import {
 } from 'react-router-dom';
 
 // Hooks
-import { Props as MatchPatternProps, useMatchPattern } from './use-match-pattern';
+import {
+  Props as MatchPatternProps,
+  useMatchPattern,
+} from './use-match-pattern';
 
 // Components
-import { ErrorElement } from './error-element';
-import * as HttpStatus from './http-status';
 import { MatchedRoute } from './matched-route';
 
 const Router: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
@@ -45,8 +46,6 @@ const Router: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
 };
 
 export {
-  ErrorElement,
-  HttpStatus,
   Link,
   MatchedRoute,
   NavLink,

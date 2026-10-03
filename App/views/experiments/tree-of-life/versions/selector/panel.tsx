@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Card, HyperLink, List, ListItem } from '@/components';
+import { Card, HyperLink, List, ListItem } from 'design/components';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';

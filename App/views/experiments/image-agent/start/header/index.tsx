@@ -1,10 +1,10 @@
 import React from 'react';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Constants
 import {

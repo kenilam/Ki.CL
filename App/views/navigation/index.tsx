@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 const VERSIONS = {
   true: React.lazy(() =>

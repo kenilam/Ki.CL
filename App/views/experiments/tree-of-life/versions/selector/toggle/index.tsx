@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, HyperLink, Layout } from '@/components';
+import { Button, HyperLink, Layout } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Routes
 import { useLocation } from '@/router';

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, Layout } from '@/components';
+import { Animation, Layout } from 'design/components';
 
 // Partials
 import { Aside } from './aside';

@@ -18,10 +18,10 @@ import {
   CardFooter,
   Form,
   Layout,
-} from '@/components';
+} from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Partials
 import { Email } from './email';

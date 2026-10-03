@@ -1,7 +1,7 @@
-import type { DiagramSpec } from '@/components';
+import type { DiagramSpec } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 /** The limits, and the schema they sit behind. */
 const allowance: DiagramSpec = {

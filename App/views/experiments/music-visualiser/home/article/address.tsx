@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from '@/components';
+import { Details, Heading, Text } from 'design/components';
 
 /** The address is the player: `/play`, pause and skip as links. */
 const Address: React.FunctionComponent = () => (
