@@ -7,10 +7,10 @@ import { useLocation } from '@/router';
 import { useAnalytics } from '@/analytics';
 
 // Widgets
-import { GlobalHeaderProvider } from '@/widgets';
+import { GlobalHeaderProvider } from 'design/widgets';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Partials
 import { Contents } from './contents';

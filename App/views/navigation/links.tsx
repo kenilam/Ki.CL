@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Animation, HyperLink, List, ListItem } from '@/components';
+import { Animation, HyperLink, List, ListItem } from 'design/components';
 
 // Views
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';

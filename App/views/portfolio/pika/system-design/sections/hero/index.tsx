@@ -3,10 +3,10 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Animation, Heading, HyperLink, Layout } from '@/components';
+import { Animation, Heading, HyperLink, Layout } from 'design/components';
 
 // Partials
 import { Byline } from './byline';

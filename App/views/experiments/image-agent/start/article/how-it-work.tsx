@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from '@/components';
+import { Details, Heading, Text } from 'design/components';
 
 /** How it works: what to write, and what the agent does with it. */
 const HowItWorks: React.FunctionComponent = () => (

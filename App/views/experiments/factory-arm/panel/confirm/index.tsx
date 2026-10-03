@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Dialog, List, ListItem, Text } from '@/components';
+import { Button, Dialog, List, ListItem, Text } from 'design/components';
 
 // Constants
 import { COPY } from '@/views/experiments/factory-arm/constants';

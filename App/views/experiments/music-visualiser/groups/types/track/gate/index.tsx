@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Fa } from '@/icons';
+import * as Fa from 'react-icons/fa6';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import {

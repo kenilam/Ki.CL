@@ -7,7 +7,7 @@ import {
   Layout,
   Spinner,
   Text,
-} from '@/components';
+} from 'design/components';
 
 // Styles
 import './styles.scss';

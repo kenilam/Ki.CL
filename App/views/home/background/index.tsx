@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 // Hooks
-import { useResizeObserver } from '@/hooks';
+import { useResizeObserver } from 'design/hooks';
 
 // Spec
 import type * as Spec from './spec';

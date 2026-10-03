@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
 import {
@@ -11,7 +11,7 @@ import {
   List,
   ListItem,
   Spinner,
-} from '@/components';
+} from 'design/components';
 
 // Hooks
 import type { RunningState } from './use-running';

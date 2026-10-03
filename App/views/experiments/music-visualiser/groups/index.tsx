@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { Navigate, Route } from '@/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Catalog
 import { GROUP, TYPES } from '@/views/experiments/music-visualiser/catalog';

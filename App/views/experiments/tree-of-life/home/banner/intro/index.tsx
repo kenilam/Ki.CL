@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Text } from '@/components';
+import { Heading, HyperLink, Text } from 'design/components';
 
 // Styles
 import './styles.scss';

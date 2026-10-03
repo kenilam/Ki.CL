@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Status } from '@/components';
+import { Status } from 'design/components';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';

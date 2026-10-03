@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Fa, Ri } from '@/icons';
+import * as Fa from 'react-icons/fa6';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { draw } from '@/views/experiments/music-visualiser/catalog';

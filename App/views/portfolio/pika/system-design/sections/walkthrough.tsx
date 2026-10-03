@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout, Text } from '@/components';
+import { Heading, Layout, Text } from 'design/components';
 
 // Constants
 import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';

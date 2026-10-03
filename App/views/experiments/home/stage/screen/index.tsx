@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { ListItem } from '@/components';
+import { ListItem } from 'design/components';
 
 // Context
 import { ScreenProvider } from './context';

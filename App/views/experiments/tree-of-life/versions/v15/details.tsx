@@ -14,7 +14,7 @@ import {
   Layout,
   List,
   Text,
-} from '@/components';
+} from 'design/components';
 
 import { TaxonVisualPanel } from '@/views/experiments/tree-of-life/taxon-visual';
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';

@@ -8,7 +8,7 @@ import {
   Heading,
   Text,
   type DiagramLegendItem,
-} from '@/components';
+} from 'design/components';
 
 // Diagrams
 import { overview } from './diagrams/overview';

@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Dialog, Heading, List, ListItem, Text } from '@/components';
+import { Dialog, Heading, List, ListItem, Text } from 'design/components';
 
 // Diagrams
-import { Diagram } from '@/components';
+import { Diagram } from 'design/components';
 import { sessionModel } from '@/views/portfolio/pika/system-design/diagrams/session-model';
 
 // Constants

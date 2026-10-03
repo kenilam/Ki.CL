@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Sheet } from '@/components';
+import { Sheet } from 'design/components';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';

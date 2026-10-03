@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Design system: Components + utilities
 
-## Prefer `@/components` over raw DOM
+## Prefer `design/components` over raw DOM
 
 When a shared component exists, use it instead of the raw element:
 
@@ -67,9 +67,9 @@ border-radius: var(--kicl-size-half);
 
 ## No custom CSS unless nothing else can do it
 
-Before writing any SCSS, look in `App/components` (`popover`, `animation`, `dialog`, `card`, …) and `App/core/styles` for the behaviour. Build from component props (`variant`, `size`, `is`), `Layout` / `List` props and `kicl-*` utilities. View `styles.scss` must not restyle, animate, position or reset what a component or utility already does.
+Before writing any SCSS, look in `design/components` (`popover`, `animation`, `dialog`, `card`, …) and the design system's `core/styles` (Ki.CL-design-system) for the behaviour. Build from component props (`variant`, `size`, `is`), `Layout` / `List` props and `kicl-*` utilities. View `styles.scss` must not restyle, animate, position or reset what a component or utility already does.
 
-If something is truly missing, add it to the shared component or as a utility in `App/core/styles` and move any existing copy there. Never patch it in a view. If view CSS is unavoidable, say why in the PR.
+If something is truly missing, add it to the shared component or as a utility in the design system's `core/styles` and move any existing copy there. Never patch it in a view. If view CSS is unavoidable, say why in the PR.
 
 ```scss
 // ❌ view styles.scss re-implementing a slide-in the animation component already has
@@ -110,7 +110,7 @@ Put classes on the element that already exists. Do not add a `div`, `span` or ex
 When changing code that already exists, find the one place that should own the behaviour and change that. These are signs the shared source is wrong, not reasons to add another layer:
 
 - a flag that swaps two class sets → one component with one prop (`Composer disallow`, not `dense` + a parent picking `Allowance` vs `Composer`)
-- the same width or inset derived in two views → one token in `App/components/frame/styles.scss` and a utility in `App/core/styles`
+- the same width or inset derived in two views → one token in the design system's `components/frame/styles.scss` and a utility in its `core/styles`
 - `grid-template-rows` in view SCSS → `Layout frames='max-content--1fr'`
 - a per-link `kicl-font-size-small` on every child → `Text dense` / `List gap` on the parent
 

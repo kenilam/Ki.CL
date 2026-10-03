@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { List, ListItem, Text } from '@/components';
+import { List, ListItem, Text } from 'design/components';
 
 // Styles
 import './styles.scss';

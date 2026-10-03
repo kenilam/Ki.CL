@@ -18,7 +18,7 @@ import {
 } from 'api/provider';
 
 import { Fiber, Drei } from '@/three';
-import { Spinner, Text } from '@/components';
+import { Spinner, Text } from 'design/components';
 
 import {
   type TreeNode,

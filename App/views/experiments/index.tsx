@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { Route as Origin } from '@/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Views
 import { FactoryArm } from './factory-arm';

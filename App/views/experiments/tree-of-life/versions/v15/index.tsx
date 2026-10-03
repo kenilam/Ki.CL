@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Frame, Heading } from '@/components';
+import { Frame, Heading } from 'design/components';
 
 // Labels
 import { Labels } from './labels';
