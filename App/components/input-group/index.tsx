@@ -3,6 +3,9 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
+// Components
+import { Layout } from '@/components/layout';
+
 // Spec
 import type { InputGroupProps } from './spec';
 
@@ -25,14 +28,15 @@ import { InputGroupTextarea } from './textarea';
  */
 const InputGroup = React.forwardRef<HTMLDivElement, InputGroupProps>(
   ({ children, className, ...rest }, ref) => (
-    <div
-      ref={ref}
-      data-slot='input-group'
-      className={classNames(CLASS_NAME, className)}
-      {...rest}
-    >
-      {children}
-    </div>
+    <Layout alignItems='center' gap='narrowest' ref={ref}>
+      <div
+        data-slot='input-group'
+        className={classNames(CLASS_NAME, className)}
+        {...rest}
+      >
+        {children}
+      </div>
+    </Layout>
   )
 );
 

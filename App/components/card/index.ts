@@ -19,7 +19,7 @@ export type {
   CardProps,
   CardSectionIs,
   CardSize,
-  CardTone,
+  CardLevel,
   CardTitleIs,
   CardTitleProps,
 } from './spec';

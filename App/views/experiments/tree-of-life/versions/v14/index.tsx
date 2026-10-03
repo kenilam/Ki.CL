@@ -557,7 +557,7 @@ const MapStage: React.FunctionComponent<{
             size='small'
             in={networkBusy}
             position='inline'
-            hasBackdrop={false}
+            backdrop={false}
             className={classNames(
               `${CLASS_NAME}__status`,
               'kicl-pointer-events-none',

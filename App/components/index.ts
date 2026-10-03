@@ -54,7 +54,7 @@ import {
   type CardProps,
   type CardSectionIs,
   type CardSize,
-  type CardTone,
+  type CardLevel,
   type CardTitleIs,
   type CardTitleProps,
 } from './card';
@@ -244,7 +244,7 @@ export {
   type CardSectionIs,
   CARD_SIZES,
   type CardSize,
-  type CardTone,
+  type CardLevel,
   CardTitle,
   type CardTitleIs,
   type CardTitleProps,

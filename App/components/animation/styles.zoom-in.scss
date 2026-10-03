@@ -1,29 +1,21 @@
 .kicl--components--animation--property--zoom-in {
-  /* What it grows or shrinks from. */
-  --kicl--components--animation--property--zoom-in--scale: 0.8;
-  --kicl--components--animation--property--zoom-in--opacity: 0;
+  /* What it grows or shrinks from when out, and how faint it gets. */
+  --kicl--components--animation--property--zoom-in--scale: 1;
+  --kicl--components--animation--property--zoom-in--opacity: 1;
   --kicl--components--animation--transition-property: opacity, scale;
 
-  opacity: 1;
-  scale: 1;
+  opacity: var(--kicl--components--animation--property--zoom-in--opacity);
+  scale: var(--kicl--components--animation--property--zoom-in--scale);
   transform-origin: center;
 
-  /*
-   * Where an entering element starts. The browser reads this only for the
-   * first style change after the element renders - or after it comes back
-   * from `display: none` - and transitions away from it.
-   *
-   * Both states use the same values, so overriding the variables above moves
-   * the entrance and the exit together.
-   */
+  /* Where it starts when entering, and ends when leaving: the variables move, the properties follow. */
   @starting-style {
-    opacity: var(--kicl--components--animation--property--zoom-in--opacity);
-    scale: var(--kicl--components--animation--property--zoom-in--scale);
+    --kicl--components--animation--property--zoom-in--scale: 0.8;
+    --kicl--components--animation--property--zoom-in--opacity: 0;
   }
 
-  /* Where a leaving element ends, held until the transition finishes. */
   &:not([data-animation-in]) {
-    opacity: var(--kicl--components--animation--property--zoom-in--opacity);
-    scale: var(--kicl--components--animation--property--zoom-in--scale);
+    --kicl--components--animation--property--zoom-in--scale: 0.8;
+    --kicl--components--animation--property--zoom-in--opacity: 0;
   }
 }

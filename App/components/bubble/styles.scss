@@ -18,19 +18,16 @@
   --kicl--components--bubble--padding-block: var(--kicl-gutter-narrow);
   --kicl--components--bubble--padding-inline: var(--kicl-gutter);
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--kicl-gutter-narrowest);
   inline-size: fit-content;
   max-inline-size: var(--kicl--components--bubble--max-inline-size);
   min-inline-size: 0;
 
-  // An auto margin moves it to the end in block, flex and grid parents alike.
+  // An auto margin moves it to the end in block and grid parents alike.
   &--align--end {
     margin-inline-start: auto;
 
     > .kicl--components--bubble__content {
-      align-self: end;
+      justify-self: end;
     }
   }
 
@@ -158,19 +155,13 @@
 }
 
 .kicl--components--bubble__group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--kicl-gutter-narrow);
   min-inline-size: 0;
 }
 
 // Overlaps a corner of the bubble by three quarters of its own height.
 .kicl--components--bubble__reactions {
-  align-items: center;
   background-color: var(--kicl-surface-color);
   box-shadow: 0 0 0 var(--kicl-size-3px) var(--kicl-body-background-color);
-  display: flex;
-  gap: var(--kicl-gutter-narrowest);
   inline-size: fit-content;
   padding-block: var(--kicl-gutter-narrowest);
   padding-inline: var(--kicl-gutter-narrower);

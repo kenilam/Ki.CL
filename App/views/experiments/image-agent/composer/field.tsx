@@ -16,7 +16,6 @@ import {
   InputGroupAddon,
   InputGroupButton,
   InputGroupTextarea,
-  Spinner,
 } from '@/components';
 
 // Schema
@@ -77,7 +76,7 @@ const Field: React.FunctionComponent<Props> = ({
                 variant='ghost'
               >
                 {sending ? (
-                  <Spinner in position='inline' size='smaller' />
+                  <Ri.RiLoader4Line aria-hidden className='is-revolving' />
                 ) : (
                   <Ri.RiCornerRightUpLine aria-hidden />
                 )}

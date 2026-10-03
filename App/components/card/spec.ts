@@ -30,8 +30,8 @@ export type CardSize = (typeof CARD_SIZES)[number] | ColumnSpan;
  */
 export type CardVariant = 'default' | 'ghost';
 
-/** The status colour of the card's edge: a card that's chosen, or needs attention. */
-export type CardTone = 'confirm' | 'error' | 'info' | 'warning';
+/** What the card means, as on `Button` and `Badge`: its edge takes the colour. A card that's chosen, or needs attention. */
+export type CardLevel = 'confirm' | 'error' | 'info' | 'warning';
 
 /** Semantic hosts that read as a card / panel surface. */
 export type CardIs = 'article' | 'aside' | 'div' | 'form' | 'li' | 'section';
@@ -52,7 +52,7 @@ type CardOwnProps = {
    */
   size?: CardSize;
   variant?: CardVariant;
-  tone?: CardTone;
+  level?: CardLevel;
   children?: ReactNode;
 };
 
@@ -66,7 +66,9 @@ export type CardHeaderProps = PolymorphicIsProps<
   CardSectionIs,
   SectionOwnProps,
   'div'
->;
+> & {
+  dense?: boolean;
+};
 
 export type CardTitleProps = PolymorphicIsProps<
   CardTitleIs,
