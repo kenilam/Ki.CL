@@ -10,7 +10,7 @@ import { Button, Text } from '@/components';
 import { Ri } from '@/icons';
 
 // Constants
-import { CLASS_NAME } from '@/widgets/global-header/navigation/mobile/constants';
+import { CLASS_NAME } from '@/views/navigation/mobile/constants';
 
 // Styles
 import './styles.scss';

@@ -19,6 +19,7 @@ import { Layout } from '@/components';
 import { SCROLL_DIRECTIONS, useScrollDirection } from '@/hooks';
 
 // Partials
+import { Navigation } from './navigation';
 import { SkipLink } from './skip-link';
 
 // Constants
@@ -44,7 +45,9 @@ const Contents: React.FunctionComponent = () => {
     <>
       <ScrollRestoration />
       <SkipLink />
-      <GlobalHeader />
+      <GlobalHeader>
+        <Navigation />
+      </GlobalHeader>
       <Layout
         alignContent='start'
         alignItems='start'
