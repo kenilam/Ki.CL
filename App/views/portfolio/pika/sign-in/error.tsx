@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
 // Components
-import { Text } from '@/components';
+import { Text } from 'design/components';
 
 // Schema
 import type { SignInValues } from './schema';

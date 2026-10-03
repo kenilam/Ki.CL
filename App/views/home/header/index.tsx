@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, Layout } from '@/components';
+import { Animation, Layout } from 'design/components';
 
 // Partials
 import { Aside } from './aside';
@@ -13,9 +13,6 @@ import { Contents } from './contents';
 // Constants
 import { CONTENT_DELAY } from '@/views/home/constants';
 import { ID } from './constants';
-
-// Styles
-import './styles.scss';
 
 const CLASS_NAME = 'kicl--views--home--header';
 
@@ -33,9 +30,11 @@ const Header: React.FunctionComponent = () => {
         <header
           className={classNames(
             'kicl-inline-size-full',
+            'kicl-overflow-hidden',
             'kicl-padding-inline-extreme',
             'kicl-position-relative',
             'kicl-text-align-center',
+            'kicl-text-wrap-balance',
             CLASS_NAME
           )}
           id={ID}

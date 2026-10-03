@@ -1,4 +1,4 @@
-import type { DiagramSpec } from '@/components';
+import type { DiagramSpec } from 'design/components';
 
 /** What happens to a message once it is sent. */
 const howItWorks: DiagramSpec = {

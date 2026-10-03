@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Button, Dialog, Image } from '@/components';
+import { Button, Dialog, Image } from 'design/components';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Styles
 import './styles.scss';
@@ -47,6 +47,8 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         aria-label={COPY.open}
         className={classNames(
           `${CLASS_NAME}__open`,
+          'kicl-cursor-zoom-in',
+          'kicl-display-block',
           'kicl-inline-size-full',
           'kicl-position-relative'
         )}
@@ -57,7 +59,12 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         <Image
           alt={COPY.alt}
           borderRadius='sm'
-          className={`${CLASS_NAME}__preview`}
+          className={classNames(
+            `${CLASS_NAME}__preview`,
+            'kicl-aspect-ratio-square',
+            'kicl-display-block',
+            'kicl-inline-size-full'
+          )}
           data={url}
         />
         <Ri.RiZoomInLine
@@ -79,7 +86,7 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         <Image
           alt={COPY.alt}
           borderRadius='sm'
-          className={`${CLASS_NAME}__large`}
+          className={classNames('kicl-display-block', 'kicl-inline-size-full')}
           data={open ? url : undefined}
         />
       </Dialog>

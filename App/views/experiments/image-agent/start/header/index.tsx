@@ -1,13 +1,10 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Constants
 import {
@@ -33,13 +30,7 @@ const Header: React.FunctionComponent = () => (
       <Heading is='h1' dense className='kicl-font-size-huge'>
         {COPY.title}
       </Heading>
-      <Text
-        dense
-        is='p'
-        className={classNames(
-          'kicl-font-size-medium',
-        )}
-      >
+      <Text dense is='p' className='kicl-font-size-medium'>
         {DESCRIPTION}
       </Text>
     </header>

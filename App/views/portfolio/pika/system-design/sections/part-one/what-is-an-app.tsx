@@ -1,11 +1,12 @@
 import React from 'react';
 
 // Libraries
+import classNames from 'classnames';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-yaml';
 
 // Components
-import { Card, CardContent, Heading, Text } from '@/components';
+import { Card, CardContent, Heading, Text } from 'design/components';
 
 const MANIFEST = `# app: character-creator @ v4
 id: character-creator
@@ -45,7 +46,14 @@ const WhatIsAnApp: React.FunctionComponent = () => (
     </Text>
     <Card>
       <CardContent>
-        <Text className='kicl-font-family-mono' is='pre' unstyled>
+        <Text
+          className={classNames(
+            'kicl-font-family-mono',
+            'kicl-overflow-x-auto'
+          )}
+          is='pre'
+          unstyled
+        >
           <code
             dangerouslySetInnerHTML={{
               __html: Prism.highlight(MANIFEST, Prism.languages.yaml, 'yaml'),

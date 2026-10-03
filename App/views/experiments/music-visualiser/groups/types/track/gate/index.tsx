@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Icons
-import { Fa } from '@/icons';
+import * as Fa from 'react-icons/fa6';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import {
@@ -17,9 +17,6 @@ import {
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
-
-// Styles
-import './styles.scss';
 
 // Constants
 import {
@@ -55,7 +52,9 @@ const Gate: React.FunctionComponent = () => {
           'kicl-inset-0',
           'kicl-margin-inline-auto',
           'kicl-max-inline-size-columns-6',
+          'kicl-padding-block-end-frame',
           'kicl-padding-block-start-header',
+          'kicl-padding-inline-frame',
           'kicl-position-absolute',
           'kicl-text-align-center'
         )}

@@ -36,6 +36,11 @@ const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 const API_REMOTE_ENTRY =
   process.env.KICL_API_REMOTE_ENTRY || '/client/remoteEntry.js';
 
+// The design system remote, proxied the same way.
+const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
+const DESIGN_REMOTE_ENTRY =
+  process.env.KICL_DESIGN_REMOTE_ENTRY || '/design/remoteEntry.js';
+
 /*
  * Kept in step with `App/.server/proxy` - the two run the same site and have
  * to agree on which paths belong to the API.
@@ -110,6 +115,11 @@ const getConfig = ({
         changeOrigin: true,
         secure: false,
       },
+      '/design': {
+        target: DESIGN_URL,
+        changeOrigin: true,
+        secure: false,
+      },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
        * because a production build emits the site's own bundles there too.
@@ -147,6 +157,11 @@ const getConfig = ({
             name: 'api',
             entry: API_REMOTE_ENTRY,
           },
+          design: {
+            type: 'module',
+            name: 'design',
+            entry: DESIGN_REMOTE_ENTRY,
+          },
         },
         shared: {
           react: { singleton: true, eager: true, requiredVersion: '^19.0.0' },
@@ -156,6 +171,9 @@ const getConfig = ({
             requiredVersion: '^19.0.0',
           },
           '@apollo/client': { singleton: true, requiredVersion: '^4.0.0' },
+          // The design system reads the router and form context views create.
+          'react-router-dom': { singleton: true, requiredVersion: '^7.0.0' },
+          'react-hook-form': { singleton: true, requiredVersion: '^7.0.0' },
         },
         dev: {
           /*
@@ -192,6 +210,11 @@ const getConfig = ({
                 alias: 'api',
                 api: `${BACKEND_URL}/client/types.d.ts`,
                 zip: `${BACKEND_URL}/client/types.zip`,
+              },
+              design: {
+                alias: 'design',
+                api: `${DESIGN_URL}/design/types.d.ts`,
+                zip: `${DESIGN_URL}/design/types.zip`,
               },
             },
           },
@@ -381,6 +404,8 @@ const getConfig = ({
           'react/jsx-runtime',
           'react/jsx-dev-runtime',
           '@apollo/client',
+          'react-router-dom',
+          'react-hook-form',
         ],
       },
       plugins,

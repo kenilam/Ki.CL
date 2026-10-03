@@ -4,14 +4,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout } from '@/components';
+import { Layout } from 'design/components';
 
 // Partials
 import { Article } from './article';
 import { Banner } from './banner';
-
-// Styles
-import './styles.scss';
 
 // Constants
 import { CLASS_NAME } from './constants';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Status, type StatusProps } from '@/components';
+import { Status, type StatusProps } from 'design/components';
 
 // Spec
 import type { Message } from '@/views/experiments/image-agent/chat/conversation/spec';

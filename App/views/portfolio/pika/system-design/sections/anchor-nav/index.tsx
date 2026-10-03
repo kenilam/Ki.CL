@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout, Navigation } from '@/components';
+import { Layout, Navigation } from 'design/components';
 
 // Styles
 import './styles.scss';

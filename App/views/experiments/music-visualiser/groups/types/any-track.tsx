@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Routes
-import { Navigate, useParams } from '@/router';
+import { Navigate, useParams } from 'design/router';
 
 // Catalog
 import { draw } from '@/views/experiments/music-visualiser/catalog';

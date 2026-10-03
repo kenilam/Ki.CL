@@ -1,5 +1,5 @@
 import React from 'react';
-import { HyperLink } from '@/components';
+import { HyperLink } from 'design/components';
 import { PATH as EXPERIMENTS } from '@/views/experiments/constants';
 
 const COPY = {

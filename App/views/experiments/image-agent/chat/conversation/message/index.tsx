@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Bubble, Card, Layout, Text } from '@/components';
+import { Bubble, Card, Layout, Text } from 'design/components';
 
 // Partials
 import { Choices } from './choices';
@@ -76,6 +76,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
             gap='narrowest'
             justifyContent='end'
           >
+            {/* Puts the retry button beside the text, outside its bubble. */}
             <div>
               {onRetry ? <Retry onRetry={() => onRetry(message.id)} /> : null}
               <MessageText
@@ -92,14 +93,12 @@ const Message = React.forwardRef<HTMLElement, Props>(
         ) : null}
 
         {message.kind === 'IMAGE' ? (
-          <Layout gap='narrow'>
-            <Card size='fit' variant='ghost'>
-              {message.asset?.url ? (
-                <Picture title={title} url={message.asset.url} />
-              ) : null}
-              {message.score ? <Review score={message.score} /> : null}
-            </Card>
-          </Layout>
+          <Card size='fit' variant='ghost'>
+            {message.asset?.url ? (
+              <Picture title={title} url={message.asset.url} />
+            ) : null}
+            {message.score ? <Review score={message.score} /> : null}
+          </Card>
         ) : null}
       </Bubble>
     );

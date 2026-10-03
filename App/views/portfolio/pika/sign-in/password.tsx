@@ -10,7 +10,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
-} from '@/components';
+} from 'design/components';
 
 // Schema
 import type { SignInValues } from './schema';

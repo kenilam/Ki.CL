@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Route as Origin } from '@/router';
+import { Route as Origin } from 'design/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 const PATH = '';
 

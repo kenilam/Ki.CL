@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import {
   useQuery,
   Kicl_TreeOfLifeSubtreeDocument,
@@ -7,7 +10,7 @@ import {
 } from 'api/provider';
 
 import { Fiber, Drei } from '@/three';
-import { Spinner, Text } from '@/components';
+import { Spinner, Text } from 'design/components';
 
 import {
   type TreeNode,
@@ -209,7 +212,13 @@ const Canvas: React.FunctionComponent = () => {
 
   if (error) {
     return (
-      <Text className={`${CLASS_NAME}__error kicl-color-error`}>
+      <Text
+        className={classNames(
+          'kicl-color-error',
+          'kicl-margin-block-wide',
+          'kicl-margin-inline-wide'
+        )}
+      >
         {error.message}
       </Text>
     );
@@ -224,11 +233,11 @@ const Canvas: React.FunctionComponent = () => {
   }
 
   return (
-    <div className={CLASS_NAME}>
+    <figure className={classNames(CLASS_NAME, 'kicl-block-size-screen')}>
       <Fiber.Canvas camera={{ position: [0, 0, 18], fov: 45 }}>
         <Scene tree={tree} onExpand={onExpand} expandingId={expandingId} />
       </Fiber.Canvas>
-    </div>
+    </figure>
   );
 };
 

@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Outlet, Route } from '@/router';
+import { Navigate, Outlet, Route } from 'design/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Views
 import { SystemDesign } from './system-design';

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Context
-import { useGlobalHeaderContext } from '@/widgets/global-header/context';
+import { useGlobalHeaderContext } from 'design/widgets';
 
 // Styles
 import './styles.scss';
@@ -30,8 +30,10 @@ const ScrollIndicator: React.FunctionComponent = () => {
         'kicl-inline-size-full',
         'kicl-inset-inline-start-0',
         'kicl-position-fixed',
+        'kicl-z-index-raised',
         {
-          [`${CLASS_NAME}--under-header`]: show,
+          'kicl-inset-block-start-0': !show,
+          'kicl-inset-block-start-header': show,
         }
       )}
     />

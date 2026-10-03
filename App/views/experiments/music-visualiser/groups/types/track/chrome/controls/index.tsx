@@ -1,13 +1,17 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Icons
-import { Fa, Ri } from '@/icons';
+import * as Fa from 'react-icons/fa6';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { HyperLink, Layout, Spinner } from '@/components';
+import { HyperLink, Layout, List, ListItem } from 'design/components';
 
 // Hooks
-import { useResponsive } from '@/hooks';
+import { useResponsive } from 'design/hooks';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -49,9 +53,10 @@ const Controls: React.FunctionComponent = () => {
       justifyContent='end'
       justifyItems='end'
     >
-      <div className={CLASS_NAME}>
-        <Layout alignItems='center' autoFlow='column' gap='narrow'>
-          <div>
+      {/* Fades as one while the listener is still. */}
+      <div className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}>
+        <List alignItems='center' autoFlow='column' gap='narrow'>
+          <ListItem>
             <HyperLink
               aria-label={COPY.pause}
               lookLikeButton
@@ -60,11 +65,13 @@ const Controls: React.FunctionComponent = () => {
               variant='secondary'
             >
               {control.loading ? (
-                <Spinner position='inline' size='small' />
+                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
               ) : (
                 <Fa.FaPause aria-hidden />
               )}
             </HyperLink>
+          </ListItem>
+          <ListItem>
             <HyperLink
               aria-label={COPY.next}
               disabled={!next}
@@ -75,9 +82,11 @@ const Controls: React.FunctionComponent = () => {
             >
               <Ri.RiSkipForwardFill aria-hidden />
             </HyperLink>
+          </ListItem>
+          <ListItem>
             <CopyLink />
-          </div>
-        </Layout>
+          </ListItem>
+        </List>
         <Volume />
       </div>
     </Layout>

@@ -4,13 +4,13 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, HyperLink, Layout } from '@/components';
+import { Button, HyperLink, Layout } from 'design/components';
 
 // Icons
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Routes
-import { useLocation } from '@/router';
+import { useLocation } from 'design/router';
 
 // Styles
 import './styles.scss';
@@ -42,13 +42,17 @@ const Toggle: React.FunctionComponent = () => {
 
   return (
     <Layout
-      className='kicl-position-fixed kicl-inset-block-end kicl-inset-inline-end'
+      className={classNames(
+        'kicl-position-fixed',
+        'kicl-inset-block-end',
+        'kicl-inset-inline-end'
+      )}
       alignItems='center'
       autoFlow='column'
       justifyContent='end'
       gap='narrow'
     >
-      <div>
+      <nav aria-label='Tree of Life'>
         <HyperLink
           before={<Ri.RiArrowLeftSLine aria-hidden />}
           className='kicl-font-size-small'
@@ -63,8 +67,9 @@ const Toggle: React.FunctionComponent = () => {
           alignItems='center'
           gap='narrower'
           className={classNames(
+            `${CLASS_NAME}__toggle`,
             'kicl-font-size-small',
-            `${CLASS_NAME}__toggle`
+            'kicl-z-index-popover'
           )}
           popoverTarget={CLASS_NAME}
           title='Every version of this view'
@@ -72,7 +77,7 @@ const Toggle: React.FunctionComponent = () => {
           <Ri.RiStackLine aria-hidden />
           {version === LIVE ? 'Final version' : `Version ${version}`}
         </Button>
-      </div>
+      </nav>
     </Layout>
   );
 };

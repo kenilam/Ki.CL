@@ -1,10 +1,13 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { List, Spinner, Status } from '@/components';
+import { List, Spinner, Status } from 'design/components';
 
 // Routes
-import { Navigate } from '@/router';
+import { Navigate } from 'design/router';
 
 // Helper
 import { GetErrorCode } from '@/helper';
@@ -17,9 +20,6 @@ import { Pending } from './pending';
 import { useFresh } from './use-fresh';
 import { useStickToBottom } from './use-stick-to-bottom';
 import type { ThreadState } from './use-thread';
-
-// Styles
-import './styles.scss';
 
 // Constants
 import { toLabel, toPath } from '@/views/experiments/image-agent/constants';
@@ -82,7 +82,7 @@ const Conversation: React.FunctionComponent<Props> = ({
     <List
       is='ol'
       alignContent='start'
-      className={CLASS_NAME}
+      className={classNames(CLASS_NAME, 'kicl-padding-block-end-widest')}
       gap='wide'
       ref={list}
       justifyItems='stretch'

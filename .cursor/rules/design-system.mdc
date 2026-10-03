@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Design system: Components + utilities
 
-## Prefer `@/components` over raw DOM
+## Prefer `design/components` over raw DOM
 
 When a shared component exists, use it instead of the raw element:
 
@@ -64,6 +64,57 @@ border-radius: var(--kicl-size-half);
 ```
 
 `background` / `border-color` still use `var(--kicl-color-*)` in SCSS (`kicl-background-color-*` sets **fill**). SVG `stroke` halos stay as vars.
+
+## No custom CSS unless nothing else can do it
+
+Before writing any SCSS, look in `design/components` (`popover`, `animation`, `dialog`, `card`, …) and the design system's `core/styles` (Ki.CL-design-system) for the behaviour. Build from component props (`variant`, `size`, `is`), `Layout` / `List` props and `kicl-*` utilities. View `styles.scss` must not restyle, animate, position or reset what a component or utility already does.
+
+If something is truly missing, add it to the shared component or as a utility in the design system's `core/styles` and move any existing copy there. Never patch it in a view. If view CSS is unavoidable, say why in the PR.
+
+```scss
+// ❌ view styles.scss re-implementing a slide-in the animation component already has
+.kicl--views--factory-arm__panel {
+  transform: translateX(100%);
+  transition: transform 0.3s;
+  &[open] { transform: none; }
+}
+```
+
+```tsx
+// ✅
+<Animation property='slide-from-right'>…</Animation>
+```
+
+## No extra wrappers
+
+Put classes on the element that already exists. Do not add a `div`, `span` or extra `Layout` only to carry classes, spacing or positioning. Keep a wrapper only when it does a job nothing else can: a clipping box, a shared coordinate space, a semantic element.
+
+```tsx
+// ❌
+<span className='kicl-position-absolute kicl-inset-0'>
+  <Ri.RiZoomInLine />
+</span>
+<Layout gap='narrow'>
+  <section>…</section>
+  <section>…</section>
+</Layout>
+
+// ✅
+<Ri.RiZoomInLine className='kicl-position-absolute kicl-inset-0' />
+<section className='kicl-padding-block-frame'>…</section>
+<section className='kicl-padding-block-frame'>…</section>
+```
+
+## Rethink before layering
+
+When changing code that already exists, find the one place that should own the behaviour and change that. These are signs the shared source is wrong, not reasons to add another layer:
+
+- a flag that swaps two class sets → one component with one prop (`Composer disallow`, not `dense` + a parent picking `Allowance` vs `Composer`)
+- the same width or inset derived in two views → one token in the design system's `components/frame/styles.scss` and a utility in its `core/styles`
+- `grid-template-rows` in view SCSS → `Layout frames='max-content--1fr'`
+- a per-link `kicl-font-size-small` on every child → `Text dense` / `List gap` on the parent
+
+Prefer deleting code to adding it.
 
 ## Rewrite legacy patterns
 

@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from '@/components';
+import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Context
 import { useScreenContext } from '../context';
@@ -28,13 +28,15 @@ const Words: React.FunctionComponent = () => {
   return (
     // Rows packed at the end: every block is as tall as the tallest, so a shorter one would spread otherwise.
     <Layout alignContent='end' autoFlow='row' gap='narrow' justifyItems='start'>
-      <div
+      <article
         className={classNames(
           CLASS_NAME,
           'kicl-animation-none-reduced-motion',
           'kicl-padding-block-extreme',
+          'kicl-padding-inline-frame-columns-12',
           'kicl-pointer-events-auto',
-          'kicl-position-relative'
+          'kicl-position-relative',
+          'kicl-z-index-raised'
         )}
       >
         <Text
@@ -63,7 +65,6 @@ const Words: React.FunctionComponent = () => {
           is='p'
           dense
           className={classNames(
-            `${CLASS_NAME}__description`,
             'kicl-font-size-small',
             'kicl-max-inline-size-columns-5'
           )}
@@ -82,7 +83,7 @@ const Words: React.FunctionComponent = () => {
             {`: ${experiment.title}`}
           </Text>
         </HyperLink>
-      </div>
+      </article>
     </Layout>
   );
 };

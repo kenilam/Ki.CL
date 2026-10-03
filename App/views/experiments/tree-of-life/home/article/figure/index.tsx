@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Button, Dialog, Image, Layout, Text } from '@/components';
+import { Button, Dialog, Image, Layout, Text } from 'design/components';
 
 // Spec
 import * as Spec from './spec';
@@ -21,7 +24,10 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
       <Layout alignItems='center' justifyContent='center'>
         <Button
           aria-label={`${alt} Open the full image.`}
-          className={`${CLASS_NAME}__preview`}
+          className={classNames(
+            `${CLASS_NAME}__preview`,
+            'kicl-cursor-zoom-in'
+          )}
           command='show-modal'
           commandFor={data}
           unstyled
@@ -42,11 +48,8 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
         fullScreen
         id={data}
       >
-        <Layout alignItems='center' justifyContent='center'>
-          <div>
-            <Image data={data} alt={alt} />
-          </div>
-        </Layout>
+        {/* A grid item of the dialog's own layout, so auto margins centre it. */}
+        <Image className='kicl-margin-inline-auto' data={data} alt={alt} />
       </Dialog>
     </figure>
   );

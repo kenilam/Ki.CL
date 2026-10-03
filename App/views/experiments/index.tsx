@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Route as Origin } from '@/router';
+import { Route as Origin } from 'design/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Views
+import { FactoryArm } from './factory-arm';
 import { ImageAgent } from './image-agent';
 import { MusicVisualiser } from './music-visualiser';
 import { TreeOfLife } from './tree-of-life';
@@ -42,6 +43,7 @@ const Experiments = (
     {TreeOfLife}
     {MusicVisualiser}
     {ImageAgent}
+    {FactoryArm}
   </Origin>
 );
 

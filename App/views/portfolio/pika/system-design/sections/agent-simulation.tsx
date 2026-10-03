@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout, Text } from '@/components';
+import { Heading, Layout, Text } from 'design/components';
 
 // Diagrams
 import { agentPlane } from '@/views/portfolio/pika/system-design/diagrams/agent-plane';

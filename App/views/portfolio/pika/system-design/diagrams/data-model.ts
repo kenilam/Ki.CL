@@ -1,4 +1,4 @@
-import type { DiagramSpec as Spec } from '@/components';
+import type { DiagramSpec as Spec } from 'design/components';
 
 /** Core data model - entities, attributes, and how records relate. */
 const dataModel: Spec = {

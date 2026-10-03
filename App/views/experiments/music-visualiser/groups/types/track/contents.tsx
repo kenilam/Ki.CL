@@ -4,10 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Routes
-import { Navigate, Outlet, useMatch, useParams } from '@/router';
+import { Navigate, Outlet, useMatch, useParams } from 'design/router';
 
 // Components
-import { Frame, Layout } from '@/components';
+import { Frame, Layout } from 'design/components';
 
 // Catalog
 import { keyOf } from '@/views/experiments/music-visualiser/catalog';
@@ -22,9 +22,6 @@ import { TrackProvider } from './context';
 import { Chrome } from './chrome';
 import { Gate } from './gate';
 import { Visualiser } from './visualiser';
-
-// Styles
-import './styles.scss';
 
 // Constants
 import {
@@ -50,8 +47,9 @@ const Contents: React.FunctionComponent = () => {
   return (
     <TrackProvider control={control} next={next} track={track}>
       <Layout autoFlow='row' gap='none'>
+        {/* The frame clips the picture and the player to the window. */}
         <Frame>
-          <div
+          <article
             className={classNames(`${VIEW}__track`, 'kicl-position-relative')}
           >
             <Visualiser
@@ -61,7 +59,7 @@ const Contents: React.FunctionComponent = () => {
             />
             {isPlay ? <Chrome /> : <Gate />}
             <Outlet />
-          </div>
+          </article>
         </Frame>
       </Layout>
     </TrackProvider>

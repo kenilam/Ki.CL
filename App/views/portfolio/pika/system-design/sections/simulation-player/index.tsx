@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 // Components
-import { Button, Card, CardContent, Layout, Spinner } from '@/components';
+import { Button, Card, CardContent, Layout } from 'design/components';
+
+// Icons
+import * as Ri from 'react-icons/ri';
 
 // Diagrams
-import { Diagram } from '@/components';
-import type { DiagramSpec as Spec } from '@/components';
+import { Diagram } from 'design/components';
+import type { DiagramSpec as Spec } from 'design/components';
 
 // Context
 import { type DotState, type PlayerStep, SimulationContext } from './context';
@@ -110,9 +113,11 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
             size='small'
             type='button'
           >
+            {playing ? (
+              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+            ) : null}
             {finished ? 'Replay' : playing ? 'Running' : runLabel}
           </Button>
-          <Spinner in={playing} position='inline' size='small' />
         </div>
       </Layout>
       <Diagram
@@ -121,14 +126,12 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
         state={{ active: current?.active, failed: current?.failed }}
       />
       <Card className='kicl-inline-size-full' size='sm'>
-        <CardContent>
-          <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-            <div>
-              <Status />
-              <Log />
-            </div>
-          </Layout>
-        </CardContent>
+        <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
+          <CardContent>
+            <Status />
+            <Log />
+          </CardContent>
+        </Layout>
       </Card>
     </SimulationContext.Provider>
   );

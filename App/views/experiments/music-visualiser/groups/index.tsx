@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Navigate, Route } from '@/router';
+import { Navigate, Route } from 'design/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Catalog
 import { GROUP, TYPES } from '@/views/experiments/music-visualiser/catalog';

@@ -1,8 +1,0 @@
-{
-  "name": "app.widgets",
-  "version": "0.0.1",
-  "workspaces": [
-    "MapBox",
-    "Schedular"
-  ]
-}

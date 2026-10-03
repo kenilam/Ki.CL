@@ -1,7 +1,10 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
-import { Bubble, Text } from '@/components';
+import { Bubble, Text } from 'design/components';
 
 // Partials
 import { MessageText } from '@/views/experiments/image-agent/chat/conversation/message/text';
@@ -43,7 +46,7 @@ const Pending = React.forwardRef<HTMLElement, Props>(
     return (
       <Bubble
         is='li'
-        className={`${CLASS_NAME} kicl-scroll-reveal-start`}
+        className={classNames(CLASS_NAME, 'kicl-scroll-reveal-start')}
         ref={ref}
         variant='ghost'
       >
@@ -53,7 +56,11 @@ const Pending = React.forwardRef<HTMLElement, Props>(
             aria-hidden
             dense
             is='span'
-            className='kicl-font-family-mono kicl-font-size-smaller kicl-color-grey-dark'
+            className={classNames(
+              'kicl-font-family-mono',
+              'kicl-font-size-smaller',
+              'kicl-color-grey-dark'
+            )}
           >
             {COPY.elapsed(seconds)}
           </Text>

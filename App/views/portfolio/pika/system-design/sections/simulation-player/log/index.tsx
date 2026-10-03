@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { List, ListItem, Text } from '@/components';
+import { List, ListItem, Text } from 'design/components';
 
 // Styles
 import './styles.scss';
@@ -32,7 +32,8 @@ const Log: React.FunctionComponent = () => {
         CLASS_NAME,
         'kicl-font-family-mono',
         'kicl-font-size-small',
-        'kicl-margin-block-start-narrow'
+        'kicl-margin-block-start-narrow',
+        'kicl-overflow-y-auto'
       )}
       ref={ref}
       role='log'

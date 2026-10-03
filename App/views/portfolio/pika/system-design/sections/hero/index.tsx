@@ -3,10 +3,10 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-import { Ri } from '@/icons';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Animation, Heading, HyperLink, Layout } from '@/components';
+import { Animation, Heading, HyperLink, Layout } from 'design/components';
 
 // Partials
 import { Byline } from './byline';
@@ -39,7 +39,8 @@ const Hero: React.FunctionComponent = () => {
             className={classNames(
               'kicl-padding-inline-extreme',
               'kicl-position-relative',
-              'kicl-text-align-center'
+              'kicl-text-align-center',
+              'kicl-text-wrap-balance'
             )}
           >
             <Heading className='kicl-font-size-largest' dense is='h1'>

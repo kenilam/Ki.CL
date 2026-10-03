@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 
 // Routes
-import { Route } from '@/router';
+import { Route } from 'design/router';
 
 // Components
-import { Spinner } from '@/components';
+import { Spinner } from 'design/components';
 
 // Constants
 import { PATH, THREAD_PATTERN } from './constants';
