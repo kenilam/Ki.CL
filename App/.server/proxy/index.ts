@@ -7,6 +7,8 @@ import {
 } from 'http-proxy-middleware';
 import { GoogleAuth } from 'google-auth-library';
 
+import { checkClientToken } from '../client-token';
+
 /**
  * Reverse proxy to the API and the design system, neither of which is reachable
  * from the internet.
@@ -29,6 +31,9 @@ const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 
 /** Where the design system remote lives. Same arrangement as the API. */
 const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
+
+/** Where the moonshot exercise lives: its remote and its API, under `/moonshot`. */
+const MOONSHOT_URL = process.env.KICL_MOONSHOT_URL || 'http://localhost:3301';
 
 /**
  * Identity tokens last an hour. Refreshed well inside that, and kept in memory
@@ -148,9 +153,10 @@ const ROUTES: Array<{
   })),
   // The design system's remote, at the same path it is served from.
   { path: '/design', target: DESIGN_URL },
+  { path: '/moonshot', target: MOONSHOT_URL },
 ];
 
-const AUDIENCES = [BACKEND_URL, DESIGN_URL];
+const AUDIENCES = [BACKEND_URL, DESIGN_URL, MOONSHOT_URL];
 
 export async function warmIdToken(): Promise<void> {
   await Promise.all(AUDIENCES.map(mintIdToken));
@@ -171,9 +177,20 @@ let subscriptions: RequestHandler | null = null;
 export function attachUpgrade(server: Server): void {
   const upgrade = subscriptions?.upgrade;
 
-  if (upgrade) {
-    server.on('upgrade', upgrade);
+  if (!upgrade) {
+    return;
   }
+
+  // Upgrades skip Express, so a client token is checked here too.
+  server.on('upgrade', (request, socket, head) => {
+    if (checkClientToken(request) === null) {
+      socket.destroy();
+
+      return;
+    }
+
+    upgrade(request, socket, head);
+  });
 }
 
 export function applyProxy(app: Express): void {
@@ -222,4 +239,4 @@ export function applyProxy(app: Express): void {
   });
 }
 
-export { BACKEND_URL, DESIGN_URL };
+export { BACKEND_URL, DESIGN_URL, MOONSHOT_URL };
