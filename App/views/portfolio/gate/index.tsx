@@ -7,11 +7,16 @@ const Contents = React.lazy(() =>
   import('./contents').then(({ Contents }) => ({ default: Contents }))
 );
 
-/** Credential gate for the portfolio pieces: its child routes need a sign-in. */
-const Gate: React.FunctionComponent = () => {
+type GateProps = React.ComponentProps<typeof Contents>;
+
+/**
+ * Credential gate for a portfolio piece: its child routes need a sign-in by a
+ * user with access to the piece at `path`.
+ */
+const Gate: React.FunctionComponent<GateProps> = (props) => {
   return (
     <Suspense fallback={<Spinner />}>
-      <Contents />
+      <Contents {...props} />
     </Suspense>
   );
 };
