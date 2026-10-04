@@ -60,6 +60,14 @@ start:
 	yarn run start
 	@echo ✅ done
 
+# Client tokens for running a federated module against a deployment from
+# localhost. The private key stays in ~/.kicl; only the public key is deployed.
+client-token.keys:
+	@yarn workspace app.server exec tsx client-token/cli.ts keys
+
+client-token:
+	@yarn workspace app.server exec tsx client-token/cli.ts mint --sub "$(SUB)" --days "$(or $(DAYS),14)"
+
 test:
 	@echo ⌛ running testing...
 	yarn run test
