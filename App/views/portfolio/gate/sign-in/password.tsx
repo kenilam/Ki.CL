@@ -9,7 +9,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
+  PasswordInput,
 } from 'design/components';
 
 // Schema
@@ -26,7 +26,7 @@ const Password: React.FunctionComponent = () => {
         <FormItem>
           <FormLabel>Password</FormLabel>
           <FormControl>
-            <Input {...field} autoComplete='current-password' type='password' />
+            <PasswordInput {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

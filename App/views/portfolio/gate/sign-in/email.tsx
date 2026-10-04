@@ -4,12 +4,12 @@ import { useFormContext } from 'react-hook-form';
 
 // Components
 import {
+  EmailInput,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
 } from 'design/components';
 
 // Schema
@@ -26,11 +26,10 @@ const Email: React.FunctionComponent = () => {
         <FormItem>
           <FormLabel>Email</FormLabel>
           <FormControl>
-            <Input
+            <EmailInput
               {...field}
               autoComplete='username'
               placeholder='you@example.com'
-              type='email'
             />
           </FormControl>
           <FormMessage />
