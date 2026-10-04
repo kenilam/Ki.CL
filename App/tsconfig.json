@@ -19,6 +19,12 @@
       ],
       "design/*": [
         "./@mf-types/design/*"
+      ],
+      "moonshot": [
+        "./@mf-types/moonshot"
+      ],
+      "moonshot/*": [
+        "./@mf-types/moonshot/*"
       ]
     },
     "types": [

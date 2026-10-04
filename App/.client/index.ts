@@ -41,6 +41,11 @@ const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
 const DESIGN_REMOTE_ENTRY =
   process.env.KICL_DESIGN_REMOTE_ENTRY || '/design/remoteEntry.js';
 
+// The moonshot exercise under /portfolio, its remote and API both at /moonshot.
+const MOONSHOT_URL = process.env.KICL_MOONSHOT_URL || 'http://localhost:3301';
+const MOONSHOT_REMOTE_ENTRY =
+  process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
+
 /*
  * Kept in step with `App/.server/proxy` - the two run the same site and have
  * to agree on which paths belong to the API.
@@ -120,6 +125,11 @@ const getConfig = ({
         changeOrigin: true,
         secure: false,
       },
+      '/moonshot': {
+        target: MOONSHOT_URL,
+        changeOrigin: true,
+        secure: false,
+      },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
        * because a production build emits the site's own bundles there too.
@@ -161,6 +171,11 @@ const getConfig = ({
             type: 'module',
             name: 'design',
             entry: DESIGN_REMOTE_ENTRY,
+          },
+          moonshot: {
+            type: 'module',
+            name: 'moonshot',
+            entry: MOONSHOT_REMOTE_ENTRY,
           },
         },
         shared: {
@@ -215,6 +230,12 @@ const getConfig = ({
                 alias: 'design',
                 api: `${DESIGN_URL}/design/types.d.ts`,
                 zip: `${DESIGN_URL}/design/types.zip`,
+              },
+              // Built with the plugin's default type file names.
+              moonshot: {
+                alias: 'moonshot',
+                api: `${MOONSHOT_URL}/moonshot/@mf-types.d.ts`,
+                zip: `${MOONSHOT_URL}/moonshot/@mf-types.zip`,
               },
             },
           },

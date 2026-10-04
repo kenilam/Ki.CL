@@ -15,7 +15,7 @@ const Portfolio: React.FunctionComponent = () => {
         autoFlow='row'
         gap='none'
         justifyContent='center'
-        justifyItems='center'
+        justifyItems='stretch'
       >
         <div className={CLASS_NAME}>
           <Outlet />
