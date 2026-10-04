@@ -3,9 +3,6 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Context
-import { useGlobalHeaderContext } from 'design/widgets';
-
 // Styles
 import './styles.scss';
 
@@ -20,21 +17,16 @@ const CLASS_NAME = `${HOME}__scroll-indicator`;
  * top of the viewport while the header is hidden, so it never floats.
  */
 const ScrollIndicator: React.FunctionComponent = () => {
-  const { show } = useGlobalHeaderContext();
-
   return (
     <div
       aria-hidden
       className={classNames(
         CLASS_NAME,
         'kicl-inline-size-full',
+        'kicl-inset-block-start-header',
         'kicl-inset-inline-start-0',
-        'kicl-position-fixed',
-        'kicl-z-index-raised',
-        {
-          'kicl-inset-block-start-0': !show,
-          'kicl-inset-block-start-header': show,
-        }
+        'kicl-position-sticky',
+        'kicl-z-index-raised'
       )}
     />
   );
