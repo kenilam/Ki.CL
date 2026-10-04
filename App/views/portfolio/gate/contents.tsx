@@ -14,15 +14,21 @@ import { SignIn } from './sign-in';
 // Constants
 import { SESSION_ENDED } from './constants';
 
+type Props = {
+  /** The piece's path segment, as stored in Ki.CL-back's `portfolio`. */
+  path: string;
+};
+
 /**
  * The portfolio pieces are shared with a small audience on purpose - the gate
  * rides the platform's existing credential flow (SignIn mutation + session
- * cookies) rather than inventing a second one.
+ * cookies) rather than inventing a second one. Each piece has its own list of
+ * users (`portfolio-access`), so signing in for one doesn't open the others.
  *
  * It asks the server rather than reading the `aud` cookie: a session signed
  * out or revoked elsewhere keeps its cookies until they expire.
  */
-const Contents: React.FunctionComponent = () => {
+const Contents: React.FunctionComponent<Props> = ({ path }) => {
   const { data, error, loading, refetch } = useQuery(Kicl_MeDocument, {
     fetchPolicy: 'network-only',
   });
@@ -39,8 +45,14 @@ const Contents: React.FunctionComponent = () => {
     return <Spinner />;
   }
 
-  if (error || data?.Me?.aud !== 'user') {
-    return <SignIn onSignedIn={() => void refetch()} />;
+  const me = error ? undefined : data?.Me;
+  const signedIn = me?.aud === 'user';
+  const allowed = Boolean(
+    signedIn && me.Portfolios.some((portfolio) => portfolio.Path === path)
+  );
+
+  if (!allowed) {
+    return <SignIn denied={signedIn} onSignedIn={() => void refetch()} />;
   }
 
   return <Outlet />;

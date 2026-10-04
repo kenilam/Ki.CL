@@ -4,18 +4,25 @@ import React from 'react';
 import { CardDescription, CardHeader, CardTitle } from 'design/components';
 
 const COPY = {
+  denied:
+    'This account can’t open this piece. Sign in with the credentials you were given for it.',
   description:
     'This piece is shared with a small audience. Sign in with the credentials you were given.',
   title: 'Private portfolio',
 };
 
-const Header: React.FunctionComponent = () => (
+type Props = {
+  /** Signed in, but without access to this piece. */
+  denied?: boolean;
+};
+
+const Header: React.FunctionComponent<Props> = ({ denied = false }) => (
   <CardHeader>
     {/* The page's only heading, kept at the card title's size. */}
     <CardTitle className='kicl-font-size' is='h1'>
       {COPY.title}
     </CardTitle>
-    <CardDescription>{COPY.description}</CardDescription>
+    <CardDescription>{denied ? COPY.denied : COPY.description}</CardDescription>
   </CardHeader>
 );
 
