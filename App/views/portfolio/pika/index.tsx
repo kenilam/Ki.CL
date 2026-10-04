@@ -17,7 +17,7 @@ import { PATH } from './constants';
 const Pika = (
   <Route path={PATH} element={<Outlet />}>
     <Route index element={<Navigate replace to='system-design' />} />
-    <Route element={<Gate />}>{SystemDesign}</Route>
+    <Route element={<Gate path={PATH} />}>{SystemDesign}</Route>
   </Route>
 );
 

@@ -32,11 +32,11 @@ import { Password } from './password';
 // Schema
 import { SignInSchema, type SignInValues } from './schema';
 
-type Props = {
+type Props = React.ComponentProps<typeof Header> & {
   onSignedIn: () => void;
 };
 
-const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
+const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
   const form = useForm<SignInValues>({
     defaultValues: { Email: '', Password: '' },
     resolver: valibotResolver(SignInSchema),
@@ -84,7 +84,7 @@ const SignIn: React.FunctionComponent<Props> = ({ onSignedIn }) => {
       >
         <section>
           <Card className='kicl-inline-size-xl'>
-            <Header />
+            <Header denied={denied} />
             <Layout
               alignContent='start'
               alignItems='start'
