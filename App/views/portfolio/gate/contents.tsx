@@ -9,11 +9,11 @@ import { Outlet } from 'design/router';
 import { SignIn } from './sign-in';
 
 /**
- * Everything under /portfolio/pika is shared with a small audience on
- * purpose - the gate rides the platform's existing credential flow (SignIn
- * mutation + `aud` session cookie) rather than inventing a second one.
+ * The portfolio pieces are shared with a small audience on purpose - the gate
+ * rides the platform's existing credential flow (SignIn mutation + `aud`
+ * session cookie) rather than inventing a second one.
  */
-const Pika: React.FunctionComponent = () => {
+const Contents: React.FunctionComponent = () => {
   const [authenticated, setAuthenticated] = useState(isAuthenticated);
 
   const onSignedIn = useCallback(() => {
@@ -27,4 +27,4 @@ const Pika: React.FunctionComponent = () => {
   return <Outlet />;
 };
 
-export { Pika };
+export { Contents };

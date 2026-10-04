@@ -16,6 +16,7 @@ import config from '../app.config.json' with { type: 'json' };
 
 import { Env } from '../env';
 
+import { applyClientToken } from './client-token';
 import { applyCollect } from './collect';
 import { applyGate } from './gate';
 import { applyProxy, attachUpgrade, warmIdToken } from './proxy';
@@ -35,6 +36,9 @@ async function Server() {
     const baseurl = [appRoot.path, 'App', 'build'].filter(Boolean).join('/');
 
     const app = express();
+
+    // Before the gate, which lets a verified client through.
+    applyClientToken(app);
 
     applyGate(app);
 

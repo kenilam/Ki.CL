@@ -16,6 +16,8 @@ make test                # npx jest
 make deploy              # build:client, then FTP deploy (temporary, being replaced by GitHub auto-deploy)
 make codegen             # run codegen (type generation)
 make start               # yarn install + development (one-step bootstrap)
+make client-token.keys   # once: Ed25519 pair, private key in ~/.kicl, prints KICL_CLIENT_PUBLIC_KEY
+make client-token SUB=jane@example.com DAYS=14   # a client token for running a federated module against dev
 ```
 
 Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn lint:stylelint` (`App/**/*.{css,scss} --fix`), `yarn lint:staged` (husky pre-commit, prettier+oxlint+stylelint via `lint-staged`). Single test file: `npx jest App/path/to/File.test.tsx`.

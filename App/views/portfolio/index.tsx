@@ -7,6 +7,7 @@ import { Navigate, Route } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Views
+import { Moonshot } from './moonshot';
 import { Pika } from './pika';
 
 // Constants
@@ -27,6 +28,7 @@ const Lazy: React.FunctionComponent = () => {
 const Portfolio = (
   <Route path={PATH} element={<Lazy />}>
     <Route index element={<Navigate replace to='..' />} />
+    {Moonshot}
     {Pika}
   </Route>
 );

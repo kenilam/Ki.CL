@@ -20,8 +20,11 @@ export function applyGate(app: Express): void {
   const expected = Buffer.from(password);
 
   app.use((request, response, next) => {
-    // Cloud Run's health check has no credentials.
-    if (request.path === '/health') {
+    /*
+     * Cloud Run's health check has no credentials, and a client with a valid
+     * token (see `client-token`) has already been let in.
+     */
+    if (request.path === '/health' || response.locals.client) {
       next();
 
       return;
@@ -30,7 +33,11 @@ export function applyGate(app: Express): void {
     const [scheme, encoded] = request.get('authorization')?.split(' ') ?? [];
     const given = Buffer.from(
       scheme === 'Basic' && encoded
-        ? Buffer.from(encoded, 'base64').toString().split(':').slice(1).join(':')
+        ? Buffer.from(encoded, 'base64')
+            .toString()
+            .split(':')
+            .slice(1)
+            .join(':')
         : ''
     );
 
