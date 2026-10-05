@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 
 import {
-  getApiKey,
   hasSession,
   Kicl_ExchangeTokenDocument,
   useMutation,
@@ -13,24 +12,6 @@ import { GetErrorCode } from '@/helper';
 import { TOKEN_HEADER } from './constants';
 
 type Outcome = 'ready' | 'rejected' | 'limited' | 'failed';
-
-const INTROSPECTION_BODY = JSON.stringify({
-  operationName: 'IntrospectionQuery',
-  query: '{ __typename }',
-});
-
-async function ensureApiKeyCookie(): Promise<void> {
-  if (getApiKey()) {
-    return;
-  }
-
-  await fetch('/graphql', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: INTROSPECTION_BODY,
-  });
-}
 
 /** The outcomes the API names with an error code. */
 const CODES: Record<string, Outcome> = {
@@ -51,15 +32,9 @@ function useExchange() {
   return useCallback(
     async (token: string | null): Promise<Outcome> => {
       try {
-        await ensureApiKeyCookie();
-
-        const apiKey = getApiKey();
         await exchangeToken({
           context: {
-            headers: {
-              ...(apiKey ? { 'x-api-key': apiKey } : {}),
-              ...(token ? { [TOKEN_HEADER]: token } : {}),
-            },
+            headers: token ? { [TOKEN_HEADER]: token } : {},
           },
         });
 
