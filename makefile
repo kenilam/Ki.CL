@@ -72,3 +72,7 @@ test:
 	@echo ⌛ running testing...
 	yarn run test
 	@echo ✅ done
+
+# Copies the production services into the second region (gcp/.env).
+gcp.region:
+	gcp/region.sh
