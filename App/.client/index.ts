@@ -43,6 +43,8 @@ const DESIGN_REMOTE_ENTRY =
 
 // The moonshot exercise under /portfolio, its remote and API both at /moonshot.
 const MOONSHOT_URL = process.env.KICL_MOONSHOT_URL || 'http://localhost:3301';
+// Its Vite dev server, for hot updates. The API stays on MOONSHOT_URL.
+const MOONSHOT_DEV_URL = process.env.KICL_MOONSHOT_DEV_URL;
 const MOONSHOT_REMOTE_ENTRY =
   process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
 
@@ -124,11 +126,19 @@ const getConfig = ({
         target: DESIGN_URL,
         changeOrigin: true,
         secure: false,
+        ws: true,
       },
-      '/moonshot': {
+      // First match wins, so the API has to come before the remote.
+      '/moonshot/api': {
         target: MOONSHOT_URL,
         changeOrigin: true,
         secure: false,
+      },
+      '/moonshot': {
+        target: MOONSHOT_DEV_URL || MOONSHOT_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
       },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
@@ -244,6 +254,25 @@ const getConfig = ({
       dynamicImport(),
       inspect(),
       react(),
+      /*
+       * A remote served by its own Vite dev server imports its own refresh
+       * runtime, which React never registered with, so its hot updates run
+       * but never re-render. Hand it the host's runtime instead.
+       */
+      {
+        name: 'kicl-remote-react-refresh',
+        apply: 'serve',
+        configureServer(server) {
+          server.middlewares.use((request, response, next) => {
+            if (!/^\/[^/]+\/@react-refresh$/.test(request.url ?? '')) {
+              return next();
+            }
+
+            response.setHeader('Content-Type', 'text/javascript');
+            response.end(`export * from '/@react-refresh';`);
+          });
+        },
+      },
       // Analytics batches land here in development, as they do on the server.
       {
         name: 'kicl-collect',
