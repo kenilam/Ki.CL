@@ -38,6 +38,16 @@
         Typekit.load({ async: true });
       } catch (e) {}
     </script>
+    <script>
+      /*
+       * The federation plugin adds this export to every module that imports
+       * a remote. It isn't a component, so without this React Fast Refresh
+       * rejects those modules and Vite reloads the whole page on each edit.
+       */
+      window.__getReactRefreshIgnoredExports = () => [
+        '__mf_remote_dependency_pending',
+      ];
+    </script>
   </head>
   <body>
     <app-root></app-root>
