@@ -13,7 +13,6 @@ make run.production     # clean build dir, build client, then vite preview
 make build               # vite build --debug (client bundle only)
 make server              # build:server → runs the Express static/SSR-ish server (App/.server)
 make test                # npx jest
-make deploy              # build:client, then FTP deploy (temporary, being replaced by GitHub auto-deploy)
 make codegen             # run codegen (type generation)
 make start               # yarn install + development (one-step bootstrap)
 make client-token.keys   # once: Ed25519 pair, private key in ~/.kicl, prints KICL_CLIENT_PUBLIC_KEY
