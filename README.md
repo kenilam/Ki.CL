@@ -48,6 +48,15 @@ The site records page views, clicks, scroll depth and time on page. It sets no c
 
 Clicks on links, buttons and `summary` are recorded by their text. Add `data-track='Name'` to name an element in reports or to track something else.
 
+To read the events from the logs:
+```BASH
+make gcp.analytics                        # the last day's page views
+make gcp.analytics TYPE=click SINCE=7d    # pageview, click, scroll or duration
+make gcp.analytics REGION=<region>        # one region only
+make gcp.analytics.source                 # the source region from gcp/.env
+make gcp.analytics.second                 # the second region
+```
+
 To keep the events in BigQuery, set a salt so every instance hashes visitors the same way, then send the logs to a dataset:
 ```BASH
 gcloud run services update <service> --update-env-vars KICL_ANALYTICS_SALT=$(openssl rand -hex 16)
