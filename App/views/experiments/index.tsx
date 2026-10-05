@@ -7,9 +7,9 @@ import { Route as Origin } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Views
-import { FactoryArm } from './factory-arm';
 import { ImageAgent } from './image-agent';
 import { MusicVisualiser } from './music-visualiser';
+import { RoboticArm } from './robotic-arm';
 import { TreeOfLife } from './tree-of-life';
 
 // Constants
@@ -43,7 +43,7 @@ const Experiments = (
     {TreeOfLife}
     {MusicVisualiser}
     {ImageAgent}
-    {FactoryArm}
+    {RoboticArm}
   </Origin>
 );
 

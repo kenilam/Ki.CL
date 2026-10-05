@@ -25,6 +25,12 @@
       ],
       "moonshot/*": [
         "./@mf-types/moonshot/*"
+      ],
+      "arm": [
+        "./@mf-types/arm"
+      ],
+      "arm/*": [
+        "./@mf-types/arm/*"
       ]
     },
     "types": [

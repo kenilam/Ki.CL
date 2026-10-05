@@ -13,6 +13,7 @@ make run.production     # clean build dir, build client, then vite preview
 make build               # vite build --debug (client bundle only)
 make server              # build:server → runs the Express static/SSR-ish server (App/.server)
 make test                # npx jest
+make test.robotic-arm    # the robotic-arm floor's headless run, against ../Ki.CL-arm
 make deploy              # build:client, then FTP deploy (temporary, being replaced by GitHub auto-deploy)
 make codegen             # run codegen (type generation)
 make start               # yarn install + development (one-step bootstrap)
@@ -38,11 +39,13 @@ Components, core styles, icons, widgets, the theme/responsive/resize hooks and t
 
 This app does not talk to GraphQL directly - it consumes the **Backend** repo's federated `Client` package as a Module Federation remote named `api` (see `App/.client/index.ts`'s `federation()` plugin config). `KiclProvider`, the typed documents and types it generates (`Kicl_TaxonVisualDocument`, `TaxonVisualStatus`, etc.) and Apollo's hooks all come from `import ... from 'api/provider'` / `'api'` at runtime - resolved via `KICL_API_REMOTE_ENTRY` (defaults to `/client/remoteEntry.js`, proxied same-origin to the Backend's `/client` route to avoid CORS/mixed-content). Types for `api/*` come from `App/@mf-types/api` (declared in `tsconfig.json` `paths`, generated separately - not a Vite alias, since aliasing it would shadow the real federated runtime remote). There are no per-operation hooks: pass the document to Apollo's hook, `useQuery(Kicl_TaxonVisualDocument, { variables })`, and it infers the result and variable types. Import `useQuery`, `useMutation`, `useSubscription` and `skipToken` from `api/provider`, not `@apollo/client`, so they run against the remote's client. React/react-dom/@apollo/client are shared singletons between host and remote - don't add a second copy of these as direct deps in a way that could desync versions.
 
+A second remote, `arm`, comes from the **Ki.CL-arm** repo, which owns everything about the robots and their brains, classic and physical AI alike: `arm/robot`, `arm/grid`, `arm/frames` and `arm/brains`. Its Rust bridge serves the remote at `/arm/client/*` and the socket to physical AI at `/arm/link`. Ki.CL proxies `/arm/*` to it on its own origin (`KICL_ARM_URL`, default `http://localhost:3400`) and loads `KICL_ARM_REMOTE_ENTRY` (default `/arm/client/remoteEntry.js`). Its types land in `App/@mf-types/arm` the same way as `api`'s. Same-origin matters twice here, because the classic brains run in workers from the remote. Run `make run` in Ki.CL-arm beside this repo for the floor to work in development. The floor itself, `App/views/experiments/robotic-arm`, keeps only the world: the plant, its meshes, the panel and the loop. Its `README.md` holds the design decisions; read it before working on either side.
+
 `App.tsx` lazy-loads `KiclProvider` from the remote and gates rendering behind `EnvProvider` (client-side env/config context) and a `Suspense`/`Spinner` fallback, wrapping `LocalStorageProvider` → `View`.
 
 ### Path aliases
 
-`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). Exception: `App/.client` and `App/.server` bootstrap files may keep relative imports for config loaded before aliases exist (e.g. `get-alias.ts` importing `../../tsconfig.json`).
+`@/*` → `App/*`, `api`/`api/*` and `arm`/`arm/*` → federated remotes (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). Exception: `App/.client` and `App/.server` bootstrap files may keep relative imports for config loaded before aliases exist (e.g. `get-alias.ts` importing `../../tsconfig.json`).
 
 ### Design system discipline (enforced by Cursor rules, apply the same bar here)
 

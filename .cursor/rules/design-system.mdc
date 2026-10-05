@@ -73,7 +73,7 @@ If something is truly missing, add it to the shared component or as a utility in
 
 ```scss
 // ❌ view styles.scss re-implementing a slide-in the animation component already has
-.kicl--views--factory-arm__panel {
+.kicl--views--experiments--robotic-arm__panel {
   transform: translateX(100%);
   transition: transform 0.3s;
   &[open] { transform: none; }
