@@ -1,0 +1,8 @@
+{
+  "name": "app.views.experiments.robotic-arm",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "test": "tsx --tsconfig ../../../tsconfig.test.json --test 'floor/**/*.test.ts'"
+  }
+}

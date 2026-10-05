@@ -68,6 +68,10 @@ client-token.keys:
 client-token:
 	@yarn workspace app.server exec tsx client-token/cli.ts mint --sub "$(SUB)" --days "$(or $(DAYS),14)"
 
+test.robotic-arm:
+	@echo ⌛ running robotic-arm tests...
+	yarn run test:robotic-arm
+
 test:
 	@echo ⌛ running testing...
 	yarn run test

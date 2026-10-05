@@ -46,6 +46,11 @@ const MOONSHOT_URL = process.env.KICL_MOONSHOT_URL || 'http://localhost:3301';
 const MOONSHOT_REMOTE_ENTRY =
   process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
 
+// The robots and their brains: the Ki.CL-arm bridge serves the `arm` remote at /arm/client and the socket to physical AI at /arm/link. Proxied same-origin for the same reasons, and so the brains' workers may start at all.
+const ARM_URL = process.env.KICL_ARM_URL || 'http://localhost:3400';
+const ARM_REMOTE_ENTRY =
+  process.env.KICL_ARM_REMOTE_ENTRY || '/arm/client/remoteEntry.js';
+
 /*
  * Kept in step with `App/.server/proxy` - the two run the same site and have
  * to agree on which paths belong to the API.
@@ -130,6 +135,23 @@ const getConfig = ({
         changeOrigin: true,
         secure: false,
       },
+      // The remote, its workers, and the socket to physical AI.
+      '/arm': {
+        target: ARM_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        // A bridge that goes away, as a tunnel does when its machine end restarts, must not take the dev server with it.
+        configure: (proxy) => {
+          proxy.on('error', (error, _request, target) => {
+            console.warn(`[arm] ${error.message}`);
+
+            if ('destroy' in target) {
+              target.destroy();
+            }
+          });
+        },
+      },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
        * because a production build emits the site's own bundles there too.
@@ -176,6 +198,11 @@ const getConfig = ({
             type: 'module',
             name: 'moonshot',
             entry: MOONSHOT_REMOTE_ENTRY,
+          },
+          arm: {
+            type: 'module',
+            name: 'arm',
+            entry: ARM_REMOTE_ENTRY,
           },
         },
         shared: {
@@ -236,6 +263,12 @@ const getConfig = ({
                 alias: 'moonshot',
                 api: `${MOONSHOT_URL}/moonshot/@mf-types.d.ts`,
                 zip: `${MOONSHOT_URL}/moonshot/@mf-types.zip`,
+              },
+              // Default type file names too.
+              arm: {
+                alias: 'arm',
+                api: `${ARM_URL}/arm/client/@mf-types.d.ts`,
+                zip: `${ARM_URL}/arm/client/@mf-types.zip`,
               },
             },
           },

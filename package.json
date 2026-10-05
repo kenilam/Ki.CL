@@ -23,7 +23,8 @@
     "prepare": "husky",
     "preview": "cross-env DEBUG=true VERBOSE=true yarn workspace app run preview",
     "production": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run production",
-    "start": "yarn install && yarn run development"
+    "start": "yarn install && yarn run development",
+    "test:robotic-arm": "yarn workspace app.views.experiments.robotic-arm run test"
   },
   "repository": {
     "type": "git",
@@ -103,13 +104,15 @@
     "stylelint-config-standard-scss": "17.0.0",
     "stylelint-order": "8.1.1",
     "stylelint-prettier": "5.0.3",
-    "stylelint-scss": "7.3.0"
+    "stylelint-scss": "7.3.0",
+    "tsx": "4.23.15"
   },
   "packageManager": "yarn@4.17.1",
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/spec\\.ts$"
+      "/spec\\.ts$",
+      "/views/experiments/robotic-arm/"
     ]
   },
   "resolutions": {
