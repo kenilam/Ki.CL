@@ -17,6 +17,8 @@ make codegen             # run codegen (type generation)
 make start               # yarn install + development (one-step bootstrap)
 make client-token.keys   # once: Ed25519 pair, private key in ~/.kicl, prints KICL_CLIENT_PUBLIC_KEY
 make client-token SUB=jane@example.com DAYS=14   # a client token for running a federated module against dev
+make gcp.analytics TYPE=click SINCE=7d   # analytics events from the production logs (pageview by default)
+make gcp.analytics.source                # the same for one region: .source or .second, named in gcp/.env
 ```
 
 Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn lint:stylelint` (`App/**/*.{css,scss} --fix`), `yarn lint:staged` (husky pre-commit, prettier+oxlint+stylelint via `lint-staged`). Single test file: `npx jest App/path/to/File.test.tsx`.
