@@ -31,12 +31,6 @@ make run:production
 make test
 ```
 
-## FTP Deploy (Temporary)
-We will migrate to Github auto-deployment
-```BASH
-make deploy
-```
-
 ## Regions
 Production runs in two regions behind one global load balancer, which sends each visitor to the nearer one. The site's service only accepts traffic from the load balancer, and the dev services run in one region.
 
