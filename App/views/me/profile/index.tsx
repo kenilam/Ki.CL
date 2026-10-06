@@ -31,7 +31,7 @@ const Profile: React.FunctionComponent = () => {
 
   return (
     <>
-      <Card className='kicl-inline-size-xl' variant='ghost'>
+      <Card className='kicl-inline-size-max' variant='ghost'>
         <Layout gap='narrow' justifyItems='center'>
           <CardHeader className='kicl-text-align-center'>
             <CardTitle className='kicl-font-size' is='h1'>
