@@ -1,6 +1,12 @@
 import React from 'react';
 
-import { Kicl_PasswordChangeConfirmDocument, useMutation } from 'api/provider';
+import {
+  Kicl_PasswordChangeConfirmDocument,
+  Kicl_PasswordChangeLinkDocument,
+  skipToken,
+  useMutation,
+  useQuery,
+} from 'api/provider';
 
 // Routes
 import { useLocation } from 'design/router';
@@ -14,6 +20,7 @@ import {
   CardHeader,
   CardTitle,
   Layout,
+  Spinner,
 } from 'design/components';
 
 // Icons
@@ -34,8 +41,21 @@ const Confirm: React.FunctionComponent = () => {
     Kicl_PasswordChangeConfirmDocument
   );
 
+  // Asked on load, so a link that was already used doesn't offer to confirm again.
+  const { data: link, loading: checking } = useQuery(
+    Kicl_PasswordChangeLinkDocument,
+    id && secret
+      ? {
+          fetchPolicy: 'network-only',
+          variables: { PasswordChangeLink: { id, secret } },
+        }
+      : skipToken
+  );
+
   const confirmed = Boolean(data?.PasswordChangeConfirm);
-  const invalid = !id || !secret || Boolean(error);
+  const invalid =
+    !confirmed &&
+    (!id || !secret || Boolean(error) || link?.PasswordChangeLink === false);
 
   const onClick = () =>
     void confirm({
@@ -52,11 +72,12 @@ const Confirm: React.FunctionComponent = () => {
           <CardDescription>
             {confirmed && COPY.return}
             {invalid && COPY.invalid}
-            {!confirmed && !invalid && COPY.description}
+            {!confirmed && !invalid && !checking && COPY.description}
           </CardDescription>
+          <Spinner in={checking} position='inline' />
         </CardHeader>
       </Layout>
-      {!confirmed && !invalid && (
+      {!confirmed && !invalid && !checking && (
         <CardFooter justifyContent='center'>
           <Button disabled={loading} onClick={onClick} size='small'>
             {COPY.confirm}
