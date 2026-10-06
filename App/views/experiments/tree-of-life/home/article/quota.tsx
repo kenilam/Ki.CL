@@ -32,10 +32,9 @@ const Quota: React.FunctionComponent = () => {
         <Text is='p'>
           A plate takes much longer than a request should, so generation is
           asynchronous. The query returns whatever exists now, and a GraphQL
-          subscription pushes the finished plate when it lands. Requests are
-          rate limited per day. The API sits behind a proxy and takes no public
-          callers, so every request carries an identity token minted by the
-          site, not the browser.
+          subscription pushes the finished plate when it lands. The API sits
+          behind a proxy and takes no public callers, so every request carries
+          an identity token minted by the site, not the browser.
         </Text>
       </section>
     </Layout>
