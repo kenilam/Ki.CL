@@ -48,7 +48,7 @@ const Password: React.FunctionComponent = () => {
   const ended = stage === 'expired' || stage === 'failed';
 
   return (
-    <Card className='kicl-inline-size-xl' variant='ghost'>
+    <Card className='kicl-inline-size-max' variant='ghost'>
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           {stage !== 'done' ? (
