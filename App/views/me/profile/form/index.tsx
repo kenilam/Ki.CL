@@ -66,7 +66,7 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
           <Status />
         </CardContent>
       </Layout>
-      <Layout autoFlow='column' justifyContent='start' gap='narrow'>
+      <Layout autoFlow='column' justifyContent='center' gap='narrow'>
         <footer className='kicl-padding-block'>
           <Button
             disabled={loading}

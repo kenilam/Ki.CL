@@ -23,20 +23,31 @@ const Actions: React.FunctionComponent = () => {
   return (
     <>
       <RootError />
-      <List autoFlow='column' gap='narrow' justifyContent='center'>
+      <List
+        autoFlow='column'
+        className='kicl-padding-block-start'
+        justifyContent='center'
+      >
         <ListItem>
           <Button
             command='request-close'
             commandFor={DELETE_ID}
             disabled={isSubmitting}
+            size='small'
             type='button'
-            variant='tertiary'
+            variant='ghost'
           >
             {COPY.cancel}
           </Button>
         </ListItem>
         <ListItem>
-          <Button disabled={isSubmitting} level='error' type='submit'>
+          <Button
+            disabled={isSubmitting}
+            level='error'
+            size='small'
+            type='submit'
+            variant='secondary'
+          >
             {COPY.delete}
           </Button>
         </ListItem>

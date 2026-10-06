@@ -30,7 +30,11 @@ const Name: React.FunctionComponent = () => {
           <FormItem>
             <FormLabel>{COPY.firstName}</FormLabel>
             <FormControl>
-              <Input {...field} autoComplete='given-name' placeholder={COPY.firstName} />
+              <Input
+                {...field}
+                autoComplete='given-name'
+                placeholder={COPY.firstName}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -43,7 +47,11 @@ const Name: React.FunctionComponent = () => {
           <FormItem>
             <FormLabel>{COPY.lastName}</FormLabel>
             <FormControl>
-              <Input {...field} autoComplete='family-name' placeholder={COPY.lastName} />
+              <Input
+                {...field}
+                autoComplete='family-name'
+                placeholder={COPY.lastName}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
