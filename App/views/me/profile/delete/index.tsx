@@ -25,6 +25,7 @@ import { COPY, DELETE_ID } from '@/views/me/profile/constants';
 
 // Partials
 import { Actions } from './actions';
+import { Notice } from './notice';
 import { Password } from './password';
 
 // Schema
@@ -39,6 +40,7 @@ const Delete: React.FunctionComponent = () => {
 
   const titleId = useId();
   const messageId = useId();
+  const noticeId = useId();
 
   const form = useForm<DeleteValues>({
     defaultValues: { CurrentPassword: '' },
@@ -66,13 +68,14 @@ const Delete: React.FunctionComponent = () => {
         command='show-modal'
         commandFor={DELETE_ID}
         level='error'
-        lookLikeHyperLink
+        size='small'
+        variant='secondary'
       >
-        {COPY.delete}
+        {COPY.deleteAccount}
       </Button>
 
       <Dialog
-        aria-describedby={messageId}
+        aria-describedby={`${noticeId} ${noticeId}-list ${messageId}`}
         aria-labelledby={titleId}
         closable={pending ? false : 'keyboard'}
         id={DELETE_ID}
@@ -90,7 +93,8 @@ const Delete: React.FunctionComponent = () => {
                 {pending ? COPY.deleting : COPY.deleteConfirm}
               </Heading>
             </Animation>
-            <Animation delay={150} property='slide-from-top'>
+            <Notice id={noticeId} />
+            <Animation delay={300} property='slide-from-top'>
               <Text id={messageId} is='p'>
                 {COPY.deleteMessage}
               </Text>

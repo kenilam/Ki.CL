@@ -58,7 +58,7 @@ const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
           <RootError />
         </CardContent>
       </Layout>
-      <CardFooter>
+      <CardFooter justifyContent='center'>
         <Button disabled={isSubmitting} size='small' type='submit'>
           {COPY.send}
           {isSubmitting ? (
