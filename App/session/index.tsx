@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // Components
-import { Dialog, Layout, Spinner } from 'design/components';
+import { Dialog, Heading, Layout, Spinner, Text } from 'design/components';
 
 // Status
 import { Status403, Status429, Status500 } from 'design/status';
@@ -10,23 +10,42 @@ import { Status403, Status429, Status500 } from 'design/status';
 import { COPY } from './constants';
 
 // Context
-import { SessionContext } from './context';
+import { SessionContext, useSessionContext } from './context';
 
 // Hooks
 import { useSession } from './use-session';
 
 /**
- * Starts an anonymous session before rendering its children, after a
- * Turnstile check when the API asks for one. It sits at the root route: the
- * API counts every request per session, so every page needs one.
+ * Starts an anonymous session, after a Turnstile check when the API asks for
+ * one. It sits at the root route, around the header as well as the page: the
+ * API counts every request per session, and the header asks who is signed in.
+ */
+const SessionProvider: React.FunctionComponent<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const session = useSession();
+
+  return (
+    <SessionContext.Provider value={session}>
+      {children}
+    </SessionContext.Provider>
+  );
+};
+
+/**
+ * Renders its children once the session is ready.
  *
- * A check asked for later, by a request the children made, runs in a dialog
- * over them, so what they were doing is still there when it passes.
+ * A session renewed later, for a check a request asked for or after a
+ * sign-out, is renewed over them, so what they were doing is still there
+ * when it is ready again. Only the check itself shows, in a dialog.
  */
 const Session: React.FunctionComponent<React.PropsWithChildren> = ({
   children,
 }) => {
-  const { challenge, resuming, stage, turnstile } = useSession();
+  const { live, resuming, stage, turnstile } = useSessionContext();
+
+  const titleId = useId();
+  const messageId = useId();
 
   if (stage === 'rejected') {
     return <Status403 message={COPY.retry} title={COPY.rejected} />;
@@ -40,23 +59,38 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
     return <Status500 message={COPY.retry} title={COPY.failed} />;
   }
 
-  if (stage === 'ready') {
+  if (live) {
     return (
-      <SessionContext.Provider value={challenge}>
+      <>
         {children}
-      </SessionContext.Provider>
-    );
-  }
-
-  if (resuming) {
-    return (
-      <SessionContext.Provider value={challenge}>
-        {children}
-        <Dialog closable={false} dense open title={COPY.checking}>
-          {!turnstile.interactive && <Spinner in position='inline' />}
-          <div ref={turnstile.container} />
-        </Dialog>
-      </SessionContext.Provider>
+        {resuming && (
+          <Dialog
+            aria-describedby={messageId}
+            aria-labelledby={titleId}
+            closable={false}
+            open={stage === 'challenge'}
+            role='alertdialog'
+          >
+            <Layout
+              alignContent='center'
+              alignItems='center'
+              justifyContent='center'
+              justifyItems='center'
+            >
+              <section className='kicl-padding-block-end-wide'>
+                <Heading dense id={titleId}>
+                  {COPY.checking}
+                </Heading>
+                <Text className='kicl-font-size-small' id={messageId} is='p'>
+                  {turnstile.interactive ? COPY.interact : COPY.wait}
+                </Text>
+                <Spinner in={!turnstile.interactive} position='inline' />
+                <div ref={turnstile.container} />
+              </section>
+            </Layout>
+          </Dialog>
+        )}
+      </>
     );
   }
 
@@ -75,5 +109,7 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
   );
 };
 
-export { Session };
-export { isChallenge, useChallenged } from './context';
+export { Session, SessionProvider };
+export { isChallenge, useChallenged, useSessionContext } from './context';
+export { useEnded } from './use-ended';
+export { useSignOut } from './use-sign-out';

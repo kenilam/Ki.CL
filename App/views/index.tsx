@@ -9,6 +9,7 @@ import { ErrorElement, Status404 } from 'design/status';
 // Views
 import { Experiments } from './experiments';
 import { Home } from './home';
+import { Me } from './me';
 import { Portfolio } from './portfolio';
 
 // Partials
@@ -21,6 +22,7 @@ const Views: React.FunctionComponent = () => {
         <Route path='*' element={<Status404 />} />
         {Experiments}
         {Home}
+        {Me}
         {Portfolio}
       </Route>
     </Router>

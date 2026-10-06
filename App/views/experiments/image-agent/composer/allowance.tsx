@@ -4,7 +4,12 @@ import React, { useEffect } from 'react';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Components
-import { Badge, BadgeLabel, type BadgeProps } from 'design/components';
+import {
+  Animation,
+  Badge,
+  BadgeLabel,
+  type BadgeProps,
+} from 'design/components';
 
 const COPY = {
   left: (remaining: number) => {
@@ -49,10 +54,12 @@ const Allowance: React.FunctionComponent<Props> = ({ busy }) => {
   }
 
   return (
-    <Badge level={level} size='small'>
-      <BadgeLabel>Allowance</BadgeLabel>
-      {COPY.left(allowance.remaining)}
-    </Badge>
+    <Animation>
+      <Badge level={level} size='small'>
+        <BadgeLabel>Allowance</BadgeLabel>
+        {COPY.left(allowance.remaining)}
+      </Badge>
+    </Animation>
   );
 };
 
