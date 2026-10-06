@@ -3,11 +3,21 @@ import { createContext, useCallback, useContext } from 'react';
 // Helper
 import { GetErrorCode } from '@/helper';
 
-/** Resolves once the session is ready again, or false when it will not be. */
-type Challenge = () => Promise<boolean>;
+import type { useSession } from './use-session';
 
-/** Outside a Session there is no check to run, so the request just fails. */
-const SessionContext = createContext<Challenge>(() => Promise.resolve(false));
+const SessionContext = createContext<ReturnType<typeof useSession> | null>(
+  null
+);
+
+function useSessionContext() {
+  const session = useContext(SessionContext);
+
+  if (!session) {
+    throw new Error('useSessionContext needs a SessionProvider above it');
+  }
+
+  return session;
+}
 
 /** The API wants the Turnstile check before it will run this. */
 const isChallenge = (error: unknown) =>
@@ -18,14 +28,15 @@ const isChallenge = (error: unknown) =>
  * and the request sent once more. Any other error is thrown as it was.
  */
 function useChallenged() {
-  const challenge = useContext(SessionContext);
+  // Outside a SessionProvider there is no check to run, so the request just fails.
+  const challenge = useContext(SessionContext)?.challenge;
 
   return useCallback(
     async <T>(request: () => Promise<T>): Promise<T> => {
       try {
         return await request();
       } catch (error) {
-        if (!isChallenge(error) || !(await challenge())) {
+        if (!isChallenge(error) || !(await challenge?.())) {
           throw error;
         }
 
@@ -36,4 +47,4 @@ function useChallenged() {
   );
 }
 
-export { isChallenge, SessionContext, useChallenged };
+export { isChallenge, SessionContext, useChallenged, useSessionContext };

@@ -7,7 +7,14 @@ import Highlighter from 'react-highlight-words';
 import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, List, ListItem } from 'design/components';
+import {
+  Animation,
+  Heading,
+  HyperLink,
+  Layout,
+  List,
+  ListItem,
+} from 'design/components';
 
 // Hooks
 import { usePast } from './use-past';
@@ -42,29 +49,31 @@ const Past: React.FunctionComponent<Props> = ({ query }) => {
   }
 
   return (
-    <Layout autoFlow='row' gap='none' justifyItems='start'>
-      <section aria-labelledby={id}>
-        <Heading id={id} is='h2' dense>
-          {COPY.title}
-        </Heading>
-        <List gap='narrow'>
-          {threads.map((thread) => (
-            <ListItem key={thread.id}>
-              <HyperLink
-                after={<Ri.RiArrowRightSLine aria-hidden />}
-                to={toPath(thread.id)}
-              >
-                <Highlighter
-                  autoEscape
-                  searchWords={words}
-                  textToHighlight={toLabel(thread)}
-                />
-              </HyperLink>
-            </ListItem>
-          ))}
-        </List>
-      </section>
-    </Layout>
+    <Animation property='slide-from-bottom'>
+      <Layout autoFlow='row' gap='none' justifyItems='start'>
+        <section aria-labelledby={id}>
+          <Heading id={id} is='h2' dense>
+            {COPY.title}
+          </Heading>
+          <List gap='narrow'>
+            {threads.map((thread) => (
+              <ListItem key={thread.id}>
+                <HyperLink
+                  after={<Ri.RiArrowRightSLine aria-hidden />}
+                  to={toPath(thread.id)}
+                >
+                  <Highlighter
+                    autoEscape
+                    searchWords={words}
+                    textToHighlight={toLabel(thread)}
+                  />
+                </HyperLink>
+              </ListItem>
+            ))}
+          </List>
+        </section>
+      </Layout>
+    </Animation>
   );
 };
 

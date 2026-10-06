@@ -10,7 +10,7 @@ import { Outlet, ScrollRestoration, useLocation } from 'design/router';
 import { GlobalHeader, useGlobalHeaderContext } from 'design/widgets';
 
 // Session
-import { Session } from '@/session';
+import { Session, SessionProvider } from '@/session';
 
 // Components
 import { Layout } from 'design/components';
@@ -42,7 +42,7 @@ const Contents: React.FunctionComponent = () => {
   }, [show, showHeader]);
 
   return (
-    <>
+    <SessionProvider>
       <ScrollRestoration />
       <SkipLink />
       <GlobalHeader>
@@ -70,7 +70,7 @@ const Contents: React.FunctionComponent = () => {
           </Session>
         </main>
       </Layout>
-    </>
+    </SessionProvider>
   );
 };
 
