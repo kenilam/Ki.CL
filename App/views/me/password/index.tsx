@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
   HyperLink,
+  Layout,
   Spinner,
 } from 'design/components';
 
@@ -47,53 +48,64 @@ const Password: React.FunctionComponent = () => {
   const ended = stage === 'expired' || stage === 'failed';
 
   return (
-    <Card className='kicl-inline-size-xl'>
-      <CardHeader>
-        {stage !== 'done' ? (
-          <HyperLink
-            before={<Ri.RiArrowGoBackLine />}
-            lookLikeButton
-            size='small'
-            to='..'
-            variant='secondary'
-          >
-            {COPY.goBack}
-          </HyperLink>
-        ) : null}
-        {/* Announced as it changes: the answer arrives from another tab or device. */}
-        <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
-          {TITLES[stage]}
-        </CardTitle>
-        {stage === 'idle' && (
-          <Animation>
-            <CardDescription>{COPY.description}</CardDescription>
-          </Animation>
-        )}
-        {stage === 'waiting' && (
-          <Animation>
-            <CardDescription>
-              {COPY.sentTo} {me?.Email}. {COPY.keepOpen}
-            </CardDescription>
-          </Animation>
-        )}
-      </CardHeader>
+    <Card className='kicl-inline-size-xl' variant='ghost'>
+      <Layout gap='narrow' justifyItems='center'>
+        <CardHeader className='kicl-text-align-center'>
+          {stage !== 'done' ? (
+            <HyperLink
+              before={<Ri.RiArrowGoBackLine />}
+              lookLikeButton
+              size='small'
+              to='..'
+              variant='secondary'
+            >
+              {COPY.goBack}
+            </HyperLink>
+          ) : null}
+          {/* Announced as it changes: the answer arrives from another tab or device. */}
+          <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
+            {TITLES[stage]}
+          </CardTitle>
+          {stage === 'idle' && (
+            <Animation>
+              <CardDescription>{COPY.description}</CardDescription>
+            </Animation>
+          )}
+          {stage === 'waiting' && (
+            <Animation>
+              <CardDescription>
+                {COPY.sentTo} {me?.Email}. {COPY.keepOpen}
+              </CardDescription>
+            </Animation>
+          )}
+        </CardHeader>
+      </Layout>
       {stage === 'idle' && <PasswordForm onSubmit={start} />}
       {busy && (
-        <CardContent>
-          <Spinner in position='inline' />
-        </CardContent>
+        <Layout justifyItems='center'>
+          <CardContent>
+            <Spinner in position='inline' />
+          </CardContent>
+        </Layout>
       )}
       {!busy && stage !== 'idle' && (
         <Animation property='slide-from-bottom'>
-          <CardFooter>
-            {ended && (
+          <CardFooter justifyContent='center'>
+            {/* Go back is still above while it can be tried again, so only done links back. */}
+            {ended ? (
               <Button onClick={reset} size='small'>
                 {COPY.again}
               </Button>
+            ) : (
+              <HyperLink
+                lookLikeButton
+                size='small'
+                to='..'
+                variant='secondary'
+              >
+                {COPY.back}
+              </HyperLink>
             )}
-            <HyperLink lookLikeButton size='small' to='..' variant='secondary'>
-              {COPY.back}
-            </HyperLink>
           </CardFooter>
         </Animation>
       )}

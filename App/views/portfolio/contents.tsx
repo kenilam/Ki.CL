@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Routes
 import { Outlet } from 'design/router';
 
@@ -14,10 +17,11 @@ const Portfolio: React.FunctionComponent = () => {
       <Layout
         autoFlow='row'
         gap='none'
-        justifyContent='center'
+        justifyContent='stretch'
         justifyItems='stretch'
       >
-        <div className={CLASS_NAME}>
+        {/* The page's width: `main` centres its children, and a frame inside sizes from here. */}
+        <div className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
           <Outlet />
         </div>
       </Layout>

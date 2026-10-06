@@ -1,7 +1,12 @@
 import React from 'react';
 
 // Components
-import { CardDescription, CardHeader, CardTitle } from 'design/components';
+import {
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Layout,
+} from 'design/components';
 
 const COPY = {
   denied:
@@ -17,13 +22,17 @@ type Props = {
 };
 
 const Header: React.FunctionComponent<Props> = ({ denied = false }) => (
-  <CardHeader>
-    {/* The page's only heading, kept at the card title's size. */}
-    <CardTitle className='kicl-font-size' is='h1'>
-      {COPY.title}
-    </CardTitle>
-    <CardDescription>{denied ? COPY.denied : COPY.description}</CardDescription>
-  </CardHeader>
+  <Layout gap='narrow' justifyItems='center'>
+    <CardHeader className='kicl-text-align-center'>
+      {/* The page's only heading, kept at the card title's size. */}
+      <CardTitle className='kicl-font-size' is='h1'>
+        {COPY.title}
+      </CardTitle>
+      <CardDescription>
+        {denied ? COPY.denied : COPY.description}
+      </CardDescription>
+    </CardHeader>
+  </Layout>
 );
 
 export { Header };
