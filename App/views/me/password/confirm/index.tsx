@@ -43,7 +43,7 @@ const Confirm: React.FunctionComponent = () => {
     }).catch(() => undefined);
 
   return (
-    <Card className='kicl-inline-size-xl' variant='ghost'>
+    <Card className='kicl-inline-size-max' variant='ghost'>
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>

@@ -101,7 +101,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
           <Animation delay={CONTENT_DELAY}>
             <Background />
           </Animation>
-          <Card className='kicl-inline-size-xl' variant='ghost'>
+          <Card className='kicl-inline-size-max' variant='ghost'>
             <Header denied={denied} />
             <Layout
               alignContent='start'
