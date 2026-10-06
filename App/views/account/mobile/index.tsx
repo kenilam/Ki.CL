@@ -16,7 +16,7 @@ import { COPY, SIGN_OUT_ID } from '@/views/account/constants';
 const Mobile: React.FunctionComponent = () => {
   return (
     <Menu autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <Animation property='slide-from-bottom' delay={600}>
+      <Animation property='slide-from-bottom' delay={900}>
         <HyperLink
           before={<Ri.RiAccountCircleLine aria-hidden />}
           className='kicl-inline-size-full'
@@ -27,7 +27,7 @@ const Mobile: React.FunctionComponent = () => {
           {COPY.profile}
         </HyperLink>
       </Animation>
-      <Animation property='slide-from-bottom' delay={900}>
+      <Animation property='slide-from-bottom' delay={1200}>
         <Button
           className='kicl-inline-size-full'
           command='show-modal'
