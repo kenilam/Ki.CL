@@ -28,6 +28,8 @@ const CONFIRM_COPY = {
   return:
     'Go back to the page where you started. It finishes there. You can close this tab.',
   invalid: 'This link has expired or was already used.',
+  invalidTitle: 'Link expired',
+  home: 'Go to home',
 };
 
 export { CONFIRM_COPY, CONFIRM_PATH, COPY, PATH };
