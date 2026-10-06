@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { Animation, Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
@@ -51,14 +51,16 @@ const NowPlaying: React.FunctionComponent = () => {
           {ATTRIBUTION.label}
         </HyperLink>
         {error ? (
-          <Text
-            className={classNames('kicl-color-error', 'kicl-font-size-small')}
-            dense
-            is='p'
-            role='alert'
-          >
-            {error}
-          </Text>
+          <Animation property='slide-from-top'>
+            <Text
+              className={classNames('kicl-color-error', 'kicl-font-size-small')}
+              dense
+              is='p'
+              role='alert'
+            >
+              {error}
+            </Text>
+          </Animation>
         ) : null}
       </header>
     </Layout>

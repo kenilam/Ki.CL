@@ -22,7 +22,8 @@ type Stage =
  *
  * A session that exists but never passed the check gets the widget later,
  * when a paid request answers CAPTCHA_REQUIRED and `challenge` is called.
- * The page stays up while that runs.
+ * The page stays up while that runs. `restart` does the same for a visitor
+ * who signed out.
  */
 function useSession() {
   const { env, loading } = useEnvContext();
@@ -46,6 +47,21 @@ function useSession() {
         setResuming(true);
         setRejections(0);
         setStage((current) => (current === 'ready' ? 'challenge' : current));
+      }),
+    []
+  );
+
+  /*
+   * Starts again from the probe, over the page. Signing out clears the
+   * cookies, so the visitor needs a new anonymous session.
+   */
+  const restart = useCallback(
+    () =>
+      new Promise<boolean>((resolve) => {
+        waiting.current.push(resolve);
+        setResuming(true);
+        setRejections(0);
+        setStage('probe');
       }),
     []
   );
@@ -113,6 +129,9 @@ function useSession() {
 
   return {
     challenge,
+    /** The page is up: the session is ready, or being renewed over it. */
+    live: stage === 'ready' || resuming,
+    restart,
     resuming,
     stage: unconfigured || turnstile.failed ? 'failed' : stage,
     turnstile,

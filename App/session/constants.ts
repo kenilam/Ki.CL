@@ -12,6 +12,8 @@ const MAX_REJECTIONS = 2;
 
 const COPY = {
   checking: 'Confirming you are human',
+  wait: 'The page carries on once this is done.',
+  interact: 'Tick the box to carry on.',
   rejected: 'Could not confirm you are human',
   failed: 'Could not start a session',
   retry: 'Reload to try again.',

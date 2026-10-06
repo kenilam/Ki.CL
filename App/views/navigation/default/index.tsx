@@ -4,6 +4,8 @@ import React from 'react';
 import { HyperLink, Navigation } from 'design/components';
 
 // Views
+import { Default as Account } from '@/views/account/default';
+import { useAccount } from '@/views/account/use-account';
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
 
 // Constants
@@ -18,9 +20,13 @@ const Links = [
 ];
 
 const Default: React.FunctionComponent = () => {
+  const { me } = useAccount();
+
   return (
     <Navigation aria-label={LABEL} autoFlow='column' className={CLASS_NAME}>
       {Links}
+      {/* Decided here, so an anonymous visitor gets no empty item. */}
+      {me ? <Account key='account' /> : null}
     </Navigation>
   );
 };
