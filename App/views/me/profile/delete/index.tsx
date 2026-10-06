@@ -95,7 +95,7 @@ const Delete: React.FunctionComponent = () => {
             </Animation>
             <Notice id={noticeId} />
             <Animation delay={300} property='slide-from-top'>
-              <Text id={messageId} is='p'>
+              <Text className='kicl-text-align-center' id={messageId} is='p'>
                 {COPY.deleteMessage}
               </Text>
             </Animation>
