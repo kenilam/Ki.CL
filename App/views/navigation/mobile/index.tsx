@@ -6,6 +6,10 @@ import { useLocation } from 'design/router';
 // Components
 import { Dialog, Navigation } from 'design/components';
 
+// Views
+import { Mobile as Account } from '@/views/account/mobile';
+import { useAccount } from '@/views/account/use-account';
+
 // Widgets
 import { Links } from '@/views/navigation/links';
 
@@ -26,6 +30,8 @@ import './styles.scss';
 
 const Mobile: React.FunctionComponent = () => {
   const { key } = useLocation();
+
+  const { me } = useAccount();
 
   const node = useRef<HTMLDialogElement>(null);
 
@@ -60,6 +66,7 @@ const Mobile: React.FunctionComponent = () => {
           justifyItems='end'
         >
           {Links}
+          {me ? <Account key='account' /> : null}
         </Navigation>
       </Dialog>
     </>
