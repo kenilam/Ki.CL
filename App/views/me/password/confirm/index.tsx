@@ -13,6 +13,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  Layout,
 } from 'design/components';
 
 // Icons
@@ -42,19 +43,21 @@ const Confirm: React.FunctionComponent = () => {
     }).catch(() => undefined);
 
   return (
-    <Card className='kicl-inline-size-xl'>
-      <CardHeader>
-        <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
-          {confirmed ? COPY.confirmed : COPY.title}
-        </CardTitle>
-        <CardDescription>
-          {confirmed && COPY.return}
-          {invalid && COPY.invalid}
-          {!confirmed && !invalid && COPY.description}
-        </CardDescription>
-      </CardHeader>
+    <Card className='kicl-inline-size-xl' variant='ghost'>
+      <Layout gap='narrow' justifyItems='center'>
+        <CardHeader className='kicl-text-align-center'>
+          <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
+            {confirmed ? COPY.confirmed : COPY.title}
+          </CardTitle>
+          <CardDescription>
+            {confirmed && COPY.return}
+            {invalid && COPY.invalid}
+            {!confirmed && !invalid && COPY.description}
+          </CardDescription>
+        </CardHeader>
+      </Layout>
       {!confirmed && !invalid && (
-        <CardFooter>
+        <CardFooter justifyContent='center'>
           <Button disabled={loading} onClick={onClick} size='small'>
             {COPY.confirm}
             {loading ? (
