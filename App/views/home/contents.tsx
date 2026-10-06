@@ -6,8 +6,10 @@ import classNames from 'classnames';
 // Components
 import { Animation, Frame, Layout } from 'design/components';
 
+// Widgets
+import { Background } from 'design/widgets';
+
 // Partials
-import { Background } from './background';
 import { Header } from './header';
 
 // Constants

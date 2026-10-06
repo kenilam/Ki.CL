@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
   HyperLink,
+  Layout,
 } from 'design/components';
 
 // Views
@@ -30,23 +31,25 @@ const Profile: React.FunctionComponent = () => {
 
   return (
     <>
-      <Card className='kicl-inline-size-xl'>
-        <CardHeader>
-          <CardTitle className='kicl-font-size' is='h1'>
-            {COPY.title}
-          </CardTitle>
-          <CardDescription>
-            {COPY.signedInAs} {me.Email}
-          </CardDescription>
-          <HyperLink
-            lookLikeButton
-            size='small'
-            to={PASSWORD_PATH}
-            variant='ghost'
-          >
-            {COPY.changePassword}
-          </HyperLink>
-        </CardHeader>
+      <Card className='kicl-inline-size-xl' variant='ghost'>
+        <Layout gap='narrow' justifyItems='center'>
+          <CardHeader className='kicl-text-align-center'>
+            <CardTitle className='kicl-font-size' is='h1'>
+              {COPY.title}
+            </CardTitle>
+            <CardDescription>
+              {COPY.signedInAs} {me.Email}
+            </CardDescription>
+            <HyperLink
+              lookLikeButton
+              size='small'
+              to={PASSWORD_PATH}
+              variant='ghost'
+            >
+              {COPY.changePassword}
+            </HyperLink>
+          </CardHeader>
+        </Layout>
         <Form me={me} />
       </Card>
       <Delete />

@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm } from 'react-hook-form';
 
@@ -17,13 +20,18 @@ import {
   CardContent,
   CardFooter,
   Form,
+  Frame,
   Layout,
 } from 'design/components';
+
+// Widgets
+import { Background } from 'design/widgets';
 
 // Icons
 import * as Ri from 'react-icons/ri';
 
 // Views
+import { CONTENT_DELAY, FRAME_DELAY } from '@/views/home/constants';
 import { RootError } from '@/views/root-error';
 
 // Partials
@@ -75,17 +83,25 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
   );
 
   return (
-    <Animation delay={300}>
-      <Layout
-        alignContent='center'
-        alignItems='center'
-        autoFlow='row'
-        fullScreen
-        justifyContent='center'
-        justifyItems='center'
-      >
-        <section>
-          <Card className='kicl-inline-size-xl'>
+    <Layout
+      alignContent='center'
+      alignItems='center'
+      autoFlow='row'
+      justifyContent='center'
+      justifyItems='center'
+    >
+      {/* Grows, with room above and below the card, for a window shorter than the form. */}
+      <Frame delay={FRAME_DELAY} grow>
+        <section
+          className={classNames(
+            'kicl-padding-block-frame',
+            'kicl-position-relative'
+          )}
+        >
+          <Animation delay={CONTENT_DELAY}>
+            <Background />
+          </Animation>
+          <Card className='kicl-inline-size-xl' variant='ghost'>
             <Header denied={denied} />
             <Layout
               alignContent='start'
@@ -102,7 +118,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
                     <RootError />
                   </CardContent>
                 </Layout>
-                <CardFooter>
+                <CardFooter justifyContent='center'>
                   <Button disabled={loading} type='submit' size='small'>
                     Sign in
                     {loading ? (
@@ -114,8 +130,8 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
             </Layout>
           </Card>
         </section>
-      </Layout>
-    </Animation>
+      </Frame>
+    </Layout>
   );
 };
 
