@@ -22,7 +22,7 @@ export const Links = [
     </HyperLink>
     <List gap='narrow' justifyItems='end'>
       {EXPERIMENTS.map(({ title, to }) => (
-        <Animation duration='faster' key={to} property='slide-from-top'>
+        <Animation key={to} property='slide-from-top'>
           <ListItem>
             <HyperLink to={to}>{title}</HyperLink>
           </ListItem>

@@ -67,7 +67,7 @@ const SignOut: React.FunctionComponent = () => {
             </Heading>
           </Animation>
           <Animation property='slide-from-top'>
-            <AnimatedText>
+            <AnimatedText className='kicl-text-align-center'>
               {COPY.message}
             </AnimatedText>
           </Animation>

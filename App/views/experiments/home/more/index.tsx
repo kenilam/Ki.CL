@@ -54,7 +54,7 @@ const More: React.FunctionComponent = () => {
         >
           {COPY.title}
         </Heading>
-        <Text>{COPY.message}</Text>
+        <Text className='kicl-text-align-center'>{COPY.message}</Text>
         <Actions />
       </section>
     </Layout>
