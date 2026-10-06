@@ -15,16 +15,22 @@ import { useLocation } from 'design/router';
 import {
   Button,
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
+  HyperLink,
   Layout,
   Spinner,
+  Status,
 } from 'design/components';
 
 // Icons
 import * as Ri from 'react-icons/ri';
+
+// Views
+import { PATH as HOME_PATH } from '@/views/home';
 
 // Constants
 import { CONFIRM_COPY as COPY } from '@/views/me/password/constants';
@@ -62,6 +68,35 @@ const Confirm: React.FunctionComponent = () => {
       variables: { PasswordChangeConfirm: { id, secret } },
     }).catch(() => undefined);
 
+  if (invalid) {
+    return (
+      <Card className='kicl-inline-size-max' variant='ghost'>
+        <Layout gap='narrow' justifyItems='center'>
+          <CardContent>
+            <Status
+              align='center'
+              headingLevel='h1'
+              in
+              level='warning'
+              message={COPY.invalid}
+              title={COPY.invalidTitle}
+            />
+          </CardContent>
+        </Layout>
+        <CardFooter justifyContent='center'>
+          <HyperLink
+            lookLikeButton
+            size='small'
+            to={`/${HOME_PATH}`}
+            variant='secondary'
+          >
+            {COPY.home}
+          </HyperLink>
+        </CardFooter>
+      </Card>
+    );
+  }
+
   return (
     <Card className='kicl-inline-size-max' variant='ghost'>
       <Layout gap='narrow' justifyItems='center'>
@@ -71,13 +106,12 @@ const Confirm: React.FunctionComponent = () => {
           </CardTitle>
           <CardDescription>
             {confirmed && COPY.return}
-            {invalid && COPY.invalid}
-            {!confirmed && !invalid && !checking && COPY.description}
+            {!confirmed && !checking && COPY.description}
           </CardDescription>
           <Spinner in={checking} position='inline' />
         </CardHeader>
       </Layout>
-      {!confirmed && !invalid && !checking && (
+      {!confirmed && !checking && (
         <CardFooter justifyContent='center'>
           <Button disabled={loading} onClick={onClick} size='small'>
             {COPY.confirm}
