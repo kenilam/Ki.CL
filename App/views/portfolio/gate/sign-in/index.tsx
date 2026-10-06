@@ -23,9 +23,11 @@ import {
 // Icons
 import * as Ri from 'react-icons/ri';
 
+// Views
+import { RootError } from '@/views/root-error';
+
 // Partials
 import { Email } from './email';
-import { RootError } from './error';
 import { Header } from './header';
 import { Password } from './password';
 

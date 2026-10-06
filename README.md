@@ -31,12 +31,6 @@ make run:production
 make test
 ```
 
-## FTP Deploy (Temporary)
-We will migrate to Github auto-deployment
-```BASH
-make deploy
-```
-
 ## Regions
 Production runs in two regions behind one global load balancer, which sends each visitor to the nearer one. The site's service only accepts traffic from the load balancer, and the dev services run in one region.
 
@@ -53,6 +47,15 @@ The database has a read-only replica in the second region. The API reads tree of
 The site records page views, clicks, scroll depth and time on page. It sets no cookies and skips browsers that send Global Privacy Control. The browser sends events in batches to `/collect`, and the server writes each one as a JSON log line. Visitors are identified by a hash of their address and user agent that changes every day.
 
 Clicks on links, buttons and `summary` are recorded by their text. Add `data-track='Name'` to name an element in reports or to track something else.
+
+To read the events from the logs:
+```BASH
+make gcp.analytics                        # the last day's page views
+make gcp.analytics TYPE=click SINCE=7d    # pageview, click, scroll or duration
+make gcp.analytics REGION=<region>        # one region only
+make gcp.analytics.source                 # the source region from gcp/.env
+make gcp.analytics.second                 # the second region
+```
 
 To keep the events in BigQuery, set a salt so every instance hashes visitors the same way, then send the logs to a dataset:
 ```BASH

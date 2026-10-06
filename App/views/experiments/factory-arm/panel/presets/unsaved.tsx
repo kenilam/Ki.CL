@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 
 // Components
-import { Button, Input, Layout, SheetFooter } from 'design/components';
+import {
+  Animation,
+  Button,
+  Input,
+  Layout,
+  SheetFooter,
+} from 'design/components';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';
@@ -35,30 +41,32 @@ const Unsaved: React.FunctionComponent = () => {
   };
 
   return (
-    <SheetFooter is='footer'>
-      <Layout
-        alignItems='center'
-        autoFlow='column'
-        frames='1fr--max-content'
-        gap='narrow'
-      >
-        <form
-          aria-label={COPY.panel.unsaved}
-          className='kicl-inline-size-full'
-          onSubmit={submit}
+    <Animation property='slide-from-bottom'>
+      <SheetFooter is='footer'>
+        <Layout
+          alignItems='center'
+          autoFlow='column'
+          frames='1fr--max-content'
+          gap='narrow'
         >
-          <Input
-            aria-label={COPY.panel.name}
-            onChange={(event) => setName(event.currentTarget.value)}
-            placeholder={next}
-            value={name}
-          />
-          <Button type='submit' size='small'>
-            {COPY.panel.save}
-          </Button>
-        </form>
-      </Layout>
-    </SheetFooter>
+          <form
+            aria-label={COPY.panel.unsaved}
+            className='kicl-inline-size-full'
+            onSubmit={submit}
+          >
+            <Input
+              aria-label={COPY.panel.name}
+              onChange={(event) => setName(event.currentTarget.value)}
+              placeholder={next}
+              value={name}
+            />
+            <Button type='submit' size='small'>
+              {COPY.panel.save}
+            </Button>
+          </form>
+        </Layout>
+      </SheetFooter>
+    </Animation>
   );
 };
 

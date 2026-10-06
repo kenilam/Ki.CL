@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 // Components
 import {
+  Animation,
   Button,
   CardContent,
   Details,
@@ -85,17 +86,19 @@ const Log: React.FunctionComponent = () => {
       </Layout>
 
       {log.length > 0 && (
-        <SheetFooter>
-          <Button
-            className='kicl-inline-size-full'
-            justifyContent='center'
-            onClick={clearLog}
-            size='small'
-            variant='secondary'
-          >
-            {COPY.panel.clear}
-          </Button>
-        </SheetFooter>
+        <Animation property='slide-from-bottom'>
+          <SheetFooter>
+            <Button
+              className='kicl-inline-size-full'
+              justifyContent='center'
+              onClick={clearLog}
+              size='small'
+              variant='secondary'
+            >
+              {COPY.panel.clear}
+            </Button>
+          </SheetFooter>
+        </Animation>
       )}
     </>
   );
