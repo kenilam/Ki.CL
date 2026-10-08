@@ -12,9 +12,11 @@ import { Versions } from './versions';
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ TreeOfLife }) => ({ default: TreeOfLife }))
-);
+const Contents = React.lazy(async () => {
+  const { TreeOfLife } = await import('./contents');
+
+  return { default: TreeOfLife };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (

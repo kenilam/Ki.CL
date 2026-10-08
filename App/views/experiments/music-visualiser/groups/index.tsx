@@ -15,9 +15,11 @@ import { Types } from './types';
 // Constants
 import { PARAMS, toPath } from '@/views/experiments/music-visualiser/constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Contents }) => ({ default: Contents }))
-);
+const Contents = React.lazy(async () => {
+  const { Contents } = await import('./contents');
+
+  return { default: Contents };
+});
 
 const Lazy: React.FunctionComponent = () => (
   <Suspense fallback={<Spinner position='inline' />}>

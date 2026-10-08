@@ -3,9 +3,11 @@ import React, { Suspense } from 'react';
 // Components
 import { Spinner } from 'design/components';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Contents }) => ({ default: Contents }))
-);
+const Contents = React.lazy(async () => {
+  const { Contents } = await import('./contents');
+
+  return { default: Contents };
+});
 
 type GateProps = React.ComponentProps<typeof Contents>;
 

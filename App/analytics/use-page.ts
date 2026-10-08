@@ -57,7 +57,7 @@ function usePage(path: string | null) {
         enqueue({ type: 'scroll', path, value: depth });
       }
 
-      flush();
+      void flush();
     };
 
     const onVisibilityChange = () => {

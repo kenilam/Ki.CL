@@ -62,8 +62,10 @@ function useTurnstile(siteKey: string | undefined) {
 
     let cancelled = false;
 
-    loadScript()
-      .then(() => {
+    const render = async () => {
+      try {
+        await loadScript();
+
         if (cancelled || !window.turnstile) {
           return;
         }
@@ -77,13 +79,15 @@ function useTurnstile(siteKey: string | undefined) {
           'expired-callback': () => setToken(null),
           'before-interactive-callback': () => setInteractive(true),
         });
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Session: Turnstile unavailable', error);
         if (!cancelled) {
           setFailed(true);
         }
-      });
+      }
+    };
+
+    void render();
 
     return () => {
       cancelled = true;

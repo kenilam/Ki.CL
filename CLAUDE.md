@@ -72,7 +72,7 @@ Views are folders of small parts, not one long file. Follow `App/views/experimen
 - Every visual section is its own folder with `index.tsx` and `styles.scss`: `home/stage`, `home/stage/screen`, `home/more`. Nest a folder inside the part that owns it.
 - No wrapper components for shared markup. Each section writes its own markup from `design/components`; what they share goes in tokens (`styles.scss` custom properties) and `constants.ts`, not in a component with props.
 - File and folder names are lowercase with dashes (`hyper-link/use-url-status.tsx`, `styles.scss`). Component names inside stay PascalCase.
-- Named exports only, no `export default`. `React.lazy` maps the name: `lazy(() => import('./contents').then(({ Contents }) => ({ default: Contents })))`. Tool configs that must default-export (`vite.config.ts`) are the exception.
+- Named exports only, no `export default`. `React.lazy` maps the name with `async`/`await`: `lazy(async () => { const { Contents } = await import('./contents'); return { default: Contents }; })`. Tool configs that must default-export (`vite.config.ts`) are the exception.
 - Keep `index.tsx` short: composition at the top, one component per file, under about 80 lines. If a file grows past that, split it.
 - Each part styles only its own elements, under its own class root (`kicl--views--…__part`), reading shared tokens from the root folder's `styles.scss`.
 

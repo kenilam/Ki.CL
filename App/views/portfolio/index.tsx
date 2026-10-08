@@ -13,9 +13,11 @@ import { Pika } from './pika';
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Portfolio }) => ({ default: Portfolio }))
-);
+const Contents = React.lazy(async () => {
+  const { Portfolio } = await import('./contents');
+
+  return { default: Portfolio };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (
