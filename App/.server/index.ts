@@ -19,6 +19,7 @@ import { Env } from '../env';
 import { applyClientToken } from './client-token';
 import { applyCollect } from './collect';
 import { applyGate } from './gate';
+import { precompressed } from './precompressed';
 import { applyProxy, attachUpgrade, warmIdToken } from './proxy';
 
 import nodePath from 'path';
@@ -26,6 +27,30 @@ import nodePath from 'path';
 dotenv.config({ path: `${appRoot.path}/.env` });
 
 const middlewares = Object.values({ ...Env });
+
+/** Where the build puts its content-hashed files. */
+const ASSETS = '/assets/';
+
+/**
+ * The shell names the current build's files, so it is checked on every visit:
+ * one kept for a day pointed at files a release had already replaced. The
+ * hashed files never change under their name. The rest, images and icons kept
+ * under a fixed name, stay a day.
+ */
+function cacheControl(file: string): string {
+  // A precompressed copy is cached like the file it stands in for.
+  const path = file.replace(/\.(br|gz)$/, '');
+
+  if (path.endsWith('.html')) {
+    return 'no-cache';
+  }
+
+  if (path.includes(ASSETS)) {
+    return 'public, max-age=31536000, immutable';
+  }
+
+  return 'public, max-age=86400';
+}
 
 async function Server() {
   if (!Number.isInteger(Number(process.env.PORT))) {
@@ -36,6 +61,12 @@ async function Server() {
     const baseurl = [appRoot.path, 'App', 'build'].filter(Boolean).join('/');
 
     const app = express();
+
+    /*
+     * First, for what is not a built file: the shell and the API's answers
+     * through the proxy. Built files arrive compressed and pass through.
+     */
+    app.use(compression());
 
     // Before the gate, which lets a verified client through.
     applyClientToken(app);
@@ -53,10 +84,13 @@ async function Server() {
     applyCollect(app);
 
     app.use(
+      precompressed(baseurl),
       express.static(baseurl, {
         etag: true,
         lastModified: true,
-        maxAge: 8.64e7, // a day
+        setHeaders(response, path) {
+          response.setHeader('Cache-Control', cacheControl(path));
+        },
       })
     );
 
@@ -94,8 +128,21 @@ async function Server() {
       let path = `${baseurl}${url.replace(config.base, '')}`;
 
       if (!fs.existsSync(path) || path === baseurl) {
+        /*
+         * A built file that is gone, asked for by a page from an earlier
+         * release. Answering with the shell would hand the browser HTML where
+         * it expects a script.
+         */
+        if (request.path.startsWith(ASSETS)) {
+          responses.status(404).send('404: Not found');
+
+          return;
+        }
+
         path = `${baseurl}/index.html`;
       }
+
+      responses.setHeader('Cache-Control', cacheControl(path));
 
       const extname = nodePath.extname(path);
 
@@ -175,7 +222,6 @@ async function Server() {
       });
     }
 
-    app.use(compression());
     app.use(express.json());
     app.use(hpp());
 
