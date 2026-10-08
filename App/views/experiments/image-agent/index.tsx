@@ -9,15 +9,21 @@ import { Spinner } from 'design/components';
 // Constants
 import { PATH, THREAD_PATTERN } from './constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ ImageAgent }) => ({ default: ImageAgent }))
-);
-const Start = React.lazy(() =>
-  import('./start').then(({ Start }) => ({ default: Start }))
-);
-const Chat = React.lazy(() =>
-  import('./chat').then(({ Chat }) => ({ default: Chat }))
-);
+const Contents = React.lazy(async () => {
+  const { ImageAgent } = await import('./contents');
+
+  return { default: ImageAgent };
+});
+const Start = React.lazy(async () => {
+  const { Start } = await import('./start');
+
+  return { default: Start };
+});
+const Chat = React.lazy(async () => {
+  const { Chat } = await import('./chat');
+
+  return { default: Chat };
+});
 
 const lazy = (element: React.ReactNode) => (
   <Suspense fallback={<Spinner position='inline' />}>{element}</Suspense>
