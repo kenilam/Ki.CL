@@ -7,6 +7,7 @@ import { glob } from 'glob';
 import { defineConfig, UserConfig } from 'vite';
 
 import checker from 'vite-plugin-checker';
+import { compression } from 'vite-plugin-compression2';
 import dynamicImport from 'vite-plugin-dynamic-import';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import inspect from 'vite-plugin-inspect';
@@ -253,6 +254,8 @@ const getConfig = ({
       }),
       dynamicImport(),
       inspect(),
+      // A .gz and a .br beside each built file, which the server sends as they are.
+      compression({ algorithms: ['gzip', 'brotliCompress'] }),
       react(),
       /*
        * A remote served by its own Vite dev server imports its own refresh

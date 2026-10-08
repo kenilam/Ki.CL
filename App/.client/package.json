@@ -13,6 +13,7 @@
     "vite": "8.1.5",
     "vite-plugin-checker": "0.14.5",
     "vite-plugin-commonjs": "0.10.4",
+    "vite-plugin-compression2": "2.5.3",
     "vite-plugin-dynamic-import": "1.6.0",
     "vite-plugin-env-compatible": "2.0.1",
     "vite-plugin-eslint": "1.8.1",
