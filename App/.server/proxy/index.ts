@@ -198,17 +198,18 @@ export function applyProxy(app: Express): void {
    * The token is fetched here rather than inside the proxy hooks, which are
    * synchronous. By the time a request reaches the hook the value is in memory.
    */
-  app.use((_request: Request, _response: Response, next: NextFunction) => {
-    const missing = AUDIENCES.filter((audience) => !cached.has(audience));
+  app.use(
+    async (_request: Request, _response: Response, next: NextFunction) => {
+      const missing = AUDIENCES.filter((audience) => !cached.has(audience));
 
-    if (missing.length) {
-      void Promise.all(missing.map(mintIdToken)).finally(() => next());
+      if (missing.length) {
+        // Never rejects: a mint that fails logs it and leaves no token.
+        await Promise.all(missing.map(mintIdToken));
+      }
 
-      return;
+      next();
     }
-
-    next();
-  });
+  );
 
   ROUTES.forEach(({ path, rewrite, target, ws }) => {
     const middleware = createProxyMiddleware({
