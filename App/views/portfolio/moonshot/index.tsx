@@ -16,9 +16,11 @@ import { PATH } from './constants';
  * Loaded on first visit, not with Ki.CL: if the moonshot remote is down, only
  * this page fails.
  */
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Contents }) => ({ default: Contents }))
-);
+const Contents = React.lazy(async () => {
+  const { Contents } = await import('./contents');
+
+  return { default: Contents };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (

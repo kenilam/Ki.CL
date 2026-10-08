@@ -19,6 +19,7 @@ import { Layout } from 'design/components';
 import { SCROLL_DIRECTIONS, useScrollDirection } from '@/hooks';
 
 // Partials
+import { SignOut } from './account/sign-out';
 import { Navigation } from './navigation';
 import { SkipLink } from './skip-link';
 
@@ -67,6 +68,8 @@ const Contents: React.FunctionComponent = () => {
           {/* Every request to the API is counted per session, so every page has one. */}
           <Session>
             <Outlet />
+            {/* Here, not in a menu: any page's sign-out button opens it, with the menus closed. */}
+            <SignOut />
           </Session>
         </main>
       </Layout>

@@ -25,19 +25,24 @@ const CopyLink: React.FunctionComponent = () => {
   const { track } = useTrackContext();
   const [copied, setCopied] = useState(false);
 
-  const copyLink = () => {
+  const copyLink = async () => {
+    // Missing outside a secure context, where nothing was copied.
+    if (!navigator.clipboard) {
+      return;
+    }
+
     const url = new URL(toPlayPath(track), window.location.origin).href;
 
-    void navigator.clipboard?.writeText(url).then(() => {
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), COPIED_MS);
-    });
+    await navigator.clipboard.writeText(url);
+
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), COPIED_MS);
   };
 
   return (
     <Button
       aria-label={copied ? COPY.copied : COPY.copy}
-      onClick={copyLink}
+      onClick={() => void copyLink()}
       size='small'
       title={copied ? COPY.copied : COPY.copy}
       variant='ghost'
