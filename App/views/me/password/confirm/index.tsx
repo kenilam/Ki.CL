@@ -63,10 +63,13 @@ const Confirm: React.FunctionComponent = () => {
     !confirmed &&
     (!id || !secret || Boolean(error) || link?.PasswordChangeLink === false);
 
-  const onClick = () =>
-    void confirm({
-      variables: { PasswordChangeConfirm: { id, secret } },
-    }).catch(() => undefined);
+  const onClick = async () => {
+    try {
+      await confirm({ variables: { PasswordChangeConfirm: { id, secret } } });
+    } catch {
+      // The mutation's `error` already shows it.
+    }
+  };
 
   if (invalid) {
     return (

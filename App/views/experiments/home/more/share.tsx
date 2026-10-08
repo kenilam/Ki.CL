@@ -22,8 +22,12 @@ const Share: React.FunctionComponent = () => {
     const url = window.location.href;
 
     if (navigator.share) {
-      // Rejects when the sheet is dismissed, which needs no handling.
-      await navigator.share({ title: document.title, url }).catch(() => {});
+      try {
+        await navigator.share({ title: document.title, url });
+      } catch {
+        // Rejects when the sheet is dismissed, which needs no handling.
+      }
+
       return;
     }
 

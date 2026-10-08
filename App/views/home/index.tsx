@@ -8,9 +8,11 @@ import { Spinner } from 'design/components';
 
 const PATH = '';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Home }) => ({ default: Home }))
-);
+const Contents = React.lazy(async () => {
+  const { Home } = await import('./contents');
+
+  return { default: Home };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (

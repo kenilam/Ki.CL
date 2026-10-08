@@ -114,6 +114,17 @@ function clamp(value: unknown): number {
 /* Read through a call: the state after an await is not what it was before. */
 const running = (context: AudioContext) => context.state === 'running';
 
+/** Whether the context agreed to run. */
+async function agreed(context: AudioContext): Promise<boolean> {
+  try {
+    await context.resume();
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /** Let the context run, or say it will not without a gesture. */
 async function resume(context: AudioContext): Promise<boolean> {
   if (running(context)) {
@@ -125,10 +136,7 @@ async function resume(context: AudioContext): Promise<boolean> {
       ? RESUME_AFTER_GESTURE_MS
       : RESUME_COLD_MS;
   const resumed = await Promise.race([
-    context.resume().then(
-      () => true,
-      () => false
-    ),
+    agreed(context),
     new Promise<boolean>((resolve) =>
       window.setTimeout(() => resolve(false), wait)
     ),

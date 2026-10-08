@@ -15,12 +15,16 @@ import { TreeOfLife } from './tree-of-life';
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Experiments }) => ({ default: Experiments }))
-);
-const Home = React.lazy(() =>
-  import('./home').then(({ Home }) => ({ default: Home }))
-);
+const Contents = React.lazy(async () => {
+  const { Experiments } = await import('./contents');
+
+  return { default: Experiments };
+});
+const Home = React.lazy(async () => {
+  const { Home } = await import('./home');
+
+  return { default: Home };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (
