@@ -18,7 +18,7 @@ const events: Event[] = [];
  * closed, which is when most batches go. A string body is sent as text/plain,
  * which every browser accepts for a beacon.
  */
-function flush() {
+async function flush() {
   if (!events.length) {
     return;
   }
@@ -29,16 +29,22 @@ function flush() {
     return;
   }
 
-  window
-    .fetch?.(COLLECT_PATH, { method: 'POST', body, keepalive: true })
-    .catch(() => undefined);
+  try {
+    await window.fetch?.(COLLECT_PATH, {
+      method: 'POST',
+      body,
+      keepalive: true,
+    });
+  } catch {
+    // Events that can't be sent are dropped.
+  }
 }
 
 function enqueue(event: Event) {
   events.push(event);
 
   if (events.length >= MAX_EVENTS) {
-    flush();
+    void flush();
   }
 }
 

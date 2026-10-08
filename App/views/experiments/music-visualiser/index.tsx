@@ -12,14 +12,16 @@ import { Groups } from './groups';
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ MusicVisualiser }) => ({
-    default: MusicVisualiser,
-  }))
-);
-const Home = React.lazy(() =>
-  import('./home').then(({ Home }) => ({ default: Home }))
-);
+const Contents = React.lazy(async () => {
+  const { MusicVisualiser } = await import('./contents');
+
+  return { default: MusicVisualiser };
+});
+const Home = React.lazy(async () => {
+  const { Home } = await import('./home');
+
+  return { default: Home };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (

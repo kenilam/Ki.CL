@@ -12,9 +12,11 @@ import { Spinner } from 'design/components';
 // View
 import { Views as View } from '@/views';
 
-const KiclProvider = lazy(() =>
-  import('api/provider').then(({ KiclProvider }) => ({ default: KiclProvider }))
-);
+const KiclProvider = lazy(async () => {
+  const { KiclProvider } = await import('api/provider');
+
+  return { default: KiclProvider };
+});
 
 const Contents: React.FunctionComponent = () => {
   const { loading } = useEnvContext();

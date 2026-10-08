@@ -16,8 +16,11 @@ function useEnded() {
   return useCallback(async () => {
     await restart();
 
-    // A query the visitor can no longer run fails here and shows that itself.
-    await client.resetStore().catch(() => undefined);
+    try {
+      await client.resetStore();
+    } catch {
+      // A query the visitor can no longer run fails here and shows that itself.
+    }
   }, [client, restart]);
 }
 

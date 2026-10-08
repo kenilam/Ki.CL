@@ -34,7 +34,13 @@ const Contents: React.FunctionComponent<Props> = ({ path }) => {
   });
 
   useEffect(() => {
-    const ended = () => void refetch().catch(() => undefined);
+    const ended = async () => {
+      try {
+        await refetch();
+      } catch {
+        // The query's `error` is set, which shows the sign-in.
+      }
+    };
 
     addEventListener(SESSION_ENDED, ended);
 

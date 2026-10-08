@@ -9,9 +9,11 @@ import { Spinner } from 'design/components';
 // Constants
 import { PATH } from './constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ FactoryArm }) => ({ default: FactoryArm }))
-);
+const Contents = React.lazy(async () => {
+  const { FactoryArm } = await import('./contents');
+
+  return { default: FactoryArm };
+});
 
 const Lazy: React.FunctionComponent = () => (
   <Suspense fallback={<Spinner position='inline' />}>

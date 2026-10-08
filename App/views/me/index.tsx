@@ -13,18 +13,26 @@ import { Gate } from './gate';
 import { PATH } from './constants';
 import { CONFIRM_PATH, PATH as PASSWORD_PATH } from './password/constants';
 
-const Contents = React.lazy(() =>
-  import('./contents').then(({ Me }) => ({ default: Me }))
-);
-const Profile = React.lazy(() =>
-  import('./profile').then(({ Profile }) => ({ default: Profile }))
-);
-const Password = React.lazy(() =>
-  import('./password').then(({ Password }) => ({ default: Password }))
-);
-const Confirm = React.lazy(() =>
-  import('./password/confirm').then(({ Confirm }) => ({ default: Confirm }))
-);
+const Contents = React.lazy(async () => {
+  const { Me } = await import('./contents');
+
+  return { default: Me };
+});
+const Profile = React.lazy(async () => {
+  const { Profile } = await import('./profile');
+
+  return { default: Profile };
+});
+const Password = React.lazy(async () => {
+  const { Password } = await import('./password');
+
+  return { default: Password };
+});
+const Confirm = React.lazy(async () => {
+  const { Confirm } = await import('./password/confirm');
+
+  return { default: Confirm };
+});
 
 const Lazy: React.FunctionComponent = () => {
   return (

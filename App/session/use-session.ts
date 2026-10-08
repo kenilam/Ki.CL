@@ -85,11 +85,15 @@ function useSession() {
 
     let cancelled = false;
 
-    exchange(null).then((outcome) => {
+    const probe = async () => {
+      const outcome = await exchange(null);
+
       if (!cancelled) {
         setStage(outcome === 'rejected' ? 'challenge' : outcome);
       }
-    });
+    };
+
+    void probe();
 
     return () => {
       cancelled = true;
@@ -103,7 +107,9 @@ function useSession() {
 
     let cancelled = false;
 
-    exchange(token).then((outcome) => {
+    const challenge = async () => {
+      const outcome = await exchange(token);
+
       if (cancelled) {
         return;
       }
@@ -114,7 +120,9 @@ function useSession() {
       } else {
         setStage(outcome);
       }
-    });
+    };
+
+    void challenge();
 
     return () => {
       cancelled = true;
