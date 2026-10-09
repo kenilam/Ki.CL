@@ -39,7 +39,12 @@ const Element: React.FunctionComponent = () => {
     root.dataset.routes = routes.join('.');
 
     document.title = `Ki.CL | ${routes.join(' | ')}`;
-  });
+    /*
+     * Once per route, not on every render. Printing changes the media queries
+     * `useResponsive` listens to, and the render that follows used to put the
+     * route's title back over the one a page had set for its print.
+     */
+  }, [location.pathname]);
 
   /**
    * A route change replaces the page without a load, so focus moves to the new
@@ -57,7 +62,7 @@ const Element: React.FunctionComponent = () => {
   }, [location.pathname]);
 
   return (
-    <GlobalHeaderProvider show={false}>
+    <GlobalHeaderProvider>
       <Contents />
     </GlobalHeaderProvider>
   );

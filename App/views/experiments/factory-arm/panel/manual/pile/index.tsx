@@ -88,6 +88,7 @@ const Pile: React.FunctionComponent = () => {
               <span className='kicl-font-family-mono'>{pile.seed}</span>
             </Text>,
             <Button
+              before={<Ri.RiShuffleLine aria-hidden />}
               onClick={() =>
                 setDraft({
                   ...draft,
@@ -97,7 +98,6 @@ const Pile: React.FunctionComponent = () => {
               size='small'
               variant='ghost'
             >
-              <Ri.RiShuffleLine aria-hidden />
               {COPY.panel.pile.random}
             </Button>
           )}

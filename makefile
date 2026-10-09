@@ -63,6 +63,17 @@ client-token.keys:
 client-token:
 	@yarn workspace app.server exec tsx client-token/cli.ts mint --sub "$(SUB)" --days "$(or $(DAYS),14)"
 
+# The resume as PDF, printed from the site running locally: `make run` here,
+# with the API and the design system up. The first uploads the public master
+# PDF to the static bucket named in gcp/.env and records what it was made from;
+# commit the record. The second writes every version on Letter and A4, with the phone number from
+# KICL_RESUME_PHONE in .env, into a folder outside the repository.
+resume.pdf:
+	@yarn workspace app.server exec tsx ../views/resume/export/cli.ts public
+
+resume.pdf.private:
+	@yarn workspace app.server exec tsx ../views/resume/export/cli.ts private --out "$(OUT)"
+
 test:
 	@echo ⌛ running testing...
 	yarn run test

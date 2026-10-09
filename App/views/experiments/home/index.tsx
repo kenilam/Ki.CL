@@ -4,11 +4,10 @@ import React, { useId } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout } from 'design/components';
+import { Heading, Layout, ScrollIndicator } from 'design/components';
 
 // Partials
 import { More } from './more';
-import { ScrollIndicator } from './scroll-indicator';
 import { Stage } from './stage';
 
 // Styles
