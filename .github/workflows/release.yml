@@ -1,0 +1,24 @@
+name: Release
+
+# Moves main to the head of develop as a fast-forward, so both branches hold
+# the same commits and nothing has to come back to develop. Run by hand.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: develop
+          fetch-depth: 0
+          # The main ruleset only lets a deploy key update the branch.
+          ssh-key: ${{ secrets.RELEASE_DEPLOY_KEY }}
+
+      # No --force: git refuses the push if main has a commit develop lacks.
+      - run: git push origin HEAD:refs/heads/main
