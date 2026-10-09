@@ -6,18 +6,17 @@ import { HyperLink, Navigation } from 'design/components';
 // Views
 import { Default as Account } from '@/views/account/default';
 import { useAccount } from '@/views/account/use-account';
-import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
 
 // Constants
-import { LABEL } from '@/views/navigation/constants';
+import { LABEL, ROUTES } from '@/views/navigation/constants';
 
 const CLASS_NAME = 'kicl--views--navigation--default';
 
-const Links = [
-  <HyperLink key={EXPERIMENTS_PATH} to={`/${EXPERIMENTS_PATH}`}>
-    Experiments
-  </HyperLink>,
-];
+const Links = ROUTES.map(({ title, to }) => (
+  <HyperLink key={to} to={to}>
+    {title}
+  </HyperLink>
+));
 
 const Default: React.FunctionComponent = () => {
   const { me } = useAccount();

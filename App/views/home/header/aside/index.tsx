@@ -7,7 +7,10 @@ import classNames from 'classnames';
 import * as Ri from 'react-icons/ri';
 
 // Components
-import { HyperLink, Navigation } from 'design/components';
+import { Button, HyperLink, Navigation } from 'design/components';
+
+// Views
+import { CONTACT_ID, COPY as CONTACT } from '@/views/contact/constants';
 
 const COPY = {
   label: 'Contact',
@@ -48,16 +51,16 @@ const Aside: React.FunctionComponent = () => {
       >
         <Ri.RiGithubLine aria-hidden />
       </HyperLink>
-      <HyperLink
-        aria-label='Email me'
-        lookLikeButton
+      <Button
+        aria-label={CONTACT.title}
+        command='show-modal'
+        commandFor={CONTACT_ID}
         size='small'
-        title='Email me'
-        to='mailto:hello@ki-cl.com'
+        title={CONTACT.title}
         variant='ghost'
       >
         <Ri.RiMailLine aria-hidden />
-      </HyperLink>
+      </Button>
     </Navigation>
   );
 };

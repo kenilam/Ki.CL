@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Animation, Layout } from 'design/components';
+import { Animation, Layout, ScrollIndicator } from 'design/components';
 
 // Partials
 import { Footer } from './sections/footer';
@@ -16,7 +16,6 @@ import { Simulation } from './sections/simulation';
 import { AgentSimulation } from './sections/agent-simulation';
 import { AnchorNav } from './sections/anchor-nav';
 import { BuildPlan } from './sections/build-plan';
-import { ScrollIndicator } from './scroll-indicator';
 
 // Constants
 import { CLASS_NAME } from './constants';

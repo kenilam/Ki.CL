@@ -21,12 +21,12 @@ const Choices: React.FunctionComponent<Props> = ({ choices, onChoose }) => (
       {choices.map((choice) => (
         <ListItem key={choice}>
           <Button
+            before={<Ri.RiCircleLine />}
             is='button'
             onClick={() => void onChoose(choice)}
             size='small'
             variant='secondary'
           >
-            <Ri.RiCircleLine />
             <Text is='span'>{choice}</Text>
           </Button>
         </ListItem>

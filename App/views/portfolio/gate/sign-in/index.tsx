@@ -119,11 +119,20 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
                   </CardContent>
                 </Layout>
                 <CardFooter justifyContent='center'>
-                  <Button disabled={loading} type='submit' size='small'>
+                  <Button
+                    after={
+                      loading && (
+                        <Ri.RiLoader4Line
+                          aria-hidden
+                          className='is-revolving'
+                        />
+                      )
+                    }
+                    disabled={loading}
+                    type='submit'
+                    size='small'
+                  >
                     Sign in
-                    {loading ? (
-                      <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-                    ) : null}
                   </Button>
                 </CardFooter>
               </Form>

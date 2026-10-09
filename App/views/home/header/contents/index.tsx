@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import * as Icons from 'design/icons';
 
 // Components
-import { AnimatedText, Heading, HyperLink } from 'design/components';
+import { AnimatedText, Heading, HyperLink, Layout } from 'design/components';
 
 const Contents: React.FunctionComponent = () => {
   return (
@@ -16,29 +16,38 @@ const Contents: React.FunctionComponent = () => {
         className={classNames('kicl-font-size-largest', 'kicl-z-index-raised')}
         is='h1'
       >
-        <HyperLink aria-label='Ki.CL home' lookLikeButton to='/' unstyled>
-          <Icons.Logo />
-        </HyperLink>
+        {/* A box of its own, so the logo isn't set on the heading's text line. */}
+        <Layout display='inline-grid'>
+          <HyperLink aria-label='Ki.CL home' to='/' unstyled>
+            <Icons.Logo />
+          </HyperLink>
+        </Layout>
       </Heading>
-      <AnimatedText
-        delay={1000}
-        duration='slower'
-        easing='ease-sine-in'
-        property='slide-from-bottom'
-        className={classNames('kicl-font-size-large', 'kicl-z-index-raised')}
-      >
-        Thanks for stopping by.
-      </AnimatedText>
-      <AnimatedText
-        delay={2000}
-        duration='slower'
-        easing='ease-sine-in'
-        property='slide-from-bottom'
-        className='kicl-z-index-raised'
-        dense
-      >
-        More soon.
-      </AnimatedText>
+      <Layout gap='narrow'>
+        <section>
+          <AnimatedText
+            delay={1000}
+            dense
+            duration='slower'
+            easing='ease-sine-in'
+            property='slide-from-bottom'
+            className={classNames('kicl-z-index-raised')}
+          >
+            Personal projects are where curiosity becomes craft.
+          </AnimatedText>
+          <AnimatedText
+            delay={1000}
+            dense
+            duration='slower'
+            easing='ease-sine-in'
+            property='slide-from-bottom'
+            className={classNames('kicl-z-index-raised')}
+          >
+            This is my own little lab for imagining what's possible and building
+            it into existence.
+          </AnimatedText>
+        </section>
+      </Layout>
     </>
   );
 };

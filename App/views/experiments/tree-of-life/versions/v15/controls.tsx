@@ -44,14 +44,14 @@ const Controls: React.FunctionComponent = () => {
           unstyled
           type='button'
           alignItems='center'
+          before={<Ri.RiFlashlightFill aria-hidden />}
           gap='narrower'
           className={animate ? 'kicl-color-green' : 'kicl-color-grey-dark'}
           aria-pressed={animate}
           title={animate ? COPY.land : COPY.play}
           onClick={() => setAnimate((current) => !current)}
         >
-          <Ri.RiFlashlightFill aria-hidden />
-          <Text is='span' dense unstyled className='kicl-font-size-small'>
+          <Text is='span' unstyled className='kicl-font-size-small'>
             {COPY.label}
           </Text>
         </Button>

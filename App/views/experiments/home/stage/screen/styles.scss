@@ -40,20 +40,12 @@
 
   /*
    * Only the picture is cropped to the frame, so the words can pass its edge.
-   * The crop starts full-bleed and tucks into the frame as the panel arrives.
+   * The crop never leaves the frame: a panel arrives by fading in over the
+   * one before, and the picture inside is what moves.
    */
   &__crop {
-    // The Frame's own radius token, which no utility reads. The animation
-    // below beats `kicl-inset-0` while it runs.
+    // The Frame's own radius token, which no utility reads.
     border-radius: var(--kicl--components--frame--radius);
-
-    @supports (animation-timeline: scroll()) {
-      @media (prefers-reduced-motion: no-preference) {
-        animation: kicl--views--experiments__home--frame-in linear both;
-        animation-range: var(#{$home}--arrival) var(#{$home}--at);
-        animation-timeline: scroll(root);
-      }
-    }
   }
 
   /*
@@ -68,15 +60,5 @@
       block-size: var(--kicl--views--experiments__home--screen);
       grid-area: auto;
     }
-  }
-}
-
-// Out to the window's edges, as if there were no frame.
-@keyframes kicl--views--experiments__home--frame-in {
-  from {
-    border-radius: 0;
-    inset: calc(var(--kicl--components--frame--top) * -1)
-      calc(var(--kicl--components--frame--gap) * -1)
-      calc(var(--kicl--components--frame--gap) * -1);
   }
 }

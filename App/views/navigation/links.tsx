@@ -7,6 +7,7 @@ import { Animation, HyperLink, List, ListItem } from 'design/components';
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
 import { EXPERIMENTS } from '@/views/experiments/home/constants';
 import { PATH as HOME_PATH } from '@/views/home';
+import { PATH as RESUME_PATH } from '@/views/resume/constants';
 
 export const Links = [
   <HyperLink
@@ -30,4 +31,11 @@ export const Links = [
       ))}
     </List>
   </React.Fragment>,
+  <HyperLink
+    className='kicl-font-size-medium'
+    key={RESUME_PATH}
+    to={`/${RESUME_PATH}`}
+  >
+    Resume
+  </HyperLink>,
 ];

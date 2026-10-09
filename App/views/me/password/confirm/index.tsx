@@ -116,11 +116,17 @@ const Confirm: React.FunctionComponent = () => {
       </Layout>
       {!confirmed && !checking && (
         <CardFooter justifyContent='center'>
-          <Button disabled={loading} onClick={onClick} size='small'>
+          <Button
+            after={
+              loading && (
+                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+              )
+            }
+            disabled={loading}
+            onClick={onClick}
+            size='small'
+          >
             {COPY.confirm}
-            {loading ? (
-              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-            ) : null}
           </Button>
         </CardFooter>
       )}

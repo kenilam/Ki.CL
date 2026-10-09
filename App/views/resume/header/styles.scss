@@ -1,0 +1,21 @@
+/*
+ * The site's five-colour gradient as a short rule over the name, the way the
+ * portfolio's section headings carry it. A Separator with its own tokens, in
+ * the flow of the page. A positioned rule would take the whole header out of
+ * paint order, and a PDF would then carry the name after everything else.
+ */
+.kicl--views--resume__header__rule {
+  --kicl--components--separator--size: var(--kicl-size-3px);
+
+  animation: kicl-gradient-shift var(--kicl-transition-duration-5m) ease
+    infinite;
+  background-image: var(--kicl-gradient-shift);
+  background-size: 1200% 1200%;
+  inline-size: var(--kicl-size-4x);
+
+  // Paper drops backgrounds unless told to keep them, and nothing moves on it.
+  @media print {
+    animation: none;
+    print-color-adjust: exact;
+  }
+}

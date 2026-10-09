@@ -47,7 +47,7 @@ const Start: React.FunctionComponent = () => {
           <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
             <section
               className={classNames(
-                // Dark in both themes, so the scrim darkens the pictures.
+                // Dark in both themes, so the scrim darkens the picture.
                 'kicl--theme--dark',
                 'kicl-padding-block-widest',
                 'kicl-padding-inline-frame',

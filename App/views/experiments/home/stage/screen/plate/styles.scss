@@ -3,13 +3,26 @@
   $home: '--kicl--views--experiments__home';
   $screen: '.kicl--views--experiments__home__screen';
 
-  --kicl--views--experiments__home--drift: 12%;
+  /*
+   * How far the plate reaches past the crop, above and below, as a share of
+   * the crop's height. It drifts by exactly that reach. A percentage in
+   * `translate` is of the plate's own height, which is the crop's plus both
+   * reaches, so the distance is scaled back down to the crop's.
+   */
+  --kicl--views--experiments__home--drift: 0.12;
+  --kicl--views--experiments__home--drift-reach: calc(
+    var(--kicl--views--experiments__home--drift) * 100%
+  );
+  --kicl--views--experiments__home--drift-distance: calc(
+    var(--kicl--views--experiments__home--drift) /
+    (1 + var(--kicl--views--experiments__home--drift) * 2) * 100%
+  );
 
   background-color: var(--kicl-body-background-color);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  inset-block: calc(var(--kicl--views--experiments__home--drift) * -1);
+  inset-block: calc(var(--kicl--views--experiments__home--drift-reach) * -1);
 
   @supports (animation-timeline: scroll()) {
     animation:
@@ -28,32 +41,29 @@
       background-image: url('/assets/static/banner.dark.webp');
     }
   }
-
-  #{$screen}--image-agent & {
-    /* The backdrop's pictures drift over the same range as the plate. */
-    --kicl--views--experiments--image-agent__backdrop--from: var(
-      #{$home}--before
-    );
-    --kicl--views--experiments--image-agent__backdrop--to: var(#{$home}--after);
-  }
 }
 
+// Fades in over the panel before, settling from slightly larger. The crop
+// clips it to the frame, so the larger picture never passes the edge.
 @keyframes kicl--views--experiments__home--arrive {
   from {
     opacity: 0;
+    scale: 1.1;
   }
 
   to {
     opacity: 1;
+    scale: 1;
   }
 }
 
 @keyframes kicl--views--experiments__home--drift {
   from {
-    translate: 0 calc(var(--kicl--views--experiments__home--drift) * -1);
+    translate: 0
+      calc(var(--kicl--views--experiments__home--drift-distance) * -1);
   }
 
   to {
-    translate: 0 var(--kicl--views--experiments__home--drift);
+    translate: 0 var(--kicl--views--experiments__home--drift-distance);
   }
 }

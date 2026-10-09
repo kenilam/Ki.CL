@@ -9,6 +9,7 @@ import { Animation, Layout } from 'design/components';
 // Partials
 import { Aside } from './aside';
 import { Contents } from './contents';
+import { Menu } from './menu';
 
 // Constants
 import { CONTENT_DELAY } from '@/views/home/constants';
@@ -40,6 +41,7 @@ const Header: React.FunctionComponent = () => {
           id={ID}
         >
           <Contents />
+          <Menu />
           <Aside />
         </header>
       </Layout>

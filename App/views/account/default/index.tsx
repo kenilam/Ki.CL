@@ -48,12 +48,12 @@ const Default: React.FunctionComponent = () => {
           </Animation>
           <Animation property='slide-from-top' delay={600}>
             <Button
+              before={<Ri.RiLogoutCircleLine aria-hidden />}
               className='kicl-inline-size-full'
               command='show-modal'
               commandFor={SIGN_OUT_ID}
               variant='secondary'
             >
-              <Ri.RiLogoutCircleLine aria-hidden />
               {COPY.signOut}
             </Button>
           </Animation>

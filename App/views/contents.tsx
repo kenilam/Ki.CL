@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Outlet, ScrollRestoration, useLocation } from 'design/router';
 
 // Widgets
-import { GlobalHeader, useGlobalHeaderContext } from 'design/widgets';
+import { GlobalHeader } from 'design/widgets';
 
 // Session
 import { Session, SessionProvider } from '@/session';
@@ -15,11 +15,9 @@ import { Session, SessionProvider } from '@/session';
 // Components
 import { Layout } from 'design/components';
 
-// Hooks
-import { SCROLL_DIRECTIONS, useScrollDirection } from '@/hooks';
-
 // Partials
 import { SignOut } from './account/sign-out';
+import { Contact } from './contact';
 import { Navigation } from './navigation';
 import { SkipLink } from './skip-link';
 
@@ -28,25 +26,15 @@ import { MAIN_ID } from './constants';
 import { PATH as HOME_PATH } from './home';
 
 const Contents: React.FunctionComponent = () => {
-  const { showHeader } = useGlobalHeaderContext();
-
   const { pathname } = useLocation();
 
-  const { direction, isAtStart } = useScrollDirection();
-
   const isHome = pathname.replace('/', '') === HOME_PATH;
-
-  const show = !isHome && (isAtStart || direction === SCROLL_DIRECTIONS.up);
-
-  useEffect(() => {
-    showHeader(show);
-  }, [show, showHeader]);
 
   return (
     <SessionProvider>
       <ScrollRestoration />
       <SkipLink />
-      <GlobalHeader>
+      <GlobalHeader hidden={isHome}>
         <Navigation />
       </GlobalHeader>
       <Layout
@@ -68,8 +56,9 @@ const Contents: React.FunctionComponent = () => {
           {/* Every request to the API is counted per session, so every page has one. */}
           <Session>
             <Outlet />
-            {/* Here, not in a menu: any page's sign-out button opens it, with the menus closed. */}
+            {/* Here, not in a menu or a page: any page's button opens them, with the menus closed. */}
             <SignOut />
+            <Contact />
           </Session>
         </main>
       </Layout>
