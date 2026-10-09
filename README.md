@@ -43,6 +43,24 @@ The load balancer has a serverless NEG per region, Google-managed certificates t
 
 The database has a read-only replica in the second region. The API reads tree of life data from the nearest node. Sessions, and anything read straight after a write, stay on the primary.
 
+## Resume
+`/resume` is the master version, and each tailored version is at `/resume/<version>`: `manager`, `frontend-ai`, `react-native` and `architecture`. The content is typed data in `App/views/resume/content`. A line several versions share is one constant in `shared.ts`, and each version's file picks its lines and their order.
+
+The PDFs are the page, printed by the Chrome on this machine. Run the site locally first, with the API and the design system up.
+```BASH
+make resume.pdf                                         # the public master PDF, uploaded to the static bucket
+make resume.pdf.private OUT=~/Desktop/resume/designed   # every version, Letter and A4, with the phone number
+```
+The public PDF is not in the repository. `make resume.pdf` uploads it to the static bucket, where the site serves it at `/assets/static/resume/keni-lam-resume.pdf` through the API. It needs `gcloud`, signed in, and `STATIC_BUCKET` in `gcp/.env`.
+
+It also writes `content/exported.json`, a fingerprint of the content the PDF was made from. Commit it. The page offers the file only while the fingerprint matches, so after a content edit the download is hidden until the next export, and print still works.
+
+The phone number is `KICL_RESUME_PHONE` in `.env`. It goes into the private PDFs only. This repository is public, so the number is in no commit, no bundle and not in the public PDF.
+
+Every version has to fit two pages on Letter and on A4, and the export fails when one does not. The type size on paper is `--kicl-print-font-size` in `App/views/resume/styles.scss`.
+
+The design is written up in `docs/design/resume.md`.
+
 ## Analytics
 The site records page views, clicks, scroll depth and time on page. It sets no cookies and skips browsers that send Global Privacy Control. The browser sends events in batches to `/collect`, and the server writes each one as a JSON log line. Visitors are identified by a hash of their address and user agent that changes every day.
 

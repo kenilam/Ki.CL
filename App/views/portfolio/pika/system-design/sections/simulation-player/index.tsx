@@ -109,13 +109,15 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
           {/* `aria-disabled` keeps focus on the button while the run plays. */}
           <Button
             aria-disabled={playing || undefined}
+            before={
+              playing && (
+                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+              )
+            }
             onClick={run}
             size='small'
             type='button'
           >
-            {playing ? (
-              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-            ) : null}
             {finished ? 'Replay' : playing ? 'Running' : runLabel}
           </Button>
         </div>

@@ -76,11 +76,18 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
           >
             {COPY.reset}
           </Button>
-          <Button disabled={loading} size='small' type='submit' level='confirm'>
+          <Button
+            after={
+              loading && (
+                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+              )
+            }
+            disabled={loading}
+            size='small'
+            type='submit'
+            level='confirm'
+          >
             {COPY.save}
-            {loading ? (
-              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-            ) : null}
           </Button>
         </footer>
       </Layout>
