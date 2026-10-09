@@ -59,11 +59,17 @@ const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
         </CardContent>
       </Layout>
       <CardFooter justifyContent='center'>
-        <Button disabled={isSubmitting} size='small' type='submit'>
+        <Button
+          after={
+            isSubmitting && (
+              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+            )
+          }
+          disabled={isSubmitting}
+          size='small'
+          type='submit'
+        >
           {COPY.send}
-          {isSubmitting ? (
-            <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-          ) : null}
         </Button>
       </CardFooter>
     </Form>

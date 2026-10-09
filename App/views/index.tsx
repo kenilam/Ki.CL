@@ -11,6 +11,7 @@ import { Experiments } from './experiments';
 import { Home } from './home';
 import { Me } from './me';
 import { Portfolio } from './portfolio';
+import { Resume } from './resume';
 
 // Partials
 import { Element } from './element';
@@ -24,6 +25,7 @@ const Views: React.FunctionComponent = () => {
         {Home}
         {Me}
         {Portfolio}
+        {Resume}
       </Route>
     </Router>
   );

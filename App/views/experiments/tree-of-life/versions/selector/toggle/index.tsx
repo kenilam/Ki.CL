@@ -65,6 +65,7 @@ const Toggle: React.FunctionComponent = () => {
           unstyled
           type='button'
           alignItems='center'
+          before={<Ri.RiStackLine aria-hidden />}
           gap='narrower'
           className={classNames(
             `${CLASS_NAME}__toggle`,
@@ -74,7 +75,6 @@ const Toggle: React.FunctionComponent = () => {
           popoverTarget={CLASS_NAME}
           title='Every version of this view'
         >
-          <Ri.RiStackLine aria-hidden />
           {version === LIVE ? 'Final version' : `Version ${version}`}
         </Button>
       </nav>

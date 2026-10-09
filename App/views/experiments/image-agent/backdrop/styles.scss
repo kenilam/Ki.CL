@@ -1,53 +1,5 @@
-$backdrop: '--kicl--views--experiments--image-agent__backdrop';
-
-// How far each picture overflows the backdrop at either end, as a share of
-// it. The picture is taller by twice that, and `translate` percentages are of
-// the picture, so the travel is scaled down to stay inside the overflow.
-$overflow: 0.1;
-$travel: math.percentage(math.div($overflow, 1 + 2 * $overflow));
-
-// How strongly all the pictures together colour the preview, split evenly
-// between them. They blend with `soft-light`, which deepens the colour instead
-// of adding light, so the preview keeps its saturation.
-$light: 1.5;
-
-/*
- * The scroll range the pictures drift over. A parent that moves on its own
- * range, such as a panel on the experiments stage, sets both.
- */
 .kicl--views--experiments--image-agent__backdrop {
-  --kicl--views--experiments--image-agent__backdrop--from: 0px;
-  --kicl--views--experiments--image-agent__backdrop--to: 100dvb;
-
   background-image: url('./preview.webp');
   background-position: center;
   background-size: cover;
-
-  &__picture {
-    background-image: var(#{$backdrop}--url);
-    background-position: center;
-    background-size: cover;
-    inset-block: math.percentage(-$overflow);
-    mix-blend-mode: soft-light;
-    opacity: calc(#{$light} / var(#{$backdrop}--count));
-
-    @supports (animation-timeline: scroll()) {
-      @media (prefers-reduced-motion: no-preference) {
-        animation: kicl--views--experiments--image-agent__backdrop--drift linear
-          both;
-        animation-range: var(#{$backdrop}--from) var(#{$backdrop}--to);
-        animation-timeline: scroll(root);
-      }
-    }
-  }
-}
-
-@keyframes kicl--views--experiments--image-agent__backdrop--drift {
-  from {
-    translate: 0 (-$travel);
-  }
-
-  to {
-    translate: 0 $travel;
-  }
 }

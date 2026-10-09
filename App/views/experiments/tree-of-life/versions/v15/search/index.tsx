@@ -242,7 +242,6 @@ const Search: React.FunctionComponent = () => {
               {query ? (
                 <InputGroupAddon align='inline-end'>
                   <InputGroupButton
-                    size='icon-xs'
                     variant='ghost'
                     type='button'
                     aria-label='Clear the search'

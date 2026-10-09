@@ -1,0 +1,121 @@
+/*
+ * The article, which is a card on a screen, and how it meets paper.
+ *
+ * The frame around it is the component's own, on a screen and on paper,
+ * where it is a rounded border on every sheet. What is left here is the
+ * page's: the card's width and padding, and how the content breaks between
+ * sheets. The width is set here and not with `Card size` because a utility
+ * cannot change for print, where the sheet sets it.
+ */
+.kicl--views--resume {
+  // Room for a document, not a panel: the frame's inset, inside the card too.
+  --kicl--components--card--spacing: var(--kicl--components--frame--inset);
+  --kicl--views--resume--max-inline-size: var(--kicl-columns-8);
+
+  max-inline-size: var(--kicl--views--resume--max-inline-size);
+
+  /*
+   * A section's label is set at the small size, so its tracking comes down
+   * with it. At the body's it is a tenth of the label's own size, wide enough
+   * that a PDF reader takes each letter for a word: "S U M M A R Y".
+   */
+  h2 {
+    letter-spacing: calc(var(--kicl-letter-spacing) * 0.8);
+  }
+
+  @media print {
+    // No card on paper: the frame's border is the only edge on the sheet.
+    --kicl--components--card--background-color: transparent;
+    --kicl--components--card--border-width: 0;
+    --kicl--components--card--spacing: 0;
+    --kicl--views--resume--max-inline-size: none;
+
+    /*
+     * Chrome can split a line between two sheets inside nested grids, and
+     * print its second half over what follows. Blocks break cleanly. So on
+     * paper each stack is a block, and the gap `Layout` gave it is the margin
+     * between its children, at the same sizes.
+     */
+    display: block;
+
+    section,
+    ul,
+    li {
+      display: block;
+    }
+
+    > * + * {
+      margin-block-start: var(--kicl-gutter-wide);
+    }
+
+    section > * + * {
+      margin-block-start: var(--kicl-gutter-narrow);
+    }
+
+    section > * + details,
+    section > details + section {
+      margin-block-start: var(--kicl-gutter);
+    }
+
+    li + li {
+      margin-block-start: var(--kicl-gutter-narrower);
+    }
+
+    /*
+     * The roles are disclosures, which the design system prints open. On
+     * paper they sit as close as the rest of the page, and without the rule
+     * that separates them on a screen.
+     */
+    details {
+      --kicl--components--details--border-width: 0;
+      --kicl--components--details--padding-block-start: 0;
+    }
+
+    summary {
+      --kicl--components--details--summary--margin-block-end: var(
+        --kicl-gutter-narrower
+      );
+    }
+
+    /*
+     * How the document breaks across sheets, which is the page's business
+     * and not any one section's: a heading stays with what it introduces,
+     * and a line is never split between two sheets.
+     */
+    h2,
+    h3,
+    header,
+    summary {
+      break-after: avoid;
+    }
+
+    li,
+    p {
+      break-inside: avoid;
+    }
+
+    // The earlier roles are four lines. They stay on one sheet together.
+    section section {
+      break-inside: avoid;
+    }
+
+    /*
+     * Nothing is cut between two sheets: a section goes to the next sheet
+     * whole, and so does each role inside Experience. Experience itself is
+     * longer than a sheet, so it is the one that breaks, between two roles.
+     */
+    > section:not(:has(details)),
+    details {
+      break-inside: avoid;
+    }
+  }
+
+  /*
+   * The type size on paper, which the design system's print styles read. It
+   * is the largest at which every version still fits two sheets, on Letter
+   * and on A4. The export fails when one no longer does.
+   */
+  @at-root :root:has(&) {
+    --kicl-print-font-size: 8.6pt;
+  }
+}

@@ -15,7 +15,7 @@ import { COPY, SIGN_OUT_ID } from '@/views/account/constants';
 /** The account as one row of the mobile menu: the profile link, then sign out. */
 const Mobile: React.FunctionComponent = () => {
   return (
-    <Menu autoFlow='row' gap='narrow' justifyItems='stretch'>
+    <Menu autoFlow='row' className='kicl-padding-block-start-wider' gap='narrow' justifyItems='stretch'>
       <Animation property='slide-from-bottom' delay={900}>
         <HyperLink
           before={<Ri.RiAccountCircleLine aria-hidden />}
@@ -29,12 +29,12 @@ const Mobile: React.FunctionComponent = () => {
       </Animation>
       <Animation property='slide-from-bottom' delay={1200}>
         <Button
+          before={<Ri.RiLogoutCircleLine aria-hidden />}
           className='kicl-inline-size-full'
           command='show-modal'
           commandFor={SIGN_OUT_ID}
           variant='secondary'
         >
-          <Ri.RiLogoutCircleLine aria-hidden />
           {COPY.signOut}
         </Button>
       </Animation>
