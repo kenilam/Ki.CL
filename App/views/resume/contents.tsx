@@ -85,7 +85,7 @@ const Resume: React.FunctionComponent = () => {
     [found, t]
   );
 
-  usePrintTitle(`${NAME} - ${t('copy.title')}`);
+  usePrintTitle(`${NAME} - ${t('title')}`);
 
   if (!version) {
     return <Status404 />;

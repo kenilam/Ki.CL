@@ -1,4 +1,9 @@
 {
+  "actions": {
+    "file": "PDF",
+    "print": "Print",
+    "sendMessage": "Send me a message"
+  },
   "architecture": {
     "headline": "Staff Software Engineer · Platform and systems architecture",
     "name": "Architecture",
@@ -22,21 +27,12 @@
       "movedCentralised": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy."
     }
   },
-  "copy": {
+  "education": {
+    "title": "Education"
+  },
+  "experience": {
     "earlier": "Earlier",
-    "file": "PDF",
-    "print": "Print",
-    "sections": {
-      "education": "Education",
-      "experience": "Experience",
-      "languages": "Languages",
-      "mentoring": "Mentoring",
-      "projects": "Projects",
-      "skills": "Skills",
-      "summary": "Summary"
-    },
-    "sendMessage": "Send me a message",
-    "title": "Resume"
+    "title": "Experience"
   },
   "frontendAi": {
     "apple": {
@@ -61,7 +57,12 @@
     },
     "summary": "Front-end and full-stack engineer with 15+ years of experience, currently leading design and engineering for Apple University's platform. I build design systems and federated front-end and GraphQL architectures, and I ship AI features end to end: an MCP server at Apple, and public agents of my own with cost, abuse and quality controls built in. I trained in fine art and design before moving into engineering."
   },
-  "location": "San Jose, California",
+  "header": {
+    "location": "San Jose, California"
+  },
+  "languages": {
+    "title": "Languages"
+  },
   "manager": {
     "apple": {
       "builtMcp": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
@@ -128,6 +129,12 @@
       "front": "**Front end:** TypeScript, React, React Native (Expo), Next.js, Vue, Vite, Webpack, Module Federation, Three.js, WebGL, Sass, Tailwind"
     },
     "summary": "Design technologist and full-stack engineer with 15+ years of experience in the US and Japan. I build design systems and federated front-end and GraphQL platforms, and I lead the teams that ship them, most recently at Apple and Tesla. I trained in fine art and design, so I work as comfortably with designers as with engineers."
+  },
+  "mentoring": {
+    "title": "Mentoring"
+  },
+  "projects": {
+    "title": "Projects"
   },
   "reactNative": {
     "apple": {
@@ -247,5 +254,12 @@
       "outages": "Cut system outages from 20+ a week to near zero. Traced the main cause, a platform-wide failure, to database connection pools that generated code opened on every request.",
       "standards": "Set front-end architecture standards and drove TypeScript adoption across the organisation."
     }
-  }
+  },
+  "skills": {
+    "title": "Skills"
+  },
+  "summary": {
+    "title": "Summary"
+  },
+  "title": "Resume"
 }

@@ -58,7 +58,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='ghost'
         >
-          {t('copy.sendMessage')}
+          {t('actions.sendMessage')}
         </Button>
       </ListItem>
       {current && (
@@ -74,7 +74,7 @@ const Actions: React.FunctionComponent = () => {
             to={FILE}
             variant='secondary'
           >
-            {t('copy.file')}
+            {t('actions.file')}
           </HyperLink>
         </ListItem>
       )}
@@ -87,7 +87,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          {t('copy.print')}
+          {t('actions.print')}
         </Button>
       </ListItem>
     </List>
