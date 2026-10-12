@@ -1,16 +1,20 @@
-import type { Key, Resolved, Version } from './types';
+import type { Key, Organisation, Resolved, Version } from './types';
 
 /**
- * A version with each key replaced by its text. The page reads the text from
- * i18next and the export reads it from the JSON file, so the two can be
- * compared.
+ * A version with each key replaced by its text, and each employer by its
+ * name. The page reads them from i18next and the export reads them from the
+ * JSON files, so the two can be compared.
  */
-const resolve = (version: Version, text: (key: Key) => string): Resolved => ({
+const resolve = (
+  version: Version,
+  text: (key: Key) => string,
+  name: (organisation: Organisation) => string
+): Resolved => ({
   earlier: version.earlier.map(text),
   education: version.education.map(text),
   experience: version.experience.map((role) => ({
     dates: text(role.dates),
-    organisation: text(role.organisation),
+    organisation: name(role.organisation),
     points: role.points.map(text),
     title: text(role.title),
   })),

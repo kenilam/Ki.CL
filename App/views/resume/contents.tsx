@@ -77,12 +77,19 @@ const Resume: React.FunctionComponent = () => {
   const { version: slug } = useParams();
 
   const { t } = useTranslation('resume');
+  const { t: common } = useTranslation();
 
   const found = findVersion(slug);
 
   const version = useMemo(
-    () => found && resolve(found, (key) => t(key)),
-    [found, t]
+    () =>
+      found &&
+      resolve(
+        found,
+        (key) => t(key),
+        (context) => common('organisation', { context })
+      ),
+    [common, found, t]
   );
 
   usePrintTitle(`${NAME} - ${t('title')}`);

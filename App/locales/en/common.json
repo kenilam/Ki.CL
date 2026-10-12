@@ -25,6 +25,11 @@
     },
     "resume": "Resume"
   },
+  "organisation_apple": "Apple",
+  "organisation_ebay": "eBay",
+  "organisation_indeed": "Indeed",
+  "organisation_rakuten": "Rakuten Ready",
+  "organisation_tesla": "Tesla",
   "session": {
     "checking": "Confirming you are human",
     "failed": "Could not start a session",

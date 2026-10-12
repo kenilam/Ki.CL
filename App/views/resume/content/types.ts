@@ -1,3 +1,4 @@
+import type common from '@/locales/en/common.json';
 import type resume from '@/locales/en/resume.json';
 
 /** Every string in a tree of them, by its path: `shared.apple.lead`. */
@@ -13,9 +14,19 @@ type Paths<Tree> = {
  */
 type Key = Paths<typeof resume>;
 
-type Role<Line = Key> = {
+/**
+ * An employer, by the name's context in the common namespace:
+ * `organisation_apple`. Names are not the resume's alone.
+ */
+type Organisation = keyof typeof common extends infer Name
+  ? Name extends `organisation_${infer Id}`
+    ? Id
+    : never
+  : never;
+
+type Role<Line = Key, Employer = Organisation> = {
   dates: Line;
-  organisation: Line;
+  organisation: Employer;
   points: readonly Line[];
   title: Line;
 };
@@ -37,10 +48,10 @@ type Slug =
  * its key: the lines several versions share are under `shared`, and the
  * lines only one has are under its own name. `resolve` puts the text in.
  */
-type Version<Line = Key> = {
+type Version<Line = Key, Employer = Organisation> = {
   earlier: readonly Line[];
   education: readonly Line[];
-  experience: readonly Role<Line>[];
+  experience: readonly Role<Line, Employer>[];
   headline: Line;
   languages: Line;
   mentoring: Line;
@@ -56,6 +67,6 @@ type Version<Line = Key> = {
 };
 
 /** A version with its text in place of the keys. */
-type Resolved = Version<string>;
+type Resolved = Version<string, string>;
 
-export type { Key, Resolved, Role, SectionId, Slug, Version };
+export type { Key, Organisation, Resolved, Role, SectionId, Slug, Version };

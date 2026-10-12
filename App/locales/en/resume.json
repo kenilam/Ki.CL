@@ -235,7 +235,6 @@
     "experience": {
       "apple": {
         "dates": "Mar 2023 – Present",
-        "organisation": "Apple",
         "points": {
           "designSystem": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
           "designSystems": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development. Also built a marketing design system and an enterprise design system.",
@@ -250,7 +249,6 @@
       },
       "ebay": {
         "dates": "Jan 2014 – Jun 2015",
-        "organisation": "eBay",
         "points": {
           "prototypes": "Prototyped the search results and item pages with product teams. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
         },
@@ -258,7 +256,6 @@
       },
       "indeed": {
         "dates": "May 2018 – Jan 2019",
-        "organisation": "Indeed",
         "points": {
           "team": "Managed a cross-functional design technology team of 4 that rolled out a new design system and shipped experimental features to weekly A/B tests."
         },
@@ -266,7 +263,6 @@
       },
       "rakuten": {
         "dates": "Jan 2019 – Jan 2020",
-        "organisation": "Rakuten Ready",
         "points": {
           "launch": "Helped launch the MVP and shipped a delivery-monitoring system for the Chipotle partnership."
         },
@@ -274,7 +270,6 @@
       },
       "retail": {
         "dates": "Jun 2015 – May 2018",
-        "organisation": "Apple",
         "points": {
           "build": "Halved local build times by moving the build from Grunt to Webpack, and automated build-to-deployment on Jenkins.",
           "frameworkAndLocales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
@@ -284,7 +279,6 @@
       },
       "tesla": {
         "dates": "Jan 2020 – Mar 2023",
-        "organisation": "Tesla",
         "points": {
           "federation": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development, helping internal systems scale with Tesla Energy's global operations.",
           "led": "Led UI/UX engineering for Tesla Energy's Solar platform, managing and mentoring an 8-person cross-functional team.",

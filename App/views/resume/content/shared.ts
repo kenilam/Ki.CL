@@ -1,6 +1,6 @@
 import type resume from '@/locales/en/resume.json';
 
-import type { Key, Role, SectionId } from './types';
+import type { Key, Organisation, Role, SectionId } from './types';
 
 /*
  * What every version says the same way is under `shared` in the resume's
@@ -35,12 +35,22 @@ const ORDER: readonly SectionId[] = [
   'languages',
 ];
 
+type RoleId = keyof typeof resume.shared.experience;
+
+/** Two of the roles were at Apple. */
+const EMPLOYERS: Record<RoleId, Organisation> = {
+  apple: 'apple',
+  ebay: 'ebay',
+  indeed: 'indeed',
+  rakuten: 'rakuten',
+  retail: 'apple',
+  tesla: 'tesla',
+};
+
 /** A role's title, employer and dates, which no version changes. */
-const role = (
-  id: keyof typeof resume.shared.experience
-): Omit<Role, 'points'> => ({
+const role = (id: RoleId): Omit<Role, 'points'> => ({
   dates: `shared.experience.${id}.dates`,
-  organisation: `shared.experience.${id}.organisation`,
+  organisation: EMPLOYERS[id],
   title: `shared.experience.${id}.title`,
 });
 
