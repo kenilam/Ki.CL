@@ -1,13 +1,15 @@
 {
   "account": "Account",
-  "cancel": "Cancel",
-  "close_navigation": "Close the navigation",
+  "action_cancel": "Cancel",
+  "action_close_navigation": "Close the navigation",
+  "action_open_navigation": "Open the navigation",
+  "action_sign_out": "Sign out",
+  "action_skip_to_content": "Skip to content",
   "experiments": "Experiments",
   "home": "Home",
   "main": "Main",
   "my_profile": "My Profile",
   "navigation": "Navigation",
-  "open_navigation": "Open the navigation",
   "resume": "Resume",
   "send_message": "Send a message",
   "session_checking": "Confirming you are human",
@@ -18,10 +20,8 @@
   "session_rejected": "Could not confirm you are human",
   "session_retry": "Reload to try again.",
   "session_wait": "The page carries on once this is done.",
-  "sign_out": "Sign out",
   "sign_out_confirm": "Sign out?",
   "sign_out_failed": "Could not sign out. Try again.",
   "sign_out_message": "You will need to sign in again to use your account.",
-  "signing_out": "Signing out",
-  "skip_to_content": "Skip to content"
+  "sign_out_pending": "Signing out"
 }

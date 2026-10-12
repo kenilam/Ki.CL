@@ -51,19 +51,28 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
 
   if (stage === 'rejected') {
     return (
-      <Status403 message={t('session_retry')} title={t('session_rejected')} />
+      <Status403
+        message={t('session', { context: 'retry' })}
+        title={t('session', { context: 'rejected' })}
+      />
     );
   }
 
   if (stage === 'limited') {
     return (
-      <Status429 message={t('session_later')} title={t('session_limited')} />
+      <Status429
+        message={t('session', { context: 'later' })}
+        title={t('session', { context: 'limited' })}
+      />
     );
   }
 
   if (stage === 'failed') {
     return (
-      <Status500 message={t('session_retry')} title={t('session_failed')} />
+      <Status500
+        message={t('session', { context: 'retry' })}
+        title={t('session', { context: 'failed' })}
+      />
     );
   }
 
@@ -87,12 +96,12 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
             >
               <section className='kicl-padding-block-end-wide'>
                 <Heading dense id={titleId}>
-                  {t('session_checking')}
+                  {t('session', { context: 'checking' })}
                 </Heading>
                 <Text className='kicl-font-size-small' id={messageId} is='p'>
                   {turnstile.interactive
-                    ? t('session_interact')
-                    : t('session_wait')}
+                    ? t('session', { context: 'interact' })
+                    : t('session', { context: 'wait' })}
                 </Text>
                 <Spinner in={!turnstile.interactive} position='inline' />
                 <div ref={turnstile.container} />
