@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { HyperLink, Text } from 'design/components';
+import { HyperLink, Markdown, Text } from 'design/components';
 
 // Content
 import { EMAIL, PROFILES } from '@/views/resume/content';
@@ -44,10 +44,10 @@ const Contact: React.FunctionComponent = () => {
         {phone && `${SEPARATOR}${phone}`}
       </Text>
       <Text dense>
-        {PROFILES.map(({ link, to }, index) => (
-          <React.Fragment key={to}>
+        {PROFILES.map((key, index) => (
+          <React.Fragment key={key}>
             {index > 0 && SEPARATOR}
-            <HyperLink to={to}>{link}</HyperLink>
+            <Markdown>{t(key)}</Markdown>
           </React.Fragment>
         ))}
       </Text>

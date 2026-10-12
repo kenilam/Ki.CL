@@ -13,17 +13,16 @@ const NAME = 'Keni Lam';
 const EMAIL = 'hello@ki-cl.com';
 
 /*
- * Under the name, in this order. Absolute, the site's own pages included: a
- * PDF printed from a local run would otherwise carry links to localhost.
+ * Under the name, in this order. Each link is written once, under
+ * `shared.links`, and the lines that carry one refer to it. They are
+ * absolute, the site's own pages included: a PDF printed from a local run
+ * would otherwise carry links to localhost.
  */
-const PROFILES = [
-  {
-    link: 'linkedin.com/in/kenilam',
-    to: 'https://www.linkedin.com/in/kenilam',
-  },
-  { link: 'github.com/kenilam', to: 'https://github.com/kenilam' },
-  { link: 'ki-cl.com/experiments', to: 'https://ki-cl.com/experiments' },
-] as const;
+const PROFILES: readonly Key[] = [
+  'shared.links.linkedin',
+  'shared.links.github',
+  'shared.links.experiments',
+];
 
 const ORDER: readonly SectionId[] = [
   'summary',

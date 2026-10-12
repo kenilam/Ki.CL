@@ -92,7 +92,7 @@ const Resume: React.FunctionComponent = () => {
     [common, found, t]
   );
 
-  usePrintTitle(`${NAME} - ${t('title')}`);
+  usePrintTitle(`${NAME} - ${common('navigation.resume')}`);
 
   if (!version) {
     return <Status404 />;

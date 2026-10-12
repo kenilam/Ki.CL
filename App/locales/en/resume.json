@@ -58,12 +58,12 @@
     "headline": "Lead Front-End Engineer · Design systems, federated platforms and AI products",
     "name": "Front end and AI",
     "projects": {
-      "intro": "Live at [ki-cl.com/experiments](https://ki-cl.com/experiments) unless noted, with code at [github.com/kenilam](https://github.com/kenilam).",
+      "intro": "Live at $t(shared.links.experiments) unless noted, with code at $t(shared.links.github).",
       "items": {
         "image": "**Image Agent.** A public prompt-to-image agent, built to learn what it takes to put an AI feature in front of real people. A clarifier asks one question at a time, up to three, and code enforces the limit. The workflow is fixed in code as well, so the model never chooses its own tools. A vision model reviews each picture and can trigger one retry. Every request passes four checks, cheapest first: rate limits, rule checks, moderation and a small classifier. Quotas are counted in MongoDB, and progress arrives over a GraphQL subscription.",
         "ki": "**Ki.CL platform.** The federated platform under all of these. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer.",
         "tree": "**Tree of Life.** A walk through the Open Tree of Life's 2.3 million species, cached in MongoDB as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a living specimen, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
-        "writing": "**Writing reviewer** (code only: [Ki.CL-moonshot-exercise](https://github.com/kenilam/Ki.CL-moonshot-exercise)). Reviews commit messages, pull-request descriptions and READMEs with Claude. The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
+        "writing": "**Writing reviewer** (code only: $t(shared.links.moonshot)). Reviews commit messages, pull-request descriptions and READMEs with Claude. The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
       }
     },
     "skills": {
@@ -118,10 +118,10 @@
       }
     },
     "headline": "Engineering Manager and Staff Software Engineer",
-    "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes, 52 reviews, and in the top 10% of contributors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. [adplist.org/mentors/keni-lam](https://adplist.org/mentors/keni-lam)",
+    "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes, 52 reviews, and in the top 10% of contributors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. $t(shared.links.adplist)",
     "name": "Manager",
     "projects": {
-      "intro": "I still build in my own time: Tree of Life, Image Agent and Factory Arm at [ki-cl.com/experiments](https://ki-cl.com/experiments), on a federated React and GraphQL platform that runs on Cloud Run in two regions. Code is at [github.com/kenilam](https://github.com/kenilam)."
+      "intro": "I still build in my own time: Tree of Life, Image Agent and Factory Arm at $t(shared.links.experiments), on a federated React and GraphQL platform that runs on Cloud Run in two regions. Code is at $t(shared.links.github)."
     },
     "skills": {
       "ai": "**AI:** LLM applications, MCP servers",
@@ -207,7 +207,7 @@
     "name": "React Native",
     "projects": {
       "items": {
-        "experiments": "**Experiments.** Tree of Life, Image Agent and Factory Arm, live at [ki-cl.com/experiments](https://ki-cl.com/experiments), with code at [github.com/kenilam](https://github.com/kenilam).",
+        "experiments": "**Experiments.** Tree of Life, Image Agent and Factory Arm, live at $t(shared.links.experiments), with code at $t(shared.links.github).",
         "interpreter": "**Interpreter (prototype).** A speech interpreter for two-way conversation. The Expo app (React Native, Tamagui) records push-to-talk audio and sends each utterance over a WebSocket to a Fastify server. The server detects the speaker's language, translates with Claude using the conversation so far, and streams captions back. The phone then speaks the result on-device. 21 languages, including Cantonese and Mandarin.",
         "ki": "**Ki.CL platform.** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer."
       }
@@ -237,7 +237,7 @@
         "dates": "Mar 2023 – Present",
         "points": {
           "designSystem": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
-          "designSystems": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development. Also built a marketing design system and an enterprise design system.",
+          "designSystems": "$t(shared.experience.apple.points.designSystem) Also built a marketing design system and an enterprise design system.",
           "federation": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs that communicate via gRPC, Node and PHP. 10+ federated mini-apps consume the component library and the federated graph.",
           "lead": "Lead design and engineering for Apple University's cross-platform ecosystem, covering design systems, UX architecture and full-stack implementation.",
           "mcp": "Built an MCP server that reads the component library and the gateway schemas, so non-technical owners can build a proof of concept and deploy it to an isolated sandbox.",
@@ -289,9 +289,16 @@
       }
     },
     "languages": "English, Cantonese, Mandarin and Japanese, all native or bilingual.",
-    "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, 52 reviews, and in the top 10% of contributors in my field. [adplist.org/mentors/keni-lam](https://adplist.org/mentors/keni-lam)",
+    "links": {
+      "adplist": "[adplist.org/mentors/keni-lam](https://adplist.org/mentors/keni-lam)",
+      "experiments": "[ki-cl.com/experiments](https://ki-cl.com/experiments)",
+      "github": "[github.com/kenilam](https://github.com/kenilam)",
+      "linkedin": "[linkedin.com/in/kenilam](https://www.linkedin.com/in/kenilam)",
+      "moonshot": "[Ki.CL-moonshot-exercise](https://github.com/kenilam/Ki.CL-moonshot-exercise)"
+    },
+    "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, 52 reviews, and in the top 10% of contributors in my field. $t(shared.links.adplist)",
     "projects": {
-      "intro": "Live at [ki-cl.com/experiments](https://ki-cl.com/experiments), with code at [github.com/kenilam](https://github.com/kenilam).",
+      "intro": "Live at $t(shared.links.experiments), with code at $t(shared.links.github).",
       "items": {
         "factoryArm": "**Factory Arm.** A 3D palletising cell in the browser. Planners run in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim."
       }
@@ -306,6 +313,5 @@
   },
   "summary": {
     "title": "Summary"
-  },
-  "title": "Resume"
+  }
 }
