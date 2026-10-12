@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
 
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import {
   Kicl_SignInDocument,
@@ -40,16 +41,20 @@ import { Header } from './header';
 import { Password } from './password';
 
 // Schema
-import { SignInSchema, type SignInValues } from './schema';
+import { signInSchema, type SignInValues } from './schema';
 
 type Props = React.ComponentProps<typeof Header> & {
   onSignedIn: () => void;
 };
 
 const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
+  const { t } = useTranslation('portfolio');
+  const { t: common } = useTranslation();
+  const schema = useMemo(() => signInSchema(t), [t]);
+
   const form = useForm<SignInValues>({
     defaultValues: { Email: '', Password: '' },
-    resolver: valibotResolver(SignInSchema),
+    resolver: valibotResolver(schema),
   });
 
   const [signIn, { error, loading }] = useMutation(Kicl_SignInDocument);
@@ -132,7 +137,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
                     type='submit'
                     size='small'
                   >
-                    Sign in
+                    {common('action', { context: 'sign_in' })}
                   </Button>
                 </CardFooter>
               </Form>
