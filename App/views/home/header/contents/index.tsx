@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Icons from 'design/icons';
@@ -10,6 +11,8 @@ import * as Icons from 'design/icons';
 import { AnimatedText, Heading, HyperLink, Layout } from 'design/components';
 
 const Contents: React.FunctionComponent = () => {
+  const { t } = useTranslation('home');
+
   return (
     <>
       <Heading
@@ -18,7 +21,7 @@ const Contents: React.FunctionComponent = () => {
       >
         {/* A box of its own, so the logo isn't set on the heading's text line. */}
         <Layout display='inline-grid'>
-          <HyperLink aria-label='Ki.CL home' to='/' unstyled>
+          <HyperLink aria-label={t('header.contents.home')} to='/' unstyled>
             <Icons.Logo />
           </HyperLink>
         </Layout>
@@ -33,7 +36,7 @@ const Contents: React.FunctionComponent = () => {
             property='slide-from-bottom'
             className={classNames('kicl-z-index-raised')}
           >
-            Personal projects are where curiosity becomes craft.
+            {t('header.contents.lead')}
           </AnimatedText>
           <AnimatedText
             delay={1000}
@@ -43,8 +46,7 @@ const Contents: React.FunctionComponent = () => {
             property='slide-from-bottom'
             className={classNames('kicl-z-index-raised')}
           >
-            This is my own little lab for imagining what's possible and building
-            it into existence.
+            {t('header.contents.body')}
           </AnimatedText>
         </section>
       </Layout>

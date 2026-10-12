@@ -34,7 +34,7 @@ const Close: React.FunctionComponent = () => {
     >
       <Ri.RiCloseLine aria-hidden />
       <Text className='kicl-hidden' is='span'>
-        {t('navigation.close')}
+        {t('navigation.mobile.close')}
       </Text>
     </Button>
   );

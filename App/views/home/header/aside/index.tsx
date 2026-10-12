@@ -13,16 +13,13 @@ import { Button, HyperLink, Navigation } from 'design/components';
 // Views
 import { CONTACT_ID } from '@/views/contact/constants';
 
-const COPY = {
-  label: 'Contact',
-};
-
 const Aside: React.FunctionComponent = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('home');
+  const { t: common } = useTranslation();
 
   return (
     <Navigation
-      aria-label={COPY.label}
+      aria-label={t('header.aside.label')}
       alignContent='center'
       alignItems='center'
       autoFlow='column'
@@ -35,31 +32,31 @@ const Aside: React.FunctionComponent = () => {
       justifyItems='center'
     >
       <HyperLink
-        aria-label='LinkedIn profile'
+        aria-label={t('header.aside.linkedin')}
         lookLikeButton
         size='small'
-        title='LinkedIn profile'
+        title={t('header.aside.linkedin')}
         to='https://www.linkedin.com/in/kenilam'
         variant='ghost'
       >
         <Ri.RiLinkedinLine aria-hidden />
       </HyperLink>
       <HyperLink
-        aria-label='GitHub profile'
+        aria-label={t('header.aside.github')}
         lookLikeButton
         size='small'
-        title='GitHub profile'
+        title={t('header.aside.github')}
         to='https://github.com/kenilam'
         variant='ghost'
       >
         <Ri.RiGithubLine aria-hidden />
       </HyperLink>
       <Button
-        aria-label={t('contact.title')}
+        aria-label={common('contact.title')}
         command='show-modal'
         commandFor={CONTACT_ID}
         size='small'
-        title={t('contact.title')}
+        title={common('contact.title')}
         variant='ghost'
       >
         <Ri.RiMailLine aria-hidden />

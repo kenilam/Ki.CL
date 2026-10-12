@@ -11,7 +11,8 @@ import { Animation, HyperLink, Navigation } from 'design/components';
 import { ROUTES } from '@/views/navigation/constants';
 
 const Menu: React.FunctionComponent = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('home');
+  const { t: common } = useTranslation();
 
   return (
     <Animation
@@ -21,7 +22,7 @@ const Menu: React.FunctionComponent = () => {
       property='slide-from-bottom'
     >
       <Navigation
-        aria-label={t('navigation.pages')}
+        aria-label={t('header.menu.label')}
         autoFlow='column'
         className={classNames(
           'kicl-padding-block-start-wide',
@@ -31,7 +32,7 @@ const Menu: React.FunctionComponent = () => {
       >
         {ROUTES.map(({ key, to }) => (
           <HyperLink key={to} to={to}>
-            {t(key)}
+            {common(key)}
           </HyperLink>
         ))}
       </Navigation>
