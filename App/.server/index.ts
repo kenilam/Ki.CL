@@ -4,21 +4,17 @@ import appRoot from 'app-root-path';
 
 import hpp from 'hpp';
 import fs from 'fs';
-import express from 'express';
+import express, { type RequestHandler } from 'express';
 import compression from 'compression';
 
-import isImage from 'is-image';
-import isVideo from 'is-video';
-
 import colors from 'colors';
-
-import config from '../app.config.json' with { type: 'json' };
 
 import { Env } from '../env';
 
 import { applyClientToken } from './client-token';
 import { applyCollect } from './collect';
-import { applyGate } from './gate';
+import { createGate } from './gate';
+import { applyHeaders } from './headers';
 import { precompressed } from './precompressed';
 import {
   applyProxy,
@@ -28,8 +24,6 @@ import {
   warmIdToken,
 } from './proxy';
 import { createTexts, escapeJson } from './texts';
-
-import nodePath from 'path';
 
 dotenv.config({ path: `${appRoot.path}/.env` });
 
@@ -75,12 +69,12 @@ async function Server() {
      */
     app.use(compression());
 
+    applyHeaders(app);
+
     // Before the gate, which lets a verified client through.
     applyClientToken(app);
 
     const texts = createTexts(() => currentIdToken(BACKEND_URL));
-
-    applyGate(app, texts);
 
     /*
      * Ahead of everything that serves files. The API's paths are not on disk,
@@ -96,14 +90,19 @@ async function Server() {
      * Ahead of the built files: the shell and the manifest ask for their words
      * by `{{key}}`, so neither is sent as the file it is on disk.
      */
-    app.get(['/', '/index.html'], (_, responses) => {
-      const shell = `${baseurl}/index.html`;
+    const shell: RequestHandler[] = [
+      createGate(texts),
+      (_, responses) => {
+        const file = `${baseurl}/index.html`;
 
-      responses
-        .setHeader('Cache-Control', cacheControl(shell))
-        .type('html')
-        .send(texts.fill(fs.readFileSync(shell, 'utf8')));
-    });
+        responses
+          .setHeader('Cache-Control', cacheControl(file))
+          .type('html')
+          .send(texts.fill(fs.readFileSync(file, 'utf8')));
+      },
+    ];
+
+    app.get(['/', '/index.html'], ...shell);
 
     app.get('/site.webmanifest', (_, responses) => {
       responses
@@ -127,40 +126,26 @@ async function Server() {
       })
     );
 
-    const middlewarePaths = middlewares?.map(({ path }) => path);
+    const middlewarePaths = middlewares.map(({ path }) => path);
 
     app.get('/health', (_, responses) => {
       responses.status(200).send('ok');
     });
 
-    app.get(/(.*)/, (request, responses, next) => {
-      console.info('Origin:', request.url);
+    /*
+     * Whatever is left is a route of the site, so it gets the shell. Files are
+     * sent by `express.static` above and never from here: this used to read the
+     * path in the URL off disk itself, and `/../../.env` left the build folder.
+     */
+    app.get(
+      /(.*)/,
+      (request, responses, next) => {
+        if (middlewarePaths.includes(request.path.replace(/\/$/, ''))) {
+          next('route');
 
-      let url = request.url;
+          return;
+        }
 
-      if (url.endsWith('/')) {
-        url = url.substring(0, url.length - 1);
-      }
-
-      if (request.url === '/health') {
-        console.info('healthCheck:', url);
-
-        next();
-
-        return;
-      }
-
-      if (middlewarePaths?.includes(url)) {
-        console.info('middleware:', url);
-
-        next();
-
-        return;
-      }
-
-      let path = `${baseurl}${url.replace(config.base, '')}`;
-
-      if (!fs.existsSync(path) || path === baseurl) {
         /*
          * A built file that is gone, asked for by a page from an earlier
          * release. Answering with the shell would hand the browser HTML where
@@ -172,83 +157,10 @@ async function Server() {
           return;
         }
 
-        path = `${baseurl}/index.html`;
-      }
-
-      responses.setHeader('Cache-Control', cacheControl(path));
-
-      const extname = nodePath.extname(path);
-
-      responses.type(extname);
-
-      if (isImage(path)) {
-        responses.sendFile(path, (error) => {
-          if (error) {
-            next(error);
-            return;
-          }
-
-          console.info('Sent:', path);
-        });
-
-        return;
-      }
-
-      if (isVideo(path)) {
-        const stat = fs.statSync(path);
-        const fileSize = stat.size;
-        const range = request.headers.range;
-
-        if (range) {
-          console.info('Sending video range:', range);
-
-          const parts = range.replace(/bytes=/, '').split('-');
-          const start = parseInt(parts[0], 10);
-          const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-
-          console.info(parts);
-
-          const chunksize = end - start + 1;
-          const file = fs.createReadStream(path, { start, end });
-
-          responses.status(206);
-          responses.setHeader(
-            'Content-Range',
-            `bytes ${start}-${end}/${fileSize}`
-          );
-          responses.setHeader('Accept-Ranges', 'bytes');
-          responses.setHeader('Content-Length', chunksize);
-
-          file.pipe(responses);
-        } else {
-          console.info('no range', range);
-
-          responses.status(200);
-          responses.setHeader('Content-Length', fileSize);
-
-          fs.createReadStream(path).pipe(responses);
-        }
-
-        console.info('Sent:', path);
-
-        return;
-      }
-
-      try {
-        const data = fs.readFileSync(path, 'utf8');
-
-        // The shell asks for its title and description by `{{key}}`.
-        responses.send(extname === '.html' ? texts.fill(data) : data);
-
-        console.info('Sent:', path);
-      } catch (error) {
-        responses.status(503).send(texts.text('error_unavailable'));
-
-        console.error(error);
-      }
-
-      next();
-    });
+        next();
+      },
+      ...shell
+    );
 
     if (middlewares) {
       middlewares.forEach(({ middleware }) => {

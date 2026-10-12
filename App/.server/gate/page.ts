@@ -2,9 +2,8 @@ import fs from 'fs';
 
 /**
  * The page a visitor sees after cancelling the password prompt, before its
- * words are filled in. The image is
- * inlined as base64 because the gate blocks every other request, so a separate
- * image URL would itself get a 401.
+ * words are filled in. The image is inlined as base64 because it is not in the
+ * build, so there is no URL to ask for it by.
  */
 const image = fs
   .readFileSync(new URL('./guard.webp', import.meta.url))

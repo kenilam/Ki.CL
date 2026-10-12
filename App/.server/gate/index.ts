@@ -1,6 +1,6 @@
 import { timingSafeEqual } from 'node:crypto';
 
-import type { Express, Request } from 'express';
+import type { RequestHandler } from 'express';
 
 import { page } from './page';
 import type { ServerTexts } from '../texts';
@@ -9,49 +9,29 @@ import type { ServerTexts } from '../texts';
 const OPEN = /^\/portfolio(\/|$)/;
 
 /**
- * Whether the request opens a page, rather than being one a page makes. A
- * browser says so in `Sec-Fetch-Mode`; for anything else, a GET that takes
- * HTML counts.
- */
-const isPageLoad = (request: Request) => {
-  const mode = request.get('sec-fetch-mode');
-
-  return mode
-    ? mode === 'navigate'
-    : request.method === 'GET' && Boolean(request.accepts('html'));
-};
-
-/**
- * Asks for a password when `KICL_GATE_PASSWORD` is set, so a dev deployment is
- * not public. The browser shows its own prompt and resends the credentials for
- * every same-origin request after that. Any username is accepted. Unset in
+ * Asks for a password before the shell is sent when `KICL_GATE_PASSWORD` is
+ * set, so a dev deployment is not public. The browser shows its own prompt and
+ * resends the credentials after that. Any username is accepted. Unset in
  * production, where this does nothing.
  *
- * Only page loads are asked, and not the portfolio's, which have their own
- * sign-in: one prompt in front of another was one too many. So a portfolio
- * page's scripts, remotes and API calls get through without the password,
- * which also leaves those paths as open as they are in production.
+ * It guards the shell and nothing else. A portfolio page has its own sign-in
+ * and is not asked, so its scripts, remotes and API calls have to get through
+ * without the password, which leaves those paths as open as they are in
+ * production. The check used to tell a page load from those by
+ * `Sec-Fetch-Mode`, a header any client can set.
  */
-export function applyGate(app: Express, texts: ServerTexts): void {
+export function createGate(texts: ServerTexts): RequestHandler {
   const password = process.env.KICL_GATE_PASSWORD;
 
   if (!password) {
-    return;
+    return (_request, _response, next) => next();
   }
 
   const expected = Buffer.from(password);
 
-  app.use((request, response, next) => {
-    /*
-     * Cloud Run's health check has no credentials, and a client with a valid
-     * token (see `client-token`) has already been let in.
-     */
-    if (
-      request.path === '/health' ||
-      response.locals.client ||
-      !isPageLoad(request) ||
-      OPEN.test(request.path)
-    ) {
+  return (request, response, next) => {
+    // A client with a valid token (see `client-token`) has already been let in.
+    if (response.locals.client || OPEN.test(request.path)) {
       next();
 
       return;
@@ -80,5 +60,5 @@ export function applyGate(app: Express, texts: ServerTexts): void {
       .set('Cache-Control', 'no-store')
       .type('html')
       .send(texts.fill(page));
-  });
+  };
 }
