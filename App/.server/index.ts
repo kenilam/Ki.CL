@@ -77,6 +77,19 @@ async function Server() {
 
     const texts = createTexts(() => currentIdToken(BACKEND_URL));
 
+    // Ahead of the proxy and the built files, so it covers both.
+    app.use(createNavigation(texts));
+
+    /*
+     * Ahead of everything that serves files. The API's paths are not on disk,
+     * and the catch-all below answers anything it cannot find with index.html -
+     * so a proxied route mounted after it would return the SPA shell instead of
+     * the remote entry, and module federation would fail on a 200.
+     */
+    applyProxy(app);
+
+    applyCollect(app);
+
     /*
      * Ahead of the built files: the shell and the manifest ask for their words
      * by `{{key}}`, so neither is sent as the file it is on disk.
@@ -92,19 +105,6 @@ async function Server() {
           .send(texts.fill(fs.readFileSync(file, 'utf8')));
       },
     ];
-
-    // Ahead of the proxy and the built files, so it covers both.
-    app.use(createNavigation(shell));
-
-    /*
-     * Ahead of everything that serves files. The API's paths are not on disk,
-     * and the catch-all below answers anything it cannot find with index.html -
-     * so a proxied route mounted after it would return the SPA shell instead of
-     * the remote entry, and module federation would fail on a 200.
-     */
-    applyProxy(app);
-
-    applyCollect(app);
 
     app.get(['/', '/index.html'], ...shell);
 
