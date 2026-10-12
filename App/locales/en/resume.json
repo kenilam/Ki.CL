@@ -5,13 +5,23 @@
     "sendMessage": "Send me a message"
   },
   "architecture": {
+    "experience": {
+      "tesla": {
+        "points": {
+          "addedRequest": "Added request tracing from client to data source with DevOps, so teams could see where a fault started.",
+          "movedCentralised": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy."
+        }
+      }
+    },
     "headline": "Staff Software Engineer · Platform and systems architecture",
     "name": "Architecture",
     "projects": {
-      "factory": "**Factory Arm.** One WebSocket per page carries protobuf frames for every robot, chosen over gRPC-Web because that has no bidirectional streaming. A Rust bridge relays the frames to a digital twin in NVIDIA Isaac Sim and answers \"hold still\" when the twin is unreachable. The twin leases simulated rigs per session, and its GPU machine stops itself when idle.",
-      "image": "**Image Agent.** A public prompt-to-image agent with a fixed workflow. Every request passes four checks, cheapest first, and quotas are counted in MongoDB so a restart does not reset them. A turn cut short by a restart is closed the next time its thread is read.",
-      "ki": "**Ki.CL platform.** A React host loads design-system, API-client and experiment remotes at runtime. The GraphQL API (Apollo Server, MongoDB) sits behind a same-origin proxy that injects server-issued keys. Production runs on Cloud Run in two regions behind a global load balancer, with a read replica in the second region. Sessions and read-after-write stay on the primary.",
-      "tree": "**Tree of Life.** 2.3 million species cached in MongoDB as a parent-pointer tree, written with idempotent upserts because overlapping lineages race. Illustration is asynchronous: the query returns what exists, and a GraphQL subscription pushes the plate when it lands. Text, image and vision calls each fail over across providers, with timeouts and cooldowns."
+      "items": {
+        "factory": "**Factory Arm.** One WebSocket per page carries protobuf frames for every robot, chosen over gRPC-Web because that has no bidirectional streaming. A Rust bridge relays the frames to a digital twin in NVIDIA Isaac Sim and answers \"hold still\" when the twin is unreachable. The twin leases simulated rigs per session, and its GPU machine stops itself when idle.",
+        "image": "**Image Agent.** A public prompt-to-image agent with a fixed workflow. Every request passes four checks, cheapest first, and quotas are counted in MongoDB so a restart does not reset them. A turn cut short by a restart is closed the next time its thread is read.",
+        "ki": "**Ki.CL platform.** A React host loads design-system, API-client and experiment remotes at runtime. The GraphQL API (Apollo Server, MongoDB) sits behind a same-origin proxy that injects server-issued keys. Production runs on Cloud Run in two regions behind a global load balancer, with a read replica in the second region. Sessions and read-after-write stay on the primary.",
+        "tree": "**Tree of Life.** 2.3 million species cached in MongoDB as a parent-pointer tree, written with idempotent upserts because overlapping lineages race. Illustration is asynchronous: the query returns what exists, and a GraphQL subscription pushes the plate when it lands. Text, image and vision calls each fail over across providers, with timeouts and cooldowns."
+      }
     },
     "skills": {
       "ai": "**AI:** LLM applications on the Claude, OpenAI and Groq APIs, MCP servers, provider failover, moderation and rate limiting",
@@ -21,34 +31,40 @@
       "front": "**Front end:** TypeScript, React, Next.js, Vue, Vite, Webpack, Three.js, WebGL, React Native (Expo)",
       "platform": "**Platform:** GCP (Cloud Run, load balancing), Docker, CI/CD with GitHub Actions and Jenkins"
     },
-    "summary": "Staff-level engineer with 15+ years of experience designing platforms that many teams and products share. At Apple I built a federated front end and a GraphQL gateway serving 20+ subgraphs. At Tesla I architected a GraphQL federation layer and front-end infrastructure, and cut system outages from 20+ a week to near zero. I work across the stack, from design systems to multi-region deployment.",
-    "tesla": {
-      "addedRequest": "Added request tracing from client to data source with DevOps, so teams could see where a fault started.",
-      "movedCentralised": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy."
-    }
+    "summary": "Staff-level engineer with 15+ years of experience designing platforms that many teams and products share. At Apple I built a federated front end and a GraphQL gateway serving 20+ subgraphs. At Tesla I architected a GraphQL federation layer and front-end infrastructure, and cut system outages from 20+ a week to near zero. I work across the stack, from design systems to multi-region deployment."
   },
   "education": {
     "title": "Education"
   },
   "experience": {
-    "earlier": "Earlier",
+    "earlier": {
+      "title": "Earlier"
+    },
     "title": "Experience"
   },
   "frontendAi": {
-    "apple": {
-      "leadDesign": "Lead design and engineering for Apple University's cross-platform ecosystem, covering UX architecture and full-stack implementation."
-    },
-    "ebay": {
-      "builtKiosk": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and three.js."
+    "experience": {
+      "apple": {
+        "points": {
+          "leadDesign": "Lead design and engineering for Apple University's cross-platform ecosystem, covering UX architecture and full-stack implementation."
+        }
+      },
+      "ebay": {
+        "points": {
+          "builtKiosk": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and three.js."
+        }
+      }
     },
     "headline": "Lead Front-End Engineer · Design systems, federated platforms and AI products",
     "name": "Front end and AI",
     "projects": {
-      "image": "**Image Agent.** A public prompt-to-image agent, built to learn what it takes to put an AI feature in front of real people. A clarifier asks one question at a time, up to three, and code enforces the limit. The workflow is fixed in code as well, so the model never chooses its own tools. A vision model reviews each picture and can trigger one retry. Every request passes four checks, cheapest first: rate limits, rule checks, moderation and a small classifier. Quotas are counted in MongoDB, and progress arrives over a GraphQL subscription.",
       "intro": "Live at [ki-cl.com/experiments](https://ki-cl.com/experiments) unless noted, with code at [github.com/kenilam](https://github.com/kenilam).",
-      "ki": "**Ki.CL platform.** The federated platform under all of these. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer.",
-      "tree": "**Tree of Life.** A walk through the Open Tree of Life's 2.3 million species, cached in MongoDB as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a living specimen, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
-      "writing": "**Writing reviewer** (code only: [Ki.CL-moonshot-exercise](https://github.com/kenilam/Ki.CL-moonshot-exercise)). Reviews commit messages, pull-request descriptions and READMEs with Claude. The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
+      "items": {
+        "image": "**Image Agent.** A public prompt-to-image agent, built to learn what it takes to put an AI feature in front of real people. A clarifier asks one question at a time, up to three, and code enforces the limit. The workflow is fixed in code as well, so the model never chooses its own tools. A vision model reviews each picture and can trigger one retry. Every request passes four checks, cheapest first: rate limits, rule checks, moderation and a small classifier. Quotas are counted in MongoDB, and progress arrives over a GraphQL subscription.",
+        "ki": "**Ki.CL platform.** The federated platform under all of these. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer.",
+        "tree": "**Tree of Life.** A walk through the Open Tree of Life's 2.3 million species, cached in MongoDB as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a living specimen, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
+        "writing": "**Writing reviewer** (code only: [Ki.CL-moonshot-exercise](https://github.com/kenilam/Ki.CL-moonshot-exercise)). Reviews commit messages, pull-request descriptions and READMEs with Claude. The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
+      }
     },
     "skills": {
       "ai": "**AI:** LLM applications on the Claude, OpenAI and Groq APIs, MCP servers, structured outputs, evals, retrieval-augmented generation, moderation and rate limiting, provider failover",
@@ -64,63 +80,85 @@
     "title": "Languages"
   },
   "manager": {
-    "apple": {
-      "builtMcp": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
-      "builtPlatform": "Built the platform's architecture: a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs, with 10+ federated mini-apps consuming the component library and the federated graph.",
-      "leadDesign": "Lead design and engineering for Apple University's cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams."
-    },
-    "ebay": {
-      "uxPartner": "UX partner to product teams on the search results page, the item page and the design system. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
+    "experience": {
+      "apple": {
+        "points": {
+          "builtMcp": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
+          "builtPlatform": "Built the platform's architecture: a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs, with 10+ federated mini-apps consuming the component library and the federated graph.",
+          "leadDesign": "Lead design and engineering for Apple University's cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams."
+        }
+      },
+      "ebay": {
+        "points": {
+          "uxPartner": "UX partner to product teams on the search results page, the item page and the design system. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
+        }
+      },
+      "indeed": {
+        "points": {
+          "embeddedTeam": "Embedded team members with product teams to roll out a new design system and its website, build components for Indeed Inbox, and run A/B tests with the Job Alert and Email team.",
+          "hired2": "Hired 2 design technologists in San Francisco and opened requisitions for UI and front-end roles in Mountain View.",
+          "managedCross": "Managed a cross-functional design technology team of 4 that built prototypes and experiments for Indeed's products.",
+          "plannedTimelines": "Planned timelines, technology and staffing for prototypes that went to user testing and then to engineering.",
+          "ranQuarterly": "Ran quarterly and calibration reviews."
+        }
+      },
+      "retail": {
+        "points": {
+          "helpedOnboard": "Helped onboard vendors and mentored them through the handover.",
+          "oversawThree": "Oversaw three retail digital-signage products and a WeChat publishing tool, rolling out features and content to 30+ locales at every major product launch."
+        }
+      },
+      "tesla": {
+        "points": {
+          "cutSystem": "Cut system outages from 20+ a week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
+          "extendedSupport": "Extended support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
+          "managedMentored": "Managed and mentored an 8-person cross-functional team while leading UI/UX engineering for Tesla Energy's Solar platform.",
+          "wonAdoption": "Won adoption of a GraphQL federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
+        }
+      }
     },
     "headline": "Engineering Manager and Staff Software Engineer",
-    "indeed": {
-      "embeddedTeam": "Embedded team members with product teams to roll out a new design system and its website, build components for Indeed Inbox, and run A/B tests with the Job Alert and Email team.",
-      "hired2": "Hired 2 design technologists in San Francisco and opened requisitions for UI and front-end roles in Mountain View.",
-      "managedCross": "Managed a cross-functional design technology team of 4 that built prototypes and experiments for Indeed's products.",
-      "plannedTimelines": "Planned timelines, technology and staffing for prototypes that went to user testing and then to engineering.",
-      "ranQuarterly": "Ran quarterly and calibration reviews."
-    },
     "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes, 52 reviews, and in the top 10% of contributors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. [adplist.org/mentors/keni-lam](https://adplist.org/mentors/keni-lam)",
     "name": "Manager",
     "projects": {
       "intro": "I still build in my own time: Tree of Life, Image Agent and Factory Arm at [ki-cl.com/experiments](https://ki-cl.com/experiments), on a federated React and GraphQL platform that runs on Cloud Run in two regions. Code is at [github.com/kenilam](https://github.com/kenilam)."
-    },
-    "retail": {
-      "helpedOnboard": "Helped onboard vendors and mentored them through the handover.",
-      "oversawThree": "Oversaw three retail digital-signage products and a WeChat publishing tool, rolling out features and content to 30+ locales at every major product launch."
     },
     "skills": {
       "ai": "**AI:** LLM applications, MCP servers",
       "engineering": "**Engineering:** TypeScript, React, Node.js, GraphQL (Apollo Federation), Module Federation, design systems, GCP, CI/CD",
       "leadership": "**Leadership:** people management, hiring, quarterly and calibration reviews, mentoring, on-call and incident process, stakeholder management, cross-team architecture"
     },
-    "summary": "Engineering manager and staff engineer with 15+ years of experience in front-end platforms and design systems. I managed an 8-person team at Tesla and a team of 4 at Indeed, where I also hired and ran quarterly and calibration reviews. I still build, currently leading design and engineering for Apple University's platform, and I mentor through ADPList, with 426 sessions so far.",
-    "tesla": {
-      "cutSystem": "Cut system outages from 20+ a week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
-      "extendedSupport": "Extended support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
-      "managedMentored": "Managed and mentored an 8-person cross-functional team while leading UI/UX engineering for Tesla Energy's Solar platform.",
-      "wonAdoption": "Won adoption of a GraphQL federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
-    }
+    "summary": "Engineering manager and staff engineer with 15+ years of experience in front-end platforms and design systems. I managed an 8-person team at Tesla and a team of 4 at Indeed, where I also hired and ran quarterly and calibration reviews. I still build, currently leading design and engineering for Apple University's platform, and I mentor through ADPList, with 426 sessions so far."
   },
   "master": {
-    "ebay": {
-      "contributedAnimation": "Contributed animation standards and UI components to the design system, and built the loading spinner that went live on eBay.com."
+    "experience": {
+      "ebay": {
+        "points": {
+          "contributedAnimation": "Contributed animation standards and UI components to the design system, and built the loading spinner that went live on eBay.com."
+        }
+      },
+      "indeed": {
+        "points": {
+          "embeddedDesign": "Embedded design technologists in product teams to roll out a new design system and its website, and to ship experimental features to weekly A/B tests.",
+          "managedCross": "Managed a cross-functional design technology team of 4, hired 2 design technologists in San Francisco, and ran quarterly and calibration reviews."
+        }
+      },
+      "retail": {
+        "points": {
+          "builtMaintained": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display products.",
+          "movedBuild": "Moved the build from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment on Jenkins.",
+          "shippedShared": "Shipped a shared React framework across the three signage products and improved on-device performance to sustain 4x-resolution assets."
+        }
+      }
     },
     "headline": "Lead Software Engineer and Design Technologist",
-    "indeed": {
-      "embeddedDesign": "Embedded design technologists in product teams to roll out a new design system and its website, and to ship experimental features to weekly A/B tests.",
-      "managedCross": "Managed a cross-functional design technology team of 4, hired 2 design technologists in San Francisco, and ran quarterly and calibration reviews."
-    },
     "name": "Master",
     "projects": {
-      "image": "**Image Agent.** A public prompt-to-image agent. It asks up to three clarifying questions, reviews each picture with a second model, and runs every request through rate limits, rule checks, moderation and a classifier.",
-      "ki": "**Ki.CL platform.** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, with Apollo Server and MongoDB behind them. Production runs on Cloud Run in two regions behind a global load balancer.",
-      "tree": "**Tree of Life.** A walk through the Open Tree of Life's 2.3 million species. Each organism's illustration is generated on demand by a fixed pipeline with provider failover and a vision-model review."
-    },
-    "retail": {
-      "builtMaintained": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display products.",
-      "movedBuild": "Moved the build from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment on Jenkins.",
-      "shippedShared": "Shipped a shared React framework across the three signage products and improved on-device performance to sustain 4x-resolution assets."
+      "items": {
+        "image": "**Image Agent.** A public prompt-to-image agent. It asks up to three clarifying questions, reviews each picture with a second model, and runs every request through rate limits, rule checks, moderation and a classifier.",
+        "ki": "**Ki.CL platform.** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, with Apollo Server and MongoDB behind them. Production runs on Cloud Run in two regions behind a global load balancer.",
+        "tree": "**Tree of Life.** A walk through the Open Tree of Life's 2.3 million species. Each organism's illustration is generated on demand by a fixed pipeline with provider failover and a vision-model review."
+      }
     },
     "skills": {
       "ai": "**AI:** LLM applications on the Claude, OpenAI and Groq APIs, MCP servers, retrieval-augmented generation, structured outputs, evals",
@@ -137,26 +175,42 @@
     "title": "Projects"
   },
   "reactNative": {
-    "apple": {
-      "builtModule": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs. 10+ federated mini-apps consume the component library and the federated graph."
-    },
     "earlier": {
       "contractWeb": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010. Brand sites, e-commerce and a native iPhone app.",
       "seniorUi": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014. UI and iOS application development with Objective-C and AngularJS."
     },
-    "headline": "Lead Product Engineer · React, React Native and design systems",
-    "indeed": {
-      "managedCross": "Managed a cross-functional design technology team of 4, embedding design technologists in product teams to roll out a new design system and ship weekly A/B tests."
+    "experience": {
+      "apple": {
+        "points": {
+          "builtModule": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs. 10+ federated mini-apps consume the component library and the federated graph."
+        }
+      },
+      "indeed": {
+        "points": {
+          "managedCross": "Managed a cross-functional design technology team of 4, embedding design technologists in product teams to roll out a new design system and ship weekly A/B tests."
+        }
+      },
+      "retail": {
+        "points": {
+          "builtMaintained": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and channel stores; and Channel Digital for channel stores.",
+          "shippedShared": "Shipped a shared React framework across all three, and improved on-device performance of the kiosk and the Pricing app to sustain 4x-resolution assets."
+        }
+      },
+      "tesla": {
+        "points": {
+          "architectedImplemented": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development.",
+          "cutSystem": "Cut system outages from 20+ a week to near zero."
+        }
+      }
     },
+    "headline": "Lead Product Engineer · React, React Native and design systems",
     "name": "React Native",
     "projects": {
-      "experiments": "**Experiments.** Tree of Life, Image Agent and Factory Arm, live at [ki-cl.com/experiments](https://ki-cl.com/experiments), with code at [github.com/kenilam](https://github.com/kenilam).",
-      "interpreter": "**Interpreter (prototype).** A speech interpreter for two-way conversation. The Expo app (React Native, Tamagui) records push-to-talk audio and sends each utterance over a WebSocket to a Fastify server. The server detects the speaker's language, translates with Claude using the conversation so far, and streams captions back. The phone then speaks the result on-device. 21 languages, including Cantonese and Mandarin.",
-      "ki": "**Ki.CL platform.** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer."
-    },
-    "retail": {
-      "builtMaintained": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and channel stores; and Channel Digital for channel stores.",
-      "shippedShared": "Shipped a shared React framework across all three, and improved on-device performance of the kiosk and the Pricing app to sustain 4x-resolution assets."
+      "items": {
+        "experiments": "**Experiments.** Tree of Life, Image Agent and Factory Arm, live at [ki-cl.com/experiments](https://ki-cl.com/experiments), with code at [github.com/kenilam](https://github.com/kenilam).",
+        "interpreter": "**Interpreter (prototype).** A speech interpreter for two-way conversation. The Expo app (React Native, Tamagui) records push-to-talk audio and sends each utterance over a WebSocket to a Fastify server. The server detects the speaker's language, translates with Claude using the conversation so far, and streams captions back. The phone then speaks the result on-device. 21 languages, including Cantonese and Mandarin.",
+        "ki": "**Ki.CL platform.** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer."
+      }
     },
     "skills": {
       "ai": "**AI:** LLM applications on the Claude and OpenAI APIs, MCP servers",
@@ -164,95 +218,93 @@
       "mobile": "**Mobile and front end:** React Native, Expo, Tamagui, TypeScript, React, Next.js, Vite, Webpack, Module Federation, Three.js",
       "native": "**Native iOS, earlier work:** Objective-C"
     },
-    "summary": "Product engineer with 15+ years of experience building interfaces, from the iPad kiosk in every Apple Store to the platform behind Apple University. React and TypeScript are my daily tools on the web. I build with React Native and Expo in my own apps, and I did native iOS work earlier in my career. I managed teams at Tesla and Indeed, and I trained in fine art and design.",
-    "tesla": {
-      "architectedImplemented": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development.",
-      "cutSystem": "Cut system outages from 20+ a week to near zero."
-    }
+    "summary": "Product engineer with 15+ years of experience building interfaces, from the iPad kiosk in every Apple Store to the platform behind Apple University. React and TypeScript are my daily tools on the web. I build with React Native and Expo in my own apps, and I did native iOS work earlier in my career. I managed teams at Tesla and Indeed, and I trained in fine art and design."
   },
   "shared": {
-    "apple": {
-      "designSystem": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
-      "designSystems": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development. Also built a marketing design system and an enterprise design system.",
-      "federation": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs that communicate via gRPC, Node and PHP. 10+ federated mini-apps consume the component library and the federated graph.",
-      "lead": "Lead design and engineering for Apple University's cross-platform ecosystem, covering design systems, UX architecture and full-stack implementation.",
-      "mcp": "Built an MCP server that reads the component library and the gateway schemas, so non-technical owners can build a proof of concept and deploy it to an isolated sandbox.",
-      "messaging": "Built a RabbitMQ message broker and a bulk-email service.",
-      "modernised": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
-      "modernisedAcrossTeams": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
-    },
     "earlier": {
       "apollo": "UI Developer, Apollo Group · Apr 2012 – May 2013",
       "appleContract": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014",
       "hasco": "Web and Product Designer, Hasco Enterprise, Osaka · Nov 2010 – Aug 2011",
       "leCielBleu": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010"
     },
-    "ebay": {
-      "prototypes": "Prototyped the search results and item pages with product teams. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
-    },
     "education": {
       "ba": "BA Fine Arts (Painting / Sculpture), University of Brighton · 2003",
       "foundation": "Foundation in Art and Design, University of the Arts London · 2000",
       "ma": "MA Applied Imagination, Central Saint Martins, University of the Arts London · 2008"
     },
-    "indeed": {
-      "team": "Managed a cross-functional design technology team of 4 that rolled out a new design system and shipped experimental features to weekly A/B tests."
-    },
-    "languages": "English, Cantonese, Mandarin and Japanese, all native or bilingual.",
-    "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, 52 reviews, and in the top 10% of contributors in my field. [adplist.org/mentors/keni-lam](https://adplist.org/mentors/keni-lam)",
-    "projects": {
-      "factoryArm": "**Factory Arm.** A 3D palletising cell in the browser. Planners run in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim.",
-      "where": "Live at [ki-cl.com/experiments](https://ki-cl.com/experiments), with code at [github.com/kenilam](https://github.com/kenilam)."
-    },
-    "rakuten": {
-      "launch": "Helped launch the MVP and shipped a delivery-monitoring system for the Chipotle partnership."
-    },
-    "retail": {
-      "build": "Halved local build times by moving the build from Grunt to Webpack, and automated build-to-deployment on Jenkins.",
-      "frameworkAndLocales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
-      "locales": "Rolled out features and content to 30+ locales at every major product launch."
-    },
-    "roles": {
+    "experience": {
       "apple": {
         "dates": "Mar 2023 – Present",
         "organisation": "Apple",
+        "points": {
+          "designSystem": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
+          "designSystems": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development. Also built a marketing design system and an enterprise design system.",
+          "federation": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs that communicate via gRPC, Node and PHP. 10+ federated mini-apps consume the component library and the federated graph.",
+          "lead": "Lead design and engineering for Apple University's cross-platform ecosystem, covering design systems, UX architecture and full-stack implementation.",
+          "mcp": "Built an MCP server that reads the component library and the gateway schemas, so non-technical owners can build a proof of concept and deploy it to an isolated sandbox.",
+          "messaging": "Built a RabbitMQ message broker and a bulk-email service.",
+          "modernised": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
+          "modernisedAcrossTeams": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
+        },
         "title": "Lead Software Development Engineer"
       },
       "ebay": {
         "dates": "Jan 2014 – Jun 2015",
         "organisation": "eBay",
+        "points": {
+          "prototypes": "Prototyped the search results and item pages with product teams. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
+        },
         "title": "Design Engineer III, Human Interface Group"
       },
       "indeed": {
         "dates": "May 2018 – Jan 2019",
         "organisation": "Indeed",
+        "points": {
+          "team": "Managed a cross-functional design technology team of 4 that rolled out a new design system and shipped experimental features to weekly A/B tests."
+        },
         "title": "Manager, Design Technology"
       },
       "rakuten": {
         "dates": "Jan 2019 – Jan 2020",
         "organisation": "Rakuten Ready",
+        "points": {
+          "launch": "Helped launch the MVP and shipped a delivery-monitoring system for the Chipotle partnership."
+        },
         "title": "Senior UX and Software Engineer"
       },
       "retail": {
         "dates": "Jun 2015 – May 2018",
         "organisation": "Apple",
+        "points": {
+          "build": "Halved local build times by moving the build from Grunt to Webpack, and automated build-to-deployment on Jenkins.",
+          "frameworkAndLocales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
+          "locales": "Rolled out features and content to 30+ locales at every major product launch."
+        },
         "title": "Interactive Developer, Retail Interactive"
       },
       "tesla": {
         "dates": "Jan 2020 – Mar 2023",
         "organisation": "Tesla",
+        "points": {
+          "federation": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development, helping internal systems scale with Tesla Energy's global operations.",
+          "led": "Led UI/UX engineering for Tesla Energy's Solar platform, managing and mentoring an 8-person cross-functional team.",
+          "outages": "Cut system outages from 20+ a week to near zero. Traced the main cause, a platform-wide failure, to database connection pools that generated code opened on every request.",
+          "standards": "Set front-end architecture standards and drove TypeScript adoption across the organisation."
+        },
         "title": "Staff Software Engineer"
+      }
+    },
+    "languages": "English, Cantonese, Mandarin and Japanese, all native or bilingual.",
+    "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, 52 reviews, and in the top 10% of contributors in my field. [adplist.org/mentors/keni-lam](https://adplist.org/mentors/keni-lam)",
+    "projects": {
+      "intro": "Live at [ki-cl.com/experiments](https://ki-cl.com/experiments), with code at [github.com/kenilam](https://github.com/kenilam).",
+      "items": {
+        "factoryArm": "**Factory Arm.** A 3D palletising cell in the browser. Planners run in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim."
       }
     },
     "skills": {
       "design": "**Design:** design systems, component libraries, prototyping, Figma, accessibility, internationalisation",
       "platform": "**Platform:** GCP (Cloud Run), Docker, CI/CD with GitHub Actions and Jenkins"
-    },
-    "tesla": {
-      "federation": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development, helping internal systems scale with Tesla Energy's global operations.",
-      "led": "Led UI/UX engineering for Tesla Energy's Solar platform, managing and mentoring an 8-person cross-functional team.",
-      "outages": "Cut system outages from 20+ a week to near zero. Traced the main cause, a platform-wide failure, to database connection pools that generated code opened on every request.",
-      "standards": "Set front-end architecture standards and drove TypeScript adoption across the organisation."
     }
   },
   "skills": {

@@ -36,10 +36,12 @@ const ORDER: readonly SectionId[] = [
 ];
 
 /** A role's title, employer and dates, which no version changes. */
-const role = (id: keyof typeof resume.shared.roles): Omit<Role, 'points'> => ({
-  dates: `shared.roles.${id}.dates`,
-  organisation: `shared.roles.${id}.organisation`,
-  title: `shared.roles.${id}.title`,
+const role = (
+  id: keyof typeof resume.shared.experience
+): Omit<Role, 'points'> => ({
+  dates: `shared.experience.${id}.dates`,
+  organisation: `shared.experience.${id}.organisation`,
+  title: `shared.experience.${id}.title`,
 });
 
 const EARLIER: readonly Key[] = [

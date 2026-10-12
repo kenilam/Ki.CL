@@ -10,31 +10,37 @@ const FRONTEND_AI: Version = {
     {
       ...role('apple'),
       points: [
-        'shared.apple.federation',
-        'shared.apple.mcp',
-        'shared.apple.designSystems',
-        'frontendAi.apple.leadDesign',
-        'shared.apple.modernisedAcrossTeams',
+        'shared.experience.apple.points.federation',
+        'shared.experience.apple.points.mcp',
+        'shared.experience.apple.points.designSystems',
+        'frontendAi.experience.apple.points.leadDesign',
+        'shared.experience.apple.points.modernisedAcrossTeams',
       ],
     },
     {
       ...role('tesla'),
       points: [
-        'shared.tesla.federation',
-        'shared.tesla.outages',
-        'shared.tesla.standards',
-        'shared.tesla.led',
+        'shared.experience.tesla.points.federation',
+        'shared.experience.tesla.points.outages',
+        'shared.experience.tesla.points.standards',
+        'shared.experience.tesla.points.led',
       ],
     },
-    { ...role('rakuten'), points: ['shared.rakuten.launch'] },
-    { ...role('indeed'), points: ['shared.indeed.team'] },
+    { ...role('rakuten'), points: ['shared.experience.rakuten.points.launch'] },
+    { ...role('indeed'), points: ['shared.experience.indeed.points.team'] },
     {
       ...role('retail'),
-      points: ['shared.retail.frameworkAndLocales', 'shared.retail.build'],
+      points: [
+        'shared.experience.retail.points.frameworkAndLocales',
+        'shared.experience.retail.points.build',
+      ],
     },
     {
       ...role('ebay'),
-      points: ['shared.ebay.prototypes', 'frontendAi.ebay.builtKiosk'],
+      points: [
+        'shared.experience.ebay.points.prototypes',
+        'frontendAi.experience.ebay.points.builtKiosk',
+      ],
     },
   ],
   headline: 'frontendAi.headline',
@@ -45,11 +51,11 @@ const FRONTEND_AI: Version = {
   projects: {
     intro: 'frontendAi.projects.intro',
     items: [
-      'frontendAi.projects.image',
-      'frontendAi.projects.tree',
-      'frontendAi.projects.writing',
-      'shared.projects.factoryArm',
-      'frontendAi.projects.ki',
+      'frontendAi.projects.items.image',
+      'frontendAi.projects.items.tree',
+      'frontendAi.projects.items.writing',
+      'shared.projects.items.factoryArm',
+      'frontendAi.projects.items.ki',
     ],
   },
   skills: [

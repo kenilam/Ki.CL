@@ -28,7 +28,7 @@ const Earlier: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
       <section aria-labelledby={titleId}>
         <Heading dense id={titleId} is='h3'>
-          {t('experience.earlier')}
+          {t('experience.earlier.title')}
         </Heading>
         <List gap='narrower'>
           {earlier.map((line, index) => (
