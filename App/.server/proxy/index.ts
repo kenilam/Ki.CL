@@ -27,8 +27,7 @@ import { checkClientToken } from '../client-token';
  */
 
 /** Where the API actually lives. Absent locally, where the default is fine. */
-export const BACKEND_URL =
-  process.env.KICL_BACKEND_URL || 'http://localhost:3100';
+const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
 
 /** Where the design system remote lives. Same arrangement as the API. */
 const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
