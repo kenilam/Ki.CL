@@ -1,15 +1,7 @@
 import React from 'react';
 
 // Components
-import {
-  Details,
-  DetailsMarker,
-  Heading,
-  Layout,
-  List,
-  ListItem,
-  Text,
-} from 'design/components';
+import { Details, Heading, List, ListItem, Text } from 'design/components';
 
 // Context
 import { useVersion } from '@/views/resume/context';
@@ -34,30 +26,23 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
 
   return (
     <Details
-      marker={false}
       open={index === 0}
       summary={
         <>
-          <Heading className='kicl-margin-inline-end-auto' dense is='h3'>
+          <Heading dense is='h3'>
             {title}
-            <Text className='kicl-font-weight-light' is='span'>
+            <Text className='kicl-font-weight-light' dense is='span'>
               {` · ${organisation}`}
             </Text>
           </Heading>
-          {/* The dates and the marker end the row together. */}
-          <Layout alignItems='center' display='flex' gap='narrower'>
-            <span>
-              <Text
-                className='kicl-text-nowrap'
-                dense
-                is='span'
-                variant='secondary'
-              >
-                {dates}
-              </Text>
-              <DetailsMarker />
-            </span>
-          </Layout>
+          <Text
+            className='kicl-text-nowrap'
+            dense
+            is='span'
+            variant='secondary'
+          >
+            {dates}
+          </Text>
         </>
       }
     >

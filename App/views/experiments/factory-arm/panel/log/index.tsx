@@ -61,7 +61,7 @@ const Log: React.FunctionComponent = () => {
                   <Details
                     key={first.id}
                     summary={
-                      <Text className='kicl-font-size-small' is='span'>
+                      <Text className='kicl-font-size-small' dense is='span'>
                         {name} · {time(first.at)} · {entries.length}{' '}
                         {entries.length === 1
                           ? COPY.panel.step
