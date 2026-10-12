@@ -72,7 +72,7 @@ const cell = (state = standard(), planner: Planner = now) => {
   };
 
   const notes = () =>
-    events.flatMap((event) => (event.type === 'note' ? [event.text] : []));
+    events.flatMap((event) => (event.type === 'note' ? [event.note] : []));
 
   return { conductor, events, notes, pad: () => pad, run };
 };
@@ -100,9 +100,17 @@ describe('conductor', () => {
 
     assert.equal(conductor.state.world.cases[target], undefined);
     assert.ok(conductor.state.riders.has(target) || !conductor.busy());
-    assert.ok(notes().some((text) => text.startsWith(`Picked case ${target}`)));
     assert.ok(
-      notes().some((text) => text === `Set case ${target} down on the belt`)
+      notes().some(
+        ({ context, values }) =>
+          context.startsWith('picked_') && values?.id === target
+      )
+    );
+    assert.ok(
+      notes().some(
+        ({ context, values }) =>
+          context === 'set_down_belt' && values?.id === target
+      )
     );
   });
 
@@ -177,7 +185,7 @@ describe('conductor', () => {
     assert.equal(
       conductor.state.world.cases[other.id],
       undefined,
-      notes().join('\n')
+      JSON.stringify(notes())
     );
   });
 

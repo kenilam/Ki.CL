@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import {
   Button,
@@ -16,7 +19,7 @@ import * as Ri from 'react-icons/ri';
 import { useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Constants
-import { COPY, PANEL } from '@/views/experiments/factory-arm/constants';
+import { PANEL } from '@/views/experiments/factory-arm/constants';
 
 const TABS = ['preset', 'manual'] as const;
 
@@ -26,6 +29,7 @@ const TABS = ['preset', 'manual'] as const;
  * screens it also closes the panel.
  */
 const Tabs: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { setTab, tab } = useSetup();
   // The tab the log goes back to.
   const back = useRef<(typeof TABS)[number]>('preset');
@@ -47,13 +51,13 @@ const Tabs: React.FunctionComponent = () => {
     >
       <SheetHeader>
         <Segmented
-          aria-label={COPY.panel.label}
+          aria-label={t('setup')}
           onValueChange={(value) => setTab(value as (typeof TABS)[number])}
           value={tab}
         >
           {TABS.map((name) => (
             <SegmentedItem key={name} value={name}>
-              {COPY.panel[name]}
+              {t('tab', { context: name })}
             </SegmentedItem>
           ))}
         </Segmented>
@@ -66,7 +70,7 @@ const Tabs: React.FunctionComponent = () => {
           level='confirm'
         >
           <Ri.RiFile4Line aria-hidden />
-          <span className='kicl-hidden'>{COPY.panel.log}</span>
+          <span className='kicl-hidden'>{t('tab', { context: 'log' })}</span>
         </Button>
 
         <Button
@@ -76,7 +80,9 @@ const Tabs: React.FunctionComponent = () => {
           variant='ghost'
         >
           <Ri.RiCloseLine aria-hidden />
-          <span className='kicl-hidden'>{COPY.panel.close}</span>
+          <span className='kicl-hidden'>
+            {t('action', { context: 'close_setup' })}
+          </span>
         </Button>
       </SheetHeader>
     </Layout>

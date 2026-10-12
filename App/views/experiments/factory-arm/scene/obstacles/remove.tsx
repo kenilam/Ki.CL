@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Three
 import { Drei } from '@/three';
 
@@ -12,9 +15,6 @@ import * as Ri from 'react-icons/ri';
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/constants';
-
 /** How far above the obstacle's top the button floats, clear of its up arrow, in metres. */
 const ABOVE = 0.4;
 
@@ -25,6 +25,7 @@ type Props = { id: string; size: [number, number, number] };
  * Delete key does.
  */
 const Remove: React.FunctionComponent<Props> = ({ id, size }) => {
+  const { t } = useTranslation('factory-arm');
   const { select, write } = useFactoryArmContext();
 
   return (
@@ -37,7 +38,9 @@ const Remove: React.FunctionComponent<Props> = ({ id, size }) => {
         variant='secondary'
       >
         <Ri.RiDeleteBinLine aria-hidden />
-        <span className='kicl-hidden'>{COPY.panel.shapes.remove}</span>
+        <span className='kicl-hidden'>
+          {t('action', { context: 'remove_obstacle' })}
+        </span>
       </Button>
     </Drei.Html>
   );
