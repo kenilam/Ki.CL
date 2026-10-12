@@ -59,6 +59,6 @@ export function createGate(texts: ServerTexts): RequestHandler {
       .set('WWW-Authenticate', 'Basic realm="dev", charset="UTF-8"')
       .set('Cache-Control', 'no-store')
       .type('html')
-      .send(texts.fill(page));
+      .send(texts.fill(page(401)));
   };
 }
