@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Icons
 import * as Fa from 'react-icons/fa6';
 
@@ -12,11 +15,6 @@ import { useTrackContext } from '@/views/experiments/music-visualiser/groups/typ
 // Constants
 import { toPlayPath } from '@/views/experiments/music-visualiser/constants';
 
-const COPY = {
-  copied: 'Link copied',
-  copy: 'Copy link to this track',
-};
-
 /** How long "copied" stays on the link. */
 const COPIED_MS = 1800;
 
@@ -24,6 +22,11 @@ const COPIED_MS = 1800;
 const CopyLink: React.FunctionComponent = () => {
   const { track } = useTrackContext();
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation('music-visualiser');
+  const { t: common } = useTranslation();
+  const label = copied
+    ? common('status', { context: 'copied' })
+    : t('action', { context: 'copy_link' });
 
   const copyLink = async () => {
     // Missing outside a secure context, where nothing was copied.
@@ -41,10 +44,10 @@ const CopyLink: React.FunctionComponent = () => {
 
   return (
     <Button
-      aria-label={copied ? COPY.copied : COPY.copy}
+      aria-label={label}
       onClick={() => void copyLink()}
       size='small'
-      title={copied ? COPY.copied : COPY.copy}
+      title={label}
       variant='ghost'
     >
       <Fa.FaLink aria-hidden />

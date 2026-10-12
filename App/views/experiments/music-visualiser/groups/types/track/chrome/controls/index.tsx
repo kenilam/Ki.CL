@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Fa from 'react-icons/fa6';
@@ -32,11 +33,6 @@ import {
 
 const CLASS_NAME = `${VIEW}__chrome__controls`;
 
-const COPY = {
-  next: 'Next track',
-  pause: 'Pause',
-};
-
 /**
  * Pause, skip, copy and volume. Pause links to the track's gate and skip to
  * the next track's `/play`. On phones and tablets the volume goes under the buttons.
@@ -44,6 +40,8 @@ const COPY = {
 const Controls: React.FunctionComponent = () => {
   const { control, next, track } = useTrackContext();
   const { isMobile } = useResponsive();
+  const { t } = useTranslation('music-visualiser');
+  const { t: common } = useTranslation();
 
   return (
     <Layout
@@ -58,7 +56,7 @@ const Controls: React.FunctionComponent = () => {
         <List alignItems='center' autoFlow='column' gap='narrow'>
           <ListItem>
             <HyperLink
-              aria-label={COPY.pause}
+              aria-label={common('action', { context: 'pause' })}
               lookLikeButton
               size='small'
               to={toTrackPath(track)}
@@ -73,7 +71,7 @@ const Controls: React.FunctionComponent = () => {
           </ListItem>
           <ListItem>
             <HyperLink
-              aria-label={COPY.next}
+              aria-label={t('action', { context: 'next' })}
               disabled={!next}
               lookLikeButton
               size='small'

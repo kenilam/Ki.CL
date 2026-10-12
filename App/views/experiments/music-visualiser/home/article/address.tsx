@@ -1,41 +1,33 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { Details, Heading, Text } from 'design/components';
+import { Details, Heading, Markdown, Text } from 'design/components';
 
 /** The address is the player: `/play`, pause and skip as links. */
-const Address: React.FunctionComponent = () => (
-  <Details
-    gap='narrow'
-    summary={
-      <Heading className='kicl-font-size-large' dense is='h3'>
-        The address is the player
-      </Heading>
-    }
-  >
-    <Text is='p'>
-      <Text is='code' variant='secondary'>
-        /play
-      </Text>{' '}
-      at the end of a track’s address means it’s playing. Pause is a link back
-      to the track. Skip links to the next one, which is picked as soon as the
-      current track starts. Back and forward work, and a copied link opens the
-      same track.
-    </Text>
-    <Text is='p'>
-      Browsers won’t start audio until the person has interacted with the page,
-      so a{' '}
-      <Text is='code' variant='secondary'>
-        /play
-      </Text>{' '}
-      link opened from somewhere else lands on the track and waits for one
-      click.
-    </Text>
-    <Text is='p'>
-      When the track changes, the old one keeps playing until the new one has
-      loaded. Then they crossfade over three seconds.
-    </Text>
-  </Details>
-);
+const Address: React.FunctionComponent = () => {
+  const { t } = useTranslation('music-visualiser');
+
+  return (
+    <Details
+      gap='narrow'
+      summary={
+        <Heading className='kicl-font-size-large' dense is='h3'>
+          {t('title', { context: 'address' })}
+        </Heading>
+      }
+    >
+      <Text is='p'>
+        <Markdown>{t('article.address.play')}</Markdown>
+      </Text>
+      <Text is='p'>
+        <Markdown>{t('article.address.gesture')}</Markdown>
+      </Text>
+      <Text is='p'>{t('article.address.crossfade')}</Text>
+    </Details>
+  );
+};
 
 export { Address };
