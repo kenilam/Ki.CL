@@ -25,10 +25,12 @@ export const Links = [
       <Trans i18nKey='experiments' />
     </HyperLink>
     <List gap='narrow' justifyItems='end'>
-      {EXPERIMENTS.map(({ title, to }) => (
+      {EXPERIMENTS.map(({ context, to }) => (
         <Animation key={to} property='slide-from-top'>
           <ListItem>
-            <HyperLink to={to}>{title}</HyperLink>
+            <HyperLink to={to}>
+              <Trans context={context} i18nKey='experiment' />
+            </HyperLink>
           </ListItem>
         </Animation>
       ))}
