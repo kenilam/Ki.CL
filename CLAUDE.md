@@ -43,6 +43,17 @@ This app does not talk to GraphQL directly - it consumes the **Backend** repo's 
 
 `App.tsx` lazy-loads `KiclProvider` from the remote and gates rendering behind `EnvProvider` (client-side env/config context) and a `Suspense`/`Spinner` fallback, wrapping `LocalStorageProvider` → `View`.
 
+### Writing comes from the database, through i18next
+
+UI copy is not written in components. It lives in `App/locales/en/<namespace>.json`, is copied into the Backend's database, one row for each string, with `make translations.seed DIR=../Ki.CL/App/locales` (run in Ki.CL-back), and is loaded at runtime through `loadTranslations` from `api/provider` by `App/i18n`. Components read it with `useTranslation()` from `react-i18next`.
+
+- `common` holds what renders outside a route's own `Suspense`: the header, navigation, session gate and dialogs. It loads before the app mounts. A view names its own namespace, `useTranslation('resume')`, and suspends into its route's fallback. Never use a view namespace outside that route's `Suspense`.
+- Dynamic copy goes through `t` too, with the values passed in: `t('review.left', { count })`, `t('sentTo', { email })`, `t('placeholder', { context: kind })`. Plurals are `_one`/`_other`/`_zero` keys, variants are `_<context>` keys, and text with a link or code inside it is one `Trans`. Never build a sentence by joining strings or JSX fragments, and never write a plural with a ternary.
+- Keys are typed from the JSON files in `App/types/i18next.d.ts`. Add a new namespace there.
+- After adding or changing a key, seed before you look at the page: the site shows the key itself until the database has it. Seed production before releasing, and check with `make translations.diff`.
+- `seed` never removes a key. Remove dead keys with `make translations.prune` one release later. A string whose placeholders change gets a new key.
+- `common.json` is also bundled, and used only when the API cannot be reached.
+
 ### Path aliases
 
 `@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). Exception: `App/.client` and `App/.server` bootstrap files may keep relative imports for config loaded before aliases exist (e.g. `get-alias.ts` importing `../../tsconfig.json`).

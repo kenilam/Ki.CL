@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -10,13 +11,15 @@ import * as Ri from 'react-icons/ri';
 import { Button, HyperLink, Navigation } from 'design/components';
 
 // Views
-import { CONTACT_ID, COPY as CONTACT } from '@/views/contact/constants';
+import { CONTACT_ID } from '@/views/contact/constants';
 
 const COPY = {
   label: 'Contact',
 };
 
 const Aside: React.FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
     <Navigation
       aria-label={COPY.label}
@@ -52,11 +55,11 @@ const Aside: React.FunctionComponent = () => {
         <Ri.RiGithubLine aria-hidden />
       </HyperLink>
       <Button
-        aria-label={CONTACT.title}
+        aria-label={t('contact.title')}
         command='show-modal'
         commandFor={CONTACT_ID}
         size='small'
-        title={CONTACT.title}
+        title={t('contact.title')}
         variant='ghost'
       >
         <Ri.RiMailLine aria-hidden />

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import {
   Animation,
@@ -19,17 +22,19 @@ import * as Ri from 'react-icons/ri';
 import { PATH as ME_PATH } from '@/views/me/constants';
 
 // Constants
-import { COPY, SIGN_OUT_ID } from '@/views/account/constants';
+import { SIGN_OUT_ID } from '@/views/account/constants';
 
 /** The account menu that ends the header's navigation. */
 const Default: React.FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button className='kicl-font-size' unstyled>
           <Ri.RiAccountCircleLine aria-hidden />
           <Text className='kicl-hidden' is='span'>
-            {COPY.account}
+            {t('account.account')}
           </Text>
         </Button>
       </PopoverTrigger>
@@ -43,7 +48,7 @@ const Default: React.FunctionComponent = () => {
               to={`/${ME_PATH}`}
               variant='secondary'
             >
-              {COPY.profile}
+              {t('account.profile')}
             </HyperLink>
           </Animation>
           <Animation property='slide-from-top' delay={600}>
@@ -54,7 +59,7 @@ const Default: React.FunctionComponent = () => {
               commandFor={SIGN_OUT_ID}
               variant='secondary'
             >
-              {COPY.signOut}
+              {t('account.signOut')}
             </Button>
           </Animation>
         </Menu>

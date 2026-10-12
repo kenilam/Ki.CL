@@ -1,0 +1,38 @@
+{
+  "account": {
+    "account": "Account",
+    "cancel": "Cancel",
+    "confirm": "Sign out?",
+    "failed": "Could not sign out. Try again.",
+    "message": "You will need to sign in again to use your account.",
+    "profile": "My Profile",
+    "signOut": "Sign out",
+    "signingOut": "Signing out"
+  },
+  "contact": {
+    "title": "Send a message"
+  },
+  "navigation": {
+    "close": "Close the navigation",
+    "dialog": "Navigation",
+    "experiments": "Experiments",
+    "home": "Home",
+    "label": "Main",
+    "open": "Open the navigation",
+    "pages": "Pages",
+    "resume": "Resume"
+  },
+  "session": {
+    "checking": "Confirming you are human",
+    "failed": "Could not start a session",
+    "interact": "Tick the box to carry on.",
+    "later": "Try again later.",
+    "limited": "Could not start a session right now",
+    "rejected": "Could not confirm you are human",
+    "retry": "Reload to try again.",
+    "wait": "The page carries on once this is done."
+  },
+  "skipLink": {
+    "skip": "Skip to content"
+  }
+}

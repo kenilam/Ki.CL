@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { Trans } from 'react-i18next';
+
 // Components
 import { Animation, HyperLink, List, ListItem } from 'design/components';
 
@@ -15,11 +18,11 @@ export const Links = [
     key={HOME_PATH}
     to={`/${HOME_PATH}`}
   >
-    Home
+    <Trans i18nKey='navigation.home' />
   </HyperLink>,
   <React.Fragment key={EXPERIMENTS_PATH}>
     <HyperLink className='kicl-font-size-medium' to={`/${EXPERIMENTS_PATH}`}>
-      Experiments
+      <Trans i18nKey='navigation.experiments' />
     </HyperLink>
     <List gap='narrow' justifyItems='end'>
       {EXPERIMENTS.map(({ title, to }) => (
@@ -36,6 +39,6 @@ export const Links = [
     key={RESUME_PATH}
     to={`/${RESUME_PATH}`}
   >
-    Resume
+    <Trans i18nKey='navigation.resume' />
   </HyperLink>,
 ];

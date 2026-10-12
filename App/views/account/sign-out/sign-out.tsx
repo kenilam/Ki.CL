@@ -1,5 +1,8 @@
 import React, { useId, useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import {
   AnimatedText,
@@ -17,7 +20,7 @@ import {
 import { useSignOut } from '@/session';
 
 // Constants
-import { COPY, SIGN_OUT_ID } from '@/views/account/constants';
+import { SIGN_OUT_ID } from '@/views/account/constants';
 
 /**
  * Asks before signing out, then waits in place while the session is
@@ -26,6 +29,8 @@ import { COPY, SIGN_OUT_ID } from '@/views/account/constants';
  */
 const SignOut: React.FunctionComponent = () => {
   const signOut = useSignOut();
+
+  const { t } = useTranslation();
 
   const titleId = useId();
   const messageId = useId();
@@ -62,19 +67,19 @@ const SignOut: React.FunctionComponent = () => {
           <Animation property='slide-from-top'>
             <Heading dense id={titleId}>
               <AnimatedText className='kicl-color-error' is='span' role='alert'>
-                {pending ? COPY.signingOut : COPY.confirm}
+                {pending ? t('account.signingOut') : t('account.confirm')}
               </AnimatedText>
             </Heading>
           </Animation>
           <Animation property='slide-from-top'>
             <AnimatedText className='kicl-text-align-center'>
-              {COPY.message}
+              {t('account.message')}
             </AnimatedText>
           </Animation>
           <Spinner in={pending} position='inline' />
           <Animation in={state === 'failed'}>
             <AnimatedText className='kicl-color-error' is='p' role='alert'>
-              {COPY.failed}
+              {t('account.failed')}
             </AnimatedText>
           </Animation>
           <Animation in={!pending} property='slide-from-top' delay={300}>
@@ -85,12 +90,12 @@ const SignOut: React.FunctionComponent = () => {
                   commandFor={SIGN_OUT_ID}
                   variant='tertiary'
                 >
-                  {COPY.cancel}
+                  {t('account.cancel')}
                 </Button>
               </ListItem>
               <ListItem>
                 <Button onClick={confirm} variant='ghost'>
-                  {COPY.signOut}
+                  {t('account.signOut')}
                 </Button>
               </ListItem>
             </List>

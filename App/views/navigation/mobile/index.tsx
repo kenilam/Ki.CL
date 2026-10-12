@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Routers
 import { useLocation } from 'design/router';
 
@@ -19,11 +22,6 @@ import { Open } from './open';
 
 // Constants
 import { CLASS_NAME } from './constants';
-import { LABEL } from '@/views/navigation/constants';
-
-const COPY = {
-  label: 'Navigation',
-};
 
 // Styles
 import './styles.scss';
@@ -32,6 +30,8 @@ const Mobile: React.FunctionComponent = () => {
   const { key } = useLocation();
 
   const { me } = useAccount();
+
+  const { t } = useTranslation();
 
   const node = useRef<HTMLDialogElement>(null);
 
@@ -50,7 +50,7 @@ const Mobile: React.FunctionComponent = () => {
       <Open />
 
       <Dialog
-        aria-label={COPY.label}
+        aria-label={t('navigation.dialog')}
         className={CLASS_NAME}
         closable='keyboard'
         fullScreen
@@ -60,7 +60,7 @@ const Mobile: React.FunctionComponent = () => {
         <Close />
 
         <Navigation
-          aria-label={LABEL}
+          aria-label={t('navigation.label')}
           autoFlow='row'
           gap='normal'
           justifyItems='end'

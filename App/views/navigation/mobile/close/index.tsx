@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Button, Text } from 'design/components';
@@ -15,11 +16,9 @@ import { CLASS_NAME } from '@/views/navigation/mobile/constants';
 // Styles
 import './styles.scss';
 
-const COPY = {
-  close: 'Close the navigation',
-};
-
 const Close: React.FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
     <Button
       className={classNames(
@@ -35,7 +34,7 @@ const Close: React.FunctionComponent = () => {
     >
       <Ri.RiCloseLine aria-hidden />
       <Text className='kicl-hidden' is='span'>
-        {COPY.close}
+        {t('navigation.close')}
       </Text>
     </Button>
   );

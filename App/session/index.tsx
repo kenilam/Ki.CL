@@ -1,13 +1,13 @@
 import React, { useId } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Dialog, Heading, Layout, Spinner, Text } from 'design/components';
 
 // Status
 import { Status403, Status429, Status500 } from 'design/status';
-
-// Constants
-import { COPY } from './constants';
 
 // Context
 import { SessionContext, useSessionContext } from './context';
@@ -44,19 +44,27 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
 }) => {
   const { live, resuming, stage, turnstile } = useSessionContext();
 
+  const { t } = useTranslation();
+
   const titleId = useId();
   const messageId = useId();
 
   if (stage === 'rejected') {
-    return <Status403 message={COPY.retry} title={COPY.rejected} />;
+    return (
+      <Status403 message={t('session.retry')} title={t('session.rejected')} />
+    );
   }
 
   if (stage === 'limited') {
-    return <Status429 message={COPY.later} title={COPY.limited} />;
+    return (
+      <Status429 message={t('session.later')} title={t('session.limited')} />
+    );
   }
 
   if (stage === 'failed') {
-    return <Status500 message={COPY.retry} title={COPY.failed} />;
+    return (
+      <Status500 message={t('session.retry')} title={t('session.failed')} />
+    );
   }
 
   if (live) {
@@ -79,10 +87,12 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
             >
               <section className='kicl-padding-block-end-wide'>
                 <Heading dense id={titleId}>
-                  {COPY.checking}
+                  {t('session.checking')}
                 </Heading>
                 <Text className='kicl-font-size-small' id={messageId} is='p'>
-                  {turnstile.interactive ? COPY.interact : COPY.wait}
+                  {turnstile.interactive
+                    ? t('session.interact')
+                    : t('session.wait')}
                 </Text>
                 <Spinner in={!turnstile.interactive} position='inline' />
                 <div ref={turnstile.container} />

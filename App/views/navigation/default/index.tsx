@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { HyperLink, Navigation } from 'design/components';
 
@@ -8,22 +11,26 @@ import { Default as Account } from '@/views/account/default';
 import { useAccount } from '@/views/account/use-account';
 
 // Constants
-import { LABEL, ROUTES } from '@/views/navigation/constants';
+import { ROUTES } from '@/views/navigation/constants';
 
 const CLASS_NAME = 'kicl--views--navigation--default';
-
-const Links = ROUTES.map(({ title, to }) => (
-  <HyperLink key={to} to={to}>
-    {title}
-  </HyperLink>
-));
 
 const Default: React.FunctionComponent = () => {
   const { me } = useAccount();
 
+  const { t } = useTranslation();
+
   return (
-    <Navigation aria-label={LABEL} autoFlow='column' className={CLASS_NAME}>
-      {Links}
+    <Navigation
+      aria-label={t('navigation.label')}
+      autoFlow='column'
+      className={CLASS_NAME}
+    >
+      {ROUTES.map(({ key, to }) => (
+        <HyperLink key={to} to={to}>
+          {t(key)}
+        </HyperLink>
+      ))}
       {/* Decided here, so an anonymous visitor gets no empty item. */}
       {me ? <Account key='account' /> : null}
     </Navigation>

@@ -10,16 +10,4 @@ const SCRIPT_SRC =
 /** A fresh token is tried once more after a rejection, then the gate gives up. */
 const MAX_REJECTIONS = 2;
 
-const COPY = {
-  checking: 'Confirming you are human',
-  wait: 'The page carries on once this is done.',
-  interact: 'Tick the box to carry on.',
-  rejected: 'Could not confirm you are human',
-  failed: 'Could not start a session',
-  retry: 'Reload to try again.',
-  // Vague like the API's own message: naming the limit says how to get round it.
-  limited: 'Could not start a session right now',
-  later: 'Try again later.',
-};
-
-export { ACTION, COPY, MAX_REJECTIONS, SCRIPT_SRC, TOKEN_HEADER };
+export { ACTION, MAX_REJECTIONS, SCRIPT_SRC, TOKEN_HEADER };
