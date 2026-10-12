@@ -15,6 +15,7 @@ import { applyClientToken } from './client-token';
 import { applyCollect } from './collect';
 import { createGate } from './gate';
 import { applyHeaders } from './headers';
+import { createNavigation } from './navigation';
 import { precompressed } from './precompressed';
 import {
   applyProxy,
@@ -75,6 +76,9 @@ async function Server() {
     applyClientToken(app);
 
     const texts = createTexts(() => currentIdToken(BACKEND_URL));
+
+    // Ahead of the proxy and the built files, so it covers both.
+    app.use(createNavigation(texts));
 
     /*
      * Ahead of everything that serves files. The API's paths are not on disk,
