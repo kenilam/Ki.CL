@@ -51,19 +51,19 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
 
   if (stage === 'rejected') {
     return (
-      <Status403 message={t('session.retry')} title={t('session.rejected')} />
+      <Status403 message={t('session_retry')} title={t('session_rejected')} />
     );
   }
 
   if (stage === 'limited') {
     return (
-      <Status429 message={t('session.later')} title={t('session.limited')} />
+      <Status429 message={t('session_later')} title={t('session_limited')} />
     );
   }
 
   if (stage === 'failed') {
     return (
-      <Status500 message={t('session.retry')} title={t('session.failed')} />
+      <Status500 message={t('session_retry')} title={t('session_failed')} />
     );
   }
 
@@ -87,12 +87,12 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
             >
               <section className='kicl-padding-block-end-wide'>
                 <Heading dense id={titleId}>
-                  {t('session.checking')}
+                  {t('session_checking')}
                 </Heading>
                 <Text className='kicl-font-size-small' id={messageId} is='p'>
                   {turnstile.interactive
-                    ? t('session.interact')
-                    : t('session.wait')}
+                    ? t('session_interact')
+                    : t('session_wait')}
                 </Text>
                 <Spinner in={!turnstile.interactive} position='inline' />
                 <div ref={turnstile.container} />

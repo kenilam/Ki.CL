@@ -21,11 +21,7 @@ const Default: React.FunctionComponent = () => {
   const { t } = useTranslation();
 
   return (
-    <Navigation
-      aria-label={t('navigation.label')}
-      autoFlow='column'
-      className={CLASS_NAME}
-    >
+    <Navigation aria-label={t('main')} autoFlow='column' className={CLASS_NAME}>
       {ROUTES.map(({ key, to }) => (
         <HyperLink key={to} to={to}>
           {t(key)}

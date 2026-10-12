@@ -34,7 +34,7 @@ const Mobile: React.FunctionComponent = () => {
           to={`/${ME_PATH}`}
           variant='secondary'
         >
-          {t('account.profile')}
+          {t('my_profile')}
         </HyperLink>
       </Animation>
       <Animation property='slide-from-bottom' delay={1200}>
@@ -45,7 +45,7 @@ const Mobile: React.FunctionComponent = () => {
           commandFor={SIGN_OUT_ID}
           variant='secondary'
         >
-          {t('signOut')}
+          {t('sign_out')}
         </Button>
       </Animation>
     </Menu>
