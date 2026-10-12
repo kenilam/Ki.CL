@@ -1,5 +1,3 @@
-import type { SectionId } from './content/types';
-
 /**
  * Route segment for this view.
  *
@@ -28,27 +26,7 @@ const FILE = `/assets/static/${OBJECT}`;
  */
 const PHONE_KEY = 'kicl-resume-phone';
 
-const SECTIONS = {
-  education: 'Education',
-  experience: 'Experience',
-  languages: 'Languages',
-  mentoring: 'Mentoring',
-  projects: 'Projects',
-  skills: 'Skills',
-  summary: 'Summary',
-} as const satisfies Record<SectionId, string>;
-
-const COPY = {
-  earlier: 'Earlier',
-  file: 'PDF',
-  print: 'Print',
-  sections: SECTIONS,
-  sendMessage: 'Send me a message',
-  /** The document's title while it prints, which a browser offers as the file's name. */
-  title: 'Resume',
-} as const;
-
 /** Every section's heading: a small label over a rule. */
 const HEADING = ['kicl-font-size-small', 'kicl-text-transform-uppercase'];
 
-export { CLASS_NAME, COPY, FILE, HEADING, OBJECT, PATH, PHONE_KEY };
+export { CLASS_NAME, FILE, HEADING, OBJECT, PATH, PHONE_KEY };

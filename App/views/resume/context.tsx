@@ -1,11 +1,11 @@
 import React, { PropsWithChildren, useContext } from 'react';
 
 // Content
-import { MASTER, type Version } from './content';
+import type { Resolved } from './content';
 
-const Context = React.createContext<Version>(MASTER);
+const Context = React.createContext<Resolved | null>(null);
 
-type Props = PropsWithChildren<{ version: Version }>;
+type Props = PropsWithChildren<{ version: Resolved }>;
 
 /** The version on the page. Every section reads its own part from here. */
 const VersionProvider: React.FunctionComponent<Props> = ({
@@ -13,6 +13,14 @@ const VersionProvider: React.FunctionComponent<Props> = ({
   version,
 }) => <Context.Provider value={version}>{children}</Context.Provider>;
 
-const useVersion = () => useContext(Context);
+const useVersion = () => {
+  const version = useContext(Context);
+
+  if (!version) {
+    throw new Error('useVersion needs a VersionProvider around it.');
+  }
+
+  return version;
+};
 
 export { VersionProvider, useVersion };

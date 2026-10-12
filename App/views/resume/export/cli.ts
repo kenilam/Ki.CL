@@ -8,7 +8,15 @@ import * as dotenv from 'dotenv';
 
 // Relative, not `@/`: this runs under tsx, outside Vite and its aliases.
 import { FILE, OBJECT, PATH, PHONE_KEY } from '../constants';
-import { MASTER, VERSIONS, fingerprint, type Version } from '../content';
+import RESUME from '../../../locales/en/resume.json';
+import {
+  MASTER,
+  VERSIONS,
+  fingerprint,
+  resolve as withText,
+  type Key,
+  type Version,
+} from '../content';
 
 import { launch, type Tab } from './chrome';
 
@@ -28,7 +36,8 @@ import { launch, type Tab } from './chrome';
  * from `KICL_RESUME_PHONE` in `.env`.
  *
  * Nothing is written for a version that runs past two sheets, that was set in
- * the fallback typeface, or that did not render.
+ * the fallback typeface, that did not render, or whose text in the database is
+ * not what `App/locales/en/resume.json` says.
  */
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -97,6 +106,7 @@ type Job = {
 
 type Ready = {
   face: boolean;
+  fingerprint: string | null;
   version: string | null;
 };
 
@@ -107,6 +117,18 @@ const { positionals, values } = parseArgs({
     url: { type: 'string' },
   },
 });
+
+/** A line as the file has it. The page has it from the database. */
+const written = (key: Key) =>
+  key
+    .split('.')
+    .reduce<unknown>(
+      (branch, name) => (branch as Record<string, unknown>)[name],
+      RESUME
+    ) as string;
+
+/** What the page's fingerprint is when the database holds what the files say. */
+const expected = (version: Version) => fingerprint(withText(version, written));
 
 const fail = (message: string): never => {
   console.error(message);
@@ -154,7 +176,11 @@ const READY = `(async () => {
   // One more turn, so the last face to arrive is laid out before the print.
   await pause(200);
 
-  return { face: loaded(), version: article()?.dataset.version ?? null };
+  return {
+    face: loaded(),
+    fingerprint: article()?.dataset.fingerprint ?? null,
+    version: article()?.dataset.version ?? null,
+  };
 })()`;
 
 const countPages = (pdf: Buffer) =>
@@ -192,6 +218,10 @@ const print = async (tab: Tab, job: Job): Promise<number | string> => {
 
   if (ready?.version !== version.slug) {
     return `${toUrl(version)} did not render the ${version.slug} version.`;
+  }
+
+  if (ready.fingerprint !== expected(version)) {
+    return 'The page does not say what App/locales/en/resume.json says. Seed the database: make translations.seed in Ki.CL-back.';
   }
 
   if (!ready.face) {
@@ -319,7 +349,7 @@ run()
     const record = {
       // The local date, as year-month-day.
       exported: new Date().toLocaleDateString('en-CA'),
-      fingerprint: fingerprint(MASTER),
+      fingerprint: expected(MASTER),
       pages,
     };
 

@@ -1,14 +1,23 @@
-/** Plain text, bold text, or a link. */
-type Run = string | { strong: string } | { link: string; to: string };
+import type resume from '@/locales/en/resume.json';
 
-/** One paragraph or one list item. A string when it is all plain text. */
-type Line = string | readonly Run[];
+/** Every string in a tree of them, by its path: `shared.apple.lead`. */
+type Paths<Tree> = {
+  [Name in keyof Tree & string]: Tree[Name] extends string
+    ? Name
+    : `${Name}.${Paths<Tree[Name]>}`;
+}[keyof Tree & string];
 
-type Role = {
-  dates: string;
-  organisation: string;
+/**
+ * Where a line is written, in `App/locales/en/resume.json`. The line itself
+ * is inline Markdown: bold text and links.
+ */
+type Key = Paths<typeof resume>;
+
+type Role<Line = Key> = {
+  dates: Line;
+  organisation: Line;
   points: readonly Line[];
-  title: string;
+  title: Line;
 };
 
 type SectionId =
@@ -24,19 +33,19 @@ type Slug =
   'architecture' | 'frontend-ai' | 'manager' | 'master' | 'react-native';
 
 /**
- * One resume. A version is a selection and an order: the lines several
- * versions share are constants in `shared.ts`, and each version adds the
- * lines only it has.
+ * One resume. A version is a selection and an order of lines, each named by
+ * its key: the lines several versions share are under `shared`, and the
+ * lines only one has are under its own name. `resolve` puts the text in.
  */
-type Version = {
+type Version<Line = Key> = {
   earlier: readonly Line[];
   education: readonly Line[];
-  experience: readonly Role[];
-  headline: string;
+  experience: readonly Role<Line>[];
+  headline: Line;
   languages: Line;
   mentoring: Line;
   /** Shown where the versions are listed, and in the PDF's title. */
-  name: string;
+  name: Line;
   /** Sections, top to bottom. */
   order: readonly SectionId[];
   projects: { intro?: Line; items?: readonly Line[] };
@@ -46,4 +55,7 @@ type Version = {
   summary: Line;
 };
 
-export type { Line, Role, Run, SectionId, Slug, Version };
+/** A version with its text in place of the keys. */
+type Resolved = Version<string>;
+
+export type { Key, Resolved, Role, SectionId, Slug, Version };

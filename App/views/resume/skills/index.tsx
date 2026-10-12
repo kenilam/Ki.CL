@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 
 // Libraries
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 // Components
@@ -9,6 +10,7 @@ import {
   Layout,
   List,
   ListItem,
+  Markdown,
   Separator,
   Text,
 } from 'design/components';
@@ -16,14 +18,13 @@ import {
 // Context
 import { useVersion } from '@/views/resume/context';
 
-// Partials
-import { Runs } from '@/views/resume/runs';
-
 // Constants
-import { COPY, HEADING } from '@/views/resume/constants';
+import { HEADING } from '@/views/resume/constants';
 
 /** One line per area, each led by its name in bold. */
 const Skills: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const { skills } = useVersion();
 
   const titleId = useId();
@@ -34,7 +35,7 @@ const Skills: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
-              {COPY.sections.skills}
+              {t('copy.sections.skills')}
             </Heading>
             <Separator />
           </header>
@@ -43,7 +44,7 @@ const Skills: React.FunctionComponent = () => {
           {skills.map((line, index) => (
             <ListItem key={index}>
               <Text dense>
-                <Runs line={line} />
+                <Markdown>{line}</Markdown>
               </Text>
             </ListItem>
           ))}

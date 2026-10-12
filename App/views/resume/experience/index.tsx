@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 
 // Libraries
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 // Components
@@ -14,13 +15,15 @@ import { Earlier } from './earlier';
 import { Role } from './role';
 
 // Constants
-import { COPY, HEADING } from '@/views/resume/constants';
+import { HEADING } from '@/views/resume/constants';
 
 /**
  * The six most recent roles, each a disclosure, then the earlier ones as a
  * list.
  */
 const Experience: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const { experience } = useVersion();
 
   const titleId = useId();
@@ -31,7 +34,7 @@ const Experience: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
-              {COPY.sections.experience}
+              {t('copy.sections.experience')}
             </Heading>
             <Separator />
           </header>

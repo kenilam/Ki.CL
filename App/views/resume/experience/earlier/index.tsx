@@ -1,19 +1,25 @@
 import React, { useId } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { Heading, Layout, List, ListItem, Text } from 'design/components';
+import {
+  Heading,
+  Layout,
+  List,
+  ListItem,
+  Markdown,
+  Text,
+} from 'design/components';
 
 // Context
 import { useVersion } from '@/views/resume/context';
 
-// Partials
-import { Runs } from '@/views/resume/runs';
-
-// Constants
-import { COPY } from '@/views/resume/constants';
-
 /** The roles before 2014, one line each. */
 const Earlier: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const { earlier } = useVersion();
 
   const titleId = useId();
@@ -22,13 +28,13 @@ const Earlier: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
       <section aria-labelledby={titleId}>
         <Heading dense id={titleId} is='h3'>
-          {COPY.earlier}
+          {t('copy.earlier')}
         </Heading>
         <List gap='narrower'>
           {earlier.map((line, index) => (
             <ListItem key={index}>
               <Text dense>
-                <Runs line={line} />
+                <Markdown>{line}</Markdown>
               </Text>
             </ListItem>
           ))}

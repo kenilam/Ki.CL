@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Icons
 import * as Ri from 'react-icons/ri';
 
@@ -14,7 +17,7 @@ import EXPORTED from '@/views/resume/content/exported.json';
 import { useVersion } from '@/views/resume/context';
 
 // Constants
-import { COPY, FILE } from '@/views/resume/constants';
+import { FILE } from '@/views/resume/constants';
 import { CONTACT_ID } from '@/views/contact/constants';
 
 const print = () => {
@@ -28,10 +31,13 @@ const print = () => {
  * Neither control belongs on paper.
  */
 const Actions: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const version = useVersion();
 
   const current =
-    version === MASTER && EXPORTED.fingerprint === fingerprint(MASTER);
+    version.slug === MASTER.slug &&
+    EXPORTED.fingerprint === fingerprint(version);
 
   return (
     <List
@@ -52,7 +58,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='ghost'
         >
-          {COPY.sendMessage}
+          {t('copy.sendMessage')}
         </Button>
       </ListItem>
       {current && (
@@ -68,7 +74,7 @@ const Actions: React.FunctionComponent = () => {
             to={FILE}
             variant='secondary'
           >
-            {COPY.file}
+            {t('copy.file')}
           </HyperLink>
         </ListItem>
       )}
@@ -81,7 +87,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          {COPY.print}
+          {t('copy.print')}
         </Button>
       </ListItem>
     </List>
