@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -39,13 +39,17 @@ const Contents: React.FunctionComponent = () => {
   const { analyser, control, next, track } = useAudio();
   const isPlay = Boolean(useMatch(PLAY_ROUTE));
   const { [PARAMS.group]: group, [PARAMS.type]: type } = useParams();
+  const stage = useRef<HTMLCanvasElement | null>(null);
+  const setStage = useCallback((canvas: HTMLCanvasElement | null) => {
+    stage.current = canvas;
+  }, []);
 
   if (!track) {
     return <Navigate to={toPath({ group, type })} replace />;
   }
 
   return (
-    <TrackProvider control={control} next={next} track={track}>
+    <TrackProvider control={control} next={next} stage={stage} track={track}>
       <Layout autoFlow='row' gap='none'>
         {/* The frame clips the picture and the player to the window. */}
         <Frame>
@@ -54,6 +58,7 @@ const Contents: React.FunctionComponent = () => {
           >
             <Visualiser
               analyser={analyser}
+              onCanvas={setStage}
               playing={control.playing}
               track={keyOf(track)}
             />

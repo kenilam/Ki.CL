@@ -18,6 +18,7 @@ import { useResponsive } from 'design/hooks';
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
 
 // Partials
+import { Clip } from './clip';
 import { CopyLink } from './copy-link';
 import { Volume } from './volume';
 
@@ -34,7 +35,7 @@ import {
 const CLASS_NAME = `${VIEW}__chrome__controls`;
 
 /**
- * Pause, skip, copy and volume. Pause links to the track's gate and skip to
+ * Pause, skip, copy, clip and volume. Pause links to the track's gate and skip to
  * the next track's `/play`. On phones and tablets the volume goes under the buttons.
  */
 const Controls: React.FunctionComponent = () => {
@@ -84,6 +85,7 @@ const Controls: React.FunctionComponent = () => {
           <ListItem>
             <CopyLink />
           </ListItem>
+          <Clip />
         </List>
         <Volume />
       </div>
