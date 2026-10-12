@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -20,11 +21,6 @@ import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/conv
 
 const CLASS_NAME = `${MESSAGE}__picture`;
 
-const COPY = {
-  alt: 'The picture the agent drew',
-  open: 'View full size',
-};
-
 type Props = {
   /** The conversation's title, as the dialog's heading. */
   title: string;
@@ -33,6 +29,8 @@ type Props = {
 
 /** A square preview; pressing it opens the whole picture in a dialog. */
 const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
+  const { t } = useTranslation('image-agent');
+
   const [open, setOpen] = useState(false);
   const { isMobile } = useResponsive();
 
@@ -44,7 +42,7 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
       )}
     >
       <Button
-        aria-label={COPY.open}
+        aria-label={t('action', { context: 'open' })}
         className={classNames(
           `${CLASS_NAME}__open`,
           'kicl-cursor-zoom-in',
@@ -53,11 +51,11 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
           'kicl-position-relative'
         )}
         onClick={() => setOpen(true)}
-        title={COPY.open}
+        title={t('action', { context: 'open' })}
         unstyled
       >
         <Image
-          alt={COPY.alt}
+          alt={t('alt')}
           borderRadius='sm'
           className={classNames(
             `${CLASS_NAME}__preview`,
@@ -84,7 +82,7 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
         title={title}
       >
         <Image
-          alt={COPY.alt}
+          alt={t('alt')}
           borderRadius='sm'
           className={classNames('kicl-display-block', 'kicl-inline-size-full')}
           data={open ? url : undefined}

@@ -45,7 +45,8 @@ const log = {
     try {
       const kept = JSON.parse(localStorage.getItem(LOG) ?? '[]');
 
-      return Array.isArray(kept) ? kept : [];
+      // Steps kept before the log read its lines from the copy hold a sentence, not a line to look up.
+      return Array.isArray(kept) ? kept.filter((entry) => entry?.note) : [];
     } catch {
       return [];
     }

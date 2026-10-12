@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout } from 'design/components';
@@ -18,6 +19,8 @@ import { WhatIsAnApp } from './what-is-an-app';
 import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
 const PartOne: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.partOne}>
@@ -30,7 +33,7 @@ const PartOne: React.FunctionComponent = () => {
           id={SECTION_ID.partOne}
           is='h2'
         >
-          Part 1 - The App platform
+          {t('title', { context: 'part_one' })}
         </Heading>
         <WhatIsAnApp />
         <CoreDataModel />

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Input } from 'design/components';
@@ -17,17 +18,14 @@ import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constan
 
 const CLASS_NAME = `${VIEW}__chrome__volume`;
 
-const COPY = {
-  volume: 'Volume',
-};
-
 /** The volume slider, remembered between visits. */
 const Volume: React.FunctionComponent = () => {
   const { control } = useTrackContext();
+  const { t } = useTranslation('music-visualiser');
 
   return (
     <Input
-      aria-label={COPY.volume}
+      aria-label={t('label', { context: 'volume' })}
       className={classNames(
         CLASS_NAME,
         'kicl-inline-size-md',

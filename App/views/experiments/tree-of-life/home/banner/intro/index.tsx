@@ -2,6 +2,7 @@ import React from 'react';
 
 // Library
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -13,10 +14,7 @@ import { Heading, HyperLink, Text } from 'design/components';
 import './styles.scss';
 
 // Constants
-import {
-  COPY as EXPERIMENTS_COPY,
-  toPath as toExperimentsPath,
-} from '@/views/experiments/constants';
+import { toPath as toExperimentsPath } from '@/views/experiments/constants';
 import { PATH } from '@/views/experiments/tree-of-life/constants';
 import { CLASS_NAME as BANNER } from '@/views/experiments/tree-of-life/home/banner/constants';
 import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constants';
@@ -24,43 +22,42 @@ import { VERSION } from '@/views/experiments/tree-of-life/versions/v15/constants
 
 const CLASS_NAME = `${BANNER}__intro`;
 
-const COPY = {
-  cta: 'See the experience',
-  lede: 'Start at the origin of life and walk to any species alive now. There are about 2.3 million to choose from, and every organism you pass has an illustration drawn for it.',
-  title: 'Tree of Life',
-};
+const Intro: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
+  const { t: common } = useTranslation();
 
-const Intro: React.FunctionComponent = () => (
-  <div className={classNames('kicl-position-relative')}>
-    <HyperLink
-      before={<Ri.RiArrowLeftSFill aria-hidden />}
-      to={toExperimentsPath(PATH)}
-    >
-      {EXPERIMENTS_COPY.back}
-    </HyperLink>
-    <Heading
-      is='h1'
-      dense
-      className={classNames(
-        `${CLASS_NAME}__title`,
-        'kicl-animation-none-reduced-motion',
-        'kicl-font-size-huge'
-      )}
-    >
-      {COPY.title}
-    </Heading>
-    <Text is='p' className={classNames('kicl-font-size-medium')}>
-      {COPY.lede}
-    </Text>
-    <HyperLink
-      className={classNames('kicl-background-color-confirm')}
-      lookLikeButton
-      to={toVersionPath({ version: VERSION })}
-      size='small'
-    >
-      {COPY.cta}
-    </HyperLink>
-  </div>
-);
+  return (
+    <div className={classNames('kicl-position-relative')}>
+      <HyperLink
+        before={<Ri.RiArrowLeftSFill aria-hidden />}
+        to={toExperimentsPath(PATH)}
+      >
+        {common('experiments')}
+      </HyperLink>
+      <Heading
+        is='h1'
+        dense
+        className={classNames(
+          `${CLASS_NAME}__title`,
+          'kicl-animation-none-reduced-motion',
+          'kicl-font-size-huge'
+        )}
+      >
+        {common('experiment', { context: 'tree_of_life' })}
+      </Heading>
+      <Text is='p' className={classNames('kicl-font-size-medium')}>
+        {t('lede')}
+      </Text>
+      <HyperLink
+        className={classNames('kicl-background-color-confirm')}
+        lookLikeButton
+        to={toVersionPath({ version: VERSION })}
+        size='small'
+      >
+        {common('action', { context: 'see_experience' })}
+      </HyperLink>
+    </div>
+  );
+};
 
 export { CLASS_NAME, Intro };

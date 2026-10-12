@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Dialog, Heading, Text } from 'design/components';
@@ -14,34 +15,34 @@ import { dataModel } from '@/views/portfolio/pika/system-design/diagrams/data-mo
 import { CLASS_NAME } from '@/views/portfolio/pika/system-design/constants';
 
 /** Jobs, tasks, attempts and assets. */
-const CoreDataModel: React.FunctionComponent = () => (
-  <>
-    <Heading className='kicl-font-size-large' is='h3'>
-      Core data model
-    </Heading>
-    <Diagram opens='diagram-data-model' spec={dataModel} />
-    <Dialog
-      aria-label={dataModel.title}
-      className={`${CLASS_NAME}__full`}
-      fullScreen
-      id='diagram-data-model'
-    >
-      <Diagram
-        className={classNames(
-          'kicl-inline-size-columns-12',
-          'kicl-margin-inline-auto'
-        )}
-        spec={dataModel}
-      />
-    </Dialog>
-    <Text>
-      Task output refs point into content-addressed asset storage instead of
-      carrying blobs inline. The lineage field on assets records which job,
-      task, and seed produced each artifact. Regenerate and provenance both read
-      from it, and in Part 2 the same lineage records are the agent&apos;s
-      memory of what exists in a session.
-    </Text>
-  </>
-);
+const CoreDataModel: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
+  const spec = useMemo(() => dataModel(t), [t]);
+
+  return (
+    <>
+      <Heading className='kicl-font-size-large' is='h3'>
+        {t('title', { context: 'core_data_model' })}
+      </Heading>
+      <Diagram opens='diagram-data-model' spec={spec} />
+      <Dialog
+        aria-label={spec.title}
+        className={`${CLASS_NAME}__full`}
+        fullScreen
+        id='diagram-data-model'
+      >
+        <Diagram
+          className={classNames(
+            'kicl-inline-size-columns-12',
+            'kicl-margin-inline-auto'
+          )}
+          spec={spec}
+        />
+      </Dialog>
+      <Text>{t('part_one.core_data_model.lineage')}</Text>
+    </>
+  );
+};
 
 export { CoreDataModel };

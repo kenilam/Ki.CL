@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import {
   Kicl_MeDocument,
@@ -16,27 +17,28 @@ import { Button, CardContent, Form as Origin, Layout } from 'design/components';
 // Icons
 import * as Ri from 'react-icons/ri';
 
-// Constants
-import { COPY } from '@/views/me/profile/constants';
-
 // Partials
 import { Name } from './name';
 import { Status } from './status';
 
 // Schema
-import { ProfileSchema, type ProfileValues } from './schema';
+import { profileSchema, type ProfileValues } from './schema';
 
 type Props = {
   me: NonNullable<Kicl_MeQuery['Me']>;
 };
 
 const Form: React.FunctionComponent<Props> = ({ me }) => {
+  const { t } = useTranslation('me');
+  const { t: common } = useTranslation();
+  const schema = useMemo(() => profileSchema(t), [t]);
+
   const form = useForm<ProfileValues>({
     defaultValues: {
       FirstName: me.FirstName ?? '',
       LastName: me.LastName ?? '',
     },
-    resolver: valibotResolver(ProfileSchema),
+    resolver: valibotResolver(schema),
   });
 
   const [updateMe, { loading }] = useMutation(Kicl_UpdateMeDocument);
@@ -74,7 +76,7 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
             type='reset'
             variant='secondary'
           >
-            {COPY.reset}
+            {common('action', { context: 'reset' })}
           </Button>
           <Button
             after={
@@ -87,7 +89,7 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
             type='submit'
             level='confirm'
           >
-            {COPY.save}
+            {common('action', { context: 'save' })}
           </Button>
         </footer>
       </Layout>

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Button, HyperLink, Layout } from 'design/components';
@@ -22,23 +23,22 @@ import {
 } from '@/views/experiments/tree-of-life/versions/constants';
 import { CLASS_NAME } from '@/views/experiments/tree-of-life/versions/selector/constants';
 
-/** What the current path is showing - the live view unless it names a version. */
-const LIVE = 'final';
-
 const Toggle: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
+  const { t: common } = useTranslation();
   const { pathname } = useLocation();
 
   /*
    * Read from the path rather than from `useParams`. Each version is a literal
    * segment in its own route, not a `:version` placeholder, so there is no
    * parameter to ask for - the segment is the name.
+   * The live view names no version, and reads as the final one.
    */
-  const version =
-    pathname
-      .split('/')
-      .find((segment): segment is Version =>
-        (VERSIONS as readonly string[]).includes(segment)
-      ) ?? LIVE;
+  const version = pathname
+    .split('/')
+    .find((segment): segment is Version =>
+      (VERSIONS as readonly string[]).includes(segment)
+    );
 
   return (
     <Layout
@@ -52,14 +52,14 @@ const Toggle: React.FunctionComponent = () => {
       justifyContent='end'
       gap='narrow'
     >
-      <nav aria-label='Tree of Life'>
+      <nav aria-label={common('experiment', { context: 'tree_of_life' })}>
         <HyperLink
           before={<Ri.RiArrowLeftSLine aria-hidden />}
           className='kicl-font-size-small'
           to='..'
           unstyled
         >
-          Back
+          {common('action', { context: 'back' })}
         </HyperLink>
         <Button
           unstyled
@@ -73,9 +73,9 @@ const Toggle: React.FunctionComponent = () => {
             'kicl-z-index-popover'
           )}
           popoverTarget={CLASS_NAME}
-          title='Every version of this view'
+          title={t('hint', { context: 'versions' })}
         >
-          {version === LIVE ? 'Final version' : `Version ${version}`}
+          {t('version', { context: version ? undefined : 'final', version })}
         </Button>
       </nav>
     </Layout>

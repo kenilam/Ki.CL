@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Button, Frame } from 'design/components';
@@ -22,11 +23,7 @@ import { Scene } from '@/views/experiments/factory-arm/scene';
 import './styles.scss';
 
 // Constants
-import {
-  CLASS_NAME,
-  COPY,
-  PANEL,
-} from '@/views/experiments/factory-arm/constants';
+import { CLASS_NAME, PANEL } from '@/views/experiments/factory-arm/constants';
 
 /**
  * The stage, and the setup panel over its right side. Only the stage and
@@ -35,6 +32,7 @@ import {
  * behind the settings button.
  */
 const Workspace: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { applied, run } = useSetup();
 
   return (
@@ -43,7 +41,7 @@ const Workspace: React.FunctionComponent = () => {
         <Frame>
           {/* The frame's own element; R3F's canvas sizes itself inline to fill it, which the frame's classes can't override. */}
           <div
-            aria-label={COPY.scene}
+            aria-label={t('scene')}
             className={classNames(
               CLASS_NAME,
               // Dragging turns the view and pinching zooms it, so the page must not.
@@ -72,7 +70,9 @@ const Workspace: React.FunctionComponent = () => {
         variant='secondary'
       >
         <Ri.RiSettings3Line aria-hidden />
-        <span className='kicl-hidden'>{COPY.panel.open}</span>
+        <span className='kicl-hidden'>
+          {t('action', { context: 'open_setup' })}
+        </span>
       </Button>
 
       <Panel />

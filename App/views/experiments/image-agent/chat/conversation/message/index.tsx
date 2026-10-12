@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Bubble, Card, Layout, Text } from 'design/components';
@@ -15,10 +16,7 @@ import { Review } from './review';
 import { MessageText } from './text';
 
 // Constants
-import {
-  CLASS_NAME as CONVERSATION,
-  COPY as CONVERSATION_COPY,
-} from '@/views/experiments/image-agent/chat/conversation/constants';
+import { CLASS_NAME as CONVERSATION } from '@/views/experiments/image-agent/chat/conversation/constants';
 
 // Spec
 import type { Message as MessageType } from '@/views/experiments/image-agent/chat/conversation/spec';
@@ -46,6 +44,8 @@ type Props = {
  */
 const Message = React.forwardRef<HTMLElement, Props>(
   ({ fresh, message, onChoose, onRetry, title }, ref) => {
+    const { t } = useTranslation('image-agent');
+
     const mine = message.role === 'USER';
     const busy = message.kind === 'PROGRESS';
     const notice = isNotice(message.kind);
@@ -64,7 +64,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
         variant={mine ? 'secondary' : 'ghost'}
       >
         <Text is='span' className='kicl-hidden'>
-          {mine ? CONVERSATION_COPY.you : CONVERSATION_COPY.agent}
+          {t('role', { context: mine ? 'you' : 'agent' })}
         </Text>
 
         <Notice kind={message.kind} text={message.text} />

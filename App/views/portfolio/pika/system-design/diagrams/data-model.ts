@@ -1,10 +1,10 @@
 import type { DiagramSpec as Spec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 /** Core data model - entities, attributes, and how records relate. */
-const dataModel: Spec = {
-  title: 'Core data model diagram',
-  description:
-    'Entity relationship diagram: an App publishes immutable App Versions; a Job pins a version, expands into Tasks and Task Attempts served by Providers, and produces Assets; Users own Jobs and are billed via a Credit Ledger.',
+const dataModel = (t: TFunction<'pika'>): Spec => ({
+  title: t('diagram.data_model.title'),
+  description: t('diagram.data_model.description'),
   width: 960,
   height: 660,
   nodes: [
@@ -17,7 +17,11 @@ const dataModel: Spec = {
       rows: [
         { type: 'string', name: 'id', key: 'PK' },
         { type: 'string', name: 'owner_team' },
-        { type: 'string', name: 'status', note: 'draft → archived' },
+        {
+          type: 'string',
+          name: 'status',
+          note: t('diagram.data_model.note_status'),
+        },
         { type: 'int', name: 'live_version' },
       ],
     },
@@ -43,9 +47,17 @@ const dataModel: Spec = {
       rows: [
         { type: 'uuid', name: 'id', key: 'PK' },
         { type: 'string', name: 'app_id' },
-        { type: 'int', name: 'app_version', note: 'pinned' },
+        {
+          type: 'int',
+          name: 'app_version',
+          note: t('diagram.data_model.note_version'),
+        },
         { type: 'jsonb', name: 'inputs' },
-        { type: 'string', name: 'state', note: 'queued → canceled' },
+        {
+          type: 'string',
+          name: 'state',
+          note: t('diagram.data_model.note_state'),
+        },
         { type: 'int', name: 'credits_reserved' },
       ],
     },
@@ -60,7 +72,11 @@ const dataModel: Spec = {
       rows: [
         { type: 'uuid', name: 'id', key: 'PK' },
         { type: 'uuid', name: 'job_id', key: 'FK' },
-        { type: 'string', name: 'node_id', note: 'DAG node' },
+        {
+          type: 'string',
+          name: 'node_id',
+          note: t('diagram.data_model.note_node'),
+        },
         { type: 'string', name: 'state' },
         { type: 'jsonb', name: 'output_ref' },
         { type: 'string', name: 'idempotency_key' },
@@ -74,8 +90,12 @@ const dataModel: Spec = {
       h: 108,
       rows: [
         { type: 'uuid', name: 'id', key: 'PK' },
-        { type: 'string', name: 'uri', note: 'S3 + CDN' },
-        { type: 'jsonb', name: 'metadata', note: 'seed · lineage' },
+        { type: 'string', name: 'uri', note: t('diagram.data_model.note_uri') },
+        {
+          type: 'jsonb',
+          name: 'metadata',
+          note: t('diagram.data_model.note_metadata'),
+        },
       ],
     },
     { title: 'TASK_ATTEMPT', x: 60, y: 480, w: 170, h: 48 },
@@ -88,7 +108,7 @@ const dataModel: Spec = {
         [145, 236],
       ],
       accent: 'green',
-      label: 'publishes 1‥N',
+      label: t('diagram.data_model.edge_publishes'),
       lx: 158,
       ly: 200,
       anchor: 'start',
@@ -99,7 +119,7 @@ const dataModel: Spec = {
         [360, 290],
       ],
       accent: 'green',
-      label: 'instantiates',
+      label: t('diagram.data_model.edge_instantiates'),
       lx: 310,
       ly: 278,
     },
@@ -110,7 +130,7 @@ const dataModel: Spec = {
         [560, 180],
       ],
       accent: 'green',
-      label: 'owns',
+      label: t('diagram.data_model.edge_owns'),
       lx: 575,
       ly: 130,
       anchor: 'start',
@@ -121,7 +141,7 @@ const dataModel: Spec = {
         [830, 180],
       ],
       accent: 'green',
-      label: 'billed via',
+      label: t('diagram.data_model.edge_billed'),
       lx: 842,
       ly: 148,
       anchor: 'start',
@@ -132,7 +152,7 @@ const dataModel: Spec = {
         [455, 420],
       ],
       accent: 'green',
-      label: 'expands DAG into',
+      label: t('diagram.data_model.edge_expands'),
       lx: 468,
       ly: 394,
       anchor: 'start',
@@ -144,7 +164,7 @@ const dataModel: Spec = {
         [805, 420],
       ],
       accent: 'green',
-      label: 'produces',
+      label: t('diagram.data_model.edge_produces'),
       lx: 700,
       ly: 318,
     },
@@ -154,7 +174,7 @@ const dataModel: Spec = {
         [230, 504],
       ],
       accent: 'green',
-      label: 'retries as',
+      label: t('diagram.data_model.edge_retries'),
       lx: 280,
       ly: 492,
     },
@@ -164,12 +184,12 @@ const dataModel: Spec = {
         [145, 580],
       ],
       accent: 'green',
-      label: 'served by',
+      label: t('diagram.data_model.edge_served'),
       lx: 158,
       ly: 558,
       anchor: 'start',
     },
   ],
-};
+});
 
 export { dataModel };

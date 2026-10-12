@@ -4,7 +4,7 @@ export type DotState = 'done' | 'idle' | 'queued' | 'retry' | 'running';
 
 export type PlayerStep = {
   active?: string[];
-  /** Replaces the free-form status chip (e.g. credits, budget). */
+  /** Replaces the status chip, a whole line such as the credits held. */
   chip?: string;
   dot?: [number, DotState];
   failed?: string[];
@@ -13,7 +13,6 @@ export type PlayerStep = {
 
 type SimulationContextValue = {
   chip: string;
-  chipLabel: string;
   dotLabels: string[];
   dots: DotState[];
   idleHint: string;
@@ -22,7 +21,6 @@ type SimulationContextValue = {
 
 const SimulationContext = createContext<SimulationContextValue>({
   chip: '',
-  chipLabel: '',
   dotLabels: [],
   dots: [],
   idleHint: '',

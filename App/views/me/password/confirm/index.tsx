@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import {
   Kicl_PasswordChangeConfirmDocument,
   Kicl_PasswordChangeLinkDocument,
@@ -32,14 +34,14 @@ import * as Ri from 'react-icons/ri';
 // Views
 import { PATH as HOME_PATH } from '@/views/home';
 
-// Constants
-import { CONFIRM_COPY as COPY } from '@/views/me/password/constants';
-
 /**
  * Where the emailed link lands. It confirms on a press, not on load: mail
  * scanners open every link in a message, and would confirm it themselves.
  */
 const Confirm: React.FunctionComponent = () => {
+  const { t } = useTranslation('me');
+  const { t: common } = useTranslation();
+
   // `#id.secret`, after the hash so the secret is never sent with a page request.
   const [id, secret] = useLocation().hash.slice(1).split('.');
 
@@ -81,8 +83,8 @@ const Confirm: React.FunctionComponent = () => {
               headingLevel='h1'
               in
               level='warning'
-              message={COPY.invalid}
-              title={COPY.invalidTitle}
+              message={t('description', { context: 'invalid' })}
+              title={t('title', { context: 'invalid' })}
             />
           </CardContent>
         </Layout>
@@ -93,7 +95,7 @@ const Confirm: React.FunctionComponent = () => {
             to={`/${HOME_PATH}`}
             variant='secondary'
           >
-            {COPY.home}
+            {t('action', { context: 'home' })}
           </HyperLink>
         </CardFooter>
       </Card>
@@ -105,11 +107,13 @@ const Confirm: React.FunctionComponent = () => {
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
-            {confirmed ? COPY.confirmed : COPY.title}
+            {t('title', { context: confirmed ? 'confirmed' : 'confirm' })}
           </CardTitle>
           <CardDescription>
-            {confirmed && COPY.return}
-            {!confirmed && !checking && COPY.description}
+            {confirmed && t('description', { context: 'confirmed' })}
+            {!confirmed &&
+              !checking &&
+              t('description', { context: 'confirm' })}
           </CardDescription>
           <Spinner in={checking} position='inline' />
         </CardHeader>
@@ -126,7 +130,7 @@ const Confirm: React.FunctionComponent = () => {
             onClick={onClick}
             size='small'
           >
-            {COPY.confirm}
+            {common('action', { context: 'confirm' })}
           </Button>
         </CardFooter>
       )}

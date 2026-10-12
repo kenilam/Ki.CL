@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import * as Ri from 'react-icons/ri';
 
@@ -23,6 +24,8 @@ const BRIEF =
   'https://docs.google.com/document/d/1-UqIfuYGPwJj-x11e71wVqWr22EcjP81L-VGr-1HoGo/edit?tab=t.0#heading=h.b06blv3gdzee';
 
 const Hero: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   return (
     <section className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
       <Animation delay={300} property='zoom-out'>
@@ -44,7 +47,7 @@ const Hero: React.FunctionComponent = () => {
             )}
           >
             <Heading className='kicl-font-size-largest' dense is='h1'>
-              Pika Creative Platform
+              {t('title')}
             </Heading>
             <Layout
               alignContent='center'
@@ -55,7 +58,7 @@ const Hero: React.FunctionComponent = () => {
               justifyItems='center'
             >
               <HyperLink before={<Ri.RiFile4Line aria-hidden />} to={BRIEF}>
-                Brief
+                {t('brief')}
               </HyperLink>
             </Layout>
             <Byline />

@@ -1,7 +1,8 @@
-import React, { useId } from 'react';
+import React, { useId, useMemo } from 'react';
 
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Kicl_DeleteMeDocument, useMutation } from 'api/provider';
 
@@ -21,7 +22,7 @@ import {
 import { useEnded } from '@/session';
 
 // Constants
-import { COPY, DELETE_ID } from '@/views/me/profile/constants';
+import { DELETE_ID } from '@/views/me/profile/constants';
 
 // Partials
 import { Actions } from './actions';
@@ -29,13 +30,16 @@ import { Notice } from './notice';
 import { Password } from './password';
 
 // Schema
-import { DeleteSchema, type DeleteValues } from './schema';
+import { deleteSchema, type DeleteValues } from './schema';
 
 /**
  * Deletes the account after the password is given again. The page then
  * finds no one signed in and sends the visitor home, which takes this with it.
  */
 const Delete: React.FunctionComponent = () => {
+  const { t } = useTranslation('me');
+  const schema = useMemo(() => deleteSchema(t), [t]);
+
   const ended = useEnded();
 
   const titleId = useId();
@@ -44,7 +48,7 @@ const Delete: React.FunctionComponent = () => {
 
   const form = useForm<DeleteValues>({
     defaultValues: { CurrentPassword: '' },
-    resolver: valibotResolver(DeleteSchema),
+    resolver: valibotResolver(schema),
   });
 
   const [deleteMe] = useMutation(Kicl_DeleteMeDocument);
@@ -71,7 +75,7 @@ const Delete: React.FunctionComponent = () => {
         size='small'
         variant='secondary'
       >
-        {COPY.deleteAccount}
+        {t('action', { context: 'delete_account' })}
       </Button>
 
       <Dialog
@@ -90,13 +94,13 @@ const Delete: React.FunctionComponent = () => {
           <section className='kicl-padding-block-end-wide'>
             <Animation property='slide-from-top'>
               <Heading dense id={titleId}>
-                {pending ? COPY.deleting : COPY.deleteConfirm}
+                {t('title', { context: pending ? 'deleting' : 'delete' })}
               </Heading>
             </Animation>
             <Notice id={noticeId} />
             <Animation delay={300} property='slide-from-top'>
               <Text className='kicl-text-align-center' id={messageId} is='p'>
-                {COPY.deleteMessage}
+                {t('description', { context: 'delete' })}
               </Text>
             </Animation>
             <Spinner in={pending} position='inline' />

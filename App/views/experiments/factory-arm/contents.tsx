@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Heading } from 'design/components';
 
@@ -7,18 +10,19 @@ import { Heading } from 'design/components';
 import { SetupProvider } from './setup';
 import { Workspace } from './workspace';
 
-// Constants
-import { COPY } from './constants';
-
 /** Kept in the lazy chunk so three.js ships only with this route. */
-const FactoryArm: React.FunctionComponent = () => (
-  <SetupProvider>
-    <Heading is='h1' className='kicl-hidden'>
-      {COPY.title}
-    </Heading>
+const FactoryArm: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
 
-    <Workspace />
-  </SetupProvider>
-);
+  return (
+    <SetupProvider>
+      <Heading is='h1' className='kicl-hidden'>
+        {t('title')}
+      </Heading>
+
+      <Workspace />
+    </SetupProvider>
+  );
+};
 
 export { FactoryArm };

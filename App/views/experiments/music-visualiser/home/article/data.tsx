@@ -1,32 +1,30 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { Details, Heading, Text } from 'design/components';
+import { Details, Heading, Markdown, Text } from 'design/components';
 
 /** Where the data comes from: a catalogue compiled into the page. */
-const Data: React.FunctionComponent = () => (
-  <Details
-    gap='narrow'
-    summary={
-      <Heading className='kicl-font-size-large' dense is='h3'>
-        Where the data comes from
-      </Heading>
-    }
-  >
-    <Text is='p'>
-      This page doesn’t use GraphQL like the rest of the site. The catalogue is
-      compiled into the page, and the audio comes from the storage bucket
-      through the site’s{' '}
-      <Text is='code' variant='secondary'>
-        /assets/static
-      </Text>{' '}
-      route.
-    </Text>
-    <Text is='p'>
-      The original plan, while I was still using Audius, was to query GraphQL
-      for the next track. That can come back if the catalogue grows.
-    </Text>
-  </Details>
-);
+const Data: React.FunctionComponent = () => {
+  const { t } = useTranslation('music-visualiser');
+
+  return (
+    <Details
+      gap='narrow'
+      summary={
+        <Heading className='kicl-font-size-large' dense is='h3'>
+          {t('title', { context: 'data' })}
+        </Heading>
+      }
+    >
+      <Text is='p'>
+        <Markdown>{t('article.data.route')}</Markdown>
+      </Text>
+      <Text is='p'>{t('article.data.graphql')}</Text>
+    </Details>
+  );
+};
 
 export { Data };

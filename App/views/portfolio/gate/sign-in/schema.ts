@@ -1,8 +1,14 @@
 import * as v from 'valibot';
 
-export const SignInSchema = v.object({
-  Email: v.pipe(v.string(), v.email('Enter a valid email address.')),
-  Password: v.pipe(v.string(), v.minLength(1, 'Enter the password.')),
-});
+import type { TFunction } from 'i18next';
 
-export type SignInValues = v.InferOutput<typeof SignInSchema>;
+export const signInSchema = (t: TFunction<'portfolio'>) =>
+  v.object({
+    Email: v.pipe(v.string(), v.email(t('error', { context: 'email' }))),
+    Password: v.pipe(
+      v.string(),
+      v.minLength(1, t('error', { context: 'password' }))
+    ),
+  });
+
+export type SignInValues = v.InferOutput<ReturnType<typeof signInSchema>>;

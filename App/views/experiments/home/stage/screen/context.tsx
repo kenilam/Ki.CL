@@ -1,7 +1,10 @@
 import React, { PropsWithChildren, useContext } from 'react';
 
 // Constants
-import type { Experiment } from '@/views/experiments/home/constants';
+import {
+  EXPERIMENTS,
+  type Experiment,
+} from '@/views/experiments/home/constants';
 
 type Value = {
   experiment: Experiment;
@@ -9,7 +12,7 @@ type Value = {
 };
 
 const Context = React.createContext<Value>({
-  experiment: { description: '', plate: '', title: '', to: '' },
+  experiment: EXPERIMENTS[0],
   number: 0,
 });
 

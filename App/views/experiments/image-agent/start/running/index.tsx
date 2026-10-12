@@ -1,5 +1,8 @@
 import React, { useId } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Icons
 import * as Ri from 'react-icons/ri';
 
@@ -20,16 +23,11 @@ import type { RunningState } from './use-running';
 // Constants
 import { toLabel, toPath } from '@/views/experiments/image-agent/constants';
 
-const COPY = {
-  title: 'In progress',
-  elsewhere:
-    'A conversation from another session on this network is still running.',
-};
-
 /**
  * Conversations with a turn still running. Renders nothing when there are none.
  */
 const Running: React.FunctionComponent<RunningState> = ({ busy, running }) => {
+  const { t } = useTranslation('image-agent');
   const id = useId();
 
   if (!busy) {
@@ -43,7 +41,7 @@ const Running: React.FunctionComponent<RunningState> = ({ busy, running }) => {
           <Layout autoFlow='column' gap='narrow'>
             <Heading id={id} is='h2' dense>
               <Spinner position='inline' />
-              {COPY.title}
+              {t('title', { context: 'running' })}
             </Heading>
           </Layout>
           <List gap='narrow'>

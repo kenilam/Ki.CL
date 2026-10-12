@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -12,13 +13,11 @@ import {
   Input,
 } from 'design/components';
 
-// Constants
-import { COPY } from '@/views/me/profile/constants';
-
 // Schema
 import type { ProfileValues } from './schema';
 
 const Name: React.FunctionComponent = () => {
+  const { t } = useTranslation('me');
   const { control } = useFormContext<ProfileValues>();
 
   return (
@@ -28,12 +27,12 @@ const Name: React.FunctionComponent = () => {
         name='FirstName'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{COPY.firstName}</FormLabel>
+            <FormLabel>{t('label', { context: 'first_name' })}</FormLabel>
             <FormControl>
               <Input
                 {...field}
                 autoComplete='given-name'
-                placeholder={COPY.firstName}
+                placeholder={t('label', { context: 'first_name' })}
               />
             </FormControl>
             <FormMessage />
@@ -45,12 +44,12 @@ const Name: React.FunctionComponent = () => {
         name='LastName'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{COPY.lastName}</FormLabel>
+            <FormLabel>{t('label', { context: 'last_name' })}</FormLabel>
             <FormControl>
               <Input
                 {...field}
                 autoComplete='family-name'
-                placeholder={COPY.lastName}
+                placeholder={t('label', { context: 'last_name' })}
               />
             </FormControl>
             <FormMessage />

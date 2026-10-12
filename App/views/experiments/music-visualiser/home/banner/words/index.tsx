@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Fa from 'react-icons/fa6';
@@ -11,13 +12,10 @@ import * as Ri from 'react-icons/ri';
 import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
-import { draw } from '@/views/experiments/music-visualiser/catalog';
+import { TOTAL, draw } from '@/views/experiments/music-visualiser/catalog';
 
 // Constants
-import {
-  COPY as EXPERIMENTS_COPY,
-  toPath as toExperimentsPath,
-} from '@/views/experiments/constants';
+import { toPath as toExperimentsPath } from '@/views/experiments/constants';
 import { CLASS_NAME as HOME } from '@/views/experiments/music-visualiser/home/constants';
 import {
   PATH,
@@ -26,15 +24,11 @@ import {
 
 const CLASS_NAME = `${HOME}__banner__words`;
 
-const COPY = {
-  lede: '166 lo-fi tracks from a public-domain collection, each drawn while it plays in one of thirteen scenes. Press play once and it keeps going.',
-  play: 'Play a random song',
-  title: 'Music Visualiser',
-};
-
 /** The page's header: the title, a line about it, and a link to a random track. */
 const Words: React.FunctionComponent = () => {
   const [track] = useState(() => draw());
+  const { t } = useTranslation('music-visualiser');
+  const { t: common } = useTranslation();
 
   return (
     <Layout autoFlow='row' gap='none' justifyItems='center'>
@@ -52,10 +46,10 @@ const Words: React.FunctionComponent = () => {
           before={<Ri.RiArrowLeftSFill aria-hidden />}
           to={toExperimentsPath(PATH)}
         >
-          {EXPERIMENTS_COPY.back}
+          {common('experiments')}
         </HyperLink>
         <Heading is='h1' dense className='kicl-font-size-huge'>
-          {COPY.title}
+          {common('experiment', { context: 'music_visualiser' })}
         </Heading>
         <Text
           is='p'
@@ -64,7 +58,7 @@ const Words: React.FunctionComponent = () => {
             'kicl-margin-block-start-wide'
           )}
         >
-          {COPY.lede}
+          {t('lede', { tracks: TOTAL })}
         </Text>
         <HyperLink
           after={<Fa.FaPlay aria-hidden />}
@@ -73,7 +67,7 @@ const Words: React.FunctionComponent = () => {
           size='small'
           to={toTrackPath(track)}
         >
-          {COPY.play}
+          {t('action', { context: 'play_random' })}
         </HyperLink>
       </header>
     </Layout>

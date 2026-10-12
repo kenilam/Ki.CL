@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Icons
 import * as Ri from 'react-icons/ri';
 
@@ -7,34 +10,32 @@ import * as Ri from 'react-icons/ri';
 import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Constants
-import {
-  COPY as EXPERIMENTS_COPY,
-  toPath as toExperimentsPath,
-} from '@/views/experiments/constants';
-import { DESCRIPTION, PATH } from '@/views/experiments/image-agent/constants';
-
-const COPY = {
-  title: 'Image Agent',
-};
+import { toPath as toExperimentsPath } from '@/views/experiments/constants';
+import { PATH } from '@/views/experiments/image-agent/constants';
 
 /** The start page's title and a line about it. */
-const Header: React.FunctionComponent = () => (
-  <Layout autoFlow='row' gap='narrower' justifyItems='start'>
-    <header className='kicl-inline-size-columns-6'>
-      <HyperLink
-        before={<Ri.RiArrowLeftSFill aria-hidden />}
-        to={toExperimentsPath(PATH)}
-      >
-        {EXPERIMENTS_COPY.back}
-      </HyperLink>
-      <Heading is='h1' dense className='kicl-font-size-huge'>
-        {COPY.title}
-      </Heading>
-      <Text dense is='p' className='kicl-font-size-medium'>
-        {DESCRIPTION}
-      </Text>
-    </header>
-  </Layout>
-);
+const Header: React.FunctionComponent = () => {
+  const { t } = useTranslation('image-agent');
+  const { t: common } = useTranslation();
+
+  return (
+    <Layout autoFlow='row' gap='narrower' justifyItems='start'>
+      <header className='kicl-inline-size-columns-6'>
+        <HyperLink
+          before={<Ri.RiArrowLeftSFill aria-hidden />}
+          to={toExperimentsPath(PATH)}
+        >
+          {common('experiments')}
+        </HyperLink>
+        <Heading is='h1' dense className='kicl-font-size-huge'>
+          {common('experiment', { context: 'image_agent' })}
+        </Heading>
+        <Text dense is='p' className='kicl-font-size-medium'>
+          {t('description')}
+        </Text>
+      </header>
+    </Layout>
+  );
+};
 
 export { Header };

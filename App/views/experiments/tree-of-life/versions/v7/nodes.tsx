@@ -5,6 +5,9 @@
  */
 import React, { useLayoutEffect, useMemo, useRef } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 import { THREE, Drei } from '@/three';
 
 import { labelFor } from '@/views/experiments/tree-of-life/tree';
@@ -103,6 +106,7 @@ type OriginProps = {
 export const OriginMarker: React.FunctionComponent<OriginProps> = ({
   node,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const [x, y, z] = node.position;
 
   return (
@@ -128,7 +132,7 @@ export const OriginMarker: React.FunctionComponent<OriginProps> = ({
         outlineWidth={0.02}
         outlineColor={BACKGROUND}
       >
-        Origin of life
+        {t('origin')}
       </Drei.Text>
     </group>
   );

@@ -17,6 +17,7 @@ import React, {
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import {
   useQuery,
@@ -316,6 +317,7 @@ const MapStage: React.FunctionComponent<{
   onAutoModeChange,
   networkBusy,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const previousLayoutRef = useRef<LayoutResult | null>(null);
   const liveLayoutRef = useRef<LayoutResult | null>(null);
   const previousTreeRef = useRef<TreeNode | null>(null);
@@ -552,7 +554,7 @@ const MapStage: React.FunctionComponent<{
           'kicl-pointer-events-auto'
         )}
       >
-        <section aria-label='Map controls'>
+        <section aria-label={t('label', { context: 'map_controls' })}>
           <Spinner
             size='small'
             in={networkBusy}
@@ -569,9 +571,9 @@ const MapStage: React.FunctionComponent<{
             size='sm'
             checked={autoMode}
             onCheckedChange={onAutoModeChange}
-            title='Keep growing expandable tips automatically'
+            title={t('hint', { context: 'grow' })}
           >
-            <SwitchLabel>Grow</SwitchLabel>
+            <SwitchLabel>{t('action', { context: 'grow' })}</SwitchLabel>
           </Switch>
           <Button
             ref={windButtonRef}
@@ -584,9 +586,9 @@ const MapStage: React.FunctionComponent<{
               'kicl-padding-inline-narrowest',
               'kicl-color-grey-dark'
             )}
-            aria-label='Force a strong gust of wind'
+            aria-label={t('action', { context: 'gust' })}
             aria-pressed={false}
-            title='Force a gust'
+            title={t('hint', { context: 'gust' })}
             onClick={blowGust}
           >
             <Ri.RiWindyLine aria-hidden />
@@ -603,6 +605,8 @@ const sleep = (ms: number) =>
   });
 
 const Canvas: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
+  const { t: common } = useTranslation();
   const ref = {
     root: useRef<HTMLElement>(null),
     expandingIds: useRef<Set<string>>(new Set()),
@@ -776,13 +780,16 @@ const Canvas: React.FunctionComponent = () => {
       form.setValue('selectedId', id);
       const node = ref.layout.current?.nodes.find((n) => n.id === id);
       if (node) {
-        const name = labelWithRank(node.node, node.isOrigin);
+        const name = labelWithRank(
+          node.node,
+          node.isOrigin ? t('origin') : undefined
+        );
         if (name) {
           form.setValue('query', name);
         }
       }
     },
-    [form]
+    [form, t]
   );
 
   const namedNodes = useMemo(() => {
@@ -790,7 +797,7 @@ const Canvas: React.FunctionComponent = () => {
     const nodes = ref.layout.current?.nodes ?? [];
     return nodes
       .map((n) => {
-        const name = n.isOrigin ? 'Origin of life' : labelFor(n.node);
+        const name = n.isOrigin ? t('origin') : labelFor(n.node);
         const rank =
           n.node.rank?.trim() && !/^no[\s_-]?rank$/i.test(n.node.rank)
             ? n.node.rank.trim()
@@ -799,12 +806,12 @@ const Canvas: React.FunctionComponent = () => {
           id: n.id,
           name,
           rank,
-          label: labelWithRank(n.node, n.isOrigin),
+          label: labelWithRank(n.node, n.isOrigin ? name : undefined),
         };
       })
       .filter((n) => Boolean(n.name))
       .sort((a, b) => a.name.localeCompare(b.name));
-  }, [layoutEpoch]);
+  }, [layoutEpoch, t]);
 
   const onSearchChange = useCallback(
     (value: string) => {
@@ -1062,7 +1069,7 @@ const Canvas: React.FunctionComponent = () => {
     return (
       <Layout fullScreen>
         <section
-          aria-label='Tree of Life'
+          aria-label={common('experiment', { context: 'tree_of_life' })}
           className={classNames(
             CLASS_NAME,
             'kicl-block-size-screen',
@@ -1083,7 +1090,7 @@ const Canvas: React.FunctionComponent = () => {
     return (
       <Layout fullScreen>
         <section
-          aria-label='Tree of Life'
+          aria-label={common('experiment', { context: 'tree_of_life' })}
           className={classNames(
             CLASS_NAME,
             'kicl-block-size-screen',
@@ -1109,7 +1116,7 @@ const Canvas: React.FunctionComponent = () => {
   return (
     <Layout fullScreen>
       <section
-        aria-label='Tree of Life'
+        aria-label={common('experiment', { context: 'tree_of_life' })}
         className={classNames(
           CLASS_NAME,
           'kicl-block-size-screen',
@@ -1143,7 +1150,7 @@ const Canvas: React.FunctionComponent = () => {
 
         <Layout gap='none' justifyContent='start' alignItems='start'>
           <aside
-            aria-label='Search and details'
+            aria-label={t('label', { context: 'search_details' })}
             className={classNames(
               `${CLASS_NAME}__panel-slot`,
               'kicl-position-fixed',
@@ -1165,7 +1172,7 @@ const Canvas: React.FunctionComponent = () => {
               >
                 <Card
                   is='section'
-                  aria-label='Search'
+                  aria-label={common('search')}
                   className={classNames(
                     `${CLASS_NAME}__panel`,
                     'kicl-pointer-events-auto',
@@ -1179,13 +1186,15 @@ const Canvas: React.FunctionComponent = () => {
                       name='query'
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Search</FormLabel>
+                          <FormLabel>{common('search')}</FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               type='search'
                               list={`${CLASS_NAME}-search-list`}
-                              placeholder='Find a named node…'
+                              placeholder={t('search_placeholder', {
+                                context: 'v14',
+                              })}
                               autoComplete='off'
                               onChange={(event) => {
                                 field.onChange(event);
@@ -1199,7 +1208,7 @@ const Canvas: React.FunctionComponent = () => {
                             ))}
                           </datalist>
                           <FormDescription>
-                            {namedNodes.length} in total
+                            {t('total', { count: namedNodes.length })}
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -1239,7 +1248,9 @@ const Canvas: React.FunctionComponent = () => {
                                 'kicl-text-transform-lowercase'
                               )}
                             >
-                              <BadgeLabel>Rank</BadgeLabel>
+                              <BadgeLabel>
+                                {t('label', { context: 'rank' })}
+                              </BadgeLabel>
                               {displayRank(selectedLayoutNode.node.rank)}
                             </Badge>
                           ) : null}
@@ -1252,7 +1263,7 @@ const Canvas: React.FunctionComponent = () => {
                                 'kicl-text-transform-lowercase'
                               )}
                             >
-                              terminal
+                              {t('terminal')}
                             </Badge>
                           ) : null}
                           {selectedLayoutNode.node.ottId != null ? (
@@ -1261,7 +1272,9 @@ const Canvas: React.FunctionComponent = () => {
                               variant='outline'
                               className='kicl-font-size-smaller'
                             >
-                              <BadgeLabel>OTT ID</BadgeLabel>
+                              <BadgeLabel>
+                                {t('label', { context: 'ott_id' })}
+                              </BadgeLabel>
                               {selectedLayoutNode.node.ottId}
                             </Badge>
                           ) : null}
@@ -1271,8 +1284,8 @@ const Canvas: React.FunctionComponent = () => {
                         <Button
                           unstyled
                           type='button'
-                          aria-label='Close panel'
-                          title='Close'
+                          aria-label={t('action', { context: 'close_panel' })}
+                          title={common('action', { context: 'close' })}
                           className='kicl-color-grey-dark'
                           onClick={onControlsReset}
                         >
@@ -1297,9 +1310,9 @@ const Canvas: React.FunctionComponent = () => {
                               )}
                             >
                               {selectedLayoutNode.isOrigin
-                                ? 'Origin of life'
+                                ? t('origin')
                                 : labelFor(selectedLayoutNode.node) ||
-                                  'Unnamed node'}
+                                  t('unnamed_node')}
                             </CardTitle>
                           }
                         >
@@ -1344,7 +1357,7 @@ const Canvas: React.FunctionComponent = () => {
             'kicl-font-size-smaller'
           )}
         >
-          v14 · botanical growth · hover/click to focus · click away to resume
+          {t('caption', { context: 'v14' })}
         </Badge>
       </section>
     </Layout>

@@ -1,47 +1,45 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { Details, Heading, HyperLink, Text } from 'design/components';
+import { Details, Heading, Markdown, Text } from 'design/components';
 
 // Catalog
-import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
+import {
+  ATTRIBUTION,
+  NAME,
+  TOTAL,
+} from '@/views/experiments/music-visualiser/catalog';
 
 /** The music: where the tracks come from, and why they are hosted here. */
-const Music: React.FunctionComponent = () => (
-  <Details
-    gap='narrow'
-    summary={
-      <Heading className='kicl-font-size-large' dense is='h3'>
-        The music
-      </Heading>
-    }
-  >
-    <Text is='p'>
-      The tracks come from{' '}
-      <HyperLink to={ATTRIBUTION.url} target='_blank' rel='noreferrer'>
-        Open Lo-Fi
-      </HyperLink>
-      : 166 tracks Bilal Tahir generated with Suno and released into the public
-      domain. I copied them into the site’s storage bucket and serve them from
-      there.
-    </Text>
-    <Text is='p'>
-      I host them because a page can only analyse audio from its own origin, or
-      from a server that explicitly allows it. Streamed from anywhere else, the
-      tracks would play but the analyser would get nothing.
-    </Text>
-    <Text is='p'>
-      I looked at Audius and Jamendo first because their catalogues are much
-      bigger. The machines I built this on couldn’t reach either service, so I
-      went with a collection I could host myself.
-    </Text>
-    <Text is='p'>
-      Before that, the page generated its own music: a seeded synth playing
-      chords and a melody over sampled piano. It was a lot of code to keep one
-      station running, and I never got the piano samples into the bucket anyway,
-      so I cut it.
-    </Text>
-  </Details>
-);
+const Music: React.FunctionComponent = () => {
+  const { t } = useTranslation('music-visualiser');
+
+  return (
+    <Details
+      gap='narrow'
+      summary={
+        <Heading className='kicl-font-size-large' dense is='h3'>
+          {t('title', { context: 'music' })}
+        </Heading>
+      }
+    >
+      <Text is='p'>
+        <Markdown>
+          {t('article.music.source', {
+            name: NAME,
+            tracks: TOTAL,
+            url: ATTRIBUTION.url,
+          })}
+        </Markdown>
+      </Text>
+      <Text is='p'>{t('article.music.hosting')}</Text>
+      <Text is='p'>{t('article.music.others')}</Text>
+      <Text is='p'>{t('article.music.generated')}</Text>
+    </Details>
+  );
+};
 
 export { Music };

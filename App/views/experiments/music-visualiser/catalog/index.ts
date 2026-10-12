@@ -15,7 +15,6 @@ const NAME = 'Open Lo-Fi';
 const BASE_URL = '/assets/static/music/open-lofi';
 
 const ATTRIBUTION = {
-  label: 'Open Lo-Fi by Bilal Tahir · CC0',
   url: 'https://github.com/btahir/open-lofi',
 };
 
@@ -28,6 +27,9 @@ export type Track = {
   type: string;
   url: string;
 };
+
+/** How many tracks the catalogue holds, for the writing about it. */
+const TOTAL = TRACKS.length;
 
 const TYPES: readonly string[] = CATEGORIES.map((category) => category.slug);
 
@@ -74,4 +76,4 @@ function draw({
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
-export { ATTRIBUTION, GROUP, NAME, TYPES, draw, find, keyOf };
+export { ATTRIBUTION, GROUP, NAME, TOTAL, TYPES, draw, find, keyOf };

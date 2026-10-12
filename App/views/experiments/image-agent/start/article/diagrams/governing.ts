@@ -1,55 +1,69 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 const Y = 50;
 const W = 130;
 const H = 70;
 
 const CHECKS = [
-  { title: 'Limits', lines: ['before saving'], x: 10 },
-  { title: 'Rules', lines: ['code, no model'], x: 162 },
-  { title: 'Moderation', lines: ['free, safety only'], x: 314 },
-  { title: 'Classifier', lines: ['is it a picture?'], x: 466 },
-  { title: 'Clarifier', lines: ['ask or draw'], x: 618 },
-];
+  { context: 'limits', x: 10 },
+  { context: 'rules', x: 162 },
+  { context: 'moderation', x: 314 },
+  { context: 'classifier', x: 466 },
+  { context: 'clarifier', x: 618 },
+] as const;
 
 const OUT = 220;
 
 /** The checks a message passes, cheapest first, and where each one sends it back. */
-const governing: DiagramSpec = {
-  title: 'What gets through',
+const governing = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.governing.title'),
   legend: [
     {
-      label: 'Green',
-      value: 'moves the message to the next check',
+      label: t('diagram.label', { context: 'green' }),
+      value: t('diagram.governing.legend', { context: 'green' }),
       accent: 'confirm',
     },
-    { label: 'Red', value: 'is where it stops', accent: 'error' },
+    {
+      label: t('diagram.label', { context: 'red' }),
+      value: t('diagram.governing.legend', { context: 'red' }),
+      accent: 'error',
+    },
   ],
-  description:
-    'A message passes limits, rules, moderation and a classifier in that order before the clarifier reads it. A limit refuses with an error that is not recorded. Rules, moderation and the classifier refuse with a refusal message, and the person’s message is withdrawn but still counted. The clarifier either asks a question, up to three per picture, or starts drawing.',
+  description: t('diagram.governing.description'),
   width: 760,
   height: 310,
   nodes: [
-    ...CHECKS.map(({ lines, title, x }) => ({
-      title,
-      lines,
+    ...CHECKS.map(({ context, x }) => ({
+      title: t('diagram.governing.node', { context }),
+      lines: [t('diagram.governing.line', { context })],
       x,
       y: Y,
       w: W,
       h: H,
     })),
-    { title: 'Error', lines: ['not recorded'], x: 10, y: OUT, w: W, h: 70 },
     {
-      title: 'Refusal',
-      lines: ['message withdrawn', 'still counted'],
+      title: t('diagram.governing.node', { context: 'error' }),
+      lines: [t('diagram.governing.line', { context: 'error' })],
+      x: 10,
+      y: OUT,
+      w: W,
+      h: 70,
+    },
+    {
+      title: t('diagram.governing.node', { context: 'refusal' }),
+      lines: [
+        t('diagram.governing.line', { context: 'refusal_withdrawn' }),
+        t('diagram.governing.line', { context: 'refusal_counted' }),
+      ],
       x: 162,
       y: OUT,
       w: 434,
       h: 70,
     },
     {
-      title: 'Question',
-      lines: ['up to 3, then draw'],
+      title: t('diagram.governing.node', { context: 'question' }),
+      lines: [t('diagram.governing.line', { context: 'question' })],
       x: 618,
       y: OUT,
       w: W,
@@ -78,6 +92,6 @@ const governing: DiagramSpec = {
       ],
     },
   ],
-};
+});
 
 export { governing };

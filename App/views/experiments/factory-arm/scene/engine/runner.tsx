@@ -66,7 +66,13 @@ const Runner: React.FunctionComponent = () => {
 
     if (felt.length) {
       write.learn(felt.map(({ id }) => id));
-      note(`Felt ${felt.map(({ id }) => id).join(', ')}`, 'warning');
+      note(
+        {
+          context: 'felt',
+          values: { ids: felt.map(({ id }) => id).join(', ') },
+        },
+        'warning'
+      );
     }
 
     // The operator moved one, or the arm came to know of one.
@@ -81,7 +87,13 @@ const Runner: React.FunctionComponent = () => {
 
       // What the sensors saw for the first time; an obstacle the operator moved or added is known already.
       if (before && seen.length && !felt.length) {
-        note(`Sensors found ${seen.map(({ id }) => id).join(', ')}`, 'info');
+        note(
+          {
+            context: 'found',
+            values: { ids: seen.map(({ id }) => id).join(', ') },
+          },
+          'info'
+        );
       }
 
       conductor.sense(
@@ -107,7 +119,7 @@ const Runner: React.FunctionComponent = () => {
 
     conductor.flush().forEach((event) => {
       if (event.type === 'note') {
-        note(event.text, event.level);
+        note(event.note, event.level);
       } else if (event.type === 'refuse') {
         // It waits red, with what's in its way lit, till the cell changes.
         write.park(event.target, event.across);
