@@ -1,0 +1,23 @@
+{
+  "action_open": "Open the panel",
+  "demo_anchored": "Scroll the page or make the window smaller. The panel stays with the button.",
+  "demo_disclosure": "Open it",
+  "demo_disclosure_long": "The second paragraph is longer, so the box is taller than a fixed height would allow for. Nothing measures it. The browser animates from zero to whatever height the content needs, and back again when it closes.",
+  "demo_disclosure_short": "The first paragraph is short.",
+  "demo_marker": "Layout",
+  "demo_reveal": "Row {{number}}",
+  "lede": "Five things a page usually needs script for. Here the stylesheet does the work.",
+  "option_grid": "Grid",
+  "option_list": "List",
+  "option_table": "Table",
+  "text_anchored": "The panel is placed beside its button with `anchor-name`{secondary} and `position-area`{secondary}. When there is no room on that side, `position-try-fallbacks`{secondary} moves it to another. Opening and closing is the `popover`{secondary} attribute.",
+  "text_disclosure": "A `details`{secondary} element. `interpolate-size`{secondary} lets it animate to the height of whatever is inside, and `::details-content`{secondary} is the part that moves.",
+  "text_marker": "The options are radio buttons. The highlight is one pseudo-element anchored to the option that matches `:has(:checked)`{secondary}, so it slides when the choice changes.",
+  "text_progress": "The bar along the top of the window fills as the page scrolls. It is an animation that runs on `scroll()`{secondary} instead of on time.",
+  "text_reveal": "Each row fades in as it enters the window and out as it leaves. The animation runs on `view()`{secondary}, the row’s own position in the window.",
+  "title_anchored": "A panel that follows its button",
+  "title_disclosure": "A box that opens to its own height",
+  "title_marker": "A highlight that slides to the choice",
+  "title_progress": "A reading progress bar",
+  "title_reveal": "Rows that fade in on scroll"
+}

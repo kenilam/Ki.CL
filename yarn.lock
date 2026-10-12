@@ -3600,6 +3600,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app.views.experiments.css-only@workspace:App/views/experiments/css-only":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.css-only@workspace:App/views/experiments/css-only"
+  languageName: unknown
+  linkType: soft
+
 "app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm"
