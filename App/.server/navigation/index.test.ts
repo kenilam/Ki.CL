@@ -8,7 +8,7 @@ import { createNavigation } from './index';
 
 const app = express();
 
-app.use(createNavigation({ text: () => '404: Not found' }));
+app.use(createNavigation({ fill: (page) => page }));
 
 // Stands in for the proxy, which replaces `Vary` with the service's own.
 app.use((_, response) => {
@@ -30,10 +30,11 @@ describe('navigation', () => {
   before(() => new Promise((resolve) => server.once('listening', resolve)));
   after(() => server.close());
 
-  test('a script opened as a page is not found', async () => {
+  test('a script opened as a page is refused with the gate page', async () => {
     const response = await ask('/design/remoteEntry.js', 'document');
 
-    assert.equal(response.status, 404);
+    assert.equal(response.status, 403);
+    assert.match(await response.text(), /<h1>403<\/h1>/);
     assert.equal(response.headers.get('cache-control'), 'no-store');
   });
 
