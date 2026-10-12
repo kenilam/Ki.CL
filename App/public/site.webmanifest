@@ -1,6 +1,6 @@
 {
-  "name": "Ki.CL",
-  "short_name": "Ki.CL",
+  "name": "{{manifest_name}}",
+  "short_name": "{{manifest_short_name}}",
   "icons": [
     {
       "src": "/assets/static/icon-192.png",

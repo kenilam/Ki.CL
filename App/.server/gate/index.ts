@@ -3,6 +3,7 @@ import { timingSafeEqual } from 'node:crypto';
 import type { Express, Request } from 'express';
 
 import { page } from './page';
+import type { ServerTexts } from '../texts';
 
 /** Pages with their own sign-in, which the dev prompt leaves alone. */
 const OPEN = /^\/portfolio(\/|$)/;
@@ -31,7 +32,7 @@ const isPageLoad = (request: Request) => {
  * page's scripts, remotes and API calls get through without the password,
  * which also leaves those paths as open as they are in production.
  */
-export function applyGate(app: Express): void {
+export function applyGate(app: Express, texts: ServerTexts): void {
   const password = process.env.KICL_GATE_PASSWORD;
 
   if (!password) {
@@ -78,6 +79,6 @@ export function applyGate(app: Express): void {
       .set('WWW-Authenticate', 'Basic realm="dev", charset="UTF-8"')
       .set('Cache-Control', 'no-store')
       .type('html')
-      .send(page);
+      .send(texts.fill(page));
   });
 }

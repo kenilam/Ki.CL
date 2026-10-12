@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Routes
 import { useLocation } from 'design/router';
 
@@ -25,6 +28,8 @@ const Element: React.FunctionComponent = () => {
 
   useAnalytics(location.pathname);
 
+  const { t } = useTranslation();
+
   const lastPathname = useRef(location.pathname);
 
   useEffect(() => {
@@ -38,13 +43,13 @@ const Element: React.FunctionComponent = () => {
 
     root.dataset.routes = routes.join('.');
 
-    document.title = `Ki.CL | ${routes.join(' | ')}`;
+    document.title = t('document_title', { routes: routes.join(' | ') });
     /*
      * Once per route, not on every render. Printing changes the media queries
      * `useResponsive` listens to, and the render that follows used to put the
      * route's title back over the one a page had set for its print.
      */
-  }, [location.pathname]);
+  }, [location.pathname, t]);
 
   /**
    * A route change replaces the page without a load, so focus moves to the new
@@ -59,7 +64,7 @@ const Element: React.FunctionComponent = () => {
     lastPathname.current = location.pathname;
 
     document.getElementById(MAIN_ID)?.focus({ preventScroll: true });
-  }, [location.pathname]);
+  }, [location.pathname, t]);
 
   return (
     <GlobalHeaderProvider>

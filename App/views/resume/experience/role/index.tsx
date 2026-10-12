@@ -4,6 +4,7 @@ import React from 'react';
 import {
   Details,
   Heading,
+  Layout,
   List,
   ListItem,
   Markdown,
@@ -32,22 +33,24 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
     <Details
       open={index === 0}
       summary={
-        <>
-          <Heading dense is='h3'>
-            {title}
-            <Text className='kicl-font-weight-light' dense is='span'>
-              {` · ${organisation}`}
+        <Layout autoFlow='column' justifyContent='space-between'>
+          <header>
+            <Heading dense is='h3'>
+              {title}
+              <Text className='kicl-font-weight-light' dense is='span'>
+                {` · ${organisation}`}
+              </Text>
+            </Heading>
+            <Text
+              className='kicl-text-nowrap'
+              dense
+              is='span'
+              variant='secondary'
+            >
+              {dates}
             </Text>
-          </Heading>
-          <Text
-            className='kicl-text-nowrap'
-            dense
-            is='span'
-            variant='secondary'
-          >
-            {dates}
-          </Text>
-        </>
+          </header>
+        </Layout>
       }
     >
       <List gap='narrower'>
