@@ -27,7 +27,7 @@ const Summary: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
-              {t('summary.title')}
+              {t('title', { context: 'summary' })}
             </Heading>
             <Separator />
           </header>

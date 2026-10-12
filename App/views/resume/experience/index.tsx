@@ -34,7 +34,7 @@ const Experience: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
-              {t('experience.title')}
+              {t('title', { context: 'experience' })}
             </Heading>
             <Separator />
           </header>

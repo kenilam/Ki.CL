@@ -33,7 +33,7 @@ const Contact: React.FunctionComponent = () => {
   return (
     <address className='kicl-font-style-normal'>
       <Text dense>
-        {t('header.location')}
+        {t('location')}
         <Text className='kicl-print-only' is='span'>
           {SEPARATOR}
         </Text>

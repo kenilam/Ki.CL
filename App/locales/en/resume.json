@@ -1,8 +1,6 @@
 {
-  "actions": {
-    "file": "PDF",
-    "send_message": "Send me a message"
-  },
+  "action_file": "PDF",
+  "action_message": "Send me a message",
   "architecture": {
     "experience": {
       "tesla": {
@@ -31,15 +29,6 @@
       "platform": "**Platform:** GCP (Cloud Run, load balancing), Docker, CI/CD with GitHub Actions and Jenkins"
     },
     "summary": "Staff-level engineer with 15+ years of experience designing platforms that many teams and products share. At Apple I built a federated front end and a GraphQL gateway serving 20+ subgraphs. At Tesla I architected a GraphQL federation layer and front-end infrastructure, and cut system outages from 20+ a week to near zero. I work across the stack, from design systems to multi-region deployment."
-  },
-  "education": {
-    "title": "Education"
-  },
-  "experience": {
-    "earlier": {
-      "title": "Earlier"
-    },
-    "title": "Experience"
   },
   "frontend_ai": {
     "experience": {
@@ -72,12 +61,7 @@
     },
     "summary": "Front-end and full-stack engineer with 15+ years of experience, currently leading design and engineering for Apple University's platform. I build design systems and federated front-end and GraphQL architectures, and I ship AI features end to end: an MCP server at Apple, and public agents of my own with cost, abuse and quality controls built in. I trained in fine art and design before moving into engineering."
   },
-  "header": {
-    "location": "San Jose, California"
-  },
-  "languages": {
-    "title": "Languages"
-  },
+  "location": "San Jose, California",
   "manager": {
     "experience": {
       "apple": {
@@ -166,12 +150,6 @@
       "front": "**Front end:** TypeScript, React, React Native (Expo), Next.js, Vue, Vite, Webpack, Module Federation, Three.js, WebGL, Sass, Tailwind"
     },
     "summary": "Design technologist and full-stack engineer with 15+ years of experience in the US and Japan. I build design systems and federated front-end and GraphQL platforms, and I lead the teams that ship them, most recently at Apple and Tesla. I trained in fine art and design, so I work as comfortably with designers as with engineers."
-  },
-  "mentoring": {
-    "title": "Mentoring"
-  },
-  "projects": {
-    "title": "Projects"
   },
   "react_native": {
     "earlier": {
@@ -307,10 +285,12 @@
       "platform": "**Platform:** GCP (Cloud Run), Docker, CI/CD with GitHub Actions and Jenkins"
     }
   },
-  "skills": {
-    "title": "Skills"
-  },
-  "summary": {
-    "title": "Summary"
-  }
+  "title_earlier": "Earlier",
+  "title_education": "Education",
+  "title_experience": "Experience",
+  "title_languages": "Languages",
+  "title_mentoring": "Mentoring",
+  "title_projects": "Projects",
+  "title_skills": "Skills",
+  "title_summary": "Summary"
 }
