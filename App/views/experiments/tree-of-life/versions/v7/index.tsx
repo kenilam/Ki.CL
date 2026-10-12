@@ -10,6 +10,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import {
   useQuery,
@@ -96,6 +97,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
 };
 
 const Canvas: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [expandingId, setExpandingId] = useState<string | null>(null);
 
@@ -188,7 +190,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        D3 cluster + CubicBezier branches · click tips to expand
+        {t('caption', { context: 'v7' })}
       </Text>
     </figure>
   );

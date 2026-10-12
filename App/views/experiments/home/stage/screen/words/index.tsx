@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, HyperLink, Layout, Text } from 'design/components';
@@ -17,13 +18,12 @@ import { CLASS_NAME as SCREEN } from '../constants';
 
 const CLASS_NAME = `${SCREEN}__words`;
 
-const COPY = {
-  open: 'See the experience',
-};
-
 /** The text block. The only part of the panel that takes the pointer. */
 const Words: React.FunctionComponent = () => {
+  const { t } = useTranslation('experiments');
+  const { t: common } = useTranslation();
   const { experiment, number } = useScreenContext();
+  const title = common('experiment', { context: experiment.context });
 
   return (
     // Rows packed at the end: every block is as tall as the tallest, so a shorter one would spread otherwise.
@@ -49,7 +49,7 @@ const Words: React.FunctionComponent = () => {
             'kicl-text-transform-uppercase'
           )}
         >
-          {`No. ${number}`}
+          {t('number', { number })}
         </Text>
         <Heading
           dense
@@ -59,7 +59,7 @@ const Words: React.FunctionComponent = () => {
           )}
           is='h2'
         >
-          {experiment.title}
+          {title}
         </Heading>
         <Text
           is='p'
@@ -69,7 +69,7 @@ const Words: React.FunctionComponent = () => {
             'kicl-max-inline-size-columns-5'
           )}
         >
-          {experiment.description}
+          {t('description', { context: experiment.context })}
         </Text>
         <HyperLink
           className='kicl-margin-block-start-narrow'
@@ -78,9 +78,9 @@ const Words: React.FunctionComponent = () => {
           size='small'
           to={experiment.to}
         >
-          {COPY.open}
+          {common('action', { context: 'see_experience' })}
           <Text is='span' className='kicl-hidden'>
-            {`: ${experiment.title}`}
+            {t('action', { context: 'open_title', title })}
           </Text>
         </HyperLink>
       </article>

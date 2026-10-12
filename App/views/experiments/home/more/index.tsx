@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Text } from 'design/components';
@@ -17,13 +18,9 @@ import { Actions } from './actions';
 
 const CLASS_NAME = `${HOME}__more`;
 
-const COPY = {
-  message: 'More on the making',
-  title: 'Come back soon.',
-};
-
 /** The closing screen, in normal flow after the stage, content centred. One element: the grid is the section. */
 const More: React.FunctionComponent = () => {
+  const { t } = useTranslation('experiments');
   const titleId = useId();
 
   return (
@@ -52,9 +49,11 @@ const More: React.FunctionComponent = () => {
           )}
           id={titleId}
         >
-          {COPY.title}
+          {t('title', { context: 'more' })}
         </Heading>
-        <Text className='kicl-text-align-center'>{COPY.message}</Text>
+        <Text className='kicl-text-align-center'>
+          {t('message', { context: 'more' })}
+        </Text>
         <Actions />
       </section>
     </Layout>

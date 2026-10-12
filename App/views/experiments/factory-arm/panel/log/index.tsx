@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -19,9 +20,6 @@ import { type Entry, useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Partials
 import { Steps, time } from './steps';
-
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/constants';
 
 /** The log split by run, newest run first. */
 const runs = (log: Entry[]) => {
@@ -41,6 +39,8 @@ const runs = (log: Entry[]) => {
  * how it started, to open when wanted.
  */
 const Log: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
+  const { t: common } = useTranslation();
   const { clearLog, log } = useSetup();
   const [latest, ...earlier] = runs(log);
 
@@ -55,17 +55,24 @@ const Log: React.FunctionComponent = () => {
               {earlier.map((entries) => {
                 // Oldest last: the step that started that run. A run the page opened with wasn't started by a step.
                 const first = entries[entries.length - 1];
-                const name = first.start ? first.text : COPY.panel.first;
+                const name = first.start
+                  ? t('step', {
+                      ...first.note.values,
+                      context: first.note.context,
+                    })
+                  : t('run', { context: 'opened' });
 
                 return (
                   <Details
                     key={first.id}
                     summary={
                       <Text className='kicl-font-size-small' dense is='span'>
-                        {name} · {time(first.at)} · {entries.length}{' '}
-                        {entries.length === 1
-                          ? COPY.panel.step
-                          : COPY.panel.steps}
+                        {t('run', {
+                          context: 'summary',
+                          count: entries.length,
+                          name,
+                          time: time(first.at),
+                        })}
                       </Text>
                     }
                   >
@@ -79,7 +86,7 @@ const Log: React.FunctionComponent = () => {
               className={classNames('kicl-color-grey', 'kicl-font-size-small')}
               is='p'
             >
-              {COPY.panel.empty}
+              {t('status', { context: 'empty' })}
             </Text>
           )}
         </CardContent>
@@ -95,7 +102,7 @@ const Log: React.FunctionComponent = () => {
               size='small'
               variant='secondary'
             >
-              {COPY.panel.clear}
+              {common('action', { context: 'clear' })}
             </Button>
           </SheetFooter>
         </Animation>

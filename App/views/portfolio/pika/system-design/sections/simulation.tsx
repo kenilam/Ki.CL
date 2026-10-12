@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import type { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Text } from 'design/components';
@@ -15,88 +17,92 @@ import { type PlayerStep, SimulationPlayer } from './simulation-player';
 // Constants
 import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
+const SHOTS = [1, 2, 3, 4, 5];
+const total = SHOTS.length;
+
 /**
  * One Character Creator job through the Part 1 architecture — including the
  * failure the design is built around: a provider timeout, an idempotent
  * retry, a circuit-break failover, and per-task settlement.
  */
-const STEPS: PlayerStep[] = [
+const steps = (t: TFunction<'pika'>): PlayerStep[] => [
   {
-    log: 'POST /jobs — character-creator @ v4',
+    log: t('watch_it_run.log.posted'),
     active: ['web', 'gw'],
-    chip: '120 held',
+    chip: t('watch_it_run.chip_held'),
   },
+  { log: t('watch_it_run.log.validated'), active: ['gw', 'jobs', 'mod'] },
   {
-    log: 'validate inputs · moderation pre-check',
-    active: ['gw', 'jobs', 'mod'],
-  },
-  {
-    log: 'RunAppWorkflow started — DAG expanded into 5 shot tasks',
+    log: t('watch_it_run.log.started', { total }),
     active: ['jobs', 'orch', 'pg'],
   },
-  { log: 'shot 1 → queued', active: ['orch', 'q'], dot: [0, 'queued'] },
   {
-    log: 'shot 1 → rendering on provider A',
+    log: t('watch_it_run.log.queued', { number: 1 }),
+    active: ['orch', 'q'],
+    dot: [0, 'queued'],
+  },
+  {
+    log: t('watch_it_run.log.rendering', { number: 1 }),
     active: ['q', 'wk', 'pad'],
     dot: [0, 'running'],
   },
   {
-    log: 'shot 1 done — asset stored, content-addressed',
+    log: t('watch_it_run.log.stored', { number: 1 }),
     active: ['wk', 's3'],
     dot: [0, 'done'],
   },
-  { log: 'progress event → SSE — 1/5 rendered', active: ['ev', 'rt', 'web'] },
   {
-    log: 'shot 2 done — 2/5 rendered',
+    log: t('watch_it_run.log.progress', { number: 1, total }),
+    active: ['ev', 'rt', 'web'],
+  },
+  {
+    log: t('watch_it_run.log.done', { number: 2, total }),
     active: ['wk', 's3', 'ev'],
     dot: [1, 'done'],
   },
   {
-    log: 'shot 3 → rendering on provider A',
+    log: t('watch_it_run.log.rendering', { number: 3 }),
     active: ['q', 'wk', 'pad'],
     dot: [2, 'running'],
   },
+  { log: t('watch_it_run.log.timeout'), failed: ['pad'], dot: [2, 'retry'] },
+  { log: t('watch_it_run.log.backoff'), active: ['wk'], dot: [2, 'retry'] },
+  { log: t('watch_it_run.log.circuit'), failed: ['pad'], dot: [2, 'retry'] },
   {
-    log: 'provider timeout — attempt 1 classified retryable',
-    failed: ['pad'],
-    dot: [2, 'retry'],
-  },
-  {
-    log: 'backoff with jitter → retry, same idempotency key',
-    active: ['wk'],
-    dot: [2, 'retry'],
-  },
-  {
-    log: 'provider A error rate trips circuit — failover to provider B',
-    failed: ['pad'],
-    dot: [2, 'retry'],
-  },
-  {
-    log: 'shot 3 done on provider B — one charge, not two',
+    log: t('watch_it_run.log.failover', { number: 3 }),
     active: ['wk', 'pad', 's3'],
     dot: [2, 'done'],
   },
   {
-    log: 'shot 4 done — 4/5 rendered',
+    log: t('watch_it_run.log.done', { number: 4, total }),
     active: ['wk', 's3'],
     dot: [3, 'done'],
   },
   {
-    log: 'shot 5 done — 5/5 rendered',
+    log: t('watch_it_run.log.done', { number: 5, total }),
     active: ['wk', 's3'],
     dot: [4, 'done'],
   },
-  { log: 'ffmpeg compose → final cut', active: ['wk', 's3'] },
-  { log: 'moderation post-check passed', active: ['mod', 'orch'] },
+  { log: t('watch_it_run.log.composed'), active: ['wk', 's3'] },
+  { log: t('watch_it_run.log.moderated'), active: ['mod', 'orch'] },
   {
-    log: 'job complete → settle per task, refund unconsumed hold',
+    log: t('watch_it_run.log.settled'),
     active: ['orch', 'jobs', 'cred'],
-    chip: '100 settled · 20 refunded',
+    chip: t('watch_it_run.chip_settled'),
   },
-  { log: 'gallery rendered from CDN', active: ['rt', 'web'] },
+  { log: t('watch_it_run.log.gallery'), active: ['rt', 'web'] },
 ];
 
 const Simulation: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
+  const spec = useMemo(() => services(t), [t]);
+  const scenario = useMemo(() => steps(t), [t]);
+  const dotLabels = useMemo(
+    () => SHOTS.map((number) => t('watch_it_run.dot', { number })),
+    [t]
+  );
+
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.watchItRun}>
@@ -109,22 +115,16 @@ const Simulation: React.FunctionComponent = () => {
           id={SECTION_ID.watchItRun}
           is='h2'
         >
-          Watch it run
+          {t('title', { context: 'watch_it_run' })}
         </Heading>
-        <Text>
-          A simulated Character Creator job through the architecture above, with
-          five shot tasks, one provider timeout, an idempotent retry, a
-          circuit-break failover, and per-task settlement. Only shot three
-          re-renders, and nobody is charged twice.
-        </Text>
+        <Text>{t('watch_it_run.intro')}</Text>
         <SimulationPlayer
-          chipLabel='credits'
-          chipStart='no hold yet'
-          dotLabels={['shot 1', 'shot 2', 'shot 3', 'shot 4', 'shot 5']}
-          idleHint='Press run to submit a job.'
-          runLabel='Run a job'
-          spec={services}
-          steps={STEPS}
+          chipStart={t('watch_it_run.chip_none')}
+          dotLabels={dotLabels}
+          idleHint={t('hint', { context: 'job' })}
+          runLabel={t('action', { context: 'run_job' })}
+          spec={spec}
+          steps={scenario}
         />
       </section>
     </Layout>

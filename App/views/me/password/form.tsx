@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -21,11 +22,8 @@ import { RootError } from '@/views/root-error';
 // Partials
 import { Fields } from './fields';
 
-// Constants
-import { COPY } from './constants';
-
 // Schema
-import { PasswordSchema, type PasswordValues } from './schema';
+import { passwordSchema, type PasswordValues } from './schema';
 
 type Props = {
   /** Sends the link. A rejection is shown under the field. */
@@ -33,9 +31,12 @@ type Props = {
 };
 
 const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
+  const { t } = useTranslation('me');
+  const schema = useMemo(() => passwordSchema(t), [t]);
+
   const form = useForm<PasswordValues>({
     defaultValues: { CurrentPassword: '', Password: '' },
-    resolver: valibotResolver(PasswordSchema),
+    resolver: valibotResolver(schema),
   });
 
   const { isSubmitting } = form.formState;
@@ -69,7 +70,7 @@ const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
           size='small'
           type='submit'
         >
-          {COPY.send}
+          {t('action', { context: 'send' })}
         </Button>
       </CardFooter>
     </Form>

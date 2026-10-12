@@ -25,7 +25,30 @@ type World = {
   obstacles: Solid[];
 };
 
+/** Where a case can be, as the log names it. */
+type Place = 'belt' | 'buffer' | 'pallet';
+
+/**
+ * A step for the log. The engine can't read the copy, so it says which line
+ * it is (`step_<context>` in the view's namespace) and the values that go in
+ * it; the log writes the sentence.
+ */
+type Note = {
+  context:
+    | `${'no_path' | 'no_room'}${'' | '_across'}${'' | '_waits'}`
+    | `${'picked' | 'set_down'}_${Place}`
+    | 'moving_belt'
+    | 'moving_buffer'
+    | 'queued'
+    | 'queued_blocked'
+    | 'resumed'
+    | 'retry'
+    | 'stopped'
+    | 'waiting';
+  values?: Record<string, number | string>;
+};
+
 /** An axis-aligned box by its lowest and highest corners. */
 type Extent = { min: Point; max: Point };
 
-export type { Case, Extent, World };
+export type { Case, Extent, Note, Place, World };

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Status, type StatusProps } from 'design/components';
 
@@ -8,10 +11,13 @@ import type { Message } from '@/views/experiments/image-agent/chat/conversation/
 
 /** Turns that did not end in a picture, and how each is shown. */
 const NOTICES: {
-  [kind in string]?: { level: StatusProps['level']; title: string };
+  [kind in string]?: {
+    context: 'failure' | 'refusal';
+    level: StatusProps['level'];
+  };
 } = {
-  FAILURE: { level: 'error', title: 'Did not finish' },
-  REFUSAL: { level: 'warning', title: 'Can not complete' },
+  FAILURE: { context: 'failure', level: 'error' },
+  REFUSAL: { context: 'refusal', level: 'warning' },
 };
 
 type Props = Pick<Message, 'kind' | 'text'>;
@@ -24,6 +30,8 @@ const isNotice = (kind: Message['kind']) => Boolean(NOTICES[kind]);
  * explanation.
  */
 const Notice: React.FunctionComponent<Props> = ({ kind, text }) => {
+  const { t } = useTranslation('image-agent');
+
   const notice = NOTICES[kind];
 
   if (!notice) {
@@ -36,7 +44,7 @@ const Notice: React.FunctionComponent<Props> = ({ kind, text }) => {
       headingLevel='h3'
       level={notice.level}
       message={text ?? undefined}
-      title={notice.title}
+      title={t('title', { context: notice.context })}
     />
   );
 };

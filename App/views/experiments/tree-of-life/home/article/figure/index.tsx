@@ -2,9 +2,17 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
-import { Button, Dialog, Image, Layout, Text } from 'design/components';
+import {
+  Button,
+  Dialog,
+  Image,
+  Layout,
+  Markdown,
+  Text,
+} from 'design/components';
 
 // Spec
 import * as Spec from './spec';
@@ -19,11 +27,13 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
   caption,
   data,
 }) => {
+  const { t } = useTranslation('tree-of-life');
+
   return (
     <figure className={CLASS_NAME}>
       <Layout alignItems='center' justifyContent='center'>
         <Button
-          aria-label={`${alt} Open the full image.`}
+          aria-label={t('article.figure.open', { alt })}
           className={classNames(
             `${CLASS_NAME}__preview`,
             'kicl-cursor-zoom-in'
@@ -38,7 +48,7 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
 
       <figcaption className='kicl-padding-block-start-narrower'>
         <Text is='span' dense>
-          {caption}
+          <Markdown>{caption}</Markdown>
         </Text>
       </figcaption>
 

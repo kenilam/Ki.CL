@@ -1,14 +1,15 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 // Libraries
 import { valibotResolver } from '@hookform/resolvers/valibot';
 import { useForm, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Spec
 import type { Sender } from './spec';
 
 // Schema
-import { ComposerSchema, type ComposerValues } from './schema';
+import { composerSchema, type ComposerValues } from './schema';
 
 type Options = Pick<Sender, 'error' | 'send'> & {
   /** Told what is in the field on every change. */
@@ -20,9 +21,12 @@ type Options = Pick<Sender, 'error' | 'send'> & {
  * included, shows under the field.
  */
 function useComposer({ error, onText, send }: Options) {
+  const { t } = useTranslation('image-agent');
+  const schema = useMemo(() => composerSchema(t), [t]);
+
   const form = useForm<ComposerValues>({
     defaultValues: { text: '' },
-    resolver: valibotResolver(ComposerSchema),
+    resolver: valibotResolver(schema),
   });
 
   const text = useWatch({ control: form.control, name: 'text' });

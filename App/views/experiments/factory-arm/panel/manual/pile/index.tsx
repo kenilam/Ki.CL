@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import {
   Button,
@@ -19,9 +22,6 @@ import * as Ri from 'react-icons/ri';
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';
 
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/constants';
-
 const LAYERS = [1, 2, 3, 4, 5];
 
 const ID = {
@@ -37,6 +37,7 @@ const ID = {
  * left and its control on the right.
  */
 const Pile: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { draft, setDraft } = useSetup();
   const { pile, stacks } = draft;
 
@@ -59,13 +60,13 @@ const Pile: React.FunctionComponent = () => {
     <Layout gap='narrow'>
       <section aria-labelledby={ID.title}>
         <Heading dense id={ID.title} is='h2' lookLike='h5'>
-          {COPY.panel.pile.title}
+          {t('title', { context: 'cases' })}
         </Heading>
 
         <List gap='narrow'>
           {row(
             <label className='kicl-font-size-small' htmlFor={ID.layers}>
-              {COPY.panel.pile.layers}
+              {t('label', { context: 'layers' })}
             </label>,
             <Select
               id={ID.layers}
@@ -84,7 +85,7 @@ const Pile: React.FunctionComponent = () => {
 
           {row(
             <Text className='kicl-font-size-small' is='span'>
-              {COPY.panel.pile.seed}{' '}
+              {t('label', { context: 'seed' })}{' '}
               <span className='kicl-font-family-mono'>{pile.seed}</span>
             </Text>,
             <Button
@@ -98,13 +99,13 @@ const Pile: React.FunctionComponent = () => {
               size='small'
               variant='ghost'
             >
-              {COPY.panel.pile.random}
+              {t('action', { context: 'random' })}
             </Button>
           )}
 
           {row(
             <Text className='kicl-font-size-small' id={ID.second} is='span'>
-              {COPY.panel.pile.second}
+              {t('label', { context: 'second_stack' })}
             </Text>,
             <Switch
               aria-labelledby={ID.second}

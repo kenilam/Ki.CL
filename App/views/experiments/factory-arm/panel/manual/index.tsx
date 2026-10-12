@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Button, CardContent, Layout, SheetFooter } from 'design/components';
 
@@ -15,15 +18,13 @@ import { Confirm } from '@/views/experiments/factory-arm/panel/confirm';
 import { Pile } from './pile';
 import { Shapes } from './shapes';
 
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/constants';
-
 /**
  * Sets the cell up by hand: obstacles go straight onto the stage, and the
  * cases are built as set here when the operator proceeds. The obstacles as
  * they stand now and the case settings save together as a preset.
  */
 const Manual: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { cell, draft, proceed, save, setOpen } = useSetup();
 
   const current = () => ({
@@ -61,7 +62,7 @@ const Manual: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          {COPY.panel.save}
+          {t('action', { context: 'save' })}
         </Button>
         <Button
           className='kicl-inline-size-full'
@@ -69,7 +70,7 @@ const Manual: React.FunctionComponent = () => {
           onClick={go}
           size='small'
         >
-          {COPY.panel.proceed}
+          {t('action', { context: 'proceed' })}
         </Button>
       </SheetFooter>
 

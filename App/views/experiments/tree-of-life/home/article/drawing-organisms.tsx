@@ -1,5 +1,8 @@
 import React, { useId } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Heading, Layout, Text } from 'design/components';
 
@@ -10,35 +13,25 @@ import { Figure } from './figure';
 import { PERROT_1854 } from './constants';
 
 const DrawingOrganisms: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const id = useId();
 
   return (
     <Layout justifyItems='start'>
       <section aria-labelledby={id}>
         <Heading id={id} is='h2' className='kicl-font-size-large'>
-          Drawing organisms nobody photographed
+          {t('title', { context: 'drawing_organisms' })}
         </Heading>
 
-        <Text is='p'>
-          Most of those 2.3 million tips are bacteria, archaea and unnamed
-          internal nodes. Nobody has photographed “uncultured Crater Lake
-          bacterium CL500-11”, so the plates are generated in the style of a
-          19th-century hand-coloured lithograph like the one below.
-        </Text>
+        <Text is='p'>{t('article.drawing_organisms.p1')}</Text>
 
         <Figure
           data={PERROT_1854}
-          alt='A hand-coloured 1854 natural-history plate by Perrot: animals arranged across a pale staged ground with fine engraved linework.'
-          caption='Perrot, 1854. Every generated plate aims for this engraved linework, muted wash and plain staged ground.'
+          alt={t('article.drawing_organisms.alt')}
+          caption={t('article.drawing_organisms.caption')}
         />
 
-        <Text is='p'>
-          The pipeline is a fixed sequence of steps, with no agent deciding what
-          to do next. It resolves the lineage, picks one real living specimen to
-          stand in for the taxon, writes a prompt from that specimen’s
-          morphology, generates an image and has a vision model score it. If the
-          score fails, the prompt is tightened for one more try.
-        </Text>
+        <Text is='p'>{t('article.drawing_organisms.p2')}</Text>
       </section>
     </Layout>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Layout, List, ListItem, Text } from 'design/components';
@@ -21,37 +22,41 @@ const time = (at: number) =>
 type Props = { entries: Entry[] };
 
 /** Steps in the log, newest first, each with its time and a dot for how it went. */
-const Steps: React.FunctionComponent<Props> = ({ entries }) => (
-  <List gap='narrower' is='ol'>
-    {entries.map(({ at, id, level, text }) => (
-      <Layout
-        alignItems='baseline'
-        autoFlow='column'
-        frames='max-content--1fr'
-        gap='narrow'
-        key={id}
-      >
-        <ListItem>
-          <time
-            className={classNames(
-              'kicl-color-grey',
-              'kicl-font-family-mono',
-              'kicl-font-size-smaller'
-            )}
-          >
-            {time(at)}
-          </time>
-          <Text className='kicl-font-size-small' is='span'>
-            <Ri.RiCheckboxBlankCircleFill
-              aria-hidden
-              className={`kicl-color-${level ?? 'grey'}`}
-            />{' '}
-            {text}
-          </Text>
-        </ListItem>
-      </Layout>
-    ))}
-  </List>
-);
+const Steps: React.FunctionComponent<Props> = ({ entries }) => {
+  const { t } = useTranslation('factory-arm');
+
+  return (
+    <List gap='narrower' is='ol'>
+      {entries.map(({ at, id, level, note }) => (
+        <Layout
+          alignItems='baseline'
+          autoFlow='column'
+          frames='max-content--1fr'
+          gap='narrow'
+          key={id}
+        >
+          <ListItem>
+            <time
+              className={classNames(
+                'kicl-color-grey',
+                'kicl-font-family-mono',
+                'kicl-font-size-smaller'
+              )}
+            >
+              {time(at)}
+            </time>
+            <Text className='kicl-font-size-small' is='span'>
+              <Ri.RiCheckboxBlankCircleFill
+                aria-hidden
+                className={`kicl-color-${level ?? 'grey'}`}
+              />{' '}
+              {t('step', { ...note.values, context: note.context })}
+            </Text>
+          </ListItem>
+        </Layout>
+      ))}
+    </List>
+  );
+};
 
 export { Steps, time };

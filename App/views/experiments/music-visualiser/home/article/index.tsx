@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout } from 'design/components';
@@ -16,7 +17,6 @@ import { WhatThisIs } from './what-this-is';
 // Constants
 import {
   ARTICLE_ID,
-  COPY,
   CLASS_NAME as HOME,
 } from '@/views/experiments/music-visualiser/home/constants';
 
@@ -28,6 +28,7 @@ const CLASS_NAME = `${HOME}__article`;
  */
 const Article: React.FunctionComponent = () => {
   const id = useId();
+  const { t: common } = useTranslation();
 
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
@@ -44,7 +45,7 @@ const Article: React.FunctionComponent = () => {
         id={ARTICLE_ID}
       >
         <Heading className='kicl-hidden' id={id} is='h2'>
-          {COPY.article}
+          {common('title', { context: 'how_it_was_made' })}
         </Heading>
         <WhatThisIs />
         <Music />

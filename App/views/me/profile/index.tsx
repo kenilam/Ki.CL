@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 // Components
 import {
   Card,
@@ -18,10 +20,8 @@ import { PATH as PASSWORD_PATH } from '@/views/me/password/constants';
 import { Delete } from './delete';
 import { Form } from './form';
 
-// Constants
-import { COPY } from './constants';
-
 const Profile: React.FunctionComponent = () => {
+  const { t } = useTranslation('me');
   const { me } = useAccount();
 
   // The gate above only renders this for a signed-in user.
@@ -35,10 +35,10 @@ const Profile: React.FunctionComponent = () => {
         <Layout gap='narrow' justifyItems='center'>
           <CardHeader className='kicl-text-align-center'>
             <CardTitle className='kicl-font-size' is='h1'>
-              {COPY.title}
+              {t('title', { context: 'profile' })}
             </CardTitle>
             <CardDescription>
-              {COPY.signedInAs} {me.Email}
+              {t('signed_in_as', { email: me.Email })}
             </CardDescription>
             <HyperLink
               lookLikeButton
@@ -46,7 +46,7 @@ const Profile: React.FunctionComponent = () => {
               to={PASSWORD_PATH}
               variant='ghost'
             >
-              {COPY.changePassword}
+              {t('change_password')}
             </HyperLink>
           </CardHeader>
         </Layout>

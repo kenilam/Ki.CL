@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout } from 'design/components';
@@ -22,6 +23,7 @@ import { ARTICLE_ID } from '@/views/experiments/image-agent/start/constants';
 
 /** How it was made, under the start page, as on the Music Visualiser. */
 const Article: React.FunctionComponent = () => {
+  const { t: common } = useTranslation();
   const id = useId();
 
   return (
@@ -38,7 +40,7 @@ const Article: React.FunctionComponent = () => {
         id={ARTICLE_ID}
       >
         <Heading className='kicl-font-size-larger' id={id} is='h2'>
-          How it was made
+          {common('title', { context: 'how_it_was_made' })}
         </Heading>
         <WhatThisIs />
         <HowItWorks />

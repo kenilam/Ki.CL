@@ -2,11 +2,14 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Layout, Separator, Text } from 'design/components';
 
 const Footer: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   return (
     <Layout
       alignContent='center'
@@ -28,7 +31,7 @@ const Footer: React.FunctionComponent = () => {
               'kicl-padding-block-wider'
             )}
           >
-            Prepared for the Pika take-home.
+            {t('footer')}
           </Text>
         </Layout>
         <Separator />
@@ -42,7 +45,8 @@ const Footer: React.FunctionComponent = () => {
           dense
           variant='secondary'
         >
-          Keni · Ki.CL · <time dateTime='2026-08'>August 2026</time>
+          {t('byline')}
+          <time dateTime='2026-08'>{t('date')}</time>
         </Text>
       </footer>
     </Layout>

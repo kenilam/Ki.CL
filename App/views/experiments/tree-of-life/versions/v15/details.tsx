@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import {
   Badge,
@@ -35,6 +36,7 @@ import {
  * and `find` reads it from the same cache everything else does.
  */
 const Details: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const { find, focus } = useTreeOfLifeContext();
   const taxon = focus ? find(focus) : null;
   const titleId = useId();
@@ -49,7 +51,7 @@ const Details: React.FunctionComponent = () => {
   const rank = displayRank(node.rank);
   const terminal = isTerminalRank(node.rank);
   const hasMeta = Boolean(rank) || terminal || node.ottId != null;
-  const title = isOrigin ? 'Origin of life' : labelFor(node) || 'Unnamed node';
+  const title = isOrigin ? t('origin') : labelFor(node) || t('unnamed_node');
 
   return (
     <Card
@@ -76,7 +78,7 @@ const Details: React.FunctionComponent = () => {
                   'kicl-text-transform-lowercase'
                 )}
               >
-                <BadgeLabel>Rank</BadgeLabel>
+                <BadgeLabel>{t('label', { context: 'rank' })}</BadgeLabel>
                 {rank}
               </Badge>
             ) : null}
@@ -89,7 +91,7 @@ const Details: React.FunctionComponent = () => {
                   'kicl-text-transform-lowercase'
                 )}
               >
-                terminal
+                {t('terminal')}
               </Badge>
             ) : null}
             {node.ottId != null ? (
@@ -98,7 +100,7 @@ const Details: React.FunctionComponent = () => {
                 variant='outline'
                 className='kicl-font-size-smaller'
               >
-                <BadgeLabel>OTT ID</BadgeLabel>
+                <BadgeLabel>{t('label', { context: 'ott_id' })}</BadgeLabel>
                 {node.ottId}
               </Badge>
             ) : null}

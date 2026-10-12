@@ -62,8 +62,6 @@ const FFT_SIZE = 2048;
 /** Kept low: the visualiser smooths at its own three time scales. */
 const ANALYSER_SMOOTHING = 0.5;
 
-const ERROR = 'Could not play this track. Try again.';
-
 type Graph = {
   analyser: AnalyserNode;
   context: AudioContext;
@@ -79,7 +77,8 @@ type Slot = {
 };
 
 export type Control = {
-  error: string | null;
+  /** The track could not be played; the player writes the message. */
+  error: boolean;
   loading: boolean;
   /** Go to this track's `/play`. */
   play(): void;
@@ -178,7 +177,7 @@ export function useAudio(): Audio {
   const fading = useRef(new Set<Slot>());
 
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [value, setValueState] = useState(() =>
@@ -302,13 +301,13 @@ export function useAudio(): Audio {
     });
     element.addEventListener('error', () => {
       if (current.current === slot) {
-        setError(ERROR);
+        setError(true);
         setLoading(false);
       }
     });
 
     current.current = slot;
-    setError(null);
+    setError(false);
   }, [cross, key, track]);
 
   /* `/play` - sound the track, or hold it silent when the route is left. */
@@ -355,7 +354,7 @@ export function useAudio(): Audio {
       slot.source.connect(slot.gain).connect(input);
     }
 
-    setError(null);
+    setError(false);
     setLoading(true);
 
     void (async () => {
@@ -387,7 +386,7 @@ export function useAudio(): Audio {
         await slot.element.play();
       } catch (caught) {
         if (!cancelled && (caught as DOMException).name !== 'AbortError') {
-          setError(ERROR);
+          setError(true);
           setLoading(false);
         }
       }

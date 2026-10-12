@@ -1,5 +1,8 @@
 import React, { useLayoutEffect, useMemo, useRef } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 import { THREE, Drei } from '@/three';
 
 import { labelFor } from '@/views/experiments/tree-of-life/tree';
@@ -86,6 +89,7 @@ export const TipInstances: React.FunctionComponent<TipInstancesProps> = ({
 export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
   node,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const [x, y, z] = node.position;
   const r = Math.max(node.radius, 0.15);
 
@@ -135,7 +139,7 @@ export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
         outlineWidth={0.02}
         outlineColor={BACKGROUND}
       >
-        Origin of life
+        {t('origin')}
       </Drei.Text>
     </group>
   );

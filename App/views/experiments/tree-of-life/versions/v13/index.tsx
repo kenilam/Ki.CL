@@ -12,6 +12,7 @@ import React, {
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import {
   useQuery,
@@ -50,6 +51,7 @@ const PosterTree: React.FunctionComponent<{
   expandingId: string | null;
   onExpand: (node: LayoutNode) => void;
 }> = ({ layout, expandingId, onExpand }) => {
+  const { t } = useTranslation('tree-of-life');
   const origin = layout.nodes.find(
     (n) =>
       n.isOrigin &&
@@ -141,7 +143,7 @@ const PosterTree: React.FunctionComponent<{
             textAnchor='middle'
             y={origin.markerRadius * 3.2}
           >
-            Origin of life
+            {t('origin')}
           </text>
         </g>
       ) : null}
@@ -285,6 +287,7 @@ const MapStage: React.FunctionComponent<{
 };
 
 const Canvas: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const stageRef = useRef<HTMLElement>(null);
   const [viewport, setViewport] = useState<ViewportSize>({
     width: 960,
@@ -411,7 +414,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        v13 · tip-first · fine branches · drag / zoom / click tips to expand
+        {t('caption', { context: 'v13' })}
       </Text>
     </figure>
   );

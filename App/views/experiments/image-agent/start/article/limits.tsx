@@ -1,60 +1,47 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+
+// Libraries
+import { useTranslation } from 'react-i18next';
 
 // Components
-import { Details, Diagram, Heading, Text } from 'design/components';
+import { Details, Diagram, Heading, Markdown, Text } from 'design/components';
 
 // Diagrams
 import { allowance } from './diagrams/allowance';
 import { howItWorks } from './diagrams/how-it-works';
 
 /** Rate limiting: the limits, who a person is, and what gets counted. */
-const Limits: React.FunctionComponent = () => (
-  <Details
-    gap='narrow'
-    summary={
-      <Heading className='kicl-font-size-large' dense is='h3'>
-        Limits
+const Limits: React.FunctionComponent = () => {
+  const { t } = useTranslation('image-agent');
+  const specs = useMemo(
+    () => ({ allowance: allowance(t), howItWorks: howItWorks(t) }),
+    [t]
+  );
+
+  return (
+    <Details
+      gap='narrow'
+      summary={
+        <Heading className='kicl-font-size-large' dense is='h3'>
+          {t('article.limits.title')}
+        </Heading>
+      }
+    >
+      <Text is='p'>{t('article.limits.cost')}</Text>
+      <Diagram spec={specs.allowance} />
+      <Diagram spec={specs.howItWorks} />
+      <Heading is='h4' className='kicl-font-size-medium'>
+        {t('article.limits.title', { context: 'person' })}
       </Heading>
-    }
-  >
-    <Text is='p'>
-      Pictures cost money and anyone can use this without an account, so a lot
-      of the backend is limits. A day means the last 24 hours, not since
-      midnight.
-    </Text>
-    <Diagram spec={allowance} />
-    <Diagram spec={howItWorks} />
-    <Heading is='h4' className='kicl-font-size-medium'>
-      Who counts as a person
-    </Heading>
-    <Text is='p'>
-      A person is their session. The first visit passes a Turnstile check and
-      gets a token, and every request after that is counted against it. Clearing
-      cookies or changing device starts a new session with a new allowance. That
-      is accepted: the check is what stops a script from doing it on a loop.
-    </Text>
-    <Text is='p'>
-      The network address is not read or stored, so people who share a network
-      do not share limits.
-    </Text>
-    <Text is='p'>
-      Counts are read from MongoDB instead of kept in memory, so restarting the
-      server doesn’t reset anyone’s allowance.
-    </Text>
-    <Text is='p'>
-      A refused request comes back as{' '}
-      <Text is='code' accent='error'>
-        TOO_MANY_REQUESTS
-      </Text>{' '}
-      and isn’t recorded. Otherwise a double-click would use up allowance and
-      restart the cooldown that refused it.
-    </Text>
-    <Text is='p'>
-      When a limit shared by everyone runs out, the error doesn’t say which one
-      or when it resets. That would tell someone trying to get around it where
-      to look.
-    </Text>
-  </Details>
-);
+      <Text is='p'>{t('article.limits.session')}</Text>
+      <Text is='p'>{t('article.limits.network')}</Text>
+      <Text is='p'>{t('article.limits.counts')}</Text>
+      <Text is='p'>
+        <Markdown>{t('article.limits.refused')}</Markdown>
+      </Text>
+      <Text is='p'>{t('article.limits.shared')}</Text>
+    </Details>
+  );
+};
 
 export { Limits };

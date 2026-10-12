@@ -4,9 +4,10 @@ import React from 'react';
 import classNames from 'classnames';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-yaml';
+import { useTranslation } from 'react-i18next';
 
 // Components
-import { Card, CardContent, Heading, Text } from 'design/components';
+import { Card, CardContent, Heading, Markdown, Text } from 'design/components';
 
 const MANIFEST = `# app: character-creator @ v4
 id: character-creator
@@ -36,53 +37,39 @@ outputs:
     actions: [regenerate, handoff: [i2v, short-film, ads]]`;
 
 /** The manifest format and the primitives it calls. */
-const WhatIsAnApp: React.FunctionComponent = () => (
-  <>
-    <Heading className='kicl-font-size-large' is='h3'>
-      What is an App?
-    </Heading>
-    <Text>
-      An App is a declarative manifest, stored and versioned like a document:
-    </Text>
-    <Card>
-      <CardContent>
-        <Text
-          className={classNames(
-            'kicl-font-family-mono',
-            'kicl-overflow-x-auto'
-          )}
-          is='pre'
-          unstyled
-        >
-          <code
-            dangerouslySetInnerHTML={{
-              __html: Prism.highlight(MANIFEST, Prism.languages.yaml, 'yaml'),
-            }}
-          />
-        </Text>
-      </CardContent>
-    </Card>
-    <Text>
-      The typed input schema lets the client render any App&apos;s form straight
-      from the manifest, with no per-App frontend code. The DAG lets the
-      orchestrator checkpoint, retry, and parallelize steps without knowing what
-      the App is for. Versions are immutable, so rollback is a pointer move.
-      Publishing writes a new row, and running jobs stay pinned to the version
-      they started on.
-    </Text>
-    <Text>
-      Primitives are thin, typed wrappers around the backend creative APIs (
-      <Text is='code'>video.generate</Text>, <Text is='code'>image.edit</Text>,
-      <Text is='code'>vision.analyze</Text>, <Text is='code'>media.ffmpeg</Text>
-      , <Text is='code'>llm.complete</Text>, and so on). Each one declares its
-      argument schema, cost model, latency class, timeout profile, and which
-      providers can serve it. When a new vendor model appears, we register a
-      provider, and every App with a <Text is='code'>model-select</Text> input
-      picks it up without a manifest change. New providers get default traffic
-      through the same staged rollout as Apps, watched against the
-      primitive&apos;s error budget.
-    </Text>
-  </>
-);
+const WhatIsAnApp: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
+  return (
+    <>
+      <Heading className='kicl-font-size-large' is='h3'>
+        {t('title', { context: 'what_is_an_app' })}
+      </Heading>
+      <Text>{t('part_one.what_is_an_app.intro')}</Text>
+      <Card>
+        <CardContent>
+          <Text
+            className={classNames(
+              'kicl-font-family-mono',
+              'kicl-overflow-x-auto'
+            )}
+            is='pre'
+            unstyled
+          >
+            <code
+              dangerouslySetInnerHTML={{
+                __html: Prism.highlight(MANIFEST, Prism.languages.yaml, 'yaml'),
+              }}
+            />
+          </Text>
+        </CardContent>
+      </Card>
+      <Text>{t('part_one.what_is_an_app.schema')}</Text>
+      <Text>
+        <Markdown>{t('part_one.what_is_an_app.primitives')}</Markdown>
+      </Text>
+    </>
+  );
+};
 
 export { WhatIsAnApp };

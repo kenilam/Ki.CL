@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Text } from 'design/components';
@@ -16,6 +17,8 @@ import { WhatChanges } from './what-changes';
 import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
 const PartTwo: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.partTwo}>
@@ -28,13 +31,9 @@ const PartTwo: React.FunctionComponent = () => {
           id={SECTION_ID.partTwo}
           is='h2'
         >
-          Part 2 - The agent experience
+          {t('title', { context: 'part_two' })}
         </Heading>
-        <Text variant='secondary'>
-          Part 2 of the brief adds a Claude Code-style agent for creative work.
-          A user describes what they want in natural language, and the agent
-          creates and edits media with the same primitives the Apps use.
-        </Text>
+        <Text variant='secondary'>{t('part_two.intro')}</Text>
         <WhatChanges />
         <AgentHarness />
         <Cost />

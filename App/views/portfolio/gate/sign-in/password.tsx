@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -16,6 +17,7 @@ import {
 import type { SignInValues } from './schema';
 
 const Password: React.FunctionComponent = () => {
+  const { t: common } = useTranslation();
   const { control } = useFormContext<SignInValues>();
 
   return (
@@ -24,7 +26,7 @@ const Password: React.FunctionComponent = () => {
       name='Password'
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Password</FormLabel>
+          <FormLabel>{common('label', { context: 'password' })}</FormLabel>
           <FormControl>
             <PasswordInput {...field} />
           </FormControl>

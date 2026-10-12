@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import {
   Animation,
@@ -12,15 +15,13 @@ import {
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';
 
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/constants';
-
 /**
  * Shows once the cell differs from the preset it started from: an obstacle
  * moved, added or taken away, or the cases set differently in Manual. It
  * saves the cell as it stands as a new preset, under the name given.
  */
 const Unsaved: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { applied, cell, draft, edited, next, save } = useSetup();
   const [name, setName] = useState('');
 
@@ -50,18 +51,18 @@ const Unsaved: React.FunctionComponent = () => {
           gap='narrow'
         >
           <form
-            aria-label={COPY.panel.unsaved}
+            aria-label={t('label', { context: 'unsaved' })}
             className='kicl-inline-size-full'
             onSubmit={submit}
           >
             <Input
-              aria-label={COPY.panel.name}
+              aria-label={t('label', { context: 'preset_name' })}
               onChange={(event) => setName(event.currentTarget.value)}
               placeholder={next}
               value={name}
             />
             <Button type='submit' size='small'>
-              {COPY.panel.save}
+              {t('action', { context: 'save' })}
             </Button>
           </form>
         </Layout>

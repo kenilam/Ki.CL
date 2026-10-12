@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { List, ListItem } from 'design/components';
@@ -24,15 +25,6 @@ const DOT = `${SYSTEM_DESIGN}__simulation-dot`;
 
 const CHIP_CLASS_NAME = classNames(CHIP, 'kicl-font-size-small');
 
-/** What each dot colour means, read out after the label. */
-const STATE_LABEL: Record<DotState, string> = {
-  done: 'done',
-  idle: 'not started',
-  queued: 'queued',
-  retry: 'retrying',
-  running: 'running',
-};
-
 const STATE_COLOR: Record<DotState, string> = {
   done: 'kicl-background-color-green',
   idle: 'kicl-background-color-grey-dark',
@@ -41,9 +33,11 @@ const STATE_COLOR: Record<DotState, string> = {
   running: 'kicl-background-color-yellow',
 };
 
-/** One dot per tracked item, then the free-form chip. */
+/** One dot per tracked item, then the chip. */
 const Status: React.FunctionComponent = () => {
-  const { chip, chipLabel, dotLabels, dots } = useSimulation();
+  const { t } = useTranslation('pika');
+
+  const { chip, dotLabels, dots } = useSimulation();
 
   return (
     <List className={CLASS_NAME} display='flex' gap='narrow' is='ul' wrap>
@@ -63,11 +57,14 @@ const Status: React.FunctionComponent = () => {
             )}
           />
           {label}
-          <span className='kicl-hidden'>, {STATE_LABEL[dots[index]]}</span>
+          {/* What the dot's colour means, read out after the label. */}
+          <span className='kicl-hidden'>
+            {t('state', { context: dots[index] })}
+          </span>
         </ListItem>
       ))}
       <ListItem alignItems='center' className={CHIP_CLASS_NAME} display='flex'>
-        {chipLabel} · {chip}
+        {chip}
       </ListItem>
     </List>
   );

@@ -198,7 +198,7 @@ const FactoryArmProvider: React.FunctionComponent<
         moving.current = { id, by, at: performance.now() };
       },
       place: (solid) => {
-        note(`Added ${solid.id}`, 'info');
+        note({ context: 'added', values: { id: solid.id } }, 'info');
         obstacles.current = [...obstacles.current, solid];
         edit(obstacles.current);
         known.current.add(solid.id);
@@ -206,7 +206,7 @@ const FactoryArmProvider: React.FunctionComponent<
         setStanding((ids) => [...ids, solid.id]);
       },
       withdraw: (id) => {
-        note(`Took ${id} away`, 'info');
+        note({ context: 'removed', values: { id } }, 'info');
         obstacles.current = obstacles.current.filter(
           (solid) => solid.id !== id
         );

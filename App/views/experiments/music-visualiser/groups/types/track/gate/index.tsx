@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Fa from 'react-icons/fa6';
@@ -26,16 +27,13 @@ import {
 
 const CLASS_NAME = `${VIEW}__gate`;
 
-const COPY = {
-  play: (title: string) => `Play ${title}`,
-};
-
 /**
  * A track's gate: its title, where it is from, and a link to its `/play`.
  * The press on that link is the gesture the browser needs before audio.
  */
 const Gate: React.FunctionComponent = () => {
   const { track } = useTrackContext();
+  const { t } = useTranslation('music-visualiser');
 
   return (
     <Layout
@@ -68,13 +66,13 @@ const Gate: React.FunctionComponent = () => {
           variant='secondary'
           className='kicl-font-size-medium'
         >
-          {NAME} · {track.category}
+          {t('source', { category: track.category, name: NAME })}
         </Text>
         <HyperLink className='kicl-font-size-small' to={ATTRIBUTION.url}>
-          {ATTRIBUTION.label}
+          {t('attribution', { name: NAME })}
         </HyperLink>
         <HyperLink
-          aria-label={COPY.play(track.title)}
+          aria-label={t('action', { context: 'play', title: track.title })}
           lookLikeButton
           size='small'
           to={toPlayPath(track)}

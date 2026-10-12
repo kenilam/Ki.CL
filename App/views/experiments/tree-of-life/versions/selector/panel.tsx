@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Card, HyperLink, List, ListItem } from 'design/components';
@@ -17,11 +18,12 @@ import {
 import { CLASS_NAME } from '@/views/experiments/tree-of-life/versions/selector/constants';
 
 const Panel: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const { focus: nodeId } = useTreeOfLifeContext();
 
   return (
     <nav
-      aria-label='Versions'
+      aria-label={t('versions')}
       className={classNames(
         CLASS_NAME,
         'kicl-inset-block-end-narrow',

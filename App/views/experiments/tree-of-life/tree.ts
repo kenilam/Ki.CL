@@ -396,8 +396,9 @@ export function displayRank(rank?: string | null): string {
   return value;
 }
 
-export function labelWithRank(node: TreeNode, isOrigin = false): string {
-  const name = isOrigin ? 'Origin of life' : labelFor(node);
+/** `origin` is the origin's name, passed when the node is the origin. */
+export function labelWithRank(node: TreeNode, origin?: string): string {
+  const name = origin ?? labelFor(node);
   const rank = displayRank(node.rank);
   if (!name) {
     return rank;

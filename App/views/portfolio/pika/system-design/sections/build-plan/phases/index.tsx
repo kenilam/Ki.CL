@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Styles
 import './styles.scss';
@@ -25,75 +26,67 @@ const TH_CLASS_NAME = classNames(
 );
 
 const PHASES = [
-  {
-    phase: 1,
-    scope:
-      'Skeleton: manifest schema and registry, Job Service, the generic workflow interpreter, two primitives, one real App end-to-end.',
-    time: '2 weeks',
-  },
-  {
-    phase: 2,
-    scope:
-      'Hardening: provider adapters with webhooks and idempotency, credits hold and settle, SSE progress, task metrics dashboard.',
-    time: '2 weeks',
-  },
-  {
-    phase: 3,
-    scope:
-      'Video primitives and the ffmpeg pool, three flagship Apps, App Studio v0 with sandboxed runs and versioned publish.',
-    time: '2-3 weeks',
-  },
-  {
-    phase: 4,
-    scope:
-      'Agent MVP: runtime loop on Temporal, tool registry projection, session store, draft-final policy, budgets and model routing.',
-    time: '2-3 weeks',
-  },
-  {
-    phase: 5,
-    scope:
-      'Eval harness (golden briefs, process checks, judge rubric, replay) and canary machinery.',
-    time: '1-2 weeks',
-  },
-];
+  { context: 'skeleton', phase: 1, weeks: '2' },
+  { context: 'hardening', phase: 2, weeks: '2' },
+  { context: 'video', phase: 3, weeks: '2_to_3' },
+  { context: 'agent', phase: 4, weeks: '2_to_3' },
+  { context: 'eval', phase: 5, weeks: '1_to_2' },
+] as const;
 
-const Phases: React.FunctionComponent = () => (
-  <table className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
-    <caption className='kicl-hidden'>Build phases, scope and time</caption>
-    <thead>
-      <tr>
-        <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
-          Phase
-        </th>
-        <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
-          Scope
-        </th>
-        <th className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)} scope='col'>
-          Time
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {PHASES.map(({ phase, scope, time }) => (
-        <tr key={phase}>
+const Phases: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
+  return (
+    <table className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
+      <caption className='kicl-hidden'>
+        {t('build_plan.phases.caption')}
+      </caption>
+      <thead>
+        <tr>
           <th
-            className={classNames(
-              CELL_CLASS_NAME,
-              'kicl-font-weight',
-              'kicl-text-align-start'
-            )}
-            scope='row'
+            className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)}
+            scope='col'
           >
-            {phase}
+            {t('label', { context: 'phase' })}
           </th>
-          <td className={CELL_CLASS_NAME}>{scope}</td>
-          <td className={classNames(CELL_CLASS_NAME, 'kicl-text-nowrap')}>
-            {time}
-          </td>
+          <th
+            className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)}
+            scope='col'
+          >
+            {t('label', { context: 'scope' })}
+          </th>
+          <th
+            className={classNames(CELL_CLASS_NAME, TH_CLASS_NAME)}
+            scope='col'
+          >
+            {t('label', { context: 'time' })}
+          </th>
         </tr>
-      ))}
-    </tbody>
-  </table>
-);
+      </thead>
+      <tbody>
+        {PHASES.map(({ context, phase, weeks }) => (
+          <tr key={phase}>
+            <th
+              className={classNames(
+                CELL_CLASS_NAME,
+                'kicl-font-weight',
+                'kicl-text-align-start'
+              )}
+              scope='row'
+            >
+              {phase}
+            </th>
+            <td className={CELL_CLASS_NAME}>
+              {t('build_plan.phases.scope', { context })}
+            </td>
+            <td className={classNames(CELL_CLASS_NAME, 'kicl-text-nowrap')}>
+              {t('build_plan.phases.weeks', { context: weeks })}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
 export { CLASS_NAME, Phases };

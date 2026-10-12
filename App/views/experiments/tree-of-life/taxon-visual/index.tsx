@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 import {
   useQuery,
   useSubscription,
@@ -23,7 +26,7 @@ import {
 import { Plate, announcementFor } from './plate';
 
 // Constants
-import { ERROR_MESSAGES, messageKey } from './constants';
+import { messageKey } from './constants';
 
 const DEBOUNCE_MS = 500;
 
@@ -51,6 +54,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
   isOrigin = false,
   onSubtree,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const eligible = isTaxonVisualEligible(node, isOrigin);
   const name = labelFor(node);
   const rank = displayRank(node.rank) || null;
@@ -154,9 +158,9 @@ const TaxonVisualPanel: React.FC<Props> = ({
       <Status
         in
         level='info'
-        title='Plate'
+        title={t('title', { context: 'plate' })}
         headingLevel='h3'
-        message='Pick a named taxon and one will be drawn for it.'
+        message={t('plate', { context: 'pick' })}
         align='start'
         property='fade'
       />
@@ -179,13 +183,18 @@ const TaxonVisualPanel: React.FC<Props> = ({
         failure is announced. A region that mounts with its text is not.
       */}
       <p className='kicl-hidden' aria-live='polite'>
-        {announcementFor({ imageUrl, isGenerating, name })}
+        {t('plate', {
+          context: announcementFor({ imageUrl, isGenerating }),
+          name: name || t('this_taxon'),
+        })}
       </p>
       <Plate
         failed={failed}
         imageUrl={imageUrl}
         isGenerating={isGenerating}
-        message={ERROR_MESSAGES[messageKey({ error: Boolean(error), status })]}
+        message={t('error', {
+          context: messageKey({ error: Boolean(error), status }),
+        })}
         name={name}
       />
     </>

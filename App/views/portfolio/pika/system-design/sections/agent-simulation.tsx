@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import type { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Text } from 'design/components';
@@ -15,102 +17,104 @@ import { type PlayerStep, SimulationPlayer } from './simulation-player';
 // Constants
 import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
+/** Credits the session may spend, and what it has spent when it closes. */
+const budget = 430;
+const spent = 222;
+
+const DRAFTS = [1, 2, 3];
+
 /**
  * One agent session through the Part 2 plane — the draft ladder, a
  * mid-session steer, and the governor's budget gate ahead of the hero
  * render. Tool calls execute as ordinary Part 1 jobs throughout.
  */
-const STEPS: PlayerStep[] = [
+const steps = (t: TFunction<'pika'>): PlayerStep[] => [
   {
-    log: 'user brief — "a 5-move fitness short with my character"',
+    log: t('watch_the_agent_work.log.brief'),
     active: ['chat'],
-    chip: '0 / 430 spent',
+    chip: t('watch_the_agent_work.chip_spent', { budget, spent: 0 }),
   },
+  { log: t('watch_the_agent_work.log.context'), active: ['art', 'sess'] },
+  { log: t('watch_the_agent_work.log.plan'), active: ['art', 'tools'] },
+  { log: t('watch_the_agent_work.log.priced'), active: ['gov'] },
   {
-    log: 'turn 1 · context assembled — media summaries, never raw video',
-    active: ['art', 'sess'],
-  },
-  {
-    log: 'plan: three draft variations at draft tier',
-    active: ['art', 'tools'],
-  },
-  {
-    log: 'governor prices the turn from cost models — 36 credits, approved',
-    active: ['gov'],
-  },
-  {
-    log: 'draft tool calls become ordinary jobs',
+    log: t('watch_the_agent_work.log.jobs'),
     active: ['tools', 'jobs', 'orch'],
   },
   {
-    log: 'drafts rendering — low resolution, short clips',
+    log: t('watch_the_agent_work.log.rendering'),
     active: ['orch', 'pad'],
     dot: [0, 'running'],
   },
   {
-    log: 'draft 1 ready',
+    log: t('watch_the_agent_work.log.draft_ready', { number: 1 }),
     active: ['pad', 's3'],
     dot: [0, 'done'],
-    chip: '12 / 430 spent',
+    chip: t('watch_the_agent_work.chip_spent', { budget, spent: 12 }),
   },
   {
-    log: 'draft 2 ready',
+    log: t('watch_the_agent_work.log.draft_ready', { number: 2 }),
     active: ['pad', 's3'],
     dot: [1, 'done'],
-    chip: '24 / 430 spent',
+    chip: t('watch_the_agent_work.chip_spent', { budget, spent: 24 }),
   },
   {
-    log: 'draft 3 ready',
+    log: t('watch_the_agent_work.log.draft_ready', { number: 3 }),
     active: ['pad', 's3'],
     dot: [2, 'done'],
-    chip: '36 / 430 spent',
+    chip: t('watch_the_agent_work.chip_spent', { budget, spent: 36 }),
   },
+  { log: t('watch_the_agent_work.log.interrupt'), active: ['chat'] },
+  { log: t('watch_the_agent_work.log.edit'), active: ['art', 'sess', 'gov'] },
   {
-    log: 'user interrupts — "warmer lighting on the second one"',
-    active: ['chat'],
-  },
-  {
-    log: 'turn 2 · image.edit against draft 2 lineage — 6 credits, approved',
-    active: ['art', 'sess', 'gov'],
-  },
-  {
-    log: 'draft 2b ready — user approves the direction',
+    log: t('watch_the_agent_work.log.approved'),
     active: ['jobs', 'pad', 's3', 'chat'],
     dot: [1, 'done'],
-    chip: '42 / 430 spent',
+    chip: t('watch_the_agent_work.chip_spent', { budget, spent: 42 }),
   },
   {
-    log: 'turn 3 · hero render requested — Seedance tier, 180 credits',
+    log: t('watch_the_agent_work.log.hero_requested'),
     active: ['art', 'tools'],
     dot: [3, 'queued'],
   },
   {
-    log: 'governor blocks — hero tier needs explicit confirmation',
+    log: t('watch_the_agent_work.log.blocked'),
     failed: ['gov'],
     dot: [3, 'retry'],
   },
   {
-    log: 'user confirms — "430 credits / Upgrade" moment from the mockups',
+    log: t('watch_the_agent_work.log.confirmed', { budget }),
     active: ['chat', 'gov'],
   },
   {
-    log: 'hero render — one job, on the approved direction only',
+    log: t('watch_the_agent_work.log.hero_rendering'),
     active: ['jobs', 'orch', 'pad'],
     dot: [3, 'running'],
   },
   {
-    log: 'hero ready — session closes at 222 of 430 credits',
+    log: t('watch_the_agent_work.log.hero_ready', { budget, spent }),
     active: ['s3', 'cred'],
     dot: [3, 'done'],
-    chip: '222 / 430 spent',
+    chip: t('watch_the_agent_work.chip_spent', { budget, spent }),
   },
-  {
-    log: 'trace logged — replayable for the eval harness',
-    active: ['eval', 'obs'],
-  },
+  { log: t('watch_the_agent_work.log.trace'), active: ['eval', 'obs'] },
 ];
 
 const AgentSimulation: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
+  const spec = useMemo(() => agentPlane(t), [t]);
+  const scenario = useMemo(() => steps(t), [t]);
+  const dotLabels = useMemo(
+    () => [
+      ...DRAFTS.map((number) =>
+        t('watch_the_agent_work.dot_draft', { number })
+      ),
+      t('watch_the_agent_work.dot_hero'),
+    ],
+    [t]
+  );
+
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.watchTheAgentWork}>
@@ -123,22 +127,16 @@ const AgentSimulation: React.FunctionComponent = () => {
           id={SECTION_ID.watchTheAgentWork}
           is='h2'
         >
-          Watch the agent work
+          {t('title', { context: 'watch_the_agent_work' })}
         </Heading>
-        <Text>
-          One agent session through the plane above. The agent renders three
-          cheap drafts, the user steers mid-session, and the governor holds the
-          expensive render until the user confirms. The hero pass runs once on
-          the approved direction, and the session ends at 222 of 430 credits.
-        </Text>
+        <Text>{t('watch_the_agent_work.intro', { budget, spent })}</Text>
         <SimulationPlayer
-          chipLabel='budget'
-          chipStart='430 credits'
-          dotLabels={['draft 1', 'draft 2', 'draft 3', 'hero']}
-          idleHint='Press run to start a session.'
-          runLabel='Run a session'
-          spec={agentPlane}
-          steps={STEPS}
+          chipStart={t('watch_the_agent_work.chip_budget', { budget })}
+          dotLabels={dotLabels}
+          idleHint={t('hint', { context: 'session' })}
+          runLabel={t('action', { context: 'run_session' })}
+          spec={spec}
+          steps={scenario}
         />
       </section>
     </Layout>

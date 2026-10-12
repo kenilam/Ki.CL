@@ -1,0 +1,44 @@
+{
+  "action_copy_link": "Copy link to this track",
+  "action_next": "Next track",
+  "action_play": "Play {{title}}",
+  "action_play_random": "Play a random song",
+  "article": {
+    "address": {
+      "crossfade": "When the track changes, the old one keeps playing until the new one has loaded. Then they crossfade over three seconds.",
+      "gesture": "Browsers won’t start audio until the person has interacted with the page, so a `/play`{secondary} link opened from somewhere else lands on the track and waits for one click.",
+      "play": "`/play`{secondary} at the end of a track’s address means it’s playing. Pause is a link back to the track. Skip links to the next one, which is picked as soon as the current track starts. Back and forward work, and a copied link opens the same track."
+    },
+    "data": {
+      "graphql": "The original plan, while I was still using Audius, was to query GraphQL for the next track. That can come back if the catalogue grows.",
+      "route": "This page doesn’t use GraphQL like the rest of the site. The catalogue is compiled into the page, and the audio comes from the storage bucket through the site’s `/assets/static`{secondary} route."
+    },
+    "music": {
+      "generated": "Before that, the page generated its own music: a seeded synth playing chords and a melody over sampled piano. It was a lot of code to keep one station running, and I never got the piano samples into the bucket anyway, so I cut it.",
+      "hosting": "I host them because a page can only analyse audio from its own origin, or from a server that explicitly allows it. Streamed from anywhere else, the tracks would play but the analyser would get nothing.",
+      "others": "I looked at Audius and Jamendo first because their catalogues are much bigger. The machines I built this on couldn’t reach either service, so I went with a collection I could host myself.",
+      "source": "The tracks come from [{{name}}]({{url}}): {{tracks}} tracks Bilal Tahir generated with Suno and released into the public domain. I copied them into the site’s storage bucket and serve them from there."
+    },
+    "picture": {
+      "analyser": "For each frame, the page reads a few values from the audio analyser: overall energy, low, mid and high frequency energy, brightness, and whether a note just landed. It also passes the shader a {{bands}}-band spectrum as a texture.",
+      "colours": "The colours come from the stylesheet: six inks over a paper colour for each theme. A Bayer dither on top matches the rest of the site.",
+      "dwell": "A scene normally stays up for 24 to 38 seconds. If the music moves into a new section, it can change sooner, and the cut waits up to two and a half seconds for a note so it lands with the music.",
+      "random": "The next scene is random, and each track gets its own camera drift and a warmer or cooler lean. An earlier version picked scenes by genre. I dropped that because it was more code and the result didn’t look any better.",
+      "shader": "Everything on screen is drawn by one fragment shader. It has thirteen scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and a few others) and blends between two at a time."
+    },
+    "what_this_is": {
+      "browser": "The browser listens to the track, pulls a few numbers out of the audio and feeds them into a shader. There’s no machine learning and no server doing the work.",
+      "experiment": "A small experiment I made for fun. The screen moves with whatever lo-fi track is playing."
+    }
+  },
+  "attribution": "{{name}} by Bilal Tahir · CC0",
+  "error_playback": "Could not play this track. Try again.",
+  "label_player": "Player",
+  "label_volume": "Volume",
+  "lede": "{{tracks}} lo-fi tracks from a public-domain collection, each drawn while it plays in one of thirteen scenes. Press play once and it keeps going.",
+  "source": "{{name}} · {{category}}",
+  "title_address": "The address is the player",
+  "title_data": "Where the data comes from",
+  "title_music": "The music",
+  "title_picture": "The picture"
+}

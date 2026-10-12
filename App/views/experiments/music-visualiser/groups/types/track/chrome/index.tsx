@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Layout } from 'design/components';
@@ -24,10 +25,6 @@ import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constan
 
 const CLASS_NAME = `${VIEW}__chrome`;
 
-const COPY = {
-  player: 'Player',
-};
-
 /**
  * The player over the picture: what is playing, and the controls. They fade
  * once the track sounds and the listener has been still, and come back on
@@ -35,6 +32,7 @@ const COPY = {
  */
 const Chrome: React.FunctionComponent = () => {
   const { control } = useTrackContext();
+  const { t } = useTranslation('music-visualiser');
   const idle = useIdle(control.playing && !control.loading);
   const { skip, stop } = control;
 
@@ -72,7 +70,7 @@ const Chrome: React.FunctionComponent = () => {
       justifyItems='start'
     >
       <section
-        aria-label={COPY.player}
+        aria-label={t('label', { context: 'player' })}
         className={classNames(
           CLASS_NAME,
           'kicl-inline-size-full',

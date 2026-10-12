@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -15,37 +16,37 @@ import { CLASS_NAME as CHAT } from '@/views/experiments/image-agent/chat/constan
 
 const CLASS_NAME = `${CHAT}__header`;
 
-const COPY = {
-  back: 'Go Back',
-};
-
 /** Stuck to the top of the conversation: the way back to the start page. */
-const Header: React.FunctionComponent = () => (
-  <Layout autoFlow='row' gap='narrow'>
-    <header
-      className={classNames(
-        CLASS_NAME,
-        'kicl-backdrop',
-        'kicl-border-radius-md',
-        'kicl-inset-block-start',
-        'kicl-position-sticky',
-        'kicl-padding-block-narrow',
-        'kicl-padding-inline-narrow',
-        'kicl-z-index-floating'
-      )}
-    >
-      <HyperLink
-        before={<Ri.RiArrowLeftSFill aria-hidden />}
-        end
-        lookLikeButton
-        to={toPath()}
-        variant='secondary'
-        size='small'
+const Header: React.FunctionComponent = () => {
+  const { t: common } = useTranslation();
+
+  return (
+    <Layout autoFlow='row' gap='narrow'>
+      <header
+        className={classNames(
+          CLASS_NAME,
+          'kicl-backdrop',
+          'kicl-border-radius-md',
+          'kicl-inset-block-start',
+          'kicl-position-sticky',
+          'kicl-padding-block-narrow',
+          'kicl-padding-inline-narrow',
+          'kicl-z-index-floating'
+        )}
       >
-        {COPY.back}
-      </HyperLink>
-    </header>
-  </Layout>
-);
+        <HyperLink
+          before={<Ri.RiArrowLeftSFill aria-hidden />}
+          end
+          lookLikeButton
+          to={toPath()}
+          variant='secondary'
+          size='small'
+        >
+          {common('action', { context: 'go_back' })}
+        </HyperLink>
+      </header>
+    </Layout>
+  );
+};
 
 export { Header };

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Bubble, Text } from 'design/components';
@@ -16,11 +17,6 @@ import { useElapsed } from './use-elapsed';
 import { CLASS_NAME as CONVERSATION } from '@/views/experiments/image-agent/chat/conversation/constants';
 
 const CLASS_NAME = `${CONVERSATION}__pending`;
-
-const COPY = {
-  reading: 'Reading your message.',
-  elapsed: (seconds: number) => `${seconds}s`,
-};
 
 /** Seconds before the elapsed time shows. */
 const SHOW_ELAPSED_AFTER = 3;
@@ -41,6 +37,8 @@ type Props = {
  */
 const Pending = React.forwardRef<HTMLElement, Props>(
   ({ activity, since }, ref) => {
+    const { t } = useTranslation('image-agent');
+
     const seconds = useElapsed(since);
 
     return (
@@ -50,7 +48,11 @@ const Pending = React.forwardRef<HTMLElement, Props>(
         ref={ref}
         variant='ghost'
       >
-        <MessageText busy reveal text={activity ?? COPY.reading} />
+        <MessageText
+          busy
+          reveal
+          text={activity ?? t('status', { context: 'reading' })}
+        />
         {seconds >= SHOW_ELAPSED_AFTER ? (
           <Text
             aria-hidden
@@ -62,7 +64,7 @@ const Pending = React.forwardRef<HTMLElement, Props>(
               'kicl-color-grey-dark'
             )}
           >
-            {COPY.elapsed(seconds)}
+            {t('elapsed', { seconds })}
           </Text>
         ) : null}
       </Bubble>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { List, ListItem, Text } from 'design/components';
@@ -19,6 +20,8 @@ const CLASS_NAME = `${SYSTEM_DESIGN}__simulation-log`;
 
 /** Numbered event log that keeps the latest entry in view. */
 const Log: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   const { idleHint, seen } = useSimulation();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -47,7 +50,11 @@ const Log: React.FunctionComponent = () => {
           {seen.map((s, index) => (
             <ListItem key={index}>
               {/* The list numbers the entries for assistive tech. */}
-              <span aria-hidden>{String(index + 1).padStart(2, '0')} · </span>
+              <span aria-hidden>
+                {t('log_number', {
+                  number: String(index + 1).padStart(2, '0'),
+                })}
+              </span>
               {s.log}
             </ListItem>
           ))}

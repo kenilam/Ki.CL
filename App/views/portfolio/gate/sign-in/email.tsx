@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -16,6 +17,8 @@ import {
 import type { SignInValues } from './schema';
 
 const Email: React.FunctionComponent = () => {
+  const { t } = useTranslation('portfolio');
+  const { t: common } = useTranslation();
   const { control } = useFormContext<SignInValues>();
 
   return (
@@ -24,12 +27,12 @@ const Email: React.FunctionComponent = () => {
       name='Email'
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Email</FormLabel>
+          <FormLabel>{common('label', { context: 'email' })}</FormLabel>
           <FormControl>
             <EmailInput
               {...field}
               autoComplete='username'
-              placeholder='you@example.com'
+              placeholder={t('placeholder', { context: 'email' })}
             />
           </FormControl>
           <FormMessage />

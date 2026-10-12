@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Libraries
 import Highlighter from 'react-highlight-words';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -22,10 +23,6 @@ import { usePast } from './use-past';
 // Constants
 import { toLabel, toPath } from '@/views/experiments/image-agent/constants';
 
-const COPY = {
-  title: 'Past conversations',
-};
-
 type Props = {
   /**
    * Text from the field. Only conversations containing every word are shown.
@@ -35,6 +32,7 @@ type Props = {
 
 /** Earlier conversations to go back to, narrowed by what is being typed. */
 const Past: React.FunctionComponent<Props> = ({ query }) => {
+  const { t } = useTranslation('image-agent');
   const id = useId();
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   const threads = usePast().filter((thread) => {
@@ -53,7 +51,7 @@ const Past: React.FunctionComponent<Props> = ({ query }) => {
       <Layout autoFlow='row' gap='none' justifyItems='start'>
         <section aria-labelledby={id}>
           <Heading id={id} is='h2' dense>
-            {COPY.title}
+            {t('title', { context: 'past' })}
           </Heading>
           <List gap='narrow'>
             {threads.map((thread) => (

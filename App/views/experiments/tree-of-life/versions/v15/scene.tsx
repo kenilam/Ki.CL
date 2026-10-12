@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Three
 import { Fiber } from '@/three';
 
@@ -32,6 +35,7 @@ import {
 } from './constants';
 
 const Scene: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const { chains, rooted } = useTreeOfLifeContext();
 
   /*
@@ -44,7 +48,7 @@ const Scene: React.FunctionComponent = () => {
 
   return (
     <Fiber.Canvas
-      aria-label='The tree of life around the taxon in view'
+      aria-label={t('label', { context: 'scene' })}
       role='img'
       camera={{ position: [0, 0, OPENING_DISTANCE], fov: 50 }}
       dpr={[1, 2]}

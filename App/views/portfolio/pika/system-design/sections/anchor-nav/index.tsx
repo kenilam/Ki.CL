@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Layout, Navigation } from 'design/components';
@@ -23,20 +24,18 @@ import {
 
 const CLASS_NAME = `${DEFAULT_CLASS_NAME}__anchor-nav`;
 
-const COPY = {
-  label: 'Sections',
-};
-
 const SECTIONS = [
-  { id: SECTION_ID.walkthrough, label: 'Walkthrough' },
-  { id: SECTION_ID.partOne, label: 'Part 1 — The App platform' },
-  { id: SECTION_ID.watchItRun, label: 'Watch it run' },
-  { id: SECTION_ID.partTwo, label: 'Part 2 — The agent experience' },
-  { id: SECTION_ID.watchTheAgentWork, label: 'Watch the agent work' },
-  { id: SECTION_ID.estimate, label: 'Estimate & build plan' },
-];
+  { context: 'walkthrough', id: SECTION_ID.walkthrough },
+  { context: 'part_one', id: SECTION_ID.partOne },
+  { context: 'watch_it_run', id: SECTION_ID.watchItRun },
+  { context: 'part_two', id: SECTION_ID.partTwo },
+  { context: 'watch_the_agent_work', id: SECTION_ID.watchTheAgentWork },
+  { context: 'estimate', id: SECTION_ID.estimate },
+] as const;
 
 const AnchorNav: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   const [active, setActive] = useState<string>(SECTIONS[0].id);
 
   /* The links scroll natively; this only tracks which heading is in the top half. */
@@ -65,7 +64,7 @@ const AnchorNav: React.FunctionComponent = () => {
     <AnchorNavContext.Provider value={{ active }}>
       <Layout alignContent='center'>
         <Navigation
-          aria-label={COPY.label}
+          aria-label={t('sections')}
           className={classNames(
             CLASS_NAME,
             'kicl-position-fixed',
@@ -77,8 +76,8 @@ const AnchorNav: React.FunctionComponent = () => {
           gap='narrow'
           justifyItems='end'
         >
-          {SECTIONS.map(({ id, label }) => (
-            <Item id={id} key={id} label={label} />
+          {SECTIONS.map(({ context, id }) => (
+            <Item id={id} key={id} label={t('section', { context })} />
           ))}
         </Navigation>
       </Layout>

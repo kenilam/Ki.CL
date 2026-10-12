@@ -1,29 +1,30 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Details, Heading, Text } from 'design/components';
 
 /** What this is: the opening section, open on arrival. */
-const WhatThisIs: React.FunctionComponent = () => (
-  <Details
-    gap='narrow'
-    open
-    summary={
-      <Heading className='kicl-font-size-large' dense is='h3'>
-        What this is
-      </Heading>
-    }
-  >
-    <Text is='p'>
-      A small experiment I made for fun. The screen moves with whatever lo-fi
-      track is playing.
-    </Text>
-    <Text is='p'>
-      The browser listens to the track, pulls a few numbers out of the audio and
-      feeds them into a shader. There’s no machine learning and no server doing
-      the work.
-    </Text>
-  </Details>
-);
+const WhatThisIs: React.FunctionComponent = () => {
+  const { t } = useTranslation('music-visualiser');
+  const { t: common } = useTranslation();
+
+  return (
+    <Details
+      gap='narrow'
+      open
+      summary={
+        <Heading className='kicl-font-size-large' dense is='h3'>
+          {common('title', { context: 'what_this_is' })}
+        </Heading>
+      }
+    >
+      <Text is='p'>{t('article.what_this_is.experiment')}</Text>
+      <Text is='p'>{t('article.what_this_is.browser')}</Text>
+    </Details>
+  );
+};
 
 export { WhatThisIs };

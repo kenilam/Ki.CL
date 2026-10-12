@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Button, Layout, Spinner, Text } from 'design/components';
@@ -15,13 +16,8 @@ import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
 // Constants
 import { CLASS_NAME } from './constants';
 
-const COPY = {
-  label: 'animation',
-  land: 'Land the tree at once',
-  play: 'Play the tree out branch by branch',
-};
-
 const Controls: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const { animate, loading, setAnimate } = useTreeOfLifeContext();
 
   return (
@@ -38,7 +34,7 @@ const Controls: React.FunctionComponent = () => {
       justifyContent='end'
       gap='narrower'
     >
-      <section aria-label='Animation'>
+      <section aria-label={t('label', { context: 'animation' })}>
         <Spinner size='small' in={loading} position='inline' backdrop={false} />
         <Button
           unstyled
@@ -48,11 +44,11 @@ const Controls: React.FunctionComponent = () => {
           gap='narrower'
           className={animate ? 'kicl-color-green' : 'kicl-color-grey-dark'}
           aria-pressed={animate}
-          title={animate ? COPY.land : COPY.play}
+          title={t('hint', { context: animate ? 'land' : 'play' })}
           onClick={() => setAnimate((current) => !current)}
         >
           <Text is='span' unstyled className='kicl-font-size-small'>
-            {COPY.label}
+            {t('animation')}
           </Text>
         </Button>
       </section>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Frame, List } from 'design/components';
@@ -42,6 +43,7 @@ const SCREENS = EXPERIMENTS.map((experiment, index) => ({
  * block meets the next whatever the fonts and viewport.
  */
 const Stage: React.FunctionComponent = () => {
+  const { t: common } = useTranslation();
   const list = useRef<HTMLOListElement>(null);
   const [block, setBlock] = useState<number | null>(null);
 
@@ -106,7 +108,10 @@ const Stage: React.FunctionComponent = () => {
         </Frame>
       </div>
       <Pages
-        pages={SCREENS.map(({ plate, title }) => ({ id: plate, label: title }))}
+        pages={SCREENS.map(({ context, plate }) => ({
+          id: plate,
+          label: common('experiment', { context }),
+        }))}
       />
       {SCREENS.map((screen, index) => (
         <Anchor id={screen.plate} index={index} key={screen.to} />

@@ -8,6 +8,9 @@ import React, {
   useState,
 } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Spec
 import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
 import type { Shape } from '@/views/experiments/factory-arm/scene/obstacles/constants';
@@ -17,7 +20,7 @@ import { PRESETS } from './presets';
 import { last, log as kept, useSaved } from './store';
 
 // Spec
-import type { Entry, Preset, Setup } from './spec';
+import type { Entry, Preset, Setup, Step } from './spec';
 
 type Tab = 'preset' | 'manual' | 'log';
 
@@ -43,7 +46,7 @@ type Value = {
   /** Every step the cell took, newest first. */
   log: Entry[];
   /** Logs a step; `start` marks the one that started its run. */
-  note: (text: string, level?: Entry['level'], start?: boolean) => void;
+  note: (step: Step, level?: Entry['level'], start?: boolean) => void;
   clearLog: () => void;
   cell: React.RefObject<Cell | null>;
   attach: (cell: Cell | null) => void;
@@ -56,7 +59,7 @@ type Value = {
   /** Counts runs; the cell is built again whenever it goes up. */
   run: number;
   /** Builds the cell again from `setup`. */
-  proceed: (setup: Setup) => void;
+  proceed: (setup: Preset | Setup) => void;
   draft: Draft;
   setDraft: (draft: Draft) => void;
   presets: Preset[];
@@ -78,6 +81,17 @@ const Context = React.createContext<Value | null>(null);
 
 const [FIRST] = PRESETS;
 
+/** The step that starts a run from `setup`, named by what it was built from. */
+const started = (setup: Preset | Setup): Step => {
+  if (!('id' in setup)) {
+    return { context: 'started_manual' };
+  }
+
+  return setup.context
+    ? { context: `started_${setup.context}` }
+    : { context: 'started', values: { name: setup.name } };
+};
+
 /** Wider than a tablet, where the panel stands beside the stage (`query('>tablet')`). */
 const WIDE = '(min-width: 737px)';
 
@@ -89,6 +103,7 @@ const WIDE = '(min-width: 737px)';
 const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
   children,
 }) => {
+  const { t } = useTranslation('factory-arm');
   const { discard: drop, save: keep, saved } = useSaved();
 
   // The page opens on the last run, as it was left, or on the first preset.
@@ -114,16 +129,16 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
   useEffect(() => kept.write(log), [log]);
 
   const note = useCallback(
-    (text: string, level?: Entry['level'], start?: boolean) => {
+    (step: Step, level?: Entry['level'], start?: boolean) => {
       counted.current += 1;
 
       const entry = {
         at: Date.now(),
         id: counted.current,
         level,
+        note: step,
         run: current.current,
         start,
-        text,
       };
 
       setLog((current) => [entry, ...current].slice(0, LIMIT));
@@ -142,9 +157,9 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
   const [open, setOpen] = useState(() => matchMedia(WIDE).matches);
 
   const proceed = useCallback(
-    (setup: Setup) => {
+    (setup: Preset | Setup) => {
       // A setup made by hand carries no id; a preset does.
-      const id = 'id' in setup ? (setup as Preset).id : null;
+      const id = 'id' in setup ? setup.id : null;
 
       setActive(id);
       setEdited(false);
@@ -153,11 +168,7 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
       setDraft({ pile: setup.pile, stacks: setup.stacks });
       setRun((count) => count + 1);
       current.current += 1;
-      note(
-        `Started ${'name' in setup ? (setup as Preset).name : 'a manual setup'}`,
-        'info',
-        true
-      );
+      note(started(setup), 'info', true);
     },
     [note]
   );
@@ -180,7 +191,7 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
     [drop]
   );
 
-  const next = `Saved ${saved.length + 1}`;
+  const next = t('preset', { context: 'saved', number: saved.length + 1 });
 
   // The running cell is what was saved, so the new preset is the active one.
   const save = useCallback(
@@ -191,7 +202,7 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
       keep(preset);
       setApplied(preset);
       last.write({ setup: preset, active: id, edited: false });
-      note(`Saved the cell as ${name?.trim() || next}`, 'info');
+      note({ context: 'saved', values: { name: preset.name } }, 'info');
       setActive(id);
       setEdited(false);
       setTab('preset');

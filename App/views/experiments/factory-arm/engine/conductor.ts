@@ -10,7 +10,7 @@ import { CONVEYOR } from '@/views/experiments/factory-arm/scene/constants';
 // Partials
 import { along, speed, type Waypoint } from './motion';
 import { clears, type Move, order, type Plan, type Refusal } from './planner';
-import type { Case, World } from './spec';
+import type { Case, Note, Place, World } from './spec';
 import { over, place, remove } from './world';
 
 /** How close the pad must be to a waypoint to count as there, in metres. */
@@ -52,7 +52,7 @@ type Level = 'confirm' | 'error' | 'info' | 'warning';
 
 /** What the cell around the arm is told: steps for the log, and what to light. */
 type Event =
-  | { type: 'note'; text: string; level: Level }
+  | { type: 'note'; note: Note; level: Level }
   | { type: 'refuse'; target: string; across: string[] }
   | { type: 'unpark'; target: string }
   | { type: 'alarm' }
@@ -71,16 +71,13 @@ type Frame = {
 /** Where to drive the pad, whether to hold, and the heading to turn it to. */
 type Command = { target: Point; grip: number; facing: number };
 
-/** How a case reads in the log. */
-const label = (id: string) => `case ${id}`;
-
-/** Where a point is, in words, for the log. */
-const where = (point: Point) =>
+/** Where a point is, for the log. */
+const where = (point: Point): Place =>
   Math.abs(point.x - CONVEYOR.x) < CONVEYOR.width
-    ? 'the belt'
+    ? 'belt'
     : point.z > 1
-      ? 'the buffer'
-      : 'the pallet';
+      ? 'buffer'
+      : 'pallet';
 
 /** The cell after `move`, its case set down; `holding` it already off the pallet. */
 const after = (cell: World, move: Move, own: Case) => {
@@ -165,8 +162,11 @@ const conduct = ({
   } = { next: null, replan: null, rest: null };
 
   const emit = (event: Event) => outbox.push(event);
-  const note = (text: string, level: Level) =>
-    emit({ type: 'note', text, level });
+  const note = (
+    context: Note['context'],
+    values: Note['values'],
+    level: Level
+  ) => emit({ type: 'note', note: { context, values }, level });
 
   /** Works out `clearing` again, after a click or once a case has moved. */
   const refresh = () => {
@@ -207,11 +207,8 @@ const conduct = ({
     state.parked.set(target, across);
     emit({ type: 'refuse', target, across });
     note(
-      (reason === 'room'
-        ? `No room on the buffer for ${label(id)}`
-        : `No clear path for ${label(id)}`) +
-        (across.length ? `: ${across.join(', ')} in the way` : '') +
-        (id !== target ? `; ${label(target)} waits` : ''),
+      `${reason === 'room' ? 'no_room' : 'no_path'}${across.length ? '_across' : ''}${id !== target ? '_waits' : ''}`,
+      { across: across.join(', '), id, target },
       'error'
     );
   };
@@ -239,7 +236,7 @@ const conduct = ({
         if ('moves' in plan && state.parked.has(target)) {
           unpark(target);
           state.targets.push(target);
-          note(`Trying ${label(target)} again`, 'info');
+          note('retry', { id: target }, 'info');
         }
       });
     });
@@ -269,14 +266,14 @@ const conduct = ({
         if (halted) {
           halted = false;
           emit({ type: 'calm' });
-          note('Found a way; carrying on', 'confirm');
+          note('resumed', undefined, 'confirm');
         }
       } else if (state.holding) {
         // Holding a case with nowhere to take it: stop, and wait for the cell to change.
         if (!halted) {
           halted = true;
           emit({ type: 'alarm' });
-          note('Stopped: no clear way on with the case', 'error');
+          note('stopped', undefined, 'error');
         }
       } else {
         state.job = null;
@@ -378,7 +375,7 @@ const conduct = ({
 
         if (!waiting.has(target)) {
           waiting.add(target);
-          note(`Case ${target} waits for room on the buffer`, 'info');
+          note('waiting', { id: target }, 'info');
         }
       } else if ('refused' in plan) {
         // Not progress: the rest still waiting are refused in turn.
@@ -389,7 +386,8 @@ const conduct = ({
         waiting.delete(target);
         plan.moves.forEach(({ id, to }) =>
           note(
-            `Moving ${label(id)} to ${to === 'belt' ? 'the belt' : 'the buffer, out of the way'}`,
+            to === 'belt' ? 'moving_belt' : 'moving_buffer',
+            { id },
             to === 'belt' ? 'confirm' : 'warning'
           )
         );
@@ -412,7 +410,8 @@ const conduct = ({
         state.world = remove(state.world, move.id);
         refresh();
         note(
-          `Picked ${label(move.id)} from ${where(move.from)}`,
+          `picked_${where(move.from)}`,
+          { id: move.id },
           move.to === 'belt' ? 'confirm' : 'warning'
         );
       }
@@ -441,7 +440,8 @@ const conduct = ({
       state.holding = null;
       refresh();
       note(
-        `Set ${label(move.id)} down on ${where(move.at)}`,
+        `set_down_${where(move.at)}`,
+        { id: move.id },
         move.to === 'belt' ? 'confirm' : 'warning'
       );
 
@@ -471,8 +471,8 @@ const conduct = ({
     const inWay = order(state.world, id).length - 1;
 
     note(
-      `Queued ${label(id)} for the belt` +
-        (inWay > 0 ? `, ${inWay} in the way first` : ''),
+      inWay > 0 ? 'queued_blocked' : 'queued',
+      { count: inWay, id },
       'confirm'
     );
   };

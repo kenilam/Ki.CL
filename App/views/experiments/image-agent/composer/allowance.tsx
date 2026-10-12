@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // API
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
@@ -11,16 +14,6 @@ import {
   type BadgeProps,
 } from 'design/components';
 
-const COPY = {
-  left: (remaining: number) => {
-    if (!remaining) {
-      return 'none left';
-    }
-
-    return `${remaining} image${remaining > 1 ? 's' : ''} left`;
-  },
-};
-
 type Props = {
   /** The agent is replying. The count updates when it finishes. */
   busy: boolean;
@@ -28,6 +21,8 @@ type Props = {
 
 /** Images left today, shown under the field. */
 const Allowance: React.FunctionComponent<Props> = ({ busy }) => {
+  const { t } = useTranslation('image-agent');
+
   const { data, refetch } = useQuery(Kicl_ImageAgentAllowanceDocument);
   const allowance = data?.ImageAgentAllowance;
 
@@ -56,8 +51,8 @@ const Allowance: React.FunctionComponent<Props> = ({ busy }) => {
   return (
     <Animation>
       <Badge level={level} size='small'>
-        <BadgeLabel>Allowance</BadgeLabel>
-        {COPY.left(allowance.remaining)}
+        <BadgeLabel>{t('label', { context: 'allowance' })}</BadgeLabel>
+        {t('images_left', { count: remaining })}
       </Badge>
     </Animation>
   );

@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import {
   useQuery,
@@ -138,6 +139,7 @@ const ViewportBridge: React.FunctionComponent<{
 };
 
 const Canvas: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [expandingId, setExpandingId] = useState<string | null>(null);
 
@@ -233,7 +235,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        Sphere from min(canvas W, H) · drag to rotate · tips on the shell
+        {t('caption', { context: 'v8' })}
       </Text>
     </figure>
   );

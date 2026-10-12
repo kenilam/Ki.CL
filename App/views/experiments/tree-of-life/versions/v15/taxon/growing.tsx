@@ -6,6 +6,9 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 import { THREE, Fiber, Three } from '@/three';
 
 // Context
@@ -148,6 +151,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
   onEntered,
   onExited,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const { animate, chains, focus } = useTreeOfLifeContext();
 
   /*
@@ -267,7 +271,10 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
    * origin, which outranks the lineage, which outranks a fan.
    */
   useEffect(() => {
-    const text = labelWithRank(taxon as TreeNode, isRoot);
+    const text = labelWithRank(
+      taxon as TreeNode,
+      isRoot ? t('origin') : undefined
+    );
 
     if (!text) {
       return undefined;
@@ -295,7 +302,7 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
     });
 
     return undefined;
-  }, [taxon, isRoot, nodeId, focus, chains, tip, size, form, color]);
+  }, [taxon, isRoot, nodeId, focus, chains, tip, size, form, color, t]);
 
   /*
    * Removal is keyed to the taxon alone, not to everything its label depends

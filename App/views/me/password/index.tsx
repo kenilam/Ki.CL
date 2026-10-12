@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 // Icons
 import * as Ri from 'react-icons/ri';
 
@@ -27,20 +29,9 @@ import { PasswordForm } from './form';
 // Hooks
 import { usePasswordChange } from './use-password-change';
 
-// Constants
-import { COPY } from './constants';
-
-const TITLES = {
-  loading: COPY.title,
-  idle: COPY.title,
-  waiting: COPY.waiting,
-  saving: COPY.saving,
-  done: COPY.done,
-  expired: COPY.expired,
-  failed: COPY.failed,
-};
-
 const Password: React.FunctionComponent = () => {
+  const { t } = useTranslation('me');
+  const { t: common } = useTranslation();
   const { me } = useAccount();
   const { reset, stage, start } = usePasswordChange();
 
@@ -59,22 +50,24 @@ const Password: React.FunctionComponent = () => {
               to='..'
               variant='secondary'
             >
-              {COPY.goBack}
+              {common('action', { context: 'go_back' })}
             </HyperLink>
           ) : null}
           {/* Announced as it changes: the answer arrives from another tab or device. */}
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
-            {TITLES[stage]}
+            {t('title', { context: stage })}
           </CardTitle>
           {stage === 'idle' && (
             <Animation>
-              <CardDescription>{COPY.description}</CardDescription>
+              <CardDescription>
+                {t('description', { context: 'idle' })}
+              </CardDescription>
             </Animation>
           )}
           {stage === 'waiting' && (
             <Animation>
               <CardDescription>
-                {COPY.sentTo} {me?.Email}. {COPY.keepOpen}
+                {t('description', { context: 'waiting', email: me?.Email })}
               </CardDescription>
             </Animation>
           )}
@@ -94,7 +87,7 @@ const Password: React.FunctionComponent = () => {
             {/* Go back is still above while it can be tried again, so only done links back. */}
             {ended ? (
               <Button onClick={reset} size='small'>
-                {COPY.again}
+                {t('action', { context: 'again' })}
               </Button>
             ) : (
               <HyperLink
@@ -103,7 +96,7 @@ const Password: React.FunctionComponent = () => {
                 to='..'
                 variant='secondary'
               >
-                {COPY.back}
+                {t('action', { context: 'back' })}
               </HyperLink>
             )}
           </CardFooter>

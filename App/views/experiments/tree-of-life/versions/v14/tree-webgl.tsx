@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { labelWithRank } from '@/views/experiments/tree-of-life/tree';
 
@@ -52,6 +53,7 @@ const TreeWebGL: React.FC<Props> = ({
   windButtonRef,
   blowGustRef,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rendererRef = useRef<TreeRenderer | null>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
@@ -245,7 +247,7 @@ const TreeWebGL: React.FC<Props> = ({
 
   const labeled = labelId ? layout.nodes.find((n) => n.id === labelId) : null;
   const labelText = labeled
-    ? labelWithRank(labeled.node, labeled.isOrigin)
+    ? labelWithRank(labeled.node, labeled.isOrigin ? t('origin') : undefined)
     : '';
 
   return (
@@ -261,7 +263,7 @@ const TreeWebGL: React.FC<Props> = ({
           'kicl-inline-size-full',
           'kicl-touch-action-none'
         )}
-        aria-label='Tree of Life map'
+        aria-label={t('label', { context: 'map' })}
         role='img'
       />
       <span

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Text } from 'design/components';
@@ -14,6 +15,8 @@ import { Prompts } from './prompts';
 import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
 
 const BuildPlan: React.FunctionComponent = () => {
+  const { t } = useTranslation('pika');
+
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.estimate}>
@@ -26,25 +29,11 @@ const BuildPlan: React.FunctionComponent = () => {
           id={SECTION_ID.estimate}
           is='h2'
         >
-          Estimate &amp; build plan
+          {t('title', { context: 'estimate' })}
         </Heading>
-        <Text>
-          These are calendar weeks. They assume I lead with coding agents doing
-          most of the implementation, Temporal Cloud handles orchestration so it
-          isn&apos;t built in-house, and one product engineer joins from week
-          three:
-        </Text>
+        <Text>{t('build_plan.assumptions')}</Text>
         <Phases />
-        <Text>
-          Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to
-          seven. That only holds because v1 is narrow: one region, two
-          providers, an internal-only Studio, and generation kept behind vendor
-          APIs. Provider-adapter edge cases are the long pole. Coding agents
-          speed up the skeleton and the agent loop but help much less with
-          debugging a flaky third-party webhook, so the middle phases carry most
-          of the schedule risk.
-        </Text>
-
+        <Text>{t('build_plan.estimate')}</Text>
         <Prompts />
       </section>
     </Layout>

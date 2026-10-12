@@ -1,7 +1,13 @@
 import * as v from 'valibot';
 
-export const DeleteSchema = v.object({
-  CurrentPassword: v.pipe(v.string(), v.minLength(1, 'Enter your password.')),
-});
+import type { TFunction } from 'i18next';
 
-export type DeleteValues = v.InferOutput<typeof DeleteSchema>;
+export const deleteSchema = (t: TFunction<'me'>) =>
+  v.object({
+    CurrentPassword: v.pipe(
+      v.string(),
+      v.minLength(1, t('error', { context: 'password' }))
+    ),
+  });
+
+export type DeleteValues = v.InferOutput<ReturnType<typeof deleteSchema>>;

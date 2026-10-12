@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Button, List, ListItem } from 'design/components';
@@ -9,13 +10,14 @@ import { Button, List, ListItem } from 'design/components';
 import { RootError } from '@/views/root-error';
 
 // Constants
-import { COPY, DELETE_ID } from '@/views/me/profile/constants';
+import { DELETE_ID } from '@/views/me/profile/constants';
 
 // Schema
 import type { DeleteValues } from './schema';
 
 /** The API's error, then cancel and delete. */
 const Actions: React.FunctionComponent = () => {
+  const { t: common } = useTranslation();
   const {
     formState: { isSubmitting },
   } = useFormContext<DeleteValues>();
@@ -37,7 +39,7 @@ const Actions: React.FunctionComponent = () => {
             type='button'
             variant='ghost'
           >
-            {COPY.cancel}
+            {common('action', { context: 'cancel' })}
           </Button>
         </ListItem>
         <ListItem>
@@ -48,7 +50,7 @@ const Actions: React.FunctionComponent = () => {
             type='submit'
             variant='secondary'
           >
-            {COPY.delete}
+            {common('action', { context: 'delete' })}
           </Button>
         </ListItem>
       </List>

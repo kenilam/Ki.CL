@@ -1,5 +1,8 @@
 import React, { useRef } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Three
 import { Drei, Fiber, THREE } from '@/three';
 
@@ -15,9 +18,6 @@ import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 // Kinematics
 import { forward } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
-// Constants
-import { COPY } from '@/views/experiments/factory-arm/constants';
-
 /**
  * A badge over what the arm can't do, following it if it moves: over the
  * gripper when the arm has stopped with no clear way forward or back, or on
@@ -25,6 +25,7 @@ import { COPY } from '@/views/experiments/factory-arm/constants';
  * hear; this one is for the eye, and lets clicks through to the scene.
  */
 const Notice: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { bodies, joints, skipped, stopped } = useFactoryArmContext();
 
   const anchor = useRef<THREE.Group>(null);
@@ -66,7 +67,7 @@ const Notice: React.FunctionComponent = () => {
               aria-hidden
               className={`kicl-color-${level}`}
             />
-            {stopped ? COPY.stopped.message : COPY.skipped}
+            {stopped ? t('stopped', { context: 'message' }) : t('skipped')}
           </Badge>
         </Animation>
       </Drei.Html>

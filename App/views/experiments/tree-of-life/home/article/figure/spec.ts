@@ -1,7 +1,6 @@
-import React from 'react';
-
 export type Props = {
   alt: string;
-  caption: React.ReactNode;
+  /** One line of inline Markdown. */
+  caption: string;
   data: string;
 };

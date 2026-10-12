@@ -1,0 +1,8 @@
+{
+  "description_denied": "This account can’t open this piece. Sign in with the credentials you were given for it.",
+  "description_shared": "This piece is shared with a small audience. Sign in with the credentials you were given.",
+  "error_email": "Enter a valid email address.",
+  "error_password": "Enter the password.",
+  "placeholder_email": "you@example.com",
+  "title": "Private portfolio"
+}

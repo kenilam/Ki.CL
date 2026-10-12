@@ -1,10 +1,10 @@
 import type { DiagramSpec as Spec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 /** Part 2 — the agent plane's data model, keyed into Part 1's tables. */
-const sessionModel: Spec = {
-  title: 'Agent session data model diagram',
-  description:
-    'Entity relationship diagram: a Session advances by Turns, each Turn issues Tool Calls, and every Tool Call executes as a Part 1 Job — so cost, retries, and lineage reuse the existing tables.',
+const sessionModel = (t: TFunction<'pika'>): Spec => ({
+  title: t('diagram.session_model.title'),
+  description: t('diagram.session_model.description'),
   width: 960,
   height: 400,
   nodes: [
@@ -19,7 +19,11 @@ const sessionModel: Spec = {
         { type: 'uuid', name: 'user_guid' },
         { type: 'int', name: 'credit_budget' },
         { type: 'int', name: 'credits_spent' },
-        { type: 'jsonb', name: 'plan', note: 'checkpoints' },
+        {
+          type: 'jsonb',
+          name: 'plan',
+          note: t('diagram.session_model.note_plan'),
+        },
         { type: 'string', name: 'state' },
       ],
     },
@@ -33,7 +37,11 @@ const sessionModel: Spec = {
         { type: 'uuid', name: 'id', key: 'PK' },
         { type: 'uuid', name: 'session_id', key: 'FK' },
         { type: 'int', name: 'turn_index' },
-        { type: 'jsonb', name: 'context_ref', note: 'compacted' },
+        {
+          type: 'jsonb',
+          name: 'context_ref',
+          note: t('diagram.session_model.note_context'),
+        },
         { type: 'string', name: 'state' },
       ],
     },
@@ -46,14 +54,18 @@ const sessionModel: Spec = {
       rows: [
         { type: 'uuid', name: 'id', key: 'PK' },
         { type: 'uuid', name: 'turn_id', key: 'FK' },
-        { type: 'string', name: 'tool', note: 'primitive · App' },
+        {
+          type: 'string',
+          name: 'tool',
+          note: t('diagram.session_model.note_tool'),
+        },
         { type: 'jsonb', name: 'args' },
         { type: 'uuid', name: 'job_id', key: 'FK' },
       ],
     },
     {
       title: 'JOB',
-      lines: ['the existing Part 1 table'],
+      lines: [t('diagram.session_model.line_job')],
       x: 700,
       y: 292,
       w: 220,
@@ -67,7 +79,7 @@ const sessionModel: Spec = {
         [370, 130],
       ],
       accent: 'green',
-      label: 'advances by',
+      label: t('diagram.session_model.edge_advances'),
       lx: 330,
       ly: 118,
     },
@@ -77,7 +89,7 @@ const sessionModel: Spec = {
         [690, 130],
       ],
       accent: 'green',
-      label: 'issues',
+      label: t('diagram.session_model.edge_issues'),
       lx: 655,
       ly: 118,
     },
@@ -87,12 +99,12 @@ const sessionModel: Spec = {
         [810, 300],
       ],
       accent: 'green',
-      label: 'executes as',
+      label: t('diagram.session_model.edge_executes'),
       lx: 822,
       ly: 268,
       anchor: 'start',
     },
   ],
-};
+});
 
 export { sessionModel };

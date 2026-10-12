@@ -7,6 +7,7 @@ import React, {
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // API
 import {
@@ -80,15 +81,10 @@ const DEBOUNCE_MS = 250;
 /** Below this the server rejects the query, so there is no point sending it. */
 const MIN_LENGTH = 2;
 
-/** A search matching nothing falls back to what is on screen, so it says so. */
-const STATUS_MESSAGES = {
-  searching: () => 'Searching…',
-  matched: (count: number) => `${count} ${count === 1 ? 'match' : 'matches'}`,
-  unmatched: (count: number) =>
-    `No taxon by that name - showing ${count} on screen`,
-  onScreen: (count: number) => `${count} on screen`,
-};
-
+/**
+ * Which `status` phrase the field reads. A search matching nothing falls back
+ * to what is on screen, so it says so.
+ */
 function statusKey({
   loading,
   searching,
@@ -97,13 +93,13 @@ function statusKey({
   loading: boolean;
   searching: boolean;
   matches: number;
-}): keyof typeof STATUS_MESSAGES {
+}): 'searching' | 'on_screen' | 'matched' | 'unmatched' {
   if (loading) {
     return 'searching';
   }
 
   if (!searching) {
-    return 'onScreen';
+    return 'on_screen';
   }
 
   return matches > 0 ? 'matched' : 'unmatched';
@@ -119,6 +115,7 @@ type Option = {
 };
 
 const Search: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const navigate = useNavigate();
   const { find } = useTreeOfLifeContext();
   const [query, setQuery] = useState('');
@@ -185,7 +182,7 @@ const Search: React.FunctionComponent = () => {
       name: result.name,
       // An Open Tree match has no rank until its subtree is fetched, so the
       // absence is the useful thing to say.
-      detail: result.rank ?? 'not yet visited',
+      detail: result.rank ?? t('not_visited'),
     }));
 
   /*
@@ -232,9 +229,9 @@ const Search: React.FunctionComponent = () => {
                 type='search'
                 value={query}
                 list={LIST_ID}
-                placeholder='Find a taxon…'
+                placeholder={t('search_placeholder')}
                 autoComplete='off'
-                aria-label='Find a taxon by name'
+                aria-label={t('search_label')}
                 aria-busy={loading}
                 onChange={(event) => choose(event.target.value)}
               />
@@ -244,7 +241,7 @@ const Search: React.FunctionComponent = () => {
                   <InputGroupButton
                     variant='ghost'
                     type='button'
-                    aria-label='Clear the search'
+                    aria-label={t('action', { context: 'clear_search' })}
                     onClick={() => setQuery('')}
                   >
                     <Ri.RiCloseLine aria-hidden />
@@ -268,9 +265,14 @@ const Search: React.FunctionComponent = () => {
                 'kicl-color-grey-dark'
               )}
             >
-              {STATUS_MESSAGES[
-                statusKey({ loading, searching, matches: found.length })
-              ](options.length)}
+              {t('status', {
+                context: statusKey({
+                  loading,
+                  searching,
+                  matches: found.length,
+                }),
+                count: options.length,
+              })}
             </Text>
           </CardContent>
         </Layout>

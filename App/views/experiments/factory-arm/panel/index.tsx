@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Sheet } from 'design/components';
 
@@ -13,11 +16,7 @@ import { Presets } from './presets';
 import { Tabs } from './tabs';
 
 // Constants
-import {
-  CLASS_NAME,
-  COPY,
-  PANEL,
-} from '@/views/experiments/factory-arm/constants';
+import { CLASS_NAME, PANEL } from '@/views/experiments/factory-arm/constants';
 
 /**
  * How the next run is set up, from a preset or by hand, and a log of every
@@ -25,11 +24,12 @@ import {
  * the stage leaves it open. It outlives the runs, open as it was left.
  */
 const Panel: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { open, setOpen, tab } = useSetup();
 
   return (
     <Sheet
-      aria-label={COPY.panel.label}
+      aria-label={t('setup')}
       className={`${CLASS_NAME}__panel`}
       defaultOpen={open}
       id={PANEL}

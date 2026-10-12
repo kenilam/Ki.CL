@@ -1,14 +1,12 @@
+import type { TFunction } from 'i18next';
+
 // Spec
 import type { Setup } from '@/views/experiments/factory-arm/setup';
 
-const count = (n: number, one: string) => `${n} ${one}${n === 1 ? '' : 's'}`;
-
 /** A setup in a line: its layers, stacks and obstacles. */
-const summary = ({ obstacles, pile, stacks }: Setup) =>
-  [
-    count(pile.layers, 'layer'),
-    count(stacks, 'stack'),
-    count(obstacles.length, 'obstacle'),
-  ].join(' · ');
+const summary = (
+  t: TFunction<'factory-arm'>,
+  { obstacles, pile, stacks }: Setup
+) => t('summary', { layers: pile.layers, obstacles: obstacles.length, stacks });
 
 export { summary };

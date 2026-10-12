@@ -1,44 +1,62 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 /** What happens to a message once it is sent. */
-const howItWorks: DiagramSpec = {
-  title: 'How it works',
+const howItWorks = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.how_it_works.title'),
   legend: [
-    { label: 'Red', value: 'refused', accent: 'error' },
-    { label: 'Green', value: 'counted', accent: 'confirm' },
+    {
+      label: t('diagram.label', { context: 'red' }),
+      value: t('diagram.how_it_works.legend', { context: 'red' }),
+      accent: 'error',
+    },
+    {
+      label: t('diagram.label', { context: 'green' }),
+      value: t('diagram.how_it_works.legend', { context: 'green' }),
+      accent: 'confirm',
+    },
   ],
-  description:
-    'A message is sent with ImageAgentSend and checked against the limits. It is either refused with TOO_MANY_REQUESTS and not recorded, or saved and counted, after which ImageAgentAllowance shows what is left.',
+  description: t('diagram.how_it_works.description'),
   width: 800,
   height: 170,
   nodes: [
-    { title: 'Send', lines: ['ImageAgentSend'], x: 30, y: 60, w: 150, h: 50 },
     {
-      title: 'Check',
-      lines: ['seven checks, in order'],
+      title: t('diagram.how_it_works.node', { context: 'send' }),
+      lines: ['ImageAgentSend'],
+      x: 30,
+      y: 60,
+      w: 150,
+      h: 50,
+    },
+    {
+      title: t('diagram.how_it_works.node', { context: 'check' }),
+      lines: [t('diagram.how_it_works.line', { context: 'check' })],
       x: 220,
       y: 60,
       w: 170,
       h: 50,
     },
     {
-      title: 'Refused',
-      lines: ['TOO_MANY_REQUESTS', 'not recorded'],
+      title: t('diagram.how_it_works.node', { context: 'refused' }),
+      lines: [
+        'TOO_MANY_REQUESTS',
+        t('diagram.how_it_works.line', { context: 'refused' }),
+      ],
       x: 430,
       y: 20,
       w: 150,
       h: 60,
     },
     {
-      title: 'Counted',
-      lines: ['saved and counted'],
+      title: t('diagram.how_it_works.node', { context: 'counted' }),
+      lines: [t('diagram.how_it_works.line', { context: 'counted' })],
       x: 430,
       y: 100,
       w: 150,
       h: 60,
     },
     {
-      title: 'Shown',
+      title: t('diagram.how_it_works.node', { context: 'shown' }),
       lines: ['ImageAgentAllowance'],
       x: 620,
       y: 100,
@@ -79,6 +97,6 @@ const howItWorks: DiagramSpec = {
       ],
     },
   ],
-};
+});
 
 export { howItWorks };

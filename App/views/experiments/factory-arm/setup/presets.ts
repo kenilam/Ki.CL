@@ -8,28 +8,28 @@ import type { Preset } from './spec';
 const PRESETS: Preset[] = [
   {
     id: 'standard',
-    name: 'Standard',
+    context: 'standard',
     obstacles: OBSTACLES,
     pile: { layers: 4, seed: 7 },
     stacks: 1,
   },
   {
     id: 'two-stacks',
-    name: 'Two stacks',
+    context: 'two_stacks',
     obstacles: OBSTACLES,
     pile: { layers: 3, seed: 11 },
     stacks: 2,
   },
   {
     id: 'open-floor',
-    name: 'Open floor',
+    context: 'open_floor',
     obstacles: [],
     pile: { layers: 4, seed: 3 },
     stacks: 1,
   },
   {
     id: 'crowded',
-    name: 'Crowded',
+    context: 'crowded',
     obstacles: [
       ...OBSTACLES,
       {

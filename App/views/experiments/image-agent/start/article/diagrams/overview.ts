@@ -1,38 +1,45 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 /** The pieces and what connects them. */
-const overview: DiagramSpec = {
-  title: 'How the pieces connect',
+const overview = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.overview.title'),
   legend: [
     {
-      label: 'Dashed',
-      value: 'updates and assets come back from the server',
+      label: t('diagram.label', { context: 'dashed' }),
+      value: t('diagram.overview.legend', { context: 'dashed' }),
     },
   ],
-  description:
-    'The browser sends messages to the API over a GraphQL mutation and gets updates back over a subscription. The API keeps conversations, jobs and assets in MongoDB, calls a moderation endpoint and three provider chains for text, vision and images, and uploads pictures to a storage bucket that the browser reads through the site’s assets route.',
+  description: t('diagram.overview.description'),
   width: 760,
   height: 460,
   nodes: [
     {
-      title: 'Browser',
-      lines: ['React, Apollo'],
+      title: t('diagram.node', { context: 'browser' }),
+      lines: [t('diagram.overview.line', { context: 'browser' })],
       x: 20,
       y: 150,
       w: 120,
       h: 60,
     },
     {
-      title: 'API',
-      lines: ['GraphQL resolvers', 'the agent’s turn', 'in-process pub/sub'],
+      title: t('diagram.node', { context: 'api' }),
+      lines: [
+        t('diagram.overview.line', { context: 'api_resolvers' }),
+        t('diagram.overview.line', { context: 'api_turn' }),
+        t('diagram.overview.line', { context: 'api_pub_sub' }),
+      ],
       x: 230,
       y: 120,
       w: 160,
       h: 120,
     },
     {
-      title: 'MongoDB',
-      lines: ['threads, jobs', 'assets'],
+      title: t('diagram.node', { context: 'mongodb' }),
+      lines: [
+        t('diagram.overview.line', { context: 'mongodb_threads' }),
+        t('diagram.overview.line', { context: 'mongodb_assets' }),
+      ],
       shape: 'cylinder',
       x: 230,
       y: 300,
@@ -40,40 +47,43 @@ const overview: DiagramSpec = {
       h: 80,
     },
     {
-      title: 'Moderation',
-      lines: ['OpenAI omni-moderation'],
+      title: t('diagram.node', { context: 'moderation' }),
+      lines: [t('diagram.overview.line', { context: 'moderation' })],
       x: 450,
       y: 20,
       w: 290,
       h: 50,
     },
     {
-      title: 'Text chain',
-      lines: ['gpt-4o-mini → Llama 3.3 → Gemini'],
+      title: t('diagram.overview.node', { context: 'text_chain' }),
+      lines: [t('diagram.overview.line', { context: 'text_chain' })],
       x: 450,
       y: 90,
       w: 290,
       h: 60,
     },
     {
-      title: 'Vision chain',
-      lines: ['gpt-4o → Gemini Flash'],
+      title: t('diagram.overview.node', { context: 'vision_chain' }),
+      lines: [t('diagram.overview.line', { context: 'vision_chain' })],
       x: 450,
       y: 170,
       w: 290,
       h: 60,
     },
     {
-      title: 'Image chain',
-      lines: ['gpt-image-1 → Flux Schnell', '→ Pollinations → Gemini'],
+      title: t('diagram.overview.node', { context: 'image_chain' }),
+      lines: [
+        t('diagram.overview.line', { context: 'image_chain_first' }),
+        t('diagram.overview.line', { context: 'image_chain_rest' }),
+      ],
       x: 450,
       y: 250,
       w: 290,
       h: 70,
     },
     {
-      title: 'Storage bucket',
-      lines: ['named by content hash'],
+      title: t('diagram.overview.node', { context: 'bucket' }),
+      lines: [t('diagram.overview.line', { context: 'bucket' })],
       shape: 'cylinder',
       x: 450,
       y: 345,
@@ -88,7 +98,7 @@ const overview: DiagramSpec = {
         [140, 165],
         [230, 165],
       ],
-      label: 'send',
+      label: t('diagram.overview.edge', { context: 'send' }),
       lx: 185,
       ly: 157,
     },
@@ -98,7 +108,7 @@ const overview: DiagramSpec = {
         [230, 200],
         [140, 200],
       ],
-      label: 'updates',
+      label: t('diagram.overview.edge', { context: 'updates' }),
       lx: 185,
       ly: 192,
     },
@@ -108,7 +118,7 @@ const overview: DiagramSpec = {
         [310, 240],
         [310, 300],
       ],
-      label: 'read, write',
+      label: t('diagram.overview.edge', { context: 'read_write' }),
       anchor: 'start',
       lx: 318,
       ly: 275,
@@ -149,7 +159,7 @@ const overview: DiagramSpec = {
         [595, 320],
         [595, 345],
       ],
-      label: 'upload',
+      label: t('diagram.overview.edge', { context: 'upload' }),
       anchor: 'start',
       lx: 603,
       ly: 337,
@@ -162,11 +172,11 @@ const overview: DiagramSpec = {
         [595, 440],
         [595, 415],
       ],
-      label: 'pictures through /assets',
+      label: t('diagram.overview.edge', { context: 'assets' }),
       lx: 330,
       ly: 432,
     },
   ],
-};
+});
 
 export { overview };
