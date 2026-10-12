@@ -79,7 +79,7 @@
   "tab_log": "Log",
   "tab_manual": "Manual",
   "tab_preset": "Preset",
-  "title": "Factory Arm",
+  "title": "$t(common:experiment_factory_arm)",
   "title_cases": "Cases",
   "title_obstacles": "Obstacles"
 }

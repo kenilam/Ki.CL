@@ -28,7 +28,6 @@ import { CONTENT_DELAY, FRAME_DELAY } from '@/views/home/constants';
 // Content
 import {
   MASTER,
-  NAME,
   findVersion,
   fingerprint,
   resolve,
@@ -94,7 +93,7 @@ const Resume: React.FunctionComponent = () => {
     [common, found, t]
   );
 
-  usePrintTitle(`${NAME} - ${common('resume')}`);
+  usePrintTitle(t('print_title', { name: common('name') }));
 
   if (!version) {
     return <Status404 />;

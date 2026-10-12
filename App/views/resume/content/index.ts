@@ -29,7 +29,7 @@ export type {
   Slug,
   Version,
 } from './types';
-export { EMAIL, NAME, PROFILES } from './shared';
+export { PROFILES } from './shared';
 export { fingerprint } from './fingerprint';
 export { resolve } from './resolve';
 export { MASTER, VERSIONS, findVersion };

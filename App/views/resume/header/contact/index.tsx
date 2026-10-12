@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { HyperLink, Markdown, Text } from 'design/components';
 
 // Content
-import { EMAIL, PROFILES } from '@/views/resume/content';
+import { PROFILES } from '@/views/resume/content';
 
 // Constants
 import { PHONE_KEY } from '@/views/resume/constants';
@@ -27,6 +27,9 @@ const readPhone = () => {
 /** Two lines, as on the printed page: where and how to write, then the profiles. */
 const Contact: React.FunctionComponent = () => {
   const { t } = useTranslation('resume');
+  const { t: common } = useTranslation();
+
+  const email = common('email');
 
   const phone = readPhone();
 
@@ -38,8 +41,8 @@ const Contact: React.FunctionComponent = () => {
           {SEPARATOR}
         </Text>
         {/* The address is for paper. A screen opens the form. */}
-        <HyperLink className='kicl-print-only' to={`mailto:${EMAIL}`}>
-          {EMAIL}
+        <HyperLink className='kicl-print-only' to={`mailto:${email}`}>
+          {email}
         </HyperLink>
         {phone && `${SEPARATOR}${phone}`}
       </Text>

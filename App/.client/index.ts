@@ -22,7 +22,9 @@ import * as dotenv from 'dotenv';
 
 import { getAlias, getStyleLayer, LAYER_ORDER } from './helper';
 
+import fs from 'node:fs';
 import { collectMiddleware } from '../.server/collect';
+import { createTexts, escapeJson } from '../.server/texts';
 
 import configJSON from '../app.config.json';
 import tsconfigJSON from '../tsconfig.json';
@@ -165,6 +167,8 @@ const getConfig = ({
       ),
     };
 
+    const texts = createTexts();
+
     const plugins: UserConfig['plugins'] = [
       // Federation must run early so shared virtual modules exist before dep optimize
       federation({
@@ -275,6 +279,30 @@ const getConfig = ({
             response.end(`export * from '/@react-refresh';`);
           });
         },
+      },
+      /*
+       * The shell and the manifest ask for their words by `{{key}}`. The
+       * server fills them in on each request, and this does the same while
+       * developing. A build keeps the braces, for the server.
+       */
+      {
+        name: 'kicl-texts',
+        apply: 'serve',
+        configureServer(server) {
+          server.middlewares.use('/site.webmanifest', (_, response) => {
+            response.setHeader('Content-Type', 'application/manifest+json');
+            response.end(
+              texts.fill(
+                fs.readFileSync(
+                  `${appRoot.path}/App/public/site.webmanifest`,
+                  'utf8'
+                ),
+                escapeJson
+              )
+            );
+          });
+        },
+        transformIndexHtml: (html) => texts.fill(html),
       },
       // Analytics batches land here in development, as they do on the server.
       {

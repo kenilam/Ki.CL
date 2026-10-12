@@ -9,10 +9,6 @@ import type { Key, Organisation, Role, SectionId } from './types';
  * dates and numbers follow LinkedIn.
  */
 
-const NAME = 'Keni Lam';
-
-const EMAIL = 'hello@ki-cl.com';
-
 /*
  * Under the name, in this order. Each link is written once, under
  * `links`, and the lines that carry one refer to it. They are
@@ -67,4 +63,4 @@ const EDUCATION: readonly Key[] = [
   'education.foundation',
 ];
 
-export { EARLIER, EDUCATION, EMAIL, NAME, ORDER, PROFILES, role };
+export { EARLIER, EDUCATION, ORDER, PROFILES, role };

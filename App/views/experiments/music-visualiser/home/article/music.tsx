@@ -9,7 +9,6 @@ import { Details, Heading, Markdown, Text } from 'design/components';
 // Catalog
 import {
   ATTRIBUTION,
-  NAME,
   TOTAL,
 } from '@/views/experiments/music-visualiser/catalog';
 
@@ -29,7 +28,6 @@ const Music: React.FunctionComponent = () => {
       <Text is='p'>
         <Markdown>
           {t('article.music.source', {
-            name: NAME,
             tracks: TOTAL,
             url: ATTRIBUTION.url,
           })}

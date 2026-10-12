@@ -1,0 +1,19 @@
+{
+  "document_author": "Keni, Lam",
+  "document_description": "An independent design agency specialising in creative consulting, branding and web development",
+  "document_keywords": "Keni,Lam,kicl,KiCL,Ki.CL,Design,Developer,Creative",
+  "document_noscript": "Ki.CL needs JavaScript to run.",
+  "document_title": "Ki.CL",
+  "error_not_found": "404: Not found",
+  "error_unavailable": "503: Service is temporary unavailable",
+  "gate_action": "Try again",
+  "gate_advice": "Please bring credentials next time.",
+  "gate_alt": "A nervous orange security guard holding a key card sits beside a locked door with a barrier across it.",
+  "gate_answer": "Nice try.",
+  "gate_eyebrow": "Knock knock.",
+  "gate_notice": "This page is for authorised guests only.",
+  "gate_question": "Who's there?",
+  "gate_title": "Knock knock",
+  "manifest_name": "Ki.CL",
+  "manifest_short_name": "Ki.CL"
+}

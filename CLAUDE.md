@@ -58,6 +58,8 @@ UI copy is not written in components. It lives in `App/locales/en/<namespace>.js
 - After adding or changing a key, seed before you look at the page: the site shows the key itself until the database has it. Seed production before releasing, and check with `make translations.diff`.
 - `seed` never removes a key. Remove dead keys with `make translations.prune` one release later. A string whose placeholders change gets a new key.
 - `common.json` is also bundled, and used only when the API cannot be reached.
+- What the server writes itself is in the `server` namespace: the shell's title and description in `App/index.html`, the web manifest's name, the gate's page and the plain error bodies. Those files ask for a string by `{{key}}`, and `App/.server/texts` fills it in on each request (Vite does the same while developing). A build keeps the braces.
+- Names are writing too: the site owner's name and email, the profile addresses (`url_github`), an experiment's name, a track's title. None is a constant in a component.
 
 ### Path aliases
 

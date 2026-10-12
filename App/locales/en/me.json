@@ -37,7 +37,7 @@
   "title_idle": "$t(change_password)",
   "title_invalid": "Link expired",
   "title_loading": "$t(change_password)",
-  "title_profile": "My profile",
+  "title_profile": "$t(common:my_profile)",
   "title_saving": "Changing your password",
   "title_waiting": "Check your email"
 }
