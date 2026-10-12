@@ -1,11 +1,11 @@
-import type { Version } from './types';
+import type { Resolved } from './types';
 
 /**
- * A short hash of one version's content: FNV-1a over its JSON. It only has to
+ * A short hash of one version's text: FNV-1a over its JSON. It only has to
  * change when the content does, so the page can tell whether the exported PDF
  * was made from what it is showing. It protects nothing.
  */
-const fingerprint = (version: Version): string => {
+const fingerprint = (version: Resolved): string => {
   const text = JSON.stringify(version);
 
   let hash = 0x811c9dc5;

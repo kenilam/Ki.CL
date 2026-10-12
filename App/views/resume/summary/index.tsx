@@ -1,22 +1,22 @@
 import React, { useId } from 'react';
 
 // Libraries
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 // Components
-import { Heading, Layout, Separator, Text } from 'design/components';
+import { Heading, Layout, Markdown, Separator, Text } from 'design/components';
 
 // Context
 import { useVersion } from '@/views/resume/context';
 
-// Partials
-import { Runs } from '@/views/resume/runs';
-
 // Constants
-import { COPY, HEADING } from '@/views/resume/constants';
+import { HEADING } from '@/views/resume/constants';
 
 /** Who this is, in one paragraph. Each version writes its own. */
 const Summary: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const { summary } = useVersion();
 
   const titleId = useId();
@@ -27,13 +27,13 @@ const Summary: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
-              {COPY.sections.summary}
+              {t('title', { context: 'summary' })}
             </Heading>
             <Separator />
           </header>
         </Layout>
         <Text dense>
-          <Runs line={summary} />
+          <Markdown>{summary}</Markdown>
         </Text>
       </section>
     </Layout>

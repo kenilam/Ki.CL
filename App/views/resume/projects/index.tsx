@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 
 // Libraries
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 
 // Components
@@ -9,6 +10,7 @@ import {
   Layout,
   List,
   ListItem,
+  Markdown,
   Separator,
   Text,
 } from 'design/components';
@@ -16,14 +18,13 @@ import {
 // Context
 import { useVersion } from '@/views/resume/context';
 
-// Partials
-import { Runs } from '@/views/resume/runs';
-
 // Constants
-import { COPY, HEADING } from '@/views/resume/constants';
+import { HEADING } from '@/views/resume/constants';
 
 /** Work outside the day job. A version gives an introduction, a list, or both. */
 const Projects: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const {
     projects: { intro, items },
   } = useVersion();
@@ -36,14 +37,14 @@ const Projects: React.FunctionComponent = () => {
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
-              {COPY.sections.projects}
+              {t('title', { context: 'projects' })}
             </Heading>
             <Separator />
           </header>
         </Layout>
         {intro && (
           <Text dense>
-            <Runs line={intro} />
+            <Markdown>{intro}</Markdown>
           </Text>
         )}
         {items && (
@@ -51,7 +52,7 @@ const Projects: React.FunctionComponent = () => {
             {items.map((line, index) => (
               <ListItem key={index}>
                 <Text dense>
-                  <Runs line={line} />
+                  <Markdown>{line}</Markdown>
                 </Text>
               </ListItem>
             ))}

@@ -19,7 +19,17 @@ const VERSIONS: readonly Version[] = [
 const findVersion = (slug: string = MASTER.slug): Version | undefined =>
   VERSIONS.find((version) => version.slug === slug);
 
-export type { Line, Role, Run, SectionId, Slug, Version } from './types';
-export { EMAIL, LOCATION, NAME, PROFILES } from './shared';
+export type {
+  Context,
+  Key,
+  Organisation,
+  Resolved,
+  Role,
+  SectionId,
+  Slug,
+  Version,
+} from './types';
+export { EMAIL, NAME, PROFILES } from './shared';
 export { fingerprint } from './fingerprint';
+export { resolve } from './resolve';
 export { MASTER, VERSIONS, findVersion };

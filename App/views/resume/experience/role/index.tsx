@@ -1,13 +1,17 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, List, ListItem, Text } from 'design/components';
+import {
+  Details,
+  Heading,
+  List,
+  ListItem,
+  Markdown,
+  Text,
+} from 'design/components';
 
 // Context
 import { useVersion } from '@/views/resume/context';
-
-// Partials
-import { Runs } from '@/views/resume/runs';
 
 type Props = {
   /** Where the role is in the version's experience, newest first. */
@@ -50,7 +54,7 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
         {points.map((line, index) => (
           <ListItem key={index}>
             <Text dense>
-              <Runs line={line} />
+              <Markdown>{line}</Markdown>
             </Text>
           </ListItem>
         ))}
