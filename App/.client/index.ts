@@ -204,6 +204,9 @@ const getConfig = ({
           // The design system reads the router and form context views create.
           'react-router-dom': { singleton: true, requiredVersion: '^7.0.0' },
           'react-hook-form': { singleton: true, requiredVersion: '^7.0.0' },
+          // The remotes read their copy from the instance this app creates.
+          i18next: { singleton: true, requiredVersion: '^26.0.0' },
+          'react-i18next': { singleton: true, requiredVersion: '^17.0.0' },
         },
         dev: {
           /*
@@ -487,6 +490,8 @@ const getConfig = ({
           '@apollo/client',
           'react-router-dom',
           'react-hook-form',
+          'i18next',
+          'react-i18next',
         ],
       },
       plugins,
