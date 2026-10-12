@@ -8,7 +8,13 @@ import { createNavigation } from './index';
 
 const app = express();
 
-app.use(createNavigation({ text: () => '404: Not found' }));
+app.use(
+  createNavigation([
+    (_, response) => {
+      response.send('shell');
+    },
+  ])
+);
 
 // Stands in for the proxy, which replaces `Vary` with the service's own.
 app.use((_, response) => {
@@ -30,11 +36,11 @@ describe('navigation', () => {
   before(() => new Promise((resolve) => server.once('listening', resolve)));
   after(() => server.close());
 
-  test('a script opened as a page is not found', async () => {
+  test('a script opened as a page gets the shell as not found', async () => {
     const response = await ask('/design/remoteEntry.js', 'document');
 
     assert.equal(response.status, 404);
-    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.equal(await response.text(), 'shell');
   });
 
   test('a script loaded by a page is sent, and varies by how it was asked for', async () => {
