@@ -52,11 +52,11 @@ const Aside: React.FunctionComponent = () => {
         <Ri.RiGithubLine aria-hidden />
       </HyperLink>
       <Button
-        aria-label={common('contact.title')}
+        aria-label={common('send_message')}
         command='show-modal'
         commandFor={CONTACT_ID}
         size='small'
-        title={common('contact.title')}
+        title={common('send_message')}
         variant='ghost'
       >
         <Ri.RiMailLine aria-hidden />

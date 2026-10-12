@@ -59,7 +59,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='ghost'
         >
-          {t('actions.sendMessage')}
+          {t('actions.send_message')}
         </Button>
       </ListItem>
       {current && (

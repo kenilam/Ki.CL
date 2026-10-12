@@ -12,8 +12,8 @@ const MASTER: Version = {
       points: [
         'shared.experience.apple.points.lead',
         'shared.experience.apple.points.federation',
-        'shared.experience.apple.points.designSystems',
-        'shared.experience.apple.points.modernisedAcrossTeams',
+        'shared.experience.apple.points.design_systems',
+        'shared.experience.apple.points.modernised_across_teams',
         'shared.experience.apple.points.mcp',
         'shared.experience.apple.points.messaging',
       ],
@@ -31,24 +31,24 @@ const MASTER: Version = {
     {
       ...role('indeed'),
       points: [
-        'master.experience.indeed.points.managedCross',
-        'master.experience.indeed.points.embeddedDesign',
+        'master.experience.indeed.points.managed_cross',
+        'master.experience.indeed.points.embedded_design',
       ],
     },
     {
       ...role('retail'),
       points: [
-        'master.experience.retail.points.builtMaintained',
+        'master.experience.retail.points.built_maintained',
         'shared.experience.retail.points.locales',
-        'master.experience.retail.points.movedBuild',
-        'master.experience.retail.points.shippedShared',
+        'master.experience.retail.points.moved_build',
+        'master.experience.retail.points.shipped_shared',
       ],
     },
     {
       ...role('ebay'),
       points: [
         'shared.experience.ebay.points.prototypes',
-        'master.experience.ebay.points.contributedAnimation',
+        'master.experience.ebay.points.contributed_animation',
       ],
     },
   ],
@@ -63,7 +63,7 @@ const MASTER: Version = {
       'master.projects.items.ki',
       'master.projects.items.tree',
       'master.projects.items.image',
-      'shared.projects.items.factoryArm',
+      'shared.projects.items.factory_arm',
     ],
   },
   skills: [

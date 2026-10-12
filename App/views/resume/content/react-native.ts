@@ -5,10 +5,10 @@ import { EDUCATION, ORDER, role } from './shared';
 /** For React Native and product-engineering roles: devices and apps first. */
 const REACT_NATIVE: Version = {
   earlier: [
-    'reactNative.earlier.seniorUi',
+    'react_native.earlier.senior_ui',
     'shared.earlier.apollo',
     'shared.earlier.hasco',
-    'reactNative.earlier.contractWeb',
+    'react_native.earlier.contract_web',
   ],
   education: EDUCATION,
   experience: [
@@ -16,9 +16,9 @@ const REACT_NATIVE: Version = {
       ...role('apple'),
       points: [
         'shared.experience.apple.points.lead',
-        'shared.experience.apple.points.designSystem',
-        'reactNative.experience.apple.points.builtModule',
-        'shared.experience.apple.points.modernisedAcrossTeams',
+        'shared.experience.apple.points.design_system',
+        'react_native.experience.apple.points.built_module',
+        'shared.experience.apple.points.modernised_across_teams',
       ],
     },
     {
@@ -26,48 +26,48 @@ const REACT_NATIVE: Version = {
       points: [
         'shared.experience.tesla.points.led',
         'shared.experience.tesla.points.standards',
-        'reactNative.experience.tesla.points.architectedImplemented',
-        'reactNative.experience.tesla.points.cutSystem',
+        'react_native.experience.tesla.points.architected_implemented',
+        'react_native.experience.tesla.points.cut_system',
       ],
     },
     { ...role('rakuten'), points: ['shared.experience.rakuten.points.launch'] },
     {
       ...role('indeed'),
-      points: ['reactNative.experience.indeed.points.managedCross'],
+      points: ['react_native.experience.indeed.points.managed_cross'],
     },
     {
       ...role('retail'),
       points: [
-        'reactNative.experience.retail.points.builtMaintained',
-        'reactNative.experience.retail.points.shippedShared',
+        'react_native.experience.retail.points.built_maintained',
+        'react_native.experience.retail.points.shipped_shared',
         'shared.experience.retail.points.locales',
         'shared.experience.retail.points.build',
       ],
     },
     { ...role('ebay'), points: ['shared.experience.ebay.points.prototypes'] },
   ],
-  headline: 'reactNative.headline',
+  headline: 'react_native.headline',
   languages: 'shared.languages',
   mentoring: 'shared.mentoring',
-  name: 'reactNative.name',
+  name: 'react_native.name',
   order: ORDER,
   projects: {
     items: [
-      'reactNative.projects.items.interpreter',
-      'reactNative.projects.items.ki',
-      'reactNative.projects.items.experiments',
+      'react_native.projects.items.interpreter',
+      'react_native.projects.items.ki',
+      'react_native.projects.items.experiments',
     ],
   },
   skills: [
-    'reactNative.skills.mobile',
-    'reactNative.skills.native',
-    'reactNative.skills.back',
-    'reactNative.skills.ai',
+    'react_native.skills.mobile',
+    'react_native.skills.native',
+    'react_native.skills.back',
+    'react_native.skills.ai',
     'shared.skills.platform',
     'shared.skills.design',
   ],
   slug: 'react-native',
-  summary: 'reactNative.summary',
+  summary: 'react_native.summary',
 };
 
 export { REACT_NATIVE };

@@ -54,10 +54,10 @@ const role = (id: RoleId): Omit<Role, 'points'> => ({
 });
 
 const EARLIER: readonly Key[] = [
-  'shared.earlier.appleContract',
+  'shared.earlier.apple_contract',
   'shared.earlier.apollo',
   'shared.earlier.hasco',
-  'shared.earlier.leCielBleu',
+  'shared.earlier.le_ciel_bleu',
 ];
 
 const EDUCATION: readonly Key[] = [

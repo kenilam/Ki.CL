@@ -1,28 +1,13 @@
 {
-  "account": {
-    "label": "Account",
-    "profile": "My Profile",
-    "signOut": {
-      "failed": "Could not sign out. Try again.",
-      "message": "You will need to sign in again to use your account.",
-      "pending": "Signing out",
-      "title": "Sign out?"
-    }
-  },
+  "account": "Account",
   "cancel": "Cancel",
-  "contact": {
-    "title": "Send a message"
-  },
+  "close_navigation": "Close the navigation",
   "experiments": "Experiments",
   "home": "Home",
-  "navigation": {
-    "label": "Main",
-    "mobile": {
-      "close": "Close the navigation",
-      "label": "Navigation",
-      "open": "Open the navigation"
-    }
-  },
+  "main": "Main",
+  "my_profile": "My Profile",
+  "navigation": "Navigation",
+  "open_navigation": "Open the navigation",
   "organisation_apple": "Apple",
   "organisation_ebay": "eBay",
   "organisation_indeed": "Indeed",
@@ -30,18 +15,19 @@
   "organisation_tesla": "Tesla",
   "print": "Print",
   "resume": "Resume",
-  "session": {
-    "checking": "Confirming you are human",
-    "failed": "Could not start a session",
-    "interact": "Tick the box to carry on.",
-    "later": "Try again later.",
-    "limited": "Could not start a session right now",
-    "rejected": "Could not confirm you are human",
-    "retry": "Reload to try again.",
-    "wait": "The page carries on once this is done."
-  },
-  "signOut": "Sign out",
-  "skipLink": {
-    "label": "Skip to content"
-  }
+  "send_message": "Send a message",
+  "session_checking": "Confirming you are human",
+  "session_failed": "Could not start a session",
+  "session_interact": "Tick the box to carry on.",
+  "session_later": "Try again later.",
+  "session_limited": "Could not start a session right now",
+  "session_rejected": "Could not confirm you are human",
+  "session_retry": "Reload to try again.",
+  "session_wait": "The page carries on once this is done.",
+  "sign_out": "Sign out",
+  "sign_out_confirm": "Sign out?",
+  "sign_out_failed": "Could not sign out. Try again.",
+  "sign_out_message": "You will need to sign in again to use your account.",
+  "signing_out": "Signing out",
+  "skip_to_content": "Skip to content"
 }

@@ -1,14 +1,14 @@
 {
   "actions": {
     "file": "PDF",
-    "sendMessage": "Send me a message"
+    "send_message": "Send me a message"
   },
   "architecture": {
     "experience": {
       "tesla": {
         "points": {
-          "addedRequest": "Added request tracing from client to data source with DevOps, so teams could see where a fault started.",
-          "movedCentralised": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy."
+          "added_request": "Added request tracing from client to data source with DevOps, so teams could see where a fault started.",
+          "moved_centralised": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy."
         }
       }
     },
@@ -41,16 +41,16 @@
     },
     "title": "Experience"
   },
-  "frontendAi": {
+  "frontend_ai": {
     "experience": {
       "apple": {
         "points": {
-          "leadDesign": "Lead design and engineering for Apple University's cross-platform ecosystem, covering UX architecture and full-stack implementation."
+          "lead_design": "Lead design and engineering for Apple University's cross-platform ecosystem, covering UX architecture and full-stack implementation."
         }
       },
       "ebay": {
         "points": {
-          "builtKiosk": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and three.js."
+          "built_kiosk": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and three.js."
         }
       }
     },
@@ -82,37 +82,37 @@
     "experience": {
       "apple": {
         "points": {
-          "builtMcp": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
-          "builtPlatform": "Built the platform's architecture: a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs, with 10+ federated mini-apps consuming the component library and the federated graph.",
-          "leadDesign": "Lead design and engineering for Apple University's cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams."
+          "built_mcp": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
+          "built_platform": "Built the platform's architecture: a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs, with 10+ federated mini-apps consuming the component library and the federated graph.",
+          "lead_design": "Lead design and engineering for Apple University's cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams."
         }
       },
       "ebay": {
         "points": {
-          "uxPartner": "UX partner to product teams on the search results page, the item page and the design system. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
+          "ux_partner": "UX partner to product teams on the search results page, the item page and the design system. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
         }
       },
       "indeed": {
         "points": {
-          "embeddedTeam": "Embedded team members with product teams to roll out a new design system and its website, build components for Indeed Inbox, and run A/B tests with the Job Alert and Email team.",
-          "hired2": "Hired 2 design technologists in San Francisco and opened requisitions for UI and front-end roles in Mountain View.",
-          "managedCross": "Managed a cross-functional design technology team of 4 that built prototypes and experiments for Indeed's products.",
-          "plannedTimelines": "Planned timelines, technology and staffing for prototypes that went to user testing and then to engineering.",
-          "ranQuarterly": "Ran quarterly and calibration reviews."
+          "embedded_team": "Embedded team members with product teams to roll out a new design system and its website, build components for Indeed Inbox, and run A/B tests with the Job Alert and Email team.",
+          "hired_2": "Hired 2 design technologists in San Francisco and opened requisitions for UI and front-end roles in Mountain View.",
+          "managed_cross": "Managed a cross-functional design technology team of 4 that built prototypes and experiments for Indeed's products.",
+          "planned_timelines": "Planned timelines, technology and staffing for prototypes that went to user testing and then to engineering.",
+          "ran_quarterly": "Ran quarterly and calibration reviews."
         }
       },
       "retail": {
         "points": {
-          "helpedOnboard": "Helped onboard vendors and mentored them through the handover.",
-          "oversawThree": "Oversaw three retail digital-signage products and a WeChat publishing tool, rolling out features and content to 30+ locales at every major product launch."
+          "helped_onboard": "Helped onboard vendors and mentored them through the handover.",
+          "oversaw_three": "Oversaw three retail digital-signage products and a WeChat publishing tool, rolling out features and content to 30+ locales at every major product launch."
         }
       },
       "tesla": {
         "points": {
-          "cutSystem": "Cut system outages from 20+ a week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
-          "extendedSupport": "Extended support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
-          "managedMentored": "Managed and mentored an 8-person cross-functional team while leading UI/UX engineering for Tesla Energy's Solar platform.",
-          "wonAdoption": "Won adoption of a GraphQL federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
+          "cut_system": "Cut system outages from 20+ a week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
+          "extended_support": "Extended support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
+          "managed_mentored": "Managed and mentored an 8-person cross-functional team while leading UI/UX engineering for Tesla Energy's Solar platform.",
+          "won_adoption": "Won adoption of a GraphQL federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
         }
       }
     },
@@ -133,20 +133,20 @@
     "experience": {
       "ebay": {
         "points": {
-          "contributedAnimation": "Contributed animation standards and UI components to the design system, and built the loading spinner that went live on eBay.com."
+          "contributed_animation": "Contributed animation standards and UI components to the design system, and built the loading spinner that went live on eBay.com."
         }
       },
       "indeed": {
         "points": {
-          "embeddedDesign": "Embedded design technologists in product teams to roll out a new design system and its website, and to ship experimental features to weekly A/B tests.",
-          "managedCross": "Managed a cross-functional design technology team of 4, hired 2 design technologists in San Francisco, and ran quarterly and calibration reviews."
+          "embedded_design": "Embedded design technologists in product teams to roll out a new design system and its website, and to ship experimental features to weekly A/B tests.",
+          "managed_cross": "Managed a cross-functional design technology team of 4, hired 2 design technologists in San Francisco, and ran quarterly and calibration reviews."
         }
       },
       "retail": {
         "points": {
-          "builtMaintained": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display products.",
-          "movedBuild": "Moved the build from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment on Jenkins.",
-          "shippedShared": "Shipped a shared React framework across the three signage products and improved on-device performance to sustain 4x-resolution assets."
+          "built_maintained": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display products.",
+          "moved_build": "Moved the build from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment on Jenkins.",
+          "shipped_shared": "Shipped a shared React framework across the three signage products and improved on-device performance to sustain 4x-resolution assets."
         }
       }
     },
@@ -173,32 +173,32 @@
   "projects": {
     "title": "Projects"
   },
-  "reactNative": {
+  "react_native": {
     "earlier": {
-      "contractWeb": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010. Brand sites, e-commerce and a native iPhone app.",
-      "seniorUi": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014. UI and iOS application development with Objective-C and AngularJS."
+      "contract_web": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010. Brand sites, e-commerce and a native iPhone app.",
+      "senior_ui": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014. UI and iOS application development with Objective-C and AngularJS."
     },
     "experience": {
       "apple": {
         "points": {
-          "builtModule": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs. 10+ federated mini-apps consume the component library and the federated graph."
+          "built_module": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs. 10+ federated mini-apps consume the component library and the federated graph."
         }
       },
       "indeed": {
         "points": {
-          "managedCross": "Managed a cross-functional design technology team of 4, embedding design technologists in product teams to roll out a new design system and ship weekly A/B tests."
+          "managed_cross": "Managed a cross-functional design technology team of 4, embedding design technologists in product teams to roll out a new design system and ship weekly A/B tests."
         }
       },
       "retail": {
         "points": {
-          "builtMaintained": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and channel stores; and Channel Digital for channel stores.",
-          "shippedShared": "Shipped a shared React framework across all three, and improved on-device performance of the kiosk and the Pricing app to sustain 4x-resolution assets."
+          "built_maintained": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and channel stores; and Channel Digital for channel stores.",
+          "shipped_shared": "Shipped a shared React framework across all three, and improved on-device performance of the kiosk and the Pricing app to sustain 4x-resolution assets."
         }
       },
       "tesla": {
         "points": {
-          "architectedImplemented": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development.",
-          "cutSystem": "Cut system outages from 20+ a week to near zero."
+          "architected_implemented": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development.",
+          "cut_system": "Cut system outages from 20+ a week to near zero."
         }
       }
     },
@@ -222,9 +222,9 @@
   "shared": {
     "earlier": {
       "apollo": "UI Developer, Apollo Group · Apr 2012 – May 2013",
-      "appleContract": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014",
+      "apple_contract": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014",
       "hasco": "Web and Product Designer, Hasco Enterprise, Osaka · Nov 2010 – Aug 2011",
-      "leCielBleu": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010"
+      "le_ciel_bleu": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010"
     },
     "education": {
       "ba": "BA Fine Arts (Painting / Sculpture), University of Brighton · 2003",
@@ -235,14 +235,14 @@
       "apple": {
         "dates": "Mar 2023 – Present",
         "points": {
-          "designSystem": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
-          "designSystems": "$t(shared.experience.apple.points.designSystem) Also built a marketing design system and an enterprise design system.",
+          "design_system": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
+          "design_systems": "$t(shared.experience.apple.points.design_system) Also built a marketing design system and an enterprise design system.",
           "federation": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs that communicate via gRPC, Node and PHP. 10+ federated mini-apps consume the component library and the federated graph.",
           "lead": "Lead design and engineering for Apple University's cross-platform ecosystem, covering design systems, UX architecture and full-stack implementation.",
           "mcp": "Built an MCP server that reads the component library and the gateway schemas, so non-technical owners can build a proof of concept and deploy it to an isolated sandbox.",
           "messaging": "Built a RabbitMQ message broker and a bulk-email service.",
           "modernised": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
-          "modernisedAcrossTeams": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
+          "modernised_across_teams": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
         },
         "title": "Lead Software Development Engineer"
       },
@@ -271,7 +271,7 @@
         "dates": "Jun 2015 – May 2018",
         "points": {
           "build": "Halved local build times by moving the build from Grunt to Webpack, and automated build-to-deployment on Jenkins.",
-          "frameworkAndLocales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
+          "framework_and_locales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
           "locales": "Rolled out features and content to 30+ locales at every major product launch."
         },
         "title": "Interactive Developer, Retail Interactive"
@@ -299,7 +299,7 @@
     "projects": {
       "intro": "Live at $t(shared.links.experiments), with code at $t(shared.links.github).",
       "items": {
-        "factoryArm": "**Factory Arm.** A 3D palletising cell in the browser. Planners run in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim."
+        "factory_arm": "**Factory Arm.** A 3D palletising cell in the browser. Planners run in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim."
       }
     },
     "skills": {

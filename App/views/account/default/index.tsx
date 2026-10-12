@@ -34,7 +34,7 @@ const Default: React.FunctionComponent = () => {
         <Button className='kicl-font-size' unstyled>
           <Ri.RiAccountCircleLine aria-hidden />
           <Text className='kicl-hidden' is='span'>
-            {t('account.label')}
+            {t('account')}
           </Text>
         </Button>
       </PopoverTrigger>
@@ -48,7 +48,7 @@ const Default: React.FunctionComponent = () => {
               to={`/${ME_PATH}`}
               variant='secondary'
             >
-              {t('account.profile')}
+              {t('my_profile')}
             </HyperLink>
           </Animation>
           <Animation property='slide-from-top' delay={600}>
@@ -59,7 +59,7 @@ const Default: React.FunctionComponent = () => {
               commandFor={SIGN_OUT_ID}
               variant='secondary'
             >
-              {t('signOut')}
+              {t('sign_out')}
             </Button>
           </Animation>
         </Menu>

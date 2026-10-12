@@ -25,7 +25,7 @@ const Open: React.FunctionComponent = () => {
     >
       <Ri.RiMenuLine aria-hidden />
       <Text className='kicl-hidden' is='span'>
-        {t('navigation.mobile.open')}
+        {t('open_navigation')}
       </Text>
     </Button>
   );

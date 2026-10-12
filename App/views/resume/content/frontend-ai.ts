@@ -12,9 +12,9 @@ const FRONTEND_AI: Version = {
       points: [
         'shared.experience.apple.points.federation',
         'shared.experience.apple.points.mcp',
-        'shared.experience.apple.points.designSystems',
-        'frontendAi.experience.apple.points.leadDesign',
-        'shared.experience.apple.points.modernisedAcrossTeams',
+        'shared.experience.apple.points.design_systems',
+        'frontend_ai.experience.apple.points.lead_design',
+        'shared.experience.apple.points.modernised_across_teams',
       ],
     },
     {
@@ -31,7 +31,7 @@ const FRONTEND_AI: Version = {
     {
       ...role('retail'),
       points: [
-        'shared.experience.retail.points.frameworkAndLocales',
+        'shared.experience.retail.points.framework_and_locales',
         'shared.experience.retail.points.build',
       ],
     },
@@ -39,34 +39,34 @@ const FRONTEND_AI: Version = {
       ...role('ebay'),
       points: [
         'shared.experience.ebay.points.prototypes',
-        'frontendAi.experience.ebay.points.builtKiosk',
+        'frontend_ai.experience.ebay.points.built_kiosk',
       ],
     },
   ],
-  headline: 'frontendAi.headline',
+  headline: 'frontend_ai.headline',
   languages: 'shared.languages',
   mentoring: 'shared.mentoring',
-  name: 'frontendAi.name',
+  name: 'frontend_ai.name',
   order: ORDER,
   projects: {
-    intro: 'frontendAi.projects.intro',
+    intro: 'frontend_ai.projects.intro',
     items: [
-      'frontendAi.projects.items.image',
-      'frontendAi.projects.items.tree',
-      'frontendAi.projects.items.writing',
-      'shared.projects.items.factoryArm',
-      'frontendAi.projects.items.ki',
+      'frontend_ai.projects.items.image',
+      'frontend_ai.projects.items.tree',
+      'frontend_ai.projects.items.writing',
+      'shared.projects.items.factory_arm',
+      'frontend_ai.projects.items.ki',
     ],
   },
   skills: [
-    'frontendAi.skills.ai',
-    'frontendAi.skills.front',
-    'frontendAi.skills.back',
+    'frontend_ai.skills.ai',
+    'frontend_ai.skills.front',
+    'frontend_ai.skills.back',
     'shared.skills.platform',
     'shared.skills.design',
   ],
   slug: 'frontend-ai',
-  summary: 'frontendAi.summary',
+  summary: 'frontend_ai.summary',
 };
 
 export { FRONTEND_AI };

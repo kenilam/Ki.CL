@@ -60,7 +60,7 @@ const Contact: React.FunctionComponent = () => {
     <Dialog
       id={CONTACT_ID}
       onClose={() => setOpened((count) => count + 1)}
-      title={t('contact.title')}
+      title={t('send_message')}
     >
       <ContactForm
         email={me?.Email ?? undefined}

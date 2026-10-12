@@ -13,18 +13,18 @@ const ARCHITECTURE: Version = {
         'shared.experience.apple.points.federation',
         'shared.experience.apple.points.messaging',
         'shared.experience.apple.points.mcp',
-        'shared.experience.apple.points.designSystems',
+        'shared.experience.apple.points.design_systems',
         'shared.experience.apple.points.lead',
-        'shared.experience.apple.points.modernisedAcrossTeams',
+        'shared.experience.apple.points.modernised_across_teams',
       ],
     },
     {
       ...role('tesla'),
       points: [
         'shared.experience.tesla.points.federation',
-        'architecture.experience.tesla.points.movedCentralised',
+        'architecture.experience.tesla.points.moved_centralised',
         'shared.experience.tesla.points.outages',
-        'architecture.experience.tesla.points.addedRequest',
+        'architecture.experience.tesla.points.added_request',
         'shared.experience.tesla.points.standards',
         'shared.experience.tesla.points.led',
       ],
@@ -34,7 +34,7 @@ const ARCHITECTURE: Version = {
     {
       ...role('retail'),
       points: [
-        'shared.experience.retail.points.frameworkAndLocales',
+        'shared.experience.retail.points.framework_and_locales',
         'shared.experience.retail.points.build',
       ],
     },
