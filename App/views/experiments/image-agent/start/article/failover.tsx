@@ -29,7 +29,7 @@ const Failover: React.FunctionComponent = () => (
   <Details
     gap='narrow'
     summary={
-      <Heading is='h3' className='kicl-font-size-large'>
+      <Heading className='kicl-font-size-large' dense is='h3'>
         When a provider stops answering
       </Heading>
     }

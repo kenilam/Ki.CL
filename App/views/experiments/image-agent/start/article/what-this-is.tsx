@@ -9,7 +9,7 @@ const WhatThisIs: React.FunctionComponent = () => (
     gap='narrow'
     open
     summary={
-      <Heading is='h3' className='kicl-font-size-large'>
+      <Heading className='kicl-font-size-large' dense is='h3'>
         What this is
       </Heading>
     }
