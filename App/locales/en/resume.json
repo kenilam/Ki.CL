@@ -1,7 +1,6 @@
 {
   "actions": {
     "file": "PDF",
-    "print": "Print",
     "sendMessage": "Send me a message"
   },
   "architecture": {

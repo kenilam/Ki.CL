@@ -32,6 +32,7 @@ const print = () => {
  */
 const Actions: React.FunctionComponent = () => {
   const { t } = useTranslation('resume');
+  const { t: common } = useTranslation();
 
   const version = useVersion();
 
@@ -87,7 +88,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          {t('actions.print')}
+          {common('print')}
         </Button>
       </ListItem>
     </List>
