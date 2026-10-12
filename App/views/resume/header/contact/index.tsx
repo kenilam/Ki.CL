@@ -1,10 +1,13 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { HyperLink, Text } from 'design/components';
+import { HyperLink, Markdown, Text } from 'design/components';
 
 // Content
-import { EMAIL, LOCATION, PROFILES } from '@/views/resume/content';
+import { EMAIL, PROFILES } from '@/views/resume/content';
 
 // Constants
 import { PHONE_KEY } from '@/views/resume/constants';
@@ -23,12 +26,14 @@ const readPhone = () => {
 
 /** Two lines, as on the printed page: where and how to write, then the profiles. */
 const Contact: React.FunctionComponent = () => {
+  const { t } = useTranslation('resume');
+
   const phone = readPhone();
 
   return (
     <address className='kicl-font-style-normal'>
       <Text dense>
-        {LOCATION}
+        {t('location')}
         <Text className='kicl-print-only' is='span'>
           {SEPARATOR}
         </Text>
@@ -39,10 +44,10 @@ const Contact: React.FunctionComponent = () => {
         {phone && `${SEPARATOR}${phone}`}
       </Text>
       <Text dense>
-        {PROFILES.map(({ link, to }, index) => (
-          <React.Fragment key={to}>
+        {PROFILES.map((key, index) => (
+          <React.Fragment key={key}>
             {index > 0 && SEPARATOR}
-            <HyperLink to={to}>{link}</HyperLink>
+            <Markdown>{t(key)}</Markdown>
           </React.Fragment>
         ))}
       </Text>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Routes
 import { useParams } from 'design/router';
@@ -25,7 +26,14 @@ import { Background } from 'design/widgets';
 import { CONTENT_DELAY, FRAME_DELAY } from '@/views/home/constants';
 
 // Content
-import { MASTER, NAME, findVersion, type SectionId } from './content';
+import {
+  MASTER,
+  NAME,
+  findVersion,
+  fingerprint,
+  resolve,
+  type SectionId,
+} from './content';
 
 // Context
 import { VersionProvider } from './context';
@@ -47,7 +55,7 @@ import { Summary } from './summary';
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME, COPY } from './constants';
+import { CLASS_NAME } from './constants';
 
 const SECTIONS: Record<SectionId, React.FunctionComponent> = {
   education: Education,
@@ -68,9 +76,25 @@ const SECTIONS: Record<SectionId, React.FunctionComponent> = {
 const Resume: React.FunctionComponent = () => {
   const { version: slug } = useParams();
 
-  const version = findVersion(slug);
+  const { t } = useTranslation('resume');
+  const { t: common } = useTranslation();
 
-  usePrintTitle(`${NAME} - ${COPY.title}`);
+  const found = findVersion(slug);
+
+  const version = useMemo(
+    () =>
+      found &&
+      resolve(
+        found,
+        // The default is what i18next shows anyway. Naming it tells the types
+        // that a line need not have a wording for every version.
+        (key, context) => t(key, { context, defaultValue: key }),
+        (context) => common('organisation', { context })
+      ),
+    [common, found, t]
+  );
+
+  usePrintTitle(`${NAME} - ${common('resume')}`);
 
   if (!version) {
     return <Status404 />;
@@ -79,7 +103,7 @@ const Resume: React.FunctionComponent = () => {
   return (
     <VersionProvider version={version}>
       {/* The tailored versions are for the people they are sent to. */}
-      {version !== MASTER && <meta content='noindex' name='robots' />}
+      {version.slug !== MASTER.slug && <meta content='noindex' name='robots' />}
       <Layout autoFlow='row' justifyContent='center' justifyItems='center'>
         {/* Grows with the page, which is longer than any window. */}
         <Frame delay={FRAME_DELAY} grow>
@@ -98,6 +122,8 @@ const Resume: React.FunctionComponent = () => {
             <ScrollIndicator />
             <Card
               className={classNames(CLASS_NAME, 'kicl-margin-inline-auto')}
+              // The export checks this against the files, to know the database is not behind them.
+              data-fingerprint={fingerprint(version)}
               data-version={version.slug}
               gap='wide'
               is='article'
