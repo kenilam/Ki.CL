@@ -1,7 +1,7 @@
 {
   "action_run_job": "Run a job",
   "action_run_session": "Run a session",
-  "brief": "Brief",
+  "brief": "$t(common:brief)",
   "build_plan": {
     "assumptions": "These are calendar weeks. They assume I lead with coding agents doing most of the implementation, Temporal Cloud handles orchestration so it isn't built in-house, and one product engineer joins from week three:",
     "estimate": "Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to seven. That only holds because v1 is narrow: one region, two providers, an internal-only Studio, and generation kept behind vendor APIs. Provider-adapter edge cases are the long pole. Coding agents speed up the skeleton and the agent loop but help much less with debugging a flaky third-party webhook, so the middle phases carry most of the schedule risk.",
@@ -19,7 +19,7 @@
     "prompts": {
       "adapters": {
         "body": "Create the provider adapter interface: `submit(request) → provider_ref`, webhook + polling completion, and error mapping into `{retryable, permanent, content_policy, degraded}`. Implement two adapters against the sandbox APIs in `providers/`{secondary} plus a deterministic fake for tests. Add a reconciler that polls for jobs whose webhooks never arrived (>2× expected latency). Integration test: webhook delivered twice, webhook lost, provider 429 storm - assert exactly-once task completion and correct backoff.",
-        "title": "Provider adapters."
+        "title": "$t(component_provider_adapters)."
       },
       "agent_runtime": {
         "body": "Add the agent service per DESIGN.md Part 2: a Temporal-backed turn loop with session state in Postgres, tool registry generated from primitive schemas plus published Apps, and the cost governor (per-session budget, per-turn estimate gate, draft-tier default with confirmation required for hero-tier renders, runaway-loop halt on 3 repeated similar tool calls). Model routing: intent and arg-filling on the small model, planning on the large one. Ship with a scripted fake LLM so the loop is testable without model calls.",
@@ -27,7 +27,7 @@
       },
       "eval_harness": {
         "body": "Build the eval runner: load briefs from `evals/briefs/*.yaml`{secondary}, execute each against the agent with stubbed providers and pinned seeds, score process metrics (tool plausibility, draft-before-final ordering, budget adherence, turn count) deterministically, and emit a diffable JSON report. Add `--judge` mode that sends outputs to a vision-capable model with the rubric in `evals/rubric.md`{secondary}. CI gate: process metrics may not regress on the golden set; judge deltas > 0.3 flag for human review.",
-        "title": "Eval harness."
+        "title": "$t(diagram.agent_plane.node_eval)."
       },
       "intro": "I'd feed these to Claude Code in stages. Each one ends at something verifiable and carries its own acceptance tests.",
       "number": "{{number}}. ",
@@ -43,7 +43,7 @@
   },
   "byline": "Keni · Ki.CL · ",
   "component_job_service": "Job Service",
-  "component_moderation": "Moderation",
+  "component_moderation": "$t(common:moderation)",
   "component_observability": "Observability",
   "component_orchestrator": "Orchestrator",
   "component_provider_adapters": "Provider adapters",
@@ -104,7 +104,7 @@
       "edge_subscribe": "5 · subscribe SSE /jobs/:id/events",
       "edge_validate": "2 · validate · hold credits · moderate",
       "edge_webhook": "8 · webhook · complete / failed",
-      "legend_dashed_label": "Dashed",
+      "legend_dashed_label": "$t(common:dashed)",
       "legend_dashed_value": "responses and events that come back later",
       "legend_solid_label": "Solid",
       "legend_solid_value": "requests",
@@ -115,7 +115,7 @@
     },
     "services": {
       "description": "Service diagram: clients reach an API gateway; a control plane holds the App Registry, Job Service, Credits and Moderation; an execution plane holds the Orchestrator, task queues, worker fleet and provider adapters; data and delivery cover Postgres, the asset store and CDN, the event bus, the realtime gateway and observability.",
-      "edge_assets": "assets",
+      "edge_assets": "$t(common:assets)",
       "edge_events": "events",
       "edge_post": "post",
       "edge_pre": "pre",

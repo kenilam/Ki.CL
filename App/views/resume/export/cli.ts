@@ -121,15 +121,19 @@ const { positionals, values } = parseArgs({
 });
 
 /** `$t(links.github)`: a line that carries another, as i18next reads it. */
-const NESTED = /\$t\(([\w.]+)\)/g;
+const NESTED = /\$t\(((?:common:)?[\w.]+)\)/g;
 
-const read = (key: string) =>
-  key
+/** `common:name` is in the common namespace. Anything else is the resume's. */
+const read = (key: string) => {
+  const [name, namespace] = key.split(':').reverse();
+
+  return name
     .split('.')
     .reduce<unknown>(
-      (branch, name) => (branch as Record<string, unknown> | undefined)?.[name],
-      RESUME
+      (branch, step) => (branch as Record<string, unknown> | undefined)?.[step],
+      namespace ? COMMON : RESUME
     ) as string | undefined;
+};
 
 /**
  * A line as the files have it: the version's own wording when there is one,

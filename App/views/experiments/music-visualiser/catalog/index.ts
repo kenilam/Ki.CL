@@ -10,8 +10,6 @@ import { CATEGORIES, TRACKS, type Entry } from './catalog';
 
 const GROUP = 'open-lofi';
 
-const NAME = 'Open Lo-Fi';
-
 const BASE_URL = '/assets/static/music/open-lofi';
 
 const ATTRIBUTION = {
@@ -19,11 +17,8 @@ const ATTRIBUTION = {
 };
 
 export type Track = {
-  /** The category's label, shown under the title. */
-  category: string;
   group: string;
   id: string;
-  title: string;
   type: string;
   url: string;
 };
@@ -31,17 +26,13 @@ export type Track = {
 /** How many tracks the catalogue holds, for the writing about it. */
 const TOTAL = TRACKS.length;
 
-const TYPES: readonly string[] = CATEGORIES.map((category) => category.slug);
+const TYPES = CATEGORIES;
 
 const idOf = (entry: Entry) => entry.filename.replace(/\.mp3$/, '');
 
 const toTrack = (entry: Entry): Track => ({
-  category:
-    CATEGORIES.find((category) => category.slug === entry.category)?.label ??
-    NAME,
   group: GROUP,
   id: idOf(entry),
-  title: entry.title,
   type: entry.category,
   url: `${BASE_URL}/${entry.filename}`,
 });
@@ -76,4 +67,4 @@ function draw({
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
-export { ATTRIBUTION, GROUP, NAME, TOTAL, TYPES, draw, find, keyOf };
+export { ATTRIBUTION, GROUP, TOTAL, TYPES, draw, find, keyOf };

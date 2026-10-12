@@ -2,12 +2,10 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Separator, Text } from 'design/components';
-
-// Content
-import { NAME } from '@/views/resume/content';
 
 // Context
 import { useVersion } from '@/views/resume/context';
@@ -28,6 +26,8 @@ const CLASS_NAME = `${RESUME}__header`;
 const Header: React.FunctionComponent = () => {
   const { headline } = useVersion();
 
+  const { t: common } = useTranslation();
+
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
       <header className={CLASS_NAME}>
@@ -40,7 +40,7 @@ const Header: React.FunctionComponent = () => {
           dense
           is='h1'
         >
-          {NAME}
+          {common('name')}
         </Heading>
         <Actions />
         <Text className='kicl-font-size-medium' dense>

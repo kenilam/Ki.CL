@@ -14,24 +14,25 @@
     -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="author" content="Keni, Lam" />
+    <meta name="author" content="{{document_author}}" />
     <meta
       name="description"
-      content="An independent design agency specialising in creative consulting, branding and web development"
+      content="{{document_description}}"
     />
     <meta
       name="keywords"
-      content="Keni,Lam,kicl,KiCL,Ki.CL,Design,Developer,Creative"
+      content="{{document_keywords}}"
     />
     <meta
       property="og:description"
-      content="An independent design agency specialising in creative consulting, branding and web development"
+      content="{{document_description}}"
     />
     <!-- <meta property="og:image" content="http://ki-cl.com/asset/image/site.hero.png"> -->
-    <meta property="og:title" content="Ki.CL" />
+    <meta property="og:title" content="{{document_title}}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.ki-cl.com" />
-    <title>Ki.CL</title>
+    <!-- The words in braces are filled in by the server, from the `server` namespace. -->
+    <title>{{document_title}}</title>
     <script src="https://use.typekit.net/cpi1lno.js"></script>
     <script>
       try {
@@ -51,7 +52,7 @@
   </head>
   <body>
     <app-root></app-root>
-    <noscript>Ki.CL needs JavaScript to run.</noscript>
+    <noscript>{{document_noscript}}</noscript>
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>

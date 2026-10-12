@@ -11,10 +11,8 @@ import * as Fa from 'react-icons/fa6';
 import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
-import {
-  ATTRIBUTION,
-  NAME,
-} from '@/views/experiments/music-visualiser/catalog';
+import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
+import { useNames } from '@/views/experiments/music-visualiser/catalog/use-names';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -34,6 +32,7 @@ const CLASS_NAME = `${VIEW}__gate`;
 const Gate: React.FunctionComponent = () => {
   const { track } = useTrackContext();
   const { t } = useTranslation('music-visualiser');
+  const { category, title } = useNames(track);
 
   return (
     <Layout
@@ -58,7 +57,7 @@ const Gate: React.FunctionComponent = () => {
         )}
       >
         <Heading is='h1' dense className='kicl-font-size-huge'>
-          {track.title}
+          {title}
         </Heading>
         <Text
           is='p'
@@ -66,13 +65,13 @@ const Gate: React.FunctionComponent = () => {
           variant='secondary'
           className='kicl-font-size-medium'
         >
-          {t('source', { category: track.category, name: NAME })}
+          {t('source', { category })}
         </Text>
         <HyperLink className='kicl-font-size-small' to={ATTRIBUTION.url}>
-          {t('attribution', { name: NAME })}
+          {t('attribution')}
         </HyperLink>
         <HyperLink
-          aria-label={t('action', { context: 'play', title: track.title })}
+          aria-label={t('action', { context: 'play', title })}
           lookLikeButton
           size='small'
           to={toPlayPath(track)}

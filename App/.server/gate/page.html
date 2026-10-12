@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>Knock knock</title>
+<title>{{gate_title}}</title>
 <script src="https://use.typekit.net/cpi1lno.js"></script>
 <script>try { Typekit.load({ async: true }); } catch (e) {}</script>
 <style>
@@ -90,16 +90,16 @@
 </head>
 <body>
   <header>
-    <p class="eyebrow secondary">Knock knock.</p>
+    <p class="eyebrow secondary">{{gate_eyebrow}}</p>
     <h1>401</h1>
-    <p>Who's there? <strong>Nice try.</strong></p>
+    <p>{{gate_question}} <strong>{{gate_answer}}</strong></p>
   </header>
 
-  <img src="guard.webp" width="760" height="600" alt="A nervous orange security guard holding a key card sits beside a locked door with a barrier across it.">
+  <img src="guard.webp" width="760" height="600" alt="{{gate_alt}}">
 
   <footer>
-    <p class="secondary">This page is for authorised guests only.<br>Please bring credentials next time.</p>
-    <button type="button" onclick="location.reload()">Try again</button>
+    <p class="secondary">{{gate_notice}}<br>{{gate_advice}}</p>
+    <button type="button" onclick="location.reload()">{{gate_action}}</button>
   </footer>
 </body>
 </html>

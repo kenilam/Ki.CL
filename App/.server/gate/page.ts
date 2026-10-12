@@ -1,7 +1,8 @@
 import fs from 'fs';
 
 /**
- * The page a visitor sees after cancelling the password prompt. The image is
+ * The page a visitor sees after cancelling the password prompt, before its
+ * words are filled in. The image is
  * inlined as base64 because the gate blocks every other request, so a separate
  * image URL would itself get a 401.
  */

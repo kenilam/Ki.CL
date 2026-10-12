@@ -20,7 +20,14 @@ import { applyClientToken } from './client-token';
 import { applyCollect } from './collect';
 import { applyGate } from './gate';
 import { precompressed } from './precompressed';
-import { applyProxy, attachUpgrade, warmIdToken } from './proxy';
+import {
+  applyProxy,
+  attachUpgrade,
+  BACKEND_URL,
+  currentIdToken,
+  warmIdToken,
+} from './proxy';
+import { createTexts, escapeJson } from './texts';
 
 import nodePath from 'path';
 
@@ -71,7 +78,9 @@ async function Server() {
     // Before the gate, which lets a verified client through.
     applyClientToken(app);
 
-    applyGate(app);
+    const texts = createTexts(() => currentIdToken(BACKEND_URL));
+
+    applyGate(app, texts);
 
     /*
      * Ahead of everything that serves files. The API's paths are not on disk,
@@ -82,6 +91,30 @@ async function Server() {
     applyProxy(app);
 
     applyCollect(app);
+
+    /*
+     * Ahead of the built files: the shell and the manifest ask for their words
+     * by `{{key}}`, so neither is sent as the file it is on disk.
+     */
+    app.get(['/', '/index.html'], (_, responses) => {
+      const shell = `${baseurl}/index.html`;
+
+      responses
+        .setHeader('Cache-Control', cacheControl(shell))
+        .type('html')
+        .send(texts.fill(fs.readFileSync(shell, 'utf8')));
+    });
+
+    app.get('/site.webmanifest', (_, responses) => {
+      responses
+        .type('application/manifest+json')
+        .send(
+          texts.fill(
+            fs.readFileSync(`${baseurl}/site.webmanifest`, 'utf8'),
+            escapeJson
+          )
+        );
+    });
 
     app.use(
       precompressed(baseurl),
@@ -134,7 +167,7 @@ async function Server() {
          * it expects a script.
          */
         if (request.path.startsWith(ASSETS)) {
-          responses.status(404).send('404: Not found');
+          responses.status(404).send(texts.text('error_not_found'));
 
           return;
         }
@@ -204,11 +237,12 @@ async function Server() {
       try {
         const data = fs.readFileSync(path, 'utf8');
 
-        responses.send(data);
+        // The shell asks for its title and description by `{{key}}`.
+        responses.send(extname === '.html' ? texts.fill(data) : data);
 
         console.info('Sent:', path);
       } catch (error) {
-        responses.status(503).send('503: Service is temporary unavailable');
+        responses.status(503).send(texts.text('error_unavailable'));
 
         console.error(error);
       }

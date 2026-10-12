@@ -36,7 +36,7 @@ const Aside: React.FunctionComponent = () => {
         lookLikeButton
         size='small'
         title={t('header.aside.linkedin')}
-        to='https://www.linkedin.com/in/kenilam'
+        to={common('url', { context: 'linkedin' })}
         variant='ghost'
       >
         <Ri.RiLinkedinLine aria-hidden />
@@ -46,7 +46,7 @@ const Aside: React.FunctionComponent = () => {
         lookLikeButton
         size='small'
         title={t('header.aside.github')}
-        to='https://github.com/kenilam'
+        to={common('url', { context: 'github' })}
         variant='ghost'
       >
         <Ri.RiGithubLine aria-hidden />

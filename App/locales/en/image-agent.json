@@ -112,7 +112,7 @@
       "why": "I built this to learn how to put an AI feature in front of people without it running up a bill or drawing something it shouldn’t."
     }
   },
-  "description": "Describe a picture and the agent draws it. If there isn’t enough detail, it asks questions first.",
+  "description": "$t(common:experiment_description_image_agent)",
   "diagram": {
     "allowance": {
       "description": "Per person: one turn running at a time, five seconds between messages, 40 messages and five pictures a day. Across everyone: 1,000 messages and 200 pictures a day, and 10 new people an hour. Both sets are checked when ImageAgentSend runs, which takes a thread id and the text. The ImageAgentAllowance query reports the person’s remaining pictures, the limit, when the next message is allowed, whether a turn is busy, and the running conversations.",
@@ -178,14 +178,14 @@
       "line_provider_timeout": "timeout: move on (30 s text, 45 s review, 90 s image)",
       "line_review": "vision chain",
       "line_write": "text chain",
-      "node_brief": "Brief",
+      "node_brief": "$t(common:brief)",
       "node_cloudflare": "Flux Schnell",
       "node_draw": "Draw",
       "node_gemini": "Gemini Image",
       "node_openai": "gpt-image-1",
       "node_pollinations": "Flux",
       "node_provider": "Each provider",
-      "node_review": "Review",
+      "node_review": "$t(article.drawing.title_review)",
       "node_save": "Save best",
       "node_write": "Write prompt",
       "title": "Drawing, and failover"
@@ -196,7 +196,7 @@
       "legend_red": "is where it stops",
       "line_clarifier": "ask or draw",
       "line_classifier": "is it a picture?",
-      "line_error": "not recorded",
+      "line_error": "$t(diagram.how_it_works.line_refused)",
       "line_limits": "before saving",
       "line_moderation": "free, safety only",
       "line_question": "up to 3, then draw",
@@ -206,11 +206,11 @@
       "node_clarifier": "$t(diagram.node_clarifier)",
       "node_classifier": "$t(diagram.node_classifier)",
       "node_error": "Error",
-      "node_limits": "Limits",
+      "node_limits": "$t(article.limits.title)",
       "node_moderation": "$t(diagram.node_moderation)",
       "node_question": "Question",
       "node_refusal": "Refusal",
-      "node_rules": "Rules",
+      "node_rules": "$t(article.governing.title_rules)",
       "title": "$t(article.governing.title)"
     },
     "how_it_works": {
@@ -223,11 +223,11 @@
       "node_check": "Check",
       "node_counted": "Counted",
       "node_refused": "Refused",
-      "node_send": "Send",
+      "node_send": "$t(common:action_send)",
       "node_shown": "Shown",
       "title": "$t(article.how_it_works.title)"
     },
-    "label_dashed": "Dashed",
+    "label_dashed": "$t(common:dashed)",
     "label_green": "Green",
     "label_red": "Red",
     "node_api": "API",
@@ -235,7 +235,7 @@
     "node_clarifier": "Clarifier",
     "node_classifier": "Classifier",
     "node_models": "Models",
-    "node_moderation": "Moderation",
+    "node_moderation": "$t(common:moderation)",
     "node_mongodb": "MongoDB",
     "overview": {
       "description": "The browser sends messages to the API over a GraphQL mutation and gets updates back over a subscription. The API keeps conversations, jobs and assets in MongoDB, calls a moderation endpoint and three provider chains for text, vision and images, and uploads pictures to a storage bucket that the browser reads through the site’s assets route.",
@@ -253,7 +253,7 @@
       "line_image_chain_first": "gpt-image-1 → Flux Schnell",
       "line_image_chain_rest": "→ Pollinations → Gemini",
       "line_moderation": "OpenAI omni-moderation",
-      "line_mongodb_assets": "assets",
+      "line_mongodb_assets": "$t(common:assets)",
       "line_mongodb_threads": "threads, jobs",
       "line_text_chain": "gpt-4o-mini → Llama 3.3 → Gemini",
       "line_vision_chain": "gpt-4o → Gemini Flash",

@@ -8,10 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { Animation, Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
-import {
-  ATTRIBUTION,
-  NAME,
-} from '@/views/experiments/music-visualiser/catalog';
+import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
+import { useNames } from '@/views/experiments/music-visualiser/catalog/use-names';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -31,6 +29,7 @@ const NowPlaying: React.FunctionComponent = () => {
     track,
   } = useTrackContext();
   const { t } = useTranslation('music-visualiser');
+  const { category, title } = useNames(track);
 
   return (
     <Layout autoFlow='row' gap='narrowest' justifyItems='start'>
@@ -47,13 +46,13 @@ const NowPlaying: React.FunctionComponent = () => {
           dense
           is='h1'
         >
-          {track.title}
+          {title}
         </Heading>
         <Text is='p' dense variant='secondary' className='kicl-font-size-small'>
-          {track.category}
+          {category}
         </Text>
         <HyperLink className='kicl-font-size-smaller' to={ATTRIBUTION.url}>
-          {t('attribution', { name: NAME })}
+          {t('attribution')}
         </HyperLink>
         {error ? (
           <Animation property='slide-from-top'>
