@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+
+// Libraries
+import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -13,69 +16,46 @@ import {
 // Diagrams
 import { drawing } from './diagrams/drawing';
 
-const STEPS = [
-  'Write an image prompt from the brief',
-  'Generate the picture',
-  'Review it',
-  'If the review fails, rewrite the prompt with up to three of the reviewer’s notes',
-  'Draw once more',
-];
+const STEPS = ['write', 'generate', 'review', 'rewrite', 'again'] as const;
 
 /** Drawing: the fixed loop, the reviewer, and where pictures are kept. */
-const Drawing: React.FunctionComponent = () => (
-  <Details
-    gap='narrow'
-    summary={
-      <Heading className='kicl-font-size-large' dense is='h3'>
-        Drawing
+const Drawing: React.FunctionComponent = () => {
+  const { t } = useTranslation('image-agent');
+  const spec = useMemo(() => drawing(t), [t]);
+
+  return (
+    <Details
+      gap='narrow'
+      summary={
+        <Heading className='kicl-font-size-large' dense is='h3'>
+          {t('article.drawing.title')}
+        </Heading>
+      }
+    >
+      <Text is='p'>{t('article.drawing.order')}</Text>
+      <List gap='narrower' is='ol'>
+        {STEPS.map((context) => (
+          <ListItem key={context}>
+            <Text is='span'>{t('article.drawing.step', { context })}</Text>
+          </ListItem>
+        ))}
+      </List>
+      <Diagram spec={spec} />
+      <Heading is='h4' className='kicl-font-size-medium'>
+        {t('article.drawing.title', { context: 'prompt' })}
       </Heading>
-    }
-  >
-    <Text is='p'>
-      My first version, in Python, let the model pick which tool to call next.
-      Its prompt spelled out the order anyway, and tool calling didn’t fit steps
-      that can switch provider halfway through. So here the order is code:
-    </Text>
-    <List gap='narrower' is='ol'>
-      {STEPS.map((step) => (
-        <ListItem key={step}>
-          <Text is='span'>{step}</Text>
-        </ListItem>
-      ))}
-    </List>
-    <Diagram spec={drawing} />
-    <Heading is='h4' className='kicl-font-size-medium'>
-      Prompt writing
-    </Heading>
-    <Text is='p'>
-      The prompt writer is asked for 60 to 120 words describing only what should
-      be in the picture. Telling an image model what to leave out tends to put
-      it in.
-    </Text>
-    <Heading is='h4' className='kicl-font-size-medium'>
-      Review
-    </Heading>
-    <Text is='p'>
-      The reviewer is a vision model. It scores relevance, quality, style match
-      and composition out of 10, plus an overall score and suggestions. A
-      picture passes with 7 overall and at least 6 for relevance. I keep the
-      better of the two attempts.
-    </Text>
-    <Text is='p'>
-      My first reviewer failed on every image, and the fallback saved each
-      failure as a pass with made-up scores. That was worse than having no
-      review. Now, if no reviewer can be reached, the picture goes out with no
-      score and a note saying it wasn’t checked.
-    </Text>
-    <Heading is='h4' className='kicl-font-size-medium'>
-      Storage
-    </Heading>
-    <Text is='p'>
-      Pictures go into a storage bucket, named with a hash of the file’s
-      contents. The same image always gets the same URL, so browsers can cache
-      it for a year.
-    </Text>
-  </Details>
-);
+      <Text is='p'>{t('article.drawing.prompt')}</Text>
+      <Heading is='h4' className='kicl-font-size-medium'>
+        {t('article.drawing.title', { context: 'review' })}
+      </Heading>
+      <Text is='p'>{t('article.drawing.review')}</Text>
+      <Text is='p'>{t('article.drawing.first_reviewer')}</Text>
+      <Heading is='h4' className='kicl-font-size-medium'>
+        {t('article.drawing.title', { context: 'storage' })}
+      </Heading>
+      <Text is='p'>{t('article.drawing.storage')}</Text>
+    </Details>
+  );
+};
 
 export { Drawing };

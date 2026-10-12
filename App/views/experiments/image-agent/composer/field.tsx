@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -24,11 +25,6 @@ import { MAX_LENGTH, type ComposerValues } from './schema';
 // Constants
 import { CLASS_NAME } from './constants';
 
-const COPY = {
-  placeholder: 'A red fox asleep under a birch, in winter light',
-  send: 'Send',
-};
-
 type Props = {
   disabled: boolean;
   /** Enter sends, Shift+Enter adds a line. */
@@ -41,7 +37,10 @@ const Field: React.FunctionComponent<Props> = ({
   onEnter,
   sending,
 }) => {
+  const { t } = useTranslation('image-agent');
+  const { t: common } = useTranslation();
   const { control } = useFormContext<ComposerValues>();
+  const placeholder = t('placeholder');
 
   return (
     <FormField
@@ -53,7 +52,7 @@ const Field: React.FunctionComponent<Props> = ({
             <FormControl>
               <InputGroupTextarea
                 {...field}
-                aria-label={COPY.placeholder}
+                aria-label={placeholder}
                 className={`${CLASS_NAME}__field`}
                 autoComplete='off'
                 disabled={disabled}
@@ -64,13 +63,13 @@ const Field: React.FunctionComponent<Props> = ({
                     onEnter();
                   }
                 }}
-                placeholder={COPY.placeholder}
+                placeholder={placeholder}
                 rows={1}
               />
             </FormControl>
             <InputGroupAddon align='inline-end'>
               <InputGroupButton
-                aria-label={COPY.send}
+                aria-label={common('action', { context: 'send' })}
                 disabled={disabled}
                 type='submit'
                 variant='ghost'

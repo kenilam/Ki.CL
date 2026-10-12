@@ -1,53 +1,54 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 const ACTORS = [
-  { title: 'Browser', x: 90 },
-  { title: 'API', x: 280 },
-  { title: 'MongoDB', x: 470 },
-  { title: 'Models', x: 660 },
-];
+  { context: 'browser', x: 90 },
+  { context: 'api', x: 280 },
+  { context: 'mongodb', x: 470 },
+  { context: 'models', x: 660 },
+] as const;
 
 const TOP = 20;
 const BOTTOM = 530;
 
-type Step = {
-  from: number;
-  to: number;
-  y: number;
-  label: string;
-  reply?: boolean;
-};
-
 /** Arrows between lifelines, a reply dashed. `from === to` loops back. */
-const STEPS: Step[] = [
-  { from: 90, to: 280, y: 90, label: '1 · ImageAgentSend' },
-  { from: 280, to: 280, y: 120, label: '2 · limits, stale turns' },
-  { from: 280, to: 470, y: 160, label: '3 · save, set THINKING' },
-  { from: 280, to: 90, y: 195, label: '4 · the thread, now', reply: true },
-  { from: 280, to: 660, y: 240, label: '5 · check, clarify' },
-  { from: 660, to: 280, y: 275, label: 'verdict, brief', reply: true },
-  { from: 280, to: 470, y: 315, label: '6 · save each step' },
-  { from: 280, to: 90, y: 350, label: '7 · pushed on change', reply: true },
-  { from: 280, to: 660, y: 395, label: '8 · draw, review' },
-  { from: 660, to: 280, y: 430, label: 'picture, score', reply: true },
-  { from: 280, to: 470, y: 470, label: '9 · picture, IDLE' },
-  { from: 280, to: 90, y: 505, label: '10 · the picture', reply: true },
-];
+const STEPS = [
+  { context: 'send', from: 90, to: 280, y: 90, reply: false },
+  { context: 'limits', from: 280, to: 280, y: 120, reply: false },
+  { context: 'save', from: 280, to: 470, y: 160, reply: false },
+  { context: 'thread', from: 280, to: 90, y: 195, reply: true },
+  { context: 'check', from: 280, to: 660, y: 240, reply: false },
+  { context: 'verdict', from: 660, to: 280, y: 275, reply: true },
+  { context: 'save_each', from: 280, to: 470, y: 315, reply: false },
+  { context: 'pushed', from: 280, to: 90, y: 350, reply: true },
+  { context: 'draw', from: 280, to: 660, y: 395, reply: false },
+  { context: 'score', from: 660, to: 280, y: 430, reply: true },
+  { context: 'idle', from: 280, to: 470, y: 470, reply: false },
+  { context: 'picture', from: 280, to: 90, y: 505, reply: true },
+] as const;
 
 /** One turn, from the send to the picture. */
-const turn: DiagramSpec = {
-  title: 'From send to picture',
+const turn = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.turn.title'),
   legend: [
-    { label: 'Step 1–4', value: 'inside the request' },
-    { label: 'Step 5', value: 'runs on its own' },
-    { label: 'Dashed', value: 'replies' },
+    {
+      label: t('diagram.turn.label', { context: 'inside' }),
+      value: t('diagram.turn.legend', { context: 'inside' }),
+    },
+    {
+      label: t('diagram.turn.label', { context: 'runs' }),
+      value: t('diagram.turn.legend', { context: 'runs' }),
+    },
+    {
+      label: t('diagram.label', { context: 'dashed' }),
+      value: t('diagram.turn.legend', { context: 'dashed' }),
+    },
   ],
-  description:
-    'Sequence of one turn. The browser sends the message; the API checks limits and stale turns, saves it and sets the conversation to THINKING, and returns at once. The turn then runs on: checks and the clarifier call the models, each step is saved and pushed to the browser over the subscription, the picture is drawn and reviewed, and the conversation goes back to IDLE with the picture.',
+  description: t('diagram.turn.description'),
   width: 760,
   height: 550,
-  nodes: ACTORS.map(({ title, x }) => ({
-    title,
+  nodes: ACTORS.map(({ context, x }) => ({
+    title: t('diagram.node', { context }),
     x: x - 65,
     y: TOP,
     w: 130,
@@ -61,8 +62,10 @@ const turn: DiagramSpec = {
         [x, BOTTOM],
       ] as Array<[number, number]>,
     })),
-    ...STEPS.map(({ from, label, reply, to, y }) =>
-      from === to
+    ...STEPS.map(({ context, from, reply, to, y }) => {
+      const label = t('diagram.turn.step', { context });
+
+      return from === to
         ? {
             accent: 'green' as const,
             anchor: 'start' as const,
@@ -86,9 +89,9 @@ const turn: DiagramSpec = {
               [from, y],
               [to, y],
             ] as Array<[number, number]>,
-          }
-    ),
+          };
+    }),
   ],
-};
+});
 
 export { turn };

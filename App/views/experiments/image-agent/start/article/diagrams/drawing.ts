@@ -1,57 +1,95 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 const Y = 40;
 const H = 60;
 
+/** The image providers, in the order they are tried. */
 const CHAIN = [
-  { title: 'gpt-image-1', lines: ['OpenAI'], x: 30 },
-  { title: 'Flux Schnell', lines: ['Cloudflare'], x: 210 },
-  { title: 'Flux', lines: ['Pollinations'], x: 390 },
-  { title: 'Gemini Image', lines: ['2.5 Flash'], x: 570 },
-];
+  { context: 'openai', x: 30 },
+  { context: 'cloudflare', x: 210 },
+  { context: 'pollinations', x: 390 },
+  { context: 'gemini', x: 570 },
+] as const;
 
 /** The drawing loop, and the provider chain one of its calls goes through. */
-const drawing: DiagramSpec = {
-  title: 'Drawing, and failover',
+const drawing = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.drawing.title'),
   legend: [
     {
-      label: 'Top row',
-      value: 'once per picture, one retry after a failed review',
+      label: t('diagram.drawing.label', { context: 'top' }),
+      value: t('diagram.drawing.legend', { context: 'top' }),
     },
-    { label: 'Bottom row', value: 'the order providers are tried in for Draw' },
+    {
+      label: t('diagram.drawing.label', { context: 'bottom' }),
+      value: t('diagram.drawing.legend', { context: 'bottom' }),
+    },
   ],
-  description:
-    'From the brief, a prompt is written, the picture drawn and reviewed. A pass saves the best attempt. A failed review sends up to three notes back to the prompt writer for one more attempt. Every call goes through a chain of providers; for pictures that is gpt-image-1, Flux Schnell on Cloudflare, Flux on Pollinations, then Gemini. Each provider times out and moves on, retries other errors three times, and is skipped for 30 minutes when its quota is spent or a day when it is out of credit.',
+  description: t('diagram.drawing.description'),
   width: 760,
   height: 470,
-  groups: [{ label: 'Image chain, in order', x: 10, y: 190, w: 740, h: 260 }],
-  nodes: [
-    { title: 'Brief', x: 10, y: Y, w: 100, h: H },
+  groups: [
     {
-      title: 'Write prompt',
-      lines: ['text chain'],
+      label: t('diagram.drawing.group', { context: 'chain' }),
+      x: 10,
+      y: 190,
+      w: 740,
+      h: 260,
+    },
+  ],
+  nodes: [
+    {
+      title: t('diagram.drawing.node', { context: 'brief' }),
+      x: 10,
+      y: Y,
+      w: 100,
+      h: H,
+    },
+    {
+      title: t('diagram.drawing.node', { context: 'write' }),
+      lines: [t('diagram.drawing.line', { context: 'write' })],
       x: 150,
       y: Y,
       w: 140,
       h: H,
     },
-    { title: 'Draw', lines: ['image chain'], x: 330, y: Y, w: 120, h: H },
-    { title: 'Review', lines: ['vision chain'], x: 490, y: Y, w: 120, h: H },
-    { title: 'Save best', x: 650, y: Y, w: 100, h: H },
-    ...CHAIN.map(({ lines, title, x }) => ({
-      title,
-      lines,
+    {
+      title: t('diagram.drawing.node', { context: 'draw' }),
+      lines: [t('diagram.drawing.line', { context: 'draw' })],
+      x: 330,
+      y: Y,
+      w: 120,
+      h: H,
+    },
+    {
+      title: t('diagram.drawing.node', { context: 'review' }),
+      lines: [t('diagram.drawing.line', { context: 'review' })],
+      x: 490,
+      y: Y,
+      w: 120,
+      h: H,
+    },
+    {
+      title: t('diagram.drawing.node', { context: 'save' }),
+      x: 650,
+      y: Y,
+      w: 100,
+      h: H,
+    },
+    ...CHAIN.map(({ context, x }) => ({
+      title: t('diagram.drawing.node', { context }),
+      lines: [t('diagram.drawing.line', { context })],
       x,
       y: 240,
       w: 160,
       h: 60,
     })),
     {
-      title: 'Each provider',
+      title: t('diagram.drawing.node', { context: 'provider' }),
       lines: [
-        'timeout: move on (30 s text, 45 s review, 90 s image)',
-        'other error: retry 3 times, 1 s then 2 s apart',
-        'quota spent: skip 30 min · out of credit: skip a day',
+        t('diagram.drawing.line', { context: 'provider_timeout' }),
+        t('diagram.drawing.line', { context: 'provider_error' }),
+        t('diagram.drawing.line', { context: 'provider_quota' }),
       ],
       x: 30,
       y: 330,
@@ -77,7 +115,7 @@ const drawing: DiagramSpec = {
         [610, Y + H / 2],
         [650, Y + H / 2],
       ],
-      label: 'pass',
+      label: t('diagram.drawing.edge', { context: 'pass' }),
       lx: 630,
       ly: Y + H / 2 - 8,
     },
@@ -90,7 +128,7 @@ const drawing: DiagramSpec = {
         [220, 140],
         [220, Y + H],
       ],
-      label: 'fails: notes, one more try',
+      label: t('diagram.drawing.edge', { context: 'fails' }),
       lx: 385,
       ly: 160,
     },
@@ -101,6 +139,6 @@ const drawing: DiagramSpec = {
       ] as Array<[number, number]>,
     })),
   ],
-};
+});
 
 export { drawing };

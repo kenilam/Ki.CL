@@ -1,4 +1,5 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 /** Top of the first group, so its label has room above the nodes. */
 const T = 50;
@@ -7,20 +8,31 @@ const T = 50;
 const B = 400;
 
 /** What each model reads, and the one lookup that retrieves. */
-const context: DiagramSpec = {
-  title: 'What each model reads',
+const context = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.context.title'),
   legend: [
-    { label: 'Top half', value: 'what each model is given' },
-    { label: 'Bottom half', value: 'the one lookup that uses no model' },
+    {
+      label: t('diagram.context.label', { context: 'top' }),
+      value: t('diagram.context.legend', { context: 'top' }),
+    },
+    {
+      label: t('diagram.context.label', { context: 'bottom' }),
+      value: t('diagram.context.legend', { context: 'bottom' }),
+    },
   ],
-  description:
-    'The conversation, as Person and Agent lines with refused messages removed, goes to the classifier and the clarifier. The clarifier also reads and updates the brief and style saved on the thread. The prompt writer and the reviewer read only the brief and style. The prompt writer’s prompt goes to the image model, the picture goes to the reviewer, and a failed review sends its notes back to the prompt writer once. Separately, similar conversations are found without a model: the typed text is split into words and compared with word sets from the person’s last 50 conversations, and up to three that share at least 60% come back.',
+  description: t('diagram.context.description'),
   width: 760,
   height: 540,
   groups: [
-    { label: 'What the models read', x: 10, y: 10, w: 740, h: 360 },
     {
-      label: 'Similar conversations, no model',
+      label: t('diagram.context.group', { context: 'models' }),
+      x: 10,
+      y: 10,
+      w: 740,
+      h: 360,
+    },
+    {
+      label: t('diagram.context.group', { context: 'similar' }),
       x: 10,
       y: B - 20,
       w: 740,
@@ -29,8 +41,11 @@ const context: DiagramSpec = {
   ],
   nodes: [
     {
-      title: 'Conversation',
-      lines: ['Person: / Agent:', 'refused ones removed'],
+      title: t('diagram.context.node', { context: 'conversation' }),
+      lines: [
+        t('diagram.context.line', { context: 'conversation_roles' }),
+        t('diagram.context.line', { context: 'conversation_refused' }),
+      ],
       shape: 'cylinder',
       x: 30,
       y: T,
@@ -38,31 +53,67 @@ const context: DiagramSpec = {
       h: 100,
     },
     {
-      title: 'Brief + style',
-      lines: ['saved on the thread'],
+      title: t('diagram.context.node', { context: 'brief' }),
+      lines: [t('diagram.context.line', { context: 'brief' })],
       shape: 'cylinder',
       x: 30,
       y: T + 180,
       w: 180,
       h: 80,
     },
-    { title: 'Classifier', x: 300, y: T, w: 150, h: 45 },
-    { title: 'Clarifier', x: 300, y: T + 85, w: 150, h: 45 },
-    { title: 'Prompt writer', x: 300, y: T + 175, w: 150, h: 45 },
-    { title: 'Reviewer', x: 300, y: T + 265, w: 150, h: 45 },
-    { title: 'Image model', x: 560, y: T + 175, w: 170, h: 45 },
-    { title: 'Typed text', x: 30, y: B + 30, w: 180, h: 60 },
     {
-      title: 'Word sets',
-      lines: ['last 50 conversations'],
+      title: t('diagram.node', { context: 'classifier' }),
+      x: 300,
+      y: T,
+      w: 150,
+      h: 45,
+    },
+    {
+      title: t('diagram.node', { context: 'clarifier' }),
+      x: 300,
+      y: T + 85,
+      w: 150,
+      h: 45,
+    },
+    {
+      title: t('diagram.context.node', { context: 'prompt_writer' }),
+      x: 300,
+      y: T + 175,
+      w: 150,
+      h: 45,
+    },
+    {
+      title: t('diagram.context.node', { context: 'reviewer' }),
+      x: 300,
+      y: T + 265,
+      w: 150,
+      h: 45,
+    },
+    {
+      title: t('diagram.context.node', { context: 'image_model' }),
+      x: 560,
+      y: T + 175,
+      w: 170,
+      h: 45,
+    },
+    {
+      title: t('diagram.context.node', { context: 'typed' }),
+      x: 30,
+      y: B + 30,
+      w: 180,
+      h: 60,
+    },
+    {
+      title: t('diagram.context.node', { context: 'word_sets' }),
+      lines: [t('diagram.context.line', { context: 'word_sets' })],
       x: 280,
       y: B + 30,
       w: 190,
       h: 60,
     },
     {
-      title: 'Up to 3',
-      lines: ['60% of words shared'],
+      title: t('diagram.context.node', { context: 'matches' }),
+      lines: [t('diagram.context.line', { context: 'matches' })],
       x: 560,
       y: B + 30,
       w: 170,
@@ -93,7 +144,7 @@ const context: DiagramSpec = {
         [265, T + 118],
         [300, T + 118],
       ],
-      label: 'reads, updates',
+      label: t('diagram.context.edge', { context: 'reads' }),
       anchor: 'start',
       lx: 272,
       ly: T + 160,
@@ -120,7 +171,7 @@ const context: DiagramSpec = {
         [450, T + 197],
         [560, T + 197],
       ],
-      label: 'prompt',
+      label: t('diagram.context.edge', { context: 'prompt' }),
       lx: 505,
       ly: T + 189,
     },
@@ -131,7 +182,7 @@ const context: DiagramSpec = {
         [645, T + 288],
         [450, T + 288],
       ],
-      label: 'picture',
+      label: t('diagram.context.edge', { context: 'picture' }),
       lx: 550,
       ly: T + 280,
     },
@@ -141,7 +192,7 @@ const context: DiagramSpec = {
         [375, T + 265],
         [375, T + 220],
       ],
-      label: 'notes, once',
+      label: t('diagram.context.edge', { context: 'notes' }),
       anchor: 'start',
       lx: 383,
       ly: T + 247,
@@ -151,7 +202,7 @@ const context: DiagramSpec = {
         [210, B + 60],
         [280, B + 60],
       ],
-      label: 'words',
+      label: t('diagram.context.edge', { context: 'words' }),
       lx: 245,
       ly: B + 52,
     },
@@ -160,11 +211,11 @@ const context: DiagramSpec = {
         [470, B + 60],
         [560, B + 60],
       ],
-      label: 'overlap',
+      label: t('diagram.context.edge', { context: 'overlap' }),
       lx: 515,
       ly: B + 52,
     },
   ],
-};
+});
 
 export { context };

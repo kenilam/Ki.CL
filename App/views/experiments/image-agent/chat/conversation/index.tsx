@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { List, Spinner, Status } from 'design/components';
@@ -23,7 +24,7 @@ import type { ThreadState } from './use-thread';
 
 // Constants
 import { toLabel, toPath } from '@/views/experiments/image-agent/constants';
-import { CLASS_NAME, COPY } from './constants';
+import { CLASS_NAME } from './constants';
 
 type Props = Omit<ThreadState, 'accept'> &
   Pick<MessageProps, 'onChoose' | 'onRetry'> & {
@@ -40,6 +41,8 @@ const Conversation: React.FunctionComponent<Props> = ({
   onRetry,
   thread,
 }) => {
+  const { t } = useTranslation('image-agent');
+
   const count = thread?.messages.length ?? 0;
   const last = thread?.messages[count - 1];
   const thinking = thread?.status === 'THINKING';
@@ -58,14 +61,15 @@ const Conversation: React.FunctionComponent<Props> = ({
 
   if (error) {
     const limited = GetErrorCode(error) === 'TOO_MANY_REQUESTS';
+    const context = limited ? 'limited' : 'unreachable';
 
     return (
       <Status
         in
         headingLevel='h2'
         level={limited ? 'warning' : 'error'}
-        message={limited ? COPY.limited : COPY.unreachable}
-        title={limited ? COPY.limitedTitle : COPY.unreachableTitle}
+        message={t('error', { context })}
+        title={t('title', { context })}
       />
     );
   }

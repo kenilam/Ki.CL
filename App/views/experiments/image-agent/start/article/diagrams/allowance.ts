@@ -1,27 +1,46 @@
 import type { DiagramSpec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 // Icons
 import * as Ri from 'react-icons/ri';
 
 /** The limits, and the schema they sit behind. */
-const allowance: DiagramSpec = {
-  title: 'Limits and the schema',
+const allowance = (t: TFunction<'image-agent'>): DiagramSpec => ({
+  title: t('diagram.allowance.title'),
   legend: [
-    { label: 'Green', value: 'validate on every request', accent: 'confirm' },
-    { label: 'Dashed', value: 'what ImageAgentAllowance reports back' },
+    {
+      label: t('diagram.label', { context: 'green' }),
+      value: t('diagram.allowance.legend', { context: 'green' }),
+      accent: 'confirm',
+    },
+    {
+      label: t('diagram.label', { context: 'dashed' }),
+      value: t('diagram.allowance.legend', { context: 'dashed' }),
+    },
   ],
-  description:
-    'Per person: one turn running at a time, five seconds between messages, 40 messages and five pictures a day. Across everyone: 1,000 messages and 200 pictures a day, and 10 new people an hour. Both sets are checked when ImageAgentSend runs, which takes a thread id and the text. The ImageAgentAllowance query reports the person’s remaining pictures, the limit, when the next message is allowed, whether a turn is busy, and the running conversations.',
+  description: t('diagram.allowance.description'),
   width: 660,
   height: 346,
   nodes: [
     {
-      title: 'Per person',
+      title: t('diagram.allowance.node', { context: 'person' }),
       rows: [
-        { icon: Ri.RiPlayCircleLine, name: 'One turn running at a time' },
-        { icon: Ri.RiTimerLine, name: 'Five seconds between messages' },
-        { icon: Ri.RiChat3Line, name: '40 messages a day' },
-        { icon: Ri.RiImageLine, name: 'Five pictures a day' },
+        {
+          icon: Ri.RiPlayCircleLine,
+          name: t('diagram.allowance.row', { context: 'turn' }),
+        },
+        {
+          icon: Ri.RiTimerLine,
+          name: t('diagram.allowance.row', { context: 'gap' }),
+        },
+        {
+          icon: Ri.RiChat3Line,
+          name: t('diagram.allowance.row', { context: 'messages_person' }),
+        },
+        {
+          icon: Ri.RiImageLine,
+          name: t('diagram.allowance.row', { context: 'pictures_person' }),
+        },
       ],
       x: 20,
       y: 40,
@@ -29,11 +48,20 @@ const allowance: DiagramSpec = {
       h: 130,
     },
     {
-      title: 'Across everyone',
+      title: t('diagram.allowance.node', { context: 'everyone' }),
       rows: [
-        { icon: Ri.RiChat3Line, name: '1,000 messages a day' },
-        { icon: Ri.RiImageLine, name: '200 pictures a day' },
-        { icon: Ri.RiUserAddLine, name: '10 new people an hour' },
+        {
+          icon: Ri.RiChat3Line,
+          name: t('diagram.allowance.row', { context: 'messages_everyone' }),
+        },
+        {
+          icon: Ri.RiImageLine,
+          name: t('diagram.allowance.row', { context: 'pictures_everyone' }),
+        },
+        {
+          icon: Ri.RiUserAddLine,
+          name: t('diagram.allowance.row', { context: 'people' }),
+        },
       ],
       x: 20,
       y: 200,
@@ -59,7 +87,10 @@ const allowance: DiagramSpec = {
       rows: [
         { type: 'arg', name: 'threadId' },
         { type: 'arg', name: 'text' },
-        { type: 'returns', name: 'the thread' },
+        {
+          type: 'returns',
+          name: t('diagram.allowance.row', { context: 'returns' }),
+        },
       ],
       x: 380,
       y: 220,
@@ -92,6 +123,6 @@ const allowance: DiagramSpec = {
       ],
     },
   ],
-};
+});
 
 export { allowance };
