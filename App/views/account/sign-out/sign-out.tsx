@@ -67,7 +67,9 @@ const SignOut: React.FunctionComponent = () => {
           <Animation property='slide-from-top'>
             <Heading dense id={titleId}>
               <AnimatedText className='kicl-color-error' is='span' role='alert'>
-                {pending ? t('account.signOut.pending') : t('account.signOut.title')}
+                {pending
+                  ? t('account.signOut.pending')
+                  : t('account.signOut.title')}
               </AnimatedText>
             </Heading>
           </Animation>
@@ -90,12 +92,12 @@ const SignOut: React.FunctionComponent = () => {
                   commandFor={SIGN_OUT_ID}
                   variant='tertiary'
                 >
-                  {t('account.signOut.cancel')}
+                  {t('cancel')}
                 </Button>
               </ListItem>
               <ListItem>
                 <Button onClick={confirm} variant='ghost'>
-                  {t('account.signOut.label')}
+                  {t('signOut')}
                 </Button>
               </ListItem>
             </List>

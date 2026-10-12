@@ -49,6 +49,7 @@ UI copy is not written in components. It lives in `App/locales/en/<namespace>.js
 
 - `common` holds what renders outside a route's own `Suspense`: the header, navigation, session gate and dialogs. It loads before the app mounts. A view names its own namespace, `useTranslation('resume')`, and suspends into its route's fallback. Never use a view namespace outside that route's `Suspense`.
 - Dynamic copy goes through `t` too, with the values passed in: `t('review.left', { count })`, `t('sentTo', { email })`, `t('placeholder', { context: kind })`. Plurals are `_one`/`_other`/`_zero` keys, variants are `_<context>` keys, and text with a link or code inside it is one `Trans`. Never build a sentence by joining strings or JSX fragments, and never write a plural with a ternary.
+- A single word or short phrase that could appear anywhere is a plain key at the top of `common`: `resume`, `experiments`, `cancel`, `signOut`. The key says what the word is, not where it is used. Copy that belongs to one part stays under that part.
 - Keys are typed from the JSON files in `App/types/i18next.d.ts`. Add a new namespace there.
 - After adding or changing a key, seed before you look at the page: the site shows the key itself until the database has it. Seed production before releasing, and check with `make translations.diff`.
 - `seed` never removes a key. Remove dead keys with `make translations.prune` one release later. A string whose placeholders change gets a new key.

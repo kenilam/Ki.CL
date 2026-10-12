@@ -59,7 +59,7 @@ const Default: React.FunctionComponent = () => {
               commandFor={SIGN_OUT_ID}
               variant='secondary'
             >
-              {t('account.signOut.label')}
+              {t('signOut')}
             </Button>
           </Animation>
         </Menu>

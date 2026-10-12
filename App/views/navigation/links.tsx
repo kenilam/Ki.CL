@@ -18,11 +18,11 @@ export const Links = [
     key={HOME_PATH}
     to={`/${HOME_PATH}`}
   >
-    <Trans i18nKey='navigation.home' />
+    <Trans i18nKey='home' />
   </HyperLink>,
   <React.Fragment key={EXPERIMENTS_PATH}>
     <HyperLink className='kicl-font-size-medium' to={`/${EXPERIMENTS_PATH}`}>
-      <Trans i18nKey='navigation.experiments' />
+      <Trans i18nKey='experiments' />
     </HyperLink>
     <List gap='narrow' justifyItems='end'>
       {EXPERIMENTS.map(({ title, to }) => (
@@ -39,6 +39,6 @@ export const Links = [
     key={RESUME_PATH}
     to={`/${RESUME_PATH}`}
   >
-    <Trans i18nKey='navigation.resume' />
+    <Trans i18nKey='resume' />
   </HyperLink>,
 ];
