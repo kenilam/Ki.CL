@@ -1,21 +1,27 @@
 import type { DiagramSpec as Spec } from 'design/components';
+import type { TFunction } from 'i18next';
 
 /** Part 2 - the new agent plane beside the unchanged Part 1 services. */
-const agentPlane: Spec = {
-  title: 'Agent plane diagram',
-  description:
-    'Diagram of the agent plane - chat gateway, agent runtime, tool registry, session store, cost governor and eval harness - beside the unchanged Part 1 services: Job Service, Orchestrator, provider adapters, asset store, credits, moderation and observability.',
+const agentPlane = (t: TFunction<'pika'>): Spec => ({
+  title: t('diagram.agent_plane.title'),
+  description: t('diagram.agent_plane.description'),
   width: 1000,
   height: 560,
   groups: [
-    { label: 'New - agent plane', x: 20, y: 20, w: 560, h: 520 },
-    { label: 'Unchanged from Part 1', x: 640, y: 20, w: 340, h: 520 },
+    { label: t('diagram.agent_plane.group_new'), x: 20, y: 20, w: 560, h: 520 },
+    {
+      label: t('diagram.agent_plane.group_unchanged'),
+      x: 640,
+      y: 20,
+      w: 340,
+      h: 520,
+    },
   ],
   nodes: [
     {
       id: 'chat',
-      title: 'Chat gateway',
-      lines: ['streaming UI'],
+      title: t('diagram.agent_plane.node_chat'),
+      lines: [t('diagram.agent_plane.line_chat')],
       x: 40,
       y: 60,
       w: 180,
@@ -23,8 +29,8 @@ const agentPlane: Spec = {
     },
     {
       id: 'art',
-      title: 'Agent Runtime',
-      lines: ['the loop'],
+      title: t('diagram.agent_plane.node_runtime'),
+      lines: [t('diagram.agent_plane.line_runtime')],
       x: 230,
       y: 150,
       w: 170,
@@ -32,8 +38,8 @@ const agentPlane: Spec = {
     },
     {
       id: 'sess',
-      title: 'Session store',
-      lines: ['messages · plan'],
+      title: t('diagram.agent_plane.node_session'),
+      lines: [t('diagram.agent_plane.line_session')],
       shape: 'cylinder',
       x: 40,
       y: 150,
@@ -42,8 +48,8 @@ const agentPlane: Spec = {
     },
     {
       id: 'tools',
-      title: 'Tool Registry',
-      lines: ['primitives + Apps'],
+      title: t('diagram.agent_plane.node_tools'),
+      lines: [t('diagram.agent_plane.line_tools')],
       x: 410,
       y: 60,
       w: 150,
@@ -51,8 +57,8 @@ const agentPlane: Spec = {
     },
     {
       id: 'gov',
-      title: 'Cost governor',
-      lines: ['budgets · router'],
+      title: t('diagram.agent_plane.node_governor'),
+      lines: [t('diagram.agent_plane.line_governor')],
       x: 410,
       y: 250,
       w: 150,
@@ -60,18 +66,25 @@ const agentPlane: Spec = {
     },
     {
       id: 'eval',
-      title: 'Eval harness',
-      lines: ['rubrics · replay'],
+      title: t('diagram.agent_plane.node_eval'),
+      lines: [t('diagram.agent_plane.line_eval')],
       x: 40,
       y: 300,
       w: 170,
       h: 60,
     },
-    { id: 'jobs', title: 'Job Service', x: 670, y: 60, w: 140, h: 44 },
+    {
+      id: 'jobs',
+      title: t('component', { context: 'job_service' }),
+      x: 670,
+      y: 60,
+      w: 140,
+      h: 44,
+    },
     {
       id: 'orch',
-      title: 'Orchestrator',
-      lines: ['durable DAG'],
+      title: t('component', { context: 'orchestrator' }),
+      lines: [t('diagram.agent_plane.line_orchestrator')],
       x: 670,
       y: 130,
       w: 140,
@@ -79,7 +92,7 @@ const agentPlane: Spec = {
     },
     {
       id: 'pad',
-      title: 'Provider adapters',
+      title: t('component', { context: 'provider_adapters' }),
       x: 670,
       y: 210,
       w: 140,
@@ -87,16 +100,37 @@ const agentPlane: Spec = {
     },
     {
       id: 's3',
-      title: 'Asset store',
+      title: t('diagram.agent_plane.node_assets'),
       shape: 'cylinder',
       x: 840,
       y: 130,
       w: 120,
       h: 60,
     },
-    { id: 'cred', title: 'Credits', x: 670, y: 300, w: 140, h: 40 },
-    { id: 'mod', title: 'Moderation', x: 670, y: 360, w: 140, h: 40 },
-    { id: 'obs', title: 'Observability', x: 670, y: 420, w: 140, h: 40 },
+    {
+      id: 'cred',
+      title: t('diagram.agent_plane.node_credits'),
+      x: 670,
+      y: 300,
+      w: 140,
+      h: 40,
+    },
+    {
+      id: 'mod',
+      title: t('component', { context: 'moderation' }),
+      x: 670,
+      y: 360,
+      w: 140,
+      h: 40,
+    },
+    {
+      id: 'obs',
+      title: t('component', { context: 'observability' }),
+      x: 670,
+      y: 420,
+      w: 140,
+      h: 40,
+    },
   ],
   edges: [
     {
@@ -128,7 +162,7 @@ const agentPlane: Spec = {
         [670, 82],
       ],
       accent: 'green',
-      label: 'jobs',
+      label: t('diagram.agent_plane.edge_jobs'),
       lx: 616,
       ly: 72,
     },
@@ -165,11 +199,11 @@ const agentPlane: Spec = {
         [280, 210],
       ],
       dashed: true,
-      label: 'replays',
+      label: t('diagram.agent_plane.edge_replays'),
       lx: 200,
       ly: 252,
     },
   ],
-};
+});
 
 export { agentPlane };

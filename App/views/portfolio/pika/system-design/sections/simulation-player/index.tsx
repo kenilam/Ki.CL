@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Button, Card, CardContent, Layout } from 'design/components';
 
@@ -20,7 +23,6 @@ import { Status } from './status';
 const STEP_MS = 900;
 
 type Props = {
-  chipLabel: string;
   chipStart: string;
   dotLabels: string[];
   idleHint: string;
@@ -34,7 +36,6 @@ type Props = {
  * lighting up nodes, ticking status dots, and narrating an event log.
  */
 const SimulationPlayer: React.FunctionComponent<Props> = ({
-  chipLabel,
   chipStart,
   dotLabels,
   idleHint,
@@ -42,6 +43,8 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
   spec,
   steps,
 }) => {
+  const { t: common } = useTranslation();
+
   const [step, setStep] = useState(-1);
   const [playing, setPlaying] = useState(false);
   const diagram = useRef<HTMLElement>(null);
@@ -95,7 +98,7 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
 
   return (
     <SimulationContext.Provider
-      value={{ chip, chipLabel, dotLabels, dots, idleHint, seen }}
+      value={{ chip, dotLabels, dots, idleHint, seen }}
     >
       <Layout
         alignContent='center'
@@ -118,7 +121,11 @@ const SimulationPlayer: React.FunctionComponent<Props> = ({
             size='small'
             type='button'
           >
-            {finished ? 'Replay' : playing ? 'Running' : runLabel}
+            {finished
+              ? common('action', { context: 'replay' })
+              : playing
+                ? common('status', { context: 'running' })
+                : runLabel}
           </Button>
         </div>
       </Layout>

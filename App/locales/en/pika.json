@@ -1,1 +1,318 @@
-{}
+{
+  "action_run_job": "Run a job",
+  "action_run_session": "Run a session",
+  "brief": "Brief",
+  "build_plan": {
+    "assumptions": "These are calendar weeks. They assume I lead with coding agents doing most of the implementation, Temporal Cloud handles orchestration so it isn't built in-house, and one product engineer joins from week three:",
+    "estimate": "Roughly 9-12 weeks to a credible v1, with Part 1 alone at six to seven. That only holds because v1 is narrow: one region, two providers, an internal-only Studio, and generation kept behind vendor APIs. Provider-adapter edge cases are the long pole. Coding agents speed up the skeleton and the agent loop but help much less with debugging a flaky third-party webhook, so the middle phases carry most of the schedule risk.",
+    "phases": {
+      "caption": "Build phases, scope and time",
+      "scope_agent": "Agent MVP: runtime loop on Temporal, tool registry projection, session store, draft-final policy, budgets and model routing.",
+      "scope_eval": "Eval harness (golden briefs, process checks, judge rubric, replay) and canary machinery.",
+      "scope_hardening": "Hardening: provider adapters with webhooks and idempotency, credits hold and settle, SSE progress, task metrics dashboard.",
+      "scope_skeleton": "Skeleton: manifest schema and registry, Job Service, the generic workflow interpreter, two primitives, one real App end-to-end.",
+      "scope_video": "Video primitives and the ffmpeg pool, three flagship Apps, App Studio v0 with sandboxed runs and versioned publish.",
+      "weeks_1_to_2": "1-2 weeks",
+      "weeks_2": "2 weeks",
+      "weeks_2_to_3": "2-3 weeks"
+    },
+    "prompts": {
+      "adapters": {
+        "body": "Create the provider adapter interface: `submit(request) → provider_ref`, webhook + polling completion, and error mapping into `{retryable, permanent, content_policy, degraded}`. Implement two adapters against the sandbox APIs in `providers/`{secondary} plus a deterministic fake for tests. Add a reconciler that polls for jobs whose webhooks never arrived (>2× expected latency). Integration test: webhook delivered twice, webhook lost, provider 429 storm - assert exactly-once task completion and correct backoff.",
+        "title": "Provider adapters."
+      },
+      "agent_runtime": {
+        "body": "Add the agent service per DESIGN.md Part 2: a Temporal-backed turn loop with session state in Postgres, tool registry generated from primitive schemas plus published Apps, and the cost governor (per-session budget, per-turn estimate gate, draft-tier default with confirmation required for hero-tier renders, runaway-loop halt on 3 repeated similar tool calls). Model routing: intent and arg-filling on the small model, planning on the large one. Ship with a scripted fake LLM so the loop is testable without model calls.",
+        "title": "Agent runtime."
+      },
+      "eval_harness": {
+        "body": "Build the eval runner: load briefs from `evals/briefs/*.yaml`{secondary}, execute each against the agent with stubbed providers and pinned seeds, score process metrics (tool plausibility, draft-before-final ordering, budget adherence, turn count) deterministically, and emit a diffable JSON report. Add `--judge` mode that sends outputs to a vision-capable model with the rubric in `evals/rubric.md`{secondary}. CI gate: process metrics may not regress on the golden set; judge deltas > 0.3 flag for human review.",
+        "title": "Eval harness."
+      },
+      "intro": "I'd feed these to Claude Code in stages. Each one ends at something verifiable and carries its own acceptance tests.",
+      "number": "{{number}}. ",
+      "orchestration": {
+        "body": "Build `RunAppWorkflow`{info} as a single generic Temporal workflow that interprets a validated manifest: topologically schedule nodes, run each as an activity with the manifest's retry policy, persist task state transitions and output refs to Postgres, emit progress events to the bus. Every provider call takes an idempotency key derived from `(job_id, node_id)` - stable across retry attempts, so a re-run cannot double-submit the same generation. Prove resumability: kill the worker mid-DAG in a test and assert the job completes without re-running finished nodes and without duplicate provider calls (use the fake provider's call log).",
+        "title": "Orchestration."
+      },
+      "skeleton": {
+        "body": "Implement the App manifest system for a creative platform. Deliverables: (a) JSON Schema for the manifest format in `schema/app-manifest.json`{secondary} - typed inputs (text, image, enum, model-select), workflow as a DAG of primitive calls with `needs` edges and per-node retry config, outputs; (b) a validator that rejects cycles, unknown primitives, and arg-type mismatches, with error messages naming the offending node; (c) Postgres migrations for `apps`, `app_versions` (immutable manifests, jsonb), `jobs`, `tasks`, `task_attempts`, `assets` per the ERD in DESIGN.md §1.2. Write property-based tests for the DAG validator (random DAGs with injected cycles must all be caught). Do not build any execution logic yet.",
+        "title": "Domain skeleton."
+      }
+    }
+  },
+  "byline": "Keni · Ki.CL · ",
+  "component_job_service": "Job Service",
+  "component_moderation": "Moderation",
+  "component_observability": "Observability",
+  "component_orchestrator": "Orchestrator",
+  "component_provider_adapters": "Provider adapters",
+  "date": "August 2026",
+  "diagram": {
+    "agent_plane": {
+      "description": "Diagram of the agent plane - chat gateway, agent runtime, tool registry, session store, cost governor and eval harness - beside the unchanged Part 1 services: Job Service, Orchestrator, provider adapters, asset store, credits, moderation and observability.",
+      "edge_jobs": "jobs",
+      "edge_replays": "replays",
+      "group_new": "New - agent plane",
+      "group_unchanged": "Unchanged from Part 1",
+      "line_chat": "streaming UI",
+      "line_eval": "rubrics · replay",
+      "line_governor": "budgets · router",
+      "line_orchestrator": "durable DAG",
+      "line_runtime": "the loop",
+      "line_session": "messages · plan",
+      "line_tools": "primitives + Apps",
+      "node_assets": "Asset store",
+      "node_chat": "Chat gateway",
+      "node_credits": "Credits",
+      "node_eval": "Eval harness",
+      "node_governor": "Cost governor",
+      "node_runtime": "Agent Runtime",
+      "node_session": "Session store",
+      "node_tools": "Tool Registry",
+      "title": "Agent plane diagram"
+    },
+    "data_model": {
+      "description": "Entity relationship diagram: an App publishes immutable App Versions; a Job pins a version, expands into Tasks and Task Attempts served by Providers, and produces Assets; Users own Jobs and are billed via a Credit Ledger.",
+      "edge_billed": "billed via",
+      "edge_expands": "expands DAG into",
+      "edge_instantiates": "instantiates",
+      "edge_owns": "owns",
+      "edge_produces": "produces",
+      "edge_publishes": "publishes 1‥N",
+      "edge_retries": "retries as",
+      "edge_served": "served by",
+      "note_metadata": "seed · lineage",
+      "note_node": "DAG node",
+      "note_state": "queued → canceled",
+      "note_status": "draft → archived",
+      "note_uri": "S3 + CDN",
+      "note_version": "pinned",
+      "title": "Core data model diagram"
+    },
+    "request_flow": {
+      "description": "Sequence diagram of a job: the client posts a job, the Job Service validates and reserves credits, the Orchestrator schedules tasks onto workers and providers, progress streams back over server-sent events, and credits settle on completion.",
+      "edge_accepted": "4 · 202 { job_id }",
+      "edge_complete": "11 · job complete → settle credits",
+      "edge_gallery": "12 · render gallery from CDN",
+      "edge_generate": "7 · generate (async)",
+      "edge_post": "1 · POST /jobs { app, version, inputs }",
+      "edge_progress": "10 · progress events",
+      "edge_result": "9 · task result + asset refs",
+      "edge_schedule": "6 · schedule task (idempotency key)",
+      "edge_start": "3 · start RunAppWorkflow",
+      "edge_subscribe": "5 · subscribe SSE /jobs/:id/events",
+      "edge_validate": "2 · validate · hold credits · moderate",
+      "edge_webhook": "8 · webhook · complete / failed",
+      "legend_dashed_label": "Dashed",
+      "legend_dashed_value": "responses and events that come back later",
+      "legend_solid_label": "Solid",
+      "legend_solid_value": "requests",
+      "node_client": "Client",
+      "node_provider": "Provider",
+      "node_worker": "Worker",
+      "title": "Request flow diagram"
+    },
+    "services": {
+      "description": "Service diagram: clients reach an API gateway; a control plane holds the App Registry, Job Service, Credits and Moderation; an execution plane holds the Orchestrator, task queues, worker fleet and provider adapters; data and delivery cover Postgres, the asset store and CDN, the event bus, the realtime gateway and observability.",
+      "edge_assets": "assets",
+      "edge_events": "events",
+      "edge_post": "post",
+      "edge_pre": "pre",
+      "edge_progress": "SSE progress",
+      "edge_start": "start",
+      "edge_state": "state",
+      "edge_webhooks": "webhooks · poll",
+      "group_clients": "Clients",
+      "group_control": "Control plane",
+      "group_data": "Data & delivery",
+      "group_execution": "Execution plane",
+      "line_gateway": "auth · rate limit",
+      "line_job_service": "create · query · cancel",
+      "line_observability": "task metrics · cost",
+      "line_orchestrator": "durable DAG engine",
+      "line_postgres": "jobs · tasks · ledger",
+      "line_provider_adapters": "video · image · vision · llm",
+      "line_queues": "per primitive class",
+      "line_realtime": "SSE / WebSocket",
+      "line_registry": "manifests · versions",
+      "node_assets": "Asset store + CDN",
+      "node_credits": "Credits & Billing",
+      "node_events": "Event bus",
+      "node_gateway": "API Gateway",
+      "node_mobile": "Mobile",
+      "node_postgres": "Postgres",
+      "node_queues": "Task queues",
+      "node_realtime": "Realtime gateway",
+      "node_registry": "App Registry",
+      "node_web": "Web app",
+      "node_workers": "Worker fleet",
+      "title": "Services and components diagram"
+    },
+    "session_model": {
+      "description": "Entity relationship diagram: a Session advances by Turns, each Turn issues Tool Calls, and every Tool Call executes as a Part 1 Job — so cost, retries, and lineage reuse the existing tables.",
+      "edge_advances": "advances by",
+      "edge_executes": "executes as",
+      "edge_issues": "issues",
+      "line_job": "the existing Part 1 table",
+      "note_context": "compacted",
+      "note_plan": "checkpoints",
+      "note_tool": "primitive · App",
+      "title": "Agent session data model diagram"
+    }
+  },
+  "footer": "Prepared for the Pika take-home.",
+  "hint_job": "Press run to submit a job.",
+  "hint_session": "Press run to start a session.",
+  "label_phase": "Phase",
+  "label_scope": "Scope",
+  "label_time": "Time",
+  "log_number": "{{number}} · ",
+  "part_one": {
+    "core_data_model": {
+      "lineage": "Task output refs point into content-addressed asset storage instead of carrying blobs inline. The lineage field on assets records which job, task, and seed produced each artifact. Regenerate and provenance both read from it, and in Part 2 the same lineage records are the agent's memory of what exists in a session."
+    },
+    "growth": {
+      "governance": "Governance keeps self-serve safe: validation and a lightweight approval on publish, staged rollout with an automatic halt on error-rate or cost regression, one-click rollback via the version pointer, and per-App budgets to cap blast radius. Because Apps are rows rather than deployments, App #200 costs a review instead of a sprint.",
+      "studio": "Manifests already make Apps no-code, so Growth needs tooling and guardrails around them. App Studio is an internal builder that edits manifests through forms: pick inputs from the typed field library, compose steps from the primitive catalog, preview the rendered App live, and test-run it in a sandbox against capped credits. Under the hood it writes YAML, and a template gallery covers the common case, since most new Apps are 90% an existing one."
+    },
+    "key_trade_offs": {
+      "async": "**Async everywhere versus a sync fast-path.** I went back and forth on giving cheap image calls a synchronous endpoint and decided against it. Even fast models have p99s bad enough to stall HTTP connections, and a second execution path means a second set of failure modes. Everything returns a job id and streams events. Primitives declare a latency class, and only provider-class calls become checkpointed task rows. The UI still feels synchronous, since the composer stays open and renders progress as it arrives.",
+      "manifests": "**Declarative manifests versus Apps-as-code.** In the code-first version every App is its own service. Authors get more power, and the platform team gets N deploy pipelines, N failure modes, no shared retry story, and an engineer in the loop for every new App. Manifests avoid that at the cost of expressiveness, so the format stays declarative with one escape hatch, a `custom.step` primitive that calls a team-owned sandboxed function.",
+      "temporal": "**`Temporal`{secondary} versus hand-rolling.** Hand-rolling a queue and state machine on Redis and `Postgres`{secondary} takes about six weeks, then keeps producing edge cases: workers dying mid-callback, retry storms, clock skew on timeouts. `Temporal`{secondary} gives durable timers, exactly-once state transitions, and workflow visibility off the shelf. For a company whose product is long-running jobs that's worth it, and lock-in stays manageable because workers only speak the task schema.",
+      "webhooks": "**Webhooks versus polling.** Adapters prefer webhooks but keep a polling reconciler behind them, because webhooks get lost. Every provider call carries an idempotency key scoped to the logical task and stable across retries, so a redelivered webhook or a rescheduled attempt maps back to the same generation. The ledger settles each task at most once, so a duplicate generation can't become a duplicate charge."
+    },
+    "resiliency": {
+      "backpressure": "**Backpressure.** Concurrency caps per user and per App, admission control keyed to queue depth, and the credit hold at job start, so a viral App slows to a queue position instead of overwhelming a provider.",
+      "checkpoint": "**Checkpoint at every node.** Task outputs persist before the next node schedules, so a crash resumes from the last completed step. A five-shot film that dies on shot five re-renders one shot.",
+      "intro": "Video providers time out, hand back corrupt files, and rate-limit without warning, so the unit of failure is the task attempt rather than the job.",
+      "monitoring": "**Task-level monitoring.** Every attempt is a row carrying app, primitive, provider, latency, cost and error class, so dashboards answer operational questions directly, and cost-anomaly alerts catch runaway loops before they bill anyone.",
+      "retries": "**Retries with a taxonomy.** Adapters classify every error: `retryable`{warning} gets exponential backoff with jitter, permanent fails fast and tells the user why, and a provider browning out trips a circuit breaker that fails work over to an equivalent provider where the manifest allows it.",
+      "watchdogs": "**Watchdogs and dead letters.** Tasks that stop heartbeating are reaped and rescheduled; tasks that exhaust retries land in a dead-letter queue with full context, and jobs fail partially where the manifest allows, so four of five shots come back with a repair action instead of an error screen."
+    },
+    "services": {
+      "credits": "Credits are held when a job starts and settled per task as work completes, never per attempt, so failed retries cost the platform rather than the user. When a job fails partway, the unconsumed hold flows back without special-case refund logic. Moderation runs before and after generation. Every task attempt is labeled, so success rate, p95 latency, retry count and cost can each be sliced by app, primitive and provider.",
+      "numbers": "Rough numbers for a single `Postgres`{secondary} box: at 100k jobs a day averaging six tasks each, task and attempt rows stay under a million a day, partitionable by month and years from being the bottleneck. Assets are the bigger problem. Video at that volume is terabytes a day, so bytes live in content-addressed `S3`{secondary} behind a CDN, away from the database. The real ceiling is provider rate limits, which per-provider admission control handles.",
+      "orchestrator": "The Orchestrator expands the manifest's DAG into task rows, schedules whatever is ready onto per-primitive-class queues, records every state transition, and drives retries and timeouts from durable state. I'd build it on `Temporal`{secondary} rather than hand-roll it, because checkpointed workflow state, timers and retries are what `Temporal`{secondary} is for. The manifest interpreter is a single generic workflow, so launching a new App deploys no orchestration code.",
+      "registry": "The App Registry owns manifests: CRUD, versioning, validation, publish and rollback. The Job Service is the front door for execution. It validates inputs against the pinned manifest, places a hold on credits, writes the job row, and hands off to the orchestrator.",
+      "workers": "Stateless workers pull typed tasks and reach providers through an adapter layer that handles the differences: auth, request shape, webhook versus polling completion, error taxonomy, per-provider rate limits. Every task transition emits an event, and a realtime gateway fans job progress out to clients over `SSE`{secondary}, so the UI can say three of five shots rendered instead of showing a spinner for four minutes."
+    },
+    "what_is_an_app": {
+      "intro": "An App is a declarative manifest, stored and versioned like a document:",
+      "primitives": "Primitives are thin, typed wrappers around the backend creative APIs (`video.generate`, `image.edit`, `vision.analyze`, `media.ffmpeg`, `llm.complete`, and so on). Each one declares its argument schema, cost model, latency class, timeout profile, and which providers can serve it. When a new vendor model appears, we register a provider, and every App with a `model-select` input picks it up without a manifest change. New providers get default traffic through the same staged rollout as Apps, watched against the primitive's error budget.",
+      "schema": "The typed input schema lets the client render any App's form straight from the manifest, with no per-App frontend code. The DAG lets the orchestrator checkpoint, retry, and parallelize steps without knowing what the App is for. Versions are immutable, so rollback is a pointer move. Publishing writes a new row, and running jobs stay pinned to the version they started on."
+    }
+  },
+  "part_two": {
+    "agent_harness": {
+      "context": "**Context assembly.** The system prompt sets a creative-director persona; session assets arrive as structured summaries with thumbnails, captioned frames and lineage, never raw video. When the agent needs to look at something, inspect extracts keyframes for a vision model.",
+      "execution": "**Execution.** Tool calls become ordinary jobs with the same validation, credits and moderation as a button press. Long renders suspend the turn durably instead of parking a worker.",
+      "job_id": "Through `TOOL_CALL.job_id`, the agent's work lands in the same job, task, and asset tables a button press writes to, so replay and the governor's ledger bookkeeping need no new infrastructure.",
+      "observe": "**Observe and iterate.** Results come back as asset refs plus a vision critique on request. Warm up the lighting on shot two becomes an `image.edit` cycle against lineage the agent can see, and approved-draft checkpoints keep iteration from wandering.",
+      "preempt": "A new message from the user preempts the turn at the next tool boundary. Queued jobs that haven't started are cancelled, and renders already running finish and join the revised context.",
+      "runtime": "The agent runs in a new Agent Runtime service: stateless loop executors pulling from a session queue, with message history, working plan, media context and budget spent kept in the session store. A turn is a durable workflow on the same `Temporal`{secondary} machinery from Part 1, so a crash mid-turn resumes mid-turn.",
+      "tables": "The agent plane adds three small tables that key into Part 1's. A tool call *is* an ordinary job, so it inherits cost tracking, retries, and lineage from the existing tables:",
+      "tools": "**Tool selection.** The tool registry projects Part 1's primitive schemas into tool definitions, so a new primitive becomes a new agent capability with no agent-side code. Published Apps become macro-tools too. Calling `character-creator`{secondary} is better than hand-orchestrating five primitives, because that path is already tested."
+    },
+    "cost": {
+      "budget": "Each session carries a hard credit budget. Before a turn runs, the governor prices it from the primitives' declared cost models, so the number comes from the platform rather than the model it constrains, and blocks any call that would go past what's left. A runaway detector halts the loop on repeated similar tool calls with no user message in between. LLM spend gets model routing, prompt caching and compaction, but it sits an order of magnitude below video cost, so most of the savings come from the draft ladder.",
+      "ladder": "The agent spends the expensive render once, on the approved direction. An open-ended loop with video generation in it can run up a huge bill, so the design assumes the loop will misbehave and constrains it up front. By default the agent explores at draft tier (low resolution, short clips, cheaper models) and converges with the user on drafts. The hero pass, the full-resolution render on the top-tier model that the user ships, runs at the end of the session, outside the loop. If a draft-phase turn asks for a hero-tier render, the governor holds it until the user confirms. The risk is fidelity. If drafts don't predict finals, people iterate at hero tier, which is what the ladder is meant to prevent, so drafts use the same model at reduced resolution rather than a cheaper model. Hero re-render rate is the ladder's health metric."
+    },
+    "intro": "Part 2 of the brief adds a Claude Code-style agent for creative work. A user describes what they want in natural language, and the agent creates and edits media with the same primitives the Apps use.",
+    "testing": {
+      "replay": "Every production session logs its full trace, so a prompt or model change is replayed against history first. Process metrics diff deterministically, divergence gets judge-scored, and the change ships through a 5% canary watched on process metrics, thumbs-down rate and cost per session. Live user signals (regeneration rate, abandonment, explicit feedback) are the online eval.",
+      "rubrics": "A non-deterministic agent with subjective output can't be tested for exact answers, so it's evaluated on distributions against rubrics. A golden suite of around a hundred briefs covers App-adjacent tasks, open-ended creation, iteration sequences (make it warmer, then check it edited the right asset), and adversarial cases like impossible asks and budget pressure.",
+      "scoring": "Scoring has two layers. Process checks are deterministic (did the agent keep drafts before finals, stay inside budget, preserve character lineage, finish in a sane number of turns) and run on stubbed providers with zero GPU spend. They catch most regressions. Output quality is scored by an LLM-and-vision judge against a decomposed rubric, calibrated quarterly against human panels. The judge is consistent but its absolute scores aren't reliable, so gating uses deltas."
+    },
+    "what_changes": {
+      "client": "The agent is another client of the platform. Part 1's execution plane (jobs, orchestration, adapters, assets, credits, moderation, task metrics) serves it unchanged, because the agent calls the same primitives the Apps already use."
+    }
+  },
+  "read_this_first": "Read this first",
+  "section_estimate": "$t(title_estimate)",
+  "section_part_one": "Part 1 — The App platform",
+  "section_part_two": "Part 2 — The agent experience",
+  "section_walkthrough": "$t(title_walkthrough)",
+  "section_watch_it_run": "$t(title_watch_it_run)",
+  "section_watch_the_agent_work": "$t(title_watch_the_agent_work)",
+  "sections": "Sections",
+  "state_done": ", done",
+  "state_idle": ", not started",
+  "state_queued": ", queued",
+  "state_retry": ", retrying",
+  "state_running": ", running",
+  "title": "Pika Creative Platform",
+  "title_agent_harness": "Agent harness",
+  "title_core_data_model": "Core data model",
+  "title_cost": "Cost",
+  "title_estimate": "Estimate & build plan",
+  "title_growth": "Growth ships an App without engineering",
+  "title_key_trade_offs": "Key trade-offs",
+  "title_part_one": "Part 1 - The App platform",
+  "title_part_two": "Part 2 - The agent experience",
+  "title_prompts": "Prompts I'd use to steer a coding agent",
+  "title_resiliency": "Resiliency",
+  "title_services": "Services & components",
+  "title_testing": "Testing & evaluation",
+  "title_walkthrough": "Walkthrough",
+  "title_watch_it_run": "Watch it run",
+  "title_watch_the_agent_work": "Watch the agent work",
+  "title_what_changes": "What changes, what stays shared",
+  "title_what_is_an_app": "What is an App?",
+  "walkthrough": {
+    "agent": "Part 2 adds an agent, and the design changes little to support it. The agent is another client of the orchestration engine, and its tools are the same primitives and Apps the buttons already call. A turn is a durable workflow on the same `Temporal`{secondary} machinery. It assembles context, picks tools, runs them as ordinary jobs, observes the results and iterates, with a governor pricing every step before it runs. What's new is the agent runtime (the loop, session state, context management), a cost-governance layer (model routing, draft-before-final rendering, budgets), and an evaluation harness (judged golden briefs, replay-based regression). Jobs, assets, moderation and the credit ledger are untouched. The governor sits over the ledger and estimates and confirms before anything is spent.",
+    "async": "The second decision is that generation is async everywhere. Video takes minutes and fails often, so the unit of work is a durable job that checkpoints at every step. Retries, idempotency, and provider fallbacks all live at the task level. When shot five of a five-shot film dies, only that shot re-renders, and nobody is billed twice.",
+    "flow": "A user fills in an App's form (rendered straight from the manifest), the Job Service validates the inputs, places a hold on credits, runs the moderation pre-check, and hands the orchestrator a pinned manifest version. The orchestrator expands the DAG into task rows; workers call providers through adapters, checkpoint every output, and emit events the client renders as live progress. When the last node lands, credits settle per completed task, the unconsumed hold flows back, and the gallery renders from CDN URLs.",
+    "manifest": "Most of the design follows from one decision. Every App is a versioned manifest, a document that declares its inputs, which creative primitives it calls and in what order, and how to present the results. One orchestration engine runs all of them, so the platform team maintains a single execution path, and anyone who can fill in a manifest can ship an App without writing code."
+  },
+  "watch_it_run": {
+    "chip_held": "credits · 120 held",
+    "chip_none": "credits · no hold yet",
+    "chip_settled": "credits · 100 settled · 20 refunded",
+    "dot": "shot {{number}}",
+    "intro": "A simulated Character Creator job through the architecture above, with five shot tasks, one provider timeout, an idempotent retry, a circuit-break failover, and per-task settlement. Only shot three re-renders, and nobody is charged twice.",
+    "log": {
+      "backoff": "backoff with jitter → retry, same idempotency key",
+      "circuit": "provider A error rate trips circuit — failover to provider B",
+      "composed": "ffmpeg compose → final cut",
+      "done": "$t(watch_it_run.dot) done — {{number}}/{{total}} rendered",
+      "failover": "$t(watch_it_run.dot) done on provider B — one charge, not two",
+      "gallery": "gallery rendered from CDN",
+      "moderated": "moderation post-check passed",
+      "posted": "POST /jobs — character-creator @ v4",
+      "progress": "progress event → SSE — {{number}}/{{total}} rendered",
+      "queued": "$t(watch_it_run.dot) → queued",
+      "rendering": "$t(watch_it_run.dot) → rendering on provider A",
+      "settled": "job complete → settle per task, refund unconsumed hold",
+      "started": "RunAppWorkflow started — DAG expanded into {{total}} shot tasks",
+      "stored": "$t(watch_it_run.dot) done — asset stored, content-addressed",
+      "timeout": "provider timeout — attempt 1 classified retryable",
+      "validated": "validate inputs · moderation pre-check"
+    }
+  },
+  "watch_the_agent_work": {
+    "chip_budget": "budget · {{budget}} credits",
+    "chip_spent": "budget · {{spent}} / {{budget}} spent",
+    "dot_draft": "draft {{number}}",
+    "dot_hero": "hero",
+    "intro": "One agent session through the plane above. The agent renders three cheap drafts, the user steers mid-session, and the governor holds the expensive render until the user confirms. The hero pass runs once on the approved direction, and the session ends at {{spent}} of {{budget}} credits.",
+    "log": {
+      "approved": "draft 2b ready — user approves the direction",
+      "blocked": "governor blocks — hero tier needs explicit confirmation",
+      "brief": "user brief — \"a 5-move fitness short with my character\"",
+      "confirmed": "user confirms — \"{{budget}} credits / Upgrade\" moment from the mockups",
+      "context": "turn 1 · context assembled — media summaries, never raw video",
+      "draft_ready": "$t(watch_the_agent_work.dot_draft) ready",
+      "edit": "turn 2 · image.edit against draft 2 lineage — 6 credits, approved",
+      "hero_ready": "hero ready — session closes at {{spent}} of {{budget}} credits",
+      "hero_rendering": "hero render — one job, on the approved direction only",
+      "hero_requested": "turn 3 · hero render requested — Seedance tier, 180 credits",
+      "interrupt": "user interrupts — \"warmer lighting on the second one\"",
+      "jobs": "draft tool calls become ordinary jobs",
+      "plan": "plan: three draft variations at draft tier",
+      "priced": "governor prices the turn from cost models — 36 credits, approved",
+      "rendering": "drafts rendering — low resolution, short clips",
+      "trace": "trace logged — replayable for the eval harness"
+    }
+  }
+}
