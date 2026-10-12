@@ -5,8 +5,8 @@ const CLASS_NAME = 'kicl--views--navigation';
 
 /** The top routes, in the order every menu lists them. */
 const ROUTES = [
-  { key: 'navigation.experiments', to: `/${EXPERIMENTS_PATH}` },
-  { key: 'navigation.resume', to: `/${RESUME_PATH}` },
+  { key: 'experiments', to: `/${EXPERIMENTS_PATH}` },
+  { key: 'resume', to: `/${RESUME_PATH}` },
 ] as const;
 
 export { CLASS_NAME, ROUTES };

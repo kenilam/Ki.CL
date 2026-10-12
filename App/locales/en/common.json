@@ -3,33 +3,33 @@
     "label": "Account",
     "profile": "My Profile",
     "signOut": {
-      "cancel": "Cancel",
       "failed": "Could not sign out. Try again.",
-      "label": "Sign out",
       "message": "You will need to sign in again to use your account.",
       "pending": "Signing out",
       "title": "Sign out?"
     }
   },
+  "cancel": "Cancel",
   "contact": {
     "title": "Send a message"
   },
+  "experiments": "Experiments",
+  "home": "Home",
   "navigation": {
-    "experiments": "Experiments",
-    "home": "Home",
     "label": "Main",
     "mobile": {
       "close": "Close the navigation",
       "label": "Navigation",
       "open": "Open the navigation"
-    },
-    "resume": "Resume"
+    }
   },
   "organisation_apple": "Apple",
   "organisation_ebay": "eBay",
   "organisation_indeed": "Indeed",
   "organisation_rakuten": "Rakuten Ready",
   "organisation_tesla": "Tesla",
+  "print": "Print",
+  "resume": "Resume",
   "session": {
     "checking": "Confirming you are human",
     "failed": "Could not start a session",
@@ -40,6 +40,7 @@
     "retry": "Reload to try again.",
     "wait": "The page carries on once this is done."
   },
+  "signOut": "Sign out",
   "skipLink": {
     "label": "Skip to content"
   }
