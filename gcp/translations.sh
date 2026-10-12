@@ -3,11 +3,14 @@
 # runs: the site needs its words before it can start one. The API reads the
 # operations it allows from WHITE_LIST_OPERATION, which comes from a secret.
 # This adds Translations to that secret, then starts a new revision of the
-# production API in both regions and of the development API, since an
-# instance reads the secret once, when it starts.
+# API, since an instance reads the secret once, when it starts.
 #
-#   gcp/translations.sh check   says what would change
-#   gcp/translations.sh         changes it
+#   gcp/translations.sh check [dev|prod]   says what would change
+#   gcp/translations.sh [dev|prod]         changes it
+#
+# `dev` is the development API and `prod` the production API in both regions.
+# With neither, it is both. The secret is one for all of them, so the first
+# run adds the operation and a later run for the other only restarts it.
 #
 # Run it after the API that has the query is deployed and before a site that
 # asks for it is released. Then seed the database (see CLAUDE.md).
@@ -17,7 +20,19 @@ source "$(dirname "$0")/env.sh"
 
 VARIABLE=WHITE_LIST_OPERATION
 OPERATION=Translations
-mode="${1:-apply}"
+mode=apply
+target=all
+
+for argument in "$@"; do
+  case "$argument" in
+    check) mode=check ;;
+    dev | prod) target="$argument" ;;
+    *)
+      echo "usage: gcp/translations.sh [check] [dev|prod]" >&2
+      exit 1
+      ;;
+  esac
+done
 
 # The secret the service takes the list from.
 secret="$(
@@ -67,9 +82,12 @@ restart() {
   echo "$1 in $2: new revision"
 }
 
-restart "$API_SERVICE" "$SOURCE_REGION"
-restart "$API_SERVICE" "$REGION"
-
-if [ -n "${API_DEV_SERVICE:-}" ]; then
+if [ "$target" != prod ]; then
+  : "${API_DEV_SERVICE:?gcp/.env has no API_DEV_SERVICE}"
   restart "$API_DEV_SERVICE" "$SOURCE_REGION"
+fi
+
+if [ "$target" != dev ]; then
+  restart "$API_SERVICE" "$SOURCE_REGION"
+  restart "$API_SERVICE" "$REGION"
 fi
