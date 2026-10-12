@@ -86,7 +86,9 @@ const Resume: React.FunctionComponent = () => {
       found &&
       resolve(
         found,
-        (key) => t(key),
+        // The default is what i18next shows anyway. Naming it tells the types
+        // that a line need not have a wording for every version.
+        (key, context) => t(key, { context, defaultValue: key }),
         (context) => common('organisation', { context })
       ),
     [common, found, t]

@@ -3,9 +3,10 @@ import type resume from '@/locales/en/resume.json';
 import type { Key, Organisation, Role, SectionId } from './types';
 
 /*
- * What every version says the same way is under `shared` in the resume's
- * namespace. Titles, dates and numbers follow LinkedIn. A line that differs
- * between versions, even slightly, is written out under that version's name.
+ * In the resume's namespace, a line every version says the same way has a
+ * plain key. A line that differs between versions, even slightly, is written
+ * out for each one, with the version on the key: `summary_manager`. Titles,
+ * dates and numbers follow LinkedIn.
  */
 
 const NAME = 'Keni Lam';
@@ -14,15 +15,15 @@ const EMAIL = 'hello@ki-cl.com';
 
 /*
  * Under the name, in this order. Each link is written once, under
- * `shared.links`, and the lines that carry one refer to it. They are
+ * `links`, and the lines that carry one refer to it. They are
  * absolute, the site's own pages included: a PDF printed from a local run
  * would otherwise carry links to localhost.
  */
-const PROFILES: readonly Key[] = [
-  'shared.links.linkedin',
-  'shared.links.github',
-  'shared.links.experiments',
-];
+const PROFILES = [
+  'links.linkedin',
+  'links.github',
+  'links.experiments',
+] as const satisfies readonly Key[];
 
 const ORDER: readonly SectionId[] = [
   'summary',
@@ -34,7 +35,7 @@ const ORDER: readonly SectionId[] = [
   'languages',
 ];
 
-type RoleId = keyof typeof resume.shared.experience;
+type RoleId = keyof typeof resume.experience;
 
 /** Two of the roles were at Apple. */
 const EMPLOYERS: Record<RoleId, Organisation> = {
@@ -48,22 +49,22 @@ const EMPLOYERS: Record<RoleId, Organisation> = {
 
 /** A role's title, employer and dates, which no version changes. */
 const role = (id: RoleId): Omit<Role, 'points'> => ({
-  dates: `shared.experience.${id}.dates`,
+  dates: `experience.${id}.dates`,
   organisation: EMPLOYERS[id],
-  title: `shared.experience.${id}.title`,
+  title: `experience.${id}.title`,
 });
 
 const EARLIER: readonly Key[] = [
-  'shared.earlier.apple_contract',
-  'shared.earlier.apollo',
-  'shared.earlier.hasco',
-  'shared.earlier.le_ciel_bleu',
+  'earlier.apple_contract',
+  'earlier.apollo',
+  'earlier.hasco',
+  'earlier.le_ciel_bleu',
 ];
 
 const EDUCATION: readonly Key[] = [
-  'shared.education.ma',
-  'shared.education.ba',
-  'shared.education.foundation',
+  'education.ma',
+  'education.ba',
+  'education.foundation',
 ];
 
 export { EARLIER, EDUCATION, EMAIL, NAME, ORDER, PROFILES, role };

@@ -15,6 +15,7 @@ import {
   VERSIONS,
   fingerprint,
   resolve as withText,
+  type Context,
   type Key,
   type Version,
 } from '../content';
@@ -119,19 +120,26 @@ const { positionals, values } = parseArgs({
   },
 });
 
-/** `$t(shared.links.github)`: a line that carries another, as i18next reads it. */
+/** `$t(links.github)`: a line that carries another, as i18next reads it. */
 const NESTED = /\$t\(([\w.]+)\)/g;
 
-/** A line as the file has it. The page has it from the database. */
-const written = (key: Key): string =>
-  (
-    key
-      .split('.')
-      .reduce<unknown>(
-        (branch, name) => (branch as Record<string, unknown>)[name],
-        RESUME
-      ) as string
-  ).replace(NESTED, (_, nested: Key) => written(nested));
+const read = (key: string) =>
+  key
+    .split('.')
+    .reduce<unknown>(
+      (branch, name) => (branch as Record<string, unknown> | undefined)?.[name],
+      RESUME
+    ) as string | undefined;
+
+/**
+ * A line as the files have it: the version's own wording when there is one,
+ * as i18next picks it by context. The page has it from the database.
+ */
+const written = (key: Key, context: Context): string =>
+  (read(`${key}_${context}`) ?? read(key) ?? key).replace(
+    NESTED,
+    (_, nested: Key) => written(nested, context)
+  );
 
 /** What the page's fingerprint is when the database holds what the files say. */
 const expected = (version: Version) =>

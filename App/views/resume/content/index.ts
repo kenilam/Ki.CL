@@ -20,6 +20,7 @@ const findVersion = (slug: string = MASTER.slug): Version | undefined =>
   VERSIONS.find((version) => version.slug === slug);
 
 export type {
+  Context,
   Key,
   Organisation,
   Resolved,

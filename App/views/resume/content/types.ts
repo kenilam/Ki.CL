@@ -8,11 +8,23 @@ type Paths<Tree> = {
     : `${Name}.${Paths<Tree[Name]>}`;
 }[keyof Tree & string];
 
+type Slug =
+  'architecture' | 'frontend-ai' | 'manager' | 'master' | 'react-native';
+
+/** A version as an i18next context: `summary_frontend_ai`. */
+type Context<Name = Slug> = Name extends `${infer Start}-${infer End}`
+  ? `${Start}_${End}`
+  : Name;
+
 /**
- * Where a line is written, in `App/locales/en/resume.json`. The line itself
- * is inline Markdown: bold text and links.
+ * Where a line is written, in `App/locales/en/resume.json`, without the
+ * version: `skills.ai` names `skills.ai_master`, `skills.ai_manager` and the
+ * rest. A line every version says the same way has no version on its key.
+ * The line itself is inline Markdown: bold text and links.
  */
-type Key = Paths<typeof resume>;
+type Key<Path = Paths<typeof resume>> = Path extends `${infer Line}_${Context}`
+  ? Line
+  : Path;
 
 /**
  * An employer, by the name's context in the common namespace:
@@ -40,13 +52,10 @@ type SectionId =
   | 'skills'
   | 'summary';
 
-type Slug =
-  'architecture' | 'frontend-ai' | 'manager' | 'master' | 'react-native';
-
 /**
  * One resume. A version is a selection and an order of lines, each named by
- * its key: the lines several versions share are under `shared`, and the
- * lines only one has are under its own name. `resolve` puts the text in.
+ * its key. Every version names its lines the same way, and the text comes
+ * from the version's own wording where it has one. `resolve` puts it in.
  */
 type Version<Line = Key, Employer = Organisation> = {
   earlier: readonly Line[];
@@ -69,4 +78,13 @@ type Version<Line = Key, Employer = Organisation> = {
 /** A version with its text in place of the keys. */
 type Resolved = Version<string, string>;
 
-export type { Key, Organisation, Resolved, Role, SectionId, Slug, Version };
+export type {
+  Context,
+  Key,
+  Organisation,
+  Resolved,
+  Role,
+  SectionId,
+  Slug,
+  Version,
+};
