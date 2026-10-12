@@ -1,5 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 
+// I18n
+import { ready } from '@/i18n';
+
 // Env
 import { EnvProvider, useEnvContext } from '@/env/client';
 
@@ -13,7 +16,8 @@ import { Spinner } from 'design/components';
 import { Views as View } from '@/views';
 
 const KiclProvider = lazy(async () => {
-  const { KiclProvider } = await import('api/provider');
+  // The words outside any route load under the same spinner as the provider.
+  const [{ KiclProvider }] = await Promise.all([import('api/provider'), ready]);
 
   return { default: KiclProvider };
 });

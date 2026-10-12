@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
 import { Animation, Button, HyperLink, Menu } from 'design/components';
 
@@ -10,12 +13,19 @@ import * as Ri from 'react-icons/ri';
 import { PATH as ME_PATH } from '@/views/me/constants';
 
 // Constants
-import { COPY, SIGN_OUT_ID } from '@/views/account/constants';
+import { SIGN_OUT_ID } from '@/views/account/constants';
 
 /** The account as one row of the mobile menu: the profile link, then sign out. */
 const Mobile: React.FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
-    <Menu autoFlow='row' className='kicl-padding-block-start-wider' gap='narrow' justifyItems='stretch'>
+    <Menu
+      autoFlow='row'
+      className='kicl-padding-block-start-wider'
+      gap='narrow'
+      justifyItems='stretch'
+    >
       <Animation property='slide-from-bottom' delay={900}>
         <HyperLink
           before={<Ri.RiAccountCircleLine aria-hidden />}
@@ -24,7 +34,7 @@ const Mobile: React.FunctionComponent = () => {
           to={`/${ME_PATH}`}
           variant='secondary'
         >
-          {COPY.profile}
+          {t('my_profile')}
         </HyperLink>
       </Animation>
       <Animation property='slide-from-bottom' delay={1200}>
@@ -35,7 +45,7 @@ const Mobile: React.FunctionComponent = () => {
           commandFor={SIGN_OUT_ID}
           variant='secondary'
         >
-          {COPY.signOut}
+          {t('action', { context: 'sign_out' })}
         </Button>
       </Animation>
     </Menu>
