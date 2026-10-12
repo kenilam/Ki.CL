@@ -45,7 +45,7 @@ const Mobile: React.FunctionComponent = () => {
           commandFor={SIGN_OUT_ID}
           variant='secondary'
         >
-          {t('account.signOut')}
+          {t('account.signOut.label')}
         </Button>
       </Animation>
     </Menu>

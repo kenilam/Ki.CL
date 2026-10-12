@@ -1,25 +1,28 @@
 {
   "account": {
-    "account": "Account",
-    "cancel": "Cancel",
-    "confirm": "Sign out?",
-    "failed": "Could not sign out. Try again.",
-    "message": "You will need to sign in again to use your account.",
+    "label": "Account",
     "profile": "My Profile",
-    "signOut": "Sign out",
-    "signingOut": "Signing out"
+    "signOut": {
+      "cancel": "Cancel",
+      "failed": "Could not sign out. Try again.",
+      "label": "Sign out",
+      "message": "You will need to sign in again to use your account.",
+      "pending": "Signing out",
+      "title": "Sign out?"
+    }
   },
   "contact": {
     "title": "Send a message"
   },
   "navigation": {
-    "close": "Close the navigation",
-    "dialog": "Navigation",
     "experiments": "Experiments",
     "home": "Home",
     "label": "Main",
-    "open": "Open the navigation",
-    "pages": "Pages",
+    "mobile": {
+      "close": "Close the navigation",
+      "label": "Navigation",
+      "open": "Open the navigation"
+    },
     "resume": "Resume"
   },
   "session": {
@@ -33,6 +36,6 @@
     "wait": "The page carries on once this is done."
   },
   "skipLink": {
-    "skip": "Skip to content"
+    "label": "Skip to content"
   }
 }

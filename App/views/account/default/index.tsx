@@ -34,7 +34,7 @@ const Default: React.FunctionComponent = () => {
         <Button className='kicl-font-size' unstyled>
           <Ri.RiAccountCircleLine aria-hidden />
           <Text className='kicl-hidden' is='span'>
-            {t('account.account')}
+            {t('account.label')}
           </Text>
         </Button>
       </PopoverTrigger>
@@ -59,7 +59,7 @@ const Default: React.FunctionComponent = () => {
               commandFor={SIGN_OUT_ID}
               variant='secondary'
             >
-              {t('account.signOut')}
+              {t('account.signOut.label')}
             </Button>
           </Animation>
         </Menu>

@@ -50,7 +50,7 @@ const Mobile: React.FunctionComponent = () => {
       <Open />
 
       <Dialog
-        aria-label={t('navigation.dialog')}
+        aria-label={t('navigation.mobile.label')}
         className={CLASS_NAME}
         closable='keyboard'
         fullScreen

@@ -29,7 +29,7 @@ const SkipLink: React.FunctionComponent = () => {
       size='small'
       to={`#${MAIN_ID}`}
     >
-      {t('skipLink.skip')}
+      {t('skipLink.label')}
     </HyperLink>
   );
 };

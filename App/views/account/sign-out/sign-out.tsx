@@ -67,19 +67,19 @@ const SignOut: React.FunctionComponent = () => {
           <Animation property='slide-from-top'>
             <Heading dense id={titleId}>
               <AnimatedText className='kicl-color-error' is='span' role='alert'>
-                {pending ? t('account.signingOut') : t('account.confirm')}
+                {pending ? t('account.signOut.pending') : t('account.signOut.title')}
               </AnimatedText>
             </Heading>
           </Animation>
           <Animation property='slide-from-top'>
             <AnimatedText className='kicl-text-align-center'>
-              {t('account.message')}
+              {t('account.signOut.message')}
             </AnimatedText>
           </Animation>
           <Spinner in={pending} position='inline' />
           <Animation in={state === 'failed'}>
             <AnimatedText className='kicl-color-error' is='p' role='alert'>
-              {t('account.failed')}
+              {t('account.signOut.failed')}
             </AnimatedText>
           </Animation>
           <Animation in={!pending} property='slide-from-top' delay={300}>
@@ -90,12 +90,12 @@ const SignOut: React.FunctionComponent = () => {
                   commandFor={SIGN_OUT_ID}
                   variant='tertiary'
                 >
-                  {t('account.cancel')}
+                  {t('account.signOut.cancel')}
                 </Button>
               </ListItem>
               <ListItem>
                 <Button onClick={confirm} variant='ghost'>
-                  {t('account.signOut')}
+                  {t('account.signOut.label')}
                 </Button>
               </ListItem>
             </List>
