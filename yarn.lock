@@ -3596,8 +3596,6 @@ __metadata:
     google-auth-library: "npm:^10.4.0"
     hpp: "npm:^0.2.3"
     http-proxy-middleware: "npm:^3.0.5"
-    is-image: "npm:^4.0.0"
-    is-video: "npm:^2.0.0"
     tsx: "npm:^4.20.6"
   languageName: unknown
   linkType: soft
@@ -7166,13 +7164,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-image@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "is-image@npm:4.0.0"
-  checksum: 10c0/ce49cf605d6c4e76740edd10790d7250078fce8773ff7668a8ac356547898f1fdc3b801091fae2e6051b3f8e0730f662070134a84d1ae79b4b0184f45bdefe26
-  languageName: node
-  linkType: hard
-
 "is-in-ssh@npm:^1.0.0":
   version: 1.0.0
   resolution: "is-in-ssh@npm:1.0.0"
@@ -7358,15 +7349,6 @@ __metadata:
   version: 0.2.1
   resolution: "is-utf8@npm:0.2.1"
   checksum: 10c0/3ed45e5b4ddfa04ed7e32c63d29c61b980ecd6df74698f45978b8c17a54034943bcbffb6ae243202e799682a66f90fef526f465dd39438745e9fe70794c1ef09
-  languageName: node
-  linkType: hard
-
-"is-video@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "is-video@npm:2.0.0"
-  dependencies:
-    video-extensions: "npm:^1.2.0"
-  checksum: 10c0/8abe02bcdbb860fb56e9acb6a8b0836f71f864ed5049352701dccdc5b2de8c247e6f337584d80880225900a776d3c220a0c2a9b134cf512cc6143fae674ee978
   languageName: node
   linkType: hard
 
@@ -11826,13 +11808,6 @@ __metadata:
   version: 1.1.2
   resolution: "vary@npm:1.1.2"
   checksum: 10c0/f15d588d79f3675135ba783c91a4083dcd290a2a5be9fcb6514220a1634e23df116847b1cc51f66bfb0644cf9353b2abb7815ae499bab06e46dd33c1a6bf1f4f
-  languageName: node
-  linkType: hard
-
-"video-extensions@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "video-extensions@npm:1.2.0"
-  checksum: 10c0/0146d247e9a9d7367d05b0165a73bc36f09aa0cc13f2492de942bca082676cd77ff68d3cba423c9e63d096fa2761cec0d751a2d6dba979607eb2b72c7c3ada8d
   languageName: node
   linkType: hard
 

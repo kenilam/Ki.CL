@@ -8,8 +8,6 @@
     "google-auth-library": "^10.4.0",
     "hpp": "^0.2.3",
     "http-proxy-middleware": "^3.0.5",
-    "is-image": "^4.0.0",
-    "is-video": "^2.0.0",
     "tsx": "^4.20.6"
   },
   "devDependencies": {
