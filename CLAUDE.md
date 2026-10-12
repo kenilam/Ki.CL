@@ -17,6 +17,7 @@ make codegen             # run codegen (type generation)
 make start               # yarn install + development (one-step bootstrap)
 make client-token.keys   # once: Ed25519 pair, private key in ~/.kicl, prints KICL_CLIENT_PUBLIC_KEY
 make client-token SUB=jane@example.com DAYS=14   # a client token for running a federated module against dev
+make gcp.translations.check   # what `make gcp.translations` would change: it lets the API serve translations without a session
 make gcp.analytics TYPE=click SINCE=7d   # analytics events from the production logs (pageview by default)
 make gcp.analytics.source                # the same for one region: .source or .second, named in gcp/.env
 make resume.pdf          # the public resume PDF, printed from the site running locally and uploaded to the static bucket

@@ -83,6 +83,14 @@ test:
 gcp.region:
 	gcp/region.sh
 
+# Lets the API answer the Translations query without a session, wherever it runs.
+# `make gcp.translations.check` says what would change.
+gcp.translations:
+	gcp/translations.sh
+
+gcp.translations.check:
+	@gcp/translations.sh check
+
 # Analytics events from the site's logs, newest first.
 # `make gcp.analytics TYPE=click SINCE=7d LIMIT=500 REGION=<region>`; TYPE is pageview, click, scroll or duration.
 gcp.analytics:
