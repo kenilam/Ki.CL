@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 import {
   Kicl_ContactDocument,
   useMutation,
@@ -19,7 +22,7 @@ import { useChallenged } from '@/session';
 import { useAccount } from '@/views/account/use-account';
 
 // Constants
-import { CONTACT_ID, COPY } from './constants';
+import { CONTACT_ID } from './constants';
 
 /**
  * The form the site offers in place of an email address. The API sends only
@@ -32,6 +35,8 @@ const Contact: React.FunctionComponent = () => {
   const challenged = useChallenged();
 
   const { me } = useAccount();
+
+  const { t } = useTranslation();
 
   /*
    * A new form each time the dialog closes, so a sent message is not what
@@ -55,7 +60,7 @@ const Contact: React.FunctionComponent = () => {
     <Dialog
       id={CONTACT_ID}
       onClose={() => setOpened((count) => count + 1)}
-      title={COPY.title}
+      title={t('send_message')}
     >
       <ContactForm
         email={me?.Email ?? undefined}

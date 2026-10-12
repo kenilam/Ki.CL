@@ -1,0 +1,17 @@
+{
+  "header": {
+    "aside": {
+      "github": "GitHub profile",
+      "label": "Contact",
+      "linkedin": "LinkedIn profile"
+    },
+    "contents": {
+      "body": "This is my own little lab for imagining what's possible and building it into existence.",
+      "home": "Ki.CL home",
+      "lead": "Personal projects are where curiosity becomes craft."
+    },
+    "menu": {
+      "label": "Pages"
+    }
+  }
+}

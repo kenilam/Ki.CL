@@ -2,6 +2,7 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Animation, HyperLink, Navigation } from 'design/components';
@@ -9,11 +10,10 @@ import { Animation, HyperLink, Navigation } from 'design/components';
 // Constants
 import { ROUTES } from '@/views/navigation/constants';
 
-const COPY = {
-  label: 'Pages',
-};
-
 const Menu: React.FunctionComponent = () => {
+  const { t } = useTranslation('home');
+  const { t: common } = useTranslation();
+
   return (
     <Animation
       delay={2000}
@@ -22,7 +22,7 @@ const Menu: React.FunctionComponent = () => {
       property='slide-from-bottom'
     >
       <Navigation
-        aria-label={COPY.label}
+        aria-label={t('header.menu.label')}
         autoFlow='column'
         className={classNames(
           'kicl-padding-block-start-wide',
@@ -30,9 +30,9 @@ const Menu: React.FunctionComponent = () => {
         )}
         justifyContent='center'
       >
-        {ROUTES.map(({ title, to }) => (
+        {ROUTES.map(({ key, to }) => (
           <HyperLink key={to} to={to}>
-            {title}
+            {common(key)}
           </HyperLink>
         ))}
       </Navigation>
