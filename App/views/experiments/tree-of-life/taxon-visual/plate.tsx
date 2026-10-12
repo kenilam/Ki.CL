@@ -2,27 +2,27 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Image, Layout, Skeleton, Status, Text } from 'design/components';
 
 // Constants
-import { CLASS_NAME, DISCLAIMER, ERROR_MESSAGES } from './constants';
+import { CLASS_NAME } from './constants';
 
+/** Which `plate` phrase the live region reads out. */
 export function announcementFor({
   imageUrl,
   isGenerating,
-  name,
 }: {
   imageUrl: string | null;
   isGenerating: boolean;
-  name: string;
-}): string {
+}): 'drawing' | 'ready' | 'none' {
   if (isGenerating) {
-    return 'Drawing the plate.';
+    return 'drawing';
   }
 
-  return imageUrl ? `Plate of ${name || 'this taxon'} ready.` : 'No plate.';
+  return imageUrl ? 'ready' : 'none';
 }
 
 type Props = {
@@ -40,12 +40,14 @@ const Plate: React.FC<Props> = ({
   message,
   name,
 }) => {
+  const { t } = useTranslation('tree-of-life');
+
   if (!imageUrl && failed) {
     return (
       <Status
         in
         level='warning'
-        title='No plate'
+        title={t('title', { context: 'no_plate' })}
         headingLevel='h3'
         message={message}
         align='start'
@@ -72,7 +74,7 @@ const Plate: React.FC<Props> = ({
               'kicl-color-grey-dark'
             )}
           >
-            Drawing this one - it takes about a minute.
+            {t('plate', { context: 'wait' })}
           </Text>
         </figure>
       </Layout>
@@ -84,9 +86,9 @@ const Plate: React.FC<Props> = ({
       <Status
         in
         level='warning'
-        title='No plate'
+        title={t('title', { context: 'no_plate' })}
         headingLevel='h3'
-        message={ERROR_MESSAGES.unfinished}
+        message={t('error', { context: 'unfinished' })}
         align='start'
         property='fade'
       />
@@ -98,7 +100,10 @@ const Plate: React.FC<Props> = ({
       <figure>
         <Image
           data={imageUrl}
-          alt={`Plate of ${name || 'this taxon'}, drawn from a description`}
+          alt={t('plate', {
+            context: 'alt',
+            name: name || t('this_taxon'),
+          })}
           borderRadius='sm'
           className={classNames(
             `${CLASS_NAME}__taxon-plate`,
@@ -116,7 +121,7 @@ const Plate: React.FC<Props> = ({
               'kicl-line-height-narrow'
             )}
           >
-            {DISCLAIMER}
+            {t('plate', { context: 'disclaimer' })}
           </Text>
         </figcaption>
       </figure>

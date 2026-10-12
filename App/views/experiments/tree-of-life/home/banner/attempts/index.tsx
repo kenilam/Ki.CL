@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Library
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, List } from 'design/components';
@@ -15,6 +16,7 @@ import { ERAS } from './constants';
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life__attempts';
 
 const Attempts: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const id = useId();
 
   return (
@@ -27,11 +29,11 @@ const Attempts: React.FunctionComponent = () => {
           dense
           className={classNames('kicl-font-family-mono')}
         >
-          Fifteen attempts:
+          {t('attempts')}
         </Heading>
         <List justifyContent='start' gap='narrow'>
           {ERAS.map((era) => (
-            <Era key={era.label} {...era} />
+            <Era key={era.context} {...era} />
           ))}
         </List>
       </nav>

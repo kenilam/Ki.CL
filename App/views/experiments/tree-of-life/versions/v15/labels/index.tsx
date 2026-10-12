@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useSyncExternalStore } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { Badge, HyperLink } from 'design/components';
@@ -68,6 +69,7 @@ const PILL_CLASS = classNames(
 
 /** DOM layer. Sits outside the Canvas and seats the pills each frame. */
 const Labels: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const hostRef = useRef<HTMLElement>(null);
   const pillsRef = useRef<Map<string, HTMLElement>>(new Map());
 
@@ -94,7 +96,7 @@ const Labels: React.FunctionComponent = () => {
 
   return (
     <nav
-      aria-label='Taxa in view'
+      aria-label={t('label', { context: 'taxa' })}
       ref={hostRef}
       className={classNames(
         `${CLASS_NAME}__labels`,

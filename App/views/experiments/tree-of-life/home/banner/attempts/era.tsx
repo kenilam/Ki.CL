@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 
 // Library
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import { HyperLink, List, ListItem, Text } from 'design/components';
@@ -12,7 +13,8 @@ import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constan
 import { type Era as Props } from './constants';
 
 // The label sits under its numbers, as a caption; the list is named by it, so a screen reader hears it first.
-const Era: React.FunctionComponent<Props> = ({ label, versions }) => {
+const Era: React.FunctionComponent<Props> = ({ context, versions }) => {
+  const { t } = useTranslation('tree-of-life');
   const id = useId();
 
   return (
@@ -39,7 +41,7 @@ const Era: React.FunctionComponent<Props> = ({ label, versions }) => {
         ))}
       </List>
       <Text id={id} dense className='kicl-font-size-small'>
-        {label}
+        {t('era', { context })}
       </Text>
     </ListItem>
   );

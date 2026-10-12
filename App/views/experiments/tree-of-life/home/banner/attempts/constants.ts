@@ -4,7 +4,8 @@ import {
 } from '@/views/experiments/tree-of-life/versions/constants';
 
 export type Era = {
-  label: string;
+  /** Which `era` phrase names the band. */
+  context: 'webgl' | 'html' | 'widest' | 'close_up';
   versions: readonly Version[];
 };
 
@@ -17,8 +18,8 @@ export type Era = {
  * and not as a list of files.
  */
 export const ERAS: readonly Era[] = [
-  { label: 'WebGL, the whole clade at once', versions: VERSIONS.slice(0, 8) },
-  { label: 'HTML, one clade at a time', versions: VERSIONS.slice(8, 13) },
-  { label: 'The widest view I tried', versions: VERSIONS.slice(13, 14) },
-  { label: 'One taxon, close up', versions: VERSIONS.slice(14) },
+  { context: 'webgl', versions: VERSIONS.slice(0, 8) },
+  { context: 'html', versions: VERSIONS.slice(8, 13) },
+  { context: 'widest', versions: VERSIONS.slice(13, 14) },
+  { context: 'close_up', versions: VERSIONS.slice(14) },
 ];

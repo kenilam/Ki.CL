@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import {
   useQuery,
@@ -142,7 +143,6 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
   highlight,
   onExpand,
 }) => {
-  const displayLabel = isOrigin ? 'Origin of life' : label;
   const markerSize = isOrigin ? 0.22 : expandable ? 0.1 : 0;
 
   return (
@@ -176,7 +176,7 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
           />
         </mesh>
       ) : null}
-      {showLabel && displayLabel ? (
+      {showLabel && label ? (
         <Drei.Text
           position={[0, isOrigin ? -0.45 : 0.14, 0.04]}
           fontSize={fontSize}
@@ -188,7 +188,7 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
           outlineColor={BACKGROUND}
           fillOpacity={0.95}
         >
-          {displayLabel}
+          {label}
         </Drei.Text>
       ) : null}
     </group>
@@ -206,6 +206,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
   onExpand,
   expandingId,
 }) => {
+  const { t } = useTranslation('tree-of-life');
   const { nodes, links, height } = useMemo(
     () => layoutPhylogeneticFan(tree),
     [tree]
@@ -249,7 +250,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
           y={item.y}
           z={item.z}
           color={item.color}
-          label={labelFor(item.node)}
+          label={item.isOrigin ? t('origin') : labelFor(item.node)}
           showLabel={item.showLabel}
           expandable={item.expandable}
           fontSize={item.fontSize}
@@ -263,6 +264,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
 };
 
 const Canvas: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [expandingId, setExpandingId] = useState<string | null>(null);
 
@@ -355,7 +357,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        Even neighbor spacing (v4) · click glowing tips to grow a clade
+        {t('caption', { context: 'v4' })}
       </Text>
     </figure>
   );

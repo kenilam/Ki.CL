@@ -1,36 +1,27 @@
 import React, { useId } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { Heading, Layout, Markdown, Text } from 'design/components';
 
 const WhereItStarted: React.FunctionComponent = () => {
+  const { t } = useTranslation('tree-of-life');
   const id = useId();
 
   return (
     <Layout justifyItems='start'>
       <section aria-labelledby={id}>
         <Heading id={id} is='h2' className='kicl-font-size-large'>
-          Where it started
+          {t('title', { context: 'where_it_started' })}
         </Heading>
 
         <Text is='p'>
-          I started from{' '}
-          <HyperLink
-            to='https://observablehq.com/@d3/tree-of-life'
-            target='_blank'
-            rel='noreferrer'
-          >
-            D3’s Tree of Life
-          </HyperLink>
-          . It’s a radial dendrogram with curved links, tips labelled around the
-          circumference and branch lengths that carry real distance. It shows
-          the shape of a phylogeny and how far apart its members sit.
+          <Markdown>{t('article.where_it_started.p1')}</Markdown>
         </Text>
 
-        <Text is='p'>
-          It doesn’t show what any of them look like. Every tip is just a name.
-          I wanted the shape and the creatures on the same page.
-        </Text>
+        <Text is='p'>{t('article.where_it_started.p2')}</Text>
       </section>
     </Layout>
   );
