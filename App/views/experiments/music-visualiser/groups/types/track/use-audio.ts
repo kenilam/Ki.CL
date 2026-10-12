@@ -357,6 +357,26 @@ export function useAudio(): Audio {
     setError(false);
     setLoading(true);
 
+    /* An old track held paused on its gate is not coming back. */
+    if (
+      audible.current &&
+      audible.current !== slot &&
+      audible.current.element.paused
+    ) {
+      drop(audible.current);
+      audible.current = null;
+    }
+
+    /*
+     * Started before the context has agreed to run, not after. A new context
+     * takes a moment to wake, and Chrome on iOS no longer counts the press by
+     * then, so it refused the first track. The gain is at zero until `cross`.
+     */
+    const started = slot.element.play().then(
+      () => null,
+      (caught: DOMException) => caught
+    );
+
     void (async () => {
       const running = await resume(context);
 
@@ -366,29 +386,18 @@ export function useAudio(): Audio {
 
       /* A cold link: the browser wants a press first, and the gate has one. */
       if (!running) {
+        slot.element.pause();
         setLoading(false);
         navigate(toTrackPath(track), { replace: true });
 
         return;
       }
 
-      /* An old track held paused on its gate is not coming back. */
-      if (
-        audible.current &&
-        audible.current !== slot &&
-        audible.current.element.paused
-      ) {
-        drop(audible.current);
-        audible.current = null;
-      }
+      const refused = await started;
 
-      try {
-        await slot.element.play();
-      } catch (caught) {
-        if (!cancelled && (caught as DOMException).name !== 'AbortError') {
-          setError(true);
-          setLoading(false);
-        }
+      if (!cancelled && refused && refused.name !== 'AbortError') {
+        setError(true);
+        setLoading(false);
       }
     })();
 
