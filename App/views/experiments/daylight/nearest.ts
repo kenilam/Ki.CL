@@ -1,4 +1,5 @@
 import { PLACES, type Place } from './constants';
+import { toVector, type Coordinates } from './sun';
 
 /** The offset from UTC is fifteen degrees of longitude an hour, four minutes a degree. */
 const MINUTES_A_DEGREE = 4;
@@ -22,6 +23,21 @@ export function toNearest(timeZone: string, offsetMinutes: number): Place {
         ? place
         : nearest
     )
+  );
+}
+
+/** The place nearest a point on the globe, over its surface. */
+export function toNearestTo(point: Coordinates): Place {
+  const [x, y, z] = toVector(point);
+  /* The nearer two points are, the larger the product of their directions. */
+  const close = (place: Place) => {
+    const [px, py, pz] = toVector(place);
+
+    return x * px + y * py + z * pz;
+  };
+
+  return PLACES.reduce((nearest, place) =>
+    close(place) > close(nearest) ? place : nearest
   );
 }
 

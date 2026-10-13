@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Routes
-import { Navigate, useParams } from 'design/router';
+import { Navigate, useNavigate, useParams } from 'design/router';
 
 // Components
 import { Frame, Layout } from 'design/components';
@@ -18,7 +18,8 @@ import { Places } from './places';
 import { Words } from './words';
 
 // Utilities
-import { toNearestHere } from './nearest';
+import { toNearestHere, toNearestTo } from './nearest';
+import { toBearing, toSubsolar } from './sun';
 
 // Constants
 import { CLASS_NAME, PARAM, PLACES, toPath, toSlug } from './constants';
@@ -30,6 +31,7 @@ import { CLASS_NAME, PARAM, PLACES, toPath, toSlug } from './constants';
  */
 const Daylight: React.FunctionComponent = () => {
   const now = useNow();
+  const navigate = useNavigate();
   const { [PARAM]: slug } = useParams();
   const active = PLACES.findIndex((place) => toSlug(place) === slug);
 
@@ -55,9 +57,11 @@ const Daylight: React.FunctionComponent = () => {
               active={active}
               centre={PLACES[active]}
               date={now}
+              /* Let go of the globe and it settles on the nearest place. */
+              onDrop={(facing) => navigate(toPath(toNearestTo(facing)))}
               places={PLACES}
             />
-            <Words />
+            <Words bearing={toBearing(PLACES[active], toSubsolar(now))} />
             <Places active={active} date={now} />
           </article>
         </Layout>

@@ -46,6 +46,8 @@ type Props = {
   centre: Coordinates;
   date: Date;
   height: number;
+  /** Told where the globe was left facing when a drag ends. */
+  onDrop?(facing: Coordinates): void;
   places: readonly Coordinates[];
   width: number;
 };
@@ -65,17 +67,20 @@ export function useOrb({
   centre,
   date,
   height,
+  onDrop,
   places,
   width,
 }: Props): Handlers {
   const facing = useRef(centre);
   const target = useRef(centre);
-  const drag = useRef<{ x: number; y: number } | null>(null);
+  const drag = useRef<{ moved: boolean; x: number; y: number } | null>(null);
+  const asked = useRef(centre);
   const scene = useRef({ active, date, places });
 
   scene.current = { active, date, places };
 
   useEffect(() => {
+    asked.current = centre;
     target.current = centre;
   }, [centre]);
 
@@ -164,7 +169,7 @@ export function useOrb({
   return {
     onPointerDown: (event) => {
       event.currentTarget.setPointerCapture(event.pointerId);
-      drag.current = { x: event.clientX, y: event.clientY };
+      drag.current = { moved: false, x: event.clientX, y: event.clientY };
     },
     onPointerMove: (event) => {
       if (!drag.current) {
@@ -180,9 +185,20 @@ export function useOrb({
         longitude:
           target.current.longitude - (event.clientX - drag.current.x) * scale,
       };
-      drag.current = { x: event.clientX, y: event.clientY };
+      drag.current = { moved: true, x: event.clientX, y: event.clientY };
     },
     onPointerUp: () => {
+      if (drag.current?.moved) {
+        const left = target.current;
+
+        /*
+         * Back to where it was asked to face. If the drop picks another
+         * place, that arrives as a new `centre` and the globe goes there.
+         */
+        target.current = asked.current;
+        onDrop?.(left);
+      }
+
       drag.current = null;
     },
   };

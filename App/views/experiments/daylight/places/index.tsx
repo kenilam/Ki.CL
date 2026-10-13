@@ -31,11 +31,14 @@ import {
 
 const CLASS_NAME = `${VIEW}__places`;
 
-/** The light at a place, as a small mark before its name. */
+/**
+ * The light at a place, as a small mark before its name, in the drawing's own
+ * colours: orange for the sun's side and blue for the moon's.
+ */
 const MARKS = {
-  day: Ri.RiSunLine,
-  night: Ri.RiMoonLine,
-  twilight: Ri.RiSunFoggyLine,
+  day: { Icon: Ri.RiSunLine, colour: 'kicl-color-orange' },
+  night: { Icon: Ri.RiMoonLine, colour: 'kicl-color-blue' },
+  twilight: { Icon: Ri.RiSunFoggyLine, colour: 'kicl-color-red' },
 } as const;
 
 type Props = {
@@ -65,11 +68,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
       )}
     >
       <PopoverTrigger asChild>
-        <Button
-          after={<Ri.RiArrowDownSLine aria-hidden />}
-          size='small'
-          variant='primary'
-        >
+        <Button after={<Ri.RiArrowDownSLine aria-hidden />} variant='primary'>
           {t('place', { context: PLACES[active].context })}
         </Button>
       </PopoverTrigger>
@@ -78,34 +77,47 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
         placement='block-end'
         variant='ghost'
       >
-        <List autoFlow='row' gap='narrow'>
+        <List alignContent='stretch' autoFlow='row'>
           {PLACES.map((place, index) => {
             const light = toLight(place, subsolar);
-            const Mark = MARKS[light];
+            const { Icon, colour } = MARKS[light];
 
             return (
               <ListItem
                 alignItems='center'
                 autoFlow='column'
                 display='grid'
-                frames='max-content--auto--max-content'
-                gap='wide'
+                frames='1fr--max-content'
+                gap='narrow'
+                justifyItems='stretch'
                 key={place.context}
               >
-                <Mark aria-label={t('light', { context: light })} role='img' />
                 <HyperLink
+                  before={
+                    <Icon
+                      aria-label={t('light', { context: light })}
+                      className={colour}
+                      role='img'
+                    />
+                  }
                   aria-current={index === active ? 'page' : undefined}
+                  className='kicl-inline-size-full'
                   to={toPath(place)}
+                  lookLikeButton
+                  variant='secondary'
                 >
                   {t('place', { context: place.context })}
                 </HyperLink>
                 <Text
                   className={classNames(
                     'kicl-color-grey',
-                    'kicl-font-size-small'
+                    'kicl-font-family-mono',
+                    'kicl-font-size-small',
+                    'kicl-text-align-end'
                   )}
+                  dateTime={date.toISOString()}
                   dense
-                  is='span'
+                  is='time'
                 >
                   {new Intl.DateTimeFormat(i18n.language, {
                     hour: '2-digit',

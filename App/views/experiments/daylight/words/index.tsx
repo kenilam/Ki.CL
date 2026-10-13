@@ -10,6 +10,9 @@ import * as Ri from 'react-icons/ri';
 // Components
 import { Heading, HyperLink, Layout, Text } from 'design/components';
 
+// Styles
+import './styles.scss';
+
 // Constants
 import { toPath as toExperimentsPath } from '@/views/experiments/constants';
 import {
@@ -19,8 +22,13 @@ import {
 
 const CLASS_NAME = `${VIEW}__words`;
 
+type Props = {
+  /** Which way the sun is from the globe, in CSS degrees. The title's colour runs toward it. */
+  bearing: number;
+};
+
 /** The page's header, over the drawing: the way back, the title and a line about it. */
-const Words: React.FunctionComponent = () => {
+const Words: React.FunctionComponent<Props> = ({ bearing }) => {
   const { t } = useTranslation('daylight');
   const { t: common } = useTranslation();
 
@@ -50,7 +58,14 @@ const Words: React.FunctionComponent = () => {
         >
           {common('experiments')}
         </HyperLink>
-        <Heading className='kicl-font-size-huge' dense is='h1'>
+        <Heading
+          className={classNames(`${CLASS_NAME}__title`, 'kicl-font-size-huge')}
+          dense
+          is='h1'
+          style={
+            { [`--${VIEW}--bearing`]: `${bearing}deg` } as React.CSSProperties
+          }
+        >
           {common('experiment', { context: 'daylight' })}
         </Heading>
         <Text className='kicl-max-inline-size-columns-4' is='p'>

@@ -81,6 +81,16 @@ export function toLight(place: Coordinates, subsolar: Coordinates): Light {
 }
 
 /**
+ * Which way the sun is from a globe that faces `place`, as an angle the way
+ * CSS counts them: 0 is up and 90 is to the right.
+ */
+export function toBearing(place: Coordinates, subsolar: Coordinates): number {
+  const [x, y] = toSeen(toVector(subsolar), toView(place));
+
+  return Math.atan2(x, y) / RADIANS;
+}
+
+/**
  * The matrix that turns a direction seen by the viewer into the globe's own
  * frame, with `centre` facing the viewer. Column-major, as WebGL takes it.
  */

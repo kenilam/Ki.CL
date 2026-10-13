@@ -55,9 +55,16 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
 - With the globe at rest it draws about eight frames a second, enough for the
   stars to twinkle. Reduced motion stops the twinkle and the easing.
 - The pixel ratio is capped at 1.5.
+- Letting go of a dragged globe settles it on the nearest place, by going to
+  that place's address.
+- The title runs from the moon's blue to the sun's orange, toward where the
+  sun is from the place faced. No utility clips a gradient to text, so
+  `words/styles.scss` holds that one rule. Everything else is components and
+  utilities.
+- In the list, each place's mark is orange by day, blue by night and red in
+  twilight, and the times are in equal-width numerals so they line up.
 - The popover stays open after a pick, so several places can be tried in a
-  row. Picking the place already in the address does not turn a dragged
-  globe back to it. The view has no stylesheet.
+  row.
 
 ## Verified
 

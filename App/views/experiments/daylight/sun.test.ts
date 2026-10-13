@@ -1,7 +1,14 @@
 import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
-import { toLight, toSeen, toSubsolar, toVector, toView } from './sun';
+import {
+  toBearing,
+  toLight,
+  toSeen,
+  toSubsolar,
+  toVector,
+  toView,
+} from './sun';
 
 const near = (actual: number, expected: number, within: number) =>
   assert.ok(
@@ -39,6 +46,22 @@ describe('toLight', () => {
     const edge = { latitude: 0, longitude: noon.longitude + 93 };
 
     assert.equal(toLight(edge, noon), 'twilight');
+  });
+});
+
+describe('toBearing', () => {
+  const here = { latitude: 0, longitude: 0 };
+
+  test('is to the right when the sun is to the east', () => {
+    near(toBearing(here, { latitude: 0, longitude: 60 }), 90, 1e-6);
+  });
+
+  test('is to the left when the sun is to the west', () => {
+    near(toBearing(here, { latitude: 0, longitude: -60 }), -90, 1e-6);
+  });
+
+  test('is up when the sun is to the north', () => {
+    near(toBearing(here, { latitude: 20, longitude: 0 }), 0, 1e-6);
   });
 });
 
