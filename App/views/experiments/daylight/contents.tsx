@@ -36,7 +36,14 @@ const Daylight: React.FunctionComponent = () => {
       <Frame grow hold>
         {/* The words go to the top and the places to the bottom. */}
         <Layout alignContent='space-between' autoFlow='row'>
-          <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+          {/* The picture is black in both themes, so what is over it is always dark-themed. */}
+          <article
+            className={classNames(
+              CLASS_NAME,
+              'kicl--theme--dark',
+              'kicl-position-relative'
+            )}
+          >
             <Orb active={active} centre={centre} date={now} places={PLACES} />
             <Words />
             <Places

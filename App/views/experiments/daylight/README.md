@@ -2,7 +2,9 @@
 
 `/experiments/daylight`. The Earth as an ink drawing in two colours, lit by
 where the sun is right now. Paper is day and black is night. The rays round
-the globe are the only colour: red-orange toward the sun, blue away from it. The globe can be dragged, and picking a place turns it there.
+the globe are red-orange toward the sun and blue away from it. A sun stands
+on the side the real one is on and a moon across from it, and both go round
+as the globe is turned. The globe can be dragged, and picking a place turns it there.
 
 ## How the pieces fit
 
@@ -10,8 +12,8 @@ the globe are the only colour: red-orange toward the sun, blue away from it. The
   low-accuracy series. It is right to about a degree. The same file turns a
   place into day, twilight or night.
 - **orb.** One fragment shader draws the whole picture: the globe shaded in
-  stipple, the rays, the stars, hatching in the corners, the horizon, and the
-  lines on the ground that run in to where the globe rests. The coast is read
+  stipple, the rays, the sun and the moon, the stars, and hatching in the
+  corners. The coast is read
   from `land.png`.
 - **land.png.** A 512 by 256 mask of the land, rasterised from Natural
   Earth's 1:110m outlines (public domain, through the `world-atlas` package).
@@ -28,10 +30,15 @@ the globe are the only colour: red-orange toward the sun, blue away from it. The
   paper, stipple, fine rays, dots and rings, hatching. It does not copy that
   picture. The first version was stained glass, from an earlier reference,
   and was replaced.
-- The picture is black and paper in both themes, so the title over it is
-  always light. The stars, the hatching and the ground are kept faint so the
+- The picture is black and paper in both themes, so the article carries the
+  dark theme's class and everything over it is light on dark. The stars, the hatching and the ground are kept faint so the
   words read over them.
-- Only the rays are coloured, so the eye goes to which side the sun is on.
+- Only the rays, the sun and the moon are coloured, so the eye goes to which
+  side the sun is on.
+- The moon is drawn across from the sun. It is a sign for night, not the real
+  moon's position.
+- An earlier version rested the globe on a floor with a horizon. It was
+  taken out.
 - The title, the places button and the drawing stay inside the page's 12
   columns. On a wide page the drawing takes at most two thirds of the column
   and sits at its far edge, which leaves a third to the words.

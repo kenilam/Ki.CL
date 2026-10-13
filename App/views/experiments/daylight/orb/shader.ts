@@ -10,11 +10,11 @@ void main() {
 `;
 
 /*
- * One ink drawing, per pixel, in two colours: black and paper. The globe is
- * shaded with stipple, dark dots on paper where it is day and paper dots on
- * black where it is night. Round it, fine rays run out on the side the sun is
- * on, and dots and rings are scattered like stars. It rests on a horizon, with
- * lines on the ground running in to where it touches.
+ * One ink drawing, per pixel. The globe is shaded with stipple, dark dots on
+ * paper where it is day and paper dots on black where it is night. Round it,
+ * fine rays run out, red-orange toward the sun and blue away from it. A sun
+ * stands on the side the real one is on and a moon on the other, and both
+ * go round as the globe is turned.
  */
 const FRAGMENT = /* glsl */ `
 precision highp float;
@@ -123,22 +123,50 @@ vec3 globe(vec2 uv, vec2 grain, float pixel) {
   return colour;
 }
 
-vec3 ground(vec2 uv, vec2 grain, float horizon) {
-  vec2 from = uv - vec2(0.0, horizon);
-  float angle = atan(from.x, -from.y);
-  float fan = 1.0 - smoothstep(0.75, 0.8, abs(angle));
-  float lines = step(0.5, fract(angle * 22.0)) * fan;
+/* Where the sun and the moon stand, as a share of the drawing's height. */
+const float ORBIT = 0.39;
+const float BODY = 0.034;
 
-  /* The lines thin out toward the horizon, where they would run together. */
-  lines *= smoothstep(0.0, 0.06, -from.y);
+/* An engraved sun: a paper disc in a ring of spikes, long and short by turns. */
+vec4 sunBody(vec2 at, vec2 grain, float pixel) {
+  float radius = length(at);
+  float sector = (atan(at.y, at.x) + PI) / (2.0 * PI) * 16.0;
+  float longer = mod(floor(sector), 2.0);
+  float reach = BODY * mix(0.6, 1.05, longer);
+  float along = (radius - BODY * 1.12) / reach;
 
-  float shadow = 1.0 - smoothstep(0.2, 1.0, length(from * vec2(1.0, 3.4)) / (GLOBE * 1.25));
-  float haze = 0.22 * (1.0 - smoothstep(0.0, 0.07, -from.y));
-  /* A little grit everywhere, more under the globe and along the horizon. */
-  float dots = stipple(grain, max(max(shadow, haze), 0.004));
+  /* The short spikes wave, as flames do in an old woodcut. */
+  float across = abs(fract(sector) - 0.5 + (1.0 - longer) * 0.16 * sin(along * 5.0));
+  float spike = step(0.0, along) * step(along, 1.0) * (1.0 - smoothstep(0.0, 0.06, across - 0.44 * (1.0 - along)));
+  float disc = 1.0 - smoothstep(BODY, BODY + pixel, radius);
+  float edge = 1.0 - smoothstep(pixel, pixel * 2.0, abs(radius - BODY));
+  float shade = stipple(grain, 0.5 * smoothstep(-0.2, 1.0, dot(at / BODY, vec2(0.6, -0.7))));
 
-  /* The lines are grey, not black, so the ground stays quiet. */
-  return mix(PAPER, INK, max(max(lines * 0.45, dots), step(0.75, shadow)));
+  vec3 colour = mix(SUNLIT, mix(PAPER, SUNLIT, shade), disc);
+
+  colour = mix(colour, INK, edge);
+
+  /* A clear space round it, so it stands off the rays behind. */
+  float halo = 1.0 - smoothstep(BODY * 2.4, BODY * 2.4 + pixel, radius);
+
+  return vec4(mix(INK, colour, max(disc, spike)), halo);
+}
+
+/* An engraved moon: a crescent, its back to the sun. */
+vec4 moonBody(vec2 at, vec2 away, vec2 grain, float pixel) {
+  float size = BODY * 1.5;
+  float outer = length(at);
+  float inner = length(at - away * size * 0.42);
+  float crescent = (1.0 - smoothstep(size, size + pixel, outer)) * smoothstep(size * 0.86, size * 0.86 + pixel, inner);
+  float edge = max(
+    1.0 - smoothstep(pixel, pixel * 2.0, abs(outer - size)),
+    1.0 - smoothstep(pixel, pixel * 2.0, abs(inner - size * 0.86))
+  ) * crescent;
+  float shade = stipple(grain, 0.55 * smoothstep(size * 0.86, size * 1.25, inner));
+  vec3 colour = mix(mix(PAPER, MOONLIT, shade), MOONLIT, edge);
+  float halo = 1.0 - smoothstep(size * 1.5, size * 1.5 + pixel, outer);
+
+  return vec4(mix(INK, colour, crescent), halo);
 }
 
 vec3 sky(vec2 uv, float radius, float pixel, float warmth) {
@@ -171,7 +199,7 @@ vec3 sky(vec2 uv, float radius, float pixel, float warmth) {
   colour = mix(colour, PAPER, star);
 
   /* Hatching fills the corners, beyond the rays, faint enough to read words over. */
-  float hatch = step(fract((abs(uv.x) + uv.y) * 60.0), 0.3) * smoothstep(0.5, 0.52, radius);
+  float hatch = step(fract((abs(uv.x) + abs(uv.y)) * 60.0), 0.3) * smoothstep(0.5, 0.52, radius);
 
   return mix(colour, PAPER, hatch * 0.1);
 }
@@ -190,7 +218,6 @@ void main() {
   vec2 uv = (gl_FragCoord.xy - middle) / shortest;
   float pixel = 1.0 / shortest;
   float radius = length(uv);
-  float horizon = -GLOBE * 0.97;
 
   /* Stipple dots are a fixed size on the page, about three pixels apart. */
   vec2 grain = gl_FragCoord.xy / max(3.0, shortest * 0.0038);
@@ -200,15 +227,21 @@ void main() {
   float facing = dot(normalize(uv + 0.0001), uSunSeen.xy / max(side, 0.0001));
   float warmth = smoothstep(-0.4, 0.5, facing * side + uSunSeen.z * (1.0 - side));
 
-  vec3 colour = uv.y < horizon ? ground(uv, grain, horizon) : sky(uv, radius, pixel, warmth);
+  vec3 colour = sky(uv, radius, pixel, warmth);
 
-  /* The horizon, and the edge of the globe, in paper. */
-  colour = mix(colour, PAPER, (1.0 - smoothstep(pixel, pixel * 2.0, abs(uv.y - horizon))) * step(GLOBE, radius));
+  /* The sun on the side the real one is on, the moon across from it. */
+  vec2 toward = side > 0.0001 ? uSunSeen.xy / side : vec2(0.0, 1.0);
+  vec4 sun = sunBody(uv - toward * ORBIT, grain, pixel);
+  vec4 moon = moonBody(uv + toward * ORBIT, -toward, grain, pixel);
+
+  colour = mix(colour, sun.rgb, sun.a);
+  colour = mix(colour, moon.rgb, moon.a);
 
   if (radius < GLOBE) {
     colour = globe(uv, grain, pixel);
   }
 
+  /* The edge of the globe, in paper. */
   colour = mix(colour, PAPER, 1.0 - smoothstep(pixel, pixel * 2.5, abs(radius - GLOBE)));
   gl_FragColor = vec4(colour, 1.0);
 }

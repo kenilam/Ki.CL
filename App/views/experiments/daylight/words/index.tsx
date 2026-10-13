@@ -34,7 +34,6 @@ const Words: React.FunctionComponent = () => {
       <header
         className={classNames(
           CLASS_NAME,
-          'kicl-color-white',
           'kicl-inline-size-full',
           'kicl-margin-inline-auto',
           'kicl-max-inline-size-columns-12',
