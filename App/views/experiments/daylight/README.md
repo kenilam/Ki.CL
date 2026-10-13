@@ -42,7 +42,8 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   side the sun is on.
 - The sun and the moon are larger and more coloured the nearer they are to
   the viewer. With the sun behind the globe it is small and nearly grey, and
-  the moon is large and blue. Only the colour fades, not the brightness.
+  the moon is large and blue. Only the colour fades, not the brightness, and only
+  once one is behind the globe: side by side, both are in full colour.
 - The moon is drawn across from the sun. It is a sign for night, not the real
   moon's position.
 - An earlier version rested the globe on a floor with a horizon. It was

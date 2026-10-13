@@ -236,7 +236,8 @@ void main() {
    * The sun on the side the real one is on, the moon across from it. Each is
    * larger and more coloured the nearer it is to the viewer: with the sun
    * behind the globe it is small and nearly grey, and the moon is large and
-   * blue. Only the colour goes; the far one stays as bright.
+   * blue. Only the colour goes; the far one stays as bright. Side by side, with the
+   * edge of day facing the viewer, both keep their full colour.
    */
   vec2 toward = side > 0.0001 ? uSunSeen.xy / side : vec2(0.0, 1.0);
   float near = smoothstep(-1.0, 1.0, uSunSeen.z);
@@ -244,8 +245,8 @@ void main() {
   float moonSize = mix(1.8, 0.4, near);
 
   /* A large one stands a little closer in, so it stays off the hatching. */
-  vec4 sun = sunBody((uv - toward * (ORBIT - (sunSize - 1.0) * 0.04)) / sunSize, grain, pixel / sunSize, mix(FADED, SUNLIT, mix(0.15, 1.0, near)));
-  vec4 moon = moonBody((uv + toward * (ORBIT - (moonSize - 1.0) * 0.04)) / moonSize, -toward, grain, pixel / moonSize, mix(FADED, MOONLIT, mix(1.0, 0.15, near)));
+  vec4 sun = sunBody((uv - toward * (ORBIT - (sunSize - 1.0) * 0.04)) / sunSize, grain, pixel / sunSize, mix(FADED, SUNLIT, mix(0.15, 1.0, smoothstep(0.0, 0.45, near))));
+  vec4 moon = moonBody((uv + toward * (ORBIT - (moonSize - 1.0) * 0.04)) / moonSize, -toward, grain, pixel / moonSize, mix(FADED, MOONLIT, mix(0.15, 1.0, 1.0 - smoothstep(0.55, 1.0, near))));
 
   colour = mix(colour, sun.rgb, sun.a);
   colour = mix(colour, moon.rgb, moon.a);
