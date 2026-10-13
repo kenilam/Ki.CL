@@ -1,12 +1,14 @@
 import React, { useMemo } from 'react';
 
 // Libraries
+import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
 import {
   Badge,
   Button,
+  Card,
   Details,
   List,
   ListItem,
@@ -47,47 +49,57 @@ const Places: React.FunctionComponent<Props> = ({ active, date, onPick }) => {
   const subsolar = useMemo(() => toSubsolar(date), [date]);
 
   return (
-    <Details
-      className={CLASS_NAME}
-      gap='narrow'
-      open={isMobile ? undefined : true}
-      summary={t('label', { context: 'places' })}
+    <Card
+      className={classNames(
+        CLASS_NAME,
+        'kicl-inset-block-end',
+        'kicl-inset-inline-start',
+        'kicl-position-absolute'
+      )}
+      size={3}
+      variant='ghost'
     >
-      <List autoFlow='row' gap='narrower'>
-        {PLACES.map((place, index) => {
-          const light = toLight(place, subsolar);
+      <Details
+        gap='narrow'
+        open={isMobile ? undefined : true}
+        summary={t('label', { context: 'places' })}
+      >
+        <List autoFlow='row' gap='narrower'>
+          {PLACES.map((place, index) => {
+            const light = toLight(place, subsolar);
 
-          return (
-            <ListItem key={place.context}>
-              <Button
-                aria-pressed={index === active}
-                autoFlow='column'
-                className='kicl-inline-size-full'
-                gap='narrow'
-                justifyContent='space-between'
-                onClick={() => onPick(index)}
-                size='small'
-                variant={index === active ? 'secondary' : 'ghost'}
-              >
-                <Text dense is='span'>
-                  {t('place', { context: place.context })}
-                </Text>
-                <Text dense is='span'>
-                  {new Intl.DateTimeFormat(i18n.language, {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    timeZone: place.timeZone,
-                  }).format(date)}
-                </Text>
-                <Badge level={LEVELS[light]} size='small' variant='outline'>
-                  {t('light', { context: light })}
-                </Badge>
-              </Button>
-            </ListItem>
-          );
-        })}
-      </List>
-    </Details>
+            return (
+              <ListItem key={place.context}>
+                <Button
+                  aria-pressed={index === active}
+                  autoFlow='column'
+                  className='kicl-inline-size-full'
+                  gap='narrow'
+                  justifyContent='space-between'
+                  onClick={() => onPick(index)}
+                  size='small'
+                  variant={index === active ? 'secondary' : 'ghost'}
+                >
+                  <Text dense is='span'>
+                    {t('place', { context: place.context })}
+                  </Text>
+                  <Text dense is='span'>
+                    {new Intl.DateTimeFormat(i18n.language, {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      timeZone: place.timeZone,
+                    }).format(date)}
+                  </Text>
+                  <Badge level={LEVELS[light]} size='small' variant='outline'>
+                    {t('light', { context: light })}
+                  </Badge>
+                </Button>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Details>
+    </Card>
   );
 };
 

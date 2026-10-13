@@ -31,8 +31,11 @@ and picking a place turns it there.
 - With the globe at rest it draws about eight frames a second, enough for the
   glass to flicker. Reduced motion stops the flicker and the easing.
 - The pixel ratio is capped at 1.5.
-- The words and the list share one ghost card, so they stay readable over
-  the glass at any window size. The view has no stylesheet.
+- The title and the line under it sit straight on the page, over the
+  window. The places are a ghost card at the bottom of the start side, closed
+  on phones. I tried one card for all of it and it looked worse. On a wide
+  page the window sits right of the middle to leave the words clear. The view
+  has no stylesheet.
 
 ## Verified
 

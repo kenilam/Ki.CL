@@ -1,6 +1,7 @@
 import React from 'react';
 
 // Libraries
+import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
@@ -18,26 +19,39 @@ import {
 
 const CLASS_NAME = `${VIEW}__words`;
 
-/** The page's header: the way back, the title and a line about it. */
+/** The page's header, over the window: the way back, the title and a line about it. */
 const Words: React.FunctionComponent = () => {
   const { t } = useTranslation('daylight');
   const { t: common } = useTranslation();
 
   return (
-    <Layout autoFlow='row' gap='narrow' justifyItems='start'>
-      <header className={CLASS_NAME}>
+    <Layout
+      alignContent='start'
+      autoFlow='row'
+      gap='narrow'
+      justifyItems='start'
+    >
+      <header
+        className={classNames(
+          CLASS_NAME,
+          'kicl-max-inline-size-columns-4',
+          'kicl-padding-block-start-header',
+          'kicl-padding-inline-frame',
+          'kicl-pointer-events-none',
+          'kicl-position-relative'
+        )}
+      >
         <HyperLink
           before={<Ri.RiArrowLeftSFill aria-hidden />}
+          className='kicl-pointer-events-auto'
           to={toExperimentsPath(PATH)}
         >
           {common('experiments')}
         </HyperLink>
-        <Heading className='kicl-font-size-larger' dense is='h1'>
+        <Heading className='kicl-font-size-huge' dense is='h1'>
           {common('experiment', { context: 'daylight' })}
         </Heading>
-        <Text dense is='p'>
-          {t('lede')}
-        </Text>
+        <Text is='p'>{t('lede')}</Text>
       </header>
     </Layout>
   );

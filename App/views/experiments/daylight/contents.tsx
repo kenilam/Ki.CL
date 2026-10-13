@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Card, Frame, Layout } from 'design/components';
+import { Frame, Layout } from 'design/components';
 
 // Hooks
 import { useNow } from './use-now';
@@ -34,37 +34,19 @@ const Daylight: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='none'>
       {/* The frame clips the window to the page. */}
       <Frame grow hold>
-        {/* The pane keeps its own size, at the top of the start side. */}
-        <Layout alignItems='start' justifyItems='start'>
-          <article
-            className={classNames(
-              CLASS_NAME,
-              'kicl-padding-block-frame',
-              'kicl-padding-inline-frame',
-              'kicl-position-relative'
-            )}
-          >
-            <Glass active={active} centre={centre} date={now} places={PLACES} />
-            {/* One pane over the glass, so the words stay readable on it. */}
-            <Card
-              className='kicl-position-relative'
-              is='section'
-              size={3}
-              variant='ghost'
-            >
-              <Words />
-              <Places
-                active={active}
-                date={now}
-                onPick={(index) => {
-                  setActive(index);
-                  /* A new object each time, so picking the same place turns back to it. */
-                  setCentre({ ...PLACES[index] });
-                }}
-              />
-            </Card>
-          </article>
-        </Layout>
+        <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+          <Glass active={active} centre={centre} date={now} places={PLACES} />
+          <Words />
+          <Places
+            active={active}
+            date={now}
+            onPick={(index) => {
+              setActive(index);
+              /* A new object each time, so picking the same place turns back to it. */
+              setCentre({ ...PLACES[index] });
+            }}
+          />
+        </article>
       </Frame>
     </Layout>
   );
