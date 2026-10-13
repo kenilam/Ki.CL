@@ -56,23 +56,22 @@ const Places: React.FunctionComponent<Props> = ({ active, date, onPick }) => {
         'kicl-inline-size-full',
         'kicl-margin-inline-auto',
         'kicl-max-inline-size-columns-12',
-        'kicl-padding-block-end-wide',
         'kicl-padding-inline-frame',
         'kicl-position-relative'
       )}
     >
       <PopoverTrigger asChild>
         <Button
-          after={<Ri.RiArrowUpSLine aria-hidden />}
+          after={<Ri.RiArrowDownSLine aria-hidden />}
           size='small'
-          variant='secondary'
+          variant='primary'
         >
           {active < 0
             ? t('label', { context: 'places' })
             : t('place', { context: PLACES[active].context })}
         </Button>
       </PopoverTrigger>
-      <PopoverContent placement='block-start' variant='ghost'>
+      <PopoverContent placement='block-end' variant='ghost'>
         <List autoFlow='row' gap='narrower'>
           {PLACES.map((place, index) => {
             const light = toLight(place, subsolar);

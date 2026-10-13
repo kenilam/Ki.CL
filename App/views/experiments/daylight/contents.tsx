@@ -34,8 +34,8 @@ const Daylight: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='none'>
       {/* The frame clips the drawing to the page. */}
       <Frame grow hold>
-        {/* The words go to the top and the places to the bottom. */}
-        <Layout alignContent='space-between' autoFlow='row'>
+        {/* The words, then the places under them, at the top. */}
+        <Layout alignContent='start' autoFlow='row' gap='narrow'>
           {/* The picture is black in both themes, so what is over it is always dark-themed. */}
           <article
             className={classNames(

@@ -18,7 +18,7 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
 - **land.png.** A 512 by 256 mask of the land, rasterised from Natural
   Earth's 1:110m outlines (public domain, through the `world-atlas` package).
   It is 3 KB, so the view needs no map library.
-- **places.** A button at the bottom opens a popover with each place's local
+- **places.** A button under the title opens a popover with each place's local
   time and its light. That list says in words what the drawing shows, so the
   canvas is hidden from assistive tech.
 - **home.ts.** The globe starts facing roughly where the visitor is, worked
