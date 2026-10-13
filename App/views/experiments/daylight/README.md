@@ -53,7 +53,9 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   taken out.
 - The title, the places button and the drawing stay inside the page's 12
   columns. On a wide page the drawing takes at most two thirds of the column
-  and sits at its far edge, which leaves a third to the words.
+  and sits at its far edge, which leaves a third to the words. On a
+  phone the drawing is a little wider than the page and sits below the
+  middle, under the words.
 - Raw WebGL with one shader, like the music visualiser, and no three.js.
 - With the globe at rest it draws about eight frames a second, enough for the
   stars to twinkle. Reduced motion stops the twinkle and the easing.

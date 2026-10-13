@@ -238,8 +238,13 @@ void main() {
   bool wide = uSize.x > uSize.y;
   float column = min(uSize.x, uColumn);
   float fit = min(uSize.x, uSize.y) * 0.92;
-  float shortest = wide ? min(fit, column * 0.66) : fit;
-  vec2 middle = uSize * 0.5 + vec2(wide ? (column - shortest) * 0.5 : 0.0, 0.0);
+
+  /*
+   * On a tall page, a phone, the drawing is a little wider than the page, so
+   * the globe is larger, and it sits below the middle, under the words.
+   */
+  float shortest = wide ? min(fit, column * 0.66) : fit * 1.2;
+  vec2 middle = uSize * 0.5 + (wide ? vec2((column - shortest) * 0.5, 0.0) : vec2(0.0, -uSize.y * 0.09));
   vec2 uv = (gl_FragCoord.xy - middle) / shortest;
   float pixel = 1.0 / shortest;
   float radius = length(uv);
