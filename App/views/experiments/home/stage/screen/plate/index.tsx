@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { useScreenContext } from '@/views/experiments/home/stage/screen/context';
 
 // Partials
+import { Plate as Daylight } from '@/views/experiments/daylight/plate';
 import { Backdrop } from '@/views/experiments/image-agent/backdrop';
 import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/track/visualiser';
 
@@ -35,6 +36,7 @@ const Plate: React.FunctionComponent = () => {
         { 'kicl-scrim': experiment.plate === 'image-agent' }
       )}
     >
+      {experiment.plate === 'daylight' ? <Daylight /> : null}
       {experiment.plate === 'image-agent' ? <Backdrop /> : null}
       {experiment.plate === 'music-visualiser' ? (
         <Visualiser analyser={null} playing={false} track={CLASS_NAME} />

@@ -1,6 +1,7 @@
 import 'i18next';
 
 import type common from '@/locales/en/common.json';
+import type daylight from '@/locales/en/daylight.json';
 import type experiments from '@/locales/en/experiments.json';
 import type factoryArm from '@/locales/en/factory-arm.json';
 import type home from '@/locales/en/home.json';
@@ -18,6 +19,7 @@ declare module 'i18next' {
     defaultNS: 'common';
     resources: {
       common: typeof common;
+      daylight: typeof daylight;
       experiments: typeof experiments;
       'factory-arm': typeof factoryArm;
       home: typeof home;
