@@ -9,7 +9,6 @@ import * as Ri from 'react-icons/ri';
 
 // Components
 import {
-  Badge,
   Button,
   HyperLink,
   List,
@@ -32,7 +31,12 @@ import {
 
 const CLASS_NAME = `${VIEW}__places`;
 
-const LEVELS = { day: 'warning', night: 'info', twilight: 'error' } as const;
+/** The light at a place, as a small mark before its name. */
+const MARKS = {
+  day: Ri.RiSunLine,
+  night: Ri.RiMoonLine,
+  twilight: Ri.RiSunFoggyLine,
+} as const;
 
 type Props = {
   /** Index of the place the address names. */
@@ -74,34 +78,41 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
         placement='block-end'
         variant='ghost'
       >
-        <List autoFlow='row' gap='narrower'>
+        <List autoFlow='row' gap='narrow'>
           {PLACES.map((place, index) => {
             const light = toLight(place, subsolar);
+            const Mark = MARKS[light];
 
             return (
               <ListItem
                 alignItems='center'
                 autoFlow='column'
-                gap='narrow'
-                justifyContent='space-between'
+                display='grid'
+                frames='max-content--auto--max-content'
+                gap='wide'
                 key={place.context}
               >
+                <Mark aria-label={t('light', { context: light })} role='img' />
                 <HyperLink
                   aria-current={index === active ? 'page' : undefined}
                   to={toPath(place)}
                 >
                   {t('place', { context: place.context })}
                 </HyperLink>
-                <Text dense is='span'>
+                <Text
+                  className={classNames(
+                    'kicl-color-grey',
+                    'kicl-font-size-small'
+                  )}
+                  dense
+                  is='span'
+                >
                   {new Intl.DateTimeFormat(i18n.language, {
                     hour: '2-digit',
                     minute: '2-digit',
                     timeZone: place.timeZone,
                   }).format(date)}
                 </Text>
-                <Badge level={LEVELS[light]} size='small' variant='outline'>
-                  {t('light', { context: light })}
-                </Badge>
               </ListItem>
             );
           })}
