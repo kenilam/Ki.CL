@@ -40,6 +40,9 @@ const vec3 PAPER = vec3(0.95, 0.93, 0.87);
 const vec3 SUNLIT = vec3(0.98, 0.42, 0.16);
 const vec3 MOONLIT = vec3(0.42, 0.6, 0.98);
 
+/* What the sun's and the moon's colour fades to when they are far: a warm grey. */
+const vec3 FADED = vec3(0.6, 0.59, 0.56);
+
 float hash(float n) {
   return fract(sin(n) * 43758.5453);
 }
@@ -128,7 +131,7 @@ const float ORBIT = 0.39;
 const float BODY = 0.034;
 
 /* An engraved sun: a paper disc in a ring of spikes, long and short by turns. */
-vec4 sunBody(vec2 at, vec2 grain, float pixel) {
+vec4 sunBody(vec2 at, vec2 grain, float pixel, vec3 tint) {
   float radius = length(at);
   float sector = (atan(at.y, at.x) + PI) / (2.0 * PI) * 16.0;
   float longer = mod(floor(sector), 2.0);
@@ -142,7 +145,7 @@ vec4 sunBody(vec2 at, vec2 grain, float pixel) {
   float edge = 1.0 - smoothstep(pixel, pixel * 2.0, abs(radius - BODY));
   float shade = stipple(grain, 0.5 * smoothstep(-0.2, 1.0, dot(at / BODY, vec2(0.6, -0.7))));
 
-  vec3 colour = mix(SUNLIT, mix(PAPER, SUNLIT, shade), disc);
+  vec3 colour = mix(tint, mix(PAPER, tint, shade), disc);
 
   colour = mix(colour, INK, edge);
 
@@ -153,7 +156,7 @@ vec4 sunBody(vec2 at, vec2 grain, float pixel) {
 }
 
 /* An engraved moon: a crescent, its back to the sun. */
-vec4 moonBody(vec2 at, vec2 away, vec2 grain, float pixel) {
+vec4 moonBody(vec2 at, vec2 away, vec2 grain, float pixel, vec3 tint) {
   float size = BODY * 1.5;
   float outer = length(at);
   float inner = length(at - away * size * 0.42);
@@ -163,7 +166,7 @@ vec4 moonBody(vec2 at, vec2 away, vec2 grain, float pixel) {
     1.0 - smoothstep(pixel, pixel * 2.0, abs(inner - size * 0.86))
   ) * crescent;
   float shade = stipple(grain, 0.55 * smoothstep(size * 0.86, size * 1.25, inner));
-  vec3 colour = mix(mix(PAPER, MOONLIT, shade), MOONLIT, edge);
+  vec3 colour = mix(mix(PAPER, tint, shade), tint, edge);
   float halo = 1.0 - smoothstep(size * 1.5, size * 1.5 + pixel, outer);
 
   return vec4(mix(INK, colour, crescent), halo);
@@ -231,8 +234,9 @@ void main() {
 
   /*
    * The sun on the side the real one is on, the moon across from it. Each is
-   * larger and brighter the nearer it is to the viewer: with the sun behind
-   * the globe it is small and faint, and the moon is large and bright.
+   * larger and more coloured the nearer it is to the viewer: with the sun
+   * behind the globe it is small and nearly grey, and the moon is large and
+   * blue. Only the colour goes; the far one stays as bright.
    */
   vec2 toward = side > 0.0001 ? uSunSeen.xy / side : vec2(0.0, 1.0);
   float near = smoothstep(-1.0, 1.0, uSunSeen.z);
@@ -240,11 +244,11 @@ void main() {
   float moonSize = mix(1.8, 0.4, near);
 
   /* A large one stands a little closer in, so it stays off the hatching. */
-  vec4 sun = sunBody((uv - toward * (ORBIT - (sunSize - 1.0) * 0.04)) / sunSize, grain, pixel / sunSize);
-  vec4 moon = moonBody((uv + toward * (ORBIT - (moonSize - 1.0) * 0.04)) / moonSize, -toward, grain, pixel / moonSize);
+  vec4 sun = sunBody((uv - toward * (ORBIT - (sunSize - 1.0) * 0.04)) / sunSize, grain, pixel / sunSize, mix(FADED, SUNLIT, mix(0.15, 1.0, near)));
+  vec4 moon = moonBody((uv + toward * (ORBIT - (moonSize - 1.0) * 0.04)) / moonSize, -toward, grain, pixel / moonSize, mix(FADED, MOONLIT, mix(1.0, 0.15, near)));
 
-  colour = mix(colour, mix(INK, sun.rgb, mix(0.3, 1.0, near)), sun.a);
-  colour = mix(colour, mix(INK, moon.rgb, mix(1.0, 0.3, near)), moon.a);
+  colour = mix(colour, sun.rgb, sun.a);
+  colour = mix(colour, moon.rgb, moon.a);
 
   if (radius < GLOBE) {
     colour = globe(uv, grain, pixel);
