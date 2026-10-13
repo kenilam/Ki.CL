@@ -35,9 +35,10 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   paper, stipple, fine rays, dots and rings, hatching. It does not copy that
   picture. The first version was stained glass, from an earlier reference,
   and was replaced.
-- The picture is black and paper in both themes, so the article carries the
-  dark theme's class and everything over it is light on dark. The stars, the hatching and the ground are kept faint so the
-  words read over them.
+- The picture follows the theme: the sky is black with paper marks in the
+  dark theme, and paper with ink marks in the light one. The globe is the
+  same in both, paper by day and black by night. The stars and the hatching
+  are kept faint so the words read over them.
 - Only the rays, the sun and the moon are coloured, so the eye goes to which
   side the sun is on.
 - The sun and the moon are larger and more coloured the nearer they are to
@@ -60,6 +61,16 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
 - With the globe at rest it draws about eight frames a second, enough for the
   stars to twinkle. Reduced motion stops the twinkle and the easing.
 - The pixel ratio is capped at 1.5.
+- The stars and a few clouds go by as the globe is turned, the way the
+  surface does, and a whole turn brings the same ones back. The clouds move
+  faster than the stars, so they read as nearer. They are drawn over
+  everything, the globe too, and come in three shapes. One grows from
+  nothing at the corner hatching, so none is cut off there.
+- A place's mark on the globe can be clicked, and goes to that place. The
+  page works out which mark is under the pointer from the same layout numbers
+  the shader draws with (`orb/layout.ts`), so the two cannot drift apart. The
+  canvas is hidden from assistive tech; the list of places is the way in by
+  keyboard.
 - Letting go of a dragged globe settles it on the nearest place, by going to
   that place's address.
 - The title runs from the moon's blue to the sun's orange, toward where the

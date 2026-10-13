@@ -20,8 +20,6 @@ import './styles.scss';
 import type { Experiment } from '@/views/experiments/home/constants';
 import { CLASS_NAME } from './constants';
 
-const DARK = ['daylight', 'image-agent'];
-
 type Props = {
   experiment: Experiment;
   /** Position in the stage, from the top. Sets the scroll ranges. */
@@ -50,8 +48,8 @@ const Screen: React.FunctionComponent<Props> = ({
       className={classNames(
         CLASS_NAME,
         `${CLASS_NAME}--${experiment.plate}`,
-        // These two plates are dark in both themes, as on their own pages.
-        { 'kicl--theme--dark': DARK.includes(experiment.plate) },
+        // The image agent's scrim is dark in both themes, as on its own page.
+        { 'kicl--theme--dark': experiment.plate === 'image-agent' },
         'kicl-pointer-events-none',
         'kicl-position-relative'
       )}
