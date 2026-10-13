@@ -3,13 +3,14 @@ import { PATH as EXPERIMENTS_PATH } from '@/views/experiments/constants';
 import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants';
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';
 import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
+import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants';
 
 /** Root of every class and custom property in this view. */
 const CLASS_NAME = 'kicl--views--experiments__home';
 
 export type Experiment = {
   /** Names it in `common` (`experiment_<context>`) and describes it here (`description_<context>`). */
-  context: 'image_agent' | 'music_visualiser' | 'tree_of_life';
+  context: 'daylight' | 'image_agent' | 'music_visualiser' | 'tree_of_life';
   /** Accent of the panel's button, from the palette. */
   level?: ButtonProps['level'];
   /** Which background Stage/Screen paints; a class modifier. */
@@ -35,6 +36,12 @@ const EXPERIMENTS: readonly Experiment[] = [
     context: 'image_agent',
     plate: 'image-agent',
     to: toImageAgentPath(),
+  },
+  {
+    context: 'daylight',
+    level: 'warning',
+    plate: 'daylight',
+    to: toDaylightPath(),
   },
 ];
 
