@@ -88,7 +88,6 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
                 autoFlow='column'
                 display='grid'
                 frames='1fr--max-content'
-                gap='narrow'
                 justifyItems='stretch'
                 key={place.context}
               >
@@ -104,7 +103,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
                   className='kicl-inline-size-full'
                   to={toPath(place)}
                   lookLikeButton
-                  variant='secondary'
+                  variant={active === index ? 'ghost' : 'secondary'}
                 >
                   {t('place', { context: place.context })}
                 </HyperLink>
@@ -113,7 +112,8 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
                     'kicl-color-grey',
                     'kicl-font-family-mono',
                     'kicl-font-size-small',
-                    'kicl-text-align-end'
+                    'kicl-text-align-end',
+                    colour
                   )}
                   dateTime={date.toISOString()}
                   dense
