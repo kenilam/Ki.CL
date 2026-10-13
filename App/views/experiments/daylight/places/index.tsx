@@ -11,6 +11,7 @@ import * as Ri from 'react-icons/ri';
 import {
   Button,
   HyperLink,
+  Layout,
   List,
   ListItem,
   Popover,
@@ -74,6 +75,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
       </PopoverTrigger>
       <PopoverContent
         aria-label={t('label', { context: 'places' })}
+        className='kicl-padding'
         placement='block-end'
         variant='ghost'
       >
@@ -92,39 +94,40 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
                 key={place.context}
               >
                 <HyperLink
-                  before={
+                  aria-current={index === active ? 'page' : undefined}
+                  className={classNames('kicl-inline-size-full')}
+                  to={toPath(place)}
+                  lookLikeButton
+                  size='small'
+                  variant={active === index ? 'ghost' : 'secondary'}
+                >
+                  {t('place', { context: place.context })}
+                </HyperLink>
+                <Layout alignItems='center' autoFlow='column' gap='narrower'>
+                  <Text
+                    className={classNames(
+                      'kicl-color-grey',
+                      'kicl-font-family-mono',
+                      'kicl-font-size-small',
+                      'kicl-text-align-end',
+                      colour
+                    )}
+                    dateTime={date.toISOString()}
+                    dense
+                    is='time'
+                  >
                     <Icon
                       aria-label={t('light', { context: light })}
                       className={colour}
                       role='img'
                     />
-                  }
-                  aria-current={index === active ? 'page' : undefined}
-                  className='kicl-inline-size-full'
-                  to={toPath(place)}
-                  lookLikeButton
-                  variant={active === index ? 'ghost' : 'secondary'}
-                >
-                  {t('place', { context: place.context })}
-                </HyperLink>
-                <Text
-                  className={classNames(
-                    'kicl-color-grey',
-                    'kicl-font-family-mono',
-                    'kicl-font-size-small',
-                    'kicl-text-align-end',
-                    colour
-                  )}
-                  dateTime={date.toISOString()}
-                  dense
-                  is='time'
-                >
-                  {new Intl.DateTimeFormat(i18n.language, {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    timeZone: place.timeZone,
-                  }).format(date)}
-                </Text>
+                    {new Intl.DateTimeFormat(i18n.language, {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      timeZone: place.timeZone,
+                    }).format(date)}
+                  </Text>
+                </Layout>
               </ListItem>
             );
           })}
