@@ -31,6 +31,7 @@ import {
  * link and a skip all go the same way.
  *
  *   element ─▶ gain ─▶ analyser ─▶ master ─▶ speakers
+ *                          └─▶ tap, while a clip is recorded
  *
  * The graph is built on the first play and kept until the track route
  * unmounts. Each track gets its own element and gain; on a skip the old one
@@ -66,6 +67,8 @@ type Graph = {
   analyser: AnalyserNode;
   context: AudioContext;
   master: GainNode;
+  /** Before the volume, so a clip sounds the same with the slider down. */
+  tap: MediaStreamAudioDestinationNode | null;
 };
 
 /** One track's element, and its place in the graph once it has played. */
@@ -77,6 +80,8 @@ type Slot = {
 };
 
 export type Control = {
+  /** What is playing, as a stream to record; `null` before the first play. */
+  capture(): MediaStream | null;
   /** The track could not be played; the player writes the message. */
   error: boolean;
   loading: boolean;
@@ -232,6 +237,21 @@ export function useAudio(): Audio {
     [storage]
   );
 
+  const capture = useCallback(() => {
+    const built = graph.current;
+
+    if (!built) {
+      return null;
+    }
+
+    if (!built.tap) {
+      built.tap = built.context.createMediaStreamDestination();
+      built.analyser.connect(built.tap);
+    }
+
+    return built.tap.stream;
+  }, []);
+
   /* The track has started to sound: bring it up and let the old one go. */
   const cross = useCallback((slot: Slot) => {
     const built = graph.current;
@@ -335,6 +355,7 @@ export function useAudio(): Audio {
         analyser: context.createAnalyser(),
         context,
         master: context.createGain(),
+        tap: null,
       };
 
       built.analyser.fftSize = FFT_SIZE;
@@ -425,6 +446,7 @@ export function useAudio(): Audio {
   return {
     analyser,
     control: {
+      capture,
       error,
       loading,
       play,

@@ -70,6 +70,11 @@ MusicVisualiser/
 - **Crossfade.** On a skip the old track plays on at full volume while the
   new one buffers. When the new one fires `playing`, the two cross over
   three seconds and the old one is dropped.
+- **Clip.** The clip button records ten seconds of the canvas and the track
+  with `MediaRecorder` and saves the file, mp4 where the browser records it
+  and webm otherwise. The sound is taken before the master volume, so a clip
+  is not quiet because the slider is down. Pausing mid-clip saves what was
+  recorded. The button is not shown where the browser cannot record a canvas.
 - **Open Lo-Fi.** 166 lo-fi tracks in ten categories, released to the
   public domain (CC0) by Bilal Tahir at <https://github.com/btahir/open-lofi>,
   generated with Suno. The files are streamed from the static bucket through
@@ -129,6 +134,11 @@ play resumes the same element from where it stopped; a track's `ended` goes
 to the same `/play` the skip link shows; a refreshed `/play` plays. The
 static route answers range requests with a plain `200`, so a track cannot
 be seeked. Typecheck, oxlint, stylelint and Prettier pass.
+
+The clip button, 12 October 2026, in Chrome: it records for ten seconds,
+shows that it is recording, and hands over an mp4 named after the track. The
+tab was in the background, where the browser draws no frames, so the picture
+and sound in the file are not checked yet.
 
 ## Next
 
