@@ -3600,6 +3600,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app.views.experiments.daylight@workspace:App/views/experiments/daylight":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.daylight@workspace:App/views/experiments/daylight"
+  languageName: unknown
+  linkType: soft
+
 "app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.factory-arm@workspace:App/views/experiments/factory-arm"

@@ -7,6 +7,7 @@ import { Route as Origin } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Views
+import { Daylight } from './daylight';
 import { FactoryArm } from './factory-arm';
 import { ImageAgent } from './image-agent';
 import { MusicVisualiser } from './music-visualiser';
@@ -48,6 +49,7 @@ const Experiments = (
     {MusicVisualiser}
     {ImageAgent}
     {FactoryArm}
+    {Daylight}
   </Origin>
 );
 

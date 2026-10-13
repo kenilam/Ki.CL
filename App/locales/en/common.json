@@ -25,6 +25,7 @@
   "dashed": "Dashed",
   "document_title": "Ki.CL | {{routes}}",
   "email": "hello@ki-cl.com",
+  "experiment_daylight": "Daylight",
   "experiment_description_image_agent": "Describe a picture and the agent draws it. If there isn’t enough detail, it asks questions first.",
   "experiment_factory_arm": "Factory Arm",
   "experiment_image_agent": "Image Agent",
