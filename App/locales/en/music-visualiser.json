@@ -1,4 +1,5 @@
 {
+  "action_clip": "Save a {{seconds}}-second clip",
   "action_copy_link": "Copy link to this track",
   "action_next": "Next track",
   "action_play": "Play {{title}}",
@@ -43,8 +44,10 @@
   "category_seasonal_weather": "Seasons, Rain & Weather",
   "category_soul_rnb": "Soul, Slow Jams & Warm Rooms",
   "collection": "Open Lo-Fi",
+  "error_clip": "Could not save the clip. Try again.",
   "error_playback": "Could not play this track. Try again.",
   "label_player": "Player",
+  "label_recording": "Recording a clip",
   "label_volume": "Volume",
   "lede": "{{tracks}} lo-fi tracks from a public-domain collection, each drawn while it plays in one of thirteen scenes. Press play once and it keeps going.",
   "source": "$t(collection) · {{category}}",

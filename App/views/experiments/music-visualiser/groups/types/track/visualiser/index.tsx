@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -17,6 +17,8 @@ const CLASS_NAME = `${VIEW}__stage`;
 
 type Props = {
   analyser: AnalyserNode | null;
+  /** Told the canvas, for whoever records it. */
+  onCanvas?(canvas: HTMLCanvasElement | null): void;
   playing: boolean;
   /** Changes when the track does. */
   track: string | null;
@@ -25,10 +27,17 @@ type Props = {
 /** The picture: a canvas the size of the view, drawn by the scene shader. */
 const Visualiser: React.FunctionComponent<Props> = ({
   analyser,
+  onCanvas,
   playing,
   track,
 }) => {
   const { node, rect } = useResizeObserver<HTMLCanvasElement>();
+
+  useEffect(() => {
+    onCanvas?.(node.current);
+
+    return () => onCanvas?.(null);
+  }, [node, onCanvas]);
 
   useStage({
     analyser,
