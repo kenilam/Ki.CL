@@ -40,6 +40,8 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   words read over them.
 - Only the rays, the sun and the moon are coloured, so the eye goes to which
   side the sun is on.
+- The sun and the moon are larger the nearer they are to the viewer. With the
+  sun behind the globe it is small and the moon is large.
 - The moon is drawn across from the sun. It is a sign for night, not the real
   moon's position.
 - An earlier version rested the globe on a floor with a horizon. It was

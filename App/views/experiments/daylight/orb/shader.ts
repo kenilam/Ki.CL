@@ -229,10 +229,19 @@ void main() {
 
   vec3 colour = sky(uv, radius, pixel, warmth);
 
-  /* The sun on the side the real one is on, the moon across from it. */
+  /*
+   * The sun on the side the real one is on, the moon across from it. Each is
+   * larger the nearer it is to the viewer: with the sun behind the globe it
+   * is small and the moon is large.
+   */
   vec2 toward = side > 0.0001 ? uSunSeen.xy / side : vec2(0.0, 1.0);
-  vec4 sun = sunBody(uv - toward * ORBIT, grain, pixel);
-  vec4 moon = moonBody(uv + toward * ORBIT, -toward, grain, pixel);
+  float near = smoothstep(-1.0, 1.0, uSunSeen.z);
+  float sunSize = mix(0.6, 1.5, near);
+  float moonSize = mix(1.5, 0.6, near);
+
+  /* A large one stands a little closer in, so it stays off the hatching. */
+  vec4 sun = sunBody((uv - toward * (ORBIT - (sunSize - 1.0) * 0.04)) / sunSize, grain, pixel / sunSize);
+  vec4 moon = moonBody((uv + toward * (ORBIT - (moonSize - 1.0) * 0.04)) / moonSize, -toward, grain, pixel / moonSize);
 
   colour = mix(colour, sun.rgb, sun.a);
   colour = mix(colour, moon.rgb, moon.a);
