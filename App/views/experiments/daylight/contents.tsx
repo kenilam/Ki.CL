@@ -47,20 +47,14 @@ const Daylight: React.FunctionComponent = () => {
       <Frame grow hold>
         {/* The words, then the places under them, at the top. */}
         <Layout alignContent='start' autoFlow='row' gap='narrow'>
-          {/* The picture is black in both themes, so what is over it is always dark-themed. */}
-          <article
-            className={classNames(
-              CLASS_NAME,
-              'kicl--theme--dark',
-              'kicl-position-relative'
-            )}
-          >
+          <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
             <Orb
               active={active}
               centre={PLACES[active]}
               date={now}
               /* Let go of the globe and it settles on the nearest place. */
               onDrop={(facing) => navigate(toPath(toNearestTo(facing)))}
+              onPick={(place) => navigate(toPath(PLACES[place]))}
               places={PLACES}
             />
             <Words
