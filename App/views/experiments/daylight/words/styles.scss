@@ -1,12 +1,15 @@
 // The title runs from the moon's blue to the sun's orange, toward where the
-// sun is. No utility clips a gradient to text, so this is the view's one
-// rule. If a second view needs it, it moves to the design system.
+// sun is, and the blue takes as much of it as the place has night. No utility
+// clips a gradient to text, so this is the view's one rule. If a second view
+// needs it, it moves to the design system.
 .kicl--views--experiments--daylight__words__title {
+  $night: var(--kicl--views--experiments--daylight--night, 50%);
+
   background-clip: text;
   background-image: linear-gradient(
     var(--kicl--views--experiments--daylight--bearing, 90deg),
-    var(--kicl-color-blue),
-    var(--kicl-color-orange)
+    var(--kicl-color-blue) calc(#{$night} - 20%),
+    var(--kicl-color-orange) calc(#{$night} + 20%)
   );
   color: transparent;
 }

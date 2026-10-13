@@ -22,13 +22,23 @@ import {
 
 const CLASS_NAME = `${VIEW}__words`;
 
+/*
+ * Where along the title the blue gives way to the orange, in per cent. It runs
+ * past both ends, so full night leaves a trace of orange and full day a trace
+ * of blue.
+ */
+const EDGE_START = -10;
+const EDGE_SPAN = 120;
+
 type Props = {
   /** Which way the sun is from the globe, in CSS degrees. The title's colour runs toward it. */
   bearing: number;
+  /** How much of the place's light is day, from 0 to 1. That much of the title is orange. */
+  day: number;
 };
 
 /** The page's header, over the drawing: the way back, the title and a line about it. */
-const Words: React.FunctionComponent<Props> = ({ bearing }) => {
+const Words: React.FunctionComponent<Props> = ({ bearing, day }) => {
   const { t } = useTranslation('daylight');
   const { t: common } = useTranslation();
 
@@ -63,7 +73,10 @@ const Words: React.FunctionComponent<Props> = ({ bearing }) => {
           dense
           is='h1'
           style={
-            { [`--${VIEW}--bearing`]: `${bearing}deg` } as React.CSSProperties
+            {
+              [`--${VIEW}--bearing`]: `${bearing}deg`,
+              [`--${VIEW}--night`]: `${EDGE_START + (1 - day) * EDGE_SPAN}%`,
+            } as React.CSSProperties
           }
         >
           {common('experiment', { context: 'daylight' })}

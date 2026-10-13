@@ -3,6 +3,7 @@ import { describe, test } from 'node:test';
 
 import {
   toBearing,
+  toDay,
   toLight,
   toSeen,
   toSubsolar,
@@ -62,6 +63,19 @@ describe('toBearing', () => {
 
   test('is up when the sun is to the north', () => {
     near(toBearing(here, { latitude: 20, longitude: 0 }), 0, 1e-6);
+  });
+});
+
+describe('toDay', () => {
+  const noon = { latitude: 0, longitude: 0 };
+
+  test('is all day under the sun and all night opposite it', () => {
+    assert.equal(toDay({ latitude: 0, longitude: 0 }, noon), 1);
+    assert.equal(toDay({ latitude: 0, longitude: 180 }, noon), 0);
+  });
+
+  test('is half and half on the edge of day', () => {
+    near(toDay({ latitude: 0, longitude: 90 }, noon), 0.5, 1e-9);
   });
 });
 

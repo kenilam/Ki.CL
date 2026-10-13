@@ -80,6 +80,19 @@ export function toLight(place: Coordinates, subsolar: Coordinates): Light {
   return altitude > TWILIGHT_DEGREES ? 'twilight' : 'night';
 }
 
+/** The sun's height at which a place counts as fully in day, or below the horizon fully in night. */
+const FULL_DEGREES = 25;
+
+/**
+ * How much of a place's light is day, from 0 in the night to 1 by day. It
+ * moves quickly through dawn and dusk and is flat either side of them.
+ */
+export function toDay(place: Coordinates, subsolar: Coordinates): number {
+  const height = toAltitude(place, subsolar) / FULL_DEGREES;
+
+  return (Math.max(-1, Math.min(1, height)) + 1) / 2;
+}
+
 /**
  * Which way the sun is from a globe that faces `place`, as an angle the way
  * CSS counts them: 0 is up and 90 is to the right.
