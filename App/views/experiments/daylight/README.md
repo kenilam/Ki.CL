@@ -16,7 +16,7 @@ and picking a place turns it there.
 - **land.png.** A 512 by 256 mask of the land, rasterised from Natural
   Earth's 1:110m outlines (public domain, through the `world-atlas` package).
   It is 3 KB, so the view needs no map library.
-- **places.** The list says what the window shows, in words: each place's
+- **places.** The list, in a popover, says what the window shows, in words: each place's
   local time and its light. The canvas is hidden from assistive tech.
 - **home.ts.** The globe starts facing roughly where the visitor is, worked
   out from their clock's offset from UTC. Nothing asks for a location.
@@ -32,8 +32,9 @@ and picking a place turns it there.
   glass to flicker. Reduced motion stops the flicker and the easing.
 - The pixel ratio is capped at 1.5.
 - The title and the line under it sit straight on the page, over the
-  window. The places are a ghost card at the bottom of the start side, closed
-  on phones. I tried one card for all of it and it looked worse. On a wide
+  window. The places open in a popover from a button at the bottom of the start
+  side. The button names the place picked. The popover stays open after a
+  pick, so several places can be tried in a row. I tried one card for all of it and it looked worse. On a wide
   page the window sits right of the middle to leave the words clear. The view
   has no stylesheet.
 

@@ -4,19 +4,20 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+// Icons
+import * as Ri from 'react-icons/ri';
+
 // Components
 import {
   Badge,
   Button,
-  Card,
-  Details,
   List,
   ListItem,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Text,
 } from 'design/components';
-
-// Hooks
-import { useResponsive } from 'design/hooks';
 
 // Utilities
 import { toLight, toSubsolar } from '@/views/experiments/daylight/sun';
@@ -40,30 +41,35 @@ type Props = {
 
 /**
  * What the window shows, in words: each place's local time and whether it
- * is day there. Picking one turns the globe to it. Closed on phones, where
- * it would cover the window.
+ * is day there. Picking one turns the globe to it. The list opens from a
+ * button, which names the place picked, so it never covers the window
+ * unasked.
  */
 const Places: React.FunctionComponent<Props> = ({ active, date, onPick }) => {
   const { i18n, t } = useTranslation('daylight');
-  const { isMobile } = useResponsive();
   const subsolar = useMemo(() => toSubsolar(date), [date]);
 
   return (
-    <Card
+    <Popover
       className={classNames(
         CLASS_NAME,
         'kicl-inset-block-end',
         'kicl-inset-inline-start',
         'kicl-position-absolute'
       )}
-      size={3}
-      variant='ghost'
     >
-      <Details
-        gap='narrow'
-        open={isMobile ? undefined : true}
-        summary={t('label', { context: 'places' })}
-      >
+      <PopoverTrigger asChild>
+        <Button
+          after={<Ri.RiArrowUpSLine aria-hidden />}
+          size='small'
+          variant='secondary'
+        >
+          {active < 0
+            ? t('label', { context: 'places' })
+            : t('place', { context: PLACES[active].context })}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent placement='block-start' variant='ghost'>
         <List autoFlow='row' gap='narrower'>
           {PLACES.map((place, index) => {
             const light = toLight(place, subsolar);
@@ -98,8 +104,8 @@ const Places: React.FunctionComponent<Props> = ({ active, date, onPick }) => {
             );
           })}
         </List>
-      </Details>
-    </Card>
+      </PopoverContent>
+    </Popover>
   );
 };
 
