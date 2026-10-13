@@ -44,6 +44,9 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   the viewer. With the sun behind the globe it is small and nearly grey, and
   the moon is large and blue. Only the colour fades, not the brightness, and only
   once one is behind the globe: side by side, both are in full colour.
+- The rays make room for the sun and the moon. A ray aimed at one stops
+  short of it, and the rays either side run on past, so they close in round
+  it. An earlier version cut a black disc out of the rays behind each.
 - The moon is drawn across from the sun. It is a sign for night, not the real
   moon's position.
 - An earlier version rested the globe on a floor with a horizon. It was

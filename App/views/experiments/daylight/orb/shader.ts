@@ -149,10 +149,7 @@ vec4 sunBody(vec2 at, vec2 grain, float pixel, vec3 tint) {
 
   colour = mix(colour, INK, edge);
 
-  /* A clear space round it, so it stands off the rays behind. */
-  float halo = 1.0 - smoothstep(BODY * 2.4, BODY * 2.4 + pixel, radius);
-
-  return vec4(mix(INK, colour, max(disc, spike)), halo);
+  return vec4(colour, max(disc, spike));
 }
 
 /* An engraved moon: a crescent, its back to the sun. */
@@ -167,12 +164,30 @@ vec4 moonBody(vec2 at, vec2 away, vec2 grain, float pixel, vec3 tint) {
   ) * crescent;
   float shade = stipple(grain, 0.55 * smoothstep(size * 0.86, size * 1.25, inner));
   vec3 colour = mix(mix(PAPER, tint, shade), tint, edge);
-  float halo = 1.0 - smoothstep(size * 1.5, size * 1.5 + pixel, outer);
-
-  return vec4(mix(INK, colour, crescent), halo);
+  return vec4(colour, crescent);
 }
 
-vec3 sky(vec2 uv, float radius, float pixel, float warmth) {
+/*
+ * How far a ray may run with a body in the way that keeps a clear space round it. A
+ * ray aimed at the body stops short of it. One that passes just beside it
+ * runs on past, so the rays close in round the body.
+ */
+float around(float to, vec2 along, vec2 centre, float clear) {
+  float reach = dot(centre, along);
+  float miss = abs(centre.x * along.y - centre.y * along.x);
+
+  if (reach <= 0.0) {
+    return to;
+  }
+
+  if (miss < clear) {
+    return min(to, reach - sqrt(clear * clear - miss * miss));
+  }
+
+  return mix(to, max(to, reach + clear * 0.5), 1.0 - smoothstep(clear, clear * 2.2, miss));
+}
+
+vec3 sky(vec2 uv, float radius, float pixel, float warmth, vec3 sunAt, vec3 moonAt) {
   vec3 colour = INK;
 
   /* Rays: red-orange and long toward the sun, blue and shorter away from it. */
@@ -182,6 +197,13 @@ vec3 sky(vec2 uv, float radius, float pixel, float warmth) {
   float across = abs(fract(sector) - 0.5) * (2.0 * PI / RAYS) * radius;
   float from = GLOBE * (1.1 + 0.12 * hash(index + 3.0));
   float to = from + (0.03 + 0.26 * seed * seed) * mix(0.55, 1.0, warmth);
+  /* The ray's own direction, so the whole of it is shaped alike. */
+  float bearing = (index + 0.5) / RAYS * 2.0 * PI - PI;
+  vec2 along = vec2(cos(bearing), sin(bearing));
+
+  to = around(to, along, sunAt.xy, sunAt.z);
+  to = around(to, along, moonAt.xy, moonAt.z);
+
   float ray = (1.0 - smoothstep(pixel * 0.5, pixel * 1.5, across)) * step(from, radius) * step(radius, to);
 
   ray *= step(hash(index + 9.0), mix(0.6, 1.0, warmth));
@@ -230,8 +252,6 @@ void main() {
   float facing = dot(normalize(uv + 0.0001), uSunSeen.xy / max(side, 0.0001));
   float warmth = smoothstep(-0.4, 0.5, facing * side + uSunSeen.z * (1.0 - side));
 
-  vec3 colour = sky(uv, radius, pixel, warmth);
-
   /*
    * The sun on the side the real one is on, the moon across from it. Each is
    * larger and more coloured the nearer it is to the viewer: with the sun
@@ -245,8 +265,21 @@ void main() {
   float moonSize = mix(1.8, 0.4, near);
 
   /* A large one stands a little closer in, so it stays off the hatching. */
-  vec4 sun = sunBody((uv - toward * (ORBIT - (sunSize - 1.0) * 0.04)) / sunSize, grain, pixel / sunSize, mix(FADED, SUNLIT, mix(0.15, 1.0, smoothstep(0.0, 0.45, near))));
-  vec4 moon = moonBody((uv + toward * (ORBIT - (moonSize - 1.0) * 0.04)) / moonSize, -toward, grain, pixel / moonSize, mix(FADED, MOONLIT, mix(0.15, 1.0, 1.0 - smoothstep(0.55, 1.0, near))));
+  vec2 sunAt = toward * (ORBIT - (sunSize - 1.0) * 0.04);
+  vec2 moonAt = -toward * (ORBIT - (moonSize - 1.0) * 0.04);
+
+  /* The rays keep clear of both: they stop short of them and close in round them. */
+  vec3 colour = sky(
+    uv,
+    radius,
+    pixel,
+    warmth,
+    vec3(sunAt, BODY * 2.45 * sunSize),
+    vec3(moonAt, BODY * 1.85 * moonSize)
+  );
+
+  vec4 sun = sunBody((uv - sunAt) / sunSize, grain, pixel / sunSize, mix(FADED, SUNLIT, mix(0.15, 1.0, smoothstep(0.0, 0.45, near))));
+  vec4 moon = moonBody((uv - moonAt) / moonSize, -toward, grain, pixel / moonSize, mix(FADED, MOONLIT, mix(0.15, 1.0, 1.0 - smoothstep(0.55, 1.0, near))));
 
   colour = mix(colour, sun.rgb, sun.a);
   colour = mix(colour, moon.rgb, moon.a);
