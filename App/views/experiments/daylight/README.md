@@ -1,9 +1,8 @@
 # Daylight
 
 `/experiments/daylight`. The Earth as an ink drawing in two colours, lit by
-where the sun is right now. Paper is day and black is night. Fine rays run
-out from the globe on the side the sun is on, and the rest of the sky has
-stars. The globe can be dragged, and picking a place turns it there.
+where the sun is right now. Paper is day and black is night. The rays round
+the globe are the only colour: red-orange toward the sun, blue away from it. The globe can be dragged, and picking a place turns it there.
 
 ## How the pieces fit
 
@@ -30,10 +29,12 @@ stars. The globe can be dragged, and picking a place turns it there.
   picture. The first version was stained glass, from an earlier reference,
   and was replaced.
 - The picture is black and paper in both themes, so the title over it is
-  always light.
+  always light. The stars, the hatching and the ground are kept faint so the
+  words read over them.
+- Only the rays are coloured, so the eye goes to which side the sun is on.
 - The title, the places button and the drawing stay inside the page's 12
-  columns. On a page wider than that the drawing sits at the column's far
-  edge, clear of the words.
+  columns. On a wide page the drawing takes at most two thirds of the column
+  and sits at its far edge, which leaves a third to the words.
 - Raw WebGL with one shader, like the music visualiser, and no three.js.
 - With the globe at rest it draws about eight frames a second, enough for the
   stars to twinkle. Reduced motion stops the twinkle and the easing.

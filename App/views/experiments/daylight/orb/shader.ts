@@ -36,6 +36,10 @@ const float RAYS = 150.0;
 const vec3 INK = vec3(0.045, 0.045, 0.05);
 const vec3 PAPER = vec3(0.95, 0.93, 0.87);
 
+/* The only colour in the drawing: the rays, toward the sun and away from it. */
+const vec3 SUNLIT = vec3(0.98, 0.42, 0.16);
+const vec3 MOONLIT = vec3(0.42, 0.6, 0.98);
+
 float hash(float n) {
   return fract(sin(n) * 43758.5453);
 }
@@ -129,30 +133,31 @@ vec3 ground(vec2 uv, vec2 grain, float horizon) {
   lines *= smoothstep(0.0, 0.06, -from.y);
 
   float shadow = 1.0 - smoothstep(0.2, 1.0, length(from * vec2(1.0, 3.4)) / (GLOBE * 1.25));
-  float haze = 0.4 * (1.0 - smoothstep(0.0, 0.07, -from.y));
+  float haze = 0.22 * (1.0 - smoothstep(0.0, 0.07, -from.y));
   /* A little grit everywhere, more under the globe and along the horizon. */
-  float dots = stipple(grain, max(max(shadow, haze), 0.012));
+  float dots = stipple(grain, max(max(shadow, haze), 0.004));
 
-  return mix(PAPER, INK, max(max(lines, dots), step(0.75, shadow)));
+  /* The lines are grey, not black, so the ground stays quiet. */
+  return mix(PAPER, INK, max(max(lines * 0.45, dots), step(0.75, shadow)));
 }
 
 vec3 sky(vec2 uv, float radius, float pixel, float warmth) {
-  float lit = 0.0;
+  vec3 colour = INK;
 
-  /* Rays: many and long toward the sun, few and short away from it. */
+  /* Rays: red-orange and long toward the sun, blue and shorter away from it. */
   float sector = (atan(uv.y, uv.x) + PI) / (2.0 * PI) * RAYS;
   float index = floor(sector);
   float seed = hash(index);
   float across = abs(fract(sector) - 0.5) * (2.0 * PI / RAYS) * radius;
   float from = GLOBE * (1.1 + 0.12 * hash(index + 3.0));
-  float to = from + (0.03 + 0.26 * seed * seed) * mix(0.3, 1.0, warmth);
+  float to = from + (0.03 + 0.26 * seed * seed) * mix(0.55, 1.0, warmth);
   float ray = (1.0 - smoothstep(pixel * 0.5, pixel * 1.5, across)) * step(from, radius) * step(radius, to);
 
-  ray *= step(hash(index + 9.0), mix(0.3, 1.0, warmth));
+  ray *= step(hash(index + 9.0), mix(0.6, 1.0, warmth));
   ray *= mix(1.0, step(0.5, fract(radius * 70.0)), step(0.75, hash(index + 5.0)));
-  lit = max(lit, ray);
+  colour = mix(colour, mix(MOONLIT, SUNLIT, warmth), ray);
 
-  /* Stars: dots, and now and then a ring round one. */
+  /* Stars: a few faint dots, and now and then a ring round one. */
   vec2 cell = floor(uv / 0.045);
   vec2 centre = (cell + 0.5 + (vec2(hash2(cell), hash2(cell + 7.0)) - 0.5) * 0.6) * 0.045;
   float kind = hash2(cell + 23.0);
@@ -161,26 +166,27 @@ vec3 sky(vec2 uv, float radius, float pixel, float warmth) {
   float star = 1.0 - smoothstep(size, size + pixel, away);
 
   star = max(star, step(0.8, kind) * (1.0 - smoothstep(pixel * 0.7, pixel * 1.7, abs(away - size * 2.6))));
-  star *= step(hash2(cell + 3.0), 0.3) * step(GLOBE * 1.2, length(centre)) * step(length(centre), 0.48);
-  star *= 0.7 + 0.3 * sin(uSeconds * (0.4 + kind) + kind * 40.0);
-  lit = max(lit, star);
+  star *= step(hash2(cell + 3.0), 0.16) * step(GLOBE * 1.2, length(centre)) * step(length(centre), 0.48);
+  star *= 0.4 + 0.15 * sin(uSeconds * (0.4 + kind) + kind * 40.0);
+  colour = mix(colour, PAPER, star);
 
-  /* Hatching fills the corners, beyond the rays. */
+  /* Hatching fills the corners, beyond the rays, faint enough to read words over. */
   float hatch = step(fract((abs(uv.x) + uv.y) * 60.0), 0.3) * smoothstep(0.5, 0.52, radius);
 
-  lit = max(lit, hatch * 0.55);
-
-  return mix(INK, PAPER, lit);
+  return mix(colour, PAPER, hatch * 0.1);
 }
 
 void main() {
   /*
-   * The drawing is as tall as the page allows. Where the page's column is
-   * wider than that, it sits at the column's far edge, clear of the words.
+   * The drawing is as tall as the page allows. On a wide page it takes at
+   * most two thirds of the page's column and sits at the column's far edge,
+   * which leaves the other third to the words.
    */
-  float shortest = min(uSize.x, uSize.y) * 0.92;
-  float room = min(uSize.x, uColumn) - shortest;
-  vec2 middle = uSize * 0.5 + vec2(max(0.0, room * 0.5), 0.0);
+  bool wide = uSize.x > uSize.y;
+  float column = min(uSize.x, uColumn);
+  float fit = min(uSize.x, uSize.y) * 0.92;
+  float shortest = wide ? min(fit, column * 0.66) : fit;
+  vec2 middle = uSize * 0.5 + vec2(wide ? (column - shortest) * 0.5 : 0.0, 0.0);
   vec2 uv = (gl_FragCoord.xy - middle) / shortest;
   float pixel = 1.0 / shortest;
   float radius = length(uv);
