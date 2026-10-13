@@ -5,9 +5,13 @@ export type Scene = {
   column: number;
   /** Index into `places` of the one picked, or -1. */
   active: number;
+  /** The light theme: the sky is paper and its marks are ink. */
+  light: boolean;
   /** Unit vectors in the globe's frame. */
   places: readonly (readonly number[])[];
   seconds: number;
+  /** Where the globe faces, as longitude from 0 to 360 and latitude. The stars go by with it. */
+  turn: readonly number[];
   /** The sun in the globe's frame, and as the viewer sees it. */
   sun: readonly number[];
   sunSeen: readonly number[];
@@ -93,11 +97,13 @@ export function createRenderer(
     active: at('uPlaceActive'),
     column: at('uColumn'),
     count: at('uPlaceCount'),
+    light: at('uLight'),
     places: at('uPlaces'),
     seconds: at('uSeconds'),
     size: at('uSize'),
     sun: at('uSun'),
     sunSeen: at('uSunSeen'),
+    turn: at('uTurn'),
     view: at('uView'),
   };
   const places = new Float32Array(MAX_PLACES * 3);
@@ -121,9 +127,11 @@ export function createRenderer(
       gl.uniform3fv(uniforms.sun, scene.sun);
       gl.uniform3fv(uniforms.sunSeen, scene.sunSeen);
       gl.uniform1f(uniforms.seconds, scene.seconds);
+      gl.uniform2fv(uniforms.turn, scene.turn);
       gl.uniform3fv(uniforms.places, places);
       gl.uniform1i(uniforms.count, Math.min(scene.places.length, MAX_PLACES));
       gl.uniform1i(uniforms.active, scene.active);
+      gl.uniform1f(uniforms.light, scene.light ? 1 : 0);
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

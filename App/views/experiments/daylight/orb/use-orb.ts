@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Partials
+import { toPlaceAt } from './pick';
 import { createRenderer } from './renderer';
 
 // Utilities
@@ -46,6 +47,10 @@ type Props = {
   centre: Coordinates;
   date: Date;
   height: number;
+  /** The light theme is on. */
+  light: boolean;
+  /** Told which place was clicked, by its index. */
+  onPick?(place: number): void;
   /** Told where the globe was left facing when a drag ends. */
   onDrop?(facing: Coordinates): void;
   places: readonly Coordinates[];
@@ -67,17 +72,37 @@ export function useOrb({
   centre,
   date,
   height,
+  light,
   onDrop,
+  onPick,
   places,
   width,
-}: Props): Handlers {
+}: Props): { handlers: Handlers; over: boolean } {
   const facing = useRef(centre);
   const target = useRef(centre);
   const drag = useRef<{ moved: boolean; x: number; y: number } | null>(null);
   const asked = useRef(centre);
-  const scene = useRef({ active, date, places });
+  const [over, setOver] = useState(false);
 
-  scene.current = { active, date, places };
+  /** The place under the pointer, or -1. */
+  const toPlace = (event: React.PointerEvent<HTMLCanvasElement>) => {
+    const { left, top } = event.currentTarget.getBoundingClientRect();
+    const style = getComputedStyle(event.currentTarget);
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+    return toPlaceAt({
+      column: parseFloat(style.getPropertyValue(COLUMN)) * rem || width,
+      height,
+      places: places.map(toVector),
+      view: toView(facing.current),
+      width,
+      x: event.clientX - left,
+      y: event.clientY - top,
+    });
+  };
+  const scene = useRef({ active, date, light, places });
+
+  scene.current = { active, date, light, places };
 
   useEffect(() => {
     asked.current = centre;
@@ -147,10 +172,15 @@ export function useOrb({
         renderer.draw({
           column: column || canvas.width,
           active: scene.current.active,
+          light: scene.current.light,
           places: scene.current.places.map(toVector),
           seconds: still.matches ? 0 : (now - start) / 1000,
           sun,
           sunSeen: toSeen(sun, view),
+          turn: [
+            ((facing.current.longitude % 360) + 360) % 360,
+            facing.current.latitude,
+          ],
           view,
         });
       };
@@ -166,13 +196,15 @@ export function useOrb({
     };
   }, [canvas, height, width]);
 
-  return {
+  const handlers: Handlers = {
     onPointerDown: (event) => {
       event.currentTarget.setPointerCapture(event.pointerId);
       drag.current = { moved: false, x: event.clientX, y: event.clientY };
     },
     onPointerMove: (event) => {
       if (!drag.current) {
+        setOver(toPlace(event) >= 0);
+
         return;
       }
 
@@ -187,7 +219,13 @@ export function useOrb({
       };
       drag.current = { moved: true, x: event.clientX, y: event.clientY };
     },
-    onPointerUp: () => {
+    onPointerUp: (event) => {
+      const place = drag.current?.moved ? -1 : toPlace(event);
+
+      if (place >= 0) {
+        onPick?.(place);
+      }
+
       if (drag.current?.moved) {
         const left = target.current;
 
@@ -202,4 +240,6 @@ export function useOrb({
       drag.current = null;
     },
   };
+
+  return { handlers, over };
 }

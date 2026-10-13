@@ -1,3 +1,5 @@
+import { COLUMN_SHARE, FIT, GLOBE, TALL_DROP, TALL_SCALE } from './layout';
+
 /** How many places the shader can mark. */
 const MAX_PLACES = 12;
 
@@ -10,11 +12,12 @@ void main() {
 `;
 
 /*
- * One ink drawing, per pixel. The globe is shaded with stipple, dark dots on
- * paper where it is day and paper dots on black where it is night. Round it,
+ * One ink drawing, per pixel, on black in the dark theme and on paper in the
+ * light one. The globe is shaded with stipple, dark dots on paper where it is
+ * day and paper dots on black where it is night, in both themes. Round it,
  * fine rays run out, red-orange toward the sun and blue away from it. A sun
  * stands on the side the real one is on and a moon on the other, and both
- * go round as the globe is turned.
+ * go round as the globe is turned. Stars and a few clouds go by with it.
  */
 const FRAGMENT = /* glsl */ `
 precision highp float;
@@ -29,10 +32,16 @@ uniform float uSeconds;
 uniform vec3 uPlaces[${MAX_PLACES}];
 uniform int uPlaceCount;
 uniform int uPlaceActive;
+uniform float uLight;
+uniform vec2 uTurn;
 
 const float PI = 3.14159265;
-const float GLOBE = 0.2;
+const float GLOBE = ${GLOBE};
 const float RAYS = 150.0;
+
+/* The stars' grid, and how many of its cells pass in one turn of the globe. */
+const float STAR = 0.045;
+const float STAR_TURN = 24.0;
 const vec3 INK = vec3(0.045, 0.045, 0.05);
 const vec3 PAPER = vec3(0.95, 0.93, 0.87);
 
@@ -42,6 +51,15 @@ const vec3 MOONLIT = vec3(0.42, 0.6, 0.98);
 
 /* What the sun's and the moon's colour fades to when they are far: a warm grey. */
 const vec3 FADED = vec3(0.6, 0.59, 0.56);
+
+/* What the sky is drawn on, and what its stars, hatching and outlines are drawn in. */
+vec3 ground() {
+  return mix(INK, PAPER, uLight);
+}
+
+vec3 mark() {
+  return mix(PAPER, INK, uLight);
+}
 
 float hash(float n) {
   return fract(sin(n) * 43758.5453);
@@ -188,7 +206,7 @@ float around(float to, vec2 along, vec2 centre, float clear) {
 }
 
 vec3 sky(vec2 uv, float radius, float pixel, float warmth, vec3 sunAt, vec3 moonAt) {
-  vec3 colour = INK;
+  vec3 colour = ground();
 
   /* Rays: red-orange and long toward the sun, blue and shorter away from it. */
   float sector = (atan(uv.y, uv.x) + PI) / (2.0 * PI) * RAYS;
@@ -208,25 +226,96 @@ vec3 sky(vec2 uv, float radius, float pixel, float warmth, vec3 sunAt, vec3 moon
 
   ray *= step(hash(index + 9.0), mix(0.6, 1.0, warmth));
   ray *= mix(1.0, step(0.5, fract(radius * 70.0)), step(0.75, hash(index + 5.0)));
-  colour = mix(colour, mix(MOONLIT, SUNLIT, warmth), ray);
+  /* On paper the rays are a little darker, or the blue ones are lost. */
+  colour = mix(colour, mix(MOONLIT, SUNLIT, warmth) * mix(1.0, 0.82, uLight), ray);
 
-  /* Stars: a few faint dots, and now and then a ring round one. */
-  vec2 cell = floor(uv / 0.045);
-  vec2 centre = (cell + 0.5 + (vec2(hash2(cell), hash2(cell + 7.0)) - 0.5) * 0.6) * 0.045;
+  /*
+   * Stars: a few faint dots, and now and then a ring round one. They go by as
+   * the globe is turned, and after a whole turn the same ones are back.
+   */
+  vec2 drift = uTurn / 360.0 * STAR_TURN * STAR;
+  vec2 place = floor((uv + drift) / STAR);
+  vec2 cell = vec2(mod(place.x, STAR_TURN), place.y);
+  vec2 centre = (place + 0.5 + (vec2(hash2(cell), hash2(cell + 7.0)) - 0.5) * 0.6) * STAR - drift;
   float kind = hash2(cell + 23.0);
   float away = length(uv - centre);
-  float size = 0.045 * mix(0.05, 0.16, hash2(cell + 31.0));
+  float size = STAR * mix(0.05, 0.16, hash2(cell + 31.0));
   float star = 1.0 - smoothstep(size, size + pixel, away);
 
   star = max(star, step(0.8, kind) * (1.0 - smoothstep(pixel * 0.7, pixel * 1.7, abs(away - size * 2.6))));
-  star *= step(hash2(cell + 3.0), 0.16) * step(GLOBE * 1.2, length(centre)) * step(length(centre), 0.48);
+  /* They fade in and out at the globe and at the hatching, so none appears at once as it goes by. */
+  float outward = length(centre);
+
+  star *= step(hash2(cell + 3.0), 0.16) * smoothstep(GLOBE * 1.15, GLOBE * 1.4, outward) * (1.0 - smoothstep(0.43, 0.5, outward));
   star *= 0.4 + 0.15 * sin(uSeconds * (0.4 + kind) + kind * 40.0);
-  colour = mix(colour, PAPER, star);
+  colour = mix(colour, mark(), star);
 
   /* Hatching fills the corners, beyond the rays, faint enough to read words over. */
   float hatch = step(fract((abs(uv.x) + abs(uv.y)) * 60.0), 0.3) * smoothstep(0.5, 0.52, radius);
 
-  return mix(colour, PAPER, hatch * 0.1);
+  return mix(colour, mark(), hatch * 0.1);
+}
+
+/* The clouds' grid, and how many of its cells pass in one turn of the globe. */
+const vec2 CLOUD = vec2(0.42, 0.3);
+const float CLOUD_TURN = 5.0;
+
+/* How far outside a hump of a cloud a point is: a circle sitting on the base. */
+float hump(vec2 at, float along, float lift, float size) {
+  return length(at - vec2(along, lift)) - size;
+}
+
+/* One of three clouds: a plain one, a tall one and a long low one. */
+float humps(vec2 at, float kind) {
+  if (kind < 0.34) {
+    return min(
+      min(hump(at, -0.5, 0.0, 0.34), hump(at, -0.1, 0.12, 0.5)),
+      min(hump(at, 0.35, 0.04, 0.4), hump(at, 0.7, 0.0, 0.22))
+    );
+  }
+
+  if (kind < 0.67) {
+    return min(
+      min(hump(at, -0.6, 0.0, 0.24), hump(at, -0.25, 0.08, 0.4)),
+      min(hump(at, 0.15, 0.2, 0.5), hump(at, 0.6, 0.02, 0.3))
+    );
+  }
+
+  return min(
+    min(hump(at, -0.72, 0.0, 0.2), hump(at, -0.38, 0.03, 0.32)),
+    min(min(hump(at, 0.02, 0.0, 0.3), hump(at, 0.4, 0.06, 0.36)), hump(at, 0.76, 0.0, 0.18))
+  );
+}
+
+/*
+ * A few clouds over the whole drawing, the globe too: a flat base under a
+ * row of humps, in paper with an ink outline and a little stipple at the
+ * base. They are nearer than the stars, so they go by faster as the globe is
+ * turned.
+ */
+vec4 cloud(vec2 uv, vec2 grain, float pixel) {
+  vec2 drift = uTurn / 360.0 * CLOUD_TURN * CLOUD;
+  vec2 place = floor((uv + drift) / CLOUD);
+  vec2 cell = vec2(mod(place.x, CLOUD_TURN), place.y);
+  vec2 centre = (place + 0.5 + (vec2(hash2(cell + 51.0), hash2(cell + 57.0)) - 0.5) * 0.3) * CLOUD - drift;
+
+  /* A cloud grows from nothing at the hatching, so none is cut off or fades to grey. */
+  float grown = 1.0 - smoothstep(0.4, 0.54, length(centre));
+  float width = mix(0.1, 0.16, hash2(cell + 61.0)) * grown;
+  vec2 at = (uv - centre) / max(width, 0.0001);
+
+  /* Half of them face the other way. */
+  at.x *= hash2(cell + 67.0) < 0.5 ? -1.0 : 1.0;
+
+  float edge = humps(at, hash2(cell + 73.0));
+  float unit = pixel / max(width, 0.0001);
+  float body = (1.0 - smoothstep(0.0, unit, edge)) * step(0.0, at.y);
+  float line = max(1.0 - smoothstep(unit * 1.5, unit * 2.5, abs(edge)), 1.0 - smoothstep(unit * 1.5, unit * 2.5, at.y));
+  float shade = stipple(grain, 0.3 * (1.0 - smoothstep(0.0, 0.22, at.y)));
+  /* On paper the cloud is white, so it stands off the sky as it does on black. */
+  vec3 colour = mix(mix(mix(PAPER, vec3(1.0), uLight), INK, shade), INK, line);
+
+  return vec4(colour, body * step(hash2(cell + 71.0), 0.6) * step(0.001, grown));
 }
 
 void main() {
@@ -237,14 +326,14 @@ void main() {
    */
   bool wide = uSize.x > uSize.y;
   float column = min(uSize.x, uColumn);
-  float fit = min(uSize.x, uSize.y) * 0.92;
+  float fit = min(uSize.x, uSize.y) * ${FIT};
 
   /*
    * On a tall page, a phone, the drawing is a little wider than the page, so
    * the globe is larger, and it sits below the middle, under the words.
    */
-  float shortest = wide ? min(fit, column * 0.66) : fit * 1.2;
-  vec2 middle = uSize * 0.5 + (wide ? vec2((column - shortest) * 0.5, 0.0) : vec2(0.0, -uSize.y * 0.09));
+  float shortest = wide ? min(fit, column * ${COLUMN_SHARE}) : fit * ${TALL_SCALE};
+  vec2 middle = uSize * 0.5 + (wide ? vec2((column - shortest) * 0.5, 0.0) : vec2(0.0, -uSize.y * ${TALL_DROP}));
   vec2 uv = (gl_FragCoord.xy - middle) / shortest;
   float pixel = 1.0 / shortest;
   float radius = length(uv);
@@ -293,8 +382,13 @@ void main() {
     colour = globe(uv, grain, pixel);
   }
 
-  /* The edge of the globe, in paper. */
-  colour = mix(colour, PAPER, 1.0 - smoothstep(pixel, pixel * 2.5, abs(radius - GLOBE)));
+  /* The edge of the globe. */
+  colour = mix(colour, mark(), 1.0 - smoothstep(pixel, pixel * 2.5, abs(radius - GLOBE)));
+
+  /* The clouds are over everything, the globe too. */
+  vec4 clouds = cloud(uv, grain, pixel);
+
+  colour = mix(colour, clouds.rgb, clouds.a);
   gl_FragColor = vec4(colour, 1.0);
 }
 `;
