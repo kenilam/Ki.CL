@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
+
+// Routes
+import { Navigate, useParams } from 'design/router';
 
 // Components
 import { Frame, Layout } from 'design/components';
@@ -15,20 +18,24 @@ import { Places } from './places';
 import { Words } from './words';
 
 // Utilities
-import { toHome } from './home';
-import type { Coordinates } from './sun';
+import { toNearestHere } from './nearest';
 
 // Constants
-import { CLASS_NAME, PLACES } from './constants';
+import { CLASS_NAME, PARAM, PLACES, toPath, toSlug } from './constants';
 
 /**
- * The Earth as an ink drawing, lit by where the sun is now. The
- * globe starts facing about where the visitor is; picking a place turns it.
+ * The Earth as an ink drawing, lit by where the sun is now. The address
+ * names the place the globe faces. With no place, or one it does not know,
+ * it goes to the place nearest the visitor.
  */
 const Daylight: React.FunctionComponent = () => {
   const now = useNow();
-  const [active, setActive] = useState(-1);
-  const [centre, setCentre] = useState<Coordinates>(() => toHome(now));
+  const { [PARAM]: slug } = useParams();
+  const active = PLACES.findIndex((place) => toSlug(place) === slug);
+
+  if (active < 0) {
+    return <Navigate replace to={toPath(toNearestHere(now))} />;
+  }
 
   return (
     <Layout autoFlow='row' gap='none'>
@@ -44,17 +51,14 @@ const Daylight: React.FunctionComponent = () => {
               'kicl-position-relative'
             )}
           >
-            <Orb active={active} centre={centre} date={now} places={PLACES} />
-            <Words />
-            <Places
+            <Orb
               active={active}
+              centre={PLACES[active]}
               date={now}
-              onPick={(index) => {
-                setActive(index);
-                /* A new object each time, so picking the same place turns back to it. */
-                setCentre({ ...PLACES[index] });
-              }}
+              places={PLACES}
             />
+            <Words />
+            <Places active={active} date={now} />
           </article>
         </Layout>
       </Frame>

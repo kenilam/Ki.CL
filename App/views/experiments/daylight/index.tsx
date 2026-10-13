@@ -7,7 +7,7 @@ import { Route } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Constants
-import { PATH } from './constants';
+import { PARAM, PATH } from './constants';
 
 const Contents = React.lazy(async () => {
   const { Daylight } = await import('./contents');
@@ -21,6 +21,16 @@ const Lazy: React.FunctionComponent = () => (
   </Suspense>
 );
 
-const Daylight = <Route path={PATH} element={<Lazy />} />;
+/**
+ * `/experiments/daylight/:place`. The place in the address is the one the
+ * globe faces, so a link to it opens the same view. The bare path goes to
+ * the place nearest the visitor.
+ */
+const Daylight = (
+  <Route path={PATH}>
+    <Route index element={<Lazy />} />
+    <Route path={`:${PARAM}`} element={<Lazy />} />
+  </Route>
+);
 
 export { PATH, Daylight };

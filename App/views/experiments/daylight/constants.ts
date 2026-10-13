@@ -3,6 +3,9 @@ import { PATH as EXPERIMENTS } from '@/views/experiments/constants';
 /** Route segment for this view. */
 const PATH = 'daylight';
 
+/** The route parameter that names the place the globe faces. */
+const PARAM = 'place';
+
 /** Root of every class this view owns. */
 const CLASS_NAME = 'kicl--views--experiments--daylight';
 
@@ -84,6 +87,14 @@ const PLACES: readonly Place[] = [
   },
 ];
 
-const toPath = (): string => `/${EXPERIMENTS}/${PATH}`;
+/** A place's segment of the address: `hong_kong` is `/hong-kong`. */
+const toSlug = ({ context }: Pick<Place, 'context'>): string =>
+  context.replaceAll('_', '-');
 
-export { CLASS_NAME, PATH, PLACES, TICK_MS, toPath };
+/** The view, or the view facing a place. The view alone goes to the nearest place. */
+const toPath = (place?: Pick<Place, 'context'>): string =>
+  place
+    ? `/${EXPERIMENTS}/${PATH}/${toSlug(place)}`
+    : `/${EXPERIMENTS}/${PATH}`;
+
+export { CLASS_NAME, PARAM, PATH, PLACES, TICK_MS, toPath, toSlug };

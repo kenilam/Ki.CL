@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import { Orb } from '@/views/experiments/daylight/orb';
 
 // Utilities
-import { toHome } from '@/views/experiments/daylight/home';
+import { toNearestHere } from '@/views/experiments/daylight/nearest';
 
 /** The drawing with no places marked, for the experiments home. */
 const Plate: React.FunctionComponent = () => {
   const [date] = useState(() => new Date());
-  const [centre] = useState(() => toHome(date));
+  const [centre] = useState(() => toNearestHere(date));
 
   return <Orb active={-1} centre={centre} date={date} places={[]} />;
 };

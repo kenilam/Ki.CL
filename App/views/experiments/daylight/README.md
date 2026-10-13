@@ -1,6 +1,6 @@
 # Daylight
 
-`/experiments/daylight`. The Earth as an ink drawing in two colours, lit by
+`/experiments/daylight/:place`. The Earth as an ink drawing in two colours, lit by
 where the sun is right now. Paper is day and black is night. The rays round
 the globe are red-orange toward the sun and blue away from it. A sun stands
 on the side the real one is on and a moon across from it, and both go round
@@ -21,8 +21,13 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
 - **places.** A button under the title opens a popover with each place's local
   time and its light. That list says in words what the drawing shows, so the
   canvas is hidden from assistive tech.
-- **home.ts.** The globe starts facing roughly where the visitor is, worked
-  out from their clock's offset from UTC. Nothing asks for a location.
+- **The address.** The place in the address is the one the globe faces, so
+  a link opens the same view and back and forward work. Each row of the list
+  is a link. The bare path, or a place it does not know, goes to the nearest
+  place.
+- **nearest.ts.** The nearest place is the one in the visitor's time zone,
+  or else the one nearest the longitude their clock's offset from UTC stands
+  for. Nothing asks for a location.
 
 ## Decisions
 
@@ -47,7 +52,8 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   stars to twinkle. Reduced motion stops the twinkle and the easing.
 - The pixel ratio is capped at 1.5.
 - The popover stays open after a pick, so several places can be tried in a
-  row. The view has no stylesheet.
+  row. Picking the place already in the address does not turn a dragged
+  globe back to it. The view has no stylesheet.
 
 ## Verified
 
