@@ -18,7 +18,7 @@ import land from './land.png';
 /** Retina is capped; every pixel runs the whole shader. */
 const MAX_PIXEL_RATIO = 1.5;
 
-/** With the globe at rest only the glass's flicker changes, and that needs few frames. */
+/** With the globe at rest only the stars' twinkle changes, and that needs few frames. */
 const REST_INTERVAL_MS = 120;
 
 /** Degrees from where it was asked to face at which the globe counts as at rest. */
@@ -31,6 +31,9 @@ const EASE = 0.08;
 
 /** Degrees the globe turns for a drag across its own width. */
 const DRAG_DEGREES = 180;
+
+/** The custom property that holds the page's width, in rem. */
+const COLUMN = '--kicl-columns-12';
 
 /** The poles stay out of the middle, where the map folds. */
 const MAX_LATITUDE = 70;
@@ -53,10 +56,10 @@ type Handlers = Pick<
 >;
 
 /**
- * Draws the window into `canvas` and turns the globe: eased toward `centre`
+ * Draws the picture into `canvas` and turns the globe: eased toward `centre`
  * when that changes, and by hand while the pointer drags it.
  */
-export function useGlass({
+export function useOrb({
   active,
   canvas,
   centre,
@@ -96,6 +99,13 @@ export function useGlass({
       const ratio = Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
       const still = window.matchMedia(REDUCED_MOTION);
       const start = performance.now();
+      const rem = parseFloat(
+        getComputedStyle(document.documentElement).fontSize
+      );
+      const column =
+        parseFloat(getComputedStyle(canvas).getPropertyValue(COLUMN)) *
+        rem *
+        ratio;
 
       renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));
       dispose = renderer.dispose;
@@ -130,6 +140,7 @@ export function useGlass({
         const sun = toVector(toSubsolar(scene.current.date));
 
         renderer.draw({
+          column: column || canvas.width,
           active: scene.current.active,
           places: scene.current.places.map(toVector),
           seconds: still.matches ? 0 : (now - start) / 1000,

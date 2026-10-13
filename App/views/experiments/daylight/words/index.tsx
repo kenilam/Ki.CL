@@ -19,7 +19,7 @@ import {
 
 const CLASS_NAME = `${VIEW}__words`;
 
-/** The page's header, over the window: the way back, the title and a line about it. */
+/** The page's header, over the drawing: the way back, the title and a line about it. */
 const Words: React.FunctionComponent = () => {
   const { t } = useTranslation('daylight');
   const { t: common } = useTranslation();
@@ -34,7 +34,10 @@ const Words: React.FunctionComponent = () => {
       <header
         className={classNames(
           CLASS_NAME,
-          'kicl-max-inline-size-columns-4',
+          'kicl-color-white',
+          'kicl-inline-size-full',
+          'kicl-margin-inline-auto',
+          'kicl-max-inline-size-columns-12',
           'kicl-padding-block-start-header',
           'kicl-padding-inline-frame',
           'kicl-pointer-events-none',
@@ -51,7 +54,9 @@ const Words: React.FunctionComponent = () => {
         <Heading className='kicl-font-size-huge' dense is='h1'>
           {common('experiment', { context: 'daylight' })}
         </Heading>
-        <Text is='p'>{t('lede')}</Text>
+        <Text className='kicl-max-inline-size-columns-4' is='p'>
+          {t('lede')}
+        </Text>
       </header>
     </Layout>
   );

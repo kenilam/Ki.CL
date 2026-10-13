@@ -1,6 +1,8 @@
 import { FRAGMENT, MAX_PLACES, VERTEX } from './shader';
 
 export type Scene = {
+  /** The page's column in canvas pixels; the drawing stays inside it. */
+  column: number;
   /** Index into `places` of the one picked, or -1. */
   active: number;
   /** Unit vectors in the globe's frame. */
@@ -38,7 +40,7 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
   return shader;
 }
 
-/** The window's program, a quad to draw it on, and the land as a texture. */
+/** The drawing's program, a quad to draw it on, and the land as a texture. */
 export function createRenderer(
   canvas: HTMLCanvasElement,
   land: HTMLImageElement
@@ -89,6 +91,7 @@ export function createRenderer(
   const at = (name: string) => gl.getUniformLocation(program, name);
   const uniforms = {
     active: at('uPlaceActive'),
+    column: at('uColumn'),
     count: at('uPlaceCount'),
     places: at('uPlaces'),
     seconds: at('uSeconds'),
@@ -113,6 +116,7 @@ export function createRenderer(
         .forEach((place, index) => places.set(place, index * 3));
 
       gl.uniform2f(uniforms.size, canvas.width, canvas.height);
+      gl.uniform1f(uniforms.column, scene.column);
       gl.uniformMatrix3fv(uniforms.view, false, scene.view);
       gl.uniform3fv(uniforms.sun, scene.sun);
       gl.uniform3fv(uniforms.sunSeen, scene.sunSeen);

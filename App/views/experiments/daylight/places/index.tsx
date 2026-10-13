@@ -40,9 +40,9 @@ type Props = {
 };
 
 /**
- * What the window shows, in words: each place's local time and whether it
+ * What the drawing shows, in words: each place's local time and whether it
  * is day there. Picking one turns the globe to it. The list opens from a
- * button, which names the place picked, so it never covers the window
+ * button, which names the place picked, so it never covers the drawing
  * unasked.
  */
 const Places: React.FunctionComponent<Props> = ({ active, date, onPick }) => {
@@ -53,9 +53,12 @@ const Places: React.FunctionComponent<Props> = ({ active, date, onPick }) => {
     <Popover
       className={classNames(
         CLASS_NAME,
-        'kicl-inset-block-end',
-        'kicl-inset-inline-start',
-        'kicl-position-absolute'
+        'kicl-inline-size-full',
+        'kicl-margin-inline-auto',
+        'kicl-max-inline-size-columns-12',
+        'kicl-padding-block-end-wide',
+        'kicl-padding-inline-frame',
+        'kicl-position-relative'
       )}
     >
       <PopoverTrigger asChild>

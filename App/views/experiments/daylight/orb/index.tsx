@@ -5,26 +5,23 @@ import classNames from 'classnames';
 
 // Hooks
 import { useResizeObserver } from 'design/hooks';
-import { useGlass } from './use-glass';
+import { useOrb } from './use-orb';
 
 // Constants
 import { CLASS_NAME as VIEW } from '@/views/experiments/daylight/constants';
 
-const CLASS_NAME = `${VIEW}__glass`;
+const CLASS_NAME = `${VIEW}__orb`;
 
-type Props = Omit<
-  Parameters<typeof useGlass>[0],
-  'canvas' | 'height' | 'width'
->;
+type Props = Omit<Parameters<typeof useOrb>[0], 'canvas' | 'height' | 'width'>;
 
 /**
- * The window: a canvas the size of the view, drawn by one shader. It can be
+ * The drawing: a canvas the size of the view, drawn by one shader. It can be
  * dragged to turn the globe. What it shows is also in the list of places, so
  * it is hidden from assistive tech.
  */
-const Glass: React.FunctionComponent<Props> = (props) => {
+const Orb: React.FunctionComponent<Props> = (props) => {
   const { node, rect } = useResizeObserver<HTMLCanvasElement>();
-  const handlers = useGlass({
+  const handlers = useOrb({
     ...props,
     canvas: node.current,
     height: rect?.height ?? 0,
@@ -49,4 +46,4 @@ const Glass: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-export { Glass };
+export { Orb };

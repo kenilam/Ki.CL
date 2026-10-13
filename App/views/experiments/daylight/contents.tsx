@@ -10,7 +10,7 @@ import { Frame, Layout } from 'design/components';
 import { useNow } from './use-now';
 
 // Partials
-import { Glass } from './glass';
+import { Orb } from './orb';
 import { Places } from './places';
 import { Words } from './words';
 
@@ -22,7 +22,7 @@ import type { Coordinates } from './sun';
 import { CLASS_NAME, PLACES } from './constants';
 
 /**
- * The Earth as a stained-glass window, lit by where the sun is now. The
+ * The Earth as an ink drawing, lit by where the sun is now. The
  * globe starts facing about where the visitor is; picking a place turns it.
  */
 const Daylight: React.FunctionComponent = () => {
@@ -32,21 +32,24 @@ const Daylight: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='none'>
-      {/* The frame clips the window to the page. */}
+      {/* The frame clips the drawing to the page. */}
       <Frame grow hold>
-        <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
-          <Glass active={active} centre={centre} date={now} places={PLACES} />
-          <Words />
-          <Places
-            active={active}
-            date={now}
-            onPick={(index) => {
-              setActive(index);
-              /* A new object each time, so picking the same place turns back to it. */
-              setCentre({ ...PLACES[index] });
-            }}
-          />
-        </article>
+        {/* The words go to the top and the places to the bottom. */}
+        <Layout alignContent='space-between' autoFlow='row'>
+          <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+            <Orb active={active} centre={centre} date={now} places={PLACES} />
+            <Words />
+            <Places
+              active={active}
+              date={now}
+              onPick={(index) => {
+                setActive(index);
+                /* A new object each time, so picking the same place turns back to it. */
+                setCentre({ ...PLACES[index] });
+              }}
+            />
+          </article>
+        </Layout>
       </Frame>
     </Layout>
   );

@@ -30,7 +30,7 @@ export function toVector({ latitude, longitude }: Coordinates): Vector {
 
 /**
  * The point the sun is directly above, by NOAA's low-accuracy series. It is
- * right to about a degree, which is less than a pane of the glass.
+ * right to about a degree, which is less than the drawing can show.
  */
 export function toSubsolar(date: Date): Coordinates {
   const start = Date.UTC(date.getUTCFullYear(), 0, 1);
