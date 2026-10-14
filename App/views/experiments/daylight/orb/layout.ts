@@ -13,7 +13,7 @@ const FIT = 0.92;
 const COLUMN_SHARE = 0.66;
 
 /** On a tall page the drawing is this much larger, and this far below the middle. */
-const TALL_SCALE = 1.2;
+const TALL_SCALE = 1.08;
 const TALL_DROP = 0.09;
 
 type Page = {
