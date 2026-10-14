@@ -35,6 +35,7 @@ uniform int uPlaceActive;
 uniform float uLight;
 uniform vec2 uTurn;
 uniform float uDrop;
+uniform float uStretch;
 
 const float PI = 3.14159265;
 const float GLOBE = ${GLOBE};
@@ -325,9 +326,11 @@ void main() {
    * most two thirds of the page's column and sits at the column's far edge,
    * which leaves the other third to the words.
    */
-  bool wide = uSize.x > uSize.y;
+  /* The canvas can be taller than what is seen of it; the page's shape is read from that part. */
+  float seen = uSize.y / uStretch;
+  bool wide = uSize.x > seen;
   float column = min(uSize.x, uColumn);
-  float fit = min(uSize.x, uSize.y) * ${FIT};
+  float fit = min(uSize.x, seen) * ${FIT};
 
   /*
    * On a tall page, a phone, the drawing is a little wider than the page, so

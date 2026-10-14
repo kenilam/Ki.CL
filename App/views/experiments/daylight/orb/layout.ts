@@ -27,14 +27,26 @@ type Page = {
   /** Used in place of `TALL_DROP`. Less than nothing lifts the drawing above the middle. */
   drop?: number;
   height: number;
+  /**
+   * How many times taller the canvas is than the part of it that is seen.
+   * The page's shape and the room for the drawing are read from that part.
+   */
+  stretch?: number;
   width: number;
 };
 
 /** The drawing's height and its middle, measured from the page's top left. */
-function toFrame({ column, drop = TALL_DROP, height, width }: Page) {
-  const wide = width > height;
+function toFrame({
+  column,
+  drop = TALL_DROP,
+  height,
+  stretch = 1,
+  width,
+}: Page) {
+  const seen = height / stretch;
+  const wide = width > seen;
   const within = Math.min(width, column);
-  const fit = Math.min(width, height) * FIT;
+  const fit = Math.min(width, seen) * FIT;
   const size = wide ? Math.min(fit, within * COLUMN_SHARE) : fit * TALL_SCALE;
 
   return {
