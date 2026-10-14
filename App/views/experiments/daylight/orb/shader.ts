@@ -1,4 +1,4 @@
-import { COLUMN_SHARE, FIT, GLOBE, TALL_DROP, TALL_SCALE } from './layout';
+import { COLUMN_SHARE, FIT, GLOBE, TALL_SCALE } from './layout';
 
 /** How many places the shader can mark. */
 const MAX_PLACES = 12;
@@ -34,6 +34,8 @@ uniform int uPlaceCount;
 uniform int uPlaceActive;
 uniform float uLight;
 uniform vec2 uTurn;
+uniform float uDrop;
+uniform float uStretch;
 
 const float PI = 3.14159265;
 const float GLOBE = ${GLOBE};
@@ -324,16 +326,18 @@ void main() {
    * most two thirds of the page's column and sits at the column's far edge,
    * which leaves the other third to the words.
    */
-  bool wide = uSize.x > uSize.y;
+  /* The canvas can be taller than what is seen of it; the page's shape is read from that part. */
+  float seen = uSize.y / uStretch;
+  bool wide = uSize.x > seen;
   float column = min(uSize.x, uColumn);
-  float fit = min(uSize.x, uSize.y) * ${FIT};
+  float fit = min(uSize.x, seen) * ${FIT};
 
   /*
    * On a tall page, a phone, the drawing is a little wider than the page, so
    * the globe is larger, and it sits below the middle, under the words.
    */
   float shortest = wide ? min(fit, column * ${COLUMN_SHARE}) : fit * ${TALL_SCALE};
-  vec2 middle = uSize * 0.5 + (wide ? vec2((column - shortest) * 0.5, 0.0) : vec2(0.0, -uSize.y * ${TALL_DROP}));
+  vec2 middle = uSize * 0.5 + (wide ? vec2((column - shortest) * 0.5, 0.0) : vec2(0.0, -uSize.y * uDrop));
   vec2 uv = (gl_FragCoord.xy - middle) / shortest;
   float pixel = 1.0 / shortest;
   float radius = length(uv);
