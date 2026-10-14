@@ -10,6 +10,7 @@ import { Navigate, useNavigate, useParams } from 'design/router';
 import { Frame, Layout } from 'design/components';
 
 // Hooks
+import { useArrows } from './use-arrows';
 import { useNow } from './use-now';
 
 // Partials
@@ -36,6 +37,8 @@ const Daylight: React.FunctionComponent = () => {
   const active = PLACES.findIndex((place) => toSlug(place) === slug);
 
   const subsolar = toSubsolar(now);
+
+  useArrows((place) => navigate(toPath(place)));
 
   if (active < 0) {
     return <Navigate replace to={toPath(toNearestHere(now))} />;

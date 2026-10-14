@@ -67,6 +67,11 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   faster than the stars, so they read as nearer. They are drawn over
   everything, the globe too, and come in three shapes. One grows from
   nothing at the corner hatching, so none is cut off there.
+- The arrow keys go to the next place that way, as the globe is seen: right
+  is east and up is north. The nearest place wins, and one off the arrow's
+  line counts as further the more it is off (`toward.ts`). The keys are
+  heard on the page, since the canvas cannot take focus, and are left alone
+  in a field and in the list of places.
 - A place's mark on the globe can be clicked, and goes to that place. The
   page works out which mark is under the pointer from the same layout numbers
   the shader draws with (`orb/layout.ts`), so the two cannot drift apart. The
