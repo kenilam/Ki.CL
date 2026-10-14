@@ -73,7 +73,9 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   canvas is hidden from assistive tech; the list of places is the way in by
   keyboard.
 - Letting go of a dragged globe settles it on the nearest place, by going to
-  that place's address.
+  that place's address. It waits 0.7 seconds first, and taking hold of the
+  globe again in that time cancels it, so a turn made in several drags
+  navigates once.
 - The title runs from the moon's blue to the sun's orange, toward where the
   sun is from the place faced. No utility clips a gradient to text, so
   `words/styles.scss` holds that one rule. Everything else is components and
