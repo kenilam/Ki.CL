@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // Partials
 import { TALL_DROP } from './layout';
@@ -133,8 +133,19 @@ export function useOrb({
 
   useEffect(() => () => window.clearTimeout(settling.current), []);
 
+  /*
+   * The size is kept in a ref so the renderer, made once per canvas, can be
+   * fitted to it on each change without being made again. Remaking it on a
+   * resize meant the land loaded and the shader compiled afresh while the
+   * last picture stretched to the new box.
+   */
+  const size = useRef({ height, width });
+  const fit = useRef<(() => void) | null>(null);
+
+  size.current = { height, width };
+
   useEffect(() => {
-    if (!canvas || !width || !height) {
+    if (!canvas) {
       return;
     }
 
@@ -161,14 +172,11 @@ export function useOrb({
         rem *
         ratio;
 
-      renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));
       dispose = renderer.dispose;
 
       let drawn = -Infinity;
 
-      const loop = (now: number) => {
-        frame = window.requestAnimationFrame(loop);
-
+      const draw = (now: number, forced: boolean) => {
         const { latitude, longitude } = facing.current;
         /* The short way round, so Tokyo to Los Angeles crosses the Pacific. */
         const turn =
@@ -179,7 +187,7 @@ export function useOrb({
           Math.abs(turn) < REST_DEGREES &&
           Math.abs(target.current.latitude - latitude) < REST_DEGREES;
 
-        if (resting && now - drawn < REST_INTERVAL_MS) {
+        if (!forced && resting && now - drawn < REST_INTERVAL_MS) {
           return;
         }
 
@@ -213,16 +221,38 @@ export function useOrb({
         });
       };
 
+      /* Fits the drawing to the canvas's box and draws it at once, so nothing stretches. */
+      fit.current = () => {
+        const { height, width } = size.current;
+
+        if (width && height) {
+          renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));
+          draw(performance.now(), true);
+        }
+      };
+      fit.current();
+
+      const loop = (now: number) => {
+        frame = window.requestAnimationFrame(loop);
+        draw(now, false);
+      };
+
       frame = window.requestAnimationFrame(loop);
     };
     picture.src = land;
 
     return () => {
       cancelled = true;
+      fit.current = null;
       window.cancelAnimationFrame(frame);
       dispose();
     };
-  }, [canvas, height, width]);
+  }, [canvas]);
+
+  /* Before the browser paints the new box, so the last picture is never seen stretched to it. */
+  useLayoutEffect(() => {
+    fit.current?.();
+  }, [height, width]);
 
   const handlers: Handlers = {
     onPointerDown: (event) => {

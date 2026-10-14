@@ -59,6 +59,9 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   middle, under the words. On the experiments home the words are at the
   foot of the panel, so there it sits above the middle.
 - Raw WebGL with one shader, like the music visualiser, and no three.js.
+  The renderer is made once per canvas and refitted on a resize before the
+  browser paints. Remaking it on each resize reloaded the land and
+  recompiled the shader while the last picture stretched to the new box.
 - With the globe at rest it draws about eight frames a second, enough for the
   stars to twinkle. Reduced motion stops the twinkle and the easing.
 - The pixel ratio is capped at 1.5.
