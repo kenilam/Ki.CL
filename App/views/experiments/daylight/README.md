@@ -56,7 +56,8 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   columns. On a wide page the drawing takes at most two thirds of the column
   and sits at its far edge, which leaves a third to the words. On a
   phone the drawing is a little wider than the page and sits below the
-  middle, under the words.
+  middle, under the words. On the experiments home the words are at the
+  foot of the panel, so there it sits above the middle.
 - Raw WebGL with one shader, like the music visualiser, and no three.js.
 - With the globe at rest it draws about eight frames a second, enough for the
   stars to twinkle. Reduced motion stops the twinkle and the easing.
@@ -66,15 +67,24 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   faster than the stars, so they read as nearer. They are drawn over
   everything, the globe too, and come in three shapes. One grows from
   nothing at the corner hatching, so none is cut off there.
+- The arrow keys go to the next place that way, as the globe is seen: right
+  is east and up is north. The nearest place wins, and one off the arrow's
+  line counts as further the more it is off (`toward.ts`). The keys are
+  heard on the page, since the canvas cannot take focus, and are left alone
+  in a field and in the list of places.
 - A place's mark on the globe can be clicked, and goes to that place. The
   page works out which mark is under the pointer from the same layout numbers
   the shader draws with (`orb/layout.ts`), so the two cannot drift apart. The
   canvas is hidden from assistive tech; the list of places is the way in by
   keyboard.
 - Letting go of a dragged globe settles it on the nearest place, by going to
-  that place's address.
+  that place's address. It waits 0.7 seconds first, and taking hold of the
+  globe again in that time cancels it, so a turn made in several drags
+  navigates once.
 - The title runs from the moon's blue to the sun's orange, toward where the
-  sun is from the place faced. No utility clips a gradient to text, so
+  sun is from where the globe faces. It follows the globe as it turns, so
+  it changes through a drag and not only when a place is reached. The draw
+  loop sets two custom properties on the article for it. No utility clips a gradient to text, so
   `words/styles.scss` holds that one rule. Everything else is components and
   utilities.
 - In the list, each place's mark is orange by day, blue by night and red in

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Partials
+import { TALL_DROP } from './layout';
 import { toPlaceAt } from './pick';
 import { createRenderer } from './renderer';
 
@@ -21,6 +22,9 @@ const MAX_PIXEL_RATIO = 1.5;
 
 /** With the globe at rest only the stars' twinkle changes, and that needs few frames. */
 const REST_INTERVAL_MS = 120;
+
+/** How long the globe stays where a drag left it before it settles on the nearest place. */
+const SETTLE_MS = 700;
 
 /** Degrees from where it was asked to face at which the globe counts as at rest. */
 const REST_DEGREES = 0.05;
@@ -46,13 +50,19 @@ type Props = {
   /** Where the globe is asked to face. A new object turns it there. */
   centre: Coordinates;
   date: Date;
+  /** On a tall page, how far below the middle the drawing sits. The page's own by default. */
+  drop?: number;
   height: number;
   /** The light theme is on. */
   light: boolean;
+  /** Told where the globe faces, each time it is drawn. */
+  onFace?(facing: Coordinates): void;
   /** Told which place was clicked, by its index. */
   onPick?(place: number): void;
-  /** Told where the globe was left facing when a drag ends. */
-  onDrop?(facing: Coordinates): void;
+  /** How many times taller the canvas is than the part of it that is seen. 1 by default. */
+  stretch?: number;
+  /** Told where the globe was left facing when a drag ends. Answers with where it should settle. */
+  onDrop?(facing: Coordinates): Coordinates | void;
   places: readonly Coordinates[];
   width: number;
 };
@@ -71,17 +81,27 @@ export function useOrb({
   canvas,
   centre,
   date,
+  drop = TALL_DROP,
   height,
   light,
   onDrop,
+  onFace,
   onPick,
   places,
+  stretch = 1,
   width,
 }: Props): { handlers: Handlers; over: boolean } {
   const facing = useRef(centre);
   const target = useRef(centre);
-  const drag = useRef<{ moved: boolean; x: number; y: number } | null>(null);
+  const drag = useRef<{
+    moved: boolean;
+    /** Taken hold of while it was waiting to settle. */
+    waiting: boolean;
+    x: number;
+    y: number;
+  } | null>(null);
   const asked = useRef(centre);
+  const settling = useRef(0);
   const [over, setOver] = useState(false);
 
   /** The place under the pointer, or -1. */
@@ -92,7 +112,9 @@ export function useOrb({
 
     return toPlaceAt({
       column: parseFloat(style.getPropertyValue(COLUMN)) * rem || width,
+      drop,
       height,
+      stretch,
       places: places.map(toVector),
       view: toView(facing.current),
       width,
@@ -100,14 +122,16 @@ export function useOrb({
       y: event.clientY - top,
     });
   };
-  const scene = useRef({ active, date, light, places });
+  const scene = useRef({ active, date, drop, light, onFace, places, stretch });
 
-  scene.current = { active, date, light, places };
+  scene.current = { active, date, drop, light, onFace, places, stretch };
 
   useEffect(() => {
     asked.current = centre;
     target.current = centre;
   }, [centre]);
+
+  useEffect(() => () => window.clearTimeout(settling.current), []);
 
   useEffect(() => {
     if (!canvas || !width || !height) {
@@ -166,11 +190,15 @@ export function useOrb({
           longitude: longitude + turn * ease,
         };
 
+        scene.current.onFace?.(facing.current);
+
         const view = toView(facing.current);
         const sun = toVector(toSubsolar(scene.current.date));
 
         renderer.draw({
           column: column || canvas.width,
+          drop: scene.current.drop,
+          stretch: scene.current.stretch,
           active: scene.current.active,
           light: scene.current.light,
           places: scene.current.places.map(toVector),
@@ -199,7 +227,15 @@ export function useOrb({
   const handlers: Handlers = {
     onPointerDown: (event) => {
       event.currentTarget.setPointerCapture(event.pointerId);
-      drag.current = { moved: false, x: event.clientX, y: event.clientY };
+      /* Taking hold of the globe again puts off settling. */
+      window.clearTimeout(settling.current);
+      drag.current = {
+        moved: false,
+        waiting: settling.current !== 0,
+        x: event.clientX,
+        y: event.clientY,
+      };
+      settling.current = 0;
     },
     onPointerMove: (event) => {
       if (!drag.current) {
@@ -217,24 +253,33 @@ export function useOrb({
         longitude:
           target.current.longitude - (event.clientX - drag.current.x) * scale,
       };
-      drag.current = { moved: true, x: event.clientX, y: event.clientY };
+      drag.current = {
+        ...drag.current,
+        moved: true,
+        x: event.clientX,
+        y: event.clientY,
+      };
     },
     onPointerUp: (event) => {
       const place = drag.current?.moved ? -1 : toPlace(event);
 
       if (place >= 0) {
+        /* If it is the place already open, nothing else turns the globe back. */
+        target.current = asked.current;
         onPick?.(place);
       }
 
-      if (drag.current?.moved) {
-        const left = target.current;
-
+      /* A press that only stopped it settling starts the wait again. */
+      if (drag.current?.moved || (drag.current?.waiting && place < 0)) {
         /*
-         * Back to where it was asked to face. If the drop picks another
-         * place, that arrives as a new `centre` and the globe goes there.
+         * The globe waits where it was left, in case it is dragged again.
+         * Then it turns straight to where the drop says to settle. Going
+         * back to where it was asked to face first would show as a jump.
          */
-        target.current = asked.current;
-        onDrop?.(left);
+        settling.current = window.setTimeout(() => {
+          settling.current = 0;
+          target.current = onDrop?.(target.current) ?? asked.current;
+        }, SETTLE_MS);
       }
 
       drag.current = null;
