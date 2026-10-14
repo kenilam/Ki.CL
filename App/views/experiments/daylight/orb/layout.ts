@@ -12,19 +12,26 @@ const FIT = 0.92;
 /** On a wide page, the share of the page's column the drawing may take. */
 const COLUMN_SHARE = 0.66;
 
-/** On a tall page the drawing is this much larger, and this far below the middle. */
+/** On a tall page the drawing is this much larger than the page is wide. */
 const TALL_SCALE = 1.08;
-const TALL_DROP = 0.09;
+
+/**
+ * On a tall page, how far below the middle the drawing sits, as a share of
+ * the page's height. The words are above it there.
+ */
+const TALL_DROP = 0.15;
 
 type Page = {
   /** The page's column, in the same unit as the width and height. */
   column: number;
+  /** Used in place of `TALL_DROP`. Less than nothing lifts the drawing above the middle. */
+  drop?: number;
   height: number;
   width: number;
 };
 
 /** The drawing's height and its middle, measured from the page's top left. */
-function toFrame({ column, height, width }: Page) {
+function toFrame({ column, drop = TALL_DROP, height, width }: Page) {
   const wide = width > height;
   const within = Math.min(width, column);
   const fit = Math.min(width, height) * FIT;
@@ -33,7 +40,7 @@ function toFrame({ column, height, width }: Page) {
   return {
     size,
     x: width / 2 + (wide ? (within - size) / 2 : 0),
-    y: height / 2 + (wide ? 0 : height * TALL_DROP),
+    y: height / 2 + (wide ? 0 : height * drop),
   };
 }
 

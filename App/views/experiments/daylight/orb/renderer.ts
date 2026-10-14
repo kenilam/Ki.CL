@@ -3,6 +3,8 @@ import { FRAGMENT, MAX_PLACES, VERTEX } from './shader';
 export type Scene = {
   /** The page's column in canvas pixels; the drawing stays inside it. */
   column: number;
+  /** On a tall page, how far below the middle the drawing sits, as a share of the height. */
+  drop: number;
   /** Index into `places` of the one picked, or -1. */
   active: number;
   /** The light theme: the sky is paper and its marks are ink. */
@@ -97,6 +99,7 @@ export function createRenderer(
     active: at('uPlaceActive'),
     column: at('uColumn'),
     count: at('uPlaceCount'),
+    drop: at('uDrop'),
     light: at('uLight'),
     places: at('uPlaces'),
     seconds: at('uSeconds'),
@@ -123,6 +126,7 @@ export function createRenderer(
 
       gl.uniform2f(uniforms.size, canvas.width, canvas.height);
       gl.uniform1f(uniforms.column, scene.column);
+      gl.uniform1f(uniforms.drop, scene.drop);
       gl.uniformMatrix3fv(uniforms.view, false, scene.view);
       gl.uniform3fv(uniforms.sun, scene.sun);
       gl.uniform3fv(uniforms.sunSeen, scene.sunSeen);

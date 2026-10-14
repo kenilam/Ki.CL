@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 // Partials
+import { TALL_DROP } from './layout';
 import { toPlaceAt } from './pick';
 import { createRenderer } from './renderer';
 
@@ -46,6 +47,8 @@ type Props = {
   /** Where the globe is asked to face. A new object turns it there. */
   centre: Coordinates;
   date: Date;
+  /** On a tall page, how far below the middle the drawing sits. The page's own by default. */
+  drop?: number;
   height: number;
   /** The light theme is on. */
   light: boolean;
@@ -71,6 +74,7 @@ export function useOrb({
   canvas,
   centre,
   date,
+  drop = TALL_DROP,
   height,
   light,
   onDrop,
@@ -92,6 +96,7 @@ export function useOrb({
 
     return toPlaceAt({
       column: parseFloat(style.getPropertyValue(COLUMN)) * rem || width,
+      drop,
       height,
       places: places.map(toVector),
       view: toView(facing.current),
@@ -100,9 +105,9 @@ export function useOrb({
       y: event.clientY - top,
     });
   };
-  const scene = useRef({ active, date, light, places });
+  const scene = useRef({ active, date, drop, light, places });
 
-  scene.current = { active, date, light, places };
+  scene.current = { active, date, drop, light, places };
 
   useEffect(() => {
     asked.current = centre;
@@ -171,6 +176,7 @@ export function useOrb({
 
         renderer.draw({
           column: column || canvas.width,
+          drop: scene.current.drop,
           active: scene.current.active,
           light: scene.current.light,
           places: scene.current.places.map(toVector),
