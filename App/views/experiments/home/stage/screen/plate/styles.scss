@@ -25,13 +25,32 @@
   inset-block: calc(var(--kicl--views--experiments__home--drift-reach) * -1);
 
   @supports (animation-timeline: scroll()) {
+    /*
+     * A plate arrives in two steps, so two pictures are never seen through
+     * each other: first its own colour covers the panel before, then its
+     * picture fades in over that colour.
+     */
+    --kicl--views--experiments__home--covered: calc(
+      var(#{$home}--at) - var(#{$home}--screen) * 0.18
+    );
+
     animation:
       kicl--views--experiments__home--arrive linear both,
+      kicl--views--experiments__home--cover linear both,
       kicl--views--experiments__home--drift linear both;
     animation-range:
       var(#{$home}--arrival) var(#{$home}--at),
+      var(#{$home}--arrival) var(#{$home}--covered),
       var(#{$home}--before) var(#{$home}--after);
-    animation-timeline: scroll(root), scroll(root);
+    animation-timeline: scroll(root), scroll(root), scroll(root);
+
+    @media (prefers-reduced-motion: no-preference) {
+      > * {
+        animation: kicl--views--experiments__home--cover linear both;
+        animation-range: var(#{$home}--covered) var(#{$home}--at);
+        animation-timeline: scroll(root);
+      }
+    }
   }
 
   #{$screen}--tree-of-life & {
@@ -43,17 +62,26 @@
   }
 }
 
-// Fades in over the panel before, settling from slightly larger. The crop
-// clips it to the frame, so the larger picture never passes the edge.
+// Settles from slightly larger. The crop clips it to the frame, so the
+// larger picture never passes the edge.
 @keyframes kicl--views--experiments__home--arrive {
   from {
-    opacity: 0;
     scale: 1.1;
   }
 
   to {
-    opacity: 1;
     scale: 1;
+  }
+}
+
+// Fades in: the plate over the panel before, then its picture over the plate.
+@keyframes kicl--views--experiments__home--cover {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
