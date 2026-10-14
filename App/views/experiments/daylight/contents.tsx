@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -20,7 +20,7 @@ import { Words } from './words';
 
 // Utilities
 import { toNearestHere, toNearestTo } from './nearest';
-import { toBearing, toDay, toSubsolar } from './sun';
+import { setGradient } from './words/gradient';
 
 // Constants
 import { CLASS_NAME, PARAM, PLACES, toPath, toSlug } from './constants';
@@ -36,7 +36,7 @@ const Daylight: React.FunctionComponent = () => {
   const { [PARAM]: slug } = useParams();
   const active = PLACES.findIndex((place) => toSlug(place) === slug);
 
-  const subsolar = toSubsolar(now);
+  const article = useRef<HTMLElement>(null);
 
   useArrows((place) => navigate(toPath(place)));
 
@@ -50,7 +50,10 @@ const Daylight: React.FunctionComponent = () => {
       <Frame grow hold>
         {/* The words, then the places under them, at the top. */}
         <Layout alignContent='start' autoFlow='row' gap='narrow'>
-          <article className={classNames(CLASS_NAME, 'kicl-position-relative')}>
+          <article
+            className={classNames(CLASS_NAME, 'kicl-position-relative')}
+            ref={article}
+          >
             <Orb
               active={active}
               centre={PLACES[active]}
@@ -63,13 +66,14 @@ const Daylight: React.FunctionComponent = () => {
 
                 return place;
               }}
+              /* The title's colour follows the globe as it turns, not the place open. */
+              onFace={(facing) =>
+                article.current && setGradient(article.current, facing, now)
+              }
               onPick={(place) => navigate(toPath(PLACES[place]))}
               places={PLACES}
             />
-            <Words
-              bearing={toBearing(PLACES[active], subsolar)}
-              day={toDay(PLACES[active], subsolar)}
-            />
+            <Words />
             <Places active={active} date={now} />
           </article>
         </Layout>

@@ -55,6 +55,8 @@ type Props = {
   height: number;
   /** The light theme is on. */
   light: boolean;
+  /** Told where the globe faces, each time it is drawn. */
+  onFace?(facing: Coordinates): void;
   /** Told which place was clicked, by its index. */
   onPick?(place: number): void;
   /** Told where the globe was left facing when a drag ends. Answers with where it should settle. */
@@ -81,6 +83,7 @@ export function useOrb({
   height,
   light,
   onDrop,
+  onFace,
   onPick,
   places,
   width,
@@ -115,9 +118,9 @@ export function useOrb({
       y: event.clientY - top,
     });
   };
-  const scene = useRef({ active, date, drop, light, places });
+  const scene = useRef({ active, date, drop, light, onFace, places });
 
-  scene.current = { active, date, drop, light, places };
+  scene.current = { active, date, drop, light, onFace, places };
 
   useEffect(() => {
     asked.current = centre;
@@ -182,6 +185,8 @@ export function useOrb({
           latitude: latitude + (target.current.latitude - latitude) * ease,
           longitude: longitude + turn * ease,
         };
+
+        scene.current.onFace?.(facing.current);
 
         const view = toView(facing.current);
         const sun = toVector(toSubsolar(scene.current.date));
