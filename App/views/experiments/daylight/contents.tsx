@@ -53,7 +53,13 @@ const Daylight: React.FunctionComponent = () => {
               centre={PLACES[active]}
               date={now}
               /* Let go of the globe and it settles on the nearest place. */
-              onDrop={(facing) => navigate(toPath(toNearestTo(facing)))}
+              onDrop={(facing) => {
+                const place = toNearestTo(facing);
+
+                navigate(toPath(place));
+
+                return place;
+              }}
               onPick={(place) => navigate(toPath(PLACES[place]))}
               places={PLACES}
             />

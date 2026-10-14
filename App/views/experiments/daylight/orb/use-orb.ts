@@ -57,8 +57,8 @@ type Props = {
   light: boolean;
   /** Told which place was clicked, by its index. */
   onPick?(place: number): void;
-  /** Told where the globe was left facing when a drag ends. */
-  onDrop?(facing: Coordinates): void;
+  /** Told where the globe was left facing when a drag ends. Answers with where it should settle. */
+  onDrop?(facing: Coordinates): Coordinates | void;
   places: readonly Coordinates[];
   width: number;
 };
@@ -263,15 +263,12 @@ export function useOrb({
       if (drag.current?.moved || (drag.current?.waiting && place < 0)) {
         /*
          * The globe waits where it was left, in case it is dragged again.
-         * Then it goes back to where it was asked to face. If the drop picks
-         * another place, that arrives as a new `centre` and it goes there.
+         * Then it turns straight to where the drop says to settle. Going
+         * back to where it was asked to face first would show as a jump.
          */
         settling.current = window.setTimeout(() => {
-          const left = target.current;
-
           settling.current = 0;
-          target.current = asked.current;
-          onDrop?.(left);
+          target.current = onDrop?.(target.current) ?? asked.current;
         }, SETTLE_MS);
       }
 
