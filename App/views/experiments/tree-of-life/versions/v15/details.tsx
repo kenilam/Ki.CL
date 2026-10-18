@@ -9,7 +9,6 @@ import {
   BadgeLabel,
   Card,
   CardContent,
-  CardHeader,
   CardTitle,
   Details as DetailsDisclosure,
   Layout,
@@ -59,9 +58,8 @@ const Details: React.FunctionComponent = () => {
       is='section'
       aria-labelledby={titleId}
       className='kicl-inline-size-xxl'
-    >
-      {hasMeta ? (
-        <CardHeader>
+      header={
+        hasMeta ? (
           <List
             display='inline-grid'
             gap='narrow'
@@ -105,9 +103,9 @@ const Details: React.FunctionComponent = () => {
               </Badge>
             ) : null}
           </List>
-        </CardHeader>
-      ) : null}
-
+        ) : null
+      }
+    >
       <Layout gap='narrow'>
         <CardContent>
           {/*

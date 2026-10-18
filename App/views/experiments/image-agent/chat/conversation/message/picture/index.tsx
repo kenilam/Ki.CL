@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import * as Ri from 'react-icons/ri';
 
 // Components
-import { Button, Dialog, Image } from 'design/components';
+import { Button, Dialog, Heading, Image } from 'design/components';
 
 // Hooks
 import { useResponsive } from 'design/hooks';
@@ -76,9 +76,13 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
       </Button>
       <Dialog
         className={`${CLASS_NAME}__dialog`}
+        header={
+          <Heading dense is='h2' lookLike='h4'>
+            {title}
+          </Heading>
+        }
         onClose={() => setOpen(false)}
         open={open}
-        title={title}
       >
         <Image
           alt={t('alt')}

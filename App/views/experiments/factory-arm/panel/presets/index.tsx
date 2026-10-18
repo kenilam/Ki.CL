@@ -11,7 +11,6 @@ import {
   CardAction,
   CardContent,
   CardDescription,
-  CardHeader,
   CardTitle,
   List,
 } from 'design/components';
@@ -64,37 +63,38 @@ const Presets: React.FunctionComponent = () => {
                 is='li'
                 key={preset.id}
                 level={preset.id === active ? 'confirm' : undefined}
-              >
-                <CardHeader>
-                  <CardTitle is='span'>{name}</CardTitle>
-                  <CardDescription
-                    className={classNames(
-                      'kicl-font-family-mono',
-                      'kicl-font-size-smaller'
-                    )}
-                    is='span'
-                  >
-                    {summary(t, preset)}
-                  </CardDescription>
-                  <CardAction>
-                    <Button
-                      aria-label={t('action', {
-                        context: preset.id === active ? 'restart' : 'run',
-                        name,
-                      })}
-                      onClick={() => play(preset)}
-                      size='small'
-                      variant='secondary'
-                    >
-                      {preset.id === active ? (
-                        <Ri.RiRestartLine aria-hidden />
-                      ) : (
-                        <Ri.RiPlayFill aria-hidden />
+                header={
+                  <>
+                    <CardTitle is='span'>{name}</CardTitle>
+                    <CardDescription
+                      className={classNames(
+                        'kicl-font-family-mono',
+                        'kicl-font-size-smaller'
                       )}
-                    </Button>
-                  </CardAction>
-                </CardHeader>
-
+                      is='span'
+                    >
+                      {summary(t, preset)}
+                    </CardDescription>
+                    <CardAction>
+                      <Button
+                        aria-label={t('action', {
+                          context: preset.id === active ? 'restart' : 'run',
+                          name,
+                        })}
+                        onClick={() => play(preset)}
+                        size='small'
+                        variant='secondary'
+                      >
+                        {preset.id === active ? (
+                          <Ri.RiRestartLine aria-hidden />
+                        ) : (
+                          <Ri.RiPlayFill aria-hidden />
+                        )}
+                      </Button>
+                    </CardAction>
+                  </>
+                }
+              >
                 {preset.saved && (
                   <Button
                     onClick={() => discard(preset.id)}
