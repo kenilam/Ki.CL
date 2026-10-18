@@ -10,21 +10,6 @@ import { Image, Layout, Skeleton, Status, Text } from 'design/components';
 // Constants
 import { CLASS_NAME } from './constants';
 
-/** Which `plate` phrase the live region reads out. */
-export function announcementFor({
-  imageUrl,
-  isGenerating,
-}: {
-  imageUrl: string | null;
-  isGenerating: boolean;
-}): 'drawing' | 'ready' | 'none' {
-  if (isGenerating) {
-    return 'drawing';
-  }
-
-  return imageUrl ? 'ready' : 'none';
-}
-
 type Props = {
   failed: boolean;
   imageUrl: string | null;
@@ -32,6 +17,18 @@ type Props = {
   message: string;
   name: string;
 };
+
+/** Which `plate` phrase the live region reads out. */
+export function announcementFor({
+  imageUrl,
+  isGenerating,
+}: Pick<Props, 'imageUrl' | 'isGenerating'>): 'drawing' | 'ready' | 'none' {
+  if (isGenerating) {
+    return 'drawing';
+  }
+
+  return imageUrl ? 'ready' : 'none';
+}
 
 const Plate: React.FC<Props> = ({
   failed,
@@ -50,7 +47,7 @@ const Plate: React.FC<Props> = ({
         title={t('title', { context: 'no_plate' })}
         headingLevel='h3'
         message={message}
-        align='start'
+        justifyContent='start'
         property='fade'
       />
     );
@@ -67,15 +64,17 @@ const Plate: React.FC<Props> = ({
               'kicl-aspect-ratio-square'
             )}
           />
-          <Text
-            is='span'
-            className={classNames(
-              'kicl-font-size-small',
-              'kicl-color-grey-dark'
-            )}
-          >
-            {t('plate', { context: 'wait' })}
-          </Text>
+          <figcaption>
+            <Text
+              is='span'
+              className={classNames(
+                'kicl-font-size-small',
+                'kicl-color-grey-dark'
+              )}
+            >
+              {t('plate', { context: 'wait' })}
+            </Text>
+          </figcaption>
         </figure>
       </Layout>
     );
@@ -89,7 +88,7 @@ const Plate: React.FC<Props> = ({
         title={t('title', { context: 'no_plate' })}
         headingLevel='h3'
         message={t('error', { context: 'unfinished' })}
-        align='start'
+        justifyContent='start'
         property='fade'
       />
     );
@@ -104,7 +103,6 @@ const Plate: React.FC<Props> = ({
             context: 'alt',
             name: name || t('this_taxon'),
           })}
-          borderRadius='sm'
           className={classNames(
             `${CLASS_NAME}__taxon-plate`,
             'kicl-aspect-ratio-square'

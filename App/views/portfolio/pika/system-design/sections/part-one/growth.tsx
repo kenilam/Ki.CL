@@ -12,7 +12,7 @@ const Growth: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'growth' })}
       </Heading>
       <Text>{t('part_one.growth.studio')}</Text>

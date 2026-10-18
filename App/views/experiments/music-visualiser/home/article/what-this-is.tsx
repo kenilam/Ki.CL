@@ -16,7 +16,7 @@ const WhatThisIs: React.FunctionComponent = () => {
       gap='narrow'
       open
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {common('title', { context: 'what_this_is' })}
         </Heading>
       }

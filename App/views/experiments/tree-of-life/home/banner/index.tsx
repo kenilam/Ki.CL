@@ -26,7 +26,7 @@ const Banner: React.FunctionComponent = () => (
     justifyItems='start'
     justifyContent='start'
   >
-    <Frame grow hold>
+    <Frame grow>
       <header
         className={classNames(
           CLASS_NAME,

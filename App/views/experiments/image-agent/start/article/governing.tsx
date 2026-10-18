@@ -28,7 +28,7 @@ const Governing: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.governing.title')}
         </Heading>
       }
@@ -38,7 +38,7 @@ const Governing: React.FunctionComponent = () => {
       </Text>
       <Diagram spec={spec} />
       <Text is='p'>{t('article.governing.outcomes')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'rules' })}
       </Heading>
       <Text is='p'>{t('article.governing.rules_intro')}</Text>
@@ -50,18 +50,18 @@ const Governing: React.FunctionComponent = () => {
         ))}
       </List>
       <Text is='p'>{t('article.governing.left_off')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'moderation' })}
       </Heading>
       <Text is='p'>{t('article.governing.moderation')}</Text>
       <Text is='p'>
         <Markdown>{t('article.governing.markers')}</Markdown>
       </Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'failed_check' })}
       </Heading>
       <Text is='p'>{t('article.governing.failed_check')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'refusals' })}
       </Heading>
       <Text is='p'>{t('article.governing.refusals')}</Text>

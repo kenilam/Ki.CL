@@ -13,7 +13,7 @@ const WhereItStarted: React.FunctionComponent = () => {
   return (
     <Layout justifyItems='start'>
       <section aria-labelledby={id}>
-        <Heading id={id} is='h2' className='kicl-font-size-large'>
+        <Heading id={id} is='h2' lookLike='h1'>
           {t('title', { context: 'where_it_started' })}
         </Heading>
 

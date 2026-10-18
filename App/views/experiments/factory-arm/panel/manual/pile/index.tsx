@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
@@ -24,12 +24,6 @@ import { useSetup } from '@/views/experiments/factory-arm/setup';
 
 const LAYERS = [1, 2, 3, 4, 5];
 
-const ID = {
-  layers: 'factory-arm-layers',
-  second: 'factory-arm-second',
-  title: 'factory-arm-pile',
-};
-
 /**
  * How the incoming cases are built for the next run: how many layers, the
  * seed that picks each layer's case type (or a random one), and whether a
@@ -39,6 +33,7 @@ const ID = {
 const Pile: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
   const { draft, setDraft } = useSetup();
+  const id = { layers: useId(), second: useId(), title: useId() };
   const { pile, stacks } = draft;
 
   // Each setting a row of its list: what it is, then its control.
@@ -58,18 +53,18 @@ const Pile: React.FunctionComponent = () => {
 
   return (
     <Layout gap='narrow'>
-      <section aria-labelledby={ID.title}>
-        <Heading dense id={ID.title} is='h2' lookLike='h5'>
+      <section aria-labelledby={id.title}>
+        <Heading dense id={id.title} is='h2' lookLike='h5'>
           {t('title', { context: 'cases' })}
         </Heading>
 
         <List gap='narrow'>
           {row(
-            <label className='kicl-font-size-small' htmlFor={ID.layers}>
+            <label className='kicl-font-size-small' htmlFor={id.layers}>
               {t('label', { context: 'layers' })}
             </label>,
             <Select
-              id={ID.layers}
+              id={id.layers}
               onValueChange={(value) =>
                 setDraft({ ...draft, pile: { ...pile, layers: Number(value) } })
               }
@@ -104,11 +99,11 @@ const Pile: React.FunctionComponent = () => {
           )}
 
           {row(
-            <Text className='kicl-font-size-small' id={ID.second} is='span'>
+            <Text className='kicl-font-size-small' id={id.second} is='span'>
               {t('label', { context: 'second_stack' })}
             </Text>,
             <Switch
-              aria-labelledby={ID.second}
+              aria-labelledby={id.second}
               checked={stacks === 2}
               onCheckedChange={(checked) =>
                 setDraft({ ...draft, stacks: checked ? 2 : 1 })

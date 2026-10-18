@@ -27,7 +27,7 @@ const Drawing: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.drawing.title')}
         </Heading>
       }
@@ -41,16 +41,16 @@ const Drawing: React.FunctionComponent = () => {
         ))}
       </List>
       <Diagram spec={spec} />
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'prompt' })}
       </Heading>
       <Text is='p'>{t('article.drawing.prompt')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'review' })}
       </Heading>
       <Text is='p'>{t('article.drawing.review')}</Text>
       <Text is='p'>{t('article.drawing.first_reviewer')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'storage' })}
       </Heading>
       <Text is='p'>{t('article.drawing.storage')}</Text>

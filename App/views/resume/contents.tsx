@@ -126,7 +126,7 @@ const Resume: React.FunctionComponent = () => {
               data-version={version.slug}
               gap='wide'
               is='article'
-              variant='ghost'
+              variant='secondary'
             >
               <Header />
               {version.order.map((id) => {

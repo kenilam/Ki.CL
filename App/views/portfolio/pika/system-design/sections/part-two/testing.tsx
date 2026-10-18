@@ -12,7 +12,7 @@ const Testing: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'testing' })}
       </Heading>
       <Text>{t('part_two.testing.rubrics')}</Text>

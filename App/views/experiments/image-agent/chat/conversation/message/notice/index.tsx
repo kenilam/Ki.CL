@@ -11,9 +11,8 @@ import type { Message } from '@/views/experiments/image-agent/chat/conversation/
 
 /** Turns that did not end in a picture, and how each is shown. */
 const NOTICES: {
-  [kind in string]?: {
+  [kind in string]?: Pick<StatusProps, 'level'> & {
     context: 'failure' | 'refusal';
-    level: StatusProps['level'];
   };
 } = {
   FAILURE: { context: 'failure', level: 'error' },

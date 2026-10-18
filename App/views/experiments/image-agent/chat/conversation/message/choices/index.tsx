@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Animation, Button, List, ListItem, Text } from 'design/components';
+import { Animation, Button, List, ListItem } from 'design/components';
 
 // Constants
 import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/conversation/message/constants';
@@ -21,13 +21,12 @@ const Choices: React.FunctionComponent<Props> = ({ choices, onChoose }) => (
       {choices.map((choice) => (
         <ListItem key={choice}>
           <Button
-            before={<Ri.RiCircleLine />}
-            is='button'
+            before={<Ri.RiCircleLine aria-hidden />}
             onClick={() => void onChoose(choice)}
             size='small'
             variant='secondary'
           >
-            <Text is='span'>{choice}</Text>
+            {choice}
           </Button>
         </ListItem>
       ))}
@@ -35,4 +34,4 @@ const Choices: React.FunctionComponent<Props> = ({ choices, onChoose }) => (
   </Animation>
 );
 
-export { Choices };
+export { Choices, type Props as ChoicesProps };

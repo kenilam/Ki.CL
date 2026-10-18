@@ -63,6 +63,7 @@ const Tabs: React.FunctionComponent = () => {
         </Segmented>
 
         <Button
+          aria-label={t('tab', { context: 'log' })}
           aria-pressed={logging}
           onClick={() => setTab(logging ? back.current : 'log')}
           size='small'
@@ -70,19 +71,16 @@ const Tabs: React.FunctionComponent = () => {
           level='confirm'
         >
           <Ri.RiFile4Line aria-hidden />
-          <span className='kicl-hidden'>{t('tab', { context: 'log' })}</span>
         </Button>
 
         <Button
+          aria-label={t('action', { context: 'close_setup' })}
           popoverTarget={PANEL}
           popoverTargetAction='hide'
           size='small'
           variant='ghost'
         >
           <Ri.RiCloseLine aria-hidden />
-          <span className='kicl-hidden'>
-            {t('action', { context: 'close_setup' })}
-          </span>
         </Button>
       </SheetHeader>
     </Layout>

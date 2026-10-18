@@ -1,14 +1,16 @@
 import React from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Markdown, Text } from 'design/components';
 
 // Constants
-import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
+import {
+  SECTION_HEADING,
+  SECTION_ID,
+} from '@/views/portfolio/pika/system-design/constants';
 
 const Walkthrough: React.FunctionComponent = () => {
   const { t } = useTranslation('pika');
@@ -18,11 +20,7 @@ const Walkthrough: React.FunctionComponent = () => {
       <section aria-labelledby={SECTION_ID.walkthrough}>
         <header>
           <Heading
-            className={classNames(
-              'kicl-font-size-larger',
-              'kicl-padding-block-start-narrow',
-              'kicl-position-relative'
-            )}
+            className={SECTION_HEADING}
             dense
             id={SECTION_ID.walkthrough}
             is='h2'

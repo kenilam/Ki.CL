@@ -42,7 +42,7 @@ const WhatIsAnApp: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'what_is_an_app' })}
       </Heading>
       <Text>{t('part_one.what_is_an_app.intro')}</Text>

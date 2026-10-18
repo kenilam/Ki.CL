@@ -22,7 +22,7 @@ const Limits: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.limits.title')}
         </Heading>
       }
@@ -30,7 +30,7 @@ const Limits: React.FunctionComponent = () => {
       <Text is='p'>{t('article.limits.cost')}</Text>
       <Diagram spec={specs.allowance} />
       <Diagram spec={specs.howItWorks} />
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.limits.title', { context: 'person' })}
       </Heading>
       <Text is='p'>{t('article.limits.session')}</Text>

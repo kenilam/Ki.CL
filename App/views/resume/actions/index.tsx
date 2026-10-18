@@ -52,7 +52,6 @@ const Actions: React.FunctionComponent = () => {
       <ListItem>
         <Button
           before={<Ri.RiMessageLine aria-hidden />}
-          className='kicl-print-hidden'
           command='show-modal'
           commandFor={CONTACT_ID}
           level='confirm'

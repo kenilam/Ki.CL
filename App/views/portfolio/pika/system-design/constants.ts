@@ -19,4 +19,8 @@ const SECTION_ID = {
   watchTheAgentWork: 'watch-the-agent-work',
 } as const;
 
-export { CLASS_NAME, PATH, SECTION_ID };
+/** Every section's `h2`. It is positioned so the gradient rule above it can anchor to it. */
+const SECTION_HEADING =
+  'kicl-font-size-larger kicl-padding-block-start-narrow kicl-position-relative';
+
+export { CLASS_NAME, PATH, SECTION_HEADING, SECTION_ID };

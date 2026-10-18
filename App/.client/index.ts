@@ -125,7 +125,8 @@ const getConfig = ({
         changeOrigin: true,
         secure: false,
       },
-      '/design': {
+      // A pattern, so it matches the segment and not a page such as /design-system.
+      '^/design/': {
         target: DESIGN_URL,
         changeOrigin: true,
         secure: false,

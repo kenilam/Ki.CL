@@ -95,7 +95,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
               >
                 <HyperLink
                   aria-current={index === active ? 'page' : undefined}
-                  className={classNames('kicl-inline-size-full')}
+                  className='kicl-inline-size-full'
                   to={toPath(place)}
                   lookLikeButton
                   size='small'
@@ -109,8 +109,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
                       'kicl-color-grey',
                       'kicl-font-family-mono',
                       'kicl-font-size-small',
-                      'kicl-text-align-end',
-                      colour
+                      'kicl-text-align-end'
                     )}
                     dateTime={date.toISOString()}
                     dense

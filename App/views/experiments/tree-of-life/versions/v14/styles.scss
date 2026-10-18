@@ -6,10 +6,8 @@
     max-inline-size: none;
   }
 
-  // HTML label over WebGL - screen-space, fixed 1rem, white outline + soft glow.
+  // HTML label over WebGL - screen-space, white outline + soft glow.
   &__webgl-label {
-    font-size: 1rem;
-
     // Hard outline (readable on any branch colour) + soft white glow.
     -webkit-text-stroke: var(--kicl-size-1px) var(--kicl-color-white);
     paint-order: stroke fill;

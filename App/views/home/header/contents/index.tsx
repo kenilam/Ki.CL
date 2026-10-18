@@ -34,7 +34,7 @@ const Contents: React.FunctionComponent = () => {
             duration='slower'
             easing='ease-sine-in'
             property='slide-from-bottom'
-            className={classNames('kicl-z-index-raised')}
+            className='kicl-z-index-raised'
           >
             {t('header.contents.lead')}
           </AnimatedText>
@@ -44,7 +44,7 @@ const Contents: React.FunctionComponent = () => {
             duration='slower'
             easing='ease-sine-in'
             property='slide-from-bottom'
-            className={classNames('kicl-z-index-raised')}
+            className='kicl-z-index-raised'
           >
             {t('header.contents.body')}
           </AnimatedText>

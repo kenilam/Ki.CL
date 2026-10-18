@@ -44,7 +44,7 @@ const SendingAMessage: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.sending.title')}
         </Heading>
       }
@@ -61,11 +61,11 @@ const SendingAMessage: React.FunctionComponent = () => {
         <Markdown>{t('article.sending.single_turn')}</Markdown>
       </Text>
       <Text is='p'>{t('article.sending.streams')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.sending.title', { context: 'pub_sub' })}
       </Heading>
       <Text is='p'>{t('article.sending.pub_sub')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.sending.title', { context: 'recovering' })}
       </Heading>
       <Text is='p'>
