@@ -33,15 +33,9 @@ const Element: React.FunctionComponent = () => {
   const lastPathname = useRef(location.pathname);
 
   useEffect(() => {
-    const root = document.querySelector('body');
-
-    if (!root) {
-      return;
-    }
-
     const routes = (location.pathname.replace('/', '') || 'home').split('/');
 
-    root.dataset.routes = routes.join('.');
+    document.body.dataset.routes = routes.join('.');
 
     document.title = t('document_title', { routes: routes.join(' | ') });
     /*
@@ -64,7 +58,7 @@ const Element: React.FunctionComponent = () => {
     lastPathname.current = location.pathname;
 
     document.getElementById(MAIN_ID)?.focus({ preventScroll: true });
-  }, [location.pathname, t]);
+  }, [location.pathname]);
 
   return (
     <GlobalHeaderProvider>

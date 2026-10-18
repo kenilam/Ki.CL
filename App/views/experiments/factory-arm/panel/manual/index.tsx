@@ -7,11 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, CardContent, Layout, SheetFooter } from 'design/components';
 
 // Context
-import {
-  type Setup,
-  useSetup,
-  WIDE,
-} from '@/views/experiments/factory-arm/setup';
+import { type Setup, useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Partials
 import { Confirm } from '@/views/experiments/factory-arm/panel/confirm';
@@ -25,7 +21,7 @@ import { Shapes } from './shapes';
  */
 const Manual: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
-  const { cell, draft, proceed, save, setOpen } = useSetup();
+  const { cell, draft, proceed, save } = useSetup();
 
   const current = () => ({
     ...draft,
@@ -34,11 +30,9 @@ const Manual: React.FunctionComponent = () => {
 
   const [asking, setAsking] = useState(false);
 
-  // On small screens the panel covers the stage, so it folds away to show the run.
   const start = (setup: Setup) => {
     setAsking(false);
     proceed(setup);
-    setOpen(matchMedia(WIDE).matches);
   };
 
   // While the arm is working, ask first.

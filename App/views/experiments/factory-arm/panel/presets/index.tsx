@@ -20,11 +20,7 @@ import {
 import * as Ri from 'react-icons/ri';
 
 // Context
-import {
-  type Preset,
-  useSetup,
-  WIDE,
-} from '@/views/experiments/factory-arm/setup';
+import { type Preset, useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Partials
 import { summary } from './summary';
@@ -41,15 +37,13 @@ import { Unsaved } from './unsaved';
 const Presets: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
   const { t: common } = useTranslation();
-  const { active, cell, discard, presets, proceed, setOpen } = useSetup();
+  const { active, cell, discard, presets, proceed } = useSetup();
   // A preset waiting on the operator to confirm starting over.
   const [pending, setPending] = useState<Preset | null>(null);
 
-  // On small screens the panel covers the stage, so it folds away to show the run.
   const run = (preset: Preset) => {
     setPending(null);
     proceed(preset);
-    setOpen(matchMedia(WIDE).matches);
   };
 
   // While the arm is working, ask first.
@@ -84,6 +78,10 @@ const Presets: React.FunctionComponent = () => {
                   </CardDescription>
                   <CardAction>
                     <Button
+                      aria-label={t('action', {
+                        context: preset.id === active ? 'restart' : 'run',
+                        name,
+                      })}
                       onClick={() => play(preset)}
                       size='small'
                       variant='secondary'
@@ -93,12 +91,6 @@ const Presets: React.FunctionComponent = () => {
                       ) : (
                         <Ri.RiPlayFill aria-hidden />
                       )}
-                      <span className='kicl-hidden'>
-                        {t('action', {
-                          context: preset.id === active ? 'restart' : 'run',
-                          name,
-                        })}
-                      </span>
                     </Button>
                   </CardAction>
                 </CardHeader>

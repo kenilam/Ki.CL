@@ -12,7 +12,7 @@ const Cost: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'cost' })}
       </Heading>
       <Text>{t('part_two.cost.ladder')}</Text>

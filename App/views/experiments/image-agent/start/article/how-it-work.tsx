@@ -14,7 +14,7 @@ const HowItWorks: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.how_it_works.title')}
         </Heading>
       }

@@ -56,7 +56,6 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
       >
         <Image
           alt={t('alt')}
-          borderRadius='sm'
           className={classNames(
             `${CLASS_NAME}__preview`,
             'kicl-aspect-ratio-square',
@@ -83,7 +82,6 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
       >
         <Image
           alt={t('alt')}
-          borderRadius='sm'
           className={classNames('kicl-display-block', 'kicl-inline-size-full')}
           data={open ? url : undefined}
         />

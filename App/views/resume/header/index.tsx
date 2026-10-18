@@ -1,7 +1,6 @@
 import React from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
@@ -32,14 +31,7 @@ const Header: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
       <header className={CLASS_NAME}>
         <Separator className={`${CLASS_NAME}__rule`} />
-        <Heading
-          className={classNames(
-            'kicl-font-size-larger',
-            'kicl-line-height-narrow'
-          )}
-          dense
-          is='h1'
-        >
+        <Heading className='kicl-font-size-larger' dense is='h1'>
           {common('name')}
         </Heading>
         <Actions />

@@ -40,12 +40,9 @@
     }
   }
 
-  // No utilities for the 50% offset, the translate, this spacing or opacity.
+  // No utilities for this spacing or opacity.
   &__hint {
-    inset-inline-start: 50%;
     letter-spacing: 0.02em;
-    max-inline-size: min(92vw, 40rem);
     opacity: 0.7;
-    translate: -50%;
   }
 }

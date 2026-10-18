@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +14,10 @@ import { services } from '@/views/portfolio/pika/system-design/diagrams/services
 import { type PlayerStep, SimulationPlayer } from './simulation-player';
 
 // Constants
-import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
+import {
+  SECTION_HEADING,
+  SECTION_ID,
+} from '@/views/portfolio/pika/system-design/constants';
 
 const SHOTS = [1, 2, 3, 4, 5];
 const total = SHOTS.length;
@@ -106,15 +108,7 @@ const Simulation: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.watchItRun}>
-        <Heading
-          className={classNames(
-            'kicl-font-size-larger',
-            'kicl-padding-block-start-narrow',
-            'kicl-position-relative'
-          )}
-          id={SECTION_ID.watchItRun}
-          is='h2'
-        >
+        <Heading className={SECTION_HEADING} id={SECTION_ID.watchItRun} is='h2'>
           {t('title', { context: 'watch_it_run' })}
         </Heading>
         <Text>{t('watch_it_run.intro')}</Text>

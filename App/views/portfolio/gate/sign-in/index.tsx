@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -57,13 +57,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
     resolver: valibotResolver(schema),
   });
 
-  const [signIn, { error, loading }] = useMutation(Kicl_SignInDocument);
-
-  useEffect(() => {
-    if (error?.message) {
-      form.setError('root', { message: error.message });
-    }
-  }, [error, form]);
+  const [signIn, { loading }] = useMutation(Kicl_SignInDocument);
 
   const onSubmit = useCallback(
     async (values: SignInValues) => {
@@ -80,11 +74,13 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
         if (data?.SignIn) {
           onSignedIn();
         }
-      } catch {
-        // Surfaced through the mutation's `error` state below.
+      } catch (error) {
+        form.setError('root', {
+          message: error instanceof Error ? error.message : undefined,
+        });
       }
     },
-    [onSignedIn, signIn]
+    [form, onSignedIn, signIn]
   );
 
   return (
@@ -106,7 +102,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
           <Animation delay={CONTENT_DELAY}>
             <Background />
           </Animation>
-          <Card className='kicl-inline-size-max' variant='ghost'>
+          <Card size='max' variant='secondary'>
             <Header denied={denied} />
             <Layout
               alignContent='start'

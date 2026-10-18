@@ -7,6 +7,7 @@ import { Router, Route } from 'design/router';
 import { ErrorElement, Status404 } from 'design/status';
 
 // Views
+import { DesignSystem } from './design-system';
 import { Experiments } from './experiments';
 import { Home } from './home';
 import { Me } from './me';
@@ -21,6 +22,7 @@ const Views: React.FunctionComponent = () => {
     <Router>
       <Route path='/' errorElement={<ErrorElement />} element={<Element />}>
         <Route path='*' element={<Status404 />} />
+        {DesignSystem}
         {Experiments}
         {Home}
         {Me}

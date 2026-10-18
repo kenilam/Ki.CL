@@ -17,14 +17,11 @@ import { Words } from './words';
 import './styles.scss';
 
 // Constants
-import type { Experiment } from '@/views/experiments/home/constants';
 import { CLASS_NAME } from './constants';
 
-type Props = {
-  experiment: Experiment;
+type Props = Omit<React.ComponentProps<typeof ScreenProvider>, 'children'> & {
   /** Position in the stage, from the top. Sets the scroll ranges. */
   index: number;
-  number: number;
 };
 
 /**

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import type { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +14,10 @@ import { agentPlane } from '@/views/portfolio/pika/system-design/diagrams/agent-
 import { type PlayerStep, SimulationPlayer } from './simulation-player';
 
 // Constants
-import { SECTION_ID } from '@/views/portfolio/pika/system-design/constants';
+import {
+  SECTION_HEADING,
+  SECTION_ID,
+} from '@/views/portfolio/pika/system-design/constants';
 
 /** Credits the session may spend, and what it has spent when it closes. */
 const budget = 430;
@@ -119,11 +121,7 @@ const AgentSimulation: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
       <section aria-labelledby={SECTION_ID.watchTheAgentWork}>
         <Heading
-          className={classNames(
-            'kicl-font-size-larger',
-            'kicl-padding-block-start-narrow',
-            'kicl-position-relative'
-          )}
+          className={SECTION_HEADING}
           id={SECTION_ID.watchTheAgentWork}
           is='h2'
         >

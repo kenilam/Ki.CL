@@ -24,7 +24,7 @@ const Services: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'services' })}
       </Heading>
       <Diagram opens='diagram-services' spec={spec} />

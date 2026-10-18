@@ -31,13 +31,12 @@ const Plate: React.FunctionComponent = () => {
         CLASS_NAME,
         'kicl-animation-none-reduced-motion',
         'kicl-inset-inline-0',
-        'kicl-position-absolute',
-        // Only the photos need a scrim; on the other plates it darkens too much.
-        { 'kicl-scrim': experiment.plate === 'image-agent' }
+        'kicl-position-absolute'
       )}
     >
       {experiment.plate === 'daylight' ? <Daylight /> : null}
-      {experiment.plate === 'image-agent' ? <Backdrop /> : null}
+      {/* Only the photo needs a scrim; on the other plates it darkens too much. */}
+      {experiment.plate === 'image-agent' ? <Backdrop scrim /> : null}
       {experiment.plate === 'music-visualiser' ? (
         <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
       ) : null}

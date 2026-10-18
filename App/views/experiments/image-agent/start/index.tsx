@@ -43,7 +43,7 @@ const Start: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
       <article className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
-        <Frame grow hold>
+        <Frame grow>
           <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
             <section
               className={classNames(

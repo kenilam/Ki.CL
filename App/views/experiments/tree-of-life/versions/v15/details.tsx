@@ -55,7 +55,7 @@ const Details: React.FunctionComponent = () => {
 
   return (
     <Card
-      variant='ghost'
+      variant='secondary'
       is='section'
       aria-labelledby={titleId}
       className='kicl-inline-size-xxl'
@@ -129,15 +129,10 @@ const Details: React.FunctionComponent = () => {
             }
           >
             {/*
-              No `onSubtree` fold-back: generated fields land in the Apollo
-              cache, which is what `find` reads, so the panel picks them up
-              without anything being threaded through it.
+              No `onSubtree`: generated fields land in the Apollo cache, which
+              is what `find` reads, so the panel picks them up on its own.
             */}
-            <TaxonVisualPanel
-              node={node}
-              isOrigin={isOrigin}
-              onSubtree={() => {}}
-            />
+            <TaxonVisualPanel node={node} isOrigin={isOrigin} />
           </DetailsDisclosure>
 
           {node.description?.trim() ? (

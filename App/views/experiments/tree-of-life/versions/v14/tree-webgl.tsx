@@ -278,6 +278,7 @@ const TreeWebGL: React.FC<Props> = ({
           'kicl-pointer-events-none',
           'kicl-text-nowrap',
           'kicl-font-family',
+          'kicl-font-size',
           'kicl-font-weight'
         )}
       >

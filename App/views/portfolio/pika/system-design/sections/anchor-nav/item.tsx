@@ -32,9 +32,7 @@ const Item: React.FunctionComponent<Props> = ({ id, label }) => {
         to={`#${id}`}
         unstyled
       >
-        <Badge className='kicl-font-size-small' size='small'>
-          {label}
-        </Badge>
+        <Badge size='small'>{label}</Badge>
         {current ? (
           <Ri.RiCheckboxBlankCircleFill
             aria-hidden

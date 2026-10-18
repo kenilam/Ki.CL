@@ -18,7 +18,8 @@
         "./@mf-types/design"
       ],
       "design/*": [
-        "./@mf-types/design/*"
+        "./@mf-types/design/*",
+        "./@mf-types/design/compiled-types/src/*"
       ],
       "moonshot": [
         "./@mf-types/moonshot"

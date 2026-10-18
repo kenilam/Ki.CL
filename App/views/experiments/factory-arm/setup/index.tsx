@@ -58,7 +58,7 @@ type Value = {
   applied: Setup;
   /** Counts runs; the cell is built again whenever it goes up. */
   run: number;
-  /** Builds the cell again from `setup`. */
+  /** Builds the cell again from `setup`, and folds the panel away on small screens. */
   proceed: (setup: Preset | Setup) => void;
   draft: Draft;
   setDraft: (draft: Draft) => void;
@@ -169,6 +169,8 @@ const SetupProvider: React.FunctionComponent<PropsWithChildren> = ({
       setRun((count) => count + 1);
       current.current += 1;
       note(started(setup), 'info', true);
+      // On small screens the panel covers the stage, so it folds away to show the run.
+      setOpen(matchMedia(WIDE).matches);
     },
     [note]
   );

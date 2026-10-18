@@ -22,7 +22,7 @@ const WhatIGaveUp: React.FunctionComponent = () => {
   return (
     <Layout justifyItems='start'>
       <section aria-labelledby={id}>
-        <Heading id={id} is='h2' className='kicl-font-size-large'>
+        <Heading id={id} is='h2' lookLike='h1'>
           {t('title', { context: 'what_i_gave_up' })}
         </Heading>
 

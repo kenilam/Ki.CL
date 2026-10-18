@@ -27,6 +27,6 @@ const FILE = `/assets/static/${OBJECT}`;
 const PHONE_KEY = 'kicl-resume-phone';
 
 /** Every section's heading: a small label over a rule. */
-const HEADING = ['kicl-font-size-small', 'kicl-text-transform-uppercase'];
+const HEADING = 'kicl-font-size-small kicl-text-transform-uppercase';
 
 export { CLASS_NAME, FILE, HEADING, OBJECT, PATH, PHONE_KEY };

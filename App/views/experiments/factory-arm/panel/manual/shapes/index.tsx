@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -33,11 +33,12 @@ const NAMES = Object.keys(SHAPES) as Shape[];
 const Shapes: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
   const { cell } = useSetup();
+  const id = useId();
 
   return (
     <Layout gap='narrow'>
-      <section aria-labelledby='factory-arm-shapes'>
-        <Heading dense id='factory-arm-shapes' is='h2' lookLike='h5'>
+      <section aria-labelledby={id}>
+        <Heading dense id={id} is='h2' lookLike='h5'>
           {t('title', { context: 'obstacles' })}
         </Heading>
         <Text
@@ -66,15 +67,16 @@ const Shapes: React.FunctionComponent = () => {
                   variant='secondary'
                 >
                   {t('shape', { context: shape })}
-                  <span
+                  <Text
                     className={classNames(
                       'kicl-font-family-mono',
                       'kicl-font-size-smaller',
                       'kicl-color-grey'
                     )}
+                    is='span'
                   >
                     {t('size', { depth, height, width })}
-                  </span>
+                  </Text>
                 </Button>
               </ListItem>
             );

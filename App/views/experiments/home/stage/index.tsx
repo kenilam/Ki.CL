@@ -95,7 +95,7 @@ const Stage: React.FunctionComponent = () => {
         )}
       >
         <Frame clip={false}>
-          <List is='ol' gap='none' ref={list as never}>
+          <List is='ol' gap='none' ref={list}>
             {SCREENS.map((screen, index) => (
               <Screen
                 experiment={screen}

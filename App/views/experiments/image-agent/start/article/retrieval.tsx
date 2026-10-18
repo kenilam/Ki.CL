@@ -18,21 +18,21 @@ const Retrieval: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.retrieval.title')}
         </Heading>
       }
     >
       <Text is='p'>{t('article.retrieval.assumed')}</Text>
       <Diagram spec={spec} />
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.retrieval.title', { context: 'conversation' })}
       </Heading>
       <Text is='p'>
         <Markdown>{t('article.retrieval.plain_text')}</Markdown>
       </Text>
       <Text is='p'>{t('article.retrieval.brief')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.retrieval.title', { context: 'similar' })}
       </Heading>
       <Text is='p'>{t('article.retrieval.similar')}</Text>

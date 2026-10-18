@@ -75,11 +75,11 @@ const Confirm: React.FunctionComponent = () => {
 
   if (invalid) {
     return (
-      <Card className='kicl-inline-size-max' variant='ghost'>
+      <Card size='max' variant='secondary'>
         <Layout gap='narrow' justifyItems='center'>
           <CardContent>
             <Status
-              align='center'
+              justifyContent='center'
               headingLevel='h1'
               in
               level='warning'
@@ -103,7 +103,7 @@ const Confirm: React.FunctionComponent = () => {
   }
 
   return (
-    <Card className='kicl-inline-size-max' variant='ghost'>
+    <Card size='max' variant='secondary'>
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>

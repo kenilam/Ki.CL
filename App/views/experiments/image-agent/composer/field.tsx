@@ -67,7 +67,7 @@ const Field: React.FunctionComponent<Props> = ({
                 rows={1}
               />
             </FormControl>
-            <InputGroupAddon align='inline-end'>
+            <InputGroupAddon>
               <InputGroupButton
                 aria-label={common('action', { context: 'send' })}
                 disabled={disabled}

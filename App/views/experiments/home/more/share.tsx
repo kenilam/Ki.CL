@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
@@ -6,17 +6,17 @@ import { useTranslation } from 'react-i18next';
 // Components
 import { Button } from 'design/components';
 
+// Hooks
+import { useClipboard } from 'design/hooks';
+
 // Icons
 import * as Ri from 'react-icons/ri';
-
-/** How long "copied" stays on the button. */
-const COPIED_MS = 1800;
 
 /** Opens the system share sheet; where there is none, copies the address instead. */
 const Share: React.FunctionComponent = () => {
   const { t } = useTranslation('experiments');
   const { t: common } = useTranslation();
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useClipboard();
 
   const share = async () => {
     const url = window.location.href;
@@ -31,9 +31,7 @@ const Share: React.FunctionComponent = () => {
       return;
     }
 
-    await navigator.clipboard?.writeText(url);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), COPIED_MS);
+    await copy(url);
   };
 
   const label = copied

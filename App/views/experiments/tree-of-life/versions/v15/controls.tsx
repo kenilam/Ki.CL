@@ -35,7 +35,7 @@ const Controls: React.FunctionComponent = () => {
       gap='narrower'
     >
       <section aria-label={t('label', { context: 'animation' })}>
-        <Spinner size='small' in={loading} position='inline' backdrop={false} />
+        <Spinner in={loading} position='inline' size='small' />
         <Button
           unstyled
           type='button'

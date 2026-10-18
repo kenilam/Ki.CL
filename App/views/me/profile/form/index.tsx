@@ -12,7 +12,13 @@ import {
 } from 'api/provider';
 
 // Components
-import { Button, CardContent, Form as Origin, Layout } from 'design/components';
+import {
+  Button,
+  CardContent,
+  CardFooter,
+  Form as Origin,
+  Layout,
+} from 'design/components';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -68,31 +74,27 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
           <Status />
         </CardContent>
       </Layout>
-      <Layout autoFlow='column' justifyContent='center' gap='narrow'>
-        <footer className='kicl-padding-block'>
-          <Button
-            disabled={loading}
-            size='small'
-            type='reset'
-            variant='secondary'
-          >
-            {common('action', { context: 'reset' })}
-          </Button>
-          <Button
-            after={
-              loading && (
-                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-              )
-            }
-            disabled={loading}
-            size='small'
-            type='submit'
-            level='confirm'
-          >
-            {common('action', { context: 'save' })}
-          </Button>
-        </footer>
-      </Layout>
+      <CardFooter justifyContent='center'>
+        <Button
+          disabled={loading}
+          size='small'
+          type='reset'
+          variant='secondary'
+        >
+          {common('action', { context: 'reset' })}
+        </Button>
+        <Button
+          after={
+            loading && <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+          }
+          disabled={loading}
+          size='small'
+          type='submit'
+          level='confirm'
+        >
+          {common('action', { context: 'save' })}
+        </Button>
+      </CardFooter>
     </Origin>
   );
 };

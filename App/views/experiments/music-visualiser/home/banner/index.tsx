@@ -23,7 +23,7 @@ const CLASS_NAME = `${HOME}__banner`;
  */
 const Banner: React.FunctionComponent = () => (
   <Layout alignContent='center' justifyContent='stretch' justifyItems='center'>
-    <Frame grow hold>
+    <Frame grow>
       <section className={classNames(CLASS_NAME, 'kicl-position-relative')}>
         <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
         <Words />

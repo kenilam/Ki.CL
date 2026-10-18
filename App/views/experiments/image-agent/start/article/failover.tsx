@@ -17,7 +17,7 @@ const Failover: React.FunctionComponent = () => {
     <Details
       gap='narrow'
       summary={
-        <Heading className='kicl-font-size-large' dense is='h3'>
+        <Heading dense is='h3' lookLike='h1'>
           {t('article.failover.title')}
         </Heading>
       }
@@ -31,16 +31,16 @@ const Failover: React.FunctionComponent = () => {
         ))}
       </List>
       <Text is='p'>{t('article.failover.groq')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.failover.title', { context: 'timeouts' })}
       </Heading>
       <Text is='p'>{t('article.failover.timeouts')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.failover.title', { context: 'quota' })}
       </Heading>
       <Text is='p'>{t('article.failover.quota')}</Text>
       <Text is='p'>{t('article.failover.before_split')}</Text>
-      <Heading is='h4' className='kicl-font-size-medium'>
+      <Heading is='h4' lookLike='h2'>
         {t('article.failover.title', { context: 'everything' })}
       </Heading>
       <Text is='p'>{t('article.failover.everything')}</Text>

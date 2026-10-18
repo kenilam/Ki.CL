@@ -19,21 +19,15 @@ const Footer: React.FunctionComponent = () => {
     >
       <footer>
         <Separator />
-        <Layout
-          alignContent='center'
-          alignItems='center'
-          justifyContent='center'
-          justifyItems='center'
+        <Text
+          className={classNames(
+            'kicl-font-style-italic',
+            'kicl-padding-block-wider',
+            'kicl-text-align-center'
+          )}
         >
-          <Text
-            className={classNames(
-              'kicl-font-style-italic',
-              'kicl-padding-block-wider'
-            )}
-          >
-            {t('footer')}
-          </Text>
-        </Layout>
+          {t('footer')}
+        </Text>
         <Separator />
         <Text
           className={classNames(
