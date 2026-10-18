@@ -4,7 +4,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Button, Dialog, List, ListItem, Text } from 'design/components';
+import {
+  Button,
+  Dialog,
+  Heading,
+  List,
+  ListItem,
+  Text,
+} from 'design/components';
 
 type Props = {
   /** Whether to ask. */
@@ -41,10 +48,14 @@ const Confirm: React.FunctionComponent<Props> = ({
           </ListItem>
         </List>
       }
+      header={
+        <Heading dense is='h2' lookLike='h4'>
+          {t('start_over', { context: 'title' })}
+        </Heading>
+      }
       onClose={onCancel}
       open={open}
       role='alertdialog'
-      title={t('start_over', { context: 'title' })}
     >
       <Text className='kicl-font-size-small' is='p'>
         {t('start_over', { context: 'message' })}
