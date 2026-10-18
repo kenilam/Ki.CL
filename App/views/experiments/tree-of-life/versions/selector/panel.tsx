@@ -32,7 +32,7 @@ const Panel: React.FunctionComponent = () => {
       id={CLASS_NAME}
       popover='auto'
     >
-      <Card variant='ghost'>
+      <Card variant='secondary'>
         {/*
           Every entry names a version, the current one included. The separate
           "Final" link pointed at an unversioned node path, which no longer

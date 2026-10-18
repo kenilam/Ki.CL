@@ -22,7 +22,7 @@ const WhatChanges: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'what_changes' })}
       </Heading>
       <Diagram opens='diagram-agent-plane' spec={spec} />

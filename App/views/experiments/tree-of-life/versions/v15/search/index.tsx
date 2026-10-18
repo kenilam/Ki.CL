@@ -210,7 +210,7 @@ const Search: React.FunctionComponent = () => {
 
   return (
     <search>
-      <Card variant='ghost' className='kicl-inline-size-xxl'>
+      <Card variant='secondary' className='kicl-inline-size-xxl'>
         <Layout autoFlow='row' gap='narrow'>
           <CardContent>
             {/*
@@ -221,7 +221,7 @@ const Search: React.FunctionComponent = () => {
               field matches everything else on the page.
             */}
             <InputGroup className={`${CLASS_NAME}__search`}>
-              <InputGroupAddon align='inline-start'>
+              <InputGroupAddon>
                 <Ri.RiSearchLine aria-hidden />
               </InputGroupAddon>
 
@@ -237,7 +237,7 @@ const Search: React.FunctionComponent = () => {
               />
 
               {query ? (
-                <InputGroupAddon align='inline-end'>
+                <InputGroupAddon>
                   <InputGroupButton
                     variant='ghost'
                     type='button'

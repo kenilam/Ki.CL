@@ -58,8 +58,8 @@ const Notice: React.FunctionComponent = () => {
         <Animation property='slide-from-bottom'>
           <Badge
             className='kicl-text-nowrap'
-            level={level}
             size='small'
+            level={level}
             variant='outline'
           >
             {/* A status dot in the level's colour; the outline's text is the page's. */}

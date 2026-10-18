@@ -27,7 +27,7 @@ const Intro: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
 
   return (
-    <div className={classNames('kicl-position-relative')}>
+    <div className='kicl-position-relative'>
       <HyperLink
         before={<Ri.RiArrowLeftSFill aria-hidden />}
         to={toExperimentsPath(PATH)}
@@ -45,11 +45,11 @@ const Intro: React.FunctionComponent = () => {
       >
         {common('experiment', { context: 'tree_of_life' })}
       </Heading>
-      <Text is='p' className={classNames('kicl-font-size-medium')}>
+      <Text is='p' className='kicl-font-size-medium'>
         {t('lede')}
       </Text>
       <HyperLink
-        className={classNames('kicl-background-color-confirm')}
+        level='confirm'
         lookLikeButton
         to={toVersionPath({ version: VERSION })}
         size='small'

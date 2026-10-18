@@ -8,11 +8,10 @@ import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants
 /** Root of every class and custom property in this view. */
 const CLASS_NAME = 'kicl--views--experiments__home';
 
-export type Experiment = {
+/** `level` is the accent of the panel's button. */
+export type Experiment = Pick<ButtonProps, 'level'> & {
   /** Names it in `common` (`experiment_<context>`) and describes it here (`description_<context>`). */
   context: 'daylight' | 'image_agent' | 'music_visualiser' | 'tree_of_life';
-  /** Accent of the panel's button, from the palette. */
-  level?: ButtonProps['level'];
   /** Which background Stage/Screen paints; a class modifier. */
   plate: string;
   to: string;

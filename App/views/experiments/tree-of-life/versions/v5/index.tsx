@@ -355,6 +355,7 @@ const Canvas: React.FunctionComponent = () => {
           `${CLASS_NAME}__hint`,
           'kicl-position-absolute',
           'kicl-inset-block-end',
+          'kicl-inset-inline-center',
           'kicl-pointer-events-none',
           'kicl-font-size-smaller',
           'kicl-color-grey-dark',

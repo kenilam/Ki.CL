@@ -31,6 +31,7 @@ const Remove: React.FunctionComponent<Props> = ({ id, size }) => {
   return (
     <Drei.Html center position={[0, size[1] / 2 + ABOVE, 0]}>
       <Button
+        aria-label={t('action', { context: 'remove_obstacle' })}
         onClick={() => {
           select(null);
           write.withdraw(id);
@@ -38,9 +39,6 @@ const Remove: React.FunctionComponent<Props> = ({ id, size }) => {
         variant='secondary'
       >
         <Ri.RiDeleteBinLine aria-hidden />
-        <span className='kicl-hidden'>
-          {t('action', { context: 'remove_obstacle' })}
-        </span>
       </Button>
     </Drei.Html>
   );

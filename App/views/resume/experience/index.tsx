@@ -2,7 +2,6 @@ import React, { useId } from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
-import classNames from 'classnames';
 
 // Components
 import { Heading, Layout, Separator } from 'design/components';
@@ -33,7 +32,7 @@ const Experience: React.FunctionComponent = () => {
       <section aria-labelledby={titleId}>
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
-            <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
+            <Heading className={HEADING} dense id={titleId} is='h2'>
               {t('title', { context: 'experience' })}
             </Heading>
             <Separator />

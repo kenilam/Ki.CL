@@ -11,9 +11,10 @@ import {
   Kicl_TaxonVisualDocument,
   Kicl_TaxonVisualUpdatedDocument,
   Kicl_TreeOfLifeSubtreeDocument,
+  type Kicl_TaxonVisualQueryVariables,
 } from 'api/provider';
 
-import { Status } from 'design/components';
+import { Status, Text } from 'design/components';
 
 import {
   labelFor,
@@ -46,7 +47,7 @@ export function isTaxonVisualEligible(
 type Props = {
   node: TreeNode;
   isOrigin?: boolean;
-  onSubtree: (subtree: TreeNode) => void;
+  onSubtree?: (subtree: TreeNode) => void;
 };
 
 const TaxonVisualPanel: React.FC<Props> = ({
@@ -60,11 +61,8 @@ const TaxonVisualPanel: React.FC<Props> = ({
   const rank = displayRank(node.rank) || null;
   const ottId = node.ottId ?? null;
 
-  const [debounced, setDebounced] = useState<{
-    ottId: number;
-    name: string;
-    rank: string | null;
-  } | null>(null);
+  const [debounced, setDebounced] =
+    useState<Kicl_TaxonVisualQueryVariables | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
   const [fetchSubtree] = useLazyQuery(Kicl_TreeOfLifeSubtreeDocument, {
@@ -139,7 +137,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
         });
         const raw = result.data?.TreeOfLifeSubtree;
         if (!cancelled && raw?.nodeId) {
-          onSubtree(fromSubtreeNode(raw));
+          onSubtree?.(fromSubtreeNode(raw));
         }
       } finally {
         if (!cancelled) {
@@ -161,7 +159,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
         title={t('title', { context: 'plate' })}
         headingLevel='h3'
         message={t('plate', { context: 'pick' })}
-        align='start'
+        justifyContent='start'
         property='fade'
       />
     );
@@ -182,12 +180,12 @@ const TaxonVisualPanel: React.FC<Props> = ({
         Mounted in every state, so the change from drawing to a plate or a
         failure is announced. A region that mounts with its text is not.
       */}
-      <p className='kicl-hidden' aria-live='polite'>
+      <Text is='p' className='kicl-hidden' aria-live='polite'>
         {t('plate', {
           context: announcementFor({ imageUrl, isGenerating }),
           name: name || t('this_taxon'),
         })}
-      </p>
+      </Text>
       <Plate
         failed={failed}
         imageUrl={imageUrl}

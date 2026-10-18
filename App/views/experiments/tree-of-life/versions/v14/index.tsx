@@ -556,10 +556,9 @@ const MapStage: React.FunctionComponent<{
       >
         <section aria-label={t('label', { context: 'map_controls' })}>
           <Spinner
-            size='small'
             in={networkBusy}
             position='inline'
-            backdrop={false}
+            size='small'
             className={classNames(
               `${CLASS_NAME}__status`,
               'kicl-pointer-events-none',
@@ -568,8 +567,8 @@ const MapStage: React.FunctionComponent<{
             )}
           />
           <Switch
-            size='sm'
             checked={autoMode}
+            size='small'
             onCheckedChange={onAutoModeChange}
             title={t('hint', { context: 'grow' })}
           >

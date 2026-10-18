@@ -12,7 +12,7 @@ const Resiliency: React.FunctionComponent = () => {
 
   return (
     <>
-      <Heading className='kicl-font-size-large' is='h3'>
+      <Heading is='h3' lookLike='h1'>
         {t('title', { context: 'resiliency' })}
       </Heading>
       <Text>{t('part_one.resiliency.intro')}</Text>

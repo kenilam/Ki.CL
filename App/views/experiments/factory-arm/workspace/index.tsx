@@ -66,13 +66,11 @@ const Workspace: React.FunctionComponent = () => {
           'kicl-inset-inline-end',
           'kicl-z-index-floating'
         )}
+        aria-label={t('action', { context: 'open_setup' })}
         popoverTarget={PANEL}
         variant='secondary'
       >
         <Ri.RiSettings3Line aria-hidden />
-        <span className='kicl-hidden'>
-          {t('action', { context: 'open_setup' })}
-        </span>
       </Button>
 
       <Panel />

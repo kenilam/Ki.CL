@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Bubble, Card, Layout, Text } from 'design/components';
 
 // Partials
-import { Choices } from './choices';
+import { Choices, type ChoicesProps } from './choices';
 import { isNotice, Notice } from './notice';
 import { Picture, type PictureProps } from './picture';
 import { Retry } from './retry';
@@ -23,20 +23,18 @@ import type { Message as MessageType } from '@/views/experiments/image-agent/cha
 
 const CLASS_NAME = `${CONVERSATION}__message`;
 
-type Props = {
-  /** Arrived after the page loaded, so the agent's text animates in. */
-  fresh?: boolean;
-  message: MessageType;
-  /** The conversation's title, for a picture's dialog. */
-  title: PictureProps['title'];
-  /** Only set while the choices can be picked (last message, agent idle). */
-  onChoose?: (text: string) => unknown;
-  /**
-   * Only on the person's messages, and only while nothing is running. Asks this
-   * message again.
-   */
-  onRetry?: (messageId: string) => unknown;
-};
+/** `onChoose` is only set while the choices can be picked (last message, agent idle). */
+type Props = Pick<PictureProps, 'title'> &
+  Partial<Pick<ChoicesProps, 'onChoose'>> & {
+    /** Arrived after the page loaded, so the agent's text animates in. */
+    fresh?: boolean;
+    message: MessageType;
+    /**
+     * Only on the person's messages, and only while nothing is running. Asks this
+     * message again.
+     */
+    onRetry?: (messageId: string) => unknown;
+  };
 
 /**
  * One turn. The person's message is a bubble at the end of the line, the
@@ -53,12 +51,13 @@ const Message = React.forwardRef<HTMLElement, Props>(
     return (
       <Bubble
         is='li'
-        align={mine ? 'end' : 'start'}
         className={classNames(
           CLASS_NAME,
           `${CLASS_NAME}--${message.role.toLowerCase()}`,
           // Each message slides in from its own side as it scrolls into view.
-          mine ? 'kicl-scroll-reveal-end' : 'kicl-scroll-reveal-start'
+          mine
+            ? 'kicl-margin-inline-start-auto kicl-scroll-reveal-end'
+            : 'kicl-scroll-reveal-start'
         )}
         ref={ref}
         variant={mine ? 'secondary' : 'ghost'}
@@ -93,7 +92,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
         ) : null}
 
         {message.kind === 'IMAGE' ? (
-          <Card size='fit' variant='ghost'>
+          <Card size='fit' variant='secondary'>
             {message.asset?.url ? (
               <Picture title={title} url={message.asset.url} />
             ) : null}

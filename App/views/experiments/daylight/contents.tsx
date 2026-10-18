@@ -47,7 +47,7 @@ const Daylight: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='none'>
       {/* The frame clips the drawing to the page. */}
-      <Frame grow hold>
+      <Frame grow>
         {/* The words, then the places under them, at the top. */}
         <Layout alignContent='start' autoFlow='row' gap='narrow'>
           <article
