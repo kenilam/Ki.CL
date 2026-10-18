@@ -10,7 +10,7 @@ import {
 } from 'api/provider';
 
 // Components
-import { Dialog } from 'design/components';
+import { Dialog, Heading } from 'design/components';
 
 // Widgets
 import { ContactForm, type ContactFormValues } from 'design/widgets';
@@ -59,8 +59,12 @@ const Contact: React.FunctionComponent = () => {
   return (
     <Dialog
       id={CONTACT_ID}
+      header={
+        <Heading dense is='h2' lookLike='h4'>
+          {t('send_message')}
+        </Heading>
+      }
       onClose={() => setOpened((count) => count + 1)}
-      title={t('send_message')}
     >
       <ContactForm
         email={me?.Email ?? undefined}

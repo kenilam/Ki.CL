@@ -35,7 +35,6 @@ import {
   Card,
   CardAction,
   CardContent,
-  CardHeader,
   CardTitle,
   Details,
   Form,
@@ -1226,72 +1225,74 @@ const Canvas: React.FunctionComponent = () => {
                       'kicl-inline-size-xxl',
                       'kicl-user-select-text'
                     )}
+                    header={
+                      <>
+                        {displayRank(selectedLayoutNode.node.rank) ||
+                        isTerminalRank(selectedLayoutNode.node.rank) ||
+                        selectedLayoutNode.node.ottId != null ? (
+                          <List
+                            display='inline-grid'
+                            gap='narrow'
+                            autoFlow='column'
+                            alignItems='center'
+                            justifyContent='start'
+                          >
+                            {displayRank(selectedLayoutNode.node.rank) ? (
+                              <Badge
+                                is='li'
+                                variant='outline'
+                                className={classNames(
+                                  'kicl-font-size-smaller',
+                                  'kicl-text-transform-lowercase'
+                                )}
+                              >
+                                <BadgeLabel>
+                                  {t('label', { context: 'rank' })}
+                                </BadgeLabel>
+                                {displayRank(selectedLayoutNode.node.rank)}
+                              </Badge>
+                            ) : null}
+                            {isTerminalRank(selectedLayoutNode.node.rank) ? (
+                              <Badge
+                                is='li'
+                                variant='secondary'
+                                className={classNames(
+                                  'kicl-font-size-smaller',
+                                  'kicl-text-transform-lowercase'
+                                )}
+                              >
+                                {t('terminal')}
+                              </Badge>
+                            ) : null}
+                            {selectedLayoutNode.node.ottId != null ? (
+                              <Badge
+                                is='li'
+                                variant='outline'
+                                className='kicl-font-size-smaller'
+                              >
+                                <BadgeLabel>
+                                  {t('label', { context: 'ott_id' })}
+                                </BadgeLabel>
+                                {selectedLayoutNode.node.ottId}
+                              </Badge>
+                            ) : null}
+                          </List>
+                        ) : null}
+                        <CardAction>
+                          <Button
+                            unstyled
+                            type='button'
+                            aria-label={t('action', { context: 'close_panel' })}
+                            title={common('action', { context: 'close' })}
+                            className='kicl-color-grey-dark'
+                            onClick={onControlsReset}
+                          >
+                            <Ri.RiCloseLine aria-hidden />
+                          </Button>
+                        </CardAction>
+                      </>
+                    }
                   >
-                    <CardHeader>
-                      {displayRank(selectedLayoutNode.node.rank) ||
-                      isTerminalRank(selectedLayoutNode.node.rank) ||
-                      selectedLayoutNode.node.ottId != null ? (
-                        <List
-                          display='inline-grid'
-                          gap='narrow'
-                          autoFlow='column'
-                          alignItems='center'
-                          justifyContent='start'
-                        >
-                          {displayRank(selectedLayoutNode.node.rank) ? (
-                            <Badge
-                              is='li'
-                              variant='outline'
-                              className={classNames(
-                                'kicl-font-size-smaller',
-                                'kicl-text-transform-lowercase'
-                              )}
-                            >
-                              <BadgeLabel>
-                                {t('label', { context: 'rank' })}
-                              </BadgeLabel>
-                              {displayRank(selectedLayoutNode.node.rank)}
-                            </Badge>
-                          ) : null}
-                          {isTerminalRank(selectedLayoutNode.node.rank) ? (
-                            <Badge
-                              is='li'
-                              variant='secondary'
-                              className={classNames(
-                                'kicl-font-size-smaller',
-                                'kicl-text-transform-lowercase'
-                              )}
-                            >
-                              {t('terminal')}
-                            </Badge>
-                          ) : null}
-                          {selectedLayoutNode.node.ottId != null ? (
-                            <Badge
-                              is='li'
-                              variant='outline'
-                              className='kicl-font-size-smaller'
-                            >
-                              <BadgeLabel>
-                                {t('label', { context: 'ott_id' })}
-                              </BadgeLabel>
-                              {selectedLayoutNode.node.ottId}
-                            </Badge>
-                          ) : null}
-                        </List>
-                      ) : null}
-                      <CardAction>
-                        <Button
-                          unstyled
-                          type='button'
-                          aria-label={t('action', { context: 'close_panel' })}
-                          title={common('action', { context: 'close' })}
-                          className='kicl-color-grey-dark'
-                          onClick={onControlsReset}
-                        >
-                          <Ri.RiCloseLine aria-hidden />
-                        </Button>
-                      </CardAction>
-                    </CardHeader>
                     <Layout gap='narrow'>
                       <CardContent>
                         <Details

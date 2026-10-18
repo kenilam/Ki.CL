@@ -32,10 +32,10 @@ const Panel: React.FunctionComponent = () => {
       aria-label={t('setup')}
       className={`${CLASS_NAME}__panel`}
       defaultOpen={open}
+      header={<Tabs />}
       id={PANEL}
       onOpenChange={setOpen}
     >
-      <Tabs />
       {tab === 'preset' && <Presets />}
       {tab === 'manual' && <Manual />}
       {tab === 'log' && <Log />}
