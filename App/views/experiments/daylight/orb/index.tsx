@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Hooks
-import { useResizeObserver, useTheme } from 'design/hooks';
+import { useResizeObserver, useResponsive } from 'design/hooks';
 import { useOrb } from './use-orb';
 
 // Constants
@@ -24,7 +24,7 @@ type Props = Omit<
  */
 const Orb: React.FunctionComponent<Props> = (props) => {
   const { node, rect } = useResizeObserver<HTMLCanvasElement>();
-  const { theme } = useTheme();
+  const { theme } = useResponsive();
   const { handlers, over } = useOrb({
     ...props,
     canvas: node.current,
