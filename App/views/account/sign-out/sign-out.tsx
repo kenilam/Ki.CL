@@ -66,7 +66,7 @@ const SignOut: React.FunctionComponent = () => {
         <section className='kicl-padding-block-end-wide'>
           <Animation property='slide-from-top'>
             <Heading dense id={titleId}>
-              <AnimatedText accent='error' is='span' role='alert'>
+              <AnimatedText level='error' is='span' role='alert'>
                 {pending
                   ? t('sign_out', { context: 'pending' })
                   : t('sign_out', { context: 'confirm' })}
@@ -80,7 +80,7 @@ const SignOut: React.FunctionComponent = () => {
           </Animation>
           <Spinner in={pending} position='inline' />
           <Animation in={state === 'failed'}>
-            <AnimatedText accent='error' is='p' role='alert'>
+            <AnimatedText level='error' is='p' role='alert'>
               {t('sign_out', { context: 'failed' })}
             </AnimatedText>
           </Animation>

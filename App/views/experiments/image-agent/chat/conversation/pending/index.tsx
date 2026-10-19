@@ -46,7 +46,7 @@ const Pending = React.forwardRef<HTMLElement, Props>(
         is='li'
         className={classNames(CLASS_NAME, 'kicl-scroll-reveal-start')}
         ref={ref}
-        variant='ghost'
+        variant='tertiary'
       >
         <MessageText
           busy

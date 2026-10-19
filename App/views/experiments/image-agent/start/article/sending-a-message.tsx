@@ -29,13 +29,13 @@ const SendingAMessage: React.FunctionComponent = () => {
   /** How long a turn may go quiet in each status before it is marked failed. */
   const quiet: DiagramLegendItem[] = [
     {
-      accent: 'warning',
       label: 'THINKING',
+      level: 'warning',
       value: t('article.sending.quiet', { context: 'thinking' }),
     },
     {
-      accent: 'info',
       label: 'DRAWING',
+      level: 'info',
       value: t('article.sending.quiet', { context: 'drawing' }),
     },
   ];

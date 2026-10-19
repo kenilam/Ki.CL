@@ -21,7 +21,7 @@ const RootError: React.FunctionComponent = () => {
 
   return (
     <Animation property='slide-from-top'>
-      <Text accent='error' className='kicl-font-size-small' is='p' role='alert'>
+      <Text level='error' className='kicl-font-size-small' is='p' role='alert'>
         {errors.root.message}
       </Text>
     </Animation>

@@ -70,7 +70,7 @@ const Details: React.FunctionComponent = () => {
             {rank ? (
               <Badge
                 is='li'
-                variant='outline'
+                variant='ghost'
                 className={classNames(
                   'kicl-font-size-smaller',
                   'kicl-text-transform-lowercase'
@@ -95,7 +95,7 @@ const Details: React.FunctionComponent = () => {
             {node.ottId != null ? (
               <Badge
                 is='li'
-                variant='outline'
+                variant='ghost'
                 className='kicl-font-size-smaller'
               >
                 <BadgeLabel>{t('label', { context: 'ott_id' })}</BadgeLabel>

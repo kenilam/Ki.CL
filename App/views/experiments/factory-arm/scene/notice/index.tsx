@@ -60,7 +60,7 @@ const Notice: React.FunctionComponent = () => {
             className='kicl-text-nowrap'
             size='small'
             level={level}
-            variant='outline'
+            variant='ghost'
           >
             {/* A status dot in the level's colour; the outline's text is the page's. */}
             <Ri.RiCheckboxBlankCircleFill
