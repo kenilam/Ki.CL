@@ -1240,7 +1240,7 @@ const Canvas: React.FunctionComponent = () => {
                             {displayRank(selectedLayoutNode.node.rank) ? (
                               <Badge
                                 is='li'
-                                variant='outline'
+                                variant='ghost'
                                 className={classNames(
                                   'kicl-font-size-smaller',
                                   'kicl-text-transform-lowercase'
@@ -1267,7 +1267,7 @@ const Canvas: React.FunctionComponent = () => {
                             {selectedLayoutNode.node.ottId != null ? (
                               <Badge
                                 is='li'
-                                variant='outline'
+                                variant='ghost'
                                 className='kicl-font-size-smaller'
                               >
                                 <BadgeLabel>
@@ -1345,7 +1345,7 @@ const Canvas: React.FunctionComponent = () => {
         </Layout>
 
         <Badge
-          variant='outline'
+          variant='ghost'
           className={classNames(
             `${CLASS_NAME}__credit`,
             'kicl-position-fixed',

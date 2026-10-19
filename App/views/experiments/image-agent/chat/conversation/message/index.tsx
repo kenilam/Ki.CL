@@ -60,7 +60,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
             : 'kicl-scroll-reveal-start'
         )}
         ref={ref}
-        variant={mine ? 'secondary' : 'ghost'}
+        variant={mine ? 'ghost' : 'tertiary'}
       >
         <Text is='span' className='kicl-hidden'>
           {t('role', { context: mine ? 'you' : 'agent' })}

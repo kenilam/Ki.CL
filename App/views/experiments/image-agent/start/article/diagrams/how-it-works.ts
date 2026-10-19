@@ -8,12 +8,12 @@ const howItWorks = (t: TFunction<'image-agent'>): DiagramSpec => ({
     {
       label: t('diagram.label', { context: 'red' }),
       value: t('diagram.how_it_works.legend', { context: 'red' }),
-      accent: 'error',
+      level: 'error',
     },
     {
       label: t('diagram.label', { context: 'green' }),
       value: t('diagram.how_it_works.legend', { context: 'green' }),
-      accent: 'confirm',
+      level: 'confirm',
     },
   ],
   description: t('diagram.how_it_works.description'),
