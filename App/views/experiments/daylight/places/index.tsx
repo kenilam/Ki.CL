@@ -77,7 +77,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
         aria-label={t('label', { context: 'places' })}
         className='kicl-padding'
         placement='block-end'
-        variant='ghost'
+        variant='secondary'
       >
         <List alignContent='stretch' autoFlow='row'>
           {PLACES.map((place, index) => {

@@ -11,7 +11,7 @@ const allowance = (t: TFunction<'image-agent'>): DiagramSpec => ({
     {
       label: t('diagram.label', { context: 'green' }),
       value: t('diagram.allowance.legend', { context: 'green' }),
-      accent: 'confirm',
+      level: 'confirm',
     },
     {
       label: t('diagram.label', { context: 'dashed' }),

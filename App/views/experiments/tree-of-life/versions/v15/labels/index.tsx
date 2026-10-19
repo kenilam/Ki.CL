@@ -135,7 +135,7 @@ const Labels: React.FunctionComponent = () => {
         >
           <Badge
             is='span'
-            variant={label.accent ? 'secondary' : 'outline'}
+            variant={label.accent ? 'secondary' : 'ghost'}
             /*
              * Set on the badge, not on the link around it. `Badge` declares
              * these properties on itself, and a self-declaration beats an

@@ -22,12 +22,12 @@ const governing = (t: TFunction<'image-agent'>): DiagramSpec => ({
     {
       label: t('diagram.label', { context: 'green' }),
       value: t('diagram.governing.legend', { context: 'green' }),
-      accent: 'confirm',
+      level: 'confirm',
     },
     {
       label: t('diagram.label', { context: 'red' }),
       value: t('diagram.governing.legend', { context: 'red' }),
-      accent: 'error',
+      level: 'error',
     },
   ],
   description: t('diagram.governing.description'),
