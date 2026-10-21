@@ -12,6 +12,7 @@ import type pika from '@/locales/en/pika.json';
 import type portfolio from '@/locales/en/portfolio.json';
 import type resume from '@/locales/en/resume.json';
 import type treeOfLife from '@/locales/en/tree-of-life.json';
+import type workshop from '@/locales/en/workshop.json';
 
 /** Keys are checked against the English files, which seed the database. */
 declare module 'i18next' {
@@ -30,6 +31,7 @@ declare module 'i18next' {
       portfolio: typeof portfolio;
       resume: typeof resume;
       'tree-of-life': typeof treeOfLife;
+      workshop: typeof workshop;
     };
   }
 }

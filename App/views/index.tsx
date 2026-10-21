@@ -7,12 +7,13 @@ import { Router, Route } from 'design/router';
 import { ErrorElement, Status404 } from 'design/status';
 
 // Views
-import { DesignSystem } from './design-system';
 import { Experiments } from './experiments';
 import { Home } from './home';
 import { Me } from './me';
 import { Portfolio } from './portfolio';
 import { Resume } from './resume';
+import { Workshop } from './workshop';
+import { DesignSystemRedirect } from './workshop/design-system/redirect';
 
 // Partials
 import { Element } from './element';
@@ -22,12 +23,13 @@ const Views: React.FunctionComponent = () => {
     <Router>
       <Route path='/' errorElement={<ErrorElement />} element={<Element />}>
         <Route path='*' element={<Status404 />} />
-        {DesignSystem}
+        {DesignSystemRedirect}
         {Experiments}
         {Home}
         {Me}
         {Portfolio}
         {Resume}
+        {Workshop}
       </Route>
     </Router>
   );

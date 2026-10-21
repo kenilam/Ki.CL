@@ -23,6 +23,7 @@
   "assets": "assets",
   "brief": "Brief",
   "dashed": "Dashed",
+  "design_system": "Design system",
   "document_title": "Ki.CL | {{routes}}",
   "email": "hello@ki-cl.com",
   "experiment_daylight": "Daylight",
@@ -69,5 +70,6 @@
   "url_experiments": "https://ki-cl.com/experiments",
   "url_github": "https://github.com/kenilam",
   "url_linkedin": "https://www.linkedin.com/in/kenilam",
-  "url_moonshot": "https://github.com/kenilam/Ki.CL-moonshot-exercise"
+  "url_moonshot": "https://github.com/kenilam/Ki.CL-moonshot-exercise",
+  "workshop": "Workshop"
 }
