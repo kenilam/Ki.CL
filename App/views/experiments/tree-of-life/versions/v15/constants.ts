@@ -2,6 +2,9 @@ import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constan
 
 import type { Vector3Tuple } from 'three';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 /** The origin of life sits at the centre of the globe, and everything radiates from it. */
 export const ORIGIN: Vector3Tuple = [0, 0, 0];
 
@@ -25,7 +28,7 @@ export const OFFSET_OF_VIEWPORT = 0.05;
 export const GLOBE_MARGIN = 1.3;
 
 /** Strong green at the origin; every other colour is derived from it. */
-export const ROOT_COLOR = '#1e8f57';
+export const ROOT_COLOR = tokenColor('green-600');
 
 /**
  * The first branch out of the centre; later generations taper from here.

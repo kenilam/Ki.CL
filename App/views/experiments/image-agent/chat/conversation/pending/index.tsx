@@ -61,7 +61,7 @@ const Pending = React.forwardRef<HTMLElement, Props>(
             className={classNames(
               'kicl-font-family-mono',
               'kicl-font-size-smaller',
-              'kicl-color-grey-dark'
+              'kicl-color-grey-700'
             )}
           >
             {t('elapsed', { seconds })}

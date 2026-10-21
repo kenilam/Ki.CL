@@ -5,11 +5,7 @@
       var(--kicl--tree-of-life--plate),
       linear-gradient(
         120deg,
-        color-mix(
-          in oklab,
-          var(--kicl-color-green) 70%,
-          var(--kicl-color-white-pure)
-        ),
+        var(--kicl-color-green-300),
         var(--kicl-color-green)
       );
     background-position:

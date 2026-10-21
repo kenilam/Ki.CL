@@ -24,6 +24,9 @@ import { Sensing } from './sensors';
 // Constants
 import { BUFFER, INCOMING } from './constants';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 const Scene: React.FunctionComponent = () => {
   const { stacks } = useFactoryArmContext();
 
@@ -51,7 +54,9 @@ const Scene: React.FunctionComponent = () => {
       />
 
       <ambientLight intensity={0.45} />
-      <hemisphereLight args={['#ffffff', '#d8d2c4', 0.6]} />
+      <hemisphereLight
+        args={[tokenColor('white-pure'), tokenColor('white-600'), 0.6]}
+      />
       {/*
        * The key light casts the shadows; its box covers the whole cell. Variance
        * shadow maps blur by `radius`: Drei's SoftShadows no longer compiles

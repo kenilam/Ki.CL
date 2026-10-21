@@ -4,7 +4,14 @@
  */
 .kicl--views--experiments__home {
   --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
+
+  // A faint glow of the accent, a light step on light and a dark one on dark.
+  --kicl--views--experiments__home--accent-glow: var(--kicl-color-green-100);
   --kicl--views--experiments__home--screen: 100dvb;
+
+  @at-root .kicl--theme--dark & {
+    --kicl--views--experiments__home--accent-glow: var(--kicl-color-green-900);
+  }
 
   /*
    * Text block height and its distance from the bottom of the screen. The

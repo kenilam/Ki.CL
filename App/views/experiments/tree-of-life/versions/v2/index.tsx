@@ -23,10 +23,13 @@ import {
 } from '@/views/experiments/tree-of-life/tree';
 import { layoutPhylogeneticFan, type LayoutLink } from './layout';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 import './styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v2';
-const BACKGROUND = '#f2efe8';
+const BACKGROUND = tokenColor('grey-100');
 
 type BranchProps = {
   link: LayoutLink;
@@ -167,8 +170,20 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
         >
           <sphereGeometry args={[markerSize, 16, 16]} />
           <meshStandardMaterial
-            color={highlight ? '#ffffff' : isOrigin ? '#2d6a4f' : color}
-            emissive={expandable ? color : isOrigin ? '#40916c' : '#000000'}
+            color={
+              highlight
+                ? tokenColor('white-pure')
+                : isOrigin
+                  ? tokenColor('green-800')
+                  : color
+            }
+            emissive={
+              expandable
+                ? color
+                : isOrigin
+                  ? tokenColor('green-600')
+                  : tokenColor('black-pure')
+            }
             emissiveIntensity={expandable ? 0.4 : isOrigin ? 0.15 : 0}
             roughness={0.5}
           />
@@ -178,7 +193,7 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
         <Drei.Text
           position={[0, isOrigin ? -0.45 : 0.14, 0.04]}
           fontSize={fontSize}
-          color={isOrigin ? '#1b4332' : color}
+          color={isOrigin ? tokenColor('green-900') : color}
           anchorX='center'
           anchorY={isOrigin ? 'top' : 'bottom'}
           maxWidth={3.2}
@@ -219,7 +234,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
       <directionalLight
         position={[-8, 4, -4]}
         intensity={0.35}
-        color='#b8d4c8'
+        color={tokenColor('white-600')}
       />
       <Drei.OrbitControls
         makeDefault
@@ -346,7 +361,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-inset-inline-center',
           'kicl-pointer-events-none',
           'kicl-font-size-smaller',
-          'kicl-color-grey-dark',
+          'kicl-color-grey-700',
           'kicl-text-align-center'
         )}
       >

@@ -8,11 +8,7 @@
 
   background-image: radial-gradient(
     ellipse 60% 50% at 80% 20%,
-    color-mix(
-      in oklab,
-      var(--kicl--views--experiments__home--accent) 22%,
-      transparent
-    ),
+    var(--kicl--views--experiments__home--accent-glow),
     transparent 70%
   );
 

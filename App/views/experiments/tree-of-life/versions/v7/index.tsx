@@ -35,10 +35,13 @@ import {
 import { Branches } from './branches';
 import { TipInstances, OriginMarker, TipSprites, NodeLabels } from './nodes';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 import './styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v7';
-const BACKGROUND = '#f7f4ef';
+const BACKGROUND = tokenColor('white-500');
 
 type SceneProps = {
   tree: TreeNode;
@@ -67,7 +70,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
       <directionalLight
         position={[-8, 4, -4]}
         intensity={0.35}
-        color='#c5d8cc'
+        color={tokenColor('white-600')}
       />
 
       <Drei.OrbitControls
@@ -187,7 +190,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-inset-inline-center',
           'kicl-pointer-events-none',
           'kicl-font-size-smaller',
-          'kicl-color-grey-dark',
+          'kicl-color-grey-700',
           'kicl-text-align-center'
         )}
       >

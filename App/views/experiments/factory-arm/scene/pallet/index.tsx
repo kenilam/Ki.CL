@@ -9,8 +9,11 @@ import { THREE } from '@/three';
 // Constants
 import { PALLET } from '@/views/experiments/factory-arm/scene/constants';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 const WOOD = new THREE.MeshStandardMaterial({
-  color: '#c7a16a',
+  color: tokenColor('orange-300'),
   roughness: 0.85,
 });
 

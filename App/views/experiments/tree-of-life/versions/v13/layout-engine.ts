@@ -14,6 +14,9 @@ import {
   ROOT_OTT_ID,
 } from '@/views/experiments/tree-of-life/tree';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 export type Vec2 = [number, number];
 
 export type LayoutNode = {
@@ -422,7 +425,7 @@ export function computePosterLayout(
       Boolean(node.data.ottId) &&
       tipsUnder > 1 &&
       (isTip || (node.children?.length ?? 0) < tipsUnder);
-    const color = isOrigin ? '#2d6a4f' : resolveColor(node);
+    const color = isOrigin ? tokenColor('green-800') : resolveColor(node);
 
     nodes.push({
       id: node.data.nodeId,

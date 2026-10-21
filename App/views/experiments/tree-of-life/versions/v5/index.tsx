@@ -22,10 +22,13 @@ import {
 } from '@/views/experiments/tree-of-life/tree';
 import { layoutPhylogeneticFan, type LayoutLink } from './layout';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 import './styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v5';
-const BACKGROUND = '#f7f4ef';
+const BACKGROUND = tokenColor('white-500');
 /** Deeper initial fetch → denser canopy closer to the poster. */
 const HEIGHT_LIMIT = 3;
 
@@ -143,13 +146,16 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
         <group>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
             <torusGeometry args={[0.55, 0.07, 10, 28]} />
-            <meshStandardMaterial color='#2d6a4f' roughness={0.55} />
+            <meshStandardMaterial
+              color={tokenColor('green-800')}
+              roughness={0.55}
+            />
           </mesh>
           <mesh>
             <sphereGeometry args={[0.2, 16, 16]} />
             <meshStandardMaterial
-              color='#40916c'
-              emissive='#2d6a4f'
+              color={tokenColor('green-600')}
+              emissive={tokenColor('green-800')}
               emissiveIntensity={0.2}
             />
           </mesh>
@@ -173,7 +179,7 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
         >
           <sphereGeometry args={[0.09, 14, 14]} />
           <meshStandardMaterial
-            color={highlight ? '#ffffff' : color}
+            color={highlight ? tokenColor('white-pure') : color}
             emissive={color}
             emissiveIntensity={0.45}
             roughness={0.45}
@@ -185,7 +191,7 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
         <Drei.Text
           position={[0, isOrigin ? -0.85 : 0.16, 0.05]}
           fontSize={fontSize}
-          color={isOrigin ? '#1b4332' : color}
+          color={isOrigin ? tokenColor('green-900') : color}
           anchorX='center'
           anchorY={isOrigin ? 'top' : 'bottom'}
           maxWidth={2.8}
@@ -226,7 +232,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
       <directionalLight
         position={[-10, 3, -5]}
         intensity={0.4}
-        color='#c9ddd2'
+        color={tokenColor('white-600')}
       />
       <Drei.OrbitControls
         makeDefault
@@ -358,7 +364,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-inset-inline-center',
           'kicl-pointer-events-none',
           'kicl-font-size-smaller',
-          'kicl-color-grey-dark',
+          'kicl-color-grey-700',
           'kicl-text-align-center'
         )}
       >

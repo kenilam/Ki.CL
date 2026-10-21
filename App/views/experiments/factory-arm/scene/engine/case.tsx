@@ -31,10 +31,13 @@ import {
   DRAG,
 } from '@/views/experiments/factory-arm/scene/constants';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 const TAPE = 0.06;
-const CARDBOARD = '#c69a64';
+const CARDBOARD = tokenColor('orange-300');
 const TAPE_MATERIAL = new THREE.MeshStandardMaterial({
-  color: '#a97c47',
+  color: tokenColor('orange-600'),
   roughness: 0.5,
 });
 
@@ -43,10 +46,10 @@ const TAPE_MATERIAL = new THREE.MeshStandardMaterial({
  * moved out of its way, red for one refused until the cell changes.
  */
 const GLOW = {
-  belt: new THREE.Color('#2fd065'),
-  buffer: new THREE.Color('#ffc21a'),
-  none: new THREE.Color('#000000'),
-  stuck: new THREE.Color('#e5322d'),
+  belt: new THREE.Color(tokenColor('green-300')),
+  buffer: new THREE.Color(tokenColor('yellow-500')),
+  none: new THREE.Color(tokenColor('black-pure')),
+  stuck: new THREE.Color(tokenColor('red-600')),
 };
 
 /** The load blink: how long after the case appears it starts, then how many times, each `period` ms. */

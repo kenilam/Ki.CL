@@ -13,7 +13,7 @@
     paint-order: stroke fill;
     text-shadow:
       0 0 var(--kicl-size-half) var(--kicl-color-white),
-      0 0 var(--kicl-size) rgb(255 255 255 / 70%),
+      0 0 var(--kicl-size) var(--kicl-color-white-a64),
       calc(var(--kicl-size-1px) * -1) calc(var(--kicl-size-1px) * -1) 0
       var(--kicl-color-white),
       var(--kicl-size-1px) calc(var(--kicl-size-1px) * -1) 0

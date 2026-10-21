@@ -1,3 +1,6 @@
+// Helpers
+import { tokenColor } from '@/helper';
+
 export type TreeAsset = {
   id: string;
   url: string;
@@ -41,48 +44,48 @@ export const DEFAULT_HEIGHT_LIMIT = 3;
  * plants green, fungi/basal orange, microbes near-root dark).
  */
 export const POSTER_PALETTE = [
-  '#c1121f', // vertebrates / mammals
-  '#e85d04', // reptiles / basal animals
-  '#0077b6', // arthropods
-  '#00b4d8', // insects / crustacea
-  '#7b2cbf', // molluscs / worms
-  '#f4a261', // echinoderms / cnidaria
-  '#2a9d8f', // plants
-  '#40916c', // green plants / algae
-  '#bc6c25', // fungi
-  '#1b4332', // bacteria
-  '#52796f', // archaea
-  '#6d597a', // other
+  tokenColor('red-700'), // vertebrates / mammals
+  tokenColor('orange-500'), // reptiles / basal animals
+  tokenColor('blue-600'), // arthropods
+  tokenColor('blue-300'), // insects / crustacea
+  tokenColor('blue-700'), // molluscs / worms
+  tokenColor('orange-300'), // echinoderms / cnidaria
+  tokenColor('green-600'), // plants
+  tokenColor('green-600'), // green plants / algae
+  tokenColor('orange-600'), // fungi
+  tokenColor('green-900'), // bacteria
+  tokenColor('grey-800'), // archaea
+  tokenColor('white-900'), // other
 ] as const;
 
 const NAMED_CLADE_COLORS: Record<string, string> = {
-  bacteria: '#1b4332',
-  archaea: '#52796f',
-  eukaryota: '#6d597a',
-  opisthokonta: '#bc6c25',
-  fungi: '#bc6c25',
-  metazoa: '#c1121f',
-  animalia: '#c1121f',
-  porifera: '#f4a261',
-  cnidaria: '#f4a261',
-  echinodermata: '#e85d04',
-  arthropoda: '#0077b6',
-  insecta: '#00b4d8',
-  crustacea: '#0096c7',
-  mollusca: '#7b2cbf',
-  annelida: '#9b5de5',
-  chordata: '#c1121f',
-  vertebrata: '#c1121f',
-  mammalia: '#9b2226',
-  aves: '#d62828',
-  reptilia: '#e85d04',
-  amphibia: '#f77f00',
-  actinopterygii: '#e76f51',
-  viridiplantae: '#2a9d8f',
-  chloroplastida: '#2a9d8f',
-  plantae: '#40916c',
-  embryophyta: '#40916c',
-  streptophyta: '#52b788',
+  bacteria: tokenColor('green-900'),
+  archaea: tokenColor('grey-800'),
+  eukaryota: tokenColor('white-900'),
+  opisthokonta: tokenColor('orange-600'),
+  fungi: tokenColor('orange-600'),
+  metazoa: tokenColor('red-700'),
+  animalia: tokenColor('red-700'),
+  porifera: tokenColor('orange-300'),
+  cnidaria: tokenColor('orange-300'),
+  echinodermata: tokenColor('orange-500'),
+  arthropoda: tokenColor('blue-600'),
+  insecta: tokenColor('blue-300'),
+  crustacea: tokenColor('blue-400'),
+  mollusca: tokenColor('blue-700'),
+  annelida: tokenColor('blue-500'),
+  chordata: tokenColor('red-700'),
+  vertebrata: tokenColor('red-700'),
+  mammalia: tokenColor('red-800'),
+  aves: tokenColor('red-700'),
+  reptilia: tokenColor('orange-500'),
+  amphibia: tokenColor('orange-400'),
+  actinopterygii: tokenColor('red-500'),
+  viridiplantae: tokenColor('green-600'),
+  chloroplastida: tokenColor('green-600'),
+  plantae: tokenColor('green-600'),
+  embryophyta: tokenColor('green-600'),
+  streptophyta: tokenColor('green-300'),
 };
 
 export function kidsOf(node: TreeNode): TreeNode[] | null {

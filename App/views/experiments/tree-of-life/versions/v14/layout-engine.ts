@@ -29,6 +29,9 @@ import {
   ROOT_OTT_ID,
 } from '@/views/experiments/tree-of-life/tree';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 export type Vec2 = [number, number];
 
 export type LayoutNode = {
@@ -1244,7 +1247,7 @@ export function computePosterLayout(
     if (pin) {
       color = pin.color;
     } else if (isOrigin) {
-      color = '#0dae6b'; // --kicl-color-green / $green
+      color = tokenColor('green-500');
     } else {
       const parentColor = node.parent
         ? colorById.get(node.parent.data.nodeId)
