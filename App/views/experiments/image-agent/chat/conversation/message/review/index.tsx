@@ -64,7 +64,7 @@ const Review: React.FunctionComponent<Props> = ({ score }) => {
                 className={classNames(
                   'kicl-font-family-mono',
                   'kicl-font-size-small',
-                  'kicl-color-grey-dark'
+                  'kicl-color-grey-700'
                 )}
               >
                 {String(score[row.key])}
@@ -85,7 +85,7 @@ const Review: React.FunctionComponent<Props> = ({ score }) => {
                       is='span'
                       className={classNames(
                         'kicl-font-size-small',
-                        'kicl-color-grey-dark'
+                        'kicl-color-grey-700'
                       )}
                     >
                       {suggestion}

@@ -8,7 +8,10 @@ import { THREE, Drei } from '@/three';
 import { labelFor } from '@/views/experiments/tree-of-life/tree';
 import type { LayoutNode } from './layout-engine';
 
-const BACKGROUND = '#f0ebe3';
+// Helpers
+import { tokenColor } from '@/helper';
+
+const BACKGROUND = tokenColor('grey-100');
 
 type TipInstancesProps = {
   tips: LayoutNode[];
@@ -39,7 +42,7 @@ export const TipInstances: React.FunctionComponent<TipInstancesProps> = ({
       dummy.scale.setScalar(expandingId === tip.id ? 1.4 : 1);
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
-      color.set(expandingId === tip.id ? '#ffffff' : tip.color);
+      color.set(expandingId === tip.id ? tokenColor('white-pure') : tip.color);
       mesh.setColorAt(i, color);
     });
 
@@ -79,7 +82,7 @@ export const TipInstances: React.FunctionComponent<TipInstancesProps> = ({
       <meshStandardMaterial
         roughness={0.4}
         metalness={0.05}
-        emissive='#111111'
+        emissive={tokenColor('black-600')}
         emissiveIntensity={0.3}
       />
     </instancedMesh>
@@ -99,7 +102,7 @@ export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
       <mesh>
         <sphereGeometry args={[r * 1.35, 32, 24]} />
         <meshPhysicalMaterial
-          color='#6bbf8a'
+          color={tokenColor('green-300')}
           transmission={0.55}
           thickness={0.6}
           roughness={0.25}
@@ -113,7 +116,7 @@ export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
       <mesh>
         <sphereGeometry args={[r * 1.05, 28, 20]} />
         <meshStandardMaterial
-          color='#3d9b6a'
+          color={tokenColor('green-600')}
           roughness={0.55}
           metalness={0.02}
           transparent
@@ -124,8 +127,8 @@ export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
       <mesh position={[r * 0.12, r * 0.08, r * 0.1]}>
         <sphereGeometry args={[r * 0.42, 20, 16]} />
         <meshStandardMaterial
-          color='#1b4332'
-          emissive='#2d6a4f'
+          color={tokenColor('green-900')}
+          emissive={tokenColor('green-800')}
           emissiveIntensity={0.25}
           roughness={0.4}
         />
@@ -133,7 +136,7 @@ export const OriginMarker: React.FunctionComponent<{ node: LayoutNode }> = ({
       <Drei.Text
         position={[0, -r * 2.4, 0]}
         fontSize={node.fontSize}
-        color='#1b4332'
+        color={tokenColor('green-900')}
         anchorX='center'
         anchorY='top'
         outlineWidth={0.02}

@@ -20,9 +20,12 @@ import { Remove } from './remove';
 // Constants
 import { DRAG } from '@/views/experiments/factory-arm/scene/constants';
 
-const GREY = new THREE.Color('#8f9398');
-const GLOW = new THREE.Color('#f07d1a');
-const DARK = new THREE.Color('#000000');
+// Helpers
+import { tokenColor } from '@/helper';
+
+const GREY = new THREE.Color(tokenColor('black-200'));
+const GLOW = new THREE.Color(tokenColor('orange-400'));
+const DARK = new THREE.Color(tokenColor('black-pure'));
 
 /** How long an obstacle stays lit after it last stood in the way, in milliseconds. */
 const LIT = 2500;

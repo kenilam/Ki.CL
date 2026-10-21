@@ -22,6 +22,9 @@ import {
 } from '@/views/experiments/tree-of-life/tree';
 import { layoutRadialTree } from './layout';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 import './styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v1';
@@ -94,7 +97,7 @@ const Taxon: React.FunctionComponent<TaxonProps> = ({
         <sphereGeometry args={[markerSize, 12, 12]} />
         <meshStandardMaterial
           color={color}
-          emissive={expandable ? color : '#000000'}
+          emissive={expandable ? color : tokenColor('black-pure')}
           emissiveIntensity={expandable ? 0.25 : 0}
         />
       </mesh>
@@ -151,7 +154,7 @@ const Scene: React.FunctionComponent<SceneProps> = ({
           x={x}
           y={y}
           z={z}
-          color={expandingId === node.nodeId ? '#ffffff' : color}
+          color={expandingId === node.nodeId ? tokenColor('white-pure') : color}
           label={labelFor(node)}
           expandable={expandable}
           depth={depth}

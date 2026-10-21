@@ -13,7 +13,10 @@ import { THREE, Drei } from '@/three';
 import { labelFor } from '@/views/experiments/tree-of-life/tree';
 import type { LayoutNode } from './layout-engine';
 
-const BACKGROUND = '#f7f4ef';
+// Helpers
+import { tokenColor } from '@/helper';
+
+const BACKGROUND = tokenColor('white-500');
 
 type TipInstancesProps = {
   tips: LayoutNode[];
@@ -50,7 +53,7 @@ export const TipInstances: React.FunctionComponent<TipInstancesProps> = ({
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
 
-      color.set(expandingId === tip.id ? '#ffffff' : tip.color);
+      color.set(expandingId === tip.id ? tokenColor('white-pure') : tip.color);
       mesh.setColorAt(i, color);
     });
 
@@ -92,7 +95,7 @@ export const TipInstances: React.FunctionComponent<TipInstancesProps> = ({
       <meshStandardMaterial
         roughness={0.42}
         metalness={0.05}
-        emissive='#222222'
+        emissive={tokenColor('black-400')}
         emissiveIntensity={0.35}
       />
     </instancedMesh>
@@ -113,20 +116,20 @@ export const OriginMarker: React.FunctionComponent<OriginProps> = ({
     <group position={[x, y, z]}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
         <torusGeometry args={[0.58, 0.075, 12, 32]} />
-        <meshStandardMaterial color='#2d6a4f' roughness={0.5} />
+        <meshStandardMaterial color={tokenColor('green-800')} roughness={0.5} />
       </mesh>
       <mesh>
         <sphereGeometry args={[0.22, 16, 16]} />
         <meshStandardMaterial
-          color='#40916c'
-          emissive='#2d6a4f'
+          color={tokenColor('green-600')}
+          emissive={tokenColor('green-800')}
           emissiveIntensity={0.22}
         />
       </mesh>
       <Drei.Text
         position={[0, -0.9, 0.05]}
         fontSize={node.fontSize}
-        color='#1b4332'
+        color={tokenColor('green-900')}
         anchorX='center'
         anchorY='top'
         outlineWidth={0.02}
@@ -155,9 +158,9 @@ export const TipSprites: React.FunctionComponent<{ tips: LayoutNode[] }> = ({
       return null;
     }
     const gradient = ctx.createRadialGradient(32, 32, 4, 32, 32, 30);
-    gradient.addColorStop(0, 'rgba(255,255,255,0.95)');
-    gradient.addColorStop(0.45, 'rgba(255,255,255,0.55)');
-    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    gradient.addColorStop(0, tokenColor('white-pure', 0.95));
+    gradient.addColorStop(0.45, tokenColor('white-pure', 0.55));
+    gradient.addColorStop(1, tokenColor('white-pure', 0));
     ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.arc(32, 32, 30, 0, Math.PI * 2);

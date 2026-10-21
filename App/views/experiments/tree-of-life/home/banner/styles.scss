@@ -34,9 +34,8 @@
       brightness(var(--kicl--tree-of-life--plate-exposure)) saturate(60%);
     background-image: radial-gradient(
       ellipse at 50% 45%,
-      color-mix(in oklab, var(--kicl-body-background-color) 0%, transparent) 30%,
-      color-mix(in oklab, var(--kicl-body-background-color) 55%, transparent)
-      74%,
+      transparent 30%,
+      var(--kicl-color-page-a48) 74%,
       var(--kicl-body-background-color) 100%
     );
     content: '';

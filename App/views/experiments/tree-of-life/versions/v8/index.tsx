@@ -32,6 +32,9 @@ import {
 import { Branches } from './branches';
 import { TipInstances, OriginMarker, InternalNodes, NodeLabels } from './nodes';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 import './styles.scss';
 
 const CLASS_NAME = 'kicl--views--experiments--tree-of-life--v8';
@@ -74,13 +77,13 @@ const Scene: React.FunctionComponent<SceneProps> = ({
       <directionalLight
         position={[-R, -R * 0.4, -R]}
         intensity={0.35}
-        color='#c5d4cb'
+        color={tokenColor('white-600')}
       />
 
       <mesh>
         <sphereGeometry args={[R, 32, 24]} />
         <meshBasicMaterial
-          color='#9aab9e'
+          color={tokenColor('white-700')}
           transparent
           opacity={0.06}
           depthWrite={false}
@@ -232,7 +235,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-inset-inline-center',
           'kicl-pointer-events-none',
           'kicl-font-size-smaller',
-          'kicl-color-grey-dark',
+          'kicl-color-grey-700',
           'kicl-text-align-center'
         )}
       >

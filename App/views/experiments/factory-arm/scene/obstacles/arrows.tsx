@@ -12,8 +12,14 @@ import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics
 // Partials
 import { useNudge } from './nudge';
 
-const IDLE = { color: new THREE.Color('#5d6167'), opacity: 0.6 };
-const ACTIVE = { color: new THREE.Color('#3fb56b'), opacity: 0.95 };
+// Helpers
+import { tokenColor } from '@/helper';
+
+const IDLE = { color: new THREE.Color(tokenColor('white-900')), opacity: 0.6 };
+const ACTIVE = {
+  color: new THREE.Color(tokenColor('green-400')),
+  opacity: 0.95,
+};
 
 /** How long an arrow stays green after a move its way, in milliseconds. */
 const LIT = 250;

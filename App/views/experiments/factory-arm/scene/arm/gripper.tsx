@@ -15,6 +15,9 @@ import { MATERIAL } from './materials';
 // Constants
 import { GRIPPER, LINK, PLATE } from './constants';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 const QUARTER = Math.PI / 2;
 
 // The housing runs from under the flange to just above the pad.
@@ -32,9 +35,9 @@ const HOLES = Array.from({ length: PLATE.rows * PLATE.columns }, (_, index) => [
     (Math.floor(index / PLATE.columns) / (PLATE.rows - 1) - 0.5) * HEIGHT * 0.7,
 ]) as [number, number, number][];
 
-const IDLE = new THREE.Color('#3a3a3a');
-const HOLDING = new THREE.Color('#29d17a');
-const STOPPED = new THREE.Color('#ff2d1f');
+const IDLE = new THREE.Color(tokenColor('black-400'));
+const HOLDING = new THREE.Color(tokenColor('green-300'));
+const STOPPED = new THREE.Color(tokenColor('red-600'));
 
 /** Vacuum box gripper, in the wrist's frame; its pad face is the arm's tip. */
 const Gripper: React.FunctionComponent = () => {

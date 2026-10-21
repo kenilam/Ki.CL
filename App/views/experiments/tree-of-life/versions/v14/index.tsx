@@ -562,7 +562,7 @@ const MapStage: React.FunctionComponent<{
               `${CLASS_NAME}__status`,
               'kicl-pointer-events-none',
               'kicl-z-index-floating',
-              'kicl-color-grey-darker'
+              'kicl-color-grey-900'
             )}
           />
           <Switch
@@ -582,7 +582,7 @@ const MapStage: React.FunctionComponent<{
               'kicl-cursor-pointer',
               'kicl-padding-block-narrowest',
               'kicl-padding-inline-narrowest',
-              'kicl-color-grey-dark'
+              'kicl-color-grey-700'
             )}
             aria-label={t('action', { context: 'gust' })}
             aria-pressed={false}
@@ -1284,7 +1284,7 @@ const Canvas: React.FunctionComponent = () => {
                             type='button'
                             aria-label={t('action', { context: 'close_panel' })}
                             title={common('action', { context: 'close' })}
-                            className='kicl-color-grey-dark'
+                            className='kicl-color-grey-700'
                             onClick={onControlsReset}
                           >
                             <Ri.RiCloseLine aria-hidden />
@@ -1296,7 +1296,7 @@ const Canvas: React.FunctionComponent = () => {
                     <Layout gap='narrow'>
                       <CardContent>
                         <Details
-                          className='kicl-color-grey-dark'
+                          className='kicl-color-grey-700'
                           open={detailOpen}
                           onToggle={(event) => {
                             setDetailOpen(event.currentTarget.open);
@@ -1306,7 +1306,7 @@ const Canvas: React.FunctionComponent = () => {
                               is='h2'
                               className={classNames(
                                 'kicl-font-size',
-                                'kicl-color-grey-darker'
+                                'kicl-color-grey-900'
                               )}
                             >
                               {selectedLayoutNode.isOrigin
@@ -1328,7 +1328,7 @@ const Canvas: React.FunctionComponent = () => {
                             is='p'
                             className={classNames(
                               'kicl-font-size-small',
-                              'kicl-color-grey-dark',
+                              'kicl-color-grey-700',
                               'kicl-line-height-narrow'
                             )}
                           >

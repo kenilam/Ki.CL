@@ -140,7 +140,7 @@ const Details: React.FunctionComponent = () => {
               className={classNames(
                 'kicl-font-size-small',
                 'kicl-line-height-narrow',
-                'kicl-color-grey-dark'
+                'kicl-color-grey-700'
               )}
             >
               {node.description.trim()}

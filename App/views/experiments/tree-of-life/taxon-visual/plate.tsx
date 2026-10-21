@@ -69,7 +69,7 @@ const Plate: React.FC<Props> = ({
               is='span'
               className={classNames(
                 'kicl-font-size-small',
-                'kicl-color-grey-dark'
+                'kicl-color-grey-700'
               )}
             >
               {t('plate', { context: 'wait' })}
@@ -115,7 +115,7 @@ const Plate: React.FC<Props> = ({
             className={classNames(
               'kicl-font-size-smaller',
               'kicl-font-weight-bolder',
-              'kicl-color-grey-dark',
+              'kicl-color-grey-700',
               'kicl-line-height-narrow'
             )}
           >

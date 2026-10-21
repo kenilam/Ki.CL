@@ -11,6 +11,9 @@ import { GLOBE_MARGIN, ORIGIN } from './constants';
 // Zoom
 import { getZoom } from './zoom';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 /**
  * The cage the tree grows inside, centred on the origin of life.
  *
@@ -200,7 +203,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
       <mesh ref={meshRef} scale={0} raycast={() => null} geometry={geometry}>
         <meshBasicMaterial
           ref={materialRef}
-          color='#b9cbc2'
+          color={tokenColor('black-100')}
           wireframe
           transparent
           // Exempt from the aerial haze: the cage encloses the whole tree, so
@@ -227,7 +230,7 @@ const Globe: React.FunctionComponent<Props> = ({ margin = GLOBE_MARGIN }) => {
             ref={(node) => {
               shellMaterials.current[index] = node;
             }}
-            color='#b9cbc2'
+            color={tokenColor('black-100')}
             wireframe
             transparent
             fog={false}

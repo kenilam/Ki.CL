@@ -34,6 +34,9 @@ import {
   WIDTH_TAPER,
 } from './constants';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 const Scene: React.FunctionComponent = () => {
   const { t } = useTranslation('tree-of-life');
   const { chains, rooted } = useTreeOfLifeContext();
@@ -55,12 +58,14 @@ const Scene: React.FunctionComponent = () => {
       gl={{ antialias: true, alpha: true }}
     >
       <ambientLight intensity={0.88} />
-      <hemisphereLight args={['#ffffff', '#cfdcd5', 0.46]} />
+      <hemisphereLight
+        args={[tokenColor('white-pure'), tokenColor('grey-200'), 0.46]}
+      />
       <directionalLight position={[4, 8, 6]} intensity={0.19} />
       <directionalLight
         position={[-6, -3, -5]}
         intensity={0.1}
-        color='#dcefe6'
+        color={tokenColor('black-50')}
       />
 
       <Globe />

@@ -164,7 +164,7 @@ const PosterTree: React.FunctionComponent<{
                 'kicl-pointer-events-none',
                 'kicl-font-family',
                 'kicl-font-weight',
-                'kicl-fill-grey-darker'
+                'kicl-fill-grey-900'
               )}
               x={x}
               y={y - 5}
@@ -412,7 +412,7 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-max-inline-size-columns-6',
           'kicl-pointer-events-none',
           'kicl-font-size-smaller',
-          'kicl-color-grey-dark',
+          'kicl-color-grey-700',
           'kicl-text-align-center'
         )}
       >
