@@ -9,8 +9,11 @@ import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 // Constants
 import { CONE, RANGE, SENSORS, type Sensor } from './constants';
 
-const IDLE = new THREE.Color('#1c1c1c');
-const ALERT = new THREE.Color('#e5412a');
+// Helpers
+import { tokenColor } from '@/helper';
+
+const IDLE = new THREE.Color(tokenColor('black-500'));
+const ALERT = new THREE.Color(tokenColor('red-600'));
 
 const UP = new THREE.Vector3(0, 1, 0);
 

@@ -2,6 +2,9 @@ import React, { useMemo, useRef } from 'react';
 
 import { THREE, Drei, Fiber } from '@/three';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 /**
  * Emphasis for the two taxa that mean something beyond their place in the
  * tree: the one being looked at, and the origin of life.
@@ -83,7 +86,7 @@ function paint(stops: readonly (readonly [number, number])[]): THREE.Texture {
     );
 
     stops.forEach(([at, alpha]) => {
-      gradient.addColorStop(at, `rgba(255, 255, 255, ${alpha})`);
+      gradient.addColorStop(at, tokenColor('white-pure', alpha));
     });
 
     context.fillStyle = gradient;
@@ -156,7 +159,7 @@ const Aura: React.FunctionComponent<Props> = ({
     () =>
       variant === 'active'
         ? `#${new THREE.Color(color)
-            .lerp(new THREE.Color('#ffffff'), RIPPLE_WHITEN)
+            .lerp(new THREE.Color(tokenColor('white-pure')), RIPPLE_WHITEN)
             .getHexString()}`
         : color,
     [variant, color]

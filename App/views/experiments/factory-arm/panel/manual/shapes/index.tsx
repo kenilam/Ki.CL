@@ -42,7 +42,7 @@ const Shapes: React.FunctionComponent = () => {
           {t('title', { context: 'obstacles' })}
         </Heading>
         <Text
-          className={classNames('kicl-color-grey-dark', 'kicl-font-size-small')}
+          className={classNames('kicl-color-grey-700', 'kicl-font-size-small')}
           is='p'
         >
           {t('hint')}

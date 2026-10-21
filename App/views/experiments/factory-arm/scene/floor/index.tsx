@@ -12,6 +12,9 @@ import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 // Constants
 import { DRAG } from '@/views/experiments/factory-arm/scene/constants';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 const SIZE = 10;
 
 /** The cell floor: what a dropped case lands on. Clicking it lets go of the selected obstacle. */
@@ -32,7 +35,7 @@ const Floor: React.FunctionComponent = () => {
       />
       <mesh onClick={release} receiveShadow rotation-x={-Math.PI / 2}>
         <planeGeometry args={[SIZE, SIZE]} />
-        <meshStandardMaterial color='#e9e6df' />
+        <meshStandardMaterial color={tokenColor('black-50')} />
       </mesh>
     </RigidBody>
   );

@@ -858,7 +858,7 @@ export class TreeRenderer {
       return;
     }
     button.classList.toggle('kicl-color-green', active);
-    button.classList.toggle('kicl-color-grey-dark', !active);
+    button.classList.toggle('kicl-color-grey-700', !active);
     button.setAttribute('aria-pressed', active ? 'true' : 'false');
   }
 

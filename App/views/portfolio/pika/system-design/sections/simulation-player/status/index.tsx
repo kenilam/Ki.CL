@@ -27,8 +27,8 @@ const CHIP_CLASS_NAME = classNames(CHIP, 'kicl-font-size-small');
 
 const STATE_COLOR: Record<DotState, string> = {
   done: 'kicl-background-color-green',
-  idle: 'kicl-background-color-grey-dark',
-  queued: 'kicl-background-color-grey-light',
+  idle: 'kicl-background-color-grey-700',
+  queued: 'kicl-background-color-grey-300',
   retry: 'kicl-background-color-orange',
   running: 'kicl-background-color-yellow',
 };

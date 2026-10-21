@@ -8,6 +8,9 @@ import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
 // Anchors
 import { getAnchor } from './anchors';
 
+// Helpers
+import { tokenColor } from '@/helper';
+
 /**
  * Aerial perspective: taxa further away lose their colour to the air.
  *
@@ -43,7 +46,7 @@ const FAR_AT = 2.1;
  * The colour distance fades toward - a cool, desaturated blue, a little above
  * the page's own near-black so it reads as haze rather than as an unlit gap.
  */
-const AIR = '#1b2733';
+const AIR = tokenColor('black-400');
 
 const Depth: React.FunctionComponent = () => {
   /** The taxon in the route, which stays clear while everything else recedes. */

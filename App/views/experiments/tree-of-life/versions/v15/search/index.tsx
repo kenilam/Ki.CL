@@ -262,7 +262,7 @@ const Search: React.FunctionComponent = () => {
               aria-live='polite'
               className={classNames(
                 'kicl-font-size-smaller',
-                'kicl-color-grey-dark'
+                'kicl-color-grey-700'
               )}
             >
               {t('status', {

@@ -7,12 +7,10 @@
  * asks, so they are arranged that way here: three warms, then three cools.
  *
  * `cell` and `levels` are the dither's raster parameters, as on the home
- * page. The colours are registered as `<color>`, so the stage reads the
- * mixed colour, not the `color-mix()` that makes it.
+ * page. Each ink is a step of the palette: light ones on the light theme and
+ * dark ones on the dark theme. The colours are registered as `<color>`, so
+ * the stage reads the colour, not the `var()`.
  */
-
-$muted: 46%;
-$muted-dark: 52%;
 
 @each $name in (paper, ink-1, ink-2, ink-3, ink-4, ink-5, ink-6) {
   @property --kicl--views--experiments--music-visualiser__stage--#{$name} {
@@ -28,76 +26,48 @@ $muted-dark: 52%;
   --kicl--views--experiments--music-visualiser__stage--paper: var(
     --kicl-color-white
   );
-  --kicl--views--experiments--music-visualiser__stage--ink-1: color-mix(
-    in oklab,
-    var(--kicl-color-white) #{$muted},
-    var(--kicl-color-yellow)
+  --kicl--views--experiments--music-visualiser__stage--ink-1: var(
+    --kicl-color-yellow-200
   );
-  --kicl--views--experiments--music-visualiser__stage--ink-2: color-mix(
-    in oklab,
-    var(--kicl-color-white) #{$muted + 6%},
-    var(--kicl-color-orange)
+  --kicl--views--experiments--music-visualiser__stage--ink-2: var(
+    --kicl-color-orange-200
   );
-  --kicl--views--experiments--music-visualiser__stage--ink-3: color-mix(
-    in oklab,
-    var(--kicl-color-white) #{$muted + 4%},
-    var(--kicl-color-red)
+  --kicl--views--experiments--music-visualiser__stage--ink-3: var(
+    --kicl-color-red-200
   );
-  --kicl--views--experiments--music-visualiser__stage--ink-4: color-mix(
-    in oklab,
-    var(--kicl-color-white) #{$muted},
-    var(--kicl-color-blue)
+  --kicl--views--experiments--music-visualiser__stage--ink-4: var(
+    --kicl-color-blue-200
   );
-  --kicl--views--experiments--music-visualiser__stage--ink-5: color-mix(
-    in oklab,
-    var(--kicl-color-white) #{$muted + 6%},
-    var(--kicl-color-green)
+  --kicl--views--experiments--music-visualiser__stage--ink-5: var(
+    --kicl-color-green-200
   );
-  --kicl--views--experiments--music-visualiser__stage--ink-6: color-mix(
-    in oklab,
-    var(--kicl-color-white) #{$muted + 2%},
-    color-mix(in oklab, var(--kicl-color-blue) 55%, var(--kicl-color-red))
+  --kicl--views--experiments--music-visualiser__stage--ink-6: var(
+    --kicl-color-blue-200
   );
 
-  // Dark: the inks have to carry more of their own colour. On black a tint
-  // reads as mud, so each is kept saturated and mixed less far in. Yellow
-  // sunk into black turns olive, so the second warm is an amber mixed from
-  // orange and red instead. A violet between the blue and the red closes the
-  // wheel, so the cools run blue, green, violet and never grey out against
-  // the warms.
+  // Dark: the warms run orange, a deep red and red, and the cools stay blue
+  // and green, so none greys out against the warms.
   @at-root .kicl--theme--dark {
     --kicl--views--experiments--music-visualiser__stage--paper: var(
       --kicl-color-black
     );
-    --kicl--views--experiments--music-visualiser__stage--ink-1: color-mix(
-      in oklab,
-      var(--kicl-color-black) #{$muted-dark},
-      hsl(from var(--kicl-color-orange) calc(h - 6) min(100, s + 10) l)
+    --kicl--views--experiments--music-visualiser__stage--ink-1: var(
+      --kicl-color-orange-800
     );
-    --kicl--views--experiments--music-visualiser__stage--ink-2: color-mix(
-      in oklab,
-      var(--kicl-color-black) #{$muted-dark + 4%},
-      color-mix(in oklab, var(--kicl-color-orange) 60%, var(--kicl-color-red))
+    --kicl--views--experiments--music-visualiser__stage--ink-2: var(
+      --kicl-color-red-900
     );
-    --kicl--views--experiments--music-visualiser__stage--ink-3: color-mix(
-      in oklab,
-      var(--kicl-color-black) #{$muted-dark},
-      hsl(from var(--kicl-color-red) h calc(s + 10) calc(l + 6))
+    --kicl--views--experiments--music-visualiser__stage--ink-3: var(
+      --kicl-color-red-800
     );
-    --kicl--views--experiments--music-visualiser__stage--ink-4: color-mix(
-      in oklab,
-      var(--kicl-color-black) #{$muted-dark - 10%},
-      hsl(from var(--kicl-color-blue) h calc(s + 22) calc(l + 16))
+    --kicl--views--experiments--music-visualiser__stage--ink-4: var(
+      --kicl-color-blue-700
     );
-    --kicl--views--experiments--music-visualiser__stage--ink-5: color-mix(
-      in oklab,
-      var(--kicl-color-black) #{$muted-dark - 2%},
-      hsl(from var(--kicl-color-green) h calc(s + 12) calc(l + 8))
+    --kicl--views--experiments--music-visualiser__stage--ink-5: var(
+      --kicl-color-green-800
     );
-    --kicl--views--experiments--music-visualiser__stage--ink-6: color-mix(
-      in oklab,
-      var(--kicl-color-black) #{$muted-dark - 4%},
-      color-mix(in oklab, var(--kicl-color-blue) 55%, var(--kicl-color-red))
+    --kicl--views--experiments--music-visualiser__stage--ink-6: var(
+      --kicl-color-blue-800
     );
   }
 }

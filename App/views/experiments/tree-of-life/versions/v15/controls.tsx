@@ -42,7 +42,7 @@ const Controls: React.FunctionComponent = () => {
           alignItems='center'
           before={<Ri.RiFlashlightFill aria-hidden />}
           gap='narrower'
-          className={animate ? 'kicl-color-green' : 'kicl-color-grey-dark'}
+          className={animate ? 'kicl-color-green' : 'kicl-color-grey-700'}
           aria-pressed={animate}
           title={t('hint', { context: animate ? 'land' : 'play' })}
           onClick={() => setAnimate((current) => !current)}
