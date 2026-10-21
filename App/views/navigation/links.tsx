@@ -11,6 +11,8 @@ import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
 import { EXPERIMENTS } from '@/views/experiments/home/constants';
 import { PATH as HOME_PATH } from '@/views/home';
 import { PATH as RESUME_PATH } from '@/views/resume/constants';
+import { PATH as WORKSHOP_PATH } from '@/views/workshop/constants';
+import { TOPICS } from '@/views/workshop/home/constants';
 
 export const Links = [
   <HyperLink
@@ -25,11 +27,28 @@ export const Links = [
       <Trans i18nKey='experiments' />
     </HyperLink>
     <List gap='narrow' justifyItems='end'>
-      {EXPERIMENTS.map(({ context, to }) => (
+      {/* Newest first. */}
+      {EXPERIMENTS.toReversed().map(({ context, to }) => (
         <Animation key={to} property='slide-from-top'>
           <ListItem>
             <HyperLink to={to}>
               <Trans context={context} i18nKey='experiment' />
+            </HyperLink>
+          </ListItem>
+        </Animation>
+      ))}
+    </List>
+  </React.Fragment>,
+  <React.Fragment key={WORKSHOP_PATH}>
+    <HyperLink className='kicl-font-size-medium' to={`/${WORKSHOP_PATH}`}>
+      <Trans i18nKey='workshop' />
+    </HyperLink>
+    <List gap='narrow' justifyItems='end'>
+      {TOPICS.map(({ context, to }) => (
+        <Animation key={to} property='slide-from-top'>
+          <ListItem>
+            <HyperLink to={to}>
+              <Trans i18nKey={context} />
             </HyperLink>
           </ListItem>
         </Animation>
