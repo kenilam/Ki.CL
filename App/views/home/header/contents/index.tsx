@@ -39,7 +39,7 @@ const Contents: React.FunctionComponent = () => {
             {t('header.contents.lead')}
           </AnimatedText>
           <AnimatedText
-            delay={1000}
+            delay={1600}
             dense
             duration='slower'
             easing='ease-sine-in'

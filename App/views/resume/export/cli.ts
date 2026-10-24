@@ -58,9 +58,11 @@ type Paper = keyof typeof PAPERS;
 
 const MAX_PAGES = 2;
 
-/** The brand typeface and the weights the page sets text in. */
-const FACE = 'mic-32-new-web';
-const WEIGHTS = ['300', '700'];
+/** The typefaces and the weights the page sets text in: headings, then body. */
+const FACES = {
+  'mic-32-new-web': ['300', '700'],
+  roboto: ['400'],
+};
 
 /** The first request to a cold dev server compiles the route. */
 const READY_MS = 90_000;
@@ -184,12 +186,14 @@ const READY = `(async () => {
   const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const article = () => document.querySelector('article[data-version]');
   const loaded = () =>
-    ${JSON.stringify(WEIGHTS)}.every((weight) =>
-      [...document.fonts].some(
-        (face) =>
-          face.family.replace(/["']/g, '') === ${JSON.stringify(FACE)} &&
-          face.weight === weight &&
-          face.status === 'loaded'
+    Object.entries(${JSON.stringify(FACES)}).every(([family, weights]) =>
+      weights.every((weight) =>
+        [...document.fonts].some(
+          (face) =>
+            face.family.replace(/["']/g, '') === family &&
+            face.weight === weight &&
+            face.status === 'loaded'
+        )
       )
     );
 
@@ -250,7 +254,7 @@ const print = async (tab: Tab, job: Job): Promise<number | string> => {
   }
 
   if (!ready.face) {
-    return `${FACE} did not load, so the page is in the fallback typeface.`;
+    return `${Object.keys(FACES).join(' or ')} did not load, so the page is in the fallback typeface.`;
   }
 
   // The margins are the page's own, from `@page`. These only stop Chrome adding its default.
