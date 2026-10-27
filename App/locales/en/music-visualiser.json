@@ -25,7 +25,7 @@
       "colours": "The colours come from the stylesheet: six inks over a paper colour for each theme. A Bayer dither on top matches the rest of the site.",
       "dwell": "A scene normally stays up for 24 to 38 seconds. If the music moves into a new section, it can change sooner, and the cut waits up to two and a half seconds for a note so it lands with the music.",
       "random": "The next scene is random, and each track gets its own camera drift and a warmer or cooler lean. An earlier version picked scenes by genre. I dropped that because it was more code and the result didn’t look any better.",
-      "shader": "Everything on screen is drawn by one fragment shader. It has thirteen scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and a few others) and blends between two at a time."
+      "scenes": "Everything on screen is drawn by one fragment shader. It has {{scenes}} scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and a few others) and blends between two at a time."
     },
     "what_this_is": {
       "browser": "The browser listens to the track, pulls a few numbers out of the audio and feeds them into a shader. There’s no machine learning and no server doing the work.",
@@ -49,8 +49,8 @@
   "label_player": "Player",
   "label_recording": "Recording a clip",
   "label_volume": "Volume",
-  "lede": "{{tracks}} lo-fi tracks from a public-domain collection, each drawn while it plays in one of thirteen scenes. Press play once and it keeps going.",
   "source": "$t(collection) · {{category}}",
+  "summary": "{{tracks}} lo-fi tracks from a public-domain collection, each drawn while it plays in one of {{scenes}} scenes. Press play once and it keeps going.",
   "title_address": "The address is the player",
   "title_data": "Where the data comes from",
   "title_music": "The music",

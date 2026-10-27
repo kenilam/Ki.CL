@@ -8,6 +8,7 @@ import { Details, Heading, Text } from 'design/components';
 
 // Constants
 import { SPECTRUM_BANDS } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/features';
+import { SCENES } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/spec';
 
 /** The picture: the shader, its scenes, and what it reads from the audio. */
 const Picture: React.FunctionComponent = () => {
@@ -22,7 +23,9 @@ const Picture: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.picture.shader')}</Text>
+      <Text is='p'>
+        {t('article.picture.scenes', { scenes: SCENES.length })}
+      </Text>
       <Text is='p'>
         {t('article.picture.analyser', { bands: SPECTRUM_BANDS })}
       </Text>

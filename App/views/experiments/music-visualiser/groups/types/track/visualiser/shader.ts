@@ -32,6 +32,7 @@ export const SCENE_INDEX: Record<SceneName, number> = {
   hive: 10,
   orb: 11,
   bloom: 12,
+  mandala: 13,
 };
 
 /** How many onsets the rings scene remembers. */
@@ -735,6 +736,90 @@ void bloom(vec2 uv, float aspect, inout float w[MAX_INKS]) {
   w[2] += thread((r + wobble) * 55.0) * sheet * 0.5;
 }
 
+vec2 mandalaArm(float y) {
+  if (y < 0.0) {
+    float a = (y + 1.0) * PI * 0.5;
+    return vec2(0.66 * sin(a), 0.33 * PI * cos(a));
+  }
+  float past = max(y - 1.0, 0.0);
+  return vec2(0.555 + 0.105 * cos(y * PI) + past * past, -0.105 * PI * sin(y * PI) + past * 2.0);
+}
+
+void mandala(vec2 uv, float aspect, inout float w[MAX_INKS]) {
+  const float PETALS = 6.0;
+  const float ROW = 0.46;
+  const float STRETCH = 0.5;
+  const float OUTER = 0.25;
+  const float ZOOM = 0.035;
+  const float SPACING = 0.14;
+  vec2 d = (uv - 0.5) * vec2(aspect, 1.0);
+  float r = max(length(d), 0.00001);
+  float period = TAU / PETALS;
+  float turn = r > 0.0001 ? atan(d.y, d.x) / period : 0.0;
+  float u = abs(fract(turn + 0.5) - 0.5) * 2.0;
+  float v = (log(r) - STRETCH * log(1.0 + r / OUTER)) / (period * ROW) - mod(u_time * ZOOM, 2.0);
+  float row = ROW / (1.0 - STRETCH * r / (r + OUTER));
+  float arc = u_resolution.y * r * period;
+  float px = 1.0 / arc;
+  float aa = px * 0.75;
+  float fine = smoothstep(20.0, 50.0, arc);
+
+  float gap = max(0.014, px);
+  float arms = max((0.05 + ease(u_low) * 0.02) * mix(2.2, 1.0, fine), px * 1.6);
+  float space = max(0.026, px);
+  float lines = max((0.016 + ease(u_mid) * 0.01) * mix(1.3, 1.0, fine), px * 1.2);
+  float tip = 0.12 + ease(u_high) * 0.05;
+  float duty = 0.5 + band(clamp(r * 1.6, 0.0, 1.0)) * 0.2;
+  float rings = (2.0 + u_slow_energy) * fine;
+  float soft = aa / SPACING;
+  float ink = 0.88 + ease(u_energy) * 0.12;
+
+  float cover = 1.0;
+  float front = 1.0;
+  float j0 = floor(v);
+  for (int k = 0; k < 4; k++) {
+    float j = j0 + 2.0 - float(k);
+    float x = mod(j, 2.0) < 0.5 ? u : 1.0 - u;
+    float y = v - j;
+    vec2 arm = mandalaArm(y);
+    float inside = (arm.x - x) * 0.5 / sqrt(1.0 + arm.y * arm.y / (4.0 * row * row));
+    float alpha = smoothstep(-aa, aa, inside);
+    float own = alpha * cover * ink;
+
+    float lining = min(inside - gap - arms - space, front - space);
+    float heart = lining - lines - 0.05;
+    float lift = (y - 0.25) * ROW;
+    float nest = (abs(lift) + x * 0.35) / SPACING;
+    float reach = lift > 0.0 ? min(rings, 1.3) : rings;
+    float chevron = smoothstep(duty + soft * 2.0, duty - soft * 2.0, abs(fract(nest + 0.5) - 0.5) * 2.0)
+      * smoothstep(reach + soft, reach - soft, nest)
+      * smoothstep(0.5 + soft, 0.5 - soft, x * 0.35 / SPACING);
+
+    float point = smoothstep(tip + aa, tip - aa, (y + 1.0) * row + x * 0.15) * smoothstep(gap - aa, gap + aa, inside);
+    float rim = smoothstep(gap - aa, gap + aa, inside) * smoothstep(gap + arms + aa, gap + arms - aa, inside);
+    float lined = smoothstep(-aa, aa, lining) * smoothstep(lines + aa, lines - aa, lining);
+
+    w[0] += own * point;
+    w[3] += own * rim * (1.0 - point);
+    w[4] += own * lined * (1.0 - point);
+    w[2] += own * smoothstep(-aa, aa, heart) * chevron * (1.0 - point);
+
+    cover *= 1.0 - alpha;
+    front = min(front, -inside);
+  }
+
+  float size = max(0.026 * u_resolution.y, 20.0) * (1.0 + ease(u_low) * 0.1);
+  float edge = r * u_resolution.y - size * mix(0.5, u < 0.5 ? 1.0 : 0.72, abs(u * 2.0 - 1.0));
+  float clear = smoothstep(2.5, 1.0, edge);
+  float star = smoothstep(0.75, -0.75, edge);
+  float border = star * smoothstep(-size * 0.2 - 0.75, -size * 0.2 + 0.75, edge);
+  float pip = smoothstep(size * 0.12 + 0.75, size * 0.12 - 0.75, r * u_resolution.y);
+  for (int i = 0; i < MAX_INKS; i++) w[i] *= 1.0 - clear;
+  w[0] += pip * ink;
+  w[3] += border * ink;
+  w[4] += (star - border) * (1.0 - pip) * ink;
+}
+
 /* Each scene under its own camera: spin in radians a second, sway in radians, zoom and drift as fractions. */
 void scene(int index, vec2 uv, float aspect, inout float w[MAX_INKS]) {
   for (int i = 0; i < MAX_INKS; i++) w[i] = 0.0;
@@ -750,6 +835,7 @@ void scene(int index, vec2 uv, float aspect, inout float w[MAX_INKS]) {
   if (index == 10) { hive(camera(uv, aspect, 0.008, 0.2, 0.18, 0.08), aspect, w); return; }
   if (index == 11) { orb(camera(uv, aspect, 0.0, 0.0, 0.1, 0.05), aspect, w); return; }
   if (index == 12) { bloom(camera(uv, aspect, 0.006, 0.1, 0.08, 0.03), aspect, w); return; }
+  if (index == 13) { mandala(camera(uv, aspect, 0.004, 0.1, 0.06, 0.01), aspect, w); return; }
   pools(uv, aspect, w);
 }
 

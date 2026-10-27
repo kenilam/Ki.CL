@@ -1,4 +1,4 @@
-import type { SceneName, Smoothed } from './spec';
+import { SCENES, type SceneName, type Smoothed } from './spec';
 
 import { MAX_RINGS } from './shader';
 
@@ -32,22 +32,6 @@ const CENTROID_DRIFT = 0.09;
 
 /** Seconds to wait for an onset before cutting on the beat of the clock. */
 const ONSET_PATIENCE_SECONDS = 2.5;
-
-const SCENES: SceneName[] = [
-  'pools',
-  'clouds',
-  'rings',
-  'bars',
-  'halo',
-  'wave',
-  'tunnel',
-  'kaleidoscope',
-  'stars',
-  'terrain',
-  'hive',
-  'orb',
-  'bloom',
-];
 
 /** How many of the last scenes a draw avoids, so the same few do not cycle. */
 const RECENT_LENGTH = 4;

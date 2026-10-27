@@ -13,6 +13,7 @@ import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { TOTAL, draw } from '@/views/experiments/music-visualiser/catalog';
+import { SCENES } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/spec';
 
 // Constants
 import { toPath as toExperimentsPath } from '@/views/experiments/constants';
@@ -51,14 +52,8 @@ const Words: React.FunctionComponent = () => {
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {common('experiment', { context: 'music_visualiser' })}
         </Heading>
-        <Text
-          is='p'
-          className={classNames(
-            'kicl-font-size-medium',
-            'kicl-margin-block-start-wide'
-          )}
-        >
-          {t('lede', { tracks: TOTAL })}
+        <Text is='p' className='kicl-margin-block-start-wide'>
+          {t('summary', { scenes: SCENES.length, tracks: TOTAL })}
         </Text>
         <HyperLink
           after={<Fa.FaPlay aria-hidden />}

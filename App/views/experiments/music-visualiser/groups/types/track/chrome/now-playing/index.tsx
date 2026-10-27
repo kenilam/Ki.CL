@@ -48,20 +48,13 @@ const NowPlaying: React.FunctionComponent = () => {
         >
           {title}
         </Heading>
-        <Text is='p' dense variant='secondary' className='kicl-font-size-small'>
+        <Text is='p' dense variant='secondary'>
           {category}
         </Text>
-        <HyperLink className='kicl-font-size-smaller' to={ATTRIBUTION.url}>
-          {t('attribution')}
-        </HyperLink>
+        <HyperLink to={ATTRIBUTION.url}>{t('attribution')}</HyperLink>
         {error ? (
           <Animation property='slide-from-top'>
-            <Text
-              className={classNames('kicl-color-error', 'kicl-font-size-small')}
-              dense
-              is='p'
-              role='alert'
-            >
+            <Text className='kicl-color-error' dense is='p' role='alert'>
               {t('error', { context: 'playback' })}
             </Text>
           </Animation>
