@@ -8,7 +8,6 @@ import type home from '@/locales/en/home.json';
 import type imageAgent from '@/locales/en/image-agent.json';
 import type me from '@/locales/en/me.json';
 import type musicVisualiser from '@/locales/en/music-visualiser.json';
-import type pika from '@/locales/en/pika.json';
 import type portfolio from '@/locales/en/portfolio.json';
 import type resume from '@/locales/en/resume.json';
 import type treeOfLife from '@/locales/en/tree-of-life.json';
@@ -27,7 +26,6 @@ declare module 'i18next' {
       'image-agent': typeof imageAgent;
       me: typeof me;
       'music-visualiser': typeof musicVisualiser;
-      pika: typeof pika;
       portfolio: typeof portfolio;
       resume: typeof resume;
       'tree-of-life': typeof treeOfLife;
