@@ -67,9 +67,7 @@ const Gate: React.FunctionComponent = () => {
         >
           {t('source', { category })}
         </Text>
-        <HyperLink className='kicl-font-size-small' to={ATTRIBUTION.url}>
-          {t('attribution')}
-        </HyperLink>
+        <HyperLink to={ATTRIBUTION.url}>{t('attribution')}</HyperLink>
         <HyperLink
           aria-label={t('action', { context: 'play', title })}
           lookLikeButton

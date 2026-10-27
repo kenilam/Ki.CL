@@ -15,6 +15,7 @@ import './styles.scss';
 
 // Constants
 import { CLASS_NAME as SCREEN } from '../constants';
+import { SCENES } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/spec';
 
 const CLASS_NAME = `${SCREEN}__words`;
 
@@ -61,15 +62,11 @@ const Words: React.FunctionComponent = () => {
         >
           {title}
         </Heading>
-        <Text
-          is='p'
-          dense
-          className={classNames(
-            'kicl-font-size-small',
-            'kicl-max-inline-size-columns-5'
-          )}
-        >
-          {t('description', { context: experiment.context })}
+        <Text is='p' dense className='kicl-max-inline-size-columns-5'>
+          {t('description', {
+            context: experiment.context,
+            scenes: SCENES.length,
+          })}
         </Text>
         <HyperLink
           className='kicl-margin-block-start-narrow'

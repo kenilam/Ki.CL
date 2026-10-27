@@ -1,18 +1,22 @@
 /** Every scene the stage can draw; `shader.ts` says what each one is. */
-export type SceneName =
-  | 'bars'
-  | 'bloom'
-  | 'clouds'
-  | 'halo'
-  | 'hive'
-  | 'kaleidoscope'
-  | 'orb'
-  | 'pools'
-  | 'rings'
-  | 'stars'
-  | 'terrain'
-  | 'tunnel'
-  | 'wave';
+export const SCENES = [
+  'pools',
+  'clouds',
+  'rings',
+  'bars',
+  'halo',
+  'wave',
+  'tunnel',
+  'kaleidoscope',
+  'stars',
+  'terrain',
+  'hive',
+  'orb',
+  'bloom',
+  'mandala',
+] as const;
+
+export type SceneName = (typeof SCENES)[number];
 
 /**
  * What the analyser hears, per frame.
