@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // API
@@ -18,8 +17,6 @@ import {
 
 // Components
 import {
-  Card,
-  CardContent,
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
@@ -209,75 +206,63 @@ const Search: React.FunctionComponent = () => {
   };
 
   return (
-    <search>
-      <Card variant='secondary' className='kicl-inline-size-xxl'>
-        <Layout autoFlow='row' gap='narrow'>
-          <CardContent>
-            {/*
-              The browser draws its own controls on this input - a cancel
-              cross for `type='search'` and a picker triangle for `list` -
-              and neither is one of ours. They are suppressed in the
-              stylesheet and replaced here with the app's own icons, so the
-              field matches everything else on the page.
-            */}
-            <InputGroup className={`${CLASS_NAME}__search`}>
-              <InputGroupAddon>
-                <Ri.RiSearchLine aria-hidden />
-              </InputGroupAddon>
+    <Layout gap='narrow'>
+      <search>
+        {/*
+          The browser draws its own controls on this input - a cancel
+          cross for `type='search'` and a picker triangle for `list` -
+          and neither is one of ours. They are suppressed in the
+          stylesheet and replaced here with the app's own icons, so the
+          field matches everything else on the page.
+        */}
+        <InputGroup className={`${CLASS_NAME}__search`}>
+          <InputGroupAddon>
+            <Ri.RiSearchLine aria-hidden />
+          </InputGroupAddon>
 
-              <InputGroupInput
-                type='search'
-                value={query}
-                list={LIST_ID}
-                placeholder={t('search_placeholder')}
-                autoComplete='off'
-                aria-label={t('search_label')}
-                aria-busy={loading}
-                onChange={(event) => choose(event.target.value)}
-              />
+          <InputGroupInput
+            type='search'
+            value={query}
+            list={LIST_ID}
+            placeholder={t('search_placeholder')}
+            autoComplete='off'
+            aria-label={t('search_label')}
+            aria-busy={loading}
+            onChange={(event) => choose(event.target.value)}
+          />
 
-              {query ? (
-                <InputGroupAddon>
-                  <InputGroupButton
-                    variant='ghost'
-                    type='button'
-                    aria-label={t('action', { context: 'clear_search' })}
-                    onClick={() => setQuery('')}
-                  >
-                    <Ri.RiCloseLine aria-hidden />
-                  </InputGroupButton>
-                </InputGroupAddon>
-              ) : null}
-            </InputGroup>
+          {query ? (
+            <InputGroupAddon>
+              <InputGroupButton
+                variant='ghost'
+                type='button'
+                aria-label={t('action', { context: 'clear_search' })}
+                onClick={() => setQuery('')}
+              >
+                <Ri.RiCloseLine aria-hidden />
+              </InputGroupButton>
+            </InputGroupAddon>
+          ) : null}
+        </InputGroup>
 
-            <datalist id={LIST_ID}>
-              {options.map((option) => (
-                <option key={option.nodeId} value={label(option)} />
-              ))}
-            </datalist>
+        <datalist id={LIST_ID}>
+          {options.map((option) => (
+            <option key={option.nodeId} value={label(option)} />
+          ))}
+        </datalist>
 
-            <Text
-              dense
-              is='p'
-              aria-live='polite'
-              className={classNames(
-                'kicl-font-size-smaller',
-                'kicl-color-grey-700'
-              )}
-            >
-              {t('status', {
-                context: statusKey({
-                  loading,
-                  searching,
-                  matches: found.length,
-                }),
-                count: options.length,
-              })}
-            </Text>
-          </CardContent>
-        </Layout>
-      </Card>
-    </search>
+        <Text dense is='p' aria-live='polite' className='kicl-color-grey-700'>
+          {t('status', {
+            context: statusKey({
+              loading,
+              searching,
+              matches: found.length,
+            }),
+            count: options.length,
+          })}
+        </Text>
+      </search>
+    </Layout>
   );
 };
 

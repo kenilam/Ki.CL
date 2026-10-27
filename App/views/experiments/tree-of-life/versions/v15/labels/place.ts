@@ -1,5 +1,6 @@
 // Constants
 import { CLASS_NAME } from '@/views/experiments/tree-of-life/versions/v15/constants';
+import { CLASS_NAME as SELECTOR } from '@/views/experiments/tree-of-life/versions/selector/constants';
 
 // Grid
 import {
@@ -20,11 +21,12 @@ import {
 import { type Seat, getHovered, isPendingRemoval, seats, store } from './store';
 
 /**
- * Fixed chrome labels must also stay clear of: the panel and the controls.
- * Matched by this view's own class, since no element carries the bare root
- * class for a descendant selector to start from.
+ * Fixed chrome labels must also stay clear of: the panel, the controls, and
+ * the Back and version links every version shares. Matched by this view's own
+ * class, since no element carries the bare root class for a descendant
+ * selector to start from.
  */
-const CHROME = [`.${CLASS_NAME}__chrome`];
+const CHROME = [`.${CLASS_NAME}__chrome`, `nav:has(.${SELECTOR}__toggle)`];
 
 /** Seats every mounted pill for one frame, against the bodies, the chrome and each other. */
 function place(host: HTMLElement, pills: Map<string, HTMLElement>): void {
@@ -229,7 +231,20 @@ function place(host: HTMLElement, pills: Map<string, HTMLElement>): void {
 
       seats.set(item.key, seat);
 
-      const placed = { x: item.x + seat.dx, y: item.y + seat.dy };
+      /*
+       * Held inside the frame. A forced label with no seat that fits, such
+       * as the focused name on a node near the edge, otherwise ran off it.
+       */
+      const placed = {
+        x: Math.max(
+          EDGE_PAD,
+          Math.min(item.x + seat.dx, store.width - width - EDGE_PAD)
+        ),
+        y: Math.max(
+          EDGE_PAD,
+          Math.min(item.y + seat.dy, store.height - height - EDGE_PAD)
+        ),
+      };
 
       pill.style.transform = `translate3d(${Math.round(placed.x)}px, ${Math.round(placed.y)}px, 0)`;
 

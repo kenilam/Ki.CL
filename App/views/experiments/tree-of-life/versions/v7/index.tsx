@@ -189,7 +189,6 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-inset-block-end',
           'kicl-inset-inline-center',
           'kicl-pointer-events-none',
-          'kicl-font-size-smaller',
           'kicl-color-grey-700',
           'kicl-text-align-center'
         )}

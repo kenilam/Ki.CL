@@ -6,32 +6,6 @@
     );
 
     /*
-     * On a small screen the panel is docked to the foot instead of the head.
-     *
-     * Held at the top it covered a quarter of a phone's frame, and since the
-     * label layer treats chrome as an obstacle, that quarter took most of the
-     * seats with it - 2 of 52 names were being placed. At the foot it covers
-     * the emptiest part of the composition instead of the densest.
-     */
-    &--panel {
-      // Docked by a style query, so set here: a utility class would win at every size.
-      inset-block-start: var(--kicl-inset-block-start);
-
-      @container style(--kicl-viewport-up-to-desktop: true) {
-        inset-block: auto var(--kicl-inset-block-end);
-        max-block-size: 45dvb;
-        overflow-y: auto;
-
-        /*
-         * Narrowed so it stops short of the version toggle in the opposite
-         * corner; both are docked to the foot, and at full width the two met.
-         * The cards are sized by `kicl-inline-size-xxl`, which reads this token.
-         */
-        --kicl-size-18x: var(--kicl-size-14x);
-      }
-    }
-
-    /*
      * Anything clickable in the chrome clears the minimum target size. These
      * are single icons and short words sitting over a canvas, so left alone
      * they size to their type - the animation control measured 16px tall.

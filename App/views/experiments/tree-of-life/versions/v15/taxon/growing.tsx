@@ -37,6 +37,7 @@ import {
   MIN_SIZE,
   MIN_WIDTH,
 } from '@/views/experiments/tree-of-life/versions/v15/constants';
+import { toPath as toDetailsPath } from '@/views/experiments/tree-of-life/versions/v15/details/constants';
 
 // Labels
 import {
@@ -539,6 +540,14 @@ const Growing: React.FunctionComponent<GrowingProps> = ({
         geometry={body}
         onClick={(event) => {
           event.stopPropagation();
+
+          // The focused taxon is already routed to, so it opens its details.
+          if (nodeId === focus) {
+            navigate(toDetailsPath(nodeId), { viewTransition: true });
+
+            return;
+          }
+
           navigate(toNodePath(nodeId));
         }}
         onPointerOver={() => {

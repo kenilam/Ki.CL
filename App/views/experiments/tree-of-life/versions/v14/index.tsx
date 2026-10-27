@@ -1241,10 +1241,7 @@ const Canvas: React.FunctionComponent = () => {
                               <Badge
                                 is='li'
                                 variant='ghost'
-                                className={classNames(
-                                  'kicl-font-size-smaller',
-                                  'kicl-text-transform-lowercase'
-                                )}
+                                className='kicl-text-transform-lowercase'
                               >
                                 <BadgeLabel>
                                   {t('label', { context: 'rank' })}
@@ -1256,20 +1253,13 @@ const Canvas: React.FunctionComponent = () => {
                               <Badge
                                 is='li'
                                 variant='secondary'
-                                className={classNames(
-                                  'kicl-font-size-smaller',
-                                  'kicl-text-transform-lowercase'
-                                )}
+                                className='kicl-text-transform-lowercase'
                               >
                                 {t('terminal')}
                               </Badge>
                             ) : null}
                             {selectedLayoutNode.node.ottId != null ? (
-                              <Badge
-                                is='li'
-                                variant='ghost'
-                                className='kicl-font-size-smaller'
-                              >
+                              <Badge is='li' variant='ghost'>
                                 <BadgeLabel>
                                   {t('label', { context: 'ott_id' })}
                                 </BadgeLabel>
@@ -1327,7 +1317,6 @@ const Canvas: React.FunctionComponent = () => {
                             dense
                             is='p'
                             className={classNames(
-                              'kicl-font-size-small',
                               'kicl-color-grey-700',
                               'kicl-line-height-narrow'
                             )}
@@ -1353,8 +1342,7 @@ const Canvas: React.FunctionComponent = () => {
             'kicl-inset-inline',
             'kicl-margin-inline-auto',
             'kicl-pointer-events-none',
-            'kicl-z-index-floating',
-            'kicl-font-size-smaller'
+            'kicl-z-index-floating'
           )}
         >
           {t('caption', { context: 'v14' })}
