@@ -104,9 +104,6 @@ const TRAVEL_EASE = 3.2;
  */
 const SETTLE_FRAMES = 6;
 
-/** The fixed panels, which read a wheel as their own scroll. */
-const CHROME_CLASS = 'kicl--views--experiments--tree-of-life--v15__chrome';
-
 /** Radians of orbit per pixel dragged. */
 const DRAG_SENSITIVITY = 0.005;
 
@@ -316,24 +313,21 @@ const CameraRig: React.FunctionComponent = () => {
    */
   useEffect(() => {
     /*
-     * Listened for on the window, not on the canvas.
+     * Listened for on the figure that holds the canvas and the names, not on
+     * the canvas.
      *
      * The labels are a sibling layer rather than children of the canvas, and
      * each is a link, so a wheel turned with the pointer over a name went to
      * the name and bubbled up past the canvas without ever reaching it -
      * zooming died wherever the tree was densest, which is exactly where the
-     * names are. Catching it higher up means the pointer can be anywhere.
+     * names are. The figure is where both bubble to.
      *
-     * The panels are the exception: they are for reading, and a wheel over
-     * them should scroll them rather than move the camera.
+     * Not the window: the panel and any dialog over the tree are for reading,
+     * and a wheel there scrolls them rather than moving the camera.
      */
+    const stage = canvas.closest('figure') ?? canvas;
+
     const onWheel = (event: WheelEvent) => {
-      const target = event.target as Element | null;
-
-      if (target?.closest?.(`.${CHROME_CLASS}`)) {
-        return;
-      }
-
       event.preventDefault();
 
       wanted.current = Math.min(
@@ -371,13 +365,13 @@ const CameraRig: React.FunctionComponent = () => {
       dragging = false;
     };
 
-    window.addEventListener('wheel', onWheel, { passive: false });
+    stage.addEventListener('wheel', onWheel, { passive: false });
     canvas.addEventListener('pointerdown', onDown);
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
 
     return () => {
-      window.removeEventListener('wheel', onWheel);
+      stage.removeEventListener('wheel', onWheel);
       canvas.removeEventListener('pointerdown', onDown);
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('pointerup', onUp);

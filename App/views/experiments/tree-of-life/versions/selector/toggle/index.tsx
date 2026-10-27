@@ -55,7 +55,6 @@ const Toggle: React.FunctionComponent = () => {
       <nav aria-label={common('experiment', { context: 'tree_of_life' })}>
         <HyperLink
           before={<Ri.RiArrowLeftSLine aria-hidden />}
-          className='kicl-font-size-small'
           to='..'
           unstyled
         >
@@ -69,7 +68,6 @@ const Toggle: React.FunctionComponent = () => {
           gap='narrower'
           className={classNames(
             `${CLASS_NAME}__toggle`,
-            'kicl-font-size-small',
             'kicl-z-index-popover'
           )}
           popoverTarget={CLASS_NAME}

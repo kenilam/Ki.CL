@@ -1,8 +1,12 @@
 // Routes
 import { Navigate, Route } from 'design/router';
 
+// Details
+import { Details } from './v15/details';
+
 // Constants
 import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';
+import { VERSION as LIVE } from './v15/constants';
 import { PATH, VERSIONS } from './constants';
 
 const Versions = (
@@ -21,7 +25,10 @@ const Versions = (
           lazy={async () => ({
             Component: (await import(`./v${version}`)).Canvas,
           })}
-        />
+        >
+          {/* Only the live version opens a taxon's details. */}
+          {version === LIVE ? Details : null}
+        </Route>
       </Route>
     ))}
   </Route>
