@@ -28,6 +28,7 @@ const SkipLink: React.FunctionComponent = () => {
       lookLikeButton
       size='small'
       to={`#${MAIN_ID}`}
+      variant='tertiary'
     >
       {t('action', { context: 'skip_to_content' })}
     </HyperLink>

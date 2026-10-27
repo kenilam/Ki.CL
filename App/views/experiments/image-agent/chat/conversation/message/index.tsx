@@ -91,7 +91,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
           <Choices choices={message.choices} onChoose={onChoose} />
         ) : null}
 
-        {message.kind === 'IMAGE' ? (
+        {message.kind === 'IMAGE' && (message.asset?.url || message.score) ? (
           <Card size='fit' variant='secondary'>
             {message.asset?.url ? (
               <Picture title={title} url={message.asset.url} />

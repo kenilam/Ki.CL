@@ -55,15 +55,12 @@ const Review: React.FunctionComponent<Props> = ({ score }) => {
               key={row.key}
               frames='auto--max-content'
             >
-              <Text is='span' className='kicl-font-size-small'>
-                {t('label', { context: row.context })}
-              </Text>
+              <Text is='span'>{t('label', { context: row.context })}</Text>
               <Text
                 dense
                 is='span'
                 className={classNames(
                   'kicl-font-family-mono',
-                  'kicl-font-size-small',
                   'kicl-color-grey-700'
                 )}
               >
@@ -75,19 +72,13 @@ const Review: React.FunctionComponent<Props> = ({ score }) => {
         {score.suggestions.length ? (
           <CardFooter>
             <section>
-              <Text is='p' dense className='kicl-font-size-small'>
+              <Text is='p' dense>
                 {t('title', { context: 'suggestions' })}
               </Text>
               <List gap='narrowest'>
                 {score.suggestions.map((suggestion) => (
                   <ListItem key={suggestion}>
-                    <Text
-                      is='span'
-                      className={classNames(
-                        'kicl-font-size-small',
-                        'kicl-color-grey-700'
-                      )}
-                    >
+                    <Text is='span' className='kicl-color-grey-700'>
                       {suggestion}
                     </Text>
                   </ListItem>
