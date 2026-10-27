@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 // Components
 import { Frame, Heading } from 'design/components';
 
+// Routes
+import { Outlet } from 'design/router';
+
 // Labels
 import { Labels } from './labels';
 
@@ -20,7 +23,7 @@ import './styles.scss';
 /*
  * The page's `h1` is the experiment's name, hidden, rather than the focused
  * taxon's: the taxon's title is missing until the lineage resolves and sits
- * inside a disclosure, so it stays an `h2` under this.
+ * in the details dialog, so it stays an `h2` under this.
  */
 const Canvas: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
@@ -45,6 +48,9 @@ const Canvas: React.FunctionComponent = () => {
       <Panel />
 
       <Controls />
+
+      {/* The taxon's details, when the route asks for them. */}
+      <Outlet />
     </>
   );
 };

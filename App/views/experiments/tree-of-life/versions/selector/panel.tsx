@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 
 // Components
 import { Card, HyperLink, List, ListItem } from 'design/components';
+
+// Hooks
+import { useOverlayContents } from 'design/hooks';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
@@ -20,6 +23,9 @@ import { CLASS_NAME } from '@/views/experiments/tree-of-life/versions/selector/c
 const Panel: React.FunctionComponent = () => {
   const { t } = useTranslation('tree-of-life');
   const { focus: nodeId } = useTreeOfLifeContext();
+  const node = useRef<HTMLElement>(null);
+  // Closed, it is only the `<nav>`, which the toggle can still open.
+  const shown = useOverlayContents(node);
 
   return (
     <nav
@@ -31,23 +37,26 @@ const Panel: React.FunctionComponent = () => {
       )}
       id={CLASS_NAME}
       popover='auto'
+      ref={node}
     >
-      <Card variant='secondary'>
-        {/*
+      {shown ? (
+        <Card variant='secondary'>
+          {/*
           Every entry names a version, the current one included. The separate
           "Final" link pointed at an unversioned node path, which no longer
           exists - and said nothing the list does not.
         */}
-        <List justifyContent='stretch' justifyItems='center' gap='narrower'>
-          {[...VERSIONS].reverse().map((version) => (
-            <ListItem key={version}>
-              <HyperLink unstyled to={toVersionPath({ version, nodeId })}>
-                {version}
-              </HyperLink>
-            </ListItem>
-          ))}
-        </List>
-      </Card>
+          <List justifyContent='stretch' justifyItems='center' gap='narrower'>
+            {[...VERSIONS].reverse().map((version) => (
+              <ListItem key={version}>
+                <HyperLink unstyled to={toVersionPath({ version, nodeId })}>
+                  {version}
+                </HyperLink>
+              </ListItem>
+            ))}
+          </List>
+        </Card>
+      ) : null}
     </nav>
   );
 };

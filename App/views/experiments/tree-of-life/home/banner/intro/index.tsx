@@ -45,9 +45,7 @@ const Intro: React.FunctionComponent = () => {
       >
         {common('experiment', { context: 'tree_of_life' })}
       </Heading>
-      <Text is='p' className='kicl-font-size-medium'>
-        {t('lede')}
-      </Text>
+      <Text is='p'>{t('lede')}</Text>
       <HyperLink
         level='confirm'
         lookLikeButton

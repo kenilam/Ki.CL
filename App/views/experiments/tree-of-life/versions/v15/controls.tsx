@@ -47,7 +47,7 @@ const Controls: React.FunctionComponent = () => {
           title={t('hint', { context: animate ? 'land' : 'play' })}
           onClick={() => setAnimate((current) => !current)}
         >
-          <Text is='span' unstyled className='kicl-font-size-small'>
+          <Text is='span' unstyled>
             {t('animation')}
           </Text>
         </Button>

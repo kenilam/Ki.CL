@@ -40,7 +40,7 @@ const Era: React.FunctionComponent<Props> = ({ context, versions }) => {
           </ListItem>
         ))}
       </List>
-      <Text id={id} dense className='kicl-font-size-small'>
+      <Text id={id} dense>
         {t('era', { context })}
       </Text>
     </ListItem>

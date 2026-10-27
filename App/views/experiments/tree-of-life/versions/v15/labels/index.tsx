@@ -7,11 +7,15 @@ import { useTranslation } from 'react-i18next';
 // Components
 import { Badge, HyperLink } from 'design/components';
 
+// Icons
+import * as Ri from 'react-icons/ri';
+
 // Constants
 import {
   CLASS_NAME,
   toNodePath,
 } from '@/views/experiments/tree-of-life/versions/v15/constants';
+import { toPath as toDetailsPath } from '@/views/experiments/tree-of-life/versions/v15/details/constants';
 
 // Styles
 import './styles.scss';
@@ -63,8 +67,7 @@ const PILL_CLASS = classNames(
   'kicl-inset-inline-start-0',
   'kicl-text-nowrap',
   'kicl-position-absolute',
-  'kicl-pointer-events-auto',
-  'kicl-font-size-small'
+  'kicl-pointer-events-auto'
 );
 
 /** DOM layer. Sits outside the Canvas and seats the pills each frame. */
@@ -118,12 +121,17 @@ const Labels: React.FunctionComponent = () => {
          * The link is the seated element, not the chip inside it: the frame
          * loop transforms whatever it holds a reference to, and reads
          * `data-seated` off the same node to fade it in.
+         *
+         * The routed taxon is already where its own link would go, so its
+         * name opens its details instead, as the taxon does on the canvas.
          */
         <HyperLink
           unstyled
+          aria-haspopup={label.accent ? 'dialog' : undefined}
           data-node={key}
           key={key}
-          to={toNodePath(key)}
+          to={label.accent ? toDetailsPath(key) : toNodePath(key)}
+          viewTransition={Boolean(label.accent)}
           className={PILL_CLASS}
           ref={(node: HTMLAnchorElement | null) => {
             if (node) {
@@ -160,6 +168,7 @@ const Labels: React.FunctionComponent = () => {
             size={label.accent ? 'large' : 'small'}
           >
             {label.text}
+            {label.accent ? <Ri.RiInformationLine aria-hidden /> : null}
           </Badge>
         </HyperLink>
       ))}

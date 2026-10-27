@@ -65,13 +65,7 @@ const Plate: React.FC<Props> = ({
             )}
           />
           <figcaption>
-            <Text
-              is='span'
-              className={classNames(
-                'kicl-font-size-small',
-                'kicl-color-grey-700'
-              )}
-            >
+            <Text is='span' className='kicl-color-grey-700'>
               {t('plate', { context: 'wait' })}
             </Text>
           </figcaption>
@@ -113,7 +107,6 @@ const Plate: React.FC<Props> = ({
             dense
             is='p'
             className={classNames(
-              'kicl-font-size-smaller',
               'kicl-font-weight-bolder',
               'kicl-color-grey-700',
               'kicl-line-height-narrow'

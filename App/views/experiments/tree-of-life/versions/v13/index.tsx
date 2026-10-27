@@ -137,7 +137,6 @@ const PosterTree: React.FunctionComponent<{
               'kicl-pointer-events-none',
               'kicl-font-family',
               'kicl-font-weight',
-              'kicl-font-size-smallest',
               'kicl-fill-green'
             )}
             textAnchor='middle'
@@ -411,7 +410,6 @@ const Canvas: React.FunctionComponent = () => {
           'kicl-inset-inline-center',
           'kicl-max-inline-size-columns-6',
           'kicl-pointer-events-none',
-          'kicl-font-size-smaller',
           'kicl-color-grey-700',
           'kicl-text-align-center'
         )}
