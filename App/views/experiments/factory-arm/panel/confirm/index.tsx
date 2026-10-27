@@ -57,9 +57,7 @@ const Confirm: React.FunctionComponent<Props> = ({
       open={open}
       role='alertdialog'
     >
-      <Text className='kicl-font-size-small' is='p'>
-        {t('start_over', { context: 'message' })}
-      </Text>
+      <Text is='p'>{t('start_over', { context: 'message' })}</Text>
     </Dialog>
   );
 };

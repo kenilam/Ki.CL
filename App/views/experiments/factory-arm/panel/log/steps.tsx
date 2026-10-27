@@ -37,17 +37,13 @@ const Steps: React.FunctionComponent<Props> = ({ entries }) => {
         >
           <ListItem>
             <Text
-              className={classNames(
-                'kicl-color-grey',
-                'kicl-font-family-mono',
-                'kicl-font-size-smaller'
-              )}
+              className={classNames('kicl-color-grey', 'kicl-font-family-mono')}
               dateTime={new Date(at).toISOString()}
               is='time'
             >
               {time(at)}
             </Text>
-            <Text className='kicl-font-size-small' is='span'>
+            <Text is='span'>
               <Ri.RiCheckboxBlankCircleFill
                 aria-hidden
                 className={`kicl-color-${level ?? 'grey'}`}

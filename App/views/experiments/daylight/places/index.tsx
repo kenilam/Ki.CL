@@ -108,7 +108,6 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
                     className={classNames(
                       'kicl-color-grey',
                       'kicl-font-family-mono',
-                      'kicl-font-size-small',
                       'kicl-text-align-end'
                     )}
                     dateTime={date.toISOString()}

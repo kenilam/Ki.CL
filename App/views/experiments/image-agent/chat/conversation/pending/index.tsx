@@ -60,7 +60,6 @@ const Pending = React.forwardRef<HTMLElement, Props>(
             is='span'
             className={classNames(
               'kicl-font-family-mono',
-              'kicl-font-size-smaller',
               'kicl-color-grey-700'
             )}
           >

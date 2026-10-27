@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,9 @@ import {
 
 // Components
 import { Dialog, Heading } from 'design/components';
+
+// Routers
+import { useLocation } from 'design/router';
 
 // Widgets
 import { ContactForm, type ContactFormValues } from 'design/widgets';
@@ -38,11 +41,18 @@ const Contact: React.FunctionComponent = () => {
 
   const { t } = useTranslation();
 
+  const { key } = useLocation();
+
+  const node = useRef<HTMLDialogElement>(null);
+
   /*
-   * A new form each time the dialog closes, so a sent message is not what
-   * opens next, and when the account changes, so it starts with that address.
+   * Opened by a command from any page, so it outlives the route it was opened
+   * on. It closes on every navigation, the back button included, as the
+   * mobile navigation does.
    */
-  const [opened, setOpened] = useState(0);
+  useEffect(() => {
+    node.current?.close();
+  }, [key]);
 
   const send = useCallback(
     ({ Email, Message }: ContactFormValues) =>
@@ -64,11 +74,15 @@ const Contact: React.FunctionComponent = () => {
           {t('send_message')}
         </Heading>
       }
-      onClose={() => setOpened((count) => count + 1)}
+      ref={node}
     >
+      {/*
+        The dialog takes its contents out when it closes, so each opening is a
+        new form. The key starts one over when the account changes while open.
+      */}
       <ContactForm
         email={me?.Email ?? undefined}
-        key={`${opened} ${me?.Email}`}
+        key={me?.Email}
         onSubmit={send}
       />
     </Dialog>

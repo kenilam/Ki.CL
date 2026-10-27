@@ -109,12 +109,13 @@ const Confirm: React.FunctionComponent = () => {
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
             {t('title', { context: confirmed ? 'confirmed' : 'confirm' })}
           </CardTitle>
-          <CardDescription>
-            {confirmed && t('description', { context: 'confirmed' })}
-            {!confirmed &&
-              !checking &&
-              t('description', { context: 'confirm' })}
-          </CardDescription>
+          {confirmed || !checking ? (
+            <CardDescription>
+              {t('description', {
+                context: confirmed ? 'confirmed' : 'confirm',
+              })}
+            </CardDescription>
+          ) : null}
           <Spinner in={checking} position='inline' />
         </CardHeader>
       </Layout>

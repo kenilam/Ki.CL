@@ -1,7 +1,6 @@
 import React from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
@@ -66,7 +65,7 @@ const Log: React.FunctionComponent = () => {
                   <Details
                     key={first.id}
                     summary={
-                      <Text className='kicl-font-size-small' dense is='span'>
+                      <Text dense is='span'>
                         {t('run', {
                           context: 'summary',
                           count: entries.length,
@@ -82,10 +81,7 @@ const Log: React.FunctionComponent = () => {
               })}
             </>
           ) : (
-            <Text
-              className={classNames('kicl-color-grey', 'kicl-font-size-small')}
-              is='p'
-            >
+            <Text className='kicl-color-grey' is='p'>
               {t('status', { context: 'empty' })}
             </Text>
           )}
