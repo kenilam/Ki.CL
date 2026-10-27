@@ -30,7 +30,7 @@ const Header: React.FunctionComponent = () => {
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {common('experiment', { context: 'image_agent' })}
         </Heading>
-        <Text dense is='p' className='kicl-font-size-medium'>
+        <Text dense is='p'>
           {t('description')}
         </Text>
       </header>

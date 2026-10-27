@@ -60,7 +60,7 @@ const Pile: React.FunctionComponent = () => {
 
         <List gap='narrow'>
           {row(
-            <label className='kicl-font-size-small' htmlFor={id.layers}>
+            <label htmlFor={id.layers}>
               {t('label', { context: 'layers' })}
             </label>,
             <Select
@@ -79,7 +79,7 @@ const Pile: React.FunctionComponent = () => {
           )}
 
           {row(
-            <Text className='kicl-font-size-small' is='span'>
+            <Text is='span'>
               {t('label', { context: 'seed' })}{' '}
               <span className='kicl-font-family-mono'>{pile.seed}</span>
             </Text>,
@@ -99,7 +99,7 @@ const Pile: React.FunctionComponent = () => {
           )}
 
           {row(
-            <Text className='kicl-font-size-small' id={id.second} is='span'>
+            <Text id={id.second} is='span'>
               {t('label', { context: 'second_stack' })}
             </Text>,
             <Switch

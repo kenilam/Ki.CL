@@ -41,10 +41,7 @@ const Shapes: React.FunctionComponent = () => {
         <Heading dense id={id} is='h2' lookLike='h5'>
           {t('title', { context: 'obstacles' })}
         </Heading>
-        <Text
-          className={classNames('kicl-color-grey-700', 'kicl-font-size-small')}
-          is='p'
-        >
+        <Text className='kicl-color-grey-700' is='p'>
           {t('hint')}
         </Text>
 
@@ -70,7 +67,6 @@ const Shapes: React.FunctionComponent = () => {
                   <Text
                     className={classNames(
                       'kicl-font-family-mono',
-                      'kicl-font-size-smaller',
                       'kicl-color-grey'
                     )}
                     is='span'

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // Libraries
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
@@ -67,10 +66,7 @@ const Presets: React.FunctionComponent = () => {
                   <>
                     <CardTitle is='span'>{name}</CardTitle>
                     <CardDescription
-                      className={classNames(
-                        'kicl-font-family-mono',
-                        'kicl-font-size-smaller'
-                      )}
+                      className='kicl-font-family-mono'
                       is='span'
                     >
                       {summary(t, preset)}
