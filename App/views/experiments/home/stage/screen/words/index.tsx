@@ -27,8 +27,7 @@ const Words: React.FunctionComponent = () => {
   const title = common('experiment', { context: experiment.context });
 
   return (
-    // Rows packed at the end: every block is as tall as the tallest, so a shorter one would spread otherwise.
-    <Layout alignContent='end' autoFlow='row' gap='narrow' justifyItems='start'>
+    <Layout autoFlow='row' gap='narrow' justifyItems='start'>
       <article
         className={classNames(
           CLASS_NAME,

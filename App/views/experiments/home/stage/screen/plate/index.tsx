@@ -18,7 +18,7 @@ import './styles.scss';
 import { CLASS_NAME } from './constants';
 
 /**
- * The background: fades in and drifts. The visualiser draws its idle scene,
+ * The background: fades in as the page scrolls. The visualiser draws its idle scene,
  * as on its own home; the other experiments show a picture.
  */
 const Plate: React.FunctionComponent = () => {
@@ -30,7 +30,7 @@ const Plate: React.FunctionComponent = () => {
       className={classNames(
         CLASS_NAME,
         'kicl-animation-none-reduced-motion',
-        'kicl-inset-inline-0',
+        'kicl-inset-0',
         'kicl-position-absolute'
       )}
     >

@@ -12,7 +12,9 @@
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
       inset-block-start: calc(var(#{$home}--index) * var(#{$home}--screen));
+      scroll-margin-block: 0;
       scroll-snap-align: start;
+      scroll-snap-stop: always;
     }
   }
 }
@@ -25,7 +27,7 @@
      */
     html:has(.kicl--views--experiments__home__stage__anchor) {
       scroll-padding-block-start: 0;
-      scroll-snap-type: y proximity;
+      scroll-snap-type: y mandatory;
     }
   }
 }

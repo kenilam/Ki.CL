@@ -59,8 +59,6 @@ type Props = {
   onFace?(facing: Coordinates): void;
   /** Told which place was clicked, by its index. */
   onPick?(place: number): void;
-  /** How many times taller the canvas is than the part of it that is seen. 1 by default. */
-  stretch?: number;
   /** Told where the globe was left facing when a drag ends. Answers with where it should settle. */
   onDrop?(facing: Coordinates): Coordinates | void;
   places: readonly Coordinates[];
@@ -88,7 +86,6 @@ export function useOrb({
   onFace,
   onPick,
   places,
-  stretch = 1,
   width,
 }: Props): { handlers: Handlers; over: boolean } {
   const facing = useRef(centre);
@@ -114,7 +111,6 @@ export function useOrb({
       column: parseFloat(style.getPropertyValue(COLUMN)) * rem || width,
       drop,
       height,
-      stretch,
       places: places.map(toVector),
       view: toView(facing.current),
       width,
@@ -122,9 +118,9 @@ export function useOrb({
       y: event.clientY - top,
     });
   };
-  const scene = useRef({ active, date, drop, light, onFace, places, stretch });
+  const scene = useRef({ active, date, drop, light, onFace, places });
 
-  scene.current = { active, date, drop, light, onFace, places, stretch };
+  scene.current = { active, date, drop, light, onFace, places };
 
   useEffect(() => {
     asked.current = centre;
@@ -206,7 +202,6 @@ export function useOrb({
         renderer.draw({
           column: column || canvas.width,
           drop: scene.current.drop,
-          stretch: scene.current.stretch,
           active: scene.current.active,
           light: scene.current.light,
           places: scene.current.places.map(toVector),

@@ -25,9 +25,8 @@ type Props = Omit<React.ComponentProps<typeof ScreenProvider>, 'children'> & {
 };
 
 /**
- * One full-screen panel: a background that fades in and drifts, and a
- * text block that rides in from below, holds, and is pushed off by the
- * next panel's block. All of it is scroll-driven CSS; see styles.scss.
+ * One full-screen panel: a background and a text block that fade in as the
+ * page scrolls to it. All of it is scroll-driven CSS; see styles.scss.
  *
  * The item is the grid and ignores the pointer: stacked above the panel
  * below, it would block that panel's link. Only the text block takes it.
@@ -52,16 +51,7 @@ const Screen: React.FunctionComponent<Props> = ({
       )}
       style={{ '--kicl--views--experiments__home--index': index } as never}
     >
-      <div
-        className={classNames(
-          `${CLASS_NAME}__crop`,
-          'kicl-inset-0',
-          'kicl-overflow-clip',
-          'kicl-position-absolute'
-        )}
-      >
-        <Plate />
-      </div>
+      <Plate />
       <Words />
     </ListItem>
   </ScreenProvider>

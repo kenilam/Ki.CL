@@ -12,8 +12,6 @@ export type Scene = {
   /** Unit vectors in the globe's frame. */
   places: readonly (readonly number[])[];
   seconds: number;
-  /** How many times taller the canvas is than the part of it that is seen. */
-  stretch: number;
   /** Where the globe faces, as longitude from 0 to 360 and latitude. The stars go by with it. */
   turn: readonly number[];
   /** The sun in the globe's frame, and as the viewer sees it. */
@@ -107,7 +105,6 @@ export function createRenderer(
     seconds: at('uSeconds'),
     size: at('uSize'),
     sun: at('uSun'),
-    stretch: at('uStretch'),
     sunSeen: at('uSunSeen'),
     turn: at('uTurn'),
     view: at('uView'),
@@ -130,7 +127,6 @@ export function createRenderer(
       gl.uniform2f(uniforms.size, canvas.width, canvas.height);
       gl.uniform1f(uniforms.column, scene.column);
       gl.uniform1f(uniforms.drop, scene.drop);
-      gl.uniform1f(uniforms.stretch, scene.stretch);
       gl.uniformMatrix3fv(uniforms.view, false, scene.view);
       gl.uniform3fv(uniforms.sun, scene.sun);
       gl.uniform3fv(uniforms.sunSeen, scene.sunSeen);
