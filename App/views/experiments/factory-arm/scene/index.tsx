@@ -1,10 +1,13 @@
 import React, { Suspense } from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Physics
 import { Physics } from '@react-three/rapier';
 
 // Three
-import { Drei, Fiber } from '@/three';
+import { Canvas, Drei } from '@/three';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
@@ -18,6 +21,7 @@ import { Engine } from './engine';
 import { Floor } from './floor';
 import { Notice } from './notice';
 import { Obstacles } from './obstacles';
+import { Overlays } from './overlays';
 import { Pallet } from './pallet';
 import { Sensing } from './sensors';
 
@@ -28,12 +32,15 @@ import { BUFFER, INCOMING } from './constants';
 import { tokenColor } from '@/helper';
 
 const Scene: React.FunctionComponent = () => {
+  const { t } = useTranslation('factory-arm');
   const { stacks } = useFactoryArmContext();
 
   return (
-    <Fiber.Canvas
+    <Canvas
+      aria-label={t('scene')}
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: true }}
+      role='img'
       shadows='variance'
     >
       <Camera />
@@ -97,7 +104,8 @@ const Scene: React.FunctionComponent = () => {
 
       <Arm />
       <Notice />
-    </Fiber.Canvas>
+      <Overlays />
+    </Canvas>
   );
 };
 

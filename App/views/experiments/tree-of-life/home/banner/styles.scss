@@ -14,6 +14,7 @@
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
+  isolation: isolate;
 
   // On the frame itself, so `100%` is the window: less the frame's own gap.
   padding-inline: calc(
@@ -41,5 +42,6 @@
     content: '';
     inset: 0;
     position: absolute;
+    z-index: var(--kicl-z-index-behind);
   }
 }

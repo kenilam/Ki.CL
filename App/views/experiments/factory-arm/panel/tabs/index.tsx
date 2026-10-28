@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Button, Layout, Segmented, SegmentedItem } from 'design/components';
+import { Button, Menu, Segmented, SegmentedItem } from 'design/components';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -33,39 +33,36 @@ const Tabs: React.FunctionComponent = () => {
 
   const logging = tab === 'log';
 
-  // One child, so the header's grid puts the sheet's close button beside it.
   return (
-    <Layout
+    <Menu
       alignItems='center'
       autoFlow='column'
       frames='auto--max-content'
       gap='narrow'
     >
-      <div>
-        <Segmented
-          aria-label={t('setup')}
-          onValueChange={(value) => setTab(value as (typeof TABS)[number])}
-          value={tab}
-        >
-          {TABS.map((name) => (
-            <SegmentedItem key={name} value={name}>
-              {t('tab', { context: name })}
-            </SegmentedItem>
-          ))}
-        </Segmented>
+      <Segmented
+        aria-label={t('setup')}
+        onValueChange={(value) => setTab(value as (typeof TABS)[number])}
+        value={tab}
+      >
+        {TABS.map((name) => (
+          <SegmentedItem key={name} value={name}>
+            {t('tab', { context: name })}
+          </SegmentedItem>
+        ))}
+      </Segmented>
 
-        <Button
-          aria-label={t('tab', { context: 'log' })}
-          aria-pressed={logging}
-          onClick={() => setTab(logging ? back.current : 'log')}
-          size='small'
-          variant={logging ? 'primary' : 'secondary'}
-          level='confirm'
-        >
-          <Ri.RiFile4Line aria-hidden />
-        </Button>
-      </div>
-    </Layout>
+      <Button
+        aria-label={t('tab', { context: 'log' })}
+        aria-pressed={logging}
+        onClick={() => setTab(logging ? back.current : 'log')}
+        size='small'
+        variant={logging ? 'primary' : 'secondary'}
+        level='confirm'
+      >
+        <Ri.RiFile4Line aria-hidden />
+      </Button>
+    </Menu>
   );
 };
 

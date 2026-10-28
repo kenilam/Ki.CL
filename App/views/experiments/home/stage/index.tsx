@@ -42,36 +42,37 @@ const Stage: React.FunctionComponent = () => {
   useHashScroll();
 
   return (
-    <div
-      className={classNames(`${CLASS_NAME}__scroll`, 'kicl-position-relative')}
+    <section
+      className={classNames(
+        `${CLASS_NAME}__scroll`,
+        // Keeps the frame's top margin inside the stage.
+        'kicl-display-flow-root',
+        'kicl-position-relative'
+      )}
       style={
         { '--kicl--views--experiments__home--screens': SCREENS.length } as never
       }
     >
-      <div
-        className={classNames(
-          CLASS_NAME,
-          'kicl-block-size-screen',
-          // Keeps the frame's top margin inside the stage.
-          'kicl-display-flow-root',
-          'kicl-inset-block-start-0',
-          'kicl-overflow-clip',
-          'kicl-position-sticky'
-        )}
-      >
-        <Frame>
-          <List is='ol' gap='none'>
-            {SCREENS.map((screen, index) => (
-              <Screen
-                experiment={screen}
-                index={index}
-                key={screen.to}
-                number={screen.number}
-              />
-            ))}
-          </List>
-        </Frame>
-      </div>
+      <Frame>
+        <List
+          className={classNames(
+            CLASS_NAME,
+            'kicl-inset-block-start-frame',
+            'kicl-position-sticky'
+          )}
+          is='ol'
+          gap='none'
+        >
+          {SCREENS.map((screen, index) => (
+            <Screen
+              experiment={screen}
+              index={index}
+              key={screen.to}
+              number={screen.number}
+            />
+          ))}
+        </List>
+      </Frame>
       <Pages
         pages={SCREENS.map(({ context, plate }) => ({
           id: plate,
@@ -81,7 +82,7 @@ const Stage: React.FunctionComponent = () => {
       {SCREENS.map((screen, index) => (
         <Anchor id={screen.plate} index={index} key={screen.to} />
       ))}
-    </div>
+    </section>
   );
 };
 

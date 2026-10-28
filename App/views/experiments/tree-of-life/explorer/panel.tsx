@@ -14,6 +14,7 @@ import { CLASS_NAME } from './constants';
 
 const Panel: React.FunctionComponent = () => (
   <Card
+    is='aside'
     size='fit'
     variant='secondary'
     className={classNames(

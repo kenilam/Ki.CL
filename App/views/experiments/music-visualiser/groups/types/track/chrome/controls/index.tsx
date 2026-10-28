@@ -9,10 +9,7 @@ import * as Fa from 'react-icons/fa6';
 import * as Ri from 'react-icons/ri';
 
 // Components
-import { HyperLink, Layout, List, ListItem } from 'design/components';
-
-// Hooks
-import { useResponsive } from 'design/hooks';
+import { HyperLink, List, ListItem } from 'design/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -40,56 +37,54 @@ const CLASS_NAME = `${VIEW}__chrome__controls`;
  */
 const Controls: React.FunctionComponent = () => {
   const { control, next, track } = useTrackContext();
-  const { isMobile } = useResponsive();
   const { t } = useTranslation('music-visualiser');
   const { t: common } = useTranslation();
 
   return (
-    <Layout
+    // Fades as one while the listener is still.
+    <List
       alignItems='center'
-      autoFlow={isMobile ? 'row' : 'column'}
+      className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}
+      display='flex'
       gap='narrow'
       justifyContent='end'
-      justifyItems='end'
+      wrap
     >
-      {/* Fades as one while the listener is still. */}
-      <div className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}>
-        <List alignItems='center' autoFlow='column' gap='narrow'>
-          <ListItem>
-            <HyperLink
-              aria-label={common('action', { context: 'pause' })}
-              lookLikeButton
-              size='small'
-              to={toTrackPath(track)}
-              variant='secondary'
-            >
-              {control.loading ? (
-                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-              ) : (
-                <Fa.FaPause aria-hidden />
-              )}
-            </HyperLink>
-          </ListItem>
-          <ListItem>
-            <HyperLink
-              aria-label={t('action', { context: 'next' })}
-              disabled={!next}
-              lookLikeButton
-              size='small'
-              to={toPlayPath(next ?? track)}
-              variant='ghost'
-            >
-              <Ri.RiSkipForwardFill aria-hidden />
-            </HyperLink>
-          </ListItem>
-          <ListItem>
-            <CopyLink />
-          </ListItem>
-          <Clip />
-        </List>
+      <ListItem>
+        <HyperLink
+          aria-label={common('action', { context: 'pause' })}
+          lookLikeButton
+          size='small'
+          to={toTrackPath(track)}
+          variant='secondary'
+        >
+          {control.loading ? (
+            <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+          ) : (
+            <Fa.FaPause aria-hidden />
+          )}
+        </HyperLink>
+      </ListItem>
+      <ListItem>
+        <HyperLink
+          aria-label={t('action', { context: 'next' })}
+          disabled={!next}
+          lookLikeButton
+          size='small'
+          to={toPlayPath(next ?? track)}
+          variant='ghost'
+        >
+          <Ri.RiSkipForwardFill aria-hidden />
+        </HyperLink>
+      </ListItem>
+      <ListItem>
+        <CopyLink />
+      </ListItem>
+      <Clip />
+      <ListItem>
         <Volume />
-      </div>
-    </Layout>
+      </ListItem>
+    </List>
   );
 };
 

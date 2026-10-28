@@ -18,9 +18,9 @@ const Experiments: React.FunctionComponent = () => {
         justifyContent='stretch'
         justifyItems='center'
       >
-        <div className={CLASS_NAME}>
+        <section className={CLASS_NAME}>
           <Outlet />
-        </div>
+        </section>
       </Layout>
     </Animation>
   );

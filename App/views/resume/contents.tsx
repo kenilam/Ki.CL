@@ -103,6 +103,8 @@ const Resume: React.FunctionComponent = () => {
     <VersionProvider version={version}>
       {/* The tailored versions are for the people they are sent to. */}
       {version.slug !== MASTER.slug && <meta content='noindex' name='robots' />}
+      {/* Outside the frame and the card: the card's blur would hold a fixed element to itself. */}
+      <ScrollIndicator />
       <Layout autoFlow='row' justifyContent='center' justifyItems='center'>
         {/* Grows with the page, which is longer than any window. */}
         <Frame delay={FRAME_DELAY} grow>
@@ -117,8 +119,6 @@ const Resume: React.FunctionComponent = () => {
             <Animation delay={CONTENT_DELAY}>
               <Background className='kicl-print-hidden' />
             </Animation>
-            {/* Beside the card, not in it: the card's blur would hold a fixed element to itself. */}
-            <ScrollIndicator />
             <Card
               className={classNames(CLASS_NAME, 'kicl-margin-inline-auto')}
               // The export checks this against the files, to know the database is not behind them.

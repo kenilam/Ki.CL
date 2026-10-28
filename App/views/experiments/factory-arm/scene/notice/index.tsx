@@ -1,31 +1,23 @@
 import React, { useRef } from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Three
-import { Drei, Fiber, THREE } from '@/three';
-
-// Components
-import { Animation, Badge } from 'design/components';
-
-// Icons
-import * as Ri from 'react-icons/ri';
+import { Fiber, THREE } from '@/three';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
+
+// Overlays
+import { toAnchor } from '@/views/experiments/factory-arm/scene/overlays';
 
 // Kinematics
 import { forward } from '@/views/experiments/factory-arm/scene/arm/kinematics';
 
 /**
- * A badge over what the arm can't do, following it if it moves: over the
- * gripper when the arm has stopped with no clear way forward or back, or on
- * a case with no clear path. It is the page's `Alert` that screen readers
- * hear; this one is for the eye, and lets clicks through to the scene.
+ * Where the badge over what the arm can't do sits, following it if it moves:
+ * the gripper when the arm has stopped with no clear way forward or back, or
+ * a case with no clear path.
  */
 const Notice: React.FunctionComponent = () => {
-  const { t } = useTranslation('factory-arm');
   const { bodies, joints, skipped, stopped } = useFactoryArmContext();
 
   const anchor = useRef<THREE.Group>(null);
@@ -45,33 +37,13 @@ const Notice: React.FunctionComponent = () => {
     return null;
   }
 
-  const level = stopped ? 'error' : 'warning';
-
   return (
-    <group ref={anchor}>
-      <Drei.Html
-        aria-hidden
-        center
-        // Clicks go through to the scene: a badge over a case mustn't stop it being picked.
-        wrapperClass='kicl-pointer-events-none'
-      >
-        <Animation property='slide-from-bottom'>
-          <Badge
-            className='kicl-text-nowrap'
-            size='small'
-            level={level}
-            variant='ghost'
-          >
-            {/* A status dot in the level's colour; the outline's text is the page's. */}
-            <Ri.RiCheckboxBlankCircleFill
-              aria-hidden
-              className={`kicl-color-${level}`}
-            />
-            {stopped ? t('stopped', { context: 'message' }) : t('skipped')}
-          </Badge>
-        </Animation>
-      </Drei.Html>
-    </group>
+    <group
+      ref={(node) => {
+        anchor.current = node;
+        toAnchor('notice')(node);
+      }}
+    />
   );
 };
 

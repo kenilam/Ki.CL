@@ -58,79 +58,82 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
   const subsolar = useMemo(() => toSubsolar(date), [date]);
 
   return (
-    <Popover
-      className={classNames(
-        CLASS_NAME,
-        'kicl-inline-size-full',
-        'kicl-margin-inline-auto',
-        'kicl-max-inline-size-columns-12',
-        'kicl-padding-inline-frame',
-        'kicl-position-relative'
-      )}
-    >
-      <PopoverTrigger asChild>
-        <Button after={<Ri.RiArrowDownSLine aria-hidden />} variant='primary'>
-          {t('place', { context: PLACES[active].context })}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
+    <Popover>
+      <nav
         aria-label={t('label', { context: 'places' })}
-        className='kicl-padding'
-        placement='block-end'
-        variant='secondary'
+        className={classNames(
+          CLASS_NAME,
+          'kicl-inline-size-full',
+          'kicl-margin-inline-auto',
+          'kicl-max-inline-size-columns-12',
+          'kicl-padding-inline-frame',
+          'kicl-position-relative'
+        )}
       >
-        <List alignContent='stretch' autoFlow='row'>
-          {PLACES.map((place, index) => {
-            const light = toLight(place, subsolar);
-            const { Icon, colour } = MARKS[light];
+        <PopoverTrigger asChild>
+          <Button after={<Ri.RiArrowDownSLine aria-hidden />} variant='primary'>
+            {t('place', { context: PLACES[active].context })}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          aria-label={t('label', { context: 'places' })}
+          className='kicl-padding'
+          placement='block-end'
+          variant='secondary'
+        >
+          <List alignContent='stretch' autoFlow='row'>
+            {PLACES.map((place, index) => {
+              const light = toLight(place, subsolar);
+              const { Icon, colour } = MARKS[light];
 
-            return (
-              <ListItem
-                alignItems='center'
-                autoFlow='column'
-                display='grid'
-                frames='1fr--max-content'
-                justifyItems='stretch'
-                key={place.context}
-              >
-                <HyperLink
-                  aria-current={index === active ? 'page' : undefined}
-                  className='kicl-inline-size-full'
-                  to={toPath(place)}
-                  lookLikeButton
-                  size='small'
-                  variant={active === index ? 'ghost' : 'secondary'}
+              return (
+                <ListItem
+                  alignItems='center'
+                  autoFlow='column'
+                  display='grid'
+                  frames='1fr--max-content'
+                  justifyItems='stretch'
+                  key={place.context}
                 >
-                  {t('place', { context: place.context })}
-                </HyperLink>
-                <Layout alignItems='center' autoFlow='column' gap='narrower'>
-                  <Text
-                    className={classNames(
-                      'kicl-color-grey',
-                      'kicl-font-family-mono',
-                      'kicl-text-align-end'
-                    )}
-                    dateTime={date.toISOString()}
-                    dense
-                    is='time'
+                  <HyperLink
+                    aria-current={index === active ? 'page' : undefined}
+                    className='kicl-inline-size-full'
+                    to={toPath(place)}
+                    lookLikeButton
+                    size='small'
+                    variant={active === index ? 'ghost' : 'secondary'}
                   >
-                    <Icon
-                      aria-label={t('light', { context: light })}
-                      className={colour}
-                      role='img'
-                    />
-                    {new Intl.DateTimeFormat(i18n.language, {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      timeZone: place.timeZone,
-                    }).format(date)}
-                  </Text>
-                </Layout>
-              </ListItem>
-            );
-          })}
-        </List>
-      </PopoverContent>
+                    {t('place', { context: place.context })}
+                  </HyperLink>
+                  <Layout alignItems='center' autoFlow='column' gap='narrower'>
+                    <Text
+                      className={classNames(
+                        'kicl-color-grey',
+                        'kicl-font-family-mono',
+                        'kicl-text-align-end'
+                      )}
+                      dateTime={date.toISOString()}
+                      dense
+                      is='time'
+                    >
+                      <Icon
+                        aria-label={t('light', { context: light })}
+                        className={colour}
+                        role='img'
+                      />
+                      {new Intl.DateTimeFormat(i18n.language, {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        timeZone: place.timeZone,
+                      }).format(date)}
+                    </Text>
+                  </Layout>
+                </ListItem>
+              );
+            })}
+          </List>
+        </PopoverContent>
+      </nav>
     </Popover>
   );
 };
