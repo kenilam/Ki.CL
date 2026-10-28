@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { Frame, Layout } from 'design/components';
 
 // Partials
-import { Attempts } from './attempts';
 import { Intro } from './intro';
 
 // Styles
@@ -35,7 +34,6 @@ const Banner: React.FunctionComponent = () => (
         )}
       >
         <Intro />
-        <Attempts />
       </header>
     </Frame>
   </Layout>

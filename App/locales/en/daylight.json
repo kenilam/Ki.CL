@@ -1,6 +1,6 @@
 {
   "label_places": "Places",
-  "lede": "Where the sun is right now, drawn in ink. Paper is day and black is night. Drag the globe, or pick a place.",
+  "lede": "$t(common:experiment_description_daylight)",
   "light_day": "Day",
   "light_night": "Night",
   "light_twilight": "Twilight",

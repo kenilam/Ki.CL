@@ -7,10 +7,11 @@ import { Route } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Versions
-import { Versions } from './versions';
+import { Details } from './explorer/details';
+import { VersionsRedirect } from './redirect';
 
 // Constants
-import { PATH } from './constants';
+import { NODE_PATTERN, PATH } from './constants';
 
 const Contents = React.lazy(async () => {
   const { TreeOfLife } = await import('./contents');
@@ -36,7 +37,15 @@ const TreeOfLife = (
         return { Component };
       }}
     />
-    {Versions}
+    <Route
+      path={NODE_PATTERN}
+      lazy={async () => ({
+        Component: (await import('./explorer')).Canvas,
+      })}
+    >
+      {Details}
+    </Route>
+    {VersionsRedirect}
   </Route>
 );
 

@@ -20,7 +20,7 @@
       "points": {
         "design_system": "Established and scaled a unified design system that gives multiple products a consistent UX and speeds up their development.",
         "design_systems": "$t(experience.apple.points.design_system) Also built a marketing design system and an enterprise design system.",
-        "federation": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs that communicate via gRPC, Node and PHP. 10+ federated mini-apps consume the component library and the federated graph.",
+        "federation": "Built a Module Federation front end and an Apollo Federation gateway over 20+ Node.js, PHP and Swift subgraphs replacing a legacy PHP system. 10+ federated mini-apps consume the component library and the federated graph.",
         "federation_manager": "Built the platform's architecture: a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs, with 10+ federated mini-apps consuming the component library and the federated graph.",
         "federation_react_native": "Built a Module Federation front end and an Apollo Federation gateway serving 20+ subgraphs. 10+ federated mini-apps consume the component library and the federated graph.",
         "lead": "Lead design and engineering for Apple University's cross-platform ecosystem, covering design systems, UX architecture and full-stack implementation.",
@@ -28,7 +28,7 @@
         "lead_manager": "Lead design and engineering for Apple University's cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams.",
         "mcp": "Built an MCP server that reads the component library and the gateway schemas, so non-technical owners can build a proof of concept and deploy it to an isolated sandbox.",
         "mcp_manager": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
-        "messaging": "Built a RabbitMQ message broker and a bulk-email service.",
+        "messaging": "Set up RabbitMQ for translation, scheduling, Workday and bulk-email jobs, and built the email service.",
         "modernised": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
         "modernised_across_teams": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
       },
@@ -37,7 +37,7 @@
     "ebay": {
       "dates": "Jan 2014 – Jun 2015",
       "points": {
-        "built_kiosk_frontend_ai": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and three.js.",
+        "built_kiosk_frontend_ai": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and Three.js.",
         "contributed_animation_master": "Contributed animation standards and UI components to the design system, and built the loading spinner that went live on eBay.com.",
         "prototypes": "Prototyped the search results and item pages with product teams. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014.",
         "prototypes_manager": "UX partner to product teams on the search results page, the item page and the design system. A left-nav redesign raised engagement on third-level categories by 2% in Q4 2014."
@@ -51,10 +51,10 @@
         "embedded_master": "Embedded design technologists in product teams to roll out a new design system and its website, and to ship experimental features to weekly A/B tests.",
         "hired_2_manager": "Hired 2 design technologists in San Francisco and opened requisitions for UI and front-end roles in Mountain View.",
         "planned_timelines_manager": "Planned timelines, technology and staffing for prototypes that went to user testing and then to engineering.",
-        "ran_quarterly_manager": "Ran quarterly and calibration reviews.",
+        "ran_quarterly_manager": "Ran quarterly performance reviews and calibration.",
         "team": "Managed a cross-functional design technology team of 4 that rolled out a new design system and shipped experimental features to weekly A/B tests.",
         "team_manager": "Managed a cross-functional design technology team of 4 that built prototypes and experiments for Indeed's products.",
-        "team_master": "Managed a cross-functional design technology team of 4, hired 2 design technologists in San Francisco, and ran quarterly and calibration reviews.",
+        "team_master": "Managed a cross-functional design technology team of 4, hired 2 design technologists in San Francisco, and ran quarterly performance reviews and calibration.",
         "team_react_native": "Managed a cross-functional design technology team of 4, embedding design technologists in product teams to roll out a new design system and ship weekly A/B tests."
       },
       "title": "Manager, Design Technology"
@@ -62,7 +62,7 @@
     "rakuten": {
       "dates": "Jan 2019 – Jan 2020",
       "points": {
-        "launch": "Helped launch the MVP and shipped a delivery-monitoring system for the Chipotle partnership."
+        "launch": "Helped launch Rakuten Ready’s pickup MVP and shipped delivery monitoring for its Chipotle partnership."
       },
       "title": "Senior UX and Software Engineer"
     },
@@ -71,14 +71,14 @@
       "points": {
         "build": "Halved local build times by moving the build from Grunt to Webpack, and automated build-to-deployment on Jenkins.",
         "build_master": "Moved the build from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment on Jenkins.",
-        "built_maintained_master": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display products.",
-        "built_maintained_react_native": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and channel stores; and Channel Digital for channel stores.",
+        "built_maintained_master": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display devices in stores.",
+        "built_maintained_react_native": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and at authorised resellers; and Channel Digital for authorised resellers.",
         "framework_and_locales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
-        "helped_onboard_manager": "Helped onboard vendors and mentored them through the handover.",
+        "helped_onboard_manager": "Helped onboard vendors and mentored them through the handover of documentation, incident reports and the DevOps taxonomy.",
         "locales": "Rolled out features and content to 30+ locales at every major product launch.",
         "oversaw_three_manager": "Oversaw three retail digital-signage products and a WeChat publishing tool, rolling out features and content to 30+ locales at every major product launch.",
-        "shipped_shared_master": "Shipped a shared React framework across the three signage products and improved on-device performance to sustain 4x-resolution assets.",
-        "shipped_shared_react_native": "Shipped a shared React framework across all three, and improved on-device performance of the kiosk and the Pricing app to sustain 4x-resolution assets."
+        "shipped_shared_master": "Shipped a shared React framework across the three signage products and improved on-device performance to handle 4K video and @4x images.",
+        "shipped_shared_react_native": "Shipped a shared React framework across all three, and improved on-device performance of the kiosk and the Pricing app to handle 4K video and @4x images."
       },
       "title": "Interactive Developer, Retail Interactive"
     },
@@ -86,13 +86,13 @@
       "dates": "Jan 2020 – Mar 2023",
       "points": {
         "added_request_architecture": "Added request tracing from client to data source with DevOps, so teams could see where a fault started.",
-        "extended_support_manager": "Extended support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
+        "extended_support_manager": "Ran on-call and user support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
         "federation": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development, helping internal systems scale with Tesla Energy's global operations.",
         "federation_react_native": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development.",
-        "led": "Led UI/UX engineering for Tesla Energy's Solar platform, managing and mentoring an 8-person cross-functional team.",
-        "led_manager": "Managed and mentored an 8-person cross-functional team while leading UI/UX engineering for Tesla Energy's Solar platform.",
+        "led": "Led UI/UX engineering for Tesla Energy’s Solar platform, managing and mentoring its 8-person core team.",
+        "led_manager": "Managed and mentored the 8-person cross-functional core team that owned the Solar platform’s apps, sprints, releases, infrastructure, incidents and on-call, while leading its UI/UX engineering at Tesla Energy.",
         "moved_centralised_architecture": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy.",
-        "outages": "Cut system outages from 20+ a week to near zero. Traced the main cause, a platform-wide failure, to database connection pools that generated code opened on every request.",
+        "outages": "Cut system outages from 20+ a week to near zero. Traced the main cause, a platform-wide failure, to generated code that opened a database connection pool on every request.",
         "outages_manager": "Cut system outages from 20+ a week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
         "outages_react_native": "Cut system outages from 20+ a week to near zero.",
         "standards": "Set front-end architecture standards and drove TypeScript adoption across the organisation.",
@@ -106,7 +106,7 @@
   "headline_manager": "Engineering Manager and Staff Software Engineer",
   "headline_master": "Lead Software Engineer and Design Technologist",
   "headline_react_native": "Lead Product Engineer · React, React Native and design systems",
-  "languages": "English, Cantonese, Mandarin and Japanese, all native or bilingual.",
+  "languages": "English, Cantonese, Mandarin and Japanese, at native or bilingual level.",
   "links": {
     "adplist": "[adplist.org/mentors/keni-lam]($t(common:url_adplist))",
     "experiments": "[ki-cl.com/experiments]($t(common:url_experiments))",
@@ -115,8 +115,8 @@
     "moonshot": "[Ki.CL-moonshot-exercise]($t(common:url_moonshot))"
   },
   "location": "San Jose, California",
-  "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, 52 reviews, and in the top 10% of contributors in my field. $t(links.adplist)",
-  "mentoring_manager": "ADPList mentor: 426 sessions and 21,000 minutes, 52 reviews, and in the top 10% of contributors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. $t(links.adplist)",
+  "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, and 52 reviews. Ranked in the top 10% of mentors in my field. $t(links.adplist)",
+  "mentoring_manager": "ADPList mentor: 426 sessions and 21,000 minutes, and 52 reviews. Ranked in the top 10% of mentors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. $t(links.adplist)",
   "name_architecture": "Architecture",
   "name_frontend_ai": "Front end and AI",
   "name_manager": "Manager",
@@ -129,9 +129,9 @@
     "intro_manager": "I still build in my own time: Tree of Life, Image Agent and Factory Arm at $t(links.experiments), on a federated React and GraphQL platform that runs on Cloud Run in two regions. Code is at $t(links.github).",
     "items": {
       "experiments_react_native": "**Experiments.** Tree of Life, Image Agent and Factory Arm, live at $t(links.experiments), with code at $t(links.github).",
-      "factory_architecture": "**$t(common:experiment_factory_arm).** One WebSocket per page carries protobuf frames for every robot, chosen over gRPC-Web because that has no bidirectional streaming. A Rust bridge relays the frames to a digital twin in NVIDIA Isaac Sim and answers \"hold still\" when the twin is unreachable. The twin leases simulated rigs per session, and its GPU machine stops itself when idle.",
-      "factory_arm": "**$t(common:experiment_factory_arm).** A 3D palletising cell in the browser. Planners run in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim.",
-      "image_architecture": "**$t(common:experiment_image_agent).** A public prompt-to-image agent with a fixed workflow. Every request passes four checks, cheapest first, and quotas are counted in MongoDB so a restart does not reset them. A turn cut short by a restart is closed the next time its thread is read.",
+      "factory_architecture": "**$t(common:experiment_factory_arm).** A browser simulation of a robot arm unloading a pallet. One WebSocket per page carries protobuf frames, chosen over gRPC-Web for bidirectional streaming. A Rust bridge relays them to a digital twin in NVIDIA Isaac Sim and answers “hold still” when it’s unreachable. Each session gets its own simulated rig, and the GPU machine stops itself when idle.",
+      "factory_arm": "**$t(common:experiment_factory_arm).** A robot arm unloading a pallet in the browser. Planning runs in web workers, and a Rust bridge relays protobuf frames over WebSocket to a digital twin in NVIDIA Isaac Sim.",
+      "image_architecture": "**$t(common:experiment_image_agent).** A public prompt-to-image agent with a fixed workflow. Every request passes four checks, cheapest first, and quotas are counted in MongoDB so a restart does not reset them. A reply cut short by a restart is marked failed when the conversation is next opened, so nobody is locked out.",
       "image_frontend_ai": "**$t(common:experiment_image_agent).** A public prompt-to-image agent, built to learn what it takes to put an AI feature in front of real people. A clarifier asks one question at a time, up to three, and code enforces the limit. The workflow is fixed in code as well, so the model never chooses its own tools. A vision model reviews each picture and can trigger one retry. Every request passes four checks, cheapest first: rate limits, rule checks, moderation and a small classifier. Quotas are counted in MongoDB, and progress arrives over a GraphQL subscription.",
       "image_master": "**$t(common:experiment_image_agent).** A public prompt-to-image agent. It asks up to three clarifying questions, reviews each picture with a second model, and runs every request through rate limits, rule checks, moderation and a classifier.",
       "interpreter_react_native": "**Interpreter (prototype).** A speech interpreter for two-way conversation. The Expo app (React Native, Tamagui) records push-to-talk audio and sends each utterance over a WebSocket to a Fastify server. The server detects the speaker's language, translates with Claude using the conversation so far, and streams captions back. The phone then speaks the result on-device. 21 languages, including Cantonese and Mandarin.",
@@ -139,8 +139,8 @@
       "ki_frontend_ai": "**$t(projects.labels.ki).** The federated platform under all of these. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer.",
       "ki_master": "**$t(projects.labels.ki).** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, with Apollo Server and MongoDB behind them. Production runs on Cloud Run in two regions behind a global load balancer.",
       "ki_react_native": "**$t(projects.labels.ki).** My site, built as a federated platform. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Cloud Run in two regions behind a global load balancer.",
-      "tree_architecture": "**$t(common:experiment_tree_of_life).** 2.3 million species cached in MongoDB as a parent-pointer tree, written with idempotent upserts because overlapping lineages race. Illustration is asynchronous: the query returns what exists, and a GraphQL subscription pushes the plate when it lands. Text, image and vision calls each fail over across providers, with timeouts and cooldowns.",
-      "tree_frontend_ai": "**$t(common:experiment_tree_of_life).** A walk through the Open Tree of Life's 2.3 million species, cached in MongoDB as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a living specimen, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
+      "tree_architecture": "**$t(common:experiment_tree_of_life).** The Open Tree of Life’s 2.3 million species, cached in MongoDB as a parent-pointer tree with idempotent upserts, since lineages that share ancestors are written at once. Illustrations are generated in the background and arrive over a GraphQL subscription. Text, image and vision calls each fail over across providers, with timeouts and cooldowns.",
+      "tree_frontend_ai": "**$t(common:experiment_tree_of_life).** A walk through the Open Tree of Life’s 2.3 million species, cached in MongoDB as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a species, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
       "tree_master": "**$t(common:experiment_tree_of_life).** A walk through the Open Tree of Life's 2.3 million species. Each organism's illustration is generated on demand by a fixed pipeline with provider failover and a vision-model review.",
       "writing_frontend_ai": "**Writing reviewer** (code only: $t(links.moonshot)). Reviews commit messages, pull-request descriptions and READMEs with Claude. The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
     },
@@ -178,7 +178,7 @@
       "native": "Native iOS, earlier work",
       "platform": "Platform"
     },
-    "leadership_manager": "**$t(skills.labels.leadership):** people management, hiring, quarterly and calibration reviews, mentoring, on-call and incident process, stakeholder management, cross-team architecture",
+    "leadership_manager": "**$t(skills.labels.leadership):** people management, hiring, quarterly performance reviews and calibration, mentoring, on-call and incident process, stakeholder management, cross-team architecture",
     "mobile_react_native": "**$t(skills.labels.mobile):** React Native, Expo, Tamagui, TypeScript, React, Next.js, Vite, Webpack, Module Federation, Three.js",
     "native_react_native": "**$t(skills.labels.native):** Objective-C",
     "platform": "**$t(skills.labels.platform):** GCP (Cloud Run), Docker, CI/CD with GitHub Actions and Jenkins",
@@ -186,7 +186,7 @@
   },
   "summary_architecture": "Staff-level engineer with 15+ years of experience designing platforms that many teams and products share. At Apple I built a federated front end and a GraphQL gateway serving 20+ subgraphs. At Tesla I architected a GraphQL federation layer and front-end infrastructure, and cut system outages from 20+ a week to near zero. I work across the stack, from design systems to multi-region deployment.",
   "summary_frontend_ai": "Front-end and full-stack engineer with 15+ years of experience, currently leading design and engineering for Apple University's platform. I build design systems and federated front-end and GraphQL architectures, and I ship AI features end to end: an MCP server at Apple, and public agents of my own with cost, abuse and quality controls built in. I trained in fine art and design before moving into engineering.",
-  "summary_manager": "Engineering manager and staff engineer with 15+ years of experience in front-end platforms and design systems. I managed an 8-person team at Tesla and a team of 4 at Indeed, where I also hired and ran quarterly and calibration reviews. I still build, currently leading design and engineering for Apple University's platform, and I mentor through ADPList, with 426 sessions so far.",
+  "summary_manager": "Engineering manager and staff engineer with 15+ years of experience in front-end platforms and design systems. I managed an 8-person team at Tesla and a team of 4 at Indeed, where I also hired and ran quarterly performance reviews and calibration. I still build, currently leading design and engineering for Apple University’s platform, and I mentor through ADPList, with 426 sessions so far.",
   "summary_master": "Design technologist and full-stack engineer with 15+ years of experience in the US and Japan. I build design systems and federated front-end and GraphQL platforms, and I lead the teams that ship them, most recently at Apple and Tesla. I trained in fine art and design, so I work as comfortably with designers as with engineers.",
   "summary_react_native": "Product engineer with 15+ years of experience building interfaces, from the iPad kiosk in every Apple Store to the platform behind Apple University. React and TypeScript are my daily tools on the web. I build with React Native and Expo in my own apps, and I did native iOS work earlier in my career. I managed teams at Tesla and Indeed, and I trained in fine art and design.",
   "title_earlier": "Earlier",

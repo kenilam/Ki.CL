@@ -4,25 +4,11 @@ import type { TFunction } from 'i18next';
 /** Top of the first group, so its label has room above the nodes. */
 const T = 50;
 
-/** Top of the second group. */
-const B = 400;
-
-/** What each model reads, and the one lookup that retrieves. */
 const context = (t: TFunction<'image-agent'>): DiagramSpec => ({
   title: t('diagram.context.title'),
-  legend: [
-    {
-      label: t('diagram.context.label', { context: 'top' }),
-      value: t('diagram.context.legend', { context: 'top' }),
-    },
-    {
-      label: t('diagram.context.label', { context: 'bottom' }),
-      value: t('diagram.context.legend', { context: 'bottom' }),
-    },
-  ],
   description: t('diagram.context.description'),
   width: 760,
-  height: 540,
+  height: 380,
   groups: [
     {
       label: t('diagram.context.group', { context: 'models' }),
@@ -30,13 +16,6 @@ const context = (t: TFunction<'image-agent'>): DiagramSpec => ({
       y: 10,
       w: 740,
       h: 360,
-    },
-    {
-      label: t('diagram.context.group', { context: 'similar' }),
-      x: 10,
-      y: B - 20,
-      w: 740,
-      h: 140,
     },
   ],
   nodes: [
@@ -95,29 +74,6 @@ const context = (t: TFunction<'image-agent'>): DiagramSpec => ({
       y: T + 175,
       w: 170,
       h: 45,
-    },
-    {
-      title: t('diagram.context.node', { context: 'typed' }),
-      x: 30,
-      y: B + 30,
-      w: 180,
-      h: 60,
-    },
-    {
-      title: t('diagram.context.node', { context: 'word_sets' }),
-      lines: [t('diagram.context.line', { context: 'word_sets' })],
-      x: 280,
-      y: B + 30,
-      w: 190,
-      h: 60,
-    },
-    {
-      title: t('diagram.context.node', { context: 'matches' }),
-      lines: [t('diagram.context.line', { context: 'matches' })],
-      x: 560,
-      y: B + 30,
-      w: 170,
-      h: 60,
     },
   ],
   edges: [
@@ -196,24 +152,6 @@ const context = (t: TFunction<'image-agent'>): DiagramSpec => ({
       anchor: 'start',
       lx: 383,
       ly: T + 247,
-    },
-    {
-      points: [
-        [210, B + 60],
-        [280, B + 60],
-      ],
-      label: t('diagram.context.edge', { context: 'words' }),
-      lx: 245,
-      ly: B + 52,
-    },
-    {
-      points: [
-        [470, B + 60],
-        [560, B + 60],
-      ],
-      label: t('diagram.context.edge', { context: 'overlap' }),
-      lx: 515,
-      ly: B + 52,
     },
   ],
 });
