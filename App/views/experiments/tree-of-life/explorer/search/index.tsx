@@ -18,7 +18,6 @@ import {
 // Components
 import {
   InputGroup,
-  InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
   Layout,
@@ -214,9 +213,7 @@ const Search: React.FunctionComponent = () => {
           field matches everything else on the page.
         */}
         <InputGroup className={`${CLASS_NAME}__search`}>
-          <InputGroupAddon>
-            <Ri.RiSearchLine aria-hidden />
-          </InputGroupAddon>
+          <Ri.RiSearchLine aria-hidden />
 
           <InputGroupInput
             type='search'
@@ -230,16 +227,14 @@ const Search: React.FunctionComponent = () => {
           />
 
           {query ? (
-            <InputGroupAddon>
-              <InputGroupButton
-                variant='ghost'
-                type='button'
-                aria-label={t('action', { context: 'clear_search' })}
-                onClick={() => setQuery('')}
-              >
-                <Ri.RiCloseLine aria-hidden />
-              </InputGroupButton>
-            </InputGroupAddon>
+            <InputGroupButton
+              variant='ghost'
+              type='button'
+              aria-label={t('action', { context: 'clear_search' })}
+              onClick={() => setQuery('')}
+            >
+              <Ri.RiCloseLine aria-hidden />
+            </InputGroupButton>
           ) : null}
         </InputGroup>
 

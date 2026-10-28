@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Button, CardContent, Layout, SheetFooter } from 'design/components';
+import { Button, SheetFooter } from 'design/components';
 
 // Context
 import { type Setup, useSetup } from '@/views/experiments/factory-arm/setup';
@@ -40,12 +40,8 @@ const Manual: React.FunctionComponent = () => {
 
   return (
     <>
-      <Layout alignContent='start' gap='wide'>
-        <CardContent>
-          <Shapes />
-          <Pile />
-        </CardContent>
-      </Layout>
+      <Shapes />
+      <Pile />
 
       {/* Full width each, the footer's row shares them out in equal halves. */}
       <SheetFooter>

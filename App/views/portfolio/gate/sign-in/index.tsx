@@ -18,7 +18,6 @@ import {
   Animation,
   Button,
   Card,
-  CardContent,
   CardFooter,
   Form,
   Frame,
@@ -102,7 +101,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
           <Animation delay={CONTENT_DELAY}>
             <Background />
           </Animation>
-          <Card size='max' variant='secondary'>
+          <Card is='section' size='max' variant='secondary'>
             <Header denied={denied} />
             <Layout
               alignContent='start'
@@ -112,13 +111,9 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
               justifyItems='stretch'
             >
               <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
-                <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-                  <CardContent>
-                    <Email />
-                    <Password />
-                    <RootError />
-                  </CardContent>
-                </Layout>
+                <Email />
+                <Password />
+                <RootError />
                 <CardFooter justifyContent='center'>
                   <Button
                     after={

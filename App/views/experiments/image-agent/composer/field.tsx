@@ -14,7 +14,6 @@ import {
   FormItem,
   FormMessage,
   InputGroup,
-  InputGroupAddon,
   InputGroupButton,
   InputGroupTextarea,
 } from 'design/components';
@@ -47,14 +46,13 @@ const Field: React.FunctionComponent<Props> = ({
       name='text'
       render={({ field }) => (
         <FormItem>
-          <InputGroup>
+          <InputGroup disabled={disabled}>
             <FormControl>
               <InputGroupTextarea
                 {...field}
                 aria-label={t('label', { context: 'message' })}
                 className={`${CLASS_NAME}__field`}
                 autoComplete='off'
-                disabled={disabled}
                 maxLength={MAX_LENGTH}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' && !event.shiftKey) {
@@ -66,20 +64,17 @@ const Field: React.FunctionComponent<Props> = ({
                 rows={1}
               />
             </FormControl>
-            <InputGroupAddon>
-              <InputGroupButton
-                aria-label={common('action', { context: 'send' })}
-                disabled={disabled}
-                type='submit'
-                variant='ghost'
-              >
-                {sending ? (
-                  <Ri.RiLoader4Line aria-hidden className='is-revolving' />
-                ) : (
-                  <Ri.RiCornerRightUpLine aria-hidden />
-                )}
-              </InputGroupButton>
-            </InputGroupAddon>
+            <InputGroupButton
+              aria-label={common('action', { context: 'send' })}
+              type='submit'
+              variant='ghost'
+            >
+              {sending ? (
+                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+              ) : (
+                <Ri.RiCornerRightUpLine aria-hidden />
+              )}
+            </InputGroupButton>
           </InputGroup>
           <FormMessage />
         </FormItem>
