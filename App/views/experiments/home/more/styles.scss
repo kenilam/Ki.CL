@@ -11,6 +11,7 @@
     var(--kicl--views--experiments__home--accent-glow),
     transparent 70%
   );
+  scroll-snap-align: start;
 
   @supports (animation-timeline: view()) {
     animation: kicl--views--experiments__home--rise linear both;
