@@ -28,7 +28,7 @@
   "email": "hello@ki-cl.com",
   "experiment_daylight": "Daylight",
   "experiment_description_daylight": "An ink drawing of the Earth that shows where it’s day and where it’s night right now. Turn it to a city to see the local time there.",
-  "experiment_description_image_agent": "Describe a picture and the agent draws it. If there isn’t enough detail, it asks questions first.",
+  "experiment_description_image_agent": "Describe a picture and the agent draws it. If it needs more detail, it asks first.",
   "experiment_description_music_visualiser": "{{scenes}} animated visuals that react to lo-fi music as it plays.",
   "experiment_description_tree_of_life": "Walk from the origin of life to any of about 2.3 million species, following the branches that join them.",
   "experiment_factory_arm": "Factory Arm",
