@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -14,7 +14,6 @@ import { useHashScroll } from './use-hash-scroll';
 import { Anchor } from './anchor';
 import { Pages } from './pages';
 import { Screen } from './screen';
-import { CLASS_NAME as WORDS } from './screen/words';
 
 // Styles
 import './styles.scss';
@@ -36,51 +35,17 @@ const SCREENS = EXPERIMENTS.map((experiment, index) => ({
 /**
  * A sticky stage, one screen tall, framed below the global header, that stays pinned while the page
  * scrolls one screen height per panel. Screen does the per-panel motion.
- *
- * The push maths in screen/styles.scss need the text block's height. The
- * stylesheet guesses it; here the real blocks are measured and the tallest
- * is written back as the variable, so the push starts exactly when one
- * block meets the next whatever the fonts and viewport.
  */
 const Stage: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
-  const list = useRef<HTMLOListElement>(null);
-  const [block, setBlock] = useState<number | null>(null);
 
   useHashScroll();
-
-  useEffect(() => {
-    const words = list.current?.querySelectorAll<HTMLElement>(`.${WORDS}`);
-
-    if (!words?.length) {
-      return;
-    }
-
-    const observer = new ResizeObserver(() => {
-      let tallest = 0;
-
-      words.forEach((node) => {
-        tallest = Math.max(tallest, node.getBoundingClientRect().height);
-      });
-
-      setBlock(Math.ceil(tallest));
-    });
-
-    words.forEach((node) => observer.observe(node));
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div
       className={classNames(`${CLASS_NAME}__scroll`, 'kicl-position-relative')}
       style={
-        {
-          '--kicl--views--experiments__home--screens': SCREENS.length,
-          ...(block
-            ? { '--kicl--views--experiments__home--block': `${block}px` }
-            : {}),
-        } as never
+        { '--kicl--views--experiments__home--screens': SCREENS.length } as never
       }
     >
       <div
@@ -94,8 +59,8 @@ const Stage: React.FunctionComponent = () => {
           'kicl-position-sticky'
         )}
       >
-        <Frame clip={false}>
-          <List is='ol' gap='none' ref={list}>
+        <Frame>
+          <List is='ol' gap='none'>
             {SCREENS.map((screen, index) => (
               <Screen
                 experiment={screen}

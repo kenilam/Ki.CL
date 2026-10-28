@@ -4,49 +4,17 @@
   --kicl--views--experiments__home--at: calc(
     var(#{$home}--index) * var(#{$home}--screen)
   );
-  --kicl--views--experiments__home--in-start: calc(
-    var(#{$home}--at) - var(#{$home}--screen)
-  );
-  --kicl--views--experiments__home--out-start: calc(
-    var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--block)
-  );
-  --kicl--views--experiments__home--out-end: calc(
-    var(#{$home}--out-start) + var(#{$home}--screen) - var(#{$home}--pad)
-  );
   --kicl--views--experiments__home--arrival: calc(
     var(#{$home}--at) - var(#{$home}--screen) * 0.3
   );
-  --kicl--views--experiments__home--before: calc(
-    var(#{$home}--at) - var(#{$home}--screen)
+  --kicl--views--experiments__home--in-start: calc(
+    var(#{$home}--at) - var(#{$home}--screen) * 0.5
   );
-  --kicl--views--experiments__home--after: calc(
-    var(#{$home}--at) + var(#{$home}--screen)
-  );
-  --kicl--views--experiments__home--below: var(#{$home}--screen);
-  --kicl--views--experiments__home--above: calc(
-    var(#{$home}--pad) - var(#{$home}--screen)
-  );
-  --kicl--views--experiments__home--entry: calc(
-    var(#{$home}--pad) + var(#{$home}--block)
-  );
-  --kicl--views--experiments__home--fade-start: calc(
-    var(#{$home}--at) + var(#{$home}--screen) - var(#{$home}--entry)
-  );
-  --kicl--views--experiments__home--fade-end: calc(
-    var(#{$home}--fade-start) + var(#{$home}--entry) * 0.6
+  --kicl--views--experiments__home--out-end: calc(
+    var(#{$home}--at) + var(#{$home}--screen) * 0.5
   );
 
   block-size: var(--kicl--views--experiments__home--screen);
-
-  /*
-   * Only the picture is cropped to the frame, so the words can pass its edge.
-   * The crop never leaves the frame: a panel arrives by fading in over the
-   * one before, and the picture inside is what moves.
-   */
-  &__crop {
-    // The Frame's own radius token, which no utility reads.
-    border-radius: var(--kicl--components--frame--radius);
-  }
 
   /*
    * All panels in the same grid cell, stacked in DOM order, and as tall as

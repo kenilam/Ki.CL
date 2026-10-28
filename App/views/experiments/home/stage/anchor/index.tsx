@@ -27,7 +27,7 @@ const Anchor: React.FunctionComponent<Props> = ({ id, index }) => (
   <div
     className={classNames(
       CLASS_NAME,
-      'kicl-inset-inline-start-0',
+      'kicl-inset-inline-0',
       'kicl-position-absolute'
     )}
     id={id}

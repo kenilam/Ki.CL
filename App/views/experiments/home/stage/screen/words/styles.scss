@@ -1,55 +1,46 @@
 /*
- * Above every background. The height comes from Stage, which measures
- * the real blocks; the min keeps every block that tall. The scroll ranges
- * are set on Screen.
+ * Above every background. The words fade in as their panel arrives and out
+ * as it leaves; hidden, they are out of the pointer's and the keyboard's way.
  *
- * The push moves `inset-block-start`, not `translate`: iOS 27 runs a
+ * The rise moves `inset-block-start`, not `translate`: iOS 27 runs a
  * scroll-driven `translate` on the compositor and never paints it here.
  */
 .kicl--views--experiments__home__screen__words {
   $home: '--kicl--views--experiments__home';
 
-  min-block-size: var(--kicl--views--experiments__home--block);
-
   @supports (animation-timeline: scroll()) {
     animation:
-      kicl--views--experiments__home--push-in linear both,
-      kicl--views--experiments__home--push-out linear forwards,
-      kicl--views--experiments__home--fade-out linear forwards;
+      kicl--views--experiments__home--words-in linear both,
+      kicl--views--experiments__home--words-out linear forwards;
     animation-range:
       var(#{$home}--in-start) var(#{$home}--at),
-      var(#{$home}--out-start) var(#{$home}--out-end),
-      var(#{$home}--fade-start) var(#{$home}--fade-end);
-    animation-timeline: scroll(root), scroll(root), scroll(root);
+      var(#{$home}--at) var(#{$home}--out-end);
+    animation-timeline: scroll(root), scroll(root);
   }
 }
 
-@keyframes kicl--views--experiments__home--push-in {
+@keyframes kicl--views--experiments__home--words-in {
   from {
-    inset-block-start: var(--kicl--views--experiments__home--below);
+    inset-block-start: var(--kicl-gutter-wide);
+    opacity: 0;
+    visibility: hidden;
   }
 
   to {
     inset-block-start: 0;
+    opacity: 1;
+    visibility: visible;
   }
 }
 
-@keyframes kicl--views--experiments__home--push-out {
-  from {
-    inset-block-start: 0;
-  }
-
-  to {
-    inset-block-start: var(--kicl--views--experiments__home--above);
-  }
-}
-
-@keyframes kicl--views--experiments__home--fade-out {
+@keyframes kicl--views--experiments__home--words-out {
   from {
     opacity: 1;
+    visibility: visible;
   }
 
   to {
     opacity: 0;
+    visibility: hidden;
   }
 }
