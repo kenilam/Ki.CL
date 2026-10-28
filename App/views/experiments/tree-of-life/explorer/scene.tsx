@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Three
-import { Fiber } from '@/three';
+import { Canvas } from '@/three';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
@@ -50,7 +50,7 @@ const Scene: React.FunctionComponent = () => {
   const root = rooted ? chains[chains.length - 1] : undefined;
 
   return (
-    <Fiber.Canvas
+    <Canvas
       aria-label={t('label', { context: 'scene' })}
       role='img'
       camera={{ position: [0, 0, OPENING_DISTANCE], fov: 50 }}
@@ -88,7 +88,7 @@ const Scene: React.FunctionComponent = () => {
       <LabelProjector />
 
       <CameraRig />
-    </Fiber.Canvas>
+    </Canvas>
   );
 };
 

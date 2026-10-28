@@ -7,9 +7,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Animation,
   Button,
-  CardContent,
   Details,
-  Layout,
   SheetFooter,
   Text,
 } from 'design/components';
@@ -45,48 +43,44 @@ const Log: React.FunctionComponent = () => {
 
   return (
     <>
-      <Layout alignContent='start' gap='normal'>
-        <CardContent>
-          {latest ? (
-            <>
-              <Steps entries={latest} />
+      {latest ? (
+        <>
+          <Steps entries={latest} />
 
-              {earlier.map((entries) => {
-                // Oldest last: the step that started that run. A run the page opened with wasn't started by a step.
-                const first = entries[entries.length - 1];
-                const name = first.start
-                  ? t('step', {
-                      ...first.note.values,
-                      context: first.note.context,
-                    })
-                  : t('run', { context: 'opened' });
+          {earlier.map((entries) => {
+            // Oldest last: the step that started that run. A run the page opened with wasn't started by a step.
+            const first = entries[entries.length - 1];
+            const name = first.start
+              ? t('step', {
+                  ...first.note.values,
+                  context: first.note.context,
+                })
+              : t('run', { context: 'opened' });
 
-                return (
-                  <Details
-                    key={first.id}
-                    summary={
-                      <Text dense is='span'>
-                        {t('run', {
-                          context: 'summary',
-                          count: entries.length,
-                          name,
-                          time: time(first.at),
-                        })}
-                      </Text>
-                    }
-                  >
-                    <Steps entries={entries} />
-                  </Details>
-                );
-              })}
-            </>
-          ) : (
-            <Text className='kicl-color-grey' is='p'>
-              {t('status', { context: 'empty' })}
-            </Text>
-          )}
-        </CardContent>
-      </Layout>
+            return (
+              <Details
+                key={first.id}
+                summary={
+                  <Text dense is='span'>
+                    {t('run', {
+                      context: 'summary',
+                      count: entries.length,
+                      name,
+                      time: time(first.at),
+                    })}
+                  </Text>
+                }
+              >
+                <Steps entries={entries} />
+              </Details>
+            );
+          })}
+        </>
+      ) : (
+        <Text className='kicl-color-grey' is='p'>
+          {t('status', { context: 'empty' })}
+        </Text>
+      )}
 
       {log.length > 0 && (
         <Animation property='slide-from-bottom'>

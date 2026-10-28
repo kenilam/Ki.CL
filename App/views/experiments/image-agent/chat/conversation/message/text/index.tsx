@@ -41,7 +41,7 @@ const MessageText: React.FunctionComponent<Props> = ({
     gap='narrow'
     justifyContent='start'
   >
-    <BubbleContent>
+    <BubbleContent is='span'>
       {busy ? (
         <Layout alignItems='center' display='inline-grid'>
           <span className={`${CLASS_NAME}__spinner`}>

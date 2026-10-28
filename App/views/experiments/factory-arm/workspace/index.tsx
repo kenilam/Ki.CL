@@ -16,6 +16,8 @@ import { useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Partials
 import { Alert } from '@/views/experiments/factory-arm/alert';
+import { Notice } from './notice';
+import { Remove } from './remove';
 import { Panel } from '@/views/experiments/factory-arm/panel';
 import { Scene } from '@/views/experiments/factory-arm/scene';
 
@@ -39,20 +41,21 @@ const Workspace: React.FunctionComponent = () => {
     <>
       <FactoryArmProvider key={run} setup={applied}>
         <Frame>
-          {/* The frame's own element; R3F's canvas sizes itself inline to fill it, which the frame's classes can't override. */}
-          <div
-            aria-label={t('scene')}
+          {/* The frame's own element: the canvas sizes itself to fill it, and the overlays sit over the canvas in its coordinates. */}
+          <figure
             className={classNames(
               CLASS_NAME,
               // Dragging turns the view and pinching zooms it, so the page must not.
               'kicl-overscroll-behavior-none',
+              'kicl-position-relative',
               'kicl-touch-action-none',
               'kicl-user-select-none'
             )}
-            role='img'
           >
             <Scene />
-          </div>
+            <Notice />
+            <Remove />
+          </figure>
         </Frame>
 
         <Alert />

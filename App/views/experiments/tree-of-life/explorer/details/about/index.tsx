@@ -3,7 +3,7 @@ import React from 'react';
 // Libraries
 import { useTranslation } from 'react-i18next';
 
-import { Badge, BadgeLabel, Layout, List, Text } from 'design/components';
+import { Badge, BadgeLabel, List, Text } from 'design/components';
 
 import { TaxonVisualPanel } from '@/views/experiments/tree-of-life/taxon-visual';
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
@@ -30,51 +30,49 @@ const About: React.FunctionComponent = () => {
   const hasMeta = Boolean(rank) || terminal || node.ottId != null;
 
   return (
-    <Layout gap='normal'>
-      <div>
-        {hasMeta ? (
-          <List display='flex' gap='narrow' wrap>
-            {rank ? (
-              <Badge
-                is='li'
-                variant='ghost'
-                className='kicl-text-transform-lowercase'
-              >
-                <BadgeLabel>{t('label', { context: 'rank' })}</BadgeLabel>
-                {rank}
-              </Badge>
-            ) : null}
-            {terminal ? (
-              <Badge
-                is='li'
-                variant='secondary'
-                className='kicl-text-transform-lowercase'
-              >
-                {t('terminal')}
-              </Badge>
-            ) : null}
-            {node.ottId != null ? (
-              <Badge is='li' variant='ghost'>
-                <BadgeLabel>{t('label', { context: 'ott_id' })}</BadgeLabel>
-                {node.ottId}
-              </Badge>
-            ) : null}
-          </List>
-        ) : null}
+    <>
+      {hasMeta ? (
+        <List display='flex' gap='narrow' wrap>
+          {rank ? (
+            <Badge
+              is='li'
+              variant='ghost'
+              className='kicl-text-transform-lowercase'
+            >
+              <BadgeLabel>{t('label', { context: 'rank' })}</BadgeLabel>
+              {rank}
+            </Badge>
+          ) : null}
+          {terminal ? (
+            <Badge
+              is='li'
+              variant='secondary'
+              className='kicl-text-transform-lowercase'
+            >
+              {t('terminal')}
+            </Badge>
+          ) : null}
+          {node.ottId != null ? (
+            <Badge is='li' variant='ghost'>
+              <BadgeLabel>{t('label', { context: 'ott_id' })}</BadgeLabel>
+              {node.ottId}
+            </Badge>
+          ) : null}
+        </List>
+      ) : null}
 
-        {/*
+      {/*
           No `onSubtree`: generated fields land in the Apollo cache, which
           is what `find` reads, so the dialog picks them up on its own.
         */}
-        <TaxonVisualPanel node={node} isOrigin={node.nodeId === ROOT_NODE_ID} />
+      <TaxonVisualPanel node={node} isOrigin={node.nodeId === ROOT_NODE_ID} />
 
-        {node.description?.trim() ? (
-          <Text dense is='p' className='kicl-color-grey-700'>
-            {node.description.trim()}
-          </Text>
-        ) : null}
-      </div>
-    </Layout>
+      {node.description?.trim() ? (
+        <Text dense is='p' className='kicl-color-grey-700'>
+          {node.description.trim()}
+        </Text>
+      ) : null}
+    </>
   );
 };
 

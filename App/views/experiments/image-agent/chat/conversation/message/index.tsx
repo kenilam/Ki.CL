@@ -76,14 +76,14 @@ const Message = React.forwardRef<HTMLElement, Props>(
             justifyContent='end'
           >
             {/* Puts the retry button beside the text, outside its bubble. */}
-            <div>
+            <p>
               {onRetry ? <Retry onRetry={() => onRetry(message.id)} /> : null}
               <MessageText
                 busy={busy}
                 reveal={Boolean(fresh) && !mine}
                 text={message.text}
               />
-            </div>
+            </p>
           </Layout>
         ) : null}
 
@@ -92,7 +92,7 @@ const Message = React.forwardRef<HTMLElement, Props>(
         ) : null}
 
         {message.kind === 'IMAGE' && (message.asset?.url || message.score) ? (
-          <Card size='fit' variant='secondary'>
+          <Card is='section' size='fit' variant='secondary'>
             {message.asset?.url ? (
               <Picture title={title} url={message.asset.url} />
             ) : null}

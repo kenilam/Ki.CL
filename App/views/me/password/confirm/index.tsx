@@ -17,7 +17,6 @@ import { useLocation } from 'design/router';
 import {
   Button,
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -75,19 +74,15 @@ const Confirm: React.FunctionComponent = () => {
 
   if (invalid) {
     return (
-      <Card size='max' variant='secondary'>
-        <Layout gap='narrow' justifyItems='center'>
-          <CardContent>
-            <Status
-              justifyContent='center'
-              headingLevel='h1'
-              in
-              level='warning'
-              message={t('description', { context: 'invalid' })}
-              title={t('title', { context: 'invalid' })}
-            />
-          </CardContent>
-        </Layout>
+      <Card is='section' size='max' variant='secondary'>
+        <Status
+          justifyContent='center'
+          headingLevel='h1'
+          in
+          level='warning'
+          message={t('description', { context: 'invalid' })}
+          title={t('title', { context: 'invalid' })}
+        />
         <CardFooter justifyContent='center'>
           <HyperLink
             lookLikeButton
@@ -103,7 +98,7 @@ const Confirm: React.FunctionComponent = () => {
   }
 
   return (
-    <Card size='max' variant='secondary'>
+    <Card is='section' size='max' variant='secondary'>
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>

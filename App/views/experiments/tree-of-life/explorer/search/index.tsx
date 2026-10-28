@@ -16,17 +16,7 @@ import {
 } from 'api/provider';
 
 // Components
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-  Layout,
-  Text,
-} from 'design/components';
-
-// Icons
-import * as Ri from 'react-icons/ri';
+import { Layout, SearchInput, Text } from 'design/components';
 
 // Router
 import { useNavigate } from 'design/router';
@@ -207,41 +197,20 @@ const Search: React.FunctionComponent = () => {
     <Layout gap='narrow'>
       <search>
         {/*
-          The browser draws its own controls on this input - a cancel
-          cross for `type='search'` and a picker triangle for `list` -
-          and neither is one of ours. They are suppressed in the
-          stylesheet and replaced here with the app's own icons, so the
-          field matches everything else on the page.
+          The browser draws a picker triangle on an input with a `list`,
+          which isn't one of ours. The stylesheet hides it, so the field
+          matches everything else on the page.
         */}
-        <InputGroup className={`${CLASS_NAME}__search`}>
-          <InputGroupAddon>
-            <Ri.RiSearchLine aria-hidden />
-          </InputGroupAddon>
-
-          <InputGroupInput
-            type='search'
-            value={query}
-            list={LIST_ID}
-            placeholder={t('search_placeholder')}
-            autoComplete='off'
-            aria-label={t('search_label')}
-            aria-busy={loading}
-            onChange={(event) => choose(event.target.value)}
-          />
-
-          {query ? (
-            <InputGroupAddon>
-              <InputGroupButton
-                variant='ghost'
-                type='button'
-                aria-label={t('action', { context: 'clear_search' })}
-                onClick={() => setQuery('')}
-              >
-                <Ri.RiCloseLine aria-hidden />
-              </InputGroupButton>
-            </InputGroupAddon>
-          ) : null}
-        </InputGroup>
+        <SearchInput
+          className={`${CLASS_NAME}__search`}
+          value={query}
+          list={LIST_ID}
+          placeholder={t('search_placeholder')}
+          autoComplete='off'
+          aria-label={t('search_label')}
+          aria-busy={loading}
+          onChange={(event) => choose(event.target.value)}
+        />
 
         <datalist id={LIST_ID}>
           {options.map((option) => (

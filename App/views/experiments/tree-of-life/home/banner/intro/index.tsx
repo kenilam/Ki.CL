@@ -29,7 +29,7 @@ const Intro: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
 
   return (
-    <div className='kicl-position-relative'>
+    <>
       <HyperLink
         before={<Ri.RiArrowLeftSFill aria-hidden />}
         to={toExperimentsPath(PATH)}
@@ -56,7 +56,7 @@ const Intro: React.FunctionComponent = () => {
       >
         {common('action', { context: 'see_experience' })}
       </HyperLink>
-    </div>
+    </>
   );
 };
 

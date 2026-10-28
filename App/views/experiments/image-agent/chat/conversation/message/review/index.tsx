@@ -39,7 +39,7 @@ const Review: React.FunctionComponent<Props> = ({ score }) => {
   const { t } = useTranslation('image-agent');
 
   return (
-    <Card className='kicl-contain-inline-size'>
+    <Card className='kicl-contain-inline-size' is='section'>
       <Details
         className={CLASS_NAME}
         summary={t('scored', {

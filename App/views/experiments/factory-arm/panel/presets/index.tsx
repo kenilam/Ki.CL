@@ -8,7 +8,6 @@ import {
   Button,
   Card,
   CardAction,
-  CardContent,
   CardDescription,
   CardTitle,
   List,
@@ -50,61 +49,56 @@ const Presets: React.FunctionComponent = () => {
 
   return (
     <>
-      <CardContent>
-        <List gap='narrow'>
-          {presets.map((preset) => {
-            const name = preset.context
-              ? t('preset', { context: preset.context })
-              : preset.name;
+      <List gap='narrow'>
+        {presets.map((preset) => {
+          const name = preset.context
+            ? t('preset', { context: preset.context })
+            : preset.name;
 
-            return (
-              <Card
-                is='li'
-                key={preset.id}
-                level={preset.id === active ? 'confirm' : undefined}
-                header={
-                  <>
-                    <CardTitle is='span'>{name}</CardTitle>
-                    <CardDescription
-                      className='kicl-font-family-mono'
-                      is='span'
+          return (
+            <Card
+              is='li'
+              key={preset.id}
+              level={preset.id === active ? 'confirm' : undefined}
+              header={
+                <>
+                  <CardTitle is='span'>{name}</CardTitle>
+                  <CardDescription className='kicl-font-family-mono' is='span'>
+                    {summary(t, preset)}
+                  </CardDescription>
+                  <CardAction>
+                    <Button
+                      aria-label={t('action', {
+                        context: preset.id === active ? 'restart' : 'run',
+                        name,
+                      })}
+                      onClick={() => play(preset)}
+                      size='small'
+                      variant='secondary'
                     >
-                      {summary(t, preset)}
-                    </CardDescription>
-                    <CardAction>
-                      <Button
-                        aria-label={t('action', {
-                          context: preset.id === active ? 'restart' : 'run',
-                          name,
-                        })}
-                        onClick={() => play(preset)}
-                        size='small'
-                        variant='secondary'
-                      >
-                        {preset.id === active ? (
-                          <Ri.RiRestartLine aria-hidden />
-                        ) : (
-                          <Ri.RiPlayFill aria-hidden />
-                        )}
-                      </Button>
-                    </CardAction>
-                  </>
-                }
-              >
-                {preset.saved && (
-                  <Button
-                    onClick={() => discard(preset.id)}
-                    size='small'
-                    variant='ghost'
-                  >
-                    {common('action', { context: 'remove' })}
-                  </Button>
-                )}
-              </Card>
-            );
-          })}
-        </List>
-      </CardContent>
+                      {preset.id === active ? (
+                        <Ri.RiRestartLine aria-hidden />
+                      ) : (
+                        <Ri.RiPlayFill aria-hidden />
+                      )}
+                    </Button>
+                  </CardAction>
+                </>
+              }
+            >
+              {preset.saved && (
+                <Button
+                  onClick={() => discard(preset.id)}
+                  size='small'
+                  variant='ghost'
+                >
+                  {common('action', { context: 'remove' })}
+                </Button>
+              )}
+            </Card>
+          );
+        })}
+      </List>
 
       <Unsaved />
 

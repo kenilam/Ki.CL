@@ -10,7 +10,6 @@ import {
   Animation,
   Button,
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -39,7 +38,7 @@ const Password: React.FunctionComponent = () => {
   const ended = stage === 'expired' || stage === 'failed';
 
   return (
-    <Card size='max' variant='secondary'>
+    <Card is='section' size='max' variant='secondary'>
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           {stage !== 'done' ? (
@@ -75,11 +74,7 @@ const Password: React.FunctionComponent = () => {
       </Layout>
       {stage === 'idle' && <PasswordForm onSubmit={start} />}
       {busy && (
-        <Layout justifyItems='center'>
-          <CardContent>
-            <Spinner in position='inline' />
-          </CardContent>
-        </Layout>
+        <Spinner className='kicl-justify-self-center' in position='inline' />
       )}
       {!busy && stage !== 'idle' && (
         <Animation property='slide-from-bottom'>

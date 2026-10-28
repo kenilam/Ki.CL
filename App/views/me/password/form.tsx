@@ -5,13 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import {
-  Button,
-  CardContent,
-  CardFooter,
-  Form,
-  Layout,
-} from 'design/components';
+import { Button, CardFooter, Form } from 'design/components';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -53,12 +47,8 @@ const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
 
   return (
     <Form {...form} onSubmit={form.handleSubmit(submit)}>
-      <Layout gap='narrow'>
-        <CardContent>
-          <Fields />
-          <RootError />
-        </CardContent>
-      </Layout>
+      <Fields />
+      <RootError />
       <CardFooter justifyContent='center'>
         <Button
           after={

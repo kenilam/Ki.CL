@@ -12,13 +12,7 @@ import {
 } from 'api/provider';
 
 // Components
-import {
-  Button,
-  CardContent,
-  CardFooter,
-  Form as Origin,
-  Layout,
-} from 'design/components';
+import { Button, CardFooter, Form as Origin } from 'design/components';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -68,12 +62,8 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
 
   return (
     <Origin {...form} onSubmit={form.handleSubmit(onSubmit)}>
-      <Layout autoFlow='row' gap='narrower'>
-        <CardContent>
-          <Name />
-          <Status />
-        </CardContent>
-      </Layout>
+      <Name />
+      <Status />
       <CardFooter justifyContent='center'>
         <Button
           disabled={loading}
