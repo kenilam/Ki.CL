@@ -40,12 +40,11 @@ const Share: React.FunctionComponent = () => {
 
   return (
     <Button
-      aria-label={label}
+      before={<Ri.RiShareFill aria-hidden />}
       onClick={() => void share()}
-      title={label}
       variant='ghost'
     >
-      <Ri.RiShareFill aria-hidden />
+      {label}
     </Button>
   );
 };
