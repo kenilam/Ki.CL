@@ -20,9 +20,11 @@ const Asking: React.FunctionComponent = () => {
       }
     >
       <Text is='p'>{t('article.asking.enough')}</Text>
+      <Text is='p'>{t('article.asking.needs')}</Text>
       <Text is='p'>{t('article.asking.answers')}</Text>
       <Text is='p'>{t('article.asking.cap')}</Text>
       <Text is='p'>{t('article.asking.brief')}</Text>
+      <Text is='p'>{t('article.asking.pipeline')}</Text>
     </Details>
   );
 };

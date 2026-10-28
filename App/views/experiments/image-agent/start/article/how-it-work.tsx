@@ -21,9 +21,7 @@ const HowItWorks: React.FunctionComponent = () => {
     >
       <Text is='p'>{t('article.how_it_works.describe')}</Text>
       <Text is='p'>{t('article.how_it_works.follow_up')}</Text>
-      <Text is='p'>{t('article.how_it_works.pick')}</Text>
-      <Text is='p'>{t('article.how_it_works.refused')}</Text>
-      <Text is='p'>{t('article.how_it_works.single')}</Text>
+      <Text is='p'>{t('article.how_it_works.limits')}</Text>
     </Details>
   );
 };

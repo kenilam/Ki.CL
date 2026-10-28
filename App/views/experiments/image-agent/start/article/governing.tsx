@@ -17,7 +17,7 @@ import {
 // Diagrams
 import { governing } from './diagrams/governing';
 
-const RULES = ['words', 'injection', 'links', 'short', 'mashing'] as const;
+const CHECKS = ['limits', 'rules', 'moderation', 'classifier'] as const;
 
 /** Governing: the four checks, their order, and how each one fails. */
 const Governing: React.FunctionComponent = () => {
@@ -33,37 +33,40 @@ const Governing: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>
-        <Markdown>{t('article.governing.checks')}</Markdown>
-      </Text>
+      <Text is='p'>{t('article.governing.checks')}</Text>
+      <List gap='narrower' is='ol'>
+        {CHECKS.map((context) => (
+          <ListItem key={context}>
+            <Text is='span'>
+              <Markdown>{t('article.governing.check', { context })}</Markdown>
+            </Text>
+          </ListItem>
+        ))}
+      </List>
+      <Text is='p'>{t('article.governing.clarifier')}</Text>
       <Diagram spec={spec} />
       <Text is='p'>{t('article.governing.outcomes')}</Text>
+      <Text is='p'>{t('article.governing.questions')}</Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'rules' })}
       </Heading>
       <Text is='p'>{t('article.governing.rules_intro')}</Text>
-      <List gap='narrower'>
-        {RULES.map((context) => (
-          <ListItem key={context}>
-            <Text is='span'>{t('article.governing.rule', { context })}</Text>
-          </ListItem>
-        ))}
-      </List>
+      <Text is='p'>{t('article.governing.rules')}</Text>
       <Text is='p'>{t('article.governing.left_off')}</Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'moderation' })}
       </Heading>
       <Text is='p'>{t('article.governing.moderation')}</Text>
+      <Text is='p'>{t('article.governing.classifier')}</Text>
       <Text is='p'>
         <Markdown>{t('article.governing.markers')}</Markdown>
       </Text>
+      <Text is='p'>{t('article.governing.earlier_turns')}</Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.governing.title', { context: 'failed_check' })}
       </Heading>
+      <Text is='p'>{t('article.governing.failed_intro')}</Text>
       <Text is='p'>{t('article.governing.failed_check')}</Text>
-      <Heading is='h4' lookLike='h2'>
-        {t('article.governing.title', { context: 'refusals' })}
-      </Heading>
       <Text is='p'>{t('article.governing.refusals')}</Text>
     </Details>
   );

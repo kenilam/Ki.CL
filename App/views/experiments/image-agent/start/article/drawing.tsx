@@ -33,6 +33,7 @@ const Drawing: React.FunctionComponent = () => {
       }
     >
       <Text is='p'>{t('article.drawing.order')}</Text>
+      <Text is='p'>{t('article.drawing.into_code')}</Text>
       <List gap='narrower' is='ol'>
         {STEPS.map((context) => (
           <ListItem key={context}>
@@ -40,20 +41,25 @@ const Drawing: React.FunctionComponent = () => {
           </ListItem>
         ))}
       </List>
+      <Text is='p'>{t('article.drawing.once')}</Text>
       <Diagram spec={spec} />
       <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'prompt' })}
       </Heading>
       <Text is='p'>{t('article.drawing.prompt')}</Text>
+      <Text is='p'>{t('article.drawing.positive')}</Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'review' })}
       </Heading>
       <Text is='p'>{t('article.drawing.review')}</Text>
+      <Text is='p'>{t('article.drawing.pass')}</Text>
       <Text is='p'>{t('article.drawing.first_reviewer')}</Text>
+      <Text is='p'>{t('article.drawing.no_reviewer')}</Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'storage' })}
       </Heading>
       <Text is='p'>{t('article.drawing.storage')}</Text>
+      <Text is='p'>{t('article.drawing.cache')}</Text>
     </Details>
   );
 };

@@ -28,12 +28,18 @@ const Limits: React.FunctionComponent = () => {
       }
     >
       <Text is='p'>{t('article.limits.cost')}</Text>
+      <Text is='p'>{t('article.limits.day')}</Text>
       <Diagram spec={specs.allowance} />
+      <Text is='p'>
+        <Markdown>{t('article.limits.checked')}</Markdown>
+      </Text>
       <Diagram spec={specs.howItWorks} />
       <Heading is='h4' lookLike='h2'>
         {t('article.limits.title', { context: 'person' })}
       </Heading>
       <Text is='p'>{t('article.limits.session')}</Text>
+      <Text is='p'>{t('article.limits.token')}</Text>
+      <Text is='p'>{t('article.limits.turnstile')}</Text>
       <Text is='p'>{t('article.limits.network')}</Text>
       <Text is='p'>{t('article.limits.counts')}</Text>
       <Text is='p'>
