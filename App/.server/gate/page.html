@@ -73,7 +73,8 @@
   }
 
   /* Button, primary, size="small" */
-  button {
+  .action {
+    display: inline-block;
     font-size: 0.7rem;
     line-height: 1;
     text-transform: uppercase;
@@ -83,10 +84,10 @@
     border-radius: 0.5rem;
     background: var(--button-bg);
     color: var(--button-ink);
-    cursor: pointer;
+    text-decoration: none;
   }
 
-  button:focus-visible { outline: 2px solid var(--button-bg); outline-offset: 1px; }
+  .action:focus-visible { outline: 2px solid var(--button-bg); outline-offset: 1px; }
 </style>
 </head>
 <body>
@@ -99,8 +100,8 @@
   <img src="guard.webp" width="760" height="600" alt="{{gate_alt}}">
 
   <footer>
-    <p class="secondary">{{gate_notice}}<br>{{gate_advice}}</p>
-    <button type="button" onclick="location.reload()">{{gate_action}}</button>
+    <p class="secondary">{{gate_notice_{{status}}}}<br>{{gate_advice_{{status}}}}</p>
+    <a class="action" href="{{href}}">{{gate_action_{{status}}}}</a>
   </footer>
 </body>
 </html>

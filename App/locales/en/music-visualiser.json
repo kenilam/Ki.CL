@@ -3,33 +3,33 @@
   "action_copy_link": "Copy link to this track",
   "action_next": "Next track",
   "action_play": "Play {{title}}",
-  "action_play_random": "Play a random song",
+  "action_play_random": "Play a random track",
   "article": {
     "address": {
       "crossfade": "When the track changes, the old one keeps playing until the new one has loaded. Then they crossfade over three seconds.",
-      "gesture": "Browsers won’t start audio until the person has interacted with the page, so a `/play`{secondary} link opened from somewhere else lands on the track and waits for one click.",
-      "play": "`/play`{secondary} at the end of a track’s address means it’s playing. Pause is a link back to the track. Skip links to the next one, which is picked as soon as the current track starts. Back and forward work, and a copied link opens the same track."
+      "gesture": "Browsers usually block audio until the person has interacted with the page, so a `/play`{secondary} link opened from somewhere else lands on the track and waits for one click.",
+      "play": "Every track has its own URL, and `/play`{secondary} at the end of it means the track is playing. Pause is a link back to the track, and Next track is a link to the next one, which is picked as soon as the current track starts. So back and forward work, and a copied link opens the same track."
     },
     "data": {
-      "graphql": "The original plan, while I was still using Audius, was to query GraphQL for the next track. That can come back if the catalogue grows.",
+      "graphql": "With Audius, the plan was to ask GraphQL for the next track. I’d go back to that if the catalogue grows.",
       "route": "This page doesn’t use GraphQL like the rest of the site. The catalogue is compiled into the page, and the audio comes from the storage bucket through the site’s `/assets/static`{secondary} route."
     },
     "music": {
-      "generated": "Before that, the page generated its own music: a seeded synth playing chords and a melody over sampled piano. It was a lot of code to keep one station running, and I never got the piano samples into the bucket anyway, so I cut it.",
+      "generated": "Before it played recorded tracks, the page generated its own music: a seeded synth playing chords and a melody over sampled piano. It was a lot of code to keep one station running, and I never got the piano samples into the bucket anyway, so I cut it.",
       "hosting": "I host them because a page can only analyse audio from its own origin, or from a server that explicitly allows it. Streamed from anywhere else, the tracks would play but the analyser would get nothing.",
       "others": "I looked at Audius and Jamendo first because their catalogues are much bigger. The machines I built this on couldn’t reach either service, so I went with a collection I could host myself.",
       "source": "The tracks come from [$t(collection)]({{url}}): {{tracks}} tracks Bilal Tahir generated with Suno and released into the public domain. I copied them into the site’s storage bucket and serve them from there."
     },
     "picture": {
       "analyser": "For each frame, the page reads a few values from the audio analyser: overall energy, low, mid and high frequency energy, brightness, and whether a note just landed. It also passes the shader a {{bands}}-band spectrum as a texture.",
-      "colours": "The colours come from the stylesheet: six inks over a paper colour for each theme. A Bayer dither on top matches the rest of the site.",
+      "colours": "The colours come from the stylesheet, a background and up to six colours for each theme, so the picture follows the light and dark themes. A Bayer dither on top matches the home page’s background.",
       "dwell": "A scene normally stays up for 24 to 38 seconds. If the music moves into a new section, it can change sooner, and the cut waits up to two and a half seconds for a note so it lands with the music.",
       "random": "The next scene is random, and each track gets its own camera drift and a warmer or cooler lean. An earlier version picked scenes by genre. I dropped that because it was more code and the result didn’t look any better.",
-      "scenes": "Everything on screen is drawn by one fragment shader. It has {{scenes}} scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and a few others) and blends between two at a time."
+      "scenes": "The picture is one fragment shader with {{scenes}} scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and a few others). It blends between two of them at a time."
     },
     "what_this_is": {
-      "browser": "The browser listens to the track, pulls a few numbers out of the audio and feeds them into a shader. There’s no machine learning and no server doing the work.",
-      "experiment": "A small experiment I made for fun. The screen moves with whatever lo-fi track is playing."
+      "browser": "The page listens to the track, pulls a few numbers out of the audio and feeds them into a shader that draws the picture. There’s no machine learning and no server doing the work.",
+      "experiment": "I made this for fun, and all of it runs in the browser."
     }
   },
   "attribution": "$t(collection) by Bilal Tahir · CC0",
@@ -50,8 +50,8 @@
   "label_recording": "Recording a clip",
   "label_volume": "Volume",
   "source": "$t(collection) · {{category}}",
-  "summary": "{{tracks}} lo-fi tracks from a public-domain collection, each drawn while it plays in one of {{scenes}} scenes. Press play once and it keeps going.",
-  "title_address": "The address is the player",
+  "summary": "$t(common:experiment_description_music_visualiser)",
+  "title_address": "The URL controls the player",
   "title_data": "Where the data comes from",
   "title_music": "The music",
   "title_picture": "The picture",

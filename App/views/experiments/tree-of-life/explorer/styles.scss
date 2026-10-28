@@ -1,0 +1,17 @@
+.kicl--views--experiments--tree-of-life--explorer {
+  &__chrome {
+    // Inside the frame's top edge, which already clears the header.
+    --kicl-inset-block-start: calc(
+      var(--kicl-gutter) + var(--kicl--components--frame--top)
+    );
+
+    /*
+     * Anything clickable in the chrome clears the minimum target size. These
+     * are single icons and short words sitting over a canvas, so left alone
+     * they size to their type - the animation control measured 16px tall.
+     */
+    .kicl--components--button {
+      min-block-size: var(--kicl-size-2x);
+    }
+  }
+}

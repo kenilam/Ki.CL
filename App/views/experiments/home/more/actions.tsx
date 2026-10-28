@@ -4,7 +4,6 @@ import React from 'react';
 import { List, ListItem } from 'design/components';
 
 // Partials
-import { Bookmark } from './bookmark';
 import { Share } from './share';
 
 const Actions: React.FunctionComponent = () => (
@@ -16,9 +15,6 @@ const Actions: React.FunctionComponent = () => (
     justifyItems='center'
     justifyContent='center'
   >
-    <ListItem>
-      <Bookmark />
-    </ListItem>
     <ListItem>
       <Share />
     </ListItem>

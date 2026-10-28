@@ -15,10 +15,12 @@ import './styles.scss';
 
 // Constants
 import { toPath as toExperimentsPath } from '@/views/experiments/constants';
-import { PATH } from '@/views/experiments/tree-of-life/constants';
+import {
+  PATH,
+  ROOT_NODE_ID,
+  toPath,
+} from '@/views/experiments/tree-of-life/constants';
 import { CLASS_NAME as BANNER } from '@/views/experiments/tree-of-life/home/banner/constants';
-import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constants';
-import { VERSION } from '@/views/experiments/tree-of-life/versions/v15/constants';
 
 const CLASS_NAME = `${BANNER}__intro`;
 
@@ -49,7 +51,7 @@ const Intro: React.FunctionComponent = () => {
       <HyperLink
         level='confirm'
         lookLikeButton
-        to={toVersionPath({ version: VERSION })}
+        to={toPath(ROOT_NODE_ID)}
         size='small'
       >
         {common('action', { context: 'see_experience' })}

@@ -7,17 +7,16 @@ import { useTranslation } from 'react-i18next';
 import { Heading, Layout, Markdown, Text } from 'design/components';
 
 // Constants
-import { toVersionPath } from '@/views/experiments/tree-of-life/versions/constants';
-import { VERSION } from '@/views/experiments/tree-of-life/versions/v15/constants';
+import {
+  ROOT_NODE_ID,
+  toPath,
+} from '@/views/experiments/tree-of-life/constants';
 
 const WhatIGaveUp: React.FunctionComponent = () => {
   const { t } = useTranslation('tree-of-life');
   const id = useId();
 
-  const links = {
-    current: toVersionPath({ version: VERSION }),
-    version: VERSION,
-  };
+  const links = { current: toPath(ROOT_NODE_ID) };
 
   return (
     <Layout justifyItems='start'>
@@ -26,9 +25,7 @@ const WhatIGaveUp: React.FunctionComponent = () => {
           {t('title', { context: 'what_i_gave_up' })}
         </Heading>
 
-        <Text is='p'>
-          <Markdown>{t('article.what_i_gave_up.p1', links)}</Markdown>
-        </Text>
+        <Text is='p'>{t('article.what_i_gave_up.one_taxon')}</Text>
 
         <Text is='p'>{t('article.what_i_gave_up.p2')}</Text>
 

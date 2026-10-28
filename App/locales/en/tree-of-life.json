@@ -1,51 +1,48 @@
 {
   "action_clear_search": "Clear the search",
-  "action_close_panel": "Close panel",
-  "action_grow": "Grow",
-  "action_gust": "Force a strong gust of wind",
   "animation": "animation",
   "article": {
     "drawing_organisms": {
       "alt": "A hand-coloured 1854 natural-history plate by Perrot: animals arranged across a pale staged ground with fine engraved linework.",
       "caption": "Perrot, 1854. Every generated plate aims for this engraved linework, muted wash and plain staged ground.",
-      "p1": "Most of those 2.3 million tips are bacteria, archaea and unnamed internal nodes. Nobody has photographed “uncultured Crater Lake bacterium CL500-11”, so the plates are generated in the style of a 19th-century hand-coloured lithograph like the one below.",
-      "p2": "The pipeline is a fixed sequence of steps, with no agent deciding what to do next. It resolves the lineage, picks one real living specimen to stand in for the taxon, writes a prompt from that specimen’s morphology, generates an image and has a vision model score it. If the score fails, the prompt is tightened for one more try."
+      "p1": "Many of those 2.3 million tips are bacteria and archaea known only from DNA. Nobody has photographed “uncultured Crater Lake bacterium CL500-11”, so the plates are generated in the style of a 19th-century hand-coloured lithograph like the one below.",
+      "p2": "The pipeline is a fixed sequence of steps, with no agent deciding what to do next. It resolves the lineage, picks a living species to stand for the taxon, writes a prompt describing what that species looks like, generates an image and has a vision model score it. If the score fails, the prompt is tightened for one more try."
     },
     "fifteen_attempts": {
-      "alt": "The v14 view: a wide, pale map of the tree with labelled nodes spread across the frame.",
-      "caption": "[v14]({{v14}}), the map, with the whole tree in view",
-      "p1": "Each version started over instead of revising the last, so they’re all still online. [v1]({{v1}}) to [v8]({{v8}}) used WebGL to lay out the whole clade at once, on a cream background borrowed from the poster. Past a few hundred taxa the layout collapsed into a mat of dots, each the same few pixels wherever it sat.",
-      "p2": "[v9]({{v9}}) to [v13]({{v13}}) went the other way, building DOM and SVG documents tip first, one clade at a time, with drag and zoom instead of a fixed composition. Names became readable, but the sense of distance from the origin was gone and the whole thing felt flat.",
-      "p3": "[v14]({{v14}}) was the widest of them. It showed everything and nothing stood out. [v{{version}}]({{current}}) dropped that. It frames one taxon and whatever sits near it, fades the rest into the background and lets the route decide what’s on screen."
+      "alt": "The fourteenth version: a wide, pale map of the tree with labelled nodes spread across the frame.",
+      "caption_map": "The fourteenth version, a map with the whole tree in view.",
+      "html": "Versions nine to thirteen went the other way. They built the tree in HTML and SVG, one clade at a time, with drag and zoom instead of a fixed picture. Names became readable, but the sense of distance from the origin was gone and the whole thing felt flat.",
+      "webgl": "It took fifteen versions to get here, each a fresh start rather than a revision of the last. The first eight used WebGL to draw every loaded branch at once, on a cream background borrowed from the graphic. Past a few hundred taxa, the drawing collapsed into a mat of dots, each the same few pixels wherever it sat.",
+      "widest": "The fourteenth was the widest of them. It showed everything, so nothing stood out. The fifteenth, [the one on the site now]({{current}}), does the opposite. It frames one taxon and what sits near it, fades the rest, and the taxon in the URL decides what’s on screen."
     },
     "figure": {
       "open": "{{alt}} Open the full image."
     },
     "quota": {
       "p1": "Generation runs across a chain of providers, tried in order, each with its own bounded retries. A provider that hits a limit it can’t retry past goes into cooldown and is skipped, so the next one takes the request. Text, images and vision each have their own chain.",
-      "p2": "There are two ways to run out. A daily allowance comes back tomorrow, and an empty balance comes back when someone pays. I’d been treating both as a thirty-minute cooldown, which meant hitting a spent account twice an hour forever and telling readers to “try again shortly” about a problem only a billing page could solve. The two are now separate all the way through to the panel, so it says which kind of wait it is.",
-      "p3": "A plate takes much longer than a request should, so generation is asynchronous. The query returns whatever exists now, and a GraphQL subscription pushes the finished plate when it lands. The API sits behind a proxy and takes no public callers, so every request carries an identity token minted by the site, not the browser."
+      "p2": "There are two ways to run out. A daily allowance comes back the next day, and an empty balance only comes back when someone pays. I’d been treating both as a thirty-minute cooldown, so the site retried a spent account every half hour and told readers to “try again shortly” when only a top-up would help. The backend now tells the two apart.",
+      "p3": "A plate takes about a minute, much longer than a request should, so it’s generated in the background. The query returns whatever exists now, and a GraphQL subscription sends the finished plate when it’s ready."
     },
     "the_backend": {
-      "p1": "Open Tree answers questions about subtrees. A request for a node returns what hangs below it, up to a height limit, so the node arrives with no parent attached. Stored as-is, that records a genus as the root of all life.",
-      "p2": "*Panthera* was once stored as the root, with nothing above it. It took a long time to find because the symptom showed up far from the cause. The fix was to stop recording “no parent” and “no parent yet” the same way. A cold fetch now also pulls the node’s rootward lineage, the whole spine back to the origin including unnamed internal nodes. A stored null means the origin and nothing else.",
-      "p3": "Everything is cached in MongoDB as a parent-pointer model. Each node stores only its parent, and children come from a reverse lookup. Writes are idempotent upserts because lineages that share ancestors are written at the same time, and two requests will race for the same row. That happened the first time I emptied the database."
+      "p1": "Open Tree answers questions about subtrees. Ask it for a node and it returns what hangs below, but not what sits above, so the node arrives with no parent.",
+      "p2": "I stored nodes as they came, and “no parent” is also how the origin of life is stored. So after a fetch that started at *Panthera*, the site served that genus as the root of all life and grew the tree from there. It took a long time to trace, because the symptom showed up far from the cause. Now the first fetch of a node also fetches its lineage back to the origin, including the unnamed nodes in between, so every node is stored with a real parent and only the origin has none.",
+      "p3": "Everything is cached in MongoDB. Each node stores only its parent, and its children come from a reverse lookup. Lineages that share ancestors are often written at the same time, so two requests can race for the same node. That first happened when I emptied the database, and writes are idempotent upserts so the race does no harm."
     },
     "the_picture": {
-      "alt": "A printed tree of life poster: coloured branches radiating from “$t(origin)” at the base, each tip ending in a painted organism.",
-      "caption": "Where I started. Around 250 tips, every one illustrated by hand.",
+      "alt": "A screen grab of a tree of life graphic: coloured branches radiating from “$t(origin)” at the base, each tip ending in a painted organism.",
+      "caption": "The graphic I was aiming for. Around 250 tips, every one illustrated by hand.",
       "p1": "I wanted every branch of life on one sheet, with something recognisable at the end of each branch, like a horse, a nautilus or a fly agaric.",
       "p2": "The Open Tree of Life holds about 2.3 million tips. That’s too many to draw, illustrate or fetch, and almost every decision below comes from that number. So I stopped trying to draw the whole tree and started choosing what to show at any one point."
     },
     "tuning_the_reviewer": {
-      "p1": "Scoring turned out to matter more than generating. For a long stretch every plate in the library, more than a hundred images, carried the same score:` overall 7, taxonMatch 7, pass true`. It was a hardcoded fallback. The vision provider had run out of credit, the call threw, and the pipeline filled in a pass instead of admitting it hadn’t looked. The whole library was marked as reviewed when none of it had been.",
-      "p2": "Three code paths could invent that pass and none of them recorded it, so the database couldn’t tell a real review from a fabricated one. A review that didn’t happen is now stored as no review. The scorer also has its own provider chain, so one spent account can’t silence it.",
-      "p3": "The rubric needed work too. It checked that the organism was the right one and matched a morphology lock, but never asked whether the anatomy was *possible*. A human with its head at an impossible angle, malformed fingers and a garbled caption passed on morphology. Anatomy is now judged separately from identity, so the scorer can say “right species, broken body”.",
-      "p4": "I also took the bans out of the prompts, because naming a thing to forbid it puts it in the picture. A list reading “no insects, no mites” produced microbes drawn as mites, and a fallback morphology ending in “not a macroscopic animal” had been doing the same to every microbe in the library."
+      "p1": "Scoring turned out to matter more than generating. For a long stretch every plate in the library, more than a hundred images, carried the same score: `overall 7, taxonMatch 7, pass true`. It was a hardcoded fallback. The vision provider had run out of credit, the call threw, and the pipeline filled in a pass instead of recording that no review had happened.",
+      "p2": "Three code paths could invent that pass, and none of them marked it as invented, so the database couldn’t tell a real review from a made-up one. A review that didn’t happen is now stored as no review. The scorer also has its own provider chain, so one spent account can’t silence it.",
+      "p3": "The rubric needed work too. It checked that the organism was the right one and matched the description it was drawn from, but never asked whether the anatomy was *possible*. A human with its head at an impossible angle, malformed fingers and a garbled caption still passed. Anatomy is now judged separately from identity, so the scorer can say “right species, broken body”.",
+      "p4": "I also took the bans out of the prompts, because naming a thing to forbid it tends to put it in the picture. A list reading “no insects, no mites” produced microbes drawn as mites, and a fallback description ending in “not a macroscopic animal” had been doing the same to the microbes in the library."
     },
     "what_i_gave_up": {
-      "p1": "The poster shows every tip at once, illustrated, on a single sheet. [v{{version}}]({{current}}) shows one taxon, its lineage back to the origin and a sampled fan of its neighbours.",
-      "p2": "Illustrations are made on demand, so most taxa have no plate until someone visits them and a provider has quota to spare. Deep fans show a representative sample instead of every child. The tree is assembled lazily from a cache in front of a public API, so the first visit to an unexplored clade is slow.",
+      "one_taxon": "The graphic shows all of its tips at once, illustrated, on a single sheet. The tree here shows one taxon at a time, with its lineage back to the origin and a sample of its neighbours.",
+      "p2": "Illustrations are made on demand, so most taxa have no plate until someone opens them and a provider has quota to spare. A taxon with many children shows a sample of them rather than all. The tree is assembled lazily from a cache in front of a public API, so the first visit to an unexplored clade is slow.",
       "p3": "A visitor can still [start at the origin of life]({{current}}) and walk to any living species to see how far it sits from there."
     },
     "where_it_started": {
@@ -53,55 +50,34 @@
       "p2": "It doesn’t show what any of them look like. Every tip is just a name. I wanted the shape and the creatures on the same page."
     }
   },
-  "attempts": "$t(title_fifteen_attempts):",
-  "caption_v13": "v13 · tip-first · fine branches · drag / zoom / click tips to expand",
-  "caption_v14": "v14 · botanical growth · hover/click to focus · click away to resume",
-  "caption_v2": "Tip-weighted organic fan (v2) · click glowing tips to grow a clade",
-  "caption_v3": "Even neighbor spacing · click glowing tips to grow a clade",
-  "caption_v4": "Even neighbor spacing (v4) · click glowing tips to grow a clade",
-  "caption_v5": "Poster-style organic fan · click glowing tips to grow a clade",
-  "caption_v6": "Poster-style organic fan (v6) · click glowing tips to grow a clade",
-  "caption_v7": "D3 cluster + CubicBezier branches · click tips to expand",
-  "caption_v8": "Sphere from min(canvas W, H) · drag to rotate · tips on the shell",
-  "era_close_up": "One taxon, close up",
-  "era_html": "HTML, one clade at a time",
-  "era_webgl": "WebGL, the whole clade at once",
-  "era_widest": "The widest view I tried",
-  "error_exhausted": "Out of drawing quota - reloading will not bring it back.",
+  "error_exhausted": "The drawing services have run out of quota, so no plate can be drawn right now. Try again later.",
   "error_unfinished": "The drawing did not finish. Reload to send it back for another try.",
   "error_unreachable": "Could not reach the plate. Check your connection and reload.",
-  "hint_grow": "Keep growing expandable tips automatically",
-  "hint_gust": "Force a gust",
-  "hint_land": "Land the tree at once",
+  "hint_land": "Skip to the finished tree",
   "hint_play": "Play the tree out branch by branch",
-  "hint_versions": "Every version of this view",
   "label_animation": "Animation",
-  "label_map": "$t(common:experiment_tree_of_life) map",
-  "label_map_controls": "Map controls",
   "label_ott_id": "OTT ID",
   "label_rank": "Rank",
   "label_scene": "The tree of life around the taxon in view",
-  "label_search_details": "Search and details",
   "label_taxa": "Taxa in view",
-  "lede": "Start at the origin of life and walk to any species alive now. There are about 2.3 million to choose from, and every organism you pass has an illustration drawn for it.",
+  "lede": "$t(common:experiment_description_tree_of_life)",
   "not_visited": "not yet visited",
   "origin": "Origin of life",
   "plate_alt": "Plate of {{name}}, drawn from a description",
-  "plate_disclaimer": "Generated from a description - not a photograph, and not always right.",
+  "plate_disclaimer": "Generated from a description. It’s not a photograph, and it’s not always right.",
   "plate_drawing": "Drawing the plate.",
   "plate_none": "$t(title_no_plate).",
   "plate_pick": "Pick a named taxon and one will be drawn for it.",
   "plate_ready": "Plate of {{name}} ready.",
-  "plate_wait": "Drawing this one - it takes about a minute.",
+  "plate_wait": "Drawing this one. It takes about a minute.",
   "search_label": "Find a taxon by name",
   "search_placeholder": "Find a taxon…",
-  "search_placeholder_v14": "Find a named node…",
   "status_matched_one": "{{count}} match",
   "status_matched_other": "{{count}} matches",
   "status_on_screen": "{{count}} on screen",
   "status_searching": "Searching…",
-  "status_unmatched": "No taxon by that name - showing {{count}} on screen",
-  "terminal": "terminal",
+  "status_unmatched": "No taxon by that name. Showing {{count}} on screen.",
+  "terminal": "tip",
   "this_taxon": "this taxon",
   "title_drawing_organisms": "Drawing organisms nobody photographed",
   "title_fifteen_attempts": "Fifteen attempts",
@@ -113,9 +89,5 @@
   "title_tuning_the_reviewer": "Tuning the reviewer",
   "title_what_i_gave_up": "What I gave up",
   "title_where_it_started": "Where it started",
-  "total": "{{count}} in total",
-  "unnamed_node": "Unnamed node",
-  "version": "Version {{version}}",
-  "version_final": "Final version",
-  "versions": "Versions"
+  "unnamed_node": "Unnamed node"
 }

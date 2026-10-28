@@ -40,7 +40,6 @@ const Field: React.FunctionComponent<Props> = ({
   const { t } = useTranslation('image-agent');
   const { t: common } = useTranslation();
   const { control } = useFormContext<ComposerValues>();
-  const placeholder = t('placeholder');
 
   return (
     <FormField
@@ -52,7 +51,7 @@ const Field: React.FunctionComponent<Props> = ({
             <FormControl>
               <InputGroupTextarea
                 {...field}
-                aria-label={placeholder}
+                aria-label={t('label', { context: 'message' })}
                 className={`${CLASS_NAME}__field`}
                 autoComplete='off'
                 disabled={disabled}
@@ -63,7 +62,7 @@ const Field: React.FunctionComponent<Props> = ({
                     onEnter();
                   }
                 }}
-                placeholder={placeholder}
+                placeholder={t('placeholder')}
                 rows={1}
               />
             </FormControl>
