@@ -18,10 +18,9 @@ import { CLASS_NAME } from './constants';
 // Stacks below `desktop` through a media query in `styles.scss`.
 const Banner: React.FunctionComponent = () => (
   <Layout
-    alignItems='center'
     alignContent='center'
-    autoFlow='column'
-    gap='extreme'
+    autoFlow='row'
+    gap='none'
     justifyItems='start'
     justifyContent='start'
   >

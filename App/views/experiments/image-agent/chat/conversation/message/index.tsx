@@ -76,14 +76,14 @@ const Message = React.forwardRef<HTMLElement, Props>(
             justifyContent='end'
           >
             {/* Puts the retry button beside the text, outside its bubble. */}
-            <div>
+            <p>
               {onRetry ? <Retry onRetry={() => onRetry(message.id)} /> : null}
               <MessageText
                 busy={busy}
                 reveal={Boolean(fresh) && !mine}
                 text={message.text}
               />
-            </div>
+            </p>
           </Layout>
         ) : null}
 
