@@ -21,9 +21,9 @@ const Portfolio: React.FunctionComponent = () => {
         justifyItems='stretch'
       >
         {/* The page's width: `main` centres its children, and a frame inside sizes from here. */}
-        <div className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
+        <section className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
           <Outlet />
-        </div>
+        </section>
       </Layout>
     </Animation>
   );
