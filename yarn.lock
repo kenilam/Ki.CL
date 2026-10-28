@@ -3564,7 +3564,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:6.1.1"
     clean-css: "npm:^5.3.3"
     glob: "npm:11.1.0"
-    vite: "npm:8.1.5"
+    vite: "npm:8.1.6"
     vite-plugin-checker: "npm:0.14.5"
     vite-plugin-commonjs: "npm:0.10.4"
     vite-plugin-compression2: "npm:2.5.3"
@@ -3687,7 +3687,7 @@ __metadata:
     three: "npm:0.185.1"
     ts-node: "npm:10.9.2"
     valibot: "npm:1.4.2"
-    vite: "npm:8.1.5"
+    vite: "npm:8.1.6"
   languageName: unknown
   linkType: soft
 
@@ -12033,9 +12033,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:8.1.5":
-  version: 8.1.5
-  resolution: "vite@npm:8.1.5"
+"vite@npm:8.1.6":
+  version: 8.1.6
+  resolution: "vite@npm:8.1.6"
   dependencies:
     fsevents: "npm:~2.3.3"
     lightningcss: "npm:^1.32.0"
@@ -12086,7 +12086,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/3231e24dd4394d0bc8b4f0f5d6d6a2eda8737e5053042892b4163564456a03d67f953c4c7498621f9517eebc30a492ea136c728a767a122eb84bf6d7cf60e1e6
+  checksum: 10c0/d931d627838f1de14e3918972e962118202bf95c266c81125823116d255171e2d5de436cfdddcfef61985741fdb894bd1a03819a651148c9e9b6a886fa5595c9
   languageName: node
   linkType: hard
 
