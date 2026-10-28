@@ -119,7 +119,7 @@ const Obstacle: React.FunctionComponent<Props> = ({ id }) => {
       {selected === id && (
         <>
           <Arrows id={id} size={size} />
-          <Remove id={id} size={size} />
+          <Remove size={size} />
         </>
       )}
     </RigidBody>
