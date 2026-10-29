@@ -4,14 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  PasswordInput,
-} from 'design/components';
+import { FormField, PasswordInput } from 'design/components';
 
 // Schema
 import type { DeleteValues } from './schema';
@@ -25,13 +18,11 @@ const Password: React.FunctionComponent = () => {
       control={control}
       name='CurrentPassword'
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{common('label', { context: 'password' })}</FormLabel>
-          <FormControl>
-            <PasswordInput {...field} autoComplete='current-password' />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+        <PasswordInput
+          {...field}
+          label={common('label', { context: 'password' })}
+          autoComplete='current-password'
+        />
       )}
     />
   );

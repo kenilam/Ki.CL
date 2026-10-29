@@ -4,14 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-} from 'design/components';
+import { FormField, Input } from 'design/components';
 
 // Schema
 import type { ProfileValues } from './schema';
@@ -26,34 +19,24 @@ const Name: React.FunctionComponent = () => {
         control={control}
         name='FirstName'
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t('label', { context: 'first_name' })}</FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                autoComplete='given-name'
-                placeholder={t('label', { context: 'first_name' })}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <Input
+            {...field}
+            label={t('label', { context: 'first_name' })}
+            autoComplete='given-name'
+            placeholder={t('label', { context: 'first_name' })}
+          />
         )}
       />
       <FormField
         control={control}
         name='LastName'
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t('label', { context: 'last_name' })}</FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                autoComplete='family-name'
-                placeholder={t('label', { context: 'last_name' })}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <Input
+            {...field}
+            label={t('label', { context: 'last_name' })}
+            autoComplete='family-name'
+            placeholder={t('label', { context: 'last_name' })}
+          />
         )}
       />
     </>
