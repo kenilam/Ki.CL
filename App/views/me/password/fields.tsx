@@ -4,14 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  PasswordInput,
-} from 'design/components';
+import { FormField, PasswordInput } from 'design/components';
 
 // Schema
 import type { PasswordValues } from './schema';
@@ -26,26 +19,22 @@ const Fields: React.FunctionComponent = () => {
         control={control}
         name='CurrentPassword'
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t('label', { context: 'current_password' })}</FormLabel>
-            <FormControl>
-              <PasswordInput {...field} autoComplete='current-password' />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <PasswordInput
+            {...field}
+            label={t('label', { context: 'current_password' })}
+            autoComplete='current-password'
+          />
         )}
       />
       <FormField
         control={control}
         name='Password'
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>{t('label', { context: 'new_password' })}</FormLabel>
-            <FormControl>
-              <PasswordInput {...field} autoComplete='new-password' />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+          <PasswordInput
+            {...field}
+            label={t('label', { context: 'new_password' })}
+            autoComplete='new-password'
+          />
         )}
       />
     </>
