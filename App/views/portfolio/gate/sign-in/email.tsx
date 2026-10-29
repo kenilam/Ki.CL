@@ -4,14 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import {
-  EmailInput,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from 'design/components';
+import { EmailInput, FormField } from 'design/components';
 
 // Schema
 import type { SignInValues } from './schema';
@@ -26,17 +19,12 @@ const Email: React.FunctionComponent = () => {
       control={control}
       name='Email'
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{common('label', { context: 'email' })}</FormLabel>
-          <FormControl>
-            <EmailInput
-              {...field}
-              autoComplete='username'
-              placeholder={t('placeholder', { context: 'email' })}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+        <EmailInput
+          {...field}
+          label={common('label', { context: 'email' })}
+          autoComplete='username'
+          placeholder={t('placeholder', { context: 'email' })}
+        />
       )}
     />
   );
