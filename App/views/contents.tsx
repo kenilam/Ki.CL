@@ -35,7 +35,7 @@ const Contents: React.FunctionComponent = () => {
     <SessionProvider>
       <ScrollRestoration />
       <SkipLink />
-      <GlobalHeader before={<Language />} hidden={isHome}>
+      <GlobalHeader after={<Language />} hidden={isHome}>
         <Navigation />
       </GlobalHeader>
       <Layout
