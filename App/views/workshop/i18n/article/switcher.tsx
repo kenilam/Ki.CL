@@ -14,7 +14,7 @@ import { Card, Layout, Text } from 'design/components';
 import { LanguageSelect } from 'design/widgets';
 
 // Hooks
-import { useLanguages } from '@/views/navigation/language/use-languages';
+import { useLanguages } from '@/views/language/use-languages';
 
 const Switcher: React.FunctionComponent = () => {
   const { i18n, t } = useTranslation('internationalisation');
