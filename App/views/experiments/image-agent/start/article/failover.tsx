@@ -24,6 +24,7 @@ const Failover: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>
@@ -32,7 +33,7 @@ const Failover: React.FunctionComponent = () => {
       }
     >
       <Text is='p'>{t('article.failover.chains_intro')}</Text>
-      <List gap='narrower'>
+      <List gap='narrower' listStyleType='disc'>
         {CHAINS.map((context) => (
           <ListItem key={context}>
             <Text is='span'>
@@ -46,7 +47,7 @@ const Failover: React.FunctionComponent = () => {
         {t('article.failover.title', { context: 'timeouts' })}
       </Heading>
       <Text is='p'>{t('article.failover.timeouts_intro')}</Text>
-      <List gap='narrower'>
+      <List gap='narrower' listStyleType='disc'>
         {TIMEOUTS.map((context) => (
           <ListItem key={context}>
             <Text is='span'>{t('article.failover.timeout', { context })}</Text>

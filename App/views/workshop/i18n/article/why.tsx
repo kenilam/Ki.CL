@@ -4,7 +4,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Details, Heading, List, ListItem, Text } from 'design/components';
+import {
+  Details,
+  Heading,
+  List,
+  ListItem,
+  Markdown,
+  Text,
+} from 'design/components';
 
 const NEEDS = ['source', 'backend', 'platform', 'complete', 'no_code'] as const;
 
@@ -13,6 +20,7 @@ const Why: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       open
       summary={
@@ -23,11 +31,13 @@ const Why: React.FunctionComponent = () => {
     >
       <Text is='p'>{t('article.why.rule')}</Text>
       <Text is='p'>{t('article.why.intro')}</Text>
-      <List gap='narrower'>
+      <List gap='narrower' listStyleType='disc'>
         {NEEDS.map((need) => {
           return (
             <ListItem key={need}>
-              <Text is='span'>{t(`article.why.${need}`)}</Text>
+              <Text is='span'>
+                <Markdown>{t(`article.why.${need}`)}</Markdown>
+              </Text>
             </ListItem>
           );
         })}

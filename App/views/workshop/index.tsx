@@ -8,7 +8,8 @@ import { Spinner } from 'design/components';
 
 // Views
 import { DesignSystem } from './design-system';
-import { Internationalisation } from './internationalisation';
+import { I18n } from './i18n';
+import { I18nRedirect } from './i18n/redirect';
 
 // Constants
 import { PATH } from './constants';
@@ -31,7 +32,8 @@ const Workshop = (
       }
     />
     {DesignSystem}
-    {Internationalisation}
+    {I18n}
+    {I18nRedirect}
   </Route>
 );
 

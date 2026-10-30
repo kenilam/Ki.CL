@@ -12,6 +12,7 @@ const Asking: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>

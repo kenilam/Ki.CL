@@ -25,6 +25,7 @@ const Drawing: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>
@@ -34,7 +35,7 @@ const Drawing: React.FunctionComponent = () => {
     >
       <Text is='p'>{t('article.drawing.order')}</Text>
       <Text is='p'>{t('article.drawing.into_code')}</Text>
-      <List gap='narrower' is='ol'>
+      <List gap='narrower' is='ol' listStyleType='decimal'>
         {STEPS.map((context) => (
           <ListItem key={context}>
             <Text is='span'>{t('article.drawing.step', { context })}</Text>

@@ -19,6 +19,7 @@ const Wrong: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>

@@ -11,18 +11,18 @@
       "play": "Every track has its own URL, and `/play`{secondary} at the end of it means the track is playing. Pause is a link back to the track, and Next track is a link to the next one, which is picked as soon as the current track starts. So back and forward work, and a copied link opens the same track."
     },
     "data": {
-      "graphql": "With Audius, the plan was to ask GraphQL for the next track. I’d go back to that if the catalogue grows.",
-      "route": "This page doesn’t use GraphQL like the rest of the site. The catalogue is compiled into the page, and the audio comes from the storage bucket through the site’s `/assets/static`{secondary} route."
+      "graphql": "With Audius, the plan was to ask GraphQL for the next track. I’d go back to that if the catalog grows.",
+      "route": "This page doesn’t use GraphQL like the rest of the site. The catalog is compiled into the page, and the audio comes from the storage bucket through the site’s `/assets/static`{secondary} route."
     },
     "music": {
       "generated": "Before it played recorded tracks, the page generated its own music: a seeded synth playing chords and a melody over sampled piano. It was a lot of code to keep one station running, and I never got the piano samples into the bucket anyway, so I cut it.",
-      "hosting": "I host them because a page can only analyse audio from its own origin, or from a server that explicitly allows it. Streamed from anywhere else, the tracks would play but the analyser would get nothing.",
-      "others": "I looked at Audius and Jamendo first because their catalogues are much bigger. The machines I built this on couldn’t reach either service, so I went with a collection I could host myself.",
+      "hosting": "I host them because a page can only analyze audio from its own origin, or from a server that explicitly allows it. Streamed from anywhere else, the tracks would play but the analyzer would get nothing.",
+      "others": "I looked at Audius and Jamendo first because their catalogs are much bigger. The machines I built this on couldn’t reach either service, so I went with a collection I could host myself.",
       "source": "The tracks come from [$t(collection)]({{url}}): {{tracks}} tracks Bilal Tahir generated with Suno and released into the public domain. I copied them into the site’s storage bucket and serve them from there."
     },
     "picture": {
-      "analyser": "For each frame, the page reads a few values from the audio analyser: overall energy, low, mid and high frequency energy, brightness, and whether a note just landed. It also passes the shader a {{bands}}-band spectrum as a texture.",
-      "colours": "The colours come from the stylesheet, a background and up to six colours for each theme, so the picture follows the light and dark themes. A Bayer dither on top matches the home page’s background.",
+      "analyser": "For each frame, the page reads a few values from the audio analyzer: overall energy, low, mid and high frequency energy, brightness, and whether a note just landed. It also passes the shader a {{bands}}-band spectrum as a texture.",
+      "colours": "The colors come from the stylesheet, a background and up to six colors for each theme, so the picture follows the light and dark themes. A Bayer dither on top matches the home page’s background.",
       "dwell": "A scene normally stays up for 24 to 38 seconds. If the music moves into a new section, it can change sooner, and the cut waits up to two and a half seconds for a note so it lands with the music.",
       "random": "The next scene is random, and each track gets its own camera drift and a warmer or cooler lean. An earlier version picked scenes by genre. I dropped that because it was more code and the result didn’t look any better.",
       "scenes": "The picture is one fragment shader with {{scenes}} scenes (pools, clouds, rings, bars, a tunnel, a hive, a bloom and a few others). It blends between two of them at a time."
