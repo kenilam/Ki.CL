@@ -14,7 +14,6 @@ import { Mobile as Account } from '@/views/account/mobile';
 import { useAccount } from '@/views/account/use-account';
 
 // Widgets
-import { Language } from '@/views/navigation/language';
 import { useLinks } from '@/views/navigation/links';
 
 // Partials
@@ -70,7 +69,6 @@ const Mobile: React.FunctionComponent = () => {
         >
           {links}
           {me ? <Account key='account' /> : null}
-          <Language />
         </Navigation>
       </Dialog>
     </>
