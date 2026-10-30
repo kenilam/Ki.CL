@@ -17,11 +17,13 @@ const WhereItStarted: React.FunctionComponent = () => {
           {t('title', { context: 'where_it_started' })}
         </Heading>
 
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           <Markdown>{t('article.where_it_started.p1')}</Markdown>
         </Text>
 
-        <Text is='p'>{t('article.where_it_started.p2')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.where_it_started.p2')}
+        </Text>
       </section>
     </Layout>
   );

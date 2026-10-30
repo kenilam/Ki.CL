@@ -17,13 +17,17 @@ const TheBackend: React.FunctionComponent = () => {
           {t('title', { context: 'the_backend' })}
         </Heading>
 
-        <Text is='p'>{t('article.the_backend.p1')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.the_backend.p1')}
+        </Text>
 
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           <Markdown>{t('article.the_backend.p2')}</Markdown>
         </Text>
 
-        <Text is='p'>{t('article.the_backend.p3')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.the_backend.p3')}
+        </Text>
       </section>
     </Layout>
   );

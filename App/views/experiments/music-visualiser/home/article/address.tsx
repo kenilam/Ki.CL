@@ -19,13 +19,15 @@ const Address: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.address.play')}</Markdown>
       </Text>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.address.gesture')}</Markdown>
       </Text>
-      <Text is='p'>{t('article.address.crossfade')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.address.crossfade')}
+      </Text>
     </Details>
   );
 };

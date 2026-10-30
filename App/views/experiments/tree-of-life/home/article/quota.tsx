@@ -17,11 +17,17 @@ const Quota: React.FunctionComponent = () => {
           {t('title', { context: 'quota' })}
         </Heading>
 
-        <Text is='p'>{t('article.quota.p1')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.quota.p1')}
+        </Text>
 
-        <Text is='p'>{t('article.quota.p2')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.quota.p2')}
+        </Text>
 
-        <Text is='p'>{t('article.quota.p3')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.quota.p3')}
+        </Text>
       </section>
     </Layout>
   );

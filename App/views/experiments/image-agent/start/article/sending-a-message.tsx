@@ -49,10 +49,10 @@ const SendingAMessage: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.sending.mutation')}</Markdown>
       </Text>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.sending.subscription')}</Markdown>
       </Text>
       <Diagram spec={specs.overview} />
@@ -60,29 +60,43 @@ const SendingAMessage: React.FunctionComponent = () => {
       <Heading is='h4' lookLike='h2'>
         {t('article.sending.title', { context: 'separate' })}
       </Heading>
-      <Text is='p'>{t('article.sending.one_turn')}</Text>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.one_turn')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.sending.same_write')}</Markdown>
       </Text>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.sending.idle')}</Markdown>
       </Text>
-      <Text is='p'>{t('article.sending.streams')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.streams')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.sending.title', { context: 'pub_sub' })}
       </Heading>
-      <Text is='p'>{t('article.sending.pub_sub')}</Text>
-      <Text is='p'>{t('article.sending.broker')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.pub_sub')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.broker')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.sending.title', { context: 'recovering' })}
       </Heading>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.sending.restart')}</Markdown>
       </Text>
-      <Text is='p'>{t('article.sending.handle')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.handle')}
+      </Text>
       <DiagramLegend items={quiet} />
-      <Text is='p'>{t('article.sending.marks_failed')}</Text>
-      <Text is='p'>{t('article.sending.not_at_startup')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.marks_failed')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.sending.not_at_startup')}
+      </Text>
     </Details>
   );
 };

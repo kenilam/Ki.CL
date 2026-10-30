@@ -23,15 +23,21 @@ const Picture: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         {t('article.picture.scenes', { scenes: SCENES.length })}
       </Text>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         {t('article.picture.analyser', { bands: SPECTRUM_BANDS })}
       </Text>
-      <Text is='p'>{t('article.picture.dwell')}</Text>
-      <Text is='p'>{t('article.picture.random')}</Text>
-      <Text is='p'>{t('article.picture.colours')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.picture.dwell')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.picture.random')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.picture.colours')}
+      </Text>
     </Details>
   );
 };

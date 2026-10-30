@@ -21,8 +21,12 @@ const WhatThisIs: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.what_this_is.experiment')}</Text>
-      <Text is='p'>{t('article.what_this_is.browser')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.what_this_is.experiment')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.what_this_is.browser')}
+      </Text>
     </Details>
   );
 };

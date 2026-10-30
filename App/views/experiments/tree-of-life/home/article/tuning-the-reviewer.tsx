@@ -17,17 +17,21 @@ const TuningTheReviewer: React.FunctionComponent = () => {
           {t('title', { context: 'tuning_the_reviewer' })}
         </Heading>
 
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           <Markdown>{t('article.tuning_the_reviewer.p1')}</Markdown>
         </Text>
 
-        <Text is='p'>{t('article.tuning_the_reviewer.p2')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.tuning_the_reviewer.p2')}
+        </Text>
 
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           <Markdown>{t('article.tuning_the_reviewer.p3')}</Markdown>
         </Text>
 
-        <Text is='p'>{t('article.tuning_the_reviewer.p4')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.tuning_the_reviewer.p4')}
+        </Text>
       </section>
     </Layout>
   );

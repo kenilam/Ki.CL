@@ -32,34 +32,61 @@ const Drawing: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.drawing.order')}</Text>
-      <Text is='p'>{t('article.drawing.into_code')}</Text>
-      <List gap='narrower' is='ol'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.order')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.into_code')}
+      </Text>
+      <List
+        className='kicl-max-inline-size-columns-8'
+        gap='narrower'
+        is='ol'
+        listStyleType='decimal'
+      >
         {STEPS.map((context) => (
           <ListItem key={context}>
             <Text is='span'>{t('article.drawing.step', { context })}</Text>
           </ListItem>
         ))}
       </List>
-      <Text is='p'>{t('article.drawing.once')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.once')}
+      </Text>
       <Diagram spec={spec} />
       <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'prompt' })}
       </Heading>
-      <Text is='p'>{t('article.drawing.prompt')}</Text>
-      <Text is='p'>{t('article.drawing.positive')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.prompt')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.positive')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'review' })}
       </Heading>
-      <Text is='p'>{t('article.drawing.review')}</Text>
-      <Text is='p'>{t('article.drawing.pass')}</Text>
-      <Text is='p'>{t('article.drawing.first_reviewer')}</Text>
-      <Text is='p'>{t('article.drawing.no_reviewer')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.review')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.pass')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.first_reviewer')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.no_reviewer')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.drawing.title', { context: 'storage' })}
       </Heading>
-      <Text is='p'>{t('article.drawing.storage')}</Text>
-      <Text is='p'>{t('article.drawing.cache')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.storage')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.drawing.cache')}
+      </Text>
     </Details>
   );
 };

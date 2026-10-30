@@ -30,9 +30,13 @@ const FifteenAttempts: React.FunctionComponent = () => {
           {t('title', { context: 'fifteen_attempts' })}
         </Heading>
 
-        <Text is='p'>{t('article.fifteen_attempts.webgl')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.fifteen_attempts.webgl')}
+        </Text>
 
-        <Text is='p'>{t('article.fifteen_attempts.html')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.fifteen_attempts.html')}
+        </Text>
 
         <Figure
           data={V14}
@@ -40,7 +44,7 @@ const FifteenAttempts: React.FunctionComponent = () => {
           caption={t('article.fifteen_attempts.caption_map')}
         />
 
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           <Markdown>{t('article.fifteen_attempts.widest', links)}</Markdown>
         </Text>
       </section>

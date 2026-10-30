@@ -19,12 +19,24 @@ const Asking: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.asking.enough')}</Text>
-      <Text is='p'>{t('article.asking.needs')}</Text>
-      <Text is='p'>{t('article.asking.answers')}</Text>
-      <Text is='p'>{t('article.asking.cap')}</Text>
-      <Text is='p'>{t('article.asking.brief')}</Text>
-      <Text is='p'>{t('article.asking.pipeline')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.asking.enough')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.asking.needs')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.asking.answers')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.asking.cap')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.asking.brief')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.asking.pipeline')}
+      </Text>
     </Details>
   );
 };

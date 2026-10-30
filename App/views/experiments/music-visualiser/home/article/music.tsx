@@ -25,7 +25,7 @@ const Music: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>
           {t('article.music.source', {
             tracks: TOTAL,
@@ -33,9 +33,15 @@ const Music: React.FunctionComponent = () => {
           })}
         </Markdown>
       </Text>
-      <Text is='p'>{t('article.music.hosting')}</Text>
-      <Text is='p'>{t('article.music.others')}</Text>
-      <Text is='p'>{t('article.music.generated')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.music.hosting')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.music.others')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.music.generated')}
+      </Text>
     </Details>
   );
 };

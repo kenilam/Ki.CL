@@ -25,11 +25,15 @@ const WhatIGaveUp: React.FunctionComponent = () => {
           {t('title', { context: 'what_i_gave_up' })}
         </Heading>
 
-        <Text is='p'>{t('article.what_i_gave_up.one_taxon')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.what_i_gave_up.one_taxon')}
+        </Text>
 
-        <Text is='p'>{t('article.what_i_gave_up.p2')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.what_i_gave_up.p2')}
+        </Text>
 
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           <Markdown>{t('article.what_i_gave_up.p3', links)}</Markdown>
         </Text>
       </section>

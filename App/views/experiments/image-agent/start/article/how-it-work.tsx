@@ -19,9 +19,15 @@ const HowItWorks: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.how_it_works.describe')}</Text>
-      <Text is='p'>{t('article.how_it_works.follow_up')}</Text>
-      <Text is='p'>{t('article.how_it_works.limits')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.how_it_works.describe')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.how_it_works.follow_up')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.how_it_works.limits')}
+      </Text>
     </Details>
   );
 };

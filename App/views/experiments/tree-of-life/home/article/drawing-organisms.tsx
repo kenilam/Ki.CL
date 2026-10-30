@@ -23,7 +23,9 @@ const DrawingOrganisms: React.FunctionComponent = () => {
           {t('title', { context: 'drawing_organisms' })}
         </Heading>
 
-        <Text is='p'>{t('article.drawing_organisms.p1')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.drawing_organisms.p1')}
+        </Text>
 
         <Figure
           data={PERROT_1854}
@@ -31,7 +33,9 @@ const DrawingOrganisms: React.FunctionComponent = () => {
           caption={t('article.drawing_organisms.caption')}
         />
 
-        <Text is='p'>{t('article.drawing_organisms.p2')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.drawing_organisms.p2')}
+        </Text>
       </section>
     </Layout>
   );

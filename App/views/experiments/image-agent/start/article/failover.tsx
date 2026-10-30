@@ -31,8 +31,14 @@ const Failover: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.failover.chains_intro')}</Text>
-      <List gap='narrower'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.chains_intro')}
+      </Text>
+      <List
+        className='kicl-max-inline-size-columns-8'
+        gap='narrower'
+        listStyleType='disc'
+      >
         {CHAINS.map((context) => (
           <ListItem key={context}>
             <Text is='span'>
@@ -41,32 +47,56 @@ const Failover: React.FunctionComponent = () => {
           </ListItem>
         ))}
       </List>
-      <Text is='p'>{t('article.failover.groq')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.groq')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.failover.title', { context: 'timeouts' })}
       </Heading>
-      <Text is='p'>{t('article.failover.timeouts_intro')}</Text>
-      <List gap='narrower'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.timeouts_intro')}
+      </Text>
+      <List
+        className='kicl-max-inline-size-columns-8'
+        gap='narrower'
+        listStyleType='disc'
+      >
         {TIMEOUTS.map((context) => (
           <ListItem key={context}>
             <Text is='span'>{t('article.failover.timeout', { context })}</Text>
           </ListItem>
         ))}
       </List>
-      <Text is='p'>{t('article.failover.timeouts')}</Text>
-      <Text is='p'>{t('article.failover.retries')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.timeouts')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.retries')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.failover.title', { context: 'quota' })}
       </Heading>
-      <Text is='p'>{t('article.failover.alike')}</Text>
-      <Text is='p'>{t('article.failover.quota')}</Text>
-      <Text is='p'>{t('article.failover.before_split')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.alike')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.quota')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.before_split')}
+      </Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.failover.title', { context: 'everything' })}
       </Heading>
-      <Text is='p'>{t('article.failover.everything')}</Text>
-      <Text is='p'>{t('article.failover.refill')}</Text>
-      <Text is='p'>{t('article.failover.first_version')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.everything')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.refill')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.failover.first_version')}
+      </Text>
     </Details>
   );
 };

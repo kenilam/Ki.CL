@@ -27,25 +27,41 @@ const Limits: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.limits.cost')}</Text>
-      <Text is='p'>{t('article.limits.day')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.cost')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.day')}
+      </Text>
       <Diagram spec={specs.allowance} />
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.limits.checked')}</Markdown>
       </Text>
       <Diagram spec={specs.howItWorks} />
       <Heading is='h4' lookLike='h2'>
         {t('article.limits.title', { context: 'person' })}
       </Heading>
-      <Text is='p'>{t('article.limits.session')}</Text>
-      <Text is='p'>{t('article.limits.token')}</Text>
-      <Text is='p'>{t('article.limits.turnstile')}</Text>
-      <Text is='p'>{t('article.limits.network')}</Text>
-      <Text is='p'>{t('article.limits.counts')}</Text>
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.session')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.token')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.turnstile')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.network')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.counts')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.limits.refused')}</Markdown>
       </Text>
-      <Text is='p'>{t('article.limits.shared')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.limits.shared')}
+      </Text>
     </Details>
   );
 };

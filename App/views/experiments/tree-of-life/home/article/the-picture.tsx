@@ -23,9 +23,13 @@ const ThePicture: React.FunctionComponent = () => {
           {t('title', { context: 'the_picture' })}
         </Heading>
 
-        <Text is='p'>{t('article.the_picture.p1')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.the_picture.p1')}
+        </Text>
 
-        <Text is='p'>{t('article.the_picture.p2')}</Text>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
+          {t('article.the_picture.p2')}
+        </Text>
 
         <Figure
           data={ORIGINAL_VISION}
