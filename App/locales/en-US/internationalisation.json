@@ -2,7 +2,8 @@
   "full_name": "Internationalization",
   "article": {
     "intro": "All the original text lives in English files alongside the code that uses it. Translations are generated automatically and stored separately. The same system handles everything from page content and validation errors to API responses and emails. There's no manual translation workflow and no language-specific logic in individual components.",
-    "switcher_caption": "The language switcher. Traditional Chinese is being translated again, and German and Spanish are disabled until their translations are complete.",
+    "switcher_caption": "The language switcher, with each language's current status. Picking a language here loads the greeting in that language without changing the rest of the page.",
+    "switcher_preview": "Hello, world!",
     "why": {
       "title": "Why I built it",
       "rule": "I wanted to make internationalization a property of the system rather than something each page or component had to implement.",
@@ -66,14 +67,15 @@
       "token_markdown": "Markdown formatting",
       "checks": "The job checks every response. If a chunk doesn't match, it retries once, then leaves out any string that still fails. Those strings are tried again on the next run.",
       "plurals": "Plural rules also differ between languages. English has two plural forms, Japanese has one and Arabic has six. The job asks for the forms each language needs, using the plural categories `Intl.PluralRules` reports for it, and the API uses the same rules to choose between them.",
-      "notes": "A language's name doesn't always say how it should be written. Traditional Chinese on this site follows the standard written Chinese used in Hong Kong rather than spoken Cantonese, so the prompt for `zh-Hant` says so.",
+      "notes": "A language's name doesn't always say how it should be written. Traditional Chinese on this site follows the standard written Chinese used in Hong Kong rather than spoken Cantonese, so its record in `locales` carries a note that the prompt includes.",
       "providers": "Requests go to Gemini first, then OpenAI, then Groq, using the same failover as the Image Agent. When every provider has run out of quota, the run stops and the next one continues where it left off. Running out of quota isn't treated as a failure."
     },
     "availability": {
       "title": "Language availability",
       "complete": "A language becomes available only when it has a translation for every string. The check compares it with the English source and ignores plural suffixes, because Chinese uses one plural form where English uses two.",
       "run": "While the job is translating a language, it keeps a record of the run in MongoDB and updates it before each namespace. A record that hasn't been updated for five minutes is treated as a run that stopped without cleaning up.",
-      "switcher": "The language switcher subscribes to the status of every language. Complete languages can be selected. Incomplete ones are disabled and show a warning icon, or a spinner while they're being translated. A language becomes available within about a minute of its last string being written."
+      "switcher": "The language switcher subscribes to the status of every language. Complete languages can be selected. Incomplete ones are disabled and show a warning icon, or a spinner while they're being translated. A language becomes available within about a minute of its last string being written.",
+      "adding": "Adding a language is a data change. `make locales.add TAG=it-CH` adds a record to the `locales` collection, the next translation run fills in every string, and the language becomes available once it's complete. Its name in the switcher comes from `Intl.DisplayNames`, so nothing else has to be written."
     },
     "implementation": {
       "title": "See the implementation",

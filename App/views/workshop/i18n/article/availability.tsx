@@ -4,15 +4,16 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Details, Heading, Text } from 'design/components';
+import { Details, Heading, Markdown, Text } from 'design/components';
 
-const PARAGRAPHS = ['complete', 'run', 'switcher'] as const;
+const PARAGRAPHS = ['complete', 'run', 'switcher', 'adding'] as const;
 
 const Availability: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>
@@ -22,12 +23,8 @@ const Availability: React.FunctionComponent = () => {
     >
       {PARAGRAPHS.map((paragraph) => {
         return (
-          <Text
-            className='kicl-max-inline-size-columns-8'
-            is='p'
-            key={paragraph}
-          >
-            {t(`article.availability.${paragraph}`)}
+          <Text is='p' key={paragraph}>
+            <Markdown>{t(`article.availability.${paragraph}`)}</Markdown>
           </Text>
         );
       })}
