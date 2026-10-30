@@ -66,7 +66,7 @@
   "plate_disclaimer": "AI generated, may not be 100% accurate.",
   "plate_drawing": "Drawing the plate.",
   "plate_none": "$t(title_no_plate).",
-  "plate_pick": "Pick a named taxon and one will be drawn for it.",
+  "plate_pick": "Select a named taxon to draw its evolutionary tree.",
   "plate_ready": "Plate of {{name}} ready.",
   "plate_wait": "Drawing this one. It takes about a minute.",
   "search_label": "Find a taxon by name",
