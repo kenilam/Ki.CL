@@ -22,7 +22,9 @@ const Header: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='narrower' justifyItems='start'>
       <header className='kicl-inline-size-columns-6'>
         <HyperLink
-          before={<Ri.RiArrowLeftSFill aria-hidden />}
+          before={
+            <Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />
+          }
           to={toExperimentsPath(PATH)}
         >
           {common('experiments')}

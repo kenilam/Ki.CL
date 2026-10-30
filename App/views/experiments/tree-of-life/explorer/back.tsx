@@ -29,7 +29,7 @@ const Back: React.FunctionComponent = () => {
       )}
     >
       <HyperLink
-        before={<Ri.RiArrowLeftSLine aria-hidden />}
+        before={<Ri.RiArrowLeftSLine aria-hidden className='kicl-rtl-mirror' />}
         to={toPath()}
         unstyled
       >

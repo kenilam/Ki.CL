@@ -43,7 +43,9 @@ const Password: React.FunctionComponent = () => {
         <CardHeader className='kicl-text-align-center'>
           {stage !== 'done' ? (
             <HyperLink
-              before={<Ri.RiArrowGoBackLine />}
+              before={
+                <Ri.RiArrowGoBackLine aria-hidden className='kicl-rtl-mirror' />
+              }
               lookLikeButton
               size='small'
               to='..'

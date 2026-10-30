@@ -26,7 +26,7 @@ const Retry: React.FunctionComponent<Props> = ({ onRetry }) => {
       type='button'
       variant='tertiary'
     >
-      <Ri.RiCornerUpRightLine aria-hidden />
+      <Ri.RiCornerUpRightLine aria-hidden className='kicl-rtl-mirror' />
     </Button>
   );
 };

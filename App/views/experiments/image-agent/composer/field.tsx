@@ -72,7 +72,10 @@ const Field: React.FunctionComponent<Props> = ({
               {sending ? (
                 <Ri.RiLoader4Line aria-hidden className='is-revolving' />
               ) : (
-                <Ri.RiCornerRightUpLine aria-hidden />
+                <Ri.RiCornerRightUpLine
+                  aria-hidden
+                  className='kicl-rtl-mirror'
+                />
               )}
             </InputGroupButton>
           </InputGroup>
