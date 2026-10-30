@@ -1,4 +1,4 @@
-import type resume from '@/locales/en/resume.json';
+import type resume from '@/locales/en-US/resume.json';
 
 import type { Key, Organisation, Role, SectionId } from './types';
 

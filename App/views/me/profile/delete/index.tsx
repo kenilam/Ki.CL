@@ -70,7 +70,7 @@ const Delete: React.FunctionComponent = () => {
     <>
       <Button
         command='show-modal'
-        commandFor={DELETE_ID}
+        commandfor={DELETE_ID}
         level='error'
         size='small'
         variant='secondary'

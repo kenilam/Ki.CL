@@ -53,7 +53,7 @@ const Actions: React.FunctionComponent = () => {
         <Button
           before={<Ri.RiMessageLine aria-hidden />}
           command='show-modal'
-          commandFor={CONTACT_ID}
+          commandfor={CONTACT_ID}
           level='confirm'
           size='small'
           variant='ghost'

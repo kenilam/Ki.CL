@@ -17,13 +17,13 @@ const TTL_MS = 60_000;
 const TIMEOUT_MS = 2000;
 
 const QUERY =
-  'query kicl_Translations($language: String!, $namespaces: [String!]!) { Translations(language: $language, namespaces: $namespaces) { field value } }';
+  'query kicl_Translations($namespaces: [String!]!) { Translations(namespaces: $namespaces) { field value } }';
 
 type Texts = Record<string, string>;
 
 const seeded: Texts = JSON.parse(
   fs.readFileSync(
-    new URL('../../locales/en/server.json', import.meta.url),
+    new URL('../../locales/en-US/server.json', import.meta.url),
     'utf8'
   )
 );
@@ -61,7 +61,7 @@ const createTexts = (token: () => string | null = () => null) => {
         body: JSON.stringify({
           operationName: 'kicl_Translations',
           query: QUERY,
-          variables: { language: 'en', namespaces: ['server'] },
+          variables: { namespaces: ['server'] },
         }),
         headers: {
           'Content-Type': 'application/json',

@@ -33,7 +33,7 @@ const Actions: React.FunctionComponent = () => {
         <ListItem>
           <Button
             command='request-close'
-            commandFor={DELETE_ID}
+            commandfor={DELETE_ID}
             disabled={isSubmitting}
             size='small'
             type='button'

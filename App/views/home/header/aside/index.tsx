@@ -54,7 +54,7 @@ const Aside: React.FunctionComponent = () => {
       <Button
         aria-label={common('send_message')}
         command='show-modal'
-        commandFor={CONTACT_ID}
+        commandfor={CONTACT_ID}
         size='small'
         title={common('send_message')}
         variant='ghost'

@@ -89,7 +89,7 @@ const SignOut: React.FunctionComponent = () => {
               <ListItem>
                 <Button
                   command='request-close'
-                  commandFor={SIGN_OUT_ID}
+                  commandfor={SIGN_OUT_ID}
                   variant='tertiary'
                 >
                   {t('action', { context: 'cancel' })}

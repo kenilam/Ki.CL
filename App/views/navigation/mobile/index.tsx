@@ -14,7 +14,8 @@ import { Mobile as Account } from '@/views/account/mobile';
 import { useAccount } from '@/views/account/use-account';
 
 // Widgets
-import { Links } from '@/views/navigation/links';
+import { Language } from '@/views/navigation/language';
+import { useLinks } from '@/views/navigation/links';
 
 // Partials
 import { Close } from './close';
@@ -32,6 +33,8 @@ const Mobile: React.FunctionComponent = () => {
   const { me } = useAccount();
 
   const { t } = useTranslation();
+
+  const links = useLinks();
 
   const node = useRef<HTMLDialogElement>(null);
 
@@ -65,8 +68,9 @@ const Mobile: React.FunctionComponent = () => {
           gap='normal'
           justifyItems='end'
         >
-          {Links}
+          {links}
           {me ? <Account key='account' /> : null}
+          <Language />
         </Navigation>
       </Dialog>
     </>

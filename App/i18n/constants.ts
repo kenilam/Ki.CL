@@ -1,4 +1,4 @@
-const LANGUAGE = 'en';
+const ACCEPT_LANGUAGE = 'accept-language';
 
 /** What renders outside a route's own `Suspense`: the header, the session gate, the dialogs. */
 const DEFAULT_NAMESPACE = 'common';
@@ -10,4 +10,4 @@ const DEFAULT_NAMESPACE = 'common';
  */
 const PRELOADED = [DEFAULT_NAMESPACE, 'design'];
 
-export { DEFAULT_NAMESPACE, LANGUAGE, PRELOADED };
+export { ACCEPT_LANGUAGE, DEFAULT_NAMESPACE, PRELOADED };

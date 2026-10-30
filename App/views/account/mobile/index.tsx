@@ -42,7 +42,7 @@ const Mobile: React.FunctionComponent = () => {
           before={<Ri.RiLogoutCircleLine aria-hidden />}
           className='kicl-inline-size-full'
           command='show-modal'
-          commandFor={SIGN_OUT_ID}
+          commandfor={SIGN_OUT_ID}
           variant='secondary'
         >
           {t('action', { context: 'sign_out' })}
