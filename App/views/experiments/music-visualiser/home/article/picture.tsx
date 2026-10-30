@@ -16,6 +16,7 @@ const Picture: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>
@@ -23,21 +24,15 @@ const Picture: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         {t('article.picture.scenes', { scenes: SCENES.length })}
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         {t('article.picture.analyser', { bands: SPECTRUM_BANDS })}
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.picture.dwell')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.picture.random')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.picture.colours')}
-      </Text>
+      <Text is='p'>{t('article.picture.dwell')}</Text>
+      <Text is='p'>{t('article.picture.random')}</Text>
+      <Text is='p'>{t('article.picture.colours')}</Text>
     </Details>
   );
 };

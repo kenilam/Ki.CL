@@ -28,6 +28,7 @@ const How: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>
@@ -35,21 +36,14 @@ const How: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.how.browser')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.how.select')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.how.parts')}
-      </Text>
-      <List
-        className='kicl-max-inline-size-columns-8'
-        gap='narrower'
-        is='ol'
-        listStyleType='decimal'
-      >
+      <Text is='p'>{t('article.how.parts')}</Text>
+      <List gap='narrower' is='ol' listStyleType='decimal'>
         {PARTS.map((part) => {
           return (
             <ListItem key={part}>
@@ -61,12 +55,8 @@ const How: React.FunctionComponent = () => {
         })}
       </List>
       <Diagram spec={spec} />
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.how.startup')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.how.source')}
-      </Text>
+      <Text is='p'>{t('article.how.startup')}</Text>
+      <Text is='p'>{t('article.how.source')}</Text>
     </Details>
   );
 };

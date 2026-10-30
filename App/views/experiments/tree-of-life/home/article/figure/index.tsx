@@ -46,12 +46,7 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
         </Button>
       </Layout>
 
-      <figcaption
-        className={classNames(
-          'kicl-max-inline-size-columns-8',
-          'kicl-padding-block-start-narrower'
-        )}
-      >
+      <figcaption className='kicl-padding-block-start-narrower'>
         <Text is='span' dense>
           <Markdown>{caption}</Markdown>
         </Text>

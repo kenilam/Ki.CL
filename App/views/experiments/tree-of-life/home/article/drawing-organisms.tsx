@@ -18,14 +18,12 @@ const DrawingOrganisms: React.FunctionComponent = () => {
 
   return (
     <Layout justifyItems='start'>
-      <section aria-labelledby={id}>
+      <section aria-labelledby={id} className='kicl-max-inline-size-columns-8'>
         <Heading id={id} is='h2' lookLike='h1'>
           {t('title', { context: 'drawing_organisms' })}
         </Heading>
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.drawing_organisms.p1')}
-        </Text>
+        <Text is='p'>{t('article.drawing_organisms.p1')}</Text>
 
         <Figure
           data={PERROT_1854}
@@ -33,9 +31,7 @@ const DrawingOrganisms: React.FunctionComponent = () => {
           caption={t('article.drawing_organisms.caption')}
         />
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.drawing_organisms.p2')}
-        </Text>
+        <Text is='p'>{t('article.drawing_organisms.p2')}</Text>
       </section>
     </Layout>
   );

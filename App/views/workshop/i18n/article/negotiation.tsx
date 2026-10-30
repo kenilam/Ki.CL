@@ -23,6 +23,7 @@ const Negotiation: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>
@@ -30,26 +31,22 @@ const Negotiation: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.header_intro')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.header')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.entries')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.list')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.matching')}</Markdown>
       </Text>
-      <List
-        className='kicl-max-inline-size-columns-8'
-        gap='narrower'
-        listStyleType='disc'
-      >
+      <List gap='narrower' listStyleType='disc'>
         {MATCHES.map((match) => {
           return (
             <ListItem key={match}>
@@ -60,10 +57,10 @@ const Negotiation: React.FunctionComponent = () => {
           );
         })}
       </List>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.complete')}</Markdown>
       </Text>
-      <Table className='kicl-max-inline-size-columns-8'>
+      <Table>
         <caption>
           <Text is='span'>{t('article.negotiation.examples')}</Text>
         </caption>
@@ -98,7 +95,7 @@ const Negotiation: React.FunctionComponent = () => {
           })}
         </tbody>
       </Table>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.negotiation.note')}</Markdown>
       </Text>
     </Details>

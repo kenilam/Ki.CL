@@ -16,6 +16,7 @@ const Retrieval: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>
@@ -23,37 +24,21 @@ const Retrieval: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.assumed')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.source')}
-      </Text>
+      <Text is='p'>{t('article.retrieval.assumed')}</Text>
+      <Text is='p'>{t('article.retrieval.source')}</Text>
       <Diagram spec={spec} />
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.retrieval.plain_text')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.brief')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.rewind')}
-      </Text>
+      <Text is='p'>{t('article.retrieval.brief')}</Text>
+      <Text is='p'>{t('article.retrieval.rewind')}</Text>
       <Heading is='h4' lookLike='h2'>
         {t('article.retrieval.title', { context: 'similar' })}
       </Heading>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.similar')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.cheap')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.moved')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.retrieval.vector_store')}
-      </Text>
+      <Text is='p'>{t('article.retrieval.similar')}</Text>
+      <Text is='p'>{t('article.retrieval.cheap')}</Text>
+      <Text is='p'>{t('article.retrieval.moved')}</Text>
+      <Text is='p'>{t('article.retrieval.vector_store')}</Text>
     </Details>
   );
 };

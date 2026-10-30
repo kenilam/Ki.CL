@@ -12,22 +12,16 @@ const Quota: React.FunctionComponent = () => {
 
   return (
     <Layout justifyItems='start'>
-      <section aria-labelledby={id}>
+      <section aria-labelledby={id} className='kicl-max-inline-size-columns-8'>
         <Heading id={id} is='h2' lookLike='h1'>
           {t('title', { context: 'quota' })}
         </Heading>
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.quota.p1')}
-        </Text>
+        <Text is='p'>{t('article.quota.p1')}</Text>
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.quota.p2')}
-        </Text>
+        <Text is='p'>{t('article.quota.p2')}</Text>
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.quota.p3')}
-        </Text>
+        <Text is='p'>{t('article.quota.p3')}</Text>
       </section>
     </Layout>
   );

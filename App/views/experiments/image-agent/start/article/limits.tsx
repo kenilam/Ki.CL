@@ -20,6 +20,7 @@ const Limits: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>
@@ -27,41 +28,25 @@ const Limits: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.cost')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.day')}
-      </Text>
+      <Text is='p'>{t('article.limits.cost')}</Text>
+      <Text is='p'>{t('article.limits.day')}</Text>
       <Diagram spec={specs.allowance} />
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.limits.checked')}</Markdown>
       </Text>
       <Diagram spec={specs.howItWorks} />
       <Heading is='h4' lookLike='h2'>
         {t('article.limits.title', { context: 'person' })}
       </Heading>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.session')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.token')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.turnstile')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.network')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.counts')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>{t('article.limits.session')}</Text>
+      <Text is='p'>{t('article.limits.token')}</Text>
+      <Text is='p'>{t('article.limits.turnstile')}</Text>
+      <Text is='p'>{t('article.limits.network')}</Text>
+      <Text is='p'>{t('article.limits.counts')}</Text>
+      <Text is='p'>
         <Markdown>{t('article.limits.refused')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.limits.shared')}
-      </Text>
+      <Text is='p'>{t('article.limits.shared')}</Text>
     </Details>
   );
 };

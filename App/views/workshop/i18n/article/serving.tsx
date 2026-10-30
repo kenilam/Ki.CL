@@ -13,6 +13,7 @@ const Serving: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>
@@ -22,11 +23,7 @@ const Serving: React.FunctionComponent = () => {
     >
       {PARAGRAPHS.map((paragraph) => {
         return (
-          <Text
-            className='kicl-max-inline-size-columns-8'
-            is='p'
-            key={paragraph}
-          >
+          <Text is='p' key={paragraph}>
             <Markdown>{t(`article.serving.${paragraph}`)}</Markdown>
           </Text>
         );

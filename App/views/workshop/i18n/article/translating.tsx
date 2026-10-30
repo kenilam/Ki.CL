@@ -27,6 +27,7 @@ const Translating: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>
@@ -34,20 +35,14 @@ const Translating: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.translating.job')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.translating.prompt')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.translating.tokens')}
-      </Text>
-      <List
-        className='kicl-max-inline-size-columns-8'
-        gap='narrower'
-        listStyleType='disc'
-      >
+      <Text is='p'>{t('article.translating.tokens')}</Text>
+      <List gap='narrower' listStyleType='disc'>
         {TOKENS.map((token) => {
           return (
             <ListItem key={token}>
@@ -60,11 +55,7 @@ const Translating: React.FunctionComponent = () => {
       </List>
       {PARAGRAPHS.map((paragraph) => {
         return (
-          <Text
-            className='kicl-max-inline-size-columns-8'
-            is='p'
-            key={paragraph}
-          >
+          <Text is='p' key={paragraph}>
             <Markdown>{t(`article.translating.${paragraph}`)}</Markdown>
           </Text>
         );

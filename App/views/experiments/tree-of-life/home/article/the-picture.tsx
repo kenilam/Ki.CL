@@ -18,18 +18,14 @@ const ThePicture: React.FunctionComponent = () => {
 
   return (
     <Layout justifyItems='start'>
-      <section aria-labelledby={id}>
+      <section aria-labelledby={id} className='kicl-max-inline-size-columns-8'>
         <Heading id={id} is='h2' lookLike='h1'>
           {t('title', { context: 'the_picture' })}
         </Heading>
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.the_picture.p1')}
-        </Text>
+        <Text is='p'>{t('article.the_picture.p1')}</Text>
 
-        <Text className='kicl-max-inline-size-columns-8' is='p'>
-          {t('article.the_picture.p2')}
-        </Text>
+        <Text is='p'>{t('article.the_picture.p2')}</Text>
 
         <Figure
           data={ORIGINAL_VISION}

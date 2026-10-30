@@ -13,6 +13,7 @@ const WhatThisIs: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       open
       summary={
@@ -21,12 +22,8 @@ const WhatThisIs: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.what_this_is.experiment')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.what_this_is.browser')}
-      </Text>
+      <Text is='p'>{t('article.what_this_is.experiment')}</Text>
+      <Text is='p'>{t('article.what_this_is.browser')}</Text>
     </Details>
   );
 };

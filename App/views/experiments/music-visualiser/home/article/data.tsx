@@ -12,6 +12,7 @@ const Data: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h3' lookLike='h1'>
@@ -19,12 +20,10 @@ const Data: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
+      <Text is='p'>
         <Markdown>{t('article.data.route')}</Markdown>
       </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.data.graphql')}
-      </Text>
+      <Text is='p'>{t('article.data.graphql')}</Text>
     </Details>
   );
 };

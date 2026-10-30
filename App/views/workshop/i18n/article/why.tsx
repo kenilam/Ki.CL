@@ -20,6 +20,7 @@ const Why: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       open
       summary={
@@ -28,17 +29,9 @@ const Why: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.why.rule')}
-      </Text>
-      <Text className='kicl-max-inline-size-columns-8' is='p'>
-        {t('article.why.intro')}
-      </Text>
-      <List
-        className='kicl-max-inline-size-columns-8'
-        gap='narrower'
-        listStyleType='disc'
-      >
+      <Text is='p'>{t('article.why.rule')}</Text>
+      <Text is='p'>{t('article.why.intro')}</Text>
+      <List gap='narrower' listStyleType='disc'>
         {NEEDS.map((need) => {
           return (
             <ListItem key={need}>
