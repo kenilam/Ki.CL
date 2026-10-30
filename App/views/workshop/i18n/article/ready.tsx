@@ -30,7 +30,11 @@ const Ready: React.FunctionComponent = () => {
       </Heading>
       {PARAGRAPHS.map((paragraph) => {
         return (
-          <Text is='p' key={paragraph}>
+          <Text
+            className='kicl-max-inline-size-columns-8'
+            is='p'
+            key={paragraph}
+          >
             {t(`article.ready.${paragraph}`)}
           </Text>
         );
@@ -38,7 +42,7 @@ const Ready: React.FunctionComponent = () => {
       <Layout gap='narrow' justifyItems='start'>
         <figure>
           <LanguageSelect languages={LANGUAGES} value='zh-Hant' />
-          <figcaption>
+          <figcaption className='kicl-max-inline-size-columns-8'>
             <Text dense is='span'>
               {t('article.ready.figure_caption')}
             </Text>

@@ -35,7 +35,11 @@ const Wrong: React.FunctionComponent = () => {
             {paragraphs.map(
               (paragraph: (typeof STORIES)[number]['paragraphs'][number]) => {
                 return (
-                  <Text is='p' key={paragraph}>
+                  <Text
+                    className='kicl-max-inline-size-columns-8'
+                    is='p'
+                    key={paragraph}
+                  >
                     <Markdown>{t(`article.wrong.${paragraph}`)}</Markdown>
                   </Text>
                 );

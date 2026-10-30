@@ -1,4 +1,5 @@
 {
+  "full_name": "Internationalization",
   "article": {
     "intro": "Every sentence on this site is written once, in English. That includes the page text, the error messages the API sends back and the emails it writes. You read it in your language, and nobody translates any of it by hand.",
     "why": {
@@ -43,7 +44,7 @@
       "prompt": "The model gets the strings as JSON, a few thousand characters at a time, along with the namespace and the keys. The keys carry a lot of meaning: `action_send` is a button and `error_user_not_found` is an error message. The prompt asks for a plain tone, about as long as the English.",
       "tokens": "Some parts of a string must come back exactly as they went out: placeholders like `{{count}}`, references to other strings like `$t(links.github)`, inline code, link targets and Markdown. The job checks every answer, retries a chunk once, and leaves out any string that still doesn't match.",
       "plurals": "Plural forms differ between languages. English has two, Japanese has one and Arabic has six. The job asks for each language's own forms, using the plural categories `Intl.PluralRules` reports for it, and the API picks between them the same way.",
-      "notes": "A language's name doesn't always say how it should be written. Traditional Chinese on this site is Hong Kong Cantonese, so the prompt for `zh-Hant` says so.",
+      "notes": "A language's name doesn't always say how it should be written. Traditional Chinese on this site is the written Chinese used in Hong Kong, not spoken Cantonese, so the prompt for `zh-Hant` says so.",
       "providers": "Requests go to Gemini first, then OpenAI, then Groq, through the same failover the image agent uses. When every provider is out of quota, the run stops where it is and the next run carries on from there, so stopping on quota doesn't count as a failure."
     },
     "ready": {

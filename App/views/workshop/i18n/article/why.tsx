@@ -21,9 +21,13 @@ const Why: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>{t('article.why.rule')}</Text>
-      <Text is='p'>{t('article.why.intro')}</Text>
-      <List gap='narrower'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.why.rule')}
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.why.intro')}
+      </Text>
+      <List className='kicl-max-inline-size-columns-8' gap='narrower'>
         {NEEDS.map((need) => {
           return (
             <ListItem key={need}>

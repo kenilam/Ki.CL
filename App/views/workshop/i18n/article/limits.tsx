@@ -20,7 +20,7 @@ const Limits: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <List gap='narrower'>
+      <List className='kicl-max-inline-size-columns-8' gap='narrower'>
         {LIMITS.map((limit) => {
           return (
             <ListItem key={limit}>

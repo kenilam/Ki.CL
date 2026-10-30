@@ -18,7 +18,11 @@ const Answering: React.FunctionComponent = () => {
       </Heading>
       {PARAGRAPHS.map((paragraph) => {
         return (
-          <Text is='p' key={paragraph}>
+          <Text
+            className='kicl-max-inline-size-columns-8'
+            is='p'
+            key={paragraph}
+          >
             <Markdown>{t(`article.answering.${paragraph}`)}</Markdown>
           </Text>
         );

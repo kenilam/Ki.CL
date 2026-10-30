@@ -15,7 +15,7 @@ const Contents = React.lazy(async () => {
   return { default: Contents };
 });
 
-const Internationalisation = (
+const I18n = (
   <Route
     path={PATH}
     element={
@@ -26,4 +26,4 @@ const Internationalisation = (
   />
 );
 
-export { PATH, Internationalisation };
+export { PATH, I18n };

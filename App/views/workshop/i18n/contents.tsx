@@ -39,9 +39,12 @@ const Contents: React.FunctionComponent = () => {
       >
         <Layout gap='normal'>
           <header>
-            <Heading className='kicl-font-size-huge' id={id}>
-              {common('internationalisation')}
-            </Heading>
+            <hgroup>
+              <Heading className='kicl-font-size-huge' id={id}>
+                {common('internationalisation')}
+              </Heading>
+              <Text lookLike='h2'>{t('full_name')}</Text>
+            </hgroup>
             <Text>
               <HyperLink
                 before={<Ri.RiGithubLine aria-hidden />}

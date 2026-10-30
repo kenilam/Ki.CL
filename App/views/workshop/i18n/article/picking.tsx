@@ -20,13 +20,19 @@ const Picking: React.FunctionComponent = () => {
       </Heading>
       {PARAGRAPHS.map((paragraph) => {
         return (
-          <Text is='p' key={paragraph}>
+          <Text
+            className='kicl-max-inline-size-columns-8'
+            is='p'
+            key={paragraph}
+          >
             <Markdown>{t(`article.picking.${paragraph}`)}</Markdown>
           </Text>
         );
       })}
-      <Text is='p'>{t('article.picking.examples')}</Text>
-      <List gap='narrower'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.picking.examples')}
+      </Text>
+      <List className='kicl-max-inline-size-columns-8' gap='narrower'>
         {EXAMPLES.map((context) => {
           return (
             <ListItem key={context}>

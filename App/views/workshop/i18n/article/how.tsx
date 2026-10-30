@@ -31,15 +31,19 @@ const How: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.how.browser')}</Markdown>
       </Text>
-      <Text is='p'>{t('article.how.parts')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.how.parts')}
+      </Text>
       <Diagram spec={spec} />
-      <Text is='p'>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         <Markdown>{t('article.how.flow')}</Markdown>
       </Text>
-      <Text is='p'>{t('article.how.source')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {t('article.how.source')}
+      </Text>
       <Picking />
       <Answering />
       <Translating />
