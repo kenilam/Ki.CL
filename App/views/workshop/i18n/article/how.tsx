@@ -4,16 +4,20 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Details, Diagram, Heading, Markdown, Text } from 'design/components';
-
-// Partials
-import { Answering } from './answering';
-import { Picking } from './picking';
-import { Ready } from './ready';
-import { Translating } from './translating';
+import {
+  Details,
+  Diagram,
+  Heading,
+  List,
+  ListItem,
+  Markdown,
+  Text,
+} from 'design/components';
 
 // Diagrams
 import { overview } from './diagrams/overview';
+
+const PARTS = ['part_files', 'part_mongodb', 'part_job'] as const;
 
 const How: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
@@ -35,19 +39,34 @@ const How: React.FunctionComponent = () => {
         <Markdown>{t('article.how.browser')}</Markdown>
       </Text>
       <Text className='kicl-max-inline-size-columns-8' is='p'>
+        <Markdown>{t('article.how.select')}</Markdown>
+      </Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
         {t('article.how.parts')}
       </Text>
+      <List
+        className='kicl-max-inline-size-columns-8'
+        gap='narrower'
+        is='ol'
+        listStyleType='decimal'
+      >
+        {PARTS.map((part) => {
+          return (
+            <ListItem key={part}>
+              <Text is='span'>
+                <Markdown>{t(`article.how.${part}`)}</Markdown>
+              </Text>
+            </ListItem>
+          );
+        })}
+      </List>
       <Diagram spec={spec} />
       <Text className='kicl-max-inline-size-columns-8' is='p'>
-        <Markdown>{t('article.how.flow')}</Markdown>
+        {t('article.how.startup')}
       </Text>
       <Text className='kicl-max-inline-size-columns-8' is='p'>
         {t('article.how.source')}
       </Text>
-      <Picking />
-      <Answering />
-      <Translating />
-      <Ready />
     </Details>
   );
 };

@@ -4,18 +4,22 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Heading, Markdown, Text } from 'design/components';
+import { Details, Heading, Markdown, Text } from 'design/components';
 
 const PARAGRAPHS = ['once', 'backend', 'query', 'header_only'] as const;
 
-const Answering: React.FunctionComponent = () => {
+const Serving: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
 
   return (
-    <>
-      <Heading is='h3' lookLike='h2'>
-        {t('article.answering.title')}
-      </Heading>
+    <Details
+      gap='narrow'
+      summary={
+        <Heading dense is='h2' lookLike='h1'>
+          {t('article.serving.title')}
+        </Heading>
+      }
+    >
       {PARAGRAPHS.map((paragraph) => {
         return (
           <Text
@@ -23,12 +27,12 @@ const Answering: React.FunctionComponent = () => {
             is='p'
             key={paragraph}
           >
-            <Markdown>{t(`article.answering.${paragraph}`)}</Markdown>
+            <Markdown>{t(`article.serving.${paragraph}`)}</Markdown>
           </Text>
         );
       })}
-    </>
+    </Details>
   );
 };
 
-export { Answering };
+export { Serving };

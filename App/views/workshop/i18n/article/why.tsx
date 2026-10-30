@@ -4,7 +4,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Details, Heading, List, ListItem, Text } from 'design/components';
+import {
+  Details,
+  Heading,
+  List,
+  ListItem,
+  Markdown,
+  Text,
+} from 'design/components';
 
 const NEEDS = ['source', 'backend', 'platform', 'complete', 'no_code'] as const;
 
@@ -27,11 +34,17 @@ const Why: React.FunctionComponent = () => {
       <Text className='kicl-max-inline-size-columns-8' is='p'>
         {t('article.why.intro')}
       </Text>
-      <List className='kicl-max-inline-size-columns-8' gap='narrower'>
+      <List
+        className='kicl-max-inline-size-columns-8'
+        gap='narrower'
+        listStyleType='disc'
+      >
         {NEEDS.map((need) => {
           return (
             <ListItem key={need}>
-              <Text is='span'>{t(`article.why.${need}`)}</Text>
+              <Text is='span'>
+                <Markdown>{t(`article.why.${need}`)}</Markdown>
+              </Text>
             </ListItem>
           );
         })}
