@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
@@ -6,12 +6,16 @@ import { useTranslation } from 'react-i18next';
 // Components
 import {
   Details,
+  Diagram,
   Heading,
   List,
   ListItem,
   Markdown,
   Text,
 } from 'design/components';
+
+// Diagrams
+import { limits } from './diagrams/limits';
 
 const TOKENS = [
   'token_placeholders',
@@ -20,10 +24,14 @@ const TOKENS = [
   'token_markdown',
 ] as const;
 
-const PARAGRAPHS = ['checks', 'plurals', 'notes', 'providers'] as const;
+const PARAGRAPHS = ['checks', 'size', 'plurals', 'notes'] as const;
 
 const Translating: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
+
+  const spec = useMemo(() => {
+    return limits(t);
+  }, [t]);
 
   return (
     <Details
@@ -60,6 +68,10 @@ const Translating: React.FunctionComponent = () => {
           </Text>
         );
       })}
+      <Text is='p'>
+        <Markdown>{t('article.translating.providers')}</Markdown>
+      </Text>
+      <Diagram spec={spec} />
     </Details>
   );
 };

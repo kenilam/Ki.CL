@@ -16,6 +16,7 @@ import { How } from './article/how';
 import { Implementation } from './article/implementation';
 import { Limits } from './article/limits';
 import { Negotiation } from './article/negotiation';
+import { Rtl } from './article/rtl';
 import { Serving } from './article/serving';
 import { Switcher } from './article/switcher';
 import { Translating } from './article/translating';
@@ -75,6 +76,7 @@ const Contents: React.FunctionComponent = () => {
         <Serving />
         <Translating />
         <Availability />
+        <Rtl />
         <Implementation />
         <Wrong />
         <Limits />
