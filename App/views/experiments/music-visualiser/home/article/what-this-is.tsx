@@ -13,6 +13,7 @@ const WhatThisIs: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       open
       summary={

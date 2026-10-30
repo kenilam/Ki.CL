@@ -1,6 +1,6 @@
 # Daylight
 
-`/experiments/daylight/:place`. The Earth as an ink drawing in two colours, lit by
+`/experiments/daylight/:place`. The Earth as an ink drawing in two colors, lit by
 where the sun is right now. Paper is day and black is night. The rays round
 the globe are red-orange toward the sun and blue away from it. A sun stands
 on the side the real one is on and a moon across from it, and both go round
@@ -39,12 +39,12 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   dark theme, and paper with ink marks in the light one. The globe is the
   same in both, paper by day and black by night. The stars and the hatching
   are kept faint so the words read over them.
-- Only the rays, the sun and the moon are coloured, so the eye goes to which
+- Only the rays, the sun and the moon are colored, so the eye goes to which
   side the sun is on.
-- The sun and the moon are larger and more coloured the nearer they are to
-  the viewer. With the sun behind the globe it is small and nearly grey, and
-  the moon is large and blue. Only the colour fades, not the brightness, and only
-  once one is behind the globe: side by side, both are in full colour.
+- The sun and the moon are larger and more colored the nearer they are to
+  the viewer. With the sun behind the globe it is small and nearly gray, and
+  the moon is large and blue. Only the color fades, not the brightness, and only
+  once one is behind the globe: side by side, both are in full color.
 - The rays make room for the sun and the moon. A ray aimed at one stops
   short of it, and the rays either side run on past, so they close in round
   it. An earlier version cut a black disc out of the rays behind each.
@@ -58,7 +58,7 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   phone the drawing is a little wider than the page and sits below the
   middle, under the words. On the experiments home the words are at the
   foot of the panel, so there it sits above the middle.
-- Raw WebGL with one shader, like the music visualiser, and no three.js.
+- Raw WebGL with one shader, like the music visualizer, and no three.js.
   The renderer is made once per canvas and refitted on a resize before the
   browser paints. Remaking it on each resize reloaded the land and
   recompiled the shader while the last picture stretched to the new box.

@@ -3,7 +3,7 @@ import * as Ri from 'react-icons/ri';
 
 import { PATH as WORKSHOP_PATH } from '@/views/workshop/constants';
 import { PATH as DESIGN_SYSTEM } from '@/views/workshop/design-system/constants';
-import { PATH as INTERNATIONALISATION } from '@/views/workshop/internationalisation/constants';
+import { PATH as I18N } from '@/views/workshop/i18n/constants';
 
 /** Root of every class in this view. */
 const CLASS_NAME = 'kicl--views--workshop__home';
@@ -29,7 +29,7 @@ const TOPICS: readonly Topic[] = [
   {
     context: 'internationalisation',
     icons: [Ri.RiTranslate2, Ri.RiGlobalLine, Ri.RiSpeakLine],
-    to: `/${WORKSHOP_PATH}/${INTERNATIONALISATION}`,
+    to: `/${WORKSHOP_PATH}/${I18N}`,
   },
 ];
 

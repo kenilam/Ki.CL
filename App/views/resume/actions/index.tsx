@@ -7,7 +7,10 @@ import { useTranslation } from 'react-i18next';
 import * as Ri from 'react-icons/ri';
 
 // Components
-import { Button, HyperLink, List, ListItem } from 'design/components';
+import { Button, HyperLink, List, ListItem, Text } from 'design/components';
+
+// Hooks
+import { useResponsive } from 'design/hooks';
 
 // Content
 import { MASTER, fingerprint } from '@/views/resume/content';
@@ -35,6 +38,17 @@ const Actions: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
 
   const version = useVersion();
+  const { isMobile } = useResponsive();
+
+  const label = (text: string) => {
+    return isMobile ? (
+      <Text className='kicl-hidden' is='span'>
+        {text}
+      </Text>
+    ) : (
+      text
+    );
+  };
 
   const current =
     version.slug === MASTER.slug &&
@@ -54,14 +68,15 @@ const Actions: React.FunctionComponent = () => {
           before={<Ri.RiMessageLine aria-hidden />}
           command='show-modal'
           commandfor={CONTACT_ID}
+          data-track='Resume message'
           level='confirm'
           size='small'
           variant='ghost'
         >
-          {t('action', { context: 'message' })}
+          {label(t('action', { context: 'message' }))}
         </Button>
       </ListItem>
-      {current && (
+      {current ? (
         <ListItem>
           <HyperLink
             before={<Ri.RiDownload2Line aria-hidden />}
@@ -74,10 +89,10 @@ const Actions: React.FunctionComponent = () => {
             to={FILE}
             variant='secondary'
           >
-            {t('action', { context: 'file' })}
+            {label(t('action', { context: 'file' }))}
           </HyperLink>
         </ListItem>
-      )}
+      ) : null}
       <ListItem>
         <Button
           before={<Ri.RiPrinterLine aria-hidden />}
@@ -87,7 +102,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          {common('action', { context: 'print' })}
+          {label(common('action', { context: 'print' }))}
         </Button>
       </ListItem>
     </List>

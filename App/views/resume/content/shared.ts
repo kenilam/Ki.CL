@@ -9,18 +9,6 @@ import type { Key, Organisation, Role, SectionId } from './types';
  * dates and numbers follow LinkedIn.
  */
 
-/*
- * Under the name, in this order. Each link is written once, under
- * `links`, and the lines that carry one refer to it. They are
- * absolute, the site's own pages included: a PDF printed from a local run
- * would otherwise carry links to localhost.
- */
-const PROFILES = [
-  'links.linkedin',
-  'links.github',
-  'links.experiments',
-] as const satisfies readonly Key[];
-
 const ORDER: readonly SectionId[] = [
   'summary',
   'experience',
@@ -63,4 +51,4 @@ const EDUCATION: readonly Key[] = [
   'education.foundation',
 ];
 
-export { EARLIER, EDUCATION, ORDER, PROFILES, role };
+export { EARLIER, EDUCATION, ORDER, role };

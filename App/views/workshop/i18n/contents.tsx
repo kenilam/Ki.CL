@@ -11,9 +11,14 @@ import * as Ri from 'react-icons/ri';
 import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Partials
+import { Availability } from './article/availability';
 import { How } from './article/how';
 import { Implementation } from './article/implementation';
 import { Limits } from './article/limits';
+import { Negotiation } from './article/negotiation';
+import { Serving } from './article/serving';
+import { Switcher } from './article/switcher';
+import { Translating } from './article/translating';
 import { Why } from './article/why';
 import { Wrong } from './article/wrong';
 
@@ -39,9 +44,12 @@ const Contents: React.FunctionComponent = () => {
       >
         <Layout gap='normal'>
           <header>
-            <Heading className='kicl-font-size-huge' id={id}>
-              {common('internationalisation')}
-            </Heading>
+            <hgroup>
+              <Heading className='kicl-font-size-huge' id={id}>
+                {common('internationalisation')}
+              </Heading>
+              <Text lookLike='h2'>{t('full_name')}</Text>
+            </hgroup>
             <Text>
               <HyperLink
                 before={<Ri.RiGithubLine aria-hidden />}
@@ -60,8 +68,13 @@ const Contents: React.FunctionComponent = () => {
             </Text>
           </header>
         </Layout>
+        <Switcher />
         <Why />
         <How />
+        <Negotiation />
+        <Serving />
+        <Translating />
+        <Availability />
         <Implementation />
         <Wrong />
         <Limits />

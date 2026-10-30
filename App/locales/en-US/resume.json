@@ -29,8 +29,8 @@
         "mcp": "Built an MCP server that reads the component library and the gateway schemas, so non-technical owners can build a proof of concept and deploy it to an isolated sandbox.",
         "mcp_manager": "Built an MCP server that lets non-technical owners build a proof of concept from the component library and gateway schemas, and deploy it to an isolated sandbox.",
         "messaging": "Set up RabbitMQ for translation, scheduling, Workday and bulk-email jobs, and built the email service.",
-        "modernised": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
-        "modernised_across_teams": "Modernised the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
+        "modernised": "Modernized the internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
+        "modernised_across_teams": "Modernized the internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams."
       },
       "title": "Lead Software Development Engineer"
     },
@@ -72,7 +72,7 @@
         "build": "Halved local build times by moving the build from Grunt to Webpack, and automated build-to-deployment on Jenkins.",
         "build_master": "Moved the build from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment on Jenkins.",
         "built_maintained_master": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on display devices in stores.",
-        "built_maintained_react_native": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and at authorised resellers; and Channel Digital for authorised resellers.",
+        "built_maintained_react_native": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and at authorized resellers; and Channel Digital for authorized resellers.",
         "framework_and_locales": "Shipped a shared React framework across three retail digital-signage products, and rolled out features and content to 30+ locales at every major product launch.",
         "helped_onboard_manager": "Helped onboard vendors and mentored them through the handover of documentation, incident reports and the DevOps taxonomy.",
         "locales": "Rolled out features and content to 30+ locales at every major product launch.",
@@ -91,11 +91,11 @@
         "federation_react_native": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure for modular development.",
         "led": "Led UI/UX engineering for Tesla Energy’s Solar platform, managing and mentoring its 8-person core team.",
         "led_manager": "Managed and mentored the 8-person cross-functional core team that owned the Solar platform’s apps, sprints, releases, infrastructure, incidents and on-call, while leading its UI/UX engineering at Tesla Energy.",
-        "moved_centralised_architecture": "Moved a centralised GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy.",
+        "moved_centralised_architecture": "Moved a centralized GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy.",
         "outages": "Cut system outages from 20+ a week to near zero. Traced the main cause, a platform-wide failure, to generated code that opened a database connection pool on every request.",
         "outages_manager": "Cut system outages from 20+ a week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
         "outages_react_native": "Cut system outages from 20+ a week to near zero.",
-        "standards": "Set front-end architecture standards and drove TypeScript adoption across the organisation.",
+        "standards": "Set front-end architecture standards and drove TypeScript adoption across the organization.",
         "won_adoption_manager": "Won adoption of a GraphQL federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
       },
       "title": "Staff Software Engineer"
@@ -109,10 +109,15 @@
   "languages": "English, Cantonese, Mandarin and Japanese, at native or bilingual level.",
   "links": {
     "adplist": "[adplist.org/mentors/keni-lam]($t(common:url_adplist))",
-    "experiments": "[ki-cl.com/experiments]($t(common:url_experiments))",
-    "github": "[github.com/kenilam]($t(common:url_github))",
-    "linkedin": "[linkedin.com/in/kenilam]($t(common:url_linkedin))",
+    "experiments": "[$t(profile.experiments)]($t(common:url_experiments))",
+    "github": "[$t(profile.github)]($t(common:url_github))",
+    "linkedin": "[$t(profile.linkedin)]($t(common:url_linkedin))",
     "moonshot": "[Ki.CL-moonshot-exercise]($t(common:url_moonshot))"
+  },
+  "profile": {
+    "experiments": "ki-cl.com/experiments",
+    "github": "github.com/kenilam",
+    "linkedin": "linkedin.com/in/kenilam"
   },
   "location": "San Jose, California",
   "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, and 52 reviews. Ranked in the top 10% of mentors in my field. $t(links.adplist)",
@@ -159,9 +164,9 @@
     "back_frontend_ai": "**$t(skills.labels.back):** Node.js, GraphQL (Apollo Federation, subscriptions), gRPC, RabbitMQ, MongoDB, SQL, WebSockets, Python",
     "back_master": "**$t(skills.labels.back):** Node.js, GraphQL (Apollo Federation), gRPC, RabbitMQ, MongoDB, SQL, WebSockets, Python",
     "back_react_native": "**$t(skills.labels.back):** Node.js, GraphQL (Apollo Federation), WebSockets, MongoDB, SQL, gRPC, RabbitMQ",
-    "design": "**$t(skills.labels.design):** design systems, component libraries, prototyping, Figma, accessibility, internationalisation",
-    "design_architecture": "**$t(skills.labels.design):** design systems, component libraries, accessibility, internationalisation",
-    "design_master": "**$t(skills.labels.design):** design systems, component libraries, prototyping, Figma, Sketch, Framer, accessibility, internationalisation",
+    "design": "**$t(skills.labels.design):** design systems, component libraries, prototyping, Figma, accessibility, internationalization",
+    "design_architecture": "**$t(skills.labels.design):** design systems, component libraries, accessibility, internationalization",
+    "design_master": "**$t(skills.labels.design):** design systems, component libraries, prototyping, Figma, Sketch, Framer, accessibility, internationalization",
     "engineering_manager": "**$t(skills.labels.engineering):** TypeScript, React, Node.js, GraphQL (Apollo Federation), Module Federation, design systems, GCP, CI/CD",
     "front_architecture": "**$t(skills.labels.front):** TypeScript, React, Next.js, Vue, Vite, Webpack, Three.js, WebGL, React Native (Expo)",
     "front_frontend_ai": "**$t(skills.labels.front):** TypeScript, React, Next.js, Vue, Vite, Webpack, Module Federation, Three.js, WebGL, Sass, Tailwind, React Native (Expo)",

@@ -3,16 +3,22 @@ import React from 'react';
 // Libraries
 import { useTranslation } from 'react-i18next';
 
-// Components
-import { HyperLink, Markdown, Text } from 'design/components';
+// Icons
+import * as Ri from 'react-icons/ri';
 
-// Content
-import { PROFILES } from '@/views/resume/content';
+// Components
+import { HyperLink, Text } from 'design/components';
 
 // Constants
 import { PHONE_KEY } from '@/views/resume/constants';
 
 const SEPARATOR = ' · ';
+
+const PROFILES = [
+  { Icon: Ri.RiLinkedinBoxLine, context: 'linkedin' },
+  { Icon: Ri.RiGithubLine, context: 'github' },
+  { Icon: Ri.RiGlobalLine, context: 'experiments' },
+] as const;
 
 /** The phone number, on a machine that has been given one. See `PHONE_KEY`. */
 const readPhone = () => {
@@ -47,10 +53,16 @@ const Contact: React.FunctionComponent = () => {
         {phone && `${SEPARATOR}${phone}`}
       </Text>
       <Text dense>
-        {PROFILES.map((key, index) => (
-          <React.Fragment key={key}>
-            {index > 0 && SEPARATOR}
-            <Markdown>{t(key)}</Markdown>
+        {PROFILES.map(({ Icon, context }, index) => (
+          <React.Fragment key={context}>
+            {index > 0 ? SEPARATOR : null}
+            <HyperLink
+              before={<Icon aria-hidden />}
+              className='kicl-text-nowrap'
+              to={common('url', { context })}
+            >
+              {t(`profile.${context}`)}
+            </HyperLink>
           </React.Fragment>
         ))}
       </Text>

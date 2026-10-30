@@ -13,6 +13,7 @@ const Limits: React.FunctionComponent = () => {
 
   return (
     <Details
+      className='kicl-max-inline-size-columns-8'
       gap='narrow'
       summary={
         <Heading dense is='h2' lookLike='h1'>
@@ -20,7 +21,7 @@ const Limits: React.FunctionComponent = () => {
         </Heading>
       }
     >
-      <List gap='narrower'>
+      <List gap='narrower' listStyleType='disc'>
         {LIMITS.map((limit) => {
           return (
             <ListItem key={limit}>

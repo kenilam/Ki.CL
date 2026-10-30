@@ -1,82 +1,106 @@
 {
+  "full_name": "Internationalization",
   "article": {
-    "intro": "Every sentence on this site is written once, in English. That includes the page text, the error messages the API sends back and the emails it writes. You read it in your language, and nobody translates any of it by hand.",
+    "intro": "All the original text lives in English files alongside the code that uses it. Translations are generated automatically and stored separately. The same system handles everything from page content and validation errors to API responses and emails. There's no manual translation workflow and no language-specific logic in individual components.",
+    "switcher_caption": "The language switcher, with each language's current status. Picking a language here loads the greeting in that language without changing the rest of the page.",
+    "switcher_preview": "Hello, world!",
     "why": {
       "title": "Why I built it",
-      "rule": "I wanted to see how far one rule could go: anything a person reads should be translatable without writing code for it. A new page, a new error message or a new language should only mean adding words.",
-      "intro": "Before writing any code, I listed what the system should do.",
-      "source": "Every sentence should live in an English file next to the code that uses it, and components should only refer to it by key.",
-      "backend": "Anything the backend says should go through the same path as the page text: error messages, validation messages and emails, not only what the page renders.",
-      "platform": "The language should come from the platform. The browser already sends the person's languages, so I didn't want a cookie, a query parameter or a custom header carrying the same thing again.",
-      "complete": "A page should be in one language. If a language isn't finished, the site should move on to the next one the person reads rather than mix two.",
-      "no_code": "Adding a language or a sentence should be a change to data, not to components."
+      "rule": "I wanted to make internationalization a property of the system rather than something each page or component had to implement.",
+      "intro": "That meant setting a few rules before writing the code:",
+      "source": "English is the source of truth. Every string lives in an English locale file and is referenced by key.",
+      "backend": "The same translation system handles frontend content and backend messages, including validation errors, API responses and emails.",
+      "platform": "Language negotiation uses the browser's `Accept-Language` header. There's no need for a separate cookie, query parameter or custom header to maintain the same information.",
+      "complete": "A page always uses one language. If a translation isn't complete, the system falls back to the next language in the reader's preferences rather than mixing languages.",
+      "no_code": "Adding a language or changing a string shouldn't require changes to application components."
     },
     "how": {
       "title": "How it works",
-      "browser": "Your browser already says which languages you read. It sends an `Accept-Language` header with every request, listing them in order of preference. The site answers in the first one it has fully translated, and says which one it used in a `Content-Language` header.",
-      "parts": "There are three parts: the English files, a collection of translations in MongoDB, and a job that fills in the other languages.",
-      "flow": "`make translations.seed` copies the English files into MongoDB, one row for each string. The translate job reads the English rows, sends the strings a language is missing to a model, and writes the answers back as rows of their own. The API reads every row into memory and answers from there.",
-      "source": "Each translated row keeps a copy of the English it came from. When the English changes, the two no longer match, so the next run translates that string again. Everything else is left alone."
+      "browser": "The browser already tells the server which languages the reader prefers. It sends an `Accept-Language` header with each request, ordered by preference and optionally weighted with quality values.",
+      "select": "The API uses that information to select the first language with a complete translation. It returns the selected language in the `Content-Language` response header.",
+      "parts": "The implementation has three main parts:",
+      "part_files": "**English locale files** – the source strings, maintained alongside the application code.",
+      "part_mongodb": "**MongoDB** – stores the English source and generated translations, one record per string and language.",
+      "part_job": "**Translation job** – finds missing or outdated translations and generates them using Gemini, OpenAI or Groq.",
+      "startup": "At startup, the API loads the translations from MongoDB into memory. The English locale files are seeded into the database, and a scheduled job handles the remaining languages.",
+      "source": "When the English source changes, its stored copy no longer matches the translated record. The next translation run picks up that string and regenerates it. Unchanged translations are left alone."
     },
-    "picking": {
-      "title": "Picking a language",
-      "header": "An `Accept-Language` header looks like `fr-CA, fr;q=0.9, en;q=0.8`. Each entry is a language, and its `q` value says how much the person wants it, from 1 down to 0.",
-      "list": "The API turns the header into a list. It sorts the entries by `q`, drops any with `q=0`, and matches each one to a language the site has. `en-US` always goes at the end, so every string has somewhere to come from.",
-      "matching": "Matching uses `Intl.Locale`, which knows the likely script and region of a language from the same data browsers use. `zh-TW` becomes `zh-Hant-TW` and lines up with Traditional Chinese, and `es-AR` lines up with Spanish. An exact region wins, which is how `es-MX` gets Mexican Spanish rather than Spanish.",
-      "complete": "Only complete languages take part. While Mexican Spanish is still being translated, an `es-MX` request gets Spanish instead, then the next language in the header, then `en-US`.",
+    "negotiation": {
+      "title": "Language negotiation",
+      "header_intro": "An `Accept-Language` header might look like this:",
+      "header": "`fr-CA, fr;q=0.9, en;q=0.8`",
+      "entries": "Each entry represents a language preference. The optional `q` value indicates its priority, from 1 (highest) to 0 (unacceptable).",
+      "list": "The API parses the header, sorts the preferences by quality value, removes entries with `q=0`, and matches the remaining languages against those supported by the site. `en-US` is always added as the final fallback.",
+      "matching": "Language matching uses `Intl.Locale` to account for script and region differences. For example:",
+      "match_script": "`zh-TW` resolves to `zh-Hant-TW`, matching Traditional Chinese.",
+      "match_region": "`es-AR` resolves to Spanish.",
+      "match_exact": "`es-MX` prefers Mexican Spanish when that translation is complete.",
+      "complete": "Only fully translated languages are eligible. If Mexican Spanish is still being generated, a request for `es-MX` falls back to the next available language in the preference list.",
       "examples": "A few examples:",
-      "example_untranslated": "`ja`, while Japanese isn't translated yet, gets `en-US`.",
-      "example_incomplete": "`es, fr;q=0.9`, while Spanish is incomplete, gets `fr`.",
-      "example_script": "`zh-TW` gets `zh-Hant`.",
-      "example_excluded": "`de;q=0.9, fr;q=0`, while German is incomplete, gets `en-US`, because `q=0` rules French out."
+      "column_preference": "Browser preference",
+      "column_result": "Result",
+      "preference_untranslated": "`ja`, with Japanese incomplete",
+      "result_untranslated": "English",
+      "preference_incomplete": "`es, fr;q=0.9`, with Spanish incomplete",
+      "result_incomplete": "French",
+      "preference_script": "`zh-TW`",
+      "result_script": "Traditional Chinese",
+      "preference_excluded": "`de;q=0.9, fr;q=0`, with German incomplete",
+      "result_excluded": "English",
+      "note": "The last example is worth noting: French isn't considered because `q=0` explicitly excludes it."
     },
-    "answering": {
-      "title": "Answering in that language",
-      "once": "The list is worked out once for each request, in a middleware, and kept in an `AsyncLocalStorage` for the rest of the request. Anything that runs during the request can read it without being handed it.",
-      "backend": "That's what lets the backend translate anything. A resolver that throws `translate('api', 'error_user_not_found')` doesn't need to know which language the person reads. Validation messages, the image agent's fixed lines and the emails work the same way. Work a request starts and leaves running, like the image agent drawing a picture, keeps the request's languages too.",
-      "query": "The `Translations` query returns every string of the namespaces a page asks for, in the first language on the list, and names that language in the `Content-Language` response header. The page starts in whatever language the header names, so the switcher always shows the language you're reading.",
-      "header_only": "The language never travels in the body of a request. The API client sets `Accept-Language` itself, with the page's language first and the browser's own list after it. Picking a language in the switcher changes that header and nothing else."
+    "serving": {
+      "title": "Serving the selected language",
+      "once": "The API works out the language list once per request, in a middleware, and stores it in an `AsyncLocalStorage` for the rest of that request. Any code that runs while the request is handled can read it without the list being passed through every function call.",
+      "backend": "This is what lets the backend translate its own messages. A resolver can throw `translate('api', 'error_user_not_found')` without knowing which language the reader prefers. Validation errors, the Image Agent's fixed replies and emails work the same way. Work that carries on after the request returns, such as the Image Agent drawing a picture, keeps the language list of the request that started it.",
+      "query": "The `Translations` query returns every string for the namespaces a page asks for, in the first eligible language, and names that language in the `Content-Language` response header. The page starts in the language the API selected, so the language switcher always shows the language being displayed.",
+      "header_only": "The language is never sent in a request body. The API client sets the `Accept-Language` header itself, with the page's current language first and the browser's preferences after it. Choosing a language in the switcher changes that header and nothing else."
     },
     "translating": {
-      "title": "Translating",
-      "job": "The translate job is a script, `make translations.translate`, and a GitHub workflow runs it every day. It works through each language and namespace, and only sends a string when it's missing or its English has changed.",
-      "prompt": "The model gets the strings as JSON, a few thousand characters at a time, along with the namespace and the keys. The keys carry a lot of meaning: `action_send` is a button and `error_user_not_found` is an error message. The prompt asks for a plain tone, about as long as the English.",
-      "tokens": "Some parts of a string must come back exactly as they went out: placeholders like `{{count}}`, references to other strings like `$t(links.github)`, inline code, link targets and Markdown. The job checks every answer, retries a chunk once, and leaves out any string that still doesn't match.",
-      "plurals": "Plural forms differ between languages. English has two, Japanese has one and Arabic has six. The job asks for each language's own forms, using the plural categories `Intl.PluralRules` reports for it, and the API picks between them the same way.",
-      "notes": "A language's name doesn't always say how it should be written. Traditional Chinese on this site is Hong Kong Cantonese, so the prompt for `zh-Hant` says so.",
-      "providers": "Requests go to Gemini first, then OpenAI, then Groq, through the same failover the image agent uses. When every provider is out of quota, the run stops where it is and the next run carries on from there, so stopping on quota doesn't count as a failure."
+      "title": "Translation",
+      "job": "Translations are generated by a script, `make translations.translate`, which a GitHub workflow runs every day. It works through each language and namespace and only sends strings that are missing or whose English source has changed.",
+      "prompt": "The model receives the strings as JSON, a few thousand characters at a time, along with the namespace and each string's key. The keys carry useful context: `action_send` is a button label and `error_user_not_found` is an error message. The prompt asks for a plain tone and a length close to the English.",
+      "tokens": "Some parts of a string have to come back exactly as they were sent:",
+      "token_placeholders": "placeholders, such as `{{count}}`",
+      "token_references": "references to other strings, such as `$t(links.github)`",
+      "token_code": "inline code and link targets",
+      "token_markdown": "Markdown formatting",
+      "checks": "The job checks every response. If a chunk doesn't match, it retries once, then leaves out any string that still fails. Those strings are tried again on the next run.",
+      "plurals": "Plural rules also differ between languages. English has two plural forms, Japanese has one and Arabic has six. The job asks for the forms each language needs, using the plural categories `Intl.PluralRules` reports for it, and the API uses the same rules to choose between them.",
+      "notes": "A language's name doesn't always say how it should be written. Traditional Chinese on this site follows the standard written Chinese used in Hong Kong rather than spoken Cantonese, so its record in `locales` carries a note that the prompt includes.",
+      "providers": "Requests go to Gemini first, then OpenAI, then Groq, using the same failover as the Image Agent. When every provider has run out of quota, the run stops and the next one continues where it left off. Running out of quota isn't treated as a failure."
     },
-    "ready": {
-      "title": "Ready or not",
-      "complete": "A language counts as ready only when it has every string. The check compares it with the English, ignoring plural endings, since Chinese has one form where English has two.",
-      "run": "While the job works on a language, it keeps a record of it in MongoDB and touches it before each namespace. A record that hasn't been touched for five minutes belongs to a run that stopped without cleaning up.",
-      "switcher": "The switcher subscribes to the status of every language. Ready ones can be picked. The rest are disabled with a warning icon, or show a spinner while they're being translated, and become available within a minute or so of their last string being written.",
-      "figure_caption": "The language switcher. Traditional Chinese is selected and being translated again, while German and Spanish can't be picked until they're complete."
+    "availability": {
+      "title": "Language availability",
+      "complete": "A language becomes available only when it has a translation for every string. The check compares it with the English source and ignores plural suffixes, because Chinese uses one plural form where English uses two.",
+      "run": "While the job is translating a language, it keeps a record of the run in MongoDB and updates it before each namespace. A record that hasn't been updated for five minutes is treated as a run that stopped without cleaning up.",
+      "switcher": "The language switcher subscribes to the status of every language. Complete languages can be selected. Incomplete ones are disabled and show a warning icon, or a spinner while they're being translated. A language becomes available within about a minute of its last string being written.",
+      "adding": "Adding a language is a data change. `make locales.add TAG=it-CH` adds a record to the `locales` collection, the next translation run fills in every string, and the language becomes available once it's complete. Its name in the switcher comes from `Intl.DisplayNames`, so nothing else has to be written."
     },
     "implementation": {
       "title": "See the implementation",
-      "code": "The API, the translations in MongoDB and the translate job are in [Ki.CL-back]($t(common:url_api)). The site's side, which loads each page's strings and follows `Content-Language`, is in [Ki.CL]($t(common:url_host))."
+      "code": "The API, the translations in MongoDB and the translation job live in [Ki.CL-back]($t(common:url_api)). The frontend side, which loads each page's strings and follows `Content-Language`, lives in [Ki.CL]($t(common:url_host))."
     },
     "wrong": {
-      "title": "What went wrong on the way",
+      "title": "What went wrong",
       "title_every_request": "Translating on every request",
-      "every_request": "My first idea was to translate each response on its way out. That would have put a model call between every visitor and every page, cost money on a query that runs before anyone has a session, and given the same button different wording from one load to the next. Translating once, when the English changes, avoids all three.",
+      "every_request": "My first approach was to translate each response as it was sent. That would have put a model call between every visitor and every page, added cost to a query that runs before a session exists, and given the same button different wording from one page load to the next. Translating once, when the English source changes, avoids all three problems.",
       "title_mixed": "Mixed pages",
-      "mixed": "At first a missing string fell back on its own, so a page in French could have an English sentence in the middle. With Arabic selected and nothing translated yet, the layout flipped right to left around English text. That's why a language now has to be complete before it's used at all.",
+      "mixed": "Originally, each missing string fell back to English on its own, so a French page could contain an English sentence. With Arabic selected and nothing translated yet, the layout switched to right-to-left around English text. That's why a language now has to be complete before it can be used.",
       "title_lost": "The language that went missing",
-      "lost": "Called directly, `translate()` answered in French. Over HTTP, the same request came back in English. The middleware set the language, but the resolvers never saw it.",
-      "lost_cause": "The resolvers were loaded with `require()`, which gave them a second copy of every module, including a second `AsyncLocalStorage` that nothing ever wrote to. Loading them with `import()` fixed it, and also fixed a translation cache the resolvers had been loading on their own instead of using the one filled at startup.",
+      "lost": "Calling `translate()` directly returned French, but the same request over HTTP came back in English. The middleware was setting the language, but the resolvers never saw it.",
+      "lost_cause": "The resolvers were loaded with `require()`, which gave them a second copy of every module, including a second `AsyncLocalStorage` that nothing wrote to. Loading them with `import()` fixed it. It also fixed a translation cache the resolvers had been loading separately instead of using the one filled at startup.",
       "title_plurals": "Chinese that never finished",
-      "plurals": "The first check for a complete language compared field names exactly. Chinese has no `_one` form, so it could never have every English field, however much of it was translated.",
+      "plurals": "The first completeness check compared string keys exactly. Chinese has no `_one` plural form, so it could never match every English key, no matter how much of it had been translated.",
       "title_quota": "Free quota",
-      "quota": "On free tiers, translating about 1,500 strings into twenty languages takes days rather than minutes. The job stops when the quota runs out and picks up the next day, which is why some languages show as not ready yet."
+      "quota": "On free tiers, translating about 1,500 strings into twenty languages takes days rather than minutes. The job stops when the quota runs out and continues the next day, which is why some languages still show as unavailable."
     },
     "limits": {
       "title": "Limits",
-      "review": "A model writes every translation, and nobody reviews them before they appear. A wrong one can be fixed by editing its row, and the fix stays until the English changes.",
-      "variants": "Each regional variant, like Canadian French, costs a whole translation of its own.",
-      "switching": "The page picks its language when it loads. If a language you prefer becomes ready while you're reading, the page switches to it the next time it loads.",
-      "html": "The title and description in the page's HTML, which search engines and link previews read, are always in English. The server fills them in without knowing who is visiting."
+      "review": "Every translation is generated by a model and published without human review. A wrong translation can be fixed by editing its record, and the fix stays until the English source changes.",
+      "variants": "Each regional variant, such as Canadian French, needs a complete translation of its own.",
+      "switching": "The page selects its language when it loads. If a preferred language becomes available while you're reading, the page switches to it on the next load.",
+      "html": "The page title and description in the HTML, which search engines and link previews read, are always in English. The server fills them in the same way for every visitor."
     }
   },
   "diagram": {
