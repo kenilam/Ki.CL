@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Details, Heading, Markdown, Text } from 'design/components';
+import { Details, Diagram, Heading, Markdown, Text } from 'design/components';
+
+// Diagrams
+import { direction } from './diagrams/direction';
 
 const STORIES = [
   { context: 'arrows', paragraphs: ['arrows', 'arrows_fix'] },
@@ -17,6 +20,10 @@ const STORIES = [
 
 const Rtl: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
+
+  const spec = useMemo(() => {
+    return direction(t);
+  }, [t]);
 
   return (
     <Details
@@ -33,6 +40,7 @@ const Rtl: React.FunctionComponent = () => {
         <Markdown>{t('article.rtl.dir')}</Markdown>
       </Text>
       <Text is='p'>{t('article.rtl.gaps')}</Text>
+      <Diagram spec={spec} />
       {STORIES.map(({ context, paragraphs }) => {
         return (
           <React.Fragment key={context}>
