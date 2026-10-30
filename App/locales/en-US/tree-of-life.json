@@ -2,13 +2,13 @@
   "animation": "animation",
   "article": {
     "drawing_organisms": {
-      "alt": "A hand-coloured 1854 natural-history plate by Perrot: animals arranged across a pale staged ground with fine engraved linework.",
+      "alt": "A hand-colored 1854 natural-history plate by Perrot: animals arranged across a pale staged ground with fine engraved linework.",
       "caption": "Perrot, 1854. Every generated plate aims for this engraved linework, muted wash and plain staged ground.",
-      "p1": "Many of those 2.3 million tips are bacteria and archaea known only from DNA. Nobody has photographed “uncultured Crater Lake bacterium CL500-11”, so the plates are generated in the style of a 19th-century hand-coloured lithograph like the one below.",
+      "p1": "Many of those 2.3 million tips are bacteria and archaea known only from DNA. Nobody has photographed “uncultured Crater Lake bacterium CL500-11”, so the plates are generated in the style of a 19th-century hand-colored lithograph like the one below.",
       "p2": "The pipeline is a fixed sequence of steps, with no agent deciding what to do next. It resolves the lineage, picks a living species to stand for the taxon, writes a prompt describing what that species looks like, generates an image and has a vision model score it. If the score fails, the prompt is tightened for one more try."
     },
     "fifteen_attempts": {
-      "alt": "The fourteenth version: a wide, pale map of the tree with labelled nodes spread across the frame.",
+      "alt": "The fourteenth version: a wide, pale map of the tree with labeled nodes spread across the frame.",
       "caption_map": "The fourteenth version, a map with the whole tree in view.",
       "html": "Versions nine to thirteen went the other way. They built the tree in HTML and SVG, one clade at a time, with drag and zoom instead of a fixed picture. Names became readable, but the sense of distance from the origin was gone and the whole thing felt flat.",
       "webgl": "It took fifteen versions to get here, each a fresh start rather than a revision of the last. The first eight used WebGL to draw every loaded branch at once, on a cream background borrowed from the graphic. Past a few hundred taxa, the drawing collapsed into a mat of dots, each the same few pixels wherever it sat.",
@@ -28,9 +28,9 @@
       "p3": "Everything is cached in MongoDB. Each node stores only its parent, and its children come from a reverse lookup. Lineages that share ancestors are often written at the same time, so two requests can race for the same node. That first happened when I emptied the database, and writes are idempotent upserts so the race does no harm."
     },
     "the_picture": {
-      "alt": "A screen grab of a tree of life graphic: coloured branches radiating from “$t(origin)” at the base, each tip ending in a painted organism.",
+      "alt": "A screen grab of a tree of life graphic: colored branches radiating from “$t(origin)” at the base, each tip ending in a painted organism.",
       "caption": "The graphic I was aiming for. Around 250 tips, every one illustrated by hand.",
-      "p1": "I wanted every branch of life on one sheet, with something recognisable at the end of each branch, like a horse, a nautilus or a fly agaric.",
+      "p1": "I wanted every branch of life on one sheet, with something recognizable at the end of each branch, like a horse, a nautilus or a fly agaric.",
       "p2": "The Open Tree of Life holds about 2.3 million tips. That’s too many to draw, illustrate or fetch, and almost every decision below comes from that number. So I stopped trying to draw the whole tree and started choosing what to show at any one point."
     },
     "tuning_the_reviewer": {
@@ -40,12 +40,12 @@
       "p4": "I also took the bans out of the prompts, because naming a thing to forbid it tends to put it in the picture. A list reading “no insects, no mites” produced microbes drawn as mites, and a fallback description ending in “not a macroscopic animal” had been doing the same to the microbes in the library."
     },
     "what_i_gave_up": {
-      "one_taxon": "The graphic shows all of its tips at once, illustrated, on a single sheet. The tree here shows one taxon at a time, with its lineage back to the origin and a sample of its neighbours.",
+      "one_taxon": "The graphic shows all of its tips at once, illustrated, on a single sheet. The tree here shows one taxon at a time, with its lineage back to the origin and a sample of its neighbors.",
       "p2": "Illustrations are made on demand, so most taxa have no plate until someone opens them and a provider has quota to spare. A taxon with many children shows a sample of them rather than all. The tree is assembled lazily from a cache in front of a public API, so the first visit to an unexplored clade is slow.",
       "p3": "A visitor can still [start at the origin of life]({{current}}) and walk to any living species to see how far it sits from there."
     },
     "where_it_started": {
-      "p1": "I started from [D3’s Tree of Life](https://observablehq.com/@d3/tree-of-life). It’s a radial dendrogram with curved links, tips labelled around the circumference and branch lengths that carry real distance. It shows the shape of a phylogeny and how far apart its members sit.",
+      "p1": "I started from [D3’s Tree of Life](https://observablehq.com/@d3/tree-of-life). It’s a radial dendrogram with curved links, tips labeled around the circumference and branch lengths that carry real distance. It shows the shape of a phylogeny and how far apart its members sit.",
       "p2": "It doesn’t show what any of them look like. Every tip is just a name. I wanted the shape and the creatures on the same page."
     }
   },

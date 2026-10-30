@@ -252,7 +252,7 @@ Scored against the plugin's quality bar, 0 to 5 each.
 | Dimension | Score | What would raise it |
 | --- | --- | --- |
 | Fundamentals | 4 | Little here tests them. The one consistency problem, a derived file, is handled by a fingerprint |
-| Building blocks | 4 | Measure the real cold load instead of estimating it from the build. Three of the four build findings were behaviours of blocks I had treated as known: grid, `will-change`, a media query hook |
+| Building blocks | 4 | Measure the real cold load instead of estimating it from the build. Three of the four build findings were behaviors of blocks I had treated as known: grid, `will-change`, a media query hook |
 | Requirements | 4 | Traffic is assumed. Read a month of `/collect` and replace the estimates |
 | Trade-offs | 5 | n/a |
 | Numbers | 4 | As for requirements |

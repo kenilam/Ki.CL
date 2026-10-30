@@ -1,4 +1,4 @@
-# Music Visualiser
+# Music Visualizer
 
 A radio for slow music, drawn as it plays. 166 public-domain lo-fi tracks,
 chosen at random one after another; the whole viewport is a generative
@@ -62,7 +62,7 @@ MusicVisualiser/
 - **useAudio.** Two effects follow the URL. `:track` makes an `<audio>`
   element for the file at `/assets/static/music/open-lofi/<id>.mp3`, so it
   starts loading on the gate. `/play` builds the graph on first use
-  (element, then a gain per track, the analyser, the master volume), lets
+  (element, then a gain per track, the analyzer, the master volume), lets
   the context run, and plays; leaving `/play` pauses. The controls it
   returns - `play`, `stop`, `skip`, `loading`, `playing`, `value` for the
   volume - only navigate or read state. The next track is drawn when this
@@ -78,13 +78,13 @@ MusicVisualiser/
 - **Open Lo-Fi.** 166 lo-fi tracks in ten categories, released to the
   public domain (CC0) by Bilal Tahir at <https://github.com/btahir/open-lofi>,
   generated with Suno. The files are streamed from the static bucket through
-  the same-origin `/assets/static/music/open-lofi/` route, so the analyser
+  the same-origin `/assets/static/music/open-lofi/` route, so the analyzer
   may read them. `upload.sh` puts the release in the bucket; `catalog.ts`
   is compiled in from the collection's `catalog.json`.
-- **Visualiser.** Knows nothing about the track but when it changes. It
+- **Visualizer.** Knows nothing about the track but when it changes. It
   makes its own randomness: the director draws each scene from any not
   shown lately, and each track gets a new camera seed and warmth.
-- **Features.** Per frame from the analyser, then smoothed three ways. Fast
+- **Features.** Per frame from the analyzer, then smoothed three ways. Fast
   drives motion, medium sets the onset threshold, slow describes the section.
 - **Director.** Cuts to a new scene when a track starts, when the slow
   features drift far enough from where the scene began (a new section), or
@@ -94,7 +94,7 @@ MusicVisualiser/
   four scenes shown are not drawn again.
 - **Scenes.** Fourteen, all in one shader: `pools` (drifting ellipses of ink, bass swells them),
   `clouds` (billowing masses on a slow wind, lit edges and shaded bellies),
-  `rings` (each onset starts a ring from the centre), `bars` (the spectrum
+  `rings` (each onset starts a ring from the center), `bars` (the spectrum
   as mirrored columns), `halo` (the spectrum around a circle), `wave` (lines
   summed from six bands, so they swell without jitter), `tunnel` (rings
   receding to a wandering point, walls lit by the spectrum), `kaleidoscope`
@@ -111,13 +111,13 @@ MusicVisualiser/
   edges) and `mandala` (rings of six mirrored petals drifting slowly
   outward from a small star, each ring a larger version of the one inside
   it, so the picture zooms in without end, each petal a thick outline
-  around a thin line and a stack of chevrons pointing at the centre; the
+  around a thin line and a stack of chevrons pointing at the center; the
   bass thickens the outlines and the spectrum thickens the chevrons at each
   radius). Every scene but pools and rings sits under a slow camera - a
   spin, a sway, a breathing zoom and a drift, each scene taking as much of
   each as it can bear - phased by a seed drawn per track, so no two tracks
   move alike. The spectrum reaches them as a 128-band texture, each band
-  eased and shown against its own recent peak. Colour is inks over paper in Oklab with a light ordered
+  eased and shown against its own recent peak. Color is inks over paper in Oklab with a light ordered
   dither, matching the home background. The palette comes from custom
   properties in `Visualiser/Styles.scss`, per theme.
 - **Gate and controls.** The gate's play link is the one gesture the
@@ -161,7 +161,7 @@ and sound in the file are not checked yet.
 ## Where the music comes from
 
 Research done in September 2026. The constraint that decides everything: an
-`<audio>` element plays almost anything, but the Web Audio analyser can only
+`<audio>` element plays almost anything, but the Web Audio analyzer can only
 read a stream whose server sends `Access-Control-Allow-Origin`, or one
 proxied through our own origin.
 
@@ -170,14 +170,14 @@ Recommended, in order:
 1. **Audius**. Free, open API, no key needed to read or stream. Base
    `https://api.audius.co/v1`, pass `app_name`. Endpoints for search,
    trending, playlists, and a stream endpoint that redirects to an MP3 with
-   range support. Catalogue is independent artists, not Creative Commons;
+   range support. Catalog is independent artists, not Creative Commons;
    fine for playback. Hosting is decentralised, so expect the odd slow node.
 2. **Jamendo**. Free for non-commercial use, needs a `client_id` from the
    developer portal, 35,000 requests a month. Returns MP3 URLs per track and
-   the licence field. The terms require showing attribution and the licence
+   the license field. The terms require showing attribution and the license
    in the UI. CORS on the audio host is undocumented.
 
-Usable but second tier: Internet Archive (huge free catalogue, hotlinking
+Usable but second tier: Internet Archive (huge free catalog, hotlinking
 allowed, but no CORS on search and inconsistent on downloads), Openverse
 (discovery only, files live elsewhere), ccMixter (CORS undocumented).
 
