@@ -109,10 +109,15 @@
   "languages": "English, Cantonese, Mandarin and Japanese, at native or bilingual level.",
   "links": {
     "adplist": "[adplist.org/mentors/keni-lam]($t(common:url_adplist))",
-    "experiments": "[ki-cl.com/experiments]($t(common:url_experiments))",
-    "github": "[github.com/kenilam]($t(common:url_github))",
-    "linkedin": "[linkedin.com/in/kenilam]($t(common:url_linkedin))",
+    "experiments": "[$t(profile.experiments)]($t(common:url_experiments))",
+    "github": "[$t(profile.github)]($t(common:url_github))",
+    "linkedin": "[$t(profile.linkedin)]($t(common:url_linkedin))",
     "moonshot": "[Ki.CL-moonshot-exercise]($t(common:url_moonshot))"
+  },
+  "profile": {
+    "experiments": "ki-cl.com/experiments",
+    "github": "github.com/kenilam",
+    "linkedin": "linkedin.com/in/kenilam"
   },
   "location": "San Jose, California",
   "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, and 52 reviews. Ranked in the top 10% of mentors in my field. $t(links.adplist)",
