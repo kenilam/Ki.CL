@@ -221,8 +221,3 @@ PR #358, merged into `develop`: the home page background is a WebGL
 dither-gradient shader at `App/views/home/background/`. Palette, cell size
 and tone count are custom properties on the canvas, set per theme in its
 stylesheet.
-
-Noted and not fixed: React 19 warns that the `commandFor` prop on invoker
-buttons should be lowercase `commandfor`. It appears in `Dialog`, the
-mobile `GlobalHeader` navigation, the Portfolio SystemDesign sections and
-the TreeOfLife `Figure`.

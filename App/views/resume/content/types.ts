@@ -1,5 +1,5 @@
-import type common from '@/locales/en/common.json';
-import type resume from '@/locales/en/resume.json';
+import type common from '@/locales/en-US/common.json';
+import type resume from '@/locales/en-US/resume.json';
 
 /** Every string in a tree of them, by its path: `shared.apple.lead`. */
 type Paths<Tree> = {
@@ -17,7 +17,7 @@ type Context<Name = Slug> = Name extends `${infer Start}-${infer End}`
   : Name;
 
 /**
- * Where a line is written, in `App/locales/en/resume.json`, without the
+ * Where a line is written, in `App/locales/en-US/resume.json`, without the
  * version: `skills.ai` names `skills.ai_master`, `skills.ai_manager` and the
  * rest. A line every version says the same way has no version on its key.
  * The line itself is inline Markdown: bold text and links.

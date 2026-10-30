@@ -39,7 +39,7 @@ const Figure: React.FunctionComponent<Spec.Props> = ({
             'kicl-cursor-zoom-in'
           )}
           command='show-modal'
-          commandFor={data}
+          commandfor={data}
           unstyled
         >
           <Image data={data} alt='' />

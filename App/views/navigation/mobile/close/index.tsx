@@ -29,7 +29,7 @@ const Close: React.FunctionComponent = () => {
         'kicl-z-index-raised'
       )}
       command='request-close'
-      commandFor={CLASS_NAME}
+      commandfor={CLASS_NAME}
       unstyled
     >
       <Ri.RiCloseLine aria-hidden />
