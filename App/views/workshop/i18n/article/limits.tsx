@@ -6,7 +6,14 @@ import { useTranslation } from 'react-i18next';
 // Components
 import { Details, Heading, List, ListItem, Text } from 'design/components';
 
-const LIMITS = ['review', 'variants', 'switching', 'html'] as const;
+const LIMITS = [
+  'review',
+  'variants',
+  'switching',
+  'html',
+  'rtl',
+  'examples',
+] as const;
 
 const Limits: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
