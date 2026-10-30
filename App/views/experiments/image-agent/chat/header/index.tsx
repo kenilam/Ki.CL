@@ -35,7 +35,9 @@ const Header: React.FunctionComponent = () => {
         )}
       >
         <HyperLink
-          before={<Ri.RiArrowLeftSFill aria-hidden />}
+          before={
+            <Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />
+          }
           end
           lookLikeButton
           to={toPath()}
