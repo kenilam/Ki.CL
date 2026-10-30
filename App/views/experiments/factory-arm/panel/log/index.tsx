@@ -36,7 +36,7 @@ const runs = (log: Entry[]) => {
  * how it started, to open when wanted.
  */
 const Log: React.FunctionComponent = () => {
-  const { t } = useTranslation('factory-arm');
+  const { i18n, t } = useTranslation('factory-arm');
   const { t: common } = useTranslation();
   const { clearLog, log } = useSetup();
   const [latest, ...earlier] = runs(log);
@@ -66,7 +66,7 @@ const Log: React.FunctionComponent = () => {
                       context: 'summary',
                       count: entries.length,
                       name,
-                      time: time(first.at),
+                      time: time(first.at, i18n.language),
                     })}
                   </Text>
                 }

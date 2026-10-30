@@ -14,8 +14,8 @@ import * as Ri from 'react-icons/ri';
 import type { Entry } from '@/views/experiments/factory-arm/setup';
 
 /** A step's time of day, to the second. */
-const time = (at: number) =>
-  new Date(at).toLocaleTimeString([], {
+const time = (at: number, language: string) =>
+  new Date(at).toLocaleTimeString(language, {
     hour12: false,
   });
 
@@ -23,7 +23,7 @@ type Props = { entries: Entry[] };
 
 /** Steps in the log, newest first, each with its time and a dot for how it went. */
 const Steps: React.FunctionComponent<Props> = ({ entries }) => {
-  const { t } = useTranslation('factory-arm');
+  const { i18n, t } = useTranslation('factory-arm');
 
   return (
     <List gap='narrower' is='ol'>
@@ -41,7 +41,7 @@ const Steps: React.FunctionComponent<Props> = ({ entries }) => {
               dateTime={new Date(at).toISOString()}
               is='time'
             >
-              {time(at)}
+              {time(at, i18n.language)}
             </Text>
             <Text is='span'>
               <Ri.RiCheckboxBlankCircleFill

@@ -63,7 +63,7 @@
   "not_visited": "not yet visited",
   "origin": "Origin of life",
   "plate_alt": "Plate of {{name}}, drawn from a description",
-  "plate_disclaimer": "Generated from a description. It’s not a photograph, and it’s not always right.",
+  "plate_disclaimer": "AI generated, may not be 100% accurate.",
   "plate_drawing": "Drawing the plate.",
   "plate_none": "$t(title_no_plate).",
   "plate_pick": "Pick a named taxon and one will be drawn for it.",
