@@ -48,7 +48,12 @@ const Running: React.FunctionComponent<RunningState> = ({ busy, running }) => {
             {running.map((thread) => (
               <ListItem key={thread.id}>
                 <HyperLink
-                  after={<Ri.RiArrowRightSLine aria-hidden />}
+                  after={
+                    <Ri.RiArrowRightSLine
+                      aria-hidden
+                      className='kicl-rtl-mirror'
+                    />
+                  }
                   to={toPath(thread.id)}
                 >
                   {toLabel(thread)}

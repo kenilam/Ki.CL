@@ -53,7 +53,12 @@ const Default: React.FunctionComponent = () => {
           </Animation>
           <Animation property='slide-from-top' delay={600}>
             <Button
-              before={<Ri.RiLogoutCircleLine aria-hidden />}
+              before={
+                <Ri.RiLogoutCircleLine
+                  aria-hidden
+                  className='kicl-rtl-mirror'
+                />
+              }
               className='kicl-inline-size-full'
               command='show-modal'
               commandfor={SIGN_OUT_ID}

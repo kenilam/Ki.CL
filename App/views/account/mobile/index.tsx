@@ -39,7 +39,9 @@ const Mobile: React.FunctionComponent = () => {
       </Animation>
       <Animation property='slide-from-bottom' delay={1200}>
         <Button
-          before={<Ri.RiLogoutCircleLine aria-hidden />}
+          before={
+            <Ri.RiLogoutCircleLine aria-hidden className='kicl-rtl-mirror' />
+          }
           className='kicl-inline-size-full'
           command='show-modal'
           commandfor={SIGN_OUT_ID}

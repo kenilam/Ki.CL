@@ -31,7 +31,7 @@ const Intro: React.FunctionComponent = () => {
   return (
     <>
       <HyperLink
-        before={<Ri.RiArrowLeftSFill aria-hidden />}
+        before={<Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />}
         to={toExperimentsPath(PATH)}
       >
         {common('experiments')}

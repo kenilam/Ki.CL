@@ -57,7 +57,12 @@ const Past: React.FunctionComponent<Props> = ({ query }) => {
             {threads.map((thread) => (
               <ListItem key={thread.id}>
                 <HyperLink
-                  after={<Ri.RiArrowRightSLine aria-hidden />}
+                  after={
+                    <Ri.RiArrowRightSLine
+                      aria-hidden
+                      className='kicl-rtl-mirror'
+                    />
+                  }
                   to={toPath(thread.id)}
                 >
                   <Highlighter
