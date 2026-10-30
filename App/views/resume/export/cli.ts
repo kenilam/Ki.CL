@@ -8,8 +8,8 @@ import * as dotenv from 'dotenv';
 
 // Relative, not `@/`: this runs under tsx, outside Vite and its aliases.
 import { FILE, OBJECT, PATH, PHONE_KEY } from '../constants';
-import COMMON from '../../../locales/en/common.json';
-import RESUME from '../../../locales/en/resume.json';
+import COMMON from '../../../locales/en-US/common.json';
+import RESUME from '../../../locales/en-US/resume.json';
 import {
   MASTER,
   VERSIONS,
@@ -39,7 +39,7 @@ import { launch, type Tab } from './chrome';
  *
  * Nothing is written for a version that runs past two sheets, that was set in
  * the fallback typeface, that did not render, or whose text in the database is
- * not what the files in `App/locales/en` say.
+ * not what the files in `App/locales/en-US` say.
  */
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -250,7 +250,7 @@ const print = async (tab: Tab, job: Job): Promise<number | string> => {
   }
 
   if (ready.fingerprint !== expected(version)) {
-    return 'The page does not say what the files in App/locales/en say. Seed the database: make translations.seed in Ki.CL-back.';
+    return 'The page does not say what the files in App/locales/en-US say. Seed the database: make translations.seed in Ki.CL-back.';
   }
 
   if (!ready.face) {

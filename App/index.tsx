@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 // Core
 import 'design/core';
+import { Masks } from 'design/icons';
 
 // App
 import { App } from '@/app';
@@ -18,6 +19,7 @@ import { App } from '@/app';
 
   root.render(
     <StrictMode>
+      <Masks />
       <App />
     </StrictMode>
   );

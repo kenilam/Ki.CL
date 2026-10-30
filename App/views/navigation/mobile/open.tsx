@@ -20,7 +20,7 @@ const Open: React.FunctionComponent = () => {
     <Button
       className={classNames('kicl-font-size', `${CLASS_NAME}--toggle`)}
       command='show-modal'
-      commandFor={CLASS_NAME}
+      commandfor={CLASS_NAME}
       unstyled
     >
       <Ri.RiMenuLine aria-hidden />

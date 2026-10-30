@@ -1,4 +1,4 @@
-import type { BackendModule, ResourceKey } from 'i18next';
+import i18next, { type BackendModule, type ResourceKey } from 'i18next';
 
 import { DEFAULT_NAMESPACE } from './constants';
 
@@ -8,7 +8,18 @@ const load = async (
 ): Promise<ResourceKey> => {
   try {
     const { loadTranslations } = await import('api/provider');
-    const [translation] = await loadTranslations(language, [namespace]);
+    const { contentLanguage, translations } = await loadTranslations(language, [
+      namespace,
+    ]);
+    const [translation] = translations;
+    const shown = contentLanguage.split(',')[0]?.trim();
+
+    // A language that stopped being complete is answered in the visitor's next one. Switch to it once this load is stored, so the switcher shows what the page shows.
+    if (shown && shown !== language) {
+      setTimeout(() => {
+        void i18next.changeLanguage(shown);
+      });
+    }
 
     if (translation) {
       return translation.resources;
@@ -23,7 +34,7 @@ const load = async (
     // The session gate reports a failed API in these words, so the build keeps a copy.
     console.error(error);
 
-    const { default: bundled } = await import('@/locales/en/common.json');
+    const { default: bundled } = await import('@/locales/en-US/common.json');
 
     return bundled;
   }

@@ -28,11 +28,11 @@ declare module 'react' {
   // match the original exactly and is what makes the obvious version fail.
   interface ButtonHTMLAttributes<T> {
     command?: Command;
-    commandFor?: string;
+    commandfor?: string;
   }
 
   interface InputHTMLAttributes<T> {
     command?: Command;
-    commandFor?: string;
+    commandfor?: string;
   }
 }
