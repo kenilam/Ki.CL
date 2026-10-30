@@ -18,6 +18,7 @@ import { Layout } from 'design/components';
 // Partials
 import { SignOut } from './account/sign-out';
 import { Contact } from './contact';
+import { Language } from './language';
 import { Navigation } from './navigation';
 import { SkipLink } from './skip-link';
 
@@ -34,7 +35,7 @@ const Contents: React.FunctionComponent = () => {
     <SessionProvider>
       <ScrollRestoration />
       <SkipLink />
-      <GlobalHeader hidden={isHome}>
+      <GlobalHeader before={<Language />} hidden={isHome}>
         <Navigation />
       </GlobalHeader>
       <Layout

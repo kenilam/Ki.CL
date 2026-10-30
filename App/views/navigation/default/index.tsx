@@ -9,7 +9,6 @@ import { HyperLink, Navigation } from 'design/components';
 // Views
 import { Default as Account } from '@/views/account/default';
 import { useAccount } from '@/views/account/use-account';
-import { Language } from '@/views/navigation/language';
 
 // Constants
 import { ROUTES } from '@/views/navigation/constants';
@@ -33,7 +32,6 @@ const Default: React.FunctionComponent = () => {
           {t(key)}
         </HyperLink>
       ))}
-      <Language />
       {me ? <Account key='account' /> : null}
     </Navigation>
   );
