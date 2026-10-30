@@ -55,7 +55,9 @@ const Translating: React.FunctionComponent = () => {
           return (
             <ListItem key={token}>
               <Text is='span'>
-                <Markdown>{t(`article.translating.${token}`)}</Markdown>
+                <Markdown>
+                  {t(`article.translating.${token}`, { nest: false })}
+                </Markdown>
               </Text>
             </ListItem>
           );
