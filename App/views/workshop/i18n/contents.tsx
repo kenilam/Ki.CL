@@ -17,6 +17,7 @@ import { Implementation } from './article/implementation';
 import { Limits } from './article/limits';
 import { Negotiation } from './article/negotiation';
 import { Serving } from './article/serving';
+import { Switcher } from './article/switcher';
 import { Translating } from './article/translating';
 import { Why } from './article/why';
 import { Wrong } from './article/wrong';
@@ -67,6 +68,7 @@ const Contents: React.FunctionComponent = () => {
             </Text>
           </header>
         </Layout>
+        <Switcher />
         <Why />
         <How />
         <Negotiation />

@@ -2,6 +2,7 @@
   "full_name": "Internationalization",
   "article": {
     "intro": "All the original text lives in English files alongside the code that uses it. Translations are generated automatically and stored separately. The same system handles everything from page content and validation errors to API responses and emails. There's no manual translation workflow and no language-specific logic in individual components.",
+    "switcher_caption": "The language switcher. Traditional Chinese is being translated again, and German and Spanish are disabled until their translations are complete.",
     "why": {
       "title": "Why I built it",
       "rule": "I wanted to make internationalization a property of the system rather than something each page or component had to implement.",
@@ -72,8 +73,7 @@
       "title": "Language availability",
       "complete": "A language becomes available only when it has a translation for every string. The check compares it with the English source and ignores plural suffixes, because Chinese uses one plural form where English uses two.",
       "run": "While the job is translating a language, it keeps a record of the run in MongoDB and updates it before each namespace. A record that hasn't been updated for five minutes is treated as a run that stopped without cleaning up.",
-      "switcher": "The language switcher subscribes to the status of every language. Complete languages can be selected. Incomplete ones are disabled and show a warning icon, or a spinner while they're being translated. A language becomes available within about a minute of its last string being written.",
-      "figure_caption": "The language switcher with Traditional Chinese selected and being translated again. German and Spanish are disabled until their translations are complete."
+      "switcher": "The language switcher subscribes to the status of every language. Complete languages can be selected. Incomplete ones are disabled and show a warning icon, or a spinner while they're being translated. A language becomes available within about a minute of its last string being written."
     },
     "implementation": {
       "title": "See the implementation",
