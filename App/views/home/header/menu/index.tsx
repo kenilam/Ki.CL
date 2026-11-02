@@ -23,12 +23,13 @@ const Menu: React.FunctionComponent = () => {
     >
       <Navigation
         aria-label={t('header.menu.label')}
-        autoFlow='column'
         className={classNames(
           'kicl-padding-block-start-wide',
           'kicl-z-index-raised'
         )}
+        display='flex'
         justifyContent='center'
+        wrap
       >
         {ROUTES.map(({ key, to }) => (
           <HyperLink key={to} to={to}>
