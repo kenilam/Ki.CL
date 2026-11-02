@@ -18,7 +18,7 @@ import { useLanguages } from '@/views/language/use-languages';
 
 const Switcher: React.FunctionComponent = () => {
   const { i18n, t } = useTranslation('internationalisation');
-  const languages = useLanguages();
+  const { languages, loading } = useLanguages();
   const [value, setValue] = useState<string>();
   const [preview, setPreview] = useState<{
     contentLanguage: string;
@@ -68,6 +68,7 @@ const Switcher: React.FunctionComponent = () => {
             >
               <Text is='p'>
                 <LanguageSelect
+                  aria-busy={loading}
                   languages={languages}
                   onValueChange={choose}
                   value={value ?? i18n.language}

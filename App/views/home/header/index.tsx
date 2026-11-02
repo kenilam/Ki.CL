@@ -6,6 +6,9 @@ import classNames from 'classnames';
 // Components
 import { Animation, Layout } from 'design/components';
 
+// Views
+import { Language } from '@/views/language';
+
 // Partials
 import { Aside } from './aside';
 import { Contents } from './contents';
@@ -43,6 +46,15 @@ const Header: React.FunctionComponent = () => {
           <Contents />
           <Menu />
           <Aside />
+          <Language
+            className={classNames(
+              'kicl-margin-block-start-wide',
+              'kicl-max-inline-size-columns-2',
+              'kicl-z-index-raised'
+            )}
+            inline={false}
+            placement='block-end-center'
+          />
         </header>
       </Layout>
     </Animation>
