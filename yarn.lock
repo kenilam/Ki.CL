@@ -1681,89 +1681,89 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@module-federation/dts-plugin@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/dts-plugin@npm:2.8.0"
+"@module-federation/dts-plugin@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/dts-plugin@npm:2.9.2"
   dependencies:
-    "@module-federation/error-codes": "npm:2.8.0"
-    "@module-federation/managers": "npm:2.8.0"
-    "@module-federation/sdk": "npm:2.8.0"
-    "@module-federation/third-party-dts-extractor": "npm:2.8.0"
-    adm-zip: "npm:0.5.10"
+    "@module-federation/error-codes": "npm:2.9.2"
+    "@module-federation/managers": "npm:2.9.2"
+    "@module-federation/sdk": "npm:2.9.2"
+    "@module-federation/third-party-dts-extractor": "npm:2.9.2"
+    adm-zip: "npm:^0.6.1"
     isomorphic-ws: "npm:5.0.0"
-    undici: "npm:7.28.0"
-    ws: "npm:8.21.0"
+    undici: "npm:7.29.1"
+    ws: "npm:8.21.3"
   peerDependencies:
     typescript: ^4.9.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
     vue-tsc: ">=1.0.24"
   peerDependenciesMeta:
     vue-tsc:
       optional: true
-  checksum: 10c0/2b4bfc185559cf79b9a649691d4517fe1381be495afa3b88c8c6bd9f861d09853b94b7940c153b5c68de37142f20ba14b73fada8bc673275c273cea7f1cdd406
+  checksum: 10c0/9a767bf3447e0bce4264f3dcf63315a10672bc4a3c98171ebb737eef888bfad05accdddafc42f3ec4d8799f686e684e2a250f6ee6097eaad0298724556e7e939
   languageName: node
   linkType: hard
 
-"@module-federation/error-codes@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/error-codes@npm:2.8.0"
-  checksum: 10c0/faee232c69ce6b37cac96dfbb588f8c063ff267b27d1bc6b9f1823638592e88d05fb7b44755430b9f25996e3f131be0ff79ec0ec4d17beaf36b5f0f6a970fb72
+"@module-federation/error-codes@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/error-codes@npm:2.9.2"
+  checksum: 10c0/f18e62190407cc1cac0255782646d547e1a6d5fcf7004f731669d4002d121475c34c7b6c145318401bcdf424f990e4ab08b5ff8dbc341df613092059008062ec
   languageName: node
   linkType: hard
 
-"@module-federation/managers@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/managers@npm:2.8.0"
+"@module-federation/managers@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/managers@npm:2.9.2"
   dependencies:
-    "@module-federation/sdk": "npm:2.8.0"
-  checksum: 10c0/d372bbeb1923ff71bc03fe1fe58594ff79f08b90a5fe965f0cb942c1b852c6e8fa74a1c9b1e7876b4108d3b288bb02b603a5d8f2b1f9efe0e554a6ff1a3ffbca
+    "@module-federation/sdk": "npm:2.9.2"
+  checksum: 10c0/7a4f8fa5defbbb28f4fd442aadf9b5a740ed8f35d61d3959af466a7acc9efc163e2a259585422e5c0ce02b17aed55e65eb80a4a3476dd1a54cddd2b9db580ff4
   languageName: node
   linkType: hard
 
-"@module-federation/runtime-core@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/runtime-core@npm:2.8.0"
+"@module-federation/runtime-core@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/runtime-core@npm:2.9.2"
   dependencies:
-    "@module-federation/error-codes": "npm:2.8.0"
-    "@module-federation/sdk": "npm:2.8.0"
-  checksum: 10c0/7ade49a9cf57f4e447c83abc321f7533379b31ca8534bf5667927328b861c8fdf630562d81de4e52689822bbd4b535b109f3c1c9e04a944d87ccf6a1bf11f0de
+    "@module-federation/error-codes": "npm:2.9.2"
+    "@module-federation/sdk": "npm:2.9.2"
+  checksum: 10c0/951ea97bf5c413bb0922df7dd03c34e6eed340ef98b6d124dbd93f787f2f57fe8213d3ec3f9c2f827b209097937830f03d996683ea19b6b00e0d712fa1b440dd
   languageName: node
   linkType: hard
 
-"@module-federation/runtime@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/runtime@npm:2.8.0"
+"@module-federation/runtime@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/runtime@npm:2.9.2"
   dependencies:
-    "@module-federation/error-codes": "npm:2.8.0"
-    "@module-federation/runtime-core": "npm:2.8.0"
-    "@module-federation/sdk": "npm:2.8.0"
-  checksum: 10c0/10737277707e9b2b81b35cb7052582251dd902f53fff93421d68be0e55fc22eca23ec308f25f2bc4af111a534de47c629c81ff7dae8ea1b4280b9a16f32f2d91
+    "@module-federation/error-codes": "npm:2.9.2"
+    "@module-federation/runtime-core": "npm:2.9.2"
+    "@module-federation/sdk": "npm:2.9.2"
+  checksum: 10c0/120abc89da43191796da23447eaa572608180aa79bfb558e086f310d0c4d4dcf9fc2cba418f12e251053e83a25d8d2a535f88007e0d7c99d9441a5f27361354d
   languageName: node
   linkType: hard
 
-"@module-federation/sdk@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/sdk@npm:2.8.0"
-  checksum: 10c0/bb1f1a377d1f7dff84ab693074b9c993a727f12868cb0e9fca001f56e7a1887057701882b0c7f4bd927997d0859babe0fba448becbc31fd94b5bb27f8c20b564
+"@module-federation/sdk@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/sdk@npm:2.9.2"
+  checksum: 10c0/3f3f4937aeb41610cea06402e0b0f5ad3117784cadf0a6a997e61f7242ece2a9dedef5a85e284d227ccfb23793b4516c37ef86904c493c065574c0d711f9417a
   languageName: node
   linkType: hard
 
-"@module-federation/third-party-dts-extractor@npm:2.8.0":
-  version: 2.8.0
-  resolution: "@module-federation/third-party-dts-extractor@npm:2.8.0"
-  checksum: 10c0/ce8e0eeb8018c52cb7ec5f3e990b211772e5ad91cab4e1bd787fff1762b754fd5f875578922deaccf081177133dbdadc938604e0d3c8062cf89eeae3b1db95c6
+"@module-federation/third-party-dts-extractor@npm:2.9.2":
+  version: 2.9.2
+  resolution: "@module-federation/third-party-dts-extractor@npm:2.9.2"
+  checksum: 10c0/0d112137ec10744a24a8dcd45779f647caf9ce9f56c5f5eff9eefe6479ece69982ae25b46f45630cea8d0b325433b0b5632fbc7fcbd1aa5cefae846669150cc3
   languageName: node
   linkType: hard
 
-"@module-federation/vite@npm:^1.20.0":
-  version: 1.20.0
-  resolution: "@module-federation/vite@npm:1.20.0"
+"@module-federation/vite@npm:^1.23.5":
+  version: 1.23.7
+  resolution: "@module-federation/vite@npm:1.23.7"
   dependencies:
-    "@module-federation/dts-plugin": "npm:2.8.0"
-    "@module-federation/runtime": "npm:2.8.0"
-    "@module-federation/sdk": "npm:2.8.0"
+    "@module-federation/dts-plugin": "npm:2.9.2"
+    "@module-federation/runtime": "npm:2.9.2"
+    "@module-federation/sdk": "npm:2.9.2"
   peerDependencies:
-    vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
-  checksum: 10c0/e6f88c45b4956e6508cc10ec18a75a874b48bbabadcd6f764b1f159beb55f61ad1b71ecd842130760c35208726b23673eae1ef99283bb84d03ef2cfa5dba6f44
+    vite: ^5.1.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 10c0/085ec1b0a44be6805b89cc5e85e7e9b9e2374bbab21c14008e4e002e46f28b079ee9a3f2b2297911df42b743a7fbf84c0f574e39e29d878372ad7ca40ad7e8c4
   languageName: node
   linkType: hard
 
@@ -3448,10 +3448,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"adm-zip@npm:0.5.10":
-  version: 0.5.10
-  resolution: "adm-zip@npm:0.5.10"
-  checksum: 10c0/1f391a4e02940688b6ca6d4b3ea96cc82a9dbe1596671d7dbc052f9a53ed2efa6ba9ba253f032ea16e70081f22d6ddd1af2d65d6be700853cdee9c2fc925c20e
+"adm-zip@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "adm-zip@npm:0.6.1"
+  checksum: 10c0/78233c6fbfd418dd605ef3c4c6a656406a49f81f716f2850d565f5e55915f18b99f4fdaf15436d77c73536da0915eeca33adab8055872a983b0ac7d07664cd25
   languageName: node
   linkType: hard
 
@@ -3556,7 +3556,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app.client@workspace:App/.client"
   dependencies:
-    "@module-federation/vite": "npm:^1.20.0"
+    "@module-federation/vite": "npm:^1.23.5"
     "@rollup/plugin-dynamic-import-vars": "npm:2.1.5"
     "@rollup/plugin-terser": "npm:^0.4.4"
     "@types/glob": "npm:8.1.0"
@@ -11653,10 +11653,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:7.28.0":
-  version: 7.28.0
-  resolution: "undici@npm:7.28.0"
-  checksum: 10c0/fe781983a26098795e99bb1f64906cbb7d0bcaa029a26baade007b53ea67f2631d189b8f9671a31f4c8d0cb3773b7559608628ba54452fef51fec90e7c78bb0d
+"undici@npm:7.29.1":
+  version: 7.29.1
+  resolution: "undici@npm:7.29.1"
+  checksum: 10c0/5a419b1364531071ebdfd93748f7f2392d4eb6d68dd99814e1020f8fc6a517e3298129004c871516ee204bac68aba93541f587200b04a7449b8d45683a7d86f6
   languageName: node
   linkType: hard
 
@@ -12326,9 +12326,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:8.21.0":
-  version: 8.21.0
-  resolution: "ws@npm:8.21.0"
+"ws@npm:8.21.3":
+  version: 8.21.3
+  resolution: "ws@npm:8.21.3"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -12337,7 +12337,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10c0/ef4a243476283fc49bc7550966c4af4aa0eef56273837211e700de3b664e08604a760cdddcb5ba43c049140e74ccfec5b0ee0bb439e08c2adf9138902fdde5f9
+  checksum: 10c0/7b28dc2863ea0e2cece68d142a3eee90361021b73f750431e6d8076bb7dede5fdfdb75b3d29534b62f411261147b76b1bc80fb5cc63ab0aabd467280e85b22e0
   languageName: node
   linkType: hard
 
