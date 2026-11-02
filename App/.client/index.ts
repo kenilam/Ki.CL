@@ -201,13 +201,25 @@ const getConfig = ({
             eager: true,
             requiredVersion: '^19.0.0',
           },
-          '@apollo/client': { singleton: true, requiredVersion: '^4.0.0' },
+          '@apollo/client': {
+            singleton: true,
+            eager: true,
+            requiredVersion: '^4.0.0',
+          },
           // The design system reads the router and form context views create.
-          'react-router-dom': { singleton: true, requiredVersion: '^7.0.0' },
+          'react-router-dom': {
+            singleton: true,
+            eager: true,
+            requiredVersion: '^7.0.0',
+          },
           'react-hook-form': { singleton: true, requiredVersion: '^7.0.0' },
           // The remotes read their copy from the instance this app creates.
-          i18next: { singleton: true, requiredVersion: '^26.0.0' },
-          'react-i18next': { singleton: true, requiredVersion: '^17.0.0' },
+          i18next: { singleton: true, eager: true, requiredVersion: '^26.0.0' },
+          'react-i18next': {
+            singleton: true,
+            eager: true,
+            requiredVersion: '^17.0.0',
+          },
         },
         dev: {
           /*
@@ -260,6 +272,15 @@ const getConfig = ({
           },
         },
       }),
+      {
+        name: 'kicl-remote-entries',
+        transformIndexHtml: () =>
+          [API_REMOTE_ENTRY, DESIGN_REMOTE_ENTRY].map((href) => ({
+            tag: 'link',
+            attrs: { rel: 'modulepreload', crossorigin: true, href },
+            injectTo: 'head',
+          })),
+      },
       dynamicImport(),
       inspect(),
       // A .gz and a .br beside each built file, which the server sends as they are.
@@ -493,6 +514,11 @@ const getConfig = ({
           'react-hook-form',
           'i18next',
           'react-i18next',
+        ],
+        include: [
+          'react-i18next > use-sync-external-store/shim',
+          'react-router-dom > react-router > cookie',
+          'react-router-dom > react-router > set-cookie-parser',
         ],
       },
       plugins,

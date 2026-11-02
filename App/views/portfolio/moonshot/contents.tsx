@@ -3,10 +3,11 @@ import React from 'react';
 // Routes
 import { Routes } from 'design/router';
 
-// Remote
-import { Compose } from 'moonshot/compose';
-import { Introduction } from 'moonshot/introduction';
-import { Review } from 'moonshot/review';
+const [{ Compose }, { Introduction }, { Review }] = await Promise.all([
+  import('moonshot/compose'),
+  import('moonshot/introduction'),
+  import('moonshot/review'),
+]);
 
 /** The remote's routes, relative to `/portfolio/moonshot`. */
 const Contents: React.FunctionComponent = () => (
