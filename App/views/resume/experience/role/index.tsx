@@ -33,12 +33,21 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
     <Details
       open={index === 0}
       summary={
-        <Layout autoFlow='column' justifyContent='space-between'>
+        <Layout
+          display='flex'
+          gap='narrower'
+          justifyContent='space-between'
+          wrap='stack'
+        >
           <header>
             <Heading dense is='h3'>
               {title}
-              <Text className='kicl-font-weight-light' dense is='span'>
-                {` · ${organisation}`}
+              <Text
+                className='kicl-display-inline kicl-font-weight-light'
+                dense
+                is='span'
+              >
+                {` · ${organisation}`}
               </Text>
             </Heading>
             <Text
