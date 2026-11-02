@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Widgets
-import { LanguageSelect } from 'design/widgets';
+import { LanguageSelect, type LanguageSelectProps } from 'design/widgets';
 
 // i18n
 import { chooseLanguage } from '@/i18n';
@@ -12,12 +12,16 @@ import { chooseLanguage } from '@/i18n';
 // Hooks
 import { useLanguages } from './use-languages';
 
-const Language: React.FunctionComponent = () => {
+const Language: React.FunctionComponent<
+  Pick<LanguageSelectProps<string>, 'className' | 'inline' | 'placement'>
+> = (props) => {
   const { i18n } = useTranslation();
-  const languages = useLanguages();
+  const { languages, loading } = useLanguages();
 
   return (
     <LanguageSelect
+      {...props}
+      aria-busy={loading}
       languages={languages}
       onValueChange={chooseLanguage}
       value={i18n.language}

@@ -7,15 +7,19 @@ import {
 
 const useLanguages = () => {
   const { i18n } = useTranslation();
-  const { data } = useSubscription(Kicl_AcceptLanguagesUpdatedDocument, {
-    context: { queryDeduplication: false },
-  });
-
-  return (
-    data?.AcceptLanguagesUpdated ?? [
-      { acceptLanguage: i18n.language, complete: true },
-    ]
+  const { data, loading } = useSubscription(
+    Kicl_AcceptLanguagesUpdatedDocument,
+    {
+      context: { queryDeduplication: false },
+    }
   );
+
+  return {
+    languages: data?.AcceptLanguagesUpdated ?? [
+      { acceptLanguage: i18n.language, complete: true },
+    ],
+    loading,
+  };
 };
 
 export { useLanguages };
