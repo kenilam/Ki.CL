@@ -13,7 +13,7 @@ function useAccount() {
   // `Me` needs a session, anonymous or not.
   const { data, error, loading } = useQuery(
     Kicl_MeDocument,
-    live ? {} : skipToken
+    live ? { fetchPolicy: 'cache-first' } : skipToken
   );
 
   const me = error ? undefined : data?.Me;
