@@ -23,11 +23,14 @@
     )
   );
 
-  // The view layer sits above `Layout`, so this overrides its column flow.
+  // Below desktop it matches the experiments list: the picture centred with no
+  // wash, the words at the bottom. The view layer sits above `Layout`, so this
+  // overrides its alignment.
   @container style(--kicl-viewport-up-to-desktop: true) {
-    align-content: start;
+    align-content: end;
     align-items: start;
-    grid-auto-flow: row;
+    background-position: center;
+    padding-block-end: var(--kicl-gutter-widest);
   }
 
   &::before {
@@ -43,5 +46,9 @@
     inset: 0;
     position: absolute;
     z-index: var(--kicl-z-index-behind);
+
+    @container style(--kicl-viewport-up-to-desktop: true) {
+      content: none;
+    }
   }
 }
