@@ -18,7 +18,11 @@ const Header: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='none' justifyItems='start'>
       <header className='kicl-inline-size-columns-6'>
-        <BackLink label={common('experiments')} to={toExperimentsPath(PATH)} />
+        <BackLink
+          className='kicl-margin-block-end'
+          label={common('experiments')}
+          to={toExperimentsPath(PATH)}
+        />
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {common('experiment', { context: 'image_agent' })}
         </Heading>
