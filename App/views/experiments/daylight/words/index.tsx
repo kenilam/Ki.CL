@@ -43,7 +43,10 @@ const Words: React.FunctionComponent = () => {
         )}
       >
         <BackLink
-          className='kicl-pointer-events-auto'
+          className={classNames(
+            'kicl-margin-block-end',
+            'kicl-pointer-events-auto'
+          )}
           label={common('experiments')}
           to={toExperimentsPath(PATH)}
         />

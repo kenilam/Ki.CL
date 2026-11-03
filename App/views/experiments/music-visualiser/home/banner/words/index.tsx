@@ -42,7 +42,11 @@ const Words: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        <BackLink label={common('experiments')} to={toExperimentsPath(PATH)} />
+        <BackLink
+          className='kicl-margin-block-end'
+          label={common('experiments')}
+          to={toExperimentsPath(PATH)}
+        />
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {common('experiment', { context: 'music_visualiser' })}
         </Heading>

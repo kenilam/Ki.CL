@@ -27,7 +27,11 @@ const Intro: React.FunctionComponent = () => {
 
   return (
     <>
-      <BackLink label={common('experiments')} to={toExperimentsPath(PATH)} />
+      <BackLink
+        className='kicl-margin-block-end'
+        label={common('experiments')}
+        to={toExperimentsPath(PATH)}
+      />
       <Heading
         is='h1'
         dense

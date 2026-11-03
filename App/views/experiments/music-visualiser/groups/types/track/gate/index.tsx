@@ -57,10 +57,14 @@ const Gate: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        <BackLink to={toPath()} />
-        <Heading is='h1' dense className='kicl-font-size-huge'>
-          {title}
-        </Heading>
+        <Layout autoFlow='row' gap='none' justifyItems='center'>
+          <header>
+            <BackLink className='kicl-margin-block-end' to={toPath()} />
+            <Heading is='h1' dense className='kicl-font-size-huge'>
+              {title}
+            </Heading>
+          </header>
+        </Layout>
         <Text
           is='p'
           dense
