@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Button, Frame } from 'design/components';
+import { BackLink, Button, Frame } from 'design/components';
 
 // Icons
 import * as Ri from 'react-icons/ri';
@@ -25,7 +25,12 @@ import { Scene } from '@/views/experiments/factory-arm/scene';
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME, PANEL } from '@/views/experiments/factory-arm/constants';
+import { toPath as toExperimentsPath } from '@/views/experiments/constants';
+import {
+  CLASS_NAME,
+  PANEL,
+  PATH,
+} from '@/views/experiments/factory-arm/constants';
 
 /**
  * The stage, and the setup panel over its right side. Only the stage and
@@ -35,6 +40,7 @@ import { CLASS_NAME, PANEL } from '@/views/experiments/factory-arm/constants';
  */
 const Workspace: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
+  const { t: common } = useTranslation();
   const { applied, run } = useSetup();
 
   return (
@@ -60,6 +66,17 @@ const Workspace: React.FunctionComponent = () => {
 
         <Alert />
       </FactoryArmProvider>
+
+      <BackLink
+        className={classNames(
+          'kicl-position-fixed',
+          'kicl-inset-block-start',
+          'kicl-inset-inline-start',
+          'kicl-z-index-floating'
+        )}
+        label={common('experiments')}
+        to={toExperimentsPath(PATH)}
+      />
 
       <Button
         className={classNames(

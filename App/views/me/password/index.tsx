@@ -2,12 +2,10 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-// Icons
-import * as Ri from 'react-icons/ri';
-
 // Components
 import {
   Animation,
+  BackLink,
   Button,
   Card,
   CardDescription,
@@ -30,7 +28,6 @@ import { usePasswordChange } from './use-password-change';
 
 const Password: React.FunctionComponent = () => {
   const { t } = useTranslation('me');
-  const { t: common } = useTranslation();
   const { me } = useAccount();
   const { reset, stage, start } = usePasswordChange();
 
@@ -41,19 +38,7 @@ const Password: React.FunctionComponent = () => {
     <Card is='section' size='max' variant='secondary'>
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
-          {stage !== 'done' ? (
-            <HyperLink
-              before={
-                <Ri.RiArrowGoBackLine aria-hidden className='kicl-rtl-mirror' />
-              }
-              lookLikeButton
-              size='small'
-              to='..'
-              variant='secondary'
-            >
-              {common('action', { context: 'go_back' })}
-            </HyperLink>
-          ) : null}
+          {stage !== 'done' ? <BackLink /> : null}
           {/* Announced as it changes: the answer arrives from another tab or device. */}
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
             {t('title', { context: stage })}

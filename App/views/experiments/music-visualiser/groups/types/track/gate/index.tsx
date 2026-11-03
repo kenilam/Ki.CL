@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Fa from 'react-icons/fa6';
+import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { BackLink, Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
@@ -20,6 +20,7 @@ import { useTrackContext } from '@/views/experiments/music-visualiser/groups/typ
 // Constants
 import {
   CLASS_NAME as VIEW,
+  toPath,
   toPlayPath,
 } from '@/views/experiments/music-visualiser/constants';
 
@@ -39,7 +40,7 @@ const Gate: React.FunctionComponent = () => {
       alignContent='center'
       alignItems='center'
       autoFlow='row'
-      gap='wide'
+      gap='none'
       justifyContent='center'
       justifyItems='center'
     >
@@ -56,6 +57,7 @@ const Gate: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
+        <BackLink to={toPath()} />
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {title}
         </Heading>
@@ -63,19 +65,23 @@ const Gate: React.FunctionComponent = () => {
           is='p'
           dense
           variant='secondary'
-          className='kicl-font-size-medium'
+          className={classNames(
+            'kicl-font-size-medium',
+            'kicl-margin-block-start-wide'
+          )}
         >
           {t('source', { category })}
         </Text>
         <HyperLink to={ATTRIBUTION.url}>{t('attribution')}</HyperLink>
         <HyperLink
           aria-label={t('action', { context: 'play', title })}
+          className='kicl-margin-block-start-wide'
           lookLikeButton
           size='small'
           to={toPlayPath(track)}
           variant='ghost'
         >
-          <Fa.FaPlay aria-hidden />
+          <Ri.RiPlayFill aria-hidden />
         </HyperLink>
       </section>
     </Layout>

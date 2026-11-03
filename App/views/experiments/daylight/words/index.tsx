@@ -4,11 +4,8 @@ import React from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-// Icons
-import * as Ri from 'react-icons/ri';
-
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { BackLink, Heading, Layout, Text } from 'design/components';
 
 // Styles
 import './styles.scss';
@@ -32,12 +29,7 @@ const Words: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
 
   return (
-    <Layout
-      alignContent='start'
-      autoFlow='row'
-      gap='narrow'
-      justifyItems='start'
-    >
+    <Layout alignContent='start' autoFlow='row' gap='none' justifyItems='start'>
       <header
         className={classNames(
           CLASS_NAME,
@@ -50,15 +42,11 @@ const Words: React.FunctionComponent = () => {
           'kicl-position-relative'
         )}
       >
-        <HyperLink
-          before={
-            <Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />
-          }
+        <BackLink
           className='kicl-pointer-events-auto'
+          label={common('experiments')}
           to={toExperimentsPath(PATH)}
-        >
-          {common('experiments')}
-        </HyperLink>
+        />
         <Heading
           className={classNames(`${CLASS_NAME}__title`, 'kicl-font-size-huge')}
           dense
@@ -66,7 +54,13 @@ const Words: React.FunctionComponent = () => {
         >
           {common('experiment', { context: 'daylight' })}
         </Heading>
-        <Text className='kicl-max-inline-size-columns-4' is='p'>
+        <Text
+          className={classNames(
+            'kicl-margin-block-start-wide',
+            'kicl-max-inline-size-columns-4'
+          )}
+          is='p'
+        >
           {t('lede')}
         </Text>
       </header>
