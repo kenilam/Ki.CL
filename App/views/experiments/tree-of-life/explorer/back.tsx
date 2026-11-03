@@ -5,10 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { HyperLink } from 'design/components';
-
-// Icons
-import * as Ri from 'react-icons/ri';
+import { BackLink } from 'design/components';
 
 // Constants
 import { toPath } from '@/views/experiments/tree-of-life/constants';
@@ -28,13 +25,7 @@ const Back: React.FunctionComponent = () => {
         'kicl-inset-inline-end'
       )}
     >
-      <HyperLink
-        before={<Ri.RiArrowLeftSLine aria-hidden className='kicl-rtl-mirror' />}
-        to={toPath()}
-        unstyled
-      >
-        {common('action', { context: 'back' })}
-      </HyperLink>
+      <BackLink to={toPath()} />
     </nav>
   );
 };

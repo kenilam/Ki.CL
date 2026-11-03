@@ -6,10 +6,9 @@ import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Fa from 'react-icons/fa6';
-import * as Ri from 'react-icons/ri';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { BackLink, Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { TOTAL, draw } from '@/views/experiments/music-visualiser/catalog';
@@ -43,14 +42,7 @@ const Words: React.FunctionComponent = () => {
           'kicl-text-align-center'
         )}
       >
-        <HyperLink
-          before={
-            <Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />
-          }
-          to={toExperimentsPath(PATH)}
-        >
-          {common('experiments')}
-        </HyperLink>
+        <BackLink label={common('experiments')} to={toExperimentsPath(PATH)} />
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {common('experiment', { context: 'music_visualiser' })}
         </Heading>

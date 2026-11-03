@@ -1,13 +1,11 @@
 {
   "account": "Account",
-  "action_back": "Back",
   "action_cancel": "Cancel",
   "action_clear": "Clear",
   "action_close": "Close",
   "action_close_navigation": "Close the navigation",
   "action_confirm": "Confirm",
   "action_delete": "Delete",
-  "action_go_back": "Go back",
   "action_open_navigation": "Open the navigation",
   "action_pause": "Pause",
   "action_print": "Print",

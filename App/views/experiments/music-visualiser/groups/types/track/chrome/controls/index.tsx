@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Fa from 'react-icons/fa6';
 import * as Ri from 'react-icons/ri';
 
 // Components
@@ -61,7 +60,7 @@ const Controls: React.FunctionComponent = () => {
           {control.loading ? (
             <Ri.RiLoader4Line aria-hidden className='is-revolving' />
           ) : (
-            <Fa.FaPause aria-hidden />
+            <Ri.RiPauseMiniFill aria-hidden />
           )}
         </HyperLink>
       </ListItem>
@@ -74,7 +73,7 @@ const Controls: React.FunctionComponent = () => {
           to={toPlayPath(next ?? track)}
           variant='ghost'
         >
-          <Ri.RiSkipForwardFill aria-hidden />
+          <Ri.RiSkipForwardMiniFill aria-hidden />
         </HyperLink>
       </ListItem>
       <ListItem>

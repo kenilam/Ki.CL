@@ -4,11 +4,8 @@ import React from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-// Icons
-import * as Ri from 'react-icons/ri';
-
 // Components
-import { Heading, HyperLink, Text } from 'design/components';
+import { BackLink, Heading, HyperLink, Text } from 'design/components';
 
 // Styles
 import './styles.scss';
@@ -30,12 +27,7 @@ const Intro: React.FunctionComponent = () => {
 
   return (
     <>
-      <HyperLink
-        before={<Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />}
-        to={toExperimentsPath(PATH)}
-      >
-        {common('experiments')}
-      </HyperLink>
+      <BackLink label={common('experiments')} to={toExperimentsPath(PATH)} />
       <Heading
         is='h1'
         dense
@@ -47,8 +39,11 @@ const Intro: React.FunctionComponent = () => {
       >
         {common('experiment', { context: 'tree_of_life' })}
       </Heading>
-      <Text is='p'>{t('lede')}</Text>
+      <Text className='kicl-margin-block-start-wide' is='p'>
+        {t('lede')}
+      </Text>
       <HyperLink
+        className='kicl-margin-block-start-wide'
         level='confirm'
         lookLikeButton
         to={toPath(ROOT_NODE_ID)}

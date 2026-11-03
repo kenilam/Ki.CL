@@ -11,6 +11,7 @@ import { Button, ListItem } from 'design/components';
 
 // Hooks
 import { CLIP_SECONDS, useClip } from './use-clip';
+import classNames from 'classnames';
 
 /** Saves a short video of the picture with the track. */
 const Clip: React.FunctionComponent = () => {
@@ -36,11 +37,17 @@ const Clip: React.FunctionComponent = () => {
         title={label}
         variant='ghost'
       >
-        {clip.recording ? (
-          <Ri.RiRecordCircleFill aria-hidden />
-        ) : (
-          <Ri.RiVideoDownloadLine aria-hidden />
-        )}
+        <Ri.RiDiscLine
+          aria-hidden
+          className={
+            classNames(
+              {
+                'kicl-color-error': clip.recording,
+                'is-revolving': clip.recording,
+              }
+            )
+          }
+        />
       </Button>
     </ListItem>
   );

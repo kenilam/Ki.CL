@@ -3,11 +3,8 @@ import React from 'react';
 // Libraries
 import { useTranslation } from 'react-i18next';
 
-// Icons
-import * as Ri from 'react-icons/ri';
-
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { BackLink, Heading, Layout, Text } from 'design/components';
 
 // Constants
 import { toPath as toExperimentsPath } from '@/views/experiments/constants';
@@ -19,20 +16,13 @@ const Header: React.FunctionComponent = () => {
   const { t: common } = useTranslation();
 
   return (
-    <Layout autoFlow='row' gap='narrower' justifyItems='start'>
+    <Layout autoFlow='row' gap='none' justifyItems='start'>
       <header className='kicl-inline-size-columns-6'>
-        <HyperLink
-          before={
-            <Ri.RiArrowLeftSFill aria-hidden className='kicl-rtl-mirror' />
-          }
-          to={toExperimentsPath(PATH)}
-        >
-          {common('experiments')}
-        </HyperLink>
+        <BackLink label={common('experiments')} to={toExperimentsPath(PATH)} />
         <Heading is='h1' dense className='kicl-font-size-huge'>
           {common('experiment', { context: 'image_agent' })}
         </Heading>
-        <Text dense is='p'>
+        <Text className='kicl-margin-block-start-wide' dense is='p'>
           {t('description')}
         </Text>
       </header>

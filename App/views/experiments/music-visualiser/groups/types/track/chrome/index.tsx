@@ -64,10 +64,11 @@ const Chrome: React.FunctionComponent = () => {
     <Layout
       alignContent='end'
       alignItems='end'
-      autoFlow='column'
+      autoFlow='row'
+      display='flex'
       gap='wide'
       justifyContent='space-between'
-      justifyItems='start'
+      wrap='stack'
     >
       <section
         aria-label={t('label', { context: 'player' })}
