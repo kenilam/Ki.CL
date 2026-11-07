@@ -47,12 +47,17 @@ type Props = React.ComponentProps<typeof Header> & {
 };
 
 const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
-  const { t } = useTranslation('portfolio');
-  const { t: common } = useTranslation();
-  const schema = useMemo(() => signInSchema(t), [t]);
+  const translations = {
+    common: useTranslation(),
+    portfolio: useTranslation('portfolio'),
+  };
+  const schema = useMemo(
+    () => signInSchema(translations.portfolio.t),
+    [translations.portfolio.t]
+  );
 
   const form = useForm<SignInValues>({
-    defaultValues: { Email: '', Password: '' },
+    defaultValues: { email: '', password: '' },
     resolver: valibotResolver(schema),
   });
 
@@ -63,14 +68,14 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
       try {
         const { data } = await signIn({
           variables: {
-            SignIn: {
-              Email: values.Email as SignInInput['Email'],
-              Password: values.Password,
+            signIn: {
+              email: values.email as SignInInput['email'],
+              password: values.password,
             },
           },
         });
 
-        if (data?.SignIn) {
+        if (data?.signIn) {
           onSignedIn();
         }
       } catch (error) {
@@ -128,7 +133,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
                     type='submit'
                     size='small'
                   >
-                    {common('action', { context: 'sign_in' })}
+                    {translations.common.t('action', { context: 'sign_in' })}
                   </Button>
                 </CardFooter>
               </Form>

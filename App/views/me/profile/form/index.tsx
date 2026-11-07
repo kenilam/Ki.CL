@@ -25,18 +25,23 @@ import { Status } from './status';
 import { profileSchema, type ProfileValues } from './schema';
 
 type Props = {
-  me: NonNullable<Kicl_MeQuery['Me']>;
+  me: NonNullable<Kicl_MeQuery['me']>;
 };
 
 const Form: React.FunctionComponent<Props> = ({ me }) => {
-  const { t } = useTranslation('me');
-  const { t: common } = useTranslation();
-  const schema = useMemo(() => profileSchema(t), [t]);
+  const translations = {
+    common: useTranslation(),
+    me: useTranslation('me'),
+  };
+  const schema = useMemo(
+    () => profileSchema(translations.me.t),
+    [translations.me.t]
+  );
 
   const form = useForm<ProfileValues>({
     defaultValues: {
-      FirstName: me.FirstName ?? '',
-      LastName: me.LastName ?? '',
+      firstName: me.firstName ?? '',
+      lastName: me.lastName ?? '',
     },
     resolver: valibotResolver(schema),
   });
@@ -49,7 +54,7 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
         // The header reads the same `Me`, so it follows.
         awaitRefetchQueries: true,
         refetchQueries: [Kicl_MeDocument],
-        variables: { UpdateMe: names },
+        variables: { updateMe: names },
       });
 
       form.reset(names, { keepIsSubmitSuccessful: true });
@@ -71,7 +76,7 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
           type='reset'
           variant='secondary'
         >
-          {common('action', { context: 'reset' })}
+          {translations.common.t('action', { context: 'reset' })}
         </Button>
         <Button
           after={
@@ -82,7 +87,7 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
           type='submit'
           level='confirm'
         >
-          {common('action', { context: 'save' })}
+          {translations.common.t('action', { context: 'save' })}
         </Button>
       </CardFooter>
     </Origin>

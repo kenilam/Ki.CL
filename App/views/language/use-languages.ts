@@ -15,7 +15,7 @@ const useLanguages = () => {
   );
 
   return {
-    languages: data?.AcceptLanguagesUpdated ?? [
+    languages: data?.acceptLanguagesUpdated ?? [
       { acceptLanguage: i18n.language, complete: true },
     ],
     loading,

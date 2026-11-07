@@ -23,13 +23,13 @@ import { useAccount } from '@/views/account/use-account';
 // Partials
 import { PasswordForm } from './form';
 
-// Hooks
-import { usePasswordChange } from './use-password-change';
+// Context
+import { usePasswordChangeContext } from './context';
 
 const Password: React.FunctionComponent = () => {
   const { t } = useTranslation('me');
   const { me } = useAccount();
-  const { reset, stage, start } = usePasswordChange();
+  const { reset, stage, start } = usePasswordChangeContext();
 
   const busy = stage === 'loading' || stage === 'waiting' || stage === 'saving';
   const ended = stage === 'expired' || stage === 'failed';
@@ -53,7 +53,7 @@ const Password: React.FunctionComponent = () => {
           {stage === 'waiting' && (
             <Animation>
               <CardDescription>
-                {t('description', { context: 'waiting', email: me?.Email })}
+                {t('description', { context: 'waiting', email: me?.email })}
               </CardDescription>
             </Animation>
           )}

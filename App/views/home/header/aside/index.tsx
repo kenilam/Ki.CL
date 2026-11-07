@@ -14,12 +14,14 @@ import { Button, HyperLink, Navigation } from 'design/components';
 import { CONTACT_ID } from '@/views/contact/constants';
 
 const Aside: React.FunctionComponent = () => {
-  const { t } = useTranslation('home');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    home: useTranslation('home'),
+  };
 
   return (
     <Navigation
-      aria-label={t('header.aside.label')}
+      aria-label={translations.home.t('header.aside.label')}
       alignContent='center'
       alignItems='center'
       autoFlow='column'
@@ -32,31 +34,31 @@ const Aside: React.FunctionComponent = () => {
       justifyItems='center'
     >
       <HyperLink
-        aria-label={t('header.aside.linkedin')}
+        aria-label={translations.home.t('header.aside.linkedin')}
         lookLikeButton
         size='small'
-        title={t('header.aside.linkedin')}
-        to={common('url', { context: 'linkedin' })}
+        title={translations.home.t('header.aside.linkedin')}
+        to={translations.common.t('url', { context: 'linkedin' })}
         variant='ghost'
       >
         <Ri.RiLinkedinLine aria-hidden />
       </HyperLink>
       <HyperLink
-        aria-label={t('header.aside.github')}
+        aria-label={translations.home.t('header.aside.github')}
         lookLikeButton
         size='small'
-        title={t('header.aside.github')}
-        to={common('url', { context: 'github' })}
+        title={translations.home.t('header.aside.github')}
+        to={translations.common.t('url', { context: 'github' })}
         variant='ghost'
       >
         <Ri.RiGithubLine aria-hidden />
       </HyperLink>
       <Button
-        aria-label={common('send_message')}
+        aria-label={translations.common.t('send_message')}
         command='show-modal'
         commandfor={CONTACT_ID}
         size='small'
-        title={common('send_message')}
+        title={translations.common.t('send_message')}
         variant='ghost'
       >
         <Ri.RiMailLine aria-hidden />

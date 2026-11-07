@@ -22,14 +22,16 @@ import { CLASS_NAME as BANNER } from '@/views/experiments/tree-of-life/home/bann
 const CLASS_NAME = `${BANNER}__intro`;
 
 const Intro: React.FunctionComponent = () => {
-  const { t } = useTranslation('tree-of-life');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    treeOfLife: useTranslation('tree-of-life'),
+  };
 
   return (
     <>
       <BackLink
         className='kicl-margin-block-end'
-        label={common('experiments')}
+        label={translations.common.t('experiments')}
         to={toExperimentsPath(PATH)}
       />
       <Heading
@@ -41,10 +43,10 @@ const Intro: React.FunctionComponent = () => {
           'kicl-font-size-huge'
         )}
       >
-        {common('experiment', { context: 'tree_of_life' })}
+        {translations.common.t('experiment', { context: 'tree_of_life' })}
       </Heading>
       <Text className='kicl-margin-block-start-wide' is='p'>
-        {t('lede')}
+        {translations.treeOfLife.t('lede')}
       </Text>
       <HyperLink
         className='kicl-margin-block-start-wide'
@@ -53,7 +55,7 @@ const Intro: React.FunctionComponent = () => {
         to={toPath(ROOT_NODE_ID)}
         size='small'
       >
-        {common('action', { context: 'see_experience' })}
+        {translations.common.t('action', { context: 'see_experience' })}
       </HyperLink>
     </>
   );

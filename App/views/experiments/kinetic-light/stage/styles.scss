@@ -1,0 +1,48 @@
+$stage: '--kicl--views--experiments--kinetic-light__stage';
+$colors:
+  paper, lane, hit, ramp-1, ramp-2, ramp-3, ramp-4, ramp-5, ramp-6, ramp-7,
+  ramp-8, ramp-9, ramp-10;
+
+@each $name in $colors {
+  @property #{$stage}--#{$name} {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+  }
+}
+
+:root {
+  #{$stage}--paper: var(--kicl-color-black-pure);
+  #{$stage}--lane: var(--kicl-color-grey-800);
+  #{$stage}--hit: var(--kicl-color-white);
+  #{$stage}--ramp-1: var(--kicl-color-red);
+  #{$stage}--ramp-2: color-mix(
+    in oklch,
+    var(--kicl-color-red),
+    var(--kicl-color-orange)
+  );
+  #{$stage}--ramp-3: var(--kicl-color-orange);
+  #{$stage}--ramp-4: color-mix(
+    in oklch,
+    var(--kicl-color-orange),
+    var(--kicl-color-yellow)
+  );
+  #{$stage}--ramp-5: var(--kicl-color-yellow);
+  #{$stage}--ramp-6: color-mix(
+    in oklch,
+    var(--kicl-color-yellow),
+    var(--kicl-color-green)
+  );
+  #{$stage}--ramp-7: var(--kicl-color-green);
+  #{$stage}--ramp-8: color-mix(
+    in oklch,
+    var(--kicl-color-green),
+    var(--kicl-color-blue)
+  );
+  #{$stage}--ramp-9: var(--kicl-color-blue);
+  #{$stage}--ramp-10: color-mix(
+    in oklch,
+    var(--kicl-color-blue),
+    var(--kicl-color-red)
+  );
+}

@@ -38,8 +38,10 @@ import { PATH as HOME_PATH } from '@/views/home';
  * scanners open every link in a message, and would confirm it themselves.
  */
 const Confirm: React.FunctionComponent = () => {
-  const { t } = useTranslation('me');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    me: useTranslation('me'),
+  };
 
   // `#id.secret`, after the hash so the secret is never sent with a page request.
   const [id, secret] = useLocation().hash.slice(1).split('.');
@@ -54,19 +56,19 @@ const Confirm: React.FunctionComponent = () => {
     id && secret
       ? {
           fetchPolicy: 'network-only',
-          variables: { PasswordChangeLink: { id, secret } },
+          variables: { passwordChangeLink: { id, secret } },
         }
       : skipToken
   );
 
-  const confirmed = Boolean(data?.PasswordChangeConfirm);
+  const confirmed = Boolean(data?.passwordChangeConfirm);
   const invalid =
     !confirmed &&
-    (!id || !secret || Boolean(error) || link?.PasswordChangeLink === false);
+    (!id || !secret || Boolean(error) || link?.passwordChangeLink === false);
 
   const onClick = async () => {
     try {
-      await confirm({ variables: { PasswordChangeConfirm: { id, secret } } });
+      await confirm({ variables: { passwordChangeConfirm: { id, secret } } });
     } catch {
       // The mutation's `error` already shows it.
     }
@@ -80,8 +82,8 @@ const Confirm: React.FunctionComponent = () => {
           headingLevel='h1'
           in
           level='warning'
-          message={t('description', { context: 'invalid' })}
-          title={t('title', { context: 'invalid' })}
+          message={translations.me.t('description', { context: 'invalid' })}
+          title={translations.me.t('title', { context: 'invalid' })}
         />
         <CardFooter justifyContent='center'>
           <HyperLink
@@ -90,7 +92,7 @@ const Confirm: React.FunctionComponent = () => {
             to={`/${HOME_PATH}`}
             variant='secondary'
           >
-            {t('action', { context: 'home' })}
+            {translations.me.t('action', { context: 'home' })}
           </HyperLink>
         </CardFooter>
       </Card>
@@ -102,11 +104,13 @@ const Confirm: React.FunctionComponent = () => {
       <Layout gap='narrow' justifyItems='center'>
         <CardHeader className='kicl-text-align-center'>
           <CardTitle aria-live='polite' className='kicl-font-size' is='h1'>
-            {t('title', { context: confirmed ? 'confirmed' : 'confirm' })}
+            {translations.me.t('title', {
+              context: confirmed ? 'confirmed' : 'confirm',
+            })}
           </CardTitle>
           {confirmed || !checking ? (
             <CardDescription>
-              {t('description', {
+              {translations.me.t('description', {
                 context: confirmed ? 'confirmed' : 'confirm',
               })}
             </CardDescription>
@@ -126,7 +130,7 @@ const Confirm: React.FunctionComponent = () => {
             onClick={onClick}
             size='small'
           >
-            {common('action', { context: 'confirm' })}
+            {translations.common.t('action', { context: 'confirm' })}
           </Button>
         </CardFooter>
       )}

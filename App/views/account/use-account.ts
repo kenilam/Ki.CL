@@ -16,7 +16,7 @@ function useAccount() {
     live ? { fetchPolicy: 'cache-first' } : skipToken
   );
 
-  const me = error ? undefined : data?.Me;
+  const me = error ? undefined : data?.me;
 
   return {
     loading: loading && !data,

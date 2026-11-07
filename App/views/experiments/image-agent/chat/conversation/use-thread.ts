@@ -52,7 +52,7 @@ function useThread(id: string, seed?: Thread): ThreadState {
   });
 
   useEffect(() => {
-    const next = live?.ImageAgentThreadUpdated;
+    const next = live?.imageAgentThreadUpdated;
     if (next && next.id === id) {
       setPushed((current) => newest(current, next));
     }
@@ -81,7 +81,7 @@ function useThread(id: string, seed?: Thread): ThreadState {
     setPushed((current) => newest(current, thread));
   }, []);
 
-  const queried = data?.ImageAgentThread;
+  const queried = data?.imageAgentThread;
   const thread = pushed?.id === id ? newest(queried, pushed) : queried;
 
   return { accept, error, loading: loading && !thread, thread };

@@ -39,8 +39,10 @@ import {
  * behind the settings button.
  */
 const Workspace: React.FunctionComponent = () => {
-  const { t } = useTranslation('factory-arm');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    factoryArm: useTranslation('factory-arm'),
+  };
   const { applied, run } = useSetup();
 
   return (
@@ -74,7 +76,7 @@ const Workspace: React.FunctionComponent = () => {
           'kicl-inset-inline-start',
           'kicl-z-index-floating'
         )}
-        label={common('experiments')}
+        label={translations.common.t('experiments')}
         to={toExperimentsPath(PATH)}
       />
 
@@ -86,7 +88,9 @@ const Workspace: React.FunctionComponent = () => {
           'kicl-inset-inline-end',
           'kicl-z-index-floating'
         )}
-        aria-label={t('action', { context: 'open_setup' })}
+        aria-label={translations.factoryArm.t('action', {
+          context: 'open_setup',
+        })}
         popoverTarget={PANEL}
         variant='secondary'
       >

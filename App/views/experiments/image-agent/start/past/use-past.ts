@@ -16,7 +16,7 @@ function usePast() {
     variables: { limit: LIMIT },
   });
 
-  return (data?.ImageAgentThreads ?? []).filter(
+  return (data?.imageAgentThreads ?? []).filter(
     ({ messages, status }) =>
       status === 'IDLE' && messages.some(({ role }) => role === 'USER')
   );

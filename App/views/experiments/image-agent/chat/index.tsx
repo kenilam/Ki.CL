@@ -36,8 +36,8 @@ const Chat: React.FunctionComponent = () => {
   const busy = Boolean(thread.thread) && thread.thread?.status !== 'IDLE';
 
   const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
-  const spent = data?.ImageAgentAllowance.remaining === 0;
-  const cooling = useCooldown(data?.ImageAgentAllowance.nextAllowedAt);
+  const spent = data?.imageAgentAllowance.remaining === 0;
+  const cooling = useCooldown(data?.imageAgentAllowance.nextAllowedAt);
 
   return (
     <>

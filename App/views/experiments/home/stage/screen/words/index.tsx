@@ -21,10 +21,14 @@ const CLASS_NAME = `${SCREEN}__words`;
 
 /** The text block. The only part of the panel that takes the pointer. */
 const Words: React.FunctionComponent = () => {
-  const { t } = useTranslation('experiments');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    experiments: useTranslation('experiments'),
+  };
   const { experiment, number } = useScreenContext();
-  const title = common('experiment', { context: experiment.context });
+  const title = translations.common.t('experiment', {
+    context: experiment.context,
+  });
 
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
@@ -49,7 +53,7 @@ const Words: React.FunctionComponent = () => {
             'kicl-text-transform-uppercase'
           )}
         >
-          {t('number', { number })}
+          {translations.experiments.t('number', { number })}
         </Text>
         <Heading
           dense
@@ -62,7 +66,7 @@ const Words: React.FunctionComponent = () => {
           {title}
         </Heading>
         <Text is='p' dense className='kicl-max-inline-size-columns-5'>
-          {t('description', {
+          {translations.experiments.t('description', {
             context: experiment.context,
             scenes: SCENES.length,
           })}
@@ -74,9 +78,12 @@ const Words: React.FunctionComponent = () => {
           size='small'
           to={experiment.to}
         >
-          {common('action', { context: 'see_experience' })}
+          {translations.common.t('action', { context: 'see_experience' })}
           <Text is='span' className='kicl-hidden'>
-            {t('action', { context: 'open_title', title })}
+            {translations.experiments.t('action', {
+              context: 'open_title',
+              title,
+            })}
           </Text>
         </HyperLink>
       </article>

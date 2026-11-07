@@ -8,8 +8,10 @@ import { Details, Heading, Text } from 'design/components';
 
 /** What this is: the opening section, open on arrival. */
 const WhatThisIs: React.FunctionComponent = () => {
-  const { t } = useTranslation('music-visualiser');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    musicVisualiser: useTranslation('music-visualiser'),
+  };
 
   return (
     <Details
@@ -18,12 +20,16 @@ const WhatThisIs: React.FunctionComponent = () => {
       open
       summary={
         <Heading dense is='h3' lookLike='h1'>
-          {common('title', { context: 'what_this_is' })}
+          {translations.common.t('title', { context: 'what_this_is' })}
         </Heading>
       }
     >
-      <Text is='p'>{t('article.what_this_is.experiment')}</Text>
-      <Text is='p'>{t('article.what_this_is.browser')}</Text>
+      <Text is='p'>
+        {translations.musicVisualiser.t('article.what_this_is.experiment')}
+      </Text>
+      <Text is='p'>
+        {translations.musicVisualiser.t('article.what_this_is.browser')}
+      </Text>
     </Details>
   );
 };
