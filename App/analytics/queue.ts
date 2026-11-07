@@ -1,4 +1,4 @@
-// Same path and batch cap as `App/.server/collect/record.ts`.
+// Same path and batch cap as `App/middleware/collect/record.ts`.
 const COLLECT_PATH = '/collect';
 const MAX_EVENTS = 50;
 
