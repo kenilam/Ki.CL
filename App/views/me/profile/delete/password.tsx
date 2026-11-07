@@ -16,7 +16,7 @@ const Password: React.FunctionComponent = () => {
   return (
     <FormField
       control={control}
-      name='CurrentPassword'
+      name='currentPassword'
       render={({ field }) => (
         <PasswordInput
           {...field}

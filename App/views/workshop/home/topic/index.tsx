@@ -25,8 +25,10 @@ const Topic: React.FunctionComponent<TopicProps> = ({
   icons: [Top, Left, Right],
   to,
 }) => {
-  const { t } = useTranslation('workshop');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    workshop: useTranslation('workshop'),
+  };
 
   return (
     // A row of the list each for its picture, title and description, shared
@@ -68,9 +70,11 @@ const Topic: React.FunctionComponent<TopicProps> = ({
         )}
       >
         <CardTitle is='h2'>
-          <HyperLink to={to}>{common(context)}</HyperLink>
+          <HyperLink to={to}>{translations.common.t(context)}</HyperLink>
         </CardTitle>
-        <CardDescription>{t('description', { context })}</CardDescription>
+        <CardDescription>
+          {translations.workshop.t('description', { context })}
+        </CardDescription>
       </CardHeader>
     </Card>
   );

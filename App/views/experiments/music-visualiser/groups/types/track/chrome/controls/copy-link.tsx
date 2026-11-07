@@ -18,14 +18,16 @@ import { toPlayPath } from '@/views/experiments/music-visualiser/constants';
 /** Copies the address of this track's `/play`. */
 const CopyLink: React.FunctionComponent = () => {
   const { track } = useTrackContext();
-  const { t } = useTranslation('music-visualiser');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    musicVisualiser: useTranslation('music-visualiser'),
+  };
 
   return (
     <CopyButton
-      copiedLabel={common('status', { context: 'copied' })}
+      copiedLabel={translations.common.t('status', { context: 'copied' })}
       icon={<Fa.FaLink aria-hidden />}
-      label={t('action', { context: 'copy_link' })}
+      label={translations.musicVisualiser.t('action', { context: 'copy_link' })}
       size='small'
       value={() => new URL(toPlayPath(track), window.location.origin).href}
       variant='ghost'

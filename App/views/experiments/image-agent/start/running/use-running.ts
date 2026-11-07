@@ -16,7 +16,7 @@ function useRunning() {
     Kicl_ImageAgentAllowanceDocument,
     { fetchPolicy: 'cache-and-network' }
   );
-  const busy = data?.ImageAgentAllowance.busy ?? false;
+  const busy = data?.imageAgentAllowance.busy ?? false;
 
   useEffect(() => {
     if (!busy) {
@@ -26,7 +26,7 @@ function useRunning() {
     return stopPolling;
   }, [busy, startPolling, stopPolling]);
 
-  return { busy, running: data?.ImageAgentAllowance.running ?? [] };
+  return { busy, running: data?.imageAgentAllowance.running ?? [] };
 }
 
 type RunningState = ReturnType<typeof useRunning>;

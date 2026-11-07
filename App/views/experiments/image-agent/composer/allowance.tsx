@@ -24,7 +24,7 @@ const Allowance: React.FunctionComponent<Props> = ({ busy }) => {
   const { t } = useTranslation('image-agent');
 
   const { data, refetch } = useQuery(Kicl_ImageAgentAllowanceDocument);
-  const allowance = data?.ImageAgentAllowance;
+  const allowance = data?.imageAgentAllowance;
 
   useEffect(() => {
     if (!busy) {

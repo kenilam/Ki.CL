@@ -22,7 +22,7 @@ const howItWorks = (t: TFunction<'image-agent'>): DiagramSpec => ({
   nodes: [
     {
       title: t('diagram.how_it_works.node', { context: 'send' }),
-      lines: ['ImageAgentSend'],
+      lines: ['imageAgentSend'],
       x: 30,
       y: 60,
       w: 140,
@@ -57,7 +57,7 @@ const howItWorks = (t: TFunction<'image-agent'>): DiagramSpec => ({
     },
     {
       title: t('diagram.how_it_works.node', { context: 'shown' }),
-      lines: ['ImageAgentAllowance'],
+      lines: ['imageAgentAllowance'],
       x: 620,
       y: 100,
       w: 170,

@@ -97,7 +97,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.29.7":
+"@babel/runtime@npm:^7.25.6, @babel/runtime@npm:^7.29.2, @babel/runtime@npm:^7.29.7":
   version: 7.29.10
   resolution: "@babel/runtime@npm:7.29.10"
   checksum: 10c0/32f975da8e9c2cae6b33e1a477f8fe8bbff6722c982b5ce35f99affaf3a7a1b612c8272b43afa0e51d3000928d6f3ba38f9296301115db5640264907c027b0cd
@@ -2281,6 +2281,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-three/postprocessing@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@react-three/postprocessing@npm:3.2.0"
+  dependencies:
+    maath: "npm:^0.10.8"
+    n8ao: "npm:^2.0.0"
+  peerDependencies:
+    "@react-three/fiber": ">=9.7.0"
+    postprocessing: ^6.36.0
+    react: ^19.0.0
+    three: ">= 0.156.0"
+  checksum: 10c0/e6af3641a6709ffd35c10f29a12f4ecb4a384e4eec9b426474ca46dae71d3fd5eb10374e3004369b735624927abc0c2da86079a8592496f5bd7e1fad3f4c6973
+  languageName: node
+  linkType: hard
+
 "@react-three/rapier@npm:2.2.0":
   version: 2.2.0
   resolution: "@react-three/rapier@npm:2.2.0"
@@ -2532,6 +2547,16 @@ __metadata:
   peerDependencies:
     stylelint: ^17.6.0
   checksum: 10c0/1d91636e454bf90d598e8161a5996bd2c96b25c42da3d2968d81f0d5e93b80671011b6ae0fd0c995d89efb8b57af3741044d747a4e69e663e28c6918c7c97311
+  languageName: node
+  linkType: hard
+
+"@tonejs/midi@npm:2.0.28":
+  version: 2.0.28
+  resolution: "@tonejs/midi@npm:2.0.28"
+  dependencies:
+    array-flatten: "npm:^3.0.0"
+    midi-file: "npm:^1.2.2"
+  checksum: 10c0/062d960c66fdf7ba1773aba6bc35c3035b5dc0dad0325c199f7e8e018125d9059dd85c362aa649eca8c98f61402ef8b24e6c1ee90b8e4b210a2c2100f0a077b4
   languageName: node
   linkType: hard
 
@@ -3618,6 +3643,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app.views.experiments.kinetic-light@workspace:App/views/experiments/kinetic-light":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.kinetic-light@workspace:App/views/experiments/kinetic-light"
+  languageName: unknown
+  linkType: soft
+
 "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.music-visualiser@workspace:App/views/experiments/music-visualiser"
@@ -3651,7 +3682,9 @@ __metadata:
     "@react-spring/three": "npm:10.1.2"
     "@react-three/drei": "npm:10.7.7"
     "@react-three/fiber": "npm:9.8.2"
+    "@react-three/postprocessing": "npm:3.2.0"
     "@react-three/rapier": "npm:2.2.0"
+    "@tonejs/midi": "npm:2.0.28"
     "@types/d3-hierarchy": "npm:3.1.7"
     "@types/enzyme": "npm:3.10.19"
     "@types/lodash": "npm:4.17.25"
@@ -3667,6 +3700,7 @@ __metadata:
     d3-hierarchy: "npm:3.1.2"
     enzyme: "npm:3.11.0"
     enzyme-to-json: "npm:3.6.2"
+    fflate: "npm:0.8.3"
     get-transition-duration: "npm:1.1.1"
     graphql: "npm:17"
     graphql-ws: "npm:6.2.0"
@@ -3675,6 +3709,7 @@ __metadata:
     its-fine: "npm:2.0.0"
     lodash: "npm:4.18.1"
     mock-local-storage: "npm:1.1.24"
+    postprocessing: "npm:6.39.5"
     react: "npm:19.3.1"
     react-dom: "npm:19.3.1"
     react-highlight-words: "npm:^0.21.0"
@@ -3685,6 +3720,7 @@ __metadata:
     react-test-renderer: "npm:19.3.0"
     react-use-gesture: "npm:9.1.3"
     three: "npm:0.185.1"
+    tone: "npm:15.1.22"
     ts-node: "npm:10.9.2"
     valibot: "npm:1.4.2"
     vite: "npm:8.1.5"
@@ -3719,6 +3755,13 @@ __metadata:
     call-bound: "npm:^1.0.3"
     is-array-buffer: "npm:^3.0.5"
   checksum: 10c0/74e1d2d996941c7a1badda9cabb7caab8c449db9086407cad8a1b71d2604cc8abf105db8ca4e02c04579ec58b7be40279ddb09aea4784832984485499f48432d
+  languageName: node
+  linkType: hard
+
+"array-flatten@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "array-flatten@npm:3.0.0"
+  checksum: 10c0/202dae2bcee760f12e29958a0957bd166b3a9a8b41d0c942786d48857f903479c8a10fc7f55ed64904254dce7240f9fa50633504c925288fd051d9fb122cbb48
   languageName: node
   linkType: hard
 
@@ -3797,6 +3840,16 @@ __metadata:
   version: 1.0.0
   resolution: "at-least-node@npm:1.0.0"
   checksum: 10c0/4c058baf6df1bc5a1697cf182e2029c58cd99975288a13f9e70068ef5d6f4e1f1fd7c4d2c3c4912eae44797d1725be9700995736deca441b39f3e66d8dee97ef
+  languageName: node
+  linkType: hard
+
+"automation-events@npm:^7.0.9":
+  version: 7.1.19
+  resolution: "automation-events@npm:7.1.19"
+  dependencies:
+    "@babel/runtime": "npm:^7.29.2"
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/f95b1c589c6ddf68521b916285e79449493c9c3cf836bca51ac24aae9af7d5c2881bc4d5be1e59cf1a046be8e7e9aa59fb3eed03d72adb1c51fe51ab03d3d911
   languageName: node
   linkType: hard
 
@@ -5866,17 +5919,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fflate@npm:0.8.3, fflate@npm:~0.8.2":
+  version: 0.8.3
+  resolution: "fflate@npm:0.8.3"
+  checksum: 10c0/eab181ca37f5348ae76d4b6f840e0026e30220e33153289ac942222d8b9638237d486507dbcc09878d724095bd354993a2ee48bbee99c8f2c6440d4448719aa7
+  languageName: node
+  linkType: hard
+
 "fflate@npm:^0.6.9":
   version: 0.6.11
   resolution: "fflate@npm:0.6.11"
   checksum: 10c0/5bbf4a7557db6f65b25c7bb12621008c400a116ec1cc65bea78abd75c0c049d8a22fb92f0a59fbf9a7ad1a24a47d2112ce10fd817d08db0e1bf7dc82e780faa1
-  languageName: node
-  linkType: hard
-
-"fflate@npm:~0.8.2":
-  version: 0.8.3
-  resolution: "fflate@npm:0.8.3"
-  checksum: 10c0/eab181ca37f5348ae76d4b6f840e0026e30220e33153289ac942222d8b9638237d486507dbcc09878d724095bd354993a2ee48bbee99c8f2c6440d4448719aa7
   languageName: node
   linkType: hard
 
@@ -8103,6 +8156,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"midi-file@npm:^1.2.2":
+  version: 1.2.4
+  resolution: "midi-file@npm:1.2.4"
+  checksum: 10c0/7095ae3244ff4d96b9d9adc07de5d71703b71b670872cfa8ec43be4aa14368313fdbd2f3c98dc0b6c4417dbcd61e3b15d6375ec038a5ada9be4d38c3942e7ca4
+  languageName: node
+  linkType: hard
+
 "mime-db@npm:1.52.0":
   version: 1.52.0
   resolution: "mime-db@npm:1.52.0"
@@ -8349,6 +8409,16 @@ __metadata:
   version: 0.0.8
   resolution: "mute-stream@npm:0.0.8"
   checksum: 10c0/18d06d92e5d6d45e2b63c0e1b8f25376af71748ac36f53c059baa8b76ffac31c5ab225480494e7d35d30215ecdb18fed26ec23cafcd2f7733f2f14406bcd19e2
+  languageName: node
+  linkType: hard
+
+"n8ao@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "n8ao@npm:2.0.1"
+  peerDependencies:
+    postprocessing: ">=6.30.0"
+    three: ">=0.137"
+  checksum: 10c0/f0269375fb4219be7eb79343feb2205e6eee6529c94fd3bbbac8898c2a8ad4acac9f6f20ce58f4c5493bf1802a2066fc23dab5797acc7225fd9f73db3e65d35a
   languageName: node
   linkType: hard
 
@@ -9557,6 +9627,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postprocessing@npm:6.39.5":
+  version: 6.39.5
+  resolution: "postprocessing@npm:6.39.5"
+  peerDependencies:
+    three: ">= 0.168.0 < 0.187.0"
+  checksum: 10c0/84ef5467d96993e6ff06d8d608db05f57459170a93cdef6d14efbb7acd470fd6f7e7ccb8c67f0adad98078a26e57ab48289031451c4bc697f931b9a0f6aa8cf0
+  languageName: node
+  linkType: hard
+
 "potpack@npm:^1.0.1":
   version: 1.0.2
   resolution: "potpack@npm:1.0.2"
@@ -10627,6 +10706,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"standardized-audio-context@npm:^25.3.70":
+  version: 25.3.77
+  resolution: "standardized-audio-context@npm:25.3.77"
+  dependencies:
+    "@babel/runtime": "npm:^7.25.6"
+    automation-events: "npm:^7.0.9"
+    tslib: "npm:^2.7.0"
+  checksum: 10c0/41d5e3a64b881691fecd709313045ab9bddb864ed79c6eb51490056cec080e808e9f5b3ef94d734567b9da88f9c95e68cc63a3a0343374b2f865b1a961fb46ef
+  languageName: node
+  linkType: hard
+
 "stats-gl@npm:^2.2.8":
   version: 2.4.2
   resolution: "stats-gl@npm:2.4.2"
@@ -11266,6 +11356,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tone@npm:15.1.22":
+  version: 15.1.22
+  resolution: "tone@npm:15.1.22"
+  dependencies:
+    standardized-audio-context: "npm:^25.3.70"
+    tslib: "npm:^2.3.1"
+  checksum: 10c0/dd11cd2b0645fec5e188919ace1494deeae30f10775b493e2a4ab44e1be0bf3087dce6c0db78da91f88eddf2fd5f1430a3cc52e2d2d5f76076efe949aa056e64
+  languageName: node
+  linkType: hard
+
 "totalist@npm:^3.0.0":
   version: 3.0.1
   resolution: "totalist@npm:3.0.1"
@@ -11359,6 +11459,13 @@ __metadata:
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.3.1, tslib@npm:^2.7.0, tslib@npm:^2.8.1":
+  version: 2.9.1
+  resolution: "tslib@npm:2.9.1"
+  checksum: 10c0/8ff46e7a4d19fa62c23483c89cf5ccc3906e742ef6e6d60bd3826b686143b300b4f6f04161cc1cf31a6b11fe70e1058ae4d4e4a108b5c68326d469684736a83c
   languageName: node
   linkType: hard
 

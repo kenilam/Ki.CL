@@ -318,7 +318,7 @@
   "images_left_one": "{{count}} image left",
   "images_left_other": "{{count}} images left",
   "images_left_zero": "none left",
-  "label_allowance": "Allowance",
+  "label_allowance": "$t(common:label_allowance)",
   "label_composition": "Composition",
   "label_message": "Describe the picture you want",
   "label_quality": "Quality",

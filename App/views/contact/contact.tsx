@@ -55,11 +55,11 @@ const Contact: React.FunctionComponent = () => {
   }, [key]);
 
   const send = useCallback(
-    ({ Email, Message }: ContactFormValues) =>
+    ({ email, message }: ContactFormValues) =>
       challenged(() =>
         contact({
           variables: {
-            Contact: { Email: Email as ContactInput['Email'], Message },
+            contact: { email: email as ContactInput['email'], message },
           },
         })
       ),
@@ -81,8 +81,8 @@ const Contact: React.FunctionComponent = () => {
         new form. The key starts one over when the account changes while open.
       */}
       <ContactForm
-        email={me?.Email ?? undefined}
-        key={me?.Email}
+        email={me?.email ?? undefined}
+        key={me?.email}
         onSubmit={send}
       />
     </Dialog>

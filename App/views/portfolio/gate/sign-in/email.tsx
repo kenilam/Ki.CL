@@ -10,20 +10,24 @@ import { EmailInput, FormField } from 'design/components';
 import type { SignInValues } from './schema';
 
 const Email: React.FunctionComponent = () => {
-  const { t } = useTranslation('portfolio');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    portfolio: useTranslation('portfolio'),
+  };
   const { control } = useFormContext<SignInValues>();
 
   return (
     <FormField
       control={control}
-      name='Email'
+      name='email'
       render={({ field }) => (
         <EmailInput
           {...field}
-          label={common('label', { context: 'email' })}
+          label={translations.common.t('label', { context: 'email' })}
           autoComplete='username'
-          placeholder={t('placeholder', { context: 'email' })}
+          placeholder={translations.portfolio.t('placeholder', {
+            context: 'email',
+          })}
         />
       )}
     />

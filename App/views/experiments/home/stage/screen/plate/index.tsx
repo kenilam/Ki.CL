@@ -9,6 +9,7 @@ import { useScreenContext } from '@/views/experiments/home/stage/screen/context'
 // Partials
 import { Plate as Daylight } from '@/views/experiments/daylight/plate';
 import { Backdrop } from '@/views/experiments/image-agent/backdrop';
+import { Backdrop as KineticLight } from '@/views/experiments/kinetic-light/backdrop';
 import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/track/visualiser';
 
 // Styles
@@ -37,6 +38,7 @@ const Plate: React.FunctionComponent = () => {
       {experiment.plate === 'daylight' ? <Daylight /> : null}
       {/* Only the photo needs a scrim; on the other plates it darkens too much. */}
       {experiment.plate === 'image-agent' ? <Backdrop scrim /> : null}
+      {experiment.plate === 'kinetic-light' ? <KineticLight /> : null}
       {experiment.plate === 'music-visualiser' ? (
         <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
       ) : null}

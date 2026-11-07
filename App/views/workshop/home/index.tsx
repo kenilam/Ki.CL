@@ -16,8 +16,10 @@ import { CLASS_NAME, PLACEHOLDERS, TOPICS } from './constants';
 
 /** The workshop index: a card for each topic, then the ones still to come. */
 const Home: React.FunctionComponent = () => {
-  const { t } = useTranslation('workshop');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    workshop: useTranslation('workshop'),
+  };
   const titleId = useId();
 
   return (
@@ -33,9 +35,9 @@ const Home: React.FunctionComponent = () => {
           )}
         >
           <Heading className='kicl-font-size-huge' id={titleId}>
-            {common('workshop')}
+            {translations.common.t('workshop')}
           </Heading>
-          <Text>{t('message')}</Text>
+          <Text>{translations.workshop.t('message')}</Text>
           {/* Two a row, and one a row on phones. */}
           <List fill={6} gap='normal'>
             {TOPICS.map((topic) => (

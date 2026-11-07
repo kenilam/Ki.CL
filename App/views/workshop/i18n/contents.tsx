@@ -27,9 +27,11 @@ import { Wrong } from './article/wrong';
 import { CLASS_NAME } from './constants';
 
 const Contents: React.FunctionComponent = () => {
-  const { t } = useTranslation('internationalisation');
-  const { t: common } = useTranslation();
-  const { t: workshop } = useTranslation('workshop');
+  const translations = {
+    common: useTranslation(),
+    internationalisation: useTranslation('internationalisation'),
+    workshop: useTranslation('workshop'),
+  };
   const id = useId();
 
   return (
@@ -47,25 +49,29 @@ const Contents: React.FunctionComponent = () => {
           <header>
             <hgroup>
               <Heading className='kicl-font-size-huge' id={id}>
-                {common('internationalisation')}
+                {translations.common.t('internationalisation')}
               </Heading>
-              <Text lookLike='h2'>{t('full_name')}</Text>
+              <Text lookLike='h2'>
+                {translations.internationalisation.t('full_name')}
+              </Text>
             </hgroup>
             <Text>
               <HyperLink
                 before={<Ri.RiGithubLine aria-hidden />}
                 lookLikeButton
-                to={common('url_api')}
+                to={translations.common.t('url_api')}
                 variant='secondary'
               >
-                {common('github')}
+                {translations.common.t('github')}
               </HyperLink>
             </Text>
             <Text className='kicl-max-inline-size-columns-8' lookLike='h3'>
-              {workshop('description', { context: 'internationalisation' })}
+              {translations.workshop.t('description', {
+                context: 'internationalisation',
+              })}
             </Text>
             <Text className='kicl-max-inline-size-columns-8'>
-              {t('article.intro')}
+              {translations.internationalisation.t('article.intro')}
             </Text>
           </header>
         </Layout>

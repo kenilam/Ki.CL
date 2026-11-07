@@ -34,8 +34,10 @@ const print = () => {
  * Neither control belongs on paper.
  */
 const Actions: React.FunctionComponent = () => {
-  const { t } = useTranslation('resume');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    resume: useTranslation('resume'),
+  };
 
   const version = useVersion();
   const { isMobile } = useResponsive();
@@ -73,7 +75,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='ghost'
         >
-          {label(t('action', { context: 'message' }))}
+          {label(translations.resume.t('action', { context: 'message' }))}
         </Button>
       </ListItem>
       {current ? (
@@ -89,7 +91,7 @@ const Actions: React.FunctionComponent = () => {
             to={FILE}
             variant='secondary'
           >
-            {label(t('action', { context: 'file' }))}
+            {label(translations.resume.t('action', { context: 'file' }))}
           </HyperLink>
         </ListItem>
       ) : null}
@@ -102,7 +104,7 @@ const Actions: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          {label(common('action', { context: 'print' }))}
+          {label(translations.common.t('action', { context: 'print' }))}
         </Button>
       </ListItem>
     </List>
