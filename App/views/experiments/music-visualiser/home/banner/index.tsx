@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Frame, Layout } from 'design/components';
 
 // Partials
-import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/track/visualiser';
+import { Visualiser } from '@/views/experiments/music-visualiser/visualiser';
 import { More } from './more';
 import { Words } from './words';
 

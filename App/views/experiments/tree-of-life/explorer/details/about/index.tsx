@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Badge, BadgeLabel, List, Text } from 'design/components';
 
-import { TaxonVisualPanel } from '@/views/experiments/tree-of-life/taxon-visual';
+import { TaxonVisualPanel } from './taxon-visual';
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
 import { ROOT_NODE_ID } from '@/views/experiments/tree-of-life/constants';
 import {

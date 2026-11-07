@@ -21,7 +21,7 @@ import { TrackProvider } from './context';
 // Partials
 import { Chrome } from './chrome';
 import { Gate } from './gate';
-import { Visualiser } from './visualiser';
+import { Visualiser } from '@/views/experiments/music-visualiser/visualiser';
 
 // Constants
 import {

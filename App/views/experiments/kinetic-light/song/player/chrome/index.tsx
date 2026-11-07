@@ -25,10 +25,10 @@ import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/
 import { useArrangement } from '@/views/experiments/kinetic-light/song/player/use-arrangement';
 
 // Partials
-import { Beat } from '@/views/experiments/kinetic-light/song/player/beat';
-import { Settings } from '@/views/experiments/kinetic-light/song/player/settings';
-import { Sound } from '@/views/experiments/kinetic-light/song/player/sound';
-import { Title } from '@/views/experiments/kinetic-light/song/player/title';
+import { Beat } from './beat';
+import { Settings } from './settings';
+import { Sound } from './sound';
+import { Title } from './title';
 
 // Styles
 import './styles.scss';

@@ -16,7 +16,7 @@ import {
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
-import { useNames } from '@/views/experiments/music-visualiser/catalog/use-names';
+import { useNames } from '@/views/experiments/music-visualiser/use-names';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';

@@ -13,7 +13,7 @@ import * as Ri from 'react-icons/ri';
 // Constants
 import { CLASS_NAME } from '@/views/experiments/tree-of-life/explorer/constants';
 import { toPath } from '@/views/experiments/tree-of-life/constants';
-import { toPath as toDetailsPath } from '@/views/experiments/tree-of-life/explorer/details/constants';
+import { toPath as toDetailsPath } from '@/views/experiments/tree-of-life/explorer/details-path';
 
 // Styles
 import './styles.scss';
@@ -22,7 +22,12 @@ import './styles.scss';
 import { place } from './place';
 
 // Store
-import { getVersion, registry, store, subscribe } from './store';
+import {
+  getVersion,
+  registry,
+  store,
+  subscribe,
+} from '@/views/experiments/tree-of-life/explorer/label-store';
 
 // Projector
 import { LabelProjector } from './projector';

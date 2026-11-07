@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Bubble, Text } from 'design/components';
 
 // Partials
-import { MessageText } from '@/views/experiments/image-agent/chat/conversation/message/text';
+import { MessageText } from '@/views/experiments/image-agent/chat/conversation/text';
 
 // Hooks
 import { useElapsed } from './use-elapsed';

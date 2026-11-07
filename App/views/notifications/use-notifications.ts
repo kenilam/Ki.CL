@@ -14,7 +14,7 @@ import {
 import { useLocation } from 'design/router';
 
 // Constants
-import { RECORD_PATHS } from '@/views/constants';
+import { RECORD_PATHS } from '@/views/routes';
 import { LOOKS } from './constants';
 
 function useNotifications() {

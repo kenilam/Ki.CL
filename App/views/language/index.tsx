@@ -10,7 +10,7 @@ import { LanguageSelect, type LanguageSelectProps } from 'design/widgets';
 import { chooseLanguage } from '@/i18n';
 
 // Hooks
-import { useLanguages } from './use-languages';
+import { useLanguages } from '@/views/use-languages';
 
 const Language: React.FunctionComponent<
   Pick<LanguageSelectProps<string>, 'className' | 'inline' | 'placement'>

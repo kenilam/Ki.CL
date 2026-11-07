@@ -8,7 +8,7 @@ import { Spinner } from 'design/components';
 
 // Views
 import { useAccount } from '@/views/account/use-account';
-import { PATH as HOME_PATH } from '@/views/home';
+import { PAGES } from '@/views/routes';
 
 /** The routes inside need a signed-in user. Anyone else is sent home. */
 const Gate: React.FunctionComponent = () => {
@@ -19,7 +19,7 @@ const Gate: React.FunctionComponent = () => {
   }
 
   if (!me) {
-    return <Navigate replace to={`/${HOME_PATH}`} />;
+    return <Navigate replace to={PAGES.home} />;
   }
 
   return <Outlet />;

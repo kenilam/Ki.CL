@@ -1,16 +1,11 @@
 // Kinematics
-import {
-  ceiling,
-  forward,
-  solve,
-  type Point,
-} from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import { ceiling, forward, solve, type Point } from './kinematics';
 
 // Arm geometry
 import { type Carried, collides, grazes, hitting } from './body';
 
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Solid } from './solid';
 
 /** Spacing of the poses tested along a move, in metres. */
 const SAMPLE = 0.03;

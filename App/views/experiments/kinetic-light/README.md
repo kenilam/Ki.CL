@@ -152,8 +152,8 @@ an acoustic kit or a drum machine, or not at all.
   clock and works the same after a pause.
 - **The piano** is the mf layer of Splendid Grand Piano, public domain
   samples by Akai: 26 notes, three to four semitones apart, cut to eight
-  seconds. `song/samples/build-piano.sh` rebuilds them from a pinned commit and
-  `song/samples/upload.sh <build> piano` puts them in the static bucket at
+  seconds. `song/player/samples/build-piano.sh` rebuilds them from a pinned commit and
+  `song/player/samples/upload.sh <build> piano` puts them in the static bucket at
   `kinetic-light/piano/`. The files are renamed to scientific pitch with `s`
   for a sharp, because the source names notes an octave low and has spaces
   and `#` in its names. In some of the source's samples the right channel is
@@ -194,9 +194,9 @@ an acoustic kit or a drum machine, or not at all.
 - Every drum file peaks at -1 dBFS and a keyboard note keeps its own level,
   so the volumes in `song/player/sounds.ts` set the balance. They were measured
   in LUFS on real songs: every sound sits with the grand and every drum set
-  with the kit, 8 to 12 LU under it. `song/samples/build-samples.sh` rebuilds
+  with the kit, 8 to 12 LU under it. `song/player/samples/build-samples.sh` rebuilds
   every set but the piano from pinned commits, a folder each, and
-  `song/samples/upload.sh <build>/<folder> <folder>` puts one at
+  `song/player/samples/upload.sh <build>/<folder> <folder>` puts one at
   `kinetic-light/<folder>/`. A sound or a drum set loads the first time it's
   chosen.
 - **The output** goes through a soft clipper, which leaves everything under

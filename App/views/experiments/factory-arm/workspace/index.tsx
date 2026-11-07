@@ -15,11 +15,11 @@ import { FactoryArmProvider } from '@/views/experiments/factory-arm/context';
 import { useSetup } from '@/views/experiments/factory-arm/setup';
 
 // Partials
-import { Alert } from '@/views/experiments/factory-arm/alert';
+import { Alert } from './alert';
 import { Notice } from './notice';
 import { Remove } from './remove';
-import { Panel } from '@/views/experiments/factory-arm/panel';
-import { Scene } from '@/views/experiments/factory-arm/scene';
+import { Panel } from './panel';
+import { Scene } from './scene';
 
 // Styles
 import './styles.scss';

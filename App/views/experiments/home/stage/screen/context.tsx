@@ -1,10 +1,7 @@
 import React, { PropsWithChildren, useContext } from 'react';
 
 // Constants
-import {
-  EXPERIMENTS,
-  type Experiment,
-} from '@/views/experiments/home/constants';
+import { EXPERIMENTS, type Experiment } from '@/views/routes';
 
 type Value = {
   experiment: Experiment;
