@@ -5,32 +5,32 @@ import type { Style } from '@/views/experiments/kinetic-light/read/beat';
 import {
   DRUM_MACHINE,
   DRUM_MACHINE_URL,
-} from '@/views/experiments/kinetic-light/samples/drum-machine';
+} from '@/views/experiments/kinetic-light/song/player/samples/drum-machine';
 import {
   DRUMS,
   DRUMS_URL,
   LOFI_URL,
-} from '@/views/experiments/kinetic-light/samples/drums';
+} from '@/views/experiments/kinetic-light/song/player/samples/drums';
 import {
   LINNDRUM,
   LINNDRUM_URL,
-} from '@/views/experiments/kinetic-light/samples/linndrum';
+} from '@/views/experiments/kinetic-light/song/player/samples/linndrum';
 import {
   PERCUSSION,
   PERCUSSION_URL,
-} from '@/views/experiments/kinetic-light/samples/percussion';
+} from '@/views/experiments/kinetic-light/song/player/samples/percussion';
 import {
   PIANO,
   PIANO_URL,
-} from '@/views/experiments/kinetic-light/samples/piano';
+} from '@/views/experiments/kinetic-light/song/player/samples/piano';
 import {
   UPRIGHT,
   UPRIGHT_URL,
-} from '@/views/experiments/kinetic-light/samples/upright';
+} from '@/views/experiments/kinetic-light/song/player/samples/upright';
 import {
   WURLITZER,
   WURLITZER_URL,
-} from '@/views/experiments/kinetic-light/samples/wurlitzer';
+} from '@/views/experiments/kinetic-light/song/player/samples/wurlitzer';
 
 type Instrument = keyof typeof INSTRUMENTS | 'synth';
 

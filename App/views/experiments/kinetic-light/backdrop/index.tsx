@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -7,11 +7,8 @@ import classNames from 'classnames';
 import { Canvas } from '@/three';
 
 // Context
-import { DEFAULT_SETTINGS } from '@/views/experiments/kinetic-light/player/context';
-import {
-  StageContext,
-  type Settings,
-} from '@/views/experiments/kinetic-light/stage/context';
+import { DEFAULT_SETTINGS } from '@/views/experiments/kinetic-light/stage/settings';
+import { StageContext } from '@/views/experiments/kinetic-light/stage/context';
 
 // Partials
 import { Scene } from '@/views/experiments/kinetic-light/stage/scene';
@@ -26,7 +23,6 @@ import { LENGTH, PIECE, START } from './interstellar';
 const CLASS_NAME = `${VIEW}__backdrop`;
 
 const Backdrop: React.FunctionComponent = () => {
-  const settings = useRef<Settings>({ ...DEFAULT_SETTINGS });
   const still = useMemo(() => {
     return matchMedia('(prefers-reduced-motion: reduce)').matches;
   }, []);
@@ -46,7 +42,12 @@ const Backdrop: React.FunctionComponent = () => {
 
   return (
     <StageContext.Provider
-      value={{ clock, length: LENGTH, piece: PIECE, settings }}
+      value={{
+        clock,
+        length: LENGTH,
+        piece: PIECE,
+        settings: DEFAULT_SETTINGS,
+      }}
     >
       <Canvas
         aria-hidden

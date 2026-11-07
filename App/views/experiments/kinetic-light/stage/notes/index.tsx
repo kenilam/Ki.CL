@@ -74,7 +74,7 @@ const Notes: React.FunctionComponent<Props> = ({ hits, palette, span }) => {
     }
 
     const now = clock();
-    const { hue, speed } = settings.current;
+    const { hue, speed } = settings;
 
     if (now < last.current) {
       next.current = firstAt(notes, now);

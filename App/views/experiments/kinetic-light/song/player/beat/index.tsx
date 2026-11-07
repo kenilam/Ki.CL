@@ -19,8 +19,8 @@ import {
 import type { KineticLightBeat } from 'api/provider';
 
 // Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/player/context';
-import type { Beat as Value } from '@/views/experiments/kinetic-light/player/use-transport';
+import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
+import type { Beat as Value } from '@/views/experiments/kinetic-light/song/player/use-transport';
 
 const BEATS: Value[] = [
   'none',

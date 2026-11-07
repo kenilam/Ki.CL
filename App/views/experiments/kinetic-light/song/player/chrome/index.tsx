@@ -19,16 +19,16 @@ import {
 } from 'design/components';
 
 // Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/player/context';
+import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
 
 // Hooks
-import { useArrangement } from '@/views/experiments/kinetic-light/player/use-arrangement';
+import { useArrangement } from '@/views/experiments/kinetic-light/song/player/use-arrangement';
 
 // Partials
-import { Beat } from '@/views/experiments/kinetic-light/player/beat';
-import { Settings } from '@/views/experiments/kinetic-light/player/settings';
-import { Sound } from '@/views/experiments/kinetic-light/player/sound';
-import { Title } from '@/views/experiments/kinetic-light/player/title';
+import { Beat } from '@/views/experiments/kinetic-light/song/player/beat';
+import { Settings } from '@/views/experiments/kinetic-light/song/player/settings';
+import { Sound } from '@/views/experiments/kinetic-light/song/player/sound';
+import { Title } from '@/views/experiments/kinetic-light/song/player/title';
 
 // Styles
 import './styles.scss';

@@ -19,8 +19,8 @@ import {
 import type { KineticLightVoice } from 'api/provider';
 
 // Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/player/context';
-import type { Voice } from '@/views/experiments/kinetic-light/player/use-transport';
+import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
+import type { Voice } from '@/views/experiments/kinetic-light/song/player/use-transport';
 
 const VOICES: Voice[] = ['grand', 'upright', 'sixteen', 'wurlitzer', 'synth'];
 

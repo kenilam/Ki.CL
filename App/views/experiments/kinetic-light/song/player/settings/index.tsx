@@ -19,11 +19,9 @@ import {
 } from 'design/components';
 
 // Context
-import {
-  settingsOf,
-  usePlayerContext,
-  type Settings as Values,
-} from '@/views/experiments/kinetic-light/player/context';
+import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
+import { settingsOf } from '@/views/experiments/kinetic-light/song/settings';
+import type { Settings as Values } from '@/views/experiments/kinetic-light/stage/settings';
 
 // Styles
 import './styles.scss';
@@ -42,14 +40,8 @@ const RANGES: Record<keyof Values, { max: number; min: number; step: number }> =
 
 const KEYS = ['speed', 'hue', 'glow'] as const;
 
-export const DEFAULT: Record<keyof Values, number> = {
-  glow: 0.8,
-  hue: 0.5,
-  speed: 3,
-};
-
 const Settings: React.FunctionComponent = () => {
-  const { save, setSetting, song } = usePlayerContext();
+  const { save, song } = usePlayerContext();
   const values = settingsOf(song?.arrangement);
   const { t } = useTranslation('kinetic-light');
   return (
@@ -80,15 +72,7 @@ const Settings: React.FunctionComponent = () => {
                     defaultValue={values[key]}
                     max={RANGES[key].max}
                     min={RANGES[key].min}
-                    onChange={(event) =>
-                      setSetting(key, Number(event.target.value))
-                    }
-                    onKeyUp={(event) =>
-                      save(key, Number(event.currentTarget.value))
-                    }
-                    onPointerUp={(event) =>
-                      save(key, Number(event.currentTarget.value))
-                    }
+                    onChange={(event) => save(key, Number(event.target.value))}
                     step={RANGES[key].step}
                     type='range'
                   />

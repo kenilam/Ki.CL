@@ -18,10 +18,10 @@ import { useParams } from 'design/router';
 
 // Context
 import { useKineticLightContext } from '@/views/experiments/kinetic-light/context';
-import { usePlayerContext } from '@/views/experiments/kinetic-light/player/context';
+import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
 
 // Partials
-import { Generate } from '@/views/experiments/kinetic-light/player/generate';
+import { Generate } from '@/views/experiments/kinetic-light/song/player/generate';
 import { Songs } from '@/views/experiments/kinetic-light/songs';
 
 // Constants

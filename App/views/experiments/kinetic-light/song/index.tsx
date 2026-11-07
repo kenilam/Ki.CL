@@ -10,13 +10,15 @@ import { Spinner } from 'design/components';
 import { PARAM } from '@/views/experiments/kinetic-light/constants';
 
 const Player = React.lazy(async () => {
-  const { Player } = await import('@/views/experiments/kinetic-light/player');
+  const { Player } =
+    await import('@/views/experiments/kinetic-light/song/player');
 
   return { default: Player };
 });
 
 const Stage = React.lazy(async () => {
-  const { Stage } = await import('@/views/experiments/kinetic-light/stage');
+  const { Stage } =
+    await import('@/views/experiments/kinetic-light/song/stage');
 
   return { default: Stage };
 });

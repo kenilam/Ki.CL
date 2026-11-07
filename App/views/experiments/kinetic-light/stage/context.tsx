@@ -3,17 +3,14 @@ import React, { useContext } from 'react';
 // Readers
 import type { Piece } from '@/views/experiments/kinetic-light/read/piece';
 
-type Settings = {
-  glow: number;
-  hue: number;
-  speed: number;
-};
+// Settings
+import type { Settings } from './settings';
 
 type Value = {
   clock: () => number;
   length: number;
   piece: Piece;
-  settings: React.RefObject<Settings>;
+  settings: Settings;
 };
 
 const Context = React.createContext<Value | null>(null);
@@ -28,4 +25,4 @@ const useStageContext = (): Value => {
   return value;
 };
 
-export { Context as StageContext, useStageContext, type Settings };
+export { Context as StageContext, useStageContext };

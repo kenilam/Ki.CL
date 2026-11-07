@@ -18,6 +18,9 @@ import {
   type Piece,
 } from '@/views/experiments/kinetic-light/read/piece';
 
+// Song
+import { LEAD_SECONDS } from '@/views/experiments/kinetic-light/song/clock';
+
 // Sounds
 import {
   ARRANGED,
@@ -49,16 +52,13 @@ type Sound = {
 
 type Transport = {
   beat: Beat;
-  clock: () => number;
   error: boolean;
-  length: number;
   pause: () => void;
   play: () => Promise<void>;
   status: Status;
   voice: Voice;
 };
 
-const LEAD_SECONDS = 2;
 const RAMP_SECONDS = 0.05;
 const SHELF_HZ = 1000;
 const DELAY_BEATS = 0.75;
@@ -68,12 +68,6 @@ const CEILING = 10 ** (-1 / 20);
 const KNEE = 10 ** (-3 / 20);
 const HEADROOM = 2;
 const CURVE_LENGTH = 4096;
-
-const latency = (): number => {
-  const context = Tone.getContext().rawContext;
-
-  return 'outputLatency' in context ? context.outputLatency || 0 : 0;
-};
 
 const soften = (input: number): number => {
   const level = Math.abs(input * HEADROOM);
@@ -175,18 +169,6 @@ function useTransport(
     current.drums[style] = created;
 
     return created;
-  }, []);
-
-  const clock = useCallback(() => {
-    const transport = Tone.getTransport();
-
-    if (transport.state !== 'started') {
-      return transport.seconds - LEAD_SECONDS;
-    }
-
-    return (
-      transport.getSecondsAtTime(Tone.immediate() - latency()) - LEAD_SECONDS
-    );
   }, []);
 
   const load = useCallback(async () => {
@@ -356,9 +338,7 @@ function useTransport(
 
   return {
     beat,
-    clock,
     error,
-    length,
     pause,
     play,
     status,

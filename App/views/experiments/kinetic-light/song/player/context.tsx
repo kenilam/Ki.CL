@@ -1,24 +1,27 @@
-import React, { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
+
+// Libraries
+import { useTranslation } from 'react-i18next';
 
 // API
-import {
-  useApolloClient,
-  type Kicl_KineticLightReadingQuery,
-} from 'api/provider';
+import { useApolloClient } from 'api/provider';
 
 // Readers
 import type { Piece } from '@/views/experiments/kinetic-light/read/piece';
 
-// Context
-import type { Settings } from '@/views/experiments/kinetic-light/stage/context';
+// Song
+import { DEFAULT_SETTINGS } from '@/views/experiments/kinetic-light/stage/settings';
+import {
+  useSong,
+  type Song,
+} from '@/views/experiments/kinetic-light/song/use-song';
 
 // Hooks
-import { useSong } from './use-song';
 import { useTransport, type Transport } from './use-transport';
 
-import { DEFAULT as DEFAULT_SETTINGS } from './settings';
-
-type Song = NonNullable<Kicl_KineticLightReadingQuery['kineticLightReading']>;
+// Constants
+import { PATH as EXPERIMENTS } from '@/views/experiments/constants';
+import { PATH } from '@/views/experiments/kinetic-light/constants';
 
 type Choice = Pick<
   NonNullable<Song['arrangement']>,
@@ -30,23 +33,11 @@ type Value = {
   piece: Piece;
   playable: boolean;
   save: <Key extends keyof Choice>(key: Key, value: Choice[Key]) => void;
-  setSetting: (key: keyof Settings, value: number) => void;
-  settings: React.RefObject<Settings>;
   song?: Song;
   transport: Transport;
 };
 
 const Context = React.createContext<Value | null>(null);
-
-const settingsOf = (
-  arrangement: Song['arrangement'] | undefined
-): Settings => ({
-  ...DEFAULT_SETTINGS,
-  ...arrangement,
-  glow: arrangement?.glow ?? DEFAULT_SETTINGS.glow,
-  hue: arrangement?.hue ?? DEFAULT_SETTINGS.hue,
-  speed: arrangement?.speed ?? DEFAULT_SETTINGS.speed,
-});
 
 const SILENCE: Piece = {
   beatsPerBar: 4,
@@ -67,6 +58,7 @@ const START = {
 
 const usePlayer = (): Value => {
   const client = useApolloClient();
+  const { t } = useTranslation();
   const { loading, piece, song } = useSong();
   const arrangement = song?.arrangement;
   const transport = useTransport(piece ?? SILENCE, arrangement);
@@ -89,22 +81,22 @@ const usePlayer = (): Value => {
     },
     [client, song]
   );
-  const settings = useRef(settingsOf(arrangement));
-  const setSetting = useCallback((key: keyof Settings, value: number) => {
-    settings.current[key] = value;
-  }, []);
 
   useEffect(() => {
-    settings.current = settingsOf(arrangement);
-  }, [arrangement, piece]);
+    if (!piece) {
+      return;
+    }
+
+    document.title = t('document_title', {
+      routes: [EXPERIMENTS, PATH, piece.title].join(' | '),
+    });
+  }, [piece, t]);
 
   return {
     loading,
     piece: piece ?? SILENCE,
     playable: Boolean(piece),
     save,
-    setSetting,
-    settings,
     song,
     transport,
   };
@@ -120,12 +112,4 @@ const usePlayerContext = (): Value => {
   return value;
 };
 
-export {
-  Context as PlayerContext,
-  DEFAULT_SETTINGS,
-  settingsOf,
-  usePlayer,
-  usePlayerContext,
-  type Settings,
-  type Song,
-};
+export { Context as PlayerContext, usePlayer, usePlayerContext };

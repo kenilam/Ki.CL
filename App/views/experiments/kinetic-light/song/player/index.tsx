@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { Frame, Layout, Spinner } from 'design/components';
 
 // Context
-import { StageContext } from '@/views/experiments/kinetic-light/stage/context';
 import { PlayerContext, usePlayer } from './context';
 
 // Partials
@@ -21,7 +20,7 @@ const CLASS_NAME = `${VIEW}__player`;
 
 const Player: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
   const value = usePlayer();
-  const { loading, piece, playable, settings, transport } = value;
+  const { loading, playable } = value;
 
   return (
     <PlayerContext.Provider value={value}>
@@ -39,16 +38,7 @@ const Player: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
             >
               {playable ? (
                 <>
-                  <StageContext.Provider
-                    value={{
-                      clock: transport.clock,
-                      length: transport.length,
-                      piece,
-                      settings,
-                    }}
-                  >
-                    {children}
-                  </StageContext.Provider>
+                  {children}
                   <Chrome />
                 </>
               ) : null}

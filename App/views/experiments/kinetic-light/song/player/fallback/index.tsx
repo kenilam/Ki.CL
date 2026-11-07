@@ -11,7 +11,7 @@ import { Heading, HyperLink, Text } from 'design/components';
 import { Status404 } from 'design/status';
 
 // Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/player/context';
+import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
 
 // Constants
 import {

@@ -1,7 +1,4 @@
-import { useEffect, useMemo } from 'react';
-
-// Libraries
-import { useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
 
 // API
 import {
@@ -17,11 +14,12 @@ import { useParams } from 'design/router';
 import { readSong } from '@/views/experiments/kinetic-light/read/song';
 
 // Constants
-import { PATH as EXPERIMENTS } from '@/views/experiments/constants';
-import { PATH, type PARAM } from '@/views/experiments/kinetic-light/constants';
+import type { PARAM } from '@/views/experiments/kinetic-light/constants';
+
+type Song = NonNullable<Kicl_KineticLightReadingQuery['kineticLightReading']>;
 
 const EMPTY: Pick<
-  NonNullable<Kicl_KineticLightReadingQuery['kineticLightReading']>,
+  Song,
   | 'beatsPerBar'
   | 'chords'
   | 'midi'
@@ -43,7 +41,6 @@ const EMPTY: Pick<
 
 function useSong() {
   const { id = '' } = useParams<typeof PARAM>();
-  const { t } = useTranslation();
   const { data, loading, previousData } = useQuery(
     Kicl_KineticLightReadingDocument,
     { fetchPolicy: 'cache-first', variables: { id } }
@@ -67,17 +64,7 @@ function useSong() {
     [beatsPerBar, chords, midi, musicxml, source, status, tempo, title]
   );
 
-  useEffect(() => {
-    if (!piece) {
-      return;
-    }
-
-    document.title = t('document_title', {
-      routes: [EXPERIMENTS, PATH, piece.title].join(' | '),
-    });
-  }, [piece, t]);
-
   return { loading, piece, song };
 }
 
-export { useSong };
+export { useSong, type Song };

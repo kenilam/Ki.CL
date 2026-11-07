@@ -14,7 +14,8 @@ import {
 import { useLocation } from 'design/router';
 
 // Constants
-import { LINKS, LOOKS } from './constants';
+import { RECORD_PATHS } from '@/views/constants';
+import { LOOKS } from './constants';
 
 function useNotifications() {
   const { pathname } = useLocation();
@@ -33,7 +34,7 @@ function useNotifications() {
       return {
         ...notification,
         look: LOOKS[`${key}_${values.context}`] ?? LOOKS[key] ?? {},
-        to: LINKS[notification.collection]?.(notification.documentId),
+        to: RECORD_PATHS[notification.collection]?.(notification.documentId),
       };
     });
 
@@ -45,13 +46,19 @@ function useNotifications() {
         return;
       }
 
-      client.cache.updateQuery({ query: Kicl_NotificationsDocument }, (cached) => {
-        if (!cached || cached.notifications.some(({ id }) => id === updated.id)) {
-          return cached;
-        }
+      client.cache.updateQuery(
+        { query: Kicl_NotificationsDocument },
+        (cached) => {
+          if (
+            !cached ||
+            cached.notifications.some(({ id }) => id === updated.id)
+          ) {
+            return cached;
+          }
 
-        return { notifications: [updated, ...cached.notifications] };
-      });
+          return { notifications: [updated, ...cached.notifications] };
+        }
+      );
     },
     skip: !notifications.some(({ look }) => look.running),
   });
