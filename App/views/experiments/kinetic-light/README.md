@@ -56,11 +56,10 @@ an acoustic kit or a drum machine, or not at all.
     sample.
 - **The model's arrangement.** Generate arranges a song before it's
   ready: a MIDI or MusicXML file right after it's saved, and a sheet once its
-  read finishes, from the notifications on whichever page the visitor is on,
-  which say "Choosing the sound and the beat…" meanwhile. The home page moves
-  to the song when it's done, and only the home page does. A song made before
-  arrangements gets one the first time its owner opens it, and Play waits
-  until it comes. `use-arrange.ts` asks once for each song, whichever of these
+  read finishes, while the home page says "Choosing the sound and the beat…".
+  The home page moves to the song when it's done. A sheet whose read finished
+  after the visitor left, or a song made before arrangements, gets one the
+  first time its owner opens it, and Play waits until it comes. `use-arrange.ts` asks once for each song, whichever of these
   gets there first. `read/outline.ts` turns the piece into an outline: the
   title, tempo, beats per bar, and for each bar where notes start on the
   beat's grid, with `b` for a bass note. `use-arrange.ts` sends it with
@@ -72,15 +71,11 @@ an acoustic kit or a drum machine, or not at all.
   any drum style. When an older song's arrangement
   arrives, the player starts again from it. Changing a setting afterwards
   only changes the page that's open.
-- **`notifications.tsx`** gives the readings to the site's notifications
-  (`App/views/notifications`), which show them with Image Agent's, Tree of
-  Life's and the password change's on every page. `use-readings.ts` asks the
-  API for the visitor's readings once per page load, and the notifications
-  subscribe to
-  `kineticLightReadingUpdated` only while one is being read. The home page and
-  the notifications both use `use-readings.ts` and `progress/`, which shows a
-  reading's progress: the notes, then the bar and note counts, then the chords
-  as the model writes them.
+- **`use-readings.ts`** asks the API for the visitor's sheets still being
+  read, and subscribes to `kineticLightReadingUpdated` while one is. The home
+  form shows its progress through `progress/`: the notes, then the bar and
+  note counts, then the chords as the model writes them. The API tells the
+  site's notifications (`App/views/notifications`) about the same steps.
 - **`home/`** is the index route and **`song/`** is the `:id` route, which
   renders the player with the stage as its index route. Each folder's
   `index.tsx` is its `<Route>`.

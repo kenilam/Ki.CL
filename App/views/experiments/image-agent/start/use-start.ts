@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 // API
 import {
-  Kicl_ImageAgentNotificationsDocument,
+  Kicl_NotificationsDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
 } from 'api/provider';
@@ -25,7 +25,7 @@ function useStart() {
   // A new turn starts, which the notifications at the root watch for.
   const [mutate, { error, loading }] = useMutation(
     Kicl_ImageAgentSendDocument,
-    { refetchQueries: [Kicl_ImageAgentNotificationsDocument] }
+    { refetchQueries: [Kicl_NotificationsDocument] }
   );
   const challenged = useChallenged();
 

@@ -10,6 +10,6 @@ const DEFAULT_NAMESPACE = 'common';
  * everywhere, the header included, so their words are fetched with the
  * default namespace's and not when the first one appears.
  */
-const PRELOADED = [DEFAULT_NAMESPACE, 'design'];
+const PRELOADED = [DEFAULT_NAMESPACE, 'api', 'design'];
 
 export { ACCEPT_LANGUAGE, DEFAULT_NAMESPACE, PRELOADED, SOURCE };

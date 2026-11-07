@@ -1,51 +1,54 @@
 import React from 'react';
 
+// Libraries
+import { useTranslation } from 'react-i18next';
+
 // Components
-import { NotificationGroup } from 'design/components';
+import { Notification, NotificationGroup } from 'design/components';
 
-// Partials
-import { useImageAgentNotifications } from '@/views/experiments/image-agent/notifications';
-import { useKineticLightNotifications } from '@/views/experiments/kinetic-light/notifications';
-import {
-  PlateWatches,
-  useTreeOfLifeNotifications,
-} from '@/views/experiments/tree-of-life/notifications';
-import { usePasswordChangeNotifications } from '@/views/me/password/notifications';
+// Hooks
+import { useNotifications } from './use-notifications';
 
-/**
- * Work that carries on after its page is left. The group opens once one of
- * them has finished, with the ones still running beside it, and closing it
- * clears every finished one.
- */
 const Notifications: React.FunctionComponent = () => {
-  const sources = [
-    useImageAgentNotifications(),
-    useKineticLightNotifications(),
-    usePasswordChangeNotifications(),
-    useTreeOfLifeNotifications(),
-  ];
+  const { t } = useTranslation();
+  const { clear, ended, shown } = useNotifications();
+
+  if (!ended.length) {
+    return null;
+  }
 
   const onOpenChange = (open: boolean) => {
     if (open) {
       return;
     }
 
-    sources.forEach(({ close }) => close());
+    clear(ended.map(({ id }) => id));
   };
 
   return (
-    <>
-      <PlateWatches />
-      {sources.some(({ finished }) => finished) ? (
-        <NotificationGroup
-          defaultOpen
-          onOpenChange={onOpenChange}
-          side='block-start'
-        >
-          {sources.flatMap(({ notifications }) => notifications)}
-        </NotificationGroup>
-      ) : null}
-    </>
+    <NotificationGroup
+      defaultOpen
+      onOpenChange={onOpenChange}
+      side='block-start'
+    >
+      {shown.map(({ id, look, message, title, to }) => {
+        const onClear = look.running ? undefined : () => clear([id]);
+
+        return (
+          <Notification
+            avatar={look.avatar}
+            key={id}
+            level={look.level}
+            onClear={onClear}
+            onClick={onClear}
+            title={t(title.key as never, title.values)}
+            to={to}
+          >
+            {t(message.key as never, message.values)}
+          </Notification>
+        );
+      })}
+    </NotificationGroup>
   );
 };
 

@@ -4,10 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
+  useApolloClient,
   useQuery,
   useSubscription,
   useLazyQuery,
   skipToken,
+  Kicl_NotificationsDocument,
   Kicl_TaxonVisualDocument,
   Kicl_TaxonVisualUpdatedDocument,
   Kicl_TreeOfLifeSubtreeDocument,
@@ -24,7 +26,6 @@ import {
 } from '@/views/experiments/tree-of-life/tree';
 
 // Partials
-import { watch } from '@/views/experiments/tree-of-life/plates';
 import { Plate, announcementFor } from './plate';
 
 // Constants
@@ -85,6 +86,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
     };
   }, [eligible, ottId, name, rank]);
 
+  const client = useApolloClient();
   const { data, loading, error } = useQuery(
     Kicl_TaxonVisualDocument,
     debounced
@@ -113,16 +115,15 @@ const TaxonVisualPanel: React.FC<Props> = ({
     }
   );
 
-  // Watched at the root too, so the visitor hears when it's ready after moving on.
-  const drawing = queryVisual?.status === 'PENDING' ? debounced : null;
+  const drawing = queryVisual?.status === 'PENDING';
 
   useEffect(() => {
     if (!drawing) {
       return;
     }
 
-    watch({ name: drawing.name, nodeId: node.nodeId, ottId: drawing.ottId });
-  }, [drawing, node.nodeId]);
+    void client.refetchQueries({ include: [Kicl_NotificationsDocument] });
+  }, [client, drawing]);
 
   const visual = subscriptionData?.taxonVisualUpdated ?? queryVisual;
   const settled =

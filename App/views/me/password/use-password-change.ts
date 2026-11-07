@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import {
+  Kicl_NotificationsDocument,
   Kicl_PasswordChangeCompleteDocument,
   Kicl_PasswordChangeDocument,
   Kicl_PasswordChangeRequestDocument,
@@ -66,8 +67,12 @@ function usePasswordChange() {
     }
   }
 
-  const [request] = useMutation(Kicl_PasswordChangeRequestDocument);
-  const [complete] = useMutation(Kicl_PasswordChangeCompleteDocument);
+  const [request] = useMutation(Kicl_PasswordChangeRequestDocument, {
+    refetchQueries: [Kicl_NotificationsDocument],
+  });
+  const [complete] = useMutation(Kicl_PasswordChangeCompleteDocument, {
+    refetchQueries: [Kicl_NotificationsDocument],
+  });
 
   /** Rejects with the API's error, for the form to show. */
   const start = useCallback(

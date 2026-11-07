@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 // API
 import {
-  Kicl_ImageAgentNotificationsDocument,
+  Kicl_NotificationsDocument,
   Kicl_ImageAgentRetryDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
@@ -28,10 +28,10 @@ type Options = {
 function useChat({ onSent, threadId }: Options) {
   // A new turn starts, which the notifications at the root watch for.
   const [mutate, sent] = useMutation(Kicl_ImageAgentSendDocument, {
-    refetchQueries: [Kicl_ImageAgentNotificationsDocument],
+    refetchQueries: [Kicl_NotificationsDocument],
   });
   const [again, retried] = useMutation(Kicl_ImageAgentRetryDocument, {
-    refetchQueries: [Kicl_ImageAgentNotificationsDocument],
+    refetchQueries: [Kicl_NotificationsDocument],
   });
   const challenged = useChallenged();
 

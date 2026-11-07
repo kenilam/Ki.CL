@@ -6,7 +6,12 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // API
-import { Kicl_KineticLightAllowanceDocument, useQuery } from 'api/provider';
+import {
+  Kicl_KineticLightAllowanceDocument,
+  Kicl_KineticLightReadingDocument,
+  skipToken,
+  useQuery,
+} from 'api/provider';
 
 // Routes
 import { useNavigate } from 'design/router';
@@ -36,10 +41,14 @@ function useGenerate() {
   };
   const navigate = useNavigate();
   const { arranging, error, loading, read } = useRead();
-  const { readings, running } = useReadings();
+  const { running } = useReadings();
   const arrange = useArrange();
   const [watching, setWatching] = useState<string | null>(null);
-  const watched = readings.find(({ id }) => id === watching);
+  const { data: reading } = useQuery(
+    Kicl_KineticLightReadingDocument,
+    watching ? { variables: { id: watching } } : skipToken
+  );
+  const watched = reading?.kineticLightReading;
   const choosing =
     arranging || (watched?.status === 'READY' && !watched.arrangement);
   const busy = loading || Boolean(running) || choosing;
