@@ -27,8 +27,10 @@ const CLASS_NAME = `${HOME}__banner__words`;
 /** The page's header: the title, a line about it, and a link to a random track. */
 const Words: React.FunctionComponent = () => {
   const [track] = useState(() => draw());
-  const { t } = useTranslation('music-visualiser');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    musicVisualiser: useTranslation('music-visualiser'),
+  };
 
   return (
     <Layout autoFlow='row' gap='none' justifyItems='center'>
@@ -44,14 +46,17 @@ const Words: React.FunctionComponent = () => {
       >
         <BackLink
           className='kicl-margin-block-end'
-          label={common('experiments')}
+          label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
         <Heading is='h1' dense className='kicl-font-size-huge'>
-          {common('experiment', { context: 'music_visualiser' })}
+          {translations.common.t('experiment', { context: 'music_visualiser' })}
         </Heading>
         <Text is='p' className='kicl-margin-block-start-wide'>
-          {t('summary', { scenes: SCENES.length, tracks: TOTAL })}
+          {translations.musicVisualiser.t('summary', {
+            scenes: SCENES.length,
+            tracks: TOTAL,
+          })}
         </Text>
         <HyperLink
           after={<Fa.FaPlay aria-hidden />}
@@ -60,7 +65,7 @@ const Words: React.FunctionComponent = () => {
           size='small'
           to={toTrackPath(track)}
         >
-          {t('action', { context: 'play_random' })}
+          {translations.musicVisualiser.t('action', { context: 'play_random' })}
         </HyperLink>
       </header>
     </Layout>

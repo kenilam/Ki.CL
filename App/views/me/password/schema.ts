@@ -9,11 +9,11 @@ const MAX_PASSWORD = 128;
 export const passwordSchema = (t: TFunction<'me'>) =>
   v.pipe(
     v.object({
-      CurrentPassword: v.pipe(
+      currentPassword: v.pipe(
         v.string(),
         v.minLength(1, t('error', { context: 'current_password' }))
       ),
-      Password: v.pipe(
+      password: v.pipe(
         v.string(),
         v.minLength(
           MIN_PASSWORD,
@@ -27,11 +27,11 @@ export const passwordSchema = (t: TFunction<'me'>) =>
     }),
     v.forward(
       v.partialCheck(
-        [['CurrentPassword'], ['Password']],
-        ({ CurrentPassword, Password }) => CurrentPassword !== Password,
+        [['currentPassword'], ['password']],
+        ({ currentPassword, password }) => currentPassword !== password,
         t('error', { context: 'same_password' })
       ),
-      ['Password']
+      ['password']
     )
   );
 

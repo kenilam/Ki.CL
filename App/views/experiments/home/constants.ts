@@ -4,6 +4,7 @@ import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';
 import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
 import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants';
+import { toPath as toKineticLightPath } from '@/views/experiments/kinetic-light/constants';
 
 /** Root of every class and custom property in this view. */
 const CLASS_NAME = 'kicl--views--experiments__home';
@@ -11,7 +12,12 @@ const CLASS_NAME = 'kicl--views--experiments__home';
 /** `level` is the accent of the panel's button. */
 export type Experiment = Pick<ButtonProps, 'level'> & {
   /** Names it in `common` (`experiment_<context>`) and describes it here (`description_<context>`). */
-  context: 'daylight' | 'image_agent' | 'music_visualiser' | 'tree_of_life';
+  context:
+    | 'daylight'
+    | 'image_agent'
+    | 'kinetic_light'
+    | 'music_visualiser'
+    | 'tree_of_life';
   /** Which background Stage/Screen paints; a class modifier. */
   plate: string;
   to: string;
@@ -41,6 +47,12 @@ const EXPERIMENTS: readonly Experiment[] = [
     level: 'warning',
     plate: 'daylight',
     to: toDaylightPath(),
+  },
+  {
+    context: 'kinetic_light',
+    level: 'neutral',
+    plate: 'kinetic-light',
+    to: toKineticLightPath(),
   },
 ];
 

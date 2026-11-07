@@ -32,17 +32,19 @@ const readPhone = () => {
 
 /** Two lines, as on the printed page: where and how to write, then the profiles. */
 const Contact: React.FunctionComponent = () => {
-  const { t } = useTranslation('resume');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    resume: useTranslation('resume'),
+  };
 
-  const email = common('email');
+  const email = translations.common.t('email');
 
   const phone = readPhone();
 
   return (
     <address className='kicl-font-style-normal'>
       <Text dense>
-        {t('location')}
+        {translations.resume.t('location')}
         <Text className='kicl-print-only' is='span'>
           {SEPARATOR}
         </Text>
@@ -59,9 +61,9 @@ const Contact: React.FunctionComponent = () => {
             <HyperLink
               before={<Icon aria-hidden />}
               className='kicl-text-nowrap'
-              to={common('url', { context })}
+              to={translations.common.t('url', { context })}
             >
-              {t(`profile.${context}`)}
+              {translations.resume.t(`profile.${context}`)}
             </HyperLink>
           </React.Fragment>
         ))}

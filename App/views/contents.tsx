@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 // Libraries
 import classNames from 'classnames';
@@ -19,12 +19,20 @@ import { Layout } from 'design/components';
 import { SignOut } from './account/sign-out';
 import { Contact } from './contact';
 import { Language } from './language';
+import { PasswordChangeProvider } from './me/password/context';
 import { Navigation } from './navigation';
 import { SkipLink } from './skip-link';
 
 // Constants
 import { MAIN_ID } from './constants';
 import { PATH as HOME_PATH } from './home';
+
+// Kept out of the first load: it brings in a part of each experiment.
+const Notifications = React.lazy(async () => {
+  const { Notifications } = await import('./notifications');
+
+  return { default: Notifications };
+});
 
 const Contents: React.FunctionComponent = () => {
   const { pathname } = useLocation();
@@ -56,10 +64,15 @@ const Contents: React.FunctionComponent = () => {
         >
           {/* Every request to the API is counted per session, so every page has one. */}
           <Session>
-            <Outlet />
-            {/* Here, not in a menu or a page: any page's button opens them, with the menus closed. */}
-            <SignOut />
-            <Contact />
+            <PasswordChangeProvider>
+              <Outlet />
+              {/* Here, not in a menu or a page: any page's button opens them, with the menus closed. */}
+              <SignOut />
+              <Contact />
+              <Suspense fallback={null}>
+                <Notifications />
+              </Suspense>
+            </PasswordChangeProvider>
           </Session>
         </main>
       </Layout>

@@ -5,13 +5,20 @@ import {
   Kicl_PasswordChangeDocument,
   Kicl_PasswordChangeRequestDocument,
   Kicl_PasswordChangeUpdatedDocument,
+  skipToken,
   useMutation,
   useQuery,
   useSubscription,
 } from 'api/provider';
 
+// Routes
+import { useLocation } from 'design/router';
+
 // Schema
 import type { PasswordValues } from './schema';
+
+// Constants
+import { PAGE_PATH } from './constants';
 
 type Stage =
   'loading' | 'idle' | 'waiting' | 'saving' | 'done' | 'expired' | 'failed';
@@ -21,21 +28,43 @@ type Stage =
  * current password, keep the new one and send the link, then a subscription
  * waits for the link to be opened.
  *
- * Nothing about the request is kept in the page. On load it asks the API for
- * one that is still open, so a reload carries on waiting.
+ * It runs at the root, so the wait carries on after the page is left. Only the
+ * tab that had the page open waits: the link opens the site in another tab,
+ * and if both completed the change, one of them would fail. On the page it
+ * asks the API for a request that is still open, so a reload there carries on.
  */
 function usePasswordChange() {
-  // What this page did since it loaded. Until then, the API's answer decides.
+  const here = useLocation().pathname === PAGE_PATH;
+
+  // What this tab did since it opened the page. Until then, the API's answer decides.
   const [local, setLocal] = useState<{ id: string; stage: Stage }>();
 
-  const { data, loading } = useQuery(Kicl_PasswordChangeDocument, {
-    fetchPolicy: 'network-only',
-  });
+  const { data, loading } = useQuery(
+    Kicl_PasswordChangeDocument,
+    here ? { fetchPolicy: 'network-only' } : skipToken
+  );
 
-  const open = data?.PasswordChange;
+  const open = here ? data?.passwordChange : undefined;
   const id = local?.id ?? open?.id ?? '';
   const stage =
     local?.stage ?? (loading ? 'loading' : open ? 'waiting' : 'idle');
+  const busy = stage === 'waiting' || stage === 'saving';
+
+  // Kept once the page has found it, so leaving the page doesn't end the wait.
+  if (open && !local) {
+    setLocal({ id: open.id, stage: 'waiting' });
+  }
+
+  // Leaving the page after it showed how the change ended puts the form back for next time.
+  const [wasHere, setWasHere] = useState(here);
+
+  if (wasHere !== here) {
+    setWasHere(here);
+
+    if (wasHere && !busy) {
+      setLocal(undefined);
+    }
+  }
 
   const [request] = useMutation(Kicl_PasswordChangeRequestDocument);
   const [complete] = useMutation(Kicl_PasswordChangeCompleteDocument);
@@ -44,11 +73,11 @@ function usePasswordChange() {
   const start = useCallback(
     async (values: PasswordValues) => {
       const { data } = await request({
-        variables: { PasswordChangeRequest: values },
+        variables: { passwordChangeRequest: values },
       });
 
       if (data) {
-        setLocal({ id: data.PasswordChangeRequest.id, stage: 'waiting' });
+        setLocal({ id: data.passwordChangeRequest.id, stage: 'waiting' });
       }
     },
     [request]
@@ -58,7 +87,7 @@ function usePasswordChange() {
     setLocal({ id, stage: 'saving' });
 
     try {
-      await complete({ variables: { PasswordChangeComplete: { id } } });
+      await complete({ variables: { passwordChangeComplete: { id } } });
       setLocal({ id, stage: 'done' });
     } catch {
       setLocal({ id, stage: 'failed' });
@@ -68,7 +97,7 @@ function usePasswordChange() {
   // Only open while waiting, so the API stops watching once this has its answer.
   useSubscription(Kicl_PasswordChangeUpdatedDocument, {
     onData: ({ data: { data } }) => {
-      const status = data?.PasswordChangeUpdated.status;
+      const status = data?.passwordChangeUpdated.status;
 
       if (status === 'CONFIRMED') {
         void finish();

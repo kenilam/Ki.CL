@@ -32,8 +32,10 @@ import { Unsaved } from './unsaved';
  * save it as a new one.
  */
 const Presets: React.FunctionComponent = () => {
-  const { t } = useTranslation('factory-arm');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    factoryArm: useTranslation('factory-arm'),
+  };
   const { active, cell, discard, presets, proceed } = useSetup();
   // A preset waiting on the operator to confirm starting over.
   const [pending, setPending] = useState<Preset | null>(null);
@@ -52,7 +54,7 @@ const Presets: React.FunctionComponent = () => {
       <List gap='narrow'>
         {presets.map((preset) => {
           const name = preset.context
-            ? t('preset', { context: preset.context })
+            ? translations.factoryArm.t('preset', { context: preset.context })
             : preset.name;
 
           return (
@@ -64,11 +66,11 @@ const Presets: React.FunctionComponent = () => {
                 <>
                   <CardTitle is='span'>{name}</CardTitle>
                   <CardDescription className='kicl-font-family-mono' is='span'>
-                    {summary(t, preset)}
+                    {summary(translations.factoryArm.t, preset)}
                   </CardDescription>
                   <CardAction>
                     <Button
-                      aria-label={t('action', {
+                      aria-label={translations.factoryArm.t('action', {
                         context: preset.id === active ? 'restart' : 'run',
                         name,
                       })}
@@ -92,7 +94,7 @@ const Presets: React.FunctionComponent = () => {
                   size='small'
                   variant='ghost'
                 >
-                  {common('action', { context: 'remove' })}
+                  {translations.common.t('action', { context: 'remove' })}
                 </Button>
               )}
             </Card>

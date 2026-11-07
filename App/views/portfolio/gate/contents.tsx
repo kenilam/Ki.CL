@@ -51,10 +51,10 @@ const Contents: React.FunctionComponent<Props> = ({ path }) => {
     return <Spinner />;
   }
 
-  const me = error ? undefined : data?.Me;
+  const me = error ? undefined : data?.me;
   const signedIn = me?.aud === 'user';
   const allowed = Boolean(
-    signedIn && me.Portfolios.some((portfolio) => portfolio.Path === path)
+    signedIn && me.portfolios.some((portfolio) => portfolio.path === path)
   );
 
   if (!allowed) {

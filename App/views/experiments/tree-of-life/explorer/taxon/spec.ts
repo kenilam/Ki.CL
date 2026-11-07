@@ -7,7 +7,7 @@ import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/provider';
  * a node, so the null is stripped here rather than guarded at every use.
  */
 export type Taxon = NonNullable<
-  Kicl_TreeOfLifeSubtreeQuery['TreeOfLifeSubtree']
+  Kicl_TreeOfLifeSubtreeQuery['treeOfLifeSubtree']
 >;
 
 /** What a taxon reports once it has finished arriving or leaving. */

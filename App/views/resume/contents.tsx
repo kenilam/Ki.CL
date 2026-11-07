@@ -75,8 +75,11 @@ const SECTIONS: Record<SectionId, React.FunctionComponent> = {
 const Resume: React.FunctionComponent = () => {
   const { version: slug } = useParams();
 
-  const { t } = useTranslation('resume');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+
+    resume: useTranslation('resume'),
+  };
 
   const found = findVersion(slug);
 
@@ -87,13 +90,18 @@ const Resume: React.FunctionComponent = () => {
         found,
         // The default is what i18next shows anyway. Naming it tells the types
         // that a line need not have a wording for every version.
-        (key, context) => t(key, { context, defaultValue: key }),
-        (context) => common('organisation', { context })
+        (key, context) =>
+          translations.resume.t(key, { context, defaultValue: key }),
+        (context) => translations.common.t('organisation', { context })
       ),
-    [common, found, t]
+    [found, translations.common, translations.resume]
   );
 
-  usePrintTitle(t('print_title', { name: common('name') }));
+  usePrintTitle(
+    translations.resume.t('print_title', {
+      name: translations.common.t('name'),
+    })
+  );
 
   if (!version) {
     return <Status404 />;

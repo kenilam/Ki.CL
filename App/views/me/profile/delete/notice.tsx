@@ -30,8 +30,8 @@ const Notice: React.FunctionComponent<Props> = ({ id }) => {
     variables: { limit: 1 },
   });
 
-  const portfolios = me?.Portfolios.length ?? 0;
-  const conversations = Boolean(data?.ImageAgentThreads.length);
+  const portfolios = me?.portfolios.length ?? 0;
+  const conversations = Boolean(data?.imageAgentThreads.length);
 
   if (!portfolios && !conversations) {
     return (

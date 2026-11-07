@@ -36,8 +36,10 @@ const runs = (log: Entry[]) => {
  * how it started, to open when wanted.
  */
 const Log: React.FunctionComponent = () => {
-  const { i18n, t } = useTranslation('factory-arm');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    factoryArm: useTranslation('factory-arm'),
+  };
   const { clearLog, log } = useSetup();
   const [latest, ...earlier] = runs(log);
 
@@ -51,22 +53,25 @@ const Log: React.FunctionComponent = () => {
             // Oldest last: the step that started that run. A run the page opened with wasn't started by a step.
             const first = entries[entries.length - 1];
             const name = first.start
-              ? t('step', {
+              ? translations.factoryArm.t('step', {
                   ...first.note.values,
                   context: first.note.context,
                 })
-              : t('run', { context: 'opened' });
+              : translations.factoryArm.t('run', { context: 'opened' });
 
             return (
               <Details
                 key={first.id}
                 summary={
                   <Text dense is='span'>
-                    {t('run', {
+                    {translations.factoryArm.t('run', {
                       context: 'summary',
                       count: entries.length,
                       name,
-                      time: time(first.at, i18n.language),
+                      time: time(
+                        first.at,
+                        translations.factoryArm.i18n.language
+                      ),
                     })}
                   </Text>
                 }
@@ -78,7 +83,7 @@ const Log: React.FunctionComponent = () => {
         </>
       ) : (
         <Text className='kicl-color-grey' is='p'>
-          {t('status', { context: 'empty' })}
+          {translations.factoryArm.t('status', { context: 'empty' })}
         </Text>
       )}
 
@@ -92,7 +97,7 @@ const Log: React.FunctionComponent = () => {
               size='small'
               variant='secondary'
             >
-              {common('action', { context: 'clear' })}
+              {translations.common.t('action', { context: 'clear' })}
             </Button>
           </SheetFooter>
         </Animation>

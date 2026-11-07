@@ -10,6 +10,7 @@ import { Spinner } from 'design/components';
 import { Daylight } from './daylight';
 import { FactoryArm } from './factory-arm';
 import { ImageAgent } from './image-agent';
+import { KineticLight } from './kinetic-light';
 import { MusicVisualiser } from './music-visualiser';
 import { TreeOfLife } from './tree-of-life';
 
@@ -36,21 +37,24 @@ const Lazy: React.FunctionComponent = () => {
 };
 
 const Experiments = (
-  <Origin path={PATH} element={<Lazy />}>
-    <Origin
-      index
-      element={
-        <Suspense fallback={<Spinner />}>
-          <Home />
-        </Suspense>
-      }
-    />
-    {TreeOfLife}
-    {MusicVisualiser}
-    {ImageAgent}
-    {FactoryArm}
-    {Daylight}
-  </Origin>
+  <>
+    <Origin path={PATH} element={<Lazy />}>
+      <Origin
+        index
+        element={
+          <Suspense fallback={<Spinner />}>
+            <Home />
+          </Suspense>
+        }
+      />
+      {TreeOfLife}
+      {MusicVisualiser}
+      {ImageAgent}
+      {FactoryArm}
+      {Daylight}
+      {KineticLight}
+    </Origin>
+  </>
 );
 
 export { PATH, Experiments };

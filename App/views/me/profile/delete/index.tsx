@@ -47,7 +47,7 @@ const Delete: React.FunctionComponent = () => {
   const noticeId = useId();
 
   const form = useForm<DeleteValues>({
-    defaultValues: { CurrentPassword: '' },
+    defaultValues: { currentPassword: '' },
     resolver: valibotResolver(schema),
   });
 
@@ -57,7 +57,7 @@ const Delete: React.FunctionComponent = () => {
 
   const onSubmit = async (values: DeleteValues) => {
     try {
-      await deleteMe({ variables: { DeleteMe: values } });
+      await deleteMe({ variables: { deleteMe: values } });
       await ended();
     } catch (error) {
       form.setError('root', {

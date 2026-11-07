@@ -38,7 +38,7 @@ const Profile: React.FunctionComponent = () => {
               {t('title', { context: 'profile' })}
             </CardTitle>
             <CardDescription>
-              {t('signed_in_as', { email: me.Email })}
+              {t('signed_in_as', { email: me.email })}
             </CardDescription>
             <HyperLink
               lookLikeButton

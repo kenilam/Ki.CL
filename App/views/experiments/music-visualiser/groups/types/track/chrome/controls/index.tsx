@@ -36,8 +36,10 @@ const CLASS_NAME = `${VIEW}__chrome__controls`;
  */
 const Controls: React.FunctionComponent = () => {
   const { control, next, track } = useTrackContext();
-  const { t } = useTranslation('music-visualiser');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    musicVisualiser: useTranslation('music-visualiser'),
+  };
 
   return (
     // Fades as one while the listener is still.
@@ -51,7 +53,7 @@ const Controls: React.FunctionComponent = () => {
     >
       <ListItem>
         <HyperLink
-          aria-label={common('action', { context: 'pause' })}
+          aria-label={translations.common.t('action', { context: 'pause' })}
           lookLikeButton
           size='small'
           to={toTrackPath(track)}
@@ -66,7 +68,9 @@ const Controls: React.FunctionComponent = () => {
       </ListItem>
       <ListItem>
         <HyperLink
-          aria-label={t('action', { context: 'next' })}
+          aria-label={translations.musicVisualiser.t('action', {
+            context: 'next',
+          })}
           disabled={!next}
           lookLikeButton
           size='small'

@@ -4,8 +4,8 @@ import type { TFunction } from 'i18next';
 
 export const signInSchema = (t: TFunction<'portfolio'>) =>
   v.object({
-    Email: v.pipe(v.string(), v.email(t('error', { context: 'email' }))),
-    Password: v.pipe(
+    email: v.pipe(v.string(), v.email(t('error', { context: 'email' }))),
+    password: v.pipe(
       v.string(),
       v.minLength(1, t('error', { context: 'password' }))
     ),

@@ -90,7 +90,7 @@ function statusKey({
   return matches > 0 ? 'matched' : 'unmatched';
 }
 
-type Result = Kicl_TaxonSearchQuery['TaxonSearch'][number];
+type Result = Kicl_TaxonSearchQuery['taxonSearch'][number];
 
 /** What the dropdown offers: a name to show and the node it leads to. */
 type Option = {
@@ -160,7 +160,7 @@ const Search: React.FunctionComponent = () => {
    */
   const searching = query.trim().length >= MIN_LENGTH;
 
-  const found: Option[] = (searching ? (data?.TaxonSearch ?? []) : [])
+  const found: Option[] = (searching ? (data?.taxonSearch ?? []) : [])
     .filter((result: Result) => Boolean(result.nodeId))
     .map((result: Result) => ({
       nodeId: result.nodeId as string,

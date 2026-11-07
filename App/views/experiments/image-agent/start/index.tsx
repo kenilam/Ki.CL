@@ -38,7 +38,7 @@ const Start: React.FunctionComponent = () => {
 
   // Shares the allowance badge's cached query.
   const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
-  const spent = data?.ImageAgentAllowance.remaining === 0;
+  const spent = data?.imageAgentAllowance.remaining === 0;
 
   return (
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>

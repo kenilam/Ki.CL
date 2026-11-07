@@ -14,7 +14,7 @@ import { FiberProvider, useContextBridge } from 'its-fine';
 
 type Props = Pick<
   Fiber.RenderProps<HTMLCanvasElement>,
-  'camera' | 'dpr' | 'gl' | 'shadows'
+  'camera' | 'dpr' | 'frameloop' | 'gl' | 'shadows'
 > &
   React.ComponentPropsWithoutRef<'canvas'> & {
     children: React.ReactNode;
@@ -46,6 +46,7 @@ const Scene: React.FunctionComponent<Props> = ({
   children,
   className,
   dpr,
+  frameloop,
   gl,
   shadows,
   ...rest
@@ -105,6 +106,7 @@ const Scene: React.FunctionComponent<Props> = ({
         camera,
         dpr,
         events: Fiber.events,
+        frameloop,
         gl,
         onCreated: (state) => state.events.connect?.(element),
         shadows,

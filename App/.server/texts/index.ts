@@ -17,7 +17,7 @@ const TTL_MS = 60_000;
 const TIMEOUT_MS = 2000;
 
 const QUERY =
-  'query kicl_Translations($namespaces: [String!]!) { Translations(namespaces: $namespaces) { field value } }';
+  'query kicl_translations($namespaces: [String!]!) { translations(namespaces: $namespaces) { field value } }';
 
 type Texts = Record<string, string>;
 
@@ -59,7 +59,7 @@ const createTexts = (token: () => string | null = () => null) => {
 
       const response = await fetch(`${BACKEND_URL}/api`, {
         body: JSON.stringify({
-          operationName: 'kicl_Translations',
+          operationName: 'kicl_translations',
           query: QUERY,
           variables: { namespaces: ['server'] },
         }),
@@ -72,7 +72,7 @@ const createTexts = (token: () => string | null = () => null) => {
       });
 
       const { data } = (await response.json()) as {
-        data?: { Translations: Array<{ field: string; value: string }> };
+        data?: { translations: Array<{ field: string; value: string }> };
       };
 
       if (data) {
@@ -80,7 +80,7 @@ const createTexts = (token: () => string | null = () => null) => {
         texts = {
           ...seeded,
           ...Object.fromEntries(
-            data.Translations.map(({ field, value }) => [field, value])
+            data.translations.map(({ field, value }) => [field, value])
           ),
         };
       }

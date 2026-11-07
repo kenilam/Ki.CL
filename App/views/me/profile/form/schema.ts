@@ -14,8 +14,8 @@ const name = (t: TFunction<'me'>) =>
 /** The limit matches the API's `UpdateMe` validation. */
 export const profileSchema = (t: TFunction<'me'>) =>
   v.object({
-    FirstName: name(t),
-    LastName: name(t),
+    firstName: name(t),
+    lastName: name(t),
   });
 
 export type ProfileValues = v.InferOutput<ReturnType<typeof profileSchema>>;

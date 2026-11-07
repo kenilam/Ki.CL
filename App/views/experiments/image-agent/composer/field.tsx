@@ -36,8 +36,10 @@ const Field: React.FunctionComponent<Props> = ({
   onEnter,
   sending,
 }) => {
-  const { t } = useTranslation('image-agent');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    imageAgent: useTranslation('image-agent'),
+  };
   const { control } = useFormContext<ComposerValues>();
 
   return (
@@ -50,7 +52,9 @@ const Field: React.FunctionComponent<Props> = ({
             <FormControl>
               <InputGroupTextarea
                 {...field}
-                aria-label={t('label', { context: 'message' })}
+                aria-label={translations.imageAgent.t('label', {
+                  context: 'message',
+                })}
                 className={`${CLASS_NAME}__field`}
                 autoComplete='off'
                 maxLength={MAX_LENGTH}
@@ -60,12 +64,12 @@ const Field: React.FunctionComponent<Props> = ({
                     onEnter();
                   }
                 }}
-                placeholder={t('placeholder')}
+                placeholder={translations.imageAgent.t('placeholder')}
                 rows={1}
               />
             </FormControl>
             <InputGroupButton
-              aria-label={common('action', { context: 'send' })}
+              aria-label={translations.common.t('action', { context: 'send' })}
               type='submit'
               variant='ghost'
             >

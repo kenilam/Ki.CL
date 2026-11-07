@@ -29,7 +29,7 @@ const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
   const schema = useMemo(() => passwordSchema(t), [t]);
 
   const form = useForm<PasswordValues>({
-    defaultValues: { CurrentPassword: '', Password: '' },
+    defaultValues: { currentPassword: '', password: '' },
     resolver: valibotResolver(schema),
   });
 

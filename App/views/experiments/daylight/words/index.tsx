@@ -25,8 +25,10 @@ const CLASS_NAME = `${VIEW}__words`;
  * globe turns; see gradient.ts.
  */
 const Words: React.FunctionComponent = () => {
-  const { t } = useTranslation('daylight');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    daylight: useTranslation('daylight'),
+  };
 
   return (
     <Layout alignContent='start' autoFlow='row' gap='none' justifyItems='start'>
@@ -47,7 +49,7 @@ const Words: React.FunctionComponent = () => {
             'kicl-margin-block-end',
             'kicl-pointer-events-auto'
           )}
-          label={common('experiments')}
+          label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
         <Heading
@@ -55,7 +57,7 @@ const Words: React.FunctionComponent = () => {
           dense
           is='h1'
         >
-          {common('experiment', { context: 'daylight' })}
+          {translations.common.t('experiment', { context: 'daylight' })}
         </Heading>
         <Text
           className={classNames(
@@ -64,7 +66,7 @@ const Words: React.FunctionComponent = () => {
           )}
           is='p'
         >
-          {t('lede')}
+          {translations.daylight.t('lede')}
         </Text>
       </header>
     </Layout>

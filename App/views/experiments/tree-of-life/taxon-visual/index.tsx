@@ -24,6 +24,7 @@ import {
 } from '@/views/experiments/tree-of-life/tree';
 
 // Partials
+import { watch } from '@/views/experiments/tree-of-life/plates';
 import { Plate, announcementFor } from './plate';
 
 // Constants
@@ -98,7 +99,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
       : skipToken
   );
 
-  const queryVisual = data?.TaxonVisual;
+  const queryVisual = data?.taxonVisual;
   const awaitingGeneration =
     Boolean(debounced) &&
     !error &&
@@ -112,7 +113,18 @@ const TaxonVisualPanel: React.FC<Props> = ({
     }
   );
 
-  const visual = subscriptionData?.TaxonVisualUpdated ?? queryVisual;
+  // Watched at the root too, so the visitor hears when it's ready after moving on.
+  const drawing = queryVisual?.status === 'PENDING' ? debounced : null;
+
+  useEffect(() => {
+    if (!drawing) {
+      return;
+    }
+
+    watch({ name: drawing.name, nodeId: node.nodeId, ottId: drawing.ottId });
+  }, [drawing, node.nodeId]);
+
+  const visual = subscriptionData?.taxonVisualUpdated ?? queryVisual;
   const settled =
     visual && visual.status !== 'PENDING'
       ? `${visual.status}:${visual.ottId}:${visual.nodeId ?? ''}`
@@ -135,7 +147,7 @@ const TaxonVisualPanel: React.FC<Props> = ({
             ? { ottId: visualOttId, heightLimit: 1 }
             : { nodeId, heightLimit: 1 },
         });
-        const raw = result.data?.TreeOfLifeSubtree;
+        const raw = result.data?.treeOfLifeSubtree;
         if (!cancelled && raw?.nodeId) {
           onSubtree?.(fromSubtreeNode(raw));
         }

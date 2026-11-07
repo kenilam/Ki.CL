@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 
 // Libraries
 import { useTranslation } from 'react-i18next';
@@ -32,7 +32,7 @@ const Element: React.FunctionComponent = () => {
 
   const lastPathname = useRef(location.pathname);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const routes = (location.pathname.replace('/', '') || 'home').split('/');
 
     document.body.dataset.routes = routes.join('.');

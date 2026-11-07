@@ -5,7 +5,14 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Components
-import { Animation, Heading, HyperLink, Layout, Text } from 'design/components';
+import {
+  Animation,
+  BackLink,
+  Heading,
+  HyperLink,
+  Layout,
+  Text,
+} from 'design/components';
 
 // Catalog
 import { ATTRIBUTION } from '@/views/experiments/music-visualiser/catalog';
@@ -18,7 +25,10 @@ import { useTrackContext } from '@/views/experiments/music-visualiser/groups/typ
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constants';
+import {
+  CLASS_NAME as VIEW,
+  toPath,
+} from '@/views/experiments/music-visualiser/constants';
 
 const CLASS_NAME = `${VIEW}__chrome__now-playing`;
 
@@ -28,7 +38,10 @@ const NowPlaying: React.FunctionComponent = () => {
     control: { error },
     track,
   } = useTrackContext();
-  const { t } = useTranslation('music-visualiser');
+  const translations = {
+    common: useTranslation(),
+    musicVisualiser: useTranslation('music-visualiser'),
+  };
   const { category, title } = useNames(track);
 
   return (
@@ -40,6 +53,13 @@ const NowPlaying: React.FunctionComponent = () => {
           'kicl-transition-duration-slow'
         )}
       >
+        <BackLink
+          className='kicl-margin-block-end'
+          label={translations.common.t('experiment', {
+            context: 'music_visualiser',
+          })}
+          to={toPath()}
+        />
         <Heading
           aria-live='polite'
           className='kicl-font-size-large'
@@ -51,11 +71,13 @@ const NowPlaying: React.FunctionComponent = () => {
         <Text is='p' dense variant='secondary'>
           {category}
         </Text>
-        <HyperLink to={ATTRIBUTION.url}>{t('attribution')}</HyperLink>
+        <HyperLink to={ATTRIBUTION.url}>
+          {translations.musicVisualiser.t('attribution')}
+        </HyperLink>
         {error ? (
           <Animation property='slide-from-top'>
             <Text className='kicl-color-error' dense is='p' role='alert'>
-              {t('error', { context: 'playback' })}
+              {translations.musicVisualiser.t('error', { context: 'playback' })}
             </Text>
           </Animation>
         ) : null}

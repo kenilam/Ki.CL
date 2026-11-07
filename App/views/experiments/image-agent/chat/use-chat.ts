@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 // API
 import {
+  Kicl_ImageAgentNotificationsDocument,
   Kicl_ImageAgentRetryDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
@@ -25,8 +26,13 @@ type Options = {
  * whether the agent accepted it.
  */
 function useChat({ onSent, threadId }: Options) {
-  const [mutate, sent] = useMutation(Kicl_ImageAgentSendDocument);
-  const [again, retried] = useMutation(Kicl_ImageAgentRetryDocument);
+  // A new turn starts, which the notifications at the root watch for.
+  const [mutate, sent] = useMutation(Kicl_ImageAgentSendDocument, {
+    refetchQueries: [Kicl_ImageAgentNotificationsDocument],
+  });
+  const [again, retried] = useMutation(Kicl_ImageAgentRetryDocument, {
+    refetchQueries: [Kicl_ImageAgentNotificationsDocument],
+  });
   const challenged = useChallenged();
 
   const send = useCallback(
@@ -35,10 +41,10 @@ function useChat({ onSent, threadId }: Options) {
         const { data } = await challenged(() =>
           mutate({ variables: { text, threadId } })
         );
-        if (!data?.ImageAgentSend) {
+        if (!data?.imageAgentSend) {
           return false;
         }
-        onSent(data.ImageAgentSend);
+        onSent(data.imageAgentSend);
         return true;
       } catch {
         // Surfaced through `error`.
@@ -55,10 +61,10 @@ function useChat({ onSent, threadId }: Options) {
         const { data } = await challenged(() =>
           again({ variables: { messageId, threadId } })
         );
-        if (!data?.ImageAgentRetry) {
+        if (!data?.imageAgentRetry) {
           return false;
         }
-        onSent(data.ImageAgentRetry);
+        onSent(data.imageAgentRetry);
         return true;
       } catch {
         // Surfaced through `error`.

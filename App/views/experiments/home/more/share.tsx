@@ -14,8 +14,10 @@ import * as Ri from 'react-icons/ri';
 
 /** Opens the system share sheet; where there is none, copies the address instead. */
 const Share: React.FunctionComponent = () => {
-  const { t } = useTranslation('experiments');
-  const { t: common } = useTranslation();
+  const translations = {
+    common: useTranslation(),
+    experiments: useTranslation('experiments'),
+  };
   const { copied, copy } = useClipboard();
 
   const share = async () => {
@@ -35,8 +37,8 @@ const Share: React.FunctionComponent = () => {
   };
 
   const label = copied
-    ? common('status', { context: 'copied' })
-    : t('action', { context: 'share' });
+    ? translations.common.t('status', { context: 'copied' })
+    : translations.experiments.t('action', { context: 'share' });
 
   return (
     <Button

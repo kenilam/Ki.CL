@@ -17,7 +17,7 @@ const Name: React.FunctionComponent = () => {
     <>
       <FormField
         control={control}
-        name='FirstName'
+        name='firstName'
         render={({ field }) => (
           <Input
             {...field}
@@ -29,7 +29,7 @@ const Name: React.FunctionComponent = () => {
       />
       <FormField
         control={control}
-        name='LastName'
+        name='lastName'
         render={({ field }) => (
           <Input
             {...field}
