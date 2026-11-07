@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Animation, HyperLink, Navigation } from 'design/components';
 
 // Constants
-import { ROUTES } from '@/views/navigation/constants';
+import { ROUTES } from '@/views/routes';
 
 const Menu: React.FunctionComponent = () => {
   const translations = {

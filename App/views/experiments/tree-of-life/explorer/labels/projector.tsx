@@ -4,7 +4,10 @@ import React, { useRef } from 'react';
 import { THREE, Fiber } from '@/three';
 
 // Store
-import { registry, store } from './store';
+import {
+  registry,
+  store,
+} from '@/views/experiments/tree-of-life/explorer/label-store';
 
 /** Publishes screen positions each frame. Must live inside the Canvas. */
 export const LabelProjector: React.FunctionComponent = () => {

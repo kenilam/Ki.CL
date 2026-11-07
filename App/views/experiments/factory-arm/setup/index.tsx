@@ -12,8 +12,8 @@ import React, {
 import { useTranslation } from 'react-i18next';
 
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
-import type { Shape } from '@/views/experiments/factory-arm/scene/obstacles/constants';
+import type { Solid } from '@/views/experiments/factory-arm/engine/solid';
+import type { Shape } from '@/views/experiments/factory-arm/engine/obstacles';
 
 // Partials
 import { PRESETS } from './presets';

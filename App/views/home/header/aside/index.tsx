@@ -11,7 +11,7 @@ import * as Ri from 'react-icons/ri';
 import { Button, HyperLink, Navigation } from 'design/components';
 
 // Views
-import { CONTACT_ID } from '@/views/contact/constants';
+import { CONTACT_ID } from '@/views/constants';
 
 const Aside: React.FunctionComponent = () => {
   const translations = {

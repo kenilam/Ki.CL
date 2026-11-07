@@ -13,7 +13,7 @@ import { isNotice, Notice } from './notice';
 import { Picture, type PictureProps } from './picture';
 import { Retry } from './retry';
 import { Review } from './review';
-import { MessageText } from './text';
+import { MessageText } from '@/views/experiments/image-agent/chat/conversation/text';
 
 // Constants
 import { CLASS_NAME as CONVERSATION } from '@/views/experiments/image-agent/chat/conversation/constants';

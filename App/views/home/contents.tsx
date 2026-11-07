@@ -13,7 +13,7 @@ import { Background } from 'design/widgets';
 import { Header } from './header';
 
 // Constants
-import { CONTENT_DELAY, FRAME_DELAY } from './constants';
+import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
 
 const CLASS_NAME = 'kicl--views--home';
 

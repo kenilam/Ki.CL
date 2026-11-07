@@ -1,9 +1,9 @@
 // Kinematics
-import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import type { Point } from './kinematics';
 
 // Spec
-import type { Box } from '@/views/experiments/factory-arm/scene/pallet/spec';
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Box } from './box';
+import type { Solid } from './solid';
 import type { Case, Extent, World } from './spec';
 
 /** Heights closer than this count as touching, in metres. */

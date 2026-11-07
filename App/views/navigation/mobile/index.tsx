@@ -10,7 +10,7 @@ import { useLocation } from 'design/router';
 import { Dialog, Navigation } from 'design/components';
 
 // Views
-import { Mobile as Account } from '@/views/account/mobile';
+import { Mobile as Account } from './account';
 import { useAccount } from '@/views/account/use-account';
 
 // Widgets

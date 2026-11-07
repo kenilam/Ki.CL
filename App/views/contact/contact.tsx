@@ -25,7 +25,7 @@ import { useChallenged } from '@/session';
 import { useAccount } from '@/views/account/use-account';
 
 // Constants
-import { CONTACT_ID } from './constants';
+import { CONTACT_ID } from '@/views/constants';
 
 /**
  * The form the site offers in place of an email address. The API sends only

@@ -13,7 +13,7 @@ import { Animation, Frame, Layout, Spinner } from 'design/components';
 import { Background } from 'design/widgets';
 
 // Views
-import { CONTENT_DELAY, FRAME_DELAY } from '@/views/home/constants';
+import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
 
 /**
  * Every page here is one card in the middle of the frame, over the home

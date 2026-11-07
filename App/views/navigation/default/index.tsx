@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next';
 import { HyperLink, Navigation } from 'design/components';
 
 // Views
-import { Default as Account } from '@/views/account/default';
+import { Default as Account } from './account';
 import { useAccount } from '@/views/account/use-account';
 
 // Constants
-import { ROUTES } from '@/views/navigation/constants';
+import { ROUTES } from '@/views/routes';
 
 const CLASS_NAME = 'kicl--views--navigation--default';
 

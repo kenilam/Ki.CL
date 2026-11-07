@@ -1,9 +1,5 @@
 // Constants
-import {
-  BUFFER,
-  INCOMING,
-  PALLET,
-} from '@/views/experiments/factory-arm/scene/constants';
+import { BUFFER, INCOMING, PALLET } from './layout';
 
 // Partials
 import { cases, extent, GRAZE, LEVEL, shared } from './world';

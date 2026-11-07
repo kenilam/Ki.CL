@@ -76,9 +76,10 @@ an acoustic kit or a drum machine, or not at all.
   form shows its progress through `progress/`: the notes, then the bar and
   note counts, then the chords as the model writes them. The API tells the
   site's notifications (`App/views/notifications`) about the same steps.
-- **`home/`** is the index route and **`song/`** is the `:id` route, which
-  renders the player with the stage as its index route. Each folder's
-  `index.tsx` is its `<Route>`.
+- **`home/`** is the index route and **`song/`** is the `:id` route. Each
+  folder's `index.tsx` is its `<Route>`. What belongs to one song is in
+  `song/`: the player, the stage, the clock, the settings and the samples. The
+  player renders the stage as its index route.
 - **`backdrop/`** is behind the home page and the experiment's card on
   `/experiments`. It's the player's scene playing Interstellar's main theme
   with no sound, from 2:15.9, where a chord sends ripples across the whole
@@ -89,10 +90,10 @@ an acoustic kit or a drum machine, or not at all.
     click a browser needs before it allows audio.
   - With reduced motion it stays on 2:15.9, without ripples or sparks, and
     only redraws when the canvas changes size.
-- **`song/`** loads a song by the id in the route and turns it into a `Piece`
+- **`song/use-song.ts`** loads a song by the id in the route and turns it into a `Piece`
   with `read/song.ts`: MIDI and MusicXML files as they were, a read sheet
   through `read/sheet.ts`.
-- **`player/use-transport.ts`** schedules every note on Tone's `Transport`
+- **`song/player/use-transport.ts`** schedules every note on Tone's `Transport`
   with a two-second lead-in, so the first notes can be seen coming. A
   `Tone.Sampler` plays them, through a high shelf, a delay and a reverb that
   only the 16′ piano turns up. Two more play the drum kit and the drum
@@ -101,12 +102,15 @@ an acoustic kit or a drum machine, or not at all.
   the one chosen.
   The piece repeats: the Transport loops from the
   first note to the end of the last bar, so the next round comes in on the
-  beat. `clock()` is the Transport's position at the moment the audio is
+  beat. `song/clock.ts` is the Transport's position at the moment the audio is
   heard, which is what the scene draws from, so a note reaches the hit line as
   it sounds.
-- **`stage/`** is the scene. It reads the notes, a clock, the song's length
-  and the speed, color and glow from `StageContext`, which the player and the
-  start page's backdrop each provide.
+- **`song/stage/`** is the scene. Its parts read the notes, a clock, the
+  song's length and the speed, color and glow from `StageContext`. `Stage`
+  builds that from the song itself: the piece and its settings from
+  `song/use-song.ts`, the clock from `song/clock.ts`. The start page's backdrop
+  provides its own. The player passes the stage nothing, and the settings
+  panel writes the song's cached arrangement as a slider moves.
   - Pitch sets the lane, across the piece's own range.
   - Time sets the distance from the hit line, at the speed from the settings.
   - Each note is drawn a little shorter than it sounds, two lanes' width, so
@@ -148,8 +152,8 @@ an acoustic kit or a drum machine, or not at all.
   clock and works the same after a pause.
 - **The piano** is the mf layer of Splendid Grand Piano, public domain
   samples by Akai: 26 notes, three to four semitones apart, cut to eight
-  seconds. `samples/build-piano.sh` rebuilds them from a pinned commit and
-  `samples/upload.sh <build> piano` puts them in the static bucket at
+  seconds. `song/player/samples/build-piano.sh` rebuilds them from a pinned commit and
+  `song/player/samples/upload.sh <build> piano` puts them in the static bucket at
   `kinetic-light/piano/`. The files are renamed to scientific pitch with `s`
   for a sharp, because the source names notes an octave low and has spaces
   and `#` in its names. In some of the source's samples the right channel is
@@ -188,11 +192,11 @@ an acoustic kit or a drum machine, or not at all.
   while it plays. The synth is Tone's FM synth set up like a DX7 electric
   piano, with no samples.
 - Every drum file peaks at -1 dBFS and a keyboard note keeps its own level,
-  so the volumes in `player/sounds.ts` set the balance. They were measured
+  so the volumes in `song/player/sounds.ts` set the balance. They were measured
   in LUFS on real songs: every sound sits with the grand and every drum set
-  with the kit, 8 to 12 LU under it. `samples/build-samples.sh` rebuilds
+  with the kit, 8 to 12 LU under it. `song/player/samples/build-samples.sh` rebuilds
   every set but the piano from pinned commits, a folder each, and
-  `samples/upload.sh <build>/<folder> <folder>` puts one at
+  `song/player/samples/upload.sh <build>/<folder> <folder>` puts one at
   `kinetic-light/<folder>/`. A sound or a drum set loads the first time it's
   chosen.
 - **The output** goes through a soft clipper, which leaves everything under
@@ -232,7 +236,7 @@ an acoustic kit or a drum machine, or not at all.
   wrong bars were on one line each time, and different lines in the two
   reads. Before the line counts, only the first nine bars were right.
 - The same sheet as a PDF gave the same notes from homr.
-- `read/chords.test.ts` and `stage/layout.test.ts` pass with
+- `read/chords.test.ts` and `song/stage/layout.test.ts` pass with
   `npx tsx --tsconfig App/tsconfig.json --test <file>`.
 - Links: a MIDI file opened from the page moved to its link and played, and
   the link played again on a fresh load. A read sheet's Play in the drawer

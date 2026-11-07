@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { Details, Heading, Text } from 'design/components';
 
 // Constants
-import { SPECTRUM_BANDS } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/features';
-import { SCENES } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/spec';
+import { SPECTRUM_BANDS } from '@/views/experiments/music-visualiser/features';
+import { SCENES } from '@/views/experiments/music-visualiser/spec';
 
 /** The picture: the shader, its scenes, and what it reads from the audio. */
 const Picture: React.FunctionComponent = () => {

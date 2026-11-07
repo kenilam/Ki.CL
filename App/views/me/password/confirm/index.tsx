@@ -31,7 +31,7 @@ import {
 import * as Ri from 'react-icons/ri';
 
 // Views
-import { PATH as HOME_PATH } from '@/views/home';
+import { PAGES } from '@/views/routes';
 
 /**
  * Where the emailed link lands. It confirms on a press, not on load: mail
@@ -89,7 +89,7 @@ const Confirm: React.FunctionComponent = () => {
           <HyperLink
             lookLikeButton
             size='small'
-            to={`/${HOME_PATH}`}
+            to={PAGES.home}
             variant='secondary'
           >
             {translations.me.t('action', { context: 'home' })}

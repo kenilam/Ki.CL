@@ -39,14 +39,10 @@ const Clip: React.FunctionComponent = () => {
       >
         <Ri.RiDiscLine
           aria-hidden
-          className={
-            classNames(
-              {
-                'kicl-color-error': clip.recording,
-                'is-revolving': clip.recording,
-              }
-            )
-          }
+          className={classNames({
+            'kicl-color-error': clip.recording,
+            'is-revolving': clip.recording,
+          })}
         />
       </Button>
     </ListItem>

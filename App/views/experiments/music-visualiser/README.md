@@ -26,40 +26,43 @@ browser needs.
 ## What is built
 
 ```
-MusicVisualiser/
+music-visualiser/
   index.tsx            the view's route; index is Home
-  Contents.tsx         an outlet; each route sets its own width
+  contents.tsx         an outlet; each route sets its own width
   constants.ts         route params and patterns, paths, class root
-  Catalog/
+  spec.ts              the scenes and the shape of the audio features
+  features.ts          energy, bands, centroid, flux, onsets, smoothed
+  use-names.ts         a track's title and its category's name
+  catalog/
     index.ts           the station: find a track, draw one at random
     catalog.ts         the collection's catalog.json as data; regenerate with it
     upload.sh          puts the release in the bucket at music/open-lofi/
-  Home/                title, lede, a link to a random track
-  Groups/
+  visualiser/          the canvas and everything that draws it, on a track
+                       and on the home page
+    use-stage.ts       the frame loop; the per-track seed and warmth
+    director.ts        which scene, and when to move to the next
+    shader.ts          fourteen scenes in one fragment shader
+    renderer.ts        program, quad, uniforms
+    palette.ts         inks and paper read off the canvas's custom properties
+  home/                title, lede, a link to a random track
+  groups/
     index.tsx          /:group; index goes to the first type
-    Contents.tsx       any group but open-lofi goes back to the view
-    Types/
+    contents.tsx       any group but open-lofi goes back to the view
+    types/
       index.tsx        /:type; index goes to a random track of it
-      Contents.tsx     an unknown type goes back to the group
-      Track/
+      contents.tsx     an unknown type goes back to the group
+      track/
         index.tsx      /:track, with Play beneath
-        Contents.tsx   the picture, and the gate or the player over it
-        useAudio.ts    the audio, driven by the URL; returns the controls
-        Play/          /play: an outlet, matched by the track
-        Gate/          title, category, attribution, play link
-        Chrome/        the player: now playing, controls, idle fade
-        Visualiser/    the canvas and everything that draws it
-          useStage.ts  the frame loop; the per-track seed and warmth
-          director.ts  which scene, and when to move to the next
-          features.ts  energy, bands, centroid, flux, onsets, smoothed
-          shader.ts    fourteen scenes in one fragment shader
-          renderer.ts  program, quad, uniforms
-          palette.ts   inks and paper read off the canvas's custom properties
+        contents.tsx   the picture, and the gate or the player over it
+        use-audio.ts   the audio, driven by the URL; returns the controls
+        play/          /play: an outlet, matched by the track
+        gate/          title, category, attribution, play link
+        chrome/        the player: now playing, controls, idle fade
 ```
 
 ### How the pieces fit
 
-- **useAudio.** Two effects follow the URL. `:track` makes an `<audio>`
+- **use-audio.ts.** Two effects follow the URL. `:track` makes an `<audio>`
   element for the file at `/assets/static/music/open-lofi/<id>.mp3`, so it
   starts loading on the gate. `/play` builds the graph on first use
   (element, then a gain per track, the analyzer, the master volume), lets
@@ -119,7 +122,7 @@ MusicVisualiser/
   move alike. The spectrum reaches them as a 128-band texture, each band
   eased and shown against its own recent peak. Color is inks over paper in Oklab with a light ordered
   dither, matching the home background. The palette comes from custom
-  properties in `Visualiser/Styles.scss`, per theme.
+  properties in `visualiser/styles.scss`, per theme.
 - **Gate and controls.** The gate's play link is the one gesture the
   browser needs before audio may start. On `/play`: title, category,
   attribution, pause, skip, copy link, volume; the first three are links.

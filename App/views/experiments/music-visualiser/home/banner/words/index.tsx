@@ -12,7 +12,7 @@ import { BackLink, Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Catalog
 import { TOTAL, draw } from '@/views/experiments/music-visualiser/catalog';
-import { SCENES } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/spec';
+import { SCENES } from '@/views/experiments/music-visualiser/spec';
 
 // Constants
 import { toPath as toExperimentsPath } from '@/views/experiments/constants';

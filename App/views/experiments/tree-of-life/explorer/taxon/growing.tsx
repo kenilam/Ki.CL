@@ -37,14 +37,14 @@ import {
   MIN_SIZE,
   MIN_WIDTH,
 } from '@/views/experiments/tree-of-life/explorer/constants';
-import { toPath as toDetailsPath } from '@/views/experiments/tree-of-life/explorer/details/constants';
+import { toPath as toDetailsPath } from '@/views/experiments/tree-of-life/explorer/details-path';
 
 // Labels
 import {
   removeLabel,
   setHovered,
   setLabel,
-} from '@/views/experiments/tree-of-life/explorer/labels/store';
+} from '@/views/experiments/tree-of-life/explorer/label-store';
 
 // Zoom
 import {

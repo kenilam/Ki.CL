@@ -1,14 +1,11 @@
 // Kinematics
-import {
-  solve,
-  type Point,
-} from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import { solve, type Point } from './kinematics';
 
 // Arm geometry
 import { type Carried, collides, grazes } from './body';
 
 // Constants
-import { CONVEYOR } from '@/views/experiments/factory-arm/scene/constants';
+import { CONVEYOR } from './layout';
 
 // Partials
 import { line, transfer, type Surroundings, type Waypoint } from './motion';
@@ -16,7 +13,7 @@ import { spots } from './placement';
 import { cases, extent, over, place, remove } from './world';
 
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Solid } from './solid';
 import type { Case, World } from './spec';
 
 /** Heights above a case's top where the arm's reach down to it is checked, in metres. */

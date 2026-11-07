@@ -8,14 +8,14 @@ import { useTranslation } from 'react-i18next';
 import { Heading, HyperLink, Layout, Text } from 'design/components';
 
 // Context
-import { useScreenContext } from '../context';
+import { useScreenContext } from '@/views/experiments/home/stage/screen/context';
 
 // Styles
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME as SCREEN } from '../constants';
-import { SCENES } from '@/views/experiments/music-visualiser/groups/types/track/visualiser/spec';
+import { CLASS_NAME as SCREEN } from '@/views/experiments/home/stage/screen/constants';
+import { MUSIC_VISUALISER_SCENES } from '@/views/experiments/previews';
 
 const CLASS_NAME = `${SCREEN}__words`;
 
@@ -68,7 +68,7 @@ const Words: React.FunctionComponent = () => {
         <Text is='p' dense className='kicl-max-inline-size-columns-5'>
           {translations.experiments.t('description', {
             context: experiment.context,
-            scenes: SCENES.length,
+            scenes: MUSIC_VISUALISER_SCENES.length,
           })}
         </Text>
         <HyperLink

@@ -7,7 +7,7 @@ import { Route } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Views
-import { Gate } from '@/views/portfolio/gate';
+import { Gate } from './gate';
 
 // Constants
 import { PATH } from './constants';

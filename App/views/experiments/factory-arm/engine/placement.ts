@@ -1,11 +1,8 @@
 // Kinematics
-import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import type { Point } from './kinematics';
 
 // Constants
-import {
-  BUFFER,
-  PALLET,
-} from '@/views/experiments/factory-arm/scene/constants';
+import { BUFFER, PALLET } from './layout';
 
 // Partials
 import { DECK, standing } from './stability';

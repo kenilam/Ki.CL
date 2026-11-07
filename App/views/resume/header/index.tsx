@@ -10,7 +10,7 @@ import { Heading, Layout, Separator, Text } from 'design/components';
 import { useVersion } from '@/views/resume/context';
 
 // Partials
-import { Actions } from '@/views/resume/actions';
+import { Actions } from './actions';
 import { Contact } from './contact';
 
 // Styles

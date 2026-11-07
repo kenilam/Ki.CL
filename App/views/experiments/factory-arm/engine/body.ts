@@ -1,30 +1,17 @@
 // Kinematics
-import {
-  bearing,
-  forward,
-  type Joints,
-  type Point,
-  turn,
-} from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import { bearing, forward, type Joints, type Point, turn } from './kinematics';
 
 // Frames
-import {
-  frames,
-  place,
-} from '@/views/experiments/factory-arm/scene/arm/frames';
+import { frames, place } from './frames';
 
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Solid } from './solid';
 
 // Rect
 import { overlap, type Rect } from './rect';
 
 // Constants
-import {
-  GRIPPER,
-  LINK,
-  SIDE,
-} from '@/views/experiments/factory-arm/scene/arm/constants';
+import { GRIPPER, LINK, SIDE } from './arm';
 
 /** Space kept between the arm and anything it knows is there, in metres. */
 const MARGIN = 0.05;

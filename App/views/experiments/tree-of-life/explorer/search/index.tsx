@@ -36,7 +36,7 @@ import {
   drawnTaxa,
   drawnVersion,
   subscribeDrawn,
-} from '@/views/experiments/tree-of-life/explorer/labels/store';
+} from '@/views/experiments/tree-of-life/explorer/label-store';
 
 /**
  * Find a taxon by name.

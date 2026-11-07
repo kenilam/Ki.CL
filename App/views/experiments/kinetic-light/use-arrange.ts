@@ -12,7 +12,7 @@ import { toOutline } from '@/views/experiments/kinetic-light/read/outline';
 import type { Piece } from '@/views/experiments/kinetic-light/read/piece';
 
 // Context
-import type { Song } from '@/views/experiments/kinetic-light/player/context';
+import type { Song } from '@/views/experiments/kinetic-light/song/use-song';
 
 const asked = new Map<string, Promise<unknown>>();
 

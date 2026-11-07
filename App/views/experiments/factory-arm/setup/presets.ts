@@ -1,5 +1,5 @@
 // Constants
-import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
+import { OBSTACLES } from '@/views/experiments/factory-arm/engine/obstacles';
 
 // Spec
 import type { Preset } from './spec';

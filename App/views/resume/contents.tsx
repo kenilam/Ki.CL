@@ -23,7 +23,7 @@ import {
 import { Background } from 'design/widgets';
 
 // Views
-import { CONTENT_DELAY, FRAME_DELAY } from '@/views/home/constants';
+import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
 
 // Content
 import {

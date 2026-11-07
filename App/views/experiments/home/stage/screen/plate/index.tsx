@@ -7,10 +7,12 @@ import classNames from 'classnames';
 import { useScreenContext } from '@/views/experiments/home/stage/screen/context';
 
 // Partials
-import { Plate as Daylight } from '@/views/experiments/daylight/plate';
-import { Backdrop } from '@/views/experiments/image-agent/backdrop';
-import { Backdrop as KineticLight } from '@/views/experiments/kinetic-light/backdrop';
-import { Visualiser } from '@/views/experiments/music-visualiser/groups/types/track/visualiser';
+import {
+  DaylightPlate,
+  ImageAgentBackdrop,
+  KineticLightBackdrop,
+  MusicVisualiser,
+} from '@/views/experiments/previews';
 
 // Styles
 import './styles.scss';
@@ -35,12 +37,12 @@ const Plate: React.FunctionComponent = () => {
         'kicl-position-absolute'
       )}
     >
-      {experiment.plate === 'daylight' ? <Daylight /> : null}
+      {experiment.plate === 'daylight' ? <DaylightPlate /> : null}
       {/* Only the photo needs a scrim; on the other plates it darkens too much. */}
-      {experiment.plate === 'image-agent' ? <Backdrop scrim /> : null}
-      {experiment.plate === 'kinetic-light' ? <KineticLight /> : null}
+      {experiment.plate === 'image-agent' ? <ImageAgentBackdrop scrim /> : null}
+      {experiment.plate === 'kinetic-light' ? <KineticLightBackdrop /> : null}
       {experiment.plate === 'music-visualiser' ? (
-        <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
+        <MusicVisualiser analyser={null} playing={false} track={CLASS_NAME} />
       ) : null}
     </div>
   );
