@@ -23,8 +23,8 @@ import * as dotenv from 'dotenv';
 import { getAlias, getStyleLayer, LAYER_ORDER } from './helper';
 
 import fs from 'node:fs';
-import { collectMiddleware } from '../.server/collect';
-import { createTexts, escapeJson } from '../.server/texts';
+import { collectMiddleware } from '../middleware/collect';
+import { createTexts, escapeJson } from '../middleware/texts';
 
 import configJSON from '../app.config.json';
 import tsconfigJSON from '../tsconfig.json';

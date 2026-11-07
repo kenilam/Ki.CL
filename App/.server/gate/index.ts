@@ -2,8 +2,8 @@ import { timingSafeEqual } from 'node:crypto';
 
 import type { RequestHandler } from 'express';
 
-import { page } from './page';
-import type { ServerTexts } from '../texts';
+import { page } from '../page';
+import type { ServerTexts } from '../../middleware/texts';
 
 /** Pages with their own sign-in, which the dev prompt leaves alone. */
 const OPEN = /^\/portfolio(\/|$)/;
