@@ -14,7 +14,7 @@ import * as Ri from 'react-icons/ri';
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
 // Overlays
-import { toElement } from '@/views/experiments/factory-arm/scene/overlays';
+import { toElement } from '@/views/experiments/factory-arm/workspace/overlays';
 
 /**
  * The badge over what the arm can't do. It is the page's `Alert` that screen

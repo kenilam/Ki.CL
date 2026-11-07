@@ -7,12 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Animation, HyperLink, List, ListItem } from 'design/components';
 
 // Views
-import { PATH as EXPERIMENTS_PATH } from '@/views/experiments';
-import { EXPERIMENTS } from '@/views/experiments/home/constants';
-import { PATH as HOME_PATH } from '@/views/home';
-import { PATH as RESUME_PATH } from '@/views/resume/constants';
-import { PATH as WORKSHOP_PATH } from '@/views/workshop/constants';
-import { TOPICS } from '@/views/workshop/home/constants';
+import { EXPERIMENTS, PAGES, TOPICS } from '@/views/routes';
 
 // Built on each render: elements kept in a constant are skipped when the language changes.
 export const useLinks = () => {
@@ -21,13 +16,13 @@ export const useLinks = () => {
   return [
     <HyperLink
       className='kicl-font-size-medium'
-      key={HOME_PATH}
-      to={`/${HOME_PATH}`}
+      key={PAGES.home}
+      to={PAGES.home}
     >
       {t('home')}
     </HyperLink>,
-    <React.Fragment key={EXPERIMENTS_PATH}>
-      <HyperLink className='kicl-font-size-medium' to={`/${EXPERIMENTS_PATH}`}>
+    <React.Fragment key={PAGES.experiments}>
+      <HyperLink className='kicl-font-size-medium' to={PAGES.experiments}>
         {t('experiments')}
       </HyperLink>
       <List gap='narrow' justifyItems='end'>
@@ -43,8 +38,8 @@ export const useLinks = () => {
         })}
       </List>
     </React.Fragment>,
-    <React.Fragment key={WORKSHOP_PATH}>
-      <HyperLink className='kicl-font-size-medium' to={`/${WORKSHOP_PATH}`}>
+    <React.Fragment key={PAGES.workshop}>
+      <HyperLink className='kicl-font-size-medium' to={PAGES.workshop}>
         {t('workshop')}
       </HyperLink>
       <List gap='narrow' justifyItems='end'>
@@ -61,8 +56,8 @@ export const useLinks = () => {
     </React.Fragment>,
     <HyperLink
       className='kicl-font-size-medium'
-      key={RESUME_PATH}
-      to={`/${RESUME_PATH}`}
+      key={PAGES.resume}
+      to={PAGES.resume}
     >
       {t('resume')}
     </HyperLink>,

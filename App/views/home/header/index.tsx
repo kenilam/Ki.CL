@@ -15,7 +15,7 @@ import { Contents } from './contents';
 import { Menu } from './menu';
 
 // Constants
-import { CONTENT_DELAY } from '@/views/home/constants';
+import { CONTENT_DELAY } from '@/views/constants';
 import { ID } from './constants';
 
 const CLASS_NAME = 'kicl--views--home--header';

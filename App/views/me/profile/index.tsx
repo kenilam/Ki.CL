@@ -14,7 +14,7 @@ import {
 
 // Views
 import { useAccount } from '@/views/account/use-account';
-import { PATH as PASSWORD_PATH } from '@/views/me/password/constants';
+import { PAGES } from '@/views/routes';
 
 // Partials
 import { Delete } from './delete';
@@ -43,7 +43,7 @@ const Profile: React.FunctionComponent = () => {
             <HyperLink
               lookLikeButton
               size='small'
-              to={PASSWORD_PATH}
+              to={PAGES.password}
               variant='ghost'
             >
               {t('change_password')}

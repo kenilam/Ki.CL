@@ -52,7 +52,7 @@ const Scene: React.FunctionComponent = () => {
 
   Fiber.useFrame(() => {
     if (bloom.current) {
-      bloom.current.intensity = settings.current.glow;
+      bloom.current.intensity = settings.glow;
     }
   });
 
@@ -73,7 +73,7 @@ const Scene: React.FunctionComponent = () => {
       {reducedMotion ? null : <Particles hits={hits} />}
       <EffectComposer>
         <Bloom
-          intensity={settings.current.glow}
+          intensity={settings.glow}
           luminanceThreshold={0.6}
           mipmapBlur
           ref={bloom}

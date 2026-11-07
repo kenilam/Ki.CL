@@ -1,11 +1,11 @@
 // Kinematics
-import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import type { Point } from './kinematics';
 
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Solid } from './solid';
 
 // Constants
-import { CONVEYOR } from '@/views/experiments/factory-arm/scene/constants';
+import { CONVEYOR } from './layout';
 
 // Partials
 import { along, speed, type Waypoint } from './motion';

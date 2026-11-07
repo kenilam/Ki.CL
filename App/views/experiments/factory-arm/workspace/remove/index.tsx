@@ -14,7 +14,7 @@ import * as Ri from 'react-icons/ri';
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
 
 // Overlays
-import { toElement } from '@/views/experiments/factory-arm/scene/overlays';
+import { toElement } from '@/views/experiments/factory-arm/workspace/overlays';
 
 /**
  * A button over the selected obstacle that takes it out of the cell, as the

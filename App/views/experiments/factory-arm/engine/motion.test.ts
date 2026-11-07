@@ -2,17 +2,14 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
 // Kinematics
-import {
-  forward,
-  HOME,
-} from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import { forward, HOME } from './kinematics';
 
 // Obstacles
-import { OBSTACLES } from '@/views/experiments/factory-arm/scene/obstacles/constants';
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import { OBSTACLES } from './obstacles';
+import type { Solid } from './solid';
 
 // Stack
-import { stack } from '@/views/experiments/factory-arm/scene/pallet/stack';
+import { stack } from './stack';
 
 // Partials
 import { transfer } from './motion';

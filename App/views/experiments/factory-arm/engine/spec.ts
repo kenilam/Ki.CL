@@ -1,8 +1,8 @@
 // Kinematics
-import type { Point } from '@/views/experiments/factory-arm/scene/arm/kinematics';
+import type { Point } from './kinematics';
 
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Solid } from './solid';
 
 /**
  * A case as the engine knows it: square to the cell, so its box is exact.

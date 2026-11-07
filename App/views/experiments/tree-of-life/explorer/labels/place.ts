@@ -17,7 +17,13 @@ import {
 } from './grid';
 
 // Store
-import { type Seat, getHovered, isPendingRemoval, seats, store } from './store';
+import {
+  type Seat,
+  getHovered,
+  isPendingRemoval,
+  seats,
+  store,
+} from '@/views/experiments/tree-of-life/explorer/label-store';
 
 const CHROME = [`.${CLASS_NAME}__chrome`];
 

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
 // Stack
-import { stack } from '@/views/experiments/factory-arm/scene/pallet/stack';
+import { stack } from './stack';
 
 // Partials
 import { spots } from './placement';

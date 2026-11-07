@@ -15,7 +15,7 @@ import {
 } from 'design/components';
 
 // Constants
-import { TOPICS } from '@/views/workshop/home/constants';
+import { TOPICS } from '@/views/routes';
 
 type TopicProps = (typeof TOPICS)[number];
 

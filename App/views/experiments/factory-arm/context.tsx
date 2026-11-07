@@ -12,20 +12,25 @@ import React, {
 import type { RapierRigidBody } from '@react-three/rapier';
 
 // Kinematics
-import { HOME, forward, type Joints, type Point } from './scene/arm/kinematics';
+import {
+  HOME,
+  forward,
+  type Joints,
+  type Point,
+} from '@/views/experiments/factory-arm/engine/kinematics';
 
 // Stack
-import { stack } from './scene/pallet/stack';
+import { stack } from '@/views/experiments/factory-arm/engine/stack';
 
 // Spec
-import type { Box } from './scene/pallet/spec';
-import type { Solid } from './scene/obstacles/spec';
+import type { Box } from '@/views/experiments/factory-arm/engine/box';
+import type { Solid } from '@/views/experiments/factory-arm/engine/solid';
 import type { Setup } from './setup/spec';
 import { useSetup } from './setup';
 
 // Obstacles
-import type { Shape } from './scene/obstacles/constants';
-import { vision } from './scene/sensors/vision';
+import type { Shape } from '@/views/experiments/factory-arm/engine/obstacles';
+import { vision } from '@/views/experiments/factory-arm/workspace/scene/sensors/vision';
 
 /**
  * `command` is where the pad should go and whether to hold; `joints` is where

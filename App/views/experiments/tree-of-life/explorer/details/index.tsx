@@ -2,7 +2,7 @@
 import { Route } from 'design/router';
 
 // Constants
-import { PATH } from './constants';
+import { PATH } from '@/views/experiments/tree-of-life/explorer/details-path';
 
 /** Nested under the taxon, so the tree stays mounted while the dialog opens and closes. */
 const Details = (

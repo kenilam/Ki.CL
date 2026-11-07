@@ -12,7 +12,8 @@ import { Placeholder } from './placeholder';
 import { Topic } from './topic';
 
 // Constants
-import { CLASS_NAME, PLACEHOLDERS, TOPICS } from './constants';
+import { TOPICS } from '@/views/routes';
+import { CLASS_NAME, PLACEHOLDERS } from './constants';
 
 /** The workshop index: a card for each topic, then the ones still to come. */
 const Home: React.FunctionComponent = () => {

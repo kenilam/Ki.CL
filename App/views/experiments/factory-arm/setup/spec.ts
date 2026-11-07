@@ -1,11 +1,11 @@
 // Spec
-import type { Solid } from '@/views/experiments/factory-arm/scene/obstacles/spec';
+import type { Solid } from '@/views/experiments/factory-arm/engine/solid';
 
 // Engine
 import type { Note } from '@/views/experiments/factory-arm/engine/spec';
 
 // Stack
-import type { Pile } from '@/views/experiments/factory-arm/scene/pallet/stack';
+import type { Pile } from '@/views/experiments/factory-arm/engine/stack';
 
 /** What a run starts from: the obstacles, how the stacks are built, and how many there are. */
 type Setup = { obstacles: Solid[]; pile: Pile; stacks: 1 | 2 };

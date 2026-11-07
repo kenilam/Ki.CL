@@ -19,10 +19,8 @@ import { Screen } from './screen';
 import './styles.scss';
 
 // Constants
-import {
-  CLASS_NAME as HOME,
-  EXPERIMENTS,
-} from '@/views/experiments/home/constants';
+import { CLASS_NAME as HOME } from '@/views/experiments/home/constants';
+import { EXPERIMENTS } from '@/views/routes';
 
 const CLASS_NAME = `${HOME}__stage`;
 

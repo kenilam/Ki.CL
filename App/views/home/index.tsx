@@ -6,7 +6,8 @@ import { Route as Origin } from 'design/router';
 // Components
 import { Spinner } from 'design/components';
 
-const PATH = '';
+// Constants
+import { PATH } from './constants';
 
 const Contents = React.lazy(async () => {
   const { Home } = await import('./contents');
