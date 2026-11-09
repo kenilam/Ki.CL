@@ -126,8 +126,13 @@ along, on an acoustic kit or a drum machine, or not at all.
   their own score. A sheet with chords gets one more staff, written by
   `read/write-score.ts`, with the bass and chord tones that play underneath
   and the chord symbols above them. A MIDI file has no score, so one is
-  written from its ticks: a part for each track, split into two staves when a
-  track covers both hands, rounded to sixteenth notes.
+  written from its ticks as a piano part, rounded to sixteenth notes. Every
+  pitched track goes into one grand staff, treble from middle C up and bass
+  below, or one staff when the notes fit a single clef. A note that several
+  tracks play at the same moment is written once, and drums and sound effects
+  stay off the sheet, though they still play. A band arrangement used to get
+  a staff for every track: 22 tracks made a sheet two dozen staves tall, with
+  a ball on each and the camera pulled far back to fit them.
 - **`song/stage/`** is the scene. Its parts read a clock, the engraved sheet,
   the arrangement's sections and the zoom, colour and glow from
   `StageContext`. `Stage` builds that from the song itself: the score and its
@@ -135,9 +140,11 @@ along, on an acoustic kit or a drum machine, or not at all.
   page's backdrop provides its own. The player passes the stage nothing, and
   the settings panel writes the song's cached arrangement as a slider moves.
   - `stage/engrave.ts` lays the score out with OpenSheetMusicDisplay on one
-    line, in a `div` that never joins the page. It reads back each notehead's
-    position and start, each whole-bar rest, and where each staff and
-    bar is. A note's time is its bar's start plus its offset in beats,
+    line, in a `div` that never joins the page. OpenSheetMusicDisplay starts a
+    new line past 32,767 pixels, a canvas limit the SVG it draws doesn't have,
+    so `SheetMaximumWidth` is lifted. A seven-minute song used to wrap onto
+    three lines, and the balls lost the music after the first. It reads back
+    each notehead's position and start, and where each staff and bar is. A note's time is its bar's start plus its offset in beats,
     converted with the reader's own bar lengths, so it matches what Tone
     plays. The engraver's bar length can't be used for this: a bar that
     holds more than its time signature, which homr writes now and then, is

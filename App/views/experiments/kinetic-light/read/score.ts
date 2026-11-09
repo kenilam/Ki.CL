@@ -20,6 +20,7 @@ type Score = { bars: number[]; musicxml: string; quarters: number[] };
 
 const CHORDS = 'kinetic-light-chords';
 const PERCUSSION_CHANNEL = 9;
+const UNPITCHED = ['percussive', 'sound effects', 'synth effects'];
 const MIDDLE_C = 60;
 const SPLIT_BELOW = 55;
 const SPLIT_ABOVE = 64;
@@ -50,20 +51,27 @@ const readMidiScore = (data: ArrayBuffer, title: string): Score => {
   const [beats = 4, beatType = 4] =
     midi.header.timeSignatures[0]?.timeSignature ?? [];
   const bar = (beats * 4) / beatType;
-  const parts: Part[] = midi.tracks
+  const written = new Map<string, Written>();
+
+  midi.tracks
     .filter(
-      ({ channel, notes }) => channel !== PERCUSSION_CHANNEL && notes.length
+      ({ channel, instrument }) =>
+        channel !== PERCUSSION_CHANNEL && !UNPITCHED.includes(instrument.family)
     )
-    .map((track) => ({
-      name: track.name || track.instrument.name,
-      staves: toStaves(
-        track.notes.map(({ durationTicks, midi: pitch, ticks }) => ({
-          length: durationTicks / ppq,
-          pitch,
-          start: ticks / ppq,
-        }))
-      ),
-    }));
+    .forEach(({ notes }) =>
+      notes.forEach(({ durationTicks, midi: pitch, ticks }) => {
+        const key = `${ticks}:${pitch}`;
+        const length = durationTicks / ppq;
+
+        if ((written.get(key)?.length ?? 0) < length) {
+          written.set(key, { length, pitch, start: ticks / ppq });
+        }
+      })
+    );
+
+  const parts: Part[] = written.size
+    ? [{ name: title, staves: toStaves([...written.values()]) }]
+    : [];
   const end = Math.max(
     0,
     ...midi.tracks.flatMap(({ notes }) =>
