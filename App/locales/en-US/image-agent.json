@@ -107,7 +107,7 @@
       "shared": "When a daily or hourly limit is reached, the error doesn’t reveal which limit was hit or when it resets. That makes it harder to use the error response to work out how to get around the limits.",
       "title": "Limits",
       "title_person": "Who counts as a person?",
-      "token": "On the first visit, they pass a Turnstile check and receive a token. Every subsequent request is counted against that session. Clearing cookies or switching devices creates a new session with a fresh allowance. I’m fine with that trade-off.",
+      "token": "On the first visit, they pass a Turnstile check and receive a token. Every subsequent request is counted against that session.",
       "turnstile": "Turnstile makes it harder to automate repeated visits and bypass the limits."
     },
     "retrieval": {
