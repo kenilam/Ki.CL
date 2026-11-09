@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 // Libraries
 import { valibotResolver } from '@hookform/resolvers/valibot';
@@ -12,9 +12,6 @@ import {
   skipToken,
   useQuery,
 } from 'api/provider';
-
-// Routes
-import { useNavigate } from 'design/router';
 
 // Readers
 import { readSong } from '@/views/experiments/kinetic-light/read/song';
@@ -31,19 +28,19 @@ import { useReadings } from './use-readings';
 // Schema
 import { startSchema, type StartValues } from './schema';
 
-// Constants
-import { toPath } from './constants';
-
 function useGenerate() {
   const translations = {
     common: useTranslation(),
     kineticLight: useTranslation('kinetic-light'),
   };
-  const navigate = useNavigate();
   const { arranging, error, loading, read } = useRead();
   const { running } = useReadings();
   const arrange = useArrange();
   const [watching, setWatching] = useState<string | null>(null);
+  const [generated, setGenerated] = useState<{
+    id: string;
+    title: string;
+  } | null>(null);
   const { data: reading } = useQuery(
     Kicl_KineticLightReadingDocument,
     watching ? { variables: { id: watching } } : skipToken
@@ -74,17 +71,20 @@ function useGenerate() {
       return;
     }
 
-    const open = () => navigate(toPath(watched.id));
+    const done = () => {
+      setGenerated({ id: watched.id, title: watched.title });
+      setWatching(null);
+    };
     const piece = watched.arrangement ? null : readSong(watched);
 
     if (!piece) {
-      open();
+      done();
 
       return;
     }
 
-    arrange(watched, piece).catch(open);
-  }, [arrange, navigate, watched]);
+    arrange(watched, piece).catch(done);
+  }, [arrange, watched]);
 
   useEffect(() => {
     if (!busy) {
@@ -99,10 +99,12 @@ function useGenerate() {
   }, [cooling, form]);
 
   const submit = form.handleSubmit(async ({ file }) => {
+    setGenerated(null);
+
     const started = await read(file);
 
     if (started?.ready) {
-      navigate(toPath(started.id));
+      setGenerated({ id: started.id, title: started.title });
 
       return;
     }
@@ -110,6 +112,11 @@ function useGenerate() {
     void refetch();
     setWatching(started?.id ?? null);
   });
+
+  const clear = useCallback(() => {
+    form.reset();
+    setGenerated(null);
+  }, [form]);
 
   let status: string | null = null;
 
@@ -128,8 +135,10 @@ function useGenerate() {
   return {
     allowance,
     busy,
+    clear,
     cooling,
     form,
+    generated,
     running,
     seconds,
     spent,

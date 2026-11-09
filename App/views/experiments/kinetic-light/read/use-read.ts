@@ -161,14 +161,14 @@ function useRead() {
       if (PICTURES.some((picture) => signature.startsWith(picture))) {
         const id = await readPicture(file);
 
-        return id ? { id, ready: false } : null;
+        return id ? { id, ready: false, title } : null;
       }
 
       if (file.type.startsWith('image/')) {
         try {
           const id = await readPicture(await toPng(file));
 
-          return id ? { id, ready: false } : null;
+          return id ? { id, ready: false, title } : null;
         } catch {
           setError(t('error', { context: 'type' }));
 
@@ -222,7 +222,7 @@ function useRead() {
       await arrange({ id, title: piece.title }, piece).catch(() => {});
       setArranging(false);
 
-      return { id, ready: true };
+      return { id, ready: true, title: piece.title };
     },
     [arrange, readPicture, save, t]
   );
