@@ -24,13 +24,14 @@ along, on an acoustic kit or a drum machine, or not at all.
     notification opens on whichever page they're on. Its title
     links to the song. Clear, or opening the song, only hides the message,
     and a song that's already on screen isn't announced at all.
-  - The home page shows how many sheets the visitor can still read today, as
-    a badge like Image Agent's. When none are left, the form is hidden and
-    only the badge shows.
+  - The home page and the player's title menu show how many sheets the
+    visitor can still read today, as a badge like Image Agent's. When none
+    are left, the home page hides its form and only the badge shows, and the
+    menu's file input is disabled.
 - Every song has a link that anyone can open, for 30 days.
 - Six examples, songs the site owner made, are kept for good and listed for
   every visitor, above the visitor's own songs. Both lists are in the home
-  page's Songs sheet and the player's title menu.
+  page's Songs sheet, which starts open, and the player's title menu.
 
 ## How the pieces fit
 
@@ -66,7 +67,12 @@ along, on an acoustic kit or a drum machine, or not at all.
 - **The model's arrangement.** Generate arranges a song before it's
   ready: a MIDI or MusicXML file right after it's saved, and a sheet once its
   read finishes, while the home page says "Choosing the sound and the beat…".
-  The home page moves to the song when it's done. A sheet whose read finished
+  The home page moves to the song when it's done. In the player's title menu
+  the file input stays on screen but disabled, its hint gives way to each
+  step as it streams in, and when the song is ready the form is replaced by
+  a link to it, so the song playing isn't interrupted. `use-generate.ts`
+  holds the new song as `generated` and each page decides what to do with
+  it. A sheet whose read finished
   after the visitor left, or a song made before arrangements, gets one the
   first time its owner opens it, and Play waits until it comes. `use-arrange.ts` asks once for each song, whichever of these
   gets there first. `read/outline.ts` turns the piece into an outline: the

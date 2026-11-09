@@ -10,16 +10,16 @@ import * as Bs from 'react-icons/bs';
 // Components
 import {
   AnimatedText,
-  Animation,
   FileInput,
   Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
+  HyperLink,
   InputGroupButton,
-  Text,
 } from 'design/components';
 
 // Partials
@@ -28,34 +28,31 @@ import { Allowance } from '@/views/experiments/kinetic-light/allowance';
 // Context
 import { useKineticLightContext } from '@/views/experiments/kinetic-light/context';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import {
   ACCEPT,
-  CLASS_NAME as VIEW,
   MAX_FILE_SIZE,
+  toPath,
 } from '@/views/experiments/kinetic-light/constants';
-
-const CLASS_NAME = `${VIEW}__player__generate`;
 
 const Generate: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');
   const {
-    generate: { busy, cooling, form, seconds, spent, status, submit },
+    generate: {
+      busy,
+      clear,
+      cooling,
+      form,
+      generated,
+      seconds,
+      spent,
+      status,
+      submit,
+    },
   } = useKineticLightContext();
   const blocked = busy || spent || cooling;
   const generateButton = useRef<HTMLButtonElement>(null);
   const file = useWatch({ control: form.control, name: 'file' });
-
-  let message = status ?? t('action', { context: 'generating' });
-  let key = message;
-
-  if (!busy && cooling) {
-    message = t('status', { context: 'cooling', count: seconds });
-    key = 'cooling';
-  }
 
   useEffect(() => {
     if (!file) {
@@ -65,54 +62,87 @@ const Generate: React.FunctionComponent = () => {
     generateButton.current?.focus();
   }, [file]);
 
+  if (generated) {
+    return (
+      <HyperLink
+        after={<Bs.BsArrowRight aria-hidden />}
+        before={<Bs.BsMusicNoteBeamed aria-hidden />}
+        className='kicl-inline-size-full'
+        frames='max-content--auto--max-content'
+        justifyContent='stretch'
+        lookLikeButton
+        onClick={clear}
+        to={toPath(generated.id)}
+        variant='secondary'
+      >
+        <span className='kicl-text-truncate' title={generated.title}>
+          {generated.title}
+        </span>
+      </HyperLink>
+    );
+  }
+
+  let message = t('hint', { context: 'file', size: MAX_FILE_SIZE });
+  let key = 'hint';
+
+  if (busy) {
+    message = status ?? t('action', { context: 'generating' });
+    key = message;
+  }
+
+  if (!busy && cooling && !spent) {
+    message = t('status', { context: 'cooling', count: seconds });
+    key = 'cooling';
+  }
+
   return (
-    <Form {...form} className={CLASS_NAME} onSubmit={submit}>
+    <Form {...form} onSubmit={submit}>
+      <Allowance />
       <FormField
         control={form.control}
         name='file'
         render={({ field: { name, onBlur, onChange, ref } }) => (
-          <Animation in={!blocked}>
-            <FormItem>
-              <FormControl>
-                <FileInput
-                  accept={ACCEPT}
-                  after={
-                    <InputGroupButton
-                      before={<Bs.BsStars aria-hidden />}
-                      disabled={!file}
-                      ref={generateButton}
-                      type='submit'
-                      variant='ghost'
-                    >
-                      {t('action', { context: 'generate' })}
-                    </InputGroupButton>
-                  }
-                  aria-label={t('label', { context: 'file' })}
-                  inline
-                  name={name}
-                  onBlur={onBlur}
-                  onChange={(event) => onChange(event.target.files?.[0])}
-                  ref={ref}
-                />
-              </FormControl>
-              <FormDescription>
-                {t('hint', { context: 'file', size: MAX_FILE_SIZE })}
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          </Animation>
+          <FormItem>
+            <FormLabel>{t('label', { context: 'file' })}</FormLabel>
+            <FormControl>
+              <FileInput
+                accept={ACCEPT}
+                after={
+                  <InputGroupButton
+                    aria-label={t('action', { context: 'generate' })}
+                    block
+                    disabled={!file || blocked}
+                    ref={generateButton}
+                    type='submit'
+                    variant='primary'
+                  >
+                    {busy ? (
+                      <Bs.BsArrowClockwise
+                        aria-hidden
+                        className='is-revolving'
+                      />
+                    ) : (
+                      <Bs.BsStars aria-hidden />
+                    )}
+                  </InputGroupButton>
+                }
+                disabled={blocked}
+                inline
+                name={name}
+                onBlur={onBlur}
+                onChange={(event) => onChange(event.target.files?.[0])}
+                ref={ref}
+              />
+            </FormControl>
+            <FormDescription role='status'>
+              <AnimatedText is='span' key={key} split='word'>
+                {message}
+              </AnimatedText>
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
         )}
       />
-      {spent && !busy ? <Allowance /> : null}
-      {busy || (cooling && !spent) ? (
-        <Animation delay='var(--kicl-transition-duration-fast)'>
-          <Text is='p' role='status' variant='secondary'>
-            <AnimatedText is='span' key={key} split='word'>
-              {message}
-            </AnimatedText>
-          </Text>
-        </Animation>
-      ) : null}
     </Form>
   );
 };

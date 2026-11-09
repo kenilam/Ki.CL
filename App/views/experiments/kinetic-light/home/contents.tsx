@@ -28,6 +28,9 @@ import {
   Text,
 } from 'design/components';
 
+// Routes
+import { useNavigate } from 'design/router';
+
 // Context
 import { useKineticLightContext } from '@/views/experiments/kinetic-light/context';
 
@@ -42,6 +45,7 @@ import {
   ACCEPT,
   MAX_FILE_SIZE,
   PATH,
+  toPath,
 } from '@/views/experiments/kinetic-light/constants';
 import { CLASS_NAME } from './constants';
 
@@ -51,10 +55,22 @@ const Contents: React.FunctionComponent = () => {
     kineticLight: useTranslation('kinetic-light'),
   };
   const {
-    generate: { busy, cooling, form, running, seconds, spent, status, submit },
+    generate: {
+      busy,
+      clear,
+      cooling,
+      form,
+      generated,
+      running,
+      seconds,
+      spent,
+      status,
+      submit,
+    },
     examples,
     songs,
   } = useKineticLightContext();
+  const navigate = useNavigate();
   const sheet = useId();
   const title = translations.kineticLight.t('label', { context: 'songs' });
   const generateButton = useRef<HTMLButtonElement>(null);
@@ -67,6 +83,15 @@ const Contents: React.FunctionComponent = () => {
 
     generateButton.current?.focus();
   }, [file]);
+
+  useEffect(() => {
+    if (!generated) {
+      return;
+    }
+
+    navigate(toPath(generated.id));
+    clear();
+  }, [clear, generated, navigate]);
 
   return (
     <Layout alignContent='end' justifyContent='stretch' justifyItems='start'>
@@ -215,6 +240,7 @@ const Contents: React.FunctionComponent = () => {
                     </Button>
                   </Layout>
                   <Sheet
+                    defaultOpen
                     header={<Heading is='h3'>{title}</Heading>}
                     id={sheet}
                     variant='secondary'

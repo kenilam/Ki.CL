@@ -43,9 +43,12 @@ const Title: React.FunctionComponent = () => {
           <Button
             after={
               generate.busy ? (
-                <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
+                <Bs.BsArrowClockwise
+                  aria-hidden
+                  className='is-revolving kicl-font-size'
+                />
               ) : (
-                <Bs.BsChevronDown aria-hidden />
+                <Bs.BsChevronDown aria-hidden className='kicl-font-size' />
               )
             }
             unstyled
