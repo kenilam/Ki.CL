@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -37,9 +37,9 @@ const CLASS_NAME = `${VIEW}__places`;
  * colours: orange for the sun's side and blue for the moon's.
  */
 const MARKS = {
-  day: { Icon: Ri.RiSunLine, colour: 'kicl-color-orange' },
-  night: { Icon: Ri.RiMoonLine, colour: 'kicl-color-blue' },
-  twilight: { Icon: Ri.RiSunFoggyLine, colour: 'kicl-color-red' },
+  day: { Icon: Bs.BsSun, colour: 'kicl-color-orange' },
+  night: { Icon: Bs.BsMoon, colour: 'kicl-color-blue' },
+  twilight: { Icon: Bs.BsSunset, colour: 'kicl-color-red' },
 } as const;
 
 type Props = {
@@ -71,7 +71,7 @@ const Places: React.FunctionComponent<Props> = ({ active, date }) => {
         )}
       >
         <PopoverTrigger asChild>
-          <Button after={<Ri.RiArrowDownSLine aria-hidden />} variant='primary'>
+          <Button after={<Bs.BsChevronDown aria-hidden />} variant='primary'>
             {t('place', { context: PLACES[active].context })}
           </Button>
         </PopoverTrigger>

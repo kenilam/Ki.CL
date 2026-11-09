@@ -2,7 +2,7 @@ import type { DiagramSpec } from 'design/components';
 import type { TFunction } from 'i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 /** The limits, and the schema they sit behind. */
 const allowance = (t: TFunction<'image-agent'>): DiagramSpec => ({
@@ -26,19 +26,19 @@ const allowance = (t: TFunction<'image-agent'>): DiagramSpec => ({
       title: t('diagram.allowance.node', { context: 'person' }),
       rows: [
         {
-          icon: Ri.RiPlayCircleLine,
+          icon: Bs.BsPlayCircle,
           name: t('diagram.allowance.row', { context: 'turn' }),
         },
         {
-          icon: Ri.RiTimerLine,
+          icon: Bs.BsStopwatch,
           name: t('diagram.allowance.row', { context: 'gap' }),
         },
         {
-          icon: Ri.RiChat3Line,
+          icon: Bs.BsChat,
           name: t('diagram.allowance.row', { context: 'messages_person' }),
         },
         {
-          icon: Ri.RiImageLine,
+          icon: Bs.BsImage,
           name: t('diagram.allowance.row', { context: 'pictures_person' }),
         },
       ],
@@ -51,15 +51,15 @@ const allowance = (t: TFunction<'image-agent'>): DiagramSpec => ({
       title: t('diagram.allowance.node', { context: 'everyone' }),
       rows: [
         {
-          icon: Ri.RiChat3Line,
+          icon: Bs.BsChat,
           name: t('diagram.allowance.row', { context: 'messages_everyone' }),
         },
         {
-          icon: Ri.RiImageLine,
+          icon: Bs.BsImage,
           name: t('diagram.allowance.row', { context: 'pictures_everyone' }),
         },
         {
-          icon: Ri.RiUserAddLine,
+          icon: Bs.BsPersonPlus,
           name: t('diagram.allowance.row', { context: 'people' }),
         },
       ],

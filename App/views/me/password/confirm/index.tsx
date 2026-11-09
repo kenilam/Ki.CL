@@ -28,7 +28,7 @@ import {
 } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Views
 import { PAGES } from '@/views/routes';
@@ -123,7 +123,7 @@ const Confirm: React.FunctionComponent = () => {
           <Button
             after={
               loading && (
-                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
               )
             }
             disabled={loading}

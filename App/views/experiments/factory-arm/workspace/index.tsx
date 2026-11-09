@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { BackLink, Button, Frame } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { FactoryArmProvider } from '@/views/experiments/factory-arm/context';
@@ -94,7 +94,7 @@ const Workspace: React.FunctionComponent = () => {
         popoverTarget={PANEL}
         variant='secondary'
       >
-        <Ri.RiSettings3Line aria-hidden />
+        <Bs.BsGear aria-hidden />
       </Button>
 
       <Panel />

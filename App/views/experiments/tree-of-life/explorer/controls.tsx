@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Layout, Spinner, Text } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { useTreeOfLifeContext } from '@/views/experiments/tree-of-life/context';
@@ -40,7 +40,7 @@ const Controls: React.FunctionComponent = () => {
           unstyled
           type='button'
           alignItems='center'
-          before={<Ri.RiFlashlightFill aria-hidden />}
+          before={<Bs.BsLightbulbFill aria-hidden />}
           gap='narrower'
           className={animate ? 'kicl-color-green' : 'kicl-color-grey-700'}
           aria-pressed={animate}

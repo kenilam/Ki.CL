@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Animation, Badge } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
@@ -48,10 +48,7 @@ const Notice: React.FunctionComponent = () => {
         variant='ghost'
       >
         {/* A status dot in the level's colour; the outline's text is the page's. */}
-        <Ri.RiCheckboxBlankCircleFill
-          aria-hidden
-          className={`kicl-color-${level}`}
-        />
+        <Bs.BsCircleFill aria-hidden className={`kicl-color-${level}`} />
         {stopped ? t('stopped', { context: 'message' }) : t('skipped')}
       </Badge>
     </Animation>

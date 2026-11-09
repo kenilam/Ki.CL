@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { HyperLink } from 'design/components';
@@ -34,7 +34,7 @@ const More: React.FunctionComponent = () => {
       to={`#${ARTICLE_ID}`}
       variant='secondary'
     >
-      <Ri.RiArrowDownSLine aria-hidden />
+      <Bs.BsChevronDown aria-hidden />
     </HyperLink>
   );
 };

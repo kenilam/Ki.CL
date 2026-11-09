@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Layout, List, ListItem, Text } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import type { Entry } from '@/views/experiments/factory-arm/setup';
@@ -44,7 +44,7 @@ const Steps: React.FunctionComponent<Props> = ({ entries }) => {
               {time(at, i18n.language)}
             </Text>
             <Text is='span'>
-              <Ri.RiCheckboxBlankCircleFill
+              <Bs.BsCircleFill
                 aria-hidden
                 className={`kicl-color-${level ?? 'grey'}`}
               />{' '}

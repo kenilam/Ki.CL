@@ -5,7 +5,7 @@ import { Animation, Button, List, ListItem } from 'design/components';
 
 // Constants
 import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/conversation/message/constants';
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 const CLASS_NAME = `${MESSAGE}__choices`;
 
@@ -21,7 +21,7 @@ const Choices: React.FunctionComponent<Props> = ({ choices, onChoose }) => (
       {choices.map((choice) => (
         <ListItem key={choice}>
           <Button
-            before={<Ri.RiCircleLine aria-hidden />}
+            before={<Bs.BsCircle aria-hidden />}
             onClick={() => void onChoose(choice)}
             size='small'
             variant='secondary'

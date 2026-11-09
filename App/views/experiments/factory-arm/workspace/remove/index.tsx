@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { useFactoryArmContext } from '@/views/experiments/factory-arm/context';
@@ -44,7 +44,7 @@ const Remove: React.FunctionComponent = () => {
       style={{ visibility: 'hidden' }}
       variant='secondary'
     >
-      <Ri.RiDeleteBinLine aria-hidden />
+      <Bs.BsTrash aria-hidden />
     </Button>
   );
 };
