@@ -116,11 +116,10 @@ const Resume: React.FunctionComponent = () => {
       <Layout autoFlow='row' justifyContent='center' justifyItems='center'>
         {/* Grows with the page, which is longer than any window. */}
         <Frame delay={FRAME_DELAY} grow>
-          {/* The box the light fills, with the frame's inset around the card. */}
+          {/* The box the light fills, with a narrow gap around the card. */}
           <div
             className={classNames(
-              'kicl-padding-block-frame',
-              'kicl-padding-inline-frame',
+              `${CLASS_NAME}__frame`,
               'kicl-position-relative'
             )}
           >
@@ -134,6 +133,7 @@ const Resume: React.FunctionComponent = () => {
               data-version={version.slug}
               gap='wide'
               is='article'
+              size={12}
               variant='secondary'
             >
               <Header />

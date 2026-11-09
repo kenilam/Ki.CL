@@ -1,0 +1,29 @@
+.kicl--views--resume__role {
+  @media print {
+    --kicl--components--card--background-color: transparent;
+    --kicl--components--card--border-radius: 0;
+    --kicl--components--card--border-width: 0;
+    --kicl--components--card--spacing: 0;
+
+    display: block;
+
+    > header {
+      float: inline-start;
+      margin-inline-end: var(--kicl-gutter-narrow);
+    }
+
+    ul {
+      clear: inline-start;
+    }
+  }
+}
+
+.kicl--views--resume__role__dates {
+  @media print {
+    --kicl--components--badge--background-color: transparent;
+    --kicl--components--badge--border-width: 0;
+    --kicl--components--badge--color: inherit;
+    --kicl--components--badge--padding-block: 0;
+    --kicl--components--badge--padding-inline: 0;
+  }
+}

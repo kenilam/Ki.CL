@@ -112,7 +112,7 @@ A bullet that several versions share is one constant, imported by each. A versio
 
 ### The exported file's record
 
-`App/views/resume/content/exported.json`, written by the export after the upload, and committed:
+`App/views/resume/exported.json`, written by the export after the upload, and committed:
 
 ```json
 { "exported": "2026-10-08", "fingerprint": "c3701a9a", "pages": 2 }

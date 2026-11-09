@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { Button, HyperLink, List, ListItem, Text } from 'design/components';
@@ -67,7 +67,7 @@ const Actions: React.FunctionComponent = () => {
     >
       <ListItem>
         <Button
-          before={<Ri.RiMessageLine aria-hidden />}
+          before={<Bs.BsChatLeftText aria-hidden />}
           command='show-modal'
           commandfor={CONTACT_ID}
           data-track='Resume message'
@@ -81,7 +81,7 @@ const Actions: React.FunctionComponent = () => {
       {current ? (
         <ListItem>
           <HyperLink
-            before={<Ri.RiDownload2Line aria-hidden />}
+            before={<Bs.BsDownload aria-hidden />}
             data-track='Resume PDF'
             download
             level='confirm'
@@ -97,7 +97,7 @@ const Actions: React.FunctionComponent = () => {
       ) : null}
       <ListItem>
         <Button
-          before={<Ri.RiPrinterLine aria-hidden />}
+          before={<Bs.BsPrinter aria-hidden />}
           data-track='Resume print'
           level='confirm'
           onClick={print}
