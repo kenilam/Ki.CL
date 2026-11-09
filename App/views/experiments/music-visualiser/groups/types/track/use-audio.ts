@@ -82,12 +82,15 @@ type Slot = {
 export type Control = {
   /** What is playing, as a stream to record; `null` before the first play. */
   capture(): MediaStream | null;
+  duration: number;
+  elapsed: number;
   /** The track could not be played; the player writes the message. */
   error: boolean;
   loading: boolean;
   /** Go to this track's `/play`. */
   play(): void;
   playing: boolean;
+  seek(seconds: number): void;
   setValue(value: number): void;
   /** Go to the next track's `/play`. */
   skip(): void;
@@ -182,6 +185,8 @@ export function useAudio(): Audio {
   const fading = useRef(new Set<Slot>());
 
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
+  const [duration, setDuration] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -236,6 +241,17 @@ export function useAudio(): Audio {
     },
     [storage]
   );
+
+  const seek = useCallback((seconds: number) => {
+    const slot = current.current;
+
+    if (!slot) {
+      return;
+    }
+
+    slot.element.currentTime = seconds;
+    setElapsed(seconds);
+  }, []);
 
   const capture = useCallback(() => {
     const built = graph.current;
@@ -314,6 +330,16 @@ export function useAudio(): Audio {
     element.preload = 'auto';
     element.src = track.url;
     element.addEventListener('playing', () => cross(slot));
+    element.addEventListener('durationchange', () => {
+      if (current.current === slot) {
+        setDuration(Number.isFinite(element.duration) ? element.duration : 0);
+      }
+    });
+    element.addEventListener('timeupdate', () => {
+      if (current.current === slot) {
+        setElapsed(element.currentTime);
+      }
+    });
     element.addEventListener('ended', () => {
       if (current.current === slot) {
         skipRef.current();
@@ -327,6 +353,8 @@ export function useAudio(): Audio {
     });
 
     current.current = slot;
+    setDuration(0);
+    setElapsed(0);
     setError(false);
   }, [cross, key, track]);
 
@@ -447,10 +475,13 @@ export function useAudio(): Audio {
     analyser,
     control: {
       capture,
+      duration,
+      elapsed,
       error,
       loading,
       play,
       playing,
+      seek,
       setValue,
       skip,
       stop,

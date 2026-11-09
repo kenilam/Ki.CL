@@ -57,7 +57,7 @@ music-visualiser/
         use-audio.ts   the audio, driven by the URL; returns the controls
         play/          /play: an outlet, matched by the track
         gate/          title, category, attribution, play link
-        chrome/        the player: now playing, controls, idle fade
+        chrome/        the player: now playing, progress, controls, idle fade
 ```
 
 ### How the pieces fit
@@ -68,8 +68,11 @@ music-visualiser/
   (element, then a gain per track, the analyzer, the master volume), lets
   the context run, and plays; leaving `/play` pauses. The controls it
   returns - `play`, `stop`, `skip`, `loading`, `playing`, `value` for the
-  volume - only navigate or read state. The next track is drawn when this
-  one is named, so skip can be a plain link.
+  volume - only navigate or read state. `elapsed` and `duration` come from
+  the element's `timeupdate` and `durationchange` events, and `seek` is the
+  one control that doesn't navigate: it moves the element's `currentTime`.
+  The progress row above the buttons shows them with a slider. The next track
+  is drawn when this one is named, so skip can be a plain link.
 - **Crossfade.** On a skip the old track plays on at full volume while the
   new one buffers. When the new one fires `playing`, the two cross over
   three seconds and the old one is dropped.
