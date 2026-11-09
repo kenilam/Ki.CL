@@ -153,14 +153,11 @@ along, on an acoustic kit or a drum machine, or not at all.
     like one. Between notes a ball arcs higher the further apart the two
     notes are, and moves sideways at a steady pace between its own two notes.
     It used to follow the scene's playhead, which jumps across barlines and
-    other staves' notes, and that pulled the arc sideways. Before a whole-bar
-    rest the ball stops on its note and stays there for the rest of the
-    round. After the rest a new ball of the same
-    colour falls from high above the frame onto the next note. A staff that
+    other staves' notes, and that pulled the arc sideways. Over a rest, even a
+    whole bar of one, the ball keeps flying to its next note. A staff that
     starts later doesn't fall in: its ball waits at the start with the others
     and arcs to its first note.
-  - `balls/ball/` draws one ball and, in `stops/`, the balls it left on
-    notes before a rest: a white-hot sphere with a halo in its colour, a trail drawn as a glowing tube along the path it has covered in the last
+  - `balls/ball/` draws one ball: a white-hot sphere with a halo in its colour, a trail drawn as a glowing tube along the path it has covered in the last
     1.6 seconds of real time, so it pulls back into the ball while the music
     is paused and grows again as it moves, a faint copy of the trail under the floor and a soft vertical streak
     beneath it for the reflection.
