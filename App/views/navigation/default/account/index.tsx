@@ -16,7 +16,7 @@ import {
 } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Views
 import { PAGES } from '@/views/routes';
@@ -32,7 +32,7 @@ const Default: React.FunctionComponent = () => {
     <Popover>
       <PopoverTrigger asChild>
         <Button className='kicl-font-size' unstyled>
-          <Ri.RiAccountCircleLine aria-hidden />
+          <Bs.BsPersonCircle aria-hidden />
           <Text className='kicl-hidden' is='span'>
             {t('account')}
           </Text>
@@ -42,7 +42,7 @@ const Default: React.FunctionComponent = () => {
         <Menu autoFlow='row' gap='narrow'>
           <Animation property='slide-from-top' delay={300}>
             <HyperLink
-              before={<Ri.RiAccountCircleLine aria-hidden />}
+              before={<Bs.BsPersonCircle aria-hidden />}
               className='kicl-inline-size-full'
               lookLikeButton
               to={PAGES.me}
@@ -54,10 +54,7 @@ const Default: React.FunctionComponent = () => {
           <Animation property='slide-from-top' delay={600}>
             <Button
               before={
-                <Ri.RiLogoutCircleLine
-                  aria-hidden
-                  className='kicl-rtl-mirror'
-                />
+                <Bs.BsBoxArrowRight aria-hidden className='kicl-rtl-mirror' />
               }
               className='kicl-inline-size-full'
               command='show-modal'

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { Button, HyperLink, Navigation } from 'design/components';
@@ -41,7 +41,7 @@ const Aside: React.FunctionComponent = () => {
         to={translations.common.t('url', { context: 'linkedin' })}
         variant='ghost'
       >
-        <Ri.RiLinkedinLine aria-hidden />
+        <Bs.BsLinkedin aria-hidden />
       </HyperLink>
       <HyperLink
         aria-label={translations.home.t('header.aside.github')}
@@ -51,7 +51,7 @@ const Aside: React.FunctionComponent = () => {
         to={translations.common.t('url', { context: 'github' })}
         variant='ghost'
       >
-        <Ri.RiGithubLine aria-hidden />
+        <Bs.BsGithub aria-hidden />
       </HyperLink>
       <Button
         aria-label={translations.common.t('send_message')}
@@ -61,7 +61,7 @@ const Aside: React.FunctionComponent = () => {
         title={translations.common.t('send_message')}
         variant='ghost'
       >
-        <Ri.RiMailLine aria-hidden />
+        <Bs.BsEnvelope aria-hidden />
       </Button>
     </Navigation>
   );

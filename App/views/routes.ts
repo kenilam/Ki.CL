@@ -1,5 +1,5 @@
 import type { IconType } from 'react-icons';
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import type { ButtonProps } from 'design/components';
@@ -98,12 +98,12 @@ const TOPICS: readonly Topic[] = [
   {
     context: 'design_system',
     // The design system's own sections: components, tokens and patterns.
-    icons: [Ri.RiShapesLine, Ri.RiPaletteLine, Ri.RiPuzzle2Line],
+    icons: [Bs.BsBoundingBoxCircles, Bs.BsPalette, Bs.BsPuzzle],
     to: `/${WORKSHOP_PATH}/${DESIGN_SYSTEM}`,
   },
   {
     context: 'internationalisation',
-    icons: [Ri.RiTranslate2, Ri.RiGlobalLine, Ri.RiSpeakLine],
+    icons: [Bs.BsTranslate, Bs.BsGlobe, Bs.BsChatDots],
     to: `/${WORKSHOP_PATH}/${I18N}`,
   },
 ];

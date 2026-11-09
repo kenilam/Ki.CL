@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Text } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Constants
 import { CLASS_NAME } from './constants';
@@ -23,7 +23,7 @@ const Open: React.FunctionComponent = () => {
       commandfor={CLASS_NAME}
       unstyled
     >
-      <Ri.RiMenuLine aria-hidden />
+      <Bs.BsList aria-hidden />
       <Text className='kicl-hidden' is='span'>
         {t('action', { context: 'open_navigation' })}
       </Text>

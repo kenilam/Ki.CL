@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Badge, HyperLink } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Constants
 import { CLASS_NAME } from '@/views/experiments/tree-of-life/explorer/constants';
@@ -171,7 +171,7 @@ const Labels: React.FunctionComponent = () => {
             size={label.accent ? 'large' : 'small'}
           >
             {label.text}
-            {label.accent ? <Ri.RiInformationLine aria-hidden /> : null}
+            {label.accent ? <Bs.BsInfoCircle aria-hidden /> : null}
           </Badge>
         </HyperLink>
       ))}
