@@ -11,8 +11,6 @@ type Head = {
   y: number;
 };
 
-type Rest = { staff: number; time: number };
-
 type Staff = { bottom: number; top: number };
 
 type Sheet = {
@@ -20,7 +18,6 @@ type Sheet = {
   end: number;
   heads: Head[];
   height: number;
-  rests: Rest[];
   staves: Staff[];
   svg: string;
   width: number;
@@ -30,7 +27,6 @@ const UNIT = 10;
 const WHOLE = 4;
 const MIDI_OFFSET = 12;
 const SAME_ONSET = 0.03;
-const WHOLE_TOLERANCE = 0.001;
 
 const OPTIONS = {
   autoBeam: true,
@@ -81,7 +77,6 @@ const engrave = async (
   const sources = measures.map((row) => row.find(Boolean)?.parentSourceMeasure);
 
   const heads: Head[] = [];
-  const rests: Rest[] = [];
 
   measures.forEach((row, index) => {
     const source = sources[index];
@@ -105,18 +100,7 @@ const engrave = async (
               bars[bar] +
               toSeconds(sourceNote.getAbsoluteTimestamp().RealValue - start);
 
-            if (staff < 0 || parentVoiceEntry.IsGrace) {
-              return;
-            }
-
-            if (sourceNote.isRest()) {
-              if (
-                sourceNote.Length.RealValue * WHOLE >=
-                beats - WHOLE_TOLERANCE
-              ) {
-                rests.push({ staff, time });
-              }
-
+            if (staff < 0 || parentVoiceEntry.IsGrace || sourceNote.isRest()) {
               return;
             }
 
@@ -150,7 +134,6 @@ const engrave = async (
     })),
     heads: heads.sort((a, b) => a.time - b.time || a.staff - b.staff),
     height: Number(svg.getAttribute('height')) || 0,
-    rests,
     staves,
     svg: new XMLSerializer().serializeToString(svg),
     width: Number(svg.getAttribute('width')) || 0,
