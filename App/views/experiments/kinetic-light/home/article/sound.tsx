@@ -29,7 +29,7 @@ const BEATS = [
   'machine',
 ] as const;
 
-const SOURCES = ['midi', 'arranged', 'other'] as const;
+const SOURCES = ['midi', 'arranged', 'written'] as const;
 
 const Sound: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');

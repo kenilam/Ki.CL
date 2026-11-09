@@ -51,7 +51,7 @@
       "drums": "There are six choices for the drums.",
       "drums_arranged": "The drums play the sections the text model wrote when it arranged the song.",
       "drums_midi": "Its own drum part plays, even after the song is arranged, with each General MIDI drum on the closest sample.",
-      "drums_other": "The page writes a beat from the song’s own rhythm. The diagram below shows how.",
+      "drums_written": "The page writes a beat from the song’s own rhythm. The diagram below shows how.",
       "once": "A song is arranged once and keeps its arrangement, so everyone who opens its link hears the same thing. Changing a setting afterwards only changes the page you have open.",
       "title": "The sound and the beat",
       "voice_grand": "It’s a recorded grand piano with no effects.",
@@ -62,7 +62,7 @@
       "voices": "Tone.js, a library for making music in the browser, plays the notes. You can pick one of five sounds.",
       "when_arranged": "An arranged song",
       "when_midi": "A MIDI file with drums",
-      "when_other": "Any other song"
+      "when_written": "Any other song"
     },
     "tracking": {
       "allowance": "Reading a sheet costs money, so each visitor can read a few sheets a day, shown on the badge under the description. The count covers the last 24 hours, not the calendar day. When none are left, the form is hidden and only the badge shows.",
