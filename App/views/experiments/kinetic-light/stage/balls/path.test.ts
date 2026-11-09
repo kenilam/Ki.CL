@@ -7,7 +7,7 @@ import {
   toPlayhead,
 } from '@/views/experiments/kinetic-light/stage/playhead';
 
-import { positionAt, stoppedAt, toTracks } from './path';
+import { positionAt, toTracks } from './path';
 
 const head = (time: number, x: number, y: number) => ({
   pitch: 60,
@@ -32,7 +32,6 @@ const sheet: Sheet = {
     head(5, 600, 20),
   ],
   height: 40,
-  rests: [{ staff: 0, time: 3 }],
   staves: [{ bottom: 40, top: 0 }],
   svg: '',
   width: 700,
@@ -71,7 +70,6 @@ describe('positionAt', () => {
         { ...head(1, 280, 50), staff: 1 },
         head(2, 300, 10),
       ],
-      rests: [],
       staves: [
         { bottom: 40, top: 0 },
         { bottom: 80, top: 40 },
@@ -91,17 +89,12 @@ describe('positionAt', () => {
     assert.ok(at(0, 0.5).y > at(0, 1.5).y);
   });
 
-  test('keeps the ball on the note before a whole rest', () => {
-    assert.deepEqual(at(0, 4), { seen: 1, x: 3, y: 0, z: 0.2 });
-  });
+  test('keeps flying over a rest to the next note', () => {
+    const flying = at(0, 4);
 
-  test('drops a new ball from high up onto the note after a whole rest', () => {
-    const falling = at(0, 4.6);
-
-    assert.equal(falling.seen, 1);
-    assert.equal(falling.x, 6);
-    assert.ok(falling.y > 5);
-    assert.deepEqual(at(0, 5), { seen: 1, x: 6, y: 0, z: 0.2 });
+    assert.equal(flying.seen, 1);
+    assert.ok(Math.abs(flying.x - 5) < 1e-9);
+    assert.ok(flying.y > 0);
   });
 
   test('drops every ball onto its first note as the song starts', () => {
@@ -118,7 +111,6 @@ describe('positionAt', () => {
     const late: Sheet = {
       ...sheet,
       heads: [head(0, 100, 10), { ...head(2, 300, 50), staff: 1 }],
-      rests: [{ staff: 1, time: 0 }],
       staves: [
         { bottom: 40, top: 0 },
         { bottom: 80, top: 40 },
@@ -130,7 +122,6 @@ describe('positionAt', () => {
 
     assert.equal(positionAt(entering, latePlayhead, 0, point), 1);
     assert.deepEqual(point, { x: 1, y: 0, z: 0.5 });
-    assert.equal(entering.stops.length, 0);
   });
 
   test('rises off its last note into the air after the music ends', () => {
@@ -166,11 +157,5 @@ describe('positionAt', () => {
 
     assert.ok(Math.abs(before.x - after.x) < 0.01);
     assert.ok(Math.abs(before.y - after.y) < 0.01);
-  });
-
-  test('leaves the stopped ball on its note once the new one drops', () => {
-    assert.equal(stoppedAt(tracks[0], playhead, 4), 0);
-    assert.equal(stoppedAt(tracks[0], playhead, 4.6), 1);
-    assert.deepEqual(tracks[0].stops[0], { time: 4.2, x: 3, z: 0.2 });
   });
 });

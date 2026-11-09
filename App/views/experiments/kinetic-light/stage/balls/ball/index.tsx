@@ -25,7 +25,6 @@ import {
 } from '@/views/experiments/kinetic-light/stage/balls/path';
 
 // Partials
-import { Stops } from './stops';
 
 // Ribbon
 import { createGlow, createRibbon, createTube, writeRibbon } from './ribbon';
@@ -188,7 +187,6 @@ const Ball: React.FunctionComponent<Props> = ({ place, playhead, track }) => {
 
   return (
     <>
-      <Stops place={place} playhead={playhead} track={track} />
       <mesh ref={sphere}>
         <sphereGeometry args={[RADIUS, 24, 16]} />
         <meshBasicMaterial toneMapped={false} />

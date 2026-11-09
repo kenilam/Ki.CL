@@ -12,17 +12,9 @@ import {
   type Playhead,
 } from '@/views/experiments/kinetic-light/stage/playhead';
 
-type Landing = { enters: boolean; time: number; x: number; z: number };
+type Landing = { time: number; x: number; z: number };
 
-type Stop = { time: number; x: number; z: number };
-
-type Track = {
-  landings: Landing[];
-  starts: number[];
-  stops: Stop[];
-  stopTimes: number[];
-  times: number[];
-};
+type Track = { landings: Landing[]; times: number[] };
 
 type Point = { x: number; y: number; z: number };
 
@@ -33,34 +25,20 @@ const DROP_HEIGHT = 12;
 const HOVER_HEIGHT = 0.6;
 
 const toSteps = (sheet: Sheet, staff: number): Landing[][] => {
-  const rests = sheet.rests
-    .filter((rest) => rest.staff === staff)
-    .map(({ time }) => time);
   const steps: Landing[][] = [];
 
   sheet.heads
     .filter((head) => head.staff === staff && head.sounded)
     .forEach(({ time, x, y }) => {
       const step = steps[steps.length - 1];
-      const landing = { enters: false, time, x: x * SCALE, z: y * SCALE };
+      const landing = { time, x: x * SCALE, z: y * SCALE };
 
       if (step && time - step[0].time < SAME_TIME) {
-        step.push({ ...landing, enters: step[0].enters, time: step[0].time });
+        step.push({ ...landing, time: step[0].time });
         return;
       }
 
-      const previous = step?.[0].time;
-
-      steps.push([
-        {
-          ...landing,
-          enters:
-            previous !== undefined &&
-            rests.some(
-              (rest) => rest > previous + SAME_TIME && rest < time - SAME_TIME
-            ),
-        },
-      ]);
+      steps.push([landing]);
     });
 
   return steps.map((step) => step.sort((a, b) => a.z - b.z));
@@ -71,38 +49,12 @@ const toTrack = (notes: Landing[], playhead: Playhead): Track => {
   const landings =
     notes[0].time - first >= SAME_TIME
       ? [
-          {
-            enters: false,
-            time: first,
-            x: playheadAt(playhead, first),
-            z: notes[0].z,
-          },
+          { time: first, x: playheadAt(playhead, first), z: notes[0].z },
           ...notes,
         ]
       : notes;
-  const starts: number[] = [];
 
-  landings.forEach(({ enters, time }, index) => {
-    starts.push(
-      enters
-        ? time - DROP_SECONDS
-        : (starts[index - 1] ?? Number.NEGATIVE_INFINITY)
-    );
-  });
-
-  const stops = landings.flatMap(({ x, z }, index) =>
-    landings[index + 1]?.enters
-      ? [{ time: landings[index + 1].time - DROP_SECONDS, x, z }]
-      : []
-  );
-
-  return {
-    landings,
-    starts,
-    stopTimes: stops.map(({ time }) => time),
-    stops,
-    times: landings.map(({ time }) => time),
-  };
+  return { landings, times: landings.map(({ time }) => time) };
 };
 
 const toTracks = (sheet: Sheet, playhead: Playhead): Track[] =>
@@ -133,14 +85,6 @@ const drop = (landing: Landing, time: number, point: Point): number => {
   point.z = landing.z;
 
   return left > 1 ? 0 : 1;
-};
-
-const sit = (landing: Landing, point: Point): number => {
-  point.x = landing.x;
-  point.y = 0;
-  point.z = landing.z;
-
-  return 1;
 };
 
 const shift = (
@@ -217,13 +161,6 @@ const positionAt = (
   }
 
   const to = shift(next, round, playhead);
-
-  if (to.enters) {
-    return to.time - time <= DROP_SECONDS
-      ? drop(to, time, point)
-      : sit(from, point);
-  }
-
   const progress = (time - from.time) / (to.time - from.time);
   const arc = Math.min(
     HIGHEST_ARC,
@@ -238,34 +175,13 @@ const positionAt = (
 };
 
 const segmentStart = (
-  { landings, starts, times }: Track,
+  { times }: Track,
   playhead: Playhead,
   time: number
-): number => {
-  const round = roundOf(time, playhead);
-  const period = periodOf(playhead);
-  const local = localOf(time, playhead);
-  const index = indexAt(times, local);
-  const next = landings[index + 1];
-
-  if (next?.enters && next.time - local <= DROP_SECONDS) {
-    return next.time - DROP_SECONDS + round * period;
-  }
-
-  if (index < 0) {
-    return round === 0
-      ? times[0] - DROP_SECONDS
-      : starts[starts.length - 1] + (round - 1) * period;
-  }
-
-  return starts[index] + round * period;
-};
-
-const stoppedAt = (
-  { stopTimes }: Track,
-  playhead: Playhead,
-  time: number
-): number => indexAt(stopTimes, localOf(time, playhead)) + 1;
+): number =>
+  roundOf(time, playhead) === 0 && indexAt(times, localOf(time, playhead)) < 0
+    ? times[0] - DROP_SECONDS
+    : Number.NEGATIVE_INFINITY;
 
 const sinceLanding = (
   { times }: Track,
@@ -288,7 +204,6 @@ export {
   positionAt,
   segmentStart,
   sinceLanding,
-  stoppedAt,
   toTracks,
   type Point,
   type Track,
