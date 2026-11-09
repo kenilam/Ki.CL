@@ -23,6 +23,7 @@ import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/
 
 // Partials
 import { Beat } from './beat';
+import { Progress } from './progress';
 import { Settings } from './settings';
 import { Sound } from './sound';
 import { Title } from './title';
@@ -125,40 +126,39 @@ const Chrome: React.FunctionComponent = () => {
             </Text>
           </header>
         </Layout>
-        <List
-          alignItems='center'
-          className='kicl-pointer-events-auto'
-          display='flex'
-          gap='narrow'
-          wrap
-        >
-          <ListItem className={`${CLASS_NAME}__play`}>
-            <Button
-              aria-keyshortcuts='Space'
-              aria-label={
-                playing
-                  ? translations.common.t('action', { context: 'pause' })
-                  : translations.common.t('action', { context: 'play' })
-              }
-              disabled={arranger.arranging}
-              onClick={() => (playing ? pause() : void play())}
-              ref={playButton}
-              size='small'
-              variant='secondary'
-            >
-              {icon}
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Sound />
-          </ListItem>
-          <ListItem>
-            <Beat />
-          </ListItem>
-          <ListItem>
-            <Settings />
-          </ListItem>
-        </List>
+        <Layout autoFlow='row' gap='narrow'>
+          <div className='kicl-pointer-events-auto'>
+            <Progress />
+            <List alignItems='center' display='flex' gap='narrow' wrap>
+              <ListItem className={`${CLASS_NAME}__play`}>
+                <Button
+                  aria-keyshortcuts='Space'
+                  aria-label={
+                    playing
+                      ? translations.common.t('action', { context: 'pause' })
+                      : translations.common.t('action', { context: 'play' })
+                  }
+                  disabled={arranger.arranging}
+                  onClick={() => (playing ? pause() : void play())}
+                  ref={playButton}
+                  size='small'
+                  variant='secondary'
+                >
+                  {icon}
+                </Button>
+              </ListItem>
+              <ListItem>
+                <Sound />
+              </ListItem>
+              <ListItem>
+                <Beat />
+              </ListItem>
+              <ListItem>
+                <Settings />
+              </ListItem>
+            </List>
+          </div>
+        </Layout>
       </section>
     </Layout>
   );

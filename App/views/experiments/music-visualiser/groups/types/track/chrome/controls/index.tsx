@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import * as Bs from 'react-icons/bs';
 
 // Components
-import { HyperLink, List, ListItem } from 'design/components';
+import { HyperLink, Layout, List, ListItem } from 'design/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
@@ -16,6 +16,7 @@ import { useTrackContext } from '@/views/experiments/music-visualiser/groups/typ
 // Partials
 import { Clip } from './clip';
 import { CopyLink } from './copy-link';
+import { Progress } from './progress';
 import { Volume } from './volume';
 
 // Styles
@@ -31,8 +32,9 @@ import {
 const CLASS_NAME = `${VIEW}__chrome__controls`;
 
 /**
- * Pause, skip, copy, clip and volume. Pause links to the track's gate and skip to
- * the next track's `/play`. On phones and tablets the volume goes under the buttons.
+ * The playback position, then pause, skip, copy, clip and volume. Pause links
+ * to the track's gate and skip to the next track's `/play`. On phones and
+ * tablets the volume goes under the buttons.
  */
 const Controls: React.FunctionComponent = () => {
   const { control, next, track } = useTrackContext();
@@ -43,51 +45,55 @@ const Controls: React.FunctionComponent = () => {
 
   return (
     // Fades as one while the listener is still.
-    <List
-      alignItems='center'
-      className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}
-      display='flex'
-      gap='narrow'
-      justifyContent='end'
-      wrap
-    >
-      <ListItem>
-        <HyperLink
-          aria-label={translations.common.t('action', { context: 'pause' })}
-          lookLikeButton
-          size='small'
-          to={toTrackPath(track)}
-          variant='secondary'
+    <Layout autoFlow='row' gap='narrow'>
+      <div className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}>
+        <Progress />
+        <List
+          alignItems='center'
+          display='flex'
+          gap='narrow'
+          justifyContent='end'
+          wrap
         >
-          {control.loading ? (
-            <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
-          ) : (
-            <Bs.BsPauseFill aria-hidden />
-          )}
-        </HyperLink>
-      </ListItem>
-      <ListItem>
-        <HyperLink
-          aria-label={translations.musicVisualiser.t('action', {
-            context: 'next',
-          })}
-          disabled={!next}
-          lookLikeButton
-          size='small'
-          to={toPlayPath(next ?? track)}
-          variant='ghost'
-        >
-          <Bs.BsSkipForwardFill aria-hidden />
-        </HyperLink>
-      </ListItem>
-      <ListItem>
-        <CopyLink />
-      </ListItem>
-      <Clip />
-      <ListItem>
-        <Volume />
-      </ListItem>
-    </List>
+          <ListItem>
+            <HyperLink
+              aria-label={translations.common.t('action', { context: 'pause' })}
+              lookLikeButton
+              size='small'
+              to={toTrackPath(track)}
+              variant='secondary'
+            >
+              {control.loading ? (
+                <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
+              ) : (
+                <Bs.BsPauseFill aria-hidden />
+              )}
+            </HyperLink>
+          </ListItem>
+          <ListItem>
+            <HyperLink
+              aria-label={translations.musicVisualiser.t('action', {
+                context: 'next',
+              })}
+              disabled={!next}
+              lookLikeButton
+              size='small'
+              to={toPlayPath(next ?? track)}
+              variant='ghost'
+            >
+              <Bs.BsSkipForwardFill aria-hidden />
+            </HyperLink>
+          </ListItem>
+          <ListItem>
+            <CopyLink />
+          </ListItem>
+          <Clip />
+          <ListItem>
+            <Volume />
+          </ListItem>
+        </List>
+      </div>
+    </Layout>
   );
 };
 
