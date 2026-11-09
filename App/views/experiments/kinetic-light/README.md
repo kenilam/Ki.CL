@@ -38,8 +38,9 @@ along, on an acoustic kit or a drum machine, or not at all.
   a start and a length in seconds, and a velocity. `use-read.ts` picks the
   reader from the file's first bytes.
 - **`read/musicxml.ts`** walks the score with `DOMParser`. A bar is as long
-  as its time signature, or as its notes if they need more, and a note that
-  runs past that is cut at the barline. Ties are joined, and so is a slur
+  as its time signature. It's longer only when a note starts after the time
+  signature's end, and then it runs to the end of its notes. A note that runs
+  past the bar is cut at the barline. Ties are joined, and so is a slur
   between two notes of the same pitch, which is how homr writes ties. It also
   returns when each bar starts, in seconds and in beats.
 - **`read/repair.ts`** fixes one misread of homr's before the song is read
@@ -327,7 +328,12 @@ along, on an acoustic kit or a drum machine, or not at all.
   barline, so the notes past it never played while the sheet still showed
   them. From bar 76 Interstellar is written in 6/8 with six beats in every
   bar, and half of each of those bars was silent. The reader now lets a bar
-  run as long as its notes, so what's drawn is what plays.
+  run as long as its notes when one of them starts past the time signature,
+  so what's drawn is what plays. The first version of that fix counted how
+  long notes last, not where they start. homr writes a note held across a
+  barline as one long note, and a whole-bar rest as four beats in any
+  metre, so bars with those doubled in length and Fable played 22 seconds
+  slower than written.
 - **Held notes** get a quiet sine tone underneath, at the same pitch, once
   they're two seconds or longer. It swells in over 2.5 seconds as the piano
   fades and stops when the note ends. The piano samples are eight seconds
