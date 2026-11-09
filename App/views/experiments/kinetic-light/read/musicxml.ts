@@ -39,16 +39,30 @@ const tempoOf = (element: Element): number | null => {
   return tempo > 0 ? tempo : null;
 };
 
-const spanOf = (measure: Element, divisions: number): number => {
+const spanOf = (
+  measure: Element,
+  divisions: number,
+  bar: number | null
+): number => {
   let unit = divisions;
+  let length = bar;
   let offset = 0;
-  let span = 0;
+  let end = 0;
+  let last = 0;
 
   for (const element of measure.children) {
     const tag = element.tagName;
 
     if (tag === 'attributes') {
       unit = Number(text(element, 'divisions')) || unit;
+
+      const time = child(element, 'time');
+      const beats = Number(text(time, 'beats'));
+      const beatType = Number(text(time, 'beat-type'));
+
+      if (beats > 0 && beatType > 0) {
+        length = (beats * 4) / beatType;
+      }
     }
 
     const duration = Number(text(element, 'duration') ?? 0) / unit;
@@ -58,16 +72,28 @@ const spanOf = (measure: Element, divisions: number): number => {
     }
 
     if (
+      tag === 'note' &&
+      !child(element, 'grace') &&
+      !child(element, 'chord')
+    ) {
+      last = Math.max(last, offset);
+    }
+
+    if (
       tag === 'forward' ||
       (tag === 'note' && !child(element, 'grace') && !child(element, 'chord'))
     ) {
       offset += duration;
     }
 
-    span = Math.max(span, offset);
+    end = Math.max(end, offset);
   }
 
-  return span;
+  if (length === null) {
+    return end;
+  }
+
+  return last >= length ? Math.max(length, end) : length;
 };
 
 const unzipMusicXml = (bytes: Uint8Array): string | null => {
@@ -129,7 +155,7 @@ const readMusicXml = (
     let barLength: number | null = null;
 
     part.querySelectorAll(':scope > measure').forEach((measure, index) => {
-      const span = spanOf(measure, divisions);
+      const span = spanOf(measure, divisions, barLength);
       let offset = 0;
       let length = 0;
       let chordStart = 0;
@@ -180,10 +206,7 @@ const readMusicXml = (
               (Number(text(pitch, 'octave')) + 1) * 12 +
               step +
               Number(text(pitch, 'alter') ?? 0);
-            const held = Math.min(
-              duration,
-              measureStart + Math.max(barLength ?? span, span) - start
-            );
+            const held = Math.min(duration, measureStart + span - start);
             const notations = child(element, 'notations');
             const tied = [
               ...element.querySelectorAll(':scope > tie'),
@@ -223,8 +246,7 @@ const readMusicXml = (
         bars.push(measureStart);
       }
 
-      measureStart +=
-        barLength === null || pickup ? length : Math.max(barLength, length);
+      measureStart += pickup ? length : span;
     });
 
     if (counting) {
