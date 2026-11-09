@@ -1,7 +1,8 @@
-import React, { useId } from 'react';
+import React, { useEffect, useId, useRef } from 'react';
 
 // Libraries
 import classNames from 'classnames';
+import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Icons
@@ -56,6 +57,16 @@ const Contents: React.FunctionComponent = () => {
   } = useKineticLightContext();
   const sheet = useId();
   const title = translations.kineticLight.t('label', { context: 'songs' });
+  const generateButton = useRef<HTMLButtonElement>(null);
+  const file = useWatch({ control: form.control, name: 'file' });
+
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+
+    generateButton.current?.focus();
+  }, [file]);
 
   return (
     <Layout alignContent='end' justifyContent='stretch' justifyItems='start'>
@@ -163,6 +174,7 @@ const Contents: React.FunctionComponent = () => {
                             <Bs.BsStars aria-hidden />
                           )
                         }
+                        ref={generateButton}
                         size='small'
                         type='submit'
                       >
