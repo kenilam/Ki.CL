@@ -17,8 +17,7 @@ import { Role } from './role';
 import { HEADING } from '@/views/resume/constants';
 
 /**
- * The six most recent roles, each a disclosure, then the earlier ones as a
- * list.
+ * The six most recent roles, each a card, then the earlier ones as a list.
  */
 const Experience: React.FunctionComponent = () => {
   const { t } = useTranslation('resume');

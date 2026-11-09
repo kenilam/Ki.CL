@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { HyperLink, Text } from 'design/components';
@@ -15,9 +15,9 @@ import { PHONE_KEY } from '@/views/resume/constants';
 const SEPARATOR = ' · ';
 
 const PROFILES = [
-  { Icon: Ri.RiLinkedinBoxLine, context: 'linkedin' },
-  { Icon: Ri.RiGithubLine, context: 'github' },
-  { Icon: Ri.RiGlobalLine, context: 'experiments' },
+  { Icon: Bs.BsLinkedin, context: 'linkedin' },
+  { Icon: Bs.BsGithub, context: 'github' },
+  { Icon: Bs.BsGlobe, context: 'experiments' },
 ] as const;
 
 /** The phone number, on a machine that has been given one. See `PHONE_KEY`. */

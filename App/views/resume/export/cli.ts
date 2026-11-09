@@ -185,13 +185,15 @@ const READY = `(async () => {
   const until = Date.now() + ${READY_MS};
   const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const article = () => document.querySelector('article[data-version]');
+  const weightOf = (face) =>
+    ({ bold: '700', normal: '400' })[face.weight] ?? face.weight;
   const loaded = () =>
     Object.entries(${JSON.stringify(FACES)}).every(([family, weights]) =>
       weights.every((weight) =>
         [...document.fonts].some(
           (face) =>
             face.family.replace(/["']/g, '') === family &&
-            face.weight === weight &&
+            weightOf(face) === weight &&
             face.status === 'loaded'
         )
       )
@@ -383,11 +385,11 @@ run()
     };
 
     writeFileSync(
-      join(HERE, '../content/exported.json'),
+      join(HERE, '../exported.json'),
       `${JSON.stringify(record, null, 2)}\n`
     );
 
-    console.info(`Uploaded to ${FILE}. Commit content/exported.json.`);
+    console.info(`Uploaded to ${FILE}. Commit App/views/resume/exported.json.`);
   })
   .catch((error: unknown) => {
     fail(error instanceof Error ? error.message : String(error));

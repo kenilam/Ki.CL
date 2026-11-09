@@ -3,16 +3,11 @@
  *
  * The frame around it is the component's own, on a screen and on paper,
  * where it is a rounded border on every sheet. What is left here is the
- * page's: the card's width and padding, and how the content breaks between
- * sheets. The width is set here and not with `Card size` because a utility
- * cannot change for print, where the sheet sets it.
+ * page's: the card's padding, and how the content breaks between sheets.
  */
 .kicl--views--resume {
   // Room for a document, not a panel: the frame's inset, inside the card too.
   --kicl--components--card--spacing: var(--kicl--components--frame--inset);
-  --kicl--views--resume--max-inline-size: var(--kicl-columns-8);
-
-  max-inline-size: var(--kicl--views--resume--max-inline-size);
 
   /*
    * A section's label is set at the small size, so its tracking comes down
@@ -28,7 +23,6 @@
     --kicl--components--card--background-color: transparent;
     --kicl--components--card--border-width: 0;
     --kicl--components--card--spacing: 0;
-    --kicl--views--resume--max-inline-size: none;
 
     /*
      * Chrome can split a line between two sheets inside nested grids, and
@@ -52,8 +46,8 @@
       margin-block-start: var(--kicl-gutter-narrow);
     }
 
-    section > * + details,
-    section > details + section {
+    section > * + article,
+    section > article + section {
       margin-block-start: var(--kicl-gutter);
     }
 
@@ -104,8 +98,8 @@
      * whole, and so does each role inside Experience. Experience itself is
      * longer than a sheet, so it is the one that breaks, between two roles.
      */
-    > section:not(:has(details)),
-    details {
+    > section:not(:has(article)),
+    article {
       break-inside: avoid;
     }
   }
@@ -117,5 +111,13 @@
    */
   @at-root :root:has(&) {
     --kicl-print-font-size: 8.4pt;
+  }
+}
+
+.kicl--views--resume__frame {
+  padding: var(--kicl-gutter-narrow);
+
+  @media print {
+    padding: var(--kicl--components--frame--inset);
   }
 }
