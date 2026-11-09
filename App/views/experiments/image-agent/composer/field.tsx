@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -74,12 +74,9 @@ const Field: React.FunctionComponent<Props> = ({
               variant='ghost'
             >
               {sending ? (
-                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
               ) : (
-                <Ri.RiCornerRightUpLine
-                  aria-hidden
-                  className='kicl-rtl-mirror'
-                />
+                <Bs.BsArrow90DegUp aria-hidden className='kicl-rtl-mirror' />
               )}
             </InputGroupButton>
           </InputGroup>

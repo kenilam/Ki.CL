@@ -10,7 +10,7 @@ import { Button } from 'design/components';
 import { useClipboard } from 'design/hooks';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 /** Opens the system share sheet; where there is none, copies the address instead. */
 const Share: React.FunctionComponent = () => {
@@ -42,7 +42,7 @@ const Share: React.FunctionComponent = () => {
 
   return (
     <Button
-      before={<Ri.RiShareFill aria-hidden />}
+      before={<Bs.BsShareFill aria-hidden />}
       onClick={() => void share()}
       variant='ghost'
     >

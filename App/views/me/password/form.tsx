@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, CardFooter, Form } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Views
 import { RootError } from '@/views/root-error';
@@ -53,7 +53,7 @@ const PasswordForm: React.FunctionComponent<Props> = ({ onSubmit }) => {
         <Button
           after={
             isSubmitting && (
-              <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+              <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
             )
           }
           disabled={isSubmitting}

@@ -4,7 +4,7 @@ import React, { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -49,7 +49,7 @@ const Running: React.FunctionComponent<RunningState> = ({ busy, running }) => {
               <ListItem key={thread.id}>
                 <HyperLink
                   after={
-                    <Ri.RiArrowRightSLine
+                    <Bs.BsChevronRight
                       aria-hidden
                       className='kicl-rtl-mirror'
                     />

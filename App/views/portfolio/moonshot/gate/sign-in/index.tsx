@@ -28,7 +28,7 @@ import {
 import { Background } from 'design/widgets';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Views
 import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
@@ -123,7 +123,7 @@ const SignIn: React.FunctionComponent<Props> = ({ denied, onSignedIn }) => {
                   <Button
                     after={
                       loading && (
-                        <Ri.RiLoader4Line
+                        <Bs.BsArrowClockwise
                           aria-hidden
                           className='is-revolving'
                         />

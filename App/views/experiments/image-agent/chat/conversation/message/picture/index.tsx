@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { Button, Dialog, Heading, Image } from 'design/components';
@@ -64,7 +64,7 @@ const Picture: React.FunctionComponent<Props> = ({ title, url }) => {
           )}
           data={url}
         />
-        <Ri.RiZoomInLine
+        <Bs.BsZoomIn
           aria-hidden
           className={classNames(
             'kicl-font-size-medium',

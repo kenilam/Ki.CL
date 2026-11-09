@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Menu, Segmented, SegmentedItem } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';
@@ -60,7 +60,7 @@ const Tabs: React.FunctionComponent = () => {
         variant={logging ? 'primary' : 'secondary'}
         level='confirm'
       >
-        <Ri.RiFile4Line aria-hidden />
+        <Bs.BsFileEarmark aria-hidden />
       </Button>
     </Menu>
   );

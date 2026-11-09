@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { Heading, HyperLink, Layout, Text } from 'design/components';
@@ -57,7 +57,7 @@ const Contents: React.FunctionComponent = () => {
             </hgroup>
             <Text>
               <HyperLink
-                before={<Ri.RiGithubLine aria-hidden />}
+                before={<Bs.BsGithub aria-hidden />}
                 lookLikeButton
                 to={translations.common.t('url_api')}
                 variant='secondary'

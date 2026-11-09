@@ -17,7 +17,7 @@ import {
 } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { useSetup } from '@/views/experiments/factory-arm/setup';
@@ -84,7 +84,7 @@ const Pile: React.FunctionComponent = () => {
               <span className='kicl-font-family-mono'>{pile.seed}</span>
             </Text>,
             <Button
-              before={<Ri.RiShuffleLine aria-hidden />}
+              before={<Bs.BsShuffle aria-hidden />}
               onClick={() =>
                 setDraft({
                   ...draft,

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Fa from 'react-icons/fa6';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { BackLink, Heading, HyperLink, Layout, Text } from 'design/components';
@@ -59,7 +59,7 @@ const Words: React.FunctionComponent = () => {
           })}
         </Text>
         <HyperLink
-          after={<Fa.FaPlay aria-hidden />}
+          after={<Bs.BsPlayFill aria-hidden />}
           className='kicl-margin-block-start-wide'
           lookLikeButton
           size='small'

@@ -15,7 +15,7 @@ import {
 import { Button, CardFooter, Form as Origin } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Partials
 import { Name } from './name';
@@ -80,7 +80,9 @@ const Form: React.FunctionComponent<Props> = ({ me }) => {
         </Button>
         <Button
           after={
-            loading && <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+            loading && (
+              <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
+            )
           }
           disabled={loading}
           size='small'

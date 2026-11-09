@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { Button, ListItem } from 'design/components';
@@ -37,7 +37,7 @@ const Clip: React.FunctionComponent = () => {
         title={label}
         variant='ghost'
       >
-        <Ri.RiDiscLine
+        <Bs.BsDisc
           aria-hidden
           className={classNames({
             'kicl-color-error': clip.recording,

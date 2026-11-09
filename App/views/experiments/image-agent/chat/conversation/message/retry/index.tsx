@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { Button } from 'design/components';
@@ -26,7 +26,7 @@ const Retry: React.FunctionComponent<Props> = ({ onRetry }) => {
       type='button'
       variant='tertiary'
     >
-      <Ri.RiCornerUpRightLine aria-hidden className='kicl-rtl-mirror' />
+      <Bs.BsArrow90DegRight aria-hidden className='kicl-rtl-mirror' />
     </Button>
   );
 };

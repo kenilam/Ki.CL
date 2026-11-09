@@ -14,7 +14,7 @@ import {
 } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Context
 import { type Preset, useSetup } from '@/views/experiments/factory-arm/setup';
@@ -79,9 +79,9 @@ const Presets: React.FunctionComponent = () => {
                       variant='secondary'
                     >
                       {preset.id === active ? (
-                        <Ri.RiRestartLine aria-hidden />
+                        <Bs.BsArrowCounterclockwise aria-hidden />
                       ) : (
-                        <Ri.RiPlayFill aria-hidden />
+                        <Bs.BsPlayFill aria-hidden />
                       )}
                     </Button>
                   </CardAction>

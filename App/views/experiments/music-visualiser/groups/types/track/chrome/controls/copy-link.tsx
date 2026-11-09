@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Fa from 'react-icons/fa6';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import { CopyButton } from 'design/components';
@@ -26,7 +26,7 @@ const CopyLink: React.FunctionComponent = () => {
   return (
     <CopyButton
       copiedLabel={translations.common.t('status', { context: 'copied' })}
-      icon={<Fa.FaLink aria-hidden />}
+      icon={<Bs.BsLink45Deg aria-hidden />}
       label={translations.musicVisualiser.t('action', { context: 'copy_link' })}
       size='small'
       value={() => new URL(toPlayPath(track), window.location.origin).href}

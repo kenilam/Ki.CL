@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Animation, Button, HyperLink, Menu } from 'design/components';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Views
 import { PAGES } from '@/views/routes';
@@ -28,7 +28,7 @@ const Mobile: React.FunctionComponent = () => {
     >
       <Animation property='slide-from-bottom' delay={900}>
         <HyperLink
-          before={<Ri.RiAccountCircleLine aria-hidden />}
+          before={<Bs.BsPersonCircle aria-hidden />}
           className='kicl-inline-size-full'
           lookLikeButton
           to={PAGES.me}
@@ -40,7 +40,7 @@ const Mobile: React.FunctionComponent = () => {
       <Animation property='slide-from-bottom' delay={1200}>
         <Button
           before={
-            <Ri.RiLogoutCircleLine aria-hidden className='kicl-rtl-mirror' />
+            <Bs.BsBoxArrowRight aria-hidden className='kicl-rtl-mirror' />
           }
           className='kicl-inline-size-full'
           command='show-modal'
