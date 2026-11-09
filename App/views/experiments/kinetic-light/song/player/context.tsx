@@ -17,6 +17,7 @@ import {
 } from '@/views/experiments/kinetic-light/song/use-song';
 
 // Hooks
+import { useArrangement, type Arranger } from './use-arrangement';
 import { useTransport, type Transport } from './use-transport';
 
 // Constants
@@ -25,10 +26,11 @@ import { PATH } from '@/views/experiments/kinetic-light/constants';
 
 type Choice = Pick<
   NonNullable<Song['arrangement']>,
-  'beat' | 'glow' | 'hue' | 'speed' | 'voice'
+  'beat' | 'glow' | 'hue' | 'voice' | 'zoom'
 >;
 
 type Value = {
+  arranger: Arranger;
   loading: boolean;
   piece: Piece;
   playable: boolean;
@@ -62,6 +64,7 @@ const usePlayer = (): Value => {
   const { loading, piece, song } = useSong();
   const arrangement = song?.arrangement;
   const transport = useTransport(piece ?? SILENCE, arrangement);
+  const arranger = useArrangement(song, piece ?? SILENCE);
   const save = useCallback<Value['save']>(
     (key, value) => {
       if (!song) {
@@ -93,6 +96,7 @@ const usePlayer = (): Value => {
   }, [piece, t]);
 
   return {
+    arranger,
     loading,
     piece: piece ?? SILENCE,
     playable: Boolean(piece),

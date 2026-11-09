@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Gi from 'react-icons/gi';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -38,7 +38,7 @@ const Sound: React.FunctionComponent = () => {
       value={transport.voice}
     >
       <SelectTrigger>
-        <Gi.GiMusicalNotes aria-hidden />
+        <Bs.BsMusicNote aria-hidden />
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

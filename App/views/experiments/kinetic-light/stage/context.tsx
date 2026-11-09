@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 
-// Readers
-import type { Piece } from '@/views/experiments/kinetic-light/read/piece';
-
-// Settings
+// Stage
+import type { Sheet } from './engrave';
+import type { Timing } from './playhead';
 import type { Settings } from './settings';
 
 type Value = {
   clock: () => number;
-  length: number;
-  piece: Piece;
+  sections: readonly number[];
   settings: Settings;
+  sheet: Sheet;
+  timing: Timing;
 };
 
 const Context = React.createContext<Value | null>(null);

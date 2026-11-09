@@ -6,21 +6,38 @@ import classNames from 'classnames';
 // Three
 import { Canvas } from '@/three';
 
-// Context
-import { DEFAULT_SETTINGS } from '@/views/experiments/kinetic-light/stage/settings';
-import { StageContext } from '@/views/experiments/kinetic-light/stage/context';
+// Readers
+import { readNotesScore } from '@/views/experiments/kinetic-light/read/score';
 
-// Partials
+// Stage
+import { StageContext } from '@/views/experiments/kinetic-light/stage/context';
 import { Scene } from '@/views/experiments/kinetic-light/stage/scene';
+import { DEFAULT_SETTINGS } from '@/views/experiments/kinetic-light/stage/settings';
+import { useSheet } from '@/views/experiments/kinetic-light/stage/use-sheet';
 
 // Styles
 import '@/views/experiments/kinetic-light/stage/styles.scss';
 
+// Partials
+import { Lens } from './lens';
+
 // Constants
-import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
+import {
+  END_HOLD_SECONDS,
+  REPLAY_LEAD_SECONDS,
+  CLASS_NAME as VIEW,
+} from '@/views/experiments/kinetic-light/constants';
 import { LENGTH, PIECE, START } from './interstellar';
 
 const CLASS_NAME = `${VIEW}__backdrop`;
+
+const SCORE = readNotesScore(PIECE);
+
+const TIMING = {
+  descent: REPLAY_LEAD_SECONDS,
+  hold: END_HOLD_SECONDS,
+  length: LENGTH,
+};
 
 const Backdrop: React.FunctionComponent = () => {
   const still = useMemo(() => {
@@ -36,22 +53,28 @@ const Backdrop: React.FunctionComponent = () => {
 
       began ??= performance.now();
 
-      return (START + (performance.now() - began) / 1000) % LENGTH;
+      return START + (performance.now() - began) / 1000;
     };
   }, [still]);
+  const sheet = useSheet(SCORE, PIECE);
+
+  if (!sheet) {
+    return null;
+  }
 
   return (
     <StageContext.Provider
       value={{
         clock,
-        length: LENGTH,
-        piece: PIECE,
+        sections: [],
         settings: DEFAULT_SETTINGS,
+        sheet,
+        timing: TIMING,
       }}
     >
       <Canvas
         aria-hidden
-        camera={{ far: 200, fov: 65, near: 0.1 }}
+        camera={{ far: 400, fov: 50, near: 0.05 }}
         className={classNames(
           CLASS_NAME,
           'kicl-block-size-full',
@@ -64,6 +87,7 @@ const Backdrop: React.FunctionComponent = () => {
         frameloop={still ? 'demand' : 'always'}
         gl={{ antialias: true }}
       >
+        <Lens />
         <Scene />
       </Canvas>
     </StageContext.Provider>

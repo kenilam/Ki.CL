@@ -21,4 +21,6 @@ const clock = (): number => {
   );
 };
 
-export { clock, LEAD_SECONDS };
+const playing = (): boolean => Tone.getTransport().state === 'started';
+
+export { clock, LEAD_SECONDS, playing };

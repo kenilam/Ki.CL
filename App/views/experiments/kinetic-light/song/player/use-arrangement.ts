@@ -3,11 +3,15 @@ import { useEffect, useState } from 'react';
 // Hooks
 import { useArrange } from '@/views/experiments/kinetic-light/use-arrange';
 
-// Context
-import { usePlayerContext } from './context';
+// Readers
+import type { Piece } from '@/views/experiments/kinetic-light/read/piece';
 
-const useArrangement = () => {
-  const { piece, song } = usePlayerContext();
+// Song
+import type { Song } from '@/views/experiments/kinetic-light/song/use-song';
+
+type Arranger = { arranging: boolean; error: Error | null };
+
+const useArrangement = (song: Song | undefined, piece: Piece): Arranger => {
   const arrange = useArrange();
   const [error, setError] = useState<Error | null>(null);
   const [source, setSource] = useState(song);
@@ -30,4 +34,4 @@ const useArrangement = () => {
   return { arranging: due && !error, error };
 };
 
-export { useArrangement };
+export { useArrangement, type Arranger };

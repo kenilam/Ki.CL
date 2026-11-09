@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Routes
 import { useParams } from 'design/router';
@@ -35,14 +35,14 @@ const Songs: React.FunctionComponent = () => {
         <ListItem key={song.id}>
           <HyperLink
             after={
-              <Ri.RiCheckLine
+              <Bs.BsCheckLg
                 aria-hidden
                 className={classNames({
                   'kicl-hidden': id !== song.id,
                 })}
               />
             }
-            before={<Ri.RiMusic2Line aria-hidden />}
+            before={<Bs.BsMusicNoteBeamed aria-hidden />}
             className='kicl-inline-size-full'
             frames='max-content--auto--max-content'
             justifyContent='stretch'

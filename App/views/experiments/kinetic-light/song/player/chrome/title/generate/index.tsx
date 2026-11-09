@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -67,7 +67,7 @@ const Generate: React.FunctionComponent = () => {
                   accept={ACCEPT}
                   after={
                     <InputGroupButton
-                      before={<Ri.RiAiGenerate2Line aria-hidden />}
+                      before={<Bs.BsStars aria-hidden />}
                       type='submit'
                     >
                       {t('action', { context: 'generate' })}

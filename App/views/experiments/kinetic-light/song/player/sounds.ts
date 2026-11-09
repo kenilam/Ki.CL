@@ -49,6 +49,14 @@ const SYNTH = {
   modulationIndex: 12,
 };
 
+const SUSTAIN = {
+  envelope: { attack: 2.5, decay: 0.01, release: 1.5, sustain: 1 },
+  oscillator: { type: 'sine' as const },
+  volume: -30,
+};
+
+const SUSTAIN_FROM_SECONDS = 2;
+
 const KITS = {
   kit: { baseUrl: DRUMS_URL, urls: DRUMS, volume: -6 },
   linndrum: { baseUrl: LINNDRUM_URL, urls: LINNDRUM, volume: -6.1 },
@@ -133,4 +141,14 @@ const ARRANGED = {
   },
 } as const;
 
-export { ARRANGED, INSTRUMENTS, KITS, STYLES, SYNTH, VOICES, type Instrument };
+export {
+  ARRANGED,
+  INSTRUMENTS,
+  KITS,
+  STYLES,
+  SUSTAIN,
+  SUSTAIN_FROM_SECONDS,
+  SYNTH,
+  VOICES,
+  type Instrument,
+};
