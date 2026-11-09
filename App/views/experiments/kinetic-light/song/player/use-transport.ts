@@ -65,6 +65,7 @@ type Transport = {
   error: boolean;
   pause: () => void;
   play: () => Promise<void>;
+  seek: (seconds: number) => void;
   status: Status;
   voice: Voice;
 };
@@ -339,6 +340,18 @@ function useTransport(
     setStatus('paused');
   }, []);
 
+  const seek = useCallback((seconds: number) => {
+    const transport = Tone.getTransport();
+
+    transport.seconds = LEAD_SECONDS + seconds;
+
+    if (sound.current) {
+      parts(sound.current).forEach((part) => part?.releaseAll());
+    }
+
+    setStatus(transport.state === 'started' ? 'playing' : 'paused');
+  }, []);
+
   useEffect(() => {
     beating.current = beat;
 
@@ -389,6 +402,7 @@ function useTransport(
     error,
     pause,
     play,
+    seek,
     status,
     voice,
   };

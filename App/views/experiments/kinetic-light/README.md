@@ -195,6 +195,12 @@ along, on an acoustic kit or a drum machine, or not at all.
     with no balls. As the song starts, each ball falls from high above onto
     its first note, the same way a ball comes in after a whole-bar rest. The camera follows the music along the sheet and eases from
     one shot to the next. With reduced motion it stays above the staves.
+- **`song/player/chrome/progress/`** shows the time played, a slider and the
+  song's length above the player's buttons, as the music visualiser does. It
+  reads the clock four times a second while the music plays. Moving the
+  slider seeks the Transport and releases any held notes, and the scene jumps
+  with it. `unwrap` counts a new round only when the clock falls back by
+  nearly a whole round, so a seek backward isn't mistaken for the loop.
 - **`song/player/prompt/`** blurs and darkens the scene and asks a question
   over it with one round button, which the question names: "Start playing?"
   before the song has started and "Play again?" a second after the music has

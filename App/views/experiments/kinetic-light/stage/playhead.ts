@@ -12,6 +12,7 @@ const SCALE = 0.01;
 const SAME_TIME = 0.001;
 const SHEET_GAP = 6;
 const HOVER_BACK = SHEET_GAP / 2;
+const WRAP_SECONDS = 1;
 const SNAP_SECONDS = 1;
 const SETTLED = 0.999;
 
@@ -69,7 +70,7 @@ const unwrap = (clock: () => number, timing: Timing): (() => number) => {
 
     if (now < -timing.descent - SAME_TIME) {
       round = 0;
-    } else if (now < last - period / 2) {
+    } else if (last - now > period - WRAP_SECONDS) {
       round += 1;
     }
 
