@@ -52,6 +52,7 @@ const engrave = async (
   const osmd = new OpenSheetMusicDisplay(host, OPTIONS);
 
   osmd.setLogLevel('error');
+  osmd.EngravingRules.SheetMaximumWidth = Number.MAX_SAFE_INTEGER;
   await osmd.load(musicxml);
   osmd.render();
 
