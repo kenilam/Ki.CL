@@ -31,7 +31,10 @@ along, on an acoustic kit or a drum machine, or not at all.
 - Every song has a link that anyone can open, for 30 days.
 - Six examples, songs the site owner made, are kept for good and listed for
   every visitor, above the visitor's own songs. Both lists are in the home
-  page's Songs sheet, which starts open, and the player's title menu.
+  page's Songs sheet and the player's title menu. The sheet starts open
+  when it fits beside the words. It closes on a click outside, and as soon as
+  it starts covering the words or the article below them, on arrival, on a
+  resize or on a scroll. Opened by hand over the words, it stays open.
 
 ## How the pieces fit
 
@@ -52,18 +55,22 @@ along, on an acoustic kit or a drum machine, or not at all.
 - **`read/sheet.ts`** puts a sheet's two readings together. The model's
   tempo and title replace homr's, which has no tempo and took a chord symbol
   for the title. The chords go on homr's bars at half the loudness.
-- **`read/beat.ts`** writes a drum part for a piece that has none, in one
-  of two styles. Both play the hi-hat on eighth notes, or on triplets or
-  sixteenths when nine in ten notes start on those, are as loud as the
-  piece's notes on average, and start each round with a crash.
-  - The acoustic beat plays the kick on each bar's first beat and wherever a
-    bass note of a beat or longer starts, and the snare on every second beat.
-  - The electronic beat is four on the floor, like the house tracks of
+- **`read/beat.ts`** writes a drum part for a piece that has neither drums
+  of its own nor an arranged one, with a pattern for each drum sound. They
+  all play the hi-hat on eighth notes, or on triplets or sixteenths when
+  nine in ten notes start on those, are as loud as the piece's notes on
+  average, and start each round with a crash.
+  - The drum kit, the lo-fi kit and the LinnDrum play the kick on each
+    bar's first beat and wherever a bass note of a beat or longer starts,
+    and the snare on every second beat.
+  - The drum machine is four on the floor, like the house tracks of
     Children's time: a kick on every beat, a clap on every second beat, and
     an open hi-hat off the beat with closed ones between.
-  - A MIDI file's own drum part plays instead, in any style:
-    `read/midi.ts` keeps it and plays each General MIDI drum on the closest
-    sample.
+  - Hand percussion plays the kit's pattern on congas and a shaker, with a
+    high bongo off the beat.
+  - A MIDI file's own drum part plays instead, on any drum sound and even
+    after the song is arranged: `read/midi.ts` keeps it and plays each
+    General MIDI drum on the closest sample.
 - **The model's arrangement.** Generate arranges a song before it's
   ready: a MIDI or MusicXML file right after it's saved, and a sheet once its
   read finishes, while the home page says "Choosing the sound and the beat…".
@@ -95,6 +102,8 @@ along, on an acoustic kit or a drum machine, or not at all.
   folder's `index.tsx` is its `<Route>`. What belongs to one song is in
   `song/`: the player, the stage, the clock, the settings and the samples. The
   player renders the stage as its index route.
+- **`home/`** is a banner one screen tall, with the words, the form and the
+  Songs sheet over the backdrop, then the article on how it was made.
 - **`backdrop/`** is behind the home page and the experiment's card on
   `/experiments`. It's the player's scene playing Interstellar's main theme
   with no sound, from 2:15.9, then round the whole song on a loop.
