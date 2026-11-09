@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Lia from 'react-icons/lia';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -45,7 +45,7 @@ const Beat: React.FunctionComponent = () => {
       value={transport.beat}
     >
       <SelectTrigger>
-        <Lia.LiaDrumSolid aria-hidden />
+        <Bs.BsSoundwave aria-hidden />
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

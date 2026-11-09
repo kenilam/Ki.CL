@@ -1,13 +1,13 @@
 type Settings = {
   glow: number;
   hue: number;
-  speed: number;
+  zoom: number;
 };
 
 const DEFAULT_SETTINGS: Settings = {
-  glow: 0.8,
+  glow: 0.4,
   hue: 0.5,
-  speed: 3,
+  zoom: 3,
 };
 
 export { DEFAULT_SETTINGS, type Settings };

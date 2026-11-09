@@ -12,6 +12,7 @@ import { PlayerContext, usePlayer } from './context';
 // Partials
 import { Chrome } from './chrome';
 import { Fallback } from './fallback';
+import { Prompt } from './prompt';
 
 // Constants
 import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
@@ -39,6 +40,7 @@ const Player: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
               {playable ? (
                 <>
                   {children}
+                  <Prompt />
                   <Chrome />
                 </>
               ) : null}

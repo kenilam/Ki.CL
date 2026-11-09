@@ -1,7 +1,7 @@
 $stage: '--kicl--views--experiments--kinetic-light__stage';
 $colors:
-  paper, lane, hit, ramp-1, ramp-2, ramp-3, ramp-4, ramp-5, ramp-6, ramp-7,
-  ramp-8, ramp-9, ramp-10;
+  paper, ink, ramp-1, ramp-2, ramp-3, ramp-4, ramp-5, ramp-6, ramp-7, ramp-8,
+  ramp-9, ramp-10;
 
 @each $name in $colors {
   @property #{$stage}--#{$name} {
@@ -13,8 +13,7 @@ $colors:
 
 :root {
   #{$stage}--paper: var(--kicl-color-black-pure);
-  #{$stage}--lane: var(--kicl-color-grey-800);
-  #{$stage}--hit: var(--kicl-color-white);
+  #{$stage}--ink: var(--kicl-color-grey-300);
   #{$stage}--ramp-1: var(--kicl-color-red);
   #{$stage}--ramp-2: color-mix(
     in oklch,

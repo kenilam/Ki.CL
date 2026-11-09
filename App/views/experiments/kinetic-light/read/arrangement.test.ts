@@ -48,7 +48,7 @@ const arrangement: Arrangement = {
       to: 2,
     },
   ],
-  speed: 6,
+  zoom: 6,
   steps: 2,
   voice: 'GRAND',
 } as Arrangement;

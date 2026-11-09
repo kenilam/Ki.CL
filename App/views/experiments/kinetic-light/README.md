@@ -1,11 +1,13 @@
 # Kinetic Light
 
 `/experiments/kinetic-light` opens a file, and `/experiments/kinetic-light/<songId>`
-plays a song. Open a music file and it plays on a piano while
-its notes come down a 3D highway toward a hit line. Each note glows as it
-sounds, throws a ring across the floor and a spray of sparks, larger for
-louder notes. A drum beat made from the song's own rhythm plays along, on
-an acoustic kit or a drum machine, or not at all.
+plays a song. Open a music file and it plays on a piano while its score lies
+on a dark floor as one long line of staves. Each staff has a ball of light for
+each note of its biggest chord. The balls land on every notehead as it sounds
+and arc to the next one, leaving a glowing trail that shows on the floor as a
+soft reflection. The camera changes shots through the song, the way the
+scorefollower videos do. A drum beat made from the song's own rhythm plays
+along, on an acoustic kit or a drum machine, or not at all.
 
 - **MIDI and MusicXML** (`.mxl` too) are read in the browser, so every note
   in the file plays as written. The file is then sent to the API and kept as a
@@ -35,10 +37,16 @@ an acoustic kit or a drum machine, or not at all.
 - **`read/`** turns each kind of file into one `Piece`: notes with a pitch,
   a start and a length in seconds, and a velocity. `use-read.ts` picks the
   reader from the file's first bytes.
-- **`read/musicxml.ts`** walks the score with `DOMParser`. Bar length comes
-  from the time signature, and a note that runs past its bar is cut at the
-  barline. Ties are joined, and so is a slur between two notes of the same
-  pitch, which is how homr writes ties. It also returns when each bar starts.
+- **`read/musicxml.ts`** walks the score with `DOMParser`. A bar is as long
+  as its time signature, or as its notes if they need more, and a note that
+  runs past that is cut at the barline. Ties are joined, and so is a slur
+  between two notes of the same pitch, which is how homr writes ties. It also
+  returns when each bar starts, in seconds and in beats.
+- **`read/repair.ts`** fixes one misread of homr's before the song is read
+  or engraved: when a voice holds more than its bar and its longest note is
+  exactly twice what fits, that note was read one value too long, so it's
+  halved. Aerith's Theme had a dotted whole note in bar 16 where the sheet
+  has a dotted half, which pushed the next two notes out of the bar.
 - **`read/sheet.ts`** puts a sheet's two readings together. The model's
   tempo and title replace homr's, which has no tempo and took a chord symbol
   for the title. The chords go on homr's bars at half the loudness.
@@ -64,7 +72,7 @@ an acoustic kit or a drum machine, or not at all.
   title, tempo, beats per bar, and for each bar where notes start on the
   beat's grid, with `b` for a bass note. `use-arrange.ts` sends it with
   `kineticLightArrange`, and the API asks a text model to choose the piano,
-  the drums, speed, colour and glow, and to write the drums in sections, each
+  the drums, zoom, colour and glow, and to write the drums in sections, each
   with a one-bar pattern, a fill on its last bar and a crash. The song keeps
   it, so a song is arranged once, and anyone with the link gets it.
   `read/arrangement.ts` plays the sections instead of the fixed beat, in
@@ -82,14 +90,17 @@ an acoustic kit or a drum machine, or not at all.
   player renders the stage as its index route.
 - **`backdrop/`** is behind the home page and the experiment's card on
   `/experiments`. It's the player's scene playing Interstellar's main theme
-  with no sound, from 2:15.9, where a chord sends ripples across the whole
-  hit line, then round the whole song on a loop.
+  with no sound, from 2:15.9, then round the whole song on a loop.
   - `interstellar.ts` holds the song's notes, copied from the song when its
-    link only lasted 30 days. It's an example now, kept for good.
+    link only lasted 30 days. It's an example now, kept for good. Its
+    MusicXML is 316 KB, too big to bundle, so the backdrop writes a score from
+    the notes with `read/score.ts`.
   - The clock is the page's own time, not Tone's, so it plays without the
     click a browser needs before it allows audio.
-  - With reduced motion it stays on 2:15.9, without ripples or sparks, and
-    only redraws when the canvas changes size.
+  - `lens.tsx` shifts the picture a fifth of the width to the right on a wide
+    canvas, so the balls play beside the words rather than behind them.
+  - With reduced motion it stays on 2:15.9 and only redraws when the canvas
+    changes size.
 - **`song/use-song.ts`** loads a song by the id in the route and turns it into a `Piece`
   with `read/song.ts`: MIDI and MusicXML files as they were, a read sheet
   through `read/sheet.ts`.
@@ -100,35 +111,104 @@ an acoustic kit or a drum machine, or not at all.
   machine straight to the output, so the 16′ piano's delay and reverb stay
   off them. Both beats are scheduled, and each hit plays only if its style is
   the one chosen.
-  The piece repeats: the Transport loops from the
-  first note to the end of the last bar, so the next round comes in on the
-  beat. `song/clock.ts` is the Transport's position at the moment the audio is
+  The Transport loops from 1.2 seconds before the first note to five seconds
+  after the last bar. A second after the music ends the player asks to play
+  again, and just before the loop point the Transport pauses, unless replay
+  was asked for, in which case it loops straight on. The scene counts each
+  loop as the next round, so the music carries on into the next copy of the
+  score.
+  `song/clock.ts` is the Transport's position at the moment the audio is
   heard, which is what the scene draws from, so a note reaches the hit line as
   it sounds.
-- **`song/stage/`** is the scene. Its parts read the notes, a clock, the
-  song's length and the speed, color and glow from `StageContext`. `Stage`
-  builds that from the song itself: the piece and its settings from
-  `song/use-song.ts`, the clock from `song/clock.ts`. The start page's backdrop
-  provides its own. The player passes the stage nothing, and the settings
-  panel writes the song's cached arrangement as a slider moves.
-  - Pitch sets the lane, across the piece's own range.
-  - Time sets the distance from the hit line, at the speed from the settings.
-  - Each note is drawn a little shorter than it sounds, two lanes' width, so
-    notes back to back in one lane stay apart. A note shorter than that keeps
-    half its length. The front stays on the note's start, so hits are on time.
-  - `notes/` draws every visible note as a tube: an open cylinder stretched
-    to the note's length, with a sphere at each end. The ends are their own
-    instances because a rounded shape stretched to the note's length would
-    stretch its ends too. It tells `ripples/` and `particles/` when a note is
-    hit. It also draws the next
-    round's first notes as the end comes near, and the last round's tail
-    after the repeat, so the loop has no gap on screen.
-  - The camera backs away until the hit line fits the canvas's width, and
-    moves again when the canvas changes size. On a wide canvas the view stays
-    the same.
+- **`read/score.ts`** gives each song the MusicXML its sheet is engraved
+  from, with the time each bar starts. A MusicXML file and a read sheet use
+  their own score. A sheet with chords gets one more staff, written by
+  `read/write-score.ts`, with the bass and chord tones that play underneath
+  and the chord symbols above them. A MIDI file has no score, so one is
+  written from its ticks: a part for each track, split into two staves when a
+  track covers both hands, rounded to sixteenth notes.
+- **`song/stage/`** is the scene. Its parts read a clock, the engraved sheet,
+  the arrangement's sections and the zoom, colour and glow from
+  `StageContext`. `Stage` builds that from the song itself: the score and its
+  settings from `song/use-song.ts`, the clock from `song/clock.ts`. The start
+  page's backdrop provides its own. The player passes the stage nothing, and
+  the settings panel writes the song's cached arrangement as a slider moves.
+  - `stage/engrave.ts` lays the score out with OpenSheetMusicDisplay on one
+    line, in a `div` that never joins the page. It reads back each notehead's
+    position and start, each whole-bar rest, and where each staff and
+    bar is. A note's time is its bar's start plus its offset in beats,
+    converted with the reader's own bar lengths, so it matches what Tone
+    plays. The engraver's bar length can't be used for this: a bar that
+    holds more than its time signature, which homr writes now and then, is
+    longer in the engraving, and the first version squeezed its notes early,
+    so balls landed on notes before they sounded. `stage/use-sheet.ts`
+    engraves a score once.
+  - `sheet/` turns the engraved SVG into one mesh on the floor with three's
+    `SVGLoader`, so the lines stay sharp from any angle.
+  - `balls/path.ts` works out where every ball is at any time, so the balls,
+    their trails, pausing and the loop all come from the clock. A staff gets
+    a ball for each note of its biggest chord. At each step the balls spread
+    over that step's notes from top to bottom, and when there are fewer notes
+    than balls, the spare ones land together on the nearest note and look
+    like one. Between notes a ball arcs higher the further apart the two
+    notes are, and moves sideways at a steady pace between its own two notes.
+    It used to follow the scene's playhead, which jumps across barlines and
+    other staves' notes, and that pulled the arc sideways. Before a whole-bar
+    rest the ball stops on its note and stays there for the rest of the
+    round. After the rest a new ball of the same
+    colour falls from high above the frame onto the next note. A staff that
+    starts later doesn't fall in: its ball waits at the start with the others
+    and arcs to its first note.
+  - `balls/ball/` draws one ball and, in `stops/`, the balls it left on
+    notes before a rest: a white-hot sphere with a halo in its colour, a trail drawn as a glowing tube along the path it has covered in the last
+    1.6 seconds of real time, so it pulls back into the ball while the music
+    is paused and grows again as it moves, a faint copy of the trail under the floor and a soft vertical streak
+    beneath it for the reflection.
+  - The loop has no seam on screen. The next copy of the score lies a few bars'
+    width of empty floor after this one's last barline (`widthOf`). A round in
+    `stage/playhead.ts` is the 1.2 second lead, the song and the five-second
+    hold. During the hold each ball rises off its last note toward a point in
+    the air halfway across the gap, short of the next round's first note, and
+    the camera moves forward with it. While "Play again?" is up the Transport is
+    paused, so the balls drift in the air on the page's own clock. Pausing
+    mid-song doesn't freeze them: `ease` keeps the scene's time running at a
+    speed that dies away over about a third of a second, so the balls slow to a
+    stop along their paths. Once they're down to half speed, a gentle drift a
+    little above their notes fades in. On resume they speed up again while the music catches up to them, and the
+    Transport pauses the hold early by the same amount so the slowdown ends
+    before the next round. On replay they
+    swoop forward and down onto their first notes on an eased curve as the music
+    starts. `unwrap` keeps the clock counting through each round, and a jump
+    back to the lead-in, from a stop or a new arrangement, starts again from the
+    first round. The sheet draws this round's copy and the one before it. The
+    next copy stays hidden while the balls fly toward it, and fades in under
+    them as the next round starts.
+  - `camera/shots.ts` picks a shot from the time: from above the staves, a
+    sweep from the front, low along the floor, or down the staff lines. It
+    changes at each of the arrangement's sections, or every eight bars
+    without one. Before the first play it looks straight down on the sheet,
+    with no balls. As the song starts, each ball falls from high above onto
+    its first note, the same way a ball comes in after a whole-bar rest. The camera follows the music along the sheet and eases from
+    one shot to the next. With reduced motion it stays above the staves.
+- **`song/player/prompt/`** blurs and darkens the scene and asks a question
+  over it with one round button, which the question names: "Start playing?"
+  before the song has started and "Play again?" a second after the music has
+  ended, while the balls are still rising. Once the music starts or pauses,
+  the play button in the player's bar takes focus, so Space or Enter pauses
+  and resumes from the keyboard. The button names the key with
+  `aria-keyshortcuts`. While the prompt is up, the bar's play button is hidden
+  with CSS (the player `:has()` the prompt), so there is one Play on screen. It fades in with the design system's `Animation` and leaves
+  at once when the music starts. The player's
+  bar stays usable under it, so the sound and the beat can be picked first.
+  The arrangement request lives in the player's context (`arranger`), so the
+  prompt and the bar both wait for it.
 - **Sound and Beat** are dropdowns in the player's bar, next to **Settings**,
-  which changes speed, colour and glow. All of them work while the piece
-  plays. Speed, colour and glow live in a ref the scene reads every
+  which changes zoom, colour and glow. Zoom sets how close the camera
+  follows, so the sheet passes faster, colour moves where the balls start on
+  the colour wheel, and glow is the bloom, at 0.3 of a unit of bloom for each
+  unit of glow because the balls and trails are much brighter than the
+  highway's notes were. All of them work while the piece
+  plays. Zoom, colour and glow live in a ref the scene reads every
   frame, so moving a slider doesn't re-render the scene. The sound and the
   beat are state in `use-transport.ts`, and each note and drum reads them as
   it plays, so a switch is heard from the next one.
@@ -221,8 +301,40 @@ an acoustic kit or a drum machine, or not at all.
   did.
 - **Settings use the design system's controls**, a `Popover` and range
   inputs, not lil-gui.
-- **Reduced motion** turns off the rings and sparks. The notes still move,
+- **Reduced motion** keeps the camera above the staves. The balls still move,
   because they are the music.
+- **The sheet comes from OpenSheetMusicDisplay** (BSD-3-Clause), which is the
+  engraver, not the player. I picked it over Verovio, which engraves as well
+  but is LGPL and ships as WebAssembly. It's loaded the first time a stage
+  engraves, so other pages don't download it. Its optional `gl` dependency is
+  for rendering in Node, and Yarn doesn't build it here.
+- **The first sheet version** ran the floor through drei's
+  `MeshReflectorMaterial`. It multiplies the reflection by the floor's colour,
+  so a black floor reflected nothing, and once it did, the blur left blocky
+  bands and the staves reflected as a grey haze. The reflections are now drawn
+  with the balls, which looks closer to the video and saves rendering the
+  scene twice.
+- **Speed became zoom.** On the sheet nothing travels at a speed, so the
+  setting now sets how close the camera follows. The arrangement's field is
+  `zoom` in the API too, the model's prompt describes it that way, and
+  `make kinetic-light.migrate` in Ki.CL-back renames `speed` on stored songs.
+- **Balls land on the notes you hear.** Each notehead is matched with a
+  played note of the same pitch starting at the same moment, and only those
+  are landings. A tied or slurred continuation has no new attack, so the
+  ball glides over it while the note rings on. Landing on every notehead was
+  tried and made held notes look silent.
+- **Bars that hold more than their time signature** used to be cut at the
+  barline, so the notes past it never played while the sheet still showed
+  them. From bar 76 Interstellar is written in 6/8 with six beats in every
+  bar, and half of each of those bars was silent. The reader now lets a bar
+  run as long as its notes, so what's drawn is what plays.
+- **Held notes** get a quiet sine tone underneath, at the same pitch, once
+  they're two seconds or longer. It swells in over 2.5 seconds as the piano
+  fades and stops when the note ends. The piano samples are eight seconds
+  with a fade from 6.5, and a grand dies away sooner at the top, so a note
+  held across two bars used to fade out before it ended. The tone goes
+  straight to the output, dry: through the 16′ piano's delay it repeated
+  over and over, and through its reverb it smeared into an echo.
 
 ## Verified
 
@@ -236,7 +348,7 @@ an acoustic kit or a drum machine, or not at all.
   wrong bars were on one line each time, and different lines in the two
   reads. Before the line counts, only the first nine bars were right.
 - The same sheet as a PDF gave the same notes from homr.
-- `read/chords.test.ts` and `song/stage/layout.test.ts` pass with
+- `read/chords.test.ts` passes with
   `npx tsx --tsconfig App/tsconfig.json --test <file>`.
 - Links: a MIDI file opened from the page moved to its link and played, and
   the link played again on a fresh load. A read sheet's Play in the drawer
@@ -328,7 +440,15 @@ an acoustic kit or a drum machine, or not at all.
   removed. The organ's reverb sounded too heavy and the orchestra's triangle
   rang over the other drums. The songs the model had arranged with either
   were arranged again.
-- Not checked: the sheet reader's Docker image, a PDF of more than one page,
+- 8 November 2026, the sheet: Children, Fable and Interstellar engraved and
+  played. Fable has one ball, Children's chords fan out into a ball for each
+  note, and Interstellar's bass ball, after four whole-bar rests, waits at
+  the start and arcs to its first note in bar 5.
+  Interstellar's 88 bars on two staves ran at 60 frames a second in Chrome on
+  macOS at 1458 × 1007. `stage/balls/path.test.ts` and
+  `read/write-score.test.ts` pass.
+- Not checked: a MIDI file through the new score writer, phone width for the
+  sheet, the sheet reader's Docker image, a PDF of more than one page,
   iOS, phone width, a long piece for frame rate, how the 16′ piano sounds
   next to Children or the real Piano 16', a MIDI file with its own drum
   part, and how either beat sounds to a listener.

@@ -11,38 +11,59 @@ import { Canvas } from '@/three';
 import { lengthOf } from '@/views/experiments/kinetic-light/read/piece';
 
 // Song
-import { clock } from '@/views/experiments/kinetic-light/song/clock';
+import { clock, playing } from '@/views/experiments/kinetic-light/song/clock';
 import { settingsOf } from '@/views/experiments/kinetic-light/song/settings';
 import { useSong } from '@/views/experiments/kinetic-light/song/use-song';
 
 // Stage
 import { StageContext } from '@/views/experiments/kinetic-light/stage/context';
+import { ease, unwrap } from '@/views/experiments/kinetic-light/stage/playhead';
 import { Scene } from '@/views/experiments/kinetic-light/stage/scene';
+import { useSheet } from '@/views/experiments/kinetic-light/stage/use-sheet';
 
 // Styles
 import '@/views/experiments/kinetic-light/stage/styles.scss';
 
 // Constants
-import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
+import {
+  END_HOLD_SECONDS,
+  REPLAY_LEAD_SECONDS,
+  CLASS_NAME as VIEW,
+} from '@/views/experiments/kinetic-light/constants';
 
 const CLASS_NAME = `${VIEW}__stage`;
 
 const Stage: React.FunctionComponent = () => {
-  const { piece, song } = useSong();
+  const { piece, score, song } = useSong();
   const { t } = useTranslation('kinetic-light');
   const arrangement = song?.arrangement;
   const settings = useMemo(() => settingsOf(arrangement), [arrangement]);
-  const length = useMemo(() => (piece ? lengthOf(piece) : 0), [piece]);
+  const sections = useMemo(
+    () => arrangement?.sections.map(({ from }) => from) ?? [],
+    [arrangement]
+  );
+  const sheet = useSheet(score, piece);
+  const timing = useMemo(
+    () => ({
+      descent: REPLAY_LEAD_SECONDS,
+      hold: END_HOLD_SECONDS,
+      length: piece ? lengthOf(piece) : 0,
+    }),
+    [piece]
+  );
+  const looped = useMemo(() => ease(unwrap(clock, timing), playing), [timing]);
 
-  if (!piece) {
+  if (!piece || !sheet) {
     return null;
   }
 
   return (
-    <StageContext.Provider value={{ clock, length, piece, settings }}>
+    <StageContext.Provider
+      value={{ clock: looped, sections, settings, sheet, timing }}
+    >
       <Canvas
         aria-label={t('scene', { title: piece.title })}
-        camera={{ far: 200, fov: 65, near: 0.1 }}
+        camera={{ far: 400, fov: 50, near: 0.05 }}
         className={classNames(
           CLASS_NAME,
           'kicl-block-size-full',

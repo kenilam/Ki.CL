@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -35,10 +35,10 @@ const RANGES: Record<keyof Values, { max: number; min: number; step: number }> =
   {
     glow: { max: 3, min: 0, step: 0.1 },
     hue: { max: 1, min: 0, step: 0.01 },
-    speed: { max: 20, min: 3, step: 0.5 },
+    zoom: { max: 20, min: 3, step: 0.5 },
   };
 
-const KEYS = ['speed', 'hue', 'glow'] as const;
+const KEYS = ['zoom', 'hue', 'glow'] as const;
 
 const Settings: React.FunctionComponent = () => {
   const { save, song } = usePlayerContext();
@@ -52,7 +52,7 @@ const Settings: React.FunctionComponent = () => {
           size='small'
           variant='secondary'
         >
-          <Ri.RiEqualizerLine aria-hidden />
+          <Bs.BsSliders aria-hidden />
         </Button>
       </PopoverTrigger>
       <PopoverContent placement='block-start-start'>
