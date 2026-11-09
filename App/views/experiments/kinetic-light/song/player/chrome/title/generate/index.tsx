@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 // Libraries
+import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 // Icons
@@ -45,6 +46,8 @@ const Generate: React.FunctionComponent = () => {
     generate: { busy, cooling, form, seconds, spent, status, submit },
   } = useKineticLightContext();
   const blocked = busy || spent || cooling;
+  const generateButton = useRef<HTMLButtonElement>(null);
+  const file = useWatch({ control: form.control, name: 'file' });
 
   let message = status ?? t('action', { context: 'generating' });
   let key = message;
@@ -53,6 +56,14 @@ const Generate: React.FunctionComponent = () => {
     message = t('status', { context: 'cooling', count: seconds });
     key = 'cooling';
   }
+
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+
+    generateButton.current?.focus();
+  }, [file]);
 
   return (
     <Form {...form} className={CLASS_NAME} onSubmit={submit}>
@@ -68,7 +79,10 @@ const Generate: React.FunctionComponent = () => {
                   after={
                     <InputGroupButton
                       before={<Bs.BsStars aria-hidden />}
+                      disabled={!file}
+                      ref={generateButton}
                       type='submit'
+                      variant='ghost'
                     >
                       {t('action', { context: 'generate' })}
                     </InputGroupButton>
