@@ -11,6 +11,8 @@ import {
 import { useParams } from 'design/router';
 
 // Readers
+import { repairMusicXml } from '@/views/experiments/kinetic-light/read/repair';
+import { readScore } from '@/views/experiments/kinetic-light/read/score';
 import { readSong } from '@/views/experiments/kinetic-light/read/song';
 
 // Constants
@@ -48,23 +50,25 @@ function useSong() {
   const song = (data ?? previousData)?.kineticLightReading ?? undefined;
   const { beatsPerBar, chords, midi, musicxml, source, status, tempo, title } =
     song ?? EMPTY;
-  const piece = useMemo(
-    () =>
-      status === 'READY'
-        ? readSong({
-            beatsPerBar,
-            chords,
-            midi,
-            musicxml,
-            source,
-            tempo,
-            title,
-          })
-        : null,
-    [beatsPerBar, chords, midi, musicxml, source, status, tempo, title]
-  );
+  const { piece, score } = useMemo(() => {
+    if (status !== 'READY') {
+      return { piece: null, score: null };
+    }
 
-  return { loading, piece, song };
+    const read = {
+      beatsPerBar,
+      chords,
+      midi,
+      musicxml: musicxml ? repairMusicXml(musicxml) : musicxml,
+      source,
+      tempo,
+      title,
+    };
+
+    return { piece: readSong(read), score: readScore(read) };
+  }, [beatsPerBar, chords, midi, musicxml, source, status, tempo, title]);
+
+  return { loading, piece, score, song };
 }
 
 export { useSong, type Song };

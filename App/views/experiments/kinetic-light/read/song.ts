@@ -27,4 +27,4 @@ const readSong = (song: Song): Piece | null => {
   return readSheet(song);
 };
 
-export { readSong };
+export { fromBase64, readSong, type Song };

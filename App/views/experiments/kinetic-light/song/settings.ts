@@ -14,7 +14,7 @@ const settingsOf = (
   ...arrangement,
   glow: arrangement?.glow ?? DEFAULT_SETTINGS.glow,
   hue: arrangement?.hue ?? DEFAULT_SETTINGS.hue,
-  speed: arrangement?.speed ?? DEFAULT_SETTINGS.speed,
+  zoom: arrangement?.zoom ?? DEFAULT_SETTINGS.zoom,
 });
 
 export { settingsOf };

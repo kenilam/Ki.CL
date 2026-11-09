@@ -21,18 +21,27 @@ import {
 // Song
 import { LEAD_SECONDS } from '@/views/experiments/kinetic-light/song/clock';
 
+// Constants
+import {
+  END_HOLD_SECONDS,
+  PAUSE_EASE_SECONDS,
+  REPLAY_LEAD_SECONDS,
+} from '@/views/experiments/kinetic-light/constants';
+
 // Sounds
 import {
   ARRANGED,
   INSTRUMENTS,
   KITS,
   STYLES,
+  SUSTAIN,
+  SUSTAIN_FROM_SECONDS,
   SYNTH,
   VOICES,
   type Instrument,
 } from './sounds';
 
-type Status = 'idle' | 'loading' | 'paused' | 'playing';
+type Status = 'ended' | 'idle' | 'loading' | 'paused' | 'playing';
 
 type Voice = keyof typeof VOICES;
 
@@ -48,6 +57,7 @@ type Sound = {
   output: Tone.Gain;
   reverb: Tone.Reverb;
   shelf: Tone.Filter;
+  sustain: Tone.PolySynth<Tone.Synth>;
 };
 
 type Transport = {
@@ -60,6 +70,8 @@ type Transport = {
 };
 
 const RAMP_SECONDS = 0.05;
+const ASK_AFTER_SECONDS = 1;
+const LOOP_MARGIN_SECONDS = 0.05;
 const SHELF_HZ = 1000;
 const DELAY_BEATS = 0.75;
 const DELAY_FEEDBACK = 0.35;
@@ -84,9 +96,10 @@ const soften = (input: number): number => {
 const ready = (keys: Keys): boolean =>
   keys instanceof Tone.Sampler ? keys.loaded : true;
 
-const parts = ({ drums, instruments }: Sound) => [
+const parts = ({ drums, instruments, sustain }: Sound) => [
   ...Object.values(drums),
   ...Object.values(instruments),
+  sustain,
 ];
 
 function useTransport(
@@ -94,6 +107,7 @@ function useTransport(
   arrangement?: Arrangement | null
 ): Transport {
   const sound = useRef<Sound | null>(null);
+  const replaying = useRef(false);
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState(false);
   const voice = ARRANGED.voice[arrangement?.voice ?? 'GRAND'];
@@ -201,6 +215,7 @@ function useTransport(
       output,
       reverb,
       shelf,
+      sustain: new Tone.PolySynth(Tone.Synth, SUSTAIN).connect(output),
     };
 
     const keys = keysOf(settings.instrument);
@@ -238,6 +253,15 @@ function useTransport(
             velocity * gain
           );
         });
+
+        if (duration >= SUSTAIN_FROM_SECONDS) {
+          sound.current?.sustain.triggerAttackRelease(
+            note.toFrequency(),
+            duration,
+            at,
+            velocity
+          );
+        }
       }, time + LEAD_SECONDS);
     });
     STYLES.forEach((style) => {
@@ -258,8 +282,25 @@ function useTransport(
       });
     });
     transport.loop = true;
-    transport.loopStart = LEAD_SECONDS;
-    transport.loopEnd = LEAD_SECONDS + length;
+    transport.loopStart = LEAD_SECONDS - REPLAY_LEAD_SECONDS;
+    transport.loopEnd = LEAD_SECONDS + length + END_HOLD_SECONDS;
+    transport.schedule(
+      (time) => {
+        Tone.getDraw().schedule(() => setStatus('ended'), time);
+      },
+      LEAD_SECONDS + length + ASK_AFTER_SECONDS
+    );
+    transport.schedule(
+      (time) => {
+        if (!replaying.current) {
+          transport.pause(time);
+        }
+      },
+      transport.loopEnd - LOOP_MARGIN_SECONDS - PAUSE_EASE_SECONDS
+    );
+    transport.schedule(() => {
+      replaying.current = false;
+    }, LEAD_SECONDS);
   }, [hits, keysOf, kitOf, length, piece]);
 
   const play = useCallback(async () => {
@@ -273,13 +314,20 @@ function useTransport(
         await load();
       }
 
-      Tone.getTransport().start();
+      const transport = Tone.getTransport();
+
+      replaying.current = transport.seconds >= LEAD_SECONDS + length;
+
+      if (transport.state !== 'started') {
+        transport.start();
+      }
+
       setStatus('playing');
     } catch {
       setError(true);
       setStatus('idle');
     }
-  }, [load]);
+  }, [length, load]);
 
   const pause = useCallback(() => {
     Tone.getTransport().pause();

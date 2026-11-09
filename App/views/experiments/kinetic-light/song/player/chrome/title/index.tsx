@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -43,9 +43,9 @@ const Title: React.FunctionComponent = () => {
           <Button
             after={
               generate.busy ? (
-                <Ri.RiLoader4Line aria-hidden className='is-revolving' />
+                <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
               ) : (
-                <Ri.RiArrowDownSLine aria-hidden />
+                <Bs.BsChevronDown aria-hidden />
               )
             }
             unstyled

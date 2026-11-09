@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -155,12 +155,12 @@ const Contents: React.FunctionComponent = () => {
                       <Button
                         before={
                           busy ? (
-                            <Ri.RiLoader4Line
+                            <Bs.BsArrowClockwise
                               aria-hidden
                               className='is-revolving'
                             />
                           ) : (
-                            <Ri.RiAiGenerate2Line aria-hidden />
+                            <Bs.BsStars aria-hidden />
                           )
                         }
                         size='small'
@@ -193,7 +193,7 @@ const Contents: React.FunctionComponent = () => {
                 <>
                   <Layout>
                     <Button
-                      before={<Ri.RiPlayListLine aria-hidden />}
+                      before={<Bs.BsMusicNoteList aria-hidden />}
                       popoverTarget={sheet}
                       popoverTargetAction='show'
                       size='small'

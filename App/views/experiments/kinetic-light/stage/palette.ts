@@ -5,8 +5,7 @@ import { THREE } from '@/three';
 import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
 
 type Palette = {
-  hit: THREE.Color;
-  lane: THREE.Color;
+  ink: THREE.Color;
   paper: THREE.Color;
   ramp: THREE.Color[];
 };
@@ -40,8 +39,7 @@ const readPalette = (element: Element): Palette => {
   };
 
   return {
-    hit: read('hit'),
-    lane: read('lane'),
+    ink: read('ink'),
     paper: read('paper'),
     ramp: Array.from({ length: RAMP }, (_, index) => read(`ramp-${index + 1}`)),
   };

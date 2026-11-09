@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Ri from 'react-icons/ri';
+import * as Bs from 'react-icons/bs';
 
 // Components
 import {
@@ -20,9 +20,6 @@ import {
 
 // Context
 import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
-
-// Hooks
-import { useArrangement } from '@/views/experiments/kinetic-light/song/player/use-arrangement';
 
 // Partials
 import { Beat } from './beat';
@@ -42,23 +39,22 @@ import {
 const CLASS_NAME = `${VIEW}__player__chrome`;
 
 const Chrome: React.FunctionComponent = () => {
-  const { piece, transport } = usePlayerContext();
+  const { arranger, piece, transport } = usePlayerContext();
   const translations = {
     common: useTranslation(),
     kineticLight: useTranslation('kinetic-light'),
   };
   const { error, pause, play, status } = transport;
-  const arrangement = useArrangement();
-  const playButton = useRef<HTMLButtonElement>(null);
   const playing = status === 'playing';
+  const playButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (arrangement.arranging) {
+    if (status !== 'playing' && status !== 'paused') {
       return;
     }
 
     playButton.current?.focus({ preventScroll: true });
-  }, [arrangement.arranging]);
+  }, [status]);
 
   let line = translations.kineticLight.t('source', { context: piece.source });
 
@@ -70,26 +66,26 @@ const Chrome: React.FunctionComponent = () => {
     line = translations.kineticLight.t('status', { context: 'loading' });
   }
 
-  if (arrangement.arranging) {
+  if (arranger.arranging) {
     line = translations.common.t('arranging');
   }
 
-  if (arrangement.error) {
-    line = arrangement.error.message;
+  if (arranger.error) {
+    line = arranger.error.message;
   }
 
   if (error) {
     line = translations.kineticLight.t('error', { context: 'playback' });
   }
 
-  let icon = <Ri.RiPlayFill aria-hidden />;
+  let icon = <Bs.BsPlayFill aria-hidden />;
 
   if (playing) {
-    icon = <Ri.RiPauseMiniFill aria-hidden />;
+    icon = <Bs.BsPauseFill aria-hidden />;
   }
 
-  if (status === 'loading' || arrangement.arranging) {
-    icon = <Ri.RiLoader4Line aria-hidden className='is-revolving' />;
+  if (status === 'loading' || arranger.arranging) {
+    icon = <Bs.BsArrowClockwise aria-hidden className='is-revolving' />;
   }
 
   return (
@@ -136,14 +132,15 @@ const Chrome: React.FunctionComponent = () => {
           gap='narrow'
           wrap
         >
-          <ListItem>
+          <ListItem className={`${CLASS_NAME}__play`}>
             <Button
+              aria-keyshortcuts='Space'
               aria-label={
                 playing
                   ? translations.common.t('action', { context: 'pause' })
                   : translations.common.t('action', { context: 'play' })
               }
-              disabled={arrangement.arranging}
+              disabled={arranger.arranging}
               onClick={() => (playing ? pause() : void play())}
               ref={playButton}
               size='small'
