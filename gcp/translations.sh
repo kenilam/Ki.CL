@@ -8,7 +8,7 @@
 #   gcp/translations.sh check [dev|prod]   says what would change
 #   gcp/translations.sh [dev|prod]         changes it
 #
-# `dev` is the development API and `prod` the production API in both regions.
+# `dev` is the development API and `prod` the production API.
 # With neither, it is both. The secret is one for all of them, so the first
 # run adds the operation and a later run for the other only restarts it.
 #
@@ -36,7 +36,7 @@ done
 
 # The secret the service takes the list from.
 secret="$(
-  gcloud run services describe "$API_SERVICE" --project "$PROJECT" --region "$SOURCE_REGION" --format json |
+  gcloud run services describe "$API_SERVICE" --project "$PROJECT" --region "$REGION" --format json |
     python3 -c '
 import json, sys
 name = sys.argv[1]
@@ -84,10 +84,9 @@ restart() {
 
 if [ "$target" != prod ]; then
   : "${API_DEV_SERVICE:?gcp/.env has no API_DEV_SERVICE}"
-  restart "$API_DEV_SERVICE" "$SOURCE_REGION"
+  restart "$API_DEV_SERVICE" "$REGION"
 fi
 
 if [ "$target" != dev ]; then
-  restart "$API_SERVICE" "$SOURCE_REGION"
   restart "$API_SERVICE" "$REGION"
 fi

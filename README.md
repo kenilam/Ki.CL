@@ -31,17 +31,13 @@ make run:production
 make test
 ```
 
-## Regions
-Production runs in two regions behind one global load balancer, which sends each visitor to the nearer one. The site's service only accepts traffic from the load balancer, and the dev services run in one region.
+## Hosting
+The site's service only accepts traffic from the load balancer. The load balancer has a serverless NEG, Google-managed certificates through DNS authorization, a `www` → apex redirect and an HTTP → HTTPS redirect. DNS is managed by hand. Keep the `_acme-challenge` CNAMEs, which renew the certificates.
 
-One region is the source: deploy and configure services there. Each main trigger deploys the same image to both regions, but settings such as env vars, memory or secrets don't copy across. After changing one, copy the services again:
+The scripts in `gcp/` and `make resume.pdf` read the project and resource names from `gcp/.env`:
 ```BASH
-cp gcp/.env.template gcp/.env   # once, then fill in the project and resource names
-make gcp.region
+cp gcp/.env.template gcp/.env   # once, then fill it in
 ```
-The load balancer has a serverless NEG per region, Google-managed certificates through DNS authorization, a `www` → apex redirect and an HTTP → HTTPS redirect. DNS is managed by hand. Keep the `_acme-challenge` CNAMEs, which renew the certificates.
-
-The database has a read-only replica in the second region. The API reads tree of life data from the nearest node. Sessions, and anything read straight after a write, stay on the primary.
 
 ## Resume
 `/resume` is the master version, and each tailored version is at `/resume/<version>`: `manager`, `frontend-ai`, `react-native` and `architecture`. The content is typed data in `App/views/resume/content`. A line several versions share is one constant in `shared.ts`, and each version's file picks its lines and their order.
@@ -77,9 +73,6 @@ To read the events from the logs:
 ```BASH
 make gcp.analytics                        # the last day's page views
 make gcp.analytics TYPE=click SINCE=7d    # pageview, click, scroll or duration
-make gcp.analytics REGION=<region>        # one region only
-make gcp.analytics.source                 # the source region from gcp/.env
-make gcp.analytics.second                 # the second region
 ```
 
 To keep the events in BigQuery, set a salt so every instance hashes visitors the same way, then send the logs to a dataset:
