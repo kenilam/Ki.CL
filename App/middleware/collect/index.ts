@@ -9,6 +9,7 @@ import express, {
 
 import { BODY_LIMIT_BYTES, COLLECT_PATH, record } from './record';
 import { visitorAddress } from './visitor-address';
+import { visitorLocation } from './visitor-location';
 
 /**
  * Receives the browser's analytics batches. Mounted ahead of the static files,
@@ -26,6 +27,7 @@ export function applyCollect(app: Express): void {
       record(request.body, {
         address: visitorAddress(request),
         userAgent: request.get('user-agent'),
+        ...visitorLocation(request),
       });
 
       response.status(204).end();
@@ -75,6 +77,7 @@ export function collectMiddleware(
       record(JSON.parse(body), {
         address: visitorAddress(request),
         userAgent: request.headers['user-agent'],
+        ...visitorLocation(request),
       });
     } catch {
       // A malformed batch is dropped, the same as an invalid event.

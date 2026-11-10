@@ -97,7 +97,7 @@ gcp.translations.check:
 gcp.analytics:
 	@gcloud logging read 'resource.type="cloud_run_revision" AND jsonPayload.analytics.type="$(or $(TYPE),pageview)"$(if $(REGION), AND resource.labels.location="$(REGION)")' \
 		--freshness="$(or $(SINCE),1d)" --limit="$(or $(LIMIT),200)" \
-		--format='table(timestamp.date(tz=LOCAL):label=TIME, resource.labels.location:label=REGION, jsonPayload.analytics.path:label=PATH, jsonPayload.analytics.target:label=TARGET, jsonPayload.analytics.value:label=VALUE, jsonPayload.analytics.referrer:label=REFERRER, jsonPayload.analytics.session:label=SESSION)'
+		--format='table(timestamp.date(tz=LOCAL):label=TIME, resource.labels.location:label=REGION, jsonPayload.analytics.region:label=FROM, jsonPayload.analytics.city:label=CITY, jsonPayload.analytics.path:label=PATH, jsonPayload.analytics.target:label=TARGET, jsonPayload.analytics.value:label=VALUE, jsonPayload.analytics.referrer:label=REFERRER, jsonPayload.analytics.session:label=SESSION)'
 
 # The same, for one of the two production regions. The region names come from gcp/.env.
 gcp-env = $(shell sed -n 's/^$(1)=//p' gcp/.env 2>/dev/null)

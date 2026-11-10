@@ -64,6 +64,13 @@ The design is written up in `docs/design/resume.md`.
 ## Analytics
 The site records page views, clicks, scroll depth and time on page. It sets no cookies and skips browsers that send Global Privacy Control. The browser sends events in batches to `/collect`, and the server writes each one as a JSON log line. Visitors are identified by a hash of their address and user agent that changes every day.
 
+Each event also records where the visitor is: `region` is a region code such as `HK` or `US`, and `city` is a city name. The load balancer works both out from the visitor's address and sends them as `X-Client-Region` and `X-Client-City`, replacing any the browser sent. The address itself is never stored. The headers are set on the backend service:
+```BASH
+gcloud compute backend-services update <backend service> --global \
+  --custom-request-header='X-Client-Region:{client_region}' \
+  --custom-request-header='X-Client-City:{client_city}'
+```
+
 Clicks on links, buttons and `summary` are recorded by their text. Add `data-track='Name'` to name an element in reports or to track something else.
 
 To read the events from the logs:

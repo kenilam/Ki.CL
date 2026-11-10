@@ -22,6 +22,8 @@ type Event = {
 
 type Visitor = {
   address?: string;
+  city?: string;
+  region?: string;
   userAgent?: string;
 };
 
@@ -100,7 +102,12 @@ export function record(body: unknown, visitor: Visitor): number {
       JSON.stringify({
         severity: 'INFO',
         message: `analytics ${event?.type}`,
-        analytics: { ...event, session: id },
+        analytics: {
+          ...event,
+          city: text(visitor.city),
+          region: text(visitor.region),
+          session: id,
+        },
       })
     );
   });
