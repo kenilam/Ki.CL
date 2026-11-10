@@ -61,7 +61,7 @@ const Generate: React.FunctionComponent = () => {
       return;
     }
 
-    generateButton.current?.focus();
+    generateButton.current?.focus({ focusVisible: true });
   }, [file]);
 
   useEffect(() => {

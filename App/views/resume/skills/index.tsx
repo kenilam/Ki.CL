@@ -39,12 +39,14 @@ const Skills: React.FunctionComponent = () => {
             <Separator />
           </header>
         </Layout>
-        <List gap='narrower'>
+        <List gap='narrow' listStyleType='inherit'>
           {skills.map((line, index) => (
             <ListItem key={index}>
-              <Text dense>
-                <Markdown>{line}</Markdown>
-              </Text>
+              <Layout gap='narrower'>
+                <Text dense>
+                  <Markdown>{line}</Markdown>
+                </Text>
+              </Layout>
             </ListItem>
           ))}
         </List>

@@ -38,7 +38,7 @@ const Words: React.FunctionComponent = () => {
           'kicl-inline-size-full',
           'kicl-margin-inline-auto',
           'kicl-max-inline-size-columns-12',
-          'kicl-padding-block-start-header',
+          'kicl-padding-block-frame',
           'kicl-padding-inline-frame',
           'kicl-pointer-events-none',
           'kicl-position-relative'

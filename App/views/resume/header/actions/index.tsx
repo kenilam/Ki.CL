@@ -67,11 +67,10 @@ const Actions: React.FunctionComponent = () => {
     >
       <ListItem>
         <Button
-          before={<Bs.BsChatLeftText aria-hidden />}
+          before={<Bs.BsChatDots aria-hidden />}
           command='show-modal'
           commandfor={CONTACT_ID}
           data-track='Resume message'
-          level='confirm'
           size='small'
           variant='ghost'
         >
@@ -84,7 +83,6 @@ const Actions: React.FunctionComponent = () => {
             before={<Bs.BsDownload aria-hidden />}
             data-track='Resume PDF'
             download
-            level='confirm'
             lookLikeButton
             reloadDocument
             size='small'
@@ -99,7 +97,6 @@ const Actions: React.FunctionComponent = () => {
         <Button
           before={<Bs.BsPrinter aria-hidden />}
           data-track='Resume print'
-          level='confirm'
           onClick={print}
           size='small'
           variant='secondary'

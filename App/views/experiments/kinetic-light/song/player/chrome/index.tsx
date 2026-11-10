@@ -54,7 +54,7 @@ const Chrome: React.FunctionComponent = () => {
       return;
     }
 
-    playButton.current?.focus({ preventScroll: true });
+    playButton.current?.focus({ focusVisible: true, preventScroll: true });
   }, [status]);
 
   let line = translations.kineticLight.t('source', { context: piece.source });
@@ -104,8 +104,7 @@ const Chrome: React.FunctionComponent = () => {
           CLASS_NAME,
           'kicl-inset-block-end-0',
           'kicl-inset-inline-0',
-          'kicl-padding-block-end-frame',
-          'kicl-padding-block-start-extreme',
+          'kicl-padding-block-frame',
           'kicl-padding-inline-frame',
           'kicl-pointer-events-none',
           'kicl-position-absolute'
