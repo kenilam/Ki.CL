@@ -30,7 +30,7 @@ const Earlier: React.FunctionComponent = () => {
         <Heading dense id={titleId} is='h3'>
           {t('title', { context: 'earlier' })}
         </Heading>
-        <List gap='narrower'>
+        <List gap='narrower' listStyleType='inherit'>
           {earlier.map((line, index) => (
             <ListItem key={index}>
               <Text dense>

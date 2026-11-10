@@ -20,7 +20,7 @@ const Home: React.FunctionComponent = () => (
       className={classNames(
         CLASS_NAME,
         'kicl-inline-size-full',
-        'kicl-padding-block-end-extreme'
+        'kicl-padding-block-end-frame'
       )}
     >
       <Banner />

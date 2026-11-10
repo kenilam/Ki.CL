@@ -116,7 +116,7 @@ const Resume: React.FunctionComponent = () => {
       <Layout autoFlow='row' justifyContent='center' justifyItems='center'>
         {/* Grows with the page, which is longer than any window. */}
         <Frame delay={FRAME_DELAY} grow>
-          {/* The box the light fills, with a narrow gap around the card. */}
+          {/* The box the light fills. */}
           <div
             className={classNames(
               `${CLASS_NAME}__frame`,

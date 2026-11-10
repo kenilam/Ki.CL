@@ -48,7 +48,7 @@ const Songs: React.FunctionComponent = () => {
             justifyContent='stretch'
             lookLikeButton
             to={toPath(song.id)}
-            variant='secondary'
+            variant='tertiary'
           >
             <span className='kicl-text-truncate' title={song.title}>
               {song.title}
