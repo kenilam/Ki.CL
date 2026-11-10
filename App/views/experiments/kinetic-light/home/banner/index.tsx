@@ -20,7 +20,7 @@ import { CLASS_NAME as HOME } from '@/views/experiments/kinetic-light/home/const
 const CLASS_NAME = `${HOME}__banner`;
 
 const Banner: React.FunctionComponent = () => (
-  <Layout alignContent='start' justifyContent='stretch' justifyItems='start'>
+  <Layout alignContent='end' justifyContent='stretch' justifyItems='start'>
     <Frame grow>
       <section
         className={classNames(
@@ -42,8 +42,12 @@ const Banner: React.FunctionComponent = () => (
           >
             <Header />
             <Generate />
-            <Privacy />
-            <SongsSheet />
+            <Layout alignItems='center' autoFlow='column' gap='narrow'>
+              <div>
+                <SongsSheet />
+                <Privacy />
+              </div>
+            </Layout>
             <More />
           </article>
         </Layout>
