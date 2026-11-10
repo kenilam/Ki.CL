@@ -47,16 +47,26 @@ const Contact: React.FunctionComponent = () => {
   return (
     <Layout gap='narrow'>
       <address className='kicl-font-style-normal'>
-        <Text dense>
-          {translations.resume.t('location')}
-        </Text>
+        <Text dense>{translations.resume.t('location')}</Text>
         <Layout display='flex' wrap>
           <Text dense>
             {printing ? (
-              <HyperLink before={<Bs.BsEnvelope />} className='kicl-print-only' to={`mailto:${email}`}>{email}</HyperLink>
+              <HyperLink
+                before={<Bs.BsEnvelope />}
+                className='kicl-print-only'
+                to={`mailto:${email}`}
+              >
+                {email}
+              </HyperLink>
             ) : null}
             {phone ? (
-              <HyperLink before={<Bs.BsPhone />} className='kicl-print-only' to={`tel:${phone}`}>{phone}</HyperLink>
+              <HyperLink
+                before={<Bs.BsPhone />}
+                className='kicl-print-only'
+                to={`tel:${phone}`}
+              >
+                {phone}
+              </HyperLink>
             ) : null}
             {PROFILES.map(({ Icon, context }) => (
               <React.Fragment key={context}>

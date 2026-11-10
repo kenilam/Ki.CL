@@ -62,12 +62,7 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
       <Details
         open={index === 0}
         summary={
-          <Layout
-            alignItems='center'
-            display='flex'
-            gap='narrow'
-            wrap
-          >
+          <Layout alignItems='center' display='flex' gap='narrow' wrap>
             <span>
               <Text className='kicl-font-weight-bold' dense is='span'>
                 {title}
