@@ -79,10 +79,6 @@ test:
 	yarn run test
 	@echo ✅ done
 
-# Copies the production services into the second region (gcp/.env).
-gcp.region:
-	gcp/region.sh
-
 # Lets the API answer the Translations query without a session, wherever it runs.
 # `make gcp.translations ENV=dev` then `ENV=prod`; without ENV it is both.
 # `make gcp.translations.check ENV=dev` says what would change.
@@ -93,19 +89,8 @@ gcp.translations.check:
 	@gcp/translations.sh check $(ENV)
 
 # Analytics events from the site's logs, newest first.
-# `make gcp.analytics TYPE=click SINCE=7d LIMIT=500 REGION=<region>`; TYPE is pageview, click, scroll or duration.
+# `make gcp.analytics TYPE=click SINCE=7d LIMIT=500`; TYPE is pageview, click, scroll or duration.
 gcp.analytics:
-	@gcloud logging read 'resource.type="cloud_run_revision" AND jsonPayload.analytics.type="$(or $(TYPE),pageview)"$(if $(REGION), AND resource.labels.location="$(REGION)")' \
+	@gcloud logging read 'resource.type="cloud_run_revision" AND jsonPayload.analytics.type="$(or $(TYPE),pageview)"' \
 		--freshness="$(or $(SINCE),1d)" --limit="$(or $(LIMIT),200)" \
-		--format='table(timestamp.date(tz=LOCAL):label=TIME, resource.labels.location:label=REGION, jsonPayload.analytics.region:label=FROM, jsonPayload.analytics.city:label=CITY, jsonPayload.analytics.path:label=PATH, jsonPayload.analytics.target:label=TARGET, jsonPayload.analytics.value:label=VALUE, jsonPayload.analytics.referrer:label=REFERRER, jsonPayload.analytics.session:label=SESSION)'
-
-# The same, for one of the two production regions. The region names come from gcp/.env.
-gcp-env = $(shell sed -n 's/^$(1)=//p' gcp/.env 2>/dev/null)
-
-gcp.analytics.source:
-	@[ -n "$(call gcp-env,SOURCE_REGION)" ] || { echo "gcp/.env has no SOURCE_REGION" >&2; exit 1; }
-	@$(MAKE) --no-print-directory gcp.analytics REGION="$(call gcp-env,SOURCE_REGION)"
-
-gcp.analytics.second:
-	@[ -n "$(call gcp-env,REGION)" ] || { echo "gcp/.env has no REGION" >&2; exit 1; }
-	@$(MAKE) --no-print-directory gcp.analytics REGION="$(call gcp-env,REGION)"
+		--format='table(timestamp.date(tz=LOCAL):label=TIME, jsonPayload.analytics.region:label=FROM, jsonPayload.analytics.city:label=CITY, jsonPayload.analytics.path:label=PATH, jsonPayload.analytics.target:label=TARGET, jsonPayload.analytics.value:label=VALUE, jsonPayload.analytics.referrer:label=REFERRER, jsonPayload.analytics.session:label=SESSION)'
