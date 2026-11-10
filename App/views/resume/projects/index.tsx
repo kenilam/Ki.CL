@@ -47,7 +47,7 @@ const Projects: React.FunctionComponent = () => {
           </Text>
         )}
         {items && (
-          <List gap='narrow'>
+          <List gap='narrow' listStyleType='inherit'>
             {items.map((line, index) => (
               <ListItem key={index}>
                 <Text dense>

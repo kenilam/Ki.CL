@@ -44,12 +44,12 @@ const Start: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
       <article className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
         <Frame grow>
-          <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
+          <Layout alignContent='start' autoFlow='row' justifyContent='stretch'>
             <section
               className={classNames(
                 // Dark in both themes, so the scrim darkens the picture.
                 'kicl--theme--dark',
-                'kicl-padding-block-widest',
+                'kicl-padding-block-frame',
                 'kicl-padding-inline-frame',
                 'kicl-position-relative'
               )}

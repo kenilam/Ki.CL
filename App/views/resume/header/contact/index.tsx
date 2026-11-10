@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import * as Bs from 'react-icons/bs';
 
 // Components
-import { HyperLink, Text } from 'design/components';
+import { HyperLink, Layout, Text } from 'design/components';
+
+// Hooks
+import { usePrinting } from 'design/hooks';
 
 // Constants
 import { PHONE_KEY } from '@/views/resume/constants';
-
-const SEPARATOR = ' · ';
 
 const PROFILES = [
   { Icon: Bs.BsLinkedin, context: 'linkedin' },
@@ -41,34 +42,47 @@ const Contact: React.FunctionComponent = () => {
 
   const phone = readPhone();
 
+  const printing = usePrinting();
+
   return (
-    <address className='kicl-font-style-normal'>
-      <Text dense>
-        {translations.resume.t('location')}
-        <Text className='kicl-print-only' is='span'>
-          {SEPARATOR}
-        </Text>
-        {/* The address is for paper. A screen opens the form. */}
-        <HyperLink className='kicl-print-only' to={`mailto:${email}`}>
-          {email}
-        </HyperLink>
-        {phone && `${SEPARATOR}${phone}`}
-      </Text>
-      <Text dense>
-        {PROFILES.map(({ Icon, context }, index) => (
-          <React.Fragment key={context}>
-            {index > 0 ? SEPARATOR : null}
-            <HyperLink
-              before={<Icon aria-hidden />}
-              className='kicl-text-nowrap'
-              to={translations.common.t('url', { context })}
-            >
-              {translations.resume.t(`profile.${context}`)}
-            </HyperLink>
-          </React.Fragment>
-        ))}
-      </Text>
-    </address>
+    <Layout gap='narrow'>
+      <address className='kicl-font-style-normal'>
+        <Text dense>{translations.resume.t('location')}</Text>
+        <Layout display='flex' wrap>
+          <Text dense>
+            {printing ? (
+              <HyperLink
+                before={<Bs.BsEnvelope />}
+                className='kicl-print-only'
+                to={`mailto:${email}`}
+              >
+                {email}
+              </HyperLink>
+            ) : null}
+            {phone ? (
+              <HyperLink
+                before={<Bs.BsPhone />}
+                className='kicl-print-only'
+                to={`tel:${phone}`}
+              >
+                {phone}
+              </HyperLink>
+            ) : null}
+            {PROFILES.map(({ Icon, context }) => (
+              <React.Fragment key={context}>
+                <HyperLink
+                  before={<Icon aria-hidden />}
+                  className='kicl-text-nowrap'
+                  to={translations.common.t('url', { context })}
+                >
+                  {translations.resume.t(`profile.${context}`)}
+                </HyperLink>
+              </React.Fragment>
+            ))}
+          </Text>
+        </Layout>
+      </address>
+    </Layout>
   );
 };
 

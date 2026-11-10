@@ -39,7 +39,7 @@ const Education: React.FunctionComponent = () => {
             <Separator />
           </header>
         </Layout>
-        <List gap='narrower'>
+        <List gap='narrow' listStyleType='inherit'>
           {education.map((line, index) => (
             <ListItem key={index}>
               <Text dense>

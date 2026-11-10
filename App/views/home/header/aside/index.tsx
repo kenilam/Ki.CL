@@ -61,7 +61,7 @@ const Aside: React.FunctionComponent = () => {
         title={translations.common.t('send_message')}
         variant='ghost'
       >
-        <Bs.BsEnvelope aria-hidden />
+        <Bs.BsChatDots aria-hidden />
       </Button>
     </Navigation>
   );

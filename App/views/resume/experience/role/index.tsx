@@ -48,8 +48,8 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
     <Card
       aria-labelledby={headingId}
       className={CLASS_NAME}
-      gap='narrow'
       is='article'
+      variant='secondary'
     >
       <Layout alignItems='center' display='flex' gap='narrow'>
         <header>
@@ -62,13 +62,7 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
       <Details
         open={index === 0}
         summary={
-          <Layout
-            alignItems='center'
-            display='flex'
-            gap='narrower'
-            justifyContent='space-between'
-            wrap
-          >
+          <Layout alignItems='center' display='flex' gap='narrow' wrap>
             <span>
               <Text className='kicl-font-weight-bold' dense is='span'>
                 {title}
@@ -80,7 +74,7 @@ const Role: React.FunctionComponent<Props> = ({ index }) => {
           </Layout>
         }
       >
-        <List gap='narrower'>
+        <List gap='narrow' listStyleType='inherit'>
           {points.map((line, index) => (
             <ListItem key={index}>
               <Text dense>

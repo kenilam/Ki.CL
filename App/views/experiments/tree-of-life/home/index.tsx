@@ -17,7 +17,7 @@ const Home: React.FunctionComponent = () => {
   return (
     <Layout gap='wide'>
       <article
-        className={classNames(CLASS_NAME, 'kicl-padding-block-end-extreme')}
+        className={classNames(CLASS_NAME, 'kicl-padding-block-end-frame')}
       >
         <Banner />
         <Article />

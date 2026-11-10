@@ -28,7 +28,7 @@ const Banner: React.FunctionComponent = () => (
       <header
         className={classNames(
           CLASS_NAME,
-          'kicl-padding-block-start-widest',
+          'kicl-padding-block-frame',
           'kicl-position-relative'
         )}
       >

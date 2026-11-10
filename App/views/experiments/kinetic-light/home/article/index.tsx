@@ -29,8 +29,7 @@ const Article: React.FunctionComponent = () => {
         className={classNames(
           'kicl-inline-size-columns-12',
           'kicl-margin-inline-auto',
-          'kicl-padding-block-end-extreme',
-          'kicl-padding-block-start-extreme',
+          'kicl-padding-block-frame',
           'kicl-padding-inline-frame'
         )}
         id={ARTICLE_ID}

@@ -1,19 +1,41 @@
 .kicl--views--resume__role {
+  @media not print {
+    ul {
+      padding-block: var(--kicl-gutter);
+      padding-inline-end: var(--kicl-gutter);
+    }
+  }
+
   @media print {
     --kicl--components--card--background-color: transparent;
     --kicl--components--card--border-radius: 0;
     --kicl--components--card--border-width: 0;
     --kicl--components--card--spacing: 0;
 
-    display: block;
+    display: grid;
+    gap: 0;
+    grid-template-rows: repeat(3, auto);
 
     > header {
-      float: inline-start;
-      margin-inline-end: var(--kicl-gutter-narrow);
+      grid-area: 2 / 1;
+
+      > h3 {
+        font-size: var(--kicl-font-size-small);
+      }
     }
 
-    ul {
-      clear: inline-start;
+    > details {
+      display: grid;
+      grid-area: 1 / 1 / 4;
+      grid-template-rows: subgrid;
+
+      > summary {
+        --kicl--components--details--summary--margin-block-end: 0;
+      }
+
+      &::details-content {
+        grid-row: 3;
+      }
     }
   }
 }

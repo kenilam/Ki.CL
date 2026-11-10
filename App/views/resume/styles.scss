@@ -34,12 +34,16 @@
 
     section,
     ul,
-    li {
+    li > p {
       display: block;
     }
 
+    li {
+      display: list-item;
+    }
+
     > * + * {
-      margin-block-start: var(--kicl-gutter-wide);
+      margin-block-start: var(--kicl-gutter);
     }
 
     section > * + * {
@@ -110,12 +114,17 @@
    * and on A4. The export fails when one no longer does.
    */
   @at-root :root:has(&) {
-    --kicl-print-font-size: 8.4pt;
+    --kicl-print-font-size: 8.3pt;
   }
 }
 
 .kicl--views--resume__frame {
-  padding: var(--kicl-gutter-narrow);
+  padding-block: clamp(
+    var(--kicl-gutter-narrow),
+    (100% - var(--kicl-columns-12)) / 2 - var(--kicl--components--frame--gap),
+    var(--kicl--components--frame--inset)
+  );
+  padding-inline: var(--kicl-gutter-narrow);
 
   @media print {
     padding: var(--kicl--components--frame--inset);

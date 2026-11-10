@@ -38,7 +38,7 @@ const Article: React.FunctionComponent = () => {
           CLASS_NAME,
           'kicl-margin-inline-auto',
           'kicl-max-inline-size-columns-12',
-          'kicl-padding-block-start-extreme',
+          'kicl-padding-block-start-frame',
           'kicl-padding-inline-frame',
           'kicl-position-relative'
         )}

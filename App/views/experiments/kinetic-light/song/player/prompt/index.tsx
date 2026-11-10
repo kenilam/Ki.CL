@@ -36,7 +36,7 @@ const Prompt: React.FunctionComponent = () => {
       return;
     }
 
-    button.current?.focus({ preventScroll: true });
+    button.current?.focus({ focusVisible: true, preventScroll: true });
   }, [busy, shown]);
 
   if (!shown) {
