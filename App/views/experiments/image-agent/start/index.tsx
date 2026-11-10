@@ -14,6 +14,7 @@ import { Backdrop } from '@/views/experiments/image-agent/backdrop';
 import { Composer } from '@/views/experiments/image-agent/composer';
 import { Article } from './article';
 import { Header } from './header';
+import { More } from './more';
 import { Past } from './past';
 import { Running } from './running';
 
@@ -44,7 +45,7 @@ const Start: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='none' justifyContent='stretch'>
       <article className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
         <Frame grow>
-          <Layout alignContent='start' autoFlow='row' justifyContent='stretch'>
+          <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
             <section
               className={classNames(
                 // Dark in both themes, so the scrim darkens the picture.
@@ -77,6 +78,7 @@ const Start: React.FunctionComponent = () => {
                     onText={setQuery}
                     sticky={false}
                   />
+                  <More />
                 </div>
               </Layout>
             </section>
