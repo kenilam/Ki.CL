@@ -69,7 +69,7 @@ const Songs: React.FunctionComponent = () => {
         ) : null}
         <Details
           gap='narrow'
-          open
+          open={!songs.length}
           summary={t('title', { context: 'examples' })}
         >
           {listOf(examples)}

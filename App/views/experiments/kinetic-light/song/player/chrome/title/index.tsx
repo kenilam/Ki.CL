@@ -7,6 +7,7 @@ import * as Bs from 'react-icons/bs';
 import {
   Button,
   Heading,
+  Layout,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -57,20 +58,22 @@ const Title: React.FunctionComponent = () => {
           </Button>
         </PopoverTrigger>
       </Heading>
-      <PopoverContent
-        className='kicl-max-inline-size-columns-4'
-        forceMount
-        placement='block-start-start'
-        variant='secondary'
-      >
-        <Generate />
-        {examples.length || songs.length ? (
-          <>
-            <Separator className='kicl-margin-block-narrow' is='hr' />
-            <Songs />
-          </>
-        ) : null}
-      </PopoverContent>
+      <Layout>
+        <PopoverContent
+          className='kicl-max-inline-size-columns-4'
+          forceMount
+          placement='block-start-start'
+          variant='secondary'
+        >
+          <Generate />
+          {examples.length || songs.length ? (
+            <>
+              <Separator is='hr' />
+              <Songs />
+            </>
+          ) : null}
+        </PopoverContent>
+      </Layout>
     </Popover>
   );
 };
