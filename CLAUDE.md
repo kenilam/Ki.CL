@@ -121,6 +121,7 @@ Lists. Every list rendered with `.map` splits into a plural part that maps and a
 - The item reads with the default cache-first policy, so mounting an item never fetches. The section that owns the list does the fetch.
 - Per-item work belongs in the item: a hook that maps a list into per-item values keeps only the list, and per-item state (open, editing) lives in the item.
 - A `.map` that only builds data stays as it is.
+- Some design-system components read their children, so those children stay as the component expects, even inside a list. `Button` gives a button the icon-only look unless a child is text. `Segmented` finds the chosen item's label through each `SegmentedItem`'s `value` and children. `Select` adds its own trigger unless a direct child is a `SelectTrigger`. `FormItem` looks for `FormDescription`, and `SelectGroup` for `SelectLabel`. So a list maps straight to `<SegmentedItem key={v} value={v}>{t('kind', { context: v })}</SegmentedItem>`, with the text written in it, and a custom trigger is `<SelectTrigger><Face /></SelectTrigger>`, with the part inside. Wrapping these in a part broke the docs pickers and the header's language select in the 2026-11-11 release.
 
 Data, without prop drilling. A part reads what it needs from its owner and builds its own value:
 

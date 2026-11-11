@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Segmented } from 'design/components';
+import { Segmented, SegmentedItem } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -10,7 +10,6 @@ import { useTranslation } from 'design/hooks';
 import { usePanelContext } from '@/views/experiments/factory-arm/panel-context';
 
 // Partials
-import { Tab } from './tab';
 
 // Constants
 import { TABS } from '@/views/experiments/factory-arm/workspace/panel/tabs/constants';
@@ -29,7 +28,11 @@ const Switch: React.FunctionComponent = () => {
       value={tab}
     >
       {TABS.map((name) => {
-        return <Tab key={name} name={name} />;
+        return (
+          <SegmentedItem key={name} value={name}>
+            {t('tab', { context: name })}
+          </SegmentedItem>
+        );
       })}
     </Segmented>
   );

@@ -6,6 +6,7 @@ import {
   Form,
   FormControl,
   FormField,
+  FormDescription,
   FormItem,
   FormLabel,
   FormMessage,
@@ -28,7 +29,8 @@ import { ACCEPT } from '@/views/experiments/kinetic-light/constants';
 
 const Generate: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');
-  const { busy, cooling, form, generated, spent, submit } = useGenerateContext();
+  const { busy, cooling, form, generated, spent, submit } =
+    useGenerateContext();
 
   if (generated) {
     return <Generated />;
@@ -55,7 +57,9 @@ const Generate: React.FunctionComponent = () => {
                 ref={ref}
               />
             </FormControl>
-            <Status />
+            <FormDescription role='status'>
+              <Status />
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}
