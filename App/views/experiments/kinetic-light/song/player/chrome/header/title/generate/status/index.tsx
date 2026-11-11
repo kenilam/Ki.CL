@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, FormDescription } from 'design/components';
+import { AnimatedText } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -30,11 +30,9 @@ const Status: React.FunctionComponent = () => {
   }
 
   return (
-    <FormDescription role='status'>
-      <AnimatedText is='span' key={key} split='word'>
-        {message}
-      </AnimatedText>
-    </FormDescription>
+    <AnimatedText is='span' key={key} split='word'>
+      {message}
+    </AnimatedText>
   );
 };
 
