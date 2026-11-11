@@ -2,19 +2,21 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
-import { Animation, HyperLink, Navigation } from 'design/components';
+import { Animation, Navigation } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
+
+// Partials
+import { Link } from './link';
 
 // Constants
 import { ROUTES } from '@/views/routes';
 
 const Menu: React.FunctionComponent = () => {
-  const translations = {
-    common: useTranslation(),
-    home: useTranslation('home'),
-  };
+  const { t } = useTranslation('home');
 
   return (
     <Animation
@@ -24,7 +26,7 @@ const Menu: React.FunctionComponent = () => {
       property='slide-from-bottom'
     >
       <Navigation
-        aria-label={translations.home.t('header.menu.label')}
+        aria-label={t('header.menu.label')}
         className={classNames(
           'kicl-padding-block-start-wide',
           'kicl-z-index-raised'
@@ -33,11 +35,9 @@ const Menu: React.FunctionComponent = () => {
         justifyContent='center'
         wrap
       >
-        {ROUTES.map(({ key, to }) => (
-          <HyperLink key={to} to={to}>
-            {translations.common.t(key)}
-          </HyperLink>
-        ))}
+        {ROUTES.map(({ to }) => {
+          return <Link key={to} to={to} />;
+        })}
       </Navigation>
     </Animation>
   );

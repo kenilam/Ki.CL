@@ -24,8 +24,12 @@
       "moonshot": [
         "./@mf-types/moonshot"
       ],
+      "moonshot/shared/*": [
+        "./@mf-types/moonshot/compiled-types/Shared/*"
+      ],
       "moonshot/*": [
-        "./@mf-types/moonshot/*"
+        "./@mf-types/moonshot/*",
+        "./@mf-types/moonshot/compiled-types/Client/src/*"
       ]
     },
     "types": [

@@ -1,10 +1,10 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Details, Heading, Markdown, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 /** Where the data comes from: a catalogue compiled into the page. */
 const Data: React.FunctionComponent = () => {

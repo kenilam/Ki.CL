@@ -1,17 +1,17 @@
 import React from 'react';
 
 // Libraries
-import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
 
 // Icons
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
 
 // Components
 import { Button, ListItem } from 'design/components';
 
 // Hooks
+import { useTranslation } from 'design/hooks';
 import { CLIP_SECONDS, useClip } from './use-clip';
-import classNames from 'classnames';
 
 /** Saves a short video of the picture with the track. */
 const Clip: React.FunctionComponent = () => {
@@ -35,9 +35,9 @@ const Clip: React.FunctionComponent = () => {
         onClick={clip.record}
         size='small'
         title={label}
-        variant='ghost'
+        variant='secondary'
       >
-        <Bs.BsDisc
+        <Tb.TbDisc
           aria-hidden
           className={classNames({
             'kicl-color-error': clip.recording,

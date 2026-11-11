@@ -18,11 +18,23 @@ const REPLAY_LEAD_SECONDS = 1.2;
 
 const PAUSE_EASE_SECONDS = 0.35;
 
+const VOICES = ['grand', 'upright', 'sixteen', 'wurlitzer', 'synth'] as const;
+
+const BEATS = [
+  'none',
+  'kit',
+  'lofi',
+  'percussion',
+  'linndrum',
+  'machine',
+] as const;
+
 const toPath = (id?: string): string =>
   id ? `/${EXPERIMENTS}/${PATH}/${id}` : `/${EXPERIMENTS}/${PATH}`;
 
 export {
   ACCEPT,
+  BEATS,
   CLASS_NAME,
   END_HOLD_SECONDS,
   MAX_FILE_BYTES,
@@ -31,5 +43,6 @@ export {
   PATH,
   PAUSE_EASE_SECONDS,
   REPLAY_LEAD_SECONDS,
+  VOICES,
   toPath,
 };

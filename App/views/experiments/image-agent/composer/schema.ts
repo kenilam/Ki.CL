@@ -1,5 +1,7 @@
-import type { TFunction } from 'i18next';
 import * as v from 'valibot';
+
+// Hooks
+import type { TFunction } from 'design/hooks';
 
 /** The same bound the API enforces, so the message arrives before the round trip. */
 const MAX_LENGTH = 150;

@@ -1,20 +1,22 @@
-import React, { useEffect, useId, useRef } from 'react';
+import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
-// Icons
-import * as Bs from 'react-icons/bs';
 
 // Components
-import { Animation, Button, Heading, Layout } from 'design/components';
+import { Animation, Heading, Layout } from 'design/components';
+
+// Partials
+import { Play } from './play';
 
 // Styles
 import './styles.scss';
 
+// Hooks
+import { useTranslation } from 'design/hooks';
+
 // Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
+import { useTransportContext } from '@/views/experiments/kinetic-light/song/player/context';
 
 // Constants
 import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
@@ -22,35 +24,12 @@ import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants'
 const CLASS_NAME = `${VIEW}__player__prompt`;
 
 const Prompt: React.FunctionComponent = () => {
-  const { arranger, transport } = usePlayerContext();
+  const { status } = useTransportContext();
   const { t } = useTranslation('kinetic-light');
-  const { play, status } = transport;
-  const button = useRef<HTMLButtonElement>(null);
   const label = useId();
-  const shown = status !== 'playing' && status !== 'paused';
-  const busy = status === 'loading' || arranger.arranging;
-  const ended = status === 'ended';
 
-  useEffect(() => {
-    if (!shown || busy) {
-      return;
-    }
-
-    button.current?.focus({ focusVisible: true, preventScroll: true });
-  }, [busy, shown]);
-
-  if (!shown) {
+  if (status === 'playing' || status === 'paused') {
     return null;
-  }
-
-  let icon = <Bs.BsPlayFill aria-hidden />;
-
-  if (ended) {
-    icon = <Bs.BsArrowRepeat aria-hidden />;
-  }
-
-  if (busy) {
-    icon = <Bs.BsArrowClockwise aria-hidden className='is-revolving' />;
   }
 
   return (
@@ -71,18 +50,9 @@ const Prompt: React.FunctionComponent = () => {
           )}
         >
           <Heading id={label} is='h2' lookLike='h3'>
-            {t('prompt', { context: ended ? 'replay' : 'start' })}
+            {t('prompt', { context: status === 'ended' ? 'replay' : 'start' })}
           </Heading>
-          <Button
-            aria-labelledby={label}
-            disabled={busy}
-            onClick={() => void play()}
-            ref={button}
-            size='large'
-            variant='secondary'
-          >
-            {icon}
-          </Button>
+          <Play aria-labelledby={label} />
         </div>
       </Animation>
     </Layout>

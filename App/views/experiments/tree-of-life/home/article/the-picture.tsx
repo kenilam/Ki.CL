@@ -1,10 +1,10 @@
 import React, { useId } from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Heading, Layout, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Partials
 import { Figure } from './figure';

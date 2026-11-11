@@ -1,97 +1,47 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
-// Icons
-import * as Bs from 'react-icons/bs';
 
 // Components
-import { HyperLink, Layout, List, ListItem } from 'design/components';
+import { Layout, Spinner } from 'design/components';
 
-// Context
-import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
-
-// Partials
-import { Clip } from './clip';
-import { CopyLink } from './copy-link';
-import { Progress } from './progress';
-import { Volume } from './volume';
+// Hooks
+import { useResponsive } from 'design/hooks';
 
 // Styles
 import './styles.scss';
 
 // Constants
-import {
-  CLASS_NAME as VIEW,
-  toPlayPath,
-  toTrackPath,
-} from '@/views/experiments/music-visualiser/constants';
+import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constants';
 
 const CLASS_NAME = `${VIEW}__chrome__controls`;
 
-/**
- * The playback position, then pause, skip, copy, clip and volume. Pause links
- * to the track's gate and skip to the next track's `/play`. On phones and
- * tablets the volume goes under the buttons.
- */
+const VERSIONS = {
+  true: React.lazy(async () => {
+    const { Narrowest } = await import('./narrowest');
+
+    return { default: Narrowest };
+  }),
+  false: React.lazy(async () => {
+    const { Default } = await import('./default');
+
+    return { default: Default };
+  }),
+};
+
 const Controls: React.FunctionComponent = () => {
-  const { control, next, track } = useTrackContext();
-  const translations = {
-    common: useTranslation(),
-    musicVisualiser: useTranslation('music-visualiser'),
-  };
+  const { isNarrowest } = useResponsive();
+
+  const Version = VERSIONS[String(isNarrowest)];
 
   return (
     // Fades as one while the listener is still.
     <Layout autoFlow='row' gap='narrow'>
       <div className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}>
-        <Progress />
-        <List
-          alignItems='center'
-          display='flex'
-          gap='narrow'
-          justifyContent='end'
-          wrap
-        >
-          <ListItem>
-            <HyperLink
-              aria-label={translations.common.t('action', { context: 'pause' })}
-              lookLikeButton
-              size='small'
-              to={toTrackPath(track)}
-              variant='secondary'
-            >
-              {control.loading ? (
-                <Bs.BsArrowClockwise aria-hidden className='is-revolving' />
-              ) : (
-                <Bs.BsPauseFill aria-hidden />
-              )}
-            </HyperLink>
-          </ListItem>
-          <ListItem>
-            <HyperLink
-              aria-label={translations.musicVisualiser.t('action', {
-                context: 'next',
-              })}
-              disabled={!next}
-              lookLikeButton
-              size='small'
-              to={toPlayPath(next ?? track)}
-              variant='ghost'
-            >
-              <Bs.BsSkipForwardFill aria-hidden />
-            </HyperLink>
-          </ListItem>
-          <ListItem>
-            <CopyLink />
-          </ListItem>
-          <Clip />
-          <ListItem>
-            <Volume />
-          </ListItem>
-        </List>
+        <Suspense fallback={<Spinner position='inline' />}>
+          <Version />
+        </Suspense>
       </div>
     </Layout>
   );

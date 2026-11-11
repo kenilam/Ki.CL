@@ -1,16 +1,13 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Icons
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
 
 // Components
 import {
+  ListItem,
   Select,
   SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from 'design/components';
@@ -18,44 +15,47 @@ import {
 // API
 import type { KineticLightBeat } from 'api/provider';
 
-// Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
-import type { Beat as Value } from '@/views/experiments/kinetic-light/song/player/use-transport';
+// Hooks
+import { useTranslation } from 'design/hooks';
 
-const BEATS: Value[] = [
-  'none',
-  'kit',
-  'lofi',
-  'percussion',
-  'linndrum',
-  'machine',
-];
+// Context
+import { useTransportContext } from '@/views/experiments/kinetic-light/song/player/context';
+
+// Hooks
+import { useSave } from '@/views/experiments/kinetic-light/song/player/use-save';
+
+// Partials
+import { Option } from './option';
+
+// Constants
+import { BEATS } from '@/views/experiments/kinetic-light/constants';
 
 const Beat: React.FunctionComponent = () => {
-  const { save, transport } = usePlayerContext();
+  const save = useSave();
+  const transport = useTransportContext();
   const { t } = useTranslation('kinetic-light');
 
   return (
-    <Select
-      aria-label={t('label', { context: 'beat' })}
-      inline
-      onValueChange={(value) =>
-        save('beat', value.toUpperCase() as KineticLightBeat)
-      }
-      value={transport.beat}
-    >
-      <SelectTrigger>
-        <Bs.BsSoundwave aria-hidden />
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {BEATS.map((beat) => (
-          <SelectItem key={beat} value={beat}>
-            {t('beat', { context: beat })}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <ListItem>
+      <Select
+        aria-label={t('label', { context: 'beat' })}
+        inline
+        onValueChange={(value) =>
+          save('beat', value.toUpperCase() as KineticLightBeat)
+        }
+        value={transport.beat}
+      >
+        <SelectTrigger>
+          <Tb.TbWaveSine aria-hidden />
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {BEATS.map((beat) => {
+            return <Option beat={beat} key={beat} />;
+          })}
+        </SelectContent>
+      </Select>
+    </ListItem>
   );
 };
 

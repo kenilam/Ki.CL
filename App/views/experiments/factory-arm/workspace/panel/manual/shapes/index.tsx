@@ -1,30 +1,16 @@
 import React, { useId } from 'react';
 
-// Libraries
-import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
 // Components
-import {
-  Button,
-  Heading,
-  Layout,
-  List,
-  ListItem,
-  Text,
-} from 'design/components';
+import { Heading, Layout, List, Text } from 'design/components';
 
-// Context
-import { useSetup } from '@/views/experiments/factory-arm/setup';
+// Hooks
+import { useTranslation } from 'design/hooks';
 
-// Obstacles
-import {
-  SHAPES,
-  SHAPE_TYPE,
-  type Shape,
-} from '@/views/experiments/factory-arm/engine/obstacles';
+// Partials
+import { Shape } from './shape';
 
-const NAMES = Object.keys(SHAPES) as Shape[];
+// Constants
+import { NAMES } from './constants';
 
 /**
  * The obstacle shapes. Drag one onto the stage to put it there, or click it
@@ -32,7 +18,6 @@ const NAMES = Object.keys(SHAPES) as Shape[];
  */
 const Shapes: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
-  const { cell } = useSetup();
   const id = useId();
 
   return (
@@ -47,35 +32,7 @@ const Shapes: React.FunctionComponent = () => {
 
         <List gap='narrower'>
           {NAMES.map((shape) => {
-            const [width, height, depth] = SHAPES[shape].size;
-
-            return (
-              <ListItem key={shape}>
-                <Button
-                  className='kicl-inline-size-full'
-                  draggable
-                  justifyContent='space-between'
-                  onClick={() => cell.current?.ask(shape)}
-                  onDragStart={(event) => {
-                    event.dataTransfer.setData(SHAPE_TYPE, shape);
-                    event.dataTransfer.effectAllowed = 'copy';
-                  }}
-                  size='small'
-                  variant='secondary'
-                >
-                  {t('shape', { context: shape })}
-                  <Text
-                    className={classNames(
-                      'kicl-font-family-mono',
-                      'kicl-color-grey'
-                    )}
-                    is='span'
-                  >
-                    {t('size', { depth, height, width })}
-                  </Text>
-                </Button>
-              </ListItem>
-            );
+            return <Shape key={shape} shape={shape} />;
           })}
         </List>
       </section>

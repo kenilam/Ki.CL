@@ -1,5 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+// Hooks
+import { useResponsive } from 'design/hooks';
+
+// Context
+import { useOrbContext } from './context';
+
 // Partials
 import { TALL_DROP } from './layout';
 import { toPlaceAt } from './pick';
@@ -11,7 +17,6 @@ import {
   toSubsolar,
   toVector,
   toView,
-  type Coordinates,
 } from '@/views/experiments/daylight/sun';
 
 // Assets
@@ -44,24 +49,8 @@ const COLUMN = '--kicl-columns-12';
 const MAX_LATITUDE = 70;
 
 type Props = {
-  /** Index into `places` of the one picked, or -1. */
-  active: number;
   canvas: HTMLCanvasElement | null;
-  /** Where the globe is asked to face. A new object turns it there. */
-  centre: Coordinates;
-  date: Date;
-  /** On a tall page, how far below the middle the drawing sits. The page's own by default. */
-  drop?: number;
   height: number;
-  /** The light theme is on. */
-  light: boolean;
-  /** Told where the globe faces, each time it is drawn. */
-  onFace?(facing: Coordinates): void;
-  /** Told which place was clicked, by its index. */
-  onPick?(place: number): void;
-  /** Told where the globe was left facing when a drag ends. Answers with where it should settle. */
-  onDrop?(facing: Coordinates): Coordinates | void;
-  places: readonly Coordinates[];
   width: number;
 };
 
@@ -75,19 +64,21 @@ type Handlers = Pick<
  * when that changes, and by hand while the pointer drags it.
  */
 export function useOrb({
-  active,
   canvas,
-  centre,
-  date,
-  drop = TALL_DROP,
   height,
-  light,
-  onDrop,
-  onFace,
-  onPick,
-  places,
   width,
 }: Props): { handlers: Handlers; over: boolean } {
+  const {
+    active,
+    centre,
+    date,
+    drop = TALL_DROP,
+    onDrop,
+    onFace,
+    onPick,
+    places,
+  } = useOrbContext();
+  const light = useResponsive().theme === 'light';
   const facing = useRef(centre);
   const target = useRef(centre);
   const drag = useRef<{

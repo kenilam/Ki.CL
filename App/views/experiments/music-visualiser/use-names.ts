@@ -1,6 +1,7 @@
-import { useTranslation } from 'react-i18next';
-
 import type { Track } from './catalog';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 /** A slug or a file name as a key: `late-night` is `late_night`. */
 const toKey = (text: string) => text.replace(/[^a-z0-9]+/g, '_');

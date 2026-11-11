@@ -2,7 +2,6 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import {
@@ -16,6 +15,9 @@ import {
 
 // Spec
 import * as Spec from './spec';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Styles
 import './styles.scss';

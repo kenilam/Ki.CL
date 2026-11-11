@@ -15,7 +15,7 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME } from './constants';
 
-// Stacks below `desktop` through a media query in `styles.scss`.
+// Stacks at the `normal` breakpoint and below, through `styles.scss`.
 const Banner: React.FunctionComponent = () => (
   <Layout
     alignContent='center'

@@ -1,10 +1,10 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Details, Heading, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 const WhatThisIs: React.FunctionComponent = () => {
   const translations = {

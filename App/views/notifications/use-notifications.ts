@@ -15,7 +15,7 @@ import { useLocation } from 'design/router';
 
 // Constants
 import { RECORD_PATHS } from '@/views/routes';
-import { LOOKS } from './constants';
+import { lookOf } from './constants';
 
 function useNotifications() {
   const { pathname } = useLocation();
@@ -29,11 +29,9 @@ function useNotifications() {
   const notifications = (data?.notifications ?? [])
     .filter(({ dismissedAt }) => !dismissedAt)
     .map((notification) => {
-      const { key, values } = notification.message;
-
       return {
         ...notification,
-        look: LOOKS[`${key}_${values.context}`] ?? LOOKS[key] ?? {},
+        look: lookOf(notification.message),
         to: RECORD_PATHS[notification.collection]?.(notification.documentId),
       };
     });

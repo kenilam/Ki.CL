@@ -1,17 +1,14 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
-// Icons
-import * as Bs from 'react-icons/bs';
 
 // Components
-import { Heading, HyperLink, Layout, Text } from 'design/components';
+import { Layout } from 'design/components';
 
 // Partials
 import { Availability } from './article/availability';
+import { Header } from './article/header';
 import { How } from './article/how';
 import { Implementation } from './article/implementation';
 import { Limits } from './article/limits';
@@ -24,20 +21,13 @@ import { Why } from './article/why';
 import { Wrong } from './article/wrong';
 
 // Constants
-import { CLASS_NAME } from './constants';
+import { CLASS_NAME, TITLE_ID } from './constants';
 
 const Contents: React.FunctionComponent = () => {
-  const translations = {
-    common: useTranslation(),
-    internationalisation: useTranslation('internationalisation'),
-    workshop: useTranslation('workshop'),
-  };
-  const id = useId();
-
   return (
     <Layout gap='wider'>
       <article
-        aria-labelledby={id}
+        aria-labelledby={TITLE_ID}
         className={classNames(
           CLASS_NAME,
           'kicl-inline-size-full',
@@ -45,36 +35,7 @@ const Contents: React.FunctionComponent = () => {
           'kicl-padding-inline-frame-columns-12'
         )}
       >
-        <Layout gap='normal'>
-          <header>
-            <hgroup>
-              <Heading className='kicl-font-size-huge' id={id}>
-                {translations.common.t('internationalisation')}
-              </Heading>
-              <Text lookLike='h2'>
-                {translations.internationalisation.t('full_name')}
-              </Text>
-            </hgroup>
-            <Text>
-              <HyperLink
-                before={<Bs.BsGithub aria-hidden />}
-                lookLikeButton
-                to={translations.common.t('url_api')}
-                variant='secondary'
-              >
-                {translations.common.t('github')}
-              </HyperLink>
-            </Text>
-            <Text className='kicl-max-inline-size-columns-8' lookLike='h3'>
-              {translations.workshop.t('description', {
-                context: 'internationalisation',
-              })}
-            </Text>
-            <Text className='kicl-max-inline-size-columns-8'>
-              {translations.internationalisation.t('article.intro')}
-            </Text>
-          </header>
-        </Layout>
+        <Header />
         <Switcher />
         <Why />
         <How />
