@@ -1,73 +1,15 @@
-import React, { useCallback, useRef } from 'react';
-
-// Libraries
-import classNames from 'classnames';
-
-// Routes
-import { Navigate, Outlet, useMatch, useParams } from 'design/router';
-
-// Components
-import { Frame, Layout } from 'design/components';
-
-// Catalog
-import { keyOf } from '@/views/experiments/music-visualiser/catalog';
-
-// Hooks
-import { useAudio } from './use-audio';
-
-// Context
-import { TrackProvider } from './context';
+import React from 'react';
 
 // Partials
-import { Chrome } from './chrome';
-import { Gate } from './gate';
-import { Visualiser } from '@/views/experiments/music-visualiser/visualiser';
+import { Article } from './article';
+import { Provider } from './context';
 
-// Constants
-import {
-  CLASS_NAME as VIEW,
-  PARAMS,
-  PLAY_ROUTE,
-  toPath,
-} from '@/views/experiments/music-visualiser/constants';
-
-/**
- * `/:track` - the picture, and over it the gate or, on `/play`, the player.
- * An id the catalogue does not have goes back to its type, which draws one.
- */
+/** `/:track` - the track the URL names, its audio and its picture. */
 const Contents: React.FunctionComponent = () => {
-  const { analyser, control, next, track } = useAudio();
-  const isPlay = Boolean(useMatch(PLAY_ROUTE));
-  const { [PARAMS.group]: group, [PARAMS.type]: type } = useParams();
-  const stage = useRef<HTMLCanvasElement | null>(null);
-  const setStage = useCallback((canvas: HTMLCanvasElement | null) => {
-    stage.current = canvas;
-  }, []);
-
-  if (!track) {
-    return <Navigate to={toPath({ group, type })} replace />;
-  }
-
   return (
-    <TrackProvider control={control} next={next} stage={stage} track={track}>
-      <Layout autoFlow='row' gap='none'>
-        {/* The frame clips the picture and the player to the window. */}
-        <Frame>
-          <article
-            className={classNames(`${VIEW}__track`, 'kicl-position-relative')}
-          >
-            <Visualiser
-              analyser={analyser}
-              onCanvas={setStage}
-              playing={control.playing}
-              track={keyOf(track)}
-            />
-            {isPlay ? <Chrome /> : <Gate />}
-            <Outlet />
-          </article>
-        </Frame>
-      </Layout>
-    </TrackProvider>
+    <Provider>
+      <Article />
+    </Provider>
   );
 };
 

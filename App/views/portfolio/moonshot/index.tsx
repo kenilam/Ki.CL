@@ -32,7 +32,7 @@ const Lazy: React.FunctionComponent = () => {
 
 /** The moonshot exercise, from its remote, behind the portfolio sign-in. */
 const Moonshot = (
-  <Route path={PATH} element={<Gate path={PATH} />}>
+  <Route path={PATH} element={<Gate />}>
     {/* A splat doesn't match the bare path, so the index is listed too. */}
     <Route index element={<Lazy />} />
     <Route path='*' element={<Lazy />} />

@@ -1,13 +1,13 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Icons
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
 
 // Components
 import { HyperLink } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Constants
 import { ARTICLE_ID } from '@/views/experiments/kinetic-light/home/constants';
@@ -26,7 +26,7 @@ const More: React.FunctionComponent = () => {
       to={`#${ARTICLE_ID}`}
       variant='secondary'
     >
-      <Bs.BsChevronDown aria-hidden />
+      <Tb.TbChevronDown aria-hidden />
     </HyperLink>
   );
 };

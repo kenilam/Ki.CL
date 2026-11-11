@@ -1,36 +1,20 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
-// Components
-import { BackLink, Button, Frame } from 'design/components';
-
-// Icons
-import * as Bs from 'react-icons/bs';
-
 // Context
-import { FactoryArmProvider } from '@/views/experiments/factory-arm/context';
-import { useSetup } from '@/views/experiments/factory-arm/setup';
+import { useRunContext } from '@/views/experiments/factory-arm/run-context';
+import { Provider as ArmProvider } from './arm-context';
+import { Provider as CasesProvider } from './cases-context';
+import { Provider as KnowledgeProvider } from './knowledge-context';
+import { Provider as NoticesProvider } from './notices-context';
+import { Provider as ObstaclesProvider } from './obstacles-context';
+import { Provider as SelectionProvider } from './selection-context';
 
 // Partials
-import { Alert } from './alert';
-import { Notice } from './notice';
-import { Remove } from './remove';
+import { Attach } from './attach';
+import { Back } from './back';
+import { Open } from './open';
 import { Panel } from './panel';
-import { Scene } from './scene';
-
-// Styles
-import './styles.scss';
-
-// Constants
-import { toPath as toExperimentsPath } from '@/views/experiments/constants';
-import {
-  CLASS_NAME,
-  PANEL,
-  PATH,
-} from '@/views/experiments/factory-arm/constants';
+import { Stage } from './stage';
 
 /**
  * The stage, and the setup panel over its right side. Only the stage and
@@ -39,64 +23,27 @@ import {
  * behind the settings button.
  */
 const Workspace: React.FunctionComponent = () => {
-  const translations = {
-    common: useTranslation(),
-    factoryArm: useTranslation('factory-arm'),
-  };
-  const { applied, run } = useSetup();
+  const { run } = useRunContext();
 
   return (
     <>
-      <FactoryArmProvider key={run} setup={applied}>
-        <Frame>
-          {/* The frame's own element: the canvas sizes itself to fill it, and the overlays sit over the canvas in its coordinates. */}
-          <figure
-            className={classNames(
-              CLASS_NAME,
-              // Dragging turns the view and pinching zooms it, so the page must not.
-              'kicl-overscroll-behavior-none',
-              'kicl-position-relative',
-              'kicl-touch-action-none',
-              'kicl-user-select-none'
-            )}
-          >
-            <Scene />
-            <Notice />
-            <Remove />
-          </figure>
-        </Frame>
+      <ArmProvider key={run}>
+        <CasesProvider>
+          <KnowledgeProvider>
+            <ObstaclesProvider>
+              <SelectionProvider>
+                <NoticesProvider>
+                  <Attach />
+                  <Stage />
+                </NoticesProvider>
+              </SelectionProvider>
+            </ObstaclesProvider>
+          </KnowledgeProvider>
+        </CasesProvider>
+      </ArmProvider>
 
-        <Alert />
-      </FactoryArmProvider>
-
-      <BackLink
-        className={classNames(
-          'kicl-position-fixed',
-          'kicl-inset-block-start',
-          'kicl-inset-inline-start',
-          'kicl-z-index-floating'
-        )}
-        label={translations.common.t('experiments')}
-        to={toExperimentsPath(PATH)}
-      />
-
-      <Button
-        className={classNames(
-          `${CLASS_NAME}__open`,
-          'kicl-position-fixed',
-          'kicl-inset-block-start',
-          'kicl-inset-inline-end',
-          'kicl-z-index-floating'
-        )}
-        aria-label={translations.factoryArm.t('action', {
-          context: 'open_setup',
-        })}
-        popoverTarget={PANEL}
-        variant='secondary'
-      >
-        <Bs.BsGear aria-hidden />
-      </Button>
-
+      <Back />
+      <Open />
       <Panel />
     </>
   );

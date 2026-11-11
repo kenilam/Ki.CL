@@ -2,10 +2,12 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { HyperLink } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Constants
 import { MAIN_ID } from '@/views/constants';

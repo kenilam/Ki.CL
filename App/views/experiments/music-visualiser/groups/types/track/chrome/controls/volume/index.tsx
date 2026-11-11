@@ -1,43 +1,23 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
 // Components
-import { Input } from 'design/components';
+import { ListItem, VolumeButton } from 'design/components';
 
 // Context
 import { useTrackContext } from '@/views/experiments/music-visualiser/groups/types/track/context';
 
-// Styles
-import './styles.scss';
-
-// Constants
-import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constants';
-
-const CLASS_NAME = `${VIEW}__chrome__volume`;
-
-/** The volume slider, remembered between visits. */
 const Volume: React.FunctionComponent = () => {
   const { control } = useTrackContext();
-  const { t } = useTranslation('music-visualiser');
 
   return (
-    <Input
-      aria-label={t('label', { context: 'volume' })}
-      className={classNames(
-        CLASS_NAME,
-        'kicl-inline-size-md',
-        'kicl-padding-none'
-      )}
-      max={1}
-      min={0}
-      onChange={(event) => control.setValue(Number(event.target.value))}
-      step={0.01}
-      type='range'
-      value={control.value}
-    />
+    <ListItem>
+      <VolumeButton
+        onChange={(event) => control.setValue(Number(event.target.value))}
+        size='small'
+        value={control.value}
+        variant='secondary'
+      />
+    </ListItem>
   );
 };
 

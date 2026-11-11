@@ -2,10 +2,12 @@ import React from 'react';
 
 // Library
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { BackLink, Heading, HyperLink, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Styles
 import './styles.scss';

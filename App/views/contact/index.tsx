@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
 
 const Dialog = React.lazy(async () => {
-  const { Contact } = await import('./contact');
+  const { Dialog } = await import('./dialog');
 
-  return { default: Contact };
+  return { default: Dialog };
 });
 
 /** The contact dialog, in its own chunk: most visits never open it. */

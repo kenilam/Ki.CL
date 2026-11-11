@@ -11,19 +11,17 @@ import { CLASS_NAME as VIEW } from '@/views/experiments/image-agent/constants';
 
 const CLASS_NAME = `${VIEW}__backdrop`;
 
-type Props = {
-  /** Darken and mute the picture so text on it stays readable. */
-  scrim?: boolean;
-};
-
-/** The preview picture. Fills the nearest positioned parent. */
-const Backdrop: React.FunctionComponent<Props> = ({ scrim }) => {
+/**
+ * The preview picture, darkened and muted so text on it stays readable. Fills
+ * the nearest positioned parent.
+ */
+const Backdrop: React.FunctionComponent = () => {
   return (
     <span
       aria-hidden
       className={classNames(
         CLASS_NAME,
-        { 'kicl-scrim': scrim },
+        'kicl-scrim',
         'kicl-inset-0',
         'kicl-pointer-events-none',
         'kicl-position-absolute'

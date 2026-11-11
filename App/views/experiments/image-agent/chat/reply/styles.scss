@@ -1,0 +1,8 @@
+/*
+ * Stuck to the bottom of the window over the page background, so the
+ * messages scroll behind it and the last one is never hidden under it.
+ * No utility sets the page background colour.
+ */
+.kicl--views--experiments--image-agent__chat__reply {
+  background-color: var(--kicl-body-background-color);
+}

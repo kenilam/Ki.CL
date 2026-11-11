@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
 
 // Components
 import { BackLink, Heading, HyperLink, Layout, Text } from 'design/components';
@@ -13,6 +12,9 @@ import { BackLink, Heading, HyperLink, Layout, Text } from 'design/components';
 // Catalog
 import { TOTAL, draw } from '@/views/experiments/music-visualiser/catalog';
 import { SCENES } from '@/views/experiments/music-visualiser/spec';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Constants
 import { toPath as toExperimentsPath } from '@/views/experiments/constants';
@@ -59,7 +61,7 @@ const Words: React.FunctionComponent = () => {
           })}
         </Text>
         <HyperLink
-          after={<Bs.BsPlayFill aria-hidden />}
+          after={<Tb.TbPlayerPlayFilled aria-hidden />}
           className='kicl-margin-block-start-wide'
           lookLikeButton
           size='small'

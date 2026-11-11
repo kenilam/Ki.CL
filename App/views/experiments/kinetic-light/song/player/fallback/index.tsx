@@ -2,7 +2,6 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, HyperLink, Text } from 'design/components';
@@ -10,8 +9,11 @@ import { Heading, HyperLink, Text } from 'design/components';
 // Status
 import { Status404 } from 'design/status';
 
+// Hooks
+import { useTranslation } from 'design/hooks';
+
 // Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
+import { useSongContext } from '@/views/experiments/kinetic-light/song/context';
 
 // Constants
 import {
@@ -22,7 +24,7 @@ import {
 const CLASS_NAME = `${VIEW}__player__fallback`;
 
 const Fallback: React.FunctionComponent = () => {
-  const { song } = usePlayerContext();
+  const { song } = useSongContext();
   const translations = {
     common: useTranslation(),
     kineticLight: useTranslation('kinetic-light'),

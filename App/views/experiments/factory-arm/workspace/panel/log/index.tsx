@@ -1,33 +1,18 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
-import {
-  Animation,
-  Button,
-  Details,
-  SheetFooter,
-  Text,
-} from 'design/components';
+import { Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Context
-import { type Entry, useSetup } from '@/views/experiments/factory-arm/setup';
+import { useLogContext } from '@/views/experiments/factory-arm/log-context';
 
 // Partials
-import { Steps, time } from './steps';
-
-/** The log split by run, newest run first. */
-const runs = (log: Entry[]) => {
-  const groups = new Map<number, Entry[]>();
-
-  log.forEach((entry) => {
-    groups.set(entry.run, [...(groups.get(entry.run) ?? []), entry]);
-  });
-
-  return [...groups.values()];
-};
+import { Clear } from './clear';
+import { Run } from './run';
+import { Steps } from './steps';
 
 /**
  * Every step the cell took, newest first: where each case went from and to,
@@ -36,72 +21,28 @@ const runs = (log: Entry[]) => {
  * how it started, to open when wanted.
  */
 const Log: React.FunctionComponent = () => {
-  const translations = {
-    common: useTranslation(),
-    factoryArm: useTranslation('factory-arm'),
-  };
-  const { clearLog, log } = useSetup();
-  const [latest, ...earlier] = runs(log);
+  const { t } = useTranslation('factory-arm');
+  const { log } = useLogContext();
+  // The runs, newest first.
+  const [latest, ...earlier] = [...new Set(log.map(({ run }) => run))];
 
   return (
     <>
-      {latest ? (
+      {latest === undefined ? (
+        <Text className='kicl-color-grey' is='p'>
+          {t('status', { context: 'empty' })}
+        </Text>
+      ) : (
         <>
-          <Steps entries={latest} />
+          <Steps run={latest} />
 
-          {earlier.map((entries) => {
-            // Oldest last: the step that started that run. A run the page opened with wasn't started by a step.
-            const first = entries[entries.length - 1];
-            const name = first.start
-              ? translations.factoryArm.t('step', {
-                  ...first.note.values,
-                  context: first.note.context,
-                })
-              : translations.factoryArm.t('run', { context: 'opened' });
-
-            return (
-              <Details
-                key={first.id}
-                summary={
-                  <Text dense is='span'>
-                    {translations.factoryArm.t('run', {
-                      context: 'summary',
-                      count: entries.length,
-                      name,
-                      time: time(
-                        first.at,
-                        translations.factoryArm.i18n.language
-                      ),
-                    })}
-                  </Text>
-                }
-              >
-                <Steps entries={entries} />
-              </Details>
-            );
+          {earlier.map((run) => {
+            return <Run id={run} key={run} />;
           })}
         </>
-      ) : (
-        <Text className='kicl-color-grey' is='p'>
-          {translations.factoryArm.t('status', { context: 'empty' })}
-        </Text>
       )}
 
-      {log.length > 0 && (
-        <Animation property='slide-from-bottom'>
-          <SheetFooter>
-            <Button
-              className='kicl-inline-size-full'
-              justifyContent='center'
-              onClick={clearLog}
-              size='small'
-              variant='secondary'
-            >
-              {translations.common.t('action', { context: 'clear' })}
-            </Button>
-          </SheetFooter>
-        </Animation>
-      )}
+      <Clear />
     </>
   );
 };

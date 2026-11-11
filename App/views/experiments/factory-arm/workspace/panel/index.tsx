@@ -1,15 +1,16 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Sheet } from 'design/components';
 
+// Hooks
+import { useTranslation } from 'design/hooks';
+
 // Context
-import { useSetup } from '@/views/experiments/factory-arm/setup';
+import { usePanelContext } from '@/views/experiments/factory-arm/panel-context';
 
 // Partials
+import { Confirm } from './confirm';
 import { Log } from './log';
 import { Manual } from './manual';
 import { Presets } from './presets';
@@ -25,7 +26,7 @@ import { CLASS_NAME, PANEL } from '@/views/experiments/factory-arm/constants';
  */
 const Panel: React.FunctionComponent = () => {
   const { t } = useTranslation('factory-arm');
-  const { open, setOpen, tab } = useSetup();
+  const { open, setOpen, tab } = usePanelContext();
 
   return (
     <Sheet
@@ -36,9 +37,11 @@ const Panel: React.FunctionComponent = () => {
       id={PANEL}
       onOpenChange={setOpen}
     >
-      {tab === 'preset' && <Presets />}
-      {tab === 'manual' && <Manual />}
-      {tab === 'log' && <Log />}
+      {tab === 'preset' ? <Presets /> : null}
+      {tab === 'manual' ? <Manual /> : null}
+      {tab === 'log' ? <Log /> : null}
+
+      <Confirm />
     </Sheet>
   );
 };

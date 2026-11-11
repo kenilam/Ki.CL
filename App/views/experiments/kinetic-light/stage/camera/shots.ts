@@ -18,6 +18,7 @@ const PAGE_WIDTH = 9;
 const PAGE_MARGIN = 1.4;
 const PAGE_TILT = 0.35;
 const DEPTH_FITS = 1.2;
+const WIDE = 16 / 9;
 
 const shotAt = (
   time: number,
@@ -35,14 +36,17 @@ const shotAt = (
 };
 
 const toRig = (shot: Shot, { aspect, depth, distance, fov }: Frame): Rig => {
+  const narrow = Math.min(1, aspect / WIDE);
+  const near = distance * Math.sqrt(narrow);
   const spread = Math.tan((fov * Math.PI) / 360);
-  const scale = distance * Math.max(1, depth / DEPTH_FITS);
+  const scale = near * Math.max(1, depth / DEPTH_FITS);
   const front = depth / 2;
+  const ahead = scale * narrow;
 
   if (shot === 'page') {
     const height = Math.max(
       (depth * PAGE_MARGIN) / (2 * spread),
-      (PAGE_WIDTH * distance) / (2 * spread * aspect)
+      (PAGE_WIDTH * near) / (2 * spread * Math.max(aspect, WIDE))
     );
 
     return {
@@ -54,20 +58,20 @@ const toRig = (shot: Shot, { aspect, depth, distance, fov }: Frame): Rig => {
   if (shot === 'sweep') {
     return {
       position: [-2.5 * scale, 1.8 * scale, front + 2.6 * scale],
-      target: [1.5 * scale, 0, 0],
+      target: [1.5 * ahead, 0, 0],
     };
   }
 
   if (shot === 'floor') {
     return {
       position: [-1.6 * scale, 0.28 * scale, front + 1.4 * scale],
-      target: [1.8 * scale, 0.45 * scale, -0.2 * scale],
+      target: [1.8 * ahead, 0.45 * scale, -0.2 * scale],
     };
   }
 
   return {
     position: [-3.2 * scale, 0.5 * scale, front * 0.3],
-    target: [4 * scale, 0.15 * scale, 0],
+    target: [4 * ahead, 0.15 * scale, 0],
   };
 };
 

@@ -1,8 +1,5 @@
 import { useCallback, useState } from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // API
 import {
   Kicl_KineticLightReadDocument,
@@ -18,6 +15,7 @@ import {
 import { isChallenge, useChallenged } from '@/session';
 
 // Hooks
+import { useTranslation } from 'design/hooks';
 import { useArrange } from '@/views/experiments/kinetic-light/use-arrange';
 
 // Readers

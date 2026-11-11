@@ -1,53 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
 
 // Hooks
-import { useResizeObserver } from 'design/hooks';
-import { useStage } from './use-stage';
+import { usePicture } from './use-picture';
+
+// Context
+import { Provider } from './context';
 
 // Styles
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME as VIEW } from '@/views/experiments/music-visualiser/constants';
-
-const CLASS_NAME = `${VIEW}__stage`;
-
-type Props = {
-  analyser: AnalyserNode | null;
-  /** Told the canvas, for whoever records it. */
-  onCanvas?(canvas: HTMLCanvasElement | null): void;
-  playing: boolean;
-  /** Changes when the track does. */
-  track: string | null;
-};
+import { CLASS_NAME } from './constants';
 
 /** The picture: a canvas the size of the view, drawn by the scene shader. */
-const Visualiser: React.FunctionComponent<Props> = ({
-  analyser,
-  onCanvas,
-  playing,
-  track,
-}) => {
-  const { node, rect } = useResizeObserver<HTMLCanvasElement>();
-
-  useEffect(() => {
-    onCanvas?.(node.current);
-
-    return () => onCanvas?.(null);
-  }, [node, onCanvas]);
-
-  useStage({
-    analyser,
-    canvas: node.current,
-    height: rect?.height ?? 0,
-    playing,
-    property: `--${CLASS_NAME}`,
-    track,
-    width: rect?.width ?? 0,
-  });
+const Visualiser: React.FunctionComponent = () => {
+  const node = usePicture();
 
   return (
     <canvas
@@ -65,4 +35,4 @@ const Visualiser: React.FunctionComponent<Props> = ({
   );
 };
 
-export { Visualiser };
+export { Provider, Visualiser };

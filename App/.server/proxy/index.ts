@@ -7,7 +7,7 @@ import {
 } from 'http-proxy-middleware';
 import { GoogleAuth } from 'google-auth-library';
 
-import { checkClientToken } from '../client-token';
+import { checkClientToken } from '@/.server/client-token';
 
 /**
  * Reverse proxy to the API and the design system, neither of which is reachable

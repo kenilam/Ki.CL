@@ -1,14 +1,15 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
-import { HyperLink, Navigation } from 'design/components';
+import { Navigation } from 'design/components';
 
 // Views
 import { Default as Account } from './account';
+import { Link } from './link';
 import { useAccount } from '@/views/account/use-account';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Constants
 import { ROUTES } from '@/views/routes';
@@ -27,11 +28,9 @@ const Default: React.FunctionComponent = () => {
       autoFlow='column'
       className={CLASS_NAME}
     >
-      {ROUTES.map(({ key, to }) => (
-        <HyperLink key={to} to={to}>
-          {t(key)}
-        </HyperLink>
-      ))}
+      {ROUTES.map(({ to }) => {
+        return <Link key={to} to={to} />;
+      })}
       {me ? <Account key='account' /> : null}
     </Navigation>
   );

@@ -2,13 +2,15 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Icons
 import * as Icons from 'design/icons';
 
 // Components
 import { AnimatedText, Heading, HyperLink, Layout } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 const Contents: React.FunctionComponent = () => {
   const { t } = useTranslation('home');

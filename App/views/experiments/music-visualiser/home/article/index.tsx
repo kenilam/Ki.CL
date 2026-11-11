@@ -2,10 +2,12 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Partials
 import { Address } from './address';

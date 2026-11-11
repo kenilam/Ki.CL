@@ -23,10 +23,10 @@
     )
   );
 
-  // Below desktop it matches the experiments list: the picture centred with no
+  // At `normal` and below it matches the experiments list: the picture centred with no
   // wash, the words at the bottom. The view layer sits above `Layout`, so this
   // overrides its alignment.
-  @container style(--kicl-viewport-up-to-desktop: true) {
+  @container style(--kicl-viewport-up-to-normal: true) {
     align-content: end;
     align-items: start;
     background-position: center;
@@ -47,7 +47,7 @@
     position: absolute;
     z-index: var(--kicl-z-index-behind);
 
-    @container style(--kicl-viewport-up-to-desktop: true) {
+    @container style(--kicl-viewport-up-to-normal: true) {
       content: none;
     }
   }

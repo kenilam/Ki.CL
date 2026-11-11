@@ -2,10 +2,12 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, ScrollIndicator } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Partials
 import { More } from './more';
@@ -22,7 +24,7 @@ import { CLASS_NAME } from './constants';
  * closing section in normal flow.
  */
 const Home: React.FunctionComponent = () => {
-  const { t: common } = useTranslation();
+  const { t } = useTranslation();
   const titleId = useId();
 
   return (
@@ -32,7 +34,7 @@ const Home: React.FunctionComponent = () => {
         className={classNames(CLASS_NAME, 'kicl-inline-size-full')}
       >
         <Heading className='kicl-hidden' id={titleId}>
-          {common('experiments')}
+          {t('experiments')}
         </Heading>
         <ScrollIndicator />
         <Stage />

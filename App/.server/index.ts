@@ -9,10 +9,10 @@ import compression from 'compression';
 
 import colors from 'colors';
 
-import { Env } from '../env';
+import { Env } from '@/env';
 
 import { applyClientToken } from './client-token';
-import { applyCollect } from '../middleware/collect';
+import { applyCollect } from '@/middleware/collect';
 import { createGate } from './gate';
 import { applyHeaders } from './headers';
 import { createNavigation } from './navigation';
@@ -24,7 +24,7 @@ import {
   currentIdToken,
   warmIdToken,
 } from './proxy';
-import { createTexts, escapeJson } from '../middleware/texts';
+import { createTexts, escapeJson } from '@/middleware/texts';
 
 dotenv.config({ path: `${appRoot.path}/.env` });
 

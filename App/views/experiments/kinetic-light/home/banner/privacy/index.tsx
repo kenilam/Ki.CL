@@ -1,36 +1,20 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
-// Icons
-import * as Bs from 'react-icons/bs';
-
 // Components
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Text,
-} from 'design/components';
+import { Popover, PopoverContent, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
+
+// Partials
+import { Trigger } from './trigger';
 
 const Privacy: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');
-  const label = t('title', { context: 'privacy' });
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          aria-label={label}
-          className='kicl-backdrop-blur'
-          title={label}
-          unstyled
-        >
-          <Bs.BsInfoCircle aria-hidden />
-        </Button>
-      </PopoverTrigger>
+      <Trigger />
       <PopoverContent
         className='kicl-max-inline-size-columns-4'
         offset='normal'

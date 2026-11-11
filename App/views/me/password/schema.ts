@@ -1,6 +1,7 @@
 import * as v from 'valibot';
 
-import type { TFunction } from 'i18next';
+// Hooks
+import type { TFunction } from 'design/hooks';
 
 const MIN_PASSWORD = 8;
 const MAX_PASSWORD = 128;

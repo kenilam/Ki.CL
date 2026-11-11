@@ -1,5 +1,7 @@
-import type { IconType } from 'react-icons';
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
+
+// Icons
+import type { IconType } from 'design/icons';
 
 // Components
 import type { ButtonProps } from 'design/components';
@@ -98,17 +100,15 @@ const TOPICS: readonly Topic[] = [
   {
     context: 'design_system',
     // The design system's own sections: components, tokens and patterns.
-    icons: [Bs.BsBoundingBoxCircles, Bs.BsPalette, Bs.BsPuzzle],
+    icons: [Tb.TbVector, Tb.TbPalette, Tb.TbPuzzle],
     to: `/${WORKSHOP_PATH}/${DESIGN_SYSTEM}`,
   },
   {
     context: 'internationalisation',
-    icons: [Bs.BsTranslate, Bs.BsGlobe, Bs.BsChatDots],
+    icons: [Tb.TbLanguage, Tb.TbWorld, Tb.TbMessageDots],
     to: `/${WORKSHOP_PATH}/${I18N}`,
   },
 ];
-
-/** Cards that stand for topics still to be written, after the real ones. */
 
 const RECORD_PATHS: Record<string, (documentId: string) => string> = {
   image_agent_threads: toImageAgentPath,

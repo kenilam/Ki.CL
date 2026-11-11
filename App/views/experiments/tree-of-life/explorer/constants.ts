@@ -42,10 +42,7 @@ export const TRUNK_SIZE = 3.6;
 export const WIDTH_TO_SIZE = 0.161;
 export const TRUNK_WIDTH = TRUNK_SIZE * WIDTH_TO_SIZE;
 
-/**
- * Mirrors the taper `Taxon` applies to its own descendants, so a step along
- * the lineage thins at the same rate as a step out into a fan.
- */
+/** Each generation's branch is thinner, and its body smaller, than its parent's. */
 export const WIDTH_TAPER = 0.72;
 export const SIZE_TAPER = 0.78;
 

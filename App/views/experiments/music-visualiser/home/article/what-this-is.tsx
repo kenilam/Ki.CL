@@ -1,10 +1,10 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Details, Heading, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 /** What this is: the opening section, open on arrival. */
 const WhatThisIs: React.FunctionComponent = () => {

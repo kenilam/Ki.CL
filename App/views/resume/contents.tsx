@@ -1,152 +1,15 @@
-import React, { useMemo } from 'react';
-
-// Libraries
-import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-
-// Routes
-import { useParams } from 'design/router';
-
-// Status
-import { Status404 } from 'design/status';
-
-// Components
-import {
-  Animation,
-  Card,
-  Frame,
-  Layout,
-  ScrollIndicator,
-} from 'design/components';
-
-// Widgets
-import { Background } from 'design/widgets';
-
-// Views
-import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
-
-// Content
-import {
-  MASTER,
-  findVersion,
-  fingerprint,
-  resolve,
-  type SectionId,
-} from './content';
-
-// Context
-import { VersionProvider } from './context';
-
-// Hooks
-import { usePrintTitle } from './use-print-title';
+import React from 'react';
 
 // Partials
-import { Education } from './education';
-import { Experience } from './experience';
-import { Header } from './header';
-import { Languages } from './languages';
-import { Mentoring } from './mentoring';
-import { Projects } from './projects';
-import { Skills } from './skills';
-import { Summary } from './summary';
+import { Page } from './page';
+import { Provider } from './context';
 
-// Styles
-import './styles.scss';
-
-// Constants
-import { CLASS_NAME } from './constants';
-
-const SECTIONS: Record<SectionId, React.FunctionComponent> = {
-  education: Education,
-  experience: Experience,
-  languages: Languages,
-  mentoring: Mentoring,
-  projects: Projects,
-  skills: Skills,
-  summary: Summary,
-};
-
-/**
- * One version of the resume, as a page and as the document it prints to: a
- * card in the home page's frame, over its light. The card is the article
- * itself. On paper there is no card and no light, only the frame's rounded
- * border on every sheet.
- */
+/** One version of the resume, as a page and as the document it prints to. */
 const Resume: React.FunctionComponent = () => {
-  const { version: slug } = useParams();
-
-  const translations = {
-    common: useTranslation(),
-
-    resume: useTranslation('resume'),
-  };
-
-  const found = findVersion(slug);
-
-  const version = useMemo(
-    () =>
-      found &&
-      resolve(
-        found,
-        // The default is what i18next shows anyway. Naming it tells the types
-        // that a line need not have a wording for every version.
-        (key, context) =>
-          translations.resume.t(key, { context, defaultValue: key }),
-        (context) => translations.common.t('organisation', { context })
-      ),
-    [found, translations.common, translations.resume]
-  );
-
-  usePrintTitle(
-    translations.resume.t('print_title', {
-      name: translations.common.t('name'),
-    })
-  );
-
-  if (!version) {
-    return <Status404 />;
-  }
-
   return (
-    <VersionProvider version={version}>
-      {/* The tailored versions are for the people they are sent to. */}
-      {version.slug !== MASTER.slug && <meta content='noindex' name='robots' />}
-      {/* Outside the frame and the card: the card's blur would hold a fixed element to itself. */}
-      <ScrollIndicator />
-      <Layout autoFlow='row' justifyContent='center' justifyItems='center'>
-        {/* Grows with the page, which is longer than any window. */}
-        <Frame delay={FRAME_DELAY} grow>
-          {/* The box the light fills. */}
-          <div
-            className={classNames(
-              `${CLASS_NAME}__frame`,
-              'kicl-position-relative'
-            )}
-          >
-            <Animation delay={CONTENT_DELAY}>
-              <Background className='kicl-print-hidden' />
-            </Animation>
-            <Card
-              className={classNames(CLASS_NAME, 'kicl-margin-inline-auto')}
-              // The export checks this against the files, to know the database is not behind them.
-              data-fingerprint={fingerprint(version)}
-              data-version={version.slug}
-              gap='wide'
-              is='article'
-              size={12}
-              variant='secondary'
-            >
-              <Header />
-              {version.order.map((id) => {
-                const Section = SECTIONS[id];
-
-                return <Section key={id} />;
-              })}
-            </Card>
-          </div>
-        </Frame>
-      </Layout>
-    </VersionProvider>
+    <Provider>
+      <Page />
+    </Provider>
   );
 };
 

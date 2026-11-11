@@ -120,7 +120,7 @@ along, on an acoustic kit or a drum machine, or not at all.
 - **`song/use-song.ts`** loads a song by the id in the route and turns it into a `Piece`
   with `read/song.ts`: MIDI and MusicXML files as they were, a read sheet
   through `read/sheet.ts`.
-- **`song/player/use-transport.ts`** schedules every note on Tone's `Transport`
+- **`song/player/context/transport/use-transport.ts`** schedules every note on Tone's `Transport`
   with a two-second lead-in, so the first notes can be seen coming. A
   `Tone.Sampler` plays them, through a high shelf, a delay and a reverb that
   only the 16′ piano turns up. Two more play the drum kit and the drum
@@ -258,8 +258,8 @@ along, on an acoustic kit or a drum machine, or not at all.
   clock and works the same after a pause.
 - **The piano** is the mf layer of Splendid Grand Piano, public domain
   samples by Akai: 26 notes, three to four semitones apart, cut to eight
-  seconds. `song/player/samples/build-piano.sh` rebuilds them from a pinned commit and
-  `song/player/samples/upload.sh <build> piano` puts them in the static bucket at
+  seconds. `song/player/context/transport/samples/build-piano.sh` rebuilds them from a pinned commit and
+  `song/player/context/transport/samples/upload.sh <build> piano` puts them in the static bucket at
   `kinetic-light/piano/`. The files are renamed to scientific pitch with `s`
   for a sharp, because the source names notes an octave low and has spaces
   and `#` in its names. In some of the source's samples the right channel is
@@ -298,11 +298,11 @@ along, on an acoustic kit or a drum machine, or not at all.
   while it plays. The synth is Tone's FM synth set up like a DX7 electric
   piano, with no samples.
 - Every drum file peaks at -1 dBFS and a keyboard note keeps its own level,
-  so the volumes in `song/player/sounds.ts` set the balance. They were measured
+  so the volumes in `song/player/context/transport/sounds.ts` set the balance. They were measured
   in LUFS on real songs: every sound sits with the grand and every drum set
-  with the kit, 8 to 12 LU under it. `song/player/samples/build-samples.sh` rebuilds
+  with the kit, 8 to 12 LU under it. `song/player/context/transport/samples/build-samples.sh` rebuilds
   every set but the piano from pinned commits, a folder each, and
-  `song/player/samples/upload.sh <build>/<folder> <folder>` puts one at
+  `song/player/context/transport/samples/upload.sh <build>/<folder> <folder>` puts one at
   `kinetic-light/<folder>/`. A sound or a drum set loads the first time it's
   chosen.
 - **The output** goes through a soft clipper, which leaves everything under

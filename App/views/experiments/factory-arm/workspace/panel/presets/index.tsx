@@ -1,114 +1,31 @@
-import React, { useState } from 'react';
-
-// Libraries
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 // Components
-import {
-  Button,
-  Card,
-  CardAction,
-  CardDescription,
-  CardTitle,
-  List,
-} from 'design/components';
-
-// Icons
-import * as Bs from 'react-icons/bs';
+import { List } from 'design/components';
 
 // Context
-import { type Preset, useSetup } from '@/views/experiments/factory-arm/setup';
+import { usePresetsContext } from '@/views/experiments/factory-arm/presets-context';
 
 // Partials
-import { summary } from './summary';
-import { Confirm } from '@/views/experiments/factory-arm/workspace/panel/confirm';
+import { Preset } from './preset';
 import { Unsaved } from './unsaved';
 
 /**
  * The presets, the ones that ship with the page and the operator's own.
- * Each one's play button builds the cell from it; the one the running cell
- * came from is edged green, and its button starts it over. Playing while the
- * arm is working asks first. Once the cell is changed, a footer offers to
- * save it as a new one.
+ * Once the cell is changed, a footer offers to save it as a new one.
  */
 const Presets: React.FunctionComponent = () => {
-  const translations = {
-    common: useTranslation(),
-    factoryArm: useTranslation('factory-arm'),
-  };
-  const { active, cell, discard, presets, proceed } = useSetup();
-  // A preset waiting on the operator to confirm starting over.
-  const [pending, setPending] = useState<Preset | null>(null);
-
-  const run = (preset: Preset) => {
-    setPending(null);
-    proceed(preset);
-  };
-
-  // While the arm is working, ask first.
-  const play = (preset: Preset) =>
-    cell.current?.busy() ? setPending(preset) : run(preset);
+  const { presets } = usePresetsContext();
 
   return (
     <>
       <List gap='narrow'>
-        {presets.map((preset) => {
-          const name = preset.context
-            ? translations.factoryArm.t('preset', { context: preset.context })
-            : preset.name;
-
-          return (
-            <Card
-              is='li'
-              key={preset.id}
-              level={preset.id === active ? 'confirm' : undefined}
-              header={
-                <>
-                  <CardTitle is='span'>{name}</CardTitle>
-                  <CardDescription className='kicl-font-family-mono' is='span'>
-                    {summary(translations.factoryArm.t, preset)}
-                  </CardDescription>
-                  <CardAction>
-                    <Button
-                      aria-label={translations.factoryArm.t('action', {
-                        context: preset.id === active ? 'restart' : 'run',
-                        name,
-                      })}
-                      onClick={() => play(preset)}
-                      size='small'
-                      variant='secondary'
-                    >
-                      {preset.id === active ? (
-                        <Bs.BsArrowCounterclockwise aria-hidden />
-                      ) : (
-                        <Bs.BsPlayFill aria-hidden />
-                      )}
-                    </Button>
-                  </CardAction>
-                </>
-              }
-            >
-              {preset.saved && (
-                <Button
-                  onClick={() => discard(preset.id)}
-                  size='small'
-                  variant='ghost'
-                >
-                  {translations.common.t('action', { context: 'remove' })}
-                </Button>
-              )}
-            </Card>
-          );
+        {presets.map(({ id }) => {
+          return <Preset id={id} key={id} />;
         })}
       </List>
 
       <Unsaved />
-
-      <Confirm
-        onCancel={() => setPending(null)}
-        onConfirm={() => pending && run(pending)}
-        open={pending !== null}
-      />
     </>
   );
 };

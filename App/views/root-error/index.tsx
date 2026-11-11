@@ -1,10 +1,7 @@
 import React from 'react';
 
-// Libraries
-import { useFormContext } from 'react-hook-form';
-
 // Components
-import { Animation, Text } from 'design/components';
+import { Animation, Text, useFormContext } from 'design/components';
 
 /**
  * The error a form sets on its root, which is where the API's answer to a

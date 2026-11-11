@@ -1,92 +1,15 @@
-import React, { useState } from 'react';
-
-// Libraries
-import classNames from 'classnames';
-
-// API
-import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
-
-// Components
-import { Frame, Layout } from 'design/components';
+import React from 'react';
 
 // Partials
-import { Backdrop } from '@/views/experiments/image-agent/backdrop';
-import { Composer } from '@/views/experiments/image-agent/composer';
-import { Article } from './article';
-import { Header } from './header';
-import { More } from './more';
-import { Past } from './past';
-import { Running } from './running';
+import { Page } from './page';
+import { Provider } from './context';
 
-// Hooks
-import { useRunning } from './running/use-running';
-import { useStart } from './use-start';
-
-// Constants
-import { CLASS_NAME } from './constants';
-
-/**
- * `/experiments/image-agent`: a framed hero with the title, how it works, the
- * field and past conversations filtered by what's typed. While one is running, only that one
- * is offered, because the API refuses new messages until it ends. With no
- * allowance left there's no field, only past conversations. The article
- * follows.
- */
+/** `/experiments/image-agent`: a framed hero, then the article. */
 const Start: React.FunctionComponent = () => {
-  const sender = useStart();
-  const running = useRunning();
-  const [query, setQuery] = useState('');
-
-  // Shares the allowance badge's cached query.
-  const { data } = useQuery(Kicl_ImageAgentAllowanceDocument);
-  const spent = data?.imageAgentAllowance.remaining === 0;
-
   return (
-    <Layout autoFlow='row' gap='none' justifyContent='stretch'>
-      <article className={classNames(CLASS_NAME, 'kicl-inline-size-full')}>
-        <Frame grow>
-          <Layout alignContent='end' autoFlow='row' justifyContent='stretch'>
-            <section
-              className={classNames(
-                // Dark in both themes, so the scrim darkens the picture.
-                'kicl--theme--dark',
-                'kicl-padding-block-frame',
-                'kicl-padding-inline-frame',
-                'kicl-position-relative'
-              )}
-            >
-              <Backdrop scrim />
-              {/*
-                Positioned so it paints over the backdrop. The frame's own
-                padding can't also cap the content at 12 columns, so this
-                element does.
-              */}
-              <Layout gap='wide'>
-                <div
-                  className={classNames(
-                    'kicl-inline-size-columns-12',
-                    'kicl-margin-inline-auto',
-                    'kicl-position-relative'
-                  )}
-                >
-                  <Header />
-                  <Running {...running} />
-                  {running.busy ? null : <Past query={query} />}
-                  <Composer
-                    {...sender}
-                    disallow={running.busy || spent}
-                    onText={setQuery}
-                    sticky={false}
-                  />
-                  <More />
-                </div>
-              </Layout>
-            </section>
-          </Layout>
-        </Frame>
-        <Article />
-      </article>
-    </Layout>
+    <Provider>
+      <Page />
+    </Provider>
   );
 };
 

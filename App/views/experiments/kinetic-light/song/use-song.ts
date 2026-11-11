@@ -10,36 +10,10 @@ import {
 // Routes
 import { useParams } from 'design/router';
 
-// Readers
-import { repairMusicXml } from '@/views/experiments/kinetic-light/read/repair';
-import { readScore } from '@/views/experiments/kinetic-light/read/score';
-import { readSong } from '@/views/experiments/kinetic-light/read/song';
-
 // Constants
 import type { PARAM } from '@/views/experiments/kinetic-light/constants';
 
 type Song = NonNullable<Kicl_KineticLightReadingQuery['kineticLightReading']>;
-
-const EMPTY: Pick<
-  Song,
-  | 'beatsPerBar'
-  | 'chords'
-  | 'midi'
-  | 'musicxml'
-  | 'source'
-  | 'status'
-  | 'tempo'
-  | 'title'
-> = {
-  beatsPerBar: null,
-  chords: [],
-  midi: null,
-  musicxml: null,
-  source: 'FILE',
-  status: 'READING',
-  tempo: null,
-  title: '',
-};
 
 function useSong() {
   const { id = '' } = useParams<typeof PARAM>();
@@ -48,27 +22,10 @@ function useSong() {
     { fetchPolicy: 'cache-first', variables: { id } }
   );
   const song = (data ?? previousData)?.kineticLightReading ?? undefined;
-  const { beatsPerBar, chords, midi, musicxml, source, status, tempo, title } =
-    song ?? EMPTY;
-  const { piece, score } = useMemo(() => {
-    if (status !== 'READY') {
-      return { piece: null, score: null };
-    }
 
-    const read = {
-      beatsPerBar,
-      chords,
-      midi,
-      musicxml: musicxml ? repairMusicXml(musicxml) : musicxml,
-      source,
-      tempo,
-      title,
-    };
-
-    return { piece: readSong(read), score: readScore(read) };
-  }, [beatsPerBar, chords, midi, musicxml, source, status, tempo, title]);
-
-  return { loading, piece, score, song };
+  return useMemo(() => {
+    return { loading, song };
+  }, [loading, song]);
 }
 
 export { useSong, type Song };

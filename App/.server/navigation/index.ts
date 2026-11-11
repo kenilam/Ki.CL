@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express';
 
-import { page } from '../page';
-import type { ServerTexts } from '../../middleware/texts';
+import { page } from '@/.server/page';
+import type { ServerTexts } from '@/middleware/texts';
 
 /** Files a page loads and nobody opens: scripts, styles and their maps. */
 const PARTS = /\.(css|js|map|mjs)$/;

@@ -2,10 +2,12 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { BackLink, Heading, Layout, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Partials
 import { Allowance } from '@/views/experiments/kinetic-light/allowance';

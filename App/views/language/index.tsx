@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Widgets
 import { LanguageSelect, type LanguageSelectProps } from 'design/widgets';
 
@@ -10,6 +7,7 @@ import { LanguageSelect, type LanguageSelectProps } from 'design/widgets';
 import { chooseLanguage } from '@/i18n';
 
 // Hooks
+import { useTranslation } from 'design/hooks';
 import { useLanguages } from '@/views/use-languages';
 
 const Language: React.FunctionComponent<

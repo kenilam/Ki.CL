@@ -42,19 +42,11 @@ export type TaxonNode = {
 };
 
 /**
- * Value the provider supplies: the route params as they are, plus the subtree
- * query for whichever node they name.
- *
- * The query members are indexed off Apollo's own result type rather than
- * restated, so regenerating `@mf-types/api` after a schema change carries
- * through here instead of drifting.
+ * Value the provider supplies: the subtree query for whichever node the route
+ * names, and the lineage walked from it.
  */
 export type Context = {
-  /** `useParams` makes every key optional - a param exists once it matches. */
-  params: Readonly<Partial<Params>>;
-  data: SubtreeResult['data'];
   loading: SubtreeResult['loading'];
-  error: SubtreeResult['error'];
   /**
    * Look a node up by id in whatever subtree is currently loaded. Consumers
    * hold ids rather than node objects, so nothing can render from a copy that

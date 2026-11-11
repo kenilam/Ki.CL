@@ -3,10 +3,13 @@ import React, { Suspense } from 'react';
 // Views
 import { useAccount } from '@/views/account/use-account';
 
-const Dialog = React.lazy(async () => {
-  const { SignOut } = await import('./sign-out');
+// Context
+import { Provider } from './context';
 
-  return { default: SignOut };
+const Dialog = React.lazy(async () => {
+  const { Dialog } = await import('./dialog');
+
+  return { default: Dialog };
 });
 
 /** The sign-out dialog, loaded only once someone is signed in. */
@@ -19,7 +22,9 @@ const SignOut: React.FunctionComponent = () => {
 
   return (
     <Suspense fallback={null}>
-      <Dialog />
+      <Provider>
+        <Dialog />
+      </Provider>
     </Suspense>
   );
 };

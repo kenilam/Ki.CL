@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Details, Heading, Markdown, Text } from 'design/components';
 
@@ -11,6 +8,9 @@ import {
   ATTRIBUTION,
   TOTAL,
 } from '@/views/experiments/music-visualiser/catalog';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 /** The music: where the tracks come from, and why they are hosted here. */
 const Music: React.FunctionComponent = () => {

@@ -1,9 +1,10 @@
-import { useTranslation } from 'react-i18next';
-
 import {
   Kicl_AcceptLanguagesUpdatedDocument,
   useSubscription,
 } from 'api/provider';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 const useLanguages = () => {
   const { i18n } = useTranslation();
