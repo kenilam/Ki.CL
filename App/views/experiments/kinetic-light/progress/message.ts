@@ -1,8 +1,8 @@
-// Libraries
-import type { TFunction } from 'i18next';
-
 // API
 import type { Kicl_KineticLightReadingsQuery } from 'api/provider';
+
+// Hooks
+import type { TFunction } from 'design/hooks';
 
 type Reading = Kicl_KineticLightReadingsQuery['kineticLightReadings'][number];
 

@@ -2,7 +2,6 @@ import React, { useId } from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { Heading, Layout, Text } from 'design/components';
@@ -12,6 +11,9 @@ import './styles.scss';
 
 // Constants
 import { CLASS_NAME as HOME } from '@/views/experiments/home/constants';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 // Partials
 import { Actions } from './actions';
@@ -60,4 +62,4 @@ const More: React.FunctionComponent = () => {
   );
 };
 
-export { CLASS_NAME, More };
+export { More };

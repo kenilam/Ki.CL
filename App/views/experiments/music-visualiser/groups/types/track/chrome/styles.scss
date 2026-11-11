@@ -9,7 +9,7 @@
   transition-property: row-gap;
   transition-timing-function: var(--kicl-ease-sine-out);
 
-  &--idle {
+  &--idle:not(:has(:popover-open)) {
     row-gap: 0;
     transition-delay: var(--kicl-transition-duration-fastest);
   }

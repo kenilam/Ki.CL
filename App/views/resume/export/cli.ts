@@ -7,9 +7,9 @@ import { parseArgs } from 'node:util';
 import * as dotenv from 'dotenv';
 
 // Relative, not `@/`: this runs under tsx, outside Vite and its aliases.
-import { FILE, OBJECT, PATH, PHONE_KEY } from '../constants';
-import COMMON from '../../../locales/en-US/common.json';
-import RESUME from '../../../locales/en-US/resume.json';
+import { FILE, OBJECT, PATH, PHONE_KEY } from '@/views/resume/constants';
+import COMMON from '@/locales/en-US/common.json';
+import RESUME from '@/locales/en-US/resume.json';
 import {
   MASTER,
   VERSIONS,
@@ -18,7 +18,7 @@ import {
   type Context,
   type Key,
   type Version,
-} from '../content';
+} from '@/views/resume/content';
 
 import { launch, type Tab } from './chrome';
 

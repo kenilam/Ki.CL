@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
-
-// Libraries
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 // Components
-import { Button, SheetFooter } from 'design/components';
-
-// Context
-import { type Setup, useSetup } from '@/views/experiments/factory-arm/setup';
+import { SheetFooter } from 'design/components';
 
 // Partials
-import { Confirm } from '@/views/experiments/factory-arm/workspace/panel/confirm';
 import { Pile } from './pile';
+import { Proceed } from './proceed';
+import { Save } from './save';
 import { Shapes } from './shapes';
 
 /**
@@ -20,24 +15,6 @@ import { Shapes } from './shapes';
  * they stand now and the case settings save together as a preset.
  */
 const Manual: React.FunctionComponent = () => {
-  const { t } = useTranslation('factory-arm');
-  const { cell, draft, proceed, save } = useSetup();
-
-  const current = () => ({
-    ...draft,
-    obstacles: cell.current?.obstacles.current ?? [],
-  });
-
-  const [asking, setAsking] = useState(false);
-
-  const start = (setup: Setup) => {
-    setAsking(false);
-    proceed(setup);
-  };
-
-  // While the arm is working, ask first.
-  const go = () => (cell.current?.busy() ? setAsking(true) : start(current()));
-
   return (
     <>
       <Shapes />
@@ -45,30 +22,9 @@ const Manual: React.FunctionComponent = () => {
 
       {/* Full width each, the footer's row shares them out in equal halves. */}
       <SheetFooter>
-        <Button
-          className='kicl-inline-size-full'
-          justifyContent='center'
-          onClick={() => save(current())}
-          size='small'
-          variant='secondary'
-        >
-          {t('action', { context: 'save' })}
-        </Button>
-        <Button
-          className='kicl-inline-size-full'
-          justifyContent='center'
-          onClick={go}
-          size='small'
-        >
-          {t('action', { context: 'proceed' })}
-        </Button>
+        <Save />
+        <Proceed />
       </SheetFooter>
-
-      <Confirm
-        onCancel={() => setAsking(false)}
-        onConfirm={() => start(current())}
-        open={asking}
-      />
     </>
   );
 };

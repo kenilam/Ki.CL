@@ -1,10 +1,10 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Components
 import { Details, Heading, Markdown, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 /** The address is the player: `/play`, pause and skip as links. */
 const Address: React.FunctionComponent = () => {

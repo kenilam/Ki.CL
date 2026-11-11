@@ -2,16 +2,18 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Icons
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
 
 // Components
 import { Button, HyperLink, Navigation } from 'design/components';
 
 // Views
 import { CONTACT_ID } from '@/views/constants';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 const Aside: React.FunctionComponent = () => {
   const translations = {
@@ -41,7 +43,7 @@ const Aside: React.FunctionComponent = () => {
         to={translations.common.t('url', { context: 'linkedin' })}
         variant='ghost'
       >
-        <Bs.BsLinkedin aria-hidden />
+        <Tb.TbBrandLinkedin aria-hidden />
       </HyperLink>
       <HyperLink
         aria-label={translations.home.t('header.aside.github')}
@@ -51,7 +53,7 @@ const Aside: React.FunctionComponent = () => {
         to={translations.common.t('url', { context: 'github' })}
         variant='ghost'
       >
-        <Bs.BsGithub aria-hidden />
+        <Tb.TbBrandGithub aria-hidden />
       </HyperLink>
       <Button
         aria-label={translations.common.t('send_message')}
@@ -61,7 +63,7 @@ const Aside: React.FunctionComponent = () => {
         title={translations.common.t('send_message')}
         variant='ghost'
       >
-        <Bs.BsChatDots aria-hidden />
+        <Tb.TbMessageDots aria-hidden />
       </Button>
     </Navigation>
   );

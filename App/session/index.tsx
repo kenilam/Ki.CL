@@ -1,36 +1,17 @@
-import React, { useId } from 'react';
-
-// Libraries
-import { useTranslation } from 'react-i18next';
-
-// Components
-import { Dialog, Heading, Layout, Spinner, Text } from 'design/components';
+import React from 'react';
 
 // Status
 import { Status403, Status429, Status500 } from 'design/status';
 
-// Context
-import { SessionContext, useSessionContext } from './context';
-
 // Hooks
-import { useSession } from './use-session';
+import { useTranslation } from 'design/hooks';
 
-/**
- * Starts an anonymous session, after a Turnstile check when the API asks for
- * one. It sits at the root route, around the header as well as the page: the
- * API counts every request per session, and the header asks who is signed in.
- */
-const SessionProvider: React.FunctionComponent<React.PropsWithChildren> = ({
-  children,
-}) => {
-  const session = useSession();
+// Context
+import { useSessionContext } from './context';
 
-  return (
-    <SessionContext.Provider value={session}>
-      {children}
-    </SessionContext.Provider>
-  );
-};
+// Partials
+import { Challenge } from './challenge';
+import { Starting } from './starting';
 
 /**
  * Renders its children once the session is ready.
@@ -42,12 +23,9 @@ const SessionProvider: React.FunctionComponent<React.PropsWithChildren> = ({
 const Session: React.FunctionComponent<React.PropsWithChildren> = ({
   children,
 }) => {
-  const { live, resuming, stage, turnstile } = useSessionContext();
+  const { live, stage } = useSessionContext();
 
   const { t } = useTranslation();
-
-  const titleId = useId();
-  const messageId = useId();
 
   if (stage === 'rejected') {
     return (
@@ -76,59 +54,20 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
     );
   }
 
-  if (live) {
-    return (
-      <>
-        {children}
-        {resuming && (
-          <Dialog
-            aria-describedby={messageId}
-            aria-labelledby={titleId}
-            closable={false}
-            open={stage === 'challenge'}
-            role='alertdialog'
-          >
-            <Layout
-              alignContent='center'
-              alignItems='center'
-              justifyContent='center'
-              justifyItems='center'
-            >
-              <section className='kicl-padding-block-end-wide'>
-                <Heading dense id={titleId}>
-                  {t('session', { context: 'checking' })}
-                </Heading>
-                <Text className='kicl-font-size-small' id={messageId} is='p'>
-                  {turnstile.interactive
-                    ? t('session', { context: 'interact' })
-                    : t('session', { context: 'wait' })}
-                </Text>
-                <Spinner in={!turnstile.interactive} position='inline' />
-                <div ref={turnstile.container} />
-              </section>
-            </Layout>
-          </Dialog>
-        )}
-      </>
-    );
+  if (!live) {
+    return <Starting />;
   }
 
   return (
     <>
-      {!turnstile.interactive && <Spinner in />}
-      <Layout
-        alignContent='center'
-        justifyContent='center'
-        justifyItems='center'
-        fullScreen
-      >
-        <div ref={turnstile.container} />
-      </Layout>
+      {children}
+      <Challenge />
     </>
   );
 };
 
-export { Session, SessionProvider };
-export { isChallenge, useChallenged, useSessionContext } from './context';
+export { Session };
+export { SessionProvider, useChallenged, useSessionContext } from './context';
+export { isChallenge } from './is-challenge';
 export { useEnded } from './use-ended';
 export { useSignOut } from './use-sign-out';

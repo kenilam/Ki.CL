@@ -2,7 +2,6 @@ import React from 'react';
 
 // Libraries
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 
 // Components
 import { Frame, List } from 'design/components';
@@ -20,23 +19,15 @@ import './styles.scss';
 
 // Constants
 import { CLASS_NAME as HOME } from '@/views/experiments/home/constants';
-import { EXPERIMENTS } from '@/views/routes';
+import { SCREENS } from './screens';
 
 const CLASS_NAME = `${HOME}__stage`;
-
-/** Newest first; the number shown keeps the order they were made in. */
-const SCREENS = EXPERIMENTS.map((experiment, index) => ({
-  ...experiment,
-  number: index + 1,
-})).reverse();
 
 /**
  * A sticky stage, one screen tall, framed below the global header, that stays pinned while the page
  * scrolls one screen height per panel. Screen does the per-panel motion.
  */
 const Stage: React.FunctionComponent = () => {
-  const { t: common } = useTranslation();
-
   useHashScroll();
 
   return (
@@ -61,27 +52,17 @@ const Stage: React.FunctionComponent = () => {
           is='ol'
           gap='none'
         >
-          {SCREENS.map((screen, index) => (
-            <Screen
-              experiment={screen}
-              index={index}
-              key={screen.to}
-              number={screen.number}
-            />
-          ))}
+          {SCREENS.map(({ experiment }) => {
+            return <Screen key={experiment.plate} plate={experiment.plate} />;
+          })}
         </List>
       </Frame>
-      <Pages
-        pages={SCREENS.map(({ context, plate }) => ({
-          id: plate,
-          label: common('experiment', { context }),
-        }))}
-      />
-      {SCREENS.map((screen, index) => (
-        <Anchor id={screen.plate} index={index} key={screen.to} />
-      ))}
+      <Pages />
+      {SCREENS.map(({ experiment }) => {
+        return <Anchor key={experiment.plate} plate={experiment.plate} />;
+      })}
     </section>
   );
 };
 
-export { CLASS_NAME, Stage };
+export { Stage };

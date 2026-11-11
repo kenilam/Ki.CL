@@ -25,7 +25,7 @@ const Banner: React.FunctionComponent = () => (
   <Layout alignContent='center' justifyContent='stretch' justifyItems='center'>
     <Frame grow>
       <section className={classNames(CLASS_NAME, 'kicl-position-relative')}>
-        <Visualiser analyser={null} playing={false} track={CLASS_NAME} />
+        <Visualiser />
         <Words />
         <More />
       </section>

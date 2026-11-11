@@ -8,9 +8,9 @@ import { Spinner } from 'design/components';
 
 const VERSIONS = {
   true: React.lazy(async () => {
-    const { Mobile } = await import('./mobile');
+    const { Narrow } = await import('./narrow');
 
-    return { default: Mobile };
+    return { default: Narrow };
   }),
   false: React.lazy(async () => {
     const { Default } = await import('./default');
@@ -20,9 +20,9 @@ const VERSIONS = {
 };
 
 const Navigation: React.FunctionComponent = () => {
-  const { isMobile } = useResponsive();
+  const { isNarrow } = useResponsive();
 
-  const Version = VERSIONS[String(isMobile)];
+  const Version = VERSIONS[String(isNarrow)];
 
   return (
     <Suspense fallback={<Spinner position='inline' />}>

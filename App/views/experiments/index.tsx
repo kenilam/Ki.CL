@@ -37,24 +37,22 @@ const Lazy: React.FunctionComponent = () => {
 };
 
 const Experiments = (
-  <>
-    <Origin path={PATH} element={<Lazy />}>
-      <Origin
-        index
-        element={
-          <Suspense fallback={<Spinner />}>
-            <Home />
-          </Suspense>
-        }
-      />
-      {TreeOfLife}
-      {MusicVisualiser}
-      {ImageAgent}
-      {FactoryArm}
-      {Daylight}
-      {KineticLight}
-    </Origin>
-  </>
+  <Origin path={PATH} element={<Lazy />}>
+    <Origin
+      index
+      element={
+        <Suspense fallback={<Spinner />}>
+          <Home />
+        </Suspense>
+      }
+    />
+    {TreeOfLife}
+    {MusicVisualiser}
+    {ImageAgent}
+    {FactoryArm}
+    {Daylight}
+    {KineticLight}
+  </Origin>
 );
 
 export { PATH, Experiments };

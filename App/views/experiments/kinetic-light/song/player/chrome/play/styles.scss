@@ -1,0 +1,5 @@
+$player: '.kicl--views--experiments--kinetic-light__player';
+
+#{$player}:has(#{$player}__prompt) #{$player}__chrome__play {
+  display: none;
+}

@@ -88,7 +88,7 @@ as the globe is turned. The globe can be dragged, and picking a place turns it t
   sun is from where the globe faces. It follows the globe as it turns, so
   it changes through a drag and not only when a place is reached. The draw
   loop sets two custom properties on the article for it. No utility clips a gradient to text, so
-  `words/styles.scss` holds that one rule. Everything else is components and
+  `article/words/styles.scss` holds that one rule. Everything else is components and
   utilities.
 - In the list, each place's mark is orange by day, blue by night and red in
   twilight, and the times are in equal-width numerals so they line up.

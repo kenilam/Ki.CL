@@ -36,7 +36,7 @@ Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn 
 
 ### Module Federation: the design system remote
 
-Components, core styles, icons, widgets, the theme/responsive/resize hooks and the HTTP status pages live in the [Ki.CL-design-system](https://github.com/kenilam/Ki.CL-design-system) repo, served as the remote `design` (`design/components`, `design/core`, `design/hooks`, `design/icons`, `design/router`, `design/status`, `design/widgets`). It is proxied same-origin at `/design`: in development Vite proxies to `KICL_DESIGN_URL` (default `http://localhost:3200`, run the design system with `make run` there), and in production `App/.server/proxy` forwards it with an ID token, like the API. Types come from `App/@mf-types/design`, pulled from the running remote. Routing comes from `design/router` (`Router`, `Route`, `MatchedRoute`, `useLocation`, …), never from `react-router-dom` directly. Icon sets are not exposed: import them from `react-icons` directly. Every icon on the site comes from Bootstrap Icons (`import * as Bs from 'react-icons/bs'`), so they look alike across repos. Changing a component, a token or a utility is a change in that repo, not here.
+Components, core styles, icons, widgets, the theme/responsive/resize hooks and the HTTP status pages live in the [Ki.CL-design-system](https://github.com/kenilam/Ki.CL-design-system) repo, served as the remote `design` (`design/components`, `design/core`, `design/hooks`, `design/icons`, `design/router`, `design/status`, `design/widgets`). It is proxied same-origin at `/design`: in development Vite proxies to `KICL_DESIGN_URL` (default `http://localhost:3200`, run the design system with `make run` there), and in production `App/.server/proxy` forwards it with an ID token, like the API. Types come from `App/@mf-types/design`, pulled from the running remote. Routing comes from `design/router` (`Router`, `Route`, `MatchedRoute`, `useLocation`, …), never from `react-router-dom` directly. Libraries that every repo shares come from one place, the remote that owns them, never from the package itself: forms (`useForm`, `useFormContext`, `useFormState`, `useWatch`, `valibotResolver` and the form types) from `design/components`, `useTranslation` and `TFunction` from `design/hooks`, `IconType` from `design/icons`, and Apollo from `api/provider`. Only `App/i18n`, which creates the i18next instance, imports `i18next` and `react-i18next` itself. A valibot schema still imports `valibot`. Icon sets are not exposed, since re-exporting a namespace ships every icon: import them from `react-icons` directly. Every icon on the site comes from Tabler Icons (`import * as Tb from 'react-icons/tb'`), so they look alike across repos. Changing a component, a token or a utility is a change in that repo, not here.
 
 ### Module Federation consumes the Backend's GraphQL client
 
@@ -50,7 +50,7 @@ Work that carries on after its page is left announces itself through one `Notifi
 
 ### Writing comes from the database, through i18next
 
-UI copy is not written in components. It lives in `App/locales/en-US/<namespace>.json`, is copied into the Backend's database, one row for each string, with `make translations.seed DIR=../Ki.CL/App/locales` (run in Ki.CL-back), and is loaded at runtime through `loadTranslations` from `api/provider` by `App/i18n`. Components read it with `useTranslation()` from `react-i18next`.
+UI copy is not written in components. It lives in `App/locales/en-US/<namespace>.json`, is copied into the Backend's database, one row for each string, with `make translations.seed DIR=../Ki.CL/App/locales` (run in Ki.CL-back), and is loaded at runtime through `loadTranslations` from `api/provider` by `App/i18n`. Components read it with `useTranslation()` from `design/hooks`.
 
 - `common` holds what renders outside a route's own `Suspense`: the header, navigation, session gate and dialogs. It loads before the app mounts. A view names its own namespace, `useTranslation('resume')`, and suspends into its route's fallback. Never use a view namespace outside that route's `Suspense`.
 - Dynamic copy goes through `t` too, with the values passed in: `t('review.left', { count })`, `t('sent_to', { email })`, `t('placeholder', { context: kind })`. Plurals are `_one`/`_other`/`_zero` keys and variants are `_<context>` keys. A line with bold text, code or a link in it is written as inline Markdown and rendered with `Markdown` from `design/components`: `<Text><Markdown>{t('summary')}</Markdown></Text>`. Inline code takes its look in braces after it, `` `IDLE`{confirm} `` or `` `/play`{secondary} ``, and a link whose target is computed is templated, `[v1]({{v1}})`. A value that comes from anywhere else (an email, a name, a number the code holds, a path) is always templated into the string. Never build a sentence by joining strings or JSX fragments, and never write a plural with a ternary.
@@ -70,7 +70,7 @@ UI copy is not written in components. It lives in `App/locales/en-US/<namespace>
 
 ### Path aliases
 
-`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). Exception: `App/.client` and `App/.server` bootstrap files may keep relative imports for config loaded before aliases exist (e.g. `get-alias.ts` importing `../../tsconfig.json`).
+`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). `App/.server` and the scripts it runs (`views/resume/export/cli.ts`) use `@/` too, since tsx loads `App/.server/tsconfig.json`, which extends the App config. The exception is `App/.client`, the Vite config, which loads before any alias exists (`get-alias.ts` imports `../../tsconfig.json`). The remotes import themselves by their federation names (see the root `CLAUDE.md`).
 
 ### Design system discipline (enforced by Cursor rules, apply the same bar here)
 
@@ -94,17 +94,44 @@ UI copy is not written in components. It lives in `App/locales/en-US/<namespace>
 
 ## Structure
 
-Views are folders of small parts, not one long file. Follow `App/views/experiments/tree-of-life/home` and `App/views/experiments/home`:
+Views are folders of small parts, not one long file. The aim is a modular architecture, the same idea as the federated remotes and the API's modules at a smaller scale. A part owns its data access and its words, other code reaches it only through its folder's `index`, and it can move to another layout, or out into a remote, without changing what's around it. Follow `App/views/experiments/tree-of-life/home`, `App/views/experiments/home` and the music visualiser's `groups/types/track/chrome/controls`.
+
+Folders and files:
 
 - A route folder has `index.tsx` (the `<Route>`), `contents.tsx` (what it renders) and `constants.ts` (paths, class root, copy that is shared).
 - Every visual section is its own folder with `index.tsx` and `styles.scss`: `home/stage`, `home/stage/screen`, `home/more`. Nest a folder inside the part that owns it.
-- No cross imports. A component never imports from a sibling's folder. A part used by one component lives inside it; a part two siblings share moves up to their parent, and both import it from there. Run the check before a change is done: nothing may reach into a sibling. Each experiment's preview for the experiments page is gathered in `App/views/experiments/previews.ts`.
-- No prop drilling. A component reads what it needs from the route (`useParams`, `useMatch`), the Apollo cache, or as a last resort a context, and builds its own value from those owners. A parent never assembles a value for a child.
-- `App/views/constants.ts` holds what several views share and imports nothing. `App/views/routes.ts` composes the views' own path constants into the site's pages, top routes, experiments, workshop topics and notification links; only components import it, so nothing cycles back.
-- No wrapper components for shared markup. Each section writes its own markup from `design/components`; what they share goes in tokens (`styles.scss` custom properties) and `constants.ts`, not in a component with props.
+- Keep every file short: composition at the top, one component per file, under about 80 lines. If a file grows past that, split it into parts or move its logic into a `use-*.ts` hook beside it.
 - File and folder names are lowercase with dashes (`hyper-link/use-url-status.tsx`, `styles.scss`). Component names inside stay PascalCase.
 - Named exports only, no `export default`. `React.lazy` maps the name with `async`/`await`: `lazy(async () => { const { Contents } = await import('./contents'); return { default: Contents }; })`. Tool configs that must default-export (`vite.config.ts`) are the exception.
-- Keep `index.tsx` short: composition at the top, one component per file, under about 80 lines. If a file grows past that, split it.
+- No cross imports. A component never imports from a sibling's folder. A part used by one component lives inside it; a part two siblings share moves up to their parent, and both import it from there. Run the check before a change is done: nothing may reach into a sibling. Each experiment's preview for the experiments page is gathered in `App/views/experiments/previews.ts`.
+- `App/views/constants.ts` holds what several views share and imports nothing. `App/views/routes.ts` composes the views' own path constants into the site's pages, top routes, experiments, workshop topics and notification links; only components import it, so nothing cycles back.
+
+Breaking a component into parts. Length is not the test, a short component splits too:
+
+- One part per control or slot. The player's controls are `pause/`, `next/`, `progress/`, `volume/`, `share/` and `clip/`, and the parent only places them. The start-over dialog in factory-arm's `workspace/panel/confirm` places `title/`, `message/`, `cancel/` and `proceed/`, and only owns `open` and `onClose`. A part that always sits in a list renders its own `ListItem`; a part that each layout places differently renders only its content, and the layout wraps it.
+- A provider never has markup written inside it. The provider is its own part that builds the value and renders it around `children`, and the component that uses it only composes. Kinetic Light's `backdrop` is `<Provider><Picture /></Provider>`: `context/` builds the stage value, and `picture/` draws it, with `lens/` inside because only the picture uses it.
+- A context is one folder, `context/`, and its `index.tsx` holds `createContext`, the `Provider` and the read hook, like the design system's `components/breadcrumb/context/index.tsx`. Parts import the hook from `…/context`, and the component that composes imports `Provider` from `./context`. A context that sibling folders share sits at their common parent.
+- A context that bundles separate concerns splits into small contexts, each its own `context/` folder inside the part that owns it, so a part reads only what it uses and doesn't re-render for the rest.
+- A layout that differs by screen is a version, not breakpoint CSS. A folder named after the breakpoint where the layout breaks and `default/` compose the same parts, picked with that breakpoint's `useResponsive()` flag (`narrowest/` with `isNarrowest` for the player's controls, `narrow/` with `isNarrow` for the navigation) from a `VERSIONS` map of `React.lazy` imports behind `Suspense` with `<Spinner position='inline' />`, like `App/views/navigation/index.tsx`. The parts stay in the parent folder.
+- No wrapper components for shared markup. Each section writes its own markup from `design/components`; what they share goes in tokens (`styles.scss` custom properties) and `constants.ts`, not in a component with props.
+
+Lists. Every list rendered with `.map` splits into a plural part that maps and a singular part for one item, whatever the list comes from: a query, a hook, a context, state, a prop, a constants array of Three.js meshes, or translation contexts in an article. The image agent's `past/` places `threads/`, which maps the matches to `threads/thread/`; an article's steps are `steps/` → `steps/step/`.
+
+- The item takes only the field that identifies it, the same one used as its `key` (`id`, or `to`, a slug or the value itself when that's what identifies it, as in `<Board z={z} key={z} />`), and finds its entry in the same owner. Never an `index`: a position points at a different item once the list is filtered, reordered or refetched.
+- The item reads with the default cache-first policy, so mounting an item never fetches. The section that owns the list does the fetch.
+- Per-item work belongs in the item: a hook that maps a list into per-item values keeps only the list, and per-item state (open, editing) lives in the item.
+- A `.map` that only builds data stays as it is.
+
+Data, without prop drilling. A part reads what it needs from its owner and builds its own value:
+
+- The owners, in order: the route (`useParams`, `useMatch`), the Apollo cache (`useQuery` on a document a parent already fetched reads the cache, it doesn't refetch), i18next (`useTranslation` in the part that shows the words, never a `t` or a string passed down), and as a last resort a context that the route or the owning component provides.
+- A part takes no props except its identifying field and `children`. A parent never assembles a value for a child, never passes a callback down only so a child can change the parent's state, and never spreads props or a hook's result into a child.
+- A component doesn't open with a run of hook calls, context reads or `useState`s. Each value moves into the part that uses it, and what the component itself still needs goes into one `use-*.ts` beside it.
+- A `useState` lives in the part that reads and sets it. State two parts share goes to its owner: the URL, then the Apollo cache, then a context. State that bundles separate concerns splits, and a `useState` that copies what an owner or the DOM already knows is deleted.
+
+Class names and styles:
+
+- More than one class is always `classNames('a', 'b')`, never a space-separated string or a template literal. One class is a plain string. A class that depends on state is `classNames({ 'is-revolving': recording })`.
 - Each part styles only its own elements, under its own class root (`kicl--views--…__part`), reading shared tokens from the root folder's `styles.scss`.
 
 ## Writing

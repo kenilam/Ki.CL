@@ -1,6 +1,7 @@
 import * as v from 'valibot';
 
-import type { TFunction } from 'i18next';
+// Hooks
+import type { TFunction } from 'design/hooks';
 
 export const deleteSchema = (t: TFunction<'me'>) =>
   v.object({

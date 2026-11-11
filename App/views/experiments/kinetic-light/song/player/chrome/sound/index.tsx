@@ -1,16 +1,13 @@
 import React from 'react';
 
-// Libraries
-import { useTranslation } from 'react-i18next';
-
 // Icons
-import * as Bs from 'react-icons/bs';
+import * as Tb from 'react-icons/tb';
 
 // Components
 import {
+  ListItem,
   Select,
   SelectContent,
-  SelectItem,
   SelectTrigger,
   SelectValue,
 } from 'design/components';
@@ -18,37 +15,47 @@ import {
 // API
 import type { KineticLightVoice } from 'api/provider';
 
-// Context
-import { usePlayerContext } from '@/views/experiments/kinetic-light/song/player/context';
-import type { Voice } from '@/views/experiments/kinetic-light/song/player/use-transport';
+// Hooks
+import { useTranslation } from 'design/hooks';
 
-const VOICES: Voice[] = ['grand', 'upright', 'sixteen', 'wurlitzer', 'synth'];
+// Context
+import { useTransportContext } from '@/views/experiments/kinetic-light/song/player/context';
+
+// Hooks
+import { useSave } from '@/views/experiments/kinetic-light/song/player/use-save';
+
+// Partials
+import { Option } from './option';
+
+// Constants
+import { VOICES } from '@/views/experiments/kinetic-light/constants';
 
 const Sound: React.FunctionComponent = () => {
-  const { save, transport } = usePlayerContext();
+  const save = useSave();
+  const transport = useTransportContext();
   const { t } = useTranslation('kinetic-light');
 
   return (
-    <Select
-      aria-label={t('label', { context: 'voice' })}
-      inline
-      onValueChange={(value) =>
-        save('voice', value.toUpperCase() as KineticLightVoice)
-      }
-      value={transport.voice}
-    >
-      <SelectTrigger>
-        <Bs.BsMusicNote aria-hidden />
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {VOICES.map((voice) => (
-          <SelectItem key={voice} value={voice}>
-            {t('voice', { context: voice })}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <ListItem>
+      <Select
+        aria-label={t('label', { context: 'voice' })}
+        inline
+        onValueChange={(value) =>
+          save('voice', value.toUpperCase() as KineticLightVoice)
+        }
+        value={transport.voice}
+      >
+        <SelectTrigger>
+          <Tb.TbMusic aria-hidden />
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {VOICES.map((voice) => {
+            return <Option key={voice} voice={voice} />;
+          })}
+        </SelectContent>
+      </Select>
+    </ListItem>
   );
 };
 

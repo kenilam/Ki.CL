@@ -1,3 +1,5 @@
+$idle: '.kicl--views--experiments--music-visualiser__chrome--idle:not(:has(:popover-open))';
+
 .kicl--views--experiments--music-visualiser__chrome__controls {
   // The duration is a utility class on the element.
   transition-delay: var(--kicl-transition-duration-fastest), 0s;
@@ -9,7 +11,7 @@
   }
 
   // Idle: the controls go.
-  .kicl--views--experiments--music-visualiser__chrome--idle & {
+  #{$idle} & {
     block-size: 0;
     opacity: 0;
     transition-delay: 0s, var(--kicl-transition-duration-fastest);
