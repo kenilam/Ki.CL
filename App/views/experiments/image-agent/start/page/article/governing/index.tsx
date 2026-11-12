@@ -18,15 +18,7 @@ const Governing: React.FunctionComponent = () => {
   const spec = useMemo(() => governing(t), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.governing.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.governing.title')}>
       <Text is='p'>{t('article.governing.checks')}</Text>
       <Checks />
       <Text is='p'>{t('article.governing.clarifier')}</Text>

@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 // Components
-import { Layout, ListItem, Select } from 'design/components';
+import { ListItem, Select } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -21,30 +21,28 @@ const Layers: React.FunctionComponent = () => {
   const id = useId();
 
   return (
-    <Layout
+    <ListItem
       alignItems='center'
       autoFlow='column'
       frames='1fr--max-content'
       gap='narrow'
     >
-      <ListItem>
-        <label htmlFor={id}>{t('label', { context: 'layers' })}</label>
-        <Select
-          id={id}
-          onValueChange={(value) =>
-            setDraft({
-              ...draft,
-              pile: { ...draft.pile, layers: Number(value) },
-            })
-          }
-          value={String(draft.pile.layers)}
-        >
-          {LAYERS.map((layers) => {
-            return <Option key={layers} layers={layers} />;
-          })}
-        </Select>
-      </ListItem>
-    </Layout>
+      <label htmlFor={id}>{t('label', { context: 'layers' })}</label>
+      <Select
+        id={id}
+        onValueChange={(value) =>
+          setDraft({
+            ...draft,
+            pile: { ...draft.pile, layers: Number(value) },
+          })
+        }
+        value={String(draft.pile.layers)}
+      >
+        {LAYERS.map((layers) => {
+          return <Option key={layers} layers={layers} />;
+        })}
+      </Select>
+    </ListItem>
   );
 };
 

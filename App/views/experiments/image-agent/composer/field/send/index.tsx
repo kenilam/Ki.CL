@@ -19,14 +19,11 @@ const Send: React.FunctionComponent = () => {
   return (
     <InputGroupButton
       aria-label={t('action', { context: 'send' })}
+      busy={loading}
       type='submit'
       variant='ghost'
     >
-      {loading ? (
-        <Tb.TbReload aria-hidden className='is-revolving' />
-      ) : (
-        <Tb.TbCornerLeftUp aria-hidden className='kicl-rtl-mirror' />
-      )}
+      <Tb.TbCornerLeftUp aria-hidden className='kicl-rtl-mirror' />
     </InputGroupButton>
   );
 };

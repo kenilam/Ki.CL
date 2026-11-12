@@ -1,6 +1,15 @@
+:root {
+  --kicl--views--experiments--music-visualiser__chrome--controls-block-size: auto;
+  --kicl--views--experiments--music-visualiser__chrome--controls-delay: var(--kicl-transition-duration-fastest), 0s;
+  --kicl--views--experiments--music-visualiser__chrome--controls-opacity: 1;
+  --kicl--views--experiments--music-visualiser__chrome--controls-rows: 1fr;
+}
+
 // The frame inset at the block end, but never less than a phone's home
 // indicator.
 .kicl--views--experiments--music-visualiser__chrome {
+  $chrome: '--kicl--views--experiments--music-visualiser__chrome';
+
   padding-block-end: max(
     var(--kicl--components--frame--inset),
     env(safe-area-inset-bottom)
@@ -9,7 +18,12 @@
   transition-property: row-gap;
   transition-timing-function: var(--kicl-ease-sine-out);
 
+  // Idle: the controls go.
   &--idle:not(:has(:popover-open)) {
+    #{$chrome}--controls-block-size: 0;
+    #{$chrome}--controls-delay: 0s, var(--kicl-transition-duration-fastest);
+    #{$chrome}--controls-opacity: 0;
+    #{$chrome}--controls-rows: 0fr;
     row-gap: 0;
     transition-delay: var(--kicl-transition-duration-fastest);
   }

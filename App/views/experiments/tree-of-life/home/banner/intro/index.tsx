@@ -37,13 +37,14 @@ const Intro: React.FunctionComponent = () => {
         to={toExperimentsPath(PATH)}
       />
       <Heading
-        is='h1'
-        dense
         className={classNames(
           `${CLASS_NAME}__title`,
           'kicl-animation-none-reduced-motion',
-          'kicl-font-size-huge'
+          'kicl-background-clip-text'
         )}
+        dense
+        is='h1'
+        lookLike='display'
       >
         {translations.common.t('experiment', { context: 'tree_of_life' })}
       </Heading>

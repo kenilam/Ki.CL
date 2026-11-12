@@ -16,9 +16,6 @@ import { Labels } from './labels';
 import { Panel } from './panel';
 import { Scene } from './scene';
 
-// Styles
-import './styles.scss';
-
 // The `h1` is the experiment's name: the taxon's title is missing until the lineage resolves.
 const Canvas: React.FunctionComponent = () => {
   const { t } = useTranslation();

@@ -1,52 +1,43 @@
-/* Solid background colour so the panel underneath is fully covered. */
 .kicl--views--experiments__home__screen__plate {
   $home: '--kicl--views--experiments__home';
-  $screen: '.kicl--views--experiments__home__screen';
-
-  background-color: var(--kicl-body-background-color);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  $screen: '--kicl--views--experiments__home__screen';
+  $plate: '--kicl--views--experiments__home__screen__plate';
 
   @supports (animation-timeline: scroll()) {
     /*
      * A plate arrives in two steps, so two pictures are never seen through
-     * each other: first its own colour covers the panel before, then its
-     * picture fades in over that colour.
+     * each other: first its own colour covers the panel before, then that
+     * colour fades off its picture.
      */
-    --kicl--views--experiments__home--covered: calc(
-      var(#{$home}--at) - var(#{$home}--screen) * 0.18
+    #{$plate}--covered: calc(
+      var(#{$screen}--at) - var(#{$home}--screen) * 0.18
     );
-
     animation:
-      kicl--views--experiments__home--arrive linear both,
-      kicl--views--experiments__home--cover linear both;
+      kicl--views--experiments__home__screen__plate--arrive linear both,
+      kicl--views--experiments__home__screen__plate--cover linear both;
     animation-range:
-      var(#{$home}--arrival) var(#{$home}--at),
-      var(#{$home}--arrival) var(#{$home}--covered);
+      var(#{$screen}--arrival) var(#{$screen}--at),
+      var(#{$screen}--arrival) var(#{$plate}--covered);
     animation-timeline: scroll(root), scroll(root);
 
     @media (prefers-reduced-motion: no-preference) {
-      > * {
-        animation: kicl--views--experiments__home--cover linear both;
-        animation-range: var(#{$home}--covered) var(#{$home}--at);
+      &::after {
+        animation: kicl--views--experiments__home__screen__plate--cover linear
+          reverse both;
+        animation-range: var(#{$plate}--covered) var(#{$screen}--at);
         animation-timeline: scroll(root);
+        background-color: inherit;
+        content: '';
+        inset: 0;
+        position: absolute;
       }
-    }
-  }
-
-  #{$screen}--tree-of-life & {
-    background-image: url('/assets/static/banner.light.webp');
-
-    .kicl--theme--dark & {
-      background-image: url('/assets/static/banner.dark.webp');
     }
   }
 }
 
 // Settles from slightly larger. The frame clips it, so the larger picture
 // never passes the edge.
-@keyframes kicl--views--experiments__home--arrive {
+@keyframes kicl--views--experiments__home__screen__plate--arrive {
   from {
     scale: 1.1;
   }
@@ -56,8 +47,8 @@
   }
 }
 
-// Fades in: the plate over the panel before, then its picture over the plate.
-@keyframes kicl--views--experiments__home--cover {
+// Fades in the plate over the panel before; reversed, lifts its cover.
+@keyframes kicl--views--experiments__home__screen__plate--cover {
   from {
     opacity: 0;
   }

@@ -9,9 +9,6 @@ import { Field } from './field';
 import { Options } from './options';
 import { Status } from './status';
 
-// Styles
-import './styles.scss';
-
 /**
  * Find a taxon by name. A native `datalist`, so the dropdown is the browser's
  * own combobox.

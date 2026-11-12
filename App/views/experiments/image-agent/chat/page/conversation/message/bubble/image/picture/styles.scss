@@ -1,9 +1,0 @@
-.kicl--views--experiments--image-agent__chat__conversation__message__picture {
-  // Dialog has no size prop; this keeps a square picture inside the window.
-  &__dialog {
-    --kicl--components--dialog--max-inline-size: min(
-      90dvi,
-      calc(100dvb - var(--kicl-gutter-extreme) * 2)
-    );
-  }
-}

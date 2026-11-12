@@ -55,9 +55,13 @@ const Words: React.FunctionComponent = () => {
           to={toExperimentsPath(PATH)}
         />
         <Heading
-          className={classNames(`${CLASS_NAME}__title`, 'kicl-font-size-huge')}
+          className={classNames(
+            `${CLASS_NAME}__title`,
+            'kicl-background-clip-text'
+          )}
           dense
           is='h1'
+          lookLike='display'
         >
           {translations.common.t('experiment', { context: 'daylight' })}
         </Heading>

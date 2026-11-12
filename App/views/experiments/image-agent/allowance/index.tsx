@@ -4,12 +4,7 @@ import React, { useEffect } from 'react';
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
 // Components
-import {
-  Animation,
-  Badge,
-  BadgeLabel,
-  type BadgeProps,
-} from 'design/components';
+import { Animation, Badge, BadgeLabel } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -37,19 +32,9 @@ const Allowance: React.FunctionComponent = () => {
 
   const { remaining, limit } = allowance;
 
-  let level: BadgeProps['level'] = 'confirm';
-
-  if (remaining <= limit / 2) {
-    level = 'warning';
-  }
-
-  if (remaining <= 1) {
-    level = 'error';
-  }
-
   return (
     <Animation>
-      <Badge level={level} size='small'>
+      <Badge limit={limit} remaining={remaining} size='small'>
         <BadgeLabel>{t('label', { context: 'allowance' })}</BadgeLabel>
         {t('images_left', { count: remaining })}
       </Badge>

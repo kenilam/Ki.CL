@@ -30,16 +30,13 @@ const Submit: React.FunctionComponent = () => {
     <InputGroupButton
       aria-label={t('action', { context: 'generate' })}
       block
-      disabled={!file || busy || spent || cooling}
+      busy={busy}
+      disabled={!file || spent || cooling}
       ref={button}
       type='submit'
       variant='primary'
     >
-      {busy ? (
-        <Tb.TbReload aria-hidden className='is-revolving' />
-      ) : (
-        <Tb.TbSparkles aria-hidden />
-      )}
+      <Tb.TbSparkles aria-hidden />
     </InputGroupButton>
   );
 };

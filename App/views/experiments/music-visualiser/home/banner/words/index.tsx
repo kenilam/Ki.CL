@@ -51,7 +51,7 @@ const Words: React.FunctionComponent = () => {
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
-        <Heading is='h1' dense className='kicl-font-size-huge'>
+        <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'music_visualiser' })}
         </Heading>
         <Text is='p' className='kicl-margin-block-start-wide'>

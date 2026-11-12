@@ -12,6 +12,7 @@ import {
   ImageAgentBackdrop,
   KineticLightBackdrop,
   MusicVisualiser,
+  TreeOfLifePlate,
 } from '@/views/experiments/previews';
 
 // Styles
@@ -33,6 +34,7 @@ const Plate: React.FunctionComponent = () => {
       className={classNames(
         CLASS_NAME,
         'kicl-animation-none-reduced-motion',
+        'kicl-background-color-body',
         'kicl-inset-0',
         'kicl-position-absolute'
       )}
@@ -40,9 +42,8 @@ const Plate: React.FunctionComponent = () => {
       {experiment.plate === 'daylight' ? <DaylightPlate /> : null}
       {experiment.plate === 'image-agent' ? <ImageAgentBackdrop /> : null}
       {experiment.plate === 'kinetic-light' ? <KineticLightBackdrop /> : null}
-      {experiment.plate === 'music-visualiser' ? (
-        <MusicVisualiser />
-      ) : null}
+      {experiment.plate === 'music-visualiser' ? <MusicVisualiser /> : null}
+      {experiment.plate === 'tree-of-life' ? <TreeOfLifePlate /> : null}
     </div>
   );
 };

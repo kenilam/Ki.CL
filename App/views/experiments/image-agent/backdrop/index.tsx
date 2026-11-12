@@ -21,6 +21,8 @@ const Backdrop: React.FunctionComponent = () => {
       aria-hidden
       className={classNames(
         CLASS_NAME,
+        'kicl-background-position-center',
+        'kicl-background-size-cover',
         'kicl-scrim',
         'kicl-inset-0',
         'kicl-pointer-events-none',

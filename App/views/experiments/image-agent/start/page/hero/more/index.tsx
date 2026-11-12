@@ -1,10 +1,7 @@
 import React from 'react';
 
-// Icons
-import * as Tb from 'react-icons/tb';
-
 // Components
-import { HyperLink } from 'design/components';
+import { MoreLink } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -14,20 +11,13 @@ import { ARTICLE_ID } from '@/views/experiments/image-agent/start/constants';
 
 const More: React.FunctionComponent = () => {
   const { t } = useTranslation();
-  const label = t('title', { context: 'how_it_was_made' });
 
   return (
-    <HyperLink
-      aria-label={label}
+    <MoreLink
       className='kicl-margin-inline-auto'
-      lookLikeButton
-      size='large'
-      title={label}
+      label={t('title', { context: 'how_it_was_made' })}
       to={`#${ARTICLE_ID}`}
-      variant='secondary'
-    >
-      <Tb.TbChevronDown aria-hidden />
-    </HyperLink>
+    />
   );
 };
 

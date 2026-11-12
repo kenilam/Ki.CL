@@ -1,0 +1,7 @@
+/*
+ * Clears the minimum target size. A single icon and a short word over a
+ * canvas would size to their type, about 16px tall.
+ */
+.kicl--views--experiments--tree-of-life--explorer__controls__animation {
+  min-block-size: var(--kicl-size-2x);
+}

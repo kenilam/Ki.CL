@@ -18,6 +18,9 @@ import { pills } from '@/views/experiments/tree-of-life/explorer/labels/mounted'
 // Partials
 import { Name } from './name';
 
+// Styles
+import './styles.scss';
+
 type Props = {
   /** The taxon the label names. */
   id: string;
@@ -25,7 +28,7 @@ type Props = {
 
 // The layer beneath takes no pointer events, so a drag anywhere but a name still turns the view.
 const PILL_CLASS = classNames(
-  `${CLASS_NAME}__label`,
+  `${CLASS_NAME}__labels__pill`,
   'kicl-border-radius-sm',
   'kicl-display-inline-flex',
   'kicl-inset-block-start-0',

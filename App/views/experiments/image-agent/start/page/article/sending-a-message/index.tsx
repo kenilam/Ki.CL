@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 // Components
-import { Details, Diagram, Heading, Markdown, Text } from 'design/components';
+import { Details, Diagram, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -24,15 +24,7 @@ const SendingAMessage: React.FunctionComponent = () => {
   const specs = useMemo(() => ({ overview: overview(t), turn: turn(t) }), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.sending.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.sending.title')}>
       <Text is='p'>
         <Markdown>{t('article.sending.mutation')}</Markdown>
       </Text>

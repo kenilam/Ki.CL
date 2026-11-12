@@ -1,13 +1,10 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Icons
 import * as Tb from 'react-icons/tb';
 
 // Components
-import { Button, Heading, PopoverTrigger } from 'design/components';
+import { Button, Heading, PopoverTrigger, Spinner } from 'design/components';
 
 // Context
 import { useGenerateContext } from '@/views/experiments/kinetic-light/context';
@@ -23,10 +20,7 @@ const Trigger: React.FunctionComponent = () => {
         <Button
           after={
             generate.busy ? (
-              <Tb.TbReload
-                aria-hidden
-                className={classNames('is-revolving', 'kicl-font-size')}
-              />
+              <Spinner className='kicl-font-size' position='inline' />
             ) : (
               <Tb.TbChevronDown aria-hidden className='kicl-font-size' />
             )

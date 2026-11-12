@@ -1,8 +1,11 @@
-$idle: '.kicl--views--experiments--music-visualiser__chrome--idle:not(:has(:popover-open))';
-
 .kicl--views--experiments--music-visualiser__chrome__controls {
+  $chrome: '--kicl--views--experiments--music-visualiser__chrome';
+
+  block-size: var(#{$chrome}--controls-block-size);
+  opacity: var(#{$chrome}--controls-opacity);
+
   // The duration is a utility class on the element.
-  transition-delay: var(--kicl-transition-duration-fastest), 0s;
+  transition-delay: var(#{$chrome}--controls-delay);
   transition-property: opacity, block-size;
   transition-timing-function: var(--kicl-ease-sine-out);
 
@@ -10,10 +13,10 @@ $idle: '.kicl--views--experiments--music-visualiser__chrome--idle:not(:has(:popo
     interpolate-size: allow-keywords;
   }
 
-  // Idle: the controls go.
-  #{$idle} & {
-    block-size: 0;
-    opacity: 0;
-    transition-delay: 0s, var(--kicl-transition-duration-fastest);
+  // Without it the height can't move to or from auto, so the row folds.
+  @supports not (interpolate-size: allow-keywords) {
+    block-size: auto;
+    grid-template-rows: var(#{$chrome}--controls-rows);
+    transition-property: opacity, grid-template-rows;
   }
 }

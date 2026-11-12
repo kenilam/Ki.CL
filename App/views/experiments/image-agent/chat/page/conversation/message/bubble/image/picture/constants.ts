@@ -2,4 +2,8 @@ import { CLASS_NAME as MESSAGE } from '@/views/experiments/image-agent/chat/page
 
 const CLASS_NAME = `${MESSAGE}__picture`;
 
-export { CLASS_NAME };
+const toFullId = (id: string) => {
+  return `${CLASS_NAME}__full--${id}`;
+};
+
+export { CLASS_NAME, toFullId };

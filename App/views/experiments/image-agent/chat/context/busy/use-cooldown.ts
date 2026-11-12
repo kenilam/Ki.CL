@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+// Hooks
+import { useNow } from 'design/hooks';
 
 /**
  * Whether the API would still turn a message away as too soon after the last
@@ -6,20 +7,10 @@ import { useEffect, useState } from 'react';
  * would otherwise be offered while picking one fails.
  */
 function useCooldown(nextAllowedAt: string | null | undefined) {
-  // Only there to render again once the gap is over.
-  const [, setNow] = useState(0);
   const until = nextAllowedAt ? Date.parse(nextAllowedAt) : 0;
+  const now = useNow(1000, until);
 
-  useEffect(() => {
-    const wait = until - Date.now();
-    if (wait <= 0) {
-      return;
-    }
-    const timer = setTimeout(() => setNow(Date.now()), wait);
-    return () => clearTimeout(timer);
-  }, [until]);
-
-  return until > Date.now();
+  return until > now;
 }
 
 export { useCooldown };

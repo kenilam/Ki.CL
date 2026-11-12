@@ -28,13 +28,8 @@ const Submit: React.FunctionComponent = () => {
 
   return (
     <Button
-      before={
-        busy ? (
-          <Tb.TbReload aria-hidden className='is-revolving' />
-        ) : (
-          <Tb.TbSparkles aria-hidden />
-        )
-      }
+      before={<Tb.TbSparkles aria-hidden />}
+      busy={busy}
       ref={button}
       size='small'
       type='submit'

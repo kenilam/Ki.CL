@@ -1,0 +1,6 @@
+// Lets the controls' row fold to nothing.
+@supports not (interpolate-size: allow-keywords) {
+  .kicl--views--experiments--music-visualiser__chrome__controls__default {
+    min-block-size: 0;
+  }
+}
