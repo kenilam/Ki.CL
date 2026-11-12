@@ -13,9 +13,6 @@ import {
 // Partials
 import { Send } from './send';
 
-// Styles
-import './styles.scss';
-
 // Hooks
 import { useTranslation } from 'design/hooks';
 import { useField } from './use-field';

@@ -10,9 +10,6 @@ import { Layout } from 'design/components';
 import { Allowance } from '@/views/experiments/image-agent/allowance';
 import { Composer } from '@/views/experiments/image-agent/composer';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { CLASS_NAME as CHAT } from '@/views/experiments/image-agent/chat/constants';
 
@@ -25,6 +22,7 @@ const Reply: React.FunctionComponent = () => {
       <section
         className={classNames(
           CLASS_NAME,
+          'kicl-background-color-body',
           'kicl-inline-size-columns-8',
           // While it is stuck, a line of the moving gradient runs along the top.
           'kicl-stuck-line-start',

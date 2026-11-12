@@ -1,0 +1,7 @@
+// No column size keeps a square picture inside the window's height.
+.kicl--views--experiments--image-agent__chat__conversation__message__picture__full {
+  --kicl--components--dialog--max-inline-size: min(
+    90dvi,
+    calc(100dvb - var(--kicl-gutter-extreme) * 2)
+  );
+}

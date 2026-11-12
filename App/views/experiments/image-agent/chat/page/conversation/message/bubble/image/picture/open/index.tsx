@@ -14,15 +14,16 @@ import { useTranslation } from 'design/hooks';
 
 // Context
 import { useMessageContext } from '@/views/experiments/image-agent/chat/page/conversation/message/context';
-import { usePictureContext } from '@/views/experiments/image-agent/chat/page/conversation/message/bubble/image/picture/context';
 
 // Constants
-import { CLASS_NAME } from '@/views/experiments/image-agent/chat/page/conversation/message/bubble/image/picture/constants';
+import {
+  CLASS_NAME,
+  toFullId,
+} from '@/views/experiments/image-agent/chat/page/conversation/message/bubble/image/picture/constants';
 
 const Open: React.FunctionComponent = () => {
   const { t } = useTranslation('image-agent');
   const { message } = useMessageContext();
-  const { setOpen } = usePictureContext();
 
   return (
     <Button
@@ -34,9 +35,8 @@ const Open: React.FunctionComponent = () => {
         'kicl-inline-size-full',
         'kicl-position-relative'
       )}
-      onClick={() => {
-        setOpen(true);
-      }}
+      command='show-modal'
+      commandfor={toFullId(message.id)}
       title={t('action', { context: 'open' })}
       unstyled
     >
