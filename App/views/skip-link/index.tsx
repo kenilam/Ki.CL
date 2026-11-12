@@ -25,7 +25,7 @@ const SkipLink: React.FunctionComponent = () => {
         'kicl-position-fixed',
         'kicl-inset-block-start-narrow',
         'kicl-inset-inline-start-narrow',
-        'kicl-z-index-top'
+        'kicl-z-index-ceiling'
       )}
       lookLikeButton
       size='small'
