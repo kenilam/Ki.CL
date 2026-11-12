@@ -13,7 +13,7 @@ const Title: React.FunctionComponent = () => {
   const { t } = useTranslation();
 
   return (
-    <Heading className='kicl-font-size-huge' id={TITLE_ID}>
+    <Heading id={TITLE_ID} lookLike='display'>
       {t('workshop')}
     </Heading>
   );

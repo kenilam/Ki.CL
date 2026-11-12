@@ -33,7 +33,7 @@ const Experience: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='normal' justifyItems='stretch'>
       <section aria-labelledby={titleId}>
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
-          <header>
+          <header className='kicl-print-break-after-avoid'>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>
               {t('title', { context: 'experience' })}
             </Heading>

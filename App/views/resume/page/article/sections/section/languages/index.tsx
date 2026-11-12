@@ -25,7 +25,10 @@ const Languages: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section aria-labelledby={titleId}>
+      <section
+        aria-labelledby={titleId}
+        className='kicl-print-break-inside-avoid'
+      >
         <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
           <header>
             <Heading className={classNames(HEADING)} dense id={titleId} is='h2'>

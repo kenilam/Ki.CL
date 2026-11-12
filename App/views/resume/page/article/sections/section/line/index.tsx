@@ -11,7 +11,7 @@ type Props = {
 /** One line of a section's list. */
 const Line: React.FunctionComponent<Props> = ({ line }) => {
   return (
-    <ListItem>
+    <ListItem className='kicl-print-break-inside-avoid'>
       <Text dense>
         <Markdown>{line}</Markdown>
       </Text>
