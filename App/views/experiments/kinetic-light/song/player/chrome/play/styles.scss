@@ -1,5 +1,6 @@
-$player: '.kicl--views--experiments--kinetic-light__player';
-
-#{$player}:has(#{$player}__prompt) #{$player}__chrome__play {
-  display: none;
+// The player hides it while the prompt's own Play button stands in for it.
+.kicl--views--experiments--kinetic-light__player__chrome__play {
+  --kicl--components--list-item--display: var(
+    --kicl--views--experiments--kinetic-light__player--play-display
+  );
 }

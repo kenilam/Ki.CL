@@ -42,15 +42,7 @@ const More: React.FunctionComponent = () => {
           'kicl-padding-inline-frame-columns-12'
         )}
       >
-        <Heading
-          is='h2'
-          dense
-          className={classNames(
-            'kicl-font-size-huge',
-            'kicl-line-height-narrower'
-          )}
-          id={titleId}
-        >
+        <Heading dense id={titleId} is='h2' lookLike='display'>
           {t('title', { context: 'more' })}
         </Heading>
         <Text className='kicl-text-align-center'>

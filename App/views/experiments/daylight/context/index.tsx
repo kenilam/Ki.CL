@@ -2,6 +2,7 @@ import React, {
   PropsWithChildren,
   createContext,
   useContext,
+  useMemo,
   useRef,
 } from 'react';
 
@@ -9,8 +10,8 @@ import React, {
 import { Navigate, useNavigate, useParams } from 'design/router';
 
 // Hooks
+import { useNow } from 'design/hooks';
 import { useArrows } from '@/views/experiments/daylight/use-arrows';
-import { useNow } from '@/views/experiments/daylight/use-now';
 
 // Utilities
 import { toNearestHere } from '@/views/experiments/daylight/nearest';
@@ -19,6 +20,7 @@ import { toNearestHere } from '@/views/experiments/daylight/nearest';
 import {
   PARAM,
   PLACES,
+  TICK_MS,
   toPath,
   toSlug,
 } from '@/views/experiments/daylight/constants';
@@ -37,7 +39,10 @@ const DaylightContext = createContext<Value | null>(null);
  * does not know, it goes to the place nearest the visitor.
  */
 const Provider: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
-  const now = useNow();
+  const time = useNow(TICK_MS);
+  const now = useMemo(() => {
+    return new Date(time);
+  }, [time]);
   const navigate = useNavigate();
   const { [PARAM]: slug } = useParams();
   const active = PLACES.findIndex((place) => {

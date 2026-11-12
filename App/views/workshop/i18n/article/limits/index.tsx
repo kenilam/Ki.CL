@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, List } from 'design/components';
+import { Details, List } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -16,15 +16,7 @@ const Limits: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h2' lookLike='h1'>
-          {t('article.limits.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h2' summary={t('article.limits.title')}>
       <List gap='narrower' listStyleType='disc'>
         {LIMITS.map((limit) => {
           return <Limit limit={limit} key={limit} />;

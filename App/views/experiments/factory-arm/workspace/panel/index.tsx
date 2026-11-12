@@ -19,6 +19,12 @@ import { Tabs } from './tabs';
 // Constants
 import { CLASS_NAME, PANEL } from '@/views/experiments/factory-arm/constants';
 
+const CONTENTS = {
+  log: <Log />,
+  manual: <Manual />,
+  preset: <Presets />,
+};
+
 /**
  * How the next run is set up, from a preset or by hand, and a log of every
  * step the cell takes. It stands beside the stage and folds away; a click on
@@ -37,9 +43,7 @@ const Panel: React.FunctionComponent = () => {
       id={PANEL}
       onOpenChange={setOpen}
     >
-      {tab === 'preset' ? <Presets /> : null}
-      {tab === 'manual' ? <Manual /> : null}
-      {tab === 'log' ? <Log /> : null}
+      {CONTENTS[tab]}
 
       <Confirm />
     </Sheet>

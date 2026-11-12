@@ -4,10 +4,10 @@ import React from 'react';
 import * as Tb from 'react-icons/tb';
 
 // Components
-import { HyperLink, ListItem, Text } from 'design/components';
+import { HyperLink, ListItem } from 'design/components';
 
 // Hooks
-import { useResponsive, useTranslation } from 'design/hooks';
+import { useTranslation } from 'design/hooks';
 
 // Content
 import { MASTER, fingerprint } from '@/views/resume/content';
@@ -26,7 +26,6 @@ import { FILE } from '@/views/resume/constants';
  */
 const File: React.FunctionComponent = () => {
   const { t } = useTranslation('resume');
-  const { isNarrow } = useResponsive();
   const version = useVersion();
 
   const current =
@@ -37,27 +36,20 @@ const File: React.FunctionComponent = () => {
     return null;
   }
 
-  const text = t('action', { context: 'file' });
-
   return (
     <ListItem>
       <HyperLink
         before={<Tb.TbDownload aria-hidden />}
         data-track='Resume PDF'
         download
+        iconOnlyUpTo='narrow'
         lookLikeButton
         reloadDocument
         size='small'
         to={FILE}
         variant='secondary'
       >
-        {isNarrow ? (
-          <Text className='kicl-hidden' is='span'>
-            {text}
-          </Text>
-        ) : (
-          text
-        )}
+        {t('action', { context: 'file' })}
       </HyperLink>
     </ListItem>
   );

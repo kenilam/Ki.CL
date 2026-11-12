@@ -10,7 +10,7 @@ type Props = {
 
 const Skill: React.FunctionComponent<Props> = ({ line }) => {
   return (
-    <ListItem>
+    <ListItem className='kicl-print-break-inside-avoid'>
       <Layout gap='narrower'>
         <Text dense>
           <Markdown>{line}</Markdown>

@@ -6,20 +6,20 @@
  * scroll-driven `translate` on the compositor and never paints it here.
  */
 .kicl--views--experiments__home__screen__words {
-  $home: '--kicl--views--experiments__home';
+  $screen: '--kicl--views--experiments__home__screen';
 
   @supports (animation-timeline: scroll()) {
     animation:
-      kicl--views--experiments__home--words-in linear both,
-      kicl--views--experiments__home--words-out linear forwards;
+      kicl--views--experiments__home__screen__words--in linear both,
+      kicl--views--experiments__home__screen__words--out linear forwards;
     animation-range:
-      var(#{$home}--in-start) var(#{$home}--at),
-      var(#{$home}--at) var(#{$home}--out-end);
+      var(#{$screen}--in-start) var(#{$screen}--at),
+      var(#{$screen}--at) var(#{$screen}--out-end);
     animation-timeline: scroll(root), scroll(root);
   }
 }
 
-@keyframes kicl--views--experiments__home--words-in {
+@keyframes kicl--views--experiments__home__screen__words--in {
   from {
     inset-block-start: var(--kicl-gutter-wide);
     opacity: 0;
@@ -33,7 +33,7 @@
   }
 }
 
-@keyframes kicl--views--experiments__home--words-out {
+@keyframes kicl--views--experiments__home__screen__words--out {
   from {
     opacity: 1;
     visibility: visible;

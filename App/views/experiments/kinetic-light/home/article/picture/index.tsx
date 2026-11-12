@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 // Components
-import { Details, Diagram, Heading, Text } from 'design/components';
+import { Details, Diagram, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -17,15 +17,7 @@ const Picture: React.FunctionComponent = () => {
   const spec = useMemo(() => picture(t), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.picture.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.picture.title')}>
       <Text is='p'>{t('article.picture.source')}</Text>
       <Sources />
       <Text is='p'>{t('article.picture.engrave')}</Text>

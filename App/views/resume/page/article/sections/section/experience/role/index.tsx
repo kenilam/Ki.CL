@@ -1,5 +1,8 @@
 import React, { useId } from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Card, Details, Heading, Layout } from 'design/components';
 
@@ -43,7 +46,7 @@ const Role: React.FunctionComponent<Props> = ({ dates }) => {
   return (
     <Card
       aria-labelledby={headingId}
-      className={CLASS_NAME}
+      className={classNames(CLASS_NAME, 'kicl-print-break-inside-avoid')}
       is='article'
       variant='secondary'
     >

@@ -12,6 +12,7 @@ import {
   ImageAgentBackdrop,
   KineticLightBackdrop,
   MusicVisualiser,
+  TreeOfLifePlate,
 } from '@/views/experiments/previews';
 
 // Styles
@@ -19,6 +20,14 @@ import './styles.scss';
 
 // Constants
 import { CLASS_NAME } from './constants';
+
+const BACKDROPS = {
+  daylight: <DaylightPlate />,
+  'image-agent': <ImageAgentBackdrop />,
+  'kinetic-light': <KineticLightBackdrop />,
+  'music-visualiser': <MusicVisualiser />,
+  'tree-of-life': <TreeOfLifePlate />,
+};
 
 /**
  * The background: fades in as the page scrolls. The visualiser draws its idle scene,
@@ -33,16 +42,12 @@ const Plate: React.FunctionComponent = () => {
       className={classNames(
         CLASS_NAME,
         'kicl-animation-none-reduced-motion',
+        'kicl-background-color-body',
         'kicl-inset-0',
         'kicl-position-absolute'
       )}
     >
-      {experiment.plate === 'daylight' ? <DaylightPlate /> : null}
-      {experiment.plate === 'image-agent' ? <ImageAgentBackdrop /> : null}
-      {experiment.plate === 'kinetic-light' ? <KineticLightBackdrop /> : null}
-      {experiment.plate === 'music-visualiser' ? (
-        <MusicVisualiser />
-      ) : null}
+      {BACKDROPS[experiment.plate]}
     </div>
   );
 };

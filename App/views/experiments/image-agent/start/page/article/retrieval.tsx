@@ -15,15 +15,7 @@ const Retrieval: React.FunctionComponent = () => {
   const spec = useMemo(() => context(t), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.retrieval.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.retrieval.title')}>
       <Text is='p'>{t('article.retrieval.assumed')}</Text>
       <Text is='p'>{t('article.retrieval.source')}</Text>
       <Diagram spec={spec} />

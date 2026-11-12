@@ -1,3 +1,6 @@
+// Helpers
+import { readColor } from 'design/helper';
+
 import type { Palette } from './renderer';
 
 /** How many inks the stylesheet may declare; reading stops at the first gap. */
@@ -5,41 +8,24 @@ const MAX_INKS = 6;
 
 /**
  * Every colour comes from the stylesheet, as custom properties on the
- * canvas, so the theme decides them and this file only reads. They come back
- * as computed colours, often `oklab()`, so a 2D context paints one pixel in
- * each and reads it back as sRGB.
+ * canvas, so the theme decides them and this file only reads.
  */
 function readPalette(canvas: HTMLCanvasElement, property: string): Palette {
-  const styles = window.getComputedStyle(canvas);
-  const scratch = document
-    .createElement('canvas')
-    .getContext('2d', { willReadFrequently: true });
+  const parse = (name: string): number | null => {
+    const color = readColor(canvas, `${property}--${name}`);
 
-  const parse = (value: string): number | null => {
-    const trimmed = value.trim();
-
-    if (!trimmed || !scratch || !CSS.supports('color', trimmed)) {
+    if (!color?.alpha) {
       return null;
     }
 
-    scratch.clearRect(0, 0, 1, 1);
-    scratch.fillStyle = trimmed;
-    scratch.fillRect(0, 0, 1, 1);
-
-    const [red, green, blue, alpha] = scratch.getImageData(0, 0, 1, 1).data;
-
-    if (!alpha) {
-      return null;
-    }
-
-    return (red << 16) | (green << 8) | blue;
+    return (color.red << 16) | (color.green << 8) | color.blue;
   };
 
-  const paper = parse(styles.getPropertyValue(`${property}--paper`)) ?? 0;
+  const paper = parse('paper') ?? 0;
   const inks: number[] = [];
 
   for (let index = 1; index <= MAX_INKS; index++) {
-    const ink = parse(styles.getPropertyValue(`${property}--ink-${index}`));
+    const ink = parse(`ink-${index}`);
 
     if (ink === null) {
       break;

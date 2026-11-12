@@ -1,20 +1,12 @@
 .kicl--views--experiments__home__screen {
   $home: '--kicl--views--experiments__home';
+  $screen: '--kicl--views--experiments__home__screen';
 
-  --kicl--views--experiments__home--at: calc(
-    var(#{$home}--index) * var(#{$home}--screen)
-  );
-  --kicl--views--experiments__home--arrival: calc(
-    var(#{$home}--at) - var(#{$home}--screen) * 0.3
-  );
-  --kicl--views--experiments__home--in-start: calc(
-    var(#{$home}--at) - var(#{$home}--screen) * 0.5
-  );
-  --kicl--views--experiments__home--out-end: calc(
-    var(#{$home}--at) + var(#{$home}--screen) * 0.5
-  );
-
-  block-size: var(--kicl--views--experiments__home--screen);
+  #{$screen}--at: calc(var(#{$home}--index) * var(#{$home}--screen));
+  #{$screen}--arrival: calc(var(#{$screen}--at) - var(#{$home}--screen) * 0.3);
+  #{$screen}--in-start: calc(var(#{$screen}--at) - var(#{$home}--screen) * 0.5);
+  #{$screen}--out-end: calc(var(#{$screen}--at) + var(#{$home}--screen) * 0.5);
+  block-size: var(#{$home}--screen);
 
   /*
    * All panels in the same grid cell, stacked in DOM order, and as tall as
@@ -25,7 +17,7 @@
     grid-area: 1 / 1;
 
     @media (prefers-reduced-motion: reduce) {
-      block-size: var(--kicl--views--experiments__home--screen);
+      block-size: var(#{$home}--screen);
       grid-area: auto;
     }
   }

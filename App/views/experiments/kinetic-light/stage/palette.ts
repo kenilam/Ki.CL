@@ -1,6 +1,9 @@
 // Three
 import { THREE } from '@/three';
 
+// Helpers
+import { readColor } from 'design/helper';
+
 // Constants
 import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
 
@@ -14,26 +17,17 @@ const PROPERTY = `--${VIEW}__stage`;
 const RAMP = 10;
 
 const readPalette = (element: Element): Palette => {
-  const style = getComputedStyle(element);
-  const probe = document
-    .createElement('canvas')
-    .getContext('2d', { willReadFrequently: true });
-
   const read = (name: string): THREE.Color => {
-    if (!probe) {
+    const color = readColor(element, `${PROPERTY}--${name}`);
+
+    if (!color) {
       return new THREE.Color(1, 1, 1);
     }
 
-    probe.clearRect(0, 0, 1, 1);
-    probe.fillStyle = style.getPropertyValue(`${PROPERTY}--${name}`).trim();
-    probe.fillRect(0, 0, 1, 1);
-
-    const [red, green, blue] = probe.getImageData(0, 0, 1, 1).data;
-
     return new THREE.Color().setRGB(
-      red / 255,
-      green / 255,
-      blue / 255,
+      color.red / 255,
+      color.green / 255,
+      color.blue / 255,
       THREE.SRGBColorSpace
     );
   };

@@ -36,7 +36,6 @@ const Panel: React.FunctionComponent = () => {
       gap='none'
       className={classNames(
         CLASS_NAME,
-        `${CLASS_NAME}--${experiment.plate}`,
         // These plates are dark in both themes, as on their own pages.
         {
           'kicl--theme--dark':

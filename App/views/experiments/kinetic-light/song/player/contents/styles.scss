@@ -1,0 +1,11 @@
+:root {
+  --kicl--views--experiments--kinetic-light__player--paper: var(
+    --kicl--views--experiments--kinetic-light__stage--paper
+  );
+}
+
+.kicl--views--experiments--kinetic-light__player:has(
+  .kicl--views--experiments--kinetic-light__player__prompt
+) {
+  --kicl--views--experiments--kinetic-light__player--play-display: none;
+}

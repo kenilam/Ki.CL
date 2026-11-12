@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import type { NotificationProps } from 'design/components';
+import { Spinner, type NotificationProps } from 'design/components';
 
 // Icons
 import * as Tb from 'react-icons/tb';
@@ -9,7 +9,7 @@ import * as Tb from 'react-icons/tb';
 type Look = Pick<NotificationProps, 'avatar' | 'level'> & { running?: boolean };
 
 const RUNNING: Look = {
-  avatar: <Tb.TbReload aria-hidden className='is-revolving' />,
+  avatar: <Spinner position='inline' />,
   running: true,
 };
 

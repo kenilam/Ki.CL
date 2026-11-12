@@ -2,19 +2,6 @@
  * Shared tokens for the index. The partials (Stage, Screen, More) read
  * these; each styles its own elements in its own file.
  */
-.kicl--views--experiments__home {
-  --kicl--views--experiments__home--accent: var(--kicl-color-confirm);
-
-  // A faint glow of the accent, a light step on light and a dark one on dark.
-  --kicl--views--experiments__home--accent-glow: var(--kicl-color-green-100);
+:root {
   --kicl--views--experiments__home--screen: 100dvb;
-
-  @at-root .kicl--theme--dark & {
-    --kicl--views--experiments__home--accent-glow: var(--kicl-color-green-900);
-  }
-
-  /* Top padding: clear the fixed site header. */
-  --kicl--views--experiments__home--top: calc(
-    var(--kicl--widgets--global-header--block-size) + var(--kicl-gutter-extreme)
-  );
 }

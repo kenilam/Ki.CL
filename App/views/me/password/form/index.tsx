@@ -1,10 +1,7 @@
 import React from 'react';
 
 // Components
-import { Form } from 'design/components';
-
-// Views
-import { RootError } from '@/views/root-error';
+import { Form, FormMessage } from 'design/components';
 
 // Hooks
 import { usePasswordForm } from './use-password-form';
@@ -21,7 +18,7 @@ const PasswordForm: React.FunctionComponent = () => {
     <Form {...form} onSubmit={form.handleSubmit(submit)}>
       <CurrentPassword />
       <NewPassword />
-      <RootError />
+      <FormMessage name='root' />
       <Send />
     </Form>
   );

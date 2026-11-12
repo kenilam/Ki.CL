@@ -1,7 +1,10 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 
 // Three
 import { Fiber, THREE } from '@/three';
+
+// Hooks
+import { useResponsive } from 'design/hooks';
 
 // Context
 import { useStageContext } from '@/views/experiments/kinetic-light/stage/context';
@@ -23,10 +26,7 @@ const Camera: React.FunctionComponent = () => {
   const { clock, playhead, settings } = useStageContext();
   const { camera, size } = Fiber.useThree();
   const { cuts, staves } = useFraming();
-  const still = useMemo(
-    () => matchMedia('(prefers-reduced-motion: reduce)').matches,
-    []
-  );
+  const { prefersReducedMotion: still } = useResponsive();
   const offset = useRef<{
     position: THREE.Vector3;
     target: THREE.Vector3;

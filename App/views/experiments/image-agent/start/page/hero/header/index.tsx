@@ -18,17 +18,16 @@ const Header: React.FunctionComponent = () => {
   };
 
   return (
-    <Layout autoFlow='row' gap='none' justifyItems='start'>
-      <header className='kicl-inline-size-columns-6'>
+    <Layout autoFlow='row' gap='narrow' justifyItems='start'>
+      <header>
         <BackLink
-          className='kicl-margin-block-end'
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
-        <Heading is='h1' dense className='kicl-font-size-huge'>
+        <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'image_agent' })}
         </Heading>
-        <Text className='kicl-margin-block-start-wide' dense is='p'>
+        <Text className='kicl-max-inline-size-columns-8' dense is='p'>
           {translations.imageAgent.t('description')}
         </Text>
       </header>

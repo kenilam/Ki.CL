@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { Button, Text } from 'design/components';
 
@@ -20,7 +17,7 @@ const Open: React.FunctionComponent = () => {
 
   return (
     <Button
-      className={classNames('kicl-font-size', `${CLASS_NAME}--toggle`)}
+      className='kicl-font-size'
       command='show-modal'
       commandfor={CLASS_NAME}
       unstyled

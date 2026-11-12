@@ -45,7 +45,7 @@ const Fallback: React.FunctionComponent = () => {
         'kicl-padding-inline-frame'
       )}
     >
-      <Heading is='h1' dense className='kicl-font-size-huge'>
+      <Heading dense is='h1' lookLike='display'>
         {translations.common.t('experiment', { context: 'kinetic_light' })}
       </Heading>
       <Text is='p' variant='secondary' className='kicl-margin-block-end'>

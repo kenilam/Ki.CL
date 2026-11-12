@@ -3,9 +3,6 @@ import React from 'react';
 // Components
 import { Button, CardFooter } from 'design/components';
 
-// Icons
-import * as Tb from 'react-icons/tb';
-
 // Hooks
 import { useTranslation } from 'design/hooks';
 
@@ -22,14 +19,7 @@ const Submit: React.FunctionComponent = () => {
 
   return (
     <CardFooter justifyContent='center'>
-      <Button
-        after={
-          loading ? <Tb.TbReload aria-hidden className='is-revolving' /> : null
-        }
-        disabled={loading}
-        onClick={onClick}
-        size='small'
-      >
+      <Button busy={loading} onClick={onClick} size='small'>
         {t('action', { context: 'confirm' })}
       </Button>
     </CardFooter>

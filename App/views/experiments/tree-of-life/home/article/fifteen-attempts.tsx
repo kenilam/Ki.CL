@@ -1,7 +1,7 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 // Components
-import { Heading, Layout, Markdown, Text } from 'design/components';
+import { Details, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -18,33 +18,23 @@ import { V14 } from './constants';
 
 const FifteenAttempts: React.FunctionComponent = () => {
   const { t } = useTranslation('tree-of-life');
-  const id = useId();
 
   // Every link in the copy, by the name the strings use for it.
   const links = { current: toPath(ROOT_NODE_ID) };
 
   return (
-    <Layout justifyItems='start'>
-      <section aria-labelledby={id} className='kicl-max-inline-size-columns-8'>
-        <Heading id={id} is='h2' lookLike='h1'>
-          {t('title', { context: 'fifteen_attempts' })}
-        </Heading>
-
-        <Text is='p'>{t('article.fifteen_attempts.webgl')}</Text>
-
-        <Text is='p'>{t('article.fifteen_attempts.html')}</Text>
-
-        <Figure
-          data={V14}
-          alt={t('article.fifteen_attempts.alt')}
-          caption={t('article.fifteen_attempts.caption_map')}
-        />
-
-        <Text is='p'>
-          <Markdown>{t('article.fifteen_attempts.widest', links)}</Markdown>
-        </Text>
-      </section>
-    </Layout>
+    <Details heading='h3' summary={t('title', { context: 'fifteen_attempts' })}>
+      <Text is='p'>{t('article.fifteen_attempts.webgl')}</Text>
+      <Text is='p'>{t('article.fifteen_attempts.html')}</Text>
+      <Figure
+        data={V14}
+        alt={t('article.fifteen_attempts.alt')}
+        caption={t('article.fifteen_attempts.caption_map')}
+      />
+      <Text is='p'>
+        <Markdown>{t('article.fifteen_attempts.widest', links)}</Markdown>
+      </Text>
+    </Details>
   );
 };
 

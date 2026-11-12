@@ -13,7 +13,7 @@ import { Scene } from '@/views/experiments/kinetic-light/stage/scene';
 import '@/views/experiments/kinetic-light/stage/styles.scss';
 
 // Hooks
-import { useStill } from '@/views/experiments/kinetic-light/backdrop/use-still';
+import { useResponsive } from 'design/hooks';
 
 // Partials
 import { Lens } from './lens';
@@ -24,7 +24,7 @@ import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants'
 const CLASS_NAME = `${VIEW}__backdrop`;
 
 const Picture: React.FunctionComponent = () => {
-  const still = useStill();
+  const { prefersReducedMotion: still } = useResponsive();
 
   return (
     <Canvas

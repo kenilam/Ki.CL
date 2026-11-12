@@ -4,7 +4,7 @@ import React from 'react';
 import * as Tb from 'react-icons/tb';
 
 // Components
-import { HyperLink, ListItem } from 'design/components';
+import { HyperLink, ListItem, Spinner } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -29,7 +29,7 @@ const Pause: React.FunctionComponent = () => {
         variant='secondary'
       >
         {control.loading ? (
-          <Tb.TbReload aria-hidden className='is-revolving' />
+          <Spinner position='inline' />
         ) : (
           <Tb.TbPlayerPauseFilled aria-hidden />
         )}

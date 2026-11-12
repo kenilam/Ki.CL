@@ -6,9 +6,6 @@ import classNames from 'classnames';
 // Constants
 import { CLASS_NAME } from '@/views/experiments/tree-of-life/explorer/constants';
 
-// Styles
-import './styles.scss';
-
 // Hooks
 import { useTranslation } from 'design/hooks';
 import { useSeat } from './use-seat';

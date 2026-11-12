@@ -3,11 +3,8 @@ import React from 'react';
 // Libraries
 import classNames from 'classnames';
 
-// Icons
-import * as Tb from 'react-icons/tb';
-
 // Components
-import { HyperLink } from 'design/components';
+import { MoreLink } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -20,24 +17,17 @@ import { ARTICLE_ID } from '@/views/experiments/music-visualiser/home/constants'
  * it never covers the words when the banner is full.
  */
 const More: React.FunctionComponent = () => {
-  const { t: common } = useTranslation();
-  const label = common('title', { context: 'how_it_was_made' });
+  const { t } = useTranslation();
 
   return (
-    <HyperLink
-      aria-label={label}
+    <MoreLink
       className={classNames(
         'kicl-margin-block-start-wider',
         'kicl-position-relative'
       )}
-      lookLikeButton
-      size='large'
-      title={label}
+      label={t('title', { context: 'how_it_was_made' })}
       to={`#${ARTICLE_ID}`}
-      variant='secondary'
-    >
-      <Tb.TbChevronDown aria-hidden />
-    </HyperLink>
+    />
   );
 };
 

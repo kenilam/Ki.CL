@@ -1,9 +1,9 @@
 // Centred on the header row and in line with its padding. The header measures
 // its height at runtime, so no utility holds either value.
-.kicl--views--navigation--narrow--toggle--is-overlaid {
-  inset-block-start: calc(
-    var(--kicl--widgets--global-header--top) +
-      (var(--kicl--widgets--global-header--block-size) - 1em) / 2
-  );
+.kicl--views--navigation--narrow__close {
+  inset-block-start: var(--kicl--widgets--global-header--top);
   inset-inline-end: var(--kicl--widgets--global-header--padding-inline);
+  margin-block-start: calc(
+    (var(--kicl--widgets--global-header--block-size) - 1em) / 2
+  );
 }

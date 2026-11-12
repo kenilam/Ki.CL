@@ -1,10 +1,7 @@
 import React from 'react';
 
 // Components
-import { List } from 'design/components';
-
-// Views
-import { RootError } from '@/views/root-error';
+import { FormMessage, List } from 'design/components';
 
 // Partials
 import { Cancel } from './cancel';
@@ -14,7 +11,7 @@ import { Submit } from './submit';
 const Actions: React.FunctionComponent = () => {
   return (
     <>
-      <RootError />
+      <FormMessage name='root' />
       <List
         autoFlow='column'
         className='kicl-padding-block-start'

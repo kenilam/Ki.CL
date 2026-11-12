@@ -1,0 +1,9 @@
+// The banner's picture, which the experiments home shows too.
+:root,
+.kicl--theme--light {
+  --kicl--views--experiments--tree-of-life--picture: url('/assets/static/banner.light.webp');
+}
+
+.kicl--theme--dark {
+  --kicl--views--experiments--tree-of-life--picture: url('/assets/static/banner.dark.webp');
+}

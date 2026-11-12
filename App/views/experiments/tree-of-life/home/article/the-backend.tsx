@@ -1,31 +1,22 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 // Components
-import { Heading, Layout, Markdown, Text } from 'design/components';
+import { Details, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
 
 const TheBackend: React.FunctionComponent = () => {
   const { t } = useTranslation('tree-of-life');
-  const id = useId();
 
   return (
-    <Layout justifyItems='start'>
-      <section aria-labelledby={id} className='kicl-max-inline-size-columns-8'>
-        <Heading id={id} is='h2' lookLike='h1'>
-          {t('title', { context: 'the_backend' })}
-        </Heading>
-
-        <Text is='p'>{t('article.the_backend.p1')}</Text>
-
-        <Text is='p'>
-          <Markdown>{t('article.the_backend.p2')}</Markdown>
-        </Text>
-
-        <Text is='p'>{t('article.the_backend.p3')}</Text>
-      </section>
-    </Layout>
+    <Details heading='h3' summary={t('title', { context: 'the_backend' })}>
+      <Text is='p'>{t('article.the_backend.p1')}</Text>
+      <Text is='p'>
+        <Markdown>{t('article.the_backend.p2')}</Markdown>
+      </Text>
+      <Text is='p'>{t('article.the_backend.p3')}</Text>
+    </Details>
   );
 };
 

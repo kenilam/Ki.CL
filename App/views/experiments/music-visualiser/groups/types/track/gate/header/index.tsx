@@ -20,7 +20,7 @@ const Header: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='none' justifyItems='center'>
       <header>
         <BackLink className='kicl-margin-block-end' to={toPath()} />
-        <Heading is='h1' dense className='kicl-font-size-huge'>
+        <Heading dense is='h1' lookLike='display'>
           {title}
         </Heading>
       </header>

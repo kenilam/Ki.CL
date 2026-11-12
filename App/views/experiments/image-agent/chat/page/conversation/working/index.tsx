@@ -9,7 +9,7 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME as CONVERSATION } from '@/views/experiments/image-agent/chat/page/conversation/constants';
 
-const CLASS_NAME = `${CONVERSATION}__text__spinner`;
+const CLASS_NAME = `${CONVERSATION}__working__spinner`;
 
 /**
  * Shown while the agent is working, spaced like a `Status` icon. It sits in a

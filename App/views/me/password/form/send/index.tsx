@@ -3,9 +3,6 @@ import React from 'react';
 // Components
 import { Button, CardFooter, useFormContext } from 'design/components';
 
-// Icons
-import * as Tb from 'react-icons/tb';
-
 // Schema
 import type { PasswordValues } from '@/views/me/password/schema';
 
@@ -20,16 +17,7 @@ const Send: React.FunctionComponent = () => {
 
   return (
     <CardFooter justifyContent='center'>
-      <Button
-        after={
-          isSubmitting ? (
-            <Tb.TbReload aria-hidden className='is-revolving' />
-          ) : null
-        }
-        disabled={isSubmitting}
-        size='small'
-        type='submit'
-      >
+      <Button busy={isSubmitting} size='small' type='submit'>
         {t('action', { context: 'send' })}
       </Button>
     </CardFooter>

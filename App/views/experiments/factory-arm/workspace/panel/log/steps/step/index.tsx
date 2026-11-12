@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Layout, ListItem, Text } from 'design/components';
+import { ListItem, Text } from 'design/components';
 
 // Icons
 import * as Tb from 'react-icons/tb';
@@ -36,29 +36,27 @@ const Step: React.FunctionComponent<Props> = ({ id }) => {
   const { at, level, note } = entry;
 
   return (
-    <Layout
+    <ListItem
       alignItems='baseline'
       autoFlow='column'
       frames='max-content--1fr'
       gap='narrow'
     >
-      <ListItem>
-        <Text
-          className={classNames('kicl-color-grey', 'kicl-font-family-mono')}
-          dateTime={new Date(at).toISOString()}
-          is='time'
-        >
-          {time(at, i18n.language)}
-        </Text>
-        <Text is='span'>
-          <Tb.TbCircleFilled
-            aria-hidden
-            className={`kicl-color-${level ?? 'grey'}`}
-          />{' '}
-          {t('step', { ...note.values, context: note.context })}
-        </Text>
-      </ListItem>
-    </Layout>
+      <Text
+        className={classNames('kicl-color-grey', 'kicl-font-family-mono')}
+        dateTime={new Date(at).toISOString()}
+        is='time'
+      >
+        {time(at, i18n.language)}
+      </Text>
+      <Text is='span'>
+        <Tb.TbCircleFilled
+          aria-hidden
+          className={`kicl-color-${level ?? 'grey'}`}
+        />{' '}
+        {t('step', { ...note.values, context: note.context })}
+      </Text>
+    </ListItem>
   );
 };
 

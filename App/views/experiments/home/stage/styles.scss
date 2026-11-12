@@ -5,11 +5,12 @@
  * after another.
  */
 .kicl--views--experiments__home__stage {
-  $home: '--kicl--views--experiments__home';
-
   &__scroll {
     @supports (animation-timeline: scroll()) {
-      block-size: calc(var(#{$home}--screens) * var(#{$home}--screen));
+      block-size: calc(
+        var(--kicl--views--experiments__home__stage--screens) *
+        var(--kicl--views--experiments__home--screen)
+      );
 
       @media (prefers-reduced-motion: reduce) {
         block-size: auto;

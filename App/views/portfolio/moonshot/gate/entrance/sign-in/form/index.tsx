@@ -1,10 +1,7 @@
 import React from 'react';
 
 // Components
-import { Form as Origin, Layout } from 'design/components';
-
-// Views
-import { RootError } from '@/views/root-error';
+import { Form as Origin, FormMessage, Layout } from 'design/components';
 
 // Hooks
 import { useSignIn } from './use-sign-in';
@@ -28,7 +25,7 @@ const Form: React.FunctionComponent = () => {
       <Origin {...form} onSubmit={form.handleSubmit(onSubmit)}>
         <Email />
         <Password />
-        <RootError />
+        <FormMessage name='root' />
         <Submit />
       </Origin>
     </Layout>

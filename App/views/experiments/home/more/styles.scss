@@ -1,28 +1,44 @@
+// A faint glow of the accent, a light step on light and a dark one on dark.
+:root,
+.kicl--theme--light {
+  --kicl--views--experiments__home__more--accent-glow: var(
+    --kicl-color-green-100
+  );
+}
+
+.kicl--theme--dark {
+  --kicl--views--experiments__home__more--accent-glow: var(
+    --kicl-color-green-900
+  );
+}
+
+:root {
+  --kicl--views--experiments__home__more--rise: 10dvb;
+}
+
 /*
  * "More to come": one element, a full screen in normal flow after the
  * stage, content centred, faint accent gradient. In normal flow it has its
  * own view timeline: the words rise as the section enters.
  */
 .kicl--views--experiments__home__more {
-  --kicl--views--experiments__home--rise: 10dvb;
-
   background-image: radial-gradient(
     ellipse 60% 50% at 80% 20%,
-    var(--kicl--views--experiments__home--accent-glow),
+    var(--kicl--views--experiments__home__more--accent-glow),
     transparent 70%
   );
   scroll-snap-align: start;
 
   @supports (animation-timeline: view()) {
-    animation: kicl--views--experiments__home--rise linear both;
+    animation: kicl--views--experiments__home__more--rise linear both;
     animation-range: entry 0% entry 100%;
     animation-timeline: view();
   }
 }
 
-@keyframes kicl--views--experiments__home--rise {
+@keyframes kicl--views--experiments__home__more--rise {
   from {
-    translate: 0 var(--kicl--views--experiments__home--rise);
+    translate: 0 var(--kicl--views--experiments__home__more--rise);
   }
 
   to {
