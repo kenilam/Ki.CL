@@ -4,7 +4,6 @@ import React from 'react';
 import {
   Dialog as Origin,
   Form,
-  Layout,
   Spinner,
   useFormState,
 } from 'design/components';
@@ -39,23 +38,14 @@ const Dialog: React.FunctionComponent = () => {
       id={DELETE_ID}
       role='alertdialog'
     >
-      <Layout
-        alignContent='center'
-        alignItems='center'
-        justifyContent='center'
-        justifyItems='center'
-      >
-        <section className='kicl-padding-block-end-wide'>
-          <Title />
-          <Notice />
-          <Message />
-          <Spinner in={isSubmitting} position='inline' />
-          <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
-            <Password />
-            <Actions />
-          </Form>
-        </section>
-      </Layout>
+      <Title />
+      <Notice />
+      <Message />
+      <Spinner in={isSubmitting} position='inline' />
+      <Form {...form} onSubmit={form.handleSubmit(onSubmit)}>
+        <Password />
+        <Actions />
+      </Form>
     </Origin>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Dialog as Origin, Layout, Spinner } from 'design/components';
+import { Dialog as Origin, Spinner } from 'design/components';
 
 // Context
 import { useSignOutContext } from '@/views/account/sign-out/context';
@@ -35,20 +35,11 @@ const Dialog: React.FunctionComponent = () => {
       id={SIGN_OUT_ID}
       role='alertdialog'
     >
-      <Layout
-        alignContent='center'
-        alignItems='center'
-        justifyContent='center'
-        justifyItems='center'
-      >
-        <section className='kicl-padding-block-end-wide'>
-          <Title />
-          <Message />
-          <Spinner in={pending} position='inline' />
-          <Failed />
-          <Actions />
-        </section>
-      </Layout>
+      <Title />
+      <Message />
+      <Spinner in={pending} position='inline' />
+      <Failed />
+      <Actions />
     </Origin>
   );
 };
