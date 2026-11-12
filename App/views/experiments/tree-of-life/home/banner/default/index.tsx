@@ -8,6 +8,7 @@ import { Frame, Layout } from 'design/components';
 
 // Partials
 import { Intro } from '@/views/experiments/tree-of-life/home/banner/intro';
+import { More } from '@/views/experiments/tree-of-life/home/banner/more';
 
 // Styles
 import './styles.scss';
@@ -23,7 +24,7 @@ const Default: React.FunctionComponent = () => (
     autoFlow='row'
     gap='none'
     justifyItems='start'
-    justifyContent='start'
+    justifyContent='stretch'
   >
     <Frame grow>
       <header
@@ -37,6 +38,7 @@ const Default: React.FunctionComponent = () => (
         )}
       >
         <Intro />
+        <More />
       </header>
     </Frame>
   </Layout>
