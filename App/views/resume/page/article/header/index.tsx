@@ -13,9 +13,6 @@ import { useVersion } from '@/views/resume/context';
 import { Actions } from './actions';
 import { Contact } from './contact';
 
-// Styles
-import './styles.scss';
-
 // Constants
 import { CLASS_NAME as RESUME } from '@/views/resume/constants';
 
@@ -30,7 +27,7 @@ const Header: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
       <header className={CLASS_NAME}>
-        <Separator className={`${CLASS_NAME}__rule`} />
+        <Separator className='kicl-inline-size-xs' variant='gradient' />
         <Heading className='kicl-font-size-larger' dense is='h1'>
           {t('name')}
         </Heading>
