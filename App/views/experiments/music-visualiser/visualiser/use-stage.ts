@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
+// Hooks
+import { useResponsive } from 'design/hooks';
+
 import { createDirector } from './director';
 import {
   createExtractor,
   emptyFeatures,
 } from '@/views/experiments/music-visualiser/features';
 import { readNumber, readPalette } from './palette';
-import { createRenderer } from './renderer';
+import { createRenderer, type Palette } from './renderer';
 
 /** Retina and beyond are capped; the scenes are soft and gain nothing past two. */
 const MAX_PIXEL_RATIO = 2;
@@ -54,9 +57,15 @@ export function useStage({
   const director = useRef(createDirector());
   const look = useRef({ seed: Math.random(), warmth: 0.5 });
   const playingRef = useRef(playing);
+  const palette = useRef<Palette | null>(null);
   const [generation, setGeneration] = useState(0);
+  const { theme } = useResponsive();
 
   playingRef.current = playing;
+
+  useEffect(() => {
+    palette.current = canvas ? readPalette(canvas, property) : null;
+  }, [canvas, property, theme]);
 
   useEffect(() => {
     if (track) {
@@ -94,7 +103,6 @@ export function useStage({
 
     renderer.resize(Math.ceil(width * ratio), Math.ceil(height * ratio));
 
-    let palette = readPalette(canvas, property);
     let frame = 0;
     let last = performance.now();
     let seconds = 0;
@@ -126,6 +134,10 @@ export function useStage({
 
       const { state: scenes } = director.current;
 
+      if (!palette.current) {
+        return;
+      }
+
       renderer.draw({
         cell,
         /*
@@ -136,7 +148,7 @@ export function useStage({
         features: features.medium,
         levels,
         mix: scenes.mix,
-        palette,
+        palette: palette.current,
         ringStrengths: scenes.ringStrengths,
         ringTimes: scenes.ringTimes,
         sceneA: scenes.sceneA,
@@ -154,15 +166,6 @@ export function useStage({
       draw(now);
     };
 
-    const theme = new MutationObserver(() => {
-      palette = readPalette(canvas, property);
-    });
-
-    theme.observe(document.body, {
-      attributeFilter: ['class'],
-      attributes: true,
-    });
-
     const onLost = (event: Event) => {
       event.preventDefault();
       window.cancelAnimationFrame(frame);
@@ -178,7 +181,6 @@ export function useStage({
 
     return () => {
       window.cancelAnimationFrame(frame);
-      theme.disconnect();
       canvas.removeEventListener('webglcontextlost', onLost);
       canvas.removeEventListener('webglcontextrestored', onRestored);
       renderer.dispose();
