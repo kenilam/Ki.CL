@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 
 // Hooks
-import { useStill } from '@/views/experiments/kinetic-light/backdrop/use-still';
+import { useResponsive } from 'design/hooks';
 
 // Constants
 import { START } from '@/views/experiments/kinetic-light/backdrop/interstellar';
 
 const useClock = () => {
-  const still = useStill();
+  const { prefersReducedMotion: still } = useResponsive();
 
   return useMemo(() => {
     let began: number | null = null;

@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { BackLink, Heading, Layout, Text } from 'design/components';
 
@@ -30,14 +27,7 @@ const Header: React.FunctionComponent = () => {
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
-        <Heading
-          dense
-          className={classNames(
-            'kicl-font-size-huge',
-            'kicl-line-height-narrower'
-          )}
-          is='h1'
-        >
+        <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'kinetic_light' })}
         </Heading>
         <Text is='p' dense className='kicl-max-inline-size-columns-5'>
