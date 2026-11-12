@@ -1,7 +1,7 @@
-import React, { useId } from 'react';
+import React from 'react';
 
 // Components
-import { Heading, Layout, Markdown, Text } from 'design/components';
+import { Details, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -14,26 +14,17 @@ import {
 
 const WhatIGaveUp: React.FunctionComponent = () => {
   const { t } = useTranslation('tree-of-life');
-  const id = useId();
 
   const links = { current: toPath(ROOT_NODE_ID) };
 
   return (
-    <Layout justifyItems='start'>
-      <section aria-labelledby={id} className='kicl-max-inline-size-columns-8'>
-        <Heading id={id} is='h2' lookLike='h1'>
-          {t('title', { context: 'what_i_gave_up' })}
-        </Heading>
-
-        <Text is='p'>{t('article.what_i_gave_up.one_taxon')}</Text>
-
-        <Text is='p'>{t('article.what_i_gave_up.p2')}</Text>
-
-        <Text is='p'>
-          <Markdown>{t('article.what_i_gave_up.p3', links)}</Markdown>
-        </Text>
-      </section>
-    </Layout>
+    <Details heading='h3' summary={t('title', { context: 'what_i_gave_up' })}>
+      <Text is='p'>{t('article.what_i_gave_up.one_taxon')}</Text>
+      <Text is='p'>{t('article.what_i_gave_up.p2')}</Text>
+      <Text is='p'>
+        <Markdown>{t('article.what_i_gave_up.p3', links)}</Markdown>
+      </Text>
+    </Details>
   );
 };
 

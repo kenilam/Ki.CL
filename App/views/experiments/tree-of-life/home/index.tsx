@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { Layout } from 'design/components';
 
@@ -16,9 +13,7 @@ import { CLASS_NAME } from './constants';
 const Home: React.FunctionComponent = () => {
   return (
     <Layout gap='wide'>
-      <article
-        className={classNames(CLASS_NAME, 'kicl-padding-block-end-frame')}
-      >
+      <article className={CLASS_NAME}>
         <Banner />
         <Article />
       </article>
