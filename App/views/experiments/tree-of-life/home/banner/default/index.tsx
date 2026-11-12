@@ -20,7 +20,7 @@ const CLASS_NAME = `${BANNER}__default`;
 
 const Default: React.FunctionComponent = () => (
   <Layout
-    alignContent='center'
+    alignContent='end'
     autoFlow='row'
     gap='none'
     justifyItems='start'
