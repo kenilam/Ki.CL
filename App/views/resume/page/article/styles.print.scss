@@ -39,37 +39,5 @@
     li + li {
       margin-block-start: var(--kicl-gutter-narrower);
     }
-
-    /*
-     * How the document breaks across sheets, which is the page's business
-     * and not any one section's: a heading stays with what it introduces,
-     * and a line is never split between two sheets.
-     */
-    h2,
-    h3,
-    header,
-    summary {
-      break-after: avoid;
-    }
-
-    li,
-    p {
-      break-inside: avoid;
-    }
-
-    // The earlier roles are four lines. They stay on one sheet together.
-    section section {
-      break-inside: avoid;
-    }
-
-    /*
-     * Nothing is cut between two sheets: a section goes to the next sheet
-     * whole, and so does each role inside Experience. Experience itself is
-     * longer than a sheet, so it is the one that breaks, between two roles.
-     */
-    > section:not(:has(article)),
-    article {
-      break-inside: avoid;
-    }
   }
 }

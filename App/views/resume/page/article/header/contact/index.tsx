@@ -18,9 +18,11 @@ const Contact: React.FunctionComponent = () => {
   return (
     <Layout gap='narrow'>
       <address className='kicl-font-style-normal'>
-        <Text dense>{t('location')}</Text>
+        <Text className='kicl-print-break-inside-avoid' dense>
+          {t('location')}
+        </Text>
         <Layout display='flex' wrap>
-          <Text dense>
+          <Text className='kicl-print-break-inside-avoid' dense>
             <Email />
             <Phone />
             <Profiles />

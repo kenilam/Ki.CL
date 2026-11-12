@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Components
 import { Heading, Layout, Separator, Text } from 'design/components';
 
@@ -26,13 +29,21 @@ const Header: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
-      <header className={CLASS_NAME}>
+      <header
+        className={classNames(CLASS_NAME, 'kicl-print-break-after-avoid')}
+      >
         <Separator className='kicl-inline-size-xs' variant='gradient' />
         <Heading className='kicl-font-size-larger' dense is='h1'>
           {t('name')}
         </Heading>
         <Actions />
-        <Text className='kicl-font-size-medium' dense>
+        <Text
+          className={classNames(
+            'kicl-font-size-medium',
+            'kicl-print-break-inside-avoid'
+          )}
+          dense
+        >
           {headline}
         </Text>
         <Contact />

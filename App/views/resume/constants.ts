@@ -30,6 +30,7 @@ const PHONE_KEY = 'kicl-resume-phone';
 const HEADING = [
   `${CLASS_NAME}__heading`,
   'kicl-font-size-small',
+  'kicl-print-break-after-avoid',
   'kicl-text-transform-uppercase',
 ];
 
