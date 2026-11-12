@@ -1,8 +1,5 @@
 import React from 'react';
 
-// Libraries
-import classNames from 'classnames';
-
 // Components
 import { Heading } from 'design/components';
 
@@ -17,11 +14,7 @@ const Title: React.FunctionComponent = () => {
   const { experiment } = useScreenContext();
 
   return (
-    <Heading
-      dense
-      className={classNames('kicl-font-size-huge', 'kicl-line-height-narrower')}
-      is='h2'
-    >
+    <Heading dense is='h2' lookLike='display'>
       {t('experiment', { context: experiment.context })}
     </Heading>
   );

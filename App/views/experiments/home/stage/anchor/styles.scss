@@ -18,16 +18,3 @@
     }
   }
 }
-
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    /*
-     * The panel maths count from the top of the page, not from under the
-     * header, so the site-wide header padding would stop every jump short.
-     */
-    html:has(.kicl--views--experiments__home__stage__anchor) {
-      scroll-padding-block-start: 0;
-      scroll-snap-type: y mandatory;
-    }
-  }
-}

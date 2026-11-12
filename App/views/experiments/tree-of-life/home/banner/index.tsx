@@ -10,6 +10,7 @@ import { Frame, Layout } from 'design/components';
 import { Intro } from './intro';
 
 // Styles
+import '@/views/experiments/tree-of-life/styles.scss';
 import './styles.scss';
 
 // Constants

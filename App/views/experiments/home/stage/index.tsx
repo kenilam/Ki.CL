@@ -39,7 +39,9 @@ const Stage: React.FunctionComponent = () => {
         'kicl-position-relative'
       )}
       style={
-        { '--kicl--views--experiments__home--screens': SCREENS.length } as never
+        {
+          '--kicl--views--experiments__home__stage--screens': SCREENS.length,
+        } as never
       }
     >
       <Frame>
