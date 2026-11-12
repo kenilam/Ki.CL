@@ -67,9 +67,7 @@ const Words: React.FunctionComponent = () => {
         >
           {translations.common.t('experiment', { context: 'daylight' })}
         </Heading>
-        <Text className='kicl-max-inline-size-columns-4' is='p'>
-          {translations.daylight.t('lede')}
-        </Text>
+        <Text is='p'>{translations.daylight.t('lede')}</Text>
       </header>
     </Layout>
   );

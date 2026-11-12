@@ -19,7 +19,7 @@ const Header: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
-      <header className='kicl-inline-size-columns-6'>
+      <header>
         <BackLink
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}

@@ -29,7 +29,7 @@ const Header: React.FunctionComponent = () => {
         <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'kinetic_light' })}
         </Heading>
-        <Text is='p' dense className='kicl-max-inline-size-columns-5'>
+        <Text is='p' dense>
           {translations.kineticLight.t('lede')}
         </Text>
         <Allowance />
