@@ -6,8 +6,8 @@ import {
   type ContactInput,
 } from 'api/provider';
 
-// Widgets
-import type { ContactFormValues } from 'design/widgets';
+// Spec
+import type { Values } from './spec';
 
 // Session
 import { useChallenged } from '@/session';
@@ -22,7 +22,7 @@ const useSend = () => {
   const challenged = useChallenged();
 
   return useCallback(
-    ({ email, message }: ContactFormValues) => {
+    ({ email, message }: Values) => {
       return challenged(() => {
         return contact({
           variables: {
