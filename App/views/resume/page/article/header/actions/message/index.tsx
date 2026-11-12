@@ -4,19 +4,16 @@ import React from 'react';
 import * as Tb from 'react-icons/tb';
 
 // Components
-import { Button, ListItem, Text } from 'design/components';
+import { Button, ListItem } from 'design/components';
 
 // Hooks
-import { useResponsive, useTranslation } from 'design/hooks';
+import { useTranslation } from 'design/hooks';
 
 // Constants
 import { CONTACT_ID } from '@/views/constants';
 
 const Message: React.FunctionComponent = () => {
   const { t } = useTranslation('resume');
-  const { isNarrow } = useResponsive();
-
-  const text = t('action', { context: 'message' });
 
   return (
     <ListItem>
@@ -25,16 +22,11 @@ const Message: React.FunctionComponent = () => {
         command='show-modal'
         commandfor={CONTACT_ID}
         data-track='Resume message'
+        iconOnlyUpTo='narrow'
         size='small'
         variant='ghost'
       >
-        {isNarrow ? (
-          <Text className='kicl-hidden' is='span'>
-            {text}
-          </Text>
-        ) : (
-          text
-        )}
+        {t('action', { context: 'message' })}
       </Button>
     </ListItem>
   );
