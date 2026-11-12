@@ -16,6 +16,10 @@ import { useVersion } from '@/views/resume/context';
 import { Header } from './header';
 import { Sections } from './sections';
 
+// Styles
+import './styles.scss';
+import './styles.print.scss';
+
 // Constants
 import { CLASS_NAME } from '@/views/resume/constants';
 

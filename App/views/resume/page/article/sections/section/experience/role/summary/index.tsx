@@ -9,6 +9,9 @@ import type { Resolved } from '@/views/resume/content';
 // Context
 import { useVersion } from '@/views/resume/context';
 
+// Styles
+import './styles.scss';
+
 // Constants
 import { CLASS_NAME as RESUME } from '@/views/resume/constants';
 
@@ -29,7 +32,7 @@ const Summary: React.FunctionComponent<Props> = ({ dates }) => {
         <Text className='kicl-font-weight-bold' dense is='span'>
           {role.title}
         </Text>
-        <Badge className={`${RESUME}__role__dates`} variant='ghost'>
+        <Badge className={`${RESUME}__role__summary__dates`} variant='ghost'>
           {dates}
         </Badge>
       </span>
