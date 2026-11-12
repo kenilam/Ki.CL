@@ -1,5 +1,5 @@
 .kicl--views--experiments--kinetic-light__player__chrome {
-  $paper: var(--kicl--views--experiments--kinetic-light__stage--paper);
+  $paper: var(--kicl--views--experiments--kinetic-light__player--paper);
   $paper-85: color-mix(in srgb, #{$paper} 85%, transparent);
   $paper-70: color-mix(in srgb, #{$paper} 70%, transparent);
   $paper-50: color-mix(in srgb, #{$paper} 50%, transparent);

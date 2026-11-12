@@ -17,6 +17,9 @@ import { Chrome } from '@/views/experiments/kinetic-light/song/player/chrome';
 import { Fallback } from '@/views/experiments/kinetic-light/song/player/fallback';
 import { Prompt } from '@/views/experiments/kinetic-light/song/player/prompt';
 
+// Styles
+import './styles.scss';
+
 // Constants
 import { CLASS_NAME as VIEW } from '@/views/experiments/kinetic-light/constants';
 
