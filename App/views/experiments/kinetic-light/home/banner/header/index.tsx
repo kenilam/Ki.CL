@@ -23,7 +23,6 @@ const Header: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='narrow' justifyItems='start'>
       <header>
         <BackLink
-          className='kicl-margin-block-end'
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
