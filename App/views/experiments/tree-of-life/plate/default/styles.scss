@@ -1,0 +1,27 @@
+:root,
+.kicl--theme--light {
+  --kicl--views--experiments--tree-of-life__plate--exposure: 1.5;
+}
+
+.kicl--theme--dark {
+  --kicl--views--experiments--tree-of-life__plate--exposure: 0.5;
+}
+
+.kicl--views--experiments--tree-of-life__plate--default {
+  background-position: left center;
+
+  &::after {
+    backdrop-filter: blur(var(--kicl-size))
+      brightness(var(--kicl--views--experiments--tree-of-life__plate--exposure))
+      saturate(60%);
+    background-image: radial-gradient(
+      ellipse at 50% 45%,
+      transparent 30%,
+      var(--kicl-color-page-a48) 74%,
+      var(--kicl-body-background-color) 100%
+    );
+    content: '';
+    inset: 0;
+    position: absolute;
+  }
+}

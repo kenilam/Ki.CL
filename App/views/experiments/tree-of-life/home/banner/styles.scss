@@ -1,18 +1,6 @@
-:root,
-.kicl--theme--light {
-  --kicl--views--experiments--tree-of-life__banner--plate-blend: multiply;
-  --kicl--views--experiments--tree-of-life__banner--plate-exposure: 1.5;
-}
-
-.kicl--theme--dark {
-  --kicl--views--experiments--tree-of-life__banner--plate-blend: screen;
-  --kicl--views--experiments--tree-of-life__banner--plate-exposure: 0.5;
-}
-
 .kicl--views--experiments--tree-of-life__banner {
   --kicl-layout--block-size: inherit;
 
-  background-image: var(--kicl--views--experiments--tree-of-life--picture);
   isolation: isolate;
 
   // On the frame itself, so `100%` is the window: less the frame's own gap.
