@@ -1,7 +1,13 @@
 import React from 'react';
 
 // Components
-import { Animation, Badge, BadgeLabel, Skeleton } from 'design/components';
+import {
+  Animation,
+  Badge,
+  BadgeLabel,
+  type BadgeProps,
+  Skeleton,
+} from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -22,9 +28,19 @@ const Allowance: React.FunctionComponent = () => {
 
   const { limit, remaining } = allowance;
 
+  let level: BadgeProps['level'] = 'confirm';
+
+  if (remaining <= limit / 2) {
+    level = 'warning';
+  }
+
+  if (remaining <= 1) {
+    level = 'error';
+  }
+
   return (
     <Animation>
-      <Badge limit={limit} remaining={remaining} size='small'>
+      <Badge level={level} size='small'>
         <BadgeLabel>
           {translations.common.t('label', { context: 'allowance' })}
         </BadgeLabel>
