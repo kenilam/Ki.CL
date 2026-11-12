@@ -2,6 +2,9 @@ import { useEffect, useMemo, useRef } from 'react';
 
 import { THREE, Fiber } from '@/three';
 
+// Hooks
+import { useResponsive } from 'design/hooks';
+
 // Anchors
 import { reach } from '@/views/experiments/tree-of-life/explorer/scene/anchors';
 
@@ -19,9 +22,6 @@ import {
   SPIN,
 } from '@/views/experiments/tree-of-life/explorer/scene/globe/constants';
 
-// Motion
-import { prefersReducedMotion } from '@/views/experiments/tree-of-life/explorer/scene/prefers-reduced-motion';
-
 // Zoom
 import { getZoom } from '@/views/experiments/tree-of-life/explorer/scene/zoom';
 
@@ -35,7 +35,7 @@ const useCage = () => {
   const materialRef = useRef<THREE.MeshBasicMaterial>(null);
   const shellMeshes = useRef(new Map<number, THREE.Mesh>());
   const shellMaterials = useRef(new Map<number, THREE.MeshBasicMaterial>());
-  const reduced = useMemo(prefersReducedMotion, []);
+  const { prefersReducedMotion: reduced } = useResponsive();
 
   // One geometry for the crisp cage and both shells; they differ only in scale.
   const geometry = useMemo(() => new THREE.SphereGeometry(1, 32, 20), []);
