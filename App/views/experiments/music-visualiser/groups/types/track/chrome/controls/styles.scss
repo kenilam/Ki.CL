@@ -3,11 +3,8 @@
 
   block-size: var(#{$chrome}--controls-block-size);
   opacity: var(#{$chrome}--controls-opacity);
-
-  // The duration is a utility class on the element.
   transition-delay: var(#{$chrome}--controls-delay);
   transition-property: opacity, block-size;
-  transition-timing-function: var(--kicl-ease-sine-out);
 
   @supports (interpolate-size: allow-keywords) {
     interpolate-size: allow-keywords;

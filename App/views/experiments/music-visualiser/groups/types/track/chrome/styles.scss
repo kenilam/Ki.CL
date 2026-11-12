@@ -15,7 +15,6 @@
     env(safe-area-inset-bottom)
   );
   transition-property: row-gap;
-  transition-timing-function: var(--kicl-ease-sine-out);
 
   // Idle: the controls go.
   &--idle:not(:has(:popover-open)) {

@@ -43,6 +43,7 @@ const Chrome: React.FunctionComponent = () => {
           'kicl-inline-size-full',
           'kicl-padding-block-start-frame',
           'kicl-padding-inline-frame-columns-12',
+          'kicl-ease-sine-out',
           'kicl-position-relative',
           'kicl-transition-duration-slow',
           {
