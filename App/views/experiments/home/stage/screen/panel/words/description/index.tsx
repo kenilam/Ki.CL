@@ -17,7 +17,7 @@ const Description: React.FunctionComponent = () => {
   const { experiment } = useScreenContext();
 
   return (
-    <Text is='p' dense>
+    <Text className='kicl-max-inline-size-columns-8' dense is='p'>
       {t('description', {
         context: experiment.context,
         scenes: MUSIC_VISUALISER_SCENES.length,

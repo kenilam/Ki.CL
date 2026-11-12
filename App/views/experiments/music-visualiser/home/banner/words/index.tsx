@@ -53,7 +53,7 @@ const Words: React.FunctionComponent = () => {
         <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'music_visualiser' })}
         </Heading>
-        <Text is='p'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           {translations.musicVisualiser.t('summary', {
             scenes: SCENES.length,
             tracks: TOTAL,

@@ -30,7 +30,9 @@ const Intro: React.FunctionComponent = () => {
       <Heading className={TITLE_CLASS_NAME} dense is='h1' lookLike='display'>
         {translations.common.t('experiment', { context: 'tree_of_life' })}
       </Heading>
-      <Text is='p'>{translations.treeOfLife.t('lede')}</Text>
+      <Text className='kicl-max-inline-size-columns-8' is='p'>
+        {translations.treeOfLife.t('lede')}
+      </Text>
       <HyperLink
         className='kicl-margin-block-start-narrow'
         level='confirm'

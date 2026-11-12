@@ -27,7 +27,7 @@ const Header: React.FunctionComponent = () => {
         <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'image_agent' })}
         </Heading>
-        <Text dense is='p'>
+        <Text className='kicl-max-inline-size-columns-8' dense is='p'>
           {translations.imageAgent.t('description')}
         </Text>
       </header>
