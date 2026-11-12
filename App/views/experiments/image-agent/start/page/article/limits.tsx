@@ -19,15 +19,7 @@ const Limits: React.FunctionComponent = () => {
   );
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.limits.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.limits.title')}>
       <Text is='p'>{t('article.limits.cost')}</Text>
       <Text is='p'>{t('article.limits.day')}</Text>
       <Diagram spec={specs.allowance} />

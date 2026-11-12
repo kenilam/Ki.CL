@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from 'design/components';
+import { Details, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -15,14 +15,9 @@ const WhatThisIs: React.FunctionComponent = () => {
 
   return (
     <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
+      heading='h3'
       open
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {translations.common.t('title', { context: 'what_this_is' })}
-        </Heading>
-      }
+      summary={translations.common.t('title', { context: 'what_this_is' })}
     >
       <Text is='p'>
         {translations.musicVisualiser.t('article.what_this_is.experiment')}

@@ -12,6 +12,8 @@ import { SCREENS } from '@/views/experiments/home/stage/screens';
 
 const CLASS_NAME = `${HOME}__stage__anchor`;
 
+const SNAPS = CSS.supports('animation-timeline', 'scroll()');
+
 type Props = Pick<(typeof SCREENS)[number]['experiment'], 'plate'>;
 
 /**
@@ -29,7 +31,10 @@ const Anchor: React.FunctionComponent<Props> = ({ plate }) => {
     <div
       className={classNames(
         CLASS_NAME,
+        { 'kicl-scroll-snap-page': SNAPS },
+        'kicl-block-size-screen',
         'kicl-inset-inline-0',
+        'kicl-pointer-events-none',
         'kicl-position-absolute'
       )}
       id={plate}

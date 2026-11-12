@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 // Components
-import { Details, Diagram, Heading, Text } from 'design/components';
+import { Details, Diagram, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -15,21 +15,12 @@ import { Voices } from './voices';
 import { beat } from './diagrams/beat';
 import { sound } from './diagrams/sound';
 
-
 const Sound: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');
   const specs = useMemo(() => ({ beat: beat(t), sound: sound(t) }), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.sound.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.sound.title')}>
       <Text is='p'>{t('article.sound.voices')}</Text>
       <Voices />
       <Text is='p'>{t('article.sound.drums')}</Text>

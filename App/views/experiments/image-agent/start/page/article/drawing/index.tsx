@@ -18,15 +18,7 @@ const Drawing: React.FunctionComponent = () => {
   const spec = useMemo(() => drawing(t), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.drawing.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.drawing.title')}>
       <Text is='p'>{t('article.drawing.order')}</Text>
       <Text is='p'>{t('article.drawing.into_code')}</Text>
       <Steps />

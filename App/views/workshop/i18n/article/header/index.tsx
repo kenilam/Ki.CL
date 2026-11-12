@@ -23,7 +23,7 @@ const Header: React.FunctionComponent = () => {
     <Layout gap='normal'>
       <header>
         <hgroup>
-          <Heading className='kicl-font-size-huge' id={TITLE_ID}>
+          <Heading id={TITLE_ID} lookLike='display'>
             {translations.common.t('internationalisation')}
           </Heading>
           <Text lookLike='h2'>

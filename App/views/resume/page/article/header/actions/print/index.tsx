@@ -4,10 +4,10 @@ import React from 'react';
 import * as Tb from 'react-icons/tb';
 
 // Components
-import { Button, ListItem, Text } from 'design/components';
+import { Button, ListItem } from 'design/components';
 
 // Hooks
-import { useResponsive, useTranslation } from 'design/hooks';
+import { useTranslation } from 'design/hooks';
 
 const print = () => {
   window.print();
@@ -15,26 +15,18 @@ const print = () => {
 
 const Print: React.FunctionComponent = () => {
   const { t } = useTranslation();
-  const { isNarrow } = useResponsive();
-
-  const text = t('action', { context: 'print' });
 
   return (
     <ListItem>
       <Button
         before={<Tb.TbPrinter aria-hidden />}
         data-track='Resume print'
+        iconOnlyUpTo='narrow'
         onClick={print}
         size='small'
         variant='secondary'
       >
-        {isNarrow ? (
-          <Text className='kicl-hidden' is='span'>
-            {text}
-          </Text>
-        ) : (
-          text
-        )}
+        {t('action', { context: 'print' })}
       </Button>
     </ListItem>
   );

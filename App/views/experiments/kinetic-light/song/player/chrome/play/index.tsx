@@ -29,16 +29,12 @@ const Play: React.FunctionComponent = () => {
     icon = <Tb.TbPlayerPauseFilled aria-hidden />;
   }
 
-  if (status === 'loading' || arranging) {
-    icon = <Tb.TbReload aria-hidden className='is-revolving' />;
-  }
-
   return (
     <ListItem className={CLASS_NAME}>
       <Button
         aria-keyshortcuts='Space'
         aria-label={t('action', { context: playing ? 'pause' : 'play' })}
-        disabled={arranging}
+        busy={status === 'loading' || arranging}
         onClick={() => (playing ? pause() : void play())}
         ref={button}
         size='small'

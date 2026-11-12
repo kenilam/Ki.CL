@@ -33,7 +33,12 @@ const Words: React.FunctionComponent = () => {
   };
 
   return (
-    <Layout alignContent='start' autoFlow='row' gap='none' justifyItems='start'>
+    <Layout
+      alignContent='start'
+      autoFlow='row'
+      gap='narrow'
+      justifyItems='start'
+    >
       <header
         className={classNames(
           CLASS_NAME,
@@ -47,27 +52,22 @@ const Words: React.FunctionComponent = () => {
         )}
       >
         <BackLink
-          className={classNames(
-            'kicl-margin-block-end',
-            'kicl-pointer-events-auto'
-          )}
+          className='kicl-pointer-events-auto'
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
         <Heading
-          className={classNames(`${CLASS_NAME}__title`, 'kicl-font-size-huge')}
+          className={classNames(
+            `${CLASS_NAME}__title`,
+            'kicl-background-clip-text'
+          )}
           dense
           is='h1'
+          lookLike='display'
         >
           {translations.common.t('experiment', { context: 'daylight' })}
         </Heading>
-        <Text
-          className={classNames(
-            'kicl-margin-block-start-wide',
-            'kicl-max-inline-size-columns-4'
-          )}
-          is='p'
-        >
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           {translations.daylight.t('lede')}
         </Text>
       </header>

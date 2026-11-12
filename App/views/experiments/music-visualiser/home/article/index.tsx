@@ -17,37 +17,27 @@ import { Picture } from './picture';
 import { WhatThisIs } from './what-this-is';
 
 // Constants
-import {
-  ARTICLE_ID,
-  CLASS_NAME as HOME,
-} from '@/views/experiments/music-visualiser/home/constants';
+import { ARTICLE_ID } from '@/views/experiments/music-visualiser/home/constants';
 
-const CLASS_NAME = `${HOME}__article`;
-
-/**
- * How it was made: the music, the picture, the data, and the address. The
- * heading is for screen readers; on screen the banner's chevron names it.
- */
+/** How it was made: the music, the picture, the data, and the address. */
 const Article: React.FunctionComponent = () => {
+  const { t } = useTranslation();
   const id = useId();
-  const { t: common } = useTranslation();
 
   return (
     <Layout autoFlow='row' gap='wide' justifyItems='stretch'>
       <section
         aria-labelledby={id}
         className={classNames(
-          CLASS_NAME,
+          'kicl-inline-size-columns-12',
           'kicl-margin-inline-auto',
-          'kicl-max-inline-size-columns-12',
-          'kicl-padding-block-start-frame',
-          'kicl-padding-inline-frame',
-          'kicl-position-relative'
+          'kicl-padding-block-frame',
+          'kicl-padding-inline-frame'
         )}
         id={ARTICLE_ID}
       >
-        <Heading className='kicl-hidden' id={id} is='h2'>
-          {common('title', { context: 'how_it_was_made' })}
+        <Heading className='kicl-font-size-larger' id={id} is='h2'>
+          {t('title', { context: 'how_it_was_made' })}
         </Heading>
         <WhatThisIs />
         <Music />

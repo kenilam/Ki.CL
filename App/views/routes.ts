@@ -47,8 +47,13 @@ type Experiment = Pick<ButtonProps, 'level'> & {
     | 'kinetic_light'
     | 'music_visualiser'
     | 'tree_of_life';
-  /** Which background Stage/Screen paints; a class modifier. */
-  plate: string;
+  /** Which background Stage/Screen paints. */
+  plate:
+    | 'daylight'
+    | 'image-agent'
+    | 'kinetic-light'
+    | 'music-visualiser'
+    | 'tree-of-life';
   to: string;
 };
 

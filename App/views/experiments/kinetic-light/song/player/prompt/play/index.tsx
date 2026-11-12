@@ -20,14 +20,10 @@ const Play: React.FunctionComponent<Props> = (props) => {
     icon = <Tb.TbRefresh aria-hidden />;
   }
 
-  if (busy) {
-    icon = <Tb.TbReload aria-hidden className='is-revolving' />;
-  }
-
   return (
     <Button
       {...props}
-      disabled={busy}
+      busy={busy}
       onClick={() => void play()}
       ref={button}
       size='large'

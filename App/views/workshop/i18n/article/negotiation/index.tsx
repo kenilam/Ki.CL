@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Markdown, Text } from 'design/components';
+import { Details, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -14,15 +14,7 @@ const Negotiation: React.FunctionComponent = () => {
   const { t } = useTranslation('internationalisation');
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h2' lookLike='h1'>
-          {t('article.negotiation.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h2' summary={t('article.negotiation.title')}>
       <Text is='p'>
         <Markdown>{t('article.negotiation.header_intro')}</Markdown>
       </Text>

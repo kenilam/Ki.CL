@@ -35,7 +35,7 @@ const Words: React.FunctionComponent = () => {
   };
 
   return (
-    <Layout autoFlow='row' gap='none' justifyItems='center'>
+    <Layout autoFlow='row' gap='narrow' justifyItems='center'>
       <header
         className={classNames(
           CLASS_NAME,
@@ -47,14 +47,13 @@ const Words: React.FunctionComponent = () => {
         )}
       >
         <BackLink
-          className='kicl-margin-block-end'
           label={translations.common.t('experiments')}
           to={toExperimentsPath(PATH)}
         />
-        <Heading is='h1' dense className='kicl-font-size-huge'>
+        <Heading dense is='h1' lookLike='display'>
           {translations.common.t('experiment', { context: 'music_visualiser' })}
         </Heading>
-        <Text is='p' className='kicl-margin-block-start-wide'>
+        <Text className='kicl-max-inline-size-columns-8' is='p'>
           {translations.musicVisualiser.t('summary', {
             scenes: SCENES.length,
             tracks: TOTAL,
@@ -62,7 +61,7 @@ const Words: React.FunctionComponent = () => {
         </Text>
         <HyperLink
           after={<Tb.TbPlayerPlayFilled aria-hidden />}
-          className='kicl-margin-block-start-wide'
+          className='kicl-margin-block-start-narrow'
           lookLikeButton
           size='small'
           to={toTrackPath(track)}

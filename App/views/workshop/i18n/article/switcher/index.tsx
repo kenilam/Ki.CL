@@ -6,17 +6,15 @@ import classNames from 'classnames';
 // Components
 import { Card, Layout, Text } from 'design/components';
 
-// Widgets
-import { LanguageSelect } from 'design/widgets';
+// Views
+import { LanguageSelect } from '@/views/language-select';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
-import { useLanguages } from '@/views/use-languages';
 import { usePreview } from './use-preview';
 
 const Switcher: React.FunctionComponent = () => {
   const { i18n, t } = useTranslation('internationalisation');
-  const { languages, loading } = useLanguages();
   const { choose, preview, value } = usePreview();
 
   return (
@@ -39,8 +37,6 @@ const Switcher: React.FunctionComponent = () => {
             >
               <Text is='p'>
                 <LanguageSelect
-                  aria-busy={loading}
-                  languages={languages}
                   onValueChange={choose}
                   value={value ?? i18n.language}
                 />

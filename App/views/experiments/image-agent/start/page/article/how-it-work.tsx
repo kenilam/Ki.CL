@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from 'design/components';
+import { Details, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -11,15 +11,7 @@ const HowItWorks: React.FunctionComponent = () => {
   const { t } = useTranslation('image-agent');
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.how_it_works.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.how_it_works.title')}>
       <Text is='p'>{t('article.how_it_works.describe')}</Text>
       <Text is='p'>{t('article.how_it_works.follow_up')}</Text>
       <Text is='p'>{t('article.how_it_works.limits')}</Text>

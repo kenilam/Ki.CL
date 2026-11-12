@@ -17,15 +17,7 @@ const Failover: React.FunctionComponent = () => {
   const { t } = useTranslation('image-agent');
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.failover.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.failover.title')}>
       <Text is='p'>{t('article.failover.chains_intro')}</Text>
       <Chains />
       <Text is='p'>{t('article.failover.groq')}</Text>

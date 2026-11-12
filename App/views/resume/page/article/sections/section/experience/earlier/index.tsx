@@ -22,7 +22,10 @@ const Earlier: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrower' justifyItems='stretch'>
-      <section aria-labelledby={titleId}>
+      <section
+        aria-labelledby={titleId}
+        className='kicl-print-break-inside-avoid'
+      >
         <Heading dense id={titleId} is='h3'>
           {t('title', { context: 'earlier' })}
         </Heading>

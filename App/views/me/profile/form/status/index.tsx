@@ -1,10 +1,12 @@
 import React from 'react';
 
 // Components
-import { Animation, Text, useFormContext } from 'design/components';
-
-// Views
-import { RootError } from '@/views/root-error';
+import {
+  Animation,
+  FormMessage,
+  Text,
+  useFormContext,
+} from 'design/components';
 
 // Schema
 import type { ProfileValues } from '@/views/me/profile/form/schema';
@@ -20,7 +22,7 @@ const Status: React.FunctionComponent = () => {
   } = useFormContext<ProfileValues>();
 
   if (errors.root?.message) {
-    return <RootError />;
+    return <FormMessage name='root' />;
   }
 
   // Gone once something is typed again.

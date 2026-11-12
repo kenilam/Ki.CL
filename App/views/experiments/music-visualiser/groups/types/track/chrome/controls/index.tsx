@@ -38,7 +38,13 @@ const Controls: React.FunctionComponent = () => {
   return (
     // Fades as one while the listener is still.
     <Layout autoFlow='row' gap='narrow'>
-      <div className={classNames(CLASS_NAME, 'kicl-transition-duration-slow')}>
+      <div
+        className={classNames(
+          CLASS_NAME,
+          'kicl-ease-sine-out',
+          'kicl-transition-duration-slow'
+        )}
+      >
         <Suspense fallback={<Spinner position='inline' />}>
           <Version />
         </Suspense>

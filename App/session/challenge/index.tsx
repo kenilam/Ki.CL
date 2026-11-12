@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Dialog, Layout } from 'design/components';
+import { Dialog } from 'design/components';
 
 // Context
 import { useSessionContext } from '@/session/context';
@@ -29,18 +29,9 @@ const Challenge: React.FunctionComponent = () => {
       open={stage === 'challenge'}
       role='alertdialog'
     >
-      <Layout
-        alignContent='center'
-        alignItems='center'
-        justifyContent='center'
-        justifyItems='center'
-      >
-        <section className='kicl-padding-block-end-wide'>
-          <Title />
-          <Message />
-          <Turnstile />
-        </section>
-      </Layout>
+      <Title />
+      <Message />
+      <Turnstile />
     </Dialog>
   );
 };
