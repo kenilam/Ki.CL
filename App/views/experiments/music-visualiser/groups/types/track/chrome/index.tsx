@@ -44,6 +44,7 @@ const Chrome: React.FunctionComponent = () => {
           'kicl-padding-block-start-frame',
           'kicl-padding-inline-frame-columns-12',
           'kicl-position-relative',
+          'kicl-transition-duration-slow',
           {
             [`${CLASS_NAME}--idle`]: idle,
           }

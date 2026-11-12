@@ -41,6 +41,7 @@ const Chrome: React.FunctionComponent = () => {
         aria-label={t('label', { context: 'player' })}
         className={classNames(
           CLASS_NAME,
+          'kicl-background-repeat-no-repeat',
           'kicl-inset-block-end-0',
           'kicl-inset-inline-0',
           'kicl-padding-block-frame',

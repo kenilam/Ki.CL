@@ -14,7 +14,6 @@
     var(--kicl--components--frame--inset),
     env(safe-area-inset-bottom)
   );
-  transition-duration: var(--kicl-transition-duration-slow);
   transition-property: row-gap;
   transition-timing-function: var(--kicl-ease-sine-out);
 
