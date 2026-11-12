@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Markdown, Text } from 'design/components';
+import { Details, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -11,15 +11,7 @@ const Data: React.FunctionComponent = () => {
   const { t } = useTranslation('music-visualiser');
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('title', { context: 'data' })}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('title', { context: 'data' })}>
       <Text is='p'>
         <Markdown>{t('article.data.route')}</Markdown>
       </Text>
