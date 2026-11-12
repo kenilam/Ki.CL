@@ -32,7 +32,9 @@ const Anchor: React.FunctionComponent<Props> = ({ plate }) => {
       className={classNames(
         CLASS_NAME,
         { 'kicl-scroll-snap-page': SNAPS },
+        'kicl-block-size-screen',
         'kicl-inset-inline-0',
+        'kicl-pointer-events-none',
         'kicl-position-absolute'
       )}
       id={plate}
