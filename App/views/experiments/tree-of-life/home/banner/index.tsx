@@ -1,13 +1,10 @@
-import React from 'react';
-
-// Library
-import classNames from 'classnames';
+import React, { Suspense } from 'react';
 
 // Components
-import { Frame, Layout } from 'design/components';
+import { Spinner } from 'design/components';
 
-// Partials
-import { Intro } from './intro';
+// Hooks
+import { useResponsive } from 'design/hooks';
 
 // Styles
 import '@/views/experiments/tree-of-life/styles.scss';
@@ -16,27 +13,29 @@ import './styles.scss';
 // Constants
 import { CLASS_NAME } from './constants';
 
-// Stacks at the `normal` breakpoint and below, through `styles.scss`.
-const Banner: React.FunctionComponent = () => (
-  <Layout
-    alignContent='center'
-    autoFlow='row'
-    gap='none'
-    justifyItems='start'
-    justifyContent='start'
-  >
-    <Frame grow>
-      <header
-        className={classNames(
-          CLASS_NAME,
-          'kicl-padding-block-frame',
-          'kicl-position-relative'
-        )}
-      >
-        <Intro />
-      </header>
-    </Frame>
-  </Layout>
-);
+const VERSIONS = {
+  true: React.lazy(async () => {
+    const { Normal } = await import('./normal');
+
+    return { default: Normal };
+  }),
+  false: React.lazy(async () => {
+    const { Default } = await import('./default');
+
+    return { default: Default };
+  }),
+};
+
+const Banner: React.FunctionComponent = () => {
+  const { isNormal } = useResponsive();
+
+  const Version = VERSIONS[String(isNormal)];
+
+  return (
+    <Suspense fallback={<Spinner position='inline' />}>
+      <Version />
+    </Suspense>
+  );
+};
 
 export { CLASS_NAME, Banner };

@@ -1,17 +1,18 @@
+:root,
+.kicl--theme--light {
+  --kicl--views--experiments--tree-of-life__banner--plate-blend: multiply;
+  --kicl--views--experiments--tree-of-life__banner--plate-exposure: 1.5;
+}
+
+.kicl--theme--dark {
+  --kicl--views--experiments--tree-of-life__banner--plate-blend: screen;
+  --kicl--views--experiments--tree-of-life__banner--plate-exposure: 0.5;
+}
+
 .kicl--views--experiments--tree-of-life__banner {
   --kicl-layout--block-size: inherit;
-  --kicl--tree-of-life--plate-blend: multiply;
-  --kicl--tree-of-life--plate-exposure: 1.5;
-
-  @at-root .kicl--theme--dark & {
-    --kicl--tree-of-life--plate-blend: screen;
-    --kicl--tree-of-life--plate-exposure: 0.5;
-  }
 
   background-image: var(--kicl--views--experiments--tree-of-life--picture);
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: cover;
   isolation: isolate;
 
   // On the frame itself, so `100%` is the window: less the frame's own gap.
@@ -20,33 +21,4 @@
       --kicl--components--frame--gap
     )
   );
-
-  // At `normal` and below it matches the experiments list: the picture centred with no
-  // wash, the words at the bottom. The view layer sits above `Layout`, so this
-  // overrides its alignment.
-  @container style(--kicl-viewport-up-to-normal: true) {
-    align-content: end;
-    align-items: start;
-    background-position: center;
-    padding-block-end: var(--kicl-gutter-widest);
-  }
-
-  &::before {
-    backdrop-filter: blur(var(--kicl-size))
-      brightness(var(--kicl--tree-of-life--plate-exposure)) saturate(60%);
-    background-image: radial-gradient(
-      ellipse at 50% 45%,
-      transparent 30%,
-      var(--kicl-color-page-a48) 74%,
-      var(--kicl-body-background-color) 100%
-    );
-    content: '';
-    inset: 0;
-    position: absolute;
-    z-index: var(--kicl-z-index-behind);
-
-    @container style(--kicl-viewport-up-to-normal: true) {
-      content: none;
-    }
-  }
 }

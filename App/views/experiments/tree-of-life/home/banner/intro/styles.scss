@@ -1,6 +1,6 @@
 .kicl--views--experiments--tree-of-life__banner__intro {
   &__title {
-    background-blend-mode: var(--kicl--tree-of-life--plate-blend), normal;
+    background-blend-mode: var(--kicl--views--experiments--tree-of-life__banner--plate-blend), normal;
     background-image:
       var(--kicl--views--experiments--tree-of-life--picture),
       linear-gradient(
@@ -15,20 +15,15 @@
     background-size:
       400% auto,
       200% 200%;
-    animation-name: kicl--tree-of-life--drift;
+    animation-name: kicl--views--experiments--tree-of-life__banner__intro--drift;
     animation-duration: var(--kicl-transition-duration-6s);
     animation-timing-function: var(--kicl-ease-sharp-in-out);
     animation-iteration-count: infinite;
     animation-direction: alternate;
-
-    @supports (background-clip: text) {
-      background-clip: text;
-      color: transparent;
-    }
   }
 }
 
-@keyframes kicl--tree-of-life--drift {
+@keyframes kicl--views--experiments--tree-of-life__banner__intro--drift {
   from {
     background-position:
       66% 44%,
