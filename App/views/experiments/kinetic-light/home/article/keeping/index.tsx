@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Details, Heading, Text } from 'design/components';
+import { Details, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -13,15 +13,7 @@ const Keeping: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('title', { context: 'privacy' })}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('title', { context: 'privacy' })}>
       <Text is='p'>{t('article.keeping.intro')}</Text>
       <Kinds />
       <Text is='p'>{t('article.keeping.days')}</Text>

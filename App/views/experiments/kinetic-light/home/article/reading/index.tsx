@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 // Components
-import { Details, Diagram, Heading, Markdown, Text } from 'design/components';
+import { Details, Diagram, Markdown, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -17,15 +17,7 @@ const Reading: React.FunctionComponent = () => {
   const spec = useMemo(() => reading(t), [t]);
 
   return (
-    <Details
-      className='kicl-max-inline-size-columns-8'
-      gap='narrow'
-      summary={
-        <Heading dense is='h3' lookLike='h1'>
-          {t('article.reading.title')}
-        </Heading>
-      }
-    >
+    <Details heading='h3' summary={t('article.reading.title')}>
       <Text is='p'>{t('article.reading.intro')}</Text>
       <Ways />
       <Text is='p'>{t('article.reading.steps')}</Text>
