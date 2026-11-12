@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Layout, ListItem, Text } from 'design/components';
+import { Button, ListItem, Text } from 'design/components';
 
 // Icons
 import * as Tb from 'react-icons/tb';
@@ -17,32 +17,30 @@ const Seed: React.FunctionComponent = () => {
   const { draft, setDraft } = useDraftContext();
 
   return (
-    <Layout
+    <ListItem
       alignItems='center'
       autoFlow='column'
       frames='1fr--max-content'
       gap='narrow'
     >
-      <ListItem>
-        <Text is='span'>
-          {t('label', { context: 'seed' })}{' '}
-          <span className='kicl-font-family-mono'>{draft.pile.seed}</span>
-        </Text>
-        <Button
-          before={<Tb.TbArrowsShuffle aria-hidden />}
-          onClick={() =>
-            setDraft({
-              ...draft,
-              pile: { ...draft.pile, seed: Math.floor(Math.random() * 1000) },
-            })
-          }
-          size='small'
-          variant='ghost'
-        >
-          {t('action', { context: 'random' })}
-        </Button>
-      </ListItem>
-    </Layout>
+      <Text is='span'>
+        {t('label', { context: 'seed' })}{' '}
+        <span className='kicl-font-family-mono'>{draft.pile.seed}</span>
+      </Text>
+      <Button
+        before={<Tb.TbArrowsShuffle aria-hidden />}
+        onClick={() =>
+          setDraft({
+            ...draft,
+            pile: { ...draft.pile, seed: Math.floor(Math.random() * 1000) },
+          })
+        }
+        size='small'
+        variant='ghost'
+      >
+        {t('action', { context: 'random' })}
+      </Button>
+    </ListItem>
   );
 };
 

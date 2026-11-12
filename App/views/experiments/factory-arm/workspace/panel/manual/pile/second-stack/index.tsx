@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 // Components
-import { Layout, ListItem, Switch, Text } from 'design/components';
+import { ListItem, Switch, Text } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -15,25 +15,23 @@ const SecondStack: React.FunctionComponent = () => {
   const id = useId();
 
   return (
-    <Layout
+    <ListItem
       alignItems='center'
       autoFlow='column'
       frames='1fr--max-content'
       gap='narrow'
     >
-      <ListItem>
-        <Text id={id} is='span'>
-          {t('label', { context: 'second_stack' })}
-        </Text>
-        <Switch
-          aria-labelledby={id}
-          checked={draft.stacks === 2}
-          onCheckedChange={(checked) =>
-            setDraft({ ...draft, stacks: checked ? 2 : 1 })
-          }
-        />
-      </ListItem>
-    </Layout>
+      <Text id={id} is='span'>
+        {t('label', { context: 'second_stack' })}
+      </Text>
+      <Switch
+        aria-labelledby={id}
+        checked={draft.stacks === 2}
+        onCheckedChange={(checked) =>
+          setDraft({ ...draft, stacks: checked ? 2 : 1 })
+        }
+      />
+    </ListItem>
   );
 };
 
