@@ -23,31 +23,31 @@ const Workshop: React.FunctionComponent = () => {
   const inverse = useInverse();
 
   return (
-    <Animation delay={1000}>
-      <section
-        aria-labelledby={TITLE_ID}
-        className={classNames(
-          CLASS_NAME,
-          inverse,
-          'kicl-background-color-body',
-          'kicl-inline-size-full',
-          'kicl-overflow-x-clip',
-          'kicl-padding-inline-frame-columns-12',
-          'kicl-position-relative'
-        )}
-        style={
-          {
-            '--kicl--views--home__workshop--topics': TOPICS.length,
-          } as never
-        }
+    <section
+      aria-labelledby={TITLE_ID}
+      className={classNames(
+        CLASS_NAME,
+        inverse,
+        'kicl-background-color-body',
+        'kicl-inline-size-full',
+        'kicl-overflow-x-clip',
+        'kicl-padding-inline-frame-columns-12',
+        'kicl-position-relative'
+      )}
+      style={
+        {
+          '--kicl--views--home__workshop--topics': TOPICS.length,
+        } as never
+      }
+    >
+      <Edge />
+      <Layout
+        alignContent='center'
+        autoFlow='row'
+        gap='wide'
+        justifyItems='center'
       >
-        <Edge />
-        <Layout
-          alignContent='center'
-          autoFlow='row'
-          gap='wide'
-          justifyItems='center'
-        >
+        <Animation delay={1000}>
           <div
             className={classNames(
               `${CLASS_NAME}__stage`,
@@ -62,10 +62,10 @@ const Workshop: React.FunctionComponent = () => {
             <Icons />
             <Open />
           </div>
-        </Layout>
-        <Anchors />
-      </section>
-    </Animation>
+        </Animation>
+      </Layout>
+      <Anchors />
+    </section>
   );
 };
 
