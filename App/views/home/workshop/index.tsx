@@ -31,6 +31,7 @@ const Workshop: React.FunctionComponent = () => {
           inverse,
           'kicl-background-color-body',
           'kicl-inline-size-full',
+          'kicl-overflow-x-clip',
           'kicl-padding-inline-frame-columns-12',
           'kicl-position-relative'
         )}
