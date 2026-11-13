@@ -1,0 +1,22 @@
+.kicl--views--home__workshop__icons__icon {
+  stroke-width: 0.5;
+  transition-delay: calc(
+    var(--kicl--views--home__workshop__icons__icon--index) *
+    var(--kicl-transition-duration-fastest)
+  );
+  transition-duration: var(--kicl-transition-duration-slow);
+  transition-property: opacity, scale;
+  transition-timing-function: var(--kicl-ease-back-out);
+  will-change: opacity, scale;
+
+  @for $index from 0 through 2 {
+    &:nth-of-type(#{$index + 1}) {
+      --kicl--views--home__workshop__icons__icon--index: #{$index};
+    }
+  }
+
+  @container style(--kicl--views--home__workshop--finale: 0) {
+    opacity: 0;
+    scale: 0.6;
+  }
+}

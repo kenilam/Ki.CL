@@ -13,7 +13,7 @@ import { Animation, Frame, Layout, Spinner } from 'design/components';
 import { Background } from 'design/widgets';
 
 // Views
-import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
+import { CONTENT_DELAY } from '@/views/constants';
 
 /**
  * Every page here is one card in the middle of the frame, over the home
@@ -28,7 +28,7 @@ const Me: React.FunctionComponent = () => {
       justifyItems='center'
     >
       {/* Grows, with room above and below the card, for a window shorter than the page. */}
-      <Frame delay={FRAME_DELAY} grow>
+      <Frame grow>
         <section
           className={classNames(
             'kicl-padding-block-frame',

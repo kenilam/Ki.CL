@@ -1,0 +1,43 @@
+.kicl--views--home__workshop__headline {
+  color: var(--kicl-color-neutral-a48);
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: kicl--views--home__workshop__headline--out linear forwards;
+      animation-range: exit;
+      animation-timeline: --kicl--views--home__workshop;
+    }
+  }
+
+  strong {
+    color: var(--kicl-body-color);
+    transition-duration: var(--kicl-transition-duration-slow);
+    transition-property: color;
+    transition-timing-function: var(--kicl-ease-quart-out);
+
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        color: inherit;
+      }
+    }
+
+    @for $index from 0 through 2 {
+      &:nth-of-type(#{$index + 1}) {
+        @supports (animation-timeline: view()) {
+          @media (prefers-reduced-motion: no-preference) {
+            @container style(--kicl--views--home__workshop--active: #{$index}) or style(--kicl--views--home__workshop--finale: 1) {
+              color: var(--kicl-body-color);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes kicl--views--home__workshop__headline--out {
+  to {
+    opacity: 0;
+    translate: 0 calc(var(--kicl-gutter-extreme) * -1);
+  }
+}

@@ -1,0 +1,10 @@
+.kicl--views--home__workshop__icons {
+  display: none;
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      display: flex;
+      grid-area: deck;
+    }
+  }
+}

@@ -11,12 +11,13 @@ import { Title } from './title';
 import { Topics } from './topics';
 
 // Constants
+import { CONTENT_DELAY } from '@/views/constants';
 import { CLASS_NAME, TITLE_ID } from './constants';
 
 /** The workshop index. */
 const Home: React.FunctionComponent = () => {
   return (
-    <Animation delay={1000}>
+    <Animation delay={CONTENT_DELAY}>
       <Layout autoFlow='row' gap='normal'>
         <section
           aria-labelledby={TITLE_ID}

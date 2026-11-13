@@ -1,0 +1,47 @@
+.kicl--views--home__workshop__topics__topic {
+  $slots: '--kicl--views--home__workshop--slots';
+
+  aspect-ratio: 5 / 6;
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: kicl--views--home__workshop__topics__topic--deal linear both;
+      animation-range: contain calc(var(--index) / var(#{$slots}) * 100%)
+        contain calc((var(--index) + 1) / var(#{$slots}) * 100%);
+      animation-timeline: --kicl--views--home__workshop;
+      grid-area: deck;
+      inline-size: min(var(--kicl-columns-12), 30dvb);
+      transform-origin: 50% 150%;
+    }
+  }
+}
+
+@keyframes kicl--views--home__workshop__topics__topic--deal {
+  0% {
+    filter: contrast(0.4);
+    opacity: 0;
+    rotate: 48deg;
+    scale: 0.8;
+    translate: 30% 0;
+    z-index: 1;
+  }
+
+  25%,
+  75% {
+    filter: none;
+    opacity: 1;
+    rotate: 0;
+    scale: 1;
+    translate: 0 0;
+    z-index: 2;
+  }
+
+  100% {
+    filter: contrast(0.4);
+    opacity: 0;
+    rotate: -48deg;
+    scale: 0.8;
+    translate: -30% 0;
+    z-index: 1;
+  }
+}
