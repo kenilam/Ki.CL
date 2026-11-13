@@ -10,7 +10,7 @@
         contain calc((var(--index) + 1) / var(#{$slots}) * 100%);
       animation-timeline: --kicl--views--home__workshop;
       grid-area: deck;
-      inline-size: min(var(--kicl-columns-12), 30dvb);
+      inline-size: min(var(--kicl-columns-12), 30dvb, 100cqi);
       transform-origin: 50% 150%;
     }
   }

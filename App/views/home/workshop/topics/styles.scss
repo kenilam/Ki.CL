@@ -3,6 +3,7 @@
 
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
+      container-type: inline-size;
       grid-area: deck;
       grid-template-areas: 'deck';
       grid-template-columns: auto;
