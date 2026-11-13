@@ -19,6 +19,7 @@ import { PATH as ME_PATH } from '@/views/me/constants';
 import { PAGE_PATH as PASSWORD_PATH } from '@/views/me/password/constants';
 import { PATH as RESUME_PATH } from '@/views/resume/constants';
 import { PATH as WORKSHOP_PATH } from '@/views/workshop/constants';
+import { PATH as ARCHITECTURE } from '@/views/workshop/architecture/constants';
 import { PATH as DESIGN_SYSTEM } from '@/views/workshop/design-system/constants';
 import { PATH as I18N } from '@/views/workshop/i18n/constants';
 
@@ -95,7 +96,7 @@ type Topic = {
    * Its name is this key in `common`, which the menu reads too. Its
    * description is `description_<context>` in `workshop`.
    */
-  context: 'design_system' | 'internationalisation';
+  context: 'architecture' | 'design_system' | 'internationalisation';
   /** Drawn as a triangle on its card, the first on top. */
   icons: readonly [IconType, IconType, IconType];
   to: string;
@@ -112,6 +113,11 @@ const TOPICS: readonly Topic[] = [
     context: 'internationalisation',
     icons: [Tb.TbLanguage, Tb.TbWorld, Tb.TbMessageDots],
     to: `/${WORKSHOP_PATH}/${I18N}`,
+  },
+  {
+    context: 'architecture',
+    icons: [Tb.TbTopologyStar3, Tb.TbServer, Tb.TbPlug],
+    to: `/${WORKSHOP_PATH}/${ARCHITECTURE}`,
   },
 ];
 

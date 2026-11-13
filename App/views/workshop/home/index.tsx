@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { Animation, Layout } from 'design/components';
 
 // Partials
-import { Message } from './message';
 import { Title } from './title';
 import { Topics } from './topics';
 
@@ -29,7 +28,6 @@ const Home: React.FunctionComponent = () => {
           )}
         >
           <Title />
-          <Message />
           <Topics />
         </section>
       </Layout>

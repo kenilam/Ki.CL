@@ -1,0 +1,52 @@
+import React from 'react';
+
+// Icons
+import * as Tb from 'react-icons/tb';
+
+// Components
+import { Heading, HyperLink, Layout, Text } from 'design/components';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
+
+// Constants
+import { TITLE_ID } from '@/views/workshop/architecture/constants';
+
+const Header: React.FunctionComponent = () => {
+  const translations = {
+    architecture: useTranslation('architecture'),
+    common: useTranslation(),
+    workshop: useTranslation('workshop'),
+  };
+
+  return (
+    <Layout gap='normal'>
+      <header>
+        <hgroup>
+          <Heading id={TITLE_ID} lookLike='display'>
+            {translations.common.t('architecture')}
+          </Heading>
+          <Text lookLike='h2'>{translations.architecture.t('full_name')}</Text>
+        </hgroup>
+        <Text>
+          <HyperLink
+            before={<Tb.TbBrandGithub aria-hidden />}
+            lookLikeButton
+            to={translations.common.t('url_host')}
+            variant='secondary'
+          >
+            {translations.common.t('github')}
+          </HyperLink>
+        </Text>
+        <Text className='kicl-max-inline-size-columns-8' lookLike='h3'>
+          {translations.workshop.t('description', { context: 'architecture' })}
+        </Text>
+        <Text className='kicl-max-inline-size-columns-8'>
+          {translations.architecture.t('article.intro')}
+        </Text>
+      </header>
+    </Layout>
+  );
+};
+
+export { Header };

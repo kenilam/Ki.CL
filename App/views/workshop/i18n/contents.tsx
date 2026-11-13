@@ -18,7 +18,6 @@ import { Serving } from './article/serving';
 import { Switcher } from './article/switcher';
 import { Translating } from './article/translating';
 import { Why } from './article/why';
-import { Wrong } from './article/wrong';
 
 // Constants
 import { CLASS_NAME, TITLE_ID } from './constants';
@@ -45,7 +44,6 @@ const Contents: React.FunctionComponent = () => {
         <Availability />
         <Rtl />
         <Implementation />
-        <Wrong />
         <Limits />
       </article>
     </Layout>
