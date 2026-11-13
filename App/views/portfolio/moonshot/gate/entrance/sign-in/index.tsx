@@ -10,7 +10,7 @@ import { Animation, Card, Frame, Layout } from 'design/components';
 import { Background } from 'design/widgets';
 
 // Views
-import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
+import { CONTENT_DELAY } from '@/views/constants';
 
 // Partials
 import { Form } from './form';
@@ -26,7 +26,7 @@ const SignIn: React.FunctionComponent = () => {
       justifyItems='center'
     >
       {/* Grows, with room above and below the card, for a window shorter than the form. */}
-      <Frame delay={FRAME_DELAY} grow>
+      <Frame grow>
         <section
           className={classNames(
             'kicl-padding-block-frame',

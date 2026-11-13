@@ -1,0 +1,11 @@
+:root {
+  --kicl--views--home__hero__works__work--font-size: var(
+    --kicl-font-size-larger
+  );
+}
+
+@property --kicl--views--home__hero__works__work--focus {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
