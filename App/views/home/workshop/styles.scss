@@ -21,13 +21,17 @@
     @media (prefers-reduced-motion: no-preference) {
       animation:
         kicl--views--home__workshop--active steps(var(#{$topics}), jump-none),
-        kicl--views--home__workshop--finale linear forwards;
+        kicl--views--home__workshop--finale linear forwards,
+        kicl--views--home__workshop--rise linear backwards;
       animation-range:
         contain 0% contain #{$finale},
-        contain #{$finale} exit 100%;
-      animation-timeline: --kicl--views--home__workshop,
+        contain #{$finale} exit 100%,
+        entry;
+      animation-timeline:
+        --kicl--views--home__workshop, --kicl--views--home__workshop,
         --kicl--views--home__workshop;
       block-size: calc(var(#{$slots}) * 100dvb);
+      margin-block-start: calc(var(--kicl-gutter-extreme) * -1);
       view-timeline: --kicl--views--home__workshop block;
     }
   }
@@ -57,5 +61,15 @@
   from,
   to {
     --kicl--views--home__workshop--finale: 1;
+  }
+}
+
+@keyframes kicl--views--home__workshop--rise {
+  from {
+    translate: 0 var(--kicl-gutter-extreme);
+  }
+
+  to {
+    translate: 0;
   }
 }
