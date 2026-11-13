@@ -1,0 +1,24 @@
+.kicl--views--home__workshop__anchor {
+  $slots: '--kicl--views--home__workshop--slots';
+
+  inset-block-start: 0;
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      inset-block-start: calc(
+        (var(--index) + 0.5) / var(#{$slots}) * (var(#{$slots}) - 1) * 100dvb
+      );
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :root:has(.kicl--views--home__workshop__anchor) {
+      scroll-padding-block-start: 0;
+      scroll-snap-type: block proximity;
+    }
+  }
+}

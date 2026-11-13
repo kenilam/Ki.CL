@@ -1,17 +1,11 @@
 {
-  "header": {
-    "aside": {
-      "github": "GitHub profile",
-      "label": "Contact",
-      "linkedin": "LinkedIn profile"
-    },
-    "contents": {
-      "body": "This is my own little lab for imagining what's possible and building it into existence.",
-      "home": "Ki.CL home",
-      "lead": "Personal projects are where curiosity becomes craft."
-    },
-    "menu": {
-      "label": "Pages"
-    }
-  }
+  "action_resume": "See my history",
+  "action_view": "View",
+  "action_workshop": "Open the workshop",
+  "explore": "Explore the details of every experiment",
+  "tagline": "This is my own little lab for imagining what's possible and building it into existence.",
+  "tagline_resume": "I build products for a living and teach code to paint for fun.",
+  "title": "Personal projects are where curiosity becomes craft.",
+  "title_resume": "A Technologist with an Art Brain",
+  "workshop": "Every page here is built from one **design system**, served in the reader's language through **i18n**, and put together at runtime by a federated **architecture**."
 }

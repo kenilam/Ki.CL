@@ -1,0 +1,61 @@
+@property --kicl--views--home__workshop--active {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: -1;
+}
+
+@property --kicl--views--home__workshop--finale {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.kicl--views--home__workshop {
+  $topics: '--kicl--views--home__workshop--topics';
+  $slots: '--kicl--views--home__workshop--slots';
+  $finale: calc(var(#{$topics}) / var(#{$slots}) * 100%);
+
+  --kicl--views--home__workshop--slots: calc(var(#{$topics}) + 1);
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation:
+        kicl--views--home__workshop--active steps(var(#{$topics}), jump-none),
+        kicl--views--home__workshop--finale linear forwards;
+      animation-range:
+        contain 0% contain #{$finale},
+        contain #{$finale} exit 100%;
+      animation-timeline: --kicl--views--home__workshop,
+        --kicl--views--home__workshop;
+      block-size: calc(var(#{$slots}) * 100dvb);
+      view-timeline: --kicl--views--home__workshop block;
+    }
+  }
+
+  &__stage {
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        grid-template-areas: 'headline' 'deck' 'open';
+      }
+    }
+  }
+}
+
+@keyframes kicl--views--home__workshop--active {
+  from {
+    --kicl--views--home__workshop--active: 0;
+  }
+
+  to {
+    --kicl--views--home__workshop--active: calc(
+      var(--kicl--views--home__workshop--topics) - 1
+    );
+  }
+}
+
+@keyframes kicl--views--home__workshop--finale {
+  from,
+  to {
+    --kicl--views--home__workshop--finale: 1;
+  }
+}

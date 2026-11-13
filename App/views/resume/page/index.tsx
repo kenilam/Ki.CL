@@ -10,7 +10,7 @@ import { Animation, Frame, Layout, ScrollIndicator } from 'design/components';
 import { Background } from 'design/widgets';
 
 // Views
-import { CONTENT_DELAY, FRAME_DELAY } from '@/views/constants';
+import { CONTENT_DELAY } from '@/views/constants';
 
 // Content
 import { MASTER } from '@/views/resume/content';
@@ -50,7 +50,7 @@ const Page: React.FunctionComponent = () => {
       <ScrollIndicator />
       <Layout autoFlow='row' justifyContent='center' justifyItems='center'>
         {/* Grows with the page, which is longer than any window. */}
-        <Frame delay={FRAME_DELAY} grow>
+        <Frame grow>
           {/* The box the light fills. */}
           <div
             className={classNames(
