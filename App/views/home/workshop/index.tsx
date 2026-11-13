@@ -9,7 +9,6 @@ import { TOPICS } from '@/views/routes';
 import { useInverse } from '@/views/home/use-inverse';
 
 import { Anchors } from './anchors';
-import { Edge } from './edge';
 import { Headline } from './headline';
 import { Icons } from './icons';
 import { Open } from './open';
@@ -40,7 +39,6 @@ const Workshop: React.FunctionComponent = () => {
         } as never
       }
     >
-      <Edge />
       <Layout
         alignContent='center'
         autoFlow='row'
