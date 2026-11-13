@@ -16,6 +16,8 @@ ENV KICL_API_REMOTE_ENTRY=/api/client/remoteEntry.js
 
 RUN yarn run build:client
 
+ENV NODE_ENV=production
+
 EXPOSE 3001
 
 CMD [ "yarn", "run", "build:server" ]
