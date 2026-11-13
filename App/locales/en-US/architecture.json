@@ -1,0 +1,158 @@
+{
+  "full_name": "Module Federation",
+  "article": {
+    "intro": "Many websites ship as one app: one repository, one build, one release. ki-cl.com is several. The page you're reading was put together in your browser from apps that were built and released on their own: the host, which owns the routes and the server; the design system, which draws every component; the API's client, which fetches the data; and features that live in repositories of their own. Module Federation is what lets them meet at runtime. This page follows how that works, from the config in each repository to the moment your browser assembled the page, and ends with when I think it's worth doing.",
+    "why": {
+      "title": "Why I split it",
+      "rule": "I wanted the site to work the way a set of backend services does: small parts with clear borders, where any one of them can be rebuilt, released or replaced without touching the others. Module Federation brings that idea to the frontend.",
+      "intro": "That only holds if every part keeps a few rules:",
+      "own": "It owns its data and its words. A remote's English lives in its own repository, and the API translates and serves it like the host's.",
+      "entry": "It has one way in. The host imports what a remote exposes, such as `design/components` or `api/provider`, and never reaches into its files.",
+      "neutral": "It doesn't know more than it needs to. The design system should work for any site, so a component that depends on this site's API belongs to the host."
+    },
+    "terms": {
+      "title": "Terminology",
+      "intro": "Module Federation has a small vocabulary, and the rest of this page leans on it:",
+      "host": "**Host** – the app the browser loads first. Here that's `Ki.CL`, which declares the routes, renders the pages and loads everything else.",
+      "remote": "**Remote** – an app that's built and deployed on its own and exposes modules for the host to load. The design system, the API's client and each feature are remotes.",
+      "exposed": "**Exposed module** – a module a remote makes public under a name, such as `design/components`. It's the only way into a remote.",
+      "entry": "**Remote entry** – the `remoteEntry.js` file a remote publishes. It exports `init`, which connects the remote to the host's shared libraries, and `get`, which loads one exposed module.",
+      "shared": "**Shared library** – a package that the host and the remotes load once between them, such as React. A singleton is a shared library that can only have one copy on the page.",
+      "scope": "**Share scope** – the runtime's record of the shared libraries: for each package, the versions on offer and the app that supplied each one.",
+      "feature": "**Feature remote** – a feature built as its own remote, with its own repository and release, which the host can place anywhere."
+    },
+    "config": {
+      "title": "What each app declares",
+      "host_intro": "Each app describes its side of the arrangement in its build config. The host lists the remotes it expects and the libraries it's willing to share. With the default entries, it looks like this:",
+      "host_note": "The entries are relative paths on purpose, and the reason comes up again when we get to the proxy. `eager` puts a shared library in the host's first chunk, which the HTML already loads, so nothing waits on a separate request for React or the router.",
+      "design_intro": "The design system's config is the other side. It names itself, says where its entry goes, and lists everything it's willing to hand out:",
+      "api_intro": "The API's client hands out a single module, the provider every query goes through:",
+      "remote_note": "Neither remote marks its shared libraries `eager`. They expect the host to bring React and the rest, and only if nothing on the page offered a copy would they load the one they were built with. A feature remote's config looks like the design system's, with its own name and modules."
+    },
+    "build": {
+      "title": "What a build leaves behind",
+      "intro": "Building a remote leaves three kinds of file, and each has its own job:",
+      "file_entry": "**`remoteEntry.js`** – the remote entry. It's the only file whose name stays the same from one release to the next, so the server sends it with `Cache-Control: no-cache` and the browser checks it on every visit.",
+      "file_assets": "**`assets/`** – the code of the exposed modules, split into chunks named after a hash of their content. A new release means new names, so browsers can keep these for a year.",
+      "file_types": "**`types.zip`** – the TypeScript declarations of the exposed modules, for the host to download while it's being developed.",
+      "compressed": "Each file also gets a `.gz` and a `.br` copy, which the server sends as they are.",
+      "entry_intro": "Open the remote entry and the whole contract between host and remote is in its last line: two functions.",
+      "entry_explain": "`init` is the handshake. The host passes in its share scope, and the remote adds the shared libraries it brought. `get` is the delivery. Ask it for `./components` and it waits for the handshake to finish, imports that module's chunk, and returns a function that hands the module over. Ask for something the remote doesn't expose, and it throws."
+    },
+    "load": {
+      "title": "What happened when you opened the site",
+      "intro": "All of that comes together when a visit starts. When you first opened ki-cl.com, this is what happened:",
+      "step_html": "The server sent the HTML, with `modulepreload` hints for the design system's and the API's entries, so your browser started fetching them alongside the host's own code.",
+      "step_runtime": "The host's first script started the federation runtime. It registered the host, the remotes it knows about and the eager shared libraries before any of the app's own code ran.",
+      "step_remotes": "The runtime loaded every remote module the host imports with a static `import`, such as `design/components`. For each remote, it called `init` with the host's share scope, then `get` for each module.",
+      "step_shared": "When the design system asked for React, the runtime found the host's copy in the share scope and gave it that one, so there's only one React on the page.",
+      "step_render": "The app rendered. Its words arrived through `api/provider`, and a spinner held the page until the first of them did.",
+      "step_feature": "Nothing about features happened yet. A feature remote is imported with `import()`, so it loads only when you open a page that uses it, and it goes through the same `init` and `get` then."
+    },
+    "under": {
+      "title": "What the plugin does to the code",
+      "rewrite": "None of this shows in the source. The code imports React and `design/components` like any other package, and the federation plugin rewrites those imports when it builds the app. `import React from 'react'` ends up pointing at a small generated module that asks the runtime for the shared copy with `loadShare`. `import { Layout } from 'design/components'` ends up at one that asks for the remote module with `loadRemote`.",
+      "boot": "The page's own script gets the same treatment. It's wrapped so the host's runtime starts first, and only then is `index.tsx` imported.",
+      "state_intro": "You can check the result yourself. The runtime keeps its state on `globalThis.__FEDERATION__`, so the browser console on this page will tell you:",
+      "state_explain": "One instance for each app that has loaded, the host named `kicl` and the two remotes, and one React, supplied by the host.",
+      "version": "The runtime is forgiving about versions, which is convenient and a little risky. Each app states the range it accepts. If the shared copy falls outside a remote's range, the runtime logs a warning and uses it anyway, because none of the apps sets `strictVersion`. Nothing breaks, so a mismatch is easy to miss. The repositories install the same versions, and the host's Renovate config updates them together so they don't drift apart."
+    },
+    "origin": {
+      "title": "Why the host proxies the remotes",
+      "goal": "Splitting the site raised a question I cared about more than any of the above: who gets to reach these apps? I wanted full control over what can be reached and who can reach it, without exposing any remote to the public.",
+      "browser": "That control can't sit in the browser. A module loaded with `import()` can't carry a custom header or a cross-site cookie, so a page has no way to prove who's asking for the code it loads. A server can.",
+      "decision": "So the host's server stands in front of every remote. That's why the entries in the config are relative paths: the browser asks ki-cl.com for each one, and the server forwards the request to the remote.",
+      "control": "That puts one place in charge of what and who:",
+      "reason_paths": "It forwards only the path prefixes it lists, such as `/design` and `/api`, so those are the only parts of a remote anyone can reach.",
+      "reason_private": "Only the host's server can call a remote. The remotes are private Cloud Run services that only accept requests signed with a Google identity token, and the server signs each one it forwards.",
+      "reason_gate": "On a dev deployment, the server asks for a password before it sends the page. A trusted client from outside, such as a feature remote running on a developer's machine, gets past that prompt with a signed token that its own dev server adds to each request. The host's server holds only the public key, so a leaked setting can't be used to issue new tokens.",
+      "effect_origin": "Two other things follow from routing everything through ki-cl.com. The page and every remote share one origin, so there are no CORS rules to maintain, and the session cookie reaches the API from every part of the page.",
+      "effect_move": "A remote can also move without a rebuild. The built page only knows the relative path, and the server reads where to forward it from its settings when it starts.",
+      "production": "The server itself is a small Express app in front of the built site. It sends `/design` to the design system, `/api` to the API, including the WebSocket that GraphQL subscriptions use, and a feature remote's requests to its own server. The API's client remote lives under `/api/client`, so everything the API serves shares one prefix."
+    },
+    "types": {
+      "title": "Types across repositories",
+      "publish": "Splitting the code across repositories breaks one thing straight away: TypeScript can't see across them. The types archive each build leaves behind fills that gap.",
+      "download": "When the host's dev server starts, it downloads those archives into `App/@mf-types`, and `tsconfig.json` maps each remote's name, such as `design/*`, to them. The folder isn't committed, so the types always match the remote that's running.",
+      "self": "That has a knock-on effect inside each remote. A generated `.d.ts` keeps its import paths exactly as written, so a design-system file that imported `@/hooks` would point at the host's own `@/` folder once it arrived there. So each remote imports its own code by the name it's exposed under, such as `design/hooks`, and the paths still make sense on the host's side.",
+      "codegen": "The API's types start one step earlier. Its GraphQL schema lives in `Ki.CL-back`, and `yarn codegen` turns it into the typed documents the client remote exposes, so a query written in the host is checked against the schema."
+    },
+    "cascade": {
+      "title": "One cascade",
+      "shared": "Styles have no borders between apps. The host and the remotes share one document and one cascade, and only their class names keep them apart: the design system's start with `kicl-` and `kicl--components--`, and the host's views use `kicl--views--`. A feature remote should build its sections from the design system's components, so it brings no stylesheets of its own to collide with.",
+      "layers": "What did need fixing was order. Without it, two rules of equal weight are settled by whichever stylesheet loaded last, and that wasn't the same in development and production. So every stylesheet in the host and the design system is wrapped in a cascade layer, and each one starts by declaring the same order:",
+      "layers_list": "`reset`, `base`, `layout`, `components`, `wrappers`, `views`, `utilities`",
+      "order": "A later layer wins over an earlier one, whatever the specificity. The host puts its own styles in `views`, so a view can override a component, and a utility class overrides both.",
+      "match": "The host and the design system each keep their own copy of that list, and the two have to match, because the browser uses the first order it sees."
+    },
+    "failure": {
+      "title": "Failures and releases",
+      "required": "Splitting the site also means it can fail in pieces. The design system and the API's client are needed for anything to render: the router, the spinner and the error dialog come from the design system, and the words come through the API's client. If either can't be loaded, the site doesn't render.",
+      "optional": "A feature remote is different. It loads only when a page that uses it opens, so if it fails, the site's error dialog offers a reload or a way home, and every other page carries on.",
+      "release": "It releases in pieces too. Each repository ships on its own, and a remote goes live the moment it's deployed, whichever version of the host is live at the time. So the order matters:",
+      "order_new": "When the host starts using something new from a remote, the remote is released first.",
+      "order_removal": "When a remote removes or renames an export, the host stops using it first, and the removal ships in a later release.",
+      "public": "In practice, every exposed module is a public API, and changing one means thinking about the host first."
+    },
+    "worth": {
+      "title": "When federation is worth it",
+      "problem": "Module Federation is mostly an answer to a team problem. It lets separate teams build, test and release their part of a site without waiting for each other. Its costs come from splitting one app into pieces that deploy separately: versions to keep in step, types to publish, releases to order, and more ways for a page to fail.",
+      "this_site": "By that measure, this site doesn't need it. One person builds and releases every repository, so nothing is gained by releasing them separately, and every cost above still applies.",
+      "reason": "I chose it anyway, because I wanted each part to stay modular and replaceable, and separate repositories enforce that in a way folders don't. The host can only import what a remote exposes. Inside one repository, a folder boundary is a convention that a single import can cross.",
+      "table": "Who builds the site matters more than how big it is:",
+      "column_team": "Who's building it",
+      "column_fit": "What usually fits",
+      "team_solo": "One person",
+      "fit_solo": "One repository, split into folders that each have one entry. That gives most of the structure without a second deployment.",
+      "team_small": "A small team on one product",
+      "fit_small": "A monorepo with packages, built and released together. A change that touches several packages is still one pull request.",
+      "team_large": "Several teams, each owning part of the site",
+      "fit_large": "Federation starts to pay for itself. Each team releases its own remote on its own schedule, and the host picks up the changes without being rebuilt.",
+      "team_shared": "A part that several sites load",
+      "fit_shared": "A remote can make sense for a single team when one part, such as a design system, has to update everywhere it's used without rebuilding each site.",
+      "size": "Size matters less than ownership. A large app with one team often works well as a single deployment with clear module boundaries. A small app can still need federation when different teams own and release its parts.",
+      "keep": "Inside each repository, the same rule continues at a smaller scale. A view is a folder of small parts, each part has one entry, it reads its own data and words, and nothing imports from a sibling's folder. That's the part I'd keep on any project. It costs nothing at runtime, and a part that follows it can become a remote of its own later, if a team ever needs to own it."
+    },
+    "limits": {
+      "title": "Limits",
+      "required": "If the design system or the API's client can't be loaded, the site doesn't render. Only a feature remote's failure stays on the pages that use it.",
+      "versions": "A shared library outside a remote's version range only shows up as a console warning.",
+      "pinning": "The host always loads the latest deployment of each remote. It can't pin an older one.",
+      "types": "The types are only as current as the remotes that were running when the host's dev server started. CI doesn't type-check the host, because the types aren't committed.",
+      "styles": "There's no style isolation. A remote's CSS can reach the host's elements, and the class-name prefixes are a convention, not a guarantee."
+    },
+    "references": {
+      "title": "References",
+      "docs": "[Module Federation](https://module-federation.io/), the project's documentation",
+      "deep_dive": "[Understanding Module Federation: A Deep Dive](https://scriptedalchemy.medium.com/understanding-webpack-module-federation-a-deep-dive-efe5c55bf366), by Zack Jackson",
+      "overview": "[What Is Webpack Module Federation and Why Does It Matter?](https://www.syncfusion.com/blogs/post/webpack-module-federation), on the Syncfusion blog",
+      "video": "[Module Federation: Microservices for the Frontend](https://www.youtube.com/watch?v=RcfQ5HfwEVs), a video by Michael Guay",
+      "code": "This site's code: [Ki.CL]($t(common:url_host)), [Ki.CL-design-system]($t(design:url_github)) and [Ki.CL-back]($t(common:url_api))"
+    }
+  },
+  "diagram": {
+    "label_dashed": "$t(common:dashed)",
+    "overview": {
+      "title": "How a page is put together",
+      "description": "The browser asks ki-cl.com for everything. The host's server sends the page and the host's code. It forwards /design to the design system, /api to the API, which also serves the client remote at /api/client, and a feature remote's requests to its own server. A feature remote can be placed anywhere in the host, and loads only when a page that uses it opens.",
+      "node_browser": "Browser",
+      "node_host": "Host server",
+      "node_design": "Design system",
+      "node_api": "API",
+      "line_browser": "One origin, ki-cl.com",
+      "line_host_page": "The page and the host's code",
+      "line_host_forward": "Forwards the remotes' paths",
+      "line_design": "/design/remoteEntry.js",
+      "line_api_entry": "/api/client/remoteEntry.js",
+      "line_api_graphql": "GraphQL at /api",
+      "edge_request": "every request",
+      "edge_design": "/design",
+      "edge_api": "/api",
+      "legend_dashed": "Loaded only when a page that uses it opens",
+      "node_features": "Features",
+      "line_features_kind": "A specific feature",
+      "line_features_place": "Anywhere in the host",
+      "edge_features": "feature proxy"
+    }
+  }
+}

@@ -3,7 +3,7 @@ import React from 'react';
 // Partials
 import { Placeholder } from './placeholder';
 
-const PLACEHOLDERS = 2;
+const PLACEHOLDERS = 1;
 
 /** Cards for the topics still to come, after the real ones. */
 const Placeholders: React.FunctionComponent = () => {

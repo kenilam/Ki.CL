@@ -1,5 +1,6 @@
 import 'i18next';
 
+import type architecture from '@/locales/en-US/architecture.json';
 import type common from '@/locales/en-US/common.json';
 import type daylight from '@/locales/en-US/daylight.json';
 import type experiments from '@/locales/en-US/experiments.json';
@@ -20,6 +21,7 @@ declare module 'i18next' {
   interface CustomTypeOptions {
     defaultNS: 'common';
     resources: {
+      architecture: typeof architecture;
       common: typeof common;
       daylight: typeof daylight;
       experiments: typeof experiments;

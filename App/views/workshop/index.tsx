@@ -7,6 +7,7 @@ import { Route } from 'design/router';
 import { Spinner } from 'design/components';
 
 // Views
+import { Architecture } from './architecture';
 import { DesignSystem } from './design-system';
 import { I18n } from './i18n';
 import { I18nRedirect } from './i18n/redirect';
@@ -34,6 +35,7 @@ const Workshop = (
     {DesignSystem}
     {I18n}
     {I18nRedirect}
+    {Architecture}
   </Route>
 );
 
