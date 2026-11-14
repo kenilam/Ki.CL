@@ -14,7 +14,7 @@ const Open: React.FunctionComponent = () => {
 
   return (
     <HyperLink
-      after={<Tb.TbArrowRight aria-hidden />}
+      after={<Tb.TbArrowRight aria-hidden className='kicl-rtl-mirror' />}
       className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
       to={PAGES.workshop}
     >

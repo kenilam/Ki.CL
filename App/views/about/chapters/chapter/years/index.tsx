@@ -13,7 +13,7 @@ const Years: React.FunctionComponent<Props> = ({ id }) => {
   return (
     <Text
       className={classNames(
-        'kicl-color-neutral-a80',
+        'kicl-color-neutral-80',
         'kicl-font-family-mono',
         'kicl-font-size-small',
         'kicl-scroll-shift-narrow',

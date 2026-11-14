@@ -2,7 +2,7 @@ import React from 'react';
 
 import * as Tb from 'react-icons/tb';
 
-import { Animation, AnimatedText } from 'design/components';
+import { Animated, Animation } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import './styles.scss';
@@ -16,7 +16,7 @@ const Reveal: React.FunctionComponent = () => {
 
   return (
     <>
-      <AnimatedText
+      <Animated.Text
         className={CLASS_NAME}
         easing='ease-expo-out'
         is='span'
@@ -24,7 +24,7 @@ const Reveal: React.FunctionComponent = () => {
         unstyled
       >
         {t('explore')}
-      </AnimatedText>
+      </Animated.Text>
       <Animation
         className={CLASS_NAME}
         delay={300}
@@ -32,7 +32,7 @@ const Reveal: React.FunctionComponent = () => {
         easing='ease-expo-out'
         property='slide-from-left'
       >
-        <Tb.TbArrowRight aria-hidden />
+        <Tb.TbArrowRight aria-hidden className='kicl-rtl-mirror' />
       </Animation>
     </>
   );

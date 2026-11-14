@@ -32,7 +32,7 @@ const View: React.FunctionComponent = () => {
           'kicl-scroll-focus-reveal-start'
         )}
       >
-        <Tb.TbArrowRight />
+        <Tb.TbArrowRight className='kicl-rtl-mirror' />
         {t('action', { context: 'view' })}
       </span>
     </Layout>

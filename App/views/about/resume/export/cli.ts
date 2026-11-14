@@ -61,8 +61,8 @@ const MAX_PAGES = 2;
 
 /** The typefaces and the weights the page sets text in: headings, then body. */
 const FACES = {
-  'mic-32-new-web': ['300', '700'],
-  roboto: ['400'],
+  'Barlow Semi Condensed': ['600', '700'],
+  Barlow: ['400', '600'],
 };
 
 /** The first request to a cold dev server compiles the route. */

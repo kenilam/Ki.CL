@@ -19,7 +19,6 @@ const Title: React.FunctionComponent = () => {
     <Heading
       className={classNames(
         'kicl-font-size-extreme',
-        'kicl-letter-spacing-tighter',
         'kicl-line-height-narrower',
         'kicl-scroll-enter-far',
         'kicl-text-hyphenate',
@@ -33,7 +32,7 @@ const Title: React.FunctionComponent = () => {
       ) : (
         <>
           {t('explore')}
-          <Tb.TbArrowRight aria-hidden />
+          <Tb.TbArrowRight aria-hidden className='kicl-rtl-mirror' />
         </>
       )}
     </Heading>

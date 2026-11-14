@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { AnimatedText, Heading } from 'design/components';
+import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import type { Props } from '@/views/about/chapters/chapter';
@@ -13,32 +13,23 @@ const Title: React.FunctionComponent<Props> = ({ id }) => {
   const { ref, seen } = useSeen<HTMLHeadingElement>();
 
   return (
-    <Heading
+    <Animated.Heading
       className={classNames(
-        'kicl-font-size-headline',
-        'kicl-font-weight',
-        'kicl-letter-spacing-tight',
-        'kicl-scroll-focus-color-a64',
         'kicl-scroll-shift-narrow',
         'kicl-text-box-trim-start',
         'kicl-text-wrap-balance'
       )}
       dense
+      easing='ease-expo-out'
+      hold
+      in={seen}
       is='h2'
+      property='slide-from-left'
       ref={ref}
+      stagger={60}
     >
-      <AnimatedText
-        easing='ease-expo-out'
-        hold
-        in={seen}
-        is='span'
-        property='slide-from-left'
-        stagger={60}
-        unstyled
-      >
-        {t('title', { context: id })}
-      </AnimatedText>
-    </Heading>
+      {t('title', { context: id })}
+    </Animated.Heading>
   );
 };
 

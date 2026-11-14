@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, Animation } from 'design/components';
+import { Animated, Animation } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -15,9 +15,9 @@ const Failed: React.FunctionComponent = () => {
 
   return (
     <Animation in={state === 'failed'}>
-      <AnimatedText level='error' is='p' role='alert'>
+      <Animated.Text level='error' is='p' role='alert'>
         {t('sign_out', { context: 'failed' })}
-      </AnimatedText>
+      </Animated.Text>
     </Animation>
   );
 };

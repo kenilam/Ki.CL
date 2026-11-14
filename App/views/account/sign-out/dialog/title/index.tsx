@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, Animation, Heading } from 'design/components';
+import { Animated, Animation } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -18,13 +18,11 @@ const Title: React.FunctionComponent = () => {
 
   return (
     <Animation property='slide-from-top'>
-      <Heading dense id={SIGN_OUT_TITLE_ID}>
-        <AnimatedText level='error' is='span' role='alert'>
-          {pending
-            ? t('sign_out', { context: 'pending' })
-            : t('sign_out', { context: 'confirm' })}
-        </AnimatedText>
-      </Heading>
+      <Animated.Heading dense id={SIGN_OUT_TITLE_ID} level='error' role='alert'>
+        {pending
+          ? t('sign_out', { context: 'pending' })
+          : t('sign_out', { context: 'confirm' })}
+      </Animated.Heading>
     </Animation>
   );
 };

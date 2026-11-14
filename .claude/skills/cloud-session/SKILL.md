@@ -92,9 +92,7 @@ Playwright is under the container's Node 22 tree, and ESM ignores
 `NODE_PATH`, so import it by path from a script run with Node 24:
 `import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs'`.
 
-Expect a failed request for `use.typekit.net` unless that host is on the
-network policy: the brand fonts fall back, nothing else is affected. The
-two 503s on `/api` are the stand-in answering for the backend.
+Expect two 503s on `/api`: they are the stand-in answering for the backend.
 
 ## Egress
 
