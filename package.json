@@ -21,7 +21,8 @@
     "prepare": "husky",
     "preview": "cross-env DEBUG=true VERBOSE=true yarn workspace app run preview",
     "production": "yarn run clean:build && cross-env DEBUG=true VERBOSE=true yarn workspace app run production",
-    "start": "yarn install && yarn run development"
+    "start": "yarn install && yarn run development",
+    "test": "yarn workspace app.server exec tsx --test '../**/*.test.ts' './**/*.test.ts'"
   },
   "repository": {
     "type": "git",
@@ -104,12 +105,6 @@
     "stylelint-scss": "7.3.0"
   },
   "packageManager": "yarn@4.17.1",
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/spec\\.ts$"
-    ]
-  },
   "resolutions": {
     "lodash@npm:4.17.21": "4.17.23"
   }

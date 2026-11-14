@@ -1,0 +1,45 @@
+import React from 'react';
+
+// Components
+import { List } from 'design/components';
+
+// Content
+import type { Resolved } from '@/views/about/resume/content';
+
+// Context
+import { useVersion } from '@/views/about/resume/context';
+
+// Partials
+import { Line } from '@/views/about/resume/page/article/sections/section/line';
+
+// Styles
+import './styles.scss';
+
+// Constants
+import { CLASS_NAME as RESUME } from '@/views/about/resume/constants';
+
+type Props = Pick<Resolved['experience'][number], 'dates'>;
+
+const Points: React.FunctionComponent<Props> = ({ dates }) => {
+  const role = useVersion().experience.find((each) => {
+    return each.dates === dates;
+  });
+
+  if (!role) {
+    return null;
+  }
+
+  return (
+    <List
+      className={`${RESUME}__role__points`}
+      gap='narrow'
+      listStyleType='inherit'
+    >
+      {role.points.map((line) => {
+        return <Line key={line} line={line} />;
+      })}
+    </List>
+  );
+};
+
+export { Points };

@@ -1,6 +1,5 @@
 {
   "action_file": "PDF",
-  "action_message": "Message me",
   "earlier": {
     "apollo": "UI Developer, Apollo Group · Apr 2012 – May 2013",
     "apple_contract": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014",
@@ -120,8 +119,8 @@
     "linkedin": "linkedin.com/in/kenilam"
   },
   "location": "San Jose, California",
-  "mentoring": "ADPList mentor: 426 sessions and 21,000 minutes with designers and engineers, and 52 reviews. Ranked in the top 10% of mentors in my field. $t(links.adplist)",
-  "mentoring_manager": "ADPList mentor: 426 sessions and 21,000 minutes, and 52 reviews. Ranked in the top 10% of mentors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. $t(links.adplist)",
+  "mentoring": "ADPList mentor: $t(common:mentoring_sessions) sessions and 21,000 minutes with designers and engineers, and 52 reviews. Ranked in the top 10% of mentors in my field. $t(links.adplist)",
+  "mentoring_manager": "ADPList mentor: $t(common:mentoring_sessions) sessions and 21,000 minutes, and 52 reviews. Ranked in the top 10% of mentors in my field. Sessions cover front-end and design problems, general mentorship and turning ideas into businesses. $t(links.adplist)",
   "name_architecture": "Architecture",
   "name_frontend_ai": "Front end and AI",
   "name_manager": "Manager",
@@ -191,7 +190,7 @@
   },
   "summary_architecture": "Staff-level engineer with 15+ years of experience designing platforms that many teams and products share. At Apple I built a federated front end and a GraphQL gateway serving 20+ subgraphs. At Tesla I architected a GraphQL federation layer and front-end infrastructure, and cut system outages from 20+ a week to near zero. I work across the stack, from design systems to deployment.",
   "summary_frontend_ai": "Front-end and full-stack engineer with 15+ years of experience, currently leading design and engineering for Apple University's platform. I build design systems and federated front-end and GraphQL architectures, and I ship AI features end to end: an MCP server at Apple, and public agents of my own with cost, abuse and quality controls built in. I trained in fine art and design before moving into engineering.",
-  "summary_manager": "Engineering manager and staff engineer with 15+ years of experience in front-end platforms and design systems. I managed an 8-person team at Tesla and a team of 4 at Indeed, where I also hired and ran quarterly performance reviews and calibration. I still build, currently leading design and engineering for Apple University’s platform, and I mentor through ADPList, with 426 sessions so far.",
+  "summary_manager": "Engineering manager and staff engineer with 15+ years of experience in front-end platforms and design systems. I managed an 8-person team at Tesla and a team of 4 at Indeed, where I also hired and ran quarterly performance reviews and calibration. I still build, currently leading design and engineering for Apple University’s platform, and I mentor through ADPList, with $t(common:mentoring_sessions) sessions so far.",
   "summary_master": "Design technologist and full-stack engineer with 15+ years of experience in the US and Japan. I build design systems and federated front-end and GraphQL platforms, and I lead the teams that ship them, most recently at Apple and Tesla. I trained in fine art and design, so I work as comfortably with designers as with engineers.",
   "summary_react_native": "Product engineer with 15+ years of experience building interfaces, from the iPad kiosk in every Apple Store to the platform behind Apple University. React and TypeScript are my daily tools on the web. I build with React Native and Expo in my own apps, and I did native iOS work earlier in my career. I managed teams at Tesla and Indeed, and I trained in fine art and design.",
   "title_earlier": "Earlier",

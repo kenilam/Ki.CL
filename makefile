@@ -69,10 +69,10 @@ client-token:
 # commit the record. The second writes every version on Letter and A4, with the phone number from
 # KICL_RESUME_PHONE in .env, into a folder outside the repository.
 resume.pdf:
-	@yarn workspace app.server exec tsx ../views/resume/export/cli.ts public
+	@yarn workspace app.server exec tsx ../views/about/resume/export/cli.ts public
 
 resume.pdf.private:
-	@yarn workspace app.server exec tsx ../views/resume/export/cli.ts private --out "$(OUT)"
+	@yarn workspace app.server exec tsx ../views/about/resume/export/cli.ts private --out "$(OUT)"
 
 test:
 	@echo ⌛ running testing...

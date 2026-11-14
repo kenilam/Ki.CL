@@ -40,7 +40,7 @@ cp gcp/.env.template gcp/.env   # once, then fill it in
 ```
 
 ## Resume
-`/resume` is the master version, and each tailored version is at `/resume/<version>`: `manager`, `frontend-ai`, `react-native` and `architecture`. The content is typed data in `App/views/resume/content`. A line several versions share is one constant in `shared.ts`, and each version's file picks its lines and their order.
+`/about/resume` is the master version, and each tailored version is at `/about/resume/<version>`: `manager`, `frontend-ai`, `react-native` and `architecture`. The content is typed data in `App/views/about/resume/content`. A line several versions share is one constant in `shared.ts`, and each version's file picks its lines and their order.
 
 The PDFs are the page, printed by the Chrome on this machine. Run the site locally first, with the API and the design system up.
 ```BASH
@@ -53,7 +53,7 @@ It also writes `content/exported.json`, a fingerprint of the content the PDF was
 
 The phone number is `KICL_RESUME_PHONE` in `.env`. It goes into the private PDFs only. This repository is public, so the number is in no commit, no bundle and not in the public PDF.
 
-Every version has to fit two pages on Letter and on A4, and the export fails when one does not. The type size on paper is `--kicl-print-font-size` in `App/views/resume/styles.scss`.
+Every version has to fit two pages on Letter and on A4, and the export fails when one does not. The type size on paper is `--kicl-print-font-size` in `App/views/about/resume/styles.scss`.
 
 The design is written up in `docs/design/resume.md`.
 
