@@ -12,11 +12,11 @@ import { useTranslation } from 'design/hooks';
 import { useDialog } from './use-dialog';
 
 // Partials
+import { About } from './about';
 import { Close } from './close';
 import { Experiments } from './experiments';
 import { Home } from './home';
 import { Open } from './open';
-import { Resume } from './resume';
 import { Workshop } from './workshop';
 
 // Constants
@@ -53,7 +53,7 @@ const Narrow: React.FunctionComponent = () => {
           <Home key='home' />
           <Experiments key='experiments' />
           <Workshop key='workshop' />
-          <Resume key='resume' />
+          <About key='about' />
           {me ? <Account key='account' /> : null}
         </Navigation>
       </Dialog>

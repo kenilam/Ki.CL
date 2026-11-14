@@ -12,12 +12,6 @@ import { View } from '@/views/home/hero/works/work/view';
 
 import type { Props } from '@/views/home/hero/works/work';
 
-import './styles.scss';
-
-import { CLASS_NAME as WORK } from '@/views/home/hero/works/work/constants';
-
-const CLASS_NAME = `${WORK}--default`;
-
 const Default: React.FunctionComponent<Props> = ({ plate }) => {
   const experiment = EXPERIMENTS.find((each) => {
     return each.plate === plate;
@@ -30,7 +24,7 @@ const Default: React.FunctionComponent<Props> = ({ plate }) => {
   return (
     <Layout alignItems='center' fill={4} gap='wide'>
       <HyperLink
-        className={classNames(CLASS_NAME, 'kicl-inline-size-full')}
+        className={classNames('kicl-inline-size-full', 'kicl-scroll-focus')}
         to={experiment.to}
         unstyled
       >

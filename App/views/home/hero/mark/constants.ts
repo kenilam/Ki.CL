@@ -9,6 +9,4 @@ const GLYPHS = [
   ['#.#.#.#', '.#.#.#.', '#.#.#.#', '.#.#.#.', '#.#.#.#', '.#.#.#.', '#.#.#.#'],
 ] as const;
 
-const SIZE = 7;
-
-export { CLASS_NAME, GLYPHS, SIZE };
+export { CLASS_NAME, GLYPHS };

@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { Explore } from './explore';
+import { Explore } from '@/views/explore';
+
+import { About } from './about';
 import { Hero } from './hero';
-import { Resume } from './resume';
 import { Workshop } from './workshop';
 
 const Home: React.FunctionComponent = () => {
@@ -11,7 +12,7 @@ const Home: React.FunctionComponent = () => {
       <Hero />
       <Workshop />
       <Explore />
-      <Resume />
+      <About />
     </>
   );
 };

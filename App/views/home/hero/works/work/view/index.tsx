@@ -28,7 +28,8 @@ const View: React.FunctionComponent = () => {
         className={classNames(
           CLASS_NAME,
           'kicl-font-weight-bold',
-          'kicl-letter-spacing-tight'
+          'kicl-letter-spacing-tight',
+          'kicl-scroll-focus-reveal-start'
         )}
       >
         <Tb.TbArrowRight />

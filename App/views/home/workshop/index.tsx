@@ -6,7 +6,7 @@ import { Animation, Layout } from 'design/components';
 
 import { TOPICS } from '@/views/routes';
 
-import { useInverse } from '@/views/home/use-inverse';
+import { useInverse } from '@/views/use-inverse';
 
 import { Anchors } from './anchors';
 import { Headline } from './headline';

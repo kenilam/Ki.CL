@@ -8,7 +8,7 @@ One typed content source in this repo renders the resume as a page in the site's
 
 ### It must do
 
-1. Show the resume at `/resume`, on a phone and a desktop, in the light and dark themes. Each role is a disclosure: its title, employer and dates are the summary, and what was done opens under it. The current role starts open.
+1. Show the resume at `/about/resume`, on a phone and a desktop, in the light and dark themes. Each role is a disclosure: its title, employer and dates are the summary, and what was done opens under it. The current role starts open.
 2. Give a PDF two ways: the browser's own print has to come out right, and the page offers a real file to download.
 3. Serve the four tailored versions (manager, front end and AI, React Native, architecture) from the same content, each at its own URL.
 4. Export every version to PDF with one command, on Letter and A4, for applications.
@@ -39,7 +39,7 @@ One typed content source in this repo renders the resume as a page in the site's
 
 These carry weight. If one is wrong, the section named after it changes.
 
-- `/resume` is public and linked from the navigation (section 6, row 8).
+- `/about/resume` is public and linked from the navigation (section 6, row 8).
 - The tailored versions may be read by anyone who has the URL (row 8).
 - The phone number belongs on the PDFs sent with an application and nowhere public (row 7).
 - A binary of about 150 KB may live in git, although site imagery lives in the bucket (row 5).
@@ -70,8 +70,8 @@ The numbers force nothing. They rule things out: no CDN change, no render servic
 
 | Request | Answer | Cache |
 | --- | --- | --- |
-| `GET /resume` | The shell, then the master version | `no-cache` on the shell |
-| `GET /resume/:version` | One of `manager`, `frontend-ai`, `react-native`, `architecture`. Anything else renders the 404 page | as above, and `noindex` |
+| `GET /about/resume` | The shell, then the master version | `no-cache` on the shell |
+| `GET /about/resume/:version` | One of `manager`, `frontend-ai`, `react-native`, `architecture`. Anything else renders the 404 page | as above, and `noindex` |
 | `GET /assets/static/resume/keni-lam-resume.pdf` | The master PDF, streamed from the static bucket by the API | `public, max-age=0, must-revalidate`, with `ETag` |
 | `POST /collect` | Existing analytics. Views by path, the PDF and print controls by `data-track` | n/a |
 
@@ -228,13 +228,13 @@ The bottleneck is not load. It is the dependency chain in front of a page that m
 | 100 × the traffic, 500,000 views a day | Still under 100 requests a second, so the host holds. The session per visitor and Turnstile are the first to hurt | Serve the page without a session, then put Cloud CDN in front of the hashed assets |
 | PDFs without a laptop | Decision 4 | A Cloud Run job with Chromium that prints the released site, writing to the bucket under fingerprinted names |
 
-Signals to watch: views of `/resume` and clicks on `Resume PDF` in `/collect`, the 5xx rate of the session exchange, and how often an export is needed.
+Signals to watch: views of `/about/resume` and clicks on `Resume PDF` in `/collect`, the 5xx rate of the session exchange, and how often an export is needed.
 
 ## 9. Coverage
 
 - Media: one PDF, in the static bucket. Fonts from Typekit. No images.
 - Ids: slugs for versions, a content fingerprint for the file. No generator needed.
-- Search: none inside the site. `/resume` is indexable, the versions are not.
+- Search: none inside the site. `/about/resume` is indexable, the versions are not.
 - Logs: analytics events as JSON log lines, already in place.
 - SLOs: stated in section 1. Not measured. See the end of section 7.
 

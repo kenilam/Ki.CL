@@ -6,10 +6,9 @@ import { useResponsive } from 'design/hooks';
 
 import { Canvas } from '@/three';
 
-import { Effects } from './effects';
-import { Pause } from './pause';
-import { Studio } from './studio';
-import { Voxels } from './voxels';
+import { Effects, Pause, Studio, Voxels } from '@/views/mark';
+
+import { Drive } from './drive';
 
 import { CLASS_NAME } from './constants';
 
@@ -42,10 +41,12 @@ const Mark: React.FunctionComponent = () => {
         gl={{ antialias: true }}
         shadows
       >
-        <Studio />
-        <Voxels />
-        <Effects />
-        <Pause />
+        <Drive>
+          <Studio />
+          <Voxels />
+          <Effects />
+          <Pause />
+        </Drive>
       </Canvas>
     </div>
   );

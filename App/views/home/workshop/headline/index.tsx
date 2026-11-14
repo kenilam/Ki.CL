@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Heading, Markdown } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
-import { useEntered } from '@/views/home/use-entered';
+import { useEntered } from '@/views/use-entered';
 import { TITLE_ID } from '@/views/home/workshop/constants';
 
 import { Reveal } from './reveal';

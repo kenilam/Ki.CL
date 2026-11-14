@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 import { Heading } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -24,7 +26,10 @@ const Name: React.FunctionComponent<Props> = ({ plate }) => {
   }
 
   return (
-    <Heading className={CLASS_NAME} is='h3'>
+    <Heading
+      className={classNames(CLASS_NAME, 'kicl-scroll-focus-reveal')}
+      is='h3'
+    >
       {t('experiment', { context: experiment.context })}
     </Heading>
   );

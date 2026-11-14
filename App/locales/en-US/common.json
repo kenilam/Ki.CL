@@ -1,4 +1,5 @@
 {
+  "about": "About",
   "account": "Account",
   "action_cancel": "Cancel",
   "action_clear": "Clear",
@@ -6,6 +7,7 @@
   "action_close_navigation": "Close the navigation",
   "action_confirm": "Confirm",
   "action_delete": "Delete",
+  "action_message": "Message me",
   "action_open_navigation": "Open the navigation",
   "action_pause": "Pause",
   "action_play": "Play",
@@ -61,6 +63,7 @@
   "language_incomplete": "Not fully translated yet.",
   "language_incomplete_translating": "Being translated. You can pick it once it’s done.",
   "main": "Main",
+  "mentoring_sessions": "426",
   "message_sent": "Message sent",
   "moderation": "Moderation",
   "my_profile": "My profile",
