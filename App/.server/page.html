@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark light">
 <title>{{gate_title}}</title>
-<script src="https://use.typekit.net/cpi1lno.js"></script>
-<script>try { Typekit.load({ async: true }); } catch (e) {}</script>
 <style>
   /* Values copied from the site's tokens and components, because this page cannot load the site's CSS. */
   :root {
@@ -28,7 +26,7 @@
   * {
     margin: 0;
     box-sizing: border-box;
-    font-family: 'roboto', sans-serif;
+    font-family: system-ui, sans-serif;
     font-size: inherit;
     font-weight: 300;
     letter-spacing: 0.08rem;
@@ -50,14 +48,13 @@
   header, footer { display: grid; gap: 0.5rem; justify-items: center; }
 
   /* Text variant="secondary" */
-  .secondary { color: color-mix(in srgb, var(--ink) 80%, transparent); }
+  .secondary { color: color-mix(in srgb, var(--ink) 80%, var(--bg)); }
 
   /* The eyebrow: kicl-font-size-small, kicl-letter-spacing, kicl-text-transform-uppercase */
   .eyebrow { font-size: 0.8rem; text-transform: uppercase; }
 
   /* Heading with kicl-font-size-extreme and kicl-line-height-narrowest */
   h1 {
-    font-family: 'mic-32-new-web', sans-serif;
     font-size: min(25dvw, 10rem);
     font-weight: 700;
     line-height: 0.8;

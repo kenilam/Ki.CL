@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, BubbleContent, Layout } from 'design/components';
+import { Animated, BubbleContent, Layout } from 'design/components';
 
 // Partials
 import { Working } from '@/views/experiments/image-agent/chat/page/conversation/working';
@@ -27,7 +27,7 @@ const Activity: React.FunctionComponent = () => {
     >
       <BubbleContent is='span'>
         <Working />
-        <AnimatedText
+        <Animated.Text
           is='span'
           key={text}
           property='blur'
@@ -35,7 +35,7 @@ const Activity: React.FunctionComponent = () => {
           stagger={40}
         >
           {text}
-        </AnimatedText>
+        </Animated.Text>
       </BubbleContent>
     </Layout>
   );

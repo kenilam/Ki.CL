@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, Animation } from 'design/components';
+import { Animated, Animation } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -14,9 +14,12 @@ const Message: React.FunctionComponent = () => {
 
   return (
     <Animation property='slide-from-top'>
-      <AnimatedText className='kicl-text-align-center' id={SIGN_OUT_MESSAGE_ID}>
+      <Animated.Text
+        className='kicl-text-align-center'
+        id={SIGN_OUT_MESSAGE_ID}
+      >
         {t('sign_out', { context: 'message' })}
-      </AnimatedText>
+      </Animated.Text>
     </Animation>
   );
 };

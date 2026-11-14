@@ -1,4 +1,4 @@
-import { useResponsive } from 'design/hooks';
+import { useResponsive, useTranslation } from 'design/hooks';
 
 import type { Fiber } from '@/three';
 
@@ -6,7 +6,7 @@ import { ease, scroll } from '@/views/about/stage/scroll';
 
 import { useStage } from '@/views/about/stage/context';
 
-import { GRID, POSES } from './constants';
+import { GRID, POSES, SIDES } from './constants';
 
 const mix = (from: number, to: number, amount: number) => {
   return from + (to - from) * amount;
@@ -15,6 +15,7 @@ const mix = (from: number, to: number, amount: number) => {
 const usePose = () => {
   const { isNarrow, prefersReducedMotion: still } = useResponsive();
   const stage = useStage();
+  const { i18n } = useTranslation();
 
   return (
     { height, width }: Fiber.RootState['viewport'],
@@ -38,7 +39,7 @@ const usePose = () => {
 
     return {
       scale: Math.min(side * span, columns / 2) / GRID,
-      x: columns * across,
+      x: columns * across * SIDES[i18n.dir()],
       y: height * (up + drift),
     };
   };

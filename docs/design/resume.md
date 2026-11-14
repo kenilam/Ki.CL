@@ -189,7 +189,7 @@ Availability in series multiplies. If the host, the design remote and the API we
 | The primary database region | The same in both regions, since sessions are written to the primary | As above. The file is served by the surviving region's host |
 | The design remote | No page. Components come from it | As above |
 | Turnstile turns a real visitor away | The 403 page | As above. This is the case most likely to hit a recruiter behind a corporate proxy |
-| Typekit blocked or slow | The page in the system sans-serif, same layout | Nothing breaks. The export refuses to write a PDF in the fallback face |
+| A font file blocked or slow | The page in the fallback sans-serif, same layout | Nothing breaks. The export refuses to write a PDF in the fallback face |
 | Content edited, PDF not re-exported | The download control is gone, print remains | Decision 6. The next export restores it |
 | A version grows past two pages | Nothing on the site | The export fails and names the version and the page count |
 | The dark theme when printing | Light paper | The design system switches to the light theme for the print |
@@ -211,7 +211,7 @@ Four things only showed up once a real PDF came out of the real page. Each is fi
 
 The second and third matter more than they look. An applicant tracking system reads a PDF in its own order and by its own idea of a word, and it has to find the name first and the headings whole.
 
-One limit stays. Typekit serves Mic 32 New with PostScript outlines, and Chrome embeds those as Type 3 fonts. The text is still selectable and extracts correctly: every line of every version was checked on the first export, on both paper sizes. The plain export from the earlier step uses TrueType and is the safer file for a strict upload form.
+One limit went away on 2026-11-14. The Adobe kit served Mic 32 New with PostScript outlines, and Chrome embedded those as Type 3 fonts. The fonts are now Barlow and Barlow Semi Condensed, shipped with the design system, and Chrome embeds them as TrueType.
 
 Recovery needs no care. There is no cache to warm and no queue to drain, and every visitor after the fix simply gets the page.
 
@@ -232,7 +232,7 @@ Signals to watch: views of `/about/resume` and clicks on `Resume PDF` in `/colle
 
 ## 9. Coverage
 
-- Media: one PDF, in the static bucket. Fonts from Typekit. No images.
+- Media: one PDF, in the static bucket. Fonts from the design system's stylesheet. No images.
 - Ids: slugs for versions, a content fingerprint for the file. No generator needed.
 - Search: none inside the site. `/about/resume` is indexable, the versions are not.
 - Logs: analytics events as JSON log lines, already in place.

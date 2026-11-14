@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText, Text } from 'design/components';
+import { Animated, Text } from 'design/components';
 
 // Context
 import { useGenerateContext } from '@/views/experiments/kinetic-light/context';
@@ -15,9 +15,9 @@ const Status: React.FunctionComponent = () => {
 
   return (
     <Text is='p' role='status' variant='secondary'>
-      <AnimatedText is='span' key={status} split='word'>
+      <Animated.Text is='span' key={status} split='word'>
         {status}
-      </AnimatedText>
+      </Animated.Text>
     </Text>
   );
 };

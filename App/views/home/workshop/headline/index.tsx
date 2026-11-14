@@ -2,13 +2,11 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { Heading, Markdown } from 'design/components';
+import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { useEntered } from '@/views/use-entered';
 import { TITLE_ID } from '@/views/home/workshop/constants';
-
-import { Reveal } from './reveal';
 
 import './styles.scss';
 
@@ -19,20 +17,23 @@ const Headline: React.FunctionComponent = () => {
   const { entered, ref } = useEntered();
 
   return (
-    <Heading
+    <Animated.Heading
       className={classNames(
         CLASS_NAME,
         'kicl-font-size-headline',
         'kicl-max-inline-size-columns-10',
-        'kicl-text-align-center',
-        { 'kicl-opacity-0': !entered }
+        'kicl-text-align-center'
       )}
+      easing='ease-expo-out'
+      hold
       id={TITLE_ID}
+      in={entered}
       is='h2'
+      property='slide-from-left'
       ref={ref}
     >
-      {entered ? <Reveal /> : <Markdown>{t('workshop')}</Markdown>}
-    </Heading>
+      {t('workshop')}
+    </Animated.Heading>
   );
 };
 

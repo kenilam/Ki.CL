@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AnimatedText } from 'design/components';
+import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { useWithin } from '@/views/about/intro/use-within';
@@ -10,7 +10,7 @@ const Name: React.FunctionComponent = () => {
   const { ref, within } = useWithin<HTMLElement>();
 
   return (
-    <AnimatedText
+    <Animated.Text
       className='kicl-scroll-leave-near'
       easing='ease-expo-out'
       hold
@@ -20,7 +20,7 @@ const Name: React.FunctionComponent = () => {
       variant='secondary'
     >
       {t('name')}
-    </AnimatedText>
+    </Animated.Text>
   );
 };
 

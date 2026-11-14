@@ -36,7 +36,7 @@ const Explore: React.FunctionComponent = () => {
         >
           <Text
             className={classNames(
-              'kicl-color-neutral-a64',
+              'kicl-color-neutral-64',
               'kicl-font-family-mono',
               'kicl-font-size-small',
               'kicl-scroll-enter-near'
