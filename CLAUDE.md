@@ -147,3 +147,4 @@ Everything written here is read by people: UI copy, comments, commit messages, R
 - Commit messages: first line what changed, body why, in normal sentences. No manifesto.
 - README: facts, decisions, how to run it. Skip the story of how it was built unless it explains a decision.
 - If a sentence would sound odd said out loud to a teammate, rewrite it.
+- The About page is the one exception. Its chapters are written as a story about the author, so a title can name a theme ("An education in making") and a metaphor from the author's own history can stay ("code could be another kind of canvas"). The facts in it stay concrete: the employer, the place, the thing built, the number.
