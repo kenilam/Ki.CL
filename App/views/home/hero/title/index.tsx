@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { AnimatedText, Heading } from 'design/components';
+import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { TITLE_ID } from '@/views/home/hero/constants';
@@ -11,7 +11,7 @@ const Title: React.FunctionComponent = () => {
   const { t } = useTranslation('home');
 
   return (
-    <Heading
+    <Animated.Heading
       className={classNames(
         'kicl-margin-inline-auto',
         'kicl-max-inline-size-columns-10',
@@ -21,11 +21,10 @@ const Title: React.FunctionComponent = () => {
       id={TITLE_ID}
       is='h1'
       lookLike='display'
+      stagger={60}
     >
-      <AnimatedText is='span' stagger={60} unstyled>
-        {t('title')}
-      </AnimatedText>
-    </Heading>
+      {t('title')}
+    </Animated.Heading>
   );
 };
 

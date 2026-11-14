@@ -41,7 +41,7 @@ const About: React.FunctionComponent = () => {
         </Heading>
         <Text
           className={classNames(
-            'kicl-color-neutral-a64',
+            'kicl-color-neutral-64',
             'kicl-font-size-medium',
             'kicl-max-inline-size-columns-6',
             'kicl-text-wrap-balance'

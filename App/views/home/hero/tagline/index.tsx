@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { AnimatedText } from 'design/components';
+import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { useShown } from './use-shown';
@@ -18,7 +18,7 @@ const Tagline: React.FunctionComponent = () => {
   const shown = useShown();
 
   return (
-    <AnimatedText
+    <Animated.Text
       className={classNames(
         CLASS_NAME,
         'kicl-font-size-medium',
@@ -34,7 +34,7 @@ const Tagline: React.FunctionComponent = () => {
       stagger={20}
     >
       {t('tagline')}
-    </AnimatedText>
+    </Animated.Text>
   );
 };
 

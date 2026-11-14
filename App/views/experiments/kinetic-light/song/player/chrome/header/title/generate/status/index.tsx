@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { AnimatedText } from 'design/components';
+import { Animated } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -30,9 +30,9 @@ const Status: React.FunctionComponent = () => {
   }
 
   return (
-    <AnimatedText is='span' key={key} split='word'>
+    <Animated.Text is='span' key={key} split='word'>
       {message}
-    </AnimatedText>
+    </Animated.Text>
   );
 };
 

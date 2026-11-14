@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { AnimatedText } from 'design/components';
+import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { useWithin } from '@/views/about/intro/use-within';
@@ -20,7 +20,7 @@ const Lead: React.FunctionComponent = () => {
 
   return (
     <>
-      <AnimatedText
+      <Animated.Text
         className={CLASS_NAME}
         delay={120}
         duration='slow'
@@ -31,8 +31,8 @@ const Lead: React.FunctionComponent = () => {
         stagger={20}
       >
         {t('lead')}
-      </AnimatedText>
-      <AnimatedText
+      </Animated.Text>
+      <Animated.Text
         className={CLASS_NAME}
         delay={240}
         duration='slow'
@@ -42,7 +42,7 @@ const Lead: React.FunctionComponent = () => {
         stagger={20}
       >
         {t('lead', { context: 'material' })}
-      </AnimatedText>
+      </Animated.Text>
     </>
   );
 };

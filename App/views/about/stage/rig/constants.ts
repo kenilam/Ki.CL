@@ -13,4 +13,6 @@ const POSES = {
   },
 };
 
-export { GRID, POSES };
+const SIDES = { ltr: 1, rtl: -1 };
+
+export { GRID, POSES, SIDES };

@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { AnimatedText, Heading } from 'design/components';
+import { Animated } from 'design/components';
 import { useResponsive, useTranslation } from 'design/hooks';
 
 import { useReady } from '@/views/about/ready/context';
@@ -20,27 +20,23 @@ const Title: React.FunctionComponent = () => {
   const { ready } = useReady();
 
   return (
-    <Heading
+    <Animated.Heading
       className={classNames(
         COLUMNS[String(isWider)],
         'kicl-align-self-center',
+        'kicl-text-hyphenate',
         'kicl-scroll-leave-far'
       )}
+      easing='ease-expo-out'
+      hold
       id={TITLE_ID}
+      in={ready || prefersReducedMotion}
       is='h1'
       lookLike='display'
+      stagger={60}
     >
-      <AnimatedText
-        easing='ease-expo-out'
-        hold
-        in={ready || prefersReducedMotion}
-        is='span'
-        stagger={60}
-        unstyled
-      >
-        {t('title', { context: 'about' })}
-      </AnimatedText>
-    </Heading>
+      {t('title', { context: 'about' })}
+    </Animated.Heading>
   );
 };
 

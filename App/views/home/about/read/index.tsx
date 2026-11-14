@@ -12,7 +12,7 @@ const Read: React.FunctionComponent = () => {
 
   return (
     <HyperLink
-      after={<Tb.TbArrowRight aria-hidden />}
+      after={<Tb.TbArrowRight aria-hidden className='kicl-rtl-mirror' />}
       lookLikeButton
       to={PAGES.about}
     >
