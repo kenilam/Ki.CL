@@ -12,7 +12,7 @@ make run                # development: frees the dev port from .env, then vite -
 make run.production     # clean build dir, build client, then vite preview
 make build               # vite build --debug (client bundle only)
 make server              # build:server → runs the Express static/SSR-ish server (App/.server)
-make test                # npx jest
+make test                # Node's test runner through tsx, every *.test.ts under App
 make codegen             # run codegen (type generation)
 make start               # yarn install + development (one-step bootstrap)
 make client-token.keys   # once: Ed25519 pair, private key in ~/.kicl, prints KICL_CLIENT_PUBLIC_KEY
@@ -24,7 +24,7 @@ make resume.pdf          # the public resume PDF, printed from the site running 
 make resume.pdf.private OUT=~/Desktop/resume   # every version, Letter and A4, with the phone number from .env
 ```
 
-Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn lint:stylelint` (`App/**/*.{css,scss} --fix`), `yarn lint:staged` (husky pre-commit, prettier+oxlint+stylelint via `lint-staged`). Single test file: `npx jest App/path/to/File.test.tsx`.
+Other scripts not wrapped by `make`: `yarn lint:oxlint` (oxlint `--fix`), `yarn lint:stylelint` (`App/**/*.{css,scss} --fix`), `yarn lint:staged` (husky pre-commit, prettier+oxlint+stylelint via `lint-staged`). Single test file: `yarn workspace app.server exec tsx --test $PWD/App/path/to/file.test.ts`.
 
 ## Architecture
 
@@ -70,7 +70,7 @@ UI copy is not written in components. It lives in `App/locales/en-US/<namespace>
 
 ### Path aliases
 
-`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). `App/.server` and the scripts it runs (`views/resume/export/cli.ts`) use `@/` too, since tsx loads `App/.server/tsconfig.json`, which extends the App config. The exception is `App/.client`, the Vite config, which loads before any alias exists (`get-alias.ts` imports `../../tsconfig.json`). The remotes import themselves by their federation names (see the root `CLAUDE.md`).
+`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). `App/.server` and the scripts it runs (`views/about/resume/export/cli.ts`) use `@/` too, since tsx loads `App/.server/tsconfig.json`, which extends the App config. The exception is `App/.client`, the Vite config, which loads before any alias exists (`get-alias.ts` imports `../../tsconfig.json`). The remotes import themselves by their federation names (see the root `CLAUDE.md`).
 
 ### Design system discipline (enforced by Cursor rules, apply the same bar here)
 

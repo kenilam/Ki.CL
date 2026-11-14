@@ -1,0 +1,8 @@
+/*
+ * A section's label is set at the small size, so its tracking comes down
+ * with it. At the body's it is a tenth of the label's own size, wide enough
+ * that a PDF reader takes each letter for a word: "S U M M A R Y".
+ */
+.kicl--views--about__resume__heading {
+  letter-spacing: calc(var(--kicl-letter-spacing) * 0.8);
+}

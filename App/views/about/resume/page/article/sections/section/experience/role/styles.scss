@@ -1,0 +1,34 @@
+.kicl--views--about__resume__role {
+  @media print {
+    --kicl--components--card--background-color: transparent;
+    --kicl--components--card--border-radius: 0;
+    --kicl--components--card--border-width: 0;
+    --kicl--components--card--spacing: 0;
+
+    display: grid;
+    gap: 0;
+    grid-template-rows: repeat(3, auto);
+
+    > header {
+      grid-area: 2 / 1;
+
+      > h3 {
+        font-size: var(--kicl-font-size-small);
+      }
+    }
+
+    > details {
+      display: grid;
+      grid-area: 1 / 1 / 4;
+      grid-template-rows: subgrid;
+
+      > summary {
+        --kicl--components--details--summary--margin-block-end: 0;
+      }
+
+      &::details-content {
+        grid-row: 3;
+      }
+    }
+  }
+}

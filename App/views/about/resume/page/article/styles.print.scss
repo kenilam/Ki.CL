@@ -1,0 +1,43 @@
+.kicl--views--about__resume {
+  @media print {
+    // No card on paper: the frame's border is the only edge on the sheet.
+    --kicl--components--card--background-color: transparent;
+    --kicl--components--card--border-width: 0;
+    --kicl--components--card--spacing: 0;
+
+    /*
+     * Chrome can split a line between two sheets inside nested grids, and
+     * print its second half over what follows. Blocks break cleanly. So on
+     * paper each stack is a block, and the gap `Layout` gave it is the margin
+     * between its children, at the same sizes.
+     */
+    display: block;
+
+    section,
+    ul,
+    li > p {
+      display: block;
+    }
+
+    li {
+      display: list-item;
+    }
+
+    > * + * {
+      margin-block-start: var(--kicl-gutter);
+    }
+
+    section > * + * {
+      margin-block-start: var(--kicl-gutter-narrow);
+    }
+
+    section > * + article,
+    section > article + section {
+      margin-block-start: var(--kicl-gutter);
+    }
+
+    li + li {
+      margin-block-start: var(--kicl-gutter-narrower);
+    }
+  }
+}
