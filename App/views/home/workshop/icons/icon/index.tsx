@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 import { TOPICS, type Topic } from '@/views/routes';
 
 import './styles.scss';
@@ -21,7 +23,15 @@ const Icon: React.FunctionComponent<Props> = ({ to }) => {
 
   const [Glyph] = topic.icons;
 
-  return <Glyph className={CLASS_NAME} />;
+  return (
+    <Glyph
+      className={classNames(
+        CLASS_NAME,
+        'kicl-ease-back-out',
+        'kicl-transition-duration-slow'
+      )}
+    />
+  );
 };
 
 export { Icon };

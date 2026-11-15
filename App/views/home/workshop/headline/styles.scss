@@ -1,7 +1,8 @@
 .kicl--views--home__workshop__headline {
+  --kicl-heading-status-color: var(--kicl-color-neutral-48);
+  --kicl-heading--transition-duration: var(--kicl-transition-duration-slow);
+  --kicl-heading--transition-timing-function: var(--kicl-ease-quart-out);
   --kicl--components--animation--slide--distance: var(--kicl-gutter-extreme);
-
-  color: var(--kicl-color-neutral-48);
 
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
@@ -12,14 +13,11 @@
   }
 
   strong {
-    color: var(--kicl-body-color);
-    transition-duration: var(--kicl-transition-duration-slow);
-    transition-property: color;
-    transition-timing-function: var(--kicl-ease-quart-out);
+    --kicl-heading-status-color: var(--kicl-body-color);
 
     @supports (animation-timeline: view()) {
       @media (prefers-reduced-motion: no-preference) {
-        color: inherit;
+        --kicl-heading-status-color: inherit;
       }
     }
 
@@ -28,7 +26,7 @@
         @supports (animation-timeline: view()) {
           @media (prefers-reduced-motion: no-preference) {
             @container style(--kicl--views--home__workshop--active: #{$index}) or style(--kicl--views--home__workshop--finale: 1) {
-              color: var(--kicl-body-color);
+              --kicl-heading-status-color: var(--kicl-body-color);
             }
           }
         }

@@ -4,9 +4,7 @@
     var(--kicl--views--home__workshop__icons__icon--index) *
     var(--kicl-transition-duration-fastest)
   );
-  transition-duration: var(--kicl-transition-duration-slow);
   transition-property: opacity, scale;
-  transition-timing-function: var(--kicl-ease-back-out);
   will-change: opacity, scale;
 
   @for $index from 0 through 2 {

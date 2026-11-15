@@ -14,7 +14,7 @@ const Title: React.FunctionComponent = () => {
   const { title } = useNames(track);
 
   return (
-    <Heading aria-live='polite' className='kicl-font-size-large' dense is='h1'>
+    <Heading aria-live='polite' dense is='h1'>
       {title}
     </Heading>
   );

@@ -11,11 +11,11 @@ const Byline: React.FunctionComponent = () => {
   return (
     <Text
       className={classNames(
-        'kicl-color-neutral-64',
         'kicl-font-size-small',
         'kicl-padding-block-end',
         'kicl-text-align-center'
       )}
+      variant='secondary'
     >
       {t('name')}
     </Text>

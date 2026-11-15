@@ -21,15 +21,14 @@ const Tagline: React.FunctionComponent = () => {
     <Animated.Text
       className={classNames(
         CLASS_NAME,
-        'kicl-font-size-medium',
-        'kicl-font-weight-bold',
         'kicl-letter-spacing-tight',
         'kicl-line-height-narrow',
         'kicl-text-wrap-balance'
       )}
-      duration='slow'
+      duration='fast'
       easing='ease-expo-out'
       in={shown}
+      lookLike='h6'
       property='slide-from-left'
       stagger={20}
     >

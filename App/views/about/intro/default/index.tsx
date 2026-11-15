@@ -19,7 +19,7 @@ const Default: React.FunctionComponent = () => {
         )}
       >
         <Title />
-        <Layout autoFlow='row' gap='normal' justifyItems='start'>
+        <Layout autoFlow='row' gap='narrower' justifyItems='start'>
           <div
             className={classNames(
               'kicl-grid-column-3',

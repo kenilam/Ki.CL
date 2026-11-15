@@ -4,17 +4,17 @@ import classNames from 'classnames';
 
 import * as Tb from 'react-icons/tb';
 
-import { Layout } from 'design/components';
-import { useTranslation } from 'design/hooks';
+import { Layout, Text } from 'design/components';
+import { useResponsive, useTranslation } from 'design/hooks';
 
-import './styles.scss';
-
-import { CLASS_NAME as WORK } from '@/views/home/hero/works/work/constants';
-
-const CLASS_NAME = `${WORK}__view`;
+const LOOKS = {
+  true: 'h3',
+  false: 'h1',
+} as const;
 
 const View: React.FunctionComponent = () => {
   const { t } = useTranslation('home');
+  const { isNarrow } = useResponsive();
 
   return (
     <Layout
@@ -23,18 +23,18 @@ const View: React.FunctionComponent = () => {
       gap='narrow'
       justifyContent='end'
     >
-      <span
+      <Text
         aria-hidden
         className={classNames(
-          CLASS_NAME,
-          'kicl-font-weight-bold',
           'kicl-letter-spacing-tight',
           'kicl-scroll-focus-reveal-start'
         )}
+        is='span'
+        lookLike={LOOKS[String(isNarrow)]}
       >
         <Tb.TbArrowRight className='kicl-rtl-mirror' />
         {t('action', { context: 'view' })}
-      </span>
+      </Text>
     </Layout>
   );
 };

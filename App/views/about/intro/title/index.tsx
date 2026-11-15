@@ -16,7 +16,7 @@ const COLUMNS = {
 
 const Title: React.FunctionComponent = () => {
   const { t } = useTranslation('home');
-  const { isWider, prefersReducedMotion } = useResponsive();
+  const { isNarrow, isWider, prefersReducedMotion } = useResponsive();
   const { ready } = useReady();
 
   return (
@@ -24,8 +24,9 @@ const Title: React.FunctionComponent = () => {
       className={classNames(
         COLUMNS[String(isWider)],
         'kicl-align-self-center',
-        'kicl-text-hyphenate',
-        'kicl-scroll-leave-far'
+        'kicl-overflow-wrap-break-word',
+        'kicl-scroll-leave-far',
+        { 'kicl-hyphens-auto': isNarrow }
       )}
       easing='ease-expo-out'
       hold

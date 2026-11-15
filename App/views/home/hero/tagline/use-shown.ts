@@ -2,6 +2,8 @@ import { useSyncExternalStore } from 'react';
 
 import { useResponsive } from 'design/hooks';
 
+import { getRest } from '@/views/home/hero/rest';
+
 const subscribe = (onScroll: () => void) => {
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -10,15 +12,17 @@ const subscribe = (onScroll: () => void) => {
   };
 };
 
-const atTop = () => {
-  return window.scrollY <= 0;
+const atRest = () => {
+  const scrolled = Math.ceil(window.scrollY);
+
+  return scrolled >= getRest() && scrolled < window.innerHeight;
 };
 
 const useShown = () => {
   const { isNarrow } = useResponsive();
-  const top = useSyncExternalStore(subscribe, atTop);
+  const rest = useSyncExternalStore(subscribe, atRest);
 
-  return isNarrow || top;
+  return isNarrow || rest;
 };
 
 export { useShown };

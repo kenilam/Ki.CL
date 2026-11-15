@@ -14,13 +14,13 @@ const Narrow: React.FunctionComponent = () => {
     <Layout autoFlow='row' gap='wide'>
       <div
         className={classNames(
-          'kicl-grid-template-rows-1fr-auto',
-          'kicl-padding-inline-end-extreme'
+          'kicl-grid-template-columns-shrink',
+          'kicl-grid-template-rows-1fr-auto'
         )}
       >
         <Title />
-        <Layout autoFlow='row' gap='normal' justifyItems='start'>
-          <div>
+        <Layout autoFlow='row' gap='narrower' justifyItems='start'>
+          <div className='kicl-padding-inline-end-extreme'>
             <Name />
             <Lead />
             <Links />

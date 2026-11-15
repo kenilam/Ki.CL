@@ -4,11 +4,8 @@ import classNames from 'classnames';
 
 import { Animation, Layout } from 'design/components';
 
-import { TOPICS } from '@/views/routes';
-
 import { useInverse } from '@/views/use-inverse';
 
-import { Anchors } from './anchors';
 import { Headline } from './headline';
 import { Icons } from './icons';
 import { Open } from './open';
@@ -33,11 +30,6 @@ const Workshop: React.FunctionComponent = () => {
         'kicl-padding-inline-frame-columns-12',
         'kicl-position-relative'
       )}
-      style={
-        {
-          '--kicl--views--home__workshop--topics': TOPICS.length,
-        } as never
-      }
     >
       <Layout
         alignContent='center'
@@ -62,7 +54,6 @@ const Workshop: React.FunctionComponent = () => {
           </div>
         </Animation>
       </Layout>
-      <Anchors />
     </section>
   );
 };

@@ -15,7 +15,7 @@ const Trigger: React.FunctionComponent = () => {
   const generate = useGenerateContext();
 
   return (
-    <Heading is='h1' dense className='kicl-font-size-large'>
+    <Heading dense is='h1'>
       <PopoverTrigger asChild>
         <Button
           after={
