@@ -6,7 +6,7 @@ import { getRest } from '@/views/home/hero/rest';
 
 import { glide } from './glide';
 
-const WAIT = 800;
+const WAIT = 600;
 
 const INTERRUPTIONS = ['keydown', 'touchmove', 'wheel'] as const;
 

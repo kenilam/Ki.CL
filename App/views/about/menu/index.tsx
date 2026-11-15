@@ -11,9 +11,9 @@ import { Workshop } from './workshop';
 
 import './styles.scss';
 
-import { CLASS_NAME as FOOTER } from '@/views/about/footer/constants';
+import { CLASS_NAME as ABOUT } from '@/views/about/constants';
 
-const CLASS_NAME = `${FOOTER}__menu`;
+const CLASS_NAME = `${ABOUT}__menu`;
 
 const Menu: React.FunctionComponent = () => {
   const { t } = useTranslation('about');

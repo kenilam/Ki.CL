@@ -31,9 +31,10 @@ const Hero: React.FunctionComponent = () => {
       className={classNames(
         CLASS_NAME,
         'kicl-inline-size-full',
-        'kicl-padding-block-end-extreme',
+        'kicl-padding-block-end-screen-quarter',
         'kicl-padding-inline-frame-columns-12',
-        'kicl-position-relative'
+        'kicl-position-relative',
+        'kicl-scroll-snap-align-start'
       )}
     >
       <Suspense fallback={<Spinner position='inline' />}>

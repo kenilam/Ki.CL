@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Explore } from '@/views/explore';
+import { Footer } from '@/views/footer';
 
 import { About } from './about';
 import { Hero } from './hero';
+import { Top } from './top';
 import { Workshop } from './workshop';
 
 const Home: React.FunctionComponent = () => {
@@ -11,8 +12,10 @@ const Home: React.FunctionComponent = () => {
     <>
       <Hero />
       <Workshop />
-      <Explore />
-      <About />
+      <Footer>
+        <About />
+        <Top />
+      </Footer>
     </>
   );
 };

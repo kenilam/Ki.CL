@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import * as Tb from 'react-icons/tb';
 
-import { Layout, Text } from 'design/components';
+import { Text } from 'design/components';
 import { useResponsive, useTranslation } from 'design/hooks';
 
 const LOOKS = {
@@ -17,25 +17,17 @@ const View: React.FunctionComponent = () => {
   const { isNarrow } = useResponsive();
 
   return (
-    <Layout
-      alignItems='center'
-      display='flex'
-      gap='narrow'
-      justifyContent='end'
+    <Text
+      aria-hidden
+      className={classNames(
+        'kicl-scroll-focus-reveal-start'
+      )}
+      is='span'
+      lookLike={LOOKS[String(isNarrow)]}
     >
-      <Text
-        aria-hidden
-        className={classNames(
-          'kicl-letter-spacing-tight',
-          'kicl-scroll-focus-reveal-start'
-        )}
-        is='span'
-        lookLike={LOOKS[String(isNarrow)]}
-      >
-        <Tb.TbArrowRight className='kicl-rtl-mirror' />
-        {t('action', { context: 'view' })}
-      </Text>
-    </Layout>
+      <Tb.TbArrowRight className='kicl-rtl-mirror' />
+      {t('action', { context: 'view' })}
+    </Text>
   );
 };
 
