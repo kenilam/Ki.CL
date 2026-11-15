@@ -1,0 +1,11 @@
+.kicl--views--home__hero__hint {
+  --kicl-scroll-leave-distance: var(--kicl-gutter-wide);
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: kicl-scroll-enter linear both;
+      animation-range: entry 0% cover 25%;
+      animation-timeline: view();
+    }
+  }
+}

@@ -4,14 +4,17 @@ import classNames from 'classnames';
 
 import { Animated, Layout } from 'design/components';
 import { useTranslation } from 'design/hooks';
+import { Background } from 'design/widgets';
 
 import { TITLE_ID } from '@/views/home/hero/constants';
+import { useInverse } from '@/views/use-inverse';
 
 import { useAdvance } from './use-advance';
 
 const Title: React.FunctionComponent = () => {
   const { t } = useTranslation('home');
   const { header, heading } = useAdvance();
+  const inverse = useInverse();
 
   return (
     <Layout alignContent='center' justifyItems='center'>
@@ -33,6 +36,7 @@ const Title: React.FunctionComponent = () => {
           id={TITLE_ID}
           is='h1'
           lookLike='display'
+          media={<Background className={inverse} />}
           ref={heading}
           stagger={60}
         >
