@@ -442,6 +442,7 @@ const getConfig = ({
           },
         },
         sourcemap: true,
+        cssTarget: ['chrome130', 'firefox140', 'safari26'],
         target: 'esnext',
         // Any non-null `build.watch` puts `vite build` into watch mode and the
         // process can exit before Rollup finishes (especially with
