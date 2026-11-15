@@ -25,7 +25,9 @@ const useAdvance = () => {
     const controller = new AbortController();
     const idle = new AbortController();
     const { signal } = controller;
-    const words = inner.getAnimations({ subtree: true });
+    const words = inner.getAnimations({ subtree: true }).filter((animation) => {
+      return Number.isFinite(animation.effect?.getComputedTiming().endTime);
+    });
 
     const advance = async () => {
       await Promise.allSettled(
