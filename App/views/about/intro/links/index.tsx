@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 import { Animation, List } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -14,7 +16,7 @@ const Links: React.FunctionComponent = () => {
   const { ref, within } = useWithin<HTMLElement>();
 
   return (
-    <nav aria-label={t('links')} className='kicl-scroll-leave-near' ref={ref}>
+    <nav aria-label={t('links')} className={classNames('kicl-scroll-leave-near', 'kicl-padding-block-start')} ref={ref}>
       <Animation
         delay={320}
         duration='slow'

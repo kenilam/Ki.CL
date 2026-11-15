@@ -42,7 +42,7 @@ const Article: React.FunctionComponent = () => {
         )}
         id={ARTICLE_ID}
       >
-        <Heading className='kicl-font-size-larger' id={id} is='h2'>
+        <Heading id={id} is='h2' lookLike='h1'>
           {t('title', { context: 'how_it_was_made' })}
         </Heading>
         <WhereItStarted />

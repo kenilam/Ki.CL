@@ -5,8 +5,6 @@ import { useResponsive } from 'design/hooks';
 
 import { WORKS } from '@/views/home/hero/works/constants';
 
-import './styles.scss';
-
 import { CLASS_NAME } from './constants';
 
 type Props = { plate: (typeof WORKS)[number] };

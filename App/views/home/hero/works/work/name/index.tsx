@@ -1,22 +1,20 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { Heading } from 'design/components';
-import { useTranslation } from 'design/hooks';
+import { useResponsive, useTranslation } from 'design/hooks';
 
 import { EXPERIMENTS } from '@/views/routes';
 
 import type { Props } from '@/views/home/hero/works/work';
 
-import './styles.scss';
-
-import { CLASS_NAME as WORK } from '@/views/home/hero/works/work/constants';
-
-const CLASS_NAME = `${WORK}__name`;
+const LOOKS = {
+  true: 'h3',
+  false: 'h1',
+} as const;
 
 const Name: React.FunctionComponent<Props> = ({ plate }) => {
   const { t } = useTranslation();
+  const { isNarrow } = useResponsive();
   const experiment = EXPERIMENTS.find((each) => {
     return each.plate === plate;
   });
@@ -27,8 +25,9 @@ const Name: React.FunctionComponent<Props> = ({ plate }) => {
 
   return (
     <Heading
-      className={classNames(CLASS_NAME, 'kicl-scroll-focus-reveal')}
+      className='kicl-scroll-focus-reveal'
       is='h3'
+      lookLike={LOOKS[String(isNarrow)]}
     >
       {t('experiment', { context: experiment.context })}
     </Heading>

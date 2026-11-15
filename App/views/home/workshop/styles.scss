@@ -15,6 +15,7 @@
   $slots: '--kicl--views--home__workshop--slots';
   $finale: calc(var(#{$topics}) / var(#{$slots}) * 100%);
 
+  --kicl--views--home__workshop--topics: 3;
   --kicl--views--home__workshop--slots: calc(var(#{$topics}) + 1);
 
   @supports (animation-timeline: view()) {

@@ -8,9 +8,9 @@ import { useTranslation } from 'design/hooks';
 import { useWithin } from '@/views/about/intro/use-within';
 
 const CLASS_NAME = classNames(
-  'kicl-font-size-medium',
   'kicl-max-inline-size-columns-4',
   'kicl-scroll-leave-near',
+  'kicl-text-hyphenate',
   'kicl-text-wrap-balance'
 );
 
@@ -34,6 +34,7 @@ const Lead: React.FunctionComponent = () => {
       </Animated.Text>
       <Animated.Text
         className={CLASS_NAME}
+        dense
         delay={240}
         duration='slow'
         easing='ease-expo-out'
