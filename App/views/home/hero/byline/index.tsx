@@ -2,23 +2,31 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { Text } from 'design/components';
+import { Layout, Text } from 'design/components';
 import { useTranslation } from 'design/hooks';
+
+import { Links } from './links';
 
 const Byline: React.FunctionComponent = () => {
   const { t } = useTranslation();
 
   return (
-    <Text
-      className={classNames(
-        'kicl-font-size-small',
-        'kicl-padding-block-end',
-        'kicl-text-align-center'
-      )}
-      variant='secondary'
+    <Layout
+      alignItems='center'
+      display='flex'
+      gap='narrow'
+      justifyContent='center'
+      wrap
     >
-      {t('name')}
-    </Text>
+      <address
+        className={classNames('kicl-font-size-small', 'kicl-padding-block-end')}
+      >
+        <Text is='span' variant='secondary'>
+          {t('name')}
+        </Text>
+        <Links />
+      </address>
+    </Layout>
   );
 };
 

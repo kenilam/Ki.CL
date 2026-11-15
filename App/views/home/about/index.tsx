@@ -24,7 +24,7 @@ const About: React.FunctionComponent = () => {
           inverse,
           'kicl-background-color-body',
           'kicl-inline-size-full',
-          'kicl-padding-block-extreme',
+          'kicl-padding-block-start-extreme',
           'kicl-padding-inline-frame-columns-12'
         )}
       >

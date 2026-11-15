@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CardTitle, HyperLink, Layout } from 'design/components';
+import { CardTitle, Layout } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { TOPICS } from '@/views/routes';
@@ -27,7 +27,7 @@ const Head: React.FunctionComponent<Props> = ({ to }) => {
       gap='normal'
     >
       <CardTitle is='h3'>
-        <HyperLink to={to}>{t(topic.context)}</HyperLink>
+        {t(topic.context)}
         <Icon aria-hidden />
       </CardTitle>
     </Layout>
