@@ -2,10 +2,12 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import { Footer } from '@/views/footer';
+
 import { Chapters } from './chapters';
 import { Provider } from './active/context';
-import { Footer } from './footer';
 import { Intro } from './intro';
+import { Menu } from './menu';
 import { Provider as Ready } from './ready/context';
 import { Stage } from './stage';
 
@@ -27,7 +29,9 @@ const About: React.FunctionComponent = () => {
           <Intro />
           <Chapters />
         </div>
-        <Footer />
+        <Footer>
+          <Menu />
+        </Footer>
       </Ready>
     </Provider>
   );

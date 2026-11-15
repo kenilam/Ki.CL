@@ -26,7 +26,7 @@ const Headline: React.FunctionComponent = () => {
     <Animated.Heading
       className={classNames(
         CLASS_NAME,
-        'kicl-max-inline-size-columns-10',
+        'kicl-max-inline-size-columns-8',
         'kicl-text-align-center'
       )}
       easing='ease-expo-out'
@@ -35,7 +35,7 @@ const Headline: React.FunctionComponent = () => {
       in={entered}
       is='h2'
       lookLike={LOOKS[String(isNarrow)]}
-      property='slide-from-left'
+      property='slide-from-top'
       ref={ref}
     >
       {t('workshop')}

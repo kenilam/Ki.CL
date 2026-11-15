@@ -7,13 +7,13 @@ import { Layout } from 'design/components';
 import { Explore } from '@/views/explore';
 import { useInverse } from '@/views/use-inverse';
 
-import { Menu } from './menu';
-
-const Footer: React.FunctionComponent = () => {
+const Footer: React.FunctionComponent<React.PropsWithChildren> = ({
+  children,
+}) => {
   const inverse = useInverse();
 
   return (
-    <Layout alignContent='start' autoFlow='row'>
+    <Layout alignContent='start' autoFlow='row' gap='none'>
       <footer
         className={classNames(
           inverse,
@@ -24,12 +24,11 @@ const Footer: React.FunctionComponent = () => {
           'kicl-padding-block-end-extreme',
           'kicl-position-relative',
           'kicl-scroll-enter',
-          'kicl-scroll-enter-far',
           'kicl-scroll-snap-align-start'
         )}
       >
         <Explore />
-        <Menu />
+        {children}
       </footer>
     </Layout>
   );

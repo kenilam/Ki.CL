@@ -14,6 +14,7 @@ const Read: React.FunctionComponent = () => {
     <HyperLink
       after={<Tb.TbArrowRight aria-hidden className='kicl-rtl-mirror' />}
       lookLikeButton
+      size='large'
       to={PAGES.about}
     >
       {t('action', { context: 'about' })}
