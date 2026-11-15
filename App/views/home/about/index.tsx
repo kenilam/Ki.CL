@@ -16,7 +16,7 @@ const About: React.FunctionComponent = () => {
   const inverse = useInverse();
 
   return (
-    <Layout autoFlow='row' gap='wide'>
+    <Layout autoFlow='row' gap='narrower'>
       <section
         aria-labelledby={TITLE_ID}
         className={classNames(
@@ -30,22 +30,24 @@ const About: React.FunctionComponent = () => {
       >
         <Heading
           className={classNames(
-            'kicl-font-size-headline',
             'kicl-max-inline-size-columns-8',
             'kicl-text-wrap-balance'
           )}
+          dense
           id={TITLE_ID}
           is='h2'
+          lookLike='display'
         >
           {t('title', { context: 'about' })}
         </Heading>
         <Text
           className={classNames(
             'kicl-color-neutral-64',
-            'kicl-font-size-medium',
             'kicl-max-inline-size-columns-6',
             'kicl-text-wrap-balance'
           )}
+          lookLike='h2'
+          variant='secondary'
         >
           {t('tagline', { context: 'about' })}
         </Text>

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+
 import { List } from 'design/components';
 
 import { TOPICS } from '@/views/routes';
@@ -12,7 +14,11 @@ import { CLASS_NAME } from './constants';
 
 const Topics: React.FunctionComponent = () => {
   return (
-    <List className={CLASS_NAME} fill={4} gap='normal'>
+    <List
+      className={classNames(CLASS_NAME, 'kicl-inline-size-full')}
+      fill={4}
+      gap='normal'
+    >
       {TOPICS.map(({ to }) => {
         return <Topic key={to} to={to} />;
       })}

@@ -15,10 +15,10 @@ const Body: React.FunctionComponent<Props> = ({ id }) => {
   return (
     <Animated.Text
       className={classNames(
-        'kicl-font-size-moderate',
         'kicl-max-inline-size-columns-5',
         'kicl-scroll-focus-color-a80',
-        'kicl-scroll-shift-narrow'
+        'kicl-scroll-shift-narrow',
+        'kicl-text-hyphenate'
       )}
       delay={150}
       duration='slow'

@@ -6,12 +6,19 @@
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       animation: kicl--views--home__workshop__topics__topic--deal linear both;
-      animation-range: contain calc(var(--index) / var(#{$slots}) * 100%)
-        contain calc((var(--index) + 1) / var(#{$slots}) * 100%);
       animation-timeline: --kicl--views--home__workshop;
       grid-area: deck;
       inline-size: min(var(--kicl-columns-12), 30dvb, 100cqi);
       transform-origin: 50% 150%;
+
+      @for $index from 0 through 2 {
+        &:nth-child(#{$index + 1}) {
+          animation-range: contain
+            calc(#{$index} / var(#{$slots}) * 100%)
+            contain
+            calc(#{$index + 1} / var(#{$slots}) * 100%);
+        }
+      }
     }
   }
 }
@@ -26,11 +33,11 @@
     z-index: 1;
   }
 
-  25%,
-  75% {
+  10%,
+  90% {
     filter: none;
     opacity: 1;
-    rotate: 0;
+    rotate: 0deg;
     scale: 1;
     translate: 0 0;
     z-index: 2;

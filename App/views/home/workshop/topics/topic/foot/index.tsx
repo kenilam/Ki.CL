@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { Layout } from 'design/components';
+import { Layout, Text } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import { TOPICS } from '@/views/routes';
@@ -34,18 +34,15 @@ const Foot: React.FunctionComponent<Props> = ({ to }) => {
       frames='auto--max-content'
       gap='normal'
     >
-      <span
+      <Text
         aria-hidden
-        className={classNames(
-          CLASS_NAME,
-          'kicl-font-size-moderate',
-          'kicl-font-weight-bold',
-          'kicl-letter-spacing-tight'
-        )}
+        className={classNames(CLASS_NAME, 'kicl-letter-spacing-tight')}
+        is='span'
+        lookLike='h3'
       >
         {t(topic.context)}
         <Icon />
-      </span>
+      </Text>
     </Layout>
   );
 };

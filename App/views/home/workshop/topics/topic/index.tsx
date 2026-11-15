@@ -9,7 +9,7 @@ import {
   useResponsive,
 } from 'design/hooks';
 
-import { TOPICS, type Topic as Data } from '@/views/routes';
+import type { Topic as Data } from '@/views/routes';
 
 import { Description } from './description';
 import { Foot } from './foot';
@@ -28,17 +28,10 @@ const THEMES = {
 
 const Topic: React.FunctionComponent<Props> = ({ to }) => {
   const { theme } = useResponsive();
-  const index = TOPICS.findIndex((each) => {
-    return each.to === to;
-  });
 
   return (
     <Layout alignContent='space-between' autoFlow='row' gap='normal'>
-      <Card
-        className={classNames(CLASS_NAME, THEMES[theme])}
-        is='li'
-        style={{ '--index': index } as never}
-      >
+      <Card className={classNames(CLASS_NAME, THEMES[theme])} is='li'>
         <Head to={to} />
         <Description to={to} />
         <Foot to={to} />
