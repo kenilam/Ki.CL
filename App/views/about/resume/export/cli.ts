@@ -188,6 +188,12 @@ const READY = `(async () => {
   const until = Date.now() + ${READY_MS};
   const pause = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const article = () => document.querySelector('article[data-version]');
+  // Each row loads the layout for the window's width, behind a spinner. One
+  // inside what paper leaves out, such as a picture still loading, can stay.
+  const settled = () =>
+    ![...document.querySelectorAll('article[data-version] .kicl--components--spinner')].some(
+      (spinner) => !spinner.closest('.kicl-print-hidden')
+    );
   const weightOf = (face) =>
     ({ bold: '700', normal: '400' })[face.weight] ?? face.weight;
   const loaded = () =>
@@ -202,7 +208,7 @@ const READY = `(async () => {
       )
     );
 
-  while (Date.now() < until && !(article() && loaded())) {
+  while (Date.now() < until && !(article() && settled() && loaded())) {
     await pause(100);
   }
 

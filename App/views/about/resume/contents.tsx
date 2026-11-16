@@ -1,17 +1,19 @@
 import React from 'react';
 
-// Partials
-import { Page } from './page';
+import { Provider as Active } from '@/views/about/active/context';
+import { Provider as Ready } from '@/views/about/ready/context';
+
 import { Provider } from './context';
+import { Page } from './page';
 
-// Styles
-import './styles.scss';
-
-/** One version of the resume, as a page and as the document it prints to. */
 const Resume: React.FunctionComponent = () => {
   return (
     <Provider>
-      <Page />
+      <Active>
+        <Ready>
+          <Page />
+        </Ready>
+      </Active>
     </Provider>
   );
 };

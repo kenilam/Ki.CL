@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // Components
-import { Button, Text } from 'design/components';
+import { Button } from 'design/components';
 
 // Icons
 import * as Tb from 'react-icons/tb';
@@ -23,6 +23,8 @@ const Close: React.FunctionComponent = () => {
 
   return (
     <Button
+      aria-label={t('action', { context: 'close_navigation' })}
+      block
       className={classNames(
         'kicl-font-size',
         'kicl-position-fixed',
@@ -31,12 +33,10 @@ const Close: React.FunctionComponent = () => {
       )}
       command='request-close'
       commandfor={CLASS_NAME}
-      unstyled
+      size='small'
+      variant='tertiary'
     >
       <Tb.TbX aria-hidden />
-      <Text className='kicl-hidden' is='span'>
-        {t('action', { context: 'close_navigation' })}
-      </Text>
     </Button>
   );
 };

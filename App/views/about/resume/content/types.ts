@@ -36,21 +36,20 @@ type Organisation = keyof typeof common extends infer Name
     : never
   : never;
 
+/** A role, by its name under `experience` in the resume's namespace. */
+type RoleId = keyof typeof resume.experience;
+
 type Role<Line = Key, Employer = Organisation> = {
   dates: Line;
+  id: RoleId;
   organisation: Employer;
   points: readonly Line[];
   title: Line;
 };
 
+/** What follows the experience, which every version opens with. */
 type SectionId =
-  | 'education'
-  | 'experience'
-  | 'languages'
-  | 'mentoring'
-  | 'projects'
-  | 'skills'
-  | 'summary';
+  'education' | 'languages' | 'mentoring' | 'projects' | 'skills';
 
 /**
  * One resume. A version is a selection and an order of lines, each named by
@@ -66,7 +65,7 @@ type Version<Line = Key, Employer = Organisation> = {
   mentoring: Line;
   /** Shown where the versions are listed, and in the PDF's title. */
   name: Line;
-  /** Sections, top to bottom. */
+  /** The sections after the experience, top to bottom. */
   order: readonly SectionId[];
   projects: { intro?: Line; items?: readonly Line[] };
   skills: readonly Line[];
@@ -84,6 +83,7 @@ export type {
   Organisation,
   Resolved,
   Role,
+  RoleId,
   SectionId,
   Slug,
   Version,

@@ -1,19 +1,39 @@
+/*
+ * The type size on paper, which the design system's print styles read. It
+ * is the largest at which every version still fits two sheets, on Letter
+ * and on A4. The export fails when one no longer does.
+ */
+:root:has(.kicl--views--about__resume) {
+  --kicl-print-font-size: 8pt;
+}
+
 .kicl--views--about__resume {
   @media print {
-    // No card on paper: the frame's border is the only edge on the sheet.
-    --kicl--components--card--background-color: transparent;
-    --kicl--components--card--border-width: 0;
-    --kicl--components--card--spacing: 0;
+    // What the page spaces and sizes for a window, a sheet does without.
+    --kicl--components--frame--columns-inset: 0;
+    --kicl--widgets--global-header--block-size: 0;
+    --kicl-columns-4: none;
+    --kicl-columns-5: none;
+    --kicl-columns-8: none;
+    --kicl-font-size-huge: var(--kicl-font-size-larger);
+    --kicl-font-size-large: var(--kicl-font-size-medium);
+    --kicl-gutter-extreme: 0;
+    --kicl-gutter-wider: 0;
 
     /*
      * Chrome can split a line between two sheets inside nested grids, and
      * print its second half over what follows. Blocks break cleanly. So on
      * paper each stack is a block, and the gap `Layout` gave it is the margin
-     * between its children, at the same sizes.
+     * between its children.
      */
     display: block;
 
+    header,
+    hgroup,
+    nav,
     section,
+    div,
+    ol,
     ul,
     li > p {
       display: block;
@@ -23,21 +43,98 @@
       display: list-item;
     }
 
-    > * + * {
+    section {
+      > * + *,
+      > div > * + * {
+        margin-block-start: var(--kicl-gutter-narrow);
+      }
+    }
+
+    > section + section,
+    > section > section,
+    ol > li + li {
       margin-block-start: var(--kicl-gutter);
     }
 
-    section > * + * {
-      margin-block-start: var(--kicl-gutter-narrow);
-    }
-
-    section > * + article,
-    section > article + section {
-      margin-block-start: var(--kicl-gutter);
-    }
-
-    li + li {
+    ul > li + li {
       margin-block-start: var(--kicl-gutter-narrower);
+    }
+
+    /*
+     * On paper the summary comes after the lines that say where to write. The
+     * block is short and never split between sheets, so it can be a flex
+     * column that puts it last.
+     */
+    > header > div > div {
+      display: flex;
+      flex-direction: column;
+      row-gap: var(--kicl-gutter-narrower);
+
+      > h2,
+      > h2 + p {
+        order: 1;
+      }
+
+      > h2 {
+        margin-block-start: var(--kicl-gutter-narrow);
+      }
+    }
+
+    /*
+     * A role is never split between sheets either: the employer, with the
+     * dates at the end of its line, then the rest. The order in the file
+     * stays dates first.
+     */
+    article {
+      align-items: baseline;
+      column-gap: var(--kicl-gutter);
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: var(--kicl-gutter-narrower);
+
+      > div {
+        display: contents;
+      }
+
+      > p:first-child {
+        order: 1;
+      }
+
+      h3 {
+        flex: 1;
+      }
+
+      h3 ~ * {
+        flex-basis: 100%;
+        order: 2;
+      }
+    }
+
+    /*
+     * The list positions each item to draw the line before it, and a PDF
+     * paints a positioned box after the text around it, which would put the
+     * contact line last in reading order. On paper the items are inline.
+     */
+    nav ul {
+      margin-inline-start: 0;
+      overflow-x: visible;
+      padding-inline-start: 0;
+    }
+
+    nav li {
+      display: inline;
+      position: static;
+
+      &::before {
+        content: none;
+      }
+
+      + li {
+        border-inline-start: var(--kicl-size-1px) solid
+          var(--kicl--components--list--separator-color);
+        margin-inline-start: var(--kicl-gutter-narrow);
+        padding-inline-start: var(--kicl-gutter-narrow);
+      }
     }
   }
 }

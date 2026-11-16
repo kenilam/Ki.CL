@@ -23,6 +23,7 @@ const Footer: React.FunctionComponent<React.PropsWithChildren> = ({
           'kicl-min-block-size-screen',
           'kicl-padding-block-end-extreme',
           'kicl-position-relative',
+          'kicl-print-hidden',
           'kicl-scroll-enter',
           'kicl-scroll-snap-align-start'
         )}

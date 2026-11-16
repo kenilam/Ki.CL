@@ -1,0 +1,7 @@
+// The name runs up to the centre line. On paper it starts at the margin, so
+// this is not the utility, which a sheet would keep.
+.kicl--views--about__resume__intro__default {
+  @media screen {
+    text-align: end;
+  }
+}
