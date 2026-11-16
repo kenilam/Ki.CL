@@ -30,7 +30,8 @@ const Scene: React.FunctionComponent = () => {
         'kicl-background-color-body',
         'kicl-inset-0',
         'kicl-pointer-events-none',
-        'kicl-position-fixed'
+        'kicl-position-fixed',
+        'kicl-print-hidden'
       )}
     >
       <div

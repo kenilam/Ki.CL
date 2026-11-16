@@ -1,0 +1,7 @@
+.kicl--views--about__resume__section {
+  --kicl--components--animation--slide--distance: var(--kicl-gutter-extreme);
+
+  @media print {
+    --kicl-font-size-medium: var(--kicl-font-size);
+  }
+}

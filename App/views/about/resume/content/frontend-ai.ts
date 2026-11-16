@@ -12,6 +12,7 @@ const FRONTEND_AI: Version = {
       points: [
         'experience.apple.points.federation',
         'experience.apple.points.mcp',
+        'experience.apple.points.ai_workflows',
         'experience.apple.points.design_systems',
         'experience.apple.points.lead',
         'experience.apple.points.modernised_across_teams',

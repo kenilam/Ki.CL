@@ -1,6 +1,4 @@
-import type resume from '@/locales/en-US/resume.json';
-
-import type { Key, Organisation, Role, SectionId } from './types';
+import type { Key, Organisation, Role, RoleId, SectionId } from './types';
 
 /*
  * In the resume's namespace, a line every version says the same way has a
@@ -10,16 +8,12 @@ import type { Key, Organisation, Role, SectionId } from './types';
  */
 
 const ORDER: readonly SectionId[] = [
-  'summary',
-  'experience',
   'projects',
   'skills',
   'mentoring',
   'education',
   'languages',
 ];
-
-type RoleId = keyof typeof resume.experience;
 
 /** Two of the roles were at Apple. */
 const EMPLOYERS: Record<RoleId, Organisation> = {
@@ -34,6 +28,7 @@ const EMPLOYERS: Record<RoleId, Organisation> = {
 /** A role's title, employer and dates, which no version changes. */
 const role = (id: RoleId): Omit<Role, 'points'> => ({
   dates: `experience.${id}.dates`,
+  id,
   organisation: EMPLOYERS[id],
   title: `experience.${id}.title`,
 });
