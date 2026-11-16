@@ -9,6 +9,8 @@ const PATH = 'resume';
 /** Root of every class and custom property in this view. */
 const CLASS_NAME = 'kicl--views--about__resume';
 
+const ENTRY_ID = 'kicl-resume-entry';
+
 /** The exported master PDF's name in the static bucket, kept for good. */
 const OBJECT = `${PATH}/keni-lam-resume.pdf`;
 
@@ -26,12 +28,15 @@ const FILE = `/assets/static/${OBJECT}`;
  */
 const PHONE_KEY = 'kicl-resume-phone';
 
-/** Every section's heading: a small label over a rule. */
-const HEADING = [
-  `${CLASS_NAME}__heading`,
-  'kicl-font-size-small',
-  'kicl-print-break-after-avoid',
-  'kicl-text-transform-uppercase',
-];
+/** The shape About's mark takes behind each row of the experience. */
+const MOMENTS = {
+  apple: 'platforms',
+  earlier: 'web',
+  ebay: 'engineer',
+  indeed: 'people',
+  rakuten: 'people',
+  retail: 'stores',
+  tesla: 'systems',
+} as const;
 
-export { CLASS_NAME, FILE, HEADING, OBJECT, PATH, PHONE_KEY };
+export { CLASS_NAME, ENTRY_ID, FILE, MOMENTS, OBJECT, PATH, PHONE_KEY };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Button, Text } from 'design/components';
+import { Button } from 'design/components';
 
 // Icons
 import * as Tb from 'react-icons/tb';
@@ -17,15 +17,15 @@ const Open: React.FunctionComponent = () => {
 
   return (
     <Button
+      aria-label={t('action', { context: 'open_navigation' })}
+      block
       className='kicl-font-size'
       command='show-modal'
       commandfor={CLASS_NAME}
-      unstyled
+      size='small'
+      variant='tertiary'
     >
       <Tb.TbMenu2 aria-hidden />
-      <Text className='kicl-hidden' is='span'>
-        {t('action', { context: 'open_navigation' })}
-      </Text>
     </Button>
   );
 };

@@ -25,6 +25,7 @@ export type {
   Organisation,
   Resolved,
   Role,
+  RoleId,
   SectionId,
   Slug,
   Version,

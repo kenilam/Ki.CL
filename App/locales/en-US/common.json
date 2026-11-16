@@ -65,6 +65,7 @@
   "language_incomplete_translating": "Being translated. You can pick it once it’s done.",
   "linkedin": "LinkedIn",
   "main": "Main",
+  "mentoring_minutes": "21,000",
   "mentoring_sessions": "426",
   "message_sent": "Message sent",
   "moderation": "Moderation",
@@ -112,11 +113,14 @@
   "title_how_it_was_made": "How it was made",
   "title_what_this_is": "What this is",
   "url_adplist": "https://adplist.org/mentors/keni-lam",
+  "url_adplist_badges": "https://adplist.org/illustrations/achievements",
+  "url_adplist_certificates": "https://adplist.org/community-certifications",
   "url_api": "https://github.com/kenilam/Ki.CL-back",
   "url_experiments": "https://ki-cl.com/experiments",
   "url_github": "https://github.com/kenilam",
   "url_host": "https://github.com/kenilam/Ki.CL",
   "url_linkedin": "https://www.linkedin.com/in/kenilam",
   "url_moonshot": "https://github.com/kenilam/Ki.CL-moonshot-exercise",
+  "url_site": "https://ki-cl.com",
   "workshop": "Workshop"
 }

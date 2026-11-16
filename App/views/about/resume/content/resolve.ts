@@ -18,6 +18,7 @@ const resolve = (
     education: version.education.map(text),
     experience: version.experience.map((role) => ({
       dates: text(role.dates),
+      id: role.id,
       organisation: name(role.organisation),
       points: role.points.map(text),
       title: text(role.title),

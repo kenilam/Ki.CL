@@ -1,33 +1,51 @@
 import React from 'react';
 
-// Content
+import classNames from 'classnames';
+
+import { Layout } from 'design/components';
+
 import type { SectionId } from '@/views/about/resume/content';
 
-// Partials
-import { Education } from './education';
-import { Experience } from './experience';
-import { Languages } from './languages';
-import { Mentoring } from './mentoring';
-import { Projects } from './projects';
-import { Skills } from './skills';
-import { Summary } from './summary';
+import { useInverse } from '@/views/use-inverse';
+
+import { Body } from './body';
+import { Hint } from './hint';
+import { Label } from './label';
+import { Title } from './title';
+
+import './styles.scss';
+
+import { CLASS_NAME } from './constants';
 
 type Props = { id: SectionId };
 
-const SECTIONS: Record<SectionId, React.FunctionComponent> = {
-  education: Education,
-  experience: Experience,
-  languages: Languages,
-  mentoring: Mentoring,
-  projects: Projects,
-  skills: Skills,
-  summary: Summary,
-};
-
 const Section: React.FunctionComponent<Props> = ({ id }) => {
-  const Component = SECTIONS[id];
+  const inverse = useInverse();
 
-  return <Component />;
+  return (
+    <Layout alignContent='start' autoFlow='row' gap='wide'>
+      <section
+        className={classNames(
+          CLASS_NAME,
+          inverse,
+          'kicl-background-color-body',
+          'kicl-inline-size-full',
+          'kicl-min-block-size-screen',
+          'kicl-overflow-x-clip',
+          'kicl-padding-block-extreme',
+          'kicl-padding-inline-frame-columns-12',
+          'kicl-position-relative',
+          'kicl-scroll-enter',
+          'kicl-scroll-snap-align-start'
+        )}
+      >
+        <Label id={id} />
+        <Title id={id} />
+        <Body id={id} />
+        <Hint />
+      </section>
+    </Layout>
+  );
 };
 
-export { Section };
+export { Section, type Props };

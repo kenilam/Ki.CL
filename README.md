@@ -53,7 +53,7 @@ It also writes `content/exported.json`, a fingerprint of the content the PDF was
 
 The phone number is `KICL_RESUME_PHONE` in `.env`. It goes into the private PDFs only. This repository is public, so the number is in no commit, no bundle and not in the public PDF.
 
-Every version has to fit two pages on Letter and on A4, and the export fails when one does not. The type size on paper is `--kicl-print-font-size` in `App/views/about/resume/styles.scss`.
+Every version has to fit two pages on Letter and on A4, and the export fails when one does not. The type size on paper is `--kicl-print-font-size` in `App/views/about/resume/page/article/styles.print.scss`.
 
 The design is written up in `docs/design/resume.md`.
 

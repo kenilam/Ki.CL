@@ -4,6 +4,6 @@
   inset-block-start: var(--kicl--widgets--global-header--top);
   inset-inline-end: var(--kicl--widgets--global-header--padding-inline);
   margin-block-start: calc(
-    (var(--kicl--widgets--global-header--block-size) - 1em) / 2
+    (var(--kicl--widgets--global-header--block-size) - 1em) / 3
   );
 }

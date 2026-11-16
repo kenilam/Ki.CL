@@ -4,7 +4,11 @@ import classNames from 'classnames';
 
 import { Navigation } from 'design/components';
 import { useTranslation } from 'design/hooks';
+import { useMatch } from 'design/router';
 
+import { PAGES } from '@/views/routes';
+
+import { About } from './about';
 import { Message } from './message';
 import { Resume } from './resume';
 import { Workshop } from './workshop';
@@ -15,8 +19,14 @@ import { CLASS_NAME as ABOUT } from '@/views/about/constants';
 
 const CLASS_NAME = `${ABOUT}__menu`;
 
+const OTHER = {
+  true: <About key='about' />,
+  false: <Resume key='resume' />,
+};
+
 const Menu: React.FunctionComponent = () => {
   const { t } = useTranslation('about');
+  const resume = useMatch(`${PAGES.resume}/*`);
 
   return (
     <Navigation
@@ -27,7 +37,7 @@ const Menu: React.FunctionComponent = () => {
       justifyItems='start'
     >
       <Workshop key='workshop' />
-      <Resume key='resume' />
+      {OTHER[String(Boolean(resume))]}
       <Message key='message' />
     </Navigation>
   );

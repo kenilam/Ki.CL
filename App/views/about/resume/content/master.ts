@@ -14,8 +14,10 @@ const MASTER: Version = {
         'experience.apple.points.federation',
         'experience.apple.points.design_systems',
         'experience.apple.points.modernised_across_teams',
+        'experience.apple.points.ai_workflows',
         'experience.apple.points.mcp',
         'experience.apple.points.messaging',
+        'experience.apple.points.stakeholders',
       ],
     },
     {
@@ -25,6 +27,7 @@ const MASTER: Version = {
         'experience.tesla.points.outages',
         'experience.tesla.points.federation',
         'experience.tesla.points.standards',
+        'experience.tesla.points.stakeholders',
       ],
     },
     { ...role('rakuten'), points: ['experience.rakuten.points.launch'] },
@@ -33,6 +36,7 @@ const MASTER: Version = {
       points: [
         'experience.indeed.points.team',
         'experience.indeed.points.embedded',
+        'experience.indeed.points.ab_testing',
       ],
     },
     {
@@ -67,10 +71,10 @@ const MASTER: Version = {
     ],
   },
   skills: [
-    'skills.front',
-    'skills.back',
     'skills.ai',
+    'skills.back',
     'skills.platform',
+    'skills.front',
     'skills.design',
   ],
   slug: 'master',
