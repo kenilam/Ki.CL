@@ -13,14 +13,14 @@ const Years: React.FunctionComponent<Props> = ({ id }) => {
   return (
     <Text
       className={classNames(
-        'kicl-color-neutral-80',
         'kicl-font-family-mono',
-        'kicl-font-size-small',
         'kicl-scroll-shift-narrow',
-        'kicl-text-box-trim-start',
-        'kicl-text-transform-uppercase'
+        'kicl-text-box-trim-start'
       )}
       dense
+      is='span'
+      lookLike='small'
+      variant='secondary'
     >
       {t('years', { context: id })}
     </Text>

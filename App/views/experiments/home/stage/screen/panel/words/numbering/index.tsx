@@ -20,9 +20,9 @@ const Numbering: React.FunctionComponent = () => {
     <Text
       is='p'
       dense
+      lookLike='small'
       variant='secondary'
       className={classNames(
-        'kicl-font-size-small',
         'kicl-letter-spacing',
         'kicl-text-transform-uppercase'
       )}

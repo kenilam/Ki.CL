@@ -20,13 +20,14 @@ const Dates: React.FunctionComponent<Props> = ({ id }) => {
   return (
     <Text
       className={classNames(
-        'kicl-color-neutral-80',
         'kicl-font-family-mono',
-        'kicl-font-size-small',
-        'kicl-scroll-enter-far',
-        'kicl-text-transform-uppercase'
+        'kicl-scroll-shift-narrow',
+        'kicl-text-box-trim-start'
       )}
       dense
+      is='span'
+      lookLike='small'
+      variant='secondary'
     >
       {role.dates}
     </Text>

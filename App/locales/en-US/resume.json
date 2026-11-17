@@ -8,33 +8,33 @@
   "action_view": "View on web",
   "earlier": {
     "apollo": "UI Developer, Apollo Group · Apr 2012 – May 2013",
-    "apple_contract": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014",
-    "contract_web_react_native": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010. Brand sites, e-commerce and a native iPhone app.",
-    "hasco": "Web and Product Designer, Hasco Enterprise, Osaka · Nov 2010 – Aug 2011",
-    "le_ciel_bleu": "Contract Web Designer, Le Ciel Bleu · Aug 2009 – Oct 2010",
-    "senior_ui_react_native": "Senior UI Developer, Apple (contract via Tech Mahindra) · May 2013 – Jan 2014. UI and iOS application development with Objective-C and AngularJS."
+    "apple_contract": "Senior UI Developer, Apple (contract via [Tech Mahindra](https://www.techmahindra.com/)) · May 2013 – Jan 2014",
+    "contract_web_react_native": "Contract Web Designer, [Le Ciel Bleu](https://www.restir.com/lecielbleu) · Aug 2009 – Oct 2010. Brand sites, e-commerce and a native iPhone app.",
+    "hasco": "Web and Product Designer, [Hasco Enterprise](https://www.hasco.co.jp/), Osaka · Nov 2010 – Aug 2011",
+    "le_ciel_bleu": "Contract Web Designer, [Le Ciel Bleu](https://www.restir.com/lecielbleu) · Aug 2009 – Oct 2010",
+    "senior_ui_react_native": "Senior UI Developer, Apple (contract via [Tech Mahindra](https://www.techmahindra.com/)) · May 2013 – Jan 2014. UI and iOS application development with [Objective-C](https://developer.apple.com/documentation/objectivec) and AngularJS."
   },
   "education": {
-    "ba": "BA Fine Arts (Painting / Sculpture), University of Brighton · 2003",
-    "foundation": "Foundation in Art and Design, University of the Arts London · 2000",
-    "ma": "MA Applied Imagination, Central Saint Martins, University of the Arts London · 2008"
+    "ba": "[BA Fine Arts (Painting / Sculpture)](https://www.brighton.ac.uk/courses/study/fine-art-ba-hons.aspx), [University of Brighton](https://www.brighton.ac.uk/) · 2003",
+    "foundation": "[Foundation in Art and Design](https://www.arts.ac.uk/subjects/communication-and-graphic-design/pre-degree-courses/ual-foundation-diploma-in-art-and-design), [University of the Arts London](https://www.arts.ac.uk/) · 2000",
+    "ma": "[MA Applied Imagination](https://www.arts.ac.uk/subjects/business-and-management-and-science/postgraduate/ma-applied-imagination-csm), [Central Saint Martins](https://www.arts.ac.uk/colleges/central-saint-martins), [University of the Arts London](https://www.arts.ac.uk/) · 2008"
   },
   "experience": {
     "apple": {
       "dates": "Mar 2023 – Present",
       "points": {
-        "ai_workflows": "Developed AI-assisted developer workflows using internal LLMs and Playwright MCP to orchestrate end-to-end testing, enabling QA agents to validate applications through headless Chromium and automated deployment pipelines.",
+        "ai_workflows": "Developed AI-assisted developer workflows using internal [LLMs](https://en.wikipedia.org/wiki/Large_language_model) and [Playwright](https://playwright.dev/) [MCP](https://modelcontextprotocol.io/) to orchestrate end-to-end testing, enabling QA agents to validate applications through headless [Chromium](https://www.chromium.org/) and automated deployment pipelines.",
         "design_system": "Designed and scaled shared design systems across multiple products, improving UX consistency and development efficiency.",
         "design_systems": "$t(experience.apple.points.design_system) Also built marketing and enterprise design systems.",
-        "federation": "Architected a federated application platform comprising a Module Federation front end and Apollo Federation gateway across 20+ Node.js, PHP and Swift subgraphs, replacing a legacy PHP system. More than 10 federated mini-apps consume the shared component library and federated graph.",
-        "federation_manager": "Architected a federated application platform: a Module Federation front end and Apollo Federation gateway across 20+ subgraphs, with more than 10 federated mini-apps consuming the shared component library and federated graph.",
-        "federation_react_native": "Architected a federated application platform comprising a Module Federation front end and Apollo Federation gateway across 20+ subgraphs. More than 10 federated mini-apps consume the shared component library and federated graph.",
-        "lead": "Lead design and engineering for Apple University’s cross-platform ecosystem, spanning design systems, UX architecture, backend services and full-stack implementation.",
-        "lead_frontend_ai": "Lead design and engineering for Apple University’s cross-platform ecosystem, spanning UX architecture, backend services and full-stack implementation.",
-        "lead_manager": "Lead design and engineering for Apple University’s cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams.",
-        "mcp": "Built an MCP server exposing component-library capabilities and GraphQL gateway schemas, enabling non-technical product owners to prototype solutions and deploy them to isolated sandboxes.",
-        "mcp_manager": "Built an MCP server that enables non-technical product owners to prototype solutions from component-library capabilities and GraphQL gateway schemas, and deploy them to isolated sandboxes.",
-        "messaging": "Designed asynchronous processing infrastructure using RabbitMQ for translation, scheduling, Workday and bulk-email workflows, and built the supporting email service.",
+        "federation": "Architected a federated application platform comprising a [Module Federation](https://module-federation.io/) front end and [Apollo Federation](https://www.apollographql.com/docs/federation/) gateway across 20+ [Node.js](https://nodejs.org/), [PHP](https://www.php.net/) and [Swift](https://www.swift.org/) subgraphs, replacing a legacy PHP system. More than 10 federated mini-apps consume the shared component library and federated graph.",
+        "federation_manager": "Architected a federated application platform: a [Module Federation](https://module-federation.io/) front end and [Apollo Federation](https://www.apollographql.com/docs/federation/) gateway across 20+ subgraphs, with more than 10 federated mini-apps consuming the shared component library and federated graph.",
+        "federation_react_native": "Architected a federated application platform comprising a [Module Federation](https://module-federation.io/) front end and [Apollo Federation](https://www.apollographql.com/docs/federation/) gateway across 20+ subgraphs. More than 10 federated mini-apps consume the shared component library and federated graph.",
+        "lead": "Lead design and engineering for [Apple](https://www.apple.com/) University’s cross-platform ecosystem, spanning design systems, UX architecture, backend services and full-stack implementation.",
+        "lead_frontend_ai": "Lead design and engineering for [Apple](https://www.apple.com/) University’s cross-platform ecosystem, spanning UX architecture, backend services and full-stack implementation.",
+        "lead_manager": "Lead design and engineering for [Apple](https://www.apple.com/) University’s cross-platform ecosystem, partnering with product, design and engineering stakeholders across distributed teams.",
+        "mcp": "Built an [MCP](https://modelcontextprotocol.io/) server exposing component-library capabilities and [GraphQL](https://graphql.org/) gateway schemas, enabling non-technical product owners to prototype solutions and deploy them to isolated sandboxes.",
+        "mcp_manager": "Built an [MCP](https://modelcontextprotocol.io/) server that enables non-technical product owners to prototype solutions from component-library capabilities and [GraphQL](https://graphql.org/) gateway schemas, and deploy them to isolated sandboxes.",
+        "messaging": "Designed asynchronous processing infrastructure using [RabbitMQ](https://www.rabbitmq.com/) for translation, scheduling, [Workday](https://www.workday.com/) and bulk-email workflows, and built the supporting email service.",
         "modernised": "Modernized internal platforms for course scheduling and orientation, improving usability, performance and maintainability.",
         "modernised_across_teams": "Modernized internal platforms for course scheduling and orientation, improving usability, performance and maintainability across distributed teams.",
         "stakeholders": "Work with product owners, designers and engineering stakeholders to translate business needs into technical solutions and deliver cross-platform experiences."
@@ -44,8 +44,8 @@
     "ebay": {
       "dates": "Jan 2014 – Jun 2015",
       "points": {
-        "built_kiosk_frontend_ai": "Built a kiosk that showed live transaction data on a 3D globe, using D3.js and Three.js.",
-        "contributed_animation_master": "Contributed animation standards and UI components to the design system, and built the loading spinner that shipped on eBay.com.",
+        "built_kiosk_frontend_ai": "Built a kiosk that showed live transaction data on a 3D globe, using [D3.js](https://d3js.org/) and [Three.js](https://threejs.org/).",
+        "contributed_animation_master": "Contributed animation standards and UI components to the design system, and built the loading spinner that shipped on [eBay.com](https://www.ebay.com/).",
         "prototypes": "Prototyped search results and item pages in collaboration with product teams. A left-navigation redesign increased engagement with third-level categories by 2% in Q4 2014.",
         "prototypes_manager": "UX partner to product teams on the search results page, the item page and the design system. A left-navigation redesign increased engagement with third-level categories by 2% in Q4 2014."
       },
@@ -55,13 +55,13 @@
       "dates": "May 2018 – Jan 2019",
       "points": {
         "ab_testing": "Helped product teams prototype and deliver experimental features through weekly A/B testing.",
-        "embedded_manager": "Embedded team members with product teams to roll out a new design system and its website, build components for Indeed Inbox, and run A/B tests with the Job Alert and Email team.",
+        "embedded_manager": "Embedded team members with product teams to roll out a new design system and its website, build components for [Indeed](https://www.indeed.com/) Inbox, and run A/B tests with the Job Alert and Email team.",
         "embedded_master": "Embedded design technologists within product teams, working with design and product stakeholders to roll out a new design system and website.",
         "hired_2_manager": "Hired two design technologists in San Francisco and opened requisitions for UI and front-end roles in Mountain View.",
         "planned_timelines_manager": "Planned timelines, technology and staffing for prototypes that went to user testing and then to engineering.",
         "ran_quarterly_manager": "Led quarterly performance reviews and calibration.",
         "team": "Managed a cross-functional design technology team of four that rolled out a new design system and shipped experimental features to weekly A/B tests.",
-        "team_manager": "Managed a cross-functional design technology team of four that built prototypes and experiments for Indeed’s products.",
+        "team_manager": "Managed a cross-functional design technology team of four that built prototypes and experiments for [Indeed](https://www.indeed.com/)’s products.",
         "team_master": "Managed a cross-functional design technology team of four, hired two design technologists in San Francisco, and led quarterly performance reviews and calibration.",
         "team_react_native": "Managed a cross-functional design technology team of four, embedding design technologists in product teams to roll out a new design system and ship weekly A/B tests."
       },
@@ -70,23 +70,23 @@
     "rakuten": {
       "dates": "Jan 2019 – Jan 2020",
       "points": {
-        "launch": "Helped launch Rakuten Ready’s pickup MVP and delivered delivery monitoring for its Chipotle partnership, working across product and partner requirements."
+        "launch": "Helped launch Rakuten Ready’s pickup MVP and delivered delivery monitoring for its [Chipotle](https://www.chipotle.com/) partnership, working across product and partner requirements."
       },
       "title": "Senior UX and Software Engineer"
     },
     "retail": {
       "dates": "Jun 2015 – May 2018",
       "points": {
-        "build": "Halved local build times by migrating build tooling from Grunt to Webpack, and automated build-to-deployment through Jenkins.",
-        "build_master": "Migrated build tooling from Grunt to Gulp and then Webpack, halving local build times, and automated build-to-deployment through Jenkins.",
-        "built_maintained_master": "Built and maintained three retail digital-signage products and a WeChat publishing tool, including the Apple Watch demo kiosk in every Apple Store and the Pricing app on in-store display devices.",
-        "built_maintained_react_native": "Built and maintained three retail digital-signage products: the Apple Watch demo, an iPad kiosk in every Apple Store; the Pricing app, which runs on display products in Apple Stores and at authorized resellers; and Channel Digital for authorized resellers.",
-        "framework_and_locales": "Shipped a shared React framework across three retail digital-signage products, and delivered features and content across 30+ locales for every major product launch.",
+        "build": "Halved local build times by migrating build tooling from [Grunt](https://gruntjs.com/) to [Webpack](https://webpack.js.org/), and automated build-to-deployment through [Jenkins](https://www.jenkins.io/).",
+        "build_master": "Migrated build tooling from [Grunt](https://gruntjs.com/) to [Gulp](https://gulpjs.com/) and then [Webpack](https://webpack.js.org/), halving local build times, and automated build-to-deployment through [Jenkins](https://www.jenkins.io/).",
+        "built_maintained_master": "Built and maintained three retail digital-signage products and a [WeChat](https://www.wechat.com/) publishing tool, including the [Apple Watch](https://www.apple.com/watch/) demo kiosk in every [Apple Store](https://www.apple.com/retail/) and the Pricing app on in-store display devices.",
+        "built_maintained_react_native": "Built and maintained three retail digital-signage products: the [Apple Watch](https://www.apple.com/watch/) demo, an iPad kiosk in every [Apple Store](https://www.apple.com/retail/); the Pricing app, which runs on display products in Apple Stores and at authorized resellers; and Channel Digital for authorized resellers.",
+        "framework_and_locales": "Shipped a shared [React](https://react.dev/) framework across three retail digital-signage products, and delivered features and content across 30+ locales for every major product launch.",
         "helped_onboard_manager": "Helped onboard vendors and mentored them through the handover of documentation, incident reports and the DevOps taxonomy.",
         "locales": "Delivered features and content across 30+ locales for every major product launch.",
-        "oversaw_three_manager": "Oversaw three retail digital-signage products and a WeChat publishing tool, delivering features and content across 30+ locales for every major product launch.",
-        "shipped_shared_master": "Shipped a shared React framework across three signage products and optimized on-device performance for 4K video and @4x images.",
-        "shipped_shared_react_native": "Shipped a shared React framework across all three, and optimized on-device performance of the kiosk and the Pricing app for 4K video and @4x images."
+        "oversaw_three_manager": "Oversaw three retail digital-signage products and a [WeChat](https://www.wechat.com/) publishing tool, delivering features and content across 30+ locales for every major product launch.",
+        "shipped_shared_master": "Shipped a shared [React](https://react.dev/) framework across three signage products and optimized on-device performance for 4K video and @4x images.",
+        "shipped_shared_react_native": "Shipped a shared [React](https://react.dev/) framework across all three, and optimized on-device performance of the kiosk and the Pricing app for 4K video and @4x images."
       },
       "title": "Interactive Developer, Retail Interactive"
     },
@@ -95,17 +95,17 @@
       "points": {
         "added_request_architecture": "Added request tracing from client to data source with DevOps, so teams could see where a fault started.",
         "extended_support_manager": "Ran on-call and user support across time zones, with engineers in Singapore, Japan, China and Berlin alongside the San Jose core.",
-        "federation": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure, establishing modular development across internal systems supporting Tesla Energy’s global operations.",
-        "federation_react_native": "Architected and implemented a GraphQL federation layer and Vite-based front-end infrastructure, establishing modular development across internal systems.",
-        "led": "Led UI/UX engineering for Tesla Energy’s Solar platform, managing and mentoring an eight-person core team.",
-        "led_manager": "Managed and mentored the eight-person cross-functional core team that owned the Solar platform’s apps, sprints, releases, infrastructure, incidents and on-call, while leading its UI/UX engineering at Tesla Energy.",
-        "moved_centralised_architecture": "Moved a centralized GraphQL platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy.",
+        "federation": "Architected and implemented a [GraphQL](https://graphql.org/) federation layer and [Vite](https://vite.dev/)-based front-end infrastructure, establishing modular development across internal systems supporting [Tesla Energy](https://tesla.com/energy)’s global operations.",
+        "federation_react_native": "Architected and implemented a [GraphQL](https://graphql.org/) federation layer and [Vite](https://vite.dev/)-based front-end infrastructure, establishing modular development across internal systems.",
+        "led": "Led UI/UX engineering for [Tesla Energy](https://tesla.com/energy)’s Solar platform, managing and mentoring an eight-person core team.",
+        "led_manager": "Managed and mentored the eight-person cross-functional core team that owned the Solar platform’s apps, sprints, releases, infrastructure, incidents and on-call, while leading its UI/UX engineering at [Tesla Energy](https://tesla.com/energy).",
+        "moved_centralised_architecture": "Moved a centralized [GraphQL](https://graphql.org/) platform to a federated gateway with domain-owned subgraphs. The existing schema was mounted as one subgraph so nothing had to move early, and schema checks in CI caught breaking changes before deploy.",
         "outages": "Reduced system outages from more than 20 per week to near zero. Identified and resolved a platform-wide reliability issue caused by generated code opening a database connection pool on every request.",
         "outages_manager": "Reduced system outages from more than 20 per week to near zero. Led the diagnosis of a platform-wide failure, added request tracing with DevOps, and set up a formal on-call rotation and an incident taxonomy.",
         "outages_react_native": "Reduced system outages from more than 20 per week to near zero.",
         "stakeholders": "Worked across engineering and product stakeholders to prioritize platform improvements, resolve operational issues and deliver reliable systems supporting energy operations.",
-        "standards": "Established front-end architecture standards and drove TypeScript adoption across the organization.",
-        "won_adoption_manager": "Won adoption of a GraphQL federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
+        "standards": "Established front-end architecture standards and drove [TypeScript](https://www.typescriptlang.org/) adoption across the organization.",
+        "won_adoption_manager": "Won adoption of a [GraphQL](https://graphql.org/) federation layer across teams I did not manage, by migrating one team first and letting the others opt in."
       },
       "title": "Staff Software Engineer"
     }
@@ -120,10 +120,14 @@
   "headline_manager": "Engineering Manager and Staff Software Engineer",
   "headline_master": "Creative Technologist & Software Engineering Leader",
   "headline_react_native": "Lead Product Engineer · React, React Native and design systems",
+  "language_cantonese": "Cantonese",
+  "language_english": "English",
+  "language_japanese": "Japanese",
+  "language_mandarin": "Mandarin",
   "languages": "English, Cantonese, Mandarin and Japanese (native or bilingual proficiency).",
   "links": {
     "adplist": "[adplist.org/mentors/keni-lam]($t(common:url_adplist))",
-    "experiments": "[$t(profile.experiments)]($t(common:url_experiments))",
+    "experiments": "[$t(profile.experiments)](/experiments)",
     "github": "[$t(profile.github)]($t(common:url_github))",
     "linkedin": "[$t(profile.linkedin)]($t(common:url_linkedin))",
     "moonshot": "[Ki.CL-moonshot-exercise]($t(common:url_moonshot))"
@@ -147,28 +151,29 @@
   "projects": {
     "intro": "Independent experiments exploring AI, software architecture, creative technology and robotics. Live at $t(links.experiments), with code at $t(links.github).",
     "intro_frontend_ai": "Independent experiments exploring AI, software architecture, creative technology and robotics. Live at $t(links.experiments) unless noted, with code at $t(links.github).",
-    "intro_manager": "I still build in my own time: Tree of Life, Image Agent and Factory Arm at $t(links.experiments), on a federated React and GraphQL platform that runs on Google Cloud Run. Code is at $t(links.github).",
+    "intro_manager": "I still build in my own time: [Tree of Life](/experiments/tree-of-life), [Image Agent](/experiments/image-agent) and [Factory Arm](/experiments/factory-arm) at $t(links.experiments), on a federated [React](https://react.dev/) and [GraphQL](https://graphql.org/) platform that runs on [Google Cloud Run](https://cloud.google.com/run). Code is at $t(links.github).",
     "items": {
-      "experiments_react_native": "**Experiments.** Tree of Life, Image Agent and Factory Arm, live at $t(links.experiments), with code at $t(links.github).",
-      "factory_architecture": "**$t(common:experiment_factory_arm).** A browser simulation of a robot arm unloading a pallet. One WebSocket per page carries protobuf frames, chosen over gRPC-Web for bidirectional streaming. A Rust bridge relays them to a digital twin in NVIDIA Isaac Sim and answers “hold still” when it’s unreachable. Each session gets its own simulated rig, and the GPU machine stops itself when idle.",
-      "factory_arm": "**$t(common:experiment_factory_arm).** A browser-based robotic palletisation experiment. Planning runs in web workers, while a Rust bridge relays Protobuf frames over WebSocket to a digital twin running in NVIDIA Isaac Sim.",
-      "image_architecture": "**$t(common:experiment_image_agent).** A public prompt-to-image agent with a fixed workflow. Every request passes four checks, cheapest first, and quotas are counted in MongoDB so a restart does not reset them. A reply cut short by a restart is marked failed when the conversation is next opened, so nobody is locked out.",
-      "image_frontend_ai": "**$t(common:experiment_image_agent).** A public prompt-to-image agent, built to learn what it takes to put an AI feature in front of real people. A clarifier asks one question at a time, up to three, and code enforces the limit. The workflow is fixed in code as well, so the model never chooses its own tools. A vision model reviews each picture and can trigger one retry. Every request passes four checks, cheapest first: rate limits, rule checks, moderation and a small classifier. Quotas are counted in MongoDB, and progress arrives over a GraphQL subscription.",
-      "image_master": "**$t(common:experiment_image_agent).** A public prompt-to-image agent that asks up to three clarifying questions, reviews generated images with a second model, and applies rate limits, rule checks, moderation and classification.",
-      "interpreter_react_native": "**Interpreter (prototype).** A speech interpreter for two-way conversation. The Expo app (React Native, Tamagui) records push-to-talk audio and sends each utterance over a WebSocket to a Fastify server. The server detects the speaker's language, translates with Claude using the conversation so far, and streams captions back. The phone then speaks the result on-device. 21 languages, including Cantonese and Mandarin.",
-      "ki_architecture": "**$t(projects.labels.ki).** A React host loads design-system, API-client and experiment remotes at runtime. The GraphQL API (Apollo Server, MongoDB) sits behind a same-origin proxy that injects server-issued keys. Production runs on Google Cloud Run.",
-      "ki_frontend_ai": "**$t(projects.labels.ki).** The federated platform under all of these. A React host loads a design-system remote and a typed GraphQL client at runtime, and production runs on Google Cloud Run.",
-      "ki_master": "**$t(projects.labels.ki).** My personal platform, built as a federated architecture. A React host loads a design-system remote and typed GraphQL client at runtime, backed by Apollo Server and MongoDB. Deployed on Google Cloud Run.",
-      "ki_react_native": "**$t(projects.labels.ki).** My personal platform, built as a federated architecture. A React host loads a design-system remote and typed GraphQL client at runtime. Deployed on Google Cloud Run.",
-      "tree_architecture": "**$t(common:experiment_tree_of_life).** The Open Tree of Life’s 2.3 million species, cached in MongoDB as a parent-pointer tree with idempotent upserts, since lineages that share ancestors are written at once. Illustrations are generated in the background and arrive over a GraphQL subscription. Text, image and vision calls each fail over across providers, with timeouts and cooldowns.",
-      "tree_frontend_ai": "**$t(common:experiment_tree_of_life).** A walk through the Open Tree of Life’s 2.3 million species, cached in MongoDB as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a species, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
-      "tree_master": "**$t(common:experiment_tree_of_life).** An interactive exploration of the Open Tree of Life’s 2.3 million species. Each organism’s illustration is generated on demand through a fixed AI pipeline with provider failover and vision-model review.",
-      "writing_frontend_ai": "**Writing reviewer** (code only: $t(links.moonshot)). Reviews commit messages, pull-request descriptions and READMEs with Claude. The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
+      "experiments_react_native": "**Experiments.** [Tree of Life](/experiments/tree-of-life), [Image Agent](/experiments/image-agent) and [Factory Arm](/experiments/factory-arm), live at $t(links.experiments), with code at $t(links.github).",
+      "factory_architecture": "**[$t(common:experiment_factory_arm)](/experiments/factory-arm).** A browser simulation of a robot arm unloading a pallet. One [WebSocket](https://developer.mozilla.org/docs/Web/API/WebSockets_API) per page carries [protobuf](https://protobuf.dev/) frames, chosen over [gRPC-Web](https://github.com/grpc/grpc-web) for bidirectional streaming. A [Rust](https://www.rust-lang.org/) bridge relays them to a digital twin in [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) and answers “hold still” when it’s unreachable. Each session gets its own simulated rig, and the GPU machine stops itself when idle.",
+      "factory_arm": "**[$t(common:experiment_factory_arm)](/experiments/factory-arm).** A browser-based robotic palletisation experiment. Planning runs in web workers, while a [Rust](https://www.rust-lang.org/) bridge relays [Protobuf](https://protobuf.dev/) frames over [WebSocket](https://developer.mozilla.org/docs/Web/API/WebSockets_API) to a digital twin running in [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim).",
+      "image_architecture": "**[$t(common:experiment_image_agent)](/experiments/image-agent).** A public prompt-to-image agent with a fixed workflow. Every request passes four checks, cheapest first, and quotas are counted in [MongoDB](https://www.mongodb.com/) so a restart does not reset them. A reply cut short by a restart is marked failed when the conversation is next opened, so nobody is locked out.",
+      "image_frontend_ai": "**[$t(common:experiment_image_agent)](/experiments/image-agent).** A public prompt-to-image agent, built to learn what it takes to put an AI feature in front of real people. A clarifier asks one question at a time, up to three, and code enforces the limit. The workflow is fixed in code as well, so the model never chooses its own tools. A vision model reviews each picture and can trigger one retry. Every request passes four checks, cheapest first: rate limits, rule checks, moderation and a small classifier. Quotas are counted in [MongoDB](https://www.mongodb.com/), and progress arrives over a [GraphQL](https://graphql.org/) subscription.",
+      "image_master": "**[$t(common:experiment_image_agent)](/experiments/image-agent).** A public prompt-to-image agent that asks up to three clarifying questions, reviews generated images with a second model, and applies rate limits, rule checks, moderation and classification.",
+      "interpreter_react_native": "**Interpreter (prototype).** A speech interpreter for two-way conversation. The [Expo](https://expo.dev/) app ([React Native](https://reactnative.dev/), [Tamagui](https://tamagui.dev/)) records push-to-talk audio and sends each utterance over a [WebSocket](https://developer.mozilla.org/docs/Web/API/WebSockets_API) to a [Fastify](https://fastify.dev/) server. The server detects the speaker's language, translates with [Claude](https://claude.com/) using the conversation so far, and streams captions back. The phone then speaks the result on-device. 21 languages, including Cantonese and Mandarin.",
+      "ki_architecture": "**$t(projects.labels.ki).** A [React](https://react.dev/) host loads design-system, API-client and experiment remotes at runtime. The [GraphQL](https://graphql.org/) API ([Apollo Server](https://www.apollographql.com/docs/apollo-server/), [MongoDB](https://www.mongodb.com/)) sits behind a same-origin proxy that injects server-issued keys. Production runs on [Google Cloud Run](https://cloud.google.com/run).",
+      "ki_frontend_ai": "**$t(projects.labels.ki).** The federated platform under all of these. A [React](https://react.dev/) host loads a design-system remote and a typed [GraphQL](https://graphql.org/) client at runtime, and production runs on [Google Cloud Run](https://cloud.google.com/run).",
+      "ki_master": "**$t(projects.labels.ki).** My personal platform, built as a federated architecture. A [React](https://react.dev/) host loads a design-system remote and typed [GraphQL](https://graphql.org/) client at runtime, backed by [Apollo Server](https://www.apollographql.com/docs/apollo-server/) and [MongoDB](https://www.mongodb.com/). Deployed on [Google Cloud Run](https://cloud.google.com/run).",
+      "ki_react_native": "**$t(projects.labels.ki).** My personal platform, built as a federated architecture. A [React](https://react.dev/) host loads a design-system remote and typed [GraphQL](https://graphql.org/) client at runtime. Deployed on [Google Cloud Run](https://cloud.google.com/run).",
+      "tree_architecture": "**[$t(common:experiment_tree_of_life)](/experiments/tree-of-life).** The [Open Tree of Life](https://tree.opentreeoflife.org/)’s 2.3 million species, cached in [MongoDB](https://www.mongodb.com/) as a parent-pointer tree with idempotent upserts, since lineages that share ancestors are written at once. Illustrations are generated in the background and arrive over a [GraphQL](https://graphql.org/) subscription. Text, image and vision calls each fail over across providers, with timeouts and cooldowns.",
+      "tree_frontend_ai": "**[$t(common:experiment_tree_of_life)](/experiments/tree-of-life).** A walk through the [Open Tree of Life](https://tree.opentreeoflife.org/)’s 2.3 million species, cached in [MongoDB](https://www.mongodb.com/) as a parent-pointer tree. Illustrations are generated on demand by a fixed pipeline: resolve the lineage, pick a species, write the prompt, generate, score with a vision model, retry once. Text, image and vision calls each have their own provider failover chain, with timeouts and cooldowns.",
+      "tree_master": "**[$t(common:experiment_tree_of_life)](/experiments/tree-of-life).** An interactive exploration of the [Open Tree of Life](https://tree.opentreeoflife.org/)’s 2.3 million species. Each organism’s illustration is generated on demand through a fixed AI pipeline with provider failover and vision-model review.",
+      "writing_frontend_ai": "**Writing reviewer** (code only: $t(links.moonshot)). Reviews commit messages, pull-request descriptions and READMEs with [Claude](https://claude.com/). The model returns structured edits, each tied to a named rule. Code locates every quote and drops any edit that does not match exactly. It turns away prompt-injection attempts and has an eval set."
     },
     "labels": {
       "ki": "Ki.CL platform"
     }
   },
+  "proficiency": "Native or bilingual proficiency",
   "quote_by": "{{title}}, {{organisation}}",
   "rank": "Top 10%",
   "recognition_adplist100": "ADPList100 Most Influential Mentors 2024",
@@ -176,23 +181,23 @@
   "recognition_top10": "Top 10 Mentor",
   "recognition_top50": "Top 50 Mentor",
   "skills": {
-    "ai_architecture": "**$t(skills.labels.ai):** LLM applications, Claude, OpenAI and Groq APIs, MCP servers, provider failover, moderation and rate limiting.",
-    "ai_frontend_ai": "**$t(skills.labels.ai):** LLM applications, Claude, OpenAI and Groq APIs, MCP servers, structured outputs, model evaluation, retrieval-augmented generation, moderation and rate limiting, provider failover.",
-    "ai_manager": "**$t(skills.labels.ai):** LLM applications, MCP servers.",
-    "ai_master": "**$t(skills.labels.ai):** LLM applications, Claude, OpenAI and Groq APIs, MCP servers, AI-assisted development, agent orchestration, retrieval-augmented generation, structured outputs, model evaluation, multimodal workflows.",
-    "ai_react_native": "**$t(skills.labels.ai):** LLM applications, Claude and OpenAI APIs, MCP servers.",
-    "architecture_architecture": "**$t(skills.labels.architecture):** Federated GraphQL (Apollo Federation), micro-frontends (Module Federation), API gateways and BFFs, messaging (RabbitMQ), gRPC, WebSockets and Protobuf, request tracing and incident response.",
-    "back_architecture": "**$t(skills.labels.back):** Node.js, GraphQL subscriptions, MongoDB, SQL, Python.",
-    "back_frontend_ai": "**$t(skills.labels.back):** Node.js, GraphQL, Apollo Federation, subscriptions, gRPC, RabbitMQ, MongoDB, SQL, WebSockets, Python.",
-    "back_master": "**$t(skills.labels.back):** Node.js, GraphQL, Apollo Federation, microservices, API design, gRPC, RabbitMQ, event-driven architecture, MongoDB, SQL, WebSockets, Python.",
-    "back_react_native": "**$t(skills.labels.back):** Node.js, GraphQL, Apollo Federation, WebSockets, MongoDB, SQL, gRPC, RabbitMQ.",
-    "design": "**$t(skills.labels.design):** Design systems, component libraries, prototyping, Figma, web accessibility (A11Y), internationalization.",
-    "design_architecture": "**$t(skills.labels.design):** Design systems, component libraries, web accessibility (A11Y), internationalization.",
-    "design_master": "**$t(skills.labels.design):** Design systems, component libraries, UX architecture, prototyping, Figma, Sketch, Framer, W3C standards, web accessibility (A11Y), internationalization.",
-    "engineering_manager": "**$t(skills.labels.engineering):** TypeScript, React, Node.js, GraphQL, Apollo Federation, Module Federation, design systems, Google Cloud Platform, CI/CD.",
-    "front_architecture": "**$t(skills.labels.frontend):** TypeScript, React, Next.js, Vue, Vite, Webpack, Three.js, WebGL, React Native (Expo).",
-    "front_frontend_ai": "**$t(skills.labels.front):** TypeScript, React, Next.js, Vue, Vite, Webpack, Module Federation, Three.js, WebGL, Sass, Tailwind, React Native (Expo).",
-    "front_master": "**$t(skills.labels.front):** TypeScript, React, React Native (Expo), Next.js, Vue, Vite, Webpack, Module Federation, Three.js, WebGL, Sass, Tailwind.",
+    "ai_architecture": "**$t(skills.labels.ai):** [LLM](https://en.wikipedia.org/wiki/Large_language_model) applications, [Claude](https://claude.com/), [OpenAI](https://openai.com/) and [Groq](https://groq.com/) APIs, [MCP](https://modelcontextprotocol.io/) servers, provider failover, moderation and rate limiting.",
+    "ai_frontend_ai": "**$t(skills.labels.ai):** [LLM](https://en.wikipedia.org/wiki/Large_language_model) applications, [Claude](https://claude.com/), [OpenAI](https://openai.com/) and [Groq](https://groq.com/) APIs, [MCP](https://modelcontextprotocol.io/) servers, structured outputs, model evaluation, retrieval-augmented generation, moderation and rate limiting, provider failover.",
+    "ai_manager": "**$t(skills.labels.ai):** [LLM](https://en.wikipedia.org/wiki/Large_language_model) applications, [MCP](https://modelcontextprotocol.io/) servers.",
+    "ai_master": "**$t(skills.labels.ai):** [LLM](https://en.wikipedia.org/wiki/Large_language_model) applications, [Claude](https://claude.com/), [OpenAI](https://openai.com/) and [Groq](https://groq.com/) APIs, [MCP](https://modelcontextprotocol.io/) servers, AI-assisted development, agent orchestration, retrieval-augmented generation, structured outputs, model evaluation, multimodal workflows.",
+    "ai_react_native": "**$t(skills.labels.ai):** [LLM](https://en.wikipedia.org/wiki/Large_language_model) applications, [Claude](https://claude.com/) and [OpenAI](https://openai.com/) APIs, [MCP](https://modelcontextprotocol.io/) servers.",
+    "architecture_architecture": "**$t(skills.labels.architecture):** Federated [GraphQL](https://graphql.org/) ([Apollo Federation](https://www.apollographql.com/docs/federation/)), [micro-frontends](/workshop/architecture) (Module Federation), API gateways and BFFs, messaging ([RabbitMQ](https://www.rabbitmq.com/)), [gRPC](https://grpc.io/), [WebSockets](https://developer.mozilla.org/docs/Web/API/WebSockets_API) and [Protobuf](https://protobuf.dev/), request tracing and incident response.",
+    "back_architecture": "**$t(skills.labels.back):** [Node.js](https://nodejs.org/), [GraphQL](https://graphql.org/) subscriptions, [MongoDB](https://www.mongodb.com/), [SQL](https://en.wikipedia.org/wiki/SQL), [Python](https://www.python.org/).",
+    "back_frontend_ai": "**$t(skills.labels.back):** [Node.js](https://nodejs.org/), [GraphQL](https://graphql.org/), [Apollo Federation](https://www.apollographql.com/docs/federation/), subscriptions, [gRPC](https://grpc.io/), [RabbitMQ](https://www.rabbitmq.com/), [MongoDB](https://www.mongodb.com/), [SQL](https://en.wikipedia.org/wiki/SQL), [WebSockets](https://developer.mozilla.org/docs/Web/API/WebSockets_API), [Python](https://www.python.org/).",
+    "back_master": "**$t(skills.labels.back):** [Node.js](https://nodejs.org/), [GraphQL](https://graphql.org/), [Apollo Federation](https://www.apollographql.com/docs/federation/), microservices, API design, [gRPC](https://grpc.io/), [RabbitMQ](https://www.rabbitmq.com/), event-driven architecture, [MongoDB](https://www.mongodb.com/), [SQL](https://en.wikipedia.org/wiki/SQL), [WebSockets](https://developer.mozilla.org/docs/Web/API/WebSockets_API), [Python](https://www.python.org/).",
+    "back_react_native": "**$t(skills.labels.back):** [Node.js](https://nodejs.org/), [GraphQL](https://graphql.org/), [Apollo Federation](https://www.apollographql.com/docs/federation/), [WebSockets](https://developer.mozilla.org/docs/Web/API/WebSockets_API), [MongoDB](https://www.mongodb.com/), [SQL](https://en.wikipedia.org/wiki/SQL), [gRPC](https://grpc.io/), [RabbitMQ](https://www.rabbitmq.com/).",
+    "design": "**$t(skills.labels.design):** [Design systems](/workshop/design-system), component libraries, prototyping, [Figma](https://www.figma.com/), [web accessibility (A11Y)](/workshop/design-system/patterns/inclusion/accessibility-first), [internationalization (i18n)](/workshop/i18n).",
+    "design_architecture": "**$t(skills.labels.design):** [Design systems](/workshop/design-system), component libraries, [web accessibility (A11Y)](/workshop/design-system/patterns/inclusion/accessibility-first), [internationalization (i18n)](/workshop/i18n).",
+    "design_master": "**$t(skills.labels.design):** [Design systems](/workshop/design-system), component libraries, UX architecture, prototyping, [Figma](https://www.figma.com/), [Sketch](https://www.sketch.com/), [Framer](https://www.framer.com/), [W3C](https://www.w3.org/) standards, [web accessibility (A11Y)](/workshop/design-system/patterns/inclusion/accessibility-first), [internationalization (i18n)](/workshop/i18n).",
+    "engineering_manager": "**$t(skills.labels.engineering):** [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), [Node.js](https://nodejs.org/), [GraphQL](https://graphql.org/), [Apollo Federation](https://www.apollographql.com/docs/federation/), [Module Federation](/workshop/architecture), [design systems](/workshop/design-system), [Google Cloud Platform](https://cloud.google.com/), CI/CD.",
+    "front_architecture": "**$t(skills.labels.frontend):** [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), [Next.js](https://nextjs.org/), [Vue](https://vuejs.org/), [Vite](https://vite.dev/), [Webpack](https://webpack.js.org/), [Three.js](https://threejs.org/), [WebGL](https://www.khronos.org/webgl/), [React Native](https://reactnative.dev/) ([Expo](https://expo.dev/)).",
+    "front_frontend_ai": "**$t(skills.labels.front):** [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), [Next.js](https://nextjs.org/), [Vue](https://vuejs.org/), [Vite](https://vite.dev/), [Webpack](https://webpack.js.org/), [Module Federation](/workshop/architecture), [Three.js](https://threejs.org/), [WebGL](https://www.khronos.org/webgl/), [Sass](https://sass-lang.com/), [Tailwind](https://tailwindcss.com/), [React Native](https://reactnative.dev/) ([Expo](https://expo.dev/)).",
+    "front_master": "**$t(skills.labels.front):** [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), [React Native](https://reactnative.dev/) ([Expo](https://expo.dev/)), [Next.js](https://nextjs.org/), [Vue](https://vuejs.org/), [Vite](https://vite.dev/), [Webpack](https://webpack.js.org/), [Module Federation](/workshop/architecture), [Three.js](https://threejs.org/), [WebGL](https://www.khronos.org/webgl/), [Sass](https://sass-lang.com/), [Tailwind](https://tailwindcss.com/).",
     "labels": {
       "ai": "AI & Agentic Systems",
       "architecture": "Architecture",
@@ -207,10 +212,10 @@
       "platform": "Cloud & Platform Engineering"
     },
     "leadership_manager": "**$t(skills.labels.leadership):** People management, hiring, quarterly performance reviews and calibration, mentoring, on-call and incident process, stakeholder management, cross-team architecture.",
-    "mobile_react_native": "**$t(skills.labels.mobile):** React Native, Expo, Tamagui, TypeScript, React, Next.js, Vite, Webpack, Module Federation, Three.js.",
-    "native_react_native": "**$t(skills.labels.native):** Objective-C.",
-    "platform": "**$t(skills.labels.platform):** Google Cloud Platform, Cloud Run, Docker, CI/CD, GitHub Actions, Jenkins, deployment automation, system reliability.",
-    "platform_architecture": "**$t(skills.labels.platform):** Google Cloud Platform, Cloud Run, load balancing, Docker, CI/CD, GitHub Actions, Jenkins."
+    "mobile_react_native": "**$t(skills.labels.mobile):** [React Native](https://reactnative.dev/), [Expo](https://expo.dev/), [Tamagui](https://tamagui.dev/), [TypeScript](https://www.typescriptlang.org/), [React](https://react.dev/), [Next.js](https://nextjs.org/), [Vite](https://vite.dev/), [Webpack](https://webpack.js.org/), [Module Federation](/workshop/architecture), [Three.js](https://threejs.org/).",
+    "native_react_native": "**$t(skills.labels.native):** [Objective-C](https://developer.apple.com/documentation/objectivec).",
+    "platform": "**$t(skills.labels.platform):** [Google Cloud Platform](https://cloud.google.com/), [Cloud Run](https://cloud.google.com/run), [Docker](https://www.docker.com/), CI/CD, [GitHub Actions](https://github.com/features/actions), [Jenkins](https://www.jenkins.io/), deployment automation, system reliability.",
+    "platform_architecture": "**$t(skills.labels.platform):** [Google Cloud Platform](https://cloud.google.com/), [Cloud Run](https://cloud.google.com/run), load balancing, [Docker](https://www.docker.com/), CI/CD, [GitHub Actions](https://github.com/features/actions), [Jenkins](https://www.jenkins.io/)."
   },
   "summary_architecture": "Staff-level engineer with 15+ years of experience designing platforms that many teams and products share. At Apple I built a federated front end and a GraphQL gateway across 20+ subgraphs. At Tesla I architected a GraphQL federation layer and front-end infrastructure, and reduced system outages from more than 20 per week to near zero. I work across the stack, from design systems to deployment.",
   "summary_frontend_ai": "Front-end and full-stack engineer with 15+ years of experience, currently leading design and engineering for Apple University’s platform. I build design systems and federated front-end and GraphQL architectures, and I ship AI features end to end: an MCP server at Apple, and public agents of my own with cost, abuse and quality controls built in. I trained in fine art and design before moving into engineering.",
@@ -224,6 +229,7 @@
   "title_mentoring": "Mentoring",
   "title_projects": "Projects",
   "title_recognition": "Community recognition",
+  "title_sections": "Sections",
   "title_skills": "Technical Skills",
   "title_summary": "Summary"
 }

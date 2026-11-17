@@ -37,10 +37,10 @@ const Explore: React.FunctionComponent = () => {
           <Text
             className={classNames(
               'kicl-font-family-mono',
-              'kicl-font-size-small',
               'kicl-scroll-enter-near'
             )}
             is='span'
+            lookLike='small'
             variant='secondary'
           >
             {t('experiments')}

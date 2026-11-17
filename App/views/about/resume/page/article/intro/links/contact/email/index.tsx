@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { HyperLink, ListItem } from 'design/components';
 import { usePrinting, useTranslation } from 'design/hooks';
 
@@ -17,10 +15,7 @@ const Email: React.FunctionComponent = () => {
 
   return (
     <ListItem>
-      <HyperLink
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
-        to={`mailto:${email}`}
-      >
+      <HyperLink className='kicl-font-family-mono' to={`mailto:${email}`}>
         {email}
       </HyperLink>
     </ListItem>

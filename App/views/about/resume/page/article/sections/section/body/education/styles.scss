@@ -1,0 +1,30 @@
+:root,
+.kicl--theme--light {
+  --kicl--views--about__resume__section__school--filter: grayscale(1);
+}
+
+// The logos are dark marks on nothing, so a dark section turns them light.
+.kicl--theme--dark {
+  --kicl--views--about__resume__section__school--filter: grayscale(1) invert(1);
+}
+
+// Every logo fits the same box, so a wide wordmark and a tall mark weigh
+// about the same, and each sits at the start of the line.
+.kicl--views--about__resume__section__school {
+  --kicl--components--image--block-size: var(--kicl-size-4x);
+  --kicl--components--image--border-radius: 0;
+  --kicl--components--image--inline-size: var(--kicl-size-10x);
+  --kicl--components--image--object-fit: contain;
+  --kicl--components--image--object-position: 0 50%;
+
+  filter: var(--kicl--views--about__resume__section__school--filter);
+
+  &:dir(rtl) {
+    --kicl--components--image--object-position: 100% 50%;
+  }
+}
+
+// The course at the size the languages use, in the text's regular weight.
+.kicl--views--about__resume__section__degree {
+  --kicl--components--text--font-size: var(--kicl-font-size-large);
+}

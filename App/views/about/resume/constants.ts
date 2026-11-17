@@ -11,6 +11,9 @@ const CLASS_NAME = 'kicl--views--about__resume';
 
 const ENTRY_ID = 'kicl-resume-entry';
 
+/** A section's anchor, which the page indicator's dots link to. */
+const toAnchor = (section: string) => `kicl-resume-${section}`;
+
 /** The exported master PDF's name in the static bucket, kept for good. */
 const OBJECT = `${PATH}/keni-lam-resume.pdf`;
 
@@ -39,4 +42,13 @@ const MOMENTS = {
   tesla: 'systems',
 } as const;
 
-export { CLASS_NAME, ENTRY_ID, FILE, MOMENTS, OBJECT, PATH, PHONE_KEY };
+export {
+  CLASS_NAME,
+  ENTRY_ID,
+  FILE,
+  MOMENTS,
+  OBJECT,
+  PATH,
+  PHONE_KEY,
+  toAnchor,
+};
