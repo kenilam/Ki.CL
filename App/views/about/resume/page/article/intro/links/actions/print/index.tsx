@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { Button, ListItem } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -15,7 +13,7 @@ const Print: React.FunctionComponent = () => {
   return (
     <ListItem>
       <Button
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
+        className='kicl-font-family-mono'
         data-track='Resume print'
         lookLikeHyperLink
         onClick={print}

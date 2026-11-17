@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Animation, Markdown, Text } from 'design/components';
+import { Animated } from 'design/components';
 
 import { useSeen } from '@/views/about/use-seen';
 
@@ -10,25 +10,27 @@ const Intro: React.FunctionComponent = () => {
   const {
     projects: { intro },
   } = useVersion();
-  const { ref, seen } = useSeen<HTMLParagraphElement>();
+  const { ref, seen } = useSeen<HTMLElement>();
 
   if (!intro) {
     return null;
   }
 
   return (
-    <Animation
+    <Animated.Text
       delay={150}
+      dense
       duration='slow'
       easing='ease-expo-out'
       hold
       in={seen}
-      property='slide-from-left'
+      lookLike='h3'
+      property='fade'
+      ref={ref}
+      stagger={12}
     >
-      <Text dense lookLike='h3' ref={ref}>
-        <Markdown>{intro}</Markdown>
-      </Text>
-    </Animation>
+      {intro}
+    </Animated.Text>
   );
 };
 

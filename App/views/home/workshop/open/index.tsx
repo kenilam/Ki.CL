@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import * as Tb from 'react-icons/tb';
 
 import { HyperLink } from 'design/components';
@@ -15,7 +13,7 @@ const Open: React.FunctionComponent = () => {
   return (
     <HyperLink
       after={<Tb.TbArrowRight aria-hidden className='kicl-rtl-mirror' />}
-      className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
+      className='kicl-font-family-mono'
       to={PAGES.workshop}
     >
       {t('action', { context: 'workshop' })}

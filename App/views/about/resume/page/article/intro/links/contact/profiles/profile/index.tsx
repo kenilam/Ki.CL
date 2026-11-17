@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { HyperLink, ListItem } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -18,7 +16,7 @@ const Profile: React.FunctionComponent<Props> = ({ context }) => {
   return (
     <ListItem>
       <HyperLink
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
+        className='kicl-font-family-mono'
         to={translations.common.t('url', { context })}
       >
         <span className='kicl-print-hidden'>

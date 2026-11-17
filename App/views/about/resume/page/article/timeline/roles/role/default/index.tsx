@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { Layout } from 'design/components';
 
 import { Dates } from '@/views/about/resume/page/article/timeline/roles/role/dates';
@@ -13,18 +11,8 @@ import type { Props } from '@/views/about/resume/page/article/timeline/roles/rol
 
 const Default: React.FunctionComponent<Props> = ({ id }) => {
   return (
-    <Layout
-      alignItems='baseline'
-      autoFlow='column'
-      frames='3fr--9fr'
-      gap='normal'
-    >
-      <article
-        className={classNames(
-          'kicl-print-break-inside-avoid',
-          'kicl-scroll-enter'
-        )}
-      >
+    <Layout alignItems='start' autoFlow='column' frames='3fr--9fr' gap='normal'>
+      <article className='kicl-print-break-inside-avoid'>
         <Dates id={id} />
         <Layout autoFlow='row' gap='narrow'>
           <div className='kicl-max-inline-size-columns-5'>

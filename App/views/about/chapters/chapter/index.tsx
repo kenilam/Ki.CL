@@ -6,6 +6,7 @@ import { ListItem, Spinner } from 'design/components';
 import { useResponsive } from 'design/hooks';
 
 import { useMoment } from '@/views/about/use-moment';
+import { useSnap } from '@/views/about/use-snap';
 
 import type { Chapter as Id } from '@/views/about/constants';
 
@@ -27,6 +28,7 @@ const VERSIONS = {
 const Chapter: React.FunctionComponent<Props> = ({ id }) => {
   const { isNarrow } = useResponsive();
   const ref = useMoment<HTMLLIElement>(id);
+  const snap = useSnap(ref);
 
   const Version = VERSIONS[String(isNarrow)];
 
@@ -34,9 +36,9 @@ const Chapter: React.FunctionComponent<Props> = ({ id }) => {
     <ListItem
       className={classNames(
         'kicl-padding-block-wider',
-        'kicl-scroll-focus',
+        'kicl-scroll-focus-within',
         'kicl-scroll-focus-scale',
-        'kicl-scroll-snap-align-center'
+        snap
       )}
       ref={ref}
     >

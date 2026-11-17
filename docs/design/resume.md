@@ -1,6 +1,6 @@
 # Design: the resume on ki-cl.com
 
-Status: built on `feat/resume`, with the print styles on `feat/print` in the design system. Not yet released. Written 7 October 2026, updated after the build on the 8th.
+Status: released. Written 7 October 2026 and updated after the first build on the 8th. The page was rebuilt on the About page's parts on 15 November (Ki.CL #590), and the requirements, interfaces, failure modes and build findings were updated then. The estimates in section 2 were not measured again unless a row says so.
 
 One typed content source in this repo renders the resume as a page in the site's design system, in five versions, and the same page produces the PDFs.
 
@@ -8,8 +8,8 @@ One typed content source in this repo renders the resume as a page in the site's
 
 ### It must do
 
-1. Show the resume at `/about/resume`, on a phone and a desktop, in the light and dark themes. Each role is a disclosure: its title, employer and dates are the summary, and what was done opens under it. The current role starts open.
-2. Give a PDF two ways: the browser's own print has to come out right, and the page offers a real file to download.
+1. Show the resume at `/about/resume`, on a phone and a desktop, in the light and dark themes. It opens like the About page: the name and headline over the mark, then the summary, location and links. Every role is open, in a timeline beside the mark. Projects, technical skills, mentoring, education and languages are each a full-screen section, and the page ends with the footer About uses.
+2. Give a PDF two ways: the browser's own print has to come out right, and the page offers a real file to download. A dialog on arrival offers both, and the page itself.
 3. Serve the four tailored versions (manager, front end and AI, React Native, architecture) from the same content, each at its own URL.
 4. Export every version to PDF with one command, on Letter and A4, for applications.
 
@@ -21,7 +21,7 @@ One typed content source in this repo renders the resume as a page in the site's
 | Read and write | All reads. Content changes about twice a month, by commit. |
 | Latency | Content painted within 2.5 s on a cold load over 4G. First byte of the PDF within 500 ms. |
 | Length | Every version fits two pages on Letter and on A4. |
-| Freshness | The page and the PDF file never disagree. A file that is out of date is not offered. |
+| Freshness | A file that doesn't match the page is never passed off as the page. It is offered as the English file. |
 | Availability | The PDF file needs the host, the API and the static bucket, but no session. The page inherits the site: host, design remote and an API session. |
 | Durability | Content lives in git. Nothing else can be lost. |
 | Privacy | This repository is public. The phone number is in no commit, no bundle and no public file. |
@@ -32,14 +32,14 @@ One typed content source in this repo renders the resume as a page in the site's
 - A CMS or an editing UI. The editor is a text editor and a pull request.
 - Rendering PDFs on the server on demand.
 - Word files from the site. The plain Word files come from the earlier export.
-- A Japanese version, and a link per recipient.
+- A PDF in any language but English, and a link per recipient. The page itself is translated with the rest of the site.
 - Sign-in for the tailored versions.
 
 ### Assumptions
 
 These carry weight. If one is wrong, the section named after it changes.
 
-- `/about/resume` is public and linked from the navigation (section 6, row 8).
+- `/about/resume` is public and linked from the About page (section 6, row 8).
 - The tailored versions may be read by anyone who has the URL (row 8).
 - The phone number belongs on the PDFs sent with an application and nowhere public (row 7).
 - A binary of about 150 KB may live in git, although site imagery lives in the bucket (row 5).
@@ -54,11 +54,11 @@ These carry weight. If one is wrong, the section named after it changes.
 | Spike day | 5,000 views × 25 | 125,000 requests, 1.5 a second on average |
 | Spike peak | most of a spike lands in two hours, so 10 × average | 15 a second |
 | Sessions at the API on a spike day | one exchange per new visitor | 5,000, under 1 a second at peak |
-| Bytes for a cold view | brotli, without the 3D chunks this route never loads | about 1 MB |
+| Bytes for a cold view | brotli. Measured before the rebuild, when this route loaded no 3D chunk. It now loads the mark's, and this was not measured again | about 1 MB then |
 | Egress on a spike day | 5,000 × 1 MB | 5 GB |
-| One PDF | two pages, three weights of one family, no images. Measured | 80 KB |
-| PDF in the static bucket | 80 KB, one object, overwritten by each export | nothing in git |
-| Export run | 5 versions × 2 papers. Measured | 31 s on a laptop |
+| One PDF | two pages, no images. Measured after the rebuild | 77 to 92 KB by version |
+| PDF in the static bucket | 94 KB, one object, overwritten by each export | nothing in git |
+| Export run | 5 versions × 2 papers. Measured after the rebuild, where each page waits for its lazy parts | 3 min 40 s on a laptop, 31 s before |
 
 One Node process serving files does hundreds of requests a second, and the site already runs in two regions, so the peak sits two orders of magnitude under capacity. A single MongoDB primary takes about 1,000 simple writes a second, three orders above the session load.
 
@@ -73,6 +73,7 @@ The numbers force nothing. They rule things out: no CDN change, no render servic
 | `GET /about/resume` | The shell, then the master version | `no-cache` on the shell |
 | `GET /about/resume/:version` | One of `manager`, `frontend-ai`, `react-native`, `architecture`. Anything else renders the 404 page | as above, and `noindex` |
 | `GET /assets/static/resume/keni-lam-resume.pdf` | The master PDF, streamed from the static bucket by the API | `public, max-age=0, must-revalidate`, with `ETag` |
+| `POST /api`, `kicl_mentorship` | The review count, the average and the latest reviews for the Mentoring section. The API reads them from the ADPList profile and keeps them a week | Apollo's cache, for the visit |
 | `POST /collect` | Existing analytics. Views by path, the PDF and print controls by `data-track` | n/a |
 
 The PDF keeps one name for good, because the link ends up in emails and profiles. It is revalidated on every request, so a new export is what the next reader gets, and an unchanged file costs a 304.
@@ -80,45 +81,45 @@ The PDF keeps one name for good, because the link ends up in emails and profiles
 ### Content
 
 ```ts
-/** Plain text, bold text, or a link. */
-type Run = string | { strong: string } | { link: string; to: string };
-type Line = string | readonly Run[];
-
+/** A line is named by its key in `App/locales/en-US/resume.json`. */
 type Role = {
-  title: string;
-  organisation: string;
-  dates: string;
-  points: readonly Line[];
+  id: RoleId;
+  title: Key;
+  organisation: Organisation;
+  dates: Key;
+  points: readonly Key[];
 };
 
 type Version = {
   slug: 'master' | 'manager' | 'frontend-ai' | 'react-native' | 'architecture';
-  name: string;
-  headline: string;
-  summary: Line;
+  name: Key;
+  headline: Key;
+  summary: Key;
   experience: readonly Role[];
-  earlier: readonly Line[];
-  projects: { intro?: Line; items?: readonly Line[] };
-  skills: readonly Line[];
-  mentoring: Line;
-  education: readonly Line[];
-  languages: Line;
-  /** Section order. The manager version puts mentoring before projects. */
+  earlier: readonly Key[];
+  projects: { intro?: Key; items?: readonly Key[] };
+  skills: readonly Key[];
+  mentoring: Key;
+  education: readonly Key[];
+  languages: Key;
+  /** The sections after the experience, top to bottom. */
   order: readonly SectionId[];
 };
 ```
+
+A line's text is in the resume's locale file, written as inline Markdown: bold text and links. It is seeded to the translations database and translated like the rest of the site's copy. Where a version words a line its own way, the key carries the version (`summary_manager`), and `resolve` puts the text in.
 
 A bullet that several versions share is one constant, imported by each. A version is a selection and an order, plus the lines only it has.
 
 ### The exported file's record
 
-`App/views/resume/exported.json`, written by the export after the upload, and committed:
+`App/views/about/resume/exported.json`, written by the export after the upload, and committed:
 
 ```json
 { "exported": "2026-10-08", "fingerprint": "c3701a9a", "pages": 2 }
 ```
 
-`fingerprint` is a hash of the master version's content. The page computes the same hash from the content it is rendering and offers the file only when the two match.
+`fingerprint` is a hash of the master version's content. The page computes the same hash from the content it is rendering. When the two match, the button reads Download. When they don't, which is the case in every other language and after an edit that hasn't been exported, it reads Download in English. A tailored version has no download.
 
 ### Export
 
@@ -137,16 +138,17 @@ See `resume.html` beside this file for the diagram.
 
 | Component | Why it is there |
 | --- | --- |
-| Content modules, `App/views/resume/content` | The single source. Pure data with relative imports only, so the view and the export script read the same thing. |
-| Resume view, `App/views/resume` | Renders one version from `design/components`. Requirement 1 and 3. |
+| Content modules, `App/views/about/resume/content` | The single source of which lines a version has and in what order. The view and the export script read the same thing. |
+| Resume view, `App/views/about/resume` | Renders one version from `design/components`, on the stage and footer the About page uses. Requirement 1 and 3. |
 | Print styles, in the design system and the view | Paper is the second output of the same markup. Requirement 2. |
 | Static PDF, in the static bucket | A real file at `/assets/static/resume`, streamed by the API. Not in git or the host image, so the address in it is in neither. |
-| Fingerprint check, in the view | Hides a stale file. Freshness target. |
-| Export script, `App/views/resume/export` | Drives the installed Chrome over the DevTools protocol. Requirement 4 and the two-page limit. |
+| Fingerprint check, in the view | Labels a file that doesn't match the page. Freshness target. |
+| Mentorship query, in the API | The reviews and rating in the Mentoring section. The page works without it. |
+| Export script, `App/views/about/resume/export` | Drives the installed Chrome over the DevTools protocol. Requirement 4 and the two-page limit. |
 | Host server, design remote, API, load balancer | Unchanged. The page is one more route. |
 | `/collect` | Unchanged. Counts views and downloads. |
 
-Reading the page: browser → load balancer → host (shell and chunks) → host proxy → design remote and API client remote → session exchange at the API → the view renders from content already in the bundle. No request is made for the resume's data.
+Reading the page: browser → load balancer → host (shell and chunks) → host proxy → design remote and API client remote → session exchange at the API → the view renders the version's lines, with their text from the `resume` namespace the API serves. One more query, `kicl_mentorship`, fills in the Mentoring section's reviews and rating.
 
 Reading the PDF: browser → load balancer → host → API → bucket. No session is needed.
 
@@ -154,11 +156,11 @@ Exporting: content → the local site → Chrome → PDF → the static bucket (
 
 ## 5. Data model
 
-There is no store. The content is TypeScript in git, and git is the history, the review and the rollback.
+The content has no store of its own. Its structure is TypeScript and its English text is a locale file, both in git, and git is the history, the review and the rollback. The translations database holds the seeded copy of the text and its translations.
 
 - Identity of a version: its slug, which is also its URL segment. Human-readable and never reused.
 - Identity of a line: none. Shared lines are constants, referenced by name.
-- Derived data: the PDF, identified by the fingerprint of the content it was made from.
+- Derived data: the PDF, identified by the fingerprint of the content it was made from. And the mentorship profile, one record in the API's `mentorships` collection, read again from ADPList after a week.
 - Private data: the phone number, in `KICL_RESUME_PHONE` in the local `.env`. The export puts it in the browser's local storage before the page loads, and the contact line shows it when it is there. It never reaches a commit or a deployed bundle.
 
 ## 6. Decisions and trade-offs
@@ -170,7 +172,7 @@ There is no store. The content is TypeScript in git, and git is the history, the
 | 3 | Versions composed from shared constants, not five documents and not flags on each line | A shared line is fixed once. A version reads top to bottom as the document it is | A line that differs slightly between versions is a separate constant, so near-duplicates can drift | Versions pass about ten. Then lines get ids and a version becomes a list of ids with overrides |
 | 4 | PDFs printed from the page by a local script, not rendered on the server, in CI, or by a second renderer | One renderer, so the PDF is the page. No Chromium in an image, no service | The export needs the local stack, and only the owner can run it. Layout changes do not change the fingerprint | PDFs are needed without a laptop, or the matrix passes about 100 files. Then a Cloud Run job |
 | 5 | The public PDF in the static bucket, behind the API's `/assets/static`, not in the host image | The file carries the email address, which is no longer published on the site, so it stays out of a public repository. Binaries live in the bucket | The PDF needs the API as well as the host. It no longer ships or rolls back with a release: a rollback keeps the newest PDF, and the fingerprint hides the link when they disagree | More than one file is published, or rollbacks matter. Then fingerprinted names |
-| 6 | A stale file is hidden by the page, not blocked in CI | Nothing can ship a file that disagrees with the page. No check to keep green, no stack needed to commit a typo fix | Until the next export the page offers print only. The fingerprint is not secure, only a change detector | The download matters enough that losing it for a day is a problem. Then the export runs in the release |
+| 6 | A stale file is labelled by the page, not blocked in CI | Nothing can ship a file that claims to be the page when it isn't. No check to keep green, no stack needed to commit a typo fix | Until the next export an English reader is offered "Download in English" for a file that is one edit behind. The fingerprint is not secure, only a change detector | The download matters enough that losing it for a day is a problem. Then the export runs in the release |
 | 7 | The phone number supplied at export from the local environment | It is in no commit of a public repository and in no bundle | Private PDFs can only be made on a machine that has the variable. One more thing in `.env` | The repository goes private, or the number should be public |
 | 8 | Tailored versions unlisted and `noindex`, not behind the portfolio sign-in | A link can be sent to a recruiter and it opens. No account needed | Anyone with the URL, or the source, can read all five | A version says something that must not be public. Then it leaves the repository |
 | 9 | Print support in the design system, not in this view | Every page prints without the header and in the light theme. The view keeps to its own layout | Two repositories change. The host needs the design system released first | Never back into the view. More print rules go to the design system |
@@ -190,24 +192,28 @@ Availability in series multiplies. If the host, the design remote and the API we
 | The design remote | No page. Components come from it | As above |
 | Turnstile turns a real visitor away | The 403 page | As above. This is the case most likely to hit a recruiter behind a corporate proxy |
 | A font file blocked or slow | The page in the fallback sans-serif, same layout | Nothing breaks. The export refuses to write a PDF in the fallback face |
-| Content edited, PDF not re-exported | The download control is gone, print remains | Decision 6. The next export restores it |
+| Content edited, PDF not re-exported | The button reads Download in English and gives the last exported file | Decision 6. The next export restores Download |
+| The mentorship query fails, or ADPList's page changes shape | Mentoring without its reviews and rating. The other figures and the badges stay | The API keeps serving the copy it stored, and the section leaves out what it has no data for |
+| ADPList moves a badge picture | A missing picture beside its title and date | The badges are a list in the view, so the fix is one line |
 | A version grows past two pages | Nothing on the site | The export fails and names the version and the page count |
 | The dark theme when printing | Light paper | The design system switches to the light theme for the print |
-| A role left closed when printing | Every role, open | Each role is a disclosure, and the design system prints every disclosure open |
 | An unknown version in the URL | The 404 page | The slug is checked against the list |
 | A release while a tab is open | The old page, and the file link still works | The PDF name does not change between releases |
 | JavaScript off | "Ki.CL needs JavaScript to run." | Not handled. See section 8 |
 
 ### What the build found
 
-Four things only showed up once a real PDF came out of the real page. Each is fixed where it belongs, and each would come back if its fix were removed.
+These only showed up once a real PDF, or a phone in another language, came out of the real page. The first four are from the first build and the last three from the rebuild. Each is fixed where it belongs, and each would come back if its fix were removed.
 
 | Found | Cause | Fix |
 | --- | --- | --- |
-| A line split between two sheets, its second half printed over the next heading | Chrome breaking nested grids across pages | On paper the page's stacks are blocks, and each gap is a margin of the same size. `App/views/resume/styles.scss` |
+| A line split between two sheets, its second half printed over the next heading | Chrome breaking nested grids across pages | On paper the page's stacks are blocks, and each gap is a margin of the same size. `App/views/about/resume/page/article/styles.print.scss` |
 | Every link's text at the end of its page in the PDF's own order, and the name after the body | `will-change` on `opacity` and `filter` makes a stacking context, which is painted last. So does a positioned header | `will-change: auto` for print, in the design system. The rule over the name is in the flow, not positioned |
 | "S U M M A R Y" when a PDF reader extracted the section labels | The body's tracking on a smaller label is a tenth of its size, which reads as a space | The label's tracking scales with its size |
 | The PDF titled "Ki.CL \| resume" | Printing changes the media queries `useResponsive` listens to, and the render that followed put the route's title back | The route's title is set once per route, in `App/views/element.tsx` |
+| Text out of order in the PDF again, once the page had scroll effects and timed reveals | Chrome starts a transition when print styles change a value. Anything in transition, or with a `scale` or `translate` set, is painted after the text around it | `Animation` rests while printing and the scroll utilities apply on screen only, both in the design system |
+| The top of the page missing from a PDF printed from a wide window | Printing flips the `useResponsive` flags, so the layout for the other width started loading and its spinner was printed | The layout pickers hold their choice with `useDeferredValue` |
+| The page scrolling sideways on a phone in Arabic | Items waiting to slide in sit to the left of their place, and in a right-to-left page that side scrolls | Each section clips sideways overflow |
 
 The second and third matter more than they look. An applicant tracking system reads a PDF in its own order and by its own idea of a word, and it has to find the name first and the headings whole.
 
@@ -219,7 +225,7 @@ How would anyone know it broke? Today they would not, short of a message from a 
 
 ## 8. Scale evolution
 
-The bottleneck is not load. It is the dependency chain in front of a page that makes no API calls, and after that the owner's time.
+The bottleneck is not load. It is the dependency chain in front of the page, and after that the owner's time.
 
 | Change | What gives first | The next step, and only that one |
 | --- | --- | --- |

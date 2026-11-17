@@ -6,6 +6,7 @@ import { ListItem, Spinner } from 'design/components';
 import { useResponsive } from 'design/hooks';
 
 import { useMoment } from '@/views/about/use-moment';
+import { useSnap } from '@/views/about/use-snap';
 
 import type { Resolved } from '@/views/about/resume/content';
 
@@ -29,6 +30,7 @@ const VERSIONS = {
 const Role: React.FunctionComponent<Props> = ({ id }) => {
   const { isNarrow } = useResponsive();
   const ref = useMoment<HTMLLIElement>(MOMENTS[id]);
+  const snap = useSnap(ref);
 
   const narrow = useDeferredValue(String(isNarrow));
 
@@ -38,10 +40,13 @@ const Role: React.FunctionComponent<Props> = ({ id }) => {
     <ListItem
       className={classNames(
         'kicl-padding-block-wider',
+        'kicl-padding-block-end-screen-quarter',
         'kicl-scroll-focus-within',
         'kicl-scroll-focus-scale',
-        'kicl-scroll-snap-align-center'
+        snap
       )}
+      alignItems='start'
+      justifyContent='start'
       ref={ref}
     >
       <Suspense fallback={<Spinner position='inline' />}>

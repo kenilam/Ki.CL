@@ -20,7 +20,7 @@ const Privacy: React.FunctionComponent = () => {
         offset='normal'
         placement='block-start-start'
       >
-        <Text className='kicl-font-size-small' dense is='p' variant='secondary'>
+        <Text dense is='p' lookLike='small' variant='secondary'>
           {t('privacy')}
         </Text>
       </PopoverContent>

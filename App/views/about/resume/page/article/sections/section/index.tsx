@@ -16,6 +16,7 @@ import { Title } from './title';
 import './styles.scss';
 
 import { CLASS_NAME } from './constants';
+import { toAnchor } from '@/views/about/resume/constants';
 
 type Props = { id: SectionId };
 
@@ -38,6 +39,7 @@ const Section: React.FunctionComponent<Props> = ({ id }) => {
           'kicl-scroll-enter',
           'kicl-scroll-snap-align-start'
         )}
+        id={toAnchor(id)}
       >
         <Label id={id} />
         <Title id={id} />

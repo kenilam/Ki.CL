@@ -6,6 +6,7 @@ import { Spinner } from 'design/components';
 import { useResponsive } from 'design/hooks';
 
 import { useMoment } from '@/views/about/use-moment';
+import { useSnap } from '@/views/about/use-snap';
 
 import { MOMENTS } from '@/views/about/resume/constants';
 
@@ -25,6 +26,7 @@ const VERSIONS = {
 const Earlier: React.FunctionComponent = () => {
   const { isNarrow } = useResponsive();
   const ref = useMoment<HTMLElement>(MOMENTS.earlier);
+  const snap = useSnap(ref);
   const narrow = useDeferredValue(String(isNarrow));
 
   const Version = VERSIONS[narrow];
@@ -36,7 +38,7 @@ const Earlier: React.FunctionComponent = () => {
         'kicl-padding-block-wider',
         'kicl-scroll-focus-within',
         'kicl-scroll-focus-scale',
-        'kicl-scroll-snap-align-center'
+        snap
       )}
       ref={ref}
     >

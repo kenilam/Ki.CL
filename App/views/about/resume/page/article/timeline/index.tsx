@@ -2,6 +2,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import { toAnchor } from '@/views/about/resume/constants';
+
 import { Earlier } from './earlier';
 import { Roles } from './roles';
 import { Title } from './title';
@@ -14,6 +16,7 @@ const Timeline: React.FunctionComponent = () => {
         'kicl-padding-inline-frame-columns-12',
         'kicl-scroll-snap-page'
       )}
+      id={toAnchor('experience')}
     >
       <Title />
       <Roles />

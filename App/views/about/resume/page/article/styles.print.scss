@@ -19,6 +19,15 @@
     --kicl-font-size-large: var(--kicl-font-size-medium);
     --kicl-gutter-extreme: 0;
     --kicl-gutter-wider: 0;
+    --kicl-text-box-trim-start: none;
+
+    // Links in the text print as plain words. Only the contact line, where the
+    // address is the point, keeps its underline.
+    --kicl--components--hyper-link--text-decoration--line: none;
+
+    nav {
+      --kicl--components--hyper-link--text-decoration--line: underline;
+    }
 
     /*
      * Chrome can split a line between two sheets inside nested grids, and
@@ -50,8 +59,8 @@
       }
     }
 
-    > section + section,
-    > section > section,
+    > div > section + section,
+    > div > section > section,
     ol > li + li {
       margin-block-start: var(--kicl-gutter);
     }
@@ -96,8 +105,12 @@
         display: contents;
       }
 
-      > p:first-child {
+      // The dates, in capitals and in the darker grey they print in.
+      > span:first-child {
+        --kicl--components--text--ink: var(--kicl-color-neutral-80);
+
         order: 1;
+        text-transform: uppercase;
       }
 
       h3 {
@@ -116,6 +129,7 @@
      * contact line last in reading order. On paper the items are inline.
      */
     nav ul {
+      font-size: var(--kicl-font-size-small);
       margin-inline-start: 0;
       overflow-x: visible;
       padding-inline-start: 0;
