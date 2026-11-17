@@ -4,7 +4,7 @@ import React from 'react';
 import { Dialog as Origin } from 'design/components';
 
 // Hooks
-import { useDialog } from './use-dialog';
+import { useDialog } from '@/views/use-dialog';
 
 // Partials
 import { Form } from './form';

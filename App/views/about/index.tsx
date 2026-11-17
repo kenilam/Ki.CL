@@ -4,8 +4,6 @@ import { Route } from 'design/router';
 
 import { Spinner } from 'design/components';
 
-import { Resume } from './resume';
-
 import { PATH } from './constants';
 
 const Contents = React.lazy(async () => {
@@ -24,7 +22,6 @@ const About = (
         </Suspense>
       }
     />
-    {Resume}
   </Route>
 );
 

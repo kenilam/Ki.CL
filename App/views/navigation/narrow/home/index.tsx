@@ -13,7 +13,7 @@ const Home: React.FunctionComponent = () => {
   const { t } = useTranslation();
 
   return (
-    <HyperLink className='kicl-font-size-medium' to={PAGES.home}>
+    <HyperLink className='kicl-font-size-medium' to={PAGES.home} unstyled>
       {t('home')}
     </HyperLink>
   );

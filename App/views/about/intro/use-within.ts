@@ -1,6 +1,6 @@
 import { useInView, useResponsive } from 'design/hooks';
 
-import { useReady } from '@/views/about/ready/context';
+import { useReady } from '@/views/ready/context';
 
 const WHOLE = 0.99;
 

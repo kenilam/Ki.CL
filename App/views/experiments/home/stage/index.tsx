@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Frame, List } from 'design/components';
 
 // Hooks
-import { useHashScroll } from './use-hash-scroll';
+import { useHashScroll } from '@/views/use-hash-scroll';
 
 // Partials
 import { Anchor } from './anchor';

@@ -8,11 +8,12 @@ import { ErrorElement, Status404 } from 'design/status';
 
 // Views
 import { About } from './about';
-import { ResumeRedirect } from './about/resume/redirect';
 import { Experiments } from './experiments';
 import { Home } from './home';
 import { Me } from './me';
 import { Portfolio } from './portfolio';
+import { Resume } from './resume';
+import { ResumeRedirect } from './resume/redirect';
 import { Workshop } from './workshop';
 import { DesignSystemRedirect } from './workshop/design-system/redirect';
 
@@ -30,6 +31,7 @@ const Views: React.FunctionComponent = () => {
         {Home}
         {Me}
         {Portfolio}
+        {Resume}
         {ResumeRedirect}
         {Workshop}
       </Route>

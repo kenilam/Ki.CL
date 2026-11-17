@@ -6,7 +6,7 @@ import { Animated } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
 import type { Props } from '@/views/about/chapters/chapter';
-import { useSeen } from '@/views/about/use-seen';
+import { useSeen } from '@/views/use-seen';
 
 const Title: React.FunctionComponent<Props> = ({ id }) => {
   const { t } = useTranslation('about');

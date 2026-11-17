@@ -1,0 +1,14 @@
+// Two buttons: on a phone the panel is as tall as they are, not a sheet the
+// height of the screen, so it keeps the corners and the space below it.
+.kicl--views--resume__entry {
+  --kicl--components--dialog--border-end-end-radius: var(
+    --kicl--components--dialog--border-radius
+  );
+  --kicl--components--dialog--border-end-start-radius: var(
+    --kicl--components--dialog--border-radius
+  );
+  --kicl--components--dialog--margin-block-end: var(
+    --kicl--components--dialog--offset
+  );
+  --kicl--components--dialog--min-block-size: auto;
+}

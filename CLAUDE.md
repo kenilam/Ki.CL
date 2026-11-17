@@ -70,7 +70,7 @@ UI copy is not written in components. It lives in `App/locales/en-US/<namespace>
 
 ### Path aliases
 
-`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). `App/.server` and the scripts it runs (`views/about/resume/export/cli.ts`) use `@/` too, since tsx loads `App/.server/tsconfig.json`, which extends the App config. The exception is `App/.client`, the Vite config, which loads before any alias exists (`get-alias.ts` imports `../../tsconfig.json`). The remotes import themselves by their federation names (see the root `CLAUDE.md`).
+`@/*` → `App/*`, `api`/`api/*` → federated remote (types only, see above), `^/*` → repo root. Same-folder `./` is fine. Rewrite reachable `../` climbs to `@/...` when editing a file (`.cursor/rules/ts-path-aliases.mdc`). `App/.server` and the scripts it runs (`views/resume/export/cli.ts`) use `@/` too, since tsx loads `App/.server/tsconfig.json`, which extends the App config. The exception is `App/.client`, the Vite config, which loads before any alias exists (`get-alias.ts` imports `../../tsconfig.json`). The remotes import themselves by their federation names (see the root `CLAUDE.md`).
 
 ### Design system discipline (enforced by Cursor rules, apply the same bar here)
 

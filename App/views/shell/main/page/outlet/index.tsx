@@ -6,6 +6,7 @@ import { Outlet as Origin } from 'design/router';
 // Partials
 import { SignOut } from '@/views/account/sign-out';
 import { Contact } from '@/views/contact';
+import { Entry as Resume } from '@/views/resume/entry';
 
 // Kept out of the first load: it brings in a part of each experiment.
 const Notifications = React.lazy(async () => {
@@ -21,6 +22,7 @@ const Outlet: React.FunctionComponent = () => {
       {/* Here, not in a menu or a page: any page's button opens them, with the menus closed. */}
       <SignOut />
       <Contact />
+      <Resume />
       <Suspense fallback={null}>
         <Notifications />
       </Suspense>
