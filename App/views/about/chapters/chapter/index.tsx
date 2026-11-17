@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import { ListItem, Spinner } from 'design/components';
 import { useResponsive } from 'design/hooks';
 
-import { useMoment } from '@/views/about/use-moment';
-import { useSnap } from '@/views/about/use-snap';
+import { useMoment } from '@/views/use-moment';
+import { useSnap } from '@/views/use-snap';
 
 import type { Chapter as Id } from '@/views/about/constants';
 

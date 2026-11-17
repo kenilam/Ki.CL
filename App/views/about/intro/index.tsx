@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import { Layout, Spinner } from 'design/components';
 import { useResponsive } from 'design/hooks';
 
-import { useMoment } from '@/views/about/use-moment';
+import { useMoment } from '@/views/use-moment';
 
-import { OPENING } from '@/views/about/constants';
+import { OPENING } from '@/views/constants';
 import { TITLE_ID } from './constants';
 
 const VERSIONS = {

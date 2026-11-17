@@ -1,6 +1,0 @@
-// A figure is narrower than the section's slide distance. Clipped by that
-// much while it waits, none of it would show, and the browser would never
-// count it as in view.
-.kicl--views--about__resume__section__figures {
-  --kicl--components--animation--slide--distance: var(--kicl-gutter);
-}

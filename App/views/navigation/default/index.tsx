@@ -6,6 +6,8 @@ import { Navigation } from 'design/components';
 // Views
 import { Default as Account } from './account';
 import { Link } from './link';
+import { Message } from './message';
+import { Resume } from './resume';
 import { useAccount } from '@/views/account/use-account';
 
 // Hooks
@@ -31,6 +33,8 @@ const Default: React.FunctionComponent = () => {
       {ROUTES.map(({ to }) => {
         return <Link key={to} to={to} />;
       })}
+      <Resume key='resume' />
+      <Message key='message' />
       {me ? <Account key='account' /> : null}
     </Navigation>
   );

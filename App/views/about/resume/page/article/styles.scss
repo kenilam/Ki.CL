@@ -1,8 +1,0 @@
-// The page indicator's column sits over the end of every section, so on
-// screen each section's text stops short of it. On a wide window the text is
-// narrower than the room left anyway.
-@media screen {
-  .kicl--views--about__resume__content > section > * {
-    margin-inline-end: var(--kicl-size-4x);
-  }
-}

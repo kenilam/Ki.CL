@@ -6,7 +6,7 @@ import { Animated } from 'design/components';
 import { useResponsive, useTranslation } from 'design/hooks';
 import { Background } from 'design/widgets';
 
-import { useReady } from '@/views/about/ready/context';
+import { useReady } from '@/views/ready/context';
 
 import { TITLE_ID } from '@/views/about/intro/constants';
 import { useInverse } from '@/views/use-inverse';

@@ -2,14 +2,14 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import { Provider } from '@/views/active/context';
 import { Footer } from '@/views/footer';
+import { Menu } from '@/views/menu';
+import { Provider as Ready } from '@/views/ready/context';
+import { Stage } from '@/views/stage';
 
 import { Chapters } from './chapters';
-import { Provider } from './active/context';
 import { Intro } from './intro';
-import { Menu } from './menu';
-import { Provider as Ready } from './ready/context';
-import { Stage } from './stage';
 
 import { CLASS_NAME } from './constants';
 

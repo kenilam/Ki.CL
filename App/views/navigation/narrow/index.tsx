@@ -9,14 +9,16 @@ import { useAccount } from '@/views/account/use-account';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
-import { useDialog } from './use-dialog';
+import { useDialog } from '@/views/use-dialog';
 
 // Partials
 import { About } from './about';
 import { Close } from './close';
 import { Experiments } from './experiments';
 import { Home } from './home';
+import { Message } from './message';
 import { Open } from './open';
+import { Resume } from './resume';
 import { Workshop } from './workshop';
 
 // Constants
@@ -54,6 +56,8 @@ const Narrow: React.FunctionComponent = () => {
           <Experiments key='experiments' />
           <Workshop key='workshop' />
           <About key='about' />
+          <Resume key='resume' />
+          <Message key='message' />
           {me ? <Account key='account' /> : null}
         </Navigation>
       </Dialog>
