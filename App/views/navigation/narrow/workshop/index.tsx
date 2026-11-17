@@ -1,11 +1,26 @@
 import React from 'react';
 
-// Partials
-import { Link } from './link';
+// Components
+import { HyperLink } from 'design/components';
+
+// Views
+import { PAGES } from '@/views/routes';
+
+// Hooks
+import { useTranslation } from 'design/hooks';
 
 const Workshop: React.FunctionComponent = () => {
+  const { t } = useTranslation();
+
   return (
-    <Link />
+    <HyperLink
+      className='kicl-font-size-medium'
+      end={false}
+      to={PAGES.workshop}
+      unstyled
+    >
+      {t('workshop')}
+    </HyperLink>
   );
 };
 

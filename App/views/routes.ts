@@ -8,7 +8,6 @@ import type { ButtonProps } from 'design/components';
 
 // Paths
 import { PATH as ABOUT_PATH } from '@/views/about/constants';
-import { PATH as RESUME_PATH } from '@/views/about/resume/constants';
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments/constants';
 import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants';
 import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
@@ -19,6 +18,7 @@ import { toPath as toPlatePath } from '@/views/experiments/tree-of-life/explorer
 import { PATH as HOME_PATH } from '@/views/home/constants';
 import { PATH as ME_PATH } from '@/views/me/constants';
 import { PAGE_PATH as PASSWORD_PATH } from '@/views/me/password/constants';
+import { PATH as RESUME_PATH } from '@/views/resume/constants';
 import { PATH as WORKSHOP_PATH } from '@/views/workshop/constants';
 import { PATH as ARCHITECTURE } from '@/views/workshop/architecture/constants';
 import { PATH as DESIGN_SYSTEM } from '@/views/workshop/design-system/constants';
@@ -30,7 +30,7 @@ const PAGES = {
   home: `/${HOME_PATH}`,
   me: `/${ME_PATH}`,
   password: PASSWORD_PATH,
-  resume: `/${ABOUT_PATH}/${RESUME_PATH}`,
+  resume: `/${RESUME_PATH}`,
   workshop: `/${WORKSHOP_PATH}`,
 };
 

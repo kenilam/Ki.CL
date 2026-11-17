@@ -1,0 +1,6 @@
+.kicl--views--resume__intro__title {
+  @media screen {
+    display: grid;
+    justify-items: var(--kicl--views--resume__intro__title--justify, start);
+  }
+}

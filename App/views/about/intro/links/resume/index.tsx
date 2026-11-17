@@ -1,18 +1,23 @@
 import React from 'react';
 
-import { HyperLink, ListItem } from 'design/components';
+import { Button, ListItem } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
-import { PAGES } from '@/views/routes';
+import { ENTRY_ID } from '@/views/resume/constants';
 
 const Resume: React.FunctionComponent = () => {
   const { t } = useTranslation();
 
   return (
     <ListItem>
-      <HyperLink className='kicl-font-family-mono' to={PAGES.resume}>
+      <Button
+        className='kicl-font-family-mono'
+        command='show-modal'
+        commandfor={ENTRY_ID}
+        lookLikeHyperLink
+      >
         {t('resume')}
-      </HyperLink>
+      </Button>
     </ListItem>
   );
 };

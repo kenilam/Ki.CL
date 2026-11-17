@@ -1,0 +1,8 @@
+// A badge is narrower than the section's slide distance: see the figures.
+.kicl--views--resume__section__recognitions {
+  --kicl--components--animation--slide--distance: var(--kicl-gutter);
+  --kicl--components--image--aspect-ratio: 1;
+  --kicl--components--image--border-radius: 0;
+  --kicl--components--image--inline-size: var(--kicl-size-5x);
+  --kicl--components--image--object-fit: contain;
+}

@@ -8,8 +8,8 @@ One typed content source in this repo renders the resume as a page in the site's
 
 ### It must do
 
-1. Show the resume at `/about/resume`, on a phone and a desktop, in the light and dark themes. It opens like the About page: the name and headline over the mark, then the summary, location and links. Every role is open, in a timeline beside the mark. Projects, technical skills, mentoring, education and languages are each a full-screen section, and the page ends with the footer About uses.
-2. Give a PDF two ways: the browser's own print has to come out right, and the page offers a real file to download. A dialog on arrival offers both, and the page itself.
+1. Show the resume at `/resume`, on a phone and a desktop, in the light and dark themes. It opens like the About page: the name and headline over the mark, then the summary, location and links. Every role is open, in a timeline beside the mark. Projects, technical skills, mentoring, education and languages are each a full-screen section, and the page ends with the footer About uses.
+2. Give a PDF two ways: the browser's own print has to come out right, and the page offers a real file to download. The page opens straight away, with Print and Download beside the contact links. On the About page, Resume opens a dialog that offers the download or the page.
 3. Serve the four tailored versions (manager, front end and AI, React Native, architecture) from the same content, each at its own URL.
 4. Export every version to PDF with one command, on Letter and A4, for applications.
 
@@ -39,7 +39,7 @@ One typed content source in this repo renders the resume as a page in the site's
 
 These carry weight. If one is wrong, the section named after it changes.
 
-- `/about/resume` is public and linked from the About page (section 6, row 8).
+- `/resume` is public, linked from the header navigation, and the About page offers it next to the PDF (section 6, row 8).
 - The tailored versions may be read by anyone who has the URL (row 8).
 - The phone number belongs on the PDFs sent with an application and nowhere public (row 7).
 - A binary of about 150 KB may live in git, although site imagery lives in the bucket (row 5).
@@ -70,8 +70,8 @@ The numbers force nothing. They rule things out: no CDN change, no render servic
 
 | Request | Answer | Cache |
 | --- | --- | --- |
-| `GET /about/resume` | The shell, then the master version | `no-cache` on the shell |
-| `GET /about/resume/:version` | One of `manager`, `frontend-ai`, `react-native`, `architecture`. Anything else renders the 404 page | as above, and `noindex` |
+| `GET /resume` | The shell, then the master version | `no-cache` on the shell |
+| `GET /resume/:version` | One of `manager`, `frontend-ai`, `react-native`, `architecture`. Anything else renders the 404 page | as above, and `noindex` |
 | `GET /assets/static/resume/keni-lam-resume.pdf` | The master PDF, streamed from the static bucket by the API | `public, max-age=0, must-revalidate`, with `ETag` |
 | `POST /api`, `kicl_mentorship` | The review count, the average and the latest reviews for the Mentoring section. The API reads them from the ADPList profile and keeps them a week | Apollo's cache, for the visit |
 | `POST /collect` | Existing analytics. Views by path, the PDF and print controls by `data-track` | n/a |
@@ -113,7 +113,7 @@ A bullet that several versions share is one constant, imported by each. A versio
 
 ### The exported file's record
 
-`App/views/about/resume/exported.json`, written by the export after the upload, and committed:
+`App/views/resume/exported.json`, written by the export after the upload, and committed:
 
 ```json
 { "exported": "2026-10-08", "fingerprint": "c3701a9a", "pages": 2 }
@@ -138,13 +138,13 @@ See `resume.html` beside this file for the diagram.
 
 | Component | Why it is there |
 | --- | --- |
-| Content modules, `App/views/about/resume/content` | The single source of which lines a version has and in what order. The view and the export script read the same thing. |
-| Resume view, `App/views/about/resume` | Renders one version from `design/components`, on the stage and footer the About page uses. Requirement 1 and 3. |
+| Content modules, `App/views/resume/content` | The single source of which lines a version has and in what order. The view and the export script read the same thing. |
+| Resume view, `App/views/resume` | Renders one version from `design/components`, on the stage and footer the About page uses. Requirement 1 and 3. |
 | Print styles, in the design system and the view | Paper is the second output of the same markup. Requirement 2. |
 | Static PDF, in the static bucket | A real file at `/assets/static/resume`, streamed by the API. Not in git or the host image, so the address in it is in neither. |
 | Fingerprint check, in the view | Labels a file that doesn't match the page. Freshness target. |
 | Mentorship query, in the API | The reviews and rating in the Mentoring section. The page works without it. |
-| Export script, `App/views/about/resume/export` | Drives the installed Chrome over the DevTools protocol. Requirement 4 and the two-page limit. |
+| Export script, `App/views/resume/export` | Drives the installed Chrome over the DevTools protocol. Requirement 4 and the two-page limit. |
 | Host server, design remote, API, load balancer | Unchanged. The page is one more route. |
 | `/collect` | Unchanged. Counts views and downloads. |
 
@@ -207,7 +207,7 @@ These only showed up once a real PDF, or a phone in another language, came out o
 
 | Found | Cause | Fix |
 | --- | --- | --- |
-| A line split between two sheets, its second half printed over the next heading | Chrome breaking nested grids across pages | On paper the page's stacks are blocks, and each gap is a margin of the same size. `App/views/about/resume/page/article/styles.print.scss` |
+| A line split between two sheets, its second half printed over the next heading | Chrome breaking nested grids across pages | On paper the page's stacks are blocks, and each gap is a margin of the same size. `App/views/resume/page/article/styles.print.scss` |
 | Every link's text at the end of its page in the PDF's own order, and the name after the body | `will-change` on `opacity` and `filter` makes a stacking context, which is painted last. So does a positioned header | `will-change: auto` for print, in the design system. The rule over the name is in the flow, not positioned |
 | "S U M M A R Y" when a PDF reader extracted the section labels | The body's tracking on a smaller label is a tenth of its size, which reads as a space | The label's tracking scales with its size |
 | The PDF titled "Ki.CL \| resume" | Printing changes the media queries `useResponsive` listens to, and the render that followed put the route's title back | The route's title is set once per route, in `App/views/element.tsx` |
@@ -234,13 +234,13 @@ The bottleneck is not load. It is the dependency chain in front of the page, and
 | 100 × the traffic, 500,000 views a day | Still under 100 requests a second, so the host holds. The session per visitor and Turnstile are the first to hurt | Serve the page without a session, then put Cloud CDN in front of the hashed assets |
 | PDFs without a laptop | Decision 4 | A Cloud Run job with Chromium that prints the released site, writing to the bucket under fingerprinted names |
 
-Signals to watch: views of `/about/resume` and clicks on `Resume PDF` in `/collect`, the 5xx rate of the session exchange, and how often an export is needed.
+Signals to watch: views of `/resume` and clicks on `Resume PDF` in `/collect`, the 5xx rate of the session exchange, and how often an export is needed.
 
 ## 9. Coverage
 
 - Media: one PDF, in the static bucket. Fonts from the design system's stylesheet. No images.
 - Ids: slugs for versions, a content fingerprint for the file. No generator needed.
-- Search: none inside the site. `/about/resume` is indexable, the versions are not.
+- Search: none inside the site. `/resume` is indexable, the versions are not.
 - Logs: analytics events as JSON log lines, already in place.
 - SLOs: stated in section 1. Not measured. See the end of section 7.
 

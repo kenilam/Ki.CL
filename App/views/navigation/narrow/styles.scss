@@ -3,4 +3,8 @@
   --kicl--components--dialog--padding-block: var(--kicl-gutter-widest);
   --kicl--components--dialog--padding-inline: var(--kicl-gutter-wide);
   --kicl--components--dialog--translate--starting-style: 0;
+
+  [aria-current='page'] {
+    --kicl--components--hyper-link--text-color: var(--kicl-color-confirm);
+  }
 }
