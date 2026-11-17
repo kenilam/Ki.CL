@@ -24,6 +24,7 @@ import { getAlias, getStyleLayer, LAYER_ORDER } from './helper';
 
 import fs from 'node:fs';
 import { collectMiddleware } from '../middleware/collect';
+import { isPath as isCrawlPath } from '../middleware/crawl/constants';
 import { createTexts, escapeJson } from '../middleware/texts';
 
 import configJSON from '../app.config.json';
@@ -328,6 +329,29 @@ const getConfig = ({
           });
         },
         transformIndexHtml: (html) => texts.fill(html),
+      },
+      // robots.txt, sitemap.xml and llms.txt, built as the server builds them.
+      {
+        name: 'kicl-crawl',
+        apply: 'serve',
+        configureServer(server) {
+          server.middlewares.use(async (request, response, next) => {
+            const path = request.url?.split('?')[0] ?? '';
+
+            if (!isCrawlPath(path)) {
+              return next();
+            }
+
+            const { crawl } = await server.ssrLoadModule(
+              '/middleware/crawl/index.ts'
+            );
+            const { body, cache, type } = crawl(path, false);
+
+            response.setHeader('Cache-Control', cache);
+            response.setHeader('Content-Type', type);
+            response.end(body);
+          });
+        },
       },
       // Analytics batches land here in development, as they do on the server.
       {

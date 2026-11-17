@@ -105,7 +105,8 @@ Folders and files:
 - File and folder names are lowercase with dashes (`hyper-link/use-url-status.tsx`, `styles.scss`). Component names inside stay PascalCase.
 - Named exports only, no `export default`. `React.lazy` maps the name with `async`/`await`: `lazy(async () => { const { Contents } = await import('./contents'); return { default: Contents }; })`. Tool configs that must default-export (`vite.config.ts`) are the exception.
 - No cross imports. A component never imports from a sibling's folder. A part used by one component lives inside it; a part two siblings share moves up to their parent, and both import it from there. Run the check before a change is done: nothing may reach into a sibling. Each experiment's preview for the experiments page is gathered in `App/views/experiments/previews.ts`.
-- `App/views/constants.ts` holds what several views share and imports nothing. `App/views/routes.ts` composes the views' own path constants into the site's pages, top routes, experiments, workshop topics and notification links; only components import it, so nothing cycles back.
+- `App/views/constants.ts` holds what several views share and imports nothing. `App/views/routes.ts` composes the views' own path constants into the site's pages, top routes, experiments, workshop topics and notification links; only components and `App/middleware/crawl` import it, so nothing cycles back.
+- `robots.txt`, `sitemap.xml` and `llms.txt` are built on each request by `App/middleware/crawl`, from `routes.ts` and the English locale files, in development and on the server. A new top route, experiment or workshop topic is listed without any change there. A page outside those lists (like `/resume`) or a new private page is added to `crawl/pages.ts`, and a new section of `llms.txt` to `crawl/llms.ts`.
 
 Breaking a component into parts. Length is not the test, a short component splits too:
 
