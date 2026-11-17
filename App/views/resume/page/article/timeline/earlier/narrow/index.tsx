@@ -8,7 +8,7 @@ import { Title } from '@/views/resume/page/article/timeline/earlier/title';
 const Narrow: React.FunctionComponent = () => {
   return (
     <Layout autoFlow='row' gap='narrow'>
-      <div className='kicl-padding-inline-end-extreme'>
+      <div>
         <Title />
         <Lines />
       </div>
