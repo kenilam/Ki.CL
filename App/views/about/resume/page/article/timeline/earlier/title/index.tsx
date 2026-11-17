@@ -7,7 +7,7 @@ const Title: React.FunctionComponent = () => {
   const { t } = useTranslation('resume');
 
   return (
-    <Heading className='kicl-scroll-enter-far' dense is='h3' lookLike='h6'>
+    <Heading className='kicl-scroll-shift-narrow' dense is='h3' lookLike='h6'>
       {t('title', { context: 'earlier' })}
     </Heading>
   );

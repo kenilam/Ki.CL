@@ -6,12 +6,14 @@ import { Layout, List } from 'design/components';
 
 import { useVersion } from '@/views/about/resume/context';
 
+import { Line } from '@/views/about/resume/page/article/sections/section/body/line';
+import { Row } from '@/views/about/resume/page/article/sections/section/body/row';
+
 import { Intro } from './intro';
-import { Project } from './project';
 
 const Projects: React.FunctionComponent = () => {
   const {
-    projects: { items },
+    projects: { items = [] },
   } = useVersion();
 
   return (
@@ -23,13 +25,16 @@ const Projects: React.FunctionComponent = () => {
         )}
       >
         <Intro />
-        {items ? (
-          <List gap='narrow' listStyleType='disc'>
-            {items.map((line) => {
-              return <Project key={line} line={line} />;
-            })}
-          </List>
-        ) : null}
+        <List className='kicl-print-hidden' gap='wide'>
+          {items.map((line) => {
+            return <Row key={line} line={line} />;
+          })}
+        </List>
+        <List className='kicl-print-only' gap='narrow' listStyleType='disc'>
+          {items.map((line) => {
+            return <Line key={line} line={line} />;
+          })}
+        </List>
       </div>
     </Layout>
   );

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { Layout, Text } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -18,9 +16,7 @@ const Byline: React.FunctionComponent = () => {
       justifyContent='center'
       wrap
     >
-      <address
-        className={classNames('kicl-font-size-small', 'kicl-padding-block-end')}
-      >
+      <address className='kicl-padding-block-end'>
         <Text is='span' variant='secondary'>
           {t('name')}
         </Text>

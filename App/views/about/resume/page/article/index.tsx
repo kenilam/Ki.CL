@@ -6,10 +6,12 @@ import { fingerprint } from '@/views/about/resume/content';
 import { useVersion } from '@/views/about/resume/context';
 
 import { Intro } from './intro';
+import { Pages } from './pages';
 import { Sections } from './sections';
 import { Timeline } from './timeline';
 
 import './styles.print.scss';
+import './styles.scss';
 
 import { CLASS_NAME } from '@/views/about/resume/constants';
 
@@ -27,8 +29,16 @@ const Article: React.FunctionComponent = () => {
       data-version={version.slug}
     >
       <Intro />
-      <Timeline />
-      <Sections />
+      <div
+        className={classNames(
+          `${CLASS_NAME}__content`,
+          'kicl-position-relative'
+        )}
+      >
+        <Pages />
+        <Timeline />
+        <Sections />
+      </div>
     </article>
   );
 };

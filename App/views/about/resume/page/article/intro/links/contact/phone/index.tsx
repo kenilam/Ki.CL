@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { HyperLink, ListItem } from 'design/components';
 
 import { PHONE_KEY } from '@/views/about/resume/constants';
@@ -23,10 +21,7 @@ const Phone: React.FunctionComponent = () => {
 
   return (
     <ListItem className='kicl-print-only'>
-      <HyperLink
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
-        to={`tel:${phone}`}
-      >
+      <HyperLink className='kicl-font-family-mono' to={`tel:${phone}`}>
         {phone}
       </HyperLink>
     </ListItem>

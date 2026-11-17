@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { HyperLink, ListItem } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -20,7 +18,7 @@ const Download: React.FunctionComponent = () => {
   return (
     <ListItem>
       <HyperLink
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
+        className='kicl-font-family-mono'
         data-track='Resume PDF'
         download
         reloadDocument

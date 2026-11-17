@@ -17,8 +17,7 @@ const Narrow: React.FunctionComponent<Props> = ({ id }) => {
       <article
         className={classNames(
           'kicl-padding-inline-end-extreme',
-          'kicl-print-break-inside-avoid',
-          'kicl-scroll-enter'
+          'kicl-print-break-inside-avoid'
         )}
       >
         <Dates id={id} />

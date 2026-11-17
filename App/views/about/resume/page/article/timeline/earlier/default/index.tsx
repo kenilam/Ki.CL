@@ -13,7 +13,7 @@ const Default: React.FunctionComponent = () => {
       frames='3fr--9fr'
       gap='normal'
     >
-      <div className='kicl-scroll-enter'>
+      <div>
         <Title />
         <Lines />
       </div>

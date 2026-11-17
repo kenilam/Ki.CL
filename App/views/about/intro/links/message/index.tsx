@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { Button, ListItem } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -13,7 +11,7 @@ const Message: React.FunctionComponent = () => {
   return (
     <ListItem>
       <Button
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
+        className='kicl-font-family-mono'
         command='show-modal'
         commandfor={CONTACT_ID}
         data-track='About message'

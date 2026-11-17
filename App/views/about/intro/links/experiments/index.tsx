@@ -1,7 +1,5 @@
 import React from 'react';
 
-import classNames from 'classnames';
-
 import { HyperLink, ListItem } from 'design/components';
 import { useTranslation } from 'design/hooks';
 
@@ -12,10 +10,7 @@ const Experiments: React.FunctionComponent = () => {
 
   return (
     <ListItem>
-      <HyperLink
-        className={classNames('kicl-font-family-mono', 'kicl-font-size-small')}
-        to={PAGES.experiments}
-      >
+      <HyperLink className='kicl-font-family-mono' to={PAGES.experiments}>
         {t('experiments')}
       </HyperLink>
     </ListItem>

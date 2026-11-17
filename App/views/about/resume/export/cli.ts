@@ -70,6 +70,9 @@ const READY_MS = 90_000;
 
 const NAME = 'keni-lam-resume';
 
+/** Where the site is published, which the links in a PDF point to. */
+const PUBLIC_ORIGIN = 'https://ki-cl.com';
+
 /** The public PDF before it is uploaded. `.temp` is not in git. */
 const STAGED = join(ROOT, '.temp', OBJECT);
 
@@ -267,6 +270,15 @@ const print = async (tab: Tab, job: Job): Promise<number | string> => {
   if (!ready.face) {
     return `${Object.keys(FACES).join(' or ')} did not load, so the page is in the fallback typeface.`;
   }
+
+  // The page links within the site by path. A PDF read anywhere needs the full
+  // address, and a path would resolve against the local server it was
+  // printed from.
+  await tab.send('Runtime.evaluate', {
+    expression: `document.querySelectorAll('a[href^="/"]:not([href^="//"])').forEach((link) => {
+      link.setAttribute('href', ${JSON.stringify(PUBLIC_ORIGIN)} + link.getAttribute('href'));
+    })`,
+  });
 
   // The margins are the page's own, from `@page`. These only stop Chrome adding its default.
   const { data } = await tab.send<{ data: string }>('Page.printToPDF', {
