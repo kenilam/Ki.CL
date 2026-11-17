@@ -13,6 +13,7 @@ import { Env } from '@/env';
 
 import { applyClientToken } from './client-token';
 import { applyCollect } from '@/middleware/collect';
+import { applyCrawl } from '@/middleware/crawl';
 import { createGate } from './gate';
 import { applyHeaders } from './headers';
 import { createNavigation } from './navigation';
@@ -107,6 +108,8 @@ async function Server() {
     ];
 
     app.get(['/', '/index.html'], ...shell);
+
+    applyCrawl(app);
 
     app.get('/site.webmanifest', (_, responses) => {
       responses
