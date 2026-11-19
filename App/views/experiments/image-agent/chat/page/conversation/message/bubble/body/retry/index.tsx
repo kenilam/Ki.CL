@@ -13,7 +13,6 @@ import { useRetry } from './use-retry';
 const Retry: React.FunctionComponent = () => {
   const { t } = useTranslation('image-agent');
   const { again, shown } = useRetry();
-  const label = t('action', { context: 'retry' });
 
   if (!shown) {
     return null;
@@ -21,9 +20,8 @@ const Retry: React.FunctionComponent = () => {
 
   return (
     <Button
-      aria-label={label}
+      aria-label={t('action', { context: 'retry' })}
       onClick={again}
-      title={label}
       type='button'
       variant='tertiary'
     >

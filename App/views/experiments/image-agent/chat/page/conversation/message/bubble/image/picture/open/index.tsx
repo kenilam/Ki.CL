@@ -37,7 +37,6 @@ const Open: React.FunctionComponent = () => {
       )}
       command='show-modal'
       commandfor={toFullId(message.id)}
-      title={t('action', { context: 'open' })}
       unstyled
     >
       <Image

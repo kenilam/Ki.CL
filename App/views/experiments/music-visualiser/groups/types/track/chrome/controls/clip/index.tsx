@@ -34,7 +34,6 @@ const Clip: React.FunctionComponent = () => {
         level={clip.failed ? 'error' : undefined}
         onClick={clip.record}
         size='small'
-        title={label}
         variant='secondary'
       >
         <Tb.TbDisc
