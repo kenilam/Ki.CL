@@ -146,6 +146,7 @@ Everything written here is read by people: UI copy, comments, commit messages, R
 - No rhythm tricks: no triplets for effect, no "not X but Y", no sentence that ends on a reveal, no colon-then-punchline.
 - No narrating what the reader can see. A comment says why, in one or two lines; the code says what.
 - UI copy is short and concrete. "See the experience", "Bookmark this page", "More to come". Never explain a feature inside the UI.
+- Link what the copy names, so a reader can open it. A page on this site gets its path, `[$t(common:experiment_kinetic_light)](/experiments/kinetic-light)`, never the domain. A source, a spec, a tool, a file format or a CSS or HTML feature with a page of its own gets that page: the spec, the project's site, MDN for web features. Link the first mention in an article, not every one, and open each address before adding it. This applies to every article, docs page and paragraph rendered with `Markdown`, new or edited. Headings, titles and buttons stay plain text.
 - Commit messages: first line what changed, body why, in normal sentences. No manifesto.
 - README: facts, decisions, how to run it. Skip the story of how it was built unless it explains a decision.
 - If a sentence would sound odd said out loud to a teammate, rewrite it.
