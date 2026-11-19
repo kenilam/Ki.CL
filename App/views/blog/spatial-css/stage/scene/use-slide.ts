@@ -48,7 +48,7 @@ const useSlide = (look: Look) => {
   const exit = useRef(1);
   const since = useRef(0);
   const { read } = useScene();
-  const { isNarrow, prefersReducedMotion: still } = useResponsive();
+  const { isWider, prefersReducedMotion: still } = useResponsive();
   const { i18n } = useTranslation();
   const side = SIDES[i18n.dir()];
 
@@ -59,7 +59,7 @@ const useSlide = (look: Look) => {
       return;
     }
 
-    if (isNarrow) {
+    if (isWider) {
       const box = nearest(look, size.height);
 
       group.visible = Boolean(box);
@@ -71,14 +71,14 @@ const useSlide = (look: Look) => {
       const sway = still ? 0 : Math.sin(clock.elapsedTime * 0.3) * 0.08;
 
       group.position.set(
-        0,
+        (box.left + box.width / 2 - size.width / 2) / viewport.factor,
         (size.height / 2 - box.top - box.height / 2) / viewport.factor,
         0
       );
       group.rotation.set(TILT, side * (YAW + sway), 0);
       group.scale.setScalar(
         Math.min(
-          viewport.width / NARROW.width,
+          box.width / viewport.factor / NARROW.width,
           box.height / viewport.factor / NARROW.height
         )
       );

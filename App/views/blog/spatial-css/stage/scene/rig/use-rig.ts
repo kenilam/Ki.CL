@@ -21,7 +21,7 @@ const GAP = 48;
 
 const useRig = () => {
   const group = useRef<THREE.Group>(null);
-  const { isNarrow, prefersReducedMotion: still } = useResponsive();
+  const { isWider, prefersReducedMotion: still } = useResponsive();
   const { i18n } = useTranslation();
   const invalidate = Fiber.useThree(({ invalidate }) => invalidate);
   const side = SIDES[i18n.dir()];
@@ -47,7 +47,7 @@ const useRig = () => {
       return;
     }
 
-    if (isNarrow) {
+    if (isWider) {
       node.position.set(0, 0, 0);
       node.rotation.set(0, 0, 0);
       node.scale.setScalar(1);

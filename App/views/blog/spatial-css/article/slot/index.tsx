@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Libraries
+import classNames from 'classnames';
+
 // Hooks
 import { useResponsive } from 'design/hooks';
 
@@ -13,13 +16,19 @@ import './styles.scss';
 type Props = { id: Shot };
 
 const Slot: React.FunctionComponent<Props> = ({ id }) => {
-  const { isNarrow } = useResponsive();
+  const { isWider } = useResponsive();
 
-  if (!isNarrow) {
+  if (!isWider) {
     return null;
   }
 
-  return <div aria-hidden className={SLOT} data-look={LOOKS[id]} />;
+  return (
+    <div
+      aria-hidden
+      className={classNames(SLOT, 'kicl-justify-self-stretch')}
+      data-look={LOOKS[id]}
+    />
+  );
 };
 
 export { Slot };

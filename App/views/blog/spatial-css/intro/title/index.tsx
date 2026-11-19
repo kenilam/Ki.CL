@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Animated } from 'design/components';
 
 // Hooks
-import { useResponsive, useTranslation } from 'design/hooks';
+import { useTranslation } from 'design/hooks';
 import { useInverse } from '@/views/use-inverse';
 
 // Widgets
@@ -18,7 +18,6 @@ import { LIFT, TITLE_ID } from '@/views/blog/spatial-css/constants';
 
 const Title: React.FunctionComponent = () => {
   const { t } = useTranslation('blog');
-  const { isNarrow } = useResponsive();
   const inverse = useInverse();
 
   return (
@@ -27,7 +26,7 @@ const Title: React.FunctionComponent = () => {
         LIFT,
         'kicl-overflow-wrap-break-word',
         'kicl-position-relative',
-        { 'kicl-hyphens-auto': isNarrow }
+        'kicl-hyphens-auto'
       )}
       easing='ease-expo-out'
       hold

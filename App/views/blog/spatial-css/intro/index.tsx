@@ -27,10 +27,10 @@ const VERSIONS = {
 };
 
 const Intro: React.FunctionComponent = () => {
-  const { isNarrow } = useResponsive();
+  const { isWider } = useResponsive();
   const ref = useSection<HTMLElement>('intro');
 
-  const Version = VERSIONS[String(isNarrow) as 'false' | 'true'];
+  const Version = VERSIONS[String(isWider) as 'false' | 'true'];
 
   return (
     <Layout autoFlow='row'>

@@ -31,6 +31,7 @@ const Default: React.FunctionComponent = () => {
             className={classNames(
               'kicl-align-self-center',
               'kicl-grid-column-2',
+              'kicl-min-inline-size-0',
               'kicl-scroll-leave-far'
             )}
           >
