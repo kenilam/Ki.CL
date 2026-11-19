@@ -19,7 +19,6 @@ const Open: React.FunctionComponent = () => {
     <Button
       aria-label={t('action', { context: 'open_navigation' })}
       block
-      className='kicl-font-size'
       command='show-modal'
       commandfor={CLASS_NAME}
       size='small'

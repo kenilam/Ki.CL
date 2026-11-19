@@ -11,14 +11,11 @@ import { useTranslation } from 'design/hooks';
 
 const Trigger: React.FunctionComponent = () => {
   const { t } = useTranslation('kinetic-light');
-  const label = t('title', { context: 'privacy' });
-
   return (
     <PopoverTrigger asChild>
       <Button
-        aria-label={label}
+        aria-label={t('title', { context: 'privacy' })}
         className='kicl-backdrop-blur'
-        title={label}
         unstyled
       >
         <Tb.TbInfoCircle aria-hidden />

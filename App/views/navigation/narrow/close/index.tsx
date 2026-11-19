@@ -26,7 +26,6 @@ const Close: React.FunctionComponent = () => {
       aria-label={t('action', { context: 'close_navigation' })}
       block
       className={classNames(
-        'kicl-font-size',
         'kicl-position-fixed',
         `${CLASS_NAME}__close`,
         'kicl-z-index-raised'
