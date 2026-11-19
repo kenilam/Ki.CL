@@ -1,5 +1,5 @@
 import { FILE } from '@/views/resume/constants';
-import { EXPERIMENTS, PAGES, TOPICS } from '@/views/routes';
+import { EXPERIMENTS, PAGES, POSTS, TOPICS } from '@/views/routes';
 
 import { ORIGIN } from './constants';
 import * as Words from './words';
@@ -40,6 +40,17 @@ const llms = () => {
         to,
         Words.COMMON[context],
         Words.WORKSHOP[`description_${context}`]
+      );
+    }),
+    '',
+    `## ${Words.COMMON.blog}`,
+    '',
+    link(PAGES.blog, Words.COMMON.blog),
+    ...POSTS.map(({ context, to }) => {
+      return link(
+        to,
+        Words.BLOG[`title_${context}`],
+        Words.BLOG[`description_${context}`]
       );
     }),
     '',

@@ -13,6 +13,7 @@ import { useDialog } from '@/views/use-dialog';
 
 // Partials
 import { About } from './about';
+import { Blog } from './blog';
 import { Close } from './close';
 import { Experiments } from './experiments';
 import { Home } from './home';
@@ -55,6 +56,7 @@ const Narrow: React.FunctionComponent = () => {
           <Home key='home' />
           <Experiments key='experiments' />
           <Workshop key='workshop' />
+          <Blog key='blog' />
           <About key='about' />
           <Resume key='resume' />
           <Message key='message' />

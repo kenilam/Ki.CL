@@ -2,6 +2,7 @@ import 'i18next';
 
 import type about from '@/locales/en-US/about.json';
 import type architecture from '@/locales/en-US/architecture.json';
+import type blog from '@/locales/en-US/blog.json';
 import type common from '@/locales/en-US/common.json';
 import type daylight from '@/locales/en-US/daylight.json';
 import type experiments from '@/locales/en-US/experiments.json';
@@ -14,6 +15,7 @@ import type me from '@/locales/en-US/me.json';
 import type musicVisualiser from '@/locales/en-US/music-visualiser.json';
 import type portfolio from '@/locales/en-US/portfolio.json';
 import type resume from '@/locales/en-US/resume.json';
+import type spatialCss from '@/locales/en-US/spatial-css.json';
 import type treeOfLife from '@/locales/en-US/tree-of-life.json';
 import type workshop from '@/locales/en-US/workshop.json';
 
@@ -24,6 +26,7 @@ declare module 'i18next' {
     resources: {
       about: typeof about;
       architecture: typeof architecture;
+      blog: typeof blog;
       common: typeof common;
       daylight: typeof daylight;
       experiments: typeof experiments;
@@ -36,6 +39,7 @@ declare module 'i18next' {
       'music-visualiser': typeof musicVisualiser;
       portfolio: typeof portfolio;
       resume: typeof resume;
+      'spatial-css': typeof spatialCss;
       'tree-of-life': typeof treeOfLife;
       workshop: typeof workshop;
     };

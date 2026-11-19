@@ -8,6 +8,8 @@ import type { ButtonProps } from 'design/components';
 
 // Paths
 import { PATH as ABOUT_PATH } from '@/views/about/constants';
+import { PATH as BLOG_PATH } from '@/views/blog/constants';
+import { TO as SPATIAL_CSS } from '@/views/blog/spatial-css/constants';
 import { PATH as EXPERIMENTS_PATH } from '@/views/experiments/constants';
 import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants';
 import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
@@ -26,6 +28,7 @@ import { PATH as I18N } from '@/views/workshop/i18n/constants';
 
 const PAGES = {
   about: `/${ABOUT_PATH}`,
+  blog: `/${BLOG_PATH}`,
   experiments: `/${EXPERIMENTS_PATH}`,
   home: `/${HOME_PATH}`,
   me: `/${ME_PATH}`,
@@ -123,6 +126,23 @@ const TOPICS: readonly Topic[] = [
   },
 ];
 
+type Post = {
+  /** Its title is `title_<context>` in `blog`, and its description `description_<context>`. */
+  context: 'spatial_css';
+  /** The day it was published, as `YYYY-MM-DD`. */
+  published: string;
+  to: string;
+};
+
+/** Newest first. */
+const POSTS: readonly Post[] = [
+  {
+    context: 'spatial_css',
+    published: '2026-11-18',
+    to: SPATIAL_CSS,
+  },
+];
+
 const RECORD_PATHS: Record<string, (documentId: string) => string> = {
   image_agent_threads: toImageAgentPath,
   kinetic_light_readings: toKineticLightPath,
@@ -133,9 +153,11 @@ const RECORD_PATHS: Record<string, (documentId: string) => string> = {
 export {
   EXPERIMENTS,
   PAGES,
+  POSTS,
   RECORD_PATHS,
   ROUTES,
   TOPICS,
   type Experiment,
+  type Post,
   type Topic,
 };

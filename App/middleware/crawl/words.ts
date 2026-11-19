@@ -1,4 +1,5 @@
 import ABOUT from '@/locales/en-US/about.json';
+import BLOG from '@/locales/en-US/blog.json';
 import COMMON from '@/locales/en-US/common.json';
 import EXPERIMENTS from '@/locales/en-US/experiments.json';
 import HOME from '@/locales/en-US/home.json';
@@ -22,4 +23,14 @@ const fill = (text: string) => {
     });
 };
 
-export { ABOUT, COMMON, EXPERIMENTS, HOME, RESUME, SERVER, WORKSHOP, fill };
+export {
+  ABOUT,
+  BLOG,
+  COMMON,
+  EXPERIMENTS,
+  HOME,
+  RESUME,
+  SERVER,
+  WORKSHOP,
+  fill,
+};
