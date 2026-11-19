@@ -15,23 +15,19 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="author" content="{{document_author}}" />
-    <meta
-      name="description"
-      content="{{document_description}}"
-    />
-    <meta
-      name="keywords"
-      content="{{document_keywords}}"
-    />
-    <meta
-      property="og:description"
-      content="{{document_description}}"
-    />
-    <!-- <meta property="og:image" content="http://ki-cl.com/asset/image/site.hero.png"> -->
-    <meta property="og:title" content="{{document_title}}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.ki-cl.com" />
-    <!-- The words in braces are filled in by the server, from the `server` namespace. -->
+    <meta name="description" content="{{page.description}}" />
+    <meta name="keywords" content="{{document_keywords}}" />
+    <meta property="og:site_name" content="{{document_title}}" />
+    <meta property="og:type" content="{{page.type}}" />
+    <meta property="og:url" content="{{page.url}}" />
+    <meta property="og:title" content="{{page.title}}" />
+    <meta property="og:description" content="{{page.description}}" />
+    <meta property="og:image" content="{{page.image}}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{{page.title}}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- The server fills in the words in braces: plain names from the `server` namespace, `page.` names from `App/middleware/crawl/previews.ts`. -->
     <title>{{document_title}}</title>
     <script>
       /*
