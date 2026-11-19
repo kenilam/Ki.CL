@@ -1,0 +1,107 @@
+{
+  "article": {
+    "intro": "Spatial CSS lets a web page arrange 3D models in one shared space using CSS. Models are positioned with transforms and anchors, lit with environment maps and turned by the visitor, and a script can move the whole scene out of the browser window and into the room. WebKit released it as a developer preview in Safari on visionOS 27.3, behind a feature flag. The specification is an early draft, so names and details are likely to change.",
+    "support": {
+      "label": "Spatial CSS",
+      "off": "Requires visionOS",
+      "on": "Supported"
+    },
+    "why": {
+      "title": "Why it interests me",
+      "rule": "This site is built platform-first. When HTML and CSS can do something, they do it, and JavaScript is the last resort. 3D is where that rule stops.",
+      "canvas": "Every 3D scene on this site, such as the voxel mark on the About page and the stage in Kinetic Light, is drawn with three.js inside a `<canvas>`. To the page, a canvas is one picture. CSS can size it, but it can’t select, transition or restyle anything drawn inside it, so a theme change or a preference for less motion has to be handled again in JavaScript.",
+      "fair": "three.js is the right tool for that work. It draws custom geometry and shaders, and it runs in every browser today.",
+      "flat": "CSS has had 3D transforms for a long time, but on a flat screen they’re projections. `perspective` makes an element look as if it tilts away from you, and [John Rhea’s recreation of Apple’s Vision Pro page](https://css-tricks.com/recreating-apples-vision-pro-animation-in-css/) on CSS-Tricks builds its depth from layered images and scroll-driven animation. Both look three-dimensional, but both are painted onto the page.",
+      "depth": "Spatial CSS proposes depth as part of CSS, on a device that can show it. A model is an element, its position is a CSS property and its lighting is an at-rule, so the tools the rest of the page uses can reach it."
+    },
+    "model": {
+      "title": "The model element",
+      "element": "Spatial CSS builds on the HTML `<model>` element. Safari turned it on by default in visionOS 26, and WebKit says it’s now in Safari 27 on all platforms. A `<model>` shows a 3D file in the USDZ format, and on Vision Pro it’s drawn in stereo, with a separate image for each eye, so the object has real depth.",
+      "behind": "Apple’s WWDC25 session describes a model as an opening into a space behind the page. It always sits behind the page’s surface, and one centimetre in the file is one centimetre in CSS.",
+      "attributes": "Lighting and interaction are attributes on each model. `environmentmap` names an image that lights it, and `stagemode=\"orbit\"` lets the visitor turn it. Browsers that don’t support the element show what’s inside it instead, such as an `<img>`.",
+      "alone": "Each model is a scene of its own, though. A model can’t contain another model, and each one is lit and turned separately, so arranging several objects together meant combining them into one file or drawing the scene another way."
+    },
+    "portal": {
+      "title": "One space for several models",
+      "property": "Spatial CSS adds a `spatial` property. Setting `spatial: portal` on an element that can hold children, such as a `<div>` or a `<figure>`, turns it into a portal: a window into one 3D space that all its children share.",
+      "transform": "Inside a portal, `transform` means something new. On a flat page it moves or turns a flat box. Inside a portal it moves the model itself through the shared space, and WebKit’s examples write the distances in centimetres, the same unit as the model files.",
+      "perspective": "The draft specification also says a portal ignores `perspective`. On a flat page, `perspective` sets how strongly depth is faked. In a portal, depth comes from where the visitor is actually standing."
+    },
+    "anchor": {
+      "title": "Placing one model on another",
+      "nesting": "On a page, one box is usually placed inside another by nesting it. Models can’t be nested, so Spatial CSS borrows CSS anchor positioning instead, the same idea that lets a tooltip follow the button it belongs to.",
+      "point": "The desk takes an anchor name. The lamp names that anchor, followed by `#` and a point inside the desk’s file, `lamp-spot`. These points are empty objects that the artist places in the 3D modelling tool, often called nulls or empties.",
+      "context": "`position-context: anchor` makes the lamp move, turn and scale with the desk, so turning the desk carries the lamp with it. WebKit says the anchor points can be animated too."
+    },
+    "lighting": {
+      "title": "Lighting a scene",
+      "reflect": "A 3D object looks flat without light to reflect. Models on visionOS are lit by an environment map, a 360° image of a surrounding space, which the model reflects as if it stood in that space.",
+      "rule": "With `<model>`, each element named its map in an attribute. Spatial CSS moves the map into an at-rule shaped like `@keyframes`. It’s declared once, by name, and any part of the scene can use it.",
+      "switch": "Because the lighting is a property, it can change like any other. A class, or a `prefers-color-scheme` media query, can switch the scene to a different map.",
+      "format": "The images are equirectangular HDR files, the kind of 360° image 3D tools use to light a scene. Apple’s WWDC25 session recommends the OpenEXR or Radiance HDR formats, because a JPEG makes a model look dull and flat."
+    },
+    "orbit": {
+      "title": "Letting the visitor turn the scene",
+      "action": "`portal-action: orbit` lets the visitor turn the whole scene with a gesture and look at it from other sides. It does for a portal what `stagemode=\"orbit\"` does for a single model.",
+      "more": "In the preview, `orbit` is the only action. WebKit mentions panning modes such as `pan-x` and `pan-y` as possible additions, and the draft specification already lists `pan`, `pan-x`, `pan-y` and `pan-z`."
+    },
+    "room": {
+      "title": "Taking the scene into the room",
+      "volume": "A portal shows its scene inside the Safari window. `requestVolumetricScene()` takes the scene out of the window and into a volume the visitor can place anywhere in their room. WebKit calls this a connected volumetric scene.",
+      "gesture": "WebKit says to call it from something the visitor does, such as a click on a button.",
+      "connected": "The scene stays connected to the page. While it sits in the room, the page’s script can still add, remove and move models in it.",
+      "script": "This part is a JavaScript method, not CSS, and the draft CSS specification doesn’t cover it."
+    },
+    "css": {
+      "title": "Working with the rest of CSS",
+      "animation": "Since the scene is described in CSS, it follows the same rules as the rest of the page. WebKit says the numbers in these properties can be transitioned and animated like any other CSS value, so a model can slide along the desk with a `transition` on its `transform`.",
+      "queries": "Media queries apply too. WebKit names aspect ratio, colour theme and reduced motion as preferences a scene can respond to, the same way the rest of the page does.",
+      "accessibility": "The draft specification keeps content in a portal interactive and in the accessibility tree, which screen readers read the page from. WebKit’s explainer adds that placing content in depth doesn’t change the reading order, and asks authors to respect reduced motion and keep focus indicators visible on raised content.",
+      "privacy": "The page isn’t told where the visitor is looking or where they’re standing. The only thing it can ask about the space is how far forward content may come, through the `front-limit` media query."
+    },
+    "fallback": {
+      "title": "Pages without spatial CSS",
+      "most": "Most visitors won’t have a Vision Pro, so a page that uses Spatial CSS should still work without it.",
+      "ignored": "CSS handles part of that already. A browser ignores properties and at-rules it doesn’t recognise, so `spatial: portal` and `@environment-map` do nothing elsewhere, and the rest of the stylesheet still applies.",
+      "children": "For the models, `<model>` shows its children in browsers that don’t support it. That can be an image, or a 3D viewer such as model-viewer or three.js, so visitors can still turn the object.",
+      "detect": "When a script needs to know, Apple’s advice is to check for the feature, not the device: test for `window.HTMLModelElement` rather than looking for visionOS in the browser’s user agent string. WebKit’s post doesn’t say how to detect the spatial properties themselves."
+    },
+    "trying": {
+      "title": "Trying it",
+      "needs": "The preview only exists in Safari on visionOS 27.3, on a Vision Pro or in the visionOS 27.3 simulator in Xcode. Safari on other platforms doesn’t have the flag, and on visionOS it’s off by default.",
+      "settings": "On the Vision Pro or in the simulator, open the Settings app.",
+      "flags": "Go to **Apps** › **Safari** › **Advanced** › **Feature Flags**.",
+      "portals": "Turn on **CSS Portals**.",
+      "demo": "Once the flag is on, [WebKit’s demo](https://webkit.org/demos/webkids-puzzle-playground/index.html) is a quick way to see it working.",
+      "page": "This page uses `spatial: page` on its headings. With the flag on, they should lift off the page by a centimetre. The 3D scenes on this page are drawn with three.js, so they show on every device."
+    },
+    "draft": {
+      "title": "What the draft adds",
+      "scope": "WebKit’s post covers the features above. The draft specification, CSS Spatial Layout Module Level 1, and WebKit’s explainer go further. They’re written for any HTML element, not only models, so text and images can be placed in depth too.",
+      "page": "`spatial: page` lets content come forward out of the page instead of sitting behind it. `inset-front` and `inset-back` place it along the depth axis, and `front-limit` sets how far forward it can come.",
+      "example": "In the draft’s own example, a heading sets `spatial: page`, and a word inside it moves out from the page with `inset-back: 1cm`.",
+      "maps": "The draft also proposes cube-shaped environment maps alongside 360° images, and properties for the intensity and rotation of each map.",
+      "open": "Several questions are still open in the draft, including what `px` should mean inside a portal and whether `spatial` and `portal-action` are the right names.",
+      "not": "The explainer is also clear about what it isn’t. It doesn’t replace WebXR, so there’s no hand tracking or controllers, and there are no shaders or custom meshes. The page can’t move the viewer’s camera either."
+    },
+    "limits": {
+      "title": "Limits",
+      "preview": "The preview only runs in Safari on visionOS 27.3, with the CSS Portals flag turned on.",
+      "models": "WebKit’s examples only use `<model>` elements. The explainer is written for any element, but WebKit’s post doesn’t say whether the preview lifts other elements yet.",
+      "usdz": "`<model>` only reads USDZ files. A model in another format has to be converted first.",
+      "orbit": "`orbit` is the only way a visitor can move the scene inside a portal.",
+      "change": "Everything here is a proposal. Names and syntax may change as the draft develops."
+    },
+    "references": {
+      "title": "References",
+      "post": "[Introducing spatial CSS: A developer preview](https://webkit.org/blog/18621/introducing-spatial-css-a-developer-preview/), by Brandel Zachernuk on the WebKit blog",
+      "spec": "[CSS Spatial Layout Module Level 1](https://drafts.csswg.org/css-spatial-1/), the editor’s draft by Ada Rose Cannon and fantasai",
+      "explainer": "[CSS Spatial Layout](https://github.com/WebKit/explainers/blob/main/css-spatial/explainer.md), WebKit’s explainer by Ada Rose Cannon and fantasai",
+      "session": "[What’s new for the spatial web](https://developer.apple.com/videos/play/wwdc2025/237/), a WWDC25 session on `<model>` and immersive media in Safari",
+      "demo": "[WebKit’s spatial CSS demo](https://webkit.org/demos/webkids-puzzle-playground/index.html)",
+      "simulator": "[Installing Xcode and simulators](https://developer.apple.com/documentation/safari-developer-tools/installing-xcode-and-simulators), in Apple’s Safari developer tools documentation",
+      "visionos": "[visionOS](https://developer.apple.com/visionos/), Apple’s developer page",
+      "css_tricks": "[Recreating Apple’s Vision Pro Animation in CSS](https://css-tricks.com/recreating-apples-vision-pro-animation-in-css/), by John Rhea on CSS-Tricks"
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { Navigation } from 'design/components';
 
 // Views
 import { Default as Account } from './account';
+import { Blog } from './blog';
 import { Link } from './link';
 import { Message } from './message';
 import { Resume } from './resume';
@@ -34,6 +35,7 @@ const Default: React.FunctionComponent = () => {
         return <Link key={to} to={to} />;
       })}
       <Resume key='resume' />
+      <Blog key='blog' />
       <Message key='message' />
       {me ? <Account key='account' /> : null}
     </Navigation>
