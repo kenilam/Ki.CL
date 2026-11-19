@@ -24,7 +24,10 @@ import { getAlias, getStyleLayer, LAYER_ORDER } from './helper';
 
 import fs from 'node:fs';
 import { collectMiddleware } from '../middleware/collect';
-import { isPath as isCrawlPath } from '../middleware/crawl/constants';
+import {
+  CARD_PATH,
+  isPath as isCrawlPath,
+} from '../middleware/crawl/constants';
 import { createTexts, escapeJson } from '../middleware/texts';
 
 import configJSON from '../app.config.json';
@@ -330,7 +333,7 @@ const getConfig = ({
         },
         transformIndexHtml: (html) => texts.fill(html),
       },
-      // robots.txt, sitemap.xml and llms.txt, built as the server builds them.
+      // robots.txt, sitemap.xml, llms.txt and link previews, built as the server builds them.
       {
         name: 'kicl-crawl',
         apply: 'serve',
@@ -351,6 +354,40 @@ const getConfig = ({
             response.setHeader('Content-Type', type);
             response.end(body);
           });
+
+          server.middlewares.use(async (request, response, next) => {
+            const path = request.url?.split('?')[0] ?? '';
+
+            if (!CARD_PATH.test(path)) {
+              return next();
+            }
+
+            const { card } = await server.ssrLoadModule(
+              '/middleware/crawl/index.ts'
+            );
+            const png = await card(path);
+
+            if (!png) {
+              response.statusCode = 404;
+              response.end();
+
+              return;
+            }
+
+            response.setHeader('Content-Type', 'image/png');
+            response.end(png);
+          });
+        },
+        async transformIndexHtml(html, { originalUrl = '/', server }) {
+          if (!server) {
+            return html;
+          }
+
+          const { head } = await server.ssrLoadModule(
+            '/middleware/crawl/index.ts'
+          );
+
+          return head(html, originalUrl.split('?')[0]);
         },
       },
       // Analytics batches land here in development, as they do on the server.

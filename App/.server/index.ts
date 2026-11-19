@@ -13,7 +13,7 @@ import { Env } from '@/env';
 
 import { applyClientToken } from './client-token';
 import { applyCollect } from '@/middleware/collect';
-import { applyCrawl } from '@/middleware/crawl';
+import { applyCrawl, head } from '@/middleware/crawl';
 import { createGate } from './gate';
 import { applyHeaders } from './headers';
 import { createNavigation } from './navigation';
@@ -97,13 +97,13 @@ async function Server() {
      */
     const shell: RequestHandler[] = [
       createGate(texts),
-      (_, responses) => {
+      (request, responses) => {
         const file = `${baseurl}/index.html`;
 
         responses
           .setHeader('Cache-Control', cacheControl(file))
           .type('html')
-          .send(texts.fill(fs.readFileSync(file, 'utf8')));
+          .send(texts.fill(head(fs.readFileSync(file, 'utf8'), request.path)));
       },
     ];
 
