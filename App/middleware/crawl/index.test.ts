@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
 
-import { EXPERIMENTS, PAGES, TOPICS } from '@/views/routes';
+import { EXPERIMENTS, PAGES, POSTS, TOPICS } from '@/views/routes';
 
 import { crawl } from '.';
 
@@ -28,6 +28,8 @@ describe('crawl', () => {
       PAGES.resume,
       ...EXPERIMENTS.map(({ to }) => to),
       ...TOPICS.map(({ to }) => to),
+      PAGES.blog,
+      ...POSTS.map(({ to }) => to),
     ];
 
     public_.forEach((path) => {

@@ -1,0 +1,13 @@
+.kicl--views--blog--spatial-css__support {
+  @supports (spatial: portal) {
+    &__off {
+      display: none;
+    }
+  }
+
+  @supports not (spatial: portal) {
+    &__on {
+      display: none;
+    }
+  }
+}

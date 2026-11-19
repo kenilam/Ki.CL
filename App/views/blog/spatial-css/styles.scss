@@ -1,0 +1,11 @@
+.kicl--views--blog--spatial-css {
+  @supports (spatial: page) {
+    spatial: page;
+  }
+
+  &__lift {
+    @supports (spatial: page) {
+      inset-back: 1cm;
+    }
+  }
+}

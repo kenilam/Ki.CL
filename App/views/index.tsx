@@ -8,6 +8,7 @@ import { ErrorElement, Status404 } from 'design/status';
 
 // Views
 import { About } from './about';
+import { Blog } from './blog';
 import { Experiments } from './experiments';
 import { Home } from './home';
 import { Me } from './me';
@@ -26,6 +27,7 @@ const Views: React.FunctionComponent = () => {
       <Route path='/' errorElement={<ErrorElement />} element={<Element />}>
         <Route path='*' element={<Status404 />} />
         {About}
+        {Blog}
         {DesignSystemRedirect}
         {Experiments}
         {Home}
