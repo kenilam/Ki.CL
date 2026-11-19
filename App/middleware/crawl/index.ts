@@ -1,6 +1,8 @@
 import type { Express } from 'express';
 
-import type { Path } from './constants';
+import { card } from './card';
+import { CARD_PATH, type Path } from './constants';
+import { head } from './head';
 import { llms } from './llms';
 import { robots } from './robots';
 import { sitemap } from './sitemap';
@@ -32,6 +34,18 @@ const applyCrawl = (app: Express): void => {
       response.setHeader('Cache-Control', CACHE).type(type).send(write(gated));
     });
   });
+
+  app.get(CARD_PATH, async (request, response) => {
+    const png = await card(request.path);
+
+    if (!png) {
+      response.sendStatus(404);
+
+      return;
+    }
+
+    response.setHeader('Cache-Control', CACHE).type('png').send(png);
+  });
 };
 
-export { applyCrawl, crawl };
+export { applyCrawl, card, crawl, head };
