@@ -1,0 +1,17 @@
+.kicl--views--experiments--swatch__card__backdrop {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: kicl--views--experiments--swatch__card__backdrop--drift linear
+        both;
+      animation-range: exit;
+      animation-timeline: view(block 0);
+    }
+  }
+}
+
+// Moving down by half its height as it leaves, the film scrolls at half the chip's speed.
+@keyframes kicl--views--experiments--swatch__card__backdrop--drift {
+  to {
+    translate: 0 50%;
+  }
+}

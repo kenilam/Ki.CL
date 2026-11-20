@@ -15,6 +15,7 @@ import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants
 import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
 import { toPath as toKineticLightPath } from '@/views/experiments/kinetic-light/constants';
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';
+import { toPath as toSwatchPath } from '@/views/experiments/swatch/constants';
 import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants';
 import { toPath as toPlatePath } from '@/views/experiments/tree-of-life/explorer/details-path';
 import { PATH as HOME_PATH } from '@/views/home/constants';
@@ -52,6 +53,7 @@ type Experiment = Pick<ButtonProps, 'level'> & {
     | 'image_agent'
     | 'kinetic_light'
     | 'music_visualiser'
+    | 'swatch'
     | 'tree_of_life';
   /** Which background Stage/Screen paints. */
   plate:
@@ -59,6 +61,7 @@ type Experiment = Pick<ButtonProps, 'level'> & {
     | 'image-agent'
     | 'kinetic-light'
     | 'music-visualiser'
+    | 'swatch'
     | 'tree-of-life';
   to: string;
 };
@@ -93,6 +96,11 @@ const EXPERIMENTS: readonly Experiment[] = [
     level: 'neutral',
     plate: 'kinetic-light',
     to: toKineticLightPath(),
+  },
+  {
+    context: 'swatch',
+    plate: 'swatch',
+    to: toSwatchPath(),
   },
 ];
 
@@ -147,6 +155,7 @@ const RECORD_PATHS: Record<string, (documentId: string) => string> = {
   image_agent_threads: toImageAgentPath,
   kinetic_light_readings: toKineticLightPath,
   password_changes: () => PASSWORD_PATH,
+  swatches: toSwatchPath,
   tree_of_life: toPlatePath,
 };
 

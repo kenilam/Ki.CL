@@ -3824,6 +3824,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"app.views.experiments.swatch@workspace:App/views/experiments/swatch":
+  version: 0.0.0-use.local
+  resolution: "app.views.experiments.swatch@workspace:App/views/experiments/swatch"
+  languageName: unknown
+  linkType: soft
+
 "app.views.experiments.tree-of-life@workspace:App/views/experiments/tree-of-life":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.tree-of-life@workspace:App/views/experiments/tree-of-life"
@@ -3867,6 +3873,7 @@ __metadata:
     "@types/react-test-renderer": "npm:19.3.0"
     "@types/three": "npm:0.185.1"
     abortcontroller-polyfill: "npm:1.7.8"
+    chromonym: "npm:3.18.1"
     classnames: "npm:2.5.1"
     d3-hierarchy: "npm:3.1.2"
     enzyme: "npm:3.11.0"
@@ -4554,6 +4561,13 @@ __metadata:
   version: 3.0.0
   resolution: "chownr@npm:3.0.0"
   checksum: 10c0/43925b87700f7e3893296c8e9c56cc58f926411cce3a6e5898136daaf08f08b9a8eb76d37d3267e707d0dcc17aed2e2ebdf5848c0c3ce95cf910a919935c1b10
+  languageName: node
+  linkType: hard
+
+"chromonym@npm:3.18.1":
+  version: 3.18.1
+  resolution: "chromonym@npm:3.18.1"
+  checksum: 10c0/584b0d8aaaf6ede876ae4389ca72043f802ffe6fbd6611bb1177f2ca2b286160f39da132c8a3c2284587e8cd5ee5ae6bd3bac0787c945bdb9e52b9c993a77cd6
   languageName: node
   linkType: hard
 

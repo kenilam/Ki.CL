@@ -1,0 +1,4 @@
+// The same ring as the color picker's swatch, so a color close to the sheet's still shows its edge.
+.kicl--views--experiments--swatch__maker__found {
+  box-shadow: inset 0 0 0 var(--kicl-size-1px) var(--kicl-color-neutral-a16);
+}
