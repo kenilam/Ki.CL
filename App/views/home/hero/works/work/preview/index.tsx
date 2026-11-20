@@ -8,6 +8,7 @@ import {
   DaylightPreview,
   KineticLightBackdrop,
   MusicVisualiser,
+  SwatchBackdrop,
 } from '@/views/experiments/previews';
 
 import type { Props } from '@/views/home/hero/works/work';
@@ -20,6 +21,7 @@ const PREVIEWS: Record<Props['plate'], React.ReactNode> = {
   daylight: <DaylightPreview />,
   'kinetic-light': <KineticLightBackdrop />,
   'music-visualiser': <MusicVisualiser />,
+  swatch: <SwatchBackdrop />,
 };
 
 const Preview: React.FunctionComponent<Props> = ({ plate }) => {

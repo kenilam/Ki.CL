@@ -12,6 +12,7 @@ import { FactoryArm } from './factory-arm';
 import { ImageAgent } from './image-agent';
 import { KineticLight } from './kinetic-light';
 import { MusicVisualiser } from './music-visualiser';
+import { Swatch } from './swatch';
 import { TreeOfLife } from './tree-of-life';
 
 // Constants
@@ -52,6 +53,7 @@ const Experiments = (
     {FactoryArm}
     {Daylight}
     {KineticLight}
+    {Swatch}
   </Origin>
 );
 

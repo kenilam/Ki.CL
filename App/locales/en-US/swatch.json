@@ -1,0 +1,73 @@
+{
+  "action_find": "Find a swatch",
+  "action_generate": "Generate a swatch",
+  "action_generating": "Generating…",
+  "action_make": "Make a swatch",
+  "action_pause": "Pause the film",
+  "action_play": "Play the film",
+  "action_sound_off": "Mute",
+  "action_sound_on": "Unmute",
+  "article": {
+    "intro": "A swatch starts from a color: one you pick, or the one that defines a picture you upload. A model names the color and chooses something to photograph in it, and the photograph is set moving as a film that loops.",
+    "notes": {
+      "nearest": {
+        "text": "Moving the color picker opens the swatch nearest to it. Nearness is the distance between the two colors in OKLab, where equal distances look about equally different, which isn’t true of their hex values.",
+        "title": "Finding a swatch"
+      },
+      "pantone": {
+        "text": "Each swatch shows the closest color in Pantone’s coated range, found by [chromonym](https://github.com/simiancraft/chromonym) with the CIEDE2000 color difference, ΔE. Below 1 the two look the same; above 5 the difference is easy to see. Pantone’s colors are inks on paper and their screen values are approximations, so this is the nearest match, not the swatch’s own Pantone number.",
+        "title": "The Pantone match"
+      },
+      "sound": {
+        "text": "Each swatch plays the film’s own sound, the subject’s sounds heard close, over a tone the browser makes. The model that names the color sets the tone: a root note, a mode, a timbre, and how bright, how restless and how busy it is. [Tone.js](https://tonejs.github.io/) plays it as a slow chord progression with sparse notes above it, so it never repeats.",
+        "title": "The sound"
+      }
+    },
+    "steps": {
+      "encode": {
+        "text": "The film comes back at 1080p, 7 to 13 MB for eight seconds. [FFmpeg](https://ffmpeg.org/) encodes it again, to 2 to 4 MB, with its index first, so it plays while it loads. Its sound loses the low rumble and the hiss under it, is brought to the same loudness as every other swatch, and falls silent between its sounds.",
+        "title": "Shrinking the file"
+      },
+      "film": {
+        "text": "[Gemini Omni](https://aistudio.google.com/docs/omni) turns the photograph into an eight-second film with its own sound, asked for only the sounds the subject makes. It’s given the photograph as both the first and the last frame, so the film ends where it began and loops without a jump.",
+        "title": "Setting it in motion"
+      },
+      "name": {
+        "text": "A text model is given the color’s hex, or a vision model is shown the picture. It answers with a name, a subject that is that color, how the subject moves, the sounds it makes, and the settings for a tone.",
+        "title": "Naming the color"
+      },
+      "photograph": {
+        "text": "[Gemini 3 Pro Image](https://aistudio.google.com/docs/image-generation) draws the subject at 16:9. A vision model scores it for its color, how real it looks and whether one subject fills the frame. When it falls short, a second photograph is drawn with the notes.",
+        "title": "Taking the photograph"
+      }
+    },
+    "steps_title": "How a swatch is made"
+  },
+  "error_empty": "Choose a picture.",
+  "error_too_large": "This picture is over {{size}}. Pick a smaller one.",
+  "hint_picture": "PNG, JPEG, WebP or GIF · Up to {{size}}",
+  "hint_spent": "No allowance left.",
+  "label_color": "Color",
+  "label_disclaimer": "Disclaimer",
+  "label_found": "Color found in your picture",
+  "label_picture": "Picture",
+  "label_source": "Start from",
+  "label_swatches": "Every swatch",
+  "lede": "Move the color to open the swatch nearest to it, or make a new one in exactly that color. You can also start from a picture.",
+  "lede_spent": "Move the color to open the swatch nearest to it.",
+  "missing": "This swatch couldn’t be found.",
+  "mode_pick": "Pick a color",
+  "mode_upload": "Upload a picture",
+  "pantone_distance": "Closest [Pantone](https://www.pantone.com/) Coated color, [ΔE](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000) {{distance}}.",
+  "privacy": "Every swatch is public and kept forever. Your uploaded image is only used to extract its color and generate the result. I don’t keep or cache your image.",
+  "status_closest": "Closest to the picked color",
+  "status_exact": "The picked color",
+  "swatches_left_one": "{{count}} swatch left",
+  "swatches_left_other": "{{count}} swatches left",
+  "swatches_left_zero": "none left",
+  "term_cmyk": "CMYK",
+  "term_hex": "HEX",
+  "term_pantone": "PANTONE",
+  "term_rgb": "RGB",
+  "title_privacy": "Who can see your swatches"
+}

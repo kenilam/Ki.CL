@@ -5,6 +5,7 @@ import { CLASS_NAME as HERO } from '@/views/home/hero/constants';
 const CLASS_NAME = `${HERO}__works`;
 
 const WORKS = [
+  'swatch',
   'kinetic-light',
   'daylight',
   'music-visualiser',
