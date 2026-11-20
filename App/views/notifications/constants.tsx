@@ -28,6 +28,7 @@ const LOOKS: Record<string, Look> = {
   agent_reply_running: RUNNING,
   agent_reply_text: { avatar: <Tb.TbMessage aria-hidden /> },
   'api:kinetic_light_error': FAILED,
+  'api:swatch_error': FAILED,
   found_chords: RUNNING,
   found_notes: RUNNING,
   password_change_done: {
@@ -48,6 +49,10 @@ const LOOKS: Record<string, Look> = {
   progress_notes: RUNNING,
   ready_to_play: { avatar: <Tb.TbMusic aria-hidden /> },
   status_running: RUNNING,
+  swatch_animating: RUNNING,
+  swatch_drawing: RUNNING,
+  swatch_naming: RUNNING,
+  swatch_ready: { avatar: <Tb.TbPalette aria-hidden /> },
 };
 
 const lookOf = ({

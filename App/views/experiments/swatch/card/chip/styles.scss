@@ -1,0 +1,17 @@
+// The window draws the paper, around a hole onto the film. The chip drifts
+// with the banner and fades its parts by the card's `--fade`: opacity on the
+// chip would cut the window's frost off from the film behind it.
+.kicl--views--experiments--swatch__chip {
+  $fade: var(--kicl--views--experiments--swatch__card--fade);
+
+  --kicl--components--card--background-color: transparent;
+  --kicl--components--card--variant-border-color: color-mix(
+    in srgb,
+    var(--kicl-surface-border-color) calc(#{$fade} * 100%),
+    transparent
+  );
+
+  > :not(.kicl--views--experiments--swatch__chip__window) {
+    opacity: $fade;
+  }
+}

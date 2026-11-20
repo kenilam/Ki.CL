@@ -48,6 +48,12 @@ const useRouteChange = () => {
     }
     lastPathname.current = location.pathname;
 
+    // Navigating from inside an open sheet or dialog changes the page behind
+    // it, so focus stays where it is.
+    if (document.activeElement?.closest(':popover-open, dialog[open]')) {
+      return;
+    }
+
     document.getElementById(MAIN_ID)?.focus({ preventScroll: true });
   }, [location.pathname]);
 };

@@ -12,6 +12,7 @@ import {
   ImageAgentBackdrop,
   KineticLightBackdrop,
   MusicVisualiser,
+  SwatchBackdrop,
   TreeOfLifePlate,
 } from '@/views/experiments/previews';
 
@@ -26,6 +27,7 @@ const BACKDROPS = {
   'image-agent': <ImageAgentBackdrop />,
   'kinetic-light': <KineticLightBackdrop />,
   'music-visualiser': <MusicVisualiser />,
+  swatch: <SwatchBackdrop />,
   'tree-of-life': <TreeOfLifePlate />,
 };
 
