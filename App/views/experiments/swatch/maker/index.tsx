@@ -5,6 +5,7 @@ import { Sheet } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
+import { useRefresh } from './use-refresh';
 
 // Partials
 import { Provider } from './context';
@@ -23,6 +24,8 @@ type Props = Pick<React.ComponentProps<typeof Sheet>, 'defaultOpen'>;
 
 const Maker: React.FunctionComponent<Props> = ({ defaultOpen }) => {
   const { t } = useTranslation('swatch');
+
+  useRefresh();
 
   return (
     <Provider>

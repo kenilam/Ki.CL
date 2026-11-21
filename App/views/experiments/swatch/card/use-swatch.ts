@@ -1,5 +1,6 @@
 // API
 import {
+  Kicl_SwatchAllowanceDocument,
   Kicl_SwatchDocument,
   Kicl_SwatchListDocument,
   Kicl_SwatchUpdatedDocument,
@@ -28,7 +29,9 @@ const useSwatch = () => {
         return;
       }
 
-      void client.refetchQueries({ include: [Kicl_SwatchListDocument] });
+      void client.refetchQueries({
+        include: [Kicl_SwatchAllowanceDocument, Kicl_SwatchListDocument],
+      });
     },
     skip: !id || !making,
     variables: { id: id ?? '' },

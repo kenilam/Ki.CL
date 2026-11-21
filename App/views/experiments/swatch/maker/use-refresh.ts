@@ -1,13 +1,17 @@
 import { useEffect } from 'react';
 
 // API
-import { Kicl_SwatchListDocument, useQuery } from 'api/provider';
+import {
+  Kicl_SwatchAllowanceDocument,
+  Kicl_SwatchListDocument,
+  useApolloClient,
+} from 'api/provider';
 
 // Constants
 import { MAKER } from '@/views/experiments/swatch/constants';
 
 const useRefresh = () => {
-  const { refetch } = useQuery(Kicl_SwatchListDocument);
+  const client = useApolloClient();
 
   useEffect(() => {
     const sheet = document.getElementById(MAKER);
@@ -17,9 +21,13 @@ const useRefresh = () => {
     }
 
     const toggle = (event: Event) => {
-      if ((event as ToggleEvent).newState === 'open') {
-        void refetch();
+      if ((event as ToggleEvent).newState !== 'open') {
+        return;
       }
+
+      void client.refetchQueries({
+        include: [Kicl_SwatchAllowanceDocument, Kicl_SwatchListDocument],
+      });
     };
 
     sheet.addEventListener('toggle', toggle);
@@ -27,7 +35,7 @@ const useRefresh = () => {
     return () => {
       sheet.removeEventListener('toggle', toggle);
     };
-  }, [refetch]);
+  }, [client]);
 };
 
 export { useRefresh };
