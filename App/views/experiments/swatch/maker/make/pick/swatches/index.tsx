@@ -8,7 +8,6 @@ import { List } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
-import { useRefresh } from './use-refresh';
 import { useScroll } from './use-scroll';
 
 // Partials
@@ -24,8 +23,6 @@ const Swatches: React.FunctionComponent = () => {
   const { t } = useTranslation('swatch');
   const { data } = useQuery(Kicl_SwatchListDocument);
   const ref = useScroll();
-
-  useRefresh();
 
   return (
     <List
