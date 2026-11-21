@@ -1,17 +1,94 @@
-// The window draws the paper, around a hole onto the film. The chip drifts
-// with the banner and fades its parts by the card's `--fade`: opacity on the
-// chip would cut the window's frost off from the film behind it.
+// The chip's paper is the window. Through its hole, the pane shows the film
+// frosted with grain from SVG turbulence (`::before`), and the swatch's color
+// pooling at its foot, under the paper's lip (`::after`). The chip's color is
+// the swatch's, set on the element.
 .kicl--views--experiments--swatch__chip {
-  $fade: var(--kicl--views--experiments--swatch__card--fade);
+  $pane: --kicl--views--experiments--swatch__chip__pane;
+  $shade: color-mix(in srgb, var(--kicl-color-black-pure) 24%, transparent);
+  $exit: --kicl--views--experiments--swatch__card;
+  $pool:
+    currentcolor 15%,
+    color-mix(in oklab, currentcolor 70%, transparent) 45%,
+    transparent 95%;
 
   --kicl--components--card--background-color: transparent;
-  --kicl--components--card--variant-border-color: color-mix(
-    in srgb,
-    var(--kicl-surface-border-color) calc(#{$fade} * 100%),
-    transparent
-  );
+  --kicl--components--card--spacing: 0;
 
-  > :not(.kicl--views--experiments--swatch__chip__window) {
-    opacity: $fade;
+  color: transparent;
+  isolation: isolate;
+
+  &::before,
+  &::after {
+    content: '';
+    inset: 0;
+    position: absolute;
+    z-index: -1;
+
+    @supports (anchor-name: --kicl) {
+      inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+      position-anchor: $pane;
+    }
+  }
+
+  &::before {
+    backdrop-filter: blur(var(--kicl-size-3px));
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  &::after {
+    background-image: linear-gradient(to top in oklab, $pool);
+    box-shadow: inset 0 var(--kicl-size-2px) var(--kicl-size-3px) #{$shade};
+  }
+
+  // A white would hide the teeth against the paper, so a thinner band of it
+  // falls from the top instead, and the film shows at the foot.
+  &--white::after {
+    background-image: linear-gradient(
+      to bottom in oklab,
+      currentcolor 5%,
+      color-mix(in oklab, currentcolor 70%, transparent) 25%,
+      transparent 55%
+    );
+  }
+
+  &__pane {
+    anchor-name: $pane;
+  }
+
+  // As the banner scrolls away, the chip moves down with the film and its
+  // parts fade by a quarter of a screen. Opacity on the chip itself would cut
+  // the frost off from the film.
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: kicl--views--experiments--swatch__chip--drift linear both;
+      animation-range: exit;
+      animation-timeline: $exit;
+
+      &::before,
+      &::after,
+      > * {
+        animation: kicl--views--experiments--swatch__chip--fade linear both;
+        animation-range: exit;
+        animation-timeline: $exit;
+      }
+    }
+  }
+}
+
+@keyframes kicl--views--experiments--swatch__chip--drift {
+  25% {
+    border-color: transparent;
+  }
+
+  100% {
+    border-color: transparent;
+    translate: 0 50dvb;
+  }
+}
+
+@keyframes kicl--views--experiments--swatch__chip--fade {
+  25%,
+  100% {
+    opacity: 0;
   }
 }

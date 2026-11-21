@@ -24,7 +24,7 @@ import { useRouteTheme } from '@/views/experiments/swatch/use-route-theme';
 import { useSwatch } from './use-swatch';
 
 // Constants
-import { CLASS_NAME, DRIFT, FADE } from './constants';
+import { CLASS_NAME, DRIFT } from './constants';
 
 const Contents: React.FunctionComponent = () => {
   useSwatch();
@@ -53,7 +53,6 @@ const Contents: React.FunctionComponent = () => {
             <Open
               className={classNames(
                 DRIFT,
-                FADE,
                 'kicl-margin-block-start-auto',
                 'kicl-position-relative'
               )}
