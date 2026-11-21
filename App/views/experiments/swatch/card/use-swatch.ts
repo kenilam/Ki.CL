@@ -1,6 +1,7 @@
 // API
 import {
   Kicl_SwatchDocument,
+  Kicl_SwatchListDocument,
   Kicl_SwatchUpdatedDocument,
   skipToken,
   useQuery,
@@ -22,6 +23,13 @@ const useSwatch = () => {
   const making = data?.swatch?.status === 'MAKING';
 
   useSubscription(Kicl_SwatchUpdatedDocument, {
+    onData: ({ client, data: { data: pushed } }) => {
+      if (pushed?.swatchUpdated?.status !== 'READY') {
+        return;
+      }
+
+      void client.refetchQueries({ include: [Kicl_SwatchListDocument] });
+    },
     skip: !id || !making,
     variables: { id: id ?? '' },
   });
