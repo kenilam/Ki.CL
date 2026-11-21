@@ -23,6 +23,7 @@ const Privacy: React.FunctionComponent = () => {
       <PopoverTrigger asChild>
         <Button
           before={<Tb.TbInfoCircle aria-hidden />}
+          className='kicl-align-self-end'
           size='small'
           variant='tertiary'
         >

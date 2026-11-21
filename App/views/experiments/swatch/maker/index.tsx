@@ -5,7 +5,6 @@ import { Sheet } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
-import { useSpent } from '@/views/experiments/swatch/use-spent';
 
 // Partials
 import { Provider } from './context';
@@ -24,12 +23,11 @@ type Props = Pick<React.ComponentProps<typeof Sheet>, 'defaultOpen'>;
 
 const Maker: React.FunctionComponent<Props> = ({ defaultOpen }) => {
   const { t } = useTranslation('swatch');
-  const spent = useSpent();
 
   return (
     <Provider>
       <Sheet
-        aria-label={t('action', { context: spent ? 'find' : 'make' })}
+        aria-label={t('action', { context: 'find' })}
         className={CLASS_NAME}
         defaultOpen={defaultOpen}
         footer={<Footer />}

@@ -28,6 +28,12 @@ swatch and shows it.
   `use-swatch.ts` fetches the swatch and subscribes to `swatchUpdated` while
   it's being made, so the still and then the film appear as each is ready.
   Every part reads the swatch from the cache with `use-card.ts`.
+- **`card/chip/`** has two versions. `narrower/`, at the `narrower`
+  breakpoint and below, is two columns wide with a 16:9 window and the
+  buttons under the values; `default/` is three columns with a square window.
+  The window is a hole onto the film, frosted and tinted to the swatch's
+  color, which it carries as its `color`. The cloth and the paper between its
+  teeth are one conic tile and its inverse, so their edges meet.
 - **`card/chip/values/`** lists the closest Pantone Coated color to the
   swatch's hex, then its CMYK, RGB and HEX values. The Pantone match is
   found by [chromonym](https://github.com/simiancraft/chromonym) with
@@ -35,14 +41,17 @@ swatch and shows it.
   line below (`use-pantone.ts`). chromonym's Pantone values are community
   approximations, so it's the nearest match, not the swatch's own Pantone
   number.
-- **`maker/`** is the sheet, opened by the button above the chip: "Make a
-  swatch", or "Find a swatch" once the visitor's allowance is used up. Its
+- **`maker/`** is the sheet, opened by the button above the chip, "Find a
+  swatch". Its
   color field is the design system's `ColorPicker` in place
   (`presentation='widget'`). Moving the color opens the existing swatch
   nearest to it, measured in OKLab (`oklab.ts`), so picking browses. Below
   the picker, `make/pick/swatches/` lists every finished swatch, marks the one
   on the page as exact or closest to the picked color, and scrolls it into
-  view; choosing one opens it and moves the picker to its color. The color
+  view; choosing one opens it and moves the picker to its color, and closes the
+  sheet where it fills the screen (`narrow` and below), where the sheet is a
+  modal dialog and `maker/close.ts` closes it with `close()`, not
+  `hidePopover()`. The color
   field sticks below the sheet's header, at the height the sheet publishes
   (`--kicl--components--sheet--header-block-size`), while the list scrolls
   under it. The picked
@@ -50,8 +59,8 @@ swatch and shows it.
   (`keepDirtyValues`). "Generate a swatch", in the sheet's footer, submits
   whichever form is showing through the button's `form` attribute: it makes a
   swatch in exactly that color. It's disabled while the page already shows
-  that exact color, and the footer shows the allowance badge in its place
-  once none are left, when uploading is turned off too. The API refuses an
+  that exact color, and once the allowance is used up, when uploading is
+  turned off too. The allowance badge sits above it. The API refuses an
   upload without allowance before it reads the picture. The picked color, the
   mode and the request live in `maker/context/`, since the forms and the
   footer are in different parts of the sheet. An uploaded picture is sent as
@@ -59,7 +68,10 @@ swatch and shows it.
   `make/upload/found/` shows the color and name the API found in it while the
   photograph and film are made. A new swatch isn't opened until its
   photograph exists: `maker/watch/` follows it from outside the sheet, and
-  `maker/progress/` shows each step in it. The footer says who can see a
+  `maker/progress/` shows each step in it.
+  Starting one refetches the notifications, so the site's notification group
+  subscribes and says when it's ready if the visitor has moved to another
+  page. The footer says who can see a
   swatch, beside the button or the badge.
 - **`film/`** shows a swatch's film, or its still until the film is ready and
   with reduced motion. The swatch page and the experiments page share it.
@@ -68,7 +80,8 @@ swatch and shows it.
   link and the button over the film follow it; the chip is always paper.
 - **`card/chip/controls/`** holds the film's play and pause button, which
   pauses the backdrop's video through `film/context/`, and the sound button.
-  **`controls/sound/`** turns the sound on and off: the tone, with Tone.js,
+  **`controls/sound/`** turns the sound on and off, and is hidden while the
+  film loads: the tone, with Tone.js,
   loaded when the visitor turns the sound on and stopped while the film is
   paused, and a film with its own sound (`audio`) unmuted over it. The tone is a chord on a slow progression in its
   mode, sparse notes above it as often as its density asks, through a filter

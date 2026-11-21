@@ -1,59 +1,36 @@
-import React from 'react';
-
-// Libraries
-import classNames from 'classnames';
+import React, { Suspense } from 'react';
 
 // Components
-import { Card, Layout } from 'design/components';
+import { Spinner } from 'design/components';
 
-// Partials
-import { Controls } from './controls';
-import { Credit } from './credit';
-import { Name } from './name';
-import { Status } from './status';
-import { Values } from './values';
-import { Window } from './window';
+// Hooks
+import { useResponsive } from 'design/hooks';
 
 // Styles
 import './styles.scss';
 
-// Constants
-import { DRIFT } from '@/views/experiments/swatch/card/constants';
-import { CLASS_NAME as VIEW } from '@/views/experiments/swatch/constants';
+const VERSIONS = {
+  true: React.lazy(async () => {
+    const { Narrower } = await import('./narrower');
 
-const CLASS_NAME = `${VIEW}__chip`;
+    return { default: Narrower };
+  }),
+  false: React.lazy(async () => {
+    const { Default } = await import('./default');
+
+    return { default: Default };
+  }),
+};
 
 const Chip: React.FunctionComponent = () => {
+  const { isNarrower } = useResponsive();
+
+  const Version = VERSIONS[String(isNarrower)];
+
   return (
-    <Card
-      className={classNames(
-        CLASS_NAME,
-        DRIFT,
-        'kicl--theme--light',
-        'kicl-position-relative'
-      )}
-      gap='narrow'
-      is='section'
-      size={3}
-    >
-      <header className='kicl-position-relative'>
-        <Name />
-        <Status />
-      </header>
-      <Window />
-      <Layout
-        alignItems='end'
-        autoFlow='column'
-        frames='1fr--max-content'
-        gap='narrow'
-      >
-        <footer>
-          <Values />
-          <Controls />
-        </footer>
-      </Layout>
-      <Credit />
-    </Card>
+    <Suspense fallback={<Spinner position='inline' />}>
+      <Version />
+    </Suspense>
   );
 };
 
