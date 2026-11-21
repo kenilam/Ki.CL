@@ -1,9 +1,3 @@
-@property --kicl--views--experiments--swatch__card--fade {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 1;
-}
-
 // The banner's progress as it scrolls away.
 .kicl--views--experiments--swatch__card {
   @supports (animation-timeline: view()) {
@@ -12,8 +6,7 @@
   }
 
   // What rests on the film moves down with it as the banner scrolls away, and
-  // is gone by a quarter of a screen. A drifting part reads `--fade`; one that
-  // can fade as a whole also takes `__fade`.
+  // is gone by a quarter of a screen.
   &__drift {
     @supports (animation-timeline: view()) {
       @media (prefers-reduced-motion: no-preference) {
@@ -23,20 +16,15 @@
       }
     }
   }
-
-  &__fade {
-    opacity: var(--kicl--views--experiments--swatch__card--fade);
-  }
 }
 
 @keyframes kicl--views--experiments--swatch__card--drift {
   25% {
-    --kicl--views--experiments--swatch__card--fade: 0;
+    opacity: 0;
   }
 
   100% {
-    --kicl--views--experiments--swatch__card--fade: 0;
-
+    opacity: 0;
     translate: 0 50dvb;
   }
 }

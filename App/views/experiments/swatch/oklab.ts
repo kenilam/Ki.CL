@@ -29,4 +29,9 @@ const distanceOf = (from: string, to: string): number => {
   return Math.hypot(l1 - l2, a1 - a2, b1 - b2);
 };
 
-export { distanceOf };
+// Close enough to white to read as the chip's paper.
+const WHITE = 0.08;
+
+const isWhite = (hex: string): boolean => distanceOf(hex, '#ffffff') < WHITE;
+
+export { distanceOf, isWhite };
