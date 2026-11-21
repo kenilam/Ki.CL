@@ -13,6 +13,9 @@ import * as Tb from 'react-icons/tb';
 // Components
 import { HyperLink, ListItem } from 'design/components';
 
+// Hooks
+import { useLive } from './use-live';
+
 // Constants
 import { toLabel, toPath } from '@/views/experiments/image-agent/constants';
 
@@ -26,6 +29,8 @@ const Thread: React.FunctionComponent<Props> = ({ id }) => {
   const thread = data?.imageAgentAllowance.running.find((running) => {
     return running.id === id;
   });
+
+  useLive(id);
 
   if (!thread) {
     return null;

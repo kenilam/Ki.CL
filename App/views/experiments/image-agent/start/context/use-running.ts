@@ -1,33 +1,17 @@
-import { useEffect } from 'react';
-
 // API
 import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
 
-/** How often to check again while a turn is running. */
-const POLL_MS = 3000;
-
 /**
  * Whether a turn is running in one of the person's conversations. While one
- * is, a new conversation is refused, so this keeps checking until it ends.
- * The running list and the composer's allowance read the same query and
- * update with it.
+ * is, a new conversation is refused. Each running thread in the list follows
+ * its own updates and fetches this again when its turn ends.
  */
 function useRunning() {
-  const { data, startPolling, stopPolling } = useQuery(
-    Kicl_ImageAgentAllowanceDocument,
-    { fetchPolicy: 'cache-and-network' }
-  );
-  const busy = data?.imageAgentAllowance.busy ?? false;
+  const { data } = useQuery(Kicl_ImageAgentAllowanceDocument, {
+    fetchPolicy: 'cache-and-network',
+  });
 
-  useEffect(() => {
-    if (!busy) {
-      return undefined;
-    }
-    startPolling(POLL_MS);
-    return stopPolling;
-  }, [busy, startPolling, stopPolling]);
-
-  return busy;
+  return data?.imageAgentAllowance.busy ?? false;
 }
 
 export { useRunning };
