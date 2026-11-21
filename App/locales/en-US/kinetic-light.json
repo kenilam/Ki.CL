@@ -7,7 +7,7 @@
       "days": "Every song is deleted 30 days after it’s made, along with everything saved with it. Until then, anyone with its link can open it.",
       "intro": "What I keep depends on the kind of file you upload.",
       "kept_file": "It’s saved with the song, because the song plays from it.",
-      "kept_sheet": "It’s held in memory while homr and Gemini read it, and then it’s dropped. Only what they read is saved: the notes, the chords, the title and the tempo."
+      "kept_sheet": "It’s kept privately while homr and Gemini read it, and deleted as soon as they finish. Only what they read is saved: the notes, the chords, the title and the tempo."
     },
     "picture": {
       "balls": "Each staff gets a ball for each note of its biggest chord. A ball lands on every notehead as it sounds and arcs to the next one, higher when the notes are further apart. It leaves a glowing trail with a soft reflection on the floor.",
