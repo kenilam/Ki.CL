@@ -19,18 +19,18 @@ const CLASS_NAME = `${VIEW}__chip__window`;
 
 // A hole in the chip onto the film behind it, with the shadow the cloth casts on the paper.
 const Window: React.FunctionComponent = () => {
-  const loading = useCard() === undefined;
+  const card = useCard();
+  const hex = card?.hex;
 
   return (
     <span
       aria-hidden
-      className={classNames(
-        CLASS_NAME,
-        'kicl-aspect-ratio-square',
-        'kicl-display-grid'
-      )}
+      className={classNames(CLASS_NAME, 'kicl-display-grid')}
+      style={hex ? { color: hex } : undefined}
     >
-      {loading ? <Skeleton className={`${CLASS_NAME}__skeleton`} /> : null}
+      {card === undefined ? (
+        <Skeleton className={`${CLASS_NAME}__skeleton`} />
+      ) : null}
       <span className={`${CLASS_NAME}__shadow`} />
     </span>
   );

@@ -9,11 +9,11 @@ import { HyperLink, Image, ListItem } from 'design/components';
 // Routes
 import { useParams } from 'design/router';
 
+// Hooks
+import { useChoose } from './use-choose';
+
 // Partials
 import { Current } from './current';
-
-// Context
-import { useMaker } from '@/views/experiments/swatch/maker/context';
 
 // Styles
 import './styles.scss';
@@ -28,7 +28,7 @@ type Props = { id: string };
 
 const Swatch: React.FunctionComponent<Props> = ({ id }) => {
   const { [PARAM]: current } = useParams();
-  const { pick } = useMaker();
+  const choose = useChoose();
   const { data } = useQuery(Kicl_SwatchListDocument);
   const swatch = data?.swatchList.find((match) => {
     return match.id === id;
@@ -55,7 +55,7 @@ const Swatch: React.FunctionComponent<Props> = ({ id }) => {
         display={false}
         lookLikeButton
         onClick={() => {
-          pick.reset({ hex }, { keepDirtyValues: false });
+          choose(hex);
         }}
         replace
         size='small'

@@ -20,7 +20,7 @@ const Values: React.FunctionComponent = () => {
   }
 
   return (
-    <Layout columns gap='narrowest'>
+    <Layout gap='narrowest'>
       <dl>
         {TERMS.map((term) => {
           return <Value key={term} term={term} />;

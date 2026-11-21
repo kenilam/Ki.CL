@@ -9,17 +9,19 @@
   $ink: var(--kicl-color-black-pure);
   $shade: color-mix(in srgb, #{$ink} 35%, transparent);
   $tooth: var(--kicl-size);
-  $foot: var(--kicl-size-half);
   $reach: var(--kicl-size-half);
 
-  // Where the cloth is: its body, and its teeth along the foot.
-  $body: linear-gradient(#{$ink} 0 0);
-  $teeth: conic-gradient(from -45deg at 50% 100%, #{$ink} 90deg, transparent 0);
-  $gaps: conic-gradient(
+  // Where the cloth is, one tile per tooth: solid above the foot, a 45° point
+  // below. The paper is the same tile inverted, so their edges meet exactly.
+  // The outline is the cloth in paper, so what its mask leaves at the edges
+  // is paper too.
+  $gaps: conic-gradient(from -45deg at 50% 100%, transparent 90deg, #{$ink} 0);
+  $outline: conic-gradient(
     from -45deg at 50% 100%,
-    transparent 90deg,
-    #{$paper} 0
+    #{$paper} 90deg,
+    transparent 0
   );
+  $solid: linear-gradient(#{$ink} 0 0);
 
   // Grain from SVG turbulence, and a faint twill.
   $grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -31,6 +33,12 @@
     $light 0 $thread,
     transparent $thread $pitch
   );
+
+  aspect-ratio: var(
+    --kicl--views--experiments--swatch__chip__window--aspect-ratio,
+    var(--kicl-aspect-ratio-square)
+  );
+  color: transparent;
 
   // Corners a little uneven, as a swatch cut by hand would be.
   border-radius: var(--kicl-size-3px) var(--kicl-size-1px) var(--kicl-size-2px)
@@ -60,43 +68,56 @@
 
   // The film behind, frosted into cloth of the swatch's color.
   &::before {
-    backdrop-filter: blur(var(--kicl-size));
+    backdrop-filter: blur(var(--kicl-size-3px));
     border-radius: inherit;
+    background-color: color-mix(in oklab, currentcolor 50%, transparent);
     background-image: $grain, $twill;
+
+    // Chrome paints a backdrop filter out to whole pixels, past a fractional
+    // edge and over the paper; the mask keeps it to the window.
+    mask-image: $solid;
     z-index: 0;
   }
 
-  // Cut with pinking shears at the foot: the paper shows between the teeth.
+  // Cut with pinking shears at the foot: the paper shows between the teeth,
+  // and runs a pixel past the foot, so no film shows where it meets the paper
+  // around the window.
   &::after {
-    background-image: $gaps;
-    background-position: bottom;
-    background-repeat: repeat-x;
-    background-size: $tooth $foot;
+    background-color: $paper;
+    margin-block-end: calc(var(--kicl-size-1px) * -1);
+    mask-clip: border-box;
+    mask-image: $gaps, $solid;
+    mask-origin: content-box, border-box;
+    mask-position: bottom;
+    mask-repeat: repeat-x, no-repeat;
+    mask-size:
+      $tooth 100%,
+      100% var(--kicl-size-2px);
+    padding-block-end: var(--kicl-size-1px);
     z-index: 1;
   }
 
   // The cloth's outline, a little inside a larger box, casting its drop
-  // shadow. The mask keeps only the shadow, on the paper outside the outline.
+  // shadow. The mask keeps only the shadow: on the paper between the teeth,
+  // and outside the window.
   &__shadow {
     background-clip: content-box;
-    background-image: $teeth, $body;
+    background-image: $outline;
     background-origin: content-box;
-    background-position: bottom, top;
-    background-repeat: repeat-x, no-repeat;
-    background-size:
-      $tooth $foot,
-      100% calc(100% - #{$foot});
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-size: $tooth 100%;
     filter: drop-shadow(0 var(--kicl-size-1px) var(--kicl-size-1px) #{$shade});
     margin: calc(#{$reach} * -1);
     mask-clip: content-box, content-box, border-box;
-    mask-composite: exclude, exclude, add;
-    mask-image: $teeth, $body, linear-gradient(#{$ink} 0 0);
+    mask-composite: add, exclude, add;
+    mask-image: $gaps, $solid, $solid;
     mask-origin: content-box, content-box, border-box;
-    mask-position: bottom, top, center;
+    mask-position: bottom, center, center;
     mask-repeat: repeat-x, no-repeat, no-repeat;
     mask-size:
-      $tooth $foot,
-      100% calc(100% - #{$foot}),
+      $tooth 100%,
+      100% 100%,
       100% 100%;
     padding: $reach;
     z-index: 2;

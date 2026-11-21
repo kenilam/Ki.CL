@@ -8,24 +8,20 @@ import { Button } from 'design/components';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
-import { useExact } from '@/views/experiments/swatch/maker/use-exact';
-
-// Context
-import { useMaker } from '@/views/experiments/swatch/maker/context';
+import { useGenerate } from './use-generate';
 
 // Constants
 import { FORM } from '@/views/experiments/swatch/maker/constants';
 
 const Generate: React.FunctionComponent = () => {
   const { t } = useTranslation('swatch');
-  const { busy, mode } = useMaker();
-  const exact = useExact();
+  const { busy, disabled } = useGenerate();
 
   return (
     <Button
       before={<Tb.TbSparkles aria-hidden />}
       busy={busy}
-      disabled={mode === 'pick' && exact}
+      disabled={disabled}
       form={FORM}
       size='small'
       type='submit'
