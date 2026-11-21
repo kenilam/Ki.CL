@@ -4,9 +4,9 @@
 in the dark. A swatch is a color with a name, a photograph in that color, a
 looping film of the photograph with its own sound, and a tone the browser
 plays under it. The page shows the film full screen behind a
-paper chip, laid out like a COLORO chip: the name, a window cut through to the
-film, frosted and pinked at its foot, the closest Pantone color with the CMYK,
-RGB and HEX values, and the film and sound buttons. The button above the chip
+paper chip with the name, a window onto the film with pinked teeth at its
+foot, the closest Pantone color with the CMYK, RGB and HEX values, and the
+film and sound buttons. The button above the chip
 opens a sheet to pick a color or upload a picture. Every swatch is public and
 kept forever.
 
@@ -29,11 +29,20 @@ swatch and shows it.
   it's being made, so the still and then the film appear as each is ready.
   Every part reads the swatch from the cache with `use-card.ts`.
 - **`card/chip/`** has two versions. `narrower/`, at the `narrower`
-  breakpoint and below, is two columns wide with a 16:9 window and the
-  buttons under the values; `default/` is three columns with a square window.
-  The window is a hole onto the film, frosted and tinted to the swatch's
-  color, which it carries as its `color`. The cloth and the paper between its
-  teeth are one conic tile and its inverse, so their edges meet.
+  breakpoint and below, is two columns wide with a 16:9 pane and the buttons
+  under the values; `default/` is three columns with a square pane and the
+  buttons beside them. The chip's paper is `window/`, which takes the chip's
+  parts as children. Through its hole, the pane shows the film frosted with
+  grain (`::before`), and the swatch's color pooling at the foot over it,
+  under the paper's lip (`::after`), both anchored to the pane. The color sits
+  above the frost so it shows exactly, white included. The swatch's hex is the
+  chip's `color`. The chip moves down with the banner as it scrolls away, and
+  only its parts fade: opacity on the chip would cut the frost off from the
+  film. A `ResizeObserver`
+  in `window/use-clip.ts` measures the pane, the empty span among them, and
+  clips a hole through the paper where it is, with one `evenodd` polygon.
+  Its foot is cut into teeth `--kicl-size` wide at 45°, centred, with part of
+  a tooth at each end, as pinking shears leave them.
 - **`card/chip/values/`** lists the closest Pantone Coated color to the
   swatch's hex, then its CMYK, RGB and HEX values. The Pantone match is
   found by [chromonym](https://github.com/simiancraft/chromonym) with

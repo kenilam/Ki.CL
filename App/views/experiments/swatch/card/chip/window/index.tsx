@@ -1,38 +1,31 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 // Libraries
 import classNames from 'classnames';
 
 // Components
-import { Skeleton } from 'design/components';
+import { Layout } from 'design/components';
 
 // Hooks
-import { useCard } from '@/views/experiments/swatch/use-card';
+import { useClip } from './use-clip';
 
 // Styles
 import './styles.scss';
 
 // Constants
-import { CLASS_NAME as VIEW } from '@/views/experiments/swatch/constants';
+import { CLASS_NAME as CHIP } from '@/views/experiments/swatch/card/chip/constants';
 
-const CLASS_NAME = `${VIEW}__chip__window`;
+const CLASS_NAME = `${CHIP}__window`;
 
-// A hole in the chip onto the film behind it, with the shadow the cloth casts on the paper.
-const Window: React.FunctionComponent = () => {
-  const card = useCard();
-  const hex = card?.hex;
+const Window: React.FunctionComponent<PropsWithChildren> = ({ children }) => {
+  const ref = useClip();
 
   return (
-    <span
-      aria-hidden
-      className={classNames(CLASS_NAME, 'kicl-display-grid')}
-      style={hex ? { color: hex } : undefined}
-    >
-      {card === undefined ? (
-        <Skeleton className={`${CLASS_NAME}__skeleton`} />
-      ) : null}
-      <span className={`${CLASS_NAME}__shadow`} />
-    </span>
+    <Layout gap='narrow'>
+      <div className={classNames(CLASS_NAME, 'kicl-padding')} ref={ref}>
+        {children}
+      </div>
+    </Layout>
   );
 };
 
