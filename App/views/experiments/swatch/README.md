@@ -57,7 +57,7 @@ swatch and shows it.
   nearest to it, measured in OKLab (`oklab.ts`), so picking browses. Below
   the picker, `make/pick/swatches/` lists every finished swatch, marks the one
   on the page as exact or closest to the picked color, and scrolls it into
-  view; choosing one opens it and moves the picker to its color, and closes the
+  view; the list is fetched again each time the sheet opens and when the swatch on the page is ready; choosing one opens it and moves the picker to its color, and closes the
   sheet where it fills the screen (`narrow` and below), where the sheet is a
   modal dialog and `maker/close.ts` closes it with `close()`, not
   `hidePopover()`. The color
