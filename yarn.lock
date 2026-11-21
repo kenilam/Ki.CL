@@ -8493,13 +8493,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoize-one@npm:^4.0.0":
-  version: 4.0.3
-  resolution: "memoize-one@npm:4.0.3"
-  checksum: 10c0/0ca0a07a0eb58867563cb05abf74596b21df02ac1046c55e5639367df8be64fa5a4a82430520f88f1ffaddec2657355b9189471ca3cff700e2164b662569e060
-  languageName: node
-  linkType: hard
-
 "meow@npm:^14.1.0":
   version: 14.1.0
   resolution: "meow@npm:14.1.0"
@@ -10412,14 +10405,13 @@ __metadata:
   linkType: hard
 
 "react-highlight-words@npm:^0.21.0":
-  version: 0.21.0
-  resolution: "react-highlight-words@npm:0.21.0"
+  version: 0.21.1
+  resolution: "react-highlight-words@npm:0.21.1"
   dependencies:
     highlight-words-core: "npm:^1.2.0"
-    memoize-one: "npm:^4.0.0"
   peerDependencies:
     react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0 || ^19.0.0-0
-  checksum: 10c0/8704097b6ca2b08a943e55e66493fab21d523362c8ea754ef4c7a351b4625b684d7ed1e9155f97d033be78783dacdd88bb83e2766cfc3d462c311551552b8ad5
+  checksum: 10c0/0d3a67f77b2116f9219de294659fd4b3663d082c6b3d6c59d9bfd63a95730642ad747cc20f4b98beca38062645405f0709208411c0369df919276a71c5406e82
   languageName: node
   linkType: hard
 
