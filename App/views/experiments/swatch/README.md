@@ -57,7 +57,7 @@ swatch and shows it.
   nearest to it, measured in OKLab (`oklab.ts`), so picking browses. Below
   the picker, `make/pick/swatches/` lists every finished swatch, marks the one
   on the page as exact or closest to the picked color, and scrolls it into
-  view; the list is fetched again each time the sheet opens and when the swatch on the page is ready; choosing one opens it and moves the picker to its color, and closes the
+  view; the list and the allowance are fetched again each time the sheet opens (`maker/use-refresh.ts`) and when the swatch on the page is ready; choosing one opens it and moves the picker to its color, and closes the
   sheet where it fills the screen (`narrow` and below), where the sheet is a
   modal dialog and `maker/close.ts` closes it with `close()`, not
   `hidePopover()`. The color
@@ -69,7 +69,9 @@ swatch and shows it.
   whichever form is showing through the button's `form` attribute: it makes a
   swatch in exactly that color. It's disabled while the page already shows
   that exact color, and once the allowance is used up, when uploading is
-  turned off too. The allowance badge sits above it. The API refuses an
+  turned off too. It shows "Generating…" while one of the visitor's swatches
+  is still being made, which the API counts until the film is ready, minutes
+  after the sheet has opened the swatch at its photograph. The allowance badge sits above it. The API refuses an
   upload without allowance before it reads the picture. The picked color, the
   mode and the request live in `maker/context/`, since the forms and the
   footer are in different parts of the sheet. An uploaded picture is sent as
