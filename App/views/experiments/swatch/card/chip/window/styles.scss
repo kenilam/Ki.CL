@@ -9,7 +9,6 @@
   $ink: var(--kicl-color-black-pure);
   $shade: color-mix(in srgb, #{$ink} 35%, transparent);
   $tooth: var(--kicl-size);
-  $reach: var(--kicl-size-half);
 
   // Where the cloth is, one tile per tooth: solid above the foot, a 45° point
   // below. The paper is the same tile inverted, so their edges meet exactly.
@@ -97,29 +96,18 @@
     z-index: 1;
   }
 
-  // The cloth's outline, a little inside a larger box, casting its drop
-  // shadow. The mask keeps only the shadow: on the paper between the teeth,
-  // and outside the window.
+  // The cloth's outline, casting its drop shadow. The mask keeps only the
+  // shadow on the paper between the teeth, so none falls past the foot.
   &__shadow {
-    background-clip: content-box;
     background-image: $outline;
-    background-origin: content-box;
     background-position: bottom;
     background-repeat: repeat-x;
     background-size: $tooth 100%;
     filter: drop-shadow(0 var(--kicl-size-1px) var(--kicl-size-1px) #{$shade});
-    margin: calc(#{$reach} * -1);
-    mask-clip: content-box, content-box, border-box;
-    mask-composite: add, exclude, add;
-    mask-image: $gaps, $solid, $solid;
-    mask-origin: content-box, content-box, border-box;
-    mask-position: bottom, center, center;
-    mask-repeat: repeat-x, no-repeat, no-repeat;
-    mask-size:
-      $tooth 100%,
-      100% 100%,
-      100% 100%;
-    padding: $reach;
+    mask-image: $gaps;
+    mask-position: bottom;
+    mask-repeat: repeat-x;
+    mask-size: $tooth 100%;
     z-index: 2;
   }
 }
