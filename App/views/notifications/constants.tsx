@@ -65,6 +65,4 @@ const lookOf = ({
   return LOOKS[`${key}_${values.context}`] ?? LOOKS[key] ?? {};
 };
 
-const POLL_MS = 30 * 1000;
-
-export { LOOKS, lookOf, POLL_MS };
+export { LOOKS, lookOf };

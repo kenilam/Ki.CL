@@ -15,14 +15,13 @@ import { useLocation } from 'design/router';
 
 // Constants
 import { RECORD_PATHS } from '@/views/routes';
-import { lookOf, POLL_MS } from './constants';
+import { lookOf } from './constants';
 
 function useNotifications() {
   const { pathname } = useLocation();
-  const { data, startPolling, stopPolling } = useQuery(
-    Kicl_NotificationsDocument,
-    { fetchPolicy: 'cache-and-network' }
-  );
+  const { data } = useQuery(Kicl_NotificationsDocument, {
+    fetchPolicy: 'cache-and-network',
+  });
   const [dismiss] = useMutation(Kicl_NotificationsDismissDocument, {
     refetchQueries: [Kicl_NotificationsDocument],
   });
@@ -38,18 +37,6 @@ function useNotifications() {
     });
 
   const running = notifications.some(({ look }) => look.running);
-
-  useEffect(() => {
-    if (!running) {
-      return;
-    }
-
-    startPolling(POLL_MS);
-
-    return () => {
-      stopPolling();
-    };
-  }, [running, startPolling, stopPolling]);
 
   useSubscription(Kicl_NotificationUpdatedDocument, {
     onData: ({ client, data: { data: pushed } }) => {
