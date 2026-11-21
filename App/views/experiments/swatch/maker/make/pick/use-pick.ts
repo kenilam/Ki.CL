@@ -1,5 +1,6 @@
 // API
 import {
+  Kicl_NotificationsDocument,
   Kicl_SwatchAllowanceDocument,
   Kicl_SwatchPickDocument,
   useMutation,
@@ -8,17 +9,20 @@ import {
 // Routes
 import { useNavigate } from 'design/router';
 
+// Helpers
+import { closeMaker } from '@/views/experiments/swatch/maker/close';
+
 // Context
 import { useMaker } from '@/views/experiments/swatch/maker/context';
 
 // Constants
-import { MAKER, toPath } from '@/views/experiments/swatch/constants';
+import { toPath } from '@/views/experiments/swatch/constants';
 
 const usePick = () => {
   const navigate = useNavigate();
   const { pick: form, setPending, setSending } = useMaker();
   const [pick] = useMutation(Kicl_SwatchPickDocument, {
-    refetchQueries: [Kicl_SwatchAllowanceDocument],
+    refetchQueries: [Kicl_NotificationsDocument, Kicl_SwatchAllowanceDocument],
   });
 
   const submit = form.handleSubmit(async (values) => {
@@ -38,7 +42,7 @@ const usePick = () => {
         return;
       }
 
-      document.getElementById(MAKER)?.hidePopover();
+      closeMaker();
       navigate(toPath(swatch.id));
     } catch (error) {
       form.setError('hex', { message: (error as Error).message });

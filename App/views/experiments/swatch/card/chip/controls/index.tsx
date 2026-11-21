@@ -23,7 +23,12 @@ const Controls: React.FunctionComponent = () => {
   }
 
   return (
-    <Layout alignItems='center' autoFlow='column' gap='narrower'>
+    <Layout
+      alignItems='center'
+      autoFlow='column'
+      gap='narrower'
+      justifyContent='start'
+    >
       <div role='group'>
         <Play />
         <Sound />

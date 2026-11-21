@@ -12,11 +12,14 @@ import {
 // Routes
 import { useNavigate } from 'design/router';
 
+// Helpers
+import { closeMaker } from '@/views/experiments/swatch/maker/close';
+
 // Context
 import { useMaker } from '@/views/experiments/swatch/maker/context';
 
 // Constants
-import { MAKER, toPath } from '@/views/experiments/swatch/constants';
+import { toPath } from '@/views/experiments/swatch/constants';
 
 // Opens a new swatch once its photograph exists, not before, wherever the sheet is.
 const Watch: React.FunctionComponent = () => {
@@ -39,7 +42,7 @@ const Watch: React.FunctionComponent = () => {
     }
 
     setPending(null);
-    document.getElementById(MAKER)?.hidePopover();
+    closeMaker();
     navigate(toPath(swatch.id));
   }, [navigate, pending, setPending, swatch]);
 

@@ -28,7 +28,7 @@ const Make: React.FunctionComponent = () => {
 
   return (
     <Layout autoFlow='row' gap='narrow' justifyItems='stretch'>
-      <section aria-label={t('action', { context: spent ? 'find' : 'make' })}>
+      <section aria-label={t('action', { context: 'find' })}>
         <Segmented
           aria-label={t('label', { context: 'source' })}
           collapse='stack'

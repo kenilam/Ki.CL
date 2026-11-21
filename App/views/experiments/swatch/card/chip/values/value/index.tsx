@@ -23,18 +23,16 @@ const Value: React.FunctionComponent<Props> = ({ term }) => {
 
   if (!hex) {
     return (
-      <>
-        <Layout span={4}>
+      <Layout autoFlow='column' frames='5fr--7fr' gap='narrowest'>
+        <div>
           <dt>
             <Skeleton className='kicl-inline-size-xs' />
           </dt>
-        </Layout>
-        <Layout span={8}>
           <dd>
             <Skeleton className='kicl-inline-size-md' />
           </dd>
-        </Layout>
-      </>
+        </div>
+      </Layout>
     );
   }
 
@@ -50,22 +48,20 @@ const Value: React.FunctionComponent<Props> = ({ term }) => {
   }
 
   return (
-    <>
-      <Layout span={4}>
+    <Layout autoFlow='column' frames='5fr--7fr' gap='narrowest'>
+      <div>
         <dt>
           <Text is='strong' lookLike='small'>
             {t('term', { context: term })}
           </Text>
         </dt>
-      </Layout>
-      <Layout span={8}>
         <dd>
           <Text is='span' lookLike='small'>
             <bdi dir='ltr'>{VALUES[term]}</bdi>
           </Text>
         </dd>
-      </Layout>
-    </>
+      </div>
+    </Layout>
   );
 };
 
