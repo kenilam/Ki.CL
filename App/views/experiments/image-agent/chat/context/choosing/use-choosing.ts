@@ -1,5 +1,5 @@
 // API
-import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/client';
 
 // Context
 import { useBusyContext } from '@/views/experiments/image-agent/chat/context/busy';

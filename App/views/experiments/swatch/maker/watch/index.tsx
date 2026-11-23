@@ -7,7 +7,7 @@ import {
   skipToken,
   useQuery,
   useSubscription,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useNavigate } from 'design/router';

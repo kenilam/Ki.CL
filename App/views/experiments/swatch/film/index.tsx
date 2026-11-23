@@ -4,7 +4,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 // API
-import { Kicl_SwatchDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchDocument, useQuery } from 'api/client';
 
 // Components
 import { Image, Video } from 'design/components';

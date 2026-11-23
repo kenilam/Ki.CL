@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { Kicl_SignOutDocument, useMutation } from 'api/provider';
+import { Kicl_SignOutDocument, useMutation } from 'api/client';
 
 import { useEnded } from './use-ended';
 

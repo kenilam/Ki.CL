@@ -1,5 +1,5 @@
 // API
-import { Kicl_SwatchDocument, skipToken, useQuery } from 'api/provider';
+import { Kicl_SwatchDocument, skipToken, useQuery } from 'api/client';
 
 // Context
 import { useMaker } from '@/views/experiments/swatch/maker/context';

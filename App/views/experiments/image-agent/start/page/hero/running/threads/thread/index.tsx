@@ -5,7 +5,7 @@ import {
   Kicl_ImageAgentAllowanceDocument,
   useQuery,
   type Kicl_ImageAgentAllowanceQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Icons
 import * as Tb from 'react-icons/tb';

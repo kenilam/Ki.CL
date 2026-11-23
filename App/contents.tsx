@@ -15,11 +15,11 @@ import { Spinner } from 'design/components';
 // View
 import { Views as View } from '@/views';
 
-const KiclProvider = lazy(async () => {
+const Provider = lazy(async () => {
   // The words outside any route load under the same spinner as the provider.
-  const [{ KiclProvider }] = await Promise.all([import('api/provider'), ready]);
+  const [{ Provider }] = await Promise.all([import('api/client'), ready]);
 
-  return { default: KiclProvider };
+  return { default: Provider };
 });
 
 const Contents: React.FunctionComponent = () => {
@@ -32,11 +32,11 @@ const Contents: React.FunctionComponent = () => {
   return (
     <Suspense fallback={<Spinner />}>
       {/* The session starts in `@/session`, at the root route. */}
-      <KiclProvider autoExchange={false}>
+      <Provider autoExchange={false}>
         <LocalStorageProvider>
           <View />
         </LocalStorageProvider>
-      </KiclProvider>
+      </Provider>
     </Suspense>
   );
 };

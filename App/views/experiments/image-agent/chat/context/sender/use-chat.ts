@@ -6,7 +6,7 @@ import {
   Kicl_ImageAgentRetryDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useParams } from 'design/router';

@@ -1,7 +1,7 @@
 import {
   Kicl_AcceptLanguagesUpdatedDocument,
   useSubscription,
-} from 'api/provider';
+} from 'api/client';
 
 // Hooks
 import { useTranslation } from 'design/hooks';

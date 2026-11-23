@@ -1,5 +1,5 @@
 // API
-import { Kicl_SwatchAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchAllowanceDocument, useQuery } from 'api/client';
 
 const useSpent = () => {
   const { data } = useQuery(Kicl_SwatchAllowanceDocument);

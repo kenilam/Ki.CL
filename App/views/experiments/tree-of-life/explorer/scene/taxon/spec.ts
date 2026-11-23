@@ -1,5 +1,5 @@
 import type { Vector3Tuple } from 'three';
-import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/provider';
+import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/client';
 
 /**
  * One taxon as the query returns it. `TreeOfLifeSubtree` is nullable - the

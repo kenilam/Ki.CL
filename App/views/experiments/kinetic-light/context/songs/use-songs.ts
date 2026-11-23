@@ -5,7 +5,7 @@ import {
   Kicl_KineticLightExamplesDocument,
   Kicl_KineticLightSongsDocument,
   useQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Context
 import { useGenerateContext } from '@/views/experiments/kinetic-light/context/generate';

@@ -6,7 +6,7 @@
       "runtimeExecutable": "sh",
       "runtimeArgs": [
         "-c",
-        "cd /Users/kenilam/Development/Ki.CL-back && exec yarn run development"
+        "cd /Users/kenilam/Development/Ki.CL-api && exec yarn run development"
       ],
       "port": 3100
     },

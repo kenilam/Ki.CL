@@ -11,7 +11,7 @@ import {
   useMutation,
   useQuery,
   useSubscription,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useLocation } from 'design/router';

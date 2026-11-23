@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 // API
-import { Kicl_SwatchListDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchListDocument, useQuery } from 'api/client';
 
 // Routes
 import { useParams } from 'design/router';

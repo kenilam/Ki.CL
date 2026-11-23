@@ -5,7 +5,7 @@ import {
   Kicl_TaxonSearchDocument,
   useLazyQuery,
   type Kicl_TaxonSearchQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Router
 import { useNavigate } from 'design/router';

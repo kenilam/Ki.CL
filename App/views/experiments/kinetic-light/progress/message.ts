@@ -1,5 +1,5 @@
 // API
-import type { Kicl_KineticLightReadingsQuery } from 'api/provider';
+import type { Kicl_KineticLightReadingsQuery } from 'api/client';
 
 // Hooks
 import type { TFunction } from 'design/hooks';

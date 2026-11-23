@@ -6,7 +6,7 @@ import {
   useLazyQuery,
   Kicl_TreeOfLifeSubtreeDocument,
   Kicl_TreeOfLifeSubtreesDocument,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useParams } from 'design/router';

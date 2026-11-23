@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // API
-import { loadTranslations } from 'api/provider';
+import { loadTranslations } from 'api/client';
 
 const usePreview = () => {
   const [value, setValue] = useState<string>();

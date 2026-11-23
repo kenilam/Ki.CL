@@ -1,4 +1,4 @@
-import { Kicl_MentorshipDocument, useQuery } from 'api/provider';
+import { Kicl_MentorshipDocument, useQuery } from 'api/client';
 
 import { useTranslation } from 'design/hooks';
 

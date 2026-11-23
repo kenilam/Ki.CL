@@ -5,7 +5,7 @@ import {
   Kicl_SwatchAllowanceDocument,
   Kicl_SwatchListDocument,
   useApolloClient,
-} from 'api/provider';
+} from 'api/client';
 
 // Constants
 import { MAKER } from '@/views/experiments/swatch/constants';

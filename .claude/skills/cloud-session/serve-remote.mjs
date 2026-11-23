@@ -8,7 +8,7 @@
  * backend's built Client package at `/client` the way the real server does,
  * so the site renders; anything that needs the API answers 503.
  *
- *   node serve-remote.mjs [path-to-Ki.CL-back/Client/dist] [port]
+ *   node serve-remote.mjs [path-to-Ki.CL-api/Client/dist] [port]
  *
  * Defaults: the sibling clone's dist, port 3100 - the host's KICL_BACKEND_URL
  * default - so no env change is needed.
@@ -28,7 +28,7 @@ const [, , distArgument, portArgument] = process.argv;
 // Relative to this file, not the shell, so it works from any directory.
 const REPO = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
-const DIST = resolve(distArgument ?? join(REPO, '../Ki.CL-back/Client/dist'));
+const DIST = resolve(distArgument ?? join(REPO, '../Ki.CL-api/Client/dist'));
 const PORT = Number(portArgument ?? 3100);
 const STATIC = process.env.KICL_STATIC_DIR
   ? resolve(process.env.KICL_STATIC_DIR)

@@ -1,5 +1,5 @@
 // API
-import type { Kicl_KineticLightReadingQuery } from 'api/provider';
+import type { Kicl_KineticLightReadingQuery } from 'api/client';
 
 // Readers
 import { readMidi } from './midi';

@@ -1,4 +1,4 @@
-import { Kicl_MeDocument, skipToken, useQuery } from 'api/provider';
+import { Kicl_MeDocument, skipToken, useQuery } from 'api/client';
 
 // Session
 import { useSessionContext } from '@/session';

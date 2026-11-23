@@ -4,7 +4,7 @@ import {
   skipToken,
   useMutation,
   useQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useLocation } from 'design/router';

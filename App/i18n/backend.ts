@@ -7,7 +7,7 @@ const load = async (
   namespace: string
 ): Promise<ResourceKey> => {
   try {
-    const { loadTranslations } = await import('api/provider');
+    const { loadTranslations } = await import('api/client');
     const { contentLanguage, translations } = await loadTranslations(language, [
       namespace,
     ]);

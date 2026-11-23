@@ -2,7 +2,7 @@ const SOURCE = `federation({
   name: 'api',
   filename: 'remoteEntry.js',
   exposes: {
-    './provider': './src/index.ts',
+    './client': './src/index.ts',
   },
   shared: {
     react: { singleton: true, requiredVersion: '^19.0.0' },

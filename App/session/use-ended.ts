@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { useApolloClient } from 'api/provider';
+import { useApolloClient } from 'api/client';
 
 import { useSessionContext } from './context';
 

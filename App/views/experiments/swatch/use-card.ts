@@ -1,5 +1,5 @@
 // API
-import { Kicl_SwatchDocument, skipToken, useQuery } from 'api/provider';
+import { Kicl_SwatchDocument, skipToken, useQuery } from 'api/client';
 
 // Routes
 import { useParams } from 'design/router';

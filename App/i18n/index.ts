@@ -38,7 +38,7 @@ i18next.on('languageChanged', (language) => {
  * namespace in `useTranslation`, which suspends into that route's fallback
  * until it arrives.
  */
-const ready = import('api/provider').then(async ({ loadTranslations }) => {
+const ready = import('api/client').then(async ({ loadTranslations }) => {
   let lng: string = SOURCE;
   let resources = {};
   const choice = remembered();

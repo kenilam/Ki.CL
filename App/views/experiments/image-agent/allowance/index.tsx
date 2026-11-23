@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 // API
-import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/client';
 
 // Components
 import {

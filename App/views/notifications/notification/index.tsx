@@ -7,7 +7,7 @@ import {
   useMutation,
   useQuery,
   type Kicl_NotificationsQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Components
 import { Notification as Origin } from 'design/components';

@@ -5,7 +5,7 @@ import {
   Kicl_SignInDocument,
   useMutation,
   type SignInInput,
-} from 'api/provider';
+} from 'api/client';
 
 // Components
 import { valibotResolver, useForm } from 'design/components';

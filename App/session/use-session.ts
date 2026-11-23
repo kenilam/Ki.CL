@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { hasSession } from 'api/provider';
+import { hasSession } from 'api/client';
 
 // Env
 import { useEnvContext } from '@/env/client';
