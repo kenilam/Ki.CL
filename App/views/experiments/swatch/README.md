@@ -10,7 +10,7 @@ film and sound buttons. The button above the chip
 opens a sheet to pick a color or upload a picture. Every swatch is public and
 kept forever.
 
-The API does the work, in `Ki.CL-api`'s `Swatch` module. This view asks for a
+The API does the work, in `Ki.CL-core`'s `Swatch` module. This view asks for a
 swatch and shows it.
 
 - **`home/`** is the index route. It replaces itself with the preset for the

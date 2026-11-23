@@ -2,6 +2,15 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "core-dev",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd /Users/kenilam/Development/Ki.CL-core && PORT=3110 exec yarn run development"
+      ],
+      "port": 3110
+    },
+    {
       "name": "backend-dev",
       "runtimeExecutable": "sh",
       "runtimeArgs": [

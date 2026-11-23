@@ -30,7 +30,8 @@ curl -sk --noproxy '*' https://localhost.kicl.com:3001/ | head
 
 ## The backend is not available here
 
-`Ki.CL-api` refuses to start without `MONGODB_ATLAS_URI`, which is
+`Ki.CL-core`, which the gateway in `Ki.CL-api` sends `/api` to, refuses
+to start without `MONGODB_ATLAS_URI`, which is
 gitignored and never in a cloud clone. Without a backend the host's Module
 Federation runtime cannot load `/client/remoteEntry.js` and blocks all
 rendering, so the page stays blank.

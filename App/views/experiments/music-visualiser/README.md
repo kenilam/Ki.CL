@@ -153,7 +153,7 @@ and sound in the file are not checked yet.
 
 ## Next
 
-1. **Backend Music module** in `Ki.CL-api`: an Audius adapter, a
+1. **Backend Music module** in `Ki.CL-core`: an Audius adapter, a
    `MusicTracks` collection, a `MusicNext` query returning a track and
    a same-origin stream path, and an Express stream route with
    range support. The host proxies `/music` the way it proxies
