@@ -102,7 +102,7 @@
     },
     "implementation": {
       "title": "See the implementation",
-      "code": "The API, the translations in MongoDB and the translation job live in [Ki.CL-api]($t(common:url_api)). The frontend side, which loads each page's strings and follows `Content-Language`, lives in [Ki.CL]($t(common:url_host))."
+      "code": "The API, the translations in MongoDB and the translation job live in [Ki.CL-core](https://github.com/kenilam/Ki.CL-core). The frontend side, which loads each page's strings and follows `Content-Language`, lives in [Ki.CL]($t(common:url_host))."
     },
     "limits": {
       "title": "Limits",

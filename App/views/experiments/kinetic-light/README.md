@@ -343,7 +343,7 @@ along, on an acoustic kit or a drum machine, or not at all.
 - **Speed became zoom.** On the sheet nothing travels at a speed, so the
   setting now sets how close the camera follows. The arrangement's field is
   `zoom` in the API too, the model's prompt describes it that way, and
-  `make kinetic-light.migrate` in Ki.CL-api renames `speed` on stored songs.
+  `make kinetic-light.migrate` in Ki.CL-core renames `speed` on stored songs.
 - **Balls land on the notes you hear.** Each notehead is matched with a
   played note of the same pitch starting at the same moment, and only those
   are landings. A tied or slurred continuation has no new attack, so the
