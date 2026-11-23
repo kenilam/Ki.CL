@@ -1,4 +1,4 @@
-import { getKiclClient, gql } from 'api/provider';
+import { getClient, gql } from 'api/client';
 
 /**
  * Walk a node's lineage rootward, through the cache rather than through one
@@ -45,7 +45,7 @@ export function chain(nodeId: string | null | undefined): Chain {
     return { ids: [], complete: false };
   }
 
-  const { cache } = getKiclClient();
+  const { cache } = getClient();
   const ids: string[] = [];
   const seen = new Set<string>();
 

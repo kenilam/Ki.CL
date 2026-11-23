@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 // API
-import { useApolloClient } from 'api/provider';
+import { useApolloClient } from 'api/client';
 
 // Song
 import { useSongContext } from '@/views/experiments/kinetic-light/song/context';

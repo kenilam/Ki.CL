@@ -30,7 +30,7 @@ curl -sk --noproxy '*' https://localhost.kicl.com:3001/ | head
 
 ## The backend is not available here
 
-`Ki.CL-back` refuses to start without `MONGODB_ATLAS_URI`, which is
+`Ki.CL-api` refuses to start without `MONGODB_ATLAS_URI`, which is
 gitignored and never in a cloud clone. Without a backend the host's Module
 Federation runtime cannot load `/client/remoteEntry.js` and blocks all
 rendering, so the page stays blank.
@@ -40,7 +40,7 @@ the host expects (`3100`, the `KICL_BACKEND_URL` default). The backend's own
 SessionStart hook has already run codegen and built `Client/dist`, so:
 
 ```bash
-node .claude/skills/cloud-session/serve-remote.mjs &   # serves ../Ki.CL-back/Client/dist
+node .claude/skills/cloud-session/serve-remote.mjs &   # serves ../Ki.CL-api/Client/dist
 # With KICL_STATIC_DIR=<dir> it also serves <dir> at /assets/static, with byte
 # ranges: lay files out as in the bucket (music/open-lofi/*.mp3) to try them.
 make run

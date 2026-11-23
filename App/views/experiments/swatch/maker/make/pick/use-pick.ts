@@ -4,7 +4,7 @@ import {
   Kicl_SwatchAllowanceDocument,
   Kicl_SwatchPickDocument,
   useMutation,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useNavigate } from 'design/router';

@@ -1,5 +1,5 @@
 // API
-import type { SwatchTimbre } from 'api/provider';
+import type { SwatchTimbre } from 'api/client';
 
 type Tone = typeof import('tone');
 

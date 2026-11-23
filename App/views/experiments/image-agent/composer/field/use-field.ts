@@ -1,5 +1,5 @@
 // API
-import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/client';
 
 // Components
 import { useFormContext } from 'design/components';

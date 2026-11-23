@@ -1,5 +1,5 @@
 // API
-import { Kicl_SwatchAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchAllowanceDocument, useQuery } from 'api/client';
 
 // Hooks
 import { useExact } from '@/views/experiments/swatch/maker/use-exact';

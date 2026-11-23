@@ -1,7 +1,7 @@
 import React from 'react';
 
 // API
-import { Kicl_SwatchAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchAllowanceDocument, useQuery } from 'api/client';
 
 // Components
 import {

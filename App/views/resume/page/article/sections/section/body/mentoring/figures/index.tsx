@@ -2,7 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { Kicl_MentorshipDocument, useQuery } from 'api/provider';
+import { Kicl_MentorshipDocument, useQuery } from 'api/client';
 
 import { List } from 'design/components';
 

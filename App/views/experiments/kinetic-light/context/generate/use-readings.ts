@@ -4,7 +4,7 @@ import {
   Kicl_KineticLightReadingsDocument,
   useQuery,
   useSubscription,
-} from 'api/provider';
+} from 'api/client';
 
 function useReadings() {
   const { data } = useQuery(Kicl_KineticLightReadingsDocument, {

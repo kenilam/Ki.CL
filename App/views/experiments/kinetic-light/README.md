@@ -246,7 +246,7 @@ along, on an acoustic kit or a drum machine, or not at all.
   best free Gemini model got 5 of the first 19 notes right; homr got all 19
   and all 35 bars. Chord symbols are text, which the model reads well, and
   homr doesn't read them at all. homr is AGPL-3.0, so it runs as its own
-  service, `Omr/` in Ki.CL-back.
+  service, `Omr/` in Ki.CL-api.
 - **Bars without a chord symbol.** The model lists every bar with `%` where
   no symbol is printed, but it still leaves some out, which moved every later
   chord a bar early. homr reads first and says how many bars each line of
@@ -343,7 +343,7 @@ along, on an acoustic kit or a drum machine, or not at all.
 - **Speed became zoom.** On the sheet nothing travels at a speed, so the
   setting now sets how close the camera follows. The arrangement's field is
   `zoom` in the API too, the model's prompt describes it that way, and
-  `make kinetic-light.migrate` in Ki.CL-back renames `speed` on stored songs.
+  `make kinetic-light.migrate` in Ki.CL-api renames `speed` on stored songs.
 - **Balls land on the notes you hear.** Each notehead is matched with a
   played note of the same pitch starting at the same moment, and only those
   are landings. A tied or slurred continuation has no new attack, so the

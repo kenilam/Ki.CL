@@ -6,7 +6,7 @@ import {
   Kicl_KineticLightReadingDocument,
   skipToken,
   useQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Readers
 import { readSong } from '@/views/experiments/kinetic-light/read/song';

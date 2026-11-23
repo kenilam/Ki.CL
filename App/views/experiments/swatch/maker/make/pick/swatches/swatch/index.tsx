@@ -1,7 +1,7 @@
 import React from 'react';
 
 // API
-import { Kicl_SwatchListDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchListDocument, useQuery } from 'api/client';
 
 // Components
 import { HyperLink, Image, ListItem } from 'design/components';

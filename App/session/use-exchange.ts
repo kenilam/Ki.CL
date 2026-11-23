@@ -4,7 +4,7 @@ import {
   hasSession,
   Kicl_ExchangeTokenDocument,
   useMutation,
-} from 'api/provider';
+} from 'api/client';
 
 // Helper
 import { GetErrorCode } from '@/helper';

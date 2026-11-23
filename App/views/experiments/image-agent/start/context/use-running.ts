@@ -1,5 +1,5 @@
 // API
-import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/provider';
+import { Kicl_ImageAgentAllowanceDocument, useQuery } from 'api/client';
 
 /**
  * Whether a turn is running in one of the person's conversations. While one

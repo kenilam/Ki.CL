@@ -5,7 +5,7 @@ import {
   Kicl_KineticLightReadingDocument,
   useQuery,
   type Kicl_KineticLightReadingQuery,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useParams } from 'design/router';

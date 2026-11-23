@@ -25,7 +25,7 @@ typed as `useKicl_TaxonVisual({ variables })` was. The remote now exports those
 documents plus Apollo's hooks (`useQuery`, `useMutation`, `useLazyQuery`,
 `useSubscription`, `skipToken`), and `.yarn/patches` is empty.
 
-The Frontend imports those hooks from `api/provider`, never from
+The Frontend imports those hooks from `api/client`, never from
 `@apollo/client` directly, so they use the remote's client.
 
 ---

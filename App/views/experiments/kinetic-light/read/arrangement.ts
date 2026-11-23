@@ -1,5 +1,5 @@
 // API
-import type { Kicl_KineticLightReadingQuery } from 'api/provider';
+import type { Kicl_KineticLightReadingQuery } from 'api/client';
 
 // Piece
 import type { Style } from './beat';

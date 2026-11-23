@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // API
-import { useLazyQuery, Kicl_TreeOfLifeSubtreeDocument } from 'api/provider';
+import { useLazyQuery, Kicl_TreeOfLifeSubtreeDocument } from 'api/client';
 
 // Tree
 import type { TreeNode } from '@/views/experiments/tree-of-life/tree';

@@ -5,7 +5,7 @@ import {
   Kicl_KineticLightArrangeDocument,
   useMutation,
   type KineticLightOutline,
-} from 'api/provider';
+} from 'api/client';
 
 // Readers
 import { toOutline } from '@/views/experiments/kinetic-light/read/outline';

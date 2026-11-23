@@ -4,7 +4,7 @@ import {
   Kicl_MeDocument,
   Kicl_UpdateMeDocument,
   useMutation,
-} from 'api/provider';
+} from 'api/client';
 
 // Components
 import { valibotResolver, useForm } from 'design/components';

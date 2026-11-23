@@ -1,5 +1,5 @@
 // API
-import { Kicl_SwatchListDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchListDocument, useQuery } from 'api/client';
 
 // Components
 import { useWatch } from 'design/components';

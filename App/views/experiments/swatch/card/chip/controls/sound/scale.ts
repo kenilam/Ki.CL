@@ -1,5 +1,5 @@
 // API
-import type { Kicl_SwatchQuery } from 'api/provider';
+import type { Kicl_SwatchQuery } from 'api/client';
 
 type Tone = NonNullable<NonNullable<Kicl_SwatchQuery['swatch']>['tone']>;
 

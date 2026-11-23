@@ -13,7 +13,7 @@ import {
 } from 'design/components';
 
 // API
-import type { KineticLightBeat } from 'api/provider';
+import type { KineticLightBeat } from 'api/client';
 
 // Hooks
 import { useTranslation } from 'design/hooks';

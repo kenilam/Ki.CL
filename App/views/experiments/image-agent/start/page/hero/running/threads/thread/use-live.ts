@@ -3,7 +3,7 @@ import {
   Kicl_ImageAgentAllowanceDocument,
   Kicl_ImageAgentThreadUpdatedDocument,
   useSubscription,
-} from 'api/provider';
+} from 'api/client';
 
 const useLive = (id: string) => {
   useSubscription(Kicl_ImageAgentThreadUpdatedDocument, {
