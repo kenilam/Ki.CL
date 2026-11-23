@@ -1,0 +1,8 @@
+.kicl--views--experiments--image-agent__chat__conversation__message__picture {
+  inline-size: var(--kicl-columns-3);
+  max-inline-size: 100%;
+
+  &--narrow {
+    inline-size: var(--kicl-columns-2);
+  }
+}

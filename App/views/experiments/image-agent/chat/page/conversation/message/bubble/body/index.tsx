@@ -21,18 +21,17 @@ const Body: React.FunctionComponent = () => {
     return null;
   }
 
+  if (message.role !== 'USER') {
+    return <Words />;
+  }
+
   return (
-    <Layout
-      alignItems='center'
-      autoFlow='column'
-      gap='narrowest'
-      justifyContent='end'
-    >
+    <Layout alignItems='center' autoFlow='column' gap='narrowest'>
       {/* Puts the retry button beside the text, outside its bubble. */}
-      <p>
+      <div>
         <Retry />
         <Words />
-      </p>
+      </div>
     </Layout>
   );
 };

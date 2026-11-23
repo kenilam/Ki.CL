@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import { Animated, BubbleContent, Layout, Text } from 'design/components';
+import { Animated, BubbleContent, Layout } from 'design/components';
 
 // Partials
 import { Working } from '@/views/experiments/image-agent/chat/page/conversation/working';
@@ -23,7 +23,7 @@ const Words: React.FunctionComponent = () => {
       gap='narrow'
       justifyContent='start'
     >
-      <BubbleContent is='span'>
+      <BubbleContent>
         {message.kind === 'PROGRESS' ? <Working /> : null}
         {reveal ? (
           <Animated.Text
@@ -36,7 +36,7 @@ const Words: React.FunctionComponent = () => {
             {message.text}
           </Animated.Text>
         ) : (
-          <Text is='span'>{message.text}</Text>
+          message.text
         )}
       </BubbleContent>
     </Layout>

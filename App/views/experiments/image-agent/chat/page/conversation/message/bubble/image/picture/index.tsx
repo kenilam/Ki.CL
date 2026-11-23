@@ -13,6 +13,9 @@ import { useMessageContext } from '@/views/experiments/image-agent/chat/page/con
 import { Full } from './full';
 import { Open } from './open';
 
+// Styles
+import './styles.scss';
+
 // Constants
 import { CLASS_NAME } from './constants';
 
@@ -30,10 +33,9 @@ const Picture: React.FunctionComponent = () => {
 
   return (
     <figure
-      className={classNames(
-        CLASS_NAME,
-        isNarrow ? 'kicl-inline-size-columns-2' : 'kicl-inline-size-columns-3'
-      )}
+      className={classNames(CLASS_NAME, {
+        [`${CLASS_NAME}--narrow`]: isNarrow,
+      })}
     >
       <Open />
       <Full />
