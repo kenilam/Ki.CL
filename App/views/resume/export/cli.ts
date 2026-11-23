@@ -261,7 +261,7 @@ const print = async (tab: Tab, job: Job): Promise<number | string> => {
   }
 
   if (ready.fingerprint !== expected(version)) {
-    return 'The page does not say what the files in App/locales/en-US say. Seed the database: make translations.seed in Ki.CL-back.';
+    return 'The page does not say what the files in App/locales/en-US say. Seed the database: make translations.seed in Ki.CL-api.';
   }
 
   if (!ready.face) {

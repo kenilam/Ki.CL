@@ -6,7 +6,7 @@ import {
   Kicl_ImageAgentThreadUpdatedDocument,
   useQuery,
   useSubscription,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useLocation, useParams } from 'design/router';

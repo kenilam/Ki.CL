@@ -10,7 +10,7 @@ import {
   Kicl_TaxonVisualDocument,
   Kicl_TaxonVisualUpdatedDocument,
   type Kicl_TaxonVisualQueryVariables,
-} from 'api/provider';
+} from 'api/client';
 
 // Tree
 import {

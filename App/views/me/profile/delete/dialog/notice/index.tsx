@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Kicl_ImageAgentThreadsDocument, useQuery } from 'api/provider';
+import { Kicl_ImageAgentThreadsDocument, useQuery } from 'api/client';
 
 // Components
 import { Animation, List, ListItem, Text } from 'design/components';

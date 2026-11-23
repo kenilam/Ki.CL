@@ -1,4 +1,4 @@
-import type { Kicl_ImageAgentThreadQuery } from 'api/provider';
+import type { Kicl_ImageAgentThreadQuery } from 'api/client';
 
 /** One conversation as the API returns it; the subscription carries the same shape. */
 export type Thread = NonNullable<

@@ -7,7 +7,7 @@
       "rule": "I wanted the site to work the way a set of backend services does: small parts with clear borders, where any one of them can be rebuilt, released or replaced without touching the others. Module Federation brings that idea to the frontend.",
       "intro": "That only holds if every part keeps a few rules:",
       "own": "It owns its data and its words. A remote's English lives in its own repository, and the API translates and serves it like the host's.",
-      "entry": "It has one way in. The host imports what a remote exposes, such as `design/components` or `api/provider`, and never reaches into its files.",
+      "entry": "It has one way in. The host imports what a remote exposes, such as `design/components` or `api/client`, and never reaches into its files.",
       "neutral": "It doesn't know more than it needs to. The design system should work for any site, so a component that depends on this site's API belongs to the host."
     },
     "terms": {
@@ -46,7 +46,7 @@
       "step_runtime": "The host's first script started the federation runtime. It registered the host, the remotes it knows about and the eager shared libraries before any of the app's own code ran.",
       "step_remotes": "The runtime loaded every remote module the host imports with a static `import`, such as `design/components`. For each remote, it called `init` with the host's share scope, then `get` for each module.",
       "step_shared": "When the design system asked for React, the runtime found the host's copy in the share scope and gave it that one, so there's only one React on the page.",
-      "step_render": "The app rendered. Its words arrived through `api/provider`, and a spinner held the page until the first of them did.",
+      "step_render": "The app rendered. Its words arrived through `api/client`, and a spinner held the page until the first of them did.",
       "step_feature": "Nothing about features happened yet. A feature remote is imported with `import()`, so it loads only when you open a page that uses it, and it goes through the same `init` and `get` then."
     },
     "under": {
@@ -75,7 +75,7 @@
       "publish": "Splitting the code across repositories breaks one thing straight away: TypeScript can't see across them. The types archive each build leaves behind fills that gap.",
       "download": "When the host's dev server starts, it downloads those archives into `App/@mf-types`, and `tsconfig.json` maps each remote's name, such as `design/*`, to them. The folder isn't committed, so the types always match the remote that's running.",
       "self": "That has a knock-on effect inside each remote. A generated `.d.ts` keeps its import paths exactly as written, so a design-system file that imported `@/hooks` would point at the host's own `@/` folder once it arrived there. So each remote imports its own code by the name it's exposed under, such as `design/hooks`, and the paths still make sense on the host's side.",
-      "codegen": "The API's types start one step earlier. Its GraphQL schema lives in `Ki.CL-back`, and `yarn codegen` turns it into the typed documents the client remote exposes, so a query written in the host is checked against the schema."
+      "codegen": "The API's types start one step earlier. Its GraphQL schema lives in `Ki.CL-api`, and `yarn codegen` turns it into the typed documents the client remote exposes, so a query written in the host is checked against the schema."
     },
     "cascade": {
       "title": "One cascade",
@@ -127,7 +127,7 @@
       "deep_dive": "[Understanding Module Federation: A Deep Dive](https://scriptedalchemy.medium.com/understanding-webpack-module-federation-a-deep-dive-efe5c55bf366), by Zack Jackson",
       "overview": "[What Is Webpack Module Federation and Why Does It Matter?](https://www.syncfusion.com/blogs/post/webpack-module-federation), on the Syncfusion blog",
       "video": "[Module Federation: Microservices for the Frontend](https://www.youtube.com/watch?v=RcfQ5HfwEVs), a video by Michael Guay",
-      "code": "This site's code: [Ki.CL]($t(common:url_host)), [Ki.CL-design-system]($t(design:url_github)) and [Ki.CL-back]($t(common:url_api))"
+      "code": "This site's code: [Ki.CL]($t(common:url_host)), [Ki.CL-design-system]($t(design:url_github)) and [Ki.CL-api]($t(common:url_api))"
     }
   },
   "diagram": {

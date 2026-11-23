@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 // API
-import { Kicl_SwatchListDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchListDocument, useQuery } from 'api/client';
 
 // Routes
 import { useNavigate, useParams } from 'design/router';

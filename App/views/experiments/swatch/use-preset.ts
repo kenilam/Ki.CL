@@ -1,5 +1,5 @@
 // API
-import { Kicl_SwatchExamplesDocument, useQuery } from 'api/provider';
+import { Kicl_SwatchExamplesDocument, useQuery } from 'api/client';
 
 // Hooks
 import { useResponsive } from 'design/hooks';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // API
-import { Kicl_SwatchDocument, skipToken, useQuery } from 'api/provider';
+import { Kicl_SwatchDocument, skipToken, useQuery } from 'api/client';
 
 // Components
 import { Animated, Text } from 'design/components';

@@ -224,6 +224,7 @@ const getConfig = ({
             eager: true,
             requiredVersion: '^17.0.0',
           },
+          three: { singleton: true, requiredVersion: '^0.185.0' },
         },
         dev: {
           /*

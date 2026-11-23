@@ -6,7 +6,7 @@ import {
   Kicl_SwatchAllowanceDocument,
   Kicl_SwatchUploadDocument,
   useMutation,
-} from 'api/provider';
+} from 'api/client';
 
 // Components
 import { useForm, valibotResolver } from 'design/components';

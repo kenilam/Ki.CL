@@ -5,7 +5,7 @@ import {
   Kicl_NotificationsDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
-} from 'api/provider';
+} from 'api/client';
 
 // Routes
 import { useNavigate } from 'design/router';

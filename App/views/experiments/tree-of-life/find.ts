@@ -1,4 +1,4 @@
-import { getKiclClient, gql } from 'api/provider';
+import { getClient, gql } from 'api/client';
 
 import type { TaxonNode } from './spec';
 
@@ -53,7 +53,7 @@ export function find(nodeId: string): TaxonNode | null {
     return null;
   }
 
-  const { cache } = getKiclClient();
+  const { cache } = getClient();
 
   return cache.readFragment<TaxonNode>({
     id: cache.identify({ __typename: 'TreeOfLifeNode', nodeId }),

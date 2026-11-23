@@ -9,7 +9,7 @@ import {
   useMutation,
   type KineticLightFile,
   type KineticLightSongInput,
-} from 'api/provider';
+} from 'api/client';
 
 // Session
 import { isChallenge, useChallenged } from '@/session';

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Kicl_DeleteMeDocument, useMutation } from 'api/provider';
+import { Kicl_DeleteMeDocument, useMutation } from 'api/client';
 
 // Session
 import { useEnded } from '@/session';

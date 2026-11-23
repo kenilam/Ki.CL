@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { Kicl_MeDocument, useQuery } from 'api/provider';
+import { Kicl_MeDocument, useQuery } from 'api/client';
 
 // Constants
 import { PATH } from '@/views/portfolio/moonshot/constants';

@@ -2,7 +2,7 @@ import {
   Kicl_MentorshipDocument,
   useQuery,
   type Kicl_MentorshipQuery,
-} from 'api/provider';
+} from 'api/client';
 
 import { useTranslation } from 'design/hooks';
 

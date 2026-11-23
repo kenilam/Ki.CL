@@ -4,7 +4,7 @@ import {
   Kicl_ContactDocument,
   useMutation,
   type ContactInput,
-} from 'api/provider';
+} from 'api/client';
 
 // Spec
 import type { Values } from './spec';

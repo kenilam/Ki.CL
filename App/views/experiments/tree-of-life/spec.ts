@@ -1,6 +1,6 @@
 import type React from 'react';
 
-import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/provider';
+import type { Kicl_TreeOfLifeSubtreeQuery } from 'api/client';
 import type { useQuery } from '@apollo/client/react';
 
 /**
