@@ -11,7 +11,7 @@ import { GetErrorCode } from '@/helper';
 
 import { TOKEN_HEADER } from './constants';
 
-type Outcome = 'ready' | 'rejected' | 'limited' | 'failed';
+type Outcome = 'ready' | 'rejected' | 'limited' | 'blocked' | 'failed';
 
 /** The outcomes the API names with an error code. */
 const CODES: Record<string, Outcome> = {
@@ -42,8 +42,7 @@ function useExchange() {
           return 'ready';
         }
 
-        console.error('Session: anonymous session was not established');
-        return 'failed';
+        return 'blocked';
       } catch (error) {
         const outcome = outcomeOf(error);
 

@@ -27,31 +27,37 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
 
   const { t } = useTranslation();
 
-  if (stage === 'rejected') {
-    return (
+  const statuses: Partial<Record<typeof stage, React.ReactElement>> = {
+    rejected: (
       <Status403
         message={t('session', { context: 'retry' })}
         title={t('session', { context: 'rejected' })}
       />
-    );
-  }
-
-  if (stage === 'limited') {
-    return (
+    ),
+    limited: (
       <Status429
         message={t('session', { context: 'later' })}
         title={t('session', { context: 'limited' })}
       />
-    );
-  }
-
-  if (stage === 'failed') {
-    return (
+    ),
+    blocked: (
+      <Status403
+        message={t('session', { context: 'cookies' })}
+        title={t('session', { context: 'blocked' })}
+      />
+    ),
+    failed: (
       <Status500
         message={t('session', { context: 'retry' })}
         title={t('session', { context: 'failed' })}
       />
-    );
+    ),
+  };
+
+  const status = statuses[stage];
+
+  if (status) {
+    return status;
   }
 
   if (!live) {
