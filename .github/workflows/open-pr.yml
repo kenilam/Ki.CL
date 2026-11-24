@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
 
       - env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PR_TOKEN }}
           BRANCH: ${{ github.ref_name }}
         run: |
           # A pull request that was closed without merging stays closed.
