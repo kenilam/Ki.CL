@@ -1,4 +1,6 @@
-import React, { createContext, useCallback, useContext } from 'react';
+import React, { createContext, useCallback, useContext, useEffect } from 'react';
+
+import { onUnauthenticated } from 'api/client';
 
 // Hooks
 import { isChallenge } from '@/session/is-challenge';
@@ -17,6 +19,9 @@ const SessionProvider: React.FunctionComponent<React.PropsWithChildren> = ({
   children,
 }) => {
   const session = useSession();
+  const { restart } = session;
+
+  useEffect(() => onUnauthenticated(restart), [restart]);
 
   return (
     <SessionContext.Provider value={session}>
