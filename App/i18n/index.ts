@@ -33,12 +33,15 @@ i18next.on('languageChanged', (language) => {
   document.documentElement.dir = i18next.dir(language);
 });
 
+let loading: Promise<unknown> | undefined;
+
 /**
  * Settles once the default namespace and the design system's have loaded. A view names its own
  * namespace in `useTranslation`, which suspends into that route's fallback
- * until it arrives.
+ * until it arrives. It starts on the first call, after `/env`, and before the
+ * session, since `translations` runs without one.
  */
-const ready = import('api/client').then(async ({ loadTranslations }) => {
+const load = () => import('api/client').then(async ({ loadTranslations }) => {
   let lng: string = SOURCE;
   let resources = {};
   const choice = remembered();
@@ -77,5 +80,7 @@ const ready = import('api/client').then(async ({ loadTranslations }) => {
       resources,
     });
 });
+
+const ready = () => (loading ??= load());
 
 export { chooseLanguage, ready };

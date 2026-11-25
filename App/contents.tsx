@@ -17,7 +17,7 @@ import { Views as View } from '@/views';
 
 const Provider = lazy(async () => {
   // The words outside any route load under the same spinner as the provider.
-  const [{ Provider }] = await Promise.all([import('api/client'), ready]);
+  const [{ Provider }] = await Promise.all([import('api/client'), ready()]);
 
   return { default: Provider };
 });

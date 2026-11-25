@@ -79,15 +79,6 @@ test:
 	yarn run test
 	@echo ✅ done
 
-# Lets the API answer the Translations query without a session, wherever it runs.
-# `make gcp.translations ENV=dev` then `ENV=prod`; without ENV it is both.
-# `make gcp.translations.check ENV=dev` says what would change.
-gcp.translations:
-	gcp/translations.sh $(ENV)
-
-gcp.translations.check:
-	@gcp/translations.sh check $(ENV)
-
 # Analytics events from the site's logs, newest first.
 # `make gcp.analytics TYPE=click SINCE=7d LIMIT=500`; TYPE is pageview, click, scroll or duration.
 gcp.analytics:
