@@ -9,7 +9,7 @@
     "@vite/vitejs-client": "2.2.10",
     "@vitejs/plugin-react": "6.1.1",
     "clean-css": "^5.3.3",
-    "glob": "11.1.0",
+    "glob": "14.0.2",
     "vite": "8.1.5",
     "vite-plugin-checker": "0.14.5",
     "vite-plugin-commonjs": "0.10.4",
