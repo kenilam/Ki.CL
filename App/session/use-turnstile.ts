@@ -7,7 +7,7 @@ type RenderOptions = {
   action: string;
   appearance: 'always' | 'execute' | 'interaction-only';
   callback: (token: string) => void;
-  'error-callback': () => void;
+  'error-callback': (code: string | number) => boolean;
   'expired-callback': () => void;
   'before-interactive-callback': () => void;
 };
@@ -21,6 +21,9 @@ declare global {
     };
   }
 }
+
+/** Codes for a wrong site key or an unlisted domain, which no retry can fix. */
+const SETUP_ERRORS = new Set(['110100', '110110', '110200', '400020', '400021', '400070']);
 
 let script: Promise<void> | null = null;
 
@@ -43,8 +46,9 @@ function loadScript(): Promise<void> {
 
 /**
  * Renders a Turnstile widget into `container` and returns its token. It stays
- * hidden unless Cloudflare needs the visitor to click, which `interactive`
- * reports. No `siteKey` renders nothing.
+ * hidden unless Cloudflare needs the visitor to click or a check fails, which
+ * `interactive` reports. Turnstile retries a failed check itself, so only a
+ * setup error sets `failed`. No `siteKey` renders nothing.
  */
 function useTurnstile(siteKey: string | undefined) {
   const container = useRef<HTMLDivElement>(null);
@@ -75,7 +79,17 @@ function useTurnstile(siteKey: string | undefined) {
           action: ACTION,
           appearance: 'interaction-only',
           callback: setToken,
-          'error-callback': () => setFailed(true),
+          'error-callback': (code) => {
+            console.warn('Session: Turnstile error', code);
+
+            if (SETUP_ERRORS.has(String(code))) {
+              setFailed(true);
+            } else {
+              setInteractive(true);
+            }
+
+            return true;
+          },
           'expired-callback': () => setToken(null),
           'before-interactive-callback': () => setInteractive(true),
         });
