@@ -12,7 +12,10 @@ import { MAX_REJECTIONS } from './constants';
 import { useExchange } from './use-exchange';
 import { useTurnstile } from './use-turnstile';
 
-type Stage = 'challenge' | Awaited<ReturnType<ReturnType<typeof useExchange>>>;
+type Stage =
+  | 'challenge'
+  | 'unavailable'
+  | Awaited<ReturnType<ReturnType<typeof useExchange>>>;
 
 /**
  * Where the gate is. A visitor without a session goes straight to the widget,
@@ -116,7 +119,12 @@ function useSession() {
     live: stage === 'ready' || resuming,
     restart,
     resuming,
-    stage: unconfigured || turnstile.failed ? 'failed' : stage,
+    stage:
+      unconfigured || turnstile.failed
+        ? 'failed'
+        : turnstile.unavailable
+          ? 'unavailable'
+          : stage,
     turnstile,
   };
 }
