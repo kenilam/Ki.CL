@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 // API
 import {
-  Kicl_NotificationsDocument,
   Kicl_SwatchAllowanceDocument,
   Kicl_SwatchUploadDocument,
   useMutation,
@@ -35,7 +34,7 @@ const useUpload = () => {
   const schema = useMemo(() => uploadSchema(t), [t]);
   const form = useForm<UploadValues>({ resolver: valibotResolver(schema) });
   const [upload] = useMutation(Kicl_SwatchUploadDocument, {
-    refetchQueries: [Kicl_NotificationsDocument, Kicl_SwatchAllowanceDocument],
+    refetchQueries: [Kicl_SwatchAllowanceDocument],
   });
 
   const submit = form.handleSubmit(async ({ file }) => {

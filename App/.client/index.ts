@@ -55,6 +55,12 @@ const MOONSHOT_DEV_URL = process.env.KICL_MOONSHOT_DEV_URL;
 const MOONSHOT_REMOTE_ENTRY =
   process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
 
+// The notification bell, from Ki.CL-notifications, at /notification.
+const NOTIFICATION_URL =
+  process.env.KICL_NOTIFICATION_URL || 'http://localhost:3401';
+const NOTIFICATION_REMOTE_ENTRY =
+  process.env.KICL_NOTIFICATION_REMOTE_ENTRY || '/notification/remoteEntry.js';
+
 /*
  * Kept in step with `App/.server/proxy` - the two run the same site and have
  * to agree on which paths belong to the API.
@@ -148,6 +154,12 @@ const getConfig = ({
         secure: false,
         ws: true,
       },
+      '/notification': {
+        target: NOTIFICATION_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
        * because a production build emits the site's own bundles there too.
@@ -196,6 +208,11 @@ const getConfig = ({
             type: 'module',
             name: 'moonshot',
             entry: MOONSHOT_REMOTE_ENTRY,
+          },
+          notification: {
+            type: 'module',
+            name: 'notification',
+            entry: NOTIFICATION_REMOTE_ENTRY,
           },
         },
         shared: {
@@ -272,6 +289,11 @@ const getConfig = ({
                 alias: 'moonshot',
                 api: `${MOONSHOT_URL}/moonshot/@mf-types.d.ts`,
                 zip: `${MOONSHOT_URL}/moonshot/@mf-types.zip`,
+              },
+              notification: {
+                alias: 'notification',
+                api: `${NOTIFICATION_URL}/notification/@mf-types.d.ts`,
+                zip: `${NOTIFICATION_URL}/notification/@mf-types.zip`,
               },
             },
           },

@@ -30,6 +30,13 @@
       "moonshot/*": [
         "./@mf-types/moonshot/*",
         "./@mf-types/moonshot/compiled-types/Client/src/*"
+      ],
+      "notification": [
+        "./@mf-types/notification"
+      ],
+      "notification/*": [
+        "./@mf-types/notification/*",
+        "./@mf-types/notification/compiled-types/src/*"
       ]
     },
     "types": [

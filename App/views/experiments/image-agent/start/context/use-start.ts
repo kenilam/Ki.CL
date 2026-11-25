@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 
 // API
 import {
-  Kicl_NotificationsDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
 } from 'api/client';
@@ -23,10 +22,7 @@ import { toPath } from '@/views/experiments/image-agent/constants';
 function useStart() {
   const navigate = useNavigate();
   // A new turn starts, which the notifications at the root watch for.
-  const [mutate, { error, loading }] = useMutation(
-    Kicl_ImageAgentSendDocument,
-    { refetchQueries: [Kicl_NotificationsDocument] }
-  );
+  const [mutate, { error, loading }] = useMutation(Kicl_ImageAgentSendDocument);
   const challenged = useChallenged();
 
   const send = useCallback(

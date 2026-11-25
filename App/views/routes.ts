@@ -17,7 +17,6 @@ import { toPath as toKineticLightPath } from '@/views/experiments/kinetic-light/
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';
 import { toPath as toSwatchPath } from '@/views/experiments/swatch/constants';
 import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants';
-import { toPath as toPlatePath } from '@/views/experiments/tree-of-life/explorer/details-path';
 import { PATH as HOME_PATH } from '@/views/home/constants';
 import { PATH as ME_PATH } from '@/views/me/constants';
 import { PAGE_PATH as PASSWORD_PATH } from '@/views/me/password/constants';
@@ -151,19 +150,10 @@ const POSTS: readonly Post[] = [
   },
 ];
 
-const RECORD_PATHS: Record<string, (documentId: string) => string> = {
-  image_agent_threads: toImageAgentPath,
-  kinetic_light_readings: toKineticLightPath,
-  password_changes: () => PASSWORD_PATH,
-  swatches: toSwatchPath,
-  tree_of_life: toPlatePath,
-};
-
 export {
   EXPERIMENTS,
   PAGES,
   POSTS,
-  RECORD_PATHS,
   ROUTES,
   TOPICS,
   type Experiment,

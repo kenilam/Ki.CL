@@ -97,7 +97,7 @@ along, on an acoustic kit or a drum machine, or not at all.
   read, and subscribes to `kineticLightReadingUpdated` while one is. The home
   form shows its progress through `progress/`: the notes, then the bar and
   note counts, then the chords as the model writes them. The API tells the
-  site's notifications (`App/views/notifications`) about the same steps.
+  site's notification bell (the `notification` remote) about the same steps.
 - **`home/`** is the index route and **`song/`** is the `:id` route. Each
   folder's `index.tsx` is its `<Route>`. What belongs to one song is in
   `song/`: the player, the stage, the clock, the settings and the samples. The

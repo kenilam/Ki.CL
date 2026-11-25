@@ -2,7 +2,6 @@ import { useCallback, useMemo } from 'react';
 
 // API
 import {
-  Kicl_NotificationsDocument,
   Kicl_ImageAgentRetryDocument,
   Kicl_ImageAgentSendDocument,
   useMutation,
@@ -29,13 +28,8 @@ import { PARAM } from '@/views/experiments/image-agent/constants';
 function useChat() {
   const { accept: onSent } = useThreadContext();
   const { [PARAM]: threadId = '' } = useParams();
-  // A new turn starts, which the notifications at the root watch for.
-  const [mutate, sent] = useMutation(Kicl_ImageAgentSendDocument, {
-    refetchQueries: [Kicl_NotificationsDocument],
-  });
-  const [again, retried] = useMutation(Kicl_ImageAgentRetryDocument, {
-    refetchQueries: [Kicl_NotificationsDocument],
-  });
+  const [mutate, sent] = useMutation(Kicl_ImageAgentSendDocument);
+  const [again, retried] = useMutation(Kicl_ImageAgentRetryDocument);
   const challenged = useChallenged();
 
   const send = useCallback(

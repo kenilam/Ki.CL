@@ -4,7 +4,6 @@ import { useCallback, useState } from 'react';
 import {
   Kicl_KineticLightReadDocument,
   Kicl_KineticLightReadingsDocument,
-  Kicl_NotificationsDocument,
   Kicl_KineticLightSaveDocument,
   useMutation,
   type KineticLightFile,
@@ -84,10 +83,7 @@ function useRead() {
   const challenged = useChallenged();
   const [mutate, { loading }] = useMutation(Kicl_KineticLightReadDocument, {
     awaitRefetchQueries: true,
-    refetchQueries: [
-      Kicl_KineticLightReadingsDocument,
-      Kicl_NotificationsDocument,
-    ],
+    refetchQueries: [Kicl_KineticLightReadingsDocument],
   });
   const [keep, { loading: saving }] = useMutation(
     Kicl_KineticLightSaveDocument
