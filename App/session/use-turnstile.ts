@@ -48,7 +48,8 @@ function loadScript(): Promise<void> {
  * Renders a Turnstile widget into `container` and returns its token. It stays
  * hidden unless Cloudflare needs the visitor to click or a check fails, which
  * `interactive` reports. Turnstile retries a failed check itself, so only a
- * setup error sets `failed`. No `siteKey` renders nothing.
+ * setup error sets `failed`. A script that won't load, because Cloudflare is
+ * down or blocked, sets `unavailable`. No `siteKey` renders nothing.
  */
 function useTurnstile(siteKey: string | undefined) {
   const container = useRef<HTMLDivElement>(null);
@@ -56,6 +57,7 @@ function useTurnstile(siteKey: string | undefined) {
   const [token, setToken] = useState<string | null>(null);
   const [interactive, setInteractive] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [unavailable, setUnavailable] = useState(false);
 
   useEffect(() => {
     const element = container.current;
@@ -96,7 +98,7 @@ function useTurnstile(siteKey: string | undefined) {
       } catch (error) {
         console.error('Session: Turnstile unavailable', error);
         if (!cancelled) {
-          setFailed(true);
+          setUnavailable(true);
         }
       }
     };
@@ -120,7 +122,7 @@ function useTurnstile(siteKey: string | undefined) {
     }
   }, []);
 
-  return { container, token, interactive, failed, reset };
+  return { container, token, interactive, failed, unavailable, reset };
 }
 
 export { useTurnstile };

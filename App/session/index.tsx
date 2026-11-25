@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Status
-import { Status403, Status429, Status500 } from 'design/status';
+import { Status403, Status429, Status500, Status503 } from 'design/status';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -44,6 +44,12 @@ const Session: React.FunctionComponent<React.PropsWithChildren> = ({
       <Status403
         message={t('session', { context: 'cookies' })}
         title={t('session', { context: 'blocked' })}
+      />
+    ),
+    unavailable: (
+      <Status503
+        message={t('session', { context: 'soon' })}
+        title={t('session', { context: 'down' })}
       />
     ),
     failed: (
