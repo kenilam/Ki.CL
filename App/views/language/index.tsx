@@ -1,28 +1,19 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
-// Views
-import {
-  LanguageSelect,
-  type LanguageSelectProps,
-} from '@/views/language-select';
+// The switcher is Ki.CL-i18n's. Its remote is already loaded by the time a page renders, since `App/i18n` loads the words through it.
+const LanguageSelect = React.lazy(async () => {
+  const { LanguageSelect } = await import('i18n');
 
-// i18n
-import { chooseLanguage } from '@/i18n';
-
-// Hooks
-import { useTranslation } from 'design/hooks';
+  return { default: LanguageSelect };
+});
 
 const Language: React.FunctionComponent<
-  Pick<LanguageSelectProps, 'className' | 'inline' | 'placement'>
+  React.ComponentProps<typeof LanguageSelect>
 > = (props) => {
-  const { i18n } = useTranslation();
-
   return (
-    <LanguageSelect
-      {...props}
-      onValueChange={chooseLanguage}
-      value={i18n.language}
-    />
+    <Suspense fallback={null}>
+      <LanguageSelect {...props} />
+    </Suspense>
   );
 };
 

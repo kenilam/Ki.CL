@@ -55,6 +55,11 @@ const MOONSHOT_DEV_URL = process.env.KICL_MOONSHOT_DEV_URL;
 const MOONSHOT_REMOTE_ENTRY =
   process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
 
+// The language switcher and i18next backend, from Ki.CL-i18n, at /i18n.
+const I18N_URL = process.env.KICL_I18N_URL || 'http://localhost:3501';
+const I18N_REMOTE_ENTRY =
+  process.env.KICL_I18N_REMOTE_ENTRY || '/i18n/remoteEntry.js';
+
 // The notification bell, from Ki.CL-notifications, at /notification.
 const NOTIFICATION_URL =
   process.env.KICL_NOTIFICATION_URL || 'http://localhost:3401';
@@ -160,6 +165,12 @@ const getConfig = ({
         secure: false,
         ws: true,
       },
+      '/i18n': {
+        target: I18N_URL,
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+      },
       /*
        * Narrowed to the individual segments rather than all of `/assets`,
        * because a production build emits the site's own bundles there too.
@@ -213,6 +224,11 @@ const getConfig = ({
             type: 'module',
             name: 'notification',
             entry: NOTIFICATION_REMOTE_ENTRY,
+          },
+          i18n: {
+            type: 'module',
+            name: 'i18n',
+            entry: I18N_REMOTE_ENTRY,
           },
         },
         shared: {
@@ -294,6 +310,11 @@ const getConfig = ({
                 alias: 'notification',
                 api: `${NOTIFICATION_URL}/notification/@mf-types.d.ts`,
                 zip: `${NOTIFICATION_URL}/notification/@mf-types.zip`,
+              },
+              i18n: {
+                alias: 'i18n',
+                api: `${I18N_URL}/i18n/@mf-types.d.ts`,
+                zip: `${I18N_URL}/i18n/@mf-types.zip`,
               },
             },
           },

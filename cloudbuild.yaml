@@ -1,0 +1,92 @@
+# The host's build, for the ki-cl-develop trigger (ki-cl-dev) and the production one (ki-cl).
+steps:
+  - id: Build
+    name: gcr.io/cloud-builders/docker
+    args: ['build', '--no-cache', '-t', '$_IMAGE', '.', '-f', 'Dockerfile']
+
+  - id: Push
+    name: gcr.io/cloud-builders/docker
+    args: ['push', '$_IMAGE']
+
+  # Sends this repo's English to Ki.CL-i18n before the code that reads it goes live. Dev translates
+  # what's new at once and production copies dev's translations; a failure is left to the nightly run.
+  # The registry names the service, and the build's own account signs the call.
+  - id: Words
+    name: node:24-slim
+    entrypoint: node
+    allowFailure: true
+    env:
+      - LOCALES=$_LOCALES
+      - BUCKET=$_REGISTRY_BUCKET
+    args:
+      - --input-type=module
+      - -e
+      - |
+        import { readdirSync, readFileSync } from 'node:fs';
+
+        const folder = process.env.LOCALES + '/en-US';
+        const english = Object.fromEntries(
+          readdirSync(folder)
+            .filter((name) => name.endsWith('.json'))
+            .sort()
+            .map((name) => [name.slice(0, -5), JSON.parse(readFileSync(folder + '/' + name, 'utf8'))]),
+        );
+
+        const metadata = 'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/';
+        const flavor = { 'Metadata-Flavor': 'Google' };
+        const token = await (await fetch(metadata + 'token', { headers: flavor })).json();
+        const record = await (
+          await fetch('https://storage.googleapis.com/storage/v1/b/' + process.env.BUCKET + '/o/services%2Fi18n.json?alt=media', {
+            headers: { Authorization: 'Bearer ' + token.access_token },
+          })
+        ).json();
+        // The metadata server only gives ID tokens to a dedicated build account, so the default one mints its own.
+        const email = await (await fetch(metadata + 'email', { headers: flavor })).text();
+        const { token: identity } = await (
+          await fetch('https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/' + email + ':generateIdToken', {
+            method: 'POST',
+            headers: { Authorization: 'Bearer ' + token.access_token, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ audience: 'ki-cl-subgraphs' }),
+          })
+        ).json();
+        const service = record.url.endsWith('/api') ? record.url.slice(0, -4) : record.url;
+
+        const response = await fetch(service + '/internal/english', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Serverless-Authorization': 'Bearer ' + identity },
+          body: JSON.stringify(english),
+          signal: AbortSignal.timeout(600000),
+        });
+
+        console.log(response.status, await response.text());
+        process.exitCode = response.ok ? 0 : 1;
+
+  - id: Deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - --platform=managed
+      - --image=$_IMAGE
+      - --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID
+      - --region=$_DEPLOY_REGION
+      - --quiet
+
+substitutions:
+  _AR_HOSTNAME: us-central1-docker.pkg.dev
+  _AR_REPOSITORY: cloud-run-source-deploy
+  _DEPLOY_REGION: us-central1
+  _SERVICE_NAME: ki-cl-dev
+  _REGISTRY_BUCKET: ki-cl-registry-dev
+  _LOCALES: App/locales
+  _IMAGE: ${_AR_HOSTNAME}/${PROJECT_ID}/${_AR_REPOSITORY}/ki.cl/${_SERVICE_NAME}:${COMMIT_SHA}
+
+options:
+  dynamicSubstitutions: true
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - $_IMAGE
