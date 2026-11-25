@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Session
-import { SessionProvider } from '@/session';
+import { Session, SessionProvider } from '@/session';
 
 // Partials
 import { Shell } from './shell';
@@ -9,7 +9,9 @@ import { Shell } from './shell';
 const Contents: React.FunctionComponent = () => {
   return (
     <SessionProvider>
-      <Shell />
+      <Session>
+        <Shell />
+      </Session>
     </SessionProvider>
   );
 };

@@ -12,25 +12,22 @@ import { MAX_REJECTIONS } from './constants';
 import { useExchange } from './use-exchange';
 import { useTurnstile } from './use-turnstile';
 
-type Stage =
-  'probe' | 'challenge' | Awaited<ReturnType<ReturnType<typeof useExchange>>>;
+type Stage = 'challenge' | Awaited<ReturnType<ReturnType<typeof useExchange>>>;
 
 /**
- * Where the gate is. It tries without a token first, so a visitor whose
- * session lapsed at midnight gets it back from their refresh token without a
- * check. Only a `rejected` probe shows the widget.
+ * Where the gate is. A visitor without a session goes straight to the widget,
+ * since the gateway answers a request without one with CAPTCHA_REQUIRED.
  *
- * A session that exists but never passed the check gets the widget later,
- * when a paid request answers CAPTCHA_REQUIRED and `challenge` is called.
- * The page stays up while that runs. `restart` does the same for a visitor
- * who signed out.
+ * A session that ends later, through a sign-out or a refused renewal, calls
+ * `restart`, and a request that answers CAPTCHA_REQUIRED calls `challenge`.
+ * Both show the widget over the page, which stays up while it runs.
  */
 function useSession() {
   const { env, loading } = useEnvContext();
   const siteKey = env?.TURNSTILE_SITE_KEY || undefined;
 
   const [stage, setStage] = useState<Stage>(() =>
-    hasSession() ? 'ready' : 'probe'
+    hasSession() ? 'ready' : 'challenge'
   );
   const [rejections, setRejections] = useState(0);
   const [resuming, setResuming] = useState(false);
@@ -52,8 +49,8 @@ function useSession() {
   );
 
   /*
-   * Starts again from the probe, over the page. Signing out clears the
-   * cookies, so the visitor needs a new anonymous session.
+   * Starts a new session over the page. Signing out clears the cookies, so
+   * the visitor needs a new anonymous session.
    */
   const restart = useCallback(
     () =>
@@ -61,13 +58,13 @@ function useSession() {
         waiting.current.push(resolve);
         setResuming(true);
         setRejections(0);
-        setStage('probe');
+        setStage('challenge');
       }),
     []
   );
 
   useEffect(() => {
-    if (stage === 'probe' || stage === 'challenge') {
+    if (stage === 'challenge') {
       return;
     }
 
@@ -77,28 +74,6 @@ function useSession() {
       resolve(stage === 'ready');
     }
   }, [stage]);
-
-  useEffect(() => {
-    if (stage !== 'probe') {
-      return;
-    }
-
-    let cancelled = false;
-
-    const probe = async () => {
-      const outcome = await exchange(null);
-
-      if (!cancelled) {
-        setStage(outcome === 'rejected' ? 'challenge' : outcome);
-      }
-    };
-
-    void probe();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [exchange, stage]);
 
   useEffect(() => {
     if (stage !== 'challenge' || !token) {

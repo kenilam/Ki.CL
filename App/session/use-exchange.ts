@@ -1,61 +1,52 @@
 import { useCallback } from 'react';
 
-import {
-  hasSession,
-  Kicl_ExchangeTokenDocument,
-  useMutation,
-} from 'api/client';
+import { hasSession } from 'api/client';
 
-// Helper
-import { GetErrorCode } from '@/helper';
-
-import { TOKEN_HEADER } from './constants';
+import { SESSION_PATH, TOKEN_HEADER } from './constants';
 
 type Outcome = 'ready' | 'rejected' | 'limited' | 'blocked' | 'failed';
 
-/** The outcomes the API names with an error code. */
+/**
+ * The outcomes the API names with an error code. `UNAUTHORIZED` means a
+ * signed-in session ended and its cookies were cleared, so the visitor starts
+ * an anonymous one through the challenge.
+ */
 const CODES: Record<string, Outcome> = {
   CAPTCHA_REQUIRED: 'rejected',
+  UNAUTHORIZED: 'rejected',
   TOO_MANY_REQUESTS: 'limited',
 };
 
-const outcomeOf = (error: unknown): Outcome | undefined =>
-  CODES[GetErrorCode(error) ?? ''];
+async function codeOf(response: Response): Promise<string> {
+  try {
+    const body: { code?: string } = await response.json();
 
-/**
- * Starts an anonymous session, sending the Turnstile token when there is one.
- * Without one, a visitor with a refresh token still gets their session back.
- */
+    return body.code ?? '';
+  } catch {
+    return '';
+  }
+}
+
+/** Asks the gateway for a session with a Turnstile token. A live session is kept as it is. */
 function useExchange() {
-  const [exchangeToken] = useMutation(Kicl_ExchangeTokenDocument);
+  return useCallback(async (token: string): Promise<Outcome> => {
+    try {
+      const response = await fetch(SESSION_PATH, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { [TOKEN_HEADER]: token },
+      });
 
-  return useCallback(
-    async (token: string | null): Promise<Outcome> => {
-      try {
-        await exchangeToken({
-          context: {
-            headers: token ? { [TOKEN_HEADER]: token } : {},
-          },
-        });
-
-        if (hasSession()) {
-          return 'ready';
-        }
-
-        return 'blocked';
-      } catch (error) {
-        const outcome = outcomeOf(error);
-
-        if (outcome) {
-          return outcome;
-        }
-
-        console.error('Session: bootstrap failed', error);
-        return 'failed';
+      if (!response.ok) {
+        return CODES[await codeOf(response)] ?? 'failed';
       }
-    },
-    [exchangeToken]
-  );
+
+      return hasSession() ? 'ready' : 'blocked';
+    } catch (error) {
+      console.error('Session: bootstrap failed', error);
+      return 'failed';
+    }
+  }, []);
 }
 
 export { useExchange };
