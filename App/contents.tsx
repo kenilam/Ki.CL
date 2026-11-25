@@ -32,7 +32,7 @@ const Contents: React.FunctionComponent = () => {
   return (
     <Suspense fallback={<Spinner />}>
       {/* The session starts in `@/session`, at the root route. */}
-      <Provider autoExchange={false}>
+      <Provider>
         <LocalStorageProvider>
           <View />
         </LocalStorageProvider>
