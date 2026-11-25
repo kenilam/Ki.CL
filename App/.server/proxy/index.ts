@@ -35,6 +35,9 @@ const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
 /** Where the moonshot exercise lives: its remote and its API, under `/moonshot`. */
 const MOONSHOT_URL = process.env.KICL_MOONSHOT_URL || 'http://localhost:3301';
 
+/** Where the language switcher's remote lives, under `/i18n`. */
+const I18N_URL = process.env.KICL_I18N_URL || 'http://localhost:3501';
+
 /** Where the notification bell's remote lives, under `/notification`. */
 const NOTIFICATION_URL =
   process.env.KICL_NOTIFICATION_URL || 'http://localhost:3401';
@@ -159,9 +162,10 @@ const ROUTES: Array<{
   { path: '/design', target: DESIGN_URL },
   { path: '/moonshot', target: MOONSHOT_URL },
   { path: '/notification', target: NOTIFICATION_URL },
+  { path: '/i18n', target: I18N_URL },
 ];
 
-const AUDIENCES = [BACKEND_URL, DESIGN_URL, MOONSHOT_URL, NOTIFICATION_URL];
+const AUDIENCES = [BACKEND_URL, DESIGN_URL, MOONSHOT_URL, NOTIFICATION_URL, I18N_URL];
 
 export async function warmIdToken(): Promise<void> {
   await Promise.all(AUDIENCES.map(mintIdToken));

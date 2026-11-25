@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Card, Layout, Text } from 'design/components';
 
 // Views
-import { LanguageSelect } from '@/views/language-select';
+import { Language } from '@/views/language';
 
 // Hooks
 import { useTranslation } from 'design/hooks';
@@ -36,7 +36,7 @@ const Switcher: React.FunctionComponent = () => {
               justifyContent='start'
             >
               <Text is='p'>
-                <LanguageSelect
+                <Language
                   onValueChange={choose}
                   value={value ?? i18n.language}
                 />

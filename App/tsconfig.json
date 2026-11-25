@@ -37,6 +37,13 @@
       "notification/*": [
         "./@mf-types/notification/*",
         "./@mf-types/notification/compiled-types/src/*"
+      ],
+      "i18n": [
+        "./@mf-types/i18n"
+      ],
+      "i18n/*": [
+        "./@mf-types/i18n/*",
+        "./@mf-types/i18n/compiled-types/Client/src/*"
       ]
     },
     "types": [
