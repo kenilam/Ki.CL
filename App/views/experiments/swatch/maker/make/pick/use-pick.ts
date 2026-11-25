@@ -1,6 +1,5 @@
 // API
 import {
-  Kicl_NotificationsDocument,
   Kicl_SwatchAllowanceDocument,
   Kicl_SwatchPickDocument,
   useMutation,
@@ -22,7 +21,7 @@ const usePick = () => {
   const navigate = useNavigate();
   const { pick: form, setPending, setSending } = useMaker();
   const [pick] = useMutation(Kicl_SwatchPickDocument, {
-    refetchQueries: [Kicl_NotificationsDocument, Kicl_SwatchAllowanceDocument],
+    refetchQueries: [Kicl_SwatchAllowanceDocument],
   });
 
   const submit = form.handleSubmit(async (values) => {

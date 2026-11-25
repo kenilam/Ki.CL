@@ -8,11 +8,11 @@ import { SignOut } from '@/views/account/sign-out';
 import { Contact } from '@/views/contact';
 import { Entry as Resume } from '@/views/resume/entry';
 
-// Kept out of the first load: it brings in a part of each experiment.
-const Notifications = React.lazy(async () => {
-  const { Notifications } = await import('@/views/notifications');
+// The bell is its own remote, Ki.CL-notifications, kept out of the first load.
+const Notification = React.lazy(async () => {
+  const { Notification } = await import('notification');
 
-  return { default: Notifications };
+  return { default: Notification };
 });
 
 const Outlet: React.FunctionComponent = () => {
@@ -24,7 +24,7 @@ const Outlet: React.FunctionComponent = () => {
       <Contact />
       <Resume />
       <Suspense fallback={null}>
-        <Notifications />
+        <Notification />
       </Suspense>
     </>
   );

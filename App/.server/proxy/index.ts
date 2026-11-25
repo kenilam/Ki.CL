@@ -35,6 +35,10 @@ const DESIGN_URL = process.env.KICL_DESIGN_URL || 'http://localhost:3200';
 /** Where the moonshot exercise lives: its remote and its API, under `/moonshot`. */
 const MOONSHOT_URL = process.env.KICL_MOONSHOT_URL || 'http://localhost:3301';
 
+/** Where the notification bell's remote lives, under `/notification`. */
+const NOTIFICATION_URL =
+  process.env.KICL_NOTIFICATION_URL || 'http://localhost:3401';
+
 /**
  * Identity tokens last an hour. Refreshed well inside that, and kept in memory
  * so the value can be read synchronously - a WebSocket upgrade is not an
@@ -154,9 +158,10 @@ const ROUTES: Array<{
   // The design system's remote, at the same path it is served from.
   { path: '/design', target: DESIGN_URL },
   { path: '/moonshot', target: MOONSHOT_URL },
+  { path: '/notification', target: NOTIFICATION_URL },
 ];
 
-const AUDIENCES = [BACKEND_URL, DESIGN_URL, MOONSHOT_URL];
+const AUDIENCES = [BACKEND_URL, DESIGN_URL, MOONSHOT_URL, NOTIFICATION_URL];
 
 export async function warmIdToken(): Promise<void> {
   await Promise.all(AUDIENCES.map(mintIdToken));

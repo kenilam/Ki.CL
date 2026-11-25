@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 
 // API
 import {
-  useApolloClient,
   useQuery,
   useSubscription,
   skipToken,
-  Kicl_NotificationsDocument,
   Kicl_TaxonVisualDocument,
   Kicl_TaxonVisualUpdatedDocument,
   type Kicl_TaxonVisualQueryVariables,
@@ -51,7 +49,6 @@ const useRequest = ({ eligible, name, node }: Props) => {
     };
   }, [eligible, ottId, name, rank]);
 
-  const client = useApolloClient();
   const { data, loading, error } = useQuery(
     Kicl_TaxonVisualDocument,
     debounced
@@ -79,16 +76,6 @@ const useRequest = ({ eligible, name, node }: Props) => {
       skip: !(awaitingGeneration && debounced),
     }
   );
-
-  const drawing = queryVisual?.status === 'PENDING';
-
-  useEffect(() => {
-    if (!drawing) {
-      return;
-    }
-
-    void client.refetchQueries({ include: [Kicl_NotificationsDocument] });
-  }, [client, drawing]);
 
   return {
     awaitingGeneration,
