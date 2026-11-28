@@ -1,7 +1,5 @@
-import type { ClientRequest } from 'node:http';
-
 import type { Express, NextFunction, Request, Response } from 'express';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createProxyMiddleware, type Options } from 'http-proxy-middleware';
 
 import * as experiments from '@/.server/proxy/experiments';
 import * as idToken from '@/.server/proxy/id-token';
@@ -10,8 +8,10 @@ import * as upgrade from '@/.server/proxy/upgrade';
 
 // The services are private on Cloud Run, so the browser reaches them through here, with this server's identity token.
 
-const authorize = (audience: string) => (proxyRequest: ClientRequest) => {
-  const token = idToken.current(audience);
+type ProxyRequest = Parameters<NonNullable<NonNullable<Options['on']>['proxyReq']>>[0];
+
+const authorize = ({ target }: (typeof ROUTES)[number]) => (proxyRequest: ProxyRequest) => {
+  const token = idToken.current(target);
 
   if (token) {
     proxyRequest.setHeader('Authorization', `Bearer ${token}`);
@@ -31,7 +31,9 @@ export function apply(app: Express): void {
 
   app.use(experiments.proxy());
 
-  ROUTES.forEach(({ path, rewrite, target, ws }) => {
+  ROUTES.forEach((route) => {
+    const { path, rewrite, target, ws } = route;
+
     // `pathFilter`, not a mount path: mounting strips the prefix before a rewrite can see it.
     const middleware = createProxyMiddleware({
       pathFilter: `${path}/**`,
@@ -39,7 +41,7 @@ export function apply(app: Express): void {
       changeOrigin: true,
       ws: ws ?? false,
       ...(rewrite ? { pathRewrite: rewrite } : {}),
-      on: { proxyReq: authorize(target), proxyReqWs: authorize(target) },
+      on: { proxyReq: authorize(route), proxyReqWs: authorize(route) },
     });
 
     if (ws) {

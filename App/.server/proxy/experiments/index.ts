@@ -7,17 +7,17 @@ import * as idToken from '@/.server/proxy/id-token';
 // Each registry record that mounts an experiment gets its `client/` and `files/` forwarded to its service.
 const PATH = /^\/(experiments\/[a-z0-9]+(?:-[a-z0-9]+)*)\/(?:client|files)(?:\/|$)/;
 
-const targetOf = (path: string) => registry.serviceOf(PATH.exec(path)?.[1] ?? '');
+const targetOf = ({ path }: Request) => registry.mounts.get(PATH.exec(path)?.[1]);
 
 export function proxy() {
   registry.watch();
 
   const forward = createProxyMiddleware<Request, Response>({
     changeOrigin: true,
-    router: (request) => targetOf(request.path) as string,
+    router: (request) => targetOf(request) as string,
     on: {
       proxyReq: (proxyRequest, request) => {
-        const token = idToken.current(targetOf(request.path) ?? '');
+        const token = idToken.current(targetOf(request) ?? '');
 
         if (token) {
           proxyRequest.setHeader('Authorization', `Bearer ${token}`);
@@ -32,7 +32,7 @@ export function proxy() {
       return;
     }
 
-    const target = targetOf(request.path);
+    const target = targetOf(request);
 
     if (!target) {
       response.status(404).end();

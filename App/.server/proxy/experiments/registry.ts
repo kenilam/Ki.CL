@@ -9,10 +9,13 @@ const POLL_MS = 30_000;
 
 type ServiceRecord = { mount?: string; url: string };
 
-let mounts = new Map<string, string>();
+// Each experiment's mount and the service behind it.
+const mounts = new Map<ServiceRecord['mount'], ServiceRecord['url']>();
 let auth: GoogleAuth | null = null;
 
-async function bucket(name: string): Promise<ServiceRecord[]> {
+type Registry = NonNullable<typeof REGISTRY>;
+
+async function bucket(name: Registry): Promise<ServiceRecord[]> {
   auth ??= new GoogleAuth({ scopes: ['https://www.googleapis.com/auth/devstorage.read_only'] });
 
   const client = await auth.getClient();
@@ -24,7 +27,7 @@ async function bucket(name: string): Promise<ServiceRecord[]> {
   );
 }
 
-async function directory(path: string): Promise<ServiceRecord[]> {
+async function directory(path: Registry): Promise<ServiceRecord[]> {
   const folder = nodePath.join(path, 'services');
 
   return Promise.all(
@@ -40,17 +43,17 @@ async function load(): Promise<void> {
   try {
     const records = REGISTRY.includes('/') ? await directory(REGISTRY) : await bucket(REGISTRY);
 
-    mounts = new Map(
-      records.filter(({ mount }) => mount?.startsWith('experiments/')).map(({ mount, url }) => [mount as string, url.replace(/\/api$/, '')])
-    );
+    mounts.clear();
+    records
+      .filter(({ mount }) => mount?.startsWith('experiments/'))
+      .forEach(({ mount, url }) => mounts.set(mount, url.replace(/\/api$/, '')));
   } catch (error) {
     // The last list read stays in place.
     console.warn('Experiments: the registry could not be read -', error instanceof Error ? error.message : String(error));
   }
 }
 
-/** The service behind an experiment's mount, from the last list read. */
-export const serviceOf = (mount: string) => mounts.get(mount);
+export { mounts };
 
 export function watch(): void {
   void load();
