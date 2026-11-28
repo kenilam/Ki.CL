@@ -7,11 +7,10 @@ import { Route, useParams } from 'design/router';
 import { Spinner } from 'design/components';
 import { ErrorElement } from 'design/status';
 
-import { loadFederated } from './load';
+import * as federated from './load';
 
 const pages = new Map<string, React.LazyExoticComponent<React.FunctionComponent>>();
 
-/** The experiment's own page, kept per name so a visit back doesn't load it again. */
 const Page: React.FunctionComponent = () => {
   const { name = '' } = useParams();
 
@@ -19,7 +18,7 @@ const Page: React.FunctionComponent = () => {
     pages.set(
       name,
       React.lazy(async () => {
-        const { Experiment } = await loadFederated<{ Experiment: React.FunctionComponent }>({ name, module: 'client' });
+        const { Experiment } = await federated.load<{ Experiment: React.FunctionComponent }>({ name, module: 'client' });
 
         return { default: Experiment };
       })
@@ -35,7 +34,7 @@ const Page: React.FunctionComponent = () => {
   );
 };
 
-// After the experiments the host still has, so theirs win. One that fails to load fails only its own page.
+// After the host's own experiments, which win; one that fails to load fails only its page.
 const Federated = <Route path=':name/*' element={<Page />} errorElement={<ErrorElement />} />;
 
 export { Federated };

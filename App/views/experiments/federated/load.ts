@@ -1,16 +1,11 @@
 import { loadRemote, registerRemotes } from '@module-federation/runtime';
 
-// An experiment that has its own service and remote, named after its path: `color-swatches`.
 const NAME = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const registered = new Set<string>();
 
-/**
- * One of an experiment's exposed modules, from the remote this site forwards
- * under `/experiments/<name>/client`. Registered when first asked for, so a
- * new experiment needs no host release.
- */
-const loadFederated = async <Module>({ name, module }: { name: string; module: 'client' | 'preview' }) => {
+// Registered when first asked for, so a new experiment needs no host release.
+const load = async <Module>({ name, module }: { name: string; module: 'client' | 'preview' }) => {
   if (!NAME.test(name)) {
     throw new Error(`${name} is not an experiment's name.`);
   }
@@ -29,4 +24,4 @@ const loadFederated = async <Module>({ name, module }: { name: string; module: '
   return loaded;
 };
 
-export { loadFederated };
+export { load };

@@ -11,20 +11,16 @@ import colors from 'colors';
 
 import { Env } from '@/env';
 
-import { applyClientToken } from './client-token';
+import * as clientToken from './client-token';
 import { applyCollect } from '@/middleware/collect';
 import { applyCrawl, head } from '@/middleware/crawl';
 import { createGate } from './gate';
 import { applyHeaders } from './headers';
 import { createNavigation } from './navigation';
 import { precompressed } from './precompressed';
-import {
-  applyProxy,
-  attachUpgrade,
-  BACKEND_URL,
-  currentIdToken,
-  warmIdToken,
-} from './proxy';
+import * as proxy from './proxy';
+import * as idToken from './proxy/id-token';
+import * as upgrade from './proxy/upgrade';
 import { createTexts, escapeJson } from '@/middleware/texts';
 
 dotenv.config({ path: `${appRoot.path}/.env` });
@@ -74,9 +70,9 @@ async function Server() {
     applyHeaders(app);
 
     // Before the gate, which lets a verified client through.
-    applyClientToken(app);
+    clientToken.apply(app);
 
-    const texts = createTexts(() => currentIdToken(BACKEND_URL));
+    const texts = createTexts(() => idToken.current(proxy.BACKEND_URL));
 
     // Ahead of the proxy and the built files, so it covers both.
     app.use(createNavigation(texts));
@@ -87,7 +83,7 @@ async function Server() {
      * so a proxied route mounted after it would return the SPA shell instead of
      * the remote entry, and module federation would fail on a 200.
      */
-    applyProxy(app);
+    proxy.apply(app);
 
     applyCollect(app);
 
@@ -189,9 +185,9 @@ async function Server() {
      * and so a misconfigured identity is visible in the startup log rather than
      * as a puzzling 403 later.
      */
-    void warmIdToken();
+    void proxy.warm();
 
-    attachUpgrade(server);
+    upgrade.attach(server);
   } catch (error) {
     console.error(
       colors.red('An error occurred when attempting to start application'),

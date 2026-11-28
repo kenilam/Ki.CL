@@ -4,7 +4,7 @@ import { homedir } from 'node:os';
 import { dirname } from 'node:path';
 import { parseArgs } from 'node:util';
 
-import { signClientToken, toPrivateKey } from '.';
+import * as clientToken from '.';
 
 /**
  * Issues client tokens. The private key stays on the issuer's machine, outside
@@ -69,13 +69,13 @@ if (command === 'keys') {
   }
 
   const now = Date.now();
-  const token = signClientToken(
+  const token = clientToken.sign(
     {
       sub: sub as string,
       iat: Math.floor(now / 1000),
       exp: Math.floor((now + days * DAY_MS) / 1000),
     },
-    toPrivateKey(readFileSync(values.key, 'utf8').trim())
+    clientToken.toPrivateKey(readFileSync(values.key, 'utf8').trim())
   );
 
   console.info(token);
