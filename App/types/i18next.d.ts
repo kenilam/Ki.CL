@@ -16,7 +16,6 @@ import type musicVisualiser from '@/locales/en-US/music-visualiser.json';
 import type portfolio from '@/locales/en-US/portfolio.json';
 import type resume from '@/locales/en-US/resume.json';
 import type spatialCss from '@/locales/en-US/spatial-css.json';
-import type swatch from '@/locales/en-US/swatch.json';
 import type treeOfLife from '@/locales/en-US/tree-of-life.json';
 import type workshop from '@/locales/en-US/workshop.json';
 
@@ -41,7 +40,6 @@ declare module 'i18next' {
       portfolio: typeof portfolio;
       resume: typeof resume;
       'spatial-css': typeof spatialCss;
-      swatch: typeof swatch;
       'tree-of-life': typeof treeOfLife;
       workshop: typeof workshop;
     };

@@ -55,6 +55,31 @@ const MOONSHOT_DEV_URL = process.env.KICL_MOONSHOT_DEV_URL;
 const MOONSHOT_REMOTE_ENTRY =
   process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
 
+// Experiments with a service of their own, from a local registry's records:
+// each record's mount gets its `client/` and `files/` forwarded to the service.
+const experimentProxies = (): Record<string, { target: string; changeOrigin: boolean; secure: boolean }> => {
+  const registry = process.env.KICL_REGISTRY;
+  const folder = registry && nodePath.join(registry, 'services');
+
+  if (!folder || !fs.existsSync(folder)) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    fs
+      .readdirSync(folder)
+      .filter((name) => name.endsWith('.json'))
+      .map((name) => JSON.parse(fs.readFileSync(nodePath.join(folder, name), 'utf8')) as { mount?: string; url: string })
+      .filter(({ mount }) => mount?.startsWith('experiments/'))
+      .flatMap(({ mount, url }) =>
+        ['client', 'files'].map((part) => [
+          `/${mount}/${part}`,
+          { target: url.replace(/\/api$/, ''), changeOrigin: true, secure: false },
+        ])
+      )
+  );
+};
+
 // The language switcher and i18next backend, from Ki.CL-i18n, at /i18n.
 const I18N_URL = process.env.KICL_I18N_URL || 'http://localhost:3501';
 const I18N_REMOTE_ENTRY =
@@ -159,6 +184,7 @@ const getConfig = ({
         secure: false,
         ws: true,
       },
+      ...experimentProxies(),
       '/notification': {
         target: NOTIFICATION_URL,
         changeOrigin: true,

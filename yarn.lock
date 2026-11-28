@@ -3824,12 +3824,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"app.views.experiments.swatch@workspace:App/views/experiments/swatch":
-  version: 0.0.0-use.local
-  resolution: "app.views.experiments.swatch@workspace:App/views/experiments/swatch"
-  languageName: unknown
-  linkType: soft
-
 "app.views.experiments.tree-of-life@workspace:App/views/experiments/tree-of-life":
   version: 0.0.0-use.local
   resolution: "app.views.experiments.tree-of-life@workspace:App/views/experiments/tree-of-life"
@@ -3856,6 +3850,7 @@ __metadata:
     "@fontsource/barlow": "npm:5.3.0"
     "@fontsource/barlow-semi-condensed": "npm:5.3.0"
     "@hookform/resolvers": "npm:5.5.7"
+    "@module-federation/runtime": "npm:2.9.2"
     "@react-spring/three": "npm:10.1.2"
     "@react-three/drei": "npm:10.7.7"
     "@react-three/fiber": "npm:9.8.2"

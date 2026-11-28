@@ -9,10 +9,10 @@ import { useScreenContext } from '@/views/experiments/home/stage/screen/context'
 // Partials
 import {
   DaylightPlate,
+  FederatedPreview,
   ImageAgentBackdrop,
   KineticLightBackdrop,
   MusicVisualiser,
-  SwatchBackdrop,
   TreeOfLifePlate,
 } from '@/views/experiments/previews';
 
@@ -27,7 +27,7 @@ const BACKDROPS = {
   'image-agent': <ImageAgentBackdrop />,
   'kinetic-light': <KineticLightBackdrop />,
   'music-visualiser': <MusicVisualiser />,
-  swatch: <SwatchBackdrop />,
+  'color-swatches': <FederatedPreview name='color-swatches' />,
   'tree-of-life': <TreeOfLifePlate />,
 };
 

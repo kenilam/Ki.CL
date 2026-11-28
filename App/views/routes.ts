@@ -15,7 +15,6 @@ import { toPath as toDaylightPath } from '@/views/experiments/daylight/constants
 import { toPath as toImageAgentPath } from '@/views/experiments/image-agent/constants';
 import { toPath as toKineticLightPath } from '@/views/experiments/kinetic-light/constants';
 import { toPath as toMusicVisualiserPath } from '@/views/experiments/music-visualiser/constants';
-import { toPath as toSwatchPath } from '@/views/experiments/swatch/constants';
 import { PATH as TREE_OF_LIFE } from '@/views/experiments/tree-of-life/constants';
 import { PATH as HOME_PATH } from '@/views/home/constants';
 import { PATH as ME_PATH } from '@/views/me/constants';
@@ -51,16 +50,16 @@ type Experiment = Pick<ButtonProps, 'level'> & {
     | 'daylight'
     | 'image_agent'
     | 'kinetic_light'
+    | 'color_swatches'
     | 'music_visualiser'
-    | 'swatch'
     | 'tree_of_life';
   /** Which background Stage/Screen paints. */
   plate:
     | 'daylight'
     | 'image-agent'
     | 'kinetic-light'
+    | 'color-swatches'
     | 'music-visualiser'
-    | 'swatch'
     | 'tree-of-life';
   to: string;
 };
@@ -97,9 +96,9 @@ const EXPERIMENTS: readonly Experiment[] = [
     to: toKineticLightPath(),
   },
   {
-    context: 'swatch',
-    plate: 'swatch',
-    to: toSwatchPath(),
+    context: 'color_swatches',
+    plate: 'color-swatches',
+    to: `/${EXPERIMENTS_PATH}/color-swatches`,
   },
 ];
 

@@ -6,9 +6,9 @@ import { DARK_THEME_CLASS_NAME } from 'design/hooks';
 
 import {
   DaylightPreview,
+  FederatedPreview,
   KineticLightBackdrop,
   MusicVisualiser,
-  SwatchBackdrop,
 } from '@/views/experiments/previews';
 
 import type { Props } from '@/views/home/hero/works/work';
@@ -21,7 +21,7 @@ const PREVIEWS: Record<Props['plate'], React.ReactNode> = {
   daylight: <DaylightPreview />,
   'kinetic-light': <KineticLightBackdrop />,
   'music-visualiser': <MusicVisualiser />,
-  swatch: <SwatchBackdrop />,
+  'color-swatches': <FederatedPreview name='color-swatches' />,
 };
 
 const Preview: React.FunctionComponent<Props> = ({ plate }) => {

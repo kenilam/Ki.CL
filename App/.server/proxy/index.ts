@@ -8,6 +8,7 @@ import {
 import { GoogleAuth } from 'google-auth-library';
 
 import { checkClientToken } from '@/.server/client-token';
+import { experimentsProxy } from '@/.server/proxy/experiments';
 
 /**
  * Reverse proxy to the API and the design system, neither of which is reachable
@@ -89,6 +90,11 @@ async function mintIdToken(audience: string): Promise<string | null> {
 }
 
 /** The current token, refreshed in the background once it ages out. */
+/** A token for an audience that isn't known at start, such as an experiment the registry names. */
+export async function idTokenFor(audience: string): Promise<string | null> {
+  return currentIdToken(audience) ?? mintIdToken(audience);
+}
+
 export function currentIdToken(audience: string): string | null {
   const token = cached.get(audience);
 
@@ -219,6 +225,8 @@ export function applyProxy(app: Express): void {
       next();
     }
   );
+
+  app.use(experimentsProxy());
 
   ROUTES.forEach(({ path, rewrite, target, ws }) => {
     const middleware = createProxyMiddleware({
