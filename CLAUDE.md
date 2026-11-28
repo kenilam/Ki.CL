@@ -88,8 +88,6 @@ UI copy is not written in components. It lives in `App/locales/en-US/<namespace>
 - **Utility classes over SCSS** for color/fill/type/position: `kicl-color-*`, `kicl-position-*` (never `position:` in SCSS), `kicl-inline-size-*`, `kicl-font-size*`, `kicl-font-*`/`kicl-line-height-*`/`kicl-text-align-*`/`kicl-text-transform-*` (capitalize | lowercase | uppercase | none).
 - **Widths come from the 12-column scale** (the design system's `core/styles/columns.scss`): pages use 12 columns (80rem) through `kicl-max-inline-size-columns-12` or `var(--kicl-columns-12)`, and narrower blocks use a smaller span (`Card size={1…12}`, or `Layout columns` with `span` on its children). No hand-picked `rem`/`ch` widths.
 - **Design tokens over magic numbers**: `var(--kicl-gutter-*)`, `var(--kicl-size-*)` for padding/margin/inset/border-radius/border-width - never invented `calc(var(--kicl-*) * n)` scales. Component SCSS defines its own `--kicl--components--{name}--*` vars on `:root`, overridden per modifier.
-- **Infer types, don't restate them**: derive props from the element or component they come from (`React.ComponentProps<'nav'>`, `React.ComponentPropsWithoutRef<'button'>`, `Pick<ListProps, 'is'>`, `Parameters<typeof fn>[0]`) instead of writing inline shapes like `{ className?: string }`.
-- **Single quotes** in TS/JS/JSX/JSDoc (Prettier `singleQuote`/`jsxSingleQuote`); use template literals for strings needing nested quotes rather than escaping.
 - When touching UI that violates these, migrate it in the same change rather than leaving it inconsistent with neighboring code.
 
 ### Federated remote types housekeeping
@@ -140,6 +138,42 @@ Class names and styles:
 
 - More than one class is always `classNames('a', 'b')`, never a space-separated string or a template literal. One class is a plain string. A class that depends on state is `classNames({ 'is-revolving': recording })`.
 - Each part styles only its own elements, under its own class root (`kicl--views--…__part`), reading shared tokens from the root folder's `styles.scss`.
+
+## Code
+
+How code is written in every Ki.CL repo: the host, the remotes, the services and the gateway. Ki.CL-arm's Rust bridge follows Rust's own conventions instead.
+
+Imports and names:
+
+- Import our own function modules as a namespace, and name their exports by what they do inside it: `import * as invoker from './invoker.js'`, then `invoker.authorization()`, never `import { invokerAuthorization }`. The module already says what a function belongs to. A local that would clash with the namespace gets a plain name of its own (`const runtime = gateway.create()`). Components and hooks keep named imports, and third-party packages keep their own exports.
+- A name that mirrors a web standard uses the standard's spelling: the `accept-language` field, BCP 47 tags, `locales/en-US`. camelCase appears only where a hyphen can't be written, such as a TS identifier or a GraphQL field.
+- Single quotes in TS, JS, JSX and JSDoc. A string that needs nested quotes is a template literal, not an escape.
+
+Types and values:
+
+- Types come from their source: a record's fields from its generated type (`Pick<ColorSwatchFieldsFragment, 'id'>`), an element's props from `React.ComponentProps<'nav'>`, a component's from `Pick<ListProps, 'is'>`, an argument from `Parameters<typeof fn>[0]`. No inline shape where a type can be inferred, and no alias that renames one that exists.
+- A function takes one object typed from where its values come from, and returns the type of where its result goes: `toPath({ id })` returns `LinkProps['to']`, and callers pass the record itself, `toPath(colorSwatch)`.
+- Values that belong together are one object. The unique index's fields are `ROW = { ownerGUID: 1, source: 1 }` in Ki.CL-notifications, and a component's namespaces are `const translations = { common: useTranslation(), kineticLight: useTranslation('kinetic-light') }`, never `const { t: common } = useTranslation()`.
+- A structure is typed from its source and read where it's used (`new Map<ServiceRecord['mount'], ServiceRecord['url']>()`, then `mounts.get(mount)`), with no helper that only wraps it.
+- Static data is a literal read where it's used. No derived lookup maps, builder helpers or layers around data the caller can read directly.
+
+Control flow:
+
+- Return early. No `if / else if / else` chains.
+- `condition ? value : null`, never `condition && value`.
+- When one value picks one of several things of the same shape, write a static map and read it once, `{CONTENTS[tab]}`, keyed by a union so TypeScript checks every entry. Keep `if` or `switch` when the branches do different work, or when the key is untrusted input, since a plain object also answers `constructor`.
+- When the same call would sit in more than one branch, build its argument first and call it once.
+- Every function has a block body with an explicit `return`, and every `if` has braces, so a breakpoint or a log fits without a rewrite.
+
+Files, comments and dead code:
+
+- Every file, not only views, stays under about 80 lines and holds one concern.
+- No comment unless it gives a reason the code can't show: a browser quirk, a platform limit, why the obvious alternative fails. Never what the code does, a label over a group of imports, or JSDoc that repeats the signature. When a change makes a comment wrong, delete it rather than rewrite it.
+- No dead code: no unused export, no option kept for a caller that's gone, no commented-out code.
+
+Changing code:
+
+- Fix the design, not the line. When one place breaks a rule, find every place that does and convert the whole module, with no half-converted signatures and nothing kept only because it was already there. Before calling a change done, reread each module it touches against these rules.
 
 ## Writing
 
