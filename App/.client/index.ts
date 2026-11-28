@@ -38,6 +38,9 @@ dotenv.config({ path: `${appRoot.path}/.env` });
 const OPEN = `https://${configJSON.host}.${configJSON.domain}:${process.env.PORT}`;
 
 const BACKEND_URL = process.env.KICL_BACKEND_URL || 'http://localhost:3100';
+
+// Files kept in the buckets come from dev, so the site runs locally without Google Cloud credentials.
+const DEV_URL = 'https://dev.ki-cl.com';
 // Same-origin via Vite proxy - avoids mixed-content (HTTPS host → HTTP remote)
 // and CORS on ES module loads. Override with absolute URL in production if needed.
 const API_REMOTE_ENTRY =
@@ -56,7 +59,7 @@ const MOONSHOT_REMOTE_ENTRY =
   process.env.KICL_MOONSHOT_REMOTE_ENTRY || '/moonshot/remoteEntry.js';
 
 // Experiments with a service of their own, from a local registry's records:
-// each record's mount gets its `client/` and `files/` forwarded to the service.
+// each record's mount gets its `client/` forwarded to the service.
 const experimentProxies = (): Record<string, { target: string; changeOrigin: boolean; secure: boolean }> => {
   const registry = process.env.KICL_REGISTRY;
   const folder = registry && nodePath.join(registry, 'services');
@@ -71,12 +74,10 @@ const experimentProxies = (): Record<string, { target: string; changeOrigin: boo
       .filter((name) => name.endsWith('.json'))
       .map((name) => JSON.parse(fs.readFileSync(nodePath.join(folder, name), 'utf8')) as { mount?: string; url: string })
       .filter(({ mount }) => mount?.startsWith('experiments/'))
-      .flatMap(({ mount, url }) =>
-        ['client', 'files'].map((part) => [
-          `/${mount}/${part}`,
-          { target: url.replace(/\/api$/, ''), changeOrigin: true, secure: false },
-        ])
-      )
+      .map(({ mount, url }) => [
+        `/${mount}/client`,
+        { target: url.replace(/\/api$/, ''), changeOrigin: true, secure: false },
+      ])
   );
 };
 
@@ -213,12 +214,17 @@ const getConfig = ({
         ASSET_SEGMENTS.map((segment) => [
           `/assets/${segment}/`,
           {
-            target: BACKEND_URL,
+            target: DEV_URL,
             changeOrigin: true,
-            secure: false,
+            secure: true,
           },
         ])
       ),
+      '^/experiments/[^/]+/files/': {
+        target: DEV_URL,
+        changeOrigin: true,
+        secure: true,
+      },
     };
 
     const texts = createTexts();
