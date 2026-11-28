@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 
 // I18n
-import { ready } from '@/i18n';
+import { ready } from '@/language';
 
 // Env
 import { useEnvContext } from '@/env/client';
