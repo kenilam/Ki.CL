@@ -20,6 +20,7 @@
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-semi-condensed": "5.3.0",
     "@hookform/resolvers": "5.5.7",
+    "@module-federation/runtime": "2.9.2",
     "@react-spring/three": "10.1.2",
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.8.2",

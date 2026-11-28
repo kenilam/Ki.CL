@@ -1,10 +1,4 @@
-import {
-  createPrivateKey,
-  createPublicKey,
-  sign,
-  verify,
-  type KeyObject,
-} from 'node:crypto';
+import * as crypto from 'node:crypto';
 import type { IncomingMessage } from 'node:http';
 
 import type { Express } from 'express';
@@ -36,29 +30,29 @@ const decode = (value: string): unknown =>
 
 /** One-line base64 DER, so the keys fit in an environment variable. */
 const toPublicKey = (value: string) =>
-  createPublicKey({
+  crypto.createPublicKey({
     key: Buffer.from(value, 'base64'),
     format: 'der',
     type: 'spki',
   });
 
 const toPrivateKey = (value: string) =>
-  createPrivateKey({
+  crypto.createPrivateKey({
     key: Buffer.from(value, 'base64'),
     format: 'der',
     type: 'pkcs8',
   });
 
-function signClientToken(claims: Claims, privateKey: KeyObject): string {
+function sign(claims: Claims, privateKey: crypto.KeyObject): string {
   const body = `${encode({ alg: 'EdDSA', typ: 'JWT' })}.${encode(claims)}`;
-  const signature = sign(null, Buffer.from(body), privateKey);
+  const signature = crypto.sign(null, Buffer.from(body), privateKey);
 
   return `${body}.${signature.toString('base64url')}`;
 }
 
-function verifyClientToken(
+function verify(
   token: string,
-  publicKey: KeyObject,
+  publicKey: crypto.KeyObject,
   now = Date.now()
 ): Claims | null {
   const [header, payload, signature] = token.split('.');
@@ -68,7 +62,7 @@ function verifyClientToken(
   }
 
   try {
-    const valid = verify(
+    const valid = crypto.verify(
       null,
       Buffer.from(`${header}.${payload}`),
       publicKey,
@@ -109,7 +103,7 @@ const denied = new Set(
  * through Express. `undefined` when no token was sent, `null` when one was
  * sent and failed.
  */
-function checkClientToken(request: IncomingMessage): Claims | null | undefined {
+function check(request: IncomingMessage): Claims | null | undefined {
   const token = request.headers[TOKEN_HEADER];
 
   delete request.headers[TOKEN_HEADER];
@@ -118,14 +112,14 @@ function checkClientToken(request: IncomingMessage): Claims | null | undefined {
     return undefined;
   }
 
-  const verified = publicKey ? verifyClientToken(token, publicKey) : null;
+  const verified = publicKey ? verify(token, publicKey) : null;
 
   return verified && !denied.has(verified.sub) ? verified : null;
 }
 
-function applyClientToken(app: Express): void {
+function apply(app: Express): void {
   app.use((request, response, next) => {
-    const claims = checkClientToken(request);
+    const claims = check(request);
 
     // A token that was sent but does not verify is refused outright, so a
     // client with an expired one sees why instead of a password prompt.
@@ -144,12 +138,5 @@ function applyClientToken(app: Express): void {
   });
 }
 
-export {
-  applyClientToken,
-  checkClientToken,
-  signClientToken,
-  toPrivateKey,
-  toPublicKey,
-  verifyClientToken,
-};
+export { apply, check, sign, toPrivateKey, toPublicKey, verify };
 export type { Claims };

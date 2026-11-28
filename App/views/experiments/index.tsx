@@ -12,8 +12,8 @@ import { FactoryArm } from './factory-arm';
 import { ImageAgent } from './image-agent';
 import { KineticLight } from './kinetic-light';
 import { MusicVisualiser } from './music-visualiser';
-import { Swatch } from './swatch';
 import { TreeOfLife } from './tree-of-life';
+import { Federated } from './federated';
 
 // Constants
 import { PATH } from './constants';
@@ -53,7 +53,7 @@ const Experiments = (
     {FactoryArm}
     {Daylight}
     {KineticLight}
-    {Swatch}
+    {Federated}
   </Origin>
 );
 

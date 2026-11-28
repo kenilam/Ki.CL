@@ -1,11 +1,11 @@
 {
   "action_open_title": ": {{title}}",
   "action_share": "Share this page",
+  "description_color_swatches": "$t(common:experiment_description_color_swatches)",
   "description_daylight": "$t(common:experiment_description_daylight)",
   "description_image_agent": "$t(common:experiment_description_image_agent)",
   "description_kinetic_light": "$t(common:experiment_description_kinetic_light)",
   "description_music_visualiser": "$t(common:experiment_description_music_visualiser)",
-  "description_swatch": "$t(common:experiment_description_swatch)",
   "description_tree_of_life": "$t(common:experiment_description_tree_of_life)",
   "message_more": "More are in the making.",
   "number": "No. {{number}}",
